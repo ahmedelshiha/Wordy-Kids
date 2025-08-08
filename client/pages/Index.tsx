@@ -366,6 +366,7 @@ const pictureQuizQuestions = [
   },
   {
     id: 7,
+    word: "butterfly",
     emoji: "🦋",
     question: "Before becoming this, it was a:",
     options: ["Tadpole", "Caterpillar", "Seed", "Egg"],
@@ -374,6 +375,7 @@ const pictureQuizQuestions = [
   },
   {
     id: 8,
+    word: "soccer",
     emoji: "⚽",
     question: "In which sport is this item used?",
     options: ["Basketball", "Tennis", "Soccer", "Baseball"],
