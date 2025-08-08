@@ -147,7 +147,8 @@ const sampleSessions: LearningSession[] = [
 
 export const ParentDashboard: React.FC<ParentDashboardProps> = ({
   children = sampleChildren,
-  sessions = sampleSessions
+  sessions = sampleSessions,
+  onNavigateBack
 }) => {
   const [selectedChild, setSelectedChild] = useState<ChildProfile | null>(children[0] || null);
   const [activeTab, setActiveTab] = useState('overview');
