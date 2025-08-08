@@ -63,7 +63,7 @@ const sampleWords = [
   {
     id: 3,
     word: "telescope",
-    pronunciation: "/ˈtelɪˌskoʊp/",
+    pronunciation: "/ˈtelɪ��skoʊp/",
     definition: "An instrument used to see distant objects, especially stars and planets",
     example: "Through the telescope, we could see the craters on the moon",
     funFact: "The first telescope was invented in 1608 and made stars look 20 times closer!",
@@ -643,6 +643,56 @@ export default function Index() {
                   </Card>
                 ))}
               </div>
+            </div>
+          </TabsContent>
+
+          <TabsContent value="reading">
+            <div className="space-y-8">
+              <div className="text-center">
+                <h2 className="text-3xl font-bold text-slate-800 mb-4">
+                  Reading Comprehension
+                </h2>
+                <p className="text-slate-600 mb-8">
+                  Improve your reading skills and vocabulary through engaging stories!
+                </p>
+              </div>
+
+              <ReadingComprehension
+                passage={undefined} // Will use default sample passage
+                onComplete={(score, total) => {
+                  setShowCelebration(true);
+                  setTimeout(() => {
+                    alert(`Reading Complete! You scored ${score}/${total}!`);
+                    setShowCelebration(false);
+                  }, 2000);
+                }}
+              />
+            </div>
+          </TabsContent>
+
+          <TabsContent value="challenges">
+            <div className="space-y-8">
+              <div className="text-center">
+                <h2 className="text-3xl font-bold text-slate-800 mb-4">
+                  Daily Challenges
+                </h2>
+                <p className="text-slate-600 mb-8">
+                  Complete daily challenges to earn rewards and build learning habits!
+                </p>
+              </div>
+
+              <DailyChallenge
+                challenges={[]}
+                onChallengeComplete={(challengeId) => {
+                  console.log('Challenge completed:', challengeId);
+                  setShowCelebration(true);
+                  setTimeout(() => setShowCelebration(false), 3000);
+                }}
+                onStartChallenge={(challengeId) => {
+                  console.log('Starting challenge:', challengeId);
+                  // In a real app, this would navigate to the appropriate learning activity
+                }}
+              />
             </div>
           </TabsContent>
         </Tabs>
