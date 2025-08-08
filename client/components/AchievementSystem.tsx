@@ -73,7 +73,7 @@ const achievements: Achievement[] = [
     requirements: 10,
     currentProgress: 7,
     unlocked: false,
-    reward: { type: 'avatar_hat', item: 'Scholar Cap' }
+    reward: { type: 'avatar_accessory', item: 'Scholar Cap' }
   },
   {
     id: 'vocabulary_master',
@@ -97,7 +97,7 @@ const achievements: Achievement[] = [
     requirements: 3,
     currentProgress: 2,
     unlocked: false,
-    reward: { type: 'special_effect', item: 'Fire Trail' }
+    reward: { type: 'sound_effect', item: 'Fire Trail' }
   },
   {
     id: 'dedication_champion',
@@ -145,7 +145,7 @@ const achievements: Achievement[] = [
     requirements: 25,
     currentProgress: 12,
     unlocked: false,
-    reward: { type: 'sound_pack', item: 'Robot Voice Pack' }
+    reward: { type: 'sound_effect', item: 'Robot Voice Pack' }
   }
 ];
 
@@ -186,4 +186,284 @@ const unlockableContent: UnlockableContent[] = [
     unlocked: false,
     unlockedBy: 'dedication_champion'
   }
-];\n\nconst getDifficultyColor = (difficulty: string) => {\n  switch (difficulty) {\n    case 'bronze': return 'from-amber-400 to-amber-600';\n    case 'silver': return 'from-gray-400 to-gray-600';\n    case 'gold': return 'from-yellow-400 to-yellow-600';\n    case 'diamond': return 'from-cyan-400 to-blue-600';\n    default: return 'from-gray-400 to-gray-600';\n  }\n};\n\nconst getDifficultyIcon = (difficulty: string) => {\n  switch (difficulty) {\n    case 'bronze': return <Trophy className=\"w-4 h-4 text-amber-600\" />;\n    case 'silver': return <Star className=\"w-4 h-4 text-gray-600\" />;\n    case 'gold': return <Crown className=\"w-4 h-4 text-yellow-600\" />;\n    case 'diamond': return <Gem className=\"w-4 h-4 text-cyan-600\" />;\n    default: return <Trophy className=\"w-4 h-4\" />;\n  }\n};\n\ninterface AchievementSystemProps {\n  onUnlock?: (achievement: Achievement) => void;\n}\n\nexport function AchievementSystem({ onUnlock }: AchievementSystemProps) {\n  const [selectedCategory, setSelectedCategory] = useState<string>('all');\n  const [showUnlockables, setShowUnlockables] = useState(false);\n  const [celebratingAchievement, setCelebratingAchievement] = useState<Achievement | null>(null);\n\n  const categories = [\n    { id: 'all', name: 'All', icon: '🏆' },\n    { id: 'learning', name: 'Learning', icon: '📚' },\n    { id: 'streak', name: 'Streaks', icon: '🔥' },\n    { id: 'quiz', name: 'Quizzes', icon: '🧠' },\n    { id: 'exploration', name: 'Explorer', icon: '🗺️' }\n  ];\n\n  const filteredAchievements = selectedCategory === 'all' \n    ? achievements \n    : achievements.filter(a => a.category === selectedCategory);\n\n  const unlockedAchievements = achievements.filter(a => a.unlocked);\n  const totalPoints = unlockedAchievements.reduce((sum, a) => {\n    const points = a.difficulty === 'bronze' ? 10 : a.difficulty === 'silver' ? 25 : a.difficulty === 'gold' ? 50 : 100;\n    return sum + points;\n  }, 0);\n\n  const handleAchievementClick = (achievement: Achievement) => {\n    if (achievement.unlocked) {\n      setCelebratingAchievement(achievement);\n      audioService.playCheerSound();\n      setTimeout(() => setCelebratingAchievement(null), 3000);\n    }\n  };\n\n  const getProgressPercentage = (achievement: Achievement) => {\n    return Math.min((achievement.currentProgress / achievement.requirements) * 100, 100);\n  };\n\n  return (\n    <div className=\"space-y-6\">\n      {/* Header */}\n      <div className=\"text-center\">\n        <h2 className=\"text-3xl font-bold text-gray-800 mb-2\">\n          🏆 Achievement Gallery\n        </h2>\n        <p className=\"text-gray-600 mb-4\">\n          Unlock amazing rewards by completing learning challenges!\n        </p>\n        <div className=\"flex justify-center gap-4 mb-6\">\n          <Card className=\"bg-gradient-to-r from-educational-blue to-educational-purple text-white\">\n            <CardContent className=\"p-4 text-center\">\n              <div className=\"text-2xl font-bold\">{unlockedAchievements.length}</div>\n              <div className=\"text-sm opacity-90\">Achievements</div>\n            </CardContent>\n          </Card>\n          <Card className=\"bg-gradient-to-r from-educational-orange to-educational-pink text-white\">\n            <CardContent className=\"p-4 text-center\">\n              <div className=\"text-2xl font-bold\">{totalPoints}</div>\n              <div className=\"text-sm opacity-90\">Achievement Points</div>\n            </CardContent>\n          </Card>\n        </div>\n      </div>\n\n      {/* Category Filters */}\n      <div className=\"flex justify-center gap-2 flex-wrap\">\n        {categories.map((category) => (\n          <Button\n            key={category.id}\n            variant={selectedCategory === category.id ? \"default\" : \"outline\"}\n            size=\"sm\"\n            onClick={() => setSelectedCategory(category.id)}\n            className=\"flex items-center gap-2\"\n          >\n            <span>{category.icon}</span>\n            {category.name}\n          </Button>\n        ))}\n        <Button\n          variant={showUnlockables ? \"default\" : \"outline\"}\n          size=\"sm\"\n          onClick={() => setShowUnlockables(!showUnlockables)}\n          className=\"flex items-center gap-2\"\n        >\n          <Gift className=\"w-4 h-4\" />\n          Rewards\n        </Button>\n      </div>\n\n      {/* Achievements Grid */}\n      {!showUnlockables && (\n        <div className=\"grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4\">\n          {filteredAchievements.map((achievement) => {\n            const progressPercentage = getProgressPercentage(achievement);\n            const isComplete = progressPercentage >= 100;\n            \n            return (\n              <Card\n                key={achievement.id}\n                className={`cursor-pointer transition-all duration-300 hover:scale-105 ${\n                  achievement.unlocked \n                    ? `bg-gradient-to-br ${getDifficultyColor(achievement.difficulty)} text-white shadow-lg`\n                    : 'bg-white border-2 border-dashed border-gray-300 hover:border-educational-blue'\n                } ${celebratingAchievement?.id === achievement.id ? 'animate-bounce' : ''}`}\n                onClick={() => handleAchievementClick(achievement)}\n              >\n                <CardHeader className=\"pb-2\">\n                  <div className=\"flex items-center justify-between\">\n                    <div className=\"text-4xl\">{achievement.icon}</div>\n                    <div className=\"flex items-center gap-1\">\n                      {getDifficultyIcon(achievement.difficulty)}\n                      {achievement.unlocked && (\n                        <Check className=\"w-4 h-4 text-green-300\" />\n                      )}\n                      {!achievement.unlocked && isComplete && (\n                        <Sparkles className=\"w-4 h-4 text-yellow-500 animate-pulse\" />\n                      )}\n                      {!achievement.unlocked && !isComplete && (\n                        <Lock className=\"w-4 h-4 text-gray-400\" />\n                      )}\n                    </div>\n                  </div>\n                  <CardTitle className={`text-lg ${\n                    achievement.unlocked ? 'text-white' : 'text-gray-800'\n                  }`}>\n                    {achievement.name}\n                  </CardTitle>\n                </CardHeader>\n                <CardContent className=\"space-y-3\">\n                  <p className={`text-sm ${\n                    achievement.unlocked ? 'text-white/90' : 'text-gray-600'\n                  }`}>\n                    {achievement.description}\n                  </p>\n                  \n                  {!achievement.unlocked && (\n                    <div className=\"space-y-2\">\n                      <div className=\"flex justify-between text-sm\">\n                        <span className=\"text-gray-600\">Progress</span>\n                        <span className=\"font-semibold text-gray-800\">\n                          {achievement.currentProgress}/{achievement.requirements}\n                        </span>\n                      </div>\n                      <Progress \n                        value={progressPercentage} \n                        className=\"h-2\"\n                      />\n                      {isComplete && (\n                        <div className=\"text-center\">\n                          <Badge className=\"bg-educational-green text-white animate-pulse\">\n                            Ready to Unlock! 🎉\n                          </Badge>\n                        </div>\n                      )}\n                    </div>\n                  )}\n                  \n                  {achievement.unlocked && achievement.reward && (\n                    <div className=\"bg-white/20 rounded-lg p-2\">\n                      <div className=\"text-xs font-semibold text-white/90 mb-1\">Reward Unlocked:</div>\n                      <div className=\"text-sm text-white\">\n                        🎁 {achievement.reward.item}\n                      </div>\n                    </div>\n                  )}\n                  \n                  {achievement.unlocked && achievement.dateUnlocked && (\n                    <div className=\"text-xs text-white/70\">\n                      Unlocked: {achievement.dateUnlocked.toLocaleDateString()}\n                    </div>\n                  )}\n                </CardContent>\n              </Card>\n            );\n          })}\n        </div>\n      )}\n\n      {/* Unlockable Content */}\n      {showUnlockables && (\n        <div className=\"space-y-6\">\n          <div className=\"text-center\">\n            <h3 className=\"text-2xl font-bold text-gray-800 mb-2\">\n              🎁 Unlockable Rewards\n            </h3>\n            <p className=\"text-gray-600\">\n              Complete achievements to unlock these amazing rewards!\n            </p>\n          </div>\n          \n          <div className=\"grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4\">\n            {unlockableContent.map((content) => (\n              <Card\n                key={content.id}\n                className={`text-center transition-all duration-300 hover:scale-105 ${\n                  content.unlocked \n                    ? 'bg-gradient-to-br from-educational-green to-educational-blue text-white'\n                    : 'bg-gray-100 border-2 border-dashed border-gray-300'\n                }`}\n              >\n                <CardContent className=\"p-4\">\n                  <div className=\"text-4xl mb-2\">{content.icon}</div>\n                  <h4 className={`font-semibold mb-2 ${\n                    content.unlocked ? 'text-white' : 'text-gray-800'\n                  }`}>\n                    {content.name}\n                  </h4>\n                  <p className={`text-sm mb-3 ${\n                    content.unlocked ? 'text-white/90' : 'text-gray-600'\n                  }`}>\n                    {content.description}\n                  </p>\n                  \n                  {!content.unlocked && content.unlockedBy && (\n                    <Badge variant=\"outline\" className=\"text-xs\">\n                      <Lock className=\"w-3 h-3 mr-1\" />\n                      Complete \"{achievements.find(a => a.id === content.unlockedBy)?.name}\"\n                    </Badge>\n                  )}\n                  \n                  {content.unlocked && (\n                    <Badge className=\"bg-white/20 text-white\">\n                      <Check className=\"w-3 h-3 mr-1\" />\n                      Unlocked!\n                    </Badge>\n                  )}\n                </CardContent>\n              </Card>\n            ))}\n          </div>\n        </div>\n      )}\n\n      {/* Achievement Celebration Modal */}\n      {celebratingAchievement && (\n        <div className=\"fixed inset-0 bg-black/50 flex items-center justify-center z-50\">\n          <Card className=\"bg-gradient-to-br from-educational-purple to-educational-pink text-white max-w-md mx-4 animate-bounce\">\n            <CardContent className=\"p-8 text-center\">\n              <div className=\"text-6xl mb-4\">{celebratingAchievement.icon}</div>\n              <h3 className=\"text-2xl font-bold mb-2\">Achievement Unlocked!</h3>\n              <h4 className=\"text-xl mb-4\">{celebratingAchievement.name}</h4>\n              <p className=\"text-white/90 mb-4\">{celebratingAchievement.description}</p>\n              {celebratingAchievement.reward && (\n                <div className=\"bg-white/20 rounded-lg p-3 mb-4\">\n                  <div className=\"text-sm font-semibold mb-1\">Reward:</div>\n                  <div className=\"text-lg\">🎁 {celebratingAchievement.reward.item}</div>\n                </div>\n              )}\n              <div className=\"flex justify-center\">\n                <Sparkles className=\"w-8 h-8 text-yellow-300 animate-spin\" />\n              </div>\n            </CardContent>\n          </Card>\n        </div>\n      )}\n    </div>\n  );\n}"
+];
+
+const getDifficultyColor = (difficulty: string) => {
+  switch (difficulty) {
+    case 'bronze': return 'from-amber-400 to-amber-600';
+    case 'silver': return 'from-gray-400 to-gray-600';
+    case 'gold': return 'from-yellow-400 to-yellow-600';
+    case 'diamond': return 'from-cyan-400 to-blue-600';
+    default: return 'from-gray-400 to-gray-600';
+  }
+};
+
+const getDifficultyIcon = (difficulty: string) => {
+  switch (difficulty) {
+    case 'bronze': return <Trophy className="w-4 h-4 text-amber-600" />;
+    case 'silver': return <Star className="w-4 h-4 text-gray-600" />;
+    case 'gold': return <Crown className="w-4 h-4 text-yellow-600" />;
+    case 'diamond': return <Gem className="w-4 h-4 text-cyan-600" />;
+    default: return <Trophy className="w-4 h-4" />;
+  }
+};
+
+interface AchievementSystemProps {
+  onUnlock?: (achievement: Achievement) => void;
+}
+
+export function AchievementSystem({ onUnlock }: AchievementSystemProps) {
+  const [selectedCategory, setSelectedCategory] = useState<string>('all');
+  const [showUnlockables, setShowUnlockables] = useState(false);
+  const [celebratingAchievement, setCelebratingAchievement] = useState<Achievement | null>(null);
+
+  const categories = [
+    { id: 'all', name: 'All', icon: '🏆' },
+    { id: 'learning', name: 'Learning', icon: '📚' },
+    { id: 'streak', name: 'Streaks', icon: '🔥' },
+    { id: 'quiz', name: 'Quizzes', icon: '🧠' },
+    { id: 'exploration', name: 'Explorer', icon: '🗺️' }
+  ];
+
+  const filteredAchievements = selectedCategory === 'all' 
+    ? achievements 
+    : achievements.filter(a => a.category === selectedCategory);
+
+  const unlockedAchievements = achievements.filter(a => a.unlocked);
+  const totalPoints = unlockedAchievements.reduce((sum, a) => {
+    const points = a.difficulty === 'bronze' ? 10 : a.difficulty === 'silver' ? 25 : a.difficulty === 'gold' ? 50 : 100;
+    return sum + points;
+  }, 0);
+
+  const handleAchievementClick = (achievement: Achievement) => {
+    if (achievement.unlocked) {
+      setCelebratingAchievement(achievement);
+      audioService.playCheerSound();
+      setTimeout(() => setCelebratingAchievement(null), 3000);
+    }
+  };
+
+  const getProgressPercentage = (achievement: Achievement) => {
+    return Math.min((achievement.currentProgress / achievement.requirements) * 100, 100);
+  };
+
+  return (
+    <div className="space-y-6">
+      {/* Header */}
+      <div className="text-center">
+        <h2 className="text-3xl font-bold text-gray-800 mb-2">
+          🏆 Achievement Gallery
+        </h2>
+        <p className="text-gray-600 mb-4">
+          Unlock amazing rewards by completing learning challenges!
+        </p>
+        <div className="flex justify-center gap-4 mb-6">
+          <Card className="bg-gradient-to-r from-educational-blue to-educational-purple text-white">
+            <CardContent className="p-4 text-center">
+              <div className="text-2xl font-bold">{unlockedAchievements.length}</div>
+              <div className="text-sm opacity-90">Achievements</div>
+            </CardContent>
+          </Card>
+          <Card className="bg-gradient-to-r from-educational-orange to-educational-pink text-white">
+            <CardContent className="p-4 text-center">
+              <div className="text-2xl font-bold">{totalPoints}</div>
+              <div className="text-sm opacity-90">Achievement Points</div>
+            </CardContent>
+          </Card>
+        </div>
+      </div>
+
+      {/* Category Filters */}
+      <div className="flex justify-center gap-2 flex-wrap">
+        {categories.map((category) => (
+          <Button
+            key={category.id}
+            variant={selectedCategory === category.id ? "default" : "outline"}
+            size="sm"
+            onClick={() => setSelectedCategory(category.id)}
+            className="flex items-center gap-2"
+          >
+            <span>{category.icon}</span>
+            {category.name}
+          </Button>
+        ))}
+        <Button
+          variant={showUnlockables ? "default" : "outline"}
+          size="sm"
+          onClick={() => setShowUnlockables(!showUnlockables)}
+          className="flex items-center gap-2"
+        >
+          <Gift className="w-4 h-4" />
+          Rewards
+        </Button>
+      </div>
+
+      {/* Achievements Grid */}
+      {!showUnlockables && (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          {filteredAchievements.map((achievement) => {
+            const progressPercentage = getProgressPercentage(achievement);
+            const isComplete = progressPercentage >= 100;
+            
+            return (
+              <Card
+                key={achievement.id}
+                className={`cursor-pointer transition-all duration-300 hover:scale-105 ${
+                  achievement.unlocked 
+                    ? `bg-gradient-to-br ${getDifficultyColor(achievement.difficulty)} text-white shadow-lg`
+                    : 'bg-white border-2 border-dashed border-gray-300 hover:border-educational-blue'
+                } ${celebratingAchievement?.id === achievement.id ? 'animate-bounce' : ''}`}
+                onClick={() => handleAchievementClick(achievement)}
+              >
+                <CardHeader className="pb-2">
+                  <div className="flex items-center justify-between">
+                    <div className="text-4xl">{achievement.icon}</div>
+                    <div className="flex items-center gap-1">
+                      {getDifficultyIcon(achievement.difficulty)}
+                      {achievement.unlocked && (
+                        <Check className="w-4 h-4 text-green-300" />
+                      )}
+                      {!achievement.unlocked && isComplete && (
+                        <Sparkles className="w-4 h-4 text-yellow-500 animate-pulse" />
+                      )}
+                      {!achievement.unlocked && !isComplete && (
+                        <Lock className="w-4 h-4 text-gray-400" />
+                      )}
+                    </div>
+                  </div>
+                  <CardTitle className={`text-lg ${
+                    achievement.unlocked ? 'text-white' : 'text-gray-800'
+                  }`}>
+                    {achievement.name}
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-3">
+                  <p className={`text-sm ${
+                    achievement.unlocked ? 'text-white/90' : 'text-gray-600'
+                  }`}>
+                    {achievement.description}
+                  </p>
+                  
+                  {!achievement.unlocked && (
+                    <div className="space-y-2">
+                      <div className="flex justify-between text-sm">
+                        <span className="text-gray-600">Progress</span>
+                        <span className="font-semibold text-gray-800">
+                          {achievement.currentProgress}/{achievement.requirements}
+                        </span>
+                      </div>
+                      <Progress 
+                        value={progressPercentage} 
+                        className="h-2"
+                      />
+                      {isComplete && (
+                        <div className="text-center">
+                          <Badge className="bg-educational-green text-white animate-pulse">
+                            Ready to Unlock! 🎉
+                          </Badge>
+                        </div>
+                      )}
+                    </div>
+                  )}
+                  
+                  {achievement.unlocked && achievement.reward && (
+                    <div className="bg-white/20 rounded-lg p-2">
+                      <div className="text-xs font-semibold text-white/90 mb-1">Reward Unlocked:</div>
+                      <div className="text-sm text-white">
+                        🎁 {achievement.reward.item}
+                      </div>
+                    </div>
+                  )}
+                  
+                  {achievement.unlocked && achievement.dateUnlocked && (
+                    <div className="text-xs text-white/70">
+                      Unlocked: {achievement.dateUnlocked.toLocaleDateString()}
+                    </div>
+                  )}
+                </CardContent>
+              </Card>
+            );
+          })}
+        </div>
+      )}
+
+      {/* Unlockable Content */}
+      {showUnlockables && (
+        <div className="space-y-6">
+          <div className="text-center">
+            <h3 className="text-2xl font-bold text-gray-800 mb-2">
+              🎁 Unlockable Rewards
+            </h3>
+            <p className="text-gray-600">
+              Complete achievements to unlock these amazing rewards!
+            </p>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+            {unlockableContent.map((content) => (
+              <Card
+                key={content.id}
+                className={`text-center transition-all duration-300 hover:scale-105 ${
+                  content.unlocked 
+                    ? 'bg-gradient-to-br from-educational-green to-educational-blue text-white'
+                    : 'bg-gray-100 border-2 border-dashed border-gray-300'
+                }`}
+              >
+                <CardContent className="p-4">
+                  <div className="text-4xl mb-2">{content.icon}</div>
+                  <h4 className={`font-semibold mb-2 ${
+                    content.unlocked ? 'text-white' : 'text-gray-800'
+                  }`}>
+                    {content.name}
+                  </h4>
+                  <p className={`text-sm mb-3 ${
+                    content.unlocked ? 'text-white/90' : 'text-gray-600'
+                  }`}>
+                    {content.description}
+                  </p>
+                  
+                  {!content.unlocked && content.unlockedBy && (
+                    <Badge variant="outline" className="text-xs">
+                      <Lock className="w-3 h-3 mr-1" />
+                      Complete "{achievements.find(a => a.id === content.unlockedBy)?.name}"
+                    </Badge>
+                  )}
+                  
+                  {content.unlocked && (
+                    <Badge className="bg-white/20 text-white">
+                      <Check className="w-3 h-3 mr-1" />
+                      Unlocked!
+                    </Badge>
+                  )}
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* Achievement Celebration Modal */}
+      {celebratingAchievement && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+          <Card className="bg-gradient-to-br from-educational-purple to-educational-pink text-white max-w-md mx-4 animate-bounce">
+            <CardContent className="p-8 text-center">
+              <div className="text-6xl mb-4">{celebratingAchievement.icon}</div>
+              <h3 className="text-2xl font-bold mb-2">Achievement Unlocked!</h3>
+              <h4 className="text-xl mb-4">{celebratingAchievement.name}</h4>
+              <p className="text-white/90 mb-4">{celebratingAchievement.description}</p>
+              {celebratingAchievement.reward && (
+                <div className="bg-white/20 rounded-lg p-3 mb-4">
+                  <div className="text-sm font-semibold mb-1">Reward:</div>
+                  <div className="text-lg">🎁 {celebratingAchievement.reward.item}</div>
+                </div>
+              )}
+              <div className="flex justify-center">
+                <Sparkles className="w-8 h-8 text-yellow-300 animate-spin" />
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+      )}
+    </div>
+  );
+}
