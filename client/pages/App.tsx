@@ -49,6 +49,19 @@ export default function App() {
     return <Index initialProfile={currentProfile} />;
   }
 
+  // Show level selection after profile creation
+  if (showLevelSelection) {
+    return (
+      <LevelSelection
+        onLevelSelect={handleLevelSelection}
+        onBack={() => {
+          setShowLevelSelection(false);
+          setShowProfileCreation(true);
+        }}
+      />
+    );
+  }
+
   // Show profile creation if in create mode
   if (showProfileCreation || mode === "create") {
     return (
