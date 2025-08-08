@@ -15,6 +15,8 @@ import { CelebrationEffect } from '@/components/CelebrationEffect';
 import { DailyChallenge } from '@/components/DailyChallenge';
 import { ReadingComprehension } from '@/components/ReadingComprehension';
 import { ParentDashboard } from '@/components/ParentDashboard';
+import { WordCreator } from '@/components/WordCreator';
+import { LearningAnalytics } from '@/components/LearningAnalytics';
 import {
   BookOpen,
   Play,
