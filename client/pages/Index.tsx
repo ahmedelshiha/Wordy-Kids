@@ -9,6 +9,9 @@ import { QuizGame } from '@/components/QuizGame';
 import { CategorySelector } from '@/components/CategorySelector';
 import { WordMatchingGame } from '@/components/WordMatchingGame';
 import { VocabularyBuilder } from '@/components/VocabularyBuilder';
+import { SettingsPanel } from '@/components/SettingsPanel';
+import { FloatingBubbles } from '@/components/FloatingBubbles';
+import { CelebrationEffect } from '@/components/CelebrationEffect';
 import { 
   BookOpen, 
   Play, 
