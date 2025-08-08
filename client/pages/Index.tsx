@@ -241,6 +241,12 @@ export default function Index() {
     console.log(`Word ${wordId} rated as ${rating}`);
   };
 
+  const handleWordCreated = (newWord: any) => {
+    setCustomWords([...customWords, { ...newWord, id: Date.now() }]);
+    setShowCelebration(true);
+    setTimeout(() => setShowCelebration(false), 3000);
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50">
       {/* Hero Header */}
