@@ -24,7 +24,8 @@ import {
   Heart,
   Gamepad2,
   Brain,
-  Shuffle
+  Shuffle,
+  Settings
 } from 'lucide-react';
 
 // Sample data for learning
