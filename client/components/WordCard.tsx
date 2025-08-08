@@ -43,11 +43,11 @@ export const WordCard: React.FC<WordCardProps> = ({
     setIsPlaying(true);
     playSoundIfEnabled.pronunciation();
 
-    // Simulate audio playback for demo
+    // Play pronunciation beep for 400ms duration
     setTimeout(() => {
       setIsPlaying(false);
       onPronounce?.(word);
-    }, 1000);
+    }, 400);
   };
 
   const handleFavorite = () => {
