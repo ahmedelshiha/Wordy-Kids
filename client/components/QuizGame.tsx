@@ -34,7 +34,8 @@ interface QuizGameProps {
 export const QuizGame: React.FC<QuizGameProps> = ({
   questions,
   onComplete,
-  onProgress
+  onProgress,
+  onExit
 }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
