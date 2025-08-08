@@ -1377,6 +1377,7 @@ export default function Index() {
                         questions={getQuizQuestions(selectedQuizType)}
                         quizType={selectedQuizType}
                         onComplete={handleQuizComplete}
+                        onExit={handleQuizExit}
                         onProgress={(current, total) =>
                           console.log(`Quiz progress: ${current}/${total}`)
                         }
