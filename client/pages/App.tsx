@@ -68,7 +68,7 @@ export default function App() {
     return (
       <AvatarCustomization
         onCreateProfile={handleProfileCreation}
-        onBack={() => setShowProfileCreation(false)}
+        onBack={() => navigate("/")}
       />
     );
   }
