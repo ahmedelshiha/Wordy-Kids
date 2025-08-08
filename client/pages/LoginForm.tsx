@@ -33,7 +33,7 @@ export default function LoginForm() {
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value.trim()
     });
     // Clear any existing messages when user starts typing
     if (message) {
