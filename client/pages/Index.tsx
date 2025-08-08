@@ -602,6 +602,10 @@ export default function Index() {
     setShowQuiz(false);
   };
 
+  const handleQuizExit = () => {
+    setShowQuiz(false);
+  };
+
   const handleMatchingComplete = (score: number, timeSpent: number) => {
     setShowCelebration(true);
     setTimeout(() => {
