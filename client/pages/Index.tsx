@@ -288,28 +288,65 @@ export default function Index() {
       {/* Main Content */}
       <main className="container mx-auto px-4 py-8">
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-          <TabsList className="grid w-full grid-cols-5 lg:w-auto lg:inline-flex mb-8">
-            <TabsTrigger value="dashboard" className="flex items-center gap-2">
-              <Target className="w-4 h-4" />
-              Dashboard
-            </TabsTrigger>
-            <TabsTrigger value="learn" className="flex items-center gap-2">
-              <BookOpen className="w-4 h-4" />
-              Learn
-            </TabsTrigger>
-            <TabsTrigger value="games" className="flex items-center gap-2">
-              <Gamepad2 className="w-4 h-4" />
-              Games
-            </TabsTrigger>
-            <TabsTrigger value="quiz" className="flex items-center gap-2">
-              <Trophy className="w-4 h-4" />
-              Quiz
-            </TabsTrigger>
-            <TabsTrigger value="progress" className="flex items-center gap-2">
-              <Star className="w-4 h-4" />
-              Progress
-            </TabsTrigger>
-          </TabsList>
+          <div className="flex items-center justify-between mb-8">
+            <TabsList className="grid w-full grid-cols-7 lg:w-auto lg:inline-flex max-w-4xl">
+              <TabsTrigger value="dashboard" className="flex items-center gap-2">
+                <Target className="w-4 h-4" />
+                Dashboard
+              </TabsTrigger>
+              <TabsTrigger value="learn" className="flex items-center gap-2">
+                <BookOpen className="w-4 h-4" />
+                Learn
+              </TabsTrigger>
+              <TabsTrigger value="games" className="flex items-center gap-2">
+                <Gamepad2 className="w-4 h-4" />
+                Games
+              </TabsTrigger>
+              <TabsTrigger value="reading" className="flex items-center gap-2">
+                <FileText className="w-4 h-4" />
+                Reading
+              </TabsTrigger>
+              <TabsTrigger value="challenges" className="flex items-center gap-2">
+                <Calendar className="w-4 h-4" />
+                Challenges
+              </TabsTrigger>
+              <TabsTrigger value="quiz" className="flex items-center gap-2">
+                <Trophy className="w-4 h-4" />
+                Quiz
+              </TabsTrigger>
+              <TabsTrigger value="progress" className="flex items-center gap-2">
+                <Star className="w-4 h-4" />
+                Progress
+              </TabsTrigger>
+            </TabsList>
+
+            <div className="flex gap-2">
+              <Button
+                variant={userRole === 'child' ? 'default' : 'outline'}
+                size="sm"
+                onClick={() => setUserRole('child')}
+              >
+                Child
+              </Button>
+              <Button
+                variant={userRole === 'parent' ? 'default' : 'outline'}
+                size="sm"
+                onClick={() => setUserRole('parent')}
+              >
+                <Users className="w-4 h-4 mr-1" />
+                Parent
+              </Button>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => setShowSettings(true)}
+                className="lg:flex hidden items-center gap-2"
+              >
+                <Settings className="w-4 h-4" />
+                Settings
+              </Button>
+            </div>
+          </div>
 
           <TabsContent value="dashboard">
             <LearningDashboard stats={learningStats} userName="Alex" />
