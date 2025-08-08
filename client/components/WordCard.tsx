@@ -3,6 +3,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Volume2, Heart, RotateCcw } from 'lucide-react';
+import { playSoundIfEnabled } from '@/lib/soundEffects';
 
 interface Word {
   id: number;
@@ -38,8 +39,10 @@ export const WordCard: React.FC<WordCardProps> = ({
 
   const handlePronounce = async () => {
     if (isPlaying || !word.pronunciation) return;
-    
+
     setIsPlaying(true);
+    playSoundIfEnabled.pronunciation();
+
     // Simulate audio playback for demo
     setTimeout(() => {
       setIsPlaying(false);
@@ -49,6 +52,7 @@ export const WordCard: React.FC<WordCardProps> = ({
 
   const handleFavorite = () => {
     setIsFavorited(!isFavorited);
+    playSoundIfEnabled.click();
     onFavorite?.(word);
   };
 
@@ -75,12 +79,16 @@ export const WordCard: React.FC<WordCardProps> = ({
 
   return (
     <div className={`relative w-full max-w-sm mx-auto ${className}`}>
-      <Card 
-        className={`h-80 cursor-pointer transition-all duration-700 transform-gpu ${
+      <Card
+        className={`h-80 cursor-pointer transition-all duration-700 transform-gpu hover:scale-105 ${
           isFlipped ? '[transform:rotateY(180deg)]' : ''
         }`}
         style={{ transformStyle: 'preserve-3d' }}
-        onClick={() => setIsFlipped(!isFlipped)}
+        onClick={() => {
+          setIsFlipped(!isFlipped);
+          playSoundIfEnabled.click();
+        }}
+        onMouseEnter={() => playSoundIfEnabled.hover()}
       >
         {/* Front of card */}
         <CardContent 
