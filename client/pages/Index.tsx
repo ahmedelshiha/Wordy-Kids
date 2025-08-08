@@ -12,6 +12,9 @@ import { VocabularyBuilder } from '@/components/VocabularyBuilder';
 import { SettingsPanel } from '@/components/SettingsPanel';
 import { FloatingBubbles } from '@/components/FloatingBubbles';
 import { CelebrationEffect } from '@/components/CelebrationEffect';
+import { DailyChallenge } from '@/components/DailyChallenge';
+import { ReadingComprehension } from '@/components/ReadingComprehension';
+import { ParentDashboard } from '@/components/ParentDashboard';
 import { 
   BookOpen, 
   Play, 
