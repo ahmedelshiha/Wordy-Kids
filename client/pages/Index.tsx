@@ -218,11 +218,19 @@ export default function Index() {
   };
 
   const handleMatchingComplete = (score: number, timeSpent: number) => {
-    alert(`Matching Game Complete! You matched ${score} pairs in ${timeSpent} seconds!`);
+    setShowCelebration(true);
+    setTimeout(() => {
+      alert(`Matching Game Complete! You matched ${score} pairs in ${timeSpent} seconds!`);
+      setShowCelebration(false);
+    }, 2000);
   };
 
   const handleVocabularySessionComplete = (wordsReviewed: number, accuracy: number) => {
-    alert(`Vocabulary Session Complete! Reviewed ${wordsReviewed} words with ${accuracy}% accuracy!`);
+    setShowCelebration(true);
+    setTimeout(() => {
+      alert(`Vocabulary Session Complete! Reviewed ${wordsReviewed} words with ${accuracy}% accuracy!`);
+      setShowCelebration(false);
+    }, 2000);
   };
 
   const handleWordMastered = (wordId: number, rating: 'easy' | 'medium' | 'hard') => {
