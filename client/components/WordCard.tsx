@@ -2,8 +2,9 @@ import React, { useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Volume2, Heart, RotateCcw } from "lucide-react";
+import { Volume2, Heart, RotateCcw, Sparkles, Star } from "lucide-react";
 import { playSoundIfEnabled } from "@/lib/soundEffects";
+import { audioService } from "@/lib/audioService";
 
 interface Word {
   id: number;
@@ -36,23 +37,48 @@ export const WordCard: React.FC<WordCardProps> = ({
   const [isFlipped, setIsFlipped] = useState(showDefinition);
   const [isPlaying, setIsPlaying] = useState(false);
   const [isFavorited, setIsFavorited] = useState(false);
+  const [showSparkles, setShowSparkles] = useState(false);
 
   const handlePronounce = async () => {
-    if (isPlaying || !word.pronunciation) return;
+    if (isPlaying) return;
 
     setIsPlaying(true);
-    playSoundIfEnabled.pronunciation();
+    setShowSparkles(true);
 
-    // Play pronunciation beep for 400ms duration
+    // Use real speech synthesis for pronunciation
+    audioService.pronounceWord(word.word, {
+      onStart: () => {
+        console.log("Started pronunciation");
+      },
+      onEnd: () => {
+        setIsPlaying(false);
+        setShowSparkles(false);
+        onPronounce?.(word);
+      },
+      onError: () => {
+        setIsPlaying(false);
+        setShowSparkles(false);
+        // Fallback to sound effect
+        playSoundIfEnabled.pronunciation();
+      },
+    });
+
+    // Safety timeout in case speech synthesis doesn't fire events
     setTimeout(() => {
       setIsPlaying(false);
-      onPronounce?.(word);
-    }, 400);
+      setShowSparkles(false);
+    }, 3000);
   };
 
   const handleFavorite = () => {
     setIsFavorited(!isFavorited);
-    playSoundIfEnabled.click();
+    if (!isFavorited) {
+      audioService.playCheerSound();
+      setShowSparkles(true);
+      setTimeout(() => setShowSparkles(false), 1000);
+    } else {
+      playSoundIfEnabled.click();
+    }
     onFavorite?.(word);
   };
 
@@ -90,7 +116,7 @@ export const WordCard: React.FC<WordCardProps> = ({
         style={{ transformStyle: "preserve-3d" }}
         onClick={() => {
           setIsFlipped(!isFlipped);
-          playSoundIfEnabled.click();
+          audioService.playWhooshSound();
         }}
       >
         {/* Front of card */}
@@ -100,7 +126,11 @@ export const WordCard: React.FC<WordCardProps> = ({
         >
           <div className="absolute top-4 left-4 flex gap-2">
             <Badge className={getDifficultyColor(word.difficulty)}>
-              {word.difficulty}
+              {word.difficulty === "easy"
+                ? "🌟 Easy"
+                : word.difficulty === "medium"
+                  ? "⭐ Medium"
+                  : "🔥 Hard"}
             </Badge>
             <Badge
               variant="outline"
@@ -114,15 +144,22 @@ export const WordCard: React.FC<WordCardProps> = ({
             <Button
               size="sm"
               variant="ghost"
-              className="text-white hover:bg-white/20 p-2 h-auto"
+              className={`text-white hover:bg-white/20 p-2 h-auto transition-all duration-300 ${
+                isFavorited ? "scale-110 text-red-300" : ""
+              }`}
               onClick={(e) => {
                 e.stopPropagation();
                 handleFavorite();
               }}
             >
               <Heart
-                className={`w-4 h-4 ${isFavorited ? "fill-current" : ""}`}
+                className={`w-4 h-4 transition-all duration-300 ${
+                  isFavorited ? "fill-current animate-pulse" : ""
+                }`}
               />
+              {showSparkles && isFavorited && (
+                <Star className="w-3 h-3 absolute -top-1 -right-1 text-yellow-300 animate-bounce" />
+              )}
             </Button>
           </div>
 
@@ -151,19 +188,31 @@ export const WordCard: React.FC<WordCardProps> = ({
                   handlePronounce();
                 }}
                 disabled={isPlaying}
-                className="text-white hover:bg-white/20 p-2 h-auto"
+                className={`text-white hover:bg-white/20 p-2 h-auto transition-all duration-300 ${
+                  isPlaying ? "scale-110 bg-white/30" : ""
+                }`}
               >
                 <Volume2
-                  className={`w-5 h-5 ${isPlaying ? "animate-pulse" : ""}`}
+                  className={`w-5 h-5 ${isPlaying ? "animate-pulse text-yellow-300" : ""}`}
                 />
+                {showSparkles && (
+                  <Sparkles className="w-4 h-4 absolute -top-1 -right-1 text-yellow-300 animate-spin" />
+                )}
               </Button>
             </div>
           )}
 
-          <p className="text-center text-sm opacity-75 mt-auto">
-            <RotateCcw className="w-4 h-4 inline mr-1" />
-            Tap to see definition
-          </p>
+          <div className="text-center mt-auto">
+            <p className="text-sm opacity-75 mb-2">
+              <RotateCcw className="w-4 h-4 inline mr-1" />
+              Tap to see definition
+            </p>
+            <div className="flex justify-center gap-1">
+              <div className="w-2 h-2 bg-white/50 rounded-full animate-bounce"></div>
+              <div className="w-2 h-2 bg-white/50 rounded-full animate-bounce delay-100"></div>
+              <div className="w-2 h-2 bg-white/50 rounded-full animate-bounce delay-200"></div>
+            </div>
+          </div>
         </CardContent>
 
         {/* Back of card */}

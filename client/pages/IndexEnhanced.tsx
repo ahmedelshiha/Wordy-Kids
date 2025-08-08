@@ -7,7 +7,7 @@ import { WordCard } from "@/components/WordCard";
 import { LearningDashboard } from "@/components/LearningDashboard";
 import { QuizGame } from "@/components/QuizGame";
 import { ChildFriendlyCategorySelector } from "@/components/ChildFriendlyCategorySelector";
-import { EnhancedChildLogin } from "@/components/EnhancedChildLogin";
+import { ChildLogin } from "@/components/ChildLogin";
 import { AvatarCustomization } from "@/components/AvatarCustomization";
 import { AchievementSystem } from "@/components/AchievementSystem";
 import { EncouragingFeedback } from "@/components/EncouragingFeedback";
@@ -52,6 +52,77 @@ import {
   Shield,
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+
+// Sample data for learning
+const sampleWords = [
+  {
+    id: 1,
+    word: "adventure",
+    pronunciation: "/ədˈven(t)SHər/",
+    definition:
+      "An exciting or unusual experience, often involving exploration or discovery",
+    example: "Reading books takes you on amazing adventures to new worlds",
+    funFact:
+      "The word 'adventure' comes from Latin 'adventurus' meaning 'about to arrive'",
+    emoji: "🗺️",
+    category: "general",
+    difficulty: "medium" as const,
+    imageUrl: undefined,
+  },
+  {
+    id: 2,
+    word: "butterfly",
+    pronunciation: "/ˈbʌdərˌflaɪ/",
+    definition:
+      "A colorful flying insect with large, often brightly colored wings",
+    example: "The butterfly landed gently on the bright yellow flower",
+    funFact:
+      "Butterflies taste with their feet and can see ultraviolet colors!",
+    emoji: "🦋",
+    category: "animals",
+    difficulty: "easy" as const,
+    imageUrl: undefined,
+  },
+  {
+    id: 3,
+    word: "telescope",
+    pronunciation: "/ˈtelɪskoʊp/",
+    definition:
+      "An instrument used to see distant objects, especially stars and planets",
+    example: "Through the telescope, we could see the craters on the moon",
+    funFact:
+      "The first telescope was invented in 1608 and made stars look 20 times closer!",
+    emoji: "🔭",
+    category: "science",
+    difficulty: "hard" as const,
+    imageUrl: undefined,
+  },
+  {
+    id: 4,
+    word: "rainbow",
+    pronunciation: "/ˈreɪnboʊ/",
+    definition:
+      "A colorful arc in the sky formed by sunlight and water droplets",
+    example: "After the rain, a beautiful rainbow appeared in the sky",
+    funFact: "Rainbows always appear in the opposite direction from the sun!",
+    emoji: "🌈",
+    category: "nature",
+    difficulty: "easy" as const,
+    imageUrl: undefined,
+  },
+  {
+    id: 5,
+    word: "magnificent",
+    pronunciation: "/mæɡˈnɪfɪsənt/",
+    definition: "Extremely beautiful, impressive, or grand in scale",
+    example: "The magnificent castle stood tall against the mountain backdrop",
+    funFact: "The word comes from Latin 'magnificus' meaning 'great in deed'",
+    emoji: "✨",
+    category: "general",
+    difficulty: "hard" as const,
+    imageUrl: undefined,
+  },
+];
 
 const learningStats = {
   wordsLearned: 68,
@@ -109,7 +180,7 @@ const learningStats = {
   ],
 };
 
-export default function Index() {
+export default function IndexEnhanced() {
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState("dashboard");
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
@@ -246,7 +317,7 @@ export default function Index() {
     }
 
     return (
-      <EnhancedChildLogin
+      <ChildLogin
         onLogin={handleLogin}
         onCreateProfile={() => setShowProfileCreation(true)}
       />
@@ -372,6 +443,24 @@ export default function Index() {
                 </button>
 
                 <button
+                  onClick={() => setActiveTab("learn")}
+                  className={`w-full flex items-center gap-4 p-4 rounded-2xl transition-all ${
+                    activeTab === "learn"
+                      ? "bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-lg"
+                      : "bg-white text-gray-700 hover:bg-purple-50"
+                  }`}
+                >
+                  <div
+                    className={`p-2 rounded-xl ${activeTab === "learn" ? "bg-white/20" : "bg-blue-100"}`}
+                  >
+                    <BookOpen
+                      className={`w-5 h-5 ${activeTab === "learn" ? "text-white" : "text-blue-600"}`}
+                    />
+                  </div>
+                  <span className="font-semibold">Word Library</span>
+                </button>
+
+                <button
                   onClick={() => setActiveTab("quiz")}
                   className={`w-full flex items-center gap-4 p-4 rounded-2xl transition-all ${
                     activeTab === "quiz"
@@ -387,24 +476,6 @@ export default function Index() {
                     />
                   </div>
                   <span className="font-semibold">Quiz Time</span>
-                </button>
-
-                <button
-                  onClick={() => setActiveTab("learn")}
-                  className={`w-full flex items-center gap-4 p-4 rounded-2xl transition-all ${
-                    activeTab === "learn"
-                      ? "bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-lg"
-                      : "bg-white text-gray-700 hover:bg-purple-50"
-                  }`}
-                >
-                  <div
-                    className={`p-2 rounded-xl ${activeTab === "learn" ? "bg-white/20" : "bg-green-100"}`}
-                  >
-                    <BookOpen
-                      className={`w-5 h-5 ${activeTab === "learn" ? "text-white" : "text-green-600"}`}
-                    />
-                  </div>
-                  <span className="font-semibold">Word Library</span>
                 </button>
 
                 <button
@@ -444,26 +515,6 @@ export default function Index() {
                 </button>
 
                 <button
-                  onClick={() => setUserRole("parent")}
-                  className="w-full flex items-center gap-4 p-4 rounded-2xl transition-all bg-white text-gray-700 hover:bg-blue-50 hover:border-blue-200 border-2 border-transparent"
-                >
-                  <div className="p-2 rounded-xl bg-blue-100">
-                    <Users className="w-5 h-5 text-blue-600" />
-                  </div>
-                  <span className="font-semibold">Parent Dashboard</span>
-                </button>
-
-                <button
-                  onClick={() => navigate("/admin")}
-                  className="w-full flex items-center gap-4 p-4 rounded-2xl transition-all bg-white text-gray-700 hover:bg-red-50 hover:border-red-200 border-2 border-transparent"
-                >
-                  <div className="p-2 rounded-xl bg-red-100">
-                    <Shield className="w-5 h-5 text-red-600" />
-                  </div>
-                  <span className="font-semibold">Administrator Dashboard</span>
-                </button>
-
-                <button
                   onClick={() => setShowSettings(true)}
                   className="w-full flex items-center gap-4 p-4 rounded-2xl bg-white text-gray-700 hover:bg-purple-50 transition-all border border-purple-200"
                 >
@@ -473,6 +524,37 @@ export default function Index() {
                   <span className="font-semibold">Settings</span>
                 </button>
               </nav>
+
+              {/* Bottom Actions */}
+              <div className="mt-6 space-y-2">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => setShowWordCreator(true)}
+                  className="w-full bg-educational-green text-white hover:bg-educational-green/90 border-0"
+                >
+                  <Plus className="w-4 h-4 mr-2" />
+                  Create Word
+                </Button>
+                <div className="flex gap-2">
+                  <Button
+                    variant={userRole === "child" ? "default" : "outline"}
+                    size="sm"
+                    onClick={() => setUserRole("child")}
+                    className="flex-1"
+                  >
+                    Child
+                  </Button>
+                  <Button
+                    variant={userRole === "parent" ? "default" : "outline"}
+                    size="sm"
+                    onClick={() => setUserRole("parent")}
+                    className="flex-1"
+                  >
+                    Parent
+                  </Button>
+                </div>
+              </div>
             </aside>
 
             {/* Main Content Area */}
@@ -690,6 +772,7 @@ export default function Index() {
                 </TabsContent>
 
                 <TabsContent value="quiz">
+                  {/* Quiz content remains the same as original */}
                   <div className="text-center">
                     <h2 className="text-3xl font-bold text-slate-800 mb-4">
                       🧠 Quiz Time!
