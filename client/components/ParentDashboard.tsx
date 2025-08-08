@@ -1005,66 +1005,566 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
     return report;
   };
 
-  // Export report as PDF-like content
+  // Export report as PDF-friendly HTML with attractive design
   const exportReport = () => {
     if (!reportData) return;
 
-    const reportContent = `
-LEARNING PROGRESS REPORT
-========================
+    const htmlContent = `
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>${reportData.child.name} - Learning Progress Report</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 
-Child: ${reportData.child.name}
-Age: ${reportData.child.age}
-Report Period: ${reportData.period.range.toUpperCase()} (${reportData.period.start.toLocaleDateString()} - ${reportData.period.end.toLocaleDateString()})
-Generated: ${reportData.generatedAt.toLocaleDateString()}
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-SUMMARY
--------
-Total Learning Time: ${reportData.summary.totalLearningTime} minutes
-Sessions Completed: ${reportData.summary.sessionsCompleted}
-Words Learned: ${reportData.summary.wordsLearned}
-Average Accuracy: ${reportData.summary.averageAccuracy}%
-Current Streak: ${reportData.summary.streakDays} days
-Level Progress: +${reportData.summary.levelUps} levels
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: #1e293b;
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            padding: 40px 20px;
+        }
 
-LEARNING PATH ANALYSIS
-----------------------
-Strong Categories: ${reportData.learningPath.strengthCategories.join(', ')}
-Needs Practice: ${reportData.learningPath.strugglingCategories.join(', ')}
+        .report-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
 
-Mastered Words: ${reportData.learningPath.masteredWords.join(', ')}
-Practice Needed: ${reportData.learningPath.practiceNeeded.join(', ')}
+        .header {
+            background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 50%, #ec4899 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+            position: relative;
+        }
 
-RECOMMENDATIONS
----------------
-${reportData.learningPath.recommendedActivities.map((activity, i) => `${i + 1}. ${activity}`).join('\n')}
+        .header::before {
+            content: '✨📚🌟';
+            position: absolute;
+            top: 15px;
+            left: 40px;
+            font-size: 24px;
+            opacity: 0.7;
+        }
 
-PARENT INSIGHTS
----------------
-Key Strengths:
-${reportData.parentInsights.keyStrengths.map((strength, i) => `• ${strength}`).join('\n')}
+        .header::after {
+            content: '🎯🚀⭐';
+            position: absolute;
+            top: 15px;
+            right: 40px;
+            font-size: 24px;
+            opacity: 0.7;
+        }
 
-Areas for Growth:
-${reportData.parentInsights.areasForGrowth.map((area, i) => `• ${area}`).join('\n')}
+        .child-avatar {
+            font-size: 64px;
+            margin-bottom: 15px;
+            display: block;
+        }
 
-Recommendations:
-${reportData.parentInsights.recommendations.map((rec, i) => `• ${rec}`).join('\n')}
+        .header h1 {
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
 
-ACHIEVEMENTS
-------------
-${reportData.achievements.map(achievement => `🏆 ${achievement.title}: ${achievement.description} (${achievement.earnedAt.toLocaleDateString()})`).join('\n')}
-`;
+        .report-meta {
+            font-size: 16px;
+            opacity: 0.9;
+            margin-bottom: 5px;
+        }
 
-    // Create downloadable file
-    const blob = new Blob([reportContent], { type: 'text/plain' });
+        .generated-date {
+            background: rgba(255,255,255,0.2);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 14px;
+            display: inline-block;
+            margin-top: 15px;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .section {
+            margin-bottom: 40px;
+            page-break-inside: avoid;
+        }
+
+        .section-title {
+            font-size: 24px;
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #e2e8f0;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 20px;
+            margin: 25px 0;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
+            padding: 25px;
+            border-radius: 12px;
+            text-align: center;
+            border: 1px solid #cbd5e1;
+        }
+
+        .stat-icon {
+            font-size: 36px;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .stat-value {
+            font-size: 28px;
+            font-weight: 700;
+            color: #1e293b;
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            font-size: 14px;
+            color: #64748b;
+            font-weight: 500;
+        }
+
+        .category-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin: 25px 0;
+        }
+
+        .category-section {
+            background: #f8fafc;
+            padding: 25px;
+            border-radius: 12px;
+            border: 1px solid #e2e8f0;
+        }
+
+        .category-header {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .badge-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .badge {
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 500;
+        }
+
+        .badge-green {
+            background: #dcfce7;
+            color: #166534;
+            border: 1px solid #bbf7d0;
+        }
+
+        .badge-orange {
+            background: #fed7aa;
+            color: #9a3412;
+            border: 1px solid #fdba74;
+        }
+
+        .progress-bar {
+            background: #e2e8f0;
+            height: 12px;
+            border-radius: 6px;
+            overflow: hidden;
+            margin: 8px 0;
+        }
+
+        .progress-fill {
+            height: 100%;
+            border-radius: 6px;
+            transition: width 0.3s ease;
+        }
+
+        .progress-excellent { background: linear-gradient(90deg, #10b981 0%, #059669 100%); }
+        .progress-good { background: linear-gradient(90deg, #3b82f6 0%, #2563eb 100%); }
+        .progress-average { background: linear-gradient(90deg, #f59e0b 0%, #d97706 100%); }
+        .progress-needs-work { background: linear-gradient(90deg, #ef4444 0%, #dc2626 100%); }
+
+        .insights-list {
+            list-style: none;
+            margin: 20px 0;
+        }
+
+        .insights-list li {
+            padding: 12px 0;
+            border-bottom: 1px solid #e2e8f0;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+
+        .insights-list li:last-child {
+            border-bottom: none;
+        }
+
+        .achievement-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 25px 0;
+        }
+
+        .achievement-card {
+            background: linear-gradient(135deg, #fef3c7 0%, #fed7aa 100%);
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid #f59e0b;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .achievement-icon {
+            font-size: 32px;
+        }
+
+        .achievement-content h4 {
+            font-weight: 600;
+            margin-bottom: 5px;
+            color: #92400e;
+        }
+
+        .achievement-content p {
+            font-size: 13px;
+            color: #b45309;
+            margin-bottom: 3px;
+        }
+
+        .achievement-date {
+            font-size: 12px;
+            color: #d97706;
+        }
+
+        .footer {
+            background: #f8fafc;
+            padding: 30px 40px;
+            text-align: center;
+            color: #64748b;
+            border-top: 1px solid #e2e8f0;
+        }
+
+        .footer-content {
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .decorative-emoji {
+            font-size: 20px;
+            margin: 0 5px;
+        }
+
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+
+            .report-container {
+                box-shadow: none;
+                border-radius: 0;
+            }
+
+            .header::before,
+            .header::after {
+                display: none;
+            }
+        }
+
+        @page {
+            margin: 1in;
+            size: A4;
+        }
+    </style>
+</head>
+<body>
+    <div class="report-container">
+        <div class="header">
+            <span class="child-avatar">${reportData.child.avatar}</span>
+            <h1>${reportData.child.name}'s Learning Progress Report</h1>
+            <div class="report-meta">
+                📅 ${reportData.period.range.toUpperCase()} Report Period: ${reportData.period.start.toLocaleDateString()} - ${reportData.period.end.toLocaleDateString()}
+            </div>
+            <div class="report-meta">
+                👶 Age: ${reportData.child.age} years old
+            </div>
+            <div class="generated-date">
+                📊 Generated on ${reportData.generatedAt.toLocaleDateString()}
+            </div>
+        </div>
+
+        <div class="content">
+            <!-- Summary Statistics -->
+            <div class="section">
+                <h2 class="section-title">
+                    📈 Learning Summary
+                </h2>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <span class="stat-icon">⏰</span>
+                        <div class="stat-value">${reportData.summary.totalLearningTime}m</div>
+                        <div class="stat-label">Learning Time</div>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-icon">📚</span>
+                        <div class="stat-value">${reportData.summary.wordsLearned}</div>
+                        <div class="stat-label">Words Learned</div>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-icon">🎯</span>
+                        <div class="stat-value">${reportData.summary.averageAccuracy}%</div>
+                        <div class="stat-label">Accuracy Rate</div>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-icon">🔥</span>
+                        <div class="stat-value">${reportData.summary.streakDays}</div>
+                        <div class="stat-label">Day Streak</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Learning Path Analysis -->
+            <div class="section">
+                <h2 class="section-title">
+                    🛤️ Learning Path Analysis
+                </h2>
+                <div class="category-grid">
+                    <div class="category-section">
+                        <div class="category-header">
+                            🌟 Strengths & Mastered Areas
+                        </div>
+                        <h4 style="margin: 15px 0 10px 0; color: #059669;">💪 Strong Categories</h4>
+                        <div class="badge-container">
+                            ${reportData.learningPath.strengthCategories.map(cat => `<span class="badge badge-green">${cat}</span>`).join('')}
+                        </div>
+                        <h4 style="margin: 15px 0 10px 0; color: #059669;">✅ Mastered Words</h4>
+                        <div class="badge-container">
+                            ${reportData.learningPath.masteredWords.map(word => `<span class="badge badge-green">${word}</span>`).join('')}
+                        </div>
+                    </div>
+
+                    <div class="category-section">
+                        <div class="category-header">
+                            🎯 Growth Opportunities
+                        </div>
+                        <h4 style="margin: 15px 0 10px 0; color: #d97706;">📖 Practice Categories</h4>
+                        <div class="badge-container">
+                            ${reportData.learningPath.strugglingCategories.map(cat => `<span class="badge badge-orange">${cat}</span>`).join('')}
+                        </div>
+                        <h4 style="margin: 15px 0 10px 0; color: #d97706;">🔄 Words to Practice</h4>
+                        <div class="badge-container">
+                            ${reportData.learningPath.practiceNeeded.map(word => `<span class="badge badge-orange">${word}</span>`).join('')}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Category Progress -->
+            <div class="section">
+                <h2 class="section-title">
+                    📊 Category Mastery Progress
+                </h2>
+                ${reportData.progressAnalytics.categoryProgress.map(category => `
+                    <div style="margin-bottom: 20px;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                            <span style="font-weight: 600;">${getCategoryEmoji(category.category)} ${category.category}</span>
+                            <div style="display: flex; align-items: center; gap: 10px;">
+                                <span style="font-size: 14px; color: #64748b;">${category.mastery}%</span>
+                                <span class="badge ${getTrendBadgeClass(category.trend)}">${getTrendEmoji(category.trend)} ${category.trend.replace('_', ' ')}</span>
+                            </div>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill ${getProgressClass(category.mastery)}" style="width: ${category.mastery}%;"></div>
+                        </div>
+                    </div>
+                `).join('')}
+            </div>
+
+            <!-- Parent Insights -->
+            <div class="section">
+                <h2 class="section-title">
+                    💡 Parent Insights & Recommendations
+                </h2>
+
+                <div style="margin-bottom: 30px;">
+                    <h3 style="color: #059669; margin-bottom: 15px; display: flex; align-items: center; gap: 8px;">
+                        ⭐ Key Strengths
+                    </h3>
+                    <ul class="insights-list">
+                        ${reportData.parentInsights.keyStrengths.map(strength => `
+                            <li>
+                                <span style="color: #10b981; font-size: 16px;">✅</span>
+                                <span>${strength}</span>
+                            </li>
+                        `).join('')}
+                    </ul>
+                </div>
+
+                <div style="margin-bottom: 30px;">
+                    <h3 style="color: #d97706; margin-bottom: 15px; display: flex; align-items: center; gap: 8px;">
+                        🎯 Growth Opportunities
+                    </h3>
+                    <ul class="insights-list">
+                        ${reportData.parentInsights.areasForGrowth.map(area => `
+                            <li>
+                                <span style="color: #f59e0b; font-size: 16px;">🔄</span>
+                                <span>${area}</span>
+                            </li>
+                        `).join('')}
+                    </ul>
+                </div>
+
+                <div>
+                    <h3 style="color: #7c3aed; margin-bottom: 15px; display: flex; align-items: center; gap: 8px;">
+                        💡 Recommended Actions
+                    </h3>
+                    <ul class="insights-list">
+                        ${reportData.parentInsights.recommendations.map(rec => `
+                            <li>
+                                <span style="color: #8b5cf6; font-size: 16px;">💜</span>
+                                <span>${rec}</span>
+                            </li>
+                        `).join('')}
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Achievements -->
+            <div class="section">
+                <h2 class="section-title">
+                    🏆 Recent Achievements
+                </h2>
+                <div class="achievement-grid">
+                    ${reportData.achievements.map(achievement => `
+                        <div class="achievement-card">
+                            <div class="achievement-icon">🏆</div>
+                            <div class="achievement-content">
+                                <h4>${achievement.title}</h4>
+                                <p>${achievement.description}</p>
+                                <div class="achievement-date">📅 ${achievement.earnedAt.toLocaleDateString()}</div>
+                            </div>
+                        </div>
+                    `).join('')}
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <div class="footer-content">
+                <p><span class="decorative-emoji">✨</span> Generated by Word Adventure Learning Platform <span class="decorative-emoji">✨</span></p>
+                <p>Keep up the amazing work, ${reportData.child.name}! <span class="decorative-emoji">🌟</span></p>
+                <p style="margin-top: 10px; font-size: 12px;">This report shows ${reportData.child.name}'s progress and achievements during the ${reportData.period.range} period.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Helper functions for dynamic content
+        function getCategoryEmoji(category) {
+            const emojis = {
+                'Animals': '🐘',
+                'Science': '🔬',
+                'Colors': '🌈',
+                'Food': '🍎',
+                'Transportation': '🚗',
+                'Nature': '🌲',
+                'Sports': '⚽',
+                'Music': '🎵'
+            };
+            return emojis[category] || '📚';
+        }
+
+        function getTrendEmoji(trend) {
+            const emojis = {
+                'improving': '📈',
+                'stable': '➡️',
+                'mastered': '🏆',
+                'needs_focus': '🎯',
+                'challenging': '💪'
+            };
+            return emojis[trend] || '📊';
+        }
+
+        function getTrendBadgeClass(trend) {
+            if (trend === 'improving' || trend === 'mastered') return 'badge-green';
+            if (trend === 'stable') return 'badge badge-blue';
+            return 'badge-orange';
+        }
+
+        function getProgressClass(mastery) {
+            if (mastery >= 90) return 'progress-excellent';
+            if (mastery >= 75) return 'progress-good';
+            if (mastery >= 60) return 'progress-average';
+            return 'progress-needs-work';
+        }
+
+        // Apply dynamic content
+        document.addEventListener('DOMContentLoaded', function() {
+            // Auto-print functionality
+            setTimeout(() => {
+                if (confirm('🖨️ Would you like to print or save this report as PDF?')) {
+                    window.print();
+                }
+            }, 1000);
+        });
+    </script>
+</body>
+</html>`;
+
+    // Create blob and download
+    const blob = new Blob([htmlContent], { type: 'text/html' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = `${reportData.child.name}_Learning_Report_${reportData.period.range}_${reportData.generatedAt.toISOString().split('T')[0]}.txt`;
+    a.download = `${reportData.child.name}_Learning_Report_${reportData.period.range}_${reportData.generatedAt.toISOString().split('T')[0]}.html`;
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
     URL.revokeObjectURL(url);
+
+    // Also open in new window for immediate viewing/printing
+    const newWindow = window.open('', '_blank');
+    if (newWindow) {
+      newWindow.document.write(htmlContent);
+      newWindow.document.close();
+    }
   };
 
   const renderDetailedReports = () => (
