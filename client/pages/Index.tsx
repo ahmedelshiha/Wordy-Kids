@@ -440,46 +440,68 @@ export default function Index() {
 
                   {learningMode === 'cards' && (
                     <>
-                      <div className="flex justify-center mb-6">
-                        <div className="flex gap-2">
-                          {sampleWords.map((_, index) => (
-                            <Button
-                              key={index}
-                              size="sm"
-                              variant={currentWordIndex === index ? "default" : "outline"}
-                              onClick={() => setCurrentWordIndex(index)}
-                              className="w-8 h-8 p-0"
-                            >
-                              {index + 1}
-                            </Button>
-                          ))}
-                        </div>
-                      </div>
+                      {(() => {
+                        const categoryWords = selectedCategory === 'all'
+                          ? getRandomWords(20)
+                          : getWordsByCategory(selectedCategory);
+                        const displayWords = categoryWords.slice(0, 20); // Limit to 20 for better performance
 
-                      <div className="max-w-md mx-auto">
-                        <WordCard 
-                          word={sampleWords[currentWordIndex]}
-                          onPronounce={(word) => console.log('Playing pronunciation for:', word.word)}
-                          onFavorite={(word) => console.log('Favorited:', word.word)}
-                        />
-                      </div>
+                        return (
+                          <>
+                            <div className="flex justify-center mb-6">
+                              <div className="flex flex-wrap gap-2 max-w-lg">
+                                {displayWords.map((_, index) => (
+                                  <Button
+                                    key={index}
+                                    size="sm"
+                                    variant={currentWordIndex === index ? "default" : "outline"}
+                                    onClick={() => setCurrentWordIndex(index)}
+                                    className="w-8 h-8 p-0"
+                                  >
+                                    {index + 1}
+                                  </Button>
+                                ))}
+                              </div>
+                            </div>
 
-                      <div className="flex justify-center gap-4">
-                        <Button
-                          onClick={() => setCurrentWordIndex(Math.max(0, currentWordIndex - 1))}
-                          disabled={currentWordIndex === 0}
-                          variant="outline"
-                        >
-                          Previous
-                        </Button>
-                        <Button
-                          onClick={() => setCurrentWordIndex(Math.min(sampleWords.length - 1, currentWordIndex + 1))}
-                          disabled={currentWordIndex === sampleWords.length - 1}
-                        >
-                          Next
-                          <ArrowRight className="w-4 h-4 ml-2" />
-                        </Button>
-                      </div>
+                            {displayWords.length > 0 && (
+                              <>
+                                <div className="max-w-md mx-auto">
+                                  <WordCard
+                                    word={displayWords[currentWordIndex] || displayWords[0]}
+                                    onPronounce={(word) => console.log('Playing pronunciation for:', word.word)}
+                                    onFavorite={(word) => console.log('Favorited:', word.word)}
+                                  />
+                                </div>
+
+                                <div className="flex justify-center gap-4">
+                                  <Button
+                                    onClick={() => setCurrentWordIndex(Math.max(0, currentWordIndex - 1))}
+                                    disabled={currentWordIndex === 0}
+                                    variant="outline"
+                                  >
+                                    Previous
+                                  </Button>
+                                  <Button
+                                    onClick={() => setCurrentWordIndex(Math.min(displayWords.length - 1, currentWordIndex + 1))}
+                                    disabled={currentWordIndex === displayWords.length - 1}
+                                  >
+                                    Next
+                                    <ArrowRight className="w-4 h-4 ml-2" />
+                                  </Button>
+                                </div>
+
+                                <div className="text-center mt-4">
+                                  <Badge variant="outline" className="text-sm">
+                                    {selectedCategory === 'all' ? 'Random Selection' : `${selectedCategory} Category`} -
+                                    Word {currentWordIndex + 1} of {displayWords.length}
+                                  </Badge>
+                                </div>
+                              </>
+                            )}
+                          </>
+                        );
+                      })()}
                     </>
                   )}
 
