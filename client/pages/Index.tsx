@@ -33,7 +33,8 @@ import {
   Settings,
   Calendar,
   FileText,
-  Plus
+  Plus,
+  TrendingUp
 } from 'lucide-react';
 
 // Sample data for learning
