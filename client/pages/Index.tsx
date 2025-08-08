@@ -17,6 +17,7 @@ import { ReadingComprehension } from '@/components/ReadingComprehension';
 import { ParentDashboard } from '@/components/ParentDashboard';
 import { WordCreator } from '@/components/WordCreator';
 import { LearningAnalytics } from '@/components/LearningAnalytics';
+import { wordsDatabase, getWordsByCategory, getRandomWords } from '@/data/wordsDatabase';
 import {
   BookOpen,
   Play,
