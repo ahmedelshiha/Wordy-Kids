@@ -246,7 +246,7 @@ export default function Index() {
     }
     
     return (
-      <ChildLogin 
+      <EnhancedChildLogin
         onLogin={handleLogin}
         onCreateProfile={() => setShowProfileCreation(true)}
       />
