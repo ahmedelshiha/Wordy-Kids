@@ -207,6 +207,9 @@ export default function Index() {
   const [showQuiz, setShowQuiz] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [learningMode, setLearningMode] = useState<'cards' | 'builder' | 'matching'>('cards');
+  const [showSettings, setShowSettings] = useState(false);
+  const [showCelebration, setShowCelebration] = useState(false);
+  const [userRole, setUserRole] = useState<'child' | 'parent'>('child');
 
   const handleQuizComplete = (score: number, total: number) => {
     const percentage = Math.round((score / total) * 100);
