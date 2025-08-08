@@ -27,8 +27,21 @@ export default function App() {
 
   const handleProfileCreation = (newProfile: any) => {
     setCurrentProfile(newProfile);
-    setIsLoggedIn(true);
     setShowProfileCreation(false);
+    setShowLevelSelection(true);
+  };
+
+  const handleLevelSelection = (level: number, levelName: string) => {
+    // Add level info to profile
+    const updatedProfile = {
+      ...currentProfile,
+      level,
+      levelName,
+      skillLevel: level
+    };
+    setCurrentProfile(updatedProfile);
+    setShowLevelSelection(false);
+    setIsLoggedIn(true);
   };
 
   // If logged in, show the main app
