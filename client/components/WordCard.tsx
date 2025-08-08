@@ -88,7 +88,6 @@ export const WordCard: React.FC<WordCardProps> = ({
           setIsFlipped(!isFlipped);
           playSoundIfEnabled.click();
         }}
-        onMouseEnter={() => playSoundIfEnabled.hover()}
       >
         {/* Front of card */}
         <CardContent 
