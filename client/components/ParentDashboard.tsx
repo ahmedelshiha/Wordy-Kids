@@ -56,6 +56,7 @@ interface LearningSession {
 interface ParentDashboardProps {
   children: ChildProfile[];
   sessions: LearningSession[];
+  onNavigateBack?: () => void;
 }
 
 const sampleChildren: ChildProfile[] = [
