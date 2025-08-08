@@ -114,6 +114,22 @@ export const QuizGame: React.FC<QuizGameProps> = ({
     setIsTimerActive(true);
   };
 
+  const handleExit = () => {
+    setShowExitConfirm(true);
+    setIsTimerActive(false);
+  };
+
+  const confirmExit = () => {
+    onExit?.();
+  };
+
+  const cancelExit = () => {
+    setShowExitConfirm(false);
+    if (!showFeedback) {
+      setIsTimerActive(true);
+    }
+  };
+
   const getButtonVariant = (option: string) => {
     if (!showFeedback) {
       return selectedAnswer === option ? 'default' : 'outline';
