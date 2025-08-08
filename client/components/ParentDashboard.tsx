@@ -984,20 +984,7 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
         <TabsContent value="custom-words">{renderCustomWords()}</TabsContent>
         <TabsContent value="analytics">{renderDetailedAnalytics()}</TabsContent>
         <TabsContent value="notifications">{renderNotifications()}</TabsContent>
-        <TabsContent value="reports">
-          <Card>
-            <CardContent className="p-8 text-center">
-              <FileText className="w-16 h-16 text-slate-400 mx-auto mb-4" />
-              <h3 className="text-xl font-semibold mb-2">Detailed Reports</h3>
-              <p className="text-slate-600 mb-4">
-                Comprehensive learning reports and progress summaries
-              </p>
-              <Button className="bg-educational-blue text-white">
-                Generate Report
-              </Button>
-            </CardContent>
-          </Card>
-        </TabsContent>
+        <TabsContent value="reports">{renderDetailedReports()}</TabsContent>
       </Tabs>
 
       {/* Add Child Dialog */}
