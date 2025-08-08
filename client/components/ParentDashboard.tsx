@@ -311,6 +311,10 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
   const [customWordInput, setCustomWordInput] = useState("");
   const [filterCategory, setFilterCategory] = useState("all");
   const [searchTerm, setSearchTerm] = useState("");
+  const [reportData, setReportData] = useState<any>(null);
+  const [generatingReport, setGeneratingReport] = useState(false);
+  const [reportType, setReportType] = useState<'summary' | 'detailed' | 'progress'>('detailed');
+  const [reportDateRange, setReportDateRange] = useState<'week' | 'month' | 'quarter' | 'year'>('month');
 
   const unreadNotifications = notifications.filter(n => !n.read).length;
   const highPriorityNotifications = notifications.filter(n => n.priority === 'high' && !n.read).length;
