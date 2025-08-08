@@ -296,8 +296,8 @@ export default function Index() {
       <main className="container mx-auto px-4 py-8">
         {userRole === 'parent' ? (
           <ParentDashboard
-            children={[]}
-            sessions={[]}
+            children={undefined} // Will use default sample data
+            sessions={undefined} // Will use default sample data
           />
         ) : (
           <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
