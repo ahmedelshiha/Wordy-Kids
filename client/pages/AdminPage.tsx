@@ -22,9 +22,12 @@ const AdminLogin: React.FC<AdminLoginProps> = ({ onLogin }) => {
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     // Simple authentication check (in production, this would be handled by a secure backend)
-    if (credentials.username === "admin" && credentials.password === "admin123") {
+    if (
+      credentials.username === "admin" &&
+      credentials.password === "admin123"
+    ) {
       setError("");
       onLogin();
     } else {
@@ -118,7 +121,8 @@ const AdminLogin: React.FC<AdminLoginProps> = ({ onLogin }) => {
             {/* Demo credentials display */}
             <div className="mt-4 p-3 bg-blue-50 rounded-lg border border-blue-200">
               <p className="text-xs text-blue-800 text-center">
-                <strong>Demo Access:</strong> username: admin, password: admin123
+                <strong>Demo Access:</strong> username: admin, password:
+                admin123
               </p>
             </div>
           </CardContent>

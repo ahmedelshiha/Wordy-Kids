@@ -1,12 +1,12 @@
 import { RequestHandler } from "express";
-import type { 
-  AdminUser, 
-  AdminWord, 
-  SupportTicket, 
+import type {
+  AdminUser,
+  AdminWord,
+  SupportTicket,
   SystemAnalytics,
   GetUsersResponse,
   CreateWordResponse,
-  GetAnalyticsResponse 
+  GetAnalyticsResponse,
 } from "@shared/api";
 
 // Sample data - in production this would come from a database
@@ -48,7 +48,8 @@ const sampleWords: AdminWord[] = [
     example: "Going on a camping trip was a great adventure",
     category: "general",
     difficulty: "medium",
-    funFact: "The word 'adventure' comes from Latin 'adventura' meaning 'about to happen'",
+    funFact:
+      "The word 'adventure' comes from Latin 'adventura' meaning 'about to happen'",
     status: "approved",
     submittedAt: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000),
     approvedAt: new Date(Date.now() - 6 * 24 * 60 * 60 * 1000),
@@ -78,41 +79,42 @@ const systemAnalytics: SystemAnalytics = {
 export const getUsers: RequestHandler = (req, res) => {
   try {
     const { page = 1, limit = 50, role, status, search } = req.query;
-    
+
     let filteredUsers = [...sampleUsers];
-    
+
     // Apply filters
-    if (role && role !== 'all') {
-      filteredUsers = filteredUsers.filter(user => user.role === role);
+    if (role && role !== "all") {
+      filteredUsers = filteredUsers.filter((user) => user.role === role);
     }
-    
-    if (status && status !== 'all') {
-      filteredUsers = filteredUsers.filter(user => user.status === status);
+
+    if (status && status !== "all") {
+      filteredUsers = filteredUsers.filter((user) => user.status === status);
     }
-    
+
     if (search) {
       const searchTerm = search.toString().toLowerCase();
-      filteredUsers = filteredUsers.filter(user => 
-        user.name.toLowerCase().includes(searchTerm) ||
-        user.email.toLowerCase().includes(searchTerm)
+      filteredUsers = filteredUsers.filter(
+        (user) =>
+          user.name.toLowerCase().includes(searchTerm) ||
+          user.email.toLowerCase().includes(searchTerm),
       );
     }
-    
+
     // Pagination
     const pageNum = parseInt(page.toString());
     const limitNum = parseInt(limit.toString());
     const startIndex = (pageNum - 1) * limitNum;
     const endIndex = startIndex + limitNum;
-    
+
     const paginatedUsers = filteredUsers.slice(startIndex, endIndex);
-    
+
     const response: GetUsersResponse = {
       users: paginatedUsers,
       total: filteredUsers.length,
       page: pageNum,
       limit: limitNum,
     };
-    
+
     res.json(response);
   } catch (error) {
     res.status(500).json({ error: "Failed to fetch users" });
@@ -123,7 +125,7 @@ export const getUsers: RequestHandler = (req, res) => {
 export const createUser: RequestHandler = (req, res) => {
   try {
     const userData = req.body;
-    
+
     const newUser: AdminUser = {
       id: `user_${Date.now()}`,
       ...userData,
@@ -132,9 +134,9 @@ export const createUser: RequestHandler = (req, res) => {
       totalSessions: 0,
       supportTickets: 0,
     };
-    
+
     sampleUsers.push(newUser);
-    
+
     res.status(201).json({
       success: true,
       user: newUser,
@@ -150,15 +152,15 @@ export const updateUser: RequestHandler = (req, res) => {
   try {
     const { id } = req.params;
     const updates = req.body;
-    
-    const userIndex = sampleUsers.findIndex(user => user.id === id);
-    
+
+    const userIndex = sampleUsers.findIndex((user) => user.id === id);
+
     if (userIndex === -1) {
       return res.status(404).json({ error: "User not found" });
     }
-    
+
     sampleUsers[userIndex] = { ...sampleUsers[userIndex], ...updates };
-    
+
     res.json({
       success: true,
       user: sampleUsers[userIndex],
@@ -173,15 +175,15 @@ export const updateUser: RequestHandler = (req, res) => {
 export const deleteUser: RequestHandler = (req, res) => {
   try {
     const { id } = req.params;
-    
-    const userIndex = sampleUsers.findIndex(user => user.id === id);
-    
+
+    const userIndex = sampleUsers.findIndex((user) => user.id === id);
+
     if (userIndex === -1) {
       return res.status(404).json({ error: "User not found" });
     }
-    
+
     sampleUsers.splice(userIndex, 1);
-    
+
     res.json({
       success: true,
       message: "User deleted successfully",
@@ -195,30 +197,35 @@ export const deleteUser: RequestHandler = (req, res) => {
 export const getWords: RequestHandler = (req, res) => {
   try {
     const { status, category, difficulty, search } = req.query;
-    
+
     let filteredWords = [...sampleWords];
-    
+
     // Apply filters
-    if (status && status !== 'all') {
-      filteredWords = filteredWords.filter(word => word.status === status);
+    if (status && status !== "all") {
+      filteredWords = filteredWords.filter((word) => word.status === status);
     }
-    
-    if (category && category !== 'all') {
-      filteredWords = filteredWords.filter(word => word.category === category);
-    }
-    
-    if (difficulty && difficulty !== 'all') {
-      filteredWords = filteredWords.filter(word => word.difficulty === difficulty);
-    }
-    
-    if (search) {
-      const searchTerm = search.toString().toLowerCase();
-      filteredWords = filteredWords.filter(word => 
-        word.word.toLowerCase().includes(searchTerm) ||
-        word.definition.toLowerCase().includes(searchTerm)
+
+    if (category && category !== "all") {
+      filteredWords = filteredWords.filter(
+        (word) => word.category === category,
       );
     }
-    
+
+    if (difficulty && difficulty !== "all") {
+      filteredWords = filteredWords.filter(
+        (word) => word.difficulty === difficulty,
+      );
+    }
+
+    if (search) {
+      const searchTerm = search.toString().toLowerCase();
+      filteredWords = filteredWords.filter(
+        (word) =>
+          word.word.toLowerCase().includes(searchTerm) ||
+          word.definition.toLowerCase().includes(searchTerm),
+      );
+    }
+
     res.json({
       words: filteredWords,
       total: filteredWords.length,
@@ -232,7 +239,7 @@ export const getWords: RequestHandler = (req, res) => {
 export const createWord: RequestHandler = (req, res) => {
   try {
     const wordData = req.body;
-    
+
     const newWord: AdminWord = {
       id: `word_${Date.now()}`,
       ...wordData,
@@ -241,15 +248,15 @@ export const createWord: RequestHandler = (req, res) => {
       accuracy: 0,
       status: "pending" as const,
     };
-    
+
     sampleWords.push(newWord);
-    
+
     const response: CreateWordResponse = {
       success: true,
       wordId: newWord.id,
       message: "Word created successfully",
     };
-    
+
     res.status(201).json(response);
   } catch (error) {
     res.status(500).json({ error: "Failed to create word" });
@@ -261,15 +268,15 @@ export const updateWord: RequestHandler = (req, res) => {
   try {
     const { id } = req.params;
     const updates = req.body;
-    
-    const wordIndex = sampleWords.findIndex(word => word.id === id);
-    
+
+    const wordIndex = sampleWords.findIndex((word) => word.id === id);
+
     if (wordIndex === -1) {
       return res.status(404).json({ error: "Word not found" });
     }
-    
+
     sampleWords[wordIndex] = { ...sampleWords[wordIndex], ...updates };
-    
+
     res.json({
       success: true,
       word: sampleWords[wordIndex],
@@ -284,7 +291,7 @@ export const updateWord: RequestHandler = (req, res) => {
 export const getAnalytics: RequestHandler = (req, res) => {
   try {
     const { timeRange = "30d", metrics } = req.query;
-    
+
     // In production, this would calculate analytics based on timeRange and requested metrics
     const response: GetAnalyticsResponse = {
       analytics: systemAnalytics,
@@ -306,7 +313,7 @@ export const getAnalytics: RequestHandler = (req, res) => {
       },
       success: true,
     };
-    
+
     res.json(response);
   } catch (error) {
     res.status(500).json({ error: "Failed to fetch analytics" });
@@ -317,13 +324,13 @@ export const getAnalytics: RequestHandler = (req, res) => {
 export const bulkImportWords: RequestHandler = (req, res) => {
   try {
     const { words } = req.body;
-    
+
     if (!Array.isArray(words)) {
       return res.status(400).json({ error: "Words must be an array" });
     }
-    
+
     const importedWords: AdminWord[] = [];
-    
+
     words.forEach((wordData, index) => {
       const newWord: AdminWord = {
         id: `word_${Date.now()}_${index}`,
@@ -333,11 +340,11 @@ export const bulkImportWords: RequestHandler = (req, res) => {
         accuracy: 0,
         status: "pending" as const,
       };
-      
+
       sampleWords.push(newWord);
       importedWords.push(newWord);
     });
-    
+
     res.status(201).json({
       success: true,
       importedCount: importedWords.length,
@@ -360,7 +367,8 @@ export const getSupportTickets: RequestHandler = (req, res) => {
         userName: "Sarah Teacher",
         userEmail: "sarah@school.edu",
         subject: "Unable to bulk upload words",
-        description: "I'm trying to upload a CSV file with 200 words but getting an error.",
+        description:
+          "I'm trying to upload a CSV file with 200 words but getting an error.",
         priority: "medium",
         status: "open",
         createdAt: new Date(Date.now() - 2 * 60 * 60 * 1000),
@@ -369,7 +377,7 @@ export const getSupportTickets: RequestHandler = (req, res) => {
         category: "technical",
       },
     ];
-    
+
     res.json({
       tickets,
       total: tickets.length,
@@ -399,7 +407,7 @@ export const getSystemHealth: RequestHandler = (req, res) => {
         activeConnections: 127,
       },
     };
-    
+
     res.json(health);
   } catch (error) {
     res.status(500).json({ error: "Failed to fetch system health" });

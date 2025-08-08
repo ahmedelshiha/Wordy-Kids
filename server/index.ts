@@ -13,7 +13,7 @@ import {
   getAnalytics,
   bulkImportWords,
   getSupportTickets,
-  getSystemHealth
+  getSystemHealth,
 } from "./routes/admin";
 
 export function createServer() {

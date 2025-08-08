@@ -157,12 +157,42 @@ const AdvancedAnalyticsDashboard: React.FC = () => {
   ];
 
   const usagePatterns: UsagePattern[] = [
-    { timeOfDay: "6-9 AM", sessions: 2840, completionRate: 89, avgDuration: 15.2 },
-    { timeOfDay: "9-12 PM", sessions: 1420, completionRate: 92, avgDuration: 22.1 },
-    { timeOfDay: "12-3 PM", sessions: 3200, completionRate: 85, avgDuration: 18.7 },
-    { timeOfDay: "3-6 PM", sessions: 8750, completionRate: 88, avgDuration: 19.3 },
-    { timeOfDay: "6-9 PM", sessions: 12300, completionRate: 91, avgDuration: 21.5 },
-    { timeOfDay: "9 PM+", sessions: 1890, completionRate: 78, avgDuration: 16.8 },
+    {
+      timeOfDay: "6-9 AM",
+      sessions: 2840,
+      completionRate: 89,
+      avgDuration: 15.2,
+    },
+    {
+      timeOfDay: "9-12 PM",
+      sessions: 1420,
+      completionRate: 92,
+      avgDuration: 22.1,
+    },
+    {
+      timeOfDay: "12-3 PM",
+      sessions: 3200,
+      completionRate: 85,
+      avgDuration: 18.7,
+    },
+    {
+      timeOfDay: "3-6 PM",
+      sessions: 8750,
+      completionRate: 88,
+      avgDuration: 19.3,
+    },
+    {
+      timeOfDay: "6-9 PM",
+      sessions: 12300,
+      completionRate: 91,
+      avgDuration: 21.5,
+    },
+    {
+      timeOfDay: "9 PM+",
+      sessions: 1890,
+      completionRate: 78,
+      avgDuration: 16.8,
+    },
   ];
 
   const learningOutcomes: LearningOutcome[] = [
@@ -201,11 +231,41 @@ const AdvancedAnalyticsDashboard: React.FC = () => {
   ];
 
   const geographicData: GeographicData[] = [
-    { region: "North America", users: 8420, sessions: 45200, performance: 88.5, growth: 12.3 },
-    { region: "Europe", users: 4320, sessions: 23800, performance: 91.2, growth: 18.7 },
-    { region: "Asia Pacific", users: 2180, sessions: 12400, performance: 85.9, growth: 25.4 },
-    { region: "Latin America", users: 520, sessions: 2890, performance: 83.7, growth: 31.2 },
-    { region: "Others", users: 80, sessions: 420, performance: 79.2, growth: 8.9 },
+    {
+      region: "North America",
+      users: 8420,
+      sessions: 45200,
+      performance: 88.5,
+      growth: 12.3,
+    },
+    {
+      region: "Europe",
+      users: 4320,
+      sessions: 23800,
+      performance: 91.2,
+      growth: 18.7,
+    },
+    {
+      region: "Asia Pacific",
+      users: 2180,
+      sessions: 12400,
+      performance: 85.9,
+      growth: 25.4,
+    },
+    {
+      region: "Latin America",
+      users: 520,
+      sessions: 2890,
+      performance: 83.7,
+      growth: 31.2,
+    },
+    {
+      region: "Others",
+      users: 80,
+      sessions: 420,
+      performance: 79.2,
+      growth: 8.9,
+    },
   ];
 
   const deviceAnalytics: DeviceAnalytics[] = [
@@ -270,7 +330,8 @@ const AdvancedAnalyticsDashboard: React.FC = () => {
                   <span className="text-slate-500">{metric.unit}</span>
                 </div>
                 <p className="text-xs text-slate-500">
-                  vs {metric.previousValue.toLocaleString()} {metric.unit} last period
+                  vs {metric.previousValue.toLocaleString()} {metric.unit} last
+                  period
                 </p>
               </div>
             </CardContent>
@@ -289,17 +350,27 @@ const AdvancedAnalyticsDashboard: React.FC = () => {
         <CardContent>
           <div className="space-y-4">
             {usagePatterns.map((pattern, index) => (
-              <div key={index} className="flex items-center justify-between p-4 bg-slate-50 rounded-lg">
+              <div
+                key={index}
+                className="flex items-center justify-between p-4 bg-slate-50 rounded-lg"
+              >
                 <div className="flex-1">
                   <div className="flex items-center gap-4">
-                    <span className="font-medium w-20">{pattern.timeOfDay}</span>
+                    <span className="font-medium w-20">
+                      {pattern.timeOfDay}
+                    </span>
                     <div className="flex-1 space-y-2">
                       <div className="flex items-center justify-between text-sm">
-                        <span>{pattern.sessions.toLocaleString()} sessions</span>
+                        <span>
+                          {pattern.sessions.toLocaleString()} sessions
+                        </span>
                         <span>{pattern.completionRate}% completion</span>
                         <span>{pattern.avgDuration}min avg</span>
                       </div>
-                      <Progress value={(pattern.sessions / 12300) * 100} className="h-2" />
+                      <Progress
+                        value={(pattern.sessions / 12300) * 100}
+                        className="h-2"
+                      />
                     </div>
                   </div>
                 </div>
@@ -331,26 +402,43 @@ const AdvancedAnalyticsDashboard: React.FC = () => {
                   <div>
                     <div className="flex justify-between text-sm mb-1">
                       <span>Mastery Progress</span>
-                      <span>{Math.round((outcome.masteredWords / outcome.totalWords) * 100)}%</span>
+                      <span>
+                        {Math.round(
+                          (outcome.masteredWords / outcome.totalWords) * 100,
+                        )}
+                        %
+                      </span>
                     </div>
-                    <Progress value={(outcome.masteredWords / outcome.totalWords) * 100} />
+                    <Progress
+                      value={(outcome.masteredWords / outcome.totalWords) * 100}
+                    />
                   </div>
                   <div className="grid grid-cols-2 gap-4 text-sm">
                     <div>
                       <span className="text-slate-600">Avg Accuracy</span>
-                      <p className="font-semibold">{outcome.averageAccuracy}%</p>
+                      <p className="font-semibold">
+                        {outcome.averageAccuracy}%
+                      </p>
                     </div>
                     <div>
                       <span className="text-slate-600">Improvement</span>
-                      <p className="font-semibold text-green-600">+{outcome.improvementRate}%</p>
+                      <p className="font-semibold text-green-600">
+                        +{outcome.improvementRate}%
+                      </p>
                     </div>
                   </div>
                   {outcome.strugglingAreas.length > 0 && (
                     <div>
-                      <span className="text-xs text-slate-600">Needs attention:</span>
+                      <span className="text-xs text-slate-600">
+                        Needs attention:
+                      </span>
                       <div className="flex flex-wrap gap-1 mt-1">
                         {outcome.strugglingAreas.map((area, i) => (
-                          <Badge key={i} variant="secondary" className="text-xs">
+                          <Badge
+                            key={i}
+                            variant="secondary"
+                            className="text-xs"
+                          >
                             {area}
                           </Badge>
                         ))}
@@ -379,7 +467,10 @@ const AdvancedAnalyticsDashboard: React.FC = () => {
         <CardContent>
           <div className="space-y-4">
             {geographicData.map((region, index) => (
-              <div key={index} className="flex items-center justify-between p-4 bg-slate-50 rounded-lg">
+              <div
+                key={index}
+                className="flex items-center justify-between p-4 bg-slate-50 rounded-lg"
+              >
                 <div className="flex-1">
                   <div className="flex items-center justify-between mb-2">
                     <span className="font-semibold">{region.region}</span>
@@ -402,7 +493,10 @@ const AdvancedAnalyticsDashboard: React.FC = () => {
                   <div className="space-y-1">
                     <div className="flex justify-between text-xs text-slate-600">
                       <span>Performance: {region.performance}%</span>
-                      <span>{Math.round((region.users / 15520) * 100)}% of total users</span>
+                      <span>
+                        {Math.round((region.users / 15520) * 100)}% of total
+                        users
+                      </span>
                     </div>
                     <Progress value={(region.users / 15520) * 100} />
                   </div>
@@ -456,22 +550,30 @@ const AdvancedAnalyticsDashboard: React.FC = () => {
             <div className="p-4 bg-blue-50 rounded-lg text-center">
               <div className="text-2xl font-bold text-blue-600">2,840</div>
               <p className="text-sm text-blue-800">New Users (7d)</p>
-              <div className="text-xs text-blue-600 mt-1">+23% vs last week</div>
+              <div className="text-xs text-blue-600 mt-1">
+                +23% vs last week
+              </div>
             </div>
             <div className="p-4 bg-green-50 rounded-lg text-center">
               <div className="text-2xl font-bold text-green-600">8,420</div>
               <p className="text-sm text-green-800">Returning Users</p>
-              <div className="text-xs text-green-600 mt-1">+12% vs last week</div>
+              <div className="text-xs text-green-600 mt-1">
+                +12% vs last week
+              </div>
             </div>
             <div className="p-4 bg-purple-50 rounded-lg text-center">
               <div className="text-2xl font-bold text-purple-600">73.2%</div>
               <p className="text-sm text-purple-800">7-Day Retention</p>
-              <div className="text-xs text-purple-600 mt-1">+1.9% vs last week</div>
+              <div className="text-xs text-purple-600 mt-1">
+                +1.9% vs last week
+              </div>
             </div>
             <div className="p-4 bg-orange-50 rounded-lg text-center">
               <div className="text-2xl font-bold text-orange-600">45.8%</div>
               <p className="text-sm text-orange-800">30-Day Retention</p>
-              <div className="text-xs text-orange-600 mt-1">+3.2% vs last month</div>
+              <div className="text-xs text-orange-600 mt-1">
+                +3.2% vs last month
+              </div>
             </div>
           </div>
         </CardContent>
@@ -526,21 +628,33 @@ const AdvancedAnalyticsDashboard: React.FC = () => {
           <div className="space-y-4">
             <div className="flex items-center justify-between p-4 bg-red-50 rounded-lg">
               <div>
-                <h4 className="font-semibold text-red-800">Audio Loading Failures</h4>
-                <p className="text-sm text-red-600">23 incidents in the last 7 days</p>
+                <h4 className="font-semibold text-red-800">
+                  Audio Loading Failures
+                </h4>
+                <p className="text-sm text-red-600">
+                  23 incidents in the last 7 days
+                </p>
               </div>
               <Badge className="bg-red-100 text-red-800">High Priority</Badge>
             </div>
             <div className="flex items-center justify-between p-4 bg-yellow-50 rounded-lg">
               <div>
-                <h4 className="font-semibold text-yellow-800">Slow Image Loading</h4>
-                <p className="text-sm text-yellow-600">12 reports from mobile users</p>
+                <h4 className="font-semibold text-yellow-800">
+                  Slow Image Loading
+                </h4>
+                <p className="text-sm text-yellow-600">
+                  12 reports from mobile users
+                </p>
               </div>
-              <Badge className="bg-yellow-100 text-yellow-800">Medium Priority</Badge>
+              <Badge className="bg-yellow-100 text-yellow-800">
+                Medium Priority
+              </Badge>
             </div>
             <div className="flex items-center justify-between p-4 bg-green-50 rounded-lg">
               <div>
-                <h4 className="font-semibold text-green-800">Score Sync Issues</h4>
+                <h4 className="font-semibold text-green-800">
+                  Score Sync Issues
+                </h4>
                 <p className="text-sm text-green-600">5 incidents - resolved</p>
               </div>
               <Badge className="bg-green-100 text-green-800">Resolved</Badge>

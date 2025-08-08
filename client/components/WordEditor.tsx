@@ -206,7 +206,10 @@ const WordEditor: React.FC<WordEditorProps> = ({
     }
   };
 
-  const addTag = (type: "tags" | "synonyms" | "antonyms" | "relatedWords", value: string) => {
+  const addTag = (
+    type: "tags" | "synonyms" | "antonyms" | "relatedWords",
+    value: string,
+  ) => {
     if (!value.trim()) return;
 
     const currentArray = formData[type] || [];
@@ -234,7 +237,10 @@ const WordEditor: React.FC<WordEditorProps> = ({
     }
   };
 
-  const removeTag = (type: "tags" | "synonyms" | "antonyms" | "relatedWords", value: string) => {
+  const removeTag = (
+    type: "tags" | "synonyms" | "antonyms" | "relatedWords",
+    value: string,
+  ) => {
     const currentArray = formData[type] || [];
     setFormData((prev) => ({
       ...prev,
@@ -247,7 +253,7 @@ const WordEditor: React.FC<WordEditorProps> = ({
     label: string,
     value: string,
     setValue: (value: string) => void,
-    placeholder: string
+    placeholder: string,
   ) => (
     <div>
       <Label>{label}</Label>
@@ -492,8 +498,9 @@ const WordEditor: React.FC<WordEditorProps> = ({
             <Alert>
               <AlertTriangle className="w-4 h-4" />
               <AlertDescription>
-                Ensure media URLs are publicly accessible and appropriate for children.
-                Images should be clear and relevant to the word meaning.
+                Ensure media URLs are publicly accessible and appropriate for
+                children. Images should be clear and relevant to the word
+                meaning.
               </AlertDescription>
             </Alert>
           </TabsContent>
@@ -504,7 +511,7 @@ const WordEditor: React.FC<WordEditorProps> = ({
               "Tags",
               newTag,
               setNewTag,
-              "Add descriptive tags..."
+              "Add descriptive tags...",
             )}
             <Separator />
             {renderTagInput(
@@ -512,7 +519,7 @@ const WordEditor: React.FC<WordEditorProps> = ({
               "Synonyms",
               newSynonym,
               setNewSynonym,
-              "Add words with similar meaning..."
+              "Add words with similar meaning...",
             )}
             <Separator />
             {renderTagInput(
@@ -520,7 +527,7 @@ const WordEditor: React.FC<WordEditorProps> = ({
               "Antonyms",
               newAntonym,
               setNewAntonym,
-              "Add words with opposite meaning..."
+              "Add words with opposite meaning...",
             )}
             <Separator />
             {renderTagInput(
@@ -528,7 +535,7 @@ const WordEditor: React.FC<WordEditorProps> = ({
               "Related Words",
               newRelatedWord,
               setNewRelatedWord,
-              "Add related vocabulary..."
+              "Add related vocabulary...",
             )}
           </TabsContent>
 
@@ -603,7 +610,10 @@ const WordEditor: React.FC<WordEditorProps> = ({
           <Button variant="outline" onClick={() => onOpenChange(false)}>
             Cancel
           </Button>
-          <Button onClick={handleSave} className="bg-blue-600 hover:bg-blue-700">
+          <Button
+            onClick={handleSave}
+            className="bg-blue-600 hover:bg-blue-700"
+          >
             <Save className="w-4 h-4 mr-2" />
             {mode === "edit" ? "Save Changes" : "Create Word"}
           </Button>

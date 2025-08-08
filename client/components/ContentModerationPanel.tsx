@@ -95,7 +95,8 @@ const sampleReports: ContentReport[] = [
     reportedBy: "teacher@school.edu",
     reportedAt: new Date(Date.now() - 2 * 60 * 60 * 1000),
     reason: "Inappropriate content",
-    description: "This word contains content that may not be suitable for children.",
+    description:
+      "This word contains content that may not be suitable for children.",
     priority: "high",
     status: "pending",
     evidence: {
@@ -126,12 +127,14 @@ const sampleReports: ContentReport[] = [
     reportedBy: "system",
     reportedAt: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000),
     reason: "Safety monitoring",
-    description: "Automated system detected unusual learning patterns that may indicate misuse.",
+    description:
+      "Automated system detected unusual learning patterns that may indicate misuse.",
     priority: "urgent",
     status: "resolved",
     assignedTo: "safety@wordadventure.com",
     resolvedAt: new Date(Date.now() - 12 * 60 * 60 * 1000),
-    resolution: "Investigated and found to be normal advanced learning behavior. No action needed.",
+    resolution:
+      "Investigated and found to be normal advanced learning behavior. No action needed.",
   },
 ];
 
@@ -139,7 +142,8 @@ const sampleSafetyRules: SafetyRule[] = [
   {
     id: "rule_1",
     name: "Inappropriate Language Detection",
-    description: "Detects and flags potentially inappropriate language in word submissions",
+    description:
+      "Detects and flags potentially inappropriate language in word submissions",
     category: "language",
     severity: "high",
     isActive: true,
@@ -163,7 +167,8 @@ const sampleSafetyRules: SafetyRule[] = [
   {
     id: "rule_3",
     name: "Child Safety Monitor",
-    description: "Monitors for potential child safety concerns in content and interactions",
+    description:
+      "Monitors for potential child safety concerns in content and interactions",
     category: "safety",
     severity: "critical",
     isActive: true,
@@ -181,7 +186,9 @@ const ContentModerationPanel: React.FC<ContentModerationPanelProps> = ({
   onUpdateRule,
 }) => {
   const [activeTab, setActiveTab] = useState("reports");
-  const [selectedReport, setSelectedReport] = useState<ContentReport | null>(null);
+  const [selectedReport, setSelectedReport] = useState<ContentReport | null>(
+    null,
+  );
   const [showReportDialog, setShowReportDialog] = useState(false);
   const [resolutionText, setResolutionText] = useState("");
   const [filterStatus, setFilterStatus] = useState("all");
@@ -198,8 +205,10 @@ const ContentModerationPanel: React.FC<ContentModerationPanelProps> = ({
   };
 
   const filteredReports = reports.filter((report) => {
-    const matchesStatus = filterStatus === "all" || report.status === filterStatus;
-    const matchesPriority = filterPriority === "all" || report.priority === filterPriority;
+    const matchesStatus =
+      filterStatus === "all" || report.status === filterStatus;
+    const matchesPriority =
+      filterPriority === "all" || report.priority === filterPriority;
     const matchesSearch =
       searchTerm === "" ||
       report.contentTitle.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -487,7 +496,11 @@ const ContentModerationPanel: React.FC<ContentModerationPanelProps> = ({
                     <Label className="text-xs text-slate-500">Keywords:</Label>
                     <div className="flex flex-wrap gap-1 mt-1">
                       {rule.keywords.map((keyword, index) => (
-                        <Badge key={index} variant="outline" className="text-xs">
+                        <Badge
+                          key={index}
+                          variant="outline"
+                          className="text-xs"
+                        >
                           {keyword}
                         </Badge>
                       ))}
@@ -663,7 +676,10 @@ const ContentModerationPanel: React.FC<ContentModerationPanelProps> = ({
           )}
 
           <DialogFooter>
-            <Button variant="outline" onClick={() => setShowReportDialog(false)}>
+            <Button
+              variant="outline"
+              onClick={() => setShowReportDialog(false)}
+            >
               Cancel
             </Button>
             {selectedReport?.status === "pending" && (

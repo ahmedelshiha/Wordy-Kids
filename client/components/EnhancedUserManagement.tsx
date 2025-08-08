@@ -153,7 +153,14 @@ const userRoles: UserRole[] = [
     id: "admin",
     name: "Administrator",
     description: "Full system access",
-    permissions: ["system_admin", "manage_users", "manage_content", "moderate_content", "view_analytics", "export_data"],
+    permissions: [
+      "system_admin",
+      "manage_users",
+      "manage_content",
+      "moderate_content",
+      "view_analytics",
+      "export_data",
+    ],
     color: "bg-red-100 text-red-800",
     icon: <Crown className="w-4 h-4" />,
   },
@@ -161,7 +168,13 @@ const userRoles: UserRole[] = [
     id: "moderator",
     name: "Content Moderator",
     description: "Content moderation and support",
-    permissions: ["moderate_content", "manage_content", "manage_support", "view_users", "view_analytics"],
+    permissions: [
+      "moderate_content",
+      "manage_content",
+      "manage_support",
+      "view_users",
+      "view_analytics",
+    ],
     color: "bg-blue-100 text-blue-800",
     icon: <Shield className="w-4 h-4" />,
   },
@@ -271,11 +284,13 @@ const EnhancedUserManagement: React.FC<EnhancedUserManagementProps> = ({
   });
 
   const filteredUsers = users.filter((user) => {
-    const matchesSearch = searchTerm === "" ||
+    const matchesSearch =
+      searchTerm === "" ||
       user.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
       user.email.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesRole = filterRole === "all" || user.role === filterRole;
-    const matchesStatus = filterStatus === "all" || user.status === filterStatus;
+    const matchesStatus =
+      filterStatus === "all" || user.status === filterStatus;
     return matchesSearch && matchesRole && matchesStatus;
   });
 
@@ -310,12 +325,12 @@ const EnhancedUserManagement: React.FC<EnhancedUserManagementProps> = ({
   };
 
   const getRoleColor = (role: string) => {
-    const roleConfig = userRoles.find(r => r.id === role);
+    const roleConfig = userRoles.find((r) => r.id === role);
     return roleConfig?.color || "bg-gray-100 text-gray-800";
   };
 
   const getRoleIcon = (role: string) => {
-    const roleConfig = userRoles.find(r => r.id === role);
+    const roleConfig = userRoles.find((r) => r.id === role);
     return roleConfig?.icon || <Users className="w-4 h-4" />;
   };
 
@@ -336,20 +351,20 @@ const EnhancedUserManagement: React.FC<EnhancedUserManagementProps> = ({
 
   const handleBulkAction = (action: string) => {
     if (selectedUsers.length === 0) return;
-    
+
     switch (action) {
       case "activate":
-        selectedUsers.forEach(userId => {
+        selectedUsers.forEach((userId) => {
           onUpdateUser?.(userId, { status: "active" });
         });
         break;
       case "suspend":
-        selectedUsers.forEach(userId => {
+        selectedUsers.forEach((userId) => {
           onUpdateUser?.(userId, { status: "suspended" });
         });
         break;
       case "delete":
-        selectedUsers.forEach(userId => {
+        selectedUsers.forEach((userId) => {
           onDeleteUser?.(userId);
         });
         break;
@@ -387,7 +402,9 @@ const EnhancedUserManagement: React.FC<EnhancedUserManagementProps> = ({
         <Card>
           <CardContent className="p-4 text-center">
             <Users className="w-8 h-8 text-blue-500 mx-auto mb-2" />
-            <div className="text-2xl font-bold text-blue-600">{users.length}</div>
+            <div className="text-2xl font-bold text-blue-600">
+              {users.length}
+            </div>
             <p className="text-sm text-slate-600">Total Users</p>
           </CardContent>
         </Card>
@@ -395,7 +412,7 @@ const EnhancedUserManagement: React.FC<EnhancedUserManagementProps> = ({
           <CardContent className="p-4 text-center">
             <UserCheck className="w-8 h-8 text-green-500 mx-auto mb-2" />
             <div className="text-2xl font-bold text-green-600">
-              {users.filter(u => u.status === "active").length}
+              {users.filter((u) => u.status === "active").length}
             </div>
             <p className="text-sm text-slate-600">Active Users</p>
           </CardContent>
@@ -404,7 +421,7 @@ const EnhancedUserManagement: React.FC<EnhancedUserManagementProps> = ({
           <CardContent className="p-4 text-center">
             <GraduationCap className="w-8 h-8 text-purple-500 mx-auto mb-2" />
             <div className="text-2xl font-bold text-purple-600">
-              {users.filter(u => u.role === "teacher").length}
+              {users.filter((u) => u.role === "teacher").length}
             </div>
             <p className="text-sm text-slate-600">Teachers</p>
           </CardContent>
@@ -413,7 +430,7 @@ const EnhancedUserManagement: React.FC<EnhancedUserManagementProps> = ({
           <CardContent className="p-4 text-center">
             <Heart className="w-8 h-8 text-pink-500 mx-auto mb-2" />
             <div className="text-2xl font-bold text-pink-600">
-              {users.filter(u => u.role === "parent").length}
+              {users.filter((u) => u.role === "parent").length}
             </div>
             <p className="text-sm text-slate-600">Parents</p>
           </CardContent>
@@ -422,7 +439,7 @@ const EnhancedUserManagement: React.FC<EnhancedUserManagementProps> = ({
           <CardContent className="p-4 text-center">
             <Crown className="w-8 h-8 text-yellow-500 mx-auto mb-2" />
             <div className="text-2xl font-bold text-yellow-600">
-              {users.filter(u => u.subscriptionType === "premium").length}
+              {users.filter((u) => u.subscriptionType === "premium").length}
             </div>
             <p className="text-sm text-slate-600">Premium</p>
           </CardContent>
@@ -477,7 +494,9 @@ const EnhancedUserManagement: React.FC<EnhancedUserManagementProps> = ({
                   </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent>
-                  <DropdownMenuItem onClick={() => handleBulkAction("activate")}>
+                  <DropdownMenuItem
+                    onClick={() => handleBulkAction("activate")}
+                  >
                     <UserCheck className="w-4 h-4 mr-2" />
                     Activate Selected
                   </DropdownMenuItem>
@@ -486,7 +505,7 @@ const EnhancedUserManagement: React.FC<EnhancedUserManagementProps> = ({
                     Suspend Selected
                   </DropdownMenuItem>
                   <DropdownMenuSeparator />
-                  <DropdownMenuItem 
+                  <DropdownMenuItem
                     onClick={() => handleBulkAction("delete")}
                     className="text-red-600"
                   >
@@ -514,7 +533,7 @@ const EnhancedUserManagement: React.FC<EnhancedUserManagementProps> = ({
                     checked={selectedUsers.length === filteredUsers.length}
                     onCheckedChange={(checked) => {
                       if (checked) {
-                        setSelectedUsers(filteredUsers.map(u => u.id));
+                        setSelectedUsers(filteredUsers.map((u) => u.id));
                       } else {
                         setSelectedUsers([]);
                       }
@@ -538,9 +557,11 @@ const EnhancedUserManagement: React.FC<EnhancedUserManagementProps> = ({
                       checked={selectedUsers.includes(user.id)}
                       onCheckedChange={(checked) => {
                         if (checked) {
-                          setSelectedUsers(prev => [...prev, user.id]);
+                          setSelectedUsers((prev) => [...prev, user.id]);
                         } else {
-                          setSelectedUsers(prev => prev.filter(id => id !== user.id));
+                          setSelectedUsers((prev) =>
+                            prev.filter((id) => id !== user.id),
+                          );
                         }
                       }}
                     />
@@ -642,10 +663,9 @@ const EnhancedUserManagement: React.FC<EnhancedUserManagementProps> = ({
               {editMode === "create" ? "Create New User" : "Edit User"}
             </DialogTitle>
             <DialogDescription>
-              {editMode === "create" 
+              {editMode === "create"
                 ? "Add a new user to the platform"
-                : "Modify user information and permissions"
-              }
+                : "Modify user information and permissions"}
             </DialogDescription>
           </DialogHeader>
 
@@ -663,7 +683,9 @@ const EnhancedUserManagement: React.FC<EnhancedUserManagementProps> = ({
                   <Input
                     id="name"
                     value={formData.name || ""}
-                    onChange={(e) => setFormData(prev => ({...prev, name: e.target.value}))}
+                    onChange={(e) =>
+                      setFormData((prev) => ({ ...prev, name: e.target.value }))
+                    }
                     placeholder="Enter full name"
                   />
                 </div>
@@ -673,7 +695,12 @@ const EnhancedUserManagement: React.FC<EnhancedUserManagementProps> = ({
                     id="email"
                     type="email"
                     value={formData.email || ""}
-                    onChange={(e) => setFormData(prev => ({...prev, email: e.target.value}))}
+                    onChange={(e) =>
+                      setFormData((prev) => ({
+                        ...prev,
+                        email: e.target.value,
+                      }))
+                    }
                     placeholder="Enter email address"
                   />
                 </div>
@@ -684,7 +711,9 @@ const EnhancedUserManagement: React.FC<EnhancedUserManagementProps> = ({
                   <Label htmlFor="role">Role *</Label>
                   <Select
                     value={formData.role || "child"}
-                    onValueChange={(value: any) => setFormData(prev => ({...prev, role: value}))}
+                    onValueChange={(value: any) =>
+                      setFormData((prev) => ({ ...prev, role: value }))
+                    }
                   >
                     <SelectTrigger>
                       <SelectValue />
@@ -705,7 +734,9 @@ const EnhancedUserManagement: React.FC<EnhancedUserManagementProps> = ({
                   <Label htmlFor="status">Status *</Label>
                   <Select
                     value={formData.status || "active"}
-                    onValueChange={(value: any) => setFormData(prev => ({...prev, status: value}))}
+                    onValueChange={(value: any) =>
+                      setFormData((prev) => ({ ...prev, status: value }))
+                    }
                   >
                     <SelectTrigger>
                       <SelectValue />
@@ -722,7 +753,12 @@ const EnhancedUserManagement: React.FC<EnhancedUserManagementProps> = ({
                   <Label htmlFor="subscription">Subscription</Label>
                   <Select
                     value={formData.subscriptionType || "free"}
-                    onValueChange={(value: any) => setFormData(prev => ({...prev, subscriptionType: value}))}
+                    onValueChange={(value: any) =>
+                      setFormData((prev) => ({
+                        ...prev,
+                        subscriptionType: value,
+                      }))
+                    }
                   >
                     <SelectTrigger>
                       <SelectValue />
@@ -742,44 +778,59 @@ const EnhancedUserManagement: React.FC<EnhancedUserManagementProps> = ({
               <Alert>
                 <Shield className="w-4 h-4" />
                 <AlertDescription>
-                  Permissions control what actions this user can perform in the system.
-                  Role-based permissions are automatically applied.
+                  Permissions control what actions this user can perform in the
+                  system. Role-based permissions are automatically applied.
                 </AlertDescription>
               </Alert>
-              
+
               <div className="space-y-4">
                 {Object.entries(
-                  permissions.reduce((acc, perm) => {
-                    if (!acc[perm.category]) acc[perm.category] = [];
-                    acc[perm.category].push(perm);
-                    return acc;
-                  }, {} as Record<string, Permission[]>)
+                  permissions.reduce(
+                    (acc, perm) => {
+                      if (!acc[perm.category]) acc[perm.category] = [];
+                      acc[perm.category].push(perm);
+                      return acc;
+                    },
+                    {} as Record<string, Permission[]>,
+                  ),
                 ).map(([category, perms]) => (
                   <div key={category}>
-                    <h4 className="font-semibold capitalize mb-2">{category}</h4>
+                    <h4 className="font-semibold capitalize mb-2">
+                      {category}
+                    </h4>
                     <div className="space-y-2">
                       {perms.map((permission) => (
-                        <div key={permission.id} className="flex items-start gap-3 p-3 border rounded-lg">
+                        <div
+                          key={permission.id}
+                          className="flex items-start gap-3 p-3 border rounded-lg"
+                        >
                           <Checkbox
-                            checked={formData.permissions?.includes(permission.id) || false}
+                            checked={
+                              formData.permissions?.includes(permission.id) ||
+                              false
+                            }
                             onCheckedChange={(checked) => {
                               const currentPerms = formData.permissions || [];
                               if (checked) {
-                                setFormData(prev => ({
+                                setFormData((prev) => ({
                                   ...prev,
-                                  permissions: [...currentPerms, permission.id]
+                                  permissions: [...currentPerms, permission.id],
                                 }));
                               } else {
-                                setFormData(prev => ({
+                                setFormData((prev) => ({
                                   ...prev,
-                                  permissions: currentPerms.filter(p => p !== permission.id)
+                                  permissions: currentPerms.filter(
+                                    (p) => p !== permission.id,
+                                  ),
                                 }));
                               }
                             }}
                           />
                           <div className="flex-1">
                             <p className="font-medium">{permission.name}</p>
-                            <p className="text-sm text-slate-600">{permission.description}</p>
+                            <p className="text-sm text-slate-600">
+                              {permission.description}
+                            </p>
                           </div>
                         </div>
                       ))}
@@ -795,30 +846,34 @@ const EnhancedUserManagement: React.FC<EnhancedUserManagementProps> = ({
                 <Textarea
                   id="bio"
                   value={formData.profileData?.bio || ""}
-                  onChange={(e) => setFormData(prev => ({
-                    ...prev,
-                    profileData: {
-                      ...prev.profileData,
-                      bio: e.target.value
-                    }
-                  }))}
+                  onChange={(e) =>
+                    setFormData((prev) => ({
+                      ...prev,
+                      profileData: {
+                        ...prev.profileData,
+                        bio: e.target.value,
+                      },
+                    }))
+                  }
                   placeholder="Brief description about the user..."
                   rows={3}
                 />
               </div>
-              
+
               <div>
                 <Label htmlFor="avatar">Avatar URL</Label>
                 <Input
                   id="avatar"
                   value={formData.profileData?.avatar || ""}
-                  onChange={(e) => setFormData(prev => ({
-                    ...prev,
-                    profileData: {
-                      ...prev.profileData,
-                      avatar: e.target.value
-                    }
-                  }))}
+                  onChange={(e) =>
+                    setFormData((prev) => ({
+                      ...prev,
+                      profileData: {
+                        ...prev.profileData,
+                        avatar: e.target.value,
+                      },
+                    }))
+                  }
                   placeholder="https://example.com/avatar.jpg"
                 />
               </div>

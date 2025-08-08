@@ -336,7 +336,9 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onNavigateBack }) => {
   const [showBulkImport, setShowBulkImport] = useState(false);
   const [showWordEditor, setShowWordEditor] = useState(false);
   const [editingWord, setEditingWord] = useState<AdminWord | null>(null);
-  const [wordEditorMode, setWordEditorMode] = useState<"create" | "edit">("create");
+  const [wordEditorMode, setWordEditorMode] = useState<"create" | "edit">(
+    "create",
+  );
 
   // Form states
   const [newWordData, setNewWordData] = useState({
@@ -609,15 +611,22 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onNavigateBack }) => {
           </p>
         </div>
         <div className="flex gap-2">
-          <Button variant="outline" size="sm" onClick={() => setShowBulkImport(true)}>
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => setShowBulkImport(true)}
+          >
             <Upload className="w-4 h-4 mr-2" />
             Bulk Import
           </Button>
-          <Button size="sm" onClick={() => {
-            setWordEditorMode("create");
-            setEditingWord(null);
-            setShowWordEditor(true);
-          }}>
+          <Button
+            size="sm"
+            onClick={() => {
+              setWordEditorMode("create");
+              setEditingWord(null);
+              setShowWordEditor(true);
+            }}
+          >
             <Plus className="w-4 h-4 mr-2" />
             Add Word
           </Button>
@@ -1663,7 +1672,7 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onNavigateBack }) => {
         onOpenChange={setShowBulkImport}
         categories={categories}
         onImport={(words) => {
-          console.log('Importing words:', words);
+          console.log("Importing words:", words);
           setShowBulkImport(false);
         }}
       />
@@ -1677,9 +1686,9 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onNavigateBack }) => {
         mode={wordEditorMode}
         onSave={(word) => {
           if (wordEditorMode === "create") {
-            setWords(prev => [...prev, word]);
+            setWords((prev) => [...prev, word]);
           } else {
-            setWords(prev => prev.map(w => w.id === word.id ? word : w));
+            setWords((prev) => prev.map((w) => (w.id === word.id ? word : w)));
           }
           setShowWordEditor(false);
         }}
