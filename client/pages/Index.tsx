@@ -268,7 +268,7 @@ const challengeQuizQuestions = [
     options: ["Weight and mass", "Speed and direction", "Height and width", "Temperature and pressure"],
     correctAnswer: "Speed and direction",
     explanation: "Velocity measures both how fast something is moving and in which direction.",
-    emoji: "🚀",
+    emoji: "��",
   },
   {
     id: 7,
@@ -1370,7 +1370,8 @@ export default function Index() {
                       </div>
                     ) : (
                       <QuizGame
-                        questions={sampleQuizQuestions}
+                        questions={getQuizQuestions(selectedQuizType)}
+                        quizType={selectedQuizType}
                         onComplete={handleQuizComplete}
                         onProgress={(current, total) =>
                           console.log(`Quiz progress: ${current}/${total}`)
