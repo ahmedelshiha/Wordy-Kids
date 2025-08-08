@@ -28,7 +28,10 @@ import {
   Gamepad2,
   Brain,
   Shuffle,
-  Settings
+  Settings,
+  Calendar,
+  FileText,
+  Users
 } from 'lucide-react';
 
 // Sample data for learning
