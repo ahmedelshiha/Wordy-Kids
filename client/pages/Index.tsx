@@ -165,6 +165,330 @@ const sampleQuizQuestions = [
   },
 ];
 
+// Quick Quiz Questions (5 questions, easy level)
+const quickQuizQuestions = [
+  {
+    id: 1,
+    word: "cat",
+    question: "What sound does a cat make?",
+    options: ["Woof", "Meow", "Moo", "Chirp"],
+    correctAnswer: "Meow",
+    explanation: "Cats say meow to communicate with humans!",
+    emoji: "🐱",
+  },
+  {
+    id: 2,
+    word: "apple",
+    question: "What color is a typical apple?",
+    options: ["Blue", "Purple", "Red", "Black"],
+    correctAnswer: "Red",
+    explanation: "Apples are commonly red, though they can also be green or yellow.",
+    emoji: "🍎",
+  },
+  {
+    id: 3,
+    word: "sun",
+    question: "When do we see the sun?",
+    options: ["At night", "During the day", "Only in winter", "Never"],
+    correctAnswer: "During the day",
+    explanation: "The sun shines during the day and gives us light and warmth.",
+    emoji: "☀️",
+  },
+  {
+    id: 4,
+    word: "happy",
+    question: "How do you feel when you're happy?",
+    options: ["Sad", "Angry", "Good", "Tired"],
+    correctAnswer: "Good",
+    explanation: "When we're happy, we feel good and joyful!",
+    emoji: "😊",
+  },
+  {
+    id: 5,
+    word: "book",
+    question: "What do you do with a book?",
+    options: ["Eat it", "Read it", "Throw it", "Break it"],
+    correctAnswer: "Read it",
+    explanation: "Books are made for reading and learning new things.",
+    emoji: "📚",
+  },
+];
+
+// Challenge Quiz Questions (15 questions, harder level)
+const challengeQuizQuestions = [
+  {
+    id: 1,
+    word: "magnificent",
+    question: "What does 'magnificent' mean?",
+    options: ["Very small", "Extremely beautiful or impressive", "Quite ugly", "Somewhat boring"],
+    correctAnswer: "Extremely beautiful or impressive",
+    explanation: "Magnificent means something is extremely beautiful, impressive, or grand in scale.",
+    emoji: "✨",
+  },
+  {
+    id: 2,
+    word: "constellation",
+    question: "What is a constellation?",
+    options: ["A type of building", "A group of stars forming a pattern", "A musical instrument", "A kind of flower"],
+    correctAnswer: "A group of stars forming a pattern",
+    explanation: "Constellations are groups of stars that form recognizable patterns in the night sky.",
+    emoji: "⭐",
+  },
+  {
+    id: 3,
+    word: "hibernation",
+    question: "During hibernation, a bear's heart rate drops from 40 beats per minute to approximately how many?",
+    options: ["35 beats", "20 beats", "8 beats", "2 beats"],
+    correctAnswer: "8 beats",
+    explanation: "During hibernation, a bear's heart rate dramatically slows down to just 8 beats per minute!",
+    emoji: "🐻",
+  },
+  {
+    id: 4,
+    word: "octopus",
+    question: "How many hearts does an octopus have?",
+    options: ["One", "Two", "Three", "Four"],
+    correctAnswer: "Three",
+    explanation: "Octopuses have three hearts and blue blood!",
+    emoji: "🐙",
+  },
+  {
+    id: 5,
+    word: "chameleon",
+    question: "What unique ability do chameleon eyes have?",
+    options: ["See in the dark", "Change color", "Move independently", "See through walls"],
+    correctAnswer: "Move independently",
+    explanation: "Chameleons can move their eyes independently - one can look forward while the other looks backward!",
+    emoji: "🦎",
+  },
+  {
+    id: 6,
+    word: "velocity",
+    question: "Velocity is a measure of:",
+    options: ["Weight and mass", "Speed and direction", "Height and width", "Temperature and pressure"],
+    correctAnswer: "Speed and direction",
+    explanation: "Velocity measures both how fast something is moving and in which direction.",
+    emoji: "🚀",
+  },
+  {
+    id: 7,
+    word: "laboratory",
+    question: "The word 'laboratory' comes from Latin meaning:",
+    options: ["Place of learning", "House of science", "A place for work", "Room of experiments"],
+    correctAnswer: "A place for work",
+    explanation: "Laboratory comes from the Latin word meaning 'a place for work'.",
+    emoji: "🧪",
+  },
+  {
+    id: 8,
+    word: "symphony",
+    question: "A symphony is typically performed by:",
+    options: ["A single musician", "A small band", "A large orchestra", "A choir only"],
+    correctAnswer: "A large orchestra",
+    explanation: "Symphonies are complex musical compositions performed by large orchestras.",
+    emoji: "🎼",
+  },
+  {
+    id: 9,
+    word: "photosynthesis",
+    question: "Photosynthesis is the process by which:",
+    options: ["Animals breathe", "Plants make food using sunlight", "Water evaporates", "Rocks form crystals"],
+    correctAnswer: "Plants make food using sunlight",
+    explanation: "Photosynthesis is how plants convert sunlight, water, and carbon dioxide into food.",
+    emoji: "🌱",
+  },
+  {
+    id: 10,
+    word: "archaeology",
+    question: "Archaeology is the study of:",
+    options: ["Stars and planets", "Human history through artifacts", "Animals in the wild", "Weather patterns"],
+    correctAnswer: "Human history through artifacts",
+    explanation: "Archaeologists study human history by examining artifacts and remains from the past.",
+    emoji: "🏺",
+  },
+];
+
+// Picture Quiz Questions (visual/emoji based)
+const pictureQuizQuestions = [
+  {
+    id: 1,
+    emoji: "🍕",
+    question: "What food does this emoji represent?",
+    options: ["Hamburger", "Pizza", "Sandwich", "Pasta"],
+    correctAnswer: "Pizza",
+    explanation: "This emoji represents pizza - a delicious round flatbread with toppings!",
+  },
+  {
+    id: 2,
+    emoji: "🦁",
+    question: "This animal is known as the:",
+    options: ["Prince of the jungle", "King of the jungle", "Duke of the forest", "Lord of the savanna"],
+    correctAnswer: "King of the jungle",
+    explanation: "Lions are often called the 'King of the jungle' because of their majestic appearance.",
+  },
+  {
+    id: 3,
+    emoji: "🌈",
+    question: "How many colors are traditionally said to be in a rainbow?",
+    options: ["Five", "Six", "Seven", "Eight"],
+    correctAnswer: "Seven",
+    explanation: "Rainbows traditionally have seven colors: red, orange, yellow, green, blue, indigo, and violet.",
+  },
+  {
+    id: 4,
+    emoji: "🚂",
+    question: "What sound does this vehicle make?",
+    options: ["Beep beep", "Choo choo", "Vroom vroom", "Ring ring"],
+    correctAnswer: "Choo choo",
+    explanation: "Trains make a 'choo choo' sound from their steam engines and whistles.",
+  },
+  {
+    id: 5,
+    emoji: "🎂",
+    question: "When do we typically see this item?",
+    options: ["At breakfast", "At birthday parties", "At school", "At the doctor"],
+    correctAnswer: "At birthday parties",
+    explanation: "Birthday cakes are a special treat we enjoy at birthday celebrations!",
+  },
+  {
+    id: 6,
+    emoji: "🌙",
+    question: "When can we see this in the sky?",
+    options: ["Only at sunrise", "During the day", "At night", "Only in winter"],
+    correctAnswer: "At night",
+    explanation: "We can see the moon in the night sky, and sometimes during the day too!",
+  },
+  {
+    id: 7,
+    emoji: "🦋",
+    question: "Before becoming this, it was a:",
+    options: ["Tadpole", "Caterpillar", "Seed", "Egg"],
+    correctAnswer: "Caterpillar",
+    explanation: "Butterflies start life as caterpillars before transforming in a process called metamorphosis.",
+  },
+  {
+    id: 8,
+    emoji: "⚽",
+    question: "In which sport is this item used?",
+    options: ["Basketball", "Tennis", "Soccer", "Baseball"],
+    correctAnswer: "Soccer",
+    explanation: "This is a soccer ball, used in the world's most popular sport!",
+  },
+];
+
+// Spelling Quiz Questions
+const spellingQuizQuestions = [
+  {
+    id: 1,
+    word: "butterfly",
+    pronunciation: "/ˈbʌtərflaɪ/",
+    hint: "A colorful insect with wings",
+    emoji: "🦋",
+  },
+  {
+    id: 2,
+    word: "elephant",
+    pronunciation: "/ˈeləfənt/",
+    hint: "A large gray animal with a trunk",
+    emoji: "🐘",
+  },
+  {
+    id: 3,
+    word: "rainbow",
+    pronunciation: "/ˈreɪnboʊ/",
+    hint: "Colorful arc in the sky after rain",
+    emoji: "🌈",
+  },
+  {
+    id: 4,
+    word: "adventure",
+    pronunciation: "/ədˈven(t)SHər/",
+    hint: "An exciting journey or experience",
+    emoji: "🗺️",
+  },
+  {
+    id: 5,
+    word: "telescope",
+    pronunciation: "/ˈtelɪˌskoʊp/",
+    hint: "Device for seeing distant objects",
+    emoji: "🔭",
+  },
+  {
+    id: 6,
+    word: "magnificent",
+    pronunciation: "/mæɡˈnɪfɪsənt/",
+    hint: "Extremely beautiful or impressive",
+    emoji: "✨",
+  },
+  {
+    id: 7,
+    word: "pronunciation",
+    pronunciation: "/prəˌnʌnsiˈeɪʃən/",
+    hint: "How a word is spoken",
+    emoji: "🗣️",
+  },
+  {
+    id: 8,
+    word: "curiosity",
+    pronunciation: "/ˌkjʊriˈɑːsəti/",
+    hint: "Wanting to learn or know more",
+    emoji: "🤔",
+  },
+  {
+    id: 9,
+    word: "celebration",
+    pronunciation: "/ˌseləˈbreɪʃən/",
+    hint: "A joyful event or party",
+    emoji: "🎉",
+  },
+  {
+    id: 10,
+    word: "imagination",
+    pronunciation: "/ɪˌmædʒəˈneɪʃən/",
+    hint: "The ability to create ideas in your mind",
+    emoji: "💭",
+  },
+];
+
+// Speed Round Questions (endless, quick questions)
+const speedRoundQuestions = [
+  { id: 1, word: "cat", question: "Pet that says meow", options: ["Dog", "Cat", "Bird", "Fish"], correctAnswer: "Cat", emoji: "🐱" },
+  { id: 2, word: "red", question: "Color of fire", options: ["Blue", "Green", "Red", "Yellow"], correctAnswer: "Red", emoji: "🔴" },
+  { id: 3, word: "sun", question: "Shines during the day", options: ["Moon", "Star", "Sun", "Cloud"], correctAnswer: "Sun", emoji: "☀️" },
+  { id: 4, word: "book", question: "You read this", options: ["Phone", "Book", "TV", "Car"], correctAnswer: "Book", emoji: "📚" },
+  { id: 5, word: "tree", question: "Has leaves and branches", options: ["Rock", "Tree", "House", "Car"], correctAnswer: "Tree", emoji: "🌳" },
+  { id: 6, word: "happy", question: "Feeling joyful", options: ["Sad", "Angry", "Happy", "Tired"], correctAnswer: "Happy", emoji: "😊" },
+  { id: 7, word: "water", question: "You drink this", options: ["Sand", "Water", "Air", "Fire"], correctAnswer: "Water", emoji: "💧" },
+  { id: 8, word: "bird", question: "Animal that flies", options: ["Fish", "Dog", "Bird", "Cat"], correctAnswer: "Bird", emoji: "🐦" },
+  { id: 9, word: "house", question: "Where people live", options: ["Car", "Tree", "House", "Rock"], correctAnswer: "House", emoji: "🏠" },
+  { id: 10, word: "flower", question: "Colorful plant part", options: ["Root", "Flower", "Stone", "Metal"], correctAnswer: "Flower", emoji: "🌸" },
+  { id: 11, word: "ball", question: "Round toy for games", options: ["Square", "Ball", "Triangle", "Line"], correctAnswer: "Ball", emoji: "⚽" },
+  { id: 12, word: "ice", question: "Frozen water", options: ["Hot", "Ice", "Steam", "Warm"], correctAnswer: "Ice", emoji: "🧊" },
+  { id: 13, word: "star", question: "Twinkles in the sky", options: ["Rock", "Star", "Cloud", "Tree"], correctAnswer: "Star", emoji: "⭐" },
+  { id: 14, word: "fish", question: "Lives in water", options: ["Bird", "Dog", "Fish", "Cat"], correctAnswer: "Fish", emoji: "🐟" },
+  { id: 15, word: "cake", question: "Sweet birthday treat", options: ["Soup", "Cake", "Salad", "Bread"], correctAnswer: "Cake", emoji: "🎂" },
+];
+
+// Function to get questions based on quiz type
+const getQuizQuestions = (type: string) => {
+  switch (type) {
+    case 'quick':
+      return quickQuizQuestions;
+    case 'standard':
+      return sampleQuizQuestions;
+    case 'challenge':
+      return challengeQuizQuestions;
+    case 'picture':
+      return pictureQuizQuestions;
+    case 'spelling':
+      return spellingQuizQuestions;
+    case 'speed':
+      return speedRoundQuestions;
+    default:
+      return sampleQuizQuestions;
+  }
+};
+
 // Sample data for matching game
 const matchingPairs = [
   {
