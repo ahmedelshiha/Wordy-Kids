@@ -45,9 +45,43 @@ export const QuizGame: React.FC<QuizGameProps> = ({
   const [isTimerActive, setIsTimerActive] = useState(true);
   const [showExitConfirm, setShowExitConfirm] = useState(false);
 
+  // Safety checks
+  if (!questions || questions.length === 0) {
+    return (
+      <div className="max-w-4xl mx-auto">
+        <Card>
+          <CardContent className="p-8 text-center">
+            <h2 className="text-2xl font-bold text-slate-800 mb-4">No Questions Available</h2>
+            <p className="text-slate-600 mb-6">Sorry, there are no quiz questions available for this quiz type.</p>
+            <Button onClick={onExit} className="bg-educational-blue text-white">
+              Return to Quiz Selection
+            </Button>
+          </CardContent>
+        </Card>
+      </div>
+    );
+  }
+
   const currentQuestion = questions[currentIndex];
   const isLastQuestion = currentIndex === questions.length - 1;
   const progressPercentage = ((currentIndex + 1) / questions.length) * 100;
+
+  // Additional safety check for currentQuestion
+  if (!currentQuestion) {
+    return (
+      <div className="max-w-4xl mx-auto">
+        <Card>
+          <CardContent className="p-8 text-center">
+            <h2 className="text-2xl font-bold text-slate-800 mb-4">Question Not Found</h2>
+            <p className="text-slate-600 mb-6">There was an issue loading the current question.</p>
+            <Button onClick={onExit} className="bg-educational-blue text-white">
+              Return to Quiz Selection
+            </Button>
+          </CardContent>
+        </Card>
+      </div>
+    );
+  }
 
   useEffect(() => {
     onProgress?.(currentIndex + 1, questions.length);
