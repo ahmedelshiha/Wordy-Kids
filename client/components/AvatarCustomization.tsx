@@ -7,10 +7,20 @@ import { Label } from "@/components/ui/label";
 import { ArrowLeft, Sparkles, Heart, Star } from "lucide-react";
 
 const avatars = [
-  { id: "cat", emoji: "🐱", name: "Whiskers", personality: "Curious & Playful" },
+  {
+    id: "cat",
+    emoji: "🐱",
+    name: "Whiskers",
+    personality: "Curious & Playful",
+  },
   { id: "dog", emoji: "🐶", name: "Buddy", personality: "Loyal & Energetic" },
   { id: "lion", emoji: "🦁", name: "Leo", personality: "Brave & Bold" },
-  { id: "unicorn", emoji: "🦄", name: "Sparkle", personality: "Magical & Creative" },
+  {
+    id: "unicorn",
+    emoji: "🦄",
+    name: "Sparkle",
+    personality: "Magical & Creative",
+  },
   { id: "dragon", emoji: "🐉", name: "Flame", personality: "Wise & Powerful" },
   { id: "bear", emoji: "🐻", name: "Honey", personality: "Gentle & Strong" },
   { id: "rabbit", emoji: "🐰", name: "Hoppy", personality: "Quick & Clever" },
@@ -22,12 +32,42 @@ const avatars = [
 ];
 
 const colorThemes = [
-  { id: "ocean", name: "Ocean Blue", gradient: "from-blue-400 to-cyan-500", accent: "text-blue-600" },
-  { id: "sunset", name: "Sunset Orange", gradient: "from-orange-400 to-red-500", accent: "text-orange-600" },
-  { id: "forest", name: "Forest Green", gradient: "from-green-400 to-emerald-500", accent: "text-green-600" },
-  { id: "purple", name: "Royal Purple", gradient: "from-purple-400 to-violet-500", accent: "text-purple-600" },
-  { id: "pink", name: "Pretty Pink", gradient: "from-pink-400 to-rose-500", accent: "text-pink-600" },
-  { id: "golden", name: "Golden Sun", gradient: "from-yellow-400 to-orange-500", accent: "text-yellow-600" },
+  {
+    id: "ocean",
+    name: "Ocean Blue",
+    gradient: "from-blue-400 to-cyan-500",
+    accent: "text-blue-600",
+  },
+  {
+    id: "sunset",
+    name: "Sunset Orange",
+    gradient: "from-orange-400 to-red-500",
+    accent: "text-orange-600",
+  },
+  {
+    id: "forest",
+    name: "Forest Green",
+    gradient: "from-green-400 to-emerald-500",
+    accent: "text-green-600",
+  },
+  {
+    id: "purple",
+    name: "Royal Purple",
+    gradient: "from-purple-400 to-violet-500",
+    accent: "text-purple-600",
+  },
+  {
+    id: "pink",
+    name: "Pretty Pink",
+    gradient: "from-pink-400 to-rose-500",
+    accent: "text-pink-600",
+  },
+  {
+    id: "golden",
+    name: "Golden Sun",
+    gradient: "from-yellow-400 to-orange-500",
+    accent: "text-yellow-600",
+  },
 ];
 
 const interests = [
@@ -47,7 +87,10 @@ interface AvatarCustomizationProps {
   onBack: () => void;
 }
 
-export function AvatarCustomization({ onCreateProfile, onBack }: AvatarCustomizationProps) {
+export function AvatarCustomization({
+  onCreateProfile,
+  onBack,
+}: AvatarCustomizationProps) {
   const [childName, setChildName] = useState("");
   const [selectedAvatar, setSelectedAvatar] = useState(avatars[0]);
   const [selectedTheme, setSelectedTheme] = useState(colorThemes[0]);
@@ -55,16 +98,16 @@ export function AvatarCustomization({ onCreateProfile, onBack }: AvatarCustomiza
   const [step, setStep] = useState(1);
 
   const handleInterestToggle = (interestId: string) => {
-    setSelectedInterests(prev => 
+    setSelectedInterests((prev) =>
       prev.includes(interestId)
-        ? prev.filter(id => id !== interestId)
-        : [...prev, interestId]
+        ? prev.filter((id) => id !== interestId)
+        : [...prev, interestId],
     );
   };
 
   const handleCreateProfile = () => {
     const newProfile = {
-      id: childName.toLowerCase().replace(/\s+/g, ''),
+      id: childName.toLowerCase().replace(/\s+/g, ""),
       name: childName,
       avatar: selectedAvatar,
       theme: selectedTheme,
@@ -105,17 +148,21 @@ export function AvatarCustomization({ onCreateProfile, onBack }: AvatarCustomiza
           <div className="flex gap-4">
             {[1, 2, 3, 4].map((stepNum) => (
               <div key={stepNum} className="flex items-center">
-                <div className={`w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm ${
-                  step >= stepNum 
-                    ? 'bg-educational-blue text-white' 
-                    : 'bg-gray-200 text-gray-500'
-                }`}>
+                <div
+                  className={`w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm ${
+                    step >= stepNum
+                      ? "bg-educational-blue text-white"
+                      : "bg-gray-200 text-gray-500"
+                  }`}
+                >
                   {stepNum}
                 </div>
                 {stepNum < 4 && (
-                  <div className={`w-8 h-1 mx-2 ${
-                    step > stepNum ? 'bg-educational-blue' : 'bg-gray-200'
-                  }`}></div>
+                  <div
+                    className={`w-8 h-1 mx-2 ${
+                      step > stepNum ? "bg-educational-blue" : "bg-gray-200"
+                    }`}
+                  ></div>
                 )}
               </div>
             ))}
@@ -135,7 +182,10 @@ export function AvatarCustomization({ onCreateProfile, onBack }: AvatarCustomiza
                   This is how your learning buddy will know you!
                 </p>
                 <div className="max-w-md mx-auto">
-                  <Label htmlFor="name" className="text-lg font-semibold text-gray-700">
+                  <Label
+                    htmlFor="name"
+                    className="text-lg font-semibold text-gray-700"
+                  >
                     Your Name
                   </Label>
                   <Input
@@ -168,21 +218,23 @@ export function AvatarCustomization({ onCreateProfile, onBack }: AvatarCustomiza
                     Pick an animal friend to join you on your word adventure!
                   </p>
                 </div>
-                
+
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                   {avatars.map((avatar) => (
                     <Card
                       key={avatar.id}
                       className={`cursor-pointer transition-all duration-300 hover:scale-105 ${
                         selectedAvatar.id === avatar.id
-                          ? 'ring-4 ring-educational-blue bg-gradient-to-br from-blue-50 to-purple-50'
-                          : 'hover:shadow-lg'
+                          ? "ring-4 ring-educational-blue bg-gradient-to-br from-blue-50 to-purple-50"
+                          : "hover:shadow-lg"
                       }`}
                       onClick={() => setSelectedAvatar(avatar)}
                     >
                       <CardContent className="p-4 text-center">
                         <div className="text-4xl mb-2">{avatar.emoji}</div>
-                        <div className="font-semibold text-gray-800">{avatar.name}</div>
+                        <div className="font-semibold text-gray-800">
+                          {avatar.name}
+                        </div>
                         <div className="text-xs text-gray-600 mt-1">
                           {avatar.personality}
                         </div>
@@ -195,7 +247,9 @@ export function AvatarCustomization({ onCreateProfile, onBack }: AvatarCustomiza
                   <p className="font-semibold text-educational-blue">
                     Selected: {selectedAvatar.name} {selectedAvatar.emoji}
                   </p>
-                  <p className="text-sm text-gray-600">{selectedAvatar.personality}</p>
+                  <p className="text-sm text-gray-600">
+                    {selectedAvatar.personality}
+                  </p>
                 </div>
               </div>
             )}
@@ -219,13 +273,15 @@ export function AvatarCustomization({ onCreateProfile, onBack }: AvatarCustomiza
                       key={theme.id}
                       className={`cursor-pointer transition-all duration-300 hover:scale-105 ${
                         selectedTheme.id === theme.id
-                          ? 'ring-4 ring-educational-blue'
-                          : 'hover:shadow-lg'
+                          ? "ring-4 ring-educational-blue"
+                          : "hover:shadow-lg"
                       }`}
                       onClick={() => setSelectedTheme(theme)}
                     >
                       <CardContent className="p-4 text-center">
-                        <div className={`w-16 h-16 mx-auto rounded-full bg-gradient-to-r ${theme.gradient} mb-3 shadow-lg`}></div>
+                        <div
+                          className={`w-16 h-16 mx-auto rounded-full bg-gradient-to-r ${theme.gradient} mb-3 shadow-lg`}
+                        ></div>
                         <div className={`font-semibold ${theme.accent}`}>
                           {theme.name}
                         </div>
@@ -236,7 +292,9 @@ export function AvatarCustomization({ onCreateProfile, onBack }: AvatarCustomiza
 
                 <div className="text-center bg-white rounded-lg p-4 border-2">
                   <p className="font-semibold text-gray-800 mb-2">Preview:</p>
-                  <div className={`w-20 h-20 mx-auto rounded-full bg-gradient-to-r ${selectedTheme.gradient} flex items-center justify-center text-4xl mb-2`}>
+                  <div
+                    className={`w-20 h-20 mx-auto rounded-full bg-gradient-to-r ${selectedTheme.gradient} flex items-center justify-center text-4xl mb-2`}
+                  >
                     {selectedAvatar.emoji}
                   </div>
                   <p className={`font-semibold ${selectedTheme.accent}`}>
@@ -265,8 +323,8 @@ export function AvatarCustomization({ onCreateProfile, onBack }: AvatarCustomiza
                       key={interest.id}
                       className={`cursor-pointer transition-all duration-300 hover:scale-105 ${
                         selectedInterests.includes(interest.id)
-                          ? 'ring-4 ring-educational-green bg-gradient-to-br from-green-50 to-blue-50'
-                          : 'hover:shadow-lg'
+                          ? "ring-4 ring-educational-green bg-gradient-to-br from-green-50 to-blue-50"
+                          : "hover:shadow-lg"
                       }`}
                       onClick={() => handleInterestToggle(interest.id)}
                     >
@@ -287,9 +345,15 @@ export function AvatarCustomization({ onCreateProfile, onBack }: AvatarCustomiza
                     </p>
                     <div className="flex flex-wrap justify-center gap-2">
                       {selectedInterests.map((interestId) => {
-                        const interest = interests.find(i => i.id === interestId);
+                        const interest = interests.find(
+                          (i) => i.id === interestId,
+                        );
                         return (
-                          <Badge key={interestId} variant="secondary" className="bg-educational-green/20 text-educational-green">
+                          <Badge
+                            key={interestId}
+                            variant="secondary"
+                            className="bg-educational-green/20 text-educational-green"
+                          >
                             {interest?.emoji} {interest?.name}
                           </Badge>
                         );
@@ -304,13 +368,19 @@ export function AvatarCustomization({ onCreateProfile, onBack }: AvatarCustomiza
                     Your Adventure Profile 🎉
                   </h3>
                   <div className="flex items-center justify-center gap-4 mb-4">
-                    <div className={`w-16 h-16 rounded-full bg-gradient-to-r ${selectedTheme.gradient} flex items-center justify-center text-3xl`}>
+                    <div
+                      className={`w-16 h-16 rounded-full bg-gradient-to-r ${selectedTheme.gradient} flex items-center justify-center text-3xl`}
+                    >
                       {selectedAvatar.emoji}
                     </div>
                     <div>
                       <p className="font-bold text-gray-800">{childName}</p>
-                      <p className="text-sm text-gray-600">Learning with {selectedAvatar.name}</p>
-                      <p className={`text-sm ${selectedTheme.accent}`}>{selectedTheme.name} Theme</p>
+                      <p className="text-sm text-gray-600">
+                        Learning with {selectedAvatar.name}
+                      </p>
+                      <p className={`text-sm ${selectedTheme.accent}`}>
+                        {selectedTheme.name} Theme
+                      </p>
                     </div>
                   </div>
                 </div>
@@ -326,7 +396,7 @@ export function AvatarCustomization({ onCreateProfile, onBack }: AvatarCustomiza
               >
                 Previous
               </Button>
-              
+
               {step < 4 ? (
                 <Button
                   onClick={() => setStep(step + 1)}

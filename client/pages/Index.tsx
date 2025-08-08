@@ -126,7 +126,7 @@ export default function Index() {
   const [userRole, setUserRole] = useState<"child" | "parent">("child");
   const [showWordCreator, setShowWordCreator] = useState(false);
   const [customWords, setCustomWords] = useState<any[]>([]);
-  
+
   // New child-friendly states
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [currentProfile, setCurrentProfile] = useState<any>(null);
@@ -137,11 +137,11 @@ export default function Index() {
   const handleQuizComplete = (score: number, total: number) => {
     const percentage = Math.round((score / total) * 100);
     setFeedback({
-      type: 'celebration',
-      title: 'Quiz Complete! 🎉',
+      type: "celebration",
+      title: "Quiz Complete! 🎉",
       message: `You scored ${score}/${total} (${percentage}%)`,
       points: score * 10,
-      onContinue: () => setFeedback(null)
+      onContinue: () => setFeedback(null),
     });
     setShowQuiz(false);
   };
@@ -154,11 +154,11 @@ export default function Index() {
     setShowCelebration(true);
     setTimeout(() => {
       setFeedback({
-        type: 'celebration',
-        title: 'Matching Game Complete! 🎯',
+        type: "celebration",
+        title: "Matching Game Complete! 🎯",
         message: `You matched ${score} pairs in ${timeSpent} seconds!`,
         points: score * 15,
-        onContinue: () => setFeedback(null)
+        onContinue: () => setFeedback(null),
       });
       setShowCelebration(false);
     }, 2000);
@@ -171,11 +171,11 @@ export default function Index() {
     setShowCelebration(true);
     setTimeout(() => {
       setFeedback({
-        type: 'celebration',
-        title: 'Vocabulary Session Complete! 📚',
+        type: "celebration",
+        title: "Vocabulary Session Complete! 📚",
         message: `Reviewed ${wordsReviewed} words with ${accuracy}% accuracy!`,
         points: wordsReviewed * accuracy,
-        onContinue: () => setFeedback(null)
+        onContinue: () => setFeedback(null),
       });
       setShowCelebration(false);
     }, 2000);
@@ -198,11 +198,11 @@ export default function Index() {
     setCurrentProfile(profile);
     setIsLoggedIn(true);
     setFeedback({
-      type: 'success',
+      type: "success",
       title: `Welcome back, ${profile.name}! 🌟`,
-      message: 'Ready to continue your vocabulary adventure?',
+      message: "Ready to continue your vocabulary adventure?",
       onContinue: () => setFeedback(null),
-      autoHide: true
+      autoHide: true,
     });
   };
 
@@ -211,21 +211,21 @@ export default function Index() {
     setIsLoggedIn(true);
     setShowProfileCreation(false);
     setFeedback({
-      type: 'celebration',
-      title: 'Profile Created! 🎉',
+      type: "celebration",
+      title: "Profile Created! 🎉",
       message: `Welcome to Word Adventure, ${newProfile.name}! Your learning journey begins now!`,
-      onContinue: () => setFeedback(null)
+      onContinue: () => setFeedback(null),
     });
   };
 
   const handleGameComplete = (score: number, totalWords: number) => {
     setGameMode(false);
     setFeedback({
-      type: 'celebration',
-      title: 'Amazing Game! 🏆',
+      type: "celebration",
+      title: "Amazing Game! 🏆",
       message: `You scored ${score} points and learned ${totalWords} words!`,
       points: score,
-      onContinue: () => setFeedback(null)
+      onContinue: () => setFeedback(null),
     });
   };
 
@@ -238,13 +238,13 @@ export default function Index() {
   if (!isLoggedIn) {
     if (showProfileCreation) {
       return (
-        <AvatarCustomization 
+        <AvatarCustomization
           onCreateProfile={handleProfileCreation}
           onBack={() => setShowProfileCreation(false)}
         />
       );
     }
-    
+
     return (
       <EnhancedChildLogin
         onLogin={handleLogin}
@@ -269,18 +269,34 @@ export default function Index() {
               ⭐ Word Adventure
             </h1>
             <p className="text-lg md:text-xl mb-6 opacity-90">
-              Welcome back, {currentProfile?.name}! Ready for more vocabulary fun?
+              Welcome back, {currentProfile?.name}! Ready for more vocabulary
+              fun?
             </p>
           </div>
         </div>
 
         {/* Enhanced Floating Elements */}
-        <div className="absolute top-10 left-10 text-3xl animate-bounce">🌟</div>
-        <div className="absolute top-20 right-20 text-2xl animate-pulse">📚</div>
-        <div className="absolute bottom-10 left-20 text-4xl animate-bounce delay-1000">🎯</div>
-        <div className="absolute bottom-20 right-10 text-3xl animate-pulse delay-500">🚀</div>
-        <div className="absolute top-1/2 left-5 text-2xl animate-spin" style={{ animationDuration: '3s' }}>✨</div>
-        <div className="absolute top-1/3 right-5 text-2xl animate-bounce delay-700">🎪</div>
+        <div className="absolute top-10 left-10 text-3xl animate-bounce">
+          🌟
+        </div>
+        <div className="absolute top-20 right-20 text-2xl animate-pulse">
+          📚
+        </div>
+        <div className="absolute bottom-10 left-20 text-4xl animate-bounce delay-1000">
+          🎯
+        </div>
+        <div className="absolute bottom-20 right-10 text-3xl animate-pulse delay-500">
+          🚀
+        </div>
+        <div
+          className="absolute top-1/2 left-5 text-2xl animate-spin"
+          style={{ animationDuration: "3s" }}
+        >
+          ✨
+        </div>
+        <div className="absolute top-1/3 right-5 text-2xl animate-bounce delay-700">
+          🎪
+        </div>
       </header>
 
       {/* Main Content with Sidebar Layout */}
@@ -300,22 +316,38 @@ export default function Index() {
               {/* User Profile Section */}
               <div className="bg-white rounded-3xl p-6 mb-6 shadow-lg">
                 <div className="text-center">
-                  <div className={`w-16 h-16 rounded-full bg-gradient-to-r ${currentProfile?.theme?.gradient || 'from-purple-400 to-pink-400'} flex items-center justify-center mx-auto mb-4 text-3xl`}>
-                    {currentProfile?.avatar?.emoji || '🎯'}
+                  <div
+                    className={`w-16 h-16 rounded-full bg-gradient-to-r ${currentProfile?.theme?.gradient || "from-purple-400 to-pink-400"} flex items-center justify-center mx-auto mb-4 text-3xl`}
+                  >
+                    {currentProfile?.avatar?.emoji || "🎯"}
                   </div>
-                  <h3 className="font-bold text-lg text-gray-800">{currentProfile?.name || 'demo'}</h3>
+                  <h3 className="font-bold text-lg text-gray-800">
+                    {currentProfile?.name || "demo"}
+                  </h3>
                   <div className="flex items-center justify-center gap-1 mb-2">
                     <Star className="w-4 h-4 text-yellow-500 fill-current" />
-                    <span className="text-sm text-gray-600">Level {currentProfile?.level || 5}</span>
+                    <span className="text-sm text-gray-600">
+                      Level {currentProfile?.level || 5}
+                    </span>
                   </div>
                   <div className="bg-gray-100 rounded-full h-2 mb-2">
                     <div
-                      className={`bg-gradient-to-r ${currentProfile?.theme?.gradient || 'from-purple-400 to-pink-400'} h-2 rounded-full`}
-                      style={{ width: `${Math.min((currentProfile?.wordsLearned || 0) / 100 * 100, 100)}%` }}
+                      className={`bg-gradient-to-r ${currentProfile?.theme?.gradient || "from-purple-400 to-pink-400"} h-2 rounded-full`}
+                      style={{
+                        width: `${Math.min(((currentProfile?.wordsLearned || 0) / 100) * 100, 100)}%`,
+                      }}
                     ></div>
                   </div>
-                  <p className="text-xs text-gray-500">Progress: {Math.round((currentProfile?.wordsLearned || 0) / 100 * 100)}%</p>
-                  <p className="text-xs text-gray-500">{currentProfile?.wordsLearned || 0} words learned</p>
+                  <p className="text-xs text-gray-500">
+                    Progress:{" "}
+                    {Math.round(
+                      ((currentProfile?.wordsLearned || 0) / 100) * 100,
+                    )}
+                    %
+                  </p>
+                  <p className="text-xs text-gray-500">
+                    {currentProfile?.wordsLearned || 0} words learned
+                  </p>
                 </div>
               </div>
 
@@ -329,8 +361,12 @@ export default function Index() {
                       : "bg-white text-gray-700 hover:bg-purple-50"
                   }`}
                 >
-                  <div className={`p-2 rounded-xl ${activeTab === "dashboard" ? "bg-white/20" : "bg-purple-100"}`}>
-                    <Target className={`w-5 h-5 ${activeTab === "dashboard" ? "text-white" : "text-purple-600"}`} />
+                  <div
+                    className={`p-2 rounded-xl ${activeTab === "dashboard" ? "bg-white/20" : "bg-purple-100"}`}
+                  >
+                    <Target
+                      className={`w-5 h-5 ${activeTab === "dashboard" ? "text-white" : "text-purple-600"}`}
+                    />
                   </div>
                   <span className="font-semibold">Dashboard</span>
                 </button>
@@ -343,8 +379,12 @@ export default function Index() {
                       : "bg-white text-gray-700 hover:bg-purple-50"
                   }`}
                 >
-                  <div className={`p-2 rounded-xl ${activeTab === "quiz" ? "bg-white/20" : "bg-pink-100"}`}>
-                    <Brain className={`w-5 h-5 ${activeTab === "quiz" ? "text-white" : "text-pink-600"}`} />
+                  <div
+                    className={`p-2 rounded-xl ${activeTab === "quiz" ? "bg-white/20" : "bg-pink-100"}`}
+                  >
+                    <Brain
+                      className={`w-5 h-5 ${activeTab === "quiz" ? "text-white" : "text-pink-600"}`}
+                    />
                   </div>
                   <span className="font-semibold">Quiz Time</span>
                 </button>
@@ -357,8 +397,12 @@ export default function Index() {
                       : "bg-white text-gray-700 hover:bg-purple-50"
                   }`}
                 >
-                  <div className={`p-2 rounded-xl ${activeTab === "learn" ? "bg-white/20" : "bg-green-100"}`}>
-                    <BookOpen className={`w-5 h-5 ${activeTab === "learn" ? "text-white" : "text-green-600"}`} />
+                  <div
+                    className={`p-2 rounded-xl ${activeTab === "learn" ? "bg-white/20" : "bg-green-100"}`}
+                  >
+                    <BookOpen
+                      className={`w-5 h-5 ${activeTab === "learn" ? "text-white" : "text-green-600"}`}
+                    />
                   </div>
                   <span className="font-semibold">Word Library</span>
                 </button>
@@ -371,8 +415,12 @@ export default function Index() {
                       : "bg-white text-gray-700 hover:bg-purple-50"
                   }`}
                 >
-                  <div className={`p-2 rounded-xl ${activeTab === "progress" ? "bg-white/20" : "bg-yellow-100"}`}>
-                    <Trophy className={`w-5 h-5 ${activeTab === "progress" ? "text-white" : "text-yellow-600"}`} />
+                  <div
+                    className={`p-2 rounded-xl ${activeTab === "progress" ? "bg-white/20" : "bg-yellow-100"}`}
+                  >
+                    <Trophy
+                      className={`w-5 h-5 ${activeTab === "progress" ? "text-white" : "text-yellow-600"}`}
+                    />
                   </div>
                   <span className="font-semibold">Achievements</span>
                 </button>
@@ -385,8 +433,12 @@ export default function Index() {
                       : "bg-white text-gray-700 hover:bg-purple-50"
                   }`}
                 >
-                  <div className={`p-2 rounded-xl ${activeTab === "analytics" ? "bg-white/20" : "bg-green-100"}`}>
-                    <TrendingUp className={`w-5 h-5 ${activeTab === "analytics" ? "text-white" : "text-green-600"}`} />
+                  <div
+                    className={`p-2 rounded-xl ${activeTab === "analytics" ? "bg-white/20" : "bg-green-100"}`}
+                  >
+                    <TrendingUp
+                      className={`w-5 h-5 ${activeTab === "analytics" ? "text-white" : "text-green-600"}`}
+                    />
                   </div>
                   <span className="font-semibold">Progress</span>
                 </button>
@@ -421,14 +473,20 @@ export default function Index() {
                   <span className="font-semibold">Settings</span>
                 </button>
               </nav>
-
             </aside>
 
             {/* Main Content Area */}
             <div className="flex-1 p-8 bg-gradient-to-br from-blue-50 via-white to-purple-50">
-              <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
+              <Tabs
+                value={activeTab}
+                onValueChange={setActiveTab}
+                className="w-full"
+              >
                 <TabsContent value="dashboard">
-                  <LearningDashboard stats={learningStats} userName={currentProfile?.name || 'Alex'} />
+                  <LearningDashboard
+                    stats={learningStats}
+                    userName={currentProfile?.name || "Alex"}
+                  />
                 </TabsContent>
 
                 <TabsContent value="learn">
@@ -445,9 +503,10 @@ export default function Index() {
                     ) : gameMode ? (
                       <GameLikeLearning
                         words={(() => {
-                          const categoryWords = selectedCategory === "all"
-                            ? getRandomWords(20)
-                            : getWordsByCategory(selectedCategory);
+                          const categoryWords =
+                            selectedCategory === "all"
+                              ? getRandomWords(20)
+                              : getWordsByCategory(selectedCategory);
                           return categoryWords.slice(0, 10);
                         })()}
                         onComplete={handleGameComplete}
@@ -456,13 +515,19 @@ export default function Index() {
                     ) : (
                       <>
                         <div className="text-center">
-                          <h2 className="text-3xl font-bold text-slate-800 mb-4">Learning Mode</h2>
-                          <p className="text-slate-600 mb-8">Choose how you'd like to learn your vocabulary!</p>
+                          <h2 className="text-3xl font-bold text-slate-800 mb-4">
+                            Learning Mode
+                          </h2>
+                          <p className="text-slate-600 mb-8">
+                            Choose how you'd like to learn your vocabulary!
+                          </p>
 
                           <div className="flex justify-center gap-4 mb-8 flex-wrap">
                             <Button
                               onClick={() => setLearningMode("cards")}
-                              variant={learningMode === "cards" ? "default" : "outline"}
+                              variant={
+                                learningMode === "cards" ? "default" : "outline"
+                              }
                               className="flex items-center gap-2"
                             >
                               <BookOpen className="w-4 h-4" />
@@ -470,7 +535,11 @@ export default function Index() {
                             </Button>
                             <Button
                               onClick={() => setLearningMode("builder")}
-                              variant={learningMode === "builder" ? "default" : "outline"}
+                              variant={
+                                learningMode === "builder"
+                                  ? "default"
+                                  : "outline"
+                              }
                               className="flex items-center gap-2"
                             >
                               <Brain className="w-4 h-4" />
@@ -484,7 +553,10 @@ export default function Index() {
                               <Gamepad2 className="w-4 h-4" />
                               Game Mode! 🎮
                             </Button>
-                            <Button onClick={() => setSelectedCategory("all")} variant="ghost">
+                            <Button
+                              onClick={() => setSelectedCategory("all")}
+                              variant="ghost"
+                            >
                               ← Back to Categories
                             </Button>
                           </div>
@@ -493,9 +565,10 @@ export default function Index() {
                         {learningMode === "cards" && (
                           <>
                             {(() => {
-                              const categoryWords = selectedCategory === "all"
-                                ? getRandomWords(20)
-                                : getWordsByCategory(selectedCategory);
+                              const categoryWords =
+                                selectedCategory === "all"
+                                  ? getRandomWords(20)
+                                  : getWordsByCategory(selectedCategory);
                               const displayWords = categoryWords.slice(0, 20);
 
                               return (
@@ -506,8 +579,14 @@ export default function Index() {
                                         <Button
                                           key={index}
                                           size="sm"
-                                          variant={currentWordIndex === index ? "default" : "outline"}
-                                          onClick={() => setCurrentWordIndex(index)}
+                                          variant={
+                                            currentWordIndex === index
+                                              ? "default"
+                                              : "outline"
+                                          }
+                                          onClick={() =>
+                                            setCurrentWordIndex(index)
+                                          }
                                           className="w-8 h-8 p-0"
                                         >
                                           {index + 1}
@@ -520,23 +599,47 @@ export default function Index() {
                                     <>
                                       <div className="max-w-md mx-auto">
                                         <WordCard
-                                          word={displayWords[currentWordIndex] || displayWords[0]}
-                                          onPronounce={(word) => console.log("Playing pronunciation for:", word.word)}
-                                          onFavorite={(word) => console.log("Favorited:", word.word)}
+                                          word={
+                                            displayWords[currentWordIndex] ||
+                                            displayWords[0]
+                                          }
+                                          onPronounce={(word) =>
+                                            console.log(
+                                              "Playing pronunciation for:",
+                                              word.word,
+                                            )
+                                          }
+                                          onFavorite={(word) =>
+                                            console.log("Favorited:", word.word)
+                                          }
                                         />
                                       </div>
 
                                       <div className="flex justify-center gap-4">
                                         <Button
-                                          onClick={() => setCurrentWordIndex(Math.max(0, currentWordIndex - 1))}
+                                          onClick={() =>
+                                            setCurrentWordIndex(
+                                              Math.max(0, currentWordIndex - 1),
+                                            )
+                                          }
                                           disabled={currentWordIndex === 0}
                                           variant="outline"
                                         >
                                           Previous
                                         </Button>
                                         <Button
-                                          onClick={() => setCurrentWordIndex(Math.min(displayWords.length - 1, currentWordIndex + 1))}
-                                          disabled={currentWordIndex === displayWords.length - 1}
+                                          onClick={() =>
+                                            setCurrentWordIndex(
+                                              Math.min(
+                                                displayWords.length - 1,
+                                                currentWordIndex + 1,
+                                              ),
+                                            )
+                                          }
+                                          disabled={
+                                            currentWordIndex ===
+                                            displayWords.length - 1
+                                          }
                                         >
                                           Next
                                           <ArrowRight className="w-4 h-4 ml-2" />
@@ -544,8 +647,15 @@ export default function Index() {
                                       </div>
 
                                       <div className="text-center mt-4">
-                                        <Badge variant="outline" className="text-sm">
-                                          {selectedCategory === "all" ? "Random Selection" : `${selectedCategory} Category`} - Word {currentWordIndex + 1} of {displayWords.length}
+                                        <Badge
+                                          variant="outline"
+                                          className="text-sm"
+                                        >
+                                          {selectedCategory === "all"
+                                            ? "Random Selection"
+                                            : `${selectedCategory} Category`}{" "}
+                                          - Word {currentWordIndex + 1} of{" "}
+                                          {displayWords.length}
                                         </Badge>
                                       </div>
                                     </>
@@ -561,8 +671,14 @@ export default function Index() {
                             words={wordsDatabase.map((word) => ({
                               ...word,
                               masteryLevel: Math.floor(Math.random() * 100),
-                              lastReviewed: new Date(Date.now() - Math.random() * 7 * 24 * 60 * 60 * 1000),
-                              nextReview: new Date(Date.now() + Math.random() * 3 * 24 * 60 * 60 * 1000),
+                              lastReviewed: new Date(
+                                Date.now() -
+                                  Math.random() * 7 * 24 * 60 * 60 * 1000,
+                              ),
+                              nextReview: new Date(
+                                Date.now() +
+                                  Math.random() * 3 * 24 * 60 * 60 * 1000,
+                              ),
                             }))}
                             onWordMastered={handleWordMastered}
                             onSessionComplete={handleVocabularySessionComplete}
@@ -575,8 +691,12 @@ export default function Index() {
 
                 <TabsContent value="quiz">
                   <div className="text-center">
-                    <h2 className="text-3xl font-bold text-slate-800 mb-4">🧠 Quiz Time!</h2>
-                    <p className="text-slate-600 mb-8">Test your vocabulary knowledge with fun quizzes!</p>
+                    <h2 className="text-3xl font-bold text-slate-800 mb-4">
+                      🧠 Quiz Time!
+                    </h2>
+                    <p className="text-slate-600 mb-8">
+                      Test your vocabulary knowledge with fun quizzes!
+                    </p>
                     <Button
                       onClick={() => setShowQuiz(true)}
                       className="bg-gradient-to-r from-educational-blue to-educational-purple text-white"
@@ -585,7 +705,7 @@ export default function Index() {
                       Start Quiz
                     </Button>
                   </div>
-                  
+
                   {showQuiz && (
                     <QuizGame
                       questions={[]}
@@ -596,14 +716,16 @@ export default function Index() {
                 </TabsContent>
 
                 <TabsContent value="progress">
-                  <AchievementSystem onUnlock={(achievement) => {
-                    setFeedback({
-                      type: 'celebration',
-                      title: 'Achievement Unlocked! 🏆',
-                      message: `You earned: ${achievement.name}`,
-                      onContinue: () => setFeedback(null)
-                    });
-                  }} />
+                  <AchievementSystem
+                    onUnlock={(achievement) => {
+                      setFeedback({
+                        type: "celebration",
+                        title: "Achievement Unlocked! 🏆",
+                        message: `You earned: ${achievement.name}`,
+                        onContinue: () => setFeedback(null),
+                      });
+                    }}
+                  />
                 </TabsContent>
 
                 <TabsContent value="analytics">
@@ -624,21 +746,33 @@ export default function Index() {
 
       {/* Word Creator */}
       {showWordCreator && (
-        <WordCreator onSave={handleWordCreated} onClose={() => setShowWordCreator(false)} />
+        <WordCreator
+          onSave={handleWordCreated}
+          onClose={() => setShowWordCreator(false)}
+        />
       )}
 
       {/* Feedback System */}
-      {feedback && <EncouragingFeedback feedback={feedback} onClose={() => setFeedback(null)} />}
+      {feedback && (
+        <EncouragingFeedback
+          feedback={feedback}
+          onClose={() => setFeedback(null)}
+        />
+      )}
 
       {/* Floating Helper */}
       <div className="fixed bottom-6 right-6 z-40">
-        <div className="bg-gradient-to-r from-educational-purple to-educational-pink p-4 rounded-full shadow-2xl cursor-pointer hover:scale-110 transition-all duration-300"
-             onClick={() => setFeedback({
-               type: 'encouragement',
-               title: 'Need Help? 🤗',
-               message: 'You\'re doing amazing! Keep learning and exploring new words!',
-               onContinue: () => setFeedback(null)
-             })}
+        <div
+          className="bg-gradient-to-r from-educational-purple to-educational-pink p-4 rounded-full shadow-2xl cursor-pointer hover:scale-110 transition-all duration-300"
+          onClick={() =>
+            setFeedback({
+              type: "encouragement",
+              title: "Need Help? 🤗",
+              message:
+                "You're doing amazing! Keep learning and exploring new words!",
+              onContinue: () => setFeedback(null),
+            })
+          }
         >
           <Heart className="w-6 h-6 text-white fill-current animate-pulse" />
         </div>

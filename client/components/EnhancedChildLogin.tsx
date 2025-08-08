@@ -4,96 +4,137 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { 
-  Heart, 
-  Star, 
-  Trophy, 
-  Sparkles, 
-  ArrowLeft, 
-  Mail, 
-  Lock, 
+import {
+  Heart,
+  Star,
+  Trophy,
+  Sparkles,
+  ArrowLeft,
+  Mail,
+  Lock,
   UserPlus,
   HelpCircle,
   Key,
   Shield,
   AlertCircle,
-  CheckCircle
+  CheckCircle,
 } from "lucide-react";
 import { audioService } from "@/lib/audioService";
 
 const avatars = [
-  { id: "cat", emoji: "🐱", name: "Whiskers", color: "from-orange-400 to-orange-600" },
-  { id: "dog", emoji: "🐶", name: "Buddy", color: "from-brown-400 to-brown-600" },
-  { id: "lion", emoji: "🦁", name: "Leo", color: "from-yellow-400 to-yellow-600" },
-  { id: "unicorn", emoji: "🦄", name: "Sparkle", color: "from-pink-400 to-purple-600" },
-  { id: "dragon", emoji: "🐉", name: "Flame", color: "from-green-400 to-green-600" },
-  { id: "bear", emoji: "🐻", name: "Honey", color: "from-amber-400 to-amber-600" },
-  { id: "rabbit", emoji: "🐰", name: "Hoppy", color: "from-gray-400 to-gray-600" },
+  {
+    id: "cat",
+    emoji: "🐱",
+    name: "Whiskers",
+    color: "from-orange-400 to-orange-600",
+  },
+  {
+    id: "dog",
+    emoji: "🐶",
+    name: "Buddy",
+    color: "from-brown-400 to-brown-600",
+  },
+  {
+    id: "lion",
+    emoji: "🦁",
+    name: "Leo",
+    color: "from-yellow-400 to-yellow-600",
+  },
+  {
+    id: "unicorn",
+    emoji: "🦄",
+    name: "Sparkle",
+    color: "from-pink-400 to-purple-600",
+  },
+  {
+    id: "dragon",
+    emoji: "🐉",
+    name: "Flame",
+    color: "from-green-400 to-green-600",
+  },
+  {
+    id: "bear",
+    emoji: "🐻",
+    name: "Honey",
+    color: "from-amber-400 to-amber-600",
+  },
+  {
+    id: "rabbit",
+    emoji: "🐰",
+    name: "Hoppy",
+    color: "from-gray-400 to-gray-600",
+  },
   { id: "panda", emoji: "🐼", name: "Bamboo", color: "from-black to-gray-600" },
 ];
 
 const savedProfiles = [
-  { 
-    id: "alex", 
-    username: "alex_explorer", 
+  {
+    id: "alex",
+    username: "alex_explorer",
     email: "alex@family.com",
-    avatar: avatars[3], 
-    level: 5, 
-    points: 1250, 
-    streak: 7, 
+    avatar: avatars[3],
+    level: 5,
+    points: 1250,
+    streak: 7,
     wordsLearned: 42,
-    hasPassword: true 
+    hasPassword: true,
   },
-  { 
-    id: "sam", 
-    username: "sam_smart", 
+  {
+    id: "sam",
+    username: "sam_smart",
     email: "sam@family.com",
-    avatar: avatars[0], 
-    level: 3, 
-    points: 850, 
-    streak: 4, 
+    avatar: avatars[0],
+    level: 3,
+    points: 850,
+    streak: 4,
     wordsLearned: 28,
-    hasPassword: false 
+    hasPassword: false,
   },
-  { 
-    id: "taylor", 
-    username: "taylor_champion", 
+  {
+    id: "taylor",
+    username: "taylor_champion",
     email: "taylor@family.com",
-    avatar: avatars[4], 
-    level: 7, 
-    points: 2100, 
-    streak: 12, 
+    avatar: avatars[4],
+    level: 7,
+    points: 2100,
+    streak: 12,
     wordsLearned: 67,
-    hasPassword: true 
+    hasPassword: true,
   },
 ];
 
-type ViewMode = 'main' | 'login' | 'create' | 'forgot';
+type ViewMode = "main" | "login" | "create" | "forgot";
 
 interface EnhancedChildLoginProps {
   onLogin: (profile: any) => void;
   onCreateProfile: () => void;
 }
 
-export function EnhancedChildLogin({ onLogin, onCreateProfile }: EnhancedChildLoginProps) {
-  const [currentView, setCurrentView] = useState<ViewMode>('main');
+export function EnhancedChildLogin({
+  onLogin,
+  onCreateProfile,
+}: EnhancedChildLoginProps) {
+  const [currentView, setCurrentView] = useState<ViewMode>("main");
   const [selectedProfile, setSelectedProfile] = useState<any>(null);
-  const [loginForm, setLoginForm] = useState({ username: '', password: '' });
-  const [createForm, setCreateForm] = useState({ 
-    childName: '', 
-    username: '', 
-    email: '', 
-    password: '', 
-    confirmPassword: '',
-    parentEmail: ''
+  const [loginForm, setLoginForm] = useState({ username: "", password: "" });
+  const [createForm, setCreateForm] = useState({
+    childName: "",
+    username: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+    parentEmail: "",
   });
-  const [forgotForm, setForgotForm] = useState({ username: '', email: '' });
+  const [forgotForm, setForgotForm] = useState({ username: "", email: "" });
   const [isLoading, setIsLoading] = useState(false);
-  const [message, setMessage] = useState<{type: 'success' | 'error', text: string} | null>(null);
+  const [message, setMessage] = useState<{
+    type: "success" | "error";
+    text: string;
+  } | null>(null);
 
   const handleProfileSelect = (profile: any) => {
     audioService.playWhooshSound();
-    
+
     if (!profile.hasPassword) {
       // Quick login for profiles without password
       setSelectedProfile(profile.id);
@@ -103,26 +144,32 @@ export function EnhancedChildLogin({ onLogin, onCreateProfile }: EnhancedChildLo
     } else {
       // Show password login for protected profiles
       setSelectedProfile(profile);
-      setLoginForm({ username: profile.username, password: '' });
-      setCurrentView('login');
+      setLoginForm({ username: profile.username, password: "" });
+      setCurrentView("login");
     }
   };
 
   const handleLogin = async () => {
     setIsLoading(true);
     setMessage(null);
-    
+
     // Simulate login process
     setTimeout(() => {
-      if (loginForm.password === 'demo123' || loginForm.password === selectedProfile?.id + '123') {
+      if (
+        loginForm.password === "demo123" ||
+        loginForm.password === selectedProfile?.id + "123"
+      ) {
         audioService.playCheerSound();
-        setMessage({ type: 'success', text: 'Welcome back! 🎉' });
+        setMessage({ type: "success", text: "Welcome back! 🎉" });
         setTimeout(() => {
           onLogin(selectedProfile);
         }, 1000);
       } else {
         audioService.playEncouragementSound();
-        setMessage({ type: 'error', text: 'Oops! Check your password and try again! 🤗' });
+        setMessage({
+          type: "error",
+          text: "Oops! Check your password and try again! 🤗",
+        });
       }
       setIsLoading(false);
     }, 1500);
@@ -131,16 +178,22 @@ export function EnhancedChildLogin({ onLogin, onCreateProfile }: EnhancedChildLo
   const handleCreateAccount = async () => {
     setIsLoading(true);
     setMessage(null);
-    
+
     // Basic validation
     if (createForm.password !== createForm.confirmPassword) {
-      setMessage({ type: 'error', text: 'Passwords don\'t match! Try again! 😊' });
+      setMessage({
+        type: "error",
+        text: "Passwords don't match! Try again! 😊",
+      });
       setIsLoading(false);
       return;
     }
-    
+
     if (createForm.password.length < 4) {
-      setMessage({ type: 'error', text: 'Password needs at least 4 characters! 🔒' });
+      setMessage({
+        type: "error",
+        text: "Password needs at least 4 characters! 🔒",
+      });
       setIsLoading(false);
       return;
     }
@@ -148,7 +201,10 @@ export function EnhancedChildLogin({ onLogin, onCreateProfile }: EnhancedChildLo
     // Simulate account creation
     setTimeout(() => {
       audioService.playCheerSound();
-      setMessage({ type: 'success', text: 'Account created! Let\'s start your adventure! 🚀' });
+      setMessage({
+        type: "success",
+        text: "Account created! Let's start your adventure! 🚀",
+      });
       setTimeout(() => {
         onCreateProfile();
       }, 1500);
@@ -159,13 +215,13 @@ export function EnhancedChildLogin({ onLogin, onCreateProfile }: EnhancedChildLo
   const handleForgotPassword = async () => {
     setIsLoading(true);
     setMessage(null);
-    
+
     // Simulate password recovery
     setTimeout(() => {
       audioService.playSuccessSound();
-      setMessage({ 
-        type: 'success', 
-        text: 'Recovery email sent! Ask a grown-up to check your email! 📧' 
+      setMessage({
+        type: "success",
+        text: "Recovery email sent! Ask a grown-up to check your email! 📧",
       });
       setIsLoading(false);
     }, 1500);
@@ -219,9 +275,11 @@ export function EnhancedChildLogin({ onLogin, onCreateProfile }: EnhancedChildLo
                 </div>
               </div>
             )}
-            
+
             <CardHeader className="text-center pb-2">
-              <div className={`w-24 h-24 mx-auto rounded-full bg-gradient-to-r ${profile.avatar.color} flex items-center justify-center text-5xl mb-4 shadow-xl animate-pulse`}>
+              <div
+                className={`w-24 h-24 mx-auto rounded-full bg-gradient-to-r ${profile.avatar.color} flex items-center justify-center text-5xl mb-4 shadow-xl animate-pulse`}
+              >
                 {profile.avatar.emoji}
               </div>
               <CardTitle className="text-2xl text-gray-800 capitalize">
@@ -263,8 +321,8 @@ export function EnhancedChildLogin({ onLogin, onCreateProfile }: EnhancedChildLo
 
               {/* Learning Buddy */}
               <div className="text-center">
-                <Badge 
-                  variant="secondary" 
+                <Badge
+                  variant="secondary"
                   className="bg-educational-purple/20 text-educational-purple px-4 py-2"
                 >
                   🎯 Learning with {profile.avatar.name}
@@ -293,9 +351,9 @@ export function EnhancedChildLogin({ onLogin, onCreateProfile }: EnhancedChildLo
       {/* Action Buttons */}
       <div className="flex justify-center gap-6 flex-wrap">
         {/* Create New Account */}
-        <Card 
+        <Card
           className="cursor-pointer hover:shadow-xl transition-all duration-300 bg-gradient-to-r from-educational-green/10 to-educational-blue/10 border-2 border-dashed border-educational-green/30 hover:scale-105"
-          onClick={() => setCurrentView('create')}
+          onClick={() => setCurrentView("create")}
         >
           <CardContent className="p-8 text-center">
             <div className="w-20 h-20 mx-auto rounded-full bg-gradient-to-r from-educational-green to-educational-blue flex items-center justify-center text-4xl mb-4 shadow-lg">
@@ -311,9 +369,9 @@ export function EnhancedChildLogin({ onLogin, onCreateProfile }: EnhancedChildLo
         </Card>
 
         {/* Need Help */}
-        <Card 
+        <Card
           className="cursor-pointer hover:shadow-xl transition-all duration-300 bg-gradient-to-r from-educational-purple/10 to-educational-pink/10 border-2 border-dashed border-educational-purple/30 hover:scale-105"
-          onClick={() => setCurrentView('forgot')}
+          onClick={() => setCurrentView("forgot")}
         >
           <CardContent className="p-8 text-center">
             <div className="w-20 h-20 mx-auto rounded-full bg-gradient-to-r from-educational-purple to-educational-pink flex items-center justify-center text-4xl mb-4 shadow-lg">
@@ -337,23 +395,30 @@ export function EnhancedChildLogin({ onLogin, onCreateProfile }: EnhancedChildLo
         <CardHeader className="text-center">
           <Button
             variant="ghost"
-            onClick={() => setCurrentView('main')}
+            onClick={() => setCurrentView("main")}
             className="absolute top-4 left-4 p-2"
           >
             <ArrowLeft className="w-4 h-4" />
           </Button>
-          
-          <div className={`w-20 h-20 mx-auto rounded-full bg-gradient-to-r ${selectedProfile?.avatar.color} flex items-center justify-center text-4xl mb-4 shadow-lg`}>
+
+          <div
+            className={`w-20 h-20 mx-auto rounded-full bg-gradient-to-r ${selectedProfile?.avatar.color} flex items-center justify-center text-4xl mb-4 shadow-lg`}
+          >
             {selectedProfile?.avatar.emoji}
           </div>
           <CardTitle className="text-2xl text-gray-800">
             Welcome back, {selectedProfile?.id}! 👋
           </CardTitle>
-          <p className="text-gray-600">Enter your password to continue your adventure!</p>
+          <p className="text-gray-600">
+            Enter your password to continue your adventure!
+          </p>
         </CardHeader>
         <CardContent className="space-y-6">
           <div>
-            <Label htmlFor="username" className="text-lg font-semibold text-gray-700">
+            <Label
+              htmlFor="username"
+              className="text-lg font-semibold text-gray-700"
+            >
               Username
             </Label>
             <Input
@@ -364,9 +429,12 @@ export function EnhancedChildLogin({ onLogin, onCreateProfile }: EnhancedChildLo
               className="text-center text-lg py-3 mt-2 bg-gray-50"
             />
           </div>
-          
+
           <div>
-            <Label htmlFor="password" className="text-lg font-semibold text-gray-700">
+            <Label
+              htmlFor="password"
+              className="text-lg font-semibold text-gray-700"
+            >
               Password
             </Label>
             <Input
@@ -374,23 +442,28 @@ export function EnhancedChildLogin({ onLogin, onCreateProfile }: EnhancedChildLo
               type="password"
               placeholder="Enter your password..."
               value={loginForm.password}
-              onChange={(e) => setLoginForm({...loginForm, password: e.target.value})}
+              onChange={(e) =>
+                setLoginForm({ ...loginForm, password: e.target.value })
+              }
               className="text-center text-lg py-3 mt-2 border-2"
-              onKeyPress={(e) => e.key === 'Enter' && handleLogin()}
+              onKeyPress={(e) => e.key === "Enter" && handleLogin()}
             />
           </div>
 
           {message && (
-            <div className={`text-center p-3 rounded-lg ${
-              message.type === 'success' 
-                ? 'bg-green-50 text-green-700 border border-green-200' 
-                : 'bg-red-50 text-red-700 border border-red-200'
-            }`}>
+            <div
+              className={`text-center p-3 rounded-lg ${
+                message.type === "success"
+                  ? "bg-green-50 text-green-700 border border-green-200"
+                  : "bg-red-50 text-red-700 border border-red-200"
+              }`}
+            >
               <div className="flex items-center justify-center gap-2">
-                {message.type === 'success' ? 
-                  <CheckCircle className="w-4 h-4" /> : 
+                {message.type === "success" ? (
+                  <CheckCircle className="w-4 h-4" />
+                ) : (
                   <AlertCircle className="w-4 h-4" />
-                }
+                )}
                 {message.text}
               </div>
             </div>
@@ -414,10 +487,10 @@ export function EnhancedChildLogin({ onLogin, onCreateProfile }: EnhancedChildLo
                 </>
               )}
             </Button>
-            
+
             <Button
               variant="ghost"
-              onClick={() => setCurrentView('forgot')}
+              onClick={() => setCurrentView("forgot")}
               className="w-full text-gray-600"
             >
               Forgot Password? 🤔
@@ -426,7 +499,8 @@ export function EnhancedChildLogin({ onLogin, onCreateProfile }: EnhancedChildLo
 
           <div className="text-center bg-blue-50 rounded-lg p-3">
             <p className="text-xs text-blue-800">
-              <strong>Demo:</strong> Try password "demo123" or "{selectedProfile?.id}123"
+              <strong>Demo:</strong> Try password "demo123" or "
+              {selectedProfile?.id}123"
             </p>
           </div>
         </CardContent>
@@ -440,23 +514,28 @@ export function EnhancedChildLogin({ onLogin, onCreateProfile }: EnhancedChildLo
         <CardHeader className="text-center">
           <Button
             variant="ghost"
-            onClick={() => setCurrentView('main')}
+            onClick={() => setCurrentView("main")}
             className="absolute top-4 left-4 p-2"
           >
             <ArrowLeft className="w-4 h-4" />
           </Button>
-          
+
           <div className="w-20 h-20 mx-auto rounded-full bg-gradient-to-r from-educational-green to-educational-blue flex items-center justify-center text-4xl mb-4 shadow-lg">
             <UserPlus className="w-10 h-10 text-white" />
           </div>
           <CardTitle className="text-2xl text-gray-800">
             Create Your Account! ✨
           </CardTitle>
-          <p className="text-gray-600">Let's set up your new vocabulary adventure!</p>
+          <p className="text-gray-600">
+            Let's set up your new vocabulary adventure!
+          </p>
         </CardHeader>
         <CardContent className="space-y-4">
           <div>
-            <Label htmlFor="childName" className="text-sm font-semibold text-gray-700">
+            <Label
+              htmlFor="childName"
+              className="text-sm font-semibold text-gray-700"
+            >
               Your Name
             </Label>
             <Input
@@ -464,13 +543,18 @@ export function EnhancedChildLogin({ onLogin, onCreateProfile }: EnhancedChildLo
               type="text"
               placeholder="What should we call you?"
               value={createForm.childName}
-              onChange={(e) => setCreateForm({...createForm, childName: e.target.value})}
+              onChange={(e) =>
+                setCreateForm({ ...createForm, childName: e.target.value })
+              }
               className="text-center py-2 mt-1"
             />
           </div>
 
           <div>
-            <Label htmlFor="newUsername" className="text-sm font-semibold text-gray-700">
+            <Label
+              htmlFor="newUsername"
+              className="text-sm font-semibold text-gray-700"
+            >
               Username
             </Label>
             <Input
@@ -478,13 +562,18 @@ export function EnhancedChildLogin({ onLogin, onCreateProfile }: EnhancedChildLo
               type="text"
               placeholder="Pick a cool username!"
               value={createForm.username}
-              onChange={(e) => setCreateForm({...createForm, username: e.target.value})}
+              onChange={(e) =>
+                setCreateForm({ ...createForm, username: e.target.value })
+              }
               className="text-center py-2 mt-1"
             />
           </div>
 
           <div>
-            <Label htmlFor="email" className="text-sm font-semibold text-gray-700">
+            <Label
+              htmlFor="email"
+              className="text-sm font-semibold text-gray-700"
+            >
               Your Email
             </Label>
             <Input
@@ -492,13 +581,18 @@ export function EnhancedChildLogin({ onLogin, onCreateProfile }: EnhancedChildLo
               type="email"
               placeholder="your.email@example.com"
               value={createForm.email}
-              onChange={(e) => setCreateForm({...createForm, email: e.target.value})}
+              onChange={(e) =>
+                setCreateForm({ ...createForm, email: e.target.value })
+              }
               className="text-center py-2 mt-1"
             />
           </div>
 
           <div>
-            <Label htmlFor="parentEmail" className="text-sm font-semibold text-gray-700">
+            <Label
+              htmlFor="parentEmail"
+              className="text-sm font-semibold text-gray-700"
+            >
               Parent's Email
             </Label>
             <Input
@@ -506,13 +600,18 @@ export function EnhancedChildLogin({ onLogin, onCreateProfile }: EnhancedChildLo
               type="email"
               placeholder="parent@example.com"
               value={createForm.parentEmail}
-              onChange={(e) => setCreateForm({...createForm, parentEmail: e.target.value})}
+              onChange={(e) =>
+                setCreateForm({ ...createForm, parentEmail: e.target.value })
+              }
               className="text-center py-2 mt-1"
             />
           </div>
 
           <div>
-            <Label htmlFor="newPassword" className="text-sm font-semibold text-gray-700">
+            <Label
+              htmlFor="newPassword"
+              className="text-sm font-semibold text-gray-700"
+            >
               Password
             </Label>
             <Input
@@ -520,13 +619,18 @@ export function EnhancedChildLogin({ onLogin, onCreateProfile }: EnhancedChildLo
               type="password"
               placeholder="Create a secret password!"
               value={createForm.password}
-              onChange={(e) => setCreateForm({...createForm, password: e.target.value})}
+              onChange={(e) =>
+                setCreateForm({ ...createForm, password: e.target.value })
+              }
               className="text-center py-2 mt-1"
             />
           </div>
 
           <div>
-            <Label htmlFor="confirmPassword" className="text-sm font-semibold text-gray-700">
+            <Label
+              htmlFor="confirmPassword"
+              className="text-sm font-semibold text-gray-700"
+            >
               Confirm Password
             </Label>
             <Input
@@ -534,22 +638,30 @@ export function EnhancedChildLogin({ onLogin, onCreateProfile }: EnhancedChildLo
               type="password"
               placeholder="Type your password again!"
               value={createForm.confirmPassword}
-              onChange={(e) => setCreateForm({...createForm, confirmPassword: e.target.value})}
+              onChange={(e) =>
+                setCreateForm({
+                  ...createForm,
+                  confirmPassword: e.target.value,
+                })
+              }
               className="text-center py-2 mt-1"
             />
           </div>
 
           {message && (
-            <div className={`text-center p-3 rounded-lg ${
-              message.type === 'success' 
-                ? 'bg-green-50 text-green-700 border border-green-200' 
-                : 'bg-red-50 text-red-700 border border-red-200'
-            }`}>
+            <div
+              className={`text-center p-3 rounded-lg ${
+                message.type === "success"
+                  ? "bg-green-50 text-green-700 border border-green-200"
+                  : "bg-red-50 text-red-700 border border-red-200"
+              }`}
+            >
               <div className="flex items-center justify-center gap-2">
-                {message.type === 'success' ? 
-                  <CheckCircle className="w-4 h-4" /> : 
+                {message.type === "success" ? (
+                  <CheckCircle className="w-4 h-4" />
+                ) : (
                   <AlertCircle className="w-4 h-4" />
-                }
+                )}
                 {message.text}
               </div>
             </div>
@@ -557,7 +669,12 @@ export function EnhancedChildLogin({ onLogin, onCreateProfile }: EnhancedChildLo
 
           <Button
             onClick={handleCreateAccount}
-            disabled={isLoading || !createForm.childName || !createForm.username || !createForm.password}
+            disabled={
+              isLoading ||
+              !createForm.childName ||
+              !createForm.username ||
+              !createForm.password
+            }
             className="w-full bg-gradient-to-r from-educational-green to-educational-blue text-white py-3"
           >
             {isLoading ? (
@@ -583,23 +700,28 @@ export function EnhancedChildLogin({ onLogin, onCreateProfile }: EnhancedChildLo
         <CardHeader className="text-center">
           <Button
             variant="ghost"
-            onClick={() => setCurrentView('main')}
+            onClick={() => setCurrentView("main")}
             className="absolute top-4 left-4 p-2"
           >
             <ArrowLeft className="w-4 h-4" />
           </Button>
-          
+
           <div className="w-20 h-20 mx-auto rounded-full bg-gradient-to-r from-educational-purple to-educational-pink flex items-center justify-center text-4xl mb-4 shadow-lg">
             <HelpCircle className="w-10 h-10 text-white" />
           </div>
           <CardTitle className="text-2xl text-gray-800">
             Need Help Getting In? 🤗
           </CardTitle>
-          <p className="text-gray-600">Don't worry! We can help you reset your password!</p>
+          <p className="text-gray-600">
+            Don't worry! We can help you reset your password!
+          </p>
         </CardHeader>
         <CardContent className="space-y-6">
           <div>
-            <Label htmlFor="forgotUsername" className="text-lg font-semibold text-gray-700">
+            <Label
+              htmlFor="forgotUsername"
+              className="text-lg font-semibold text-gray-700"
+            >
               Username
             </Label>
             <Input
@@ -607,13 +729,18 @@ export function EnhancedChildLogin({ onLogin, onCreateProfile }: EnhancedChildLo
               type="text"
               placeholder="Enter your username..."
               value={forgotForm.username}
-              onChange={(e) => setForgotForm({...forgotForm, username: e.target.value})}
+              onChange={(e) =>
+                setForgotForm({ ...forgotForm, username: e.target.value })
+              }
               className="text-center text-lg py-3 mt-2 border-2"
             />
           </div>
 
           <div>
-            <Label htmlFor="forgotEmail" className="text-lg font-semibold text-gray-700">
+            <Label
+              htmlFor="forgotEmail"
+              className="text-lg font-semibold text-gray-700"
+            >
               Email Address
             </Label>
             <Input
@@ -621,22 +748,27 @@ export function EnhancedChildLogin({ onLogin, onCreateProfile }: EnhancedChildLo
               type="email"
               placeholder="Enter your email address..."
               value={forgotForm.email}
-              onChange={(e) => setForgotForm({...forgotForm, email: e.target.value})}
+              onChange={(e) =>
+                setForgotForm({ ...forgotForm, email: e.target.value })
+              }
               className="text-center text-lg py-3 mt-2 border-2"
             />
           </div>
 
           {message && (
-            <div className={`text-center p-3 rounded-lg ${
-              message.type === 'success' 
-                ? 'bg-green-50 text-green-700 border border-green-200' 
-                : 'bg-red-50 text-red-700 border border-red-200'
-            }`}>
+            <div
+              className={`text-center p-3 rounded-lg ${
+                message.type === "success"
+                  ? "bg-green-50 text-green-700 border border-green-200"
+                  : "bg-red-50 text-red-700 border border-red-200"
+              }`}
+            >
               <div className="flex items-center justify-center gap-2">
-                {message.type === 'success' ? 
-                  <CheckCircle className="w-4 h-4" /> : 
+                {message.type === "success" ? (
+                  <CheckCircle className="w-4 h-4" />
+                ) : (
                   <AlertCircle className="w-4 h-4" />
-                }
+                )}
                 {message.text}
               </div>
             </div>
@@ -662,7 +794,8 @@ export function EnhancedChildLogin({ onLogin, onCreateProfile }: EnhancedChildLo
 
           <div className="text-center bg-purple-50 rounded-lg p-4">
             <p className="text-sm text-purple-800">
-              💡 <strong>Tip:</strong> Ask a grown-up to help check your email for the reset link!
+              💡 <strong>Tip:</strong> Ask a grown-up to help check your email
+              for the reset link!
             </p>
           </div>
         </CardContent>
@@ -675,19 +808,34 @@ export function EnhancedChildLogin({ onLogin, onCreateProfile }: EnhancedChildLo
       {/* Background Fun Elements */}
       <div className="fixed top-10 left-10 text-5xl animate-bounce">🌟</div>
       <div className="fixed top-20 right-20 text-4xl animate-pulse">📚</div>
-      <div className="fixed bottom-10 left-20 text-5xl animate-bounce delay-1000">🎯</div>
-      <div className="fixed bottom-20 right-10 text-4xl animate-pulse delay-500">🚀</div>
-      <div className="fixed top-1/2 left-5 text-3xl animate-spin" style={{ animationDuration: '4s' }}>✨</div>
-      <div className="fixed top-1/3 right-5 text-3xl animate-bounce delay-700">🎪</div>
-      <div className="fixed bottom-1/3 left-1/4 text-2xl animate-pulse delay-1000">🌈</div>
-      <div className="fixed top-1/4 right-1/4 text-3xl animate-bounce delay-500">🎨</div>
+      <div className="fixed bottom-10 left-20 text-5xl animate-bounce delay-1000">
+        🎯
+      </div>
+      <div className="fixed bottom-20 right-10 text-4xl animate-pulse delay-500">
+        🚀
+      </div>
+      <div
+        className="fixed top-1/2 left-5 text-3xl animate-spin"
+        style={{ animationDuration: "4s" }}
+      >
+        ✨
+      </div>
+      <div className="fixed top-1/3 right-5 text-3xl animate-bounce delay-700">
+        🎪
+      </div>
+      <div className="fixed bottom-1/3 left-1/4 text-2xl animate-pulse delay-1000">
+        🌈
+      </div>
+      <div className="fixed top-1/4 right-1/4 text-3xl animate-bounce delay-500">
+        🎨
+      </div>
 
       {/* Main Content */}
       <div className="relative z-10">
-        {currentView === 'main' && renderMainView()}
-        {currentView === 'login' && renderLoginView()}
-        {currentView === 'create' && renderCreateView()}
-        {currentView === 'forgot' && renderForgotView()}
+        {currentView === "main" && renderMainView()}
+        {currentView === "login" && renderLoginView()}
+        {currentView === "create" && renderCreateView()}
+        {currentView === "forgot" && renderForgotView()}
       </div>
     </div>
   );

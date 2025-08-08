@@ -48,7 +48,7 @@ export const WordCard: React.FC<WordCardProps> = ({
     // Use real speech synthesis for pronunciation
     audioService.pronounceWord(word.word, {
       onStart: () => {
-        console.log('Started pronunciation');
+        console.log("Started pronunciation");
       },
       onEnd: () => {
         setIsPlaying(false);
@@ -60,7 +60,7 @@ export const WordCard: React.FC<WordCardProps> = ({
         setShowSparkles(false);
         // Fallback to sound effect
         playSoundIfEnabled.pronunciation();
-      }
+      },
     });
 
     // Safety timeout in case speech synthesis doesn't fire events
@@ -126,7 +126,11 @@ export const WordCard: React.FC<WordCardProps> = ({
         >
           <div className="absolute top-4 left-4 flex gap-2">
             <Badge className={getDifficultyColor(word.difficulty)}>
-              {word.difficulty === 'easy' ? '🌟 Easy' : word.difficulty === 'medium' ? '⭐ Medium' : '🔥 Hard'}
+              {word.difficulty === "easy"
+                ? "🌟 Easy"
+                : word.difficulty === "medium"
+                  ? "⭐ Medium"
+                  : "🔥 Hard"}
             </Badge>
             <Badge
               variant="outline"
@@ -141,7 +145,7 @@ export const WordCard: React.FC<WordCardProps> = ({
               size="sm"
               variant="ghost"
               className={`text-white hover:bg-white/20 p-2 h-auto transition-all duration-300 ${
-                isFavorited ? 'scale-110 text-red-300' : ''
+                isFavorited ? "scale-110 text-red-300" : ""
               }`}
               onClick={(e) => {
                 e.stopPropagation();
@@ -185,7 +189,7 @@ export const WordCard: React.FC<WordCardProps> = ({
                 }}
                 disabled={isPlaying}
                 className={`text-white hover:bg-white/20 p-2 h-auto transition-all duration-300 ${
-                  isPlaying ? 'scale-110 bg-white/30' : ''
+                  isPlaying ? "scale-110 bg-white/30" : ""
                 }`}
               >
                 <Volume2

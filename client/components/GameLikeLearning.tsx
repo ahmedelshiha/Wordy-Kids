@@ -3,12 +3,12 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
-import { 
-  Gamepad2, 
-  Trophy, 
-  Star, 
-  Zap, 
-  Heart, 
+import {
+  Gamepad2,
+  Trophy,
+  Star,
+  Zap,
+  Heart,
   Target,
   Gift,
   Crown,
@@ -17,7 +17,7 @@ import {
   Volume2,
   Shuffle,
   ChevronRight,
-  RotateCcw
+  RotateCcw,
 } from "lucide-react";
 import { audioService } from "@/lib/audioService";
 import { EncouragingFeedback } from "./EncouragingFeedback";
@@ -37,7 +37,12 @@ interface Word {
 
 interface GameSession {
   id: string;
-  type: 'word_adventure' | 'spelling_quest' | 'memory_match' | 'pronunciation_practice' | 'definition_detective';
+  type:
+    | "word_adventure"
+    | "spelling_quest"
+    | "memory_match"
+    | "pronunciation_practice"
+    | "definition_detective";
   words: Word[];
   currentIndex: number;
   score: number;
@@ -61,93 +66,113 @@ interface GameLikeLearningProps {
 
 const gameTypes = [
   {
-    id: 'word_adventure',
-    name: 'Word Adventure',
-    icon: '🗺️',
-    description: 'Journey through words with your learning buddy!',
-    difficulty: 'easy',
+    id: "word_adventure",
+    name: "Word Adventure",
+    icon: "🗺️",
+    description: "Journey through words with your learning buddy!",
+    difficulty: "easy",
     timeLimit: 60,
-    rewards: ['🎯 +10 points per word', '⭐ Streak bonuses', '🎁 Power-ups']
+    rewards: ["🎯 +10 points per word", "⭐ Streak bonuses", "🎁 Power-ups"],
   },
   {
-    id: 'spelling_quest',
-    name: 'Spelling Quest',
-    icon: '✏️',
-    description: 'Master the magic of spelling with fun challenges!',
-    difficulty: 'medium',
+    id: "spelling_quest",
+    name: "Spelling Quest",
+    icon: "✏️",
+    description: "Master the magic of spelling with fun challenges!",
+    difficulty: "medium",
     timeLimit: 90,
-    rewards: ['📝 +15 points per word', '🔥 Accuracy bonuses', '👑 Special badges']
+    rewards: [
+      "📝 +15 points per word",
+      "🔥 Accuracy bonuses",
+      "👑 Special badges",
+    ],
   },
   {
-    id: 'memory_match',
-    name: 'Memory Match',
-    icon: '🧩',
-    description: 'Match words with their meanings in this brain game!',
-    difficulty: 'medium',
+    id: "memory_match",
+    name: "Memory Match",
+    icon: "🧩",
+    description: "Match words with their meanings in this brain game!",
+    difficulty: "medium",
     timeLimit: 120,
-    rewards: ['�� +20 points per match', '⚡ Speed bonuses', '🌟 Memory master badge']
+    rewards: [
+      "�� +20 points per match",
+      "⚡ Speed bonuses",
+      "🌟 Memory master badge",
+    ],
   },
   {
-    id: 'pronunciation_practice',
-    name: 'Pronunciation Practice',
-    icon: '🎤',
-    description: 'Learn to say words perfectly with audio help!',
-    difficulty: 'easy',
+    id: "pronunciation_practice",
+    name: "Pronunciation Practice",
+    icon: "🎤",
+    description: "Learn to say words perfectly with audio help!",
+    difficulty: "easy",
     timeLimit: 45,
-    rewards: ['🔊 +12 points per word', '🎵 Pronunciation badges', '🗣️ Speaking confidence']
+    rewards: [
+      "🔊 +12 points per word",
+      "🎵 Pronunciation badges",
+      "🗣️ Speaking confidence",
+    ],
   },
   {
-    id: 'definition_detective',
-    name: 'Definition Detective',
-    icon: '🔍',
-    description: 'Solve word mysteries by finding the right meanings!',
-    difficulty: 'hard',
+    id: "definition_detective",
+    name: "Definition Detective",
+    icon: "🔍",
+    description: "Solve word mysteries by finding the right meanings!",
+    difficulty: "hard",
     timeLimit: 150,
-    rewards: ['🕵️ +25 points per solve', '💎 Detective badges', '🏆 Master rewards']
-  }
+    rewards: [
+      "🕵️ +25 points per solve",
+      "💎 Detective badges",
+      "🏆 Master rewards",
+    ],
+  },
 ];
 
 const powerUps = [
   {
-    id: 'extra_time',
-    name: 'Extra Time',
-    icon: '⏰',
-    description: '+30 seconds',
+    id: "extra_time",
+    name: "Extra Time",
+    icon: "⏰",
+    description: "+30 seconds",
     cost: 50,
-    effect: 'Adds 30 seconds to the timer'
+    effect: "Adds 30 seconds to the timer",
   },
   {
-    id: 'hint_helper',
-    name: 'Hint Helper',
-    icon: '💡',
-    description: 'Get a helpful hint',
+    id: "hint_helper",
+    name: "Hint Helper",
+    icon: "💡",
+    description: "Get a helpful hint",
     cost: 75,
-    effect: 'Reveals part of the answer'
+    effect: "Reveals part of the answer",
   },
   {
-    id: 'double_points',
-    name: 'Double Points',
-    icon: '✨',
-    description: '2x points for next answer',
+    id: "double_points",
+    name: "Double Points",
+    icon: "✨",
+    description: "2x points for next answer",
     cost: 100,
-    effect: 'Doubles points for the next correct answer'
+    effect: "Doubles points for the next correct answer",
   },
   {
-    id: 'shield',
-    name: 'Shield',
-    icon: '🛡���',
-    description: 'Protect from mistakes',
+    id: "shield",
+    name: "Shield",
+    icon: "🛡���",
+    description: "Protect from mistakes",
     cost: 125,
-    effect: 'Next wrong answer won\'t count against you'
-  }
+    effect: "Next wrong answer won't count against you",
+  },
 ];
 
-export function GameLikeLearning({ words, onComplete, userProfile }: GameLikeLearningProps) {
-  const [selectedGame, setSelectedGame] = useState<string>('');
+export function GameLikeLearning({
+  words,
+  onComplete,
+  userProfile,
+}: GameLikeLearningProps) {
+  const [selectedGame, setSelectedGame] = useState<string>("");
   const [gameSession, setGameSession] = useState<GameSession | null>(null);
   const [showGameSelection, setShowGameSelection] = useState(true);
   const [feedback, setFeedback] = useState<any>(null);
-  const [playerAnswer, setPlayerAnswer] = useState('');
+  const [playerAnswer, setPlayerAnswer] = useState("");
   const [lives, setLives] = useState(3);
   const [multiplier, setMultiplier] = useState(1);
   const [achievements, setAchievements] = useState<string[]>([]);
@@ -156,7 +181,9 @@ export function GameLikeLearning({ words, onComplete, userProfile }: GameLikeLea
   useEffect(() => {
     if (gameSession?.isActive && gameSession.timeLeft > 0) {
       const timer = setTimeout(() => {
-        setGameSession(prev => prev ? { ...prev, timeLeft: prev.timeLeft - 1 } : null);
+        setGameSession((prev) =>
+          prev ? { ...prev, timeLeft: prev.timeLeft - 1 } : null,
+        );
       }, 1000);
       return () => clearTimeout(timer);
     } else if (gameSession?.timeLeft === 0) {
@@ -165,11 +192,13 @@ export function GameLikeLearning({ words, onComplete, userProfile }: GameLikeLea
   }, [gameSession?.timeLeft, gameSession?.isActive]);
 
   const startGame = (gameType: string) => {
-    const gameConfig = gameTypes.find(g => g.id === gameType);
+    const gameConfig = gameTypes.find((g) => g.id === gameType);
     if (!gameConfig) return;
 
-    const shuffledWords = [...words].sort(() => Math.random() - 0.5).slice(0, 10);
-    
+    const shuffledWords = [...words]
+      .sort(() => Math.random() - 0.5)
+      .slice(0, 10);
+
     const newSession: GameSession = {
       id: Date.now().toString(),
       type: gameType as any,
@@ -180,7 +209,7 @@ export function GameLikeLearning({ words, onComplete, userProfile }: GameLikeLea
       streak: 0,
       timeLeft: gameConfig.timeLimit,
       isActive: true,
-      powerUps: []
+      powerUps: [],
     };
 
     setGameSession(newSession);
@@ -198,16 +227,20 @@ export function GameLikeLearning({ words, onComplete, userProfile }: GameLikeLea
       const streakBonus = gameSession.streak * 2;
       const totalPoints = basePoints + streakBonus;
 
-      setGameSession(prev => prev ? {
-        ...prev,
-        score: prev.score + totalPoints,
-        streak: prev.streak + 1,
-        currentIndex: prev.currentIndex + 1
-      } : null);
+      setGameSession((prev) =>
+        prev
+          ? {
+              ...prev,
+              score: prev.score + totalPoints,
+              streak: prev.streak + 1,
+              currentIndex: prev.currentIndex + 1,
+            }
+          : null,
+      );
 
       setFeedback({
-        type: 'success',
-        title: 'Awesome! 🎉',
+        type: "success",
+        title: "Awesome! 🎉",
         message: `Correct! You earned ${totalPoints} points!`,
         points: totalPoints,
         streak: gameSession.streak + 1,
@@ -216,12 +249,12 @@ export function GameLikeLearning({ words, onComplete, userProfile }: GameLikeLea
           if (gameSession.currentIndex + 1 >= gameSession.words.length) {
             handleGameComplete();
           }
-        }
+        },
       });
 
       // Check for achievements
       if (gameSession.streak + 1 === 5) {
-        setAchievements(prev => [...prev, 'streak_master']);
+        setAchievements((prev) => [...prev, "streak_master"]);
       }
 
       audioService.playCheerSound();
@@ -234,23 +267,25 @@ export function GameLikeLearning({ words, onComplete, userProfile }: GameLikeLea
         return;
       }
 
-      setGameSession(prev => prev ? { ...prev, streak: 0 } : null);
+      setGameSession((prev) => (prev ? { ...prev, streak: 0 } : null));
 
       setFeedback({
-        type: 'try_again',
-        title: 'Oops! 💝',
+        type: "try_again",
+        title: "Oops! 💝",
         message: `That's okay! You have ${newLives} hearts left. Keep trying!`,
         onTryAgain: () => {
           setFeedback(null);
-          setPlayerAnswer('');
+          setPlayerAnswer("");
         },
         onContinue: () => {
           setFeedback(null);
-          setPlayerAnswer('');
+          setPlayerAnswer("");
           if (gameSession) {
-            setGameSession(prev => prev ? { ...prev, currentIndex: prev.currentIndex + 1 } : null);
+            setGameSession((prev) =>
+              prev ? { ...prev, currentIndex: prev.currentIndex + 1 } : null,
+            );
           }
-        }
+        },
       });
 
       audioService.playEncouragementSound();
@@ -262,28 +297,28 @@ export function GameLikeLearning({ words, onComplete, userProfile }: GameLikeLea
   const handleGameComplete = () => {
     if (!gameSession) return;
 
-    setGameSession(prev => prev ? { ...prev, isActive: false } : null);
-    
+    setGameSession((prev) => (prev ? { ...prev, isActive: false } : null));
+
     const completionBonus = Math.floor(gameSession.score * 0.1);
     const finalScore = gameSession.score + completionBonus;
 
     setFeedback({
-      type: 'celebration',
-      title: 'Game Complete! 🏆',
+      type: "celebration",
+      title: "Game Complete! 🏆",
       message: `You scored ${finalScore} points and learned ${gameSession.currentIndex} words!`,
       points: finalScore,
       onContinue: () => {
         setFeedback(null);
         onComplete(finalScore, gameSession.words.length);
         resetGame();
-      }
+      },
     });
   };
 
   const resetGame = () => {
     setGameSession(null);
     setShowGameSelection(true);
-    setPlayerAnswer('');
+    setPlayerAnswer("");
     setLives(3);
     setMultiplier(1);
   };
@@ -292,16 +327,18 @@ export function GameLikeLearning({ words, onComplete, userProfile }: GameLikeLea
     if (!gameSession) return;
 
     switch (powerUpId) {
-      case 'extra_time':
-        setGameSession(prev => prev ? { ...prev, timeLeft: prev.timeLeft + 30 } : null);
+      case "extra_time":
+        setGameSession((prev) =>
+          prev ? { ...prev, timeLeft: prev.timeLeft + 30 } : null,
+        );
         break;
-      case 'double_points':
+      case "double_points":
         setMultiplier(2);
         break;
-      case 'hint_helper':
+      case "hint_helper":
         // Show hint logic would go here
         break;
-      case 'shield':
+      case "shield":
         // Shield logic would go here
         break;
     }
@@ -324,15 +361,19 @@ export function GameLikeLearning({ words, onComplete, userProfile }: GameLikeLea
         <p className="text-lg text-gray-600 mb-6">
           Ready for some fun? Pick a game and start your vocabulary adventure!
         </p>
-        
+
         {userProfile && (
           <div className="flex justify-center mb-6">
             <Card className="bg-gradient-to-r from-educational-green to-educational-blue text-white">
               <CardContent className="p-4 flex items-center gap-4">
-                <div className="text-3xl">{userProfile.avatar?.emoji || '🎯'}</div>
+                <div className="text-3xl">
+                  {userProfile.avatar?.emoji || "🎯"}
+                </div>
                 <div>
                   <div className="font-bold">{userProfile.name}</div>
-                  <div className="text-sm opacity-90">Level {userProfile.level} • {userProfile.points} points</div>
+                  <div className="text-sm opacity-90">
+                    Level {userProfile.level} • {userProfile.points} points
+                  </div>
                 </div>
               </CardContent>
             </Card>
@@ -346,26 +387,37 @@ export function GameLikeLearning({ words, onComplete, userProfile }: GameLikeLea
           <Card
             key={game.id}
             className={`cursor-pointer transition-all duration-500 hover:scale-105 hover:shadow-2xl transform hover:-translate-y-2 ${
-              selectedGame === game.id ? 'ring-4 ring-educational-blue bg-gradient-to-br from-blue-50 to-purple-50' : ''
+              selectedGame === game.id
+                ? "ring-4 ring-educational-blue bg-gradient-to-br from-blue-50 to-purple-50"
+                : ""
             }`}
             style={{ animationDelay: `${index * 100}ms` }}
             onClick={() => setSelectedGame(game.id)}
           >
             <CardHeader className="text-center">
               <div className="text-6xl mb-2">{game.icon}</div>
-              <CardTitle className="text-educational-blue">{game.name}</CardTitle>
-              <Badge className={`${
-                game.difficulty === 'easy' ? 'bg-educational-green' :
-                game.difficulty === 'medium' ? 'bg-educational-orange' :
-                'bg-educational-pink'
-              } text-white`}>
-                {game.difficulty === 'easy' ? '🌟 Easy' : 
-                 game.difficulty === 'medium' ? '⭐ Medium' : '🔥 Hard'}
+              <CardTitle className="text-educational-blue">
+                {game.name}
+              </CardTitle>
+              <Badge
+                className={`${
+                  game.difficulty === "easy"
+                    ? "bg-educational-green"
+                    : game.difficulty === "medium"
+                      ? "bg-educational-orange"
+                      : "bg-educational-pink"
+                } text-white`}
+              >
+                {game.difficulty === "easy"
+                  ? "🌟 Easy"
+                  : game.difficulty === "medium"
+                    ? "⭐ Medium"
+                    : "🔥 Hard"}
               </Badge>
             </CardHeader>
             <CardContent className="space-y-4">
               <p className="text-sm text-gray-600">{game.description}</p>
-              
+
               <div className="space-y-2">
                 <div className="flex items-center gap-2 text-sm">
                   <Timer className="w-4 h-4 text-educational-blue" />
@@ -410,40 +462,47 @@ export function GameLikeLearning({ words, onComplete, userProfile }: GameLikeLea
         <div className="bg-gradient-to-r from-educational-blue to-educational-purple text-white rounded-lg p-6">
           <div className="flex justify-between items-center mb-4">
             <div className="flex items-center gap-4">
-              <div className="text-3xl">{gameTypes.find(g => g.id === gameSession.type)?.icon}</div>
+              <div className="text-3xl">
+                {gameTypes.find((g) => g.id === gameSession.type)?.icon}
+              </div>
               <div>
-                <h3 className="text-xl font-bold">{gameTypes.find(g => g.id === gameSession.type)?.name}</h3>
+                <h3 className="text-xl font-bold">
+                  {gameTypes.find((g) => g.id === gameSession.type)?.name}
+                </h3>
                 <div className="text-sm opacity-90">
-                  Word {gameSession.currentIndex + 1} of {gameSession.words.length}
+                  Word {gameSession.currentIndex + 1} of{" "}
+                  {gameSession.words.length}
                 </div>
               </div>
             </div>
-            
+
             <div className="flex items-center gap-4">
               {/* Lives */}
               <div className="flex items-center gap-1">
                 {Array.from({ length: 3 }, (_, i) => (
                   <Heart
                     key={i}
-                    className={`w-6 h-6 ${i < lives ? 'text-red-400 fill-current' : 'text-gray-400'}`}
+                    className={`w-6 h-6 ${i < lives ? "text-red-400 fill-current" : "text-gray-400"}`}
                   />
                 ))}
               </div>
-              
+
               {/* Timer */}
               <div className="flex items-center gap-2">
                 <Timer className="w-5 h-5" />
-                <span className="font-bold text-lg">{gameSession.timeLeft}s</span>
+                <span className="font-bold text-lg">
+                  {gameSession.timeLeft}s
+                </span>
               </div>
             </div>
           </div>
 
           {/* Progress Bar */}
-          <Progress 
-            value={(gameSession.currentIndex / gameSession.words.length) * 100} 
+          <Progress
+            value={(gameSession.currentIndex / gameSession.words.length) * 100}
             className="h-3 bg-white/20"
           />
-          
+
           {/* Score & Streak */}
           <div className="flex justify-between items-center mt-4">
             <div className="flex items-center gap-4">
@@ -470,10 +529,10 @@ export function GameLikeLearning({ words, onComplete, userProfile }: GameLikeLea
         {/* Word Display */}
         <Card className="bg-gradient-to-br from-educational-green to-educational-blue text-white">
           <CardContent className="p-8 text-center">
-            <div className="text-6xl mb-4">{currentWord.emoji || '📚'}</div>
+            <div className="text-6xl mb-4">{currentWord.emoji || "📚"}</div>
             <h2 className="text-4xl font-bold mb-2">{currentWord.word}</h2>
-            
-            {gameSession.type === 'pronunciation_practice' && (
+
+            {gameSession.type === "pronunciation_practice" && (
               <Button
                 variant="ghost"
                 size="lg"
@@ -486,7 +545,9 @@ export function GameLikeLearning({ words, onComplete, userProfile }: GameLikeLea
             )}
 
             {currentWord.pronunciation && (
-              <p className="text-lg opacity-90 mb-4">{currentWord.pronunciation}</p>
+              <p className="text-lg opacity-90 mb-4">
+                {currentWord.pronunciation}
+              </p>
             )}
           </CardContent>
         </Card>
@@ -494,18 +555,30 @@ export function GameLikeLearning({ words, onComplete, userProfile }: GameLikeLea
         {/* Game-specific content */}
         <Card>
           <CardContent className="p-6">
-            {gameSession.type === 'word_adventure' && (
+            {gameSession.type === "word_adventure" && (
               <div className="space-y-4">
-                <h3 className="text-lg font-semibold text-center">What does this word mean?</h3>
+                <h3 className="text-lg font-semibold text-center">
+                  What does this word mean?
+                </h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                  {[currentWord.definition, 'A wrong definition', 'Another wrong answer', 'Yet another wrong option']
+                  {[
+                    currentWord.definition,
+                    "A wrong definition",
+                    "Another wrong answer",
+                    "Yet another wrong option",
+                  ]
                     .sort(() => Math.random() - 0.5)
                     .map((option, index) => (
                       <Button
                         key={index}
                         variant="outline"
                         className="p-4 h-auto text-left"
-                        onClick={() => handleAnswer(option, option === currentWord.definition)}
+                        onClick={() =>
+                          handleAnswer(
+                            option,
+                            option === currentWord.definition,
+                          )
+                        }
                       >
                         {option}
                       </Button>
@@ -514,10 +587,14 @@ export function GameLikeLearning({ words, onComplete, userProfile }: GameLikeLea
               </div>
             )}
 
-            {gameSession.type === 'definition_detective' && (
+            {gameSession.type === "definition_detective" && (
               <div className="space-y-4">
-                <h3 className="text-lg font-semibold text-center">🔍 Detective Challenge!</h3>
-                <p className="text-center text-gray-600">Read this definition and find the mystery word:</p>
+                <h3 className="text-lg font-semibold text-center">
+                  🔍 Detective Challenge!
+                </h3>
+                <p className="text-center text-gray-600">
+                  Read this definition and find the mystery word:
+                </p>
                 <div className="bg-gray-100 rounded-lg p-4 text-center">
                   <p className="font-semibold">{currentWord.definition}</p>
                 </div>
@@ -529,8 +606,12 @@ export function GameLikeLearning({ words, onComplete, userProfile }: GameLikeLea
                     placeholder="Type your answer..."
                     className="px-4 py-2 border rounded-lg text-center"
                     onKeyPress={(e) => {
-                      if (e.key === 'Enter') {
-                        handleAnswer(playerAnswer, playerAnswer.toLowerCase() === currentWord.word.toLowerCase());
+                      if (e.key === "Enter") {
+                        handleAnswer(
+                          playerAnswer,
+                          playerAnswer.toLowerCase() ===
+                            currentWord.word.toLowerCase(),
+                        );
                       }
                     }}
                   />
@@ -561,7 +642,9 @@ export function GameLikeLearning({ words, onComplete, userProfile }: GameLikeLea
                 >
                   <div className="text-2xl">{powerUp.icon}</div>
                   <div className="text-xs font-semibold">{powerUp.name}</div>
-                  <div className="text-xs text-gray-500">{powerUp.cost} pts</div>
+                  <div className="text-xs text-gray-500">
+                    {powerUp.cost} pts
+                  </div>
                 </Button>
               ))}
             </div>
@@ -586,11 +669,11 @@ export function GameLikeLearning({ words, onComplete, userProfile }: GameLikeLea
   return (
     <div className="space-y-8">
       {showGameSelection ? renderGameSelection() : renderGameplay()}
-      
+
       {feedback && (
-        <EncouragingFeedback 
-          feedback={feedback} 
-          onClose={() => setFeedback(null)} 
+        <EncouragingFeedback
+          feedback={feedback}
+          onClose={() => setFeedback(null)}
         />
       )}
     </div>

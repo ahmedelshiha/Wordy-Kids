@@ -59,9 +59,13 @@ const enrichedCategories: Category[] = [
     description: "Meet amazing creatures from around the world!",
     funFact: "Some animals can taste with their feet!",
     difficultyBreakdown: {
-      easy: getWordsByCategory("animals").filter((w) => w.difficulty === "easy").length,
-      medium: getWordsByCategory("animals").filter((w) => w.difficulty === "medium").length,
-      hard: getWordsByCategory("animals").filter((w) => w.difficulty === "hard").length,
+      easy: getWordsByCategory("animals").filter((w) => w.difficulty === "easy")
+        .length,
+      medium: getWordsByCategory("animals").filter(
+        (w) => w.difficulty === "medium",
+      ).length,
+      hard: getWordsByCategory("animals").filter((w) => w.difficulty === "hard")
+        .length,
     },
   },
   {
@@ -74,9 +78,13 @@ const enrichedCategories: Category[] = [
     description: "Explore the magical wonders of our natural world!",
     funFact: "Trees can live for thousands of years!",
     difficultyBreakdown: {
-      easy: getWordsByCategory("nature").filter((w) => w.difficulty === "easy").length,
-      medium: getWordsByCategory("nature").filter((w) => w.difficulty === "medium").length,
-      hard: getWordsByCategory("nature").filter((w) => w.difficulty === "hard").length,
+      easy: getWordsByCategory("nature").filter((w) => w.difficulty === "easy")
+        .length,
+      medium: getWordsByCategory("nature").filter(
+        (w) => w.difficulty === "medium",
+      ).length,
+      hard: getWordsByCategory("nature").filter((w) => w.difficulty === "hard")
+        .length,
     },
   },
   {
@@ -89,9 +97,13 @@ const enrichedCategories: Category[] = [
     description: "Discover amazing scientific wonders and cool experiments!",
     funFact: "Scientists discover new things every day!",
     difficultyBreakdown: {
-      easy: getWordsByCategory("science").filter((w) => w.difficulty === "easy").length,
-      medium: getWordsByCategory("science").filter((w) => w.difficulty === "medium").length,
-      hard: getWordsByCategory("science").filter((w) => w.difficulty === "hard").length,
+      easy: getWordsByCategory("science").filter((w) => w.difficulty === "easy")
+        .length,
+      medium: getWordsByCategory("science").filter(
+        (w) => w.difficulty === "medium",
+      ).length,
+      hard: getWordsByCategory("science").filter((w) => w.difficulty === "hard")
+        .length,
     },
   },
   {
@@ -104,9 +116,13 @@ const enrichedCategories: Category[] = [
     description: "Discover delicious treats and healthy foods!",
     funFact: "Some fruits change color as they ripen!",
     difficultyBreakdown: {
-      easy: getWordsByCategory("food").filter((w) => w.difficulty === "easy").length,
-      medium: getWordsByCategory("food").filter((w) => w.difficulty === "medium").length,
-      hard: getWordsByCategory("food").filter((w) => w.difficulty === "hard").length,
+      easy: getWordsByCategory("food").filter((w) => w.difficulty === "easy")
+        .length,
+      medium: getWordsByCategory("food").filter(
+        (w) => w.difficulty === "medium",
+      ).length,
+      hard: getWordsByCategory("food").filter((w) => w.difficulty === "hard")
+        .length,
     },
   },
   {
@@ -119,9 +135,13 @@ const enrichedCategories: Category[] = [
     description: "Blast off and explore the mysteries of the cosmos!",
     funFact: "There are more stars than grains of sand on Earth!",
     difficultyBreakdown: {
-      easy: getWordsByCategory("space").filter((w) => w.difficulty === "easy").length,
-      medium: getWordsByCategory("space").filter((w) => w.difficulty === "medium").length,
-      hard: getWordsByCategory("space").filter((w) => w.difficulty === "hard").length,
+      easy: getWordsByCategory("space").filter((w) => w.difficulty === "easy")
+        .length,
+      medium: getWordsByCategory("space").filter(
+        (w) => w.difficulty === "medium",
+      ).length,
+      hard: getWordsByCategory("space").filter((w) => w.difficulty === "hard")
+        .length,
     },
   },
   {
@@ -134,9 +154,13 @@ const enrichedCategories: Category[] = [
     description: "Get active with games, sports, and fun activities!",
     funFact: "Playing sports helps your brain grow stronger!",
     difficultyBreakdown: {
-      easy: getWordsByCategory("sports").filter((w) => w.difficulty === "easy").length,
-      medium: getWordsByCategory("sports").filter((w) => w.difficulty === "medium").length,
-      hard: getWordsByCategory("sports").filter((w) => w.difficulty === "hard").length,
+      easy: getWordsByCategory("sports").filter((w) => w.difficulty === "easy")
+        .length,
+      medium: getWordsByCategory("sports").filter(
+        (w) => w.difficulty === "medium",
+      ).length,
+      hard: getWordsByCategory("sports").filter((w) => w.difficulty === "hard")
+        .length,
     },
   },
   {
@@ -149,31 +173,37 @@ const enrichedCategories: Category[] = [
     description: "Make beautiful sounds with instruments and melodies!",
     funFact: "Music can make you feel happy and excited!",
     difficultyBreakdown: {
-      easy: getWordsByCategory("music").filter((w) => w.difficulty === "easy").length,
-      medium: getWordsByCategory("music").filter((w) => w.difficulty === "medium").length,
-      hard: getWordsByCategory("music").filter((w) => w.difficulty === "hard").length,
+      easy: getWordsByCategory("music").filter((w) => w.difficulty === "easy")
+        .length,
+      medium: getWordsByCategory("music").filter(
+        (w) => w.difficulty === "medium",
+      ).length,
+      hard: getWordsByCategory("music").filter((w) => w.difficulty === "hard")
+        .length,
     },
   },
 ].filter((category) => category.wordCount > 0 || category.id === "all");
 
-export function ChildFriendlyCategorySelector({ 
-  selectedCategory = "all", 
+export function ChildFriendlyCategorySelector({
+  selectedCategory = "all",
   onSelectCategory,
-  userInterests = []
+  userInterests = [],
 }: ChildFriendlyCategorySelectorProps) {
   const [hoveredCategory, setHoveredCategory] = useState<string | null>(null);
-  const [floatingElements, setFloatingElements] = useState<Array<{id: string, emoji: string, x: number, y: number}>>([]);
+  const [floatingElements, setFloatingElements] = useState<
+    Array<{ id: string; emoji: string; x: number; y: number }>
+  >([]);
   const [showEncouragement, setShowEncouragement] = useState(false);
 
   // Add floating animation elements
   useEffect(() => {
     const elements = [
-      { id: '1', emoji: '🌟', x: 10, y: 10 },
-      { id: '2', emoji: '✨', x: 90, y: 20 },
-      { id: '3', emoji: '🎯', x: 15, y: 80 },
-      { id: '4', emoji: '🚀', x: 85, y: 75 },
-      { id: '5', emoji: '💫', x: 50, y: 5 },
-      { id: '6', emoji: '🎪', x: 25, y: 45 },
+      { id: "1", emoji: "🌟", x: 10, y: 10 },
+      { id: "2", emoji: "✨", x: 90, y: 20 },
+      { id: "3", emoji: "🎯", x: 15, y: 80 },
+      { id: "4", emoji: "🚀", x: 85, y: 75 },
+      { id: "5", emoji: "💫", x: 50, y: 5 },
+      { id: "6", emoji: "🎪", x: 25, y: 45 },
     ];
     setFloatingElements(elements);
 
@@ -197,31 +227,38 @@ export function ChildFriendlyCategorySelector({
   };
 
   const getPersonalizedMessage = () => {
-    if (userInterests.length === 0) return "Choose your favorite topic to start learning!";
-    
-    const matchingCategories = enrichedCategories.filter(cat => 
-      userInterests.some(interest => 
-        cat.id.includes(interest) || cat.name.toLowerCase().includes(interest.toLowerCase())
-      )
+    if (userInterests.length === 0)
+      return "Choose your favorite topic to start learning!";
+
+    const matchingCategories = enrichedCategories.filter((cat) =>
+      userInterests.some(
+        (interest) =>
+          cat.id.includes(interest) ||
+          cat.name.toLowerCase().includes(interest.toLowerCase()),
+      ),
     );
 
     if (matchingCategories.length > 0) {
       return `I see you love ${matchingCategories[0].name.toLowerCase()}! That's awesome! 🌟`;
     }
-    
+
     return "I've picked some special categories just for you! 💝";
   };
 
   const getRecommendedCategories = () => {
     if (userInterests.length === 0) return enrichedCategories;
-    
-    const recommended = enrichedCategories.filter(cat => 
-      userInterests.some(interest => 
-        cat.id.includes(interest) || cat.name.toLowerCase().includes(interest.toLowerCase())
-      )
+
+    const recommended = enrichedCategories.filter((cat) =>
+      userInterests.some(
+        (interest) =>
+          cat.id.includes(interest) ||
+          cat.name.toLowerCase().includes(interest.toLowerCase()),
+      ),
     );
-    
-    const others = enrichedCategories.filter(cat => !recommended.includes(cat));
+
+    const others = enrichedCategories.filter(
+      (cat) => !recommended.includes(cat),
+    );
     return [...recommended, ...others];
   };
 
@@ -239,7 +276,7 @@ export function ChildFriendlyCategorySelector({
               left: `${element.x}%`,
               top: `${element.y}%`,
               animationDelay: `${Math.random() * 2}s`,
-              animationDuration: `${3 + Math.random() * 2}s`
+              animationDuration: `${3 + Math.random() * 2}s`,
             }}
           >
             {element.emoji}
@@ -279,7 +316,9 @@ export function ChildFriendlyCategorySelector({
           <Card className="bg-gradient-to-r from-educational-pink to-educational-purple text-white shadow-2xl">
             <CardContent className="p-4 text-center">
               <Heart className="w-6 h-6 mx-auto mb-2 fill-current" />
-              <p className="text-sm font-semibold">You're doing great! Keep exploring! 🌟</p>
+              <p className="text-sm font-semibold">
+                You're doing great! Keep exploring! 🌟
+              </p>
             </CardContent>
           </Card>
         </div>
@@ -313,10 +352,12 @@ export function ChildFriendlyCategorySelector({
       {/* Categories Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
         {categories.map((category, index) => {
-          const isRecommended = userInterests.some(interest => 
-            category.id.includes(interest) || category.name.toLowerCase().includes(interest.toLowerCase())
+          const isRecommended = userInterests.some(
+            (interest) =>
+              category.id.includes(interest) ||
+              category.name.toLowerCase().includes(interest.toLowerCase()),
           );
-          
+
           return (
             <Card
               key={category.id}
@@ -324,11 +365,11 @@ export function ChildFriendlyCategorySelector({
                 selectedCategory === category.id
                   ? "ring-4 ring-educational-blue shadow-2xl scale-105 bg-gradient-to-br from-blue-50 to-purple-50"
                   : hoveredCategory === category.id
-                  ? "ring-2 ring-educational-purple shadow-xl scale-105"
-                  : "hover:shadow-lg"
+                    ? "ring-2 ring-educational-purple shadow-xl scale-105"
+                    : "hover:shadow-lg"
               }`}
               style={{
-                animationDelay: `${index * 100}ms`
+                animationDelay: `${index * 100}ms`,
               }}
               onClick={() => handleCategoryClick(category.id)}
               onMouseEnter={() => handleCategoryHover(category.id)}
@@ -336,7 +377,9 @@ export function ChildFriendlyCategorySelector({
             >
               <CardContent className="p-0 overflow-hidden">
                 {/* Header with gradient */}
-                <div className={`bg-gradient-to-r ${category.gradient} p-6 text-white text-center relative overflow-hidden`}>
+                <div
+                  className={`bg-gradient-to-r ${category.gradient} p-6 text-white text-center relative overflow-hidden`}
+                >
                   {/* Recommended Badge */}
                   {isRecommended && (
                     <div className="absolute top-2 left-2">
@@ -345,7 +388,7 @@ export function ChildFriendlyCategorySelector({
                       </Badge>
                     </div>
                   )}
-                  
+
                   {/* Sparkle Effect on Hover */}
                   {hoveredCategory === category.id && (
                     <>
@@ -354,10 +397,14 @@ export function ChildFriendlyCategorySelector({
                       <Heart className="absolute bottom-2 right-2 w-5 h-5 text-pink-300 animate-bounce" />
                     </>
                   )}
-                  
-                  <div className={`text-6xl mb-3 transition-transform duration-300 ${
-                    hoveredCategory === category.id ? 'animate-bounce scale-110' : ''
-                  }`}>
+
+                  <div
+                    className={`text-6xl mb-3 transition-transform duration-300 ${
+                      hoveredCategory === category.id
+                        ? "animate-bounce scale-110"
+                        : ""
+                    }`}
+                  >
                     {category.icon}
                   </div>
                   <h3 className="text-xl font-bold mb-1">{category.name}</h3>
@@ -365,7 +412,7 @@ export function ChildFriendlyCategorySelector({
                     <Zap className="w-3 h-3 mr-1" />
                     {category.wordCount} words
                   </Badge>
-                  
+
                   {/* Selection Animation */}
                   {selectedCategory === category.id && (
                     <div className="absolute inset-0 bg-white/10 animate-pulse"></div>
@@ -374,14 +421,16 @@ export function ChildFriendlyCategorySelector({
 
                 {/* Content */}
                 <div className="p-6 space-y-4">
-                  <p className={`text-sm leading-relaxed transition-colors duration-300 ${
-                    selectedCategory === category.id 
-                      ? 'text-educational-blue font-semibold' 
-                      : 'text-slate-600'
-                  }`}>
+                  <p
+                    className={`text-sm leading-relaxed transition-colors duration-300 ${
+                      selectedCategory === category.id
+                        ? "text-educational-blue font-semibold"
+                        : "text-slate-600"
+                    }`}
+                  >
                     {category.description}
                   </p>
-                  
+
                   {/* Fun fact on hover */}
                   {hoveredCategory === category.id && (
                     <div className="bg-gradient-to-r from-educational-blue/10 to-educational-purple/10 rounded-lg p-3 animate-fade-in">
@@ -453,15 +502,16 @@ export function ChildFriendlyCategorySelector({
                       </Badge>
                     </div>
                   )}
-                  
+
                   {/* Hover encouragement */}
-                  {hoveredCategory === category.id && selectedCategory !== category.id && (
-                    <div className="flex items-center justify-center mt-2">
-                      <Badge className="bg-educational-purple/20 text-educational-purple border border-educational-purple/30 animate-pulse">
-                        🎯 Click to explore!
-                      </Badge>
-                    </div>
-                  )}
+                  {hoveredCategory === category.id &&
+                    selectedCategory !== category.id && (
+                      <div className="flex items-center justify-center mt-2">
+                        <Badge className="bg-educational-purple/20 text-educational-purple border border-educational-purple/30 animate-pulse">
+                          🎯 Click to explore!
+                        </Badge>
+                      </div>
+                    )}
                 </div>
               </CardContent>
             </Card>
@@ -475,16 +525,18 @@ export function ChildFriendlyCategorySelector({
           <div className="bg-white rounded-full p-4 shadow-lg">
             <div className="flex items-center gap-2 text-educational-blue">
               <Heart className="w-5 h-5 fill-current" />
-              <span className="font-semibold">Ready for your word adventure?</span>
+              <span className="font-semibold">
+                Ready for your word adventure?
+              </span>
               <Heart className="w-5 h-5 fill-current" />
             </div>
           </div>
         </div>
-        
+
         <Button
           size="lg"
           onClick={() => handleCategoryClick(selectedCategory)}
-          disabled={!selectedCategory || selectedCategory === ''}
+          disabled={!selectedCategory || selectedCategory === ""}
           className="bg-gradient-to-r from-educational-blue via-educational-purple to-educational-pink text-white hover:from-educational-blue/90 hover:via-educational-purple/90 hover:to-educational-pink/90 text-xl px-12 py-4 rounded-full font-bold transform hover:scale-110 transition-all duration-300 shadow-2xl relative overflow-hidden"
         >
           <span className="relative z-10 flex items-center gap-2">
@@ -493,11 +545,11 @@ export function ChildFriendlyCategorySelector({
             {categories.find((c) => c.id === selectedCategory)?.name}! 🚀
             <Star className="w-6 h-6 animate-pulse" />
           </span>
-          
+
           {/* Animated background */}
           <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full animate-shimmer"></div>
         </Button>
-        
+
         <p className="text-sm text-slate-500 mt-4 animate-pulse">
           ✨ Choose a category above to begin your vocabulary journey! ✨
         </p>

@@ -5,20 +5,76 @@ import { Badge } from "@/components/ui/badge";
 import { Heart, Star, Trophy, Sparkles } from "lucide-react";
 
 const avatars = [
-  { id: "cat", emoji: "🐱", name: "Whiskers", color: "from-orange-400 to-orange-600" },
-  { id: "dog", emoji: "🐶", name: "Buddy", color: "from-brown-400 to-brown-600" },
-  { id: "lion", emoji: "🦁", name: "Leo", color: "from-yellow-400 to-yellow-600" },
-  { id: "unicorn", emoji: "🦄", name: "Sparkle", color: "from-pink-400 to-purple-600" },
-  { id: "dragon", emoji: "🐉", name: "Flame", color: "from-green-400 to-green-600" },
-  { id: "bear", emoji: "🐻", name: "Honey", color: "from-amber-400 to-amber-600" },
-  { id: "rabbit", emoji: "🐰", name: "Hoppy", color: "from-gray-400 to-gray-600" },
+  {
+    id: "cat",
+    emoji: "🐱",
+    name: "Whiskers",
+    color: "from-orange-400 to-orange-600",
+  },
+  {
+    id: "dog",
+    emoji: "🐶",
+    name: "Buddy",
+    color: "from-brown-400 to-brown-600",
+  },
+  {
+    id: "lion",
+    emoji: "🦁",
+    name: "Leo",
+    color: "from-yellow-400 to-yellow-600",
+  },
+  {
+    id: "unicorn",
+    emoji: "🦄",
+    name: "Sparkle",
+    color: "from-pink-400 to-purple-600",
+  },
+  {
+    id: "dragon",
+    emoji: "🐉",
+    name: "Flame",
+    color: "from-green-400 to-green-600",
+  },
+  {
+    id: "bear",
+    emoji: "🐻",
+    name: "Honey",
+    color: "from-amber-400 to-amber-600",
+  },
+  {
+    id: "rabbit",
+    emoji: "🐰",
+    name: "Hoppy",
+    color: "from-gray-400 to-gray-600",
+  },
   { id: "panda", emoji: "🐼", name: "Bamboo", color: "from-black to-gray-600" },
 ];
 
 const savedProfiles = [
-  { id: "alex", avatar: avatars[3], level: 5, points: 1250, streak: 7, wordsLearned: 42 },
-  { id: "sam", avatar: avatars[0], level: 3, points: 850, streak: 4, wordsLearned: 28 },
-  { id: "taylor", avatar: avatars[4], level: 7, points: 2100, streak: 12, wordsLearned: 67 },
+  {
+    id: "alex",
+    avatar: avatars[3],
+    level: 5,
+    points: 1250,
+    streak: 7,
+    wordsLearned: 42,
+  },
+  {
+    id: "sam",
+    avatar: avatars[0],
+    level: 3,
+    points: 850,
+    streak: 4,
+    wordsLearned: 28,
+  },
+  {
+    id: "taylor",
+    avatar: avatars[4],
+    level: 7,
+    points: 2100,
+    streak: 12,
+    wordsLearned: 67,
+  },
 ];
 
 interface ChildLoginProps {
@@ -68,7 +124,9 @@ export function ChildLogin({ onLogin, onCreateProfile }: ChildLoginProps) {
               onClick={() => handleProfileSelect(profile)}
             >
               <CardHeader className="text-center pb-2">
-                <div className={`w-20 h-20 mx-auto rounded-full bg-gradient-to-r ${profile.avatar.color} flex items-center justify-center text-4xl mb-3 shadow-lg`}>
+                <div
+                  className={`w-20 h-20 mx-auto rounded-full bg-gradient-to-r ${profile.avatar.color} flex items-center justify-center text-4xl mb-3 shadow-lg`}
+                >
                   {profile.avatar.emoji}
                 </div>
                 <CardTitle className="text-xl text-gray-800 capitalize">
@@ -110,8 +168,8 @@ export function ChildLogin({ onLogin, onCreateProfile }: ChildLoginProps) {
 
                 {/* Learning Buddy */}
                 <div className="text-center">
-                  <Badge 
-                    variant="secondary" 
+                  <Badge
+                    variant="secondary"
                     className="bg-educational-purple/20 text-educational-purple"
                   >
                     🎯 Learning with {profile.avatar.name}
@@ -125,10 +183,7 @@ export function ChildLogin({ onLogin, onCreateProfile }: ChildLoginProps) {
         {/* Create New Profile */}
         <div className="text-center">
           <Card className="inline-block cursor-pointer hover:shadow-lg transition-all duration-300 bg-gradient-to-r from-educational-green/10 to-educational-blue/10 border-2 border-dashed border-educational-green/30">
-            <CardContent 
-              className="p-6 text-center"
-              onClick={onCreateProfile}
-            >
+            <CardContent className="p-6 text-center" onClick={onCreateProfile}>
               <div className="w-16 h-16 mx-auto rounded-full bg-gradient-to-r from-educational-green to-educational-blue flex items-center justify-center text-3xl mb-3">
                 ➕
               </div>
@@ -143,12 +198,8 @@ export function ChildLogin({ onLogin, onCreateProfile }: ChildLoginProps) {
         </div>
 
         {/* Fun Elements */}
-        <div className="fixed top-10 left-10 text-4xl animate-bounce">
-          🌟
-        </div>
-        <div className="fixed top-20 right-20 text-3xl animate-pulse">
-          📚
-        </div>
+        <div className="fixed top-10 left-10 text-4xl animate-bounce">🌟</div>
+        <div className="fixed top-20 right-20 text-3xl animate-pulse">📚</div>
         <div className="fixed bottom-10 left-20 text-4xl animate-bounce delay-1000">
           🎯
         </div>
