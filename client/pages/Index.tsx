@@ -708,6 +708,10 @@ export default function Index() {
             </div>
           </TabsContent>
 
+          <TabsContent value="analytics">
+            <LearningAnalytics />
+          </TabsContent>
+
           <TabsContent value="challenges">
             <div className="space-y-8">
               <div className="text-center">
