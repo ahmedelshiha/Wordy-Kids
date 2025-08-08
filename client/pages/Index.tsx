@@ -6,6 +6,9 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { WordCard } from '@/components/WordCard';
 import { LearningDashboard } from '@/components/LearningDashboard';
 import { QuizGame } from '@/components/QuizGame';
+import { CategorySelector } from '@/components/CategorySelector';
+import { WordMatchingGame } from '@/components/WordMatchingGame';
+import { VocabularyBuilder } from '@/components/VocabularyBuilder';
 import { 
   BookOpen, 
   Play, 
@@ -15,10 +18,13 @@ import {
   ArrowRight,
   Star,
   Target,
-  Heart
+  Heart,
+  Gamepad2,
+  Brain,
+  Shuffle
 } from 'lucide-react';
 
-// Sample data
+// Sample data for learning
 const sampleWords = [
   {
     id: 1,
@@ -53,6 +59,30 @@ const sampleWords = [
     funFact: "The first telescope was invented in 1608 and made stars look 20 times closer!",
     emoji: "🔭",
     category: "science",
+    difficulty: "hard" as const,
+    imageUrl: undefined
+  },
+  {
+    id: 4,
+    word: "rainbow",
+    pronunciation: "/ˈreɪnboʊ/",
+    definition: "A colorful arc in the sky formed by sunlight and water droplets",
+    example: "After the rain, a beautiful rainbow appeared in the sky",
+    funFact: "Rainbows always appear in the opposite direction from the sun!",
+    emoji: "🌈",
+    category: "nature",
+    difficulty: "easy" as const,
+    imageUrl: undefined
+  },
+  {
+    id: 5,
+    word: "magnificent",
+    pronunciation: "/mæɡˈnɪfɪsənt/",
+    definition: "Extremely beautiful, impressive, or grand in scale",
+    example: "The magnificent castle stood tall against the mountain backdrop",
+    funFact: "The word comes from Latin 'magnificus' meaning 'great in deed'",
+    emoji: "✨",
+    category: "general",
     difficulty: "hard" as const,
     imageUrl: undefined
   }
@@ -103,6 +133,22 @@ const sampleQuizQuestions = [
   }
 ];
 
+// Sample data for matching game
+const matchingPairs = [
+  { id: 1, word: "adventure", definition: "An exciting or unusual experience", matched: false },
+  { id: 2, word: "butterfly", definition: "A colorful flying insect with large wings", matched: false },
+  { id: 3, word: "telescope", definition: "An instrument used to see distant objects", matched: false },
+  { id: 4, word: "rainbow", definition: "A colorful arc in the sky", matched: false }
+];
+
+// Sample vocabulary builder words
+const vocabularyWords = sampleWords.map(word => ({
+  ...word,
+  masteryLevel: Math.floor(Math.random() * 100),
+  lastReviewed: new Date(Date.now() - Math.random() * 7 * 24 * 60 * 60 * 1000),
+  nextReview: new Date(Date.now() + Math.random() * 3 * 24 * 60 * 60 * 1000)
+}));
+
 const learningStats = {
   wordsLearned: 47,
   totalWords: 200,
@@ -149,11 +195,25 @@ export default function Index() {
   const [activeTab, setActiveTab] = useState("dashboard");
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
   const [showQuiz, setShowQuiz] = useState(false);
+  const [selectedCategory, setSelectedCategory] = useState('all');
+  const [learningMode, setLearningMode] = useState<'cards' | 'builder' | 'matching'>('cards');
 
   const handleQuizComplete = (score: number, total: number) => {
     const percentage = Math.round((score / total) * 100);
     alert(`Quiz Complete! You scored ${score}/${total} (${percentage}%)`);
     setShowQuiz(false);
+  };
+
+  const handleMatchingComplete = (score: number, timeSpent: number) => {
+    alert(`Matching Game Complete! You matched ${score} pairs in ${timeSpent} seconds!`);
+  };
+
+  const handleVocabularySessionComplete = (wordsReviewed: number, accuracy: number) => {
+    alert(`Vocabulary Session Complete! Reviewed ${wordsReviewed} words with ${accuracy}% accuracy!`);
+  };
+
+  const handleWordMastered = (wordId: number, rating: 'easy' | 'medium' | 'hard') => {
+    console.log(`Word ${wordId} rated as ${rating}`);
   };
 
   return (
@@ -187,6 +247,15 @@ export default function Index() {
                 size="lg" 
                 variant="outline" 
                 className="border-white text-white hover:bg-white/10"
+                onClick={() => setActiveTab("games")}
+              >
+                <Gamepad2 className="w-5 h-5 mr-2" />
+                Play Games
+              </Button>
+              <Button 
+                size="lg" 
+                variant="outline" 
+                className="border-white text-white hover:bg-white/10"
                 onClick={() => setActiveTab("quiz")}
               >
                 <Trophy className="w-5 h-5 mr-2" />
@@ -206,7 +275,7 @@ export default function Index() {
       {/* Main Content */}
       <main className="container mx-auto px-4 py-8">
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-          <TabsList className="grid w-full grid-cols-4 lg:w-auto lg:inline-flex mb-8">
+          <TabsList className="grid w-full grid-cols-5 lg:w-auto lg:inline-flex mb-8">
             <TabsTrigger value="dashboard" className="flex items-center gap-2">
               <Target className="w-4 h-4" />
               Dashboard
@@ -214,6 +283,10 @@ export default function Index() {
             <TabsTrigger value="learn" className="flex items-center gap-2">
               <BookOpen className="w-4 h-4" />
               Learn
+            </TabsTrigger>
+            <TabsTrigger value="games" className="flex items-center gap-2">
+              <Gamepad2 className="w-4 h-4" />
+              Games
             </TabsTrigger>
             <TabsTrigger value="quiz" className="flex items-center gap-2">
               <Trophy className="w-4 h-4" />
@@ -231,55 +304,162 @@ export default function Index() {
 
           <TabsContent value="learn">
             <div className="space-y-8">
+              {selectedCategory === 'all' ? (
+                <CategorySelector 
+                  categories={[]} 
+                  selectedCategory={selectedCategory}
+                  onSelectCategory={(category) => {
+                    setSelectedCategory(category);
+                    setLearningMode('cards');
+                  }}
+                />
+              ) : (
+                <>
+                  <div className="text-center">
+                    <h2 className="text-3xl font-bold text-slate-800 mb-4">
+                      Learning Mode
+                    </h2>
+                    <p className="text-slate-600 mb-8">
+                      Choose how you'd like to learn your vocabulary!
+                    </p>
+                    
+                    <div className="flex justify-center gap-4 mb-8">
+                      <Button
+                        onClick={() => setLearningMode('cards')}
+                        variant={learningMode === 'cards' ? 'default' : 'outline'}
+                        className="flex items-center gap-2"
+                      >
+                        <BookOpen className="w-4 h-4" />
+                        Word Cards
+                      </Button>
+                      <Button
+                        onClick={() => setLearningMode('builder')}
+                        variant={learningMode === 'builder' ? 'default' : 'outline'}
+                        className="flex items-center gap-2"
+                      >
+                        <Brain className="w-4 h-4" />
+                        Vocabulary Builder
+                      </Button>
+                      <Button
+                        onClick={() => setSelectedCategory('all')}
+                        variant="ghost"
+                      >
+                        ← Back to Categories
+                      </Button>
+                    </div>
+                  </div>
+
+                  {learningMode === 'cards' && (
+                    <>
+                      <div className="flex justify-center mb-6">
+                        <div className="flex gap-2">
+                          {sampleWords.map((_, index) => (
+                            <Button
+                              key={index}
+                              size="sm"
+                              variant={currentWordIndex === index ? "default" : "outline"}
+                              onClick={() => setCurrentWordIndex(index)}
+                              className="w-8 h-8 p-0"
+                            >
+                              {index + 1}
+                            </Button>
+                          ))}
+                        </div>
+                      </div>
+
+                      <div className="max-w-md mx-auto">
+                        <WordCard 
+                          word={sampleWords[currentWordIndex]}
+                          onPronounce={(word) => console.log('Playing pronunciation for:', word.word)}
+                          onFavorite={(word) => console.log('Favorited:', word.word)}
+                        />
+                      </div>
+
+                      <div className="flex justify-center gap-4">
+                        <Button
+                          onClick={() => setCurrentWordIndex(Math.max(0, currentWordIndex - 1))}
+                          disabled={currentWordIndex === 0}
+                          variant="outline"
+                        >
+                          Previous
+                        </Button>
+                        <Button
+                          onClick={() => setCurrentWordIndex(Math.min(sampleWords.length - 1, currentWordIndex + 1))}
+                          disabled={currentWordIndex === sampleWords.length - 1}
+                        >
+                          Next
+                          <ArrowRight className="w-4 h-4 ml-2" />
+                        </Button>
+                      </div>
+                    </>
+                  )}
+
+                  {learningMode === 'builder' && (
+                    <VocabularyBuilder
+                      words={vocabularyWords}
+                      onWordMastered={handleWordMastered}
+                      onSessionComplete={handleVocabularySessionComplete}
+                    />
+                  )}
+                </>
+              )}
+            </div>
+          </TabsContent>
+
+          <TabsContent value="games">
+            <div className="space-y-8">
               <div className="text-center">
                 <h2 className="text-3xl font-bold text-slate-800 mb-4">
-                  Discover New Words
+                  Learning Games
                 </h2>
                 <p className="text-slate-600 mb-8">
-                  Explore vocabulary through interactive word cards. Click to flip and learn!
+                  Make learning fun with our interactive vocabulary games!
                 </p>
               </div>
 
-              <div className="flex justify-center mb-6">
-                <div className="flex gap-2">
-                  {sampleWords.map((_, index) => (
-                    <Button
-                      key={index}
-                      size="sm"
-                      variant={currentWordIndex === index ? "default" : "outline"}
-                      onClick={() => setCurrentWordIndex(index)}
-                      className="w-8 h-8 p-0"
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+                <Card className="cursor-pointer hover:shadow-lg transition-all duration-300 hover:scale-105">
+                  <CardContent className="p-8 text-center">
+                    <div className="text-6xl mb-4">🎯</div>
+                    <h3 className="text-xl font-semibold mb-2">Word Matching</h3>
+                    <p className="text-slate-600 mb-4">
+                      Match words with their definitions in this fun memory game!
+                    </p>
+                    <Button 
+                      className="bg-educational-blue text-white"
+                      onClick={() => setLearningMode('matching')}
                     >
-                      {index + 1}
+                      <Shuffle className="w-4 h-4 mr-2" />
+                      Start Matching
                     </Button>
-                  ))}
+                  </CardContent>
+                </Card>
+
+                <Card className="cursor-pointer hover:shadow-lg transition-all duration-300 hover:scale-105">
+                  <CardContent className="p-8 text-center">
+                    <div className="text-6xl mb-4">🧩</div>
+                    <h3 className="text-xl font-semibold mb-2">Word Puzzle</h3>
+                    <p className="text-slate-600 mb-4">
+                      Solve word puzzles and unscramble letters to form vocabulary words!
+                    </p>
+                    <Button 
+                      variant="outline"
+                      disabled
+                    >
+                      Coming Soon
+                    </Button>
+                  </CardContent>
+                </Card>
+              </div>
+
+              {learningMode === 'matching' && (
+                <div className="mt-8">
+                  <WordMatchingGame
+                    pairs={matchingPairs}
+                    onComplete={handleMatchingComplete}
+                  />
                 </div>
-              </div>
-
-              <div className="max-w-md mx-auto">
-                <WordCard 
-                  word={sampleWords[currentWordIndex]}
-                  onPronounce={(word) => console.log('Playing pronunciation for:', word.word)}
-                  onFavorite={(word) => console.log('Favorited:', word.word)}
-                />
-              </div>
-
-              <div className="flex justify-center gap-4">
-                <Button
-                  onClick={() => setCurrentWordIndex(Math.max(0, currentWordIndex - 1))}
-                  disabled={currentWordIndex === 0}
-                  variant="outline"
-                >
-                  Previous
-                </Button>
-                <Button
-                  onClick={() => setCurrentWordIndex(Math.min(sampleWords.length - 1, currentWordIndex + 1))}
-                  disabled={currentWordIndex === sampleWords.length - 1}
-                >
-                  Next
-                  <ArrowRight className="w-4 h-4 ml-2" />
-                </Button>
-              </div>
+              )}
             </div>
           </TabsContent>
 
