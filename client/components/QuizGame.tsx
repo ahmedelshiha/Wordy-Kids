@@ -257,7 +257,7 @@ export const QuizGame: React.FC<QuizGameProps> = ({
 
           {/* Answer Options */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-2xl mx-auto">
-            {currentQuestion.options.map((option, index) => (
+            {currentQuestion.options?.map((option, index) => (
               <Button
                 key={index}
                 onClick={() => handleAnswerSelect(option)}
