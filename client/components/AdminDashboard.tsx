@@ -104,6 +104,11 @@ import {
   Send,
 } from "lucide-react";
 import { AnimatedCounter } from "@/components/AnimatedCounter";
+import BulkWordImport from "@/components/BulkWordImport";
+import WordEditor from "@/components/WordEditor";
+import ContentModerationPanel from "@/components/ContentModerationPanel";
+import AdvancedAnalyticsDashboard from "@/components/AdvancedAnalyticsDashboard";
+import EnhancedUserManagement from "@/components/EnhancedUserManagement";
 
 interface AdminWord {
   id: string;
@@ -328,6 +333,10 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onNavigateBack }) => {
   const [showUserDialog, setShowUserDialog] = useState(false);
   const [showCategoryDialog, setShowCategoryDialog] = useState(false);
   const [showTicketDialog, setShowTicketDialog] = useState(false);
+  const [showBulkImport, setShowBulkImport] = useState(false);
+  const [showWordEditor, setShowWordEditor] = useState(false);
+  const [editingWord, setEditingWord] = useState<AdminWord | null>(null);
+  const [wordEditorMode, setWordEditorMode] = useState<"create" | "edit">("create");
 
   // Form states
   const [newWordData, setNewWordData] = useState({
@@ -462,7 +471,11 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onNavigateBack }) => {
             <Button
               variant="outline"
               className="h-20 flex-col gap-2"
-              onClick={() => setShowWordDialog(true)}
+              onClick={() => {
+                setWordEditorMode("create");
+                setEditingWord(null);
+                setShowWordEditor(true);
+              }}
             >
               <Plus className="w-5 h-5" />
               Add Word
@@ -596,11 +609,15 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onNavigateBack }) => {
           </p>
         </div>
         <div className="flex gap-2">
-          <Button variant="outline" size="sm">
+          <Button variant="outline" size="sm" onClick={() => setShowBulkImport(true)}>
             <Upload className="w-4 h-4 mr-2" />
             Bulk Import
           </Button>
-          <Button size="sm" onClick={() => setShowWordDialog(true)}>
+          <Button size="sm" onClick={() => {
+            setWordEditorMode("create");
+            setEditingWord(null);
+            setShowWordEditor(true);
+          }}>
             <Plus className="w-4 h-4 mr-2" />
             Add Word
           </Button>
@@ -693,7 +710,15 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onNavigateBack }) => {
                         </Button>
                       </>
                     )}
-                    <Button size="sm" variant="outline">
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      onClick={() => {
+                        setWordEditorMode("edit");
+                        setEditingWord(word);
+                        setShowWordEditor(true);
+                      }}
+                    >
                       <Edit className="w-4 h-4" />
                     </Button>
                     <Button size="sm" variant="outline">
