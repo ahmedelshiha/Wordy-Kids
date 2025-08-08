@@ -87,7 +87,7 @@ interface ChildProfile {
   favoriteCategory: string;
   lastActive: Date;
   preferredLearningTime: string;
-  difficultyPreference: 'easy' | 'medium' | 'hard';
+  difficultyPreference: "easy" | "medium" | "hard";
   parentNotes: string;
   customWords: string[];
   weeklyTarget: number;
@@ -125,20 +125,20 @@ interface ParentGoal {
   targetValue: number;
   currentValue: number;
   deadline: Date;
-  type: 'daily' | 'weekly' | 'monthly';
-  status: 'active' | 'completed' | 'paused';
+  type: "daily" | "weekly" | "monthly";
+  status: "active" | "completed" | "paused";
   reward: string;
 }
 
 interface ParentNotification {
   id: string;
-  type: 'achievement' | 'goal_progress' | 'milestone' | 'reminder' | 'concern';
+  type: "achievement" | "goal_progress" | "milestone" | "reminder" | "concern";
   title: string;
   message: string;
   childId: string;
   timestamp: Date;
   read: boolean;
-  priority: 'low' | 'medium' | 'high';
+  priority: "low" | "medium" | "high";
 }
 
 interface ParentDashboardProps {
@@ -162,14 +162,27 @@ const sampleChildren: ChildProfile[] = [
     favoriteCategory: "Animals",
     lastActive: new Date(Date.now() - 2 * 60 * 60 * 1000),
     preferredLearningTime: "After school (4-6 PM)",
-    difficultyPreference: 'medium',
-    parentNotes: "Loves animal facts. Struggles with spelling but excels at comprehension.",
+    difficultyPreference: "medium",
+    parentNotes:
+      "Loves animal facts. Struggles with spelling but excels at comprehension.",
     customWords: ["dinosaur", "paleontologist", "prehistoric", "excavation"],
     weeklyTarget: 20,
     monthlyTarget: 80,
-    learningStrengths: ["Visual Learning", "Pattern Recognition", "Memory Games"],
-    areasForImprovement: ["Spelling Accuracy", "Reading Speed", "Pronunciation"],
-    motivationalRewards: ["Extra playtime", "Choose weekend activity", "New book"],
+    learningStrengths: [
+      "Visual Learning",
+      "Pattern Recognition",
+      "Memory Games",
+    ],
+    areasForImprovement: [
+      "Spelling Accuracy",
+      "Reading Speed",
+      "Pronunciation",
+    ],
+    motivationalRewards: [
+      "Extra playtime",
+      "Choose weekend activity",
+      "New book",
+    ],
     recentAchievements: [
       {
         id: "streak-5",
@@ -201,13 +214,22 @@ const sampleChildren: ChildProfile[] = [
     favoriteCategory: "Nature",
     lastActive: new Date(Date.now() - 4 * 60 * 60 * 1000),
     preferredLearningTime: "Morning (9-11 AM)",
-    difficultyPreference: 'easy',
-    parentNotes: "Very enthusiastic learner. Loves nature and outdoor activities.",
+    difficultyPreference: "easy",
+    parentNotes:
+      "Very enthusiastic learner. Loves nature and outdoor activities.",
     customWords: ["butterfly", "flowers", "garden", "rainbow"],
     weeklyTarget: 15,
     monthlyTarget: 60,
-    learningStrengths: ["Curiosity", "Attention to Detail", "Creative Thinking"],
-    areasForImprovement: ["Focus Duration", "Following Instructions", "Letter Formation"],
+    learningStrengths: [
+      "Curiosity",
+      "Attention to Detail",
+      "Creative Thinking",
+    ],
+    areasForImprovement: [
+      "Focus Duration",
+      "Following Instructions",
+      "Letter Formation",
+    ],
     motivationalRewards: ["Nature walk", "Art supplies", "Story time"],
     recentAchievements: [
       {
@@ -230,9 +252,9 @@ const sampleGoals: ParentGoal[] = [
     targetValue: 20,
     currentValue: 12,
     deadline: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000),
-    type: 'weekly',
-    status: 'active',
-    reward: "Extra 30 minutes of screen time"
+    type: "weekly",
+    status: "active",
+    reward: "Extra 30 minutes of screen time",
   },
   {
     id: "goal-2",
@@ -242,43 +264,46 @@ const sampleGoals: ParentGoal[] = [
     targetValue: 7,
     currentValue: 3,
     deadline: new Date(Date.now() + 4 * 24 * 60 * 60 * 1000),
-    type: 'weekly',
-    status: 'active',
-    reward: "Choose family movie night film"
-  }
+    type: "weekly",
+    status: "active",
+    reward: "Choose family movie night film",
+  },
 ];
 
 const sampleNotifications: ParentNotification[] = [
   {
     id: "notif-1",
-    type: 'achievement',
+    type: "achievement",
     title: "New Achievement Unlocked!",
-    message: "Alex earned the 'Streak Master' badge for learning 5 days in a row!",
+    message:
+      "Alex earned the 'Streak Master' badge for learning 5 days in a row!",
     childId: "1",
     timestamp: new Date(Date.now() - 30 * 60 * 1000),
     read: false,
-    priority: 'medium'
+    priority: "medium",
   },
   {
     id: "notif-2",
-    type: 'goal_progress',
+    type: "goal_progress",
     title: "Goal Progress Update",
-    message: "Emma is 80% complete with her weekly goal - only 2 more words to go!",
+    message:
+      "Emma is 80% complete with her weekly goal - only 2 more words to go!",
     childId: "2",
     timestamp: new Date(Date.now() - 2 * 60 * 60 * 1000),
     read: false,
-    priority: 'low'
+    priority: "low",
   },
   {
     id: "notif-3",
-    type: 'concern',
+    type: "concern",
     title: "Learning Pattern Alert",
-    message: "Alex has been struggling with spelling activities. Consider additional practice.",
+    message:
+      "Alex has been struggling with spelling activities. Consider additional practice.",
     childId: "1",
     timestamp: new Date(Date.now() - 6 * 60 * 60 * 1000),
     read: true,
-    priority: 'high'
-  }
+    priority: "high",
+  },
 ];
 
 export const ParentDashboard: React.FC<ParentDashboardProps> = ({
@@ -286,10 +311,13 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
   sessions = [],
   onNavigateBack,
 }) => {
-  const [selectedChild, setSelectedChild] = useState<ChildProfile | null>(children[0] || null);
+  const [selectedChild, setSelectedChild] = useState<ChildProfile | null>(
+    children[0] || null,
+  );
   const [activeTab, setActiveTab] = useState("overview");
   const [goals, setGoals] = useState<ParentGoal[]>(sampleGoals);
-  const [notifications, setNotifications] = useState<ParentNotification[]>(sampleNotifications);
+  const [notifications, setNotifications] =
+    useState<ParentNotification[]>(sampleNotifications);
   const [showAddChildDialog, setShowAddChildDialog] = useState(false);
   const [showAddGoalDialog, setShowAddGoalDialog] = useState(false);
   const [showCustomWordDialog, setShowCustomWordDialog] = useState(false);
@@ -304,24 +332,32 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
     title: "",
     description: "",
     targetValue: 10,
-    type: 'weekly' as const,
+    type: "weekly" as const,
     reward: "",
-    deadline: ""
+    deadline: "",
   });
   const [customWordInput, setCustomWordInput] = useState("");
   const [filterCategory, setFilterCategory] = useState("all");
   const [searchTerm, setSearchTerm] = useState("");
   const [reportData, setReportData] = useState<any>(null);
   const [generatingReport, setGeneratingReport] = useState(false);
-  const [reportType, setReportType] = useState<'summary' | 'detailed' | 'progress'>('detailed');
-  const [reportDateRange, setReportDateRange] = useState<'week' | 'month' | 'quarter' | 'year'>('month');
+  const [reportType, setReportType] = useState<
+    "summary" | "detailed" | "progress"
+  >("detailed");
+  const [reportDateRange, setReportDateRange] = useState<
+    "week" | "month" | "quarter" | "year"
+  >("month");
 
-  const unreadNotifications = notifications.filter(n => !n.read).length;
-  const highPriorityNotifications = notifications.filter(n => n.priority === 'high' && !n.read).length;
+  const unreadNotifications = notifications.filter((n) => !n.read).length;
+  const highPriorityNotifications = notifications.filter(
+    (n) => n.priority === "high" && !n.read,
+  ).length;
 
   const getTimeAgo = (date: Date) => {
     const now = new Date();
-    const diffInHours = Math.floor((now.getTime() - date.getTime()) / (1000 * 60 * 60));
+    const diffInHours = Math.floor(
+      (now.getTime() - date.getTime()) / (1000 * 60 * 60),
+    );
     if (diffInHours < 1) return "Just now";
     if (diffInHours < 24) return `${diffInHours}h ago`;
     const diffInDays = Math.floor(diffInHours / 24);
@@ -337,17 +373,21 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
   };
 
   const getChildGoals = (childId: string) => {
-    return goals.filter(goal => goal.childId === childId);
+    return goals.filter((goal) => goal.childId === childId);
   };
 
   const getChildNotifications = (childId: string) => {
-    return notifications.filter(notif => notif.childId === childId).slice(0, 3);
+    return notifications
+      .filter((notif) => notif.childId === childId)
+      .slice(0, 3);
   };
 
   const markNotificationAsRead = (notificationId: string) => {
-    setNotifications(prev => prev.map(notif => 
-      notif.id === notificationId ? { ...notif, read: true } : notif
-    ));
+    setNotifications((prev) =>
+      prev.map((notif) =>
+        notif.id === notificationId ? { ...notif, read: true } : notif,
+      ),
+    );
   };
 
   const addCustomWord = () => {
@@ -355,7 +395,7 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
       // In a real app, this would update the backend
       const updatedChild = {
         ...selectedChild,
-        customWords: [...selectedChild.customWords, customWordInput.trim()]
+        customWords: [...selectedChild.customWords, customWordInput.trim()],
       };
       setSelectedChild(updatedChild);
       setCustomWordInput("");
@@ -367,7 +407,7 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
     if (selectedChild) {
       const updatedChild = {
         ...selectedChild,
-        customWords: selectedChild.customWords.filter(w => w !== word)
+        customWords: selectedChild.customWords.filter((w) => w !== word),
       };
       setSelectedChild(updatedChild);
     }
@@ -384,17 +424,17 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
         currentValue: 0,
         deadline: new Date(newGoalData.deadline),
         type: newGoalData.type,
-        status: 'active',
-        reward: newGoalData.reward
+        status: "active",
+        reward: newGoalData.reward,
       };
-      setGoals(prev => [...prev, newGoal]);
+      setGoals((prev) => [...prev, newGoal]);
       setNewGoalData({
         title: "",
         description: "",
         targetValue: 10,
-        type: 'weekly',
+        type: "weekly",
         reward: "",
-        deadline: ""
+        deadline: "",
       });
       setShowAddGoalDialog(false);
     }
@@ -409,8 +449,9 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
             <div>
               <h3 className="font-semibold text-lg">Good Morning! 👋</h3>
               <p className="text-sm text-slate-600">
-                {children.length} active learner{children.length !== 1 ? 's' : ''} • 
-                {unreadNotifications} new notification{unreadNotifications !== 1 ? 's' : ''}
+                {children.length} active learner
+                {children.length !== 1 ? "s" : ""} •{unreadNotifications} new
+                notification{unreadNotifications !== 1 ? "s" : ""}
                 {highPriorityNotifications > 0 && (
                   <span className="ml-2 text-red-600 font-medium">
                     {highPriorityNotifications} urgent
@@ -419,7 +460,11 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
               </p>
             </div>
             <div className="flex gap-2">
-              <Button size="sm" variant="outline" onClick={() => setShowAddChildDialog(true)}>
+              <Button
+                size="sm"
+                variant="outline"
+                onClick={() => setShowAddChildDialog(true)}
+              >
                 <UserPlus className="w-4 h-4 mr-2" />
                 Add Child
               </Button>
@@ -447,7 +492,10 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
             <div className="text-center p-4 bg-educational-green/5 rounded-lg">
               <div className="text-2xl font-bold text-educational-green">
                 <AnimatedCounter
-                  value={children.reduce((sum, child) => sum + child.wordsLearned, 0)}
+                  value={children.reduce(
+                    (sum, child) => sum + child.wordsLearned,
+                    0,
+                  )}
                 />
               </div>
               <p className="text-sm text-slate-600">Total Words Learned</p>
@@ -455,7 +503,10 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
             <div className="text-center p-4 bg-educational-orange/5 rounded-lg">
               <div className="text-2xl font-bold text-educational-orange">
                 <AnimatedCounter
-                  value={children.reduce((sum, child) => sum + child.totalPoints, 0)}
+                  value={children.reduce(
+                    (sum, child) => sum + child.totalPoints,
+                    0,
+                  )}
                 />
               </div>
               <p className="text-sm text-slate-600">Total Points Earned</p>
@@ -463,7 +514,9 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
             <div className="text-center p-4 bg-educational-purple/5 rounded-lg">
               <div className="text-2xl font-bold text-educational-purple">
                 <AnimatedCounter
-                  value={Math.max(...children.map((child) => child.currentStreak))}
+                  value={Math.max(
+                    ...children.map((child) => child.currentStreak),
+                  )}
                 />
               </div>
               <p className="text-sm text-slate-600">Longest Streak</p>
@@ -476,9 +529,10 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {children.map((child) => {
           const weeklyStats = calculateWeeklyStats(child.id);
-          const progressPercentage = (child.weeklyProgress / child.weeklyGoal) * 100;
+          const progressPercentage =
+            (child.weeklyProgress / child.weeklyGoal) * 100;
           const childGoals = getChildGoals(child.id);
-          const activeGoals = childGoals.filter(g => g.status === 'active');
+          const activeGoals = childGoals.filter((g) => g.status === "active");
           const childNotifications = getChildNotifications(child.id);
 
           return (
@@ -508,7 +562,8 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
                     <p className="text-xs text-slate-500">Last active</p>
                     {activeGoals.length > 0 && (
                       <Badge className="bg-educational-purple text-white text-xs mt-1">
-                        {activeGoals.length} active goal{activeGoals.length !== 1 ? 's' : ''}
+                        {activeGoals.length} active goal
+                        {activeGoals.length !== 1 ? "s" : ""}
                       </Badge>
                     )}
                   </div>
@@ -519,7 +574,9 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
                 <div>
                   <div className="flex justify-between text-sm mb-2">
                     <span>Weekly Goal</span>
-                    <span>{child.weeklyProgress}/{child.weeklyGoal} words</span>
+                    <span>
+                      {child.weeklyProgress}/{child.weeklyGoal} words
+                    </span>
                   </div>
                   <Progress value={progressPercentage} className="h-2" />
                   <p className="text-xs text-slate-500 mt-1">
@@ -554,16 +611,19 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
                   <div className="bg-blue-50 p-3 rounded-lg">
                     <div className="flex items-center gap-2 mb-2">
                       <Bell className="w-4 h-4 text-educational-blue" />
-                      <span className="text-sm font-medium">Recent Updates</span>
+                      <span className="text-sm font-medium">
+                        Recent Updates
+                      </span>
                     </div>
-                    {childNotifications.slice(0, 1).map(notif => (
+                    {childNotifications.slice(0, 1).map((notif) => (
                       <div key={notif.id} className="text-sm text-slate-600">
                         {notif.message}
                       </div>
                     ))}
                     {childNotifications.length > 1 && (
                       <p className="text-xs text-slate-500 mt-1">
-                        +{childNotifications.length - 1} more update{childNotifications.length - 1 !== 1 ? 's' : ''}
+                        +{childNotifications.length - 1} more update
+                        {childNotifications.length - 1 !== 1 ? "s" : ""}
                       </p>
                     )}
                   </div>
@@ -573,9 +633,13 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
                 {child.recentAchievements.length > 0 && (
                   <div className="bg-yellow-50 p-3 rounded-lg">
                     <div className="flex items-center gap-2">
-                      <span className="text-lg">{child.recentAchievements[0].icon}</span>
+                      <span className="text-lg">
+                        {child.recentAchievements[0].icon}
+                      </span>
                       <div>
-                        <p className="font-medium text-sm">{child.recentAchievements[0].title}</p>
+                        <p className="font-medium text-sm">
+                          {child.recentAchievements[0].title}
+                        </p>
                         <p className="text-xs text-slate-600">
                           {getTimeAgo(child.recentAchievements[0].earnedAt)}
                         </p>
@@ -596,16 +660,21 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
       <div className="flex items-center justify-between">
         <div>
           <h2 className="text-2xl font-bold">Goal Management</h2>
-          <p className="text-slate-600">Set and track learning objectives for your children</p>
+          <p className="text-slate-600">
+            Set and track learning objectives for your children
+          </p>
         </div>
-        <Button onClick={() => setShowAddGoalDialog(true)} className="bg-educational-blue">
+        <Button
+          onClick={() => setShowAddGoalDialog(true)}
+          className="bg-educational-blue"
+        >
           <Plus className="w-4 h-4 mr-2" />
           Create Goal
         </Button>
       </div>
 
       {/* Goals by Child */}
-      {children.map(child => {
+      {children.map((child) => {
         const childGoals = getChildGoals(child.id);
         if (childGoals.length === 0) return null;
 
@@ -619,28 +688,42 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
             </CardHeader>
             <CardContent>
               <div className="grid gap-4">
-                {childGoals.map(goal => {
-                  const progressPercentage = Math.min((goal.currentValue / goal.targetValue) * 100, 100);
-                  const isCompleted = goal.status === 'completed';
+                {childGoals.map((goal) => {
+                  const progressPercentage = Math.min(
+                    (goal.currentValue / goal.targetValue) * 100,
+                    100,
+                  );
+                  const isCompleted = goal.status === "completed";
                   const isOverdue = new Date() > goal.deadline && !isCompleted;
 
                   return (
-                    <div key={goal.id} className={`p-4 rounded-lg border ${
-                      isCompleted ? 'bg-green-50 border-green-200' :
-                      isOverdue ? 'bg-red-50 border-red-200' :
-                      'bg-slate-50 border-slate-200'
-                    }`}>
+                    <div
+                      key={goal.id}
+                      className={`p-4 rounded-lg border ${
+                        isCompleted
+                          ? "bg-green-50 border-green-200"
+                          : isOverdue
+                            ? "bg-red-50 border-red-200"
+                            : "bg-slate-50 border-slate-200"
+                      }`}
+                    >
                       <div className="flex items-center justify-between mb-3">
                         <div>
                           <h4 className="font-semibold">{goal.title}</h4>
-                          <p className="text-sm text-slate-600">{goal.description}</p>
+                          <p className="text-sm text-slate-600">
+                            {goal.description}
+                          </p>
                         </div>
                         <div className="text-right">
-                          <Badge className={
-                            isCompleted ? 'bg-green-500' :
-                            isOverdue ? 'bg-red-500' :
-                            'bg-educational-blue'
-                          }>
+                          <Badge
+                            className={
+                              isCompleted
+                                ? "bg-green-500"
+                                : isOverdue
+                                  ? "bg-red-500"
+                                  : "bg-educational-blue"
+                            }
+                          >
                             {goal.status}
                           </Badge>
                           <p className="text-xs text-slate-500 mt-1">
@@ -648,11 +731,13 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
                           </p>
                         </div>
                       </div>
-                      
+
                       <div className="mb-3">
                         <div className="flex justify-between text-sm mb-1">
                           <span>Progress</span>
-                          <span>{goal.currentValue}/{goal.targetValue}</span>
+                          <span>
+                            {goal.currentValue}/{goal.targetValue}
+                          </span>
                         </div>
                         <Progress value={progressPercentage} className="h-2" />
                       </div>
@@ -679,9 +764,14 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
       <div className="flex items-center justify-between">
         <div>
           <h2 className="text-2xl font-bold">Custom Vocabulary</h2>
-          <p className="text-slate-600">Add personalized words for your children's learning</p>
+          <p className="text-slate-600">
+            Add personalized words for your children's learning
+          </p>
         </div>
-        <Button onClick={() => setShowCustomWordDialog(true)} className="bg-educational-green">
+        <Button
+          onClick={() => setShowCustomWordDialog(true)}
+          className="bg-educational-green"
+        >
           <Plus className="w-4 h-4 mr-2" />
           Add Custom Word
         </Button>
@@ -699,11 +789,17 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
             {selectedChild.customWords.length === 0 ? (
               <div className="text-center p-8">
                 <BookMarked className="w-16 h-16 text-slate-400 mx-auto mb-4" />
-                <h3 className="text-lg font-semibold mb-2">No Custom Words Yet</h3>
+                <h3 className="text-lg font-semibold mb-2">
+                  No Custom Words Yet
+                </h3>
                 <p className="text-slate-600 mb-4">
-                  Add words that are meaningful to your child's interests and experiences
+                  Add words that are meaningful to your child's interests and
+                  experiences
                 </p>
-                <Button onClick={() => setShowCustomWordDialog(true)} className="bg-educational-green">
+                <Button
+                  onClick={() => setShowCustomWordDialog(true)}
+                  className="bg-educational-green"
+                >
                   <Plus className="w-4 h-4 mr-2" />
                   Add First Word
                 </Button>
@@ -711,7 +807,10 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
             ) : (
               <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
                 {selectedChild.customWords.map((word, index) => (
-                  <div key={index} className="flex items-center justify-between p-3 bg-slate-50 rounded-lg">
+                  <div
+                    key={index}
+                    className="flex items-center justify-between p-3 bg-slate-50 rounded-lg"
+                  >
                     <span className="font-medium">{word}</span>
                     <Button
                       size="sm"
@@ -731,13 +830,15 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
     </div>
   );
 
-  const renderDetailedAnalytics = () => (
+  const renderDetailedAnalytics = () =>
     selectedChild && (
       <div className="space-y-6">
         <div className="flex items-center justify-between">
           <div>
             <h2 className="text-2xl font-bold">Detailed Analytics</h2>
-            <p className="text-slate-600">In-depth insights for {selectedChild.name}</p>
+            <p className="text-slate-600">
+              In-depth insights for {selectedChild.name}
+            </p>
           </div>
           <div className="flex gap-2">
             <Button variant="outline" size="sm">
@@ -822,7 +923,10 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
           <CardContent>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
               {selectedChild.motivationalRewards.map((reward, index) => (
-                <div key={index} className="p-3 bg-yellow-50 rounded-lg text-center">
+                <div
+                  key={index}
+                  className="p-3 bg-yellow-50 rounded-lg text-center"
+                >
                   <span className="font-medium">{reward}</span>
                 </div>
               ))}
@@ -830,8 +934,7 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
           </CardContent>
         </Card>
       </div>
-    )
-  );
+    );
 
   const renderNotifications = () => (
     <div className="space-y-6">
@@ -854,32 +957,59 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
       </div>
 
       <div className="space-y-3">
-        {notifications.map(notification => (
-          <Card key={notification.id} className={`cursor-pointer transition-all ${
-            !notification.read ? 'border-l-4 border-l-educational-blue bg-blue-50/30' : ''
-          }`} onClick={() => markNotificationAsRead(notification.id)}>
+        {notifications.map((notification) => (
+          <Card
+            key={notification.id}
+            className={`cursor-pointer transition-all ${
+              !notification.read
+                ? "border-l-4 border-l-educational-blue bg-blue-50/30"
+                : ""
+            }`}
+            onClick={() => markNotificationAsRead(notification.id)}
+          >
             <CardContent className="p-4">
               <div className="flex items-start justify-between">
                 <div className="flex items-start gap-3">
-                  <div className={`w-8 h-8 rounded-full flex items-center justify-center ${
-                    notification.type === 'achievement' ? 'bg-yellow-100 text-yellow-600' :
-                    notification.type === 'goal_progress' ? 'bg-blue-100 text-blue-600' :
-                    notification.type === 'concern' ? 'bg-red-100 text-red-600' :
-                    notification.type === 'milestone' ? 'bg-green-100 text-green-600' :
-                    'bg-slate-100 text-slate-600'
-                  }`}>
-                    {notification.type === 'achievement' && <Award className="w-4 h-4" />}
-                    {notification.type === 'goal_progress' && <Target className="w-4 h-4" />}
-                    {notification.type === 'concern' && <BellRing className="w-4 h-4" />}
-                    {notification.type === 'milestone' && <Star className="w-4 h-4" />}
-                    {notification.type === 'reminder' && <Bell className="w-4 h-4" />}
+                  <div
+                    className={`w-8 h-8 rounded-full flex items-center justify-center ${
+                      notification.type === "achievement"
+                        ? "bg-yellow-100 text-yellow-600"
+                        : notification.type === "goal_progress"
+                          ? "bg-blue-100 text-blue-600"
+                          : notification.type === "concern"
+                            ? "bg-red-100 text-red-600"
+                            : notification.type === "milestone"
+                              ? "bg-green-100 text-green-600"
+                              : "bg-slate-100 text-slate-600"
+                    }`}
+                  >
+                    {notification.type === "achievement" && (
+                      <Award className="w-4 h-4" />
+                    )}
+                    {notification.type === "goal_progress" && (
+                      <Target className="w-4 h-4" />
+                    )}
+                    {notification.type === "concern" && (
+                      <BellRing className="w-4 h-4" />
+                    )}
+                    {notification.type === "milestone" && (
+                      <Star className="w-4 h-4" />
+                    )}
+                    {notification.type === "reminder" && (
+                      <Bell className="w-4 h-4" />
+                    )}
                   </div>
                   <div>
                     <h4 className="font-semibold">{notification.title}</h4>
-                    <p className="text-sm text-slate-600 mt-1">{notification.message}</p>
+                    <p className="text-sm text-slate-600 mt-1">
+                      {notification.message}
+                    </p>
                     <div className="flex items-center gap-2 mt-2">
                       <Badge variant="outline" className="text-xs">
-                        {children.find(c => c.id === notification.childId)?.name}
+                        {
+                          children.find((c) => c.id === notification.childId)
+                            ?.name
+                        }
                       </Badge>
                       <span className="text-xs text-slate-500">
                         {getTimeAgo(notification.timestamp)}
@@ -888,11 +1018,15 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
                   </div>
                 </div>
                 <div className="flex items-center gap-2">
-                  <Badge className={
-                    notification.priority === 'high' ? 'bg-red-500' :
-                    notification.priority === 'medium' ? 'bg-yellow-500' :
-                    'bg-slate-500'
-                  }>
+                  <Badge
+                    className={
+                      notification.priority === "high"
+                        ? "bg-red-500"
+                        : notification.priority === "medium"
+                          ? "bg-yellow-500"
+                          : "bg-slate-500"
+                    }
+                  >
                     {notification.priority}
                   </Badge>
                   {!notification.read && (
@@ -908,26 +1042,30 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
   );
 
   // Helper function to generate comprehensive learning report
-  const generateLearningReport = async (child: ChildProfile, dateRange: string, reportType: string) => {
+  const generateLearningReport = async (
+    child: ChildProfile,
+    dateRange: string,
+    reportType: string,
+  ) => {
     setGeneratingReport(true);
 
     // Simulate API call delay
-    await new Promise(resolve => setTimeout(resolve, 2000));
+    await new Promise((resolve) => setTimeout(resolve, 2000));
 
     const now = new Date();
     const startDate = new Date();
 
     switch (dateRange) {
-      case 'week':
+      case "week":
         startDate.setDate(now.getDate() - 7);
         break;
-      case 'month':
+      case "month":
         startDate.setMonth(now.getMonth() - 1);
         break;
-      case 'quarter':
+      case "quarter":
         startDate.setMonth(now.getMonth() - 3);
         break;
-      case 'year':
+      case "year":
         startDate.setFullYear(now.getFullYear() - 1);
         break;
     }
@@ -946,54 +1084,87 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
         levelUps: Math.floor(Math.random() * 3) + 1,
       },
       learningPath: {
-        strengthCategories: ['Animals', 'Science', 'Colors'],
-        strugglingCategories: ['Food', 'Transportation'],
-        masteredWords: ['elephant', 'microscope', 'rainbow', 'volcano', 'constellation'],
-        practiceNeeded: ['helicopter', 'restaurant', 'apartment', 'orchestra'],
+        strengthCategories: ["Animals", "Science", "Colors"],
+        strugglingCategories: ["Food", "Transportation"],
+        masteredWords: [
+          "elephant",
+          "microscope",
+          "rainbow",
+          "volcano",
+          "constellation",
+        ],
+        practiceNeeded: ["helicopter", "restaurant", "apartment", "orchestra"],
         recommendedActivities: [
-          'Focus on transportation vocabulary through picture matching',
-          'Practice food words using cooking-themed games',
-          'Reinforce helicopter/orchestra pronunciation with audio exercises'
-        ]
+          "Focus on transportation vocabulary through picture matching",
+          "Practice food words using cooking-themed games",
+          "Reinforce helicopter/orchestra pronunciation with audio exercises",
+        ],
       },
       progressAnalytics: {
         weeklyTrends: [
-          { week: 'Week 1', accuracy: 78, wordsLearned: 12, timeSpent: 145 },
-          { week: 'Week 2', accuracy: 82, wordsLearned: 15, timeSpent: 160 },
-          { week: 'Week 3', accuracy: 85, wordsLearned: 18, timeSpent: 175 },
-          { week: 'Week 4', accuracy: 88, wordsLearned: 22, timeSpent: 190 }
+          { week: "Week 1", accuracy: 78, wordsLearned: 12, timeSpent: 145 },
+          { week: "Week 2", accuracy: 82, wordsLearned: 15, timeSpent: 160 },
+          { week: "Week 3", accuracy: 85, wordsLearned: 18, timeSpent: 175 },
+          { week: "Week 4", accuracy: 88, wordsLearned: 22, timeSpent: 190 },
         ],
         categoryProgress: [
-          { category: 'Animals', mastery: 92, timeSpent: 45, trend: 'improving' },
-          { category: 'Science', mastery: 87, timeSpent: 38, trend: 'stable' },
-          { category: 'Colors', mastery: 95, timeSpent: 25, trend: 'mastered' },
-          { category: 'Food', mastery: 65, timeSpent: 42, trend: 'needs_focus' },
-          { category: 'Transportation', mastery: 58, timeSpent: 35, trend: 'challenging' }
-        ]
+          {
+            category: "Animals",
+            mastery: 92,
+            timeSpent: 45,
+            trend: "improving",
+          },
+          { category: "Science", mastery: 87, timeSpent: 38, trend: "stable" },
+          { category: "Colors", mastery: 95, timeSpent: 25, trend: "mastered" },
+          {
+            category: "Food",
+            mastery: 65,
+            timeSpent: 42,
+            trend: "needs_focus",
+          },
+          {
+            category: "Transportation",
+            mastery: 58,
+            timeSpent: 35,
+            trend: "challenging",
+          },
+        ],
       },
       achievements: [
-        { title: 'Vocabulary Star', description: 'Learned 50+ new words', earnedAt: new Date(now.getTime() - 3 * 24 * 60 * 60 * 1000) },
-        { title: 'Streak Champion', description: '10-day learning streak', earnedAt: new Date(now.getTime() - 5 * 24 * 60 * 60 * 1000) },
-        { title: 'Animal Expert', description: 'Mastered all animal words', earnedAt: new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000) }
+        {
+          title: "Vocabulary Star",
+          description: "Learned 50+ new words",
+          earnedAt: new Date(now.getTime() - 3 * 24 * 60 * 60 * 1000),
+        },
+        {
+          title: "Streak Champion",
+          description: "10-day learning streak",
+          earnedAt: new Date(now.getTime() - 5 * 24 * 60 * 60 * 1000),
+        },
+        {
+          title: "Animal Expert",
+          description: "Mastered all animal words",
+          earnedAt: new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000),
+        },
       ],
       parentInsights: {
         keyStrengths: [
-          'Excellent visual memory - retains information well through pictures',
-          'High engagement with interactive content',
-          'Consistent daily practice habits'
+          "Excellent visual memory - retains information well through pictures",
+          "High engagement with interactive content",
+          "Consistent daily practice habits",
         ],
         areasForGrowth: [
-          'Spelling accuracy could improve with more writing practice',
-          'Pronunciation of complex words needs attention',
-          'Speed of word recognition in timed activities'
+          "Spelling accuracy could improve with more writing practice",
+          "Pronunciation of complex words needs attention",
+          "Speed of word recognition in timed activities",
         ],
         recommendations: [
-          'Introduce spelling games to reinforce visual learning',
-          'Use audio repetition for difficult pronunciations',
-          'Gradually increase difficulty in timed exercises',
-          'Celebrate transportation vocabulary progress to boost confidence'
-        ]
-      }
+          "Introduce spelling games to reinforce visual learning",
+          "Use audio repetition for difficult pronunciations",
+          "Gradually increase difficulty in timed exercises",
+          "Celebrate transportation vocabulary progress to boost confidence",
+        ],
+      },
     };
 
     setReportData(report);
@@ -1004,40 +1175,40 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
   // Helper functions for dynamic content
   const getCategoryEmoji = (category: string) => {
     const emojis: Record<string, string> = {
-      'Animals': '🐘',
-      'Science': '🔬',
-      'Colors': '🌈',
-      'Food': '🍎',
-      'Transportation': '🚗',
-      'Nature': '🌲',
-      'Sports': '⚽',
-      'Music': '🎵'
+      Animals: "🐘",
+      Science: "🔬",
+      Colors: "🌈",
+      Food: "🍎",
+      Transportation: "🚗",
+      Nature: "🌲",
+      Sports: "⚽",
+      Music: "🎵",
     };
-    return emojis[category] || '📚';
+    return emojis[category] || "📚";
   };
 
   const getTrendEmoji = (trend: string) => {
     const emojis: Record<string, string> = {
-      'improving': '📈',
-      'stable': '➡️',
-      'mastered': '🏆',
-      'needs_focus': '🎯',
-      'challenging': '💪'
+      improving: "📈",
+      stable: "➡️",
+      mastered: "🏆",
+      needs_focus: "🎯",
+      challenging: "💪",
     };
-    return emojis[trend] || '📊';
+    return emojis[trend] || "📊";
   };
 
   const getTrendBadgeClass = (trend: string) => {
-    if (trend === 'improving' || trend === 'mastered') return 'badge-green';
-    if (trend === 'stable') return 'badge badge-blue';
-    return 'badge-orange';
+    if (trend === "improving" || trend === "mastered") return "badge-green";
+    if (trend === "stable") return "badge badge-blue";
+    return "badge-orange";
   };
 
   const getProgressClass = (mastery: number) => {
-    if (mastery >= 90) return 'progress-excellent';
-    if (mastery >= 75) return 'progress-good';
-    if (mastery >= 60) return 'progress-average';
-    return 'progress-needs-work';
+    if (mastery >= 90) return "progress-excellent";
+    if (mastery >= 75) return "progress-good";
+    if (mastery >= 60) return "progress-average";
+    return "progress-needs-work";
   };
 
   // Export report as PDF-friendly HTML with attractive design
@@ -1407,11 +1578,11 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
                         </div>
                         <h4 style="margin: 15px 0 10px 0; color: #059669;">💪 Strong Categories</h4>
                         <div class="badge-container">
-                            ${reportData.learningPath.strengthCategories.map(cat => `<span class="badge badge-green">${cat}</span>`).join('')}
+                            ${reportData.learningPath.strengthCategories.map((cat) => `<span class="badge badge-green">${cat}</span>`).join("")}
                         </div>
                         <h4 style="margin: 15px 0 10px 0; color: #059669;">✅ Mastered Words</h4>
                         <div class="badge-container">
-                            ${reportData.learningPath.masteredWords.map(word => `<span class="badge badge-green">${word}</span>`).join('')}
+                            ${reportData.learningPath.masteredWords.map((word) => `<span class="badge badge-green">${word}</span>`).join("")}
                         </div>
                     </div>
 
@@ -1421,11 +1592,11 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
                         </div>
                         <h4 style="margin: 15px 0 10px 0; color: #d97706;">📖 Practice Categories</h4>
                         <div class="badge-container">
-                            ${reportData.learningPath.strugglingCategories.map(cat => `<span class="badge badge-orange">${cat}</span>`).join('')}
+                            ${reportData.learningPath.strugglingCategories.map((cat) => `<span class="badge badge-orange">${cat}</span>`).join("")}
                         </div>
                         <h4 style="margin: 15px 0 10px 0; color: #d97706;">🔄 Words to Practice</h4>
                         <div class="badge-container">
-                            ${reportData.learningPath.practiceNeeded.map(word => `<span class="badge badge-orange">${word}</span>`).join('')}
+                            ${reportData.learningPath.practiceNeeded.map((word) => `<span class="badge badge-orange">${word}</span>`).join("")}
                         </div>
                     </div>
                 </div>
@@ -1436,20 +1607,24 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
                 <h2 class="section-title">
                     📊 Category Mastery Progress
                 </h2>
-                ${reportData.progressAnalytics.categoryProgress.map(category => `
+                ${reportData.progressAnalytics.categoryProgress
+                  .map(
+                    (category) => `
                     <div style="margin-bottom: 20px;">
                         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
                             <span style="font-weight: 600;">${getCategoryEmoji(category.category)} ${category.category}</span>
                             <div style="display: flex; align-items: center; gap: 10px;">
                                 <span style="font-size: 14px; color: #64748b;">${category.mastery}%</span>
-                                <span class="badge ${getTrendBadgeClass(category.trend)}">${getTrendEmoji(category.trend)} ${category.trend.replace('_', ' ')}</span>
+                                <span class="badge ${getTrendBadgeClass(category.trend)}">${getTrendEmoji(category.trend)} ${category.trend.replace("_", " ")}</span>
                             </div>
                         </div>
                         <div class="progress-bar">
                             <div class="progress-fill ${getProgressClass(category.mastery)}" style="width: ${category.mastery}%;"></div>
                         </div>
                     </div>
-                `).join('')}
+                `,
+                  )
+                  .join("")}
             </div>
 
             <!-- Parent Insights -->
@@ -1463,12 +1638,16 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
                         ⭐ Key Strengths
                     </h3>
                     <ul class="insights-list">
-                        ${reportData.parentInsights.keyStrengths.map(strength => `
+                        ${reportData.parentInsights.keyStrengths
+                          .map(
+                            (strength) => `
                             <li>
                                 <span style="color: #10b981; font-size: 16px;">✅</span>
                                 <span>${strength}</span>
                             </li>
-                        `).join('')}
+                        `,
+                          )
+                          .join("")}
                     </ul>
                 </div>
 
@@ -1477,12 +1656,16 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
                         🎯 Growth Opportunities
                     </h3>
                     <ul class="insights-list">
-                        ${reportData.parentInsights.areasForGrowth.map(area => `
+                        ${reportData.parentInsights.areasForGrowth
+                          .map(
+                            (area) => `
                             <li>
                                 <span style="color: #f59e0b; font-size: 16px;">🔄</span>
                                 <span>${area}</span>
                             </li>
-                        `).join('')}
+                        `,
+                          )
+                          .join("")}
                     </ul>
                 </div>
 
@@ -1491,12 +1674,16 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
                         💡 Recommended Actions
                     </h3>
                     <ul class="insights-list">
-                        ${reportData.parentInsights.recommendations.map(rec => `
+                        ${reportData.parentInsights.recommendations
+                          .map(
+                            (rec) => `
                             <li>
                                 <span style="color: #8b5cf6; font-size: 16px;">💜</span>
                                 <span>${rec}</span>
                             </li>
-                        `).join('')}
+                        `,
+                          )
+                          .join("")}
                     </ul>
                 </div>
             </div>
@@ -1507,7 +1694,9 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
                     �� Recent Achievements
                 </h2>
                 <div class="achievement-grid">
-                    ${reportData.achievements.map(achievement => `
+                    ${reportData.achievements
+                      .map(
+                        (achievement) => `
                         <div class="achievement-card">
                             <div class="achievement-icon">🏆</div>
                             <div class="achievement-content">
@@ -1516,7 +1705,9 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
                                 <div class="achievement-date">📅 ${achievement.earnedAt.toLocaleDateString()}</div>
                             </div>
                         </div>
-                    `).join('')}
+                    `,
+                      )
+                      .join("")}
                 </div>
             </div>
         </div>
@@ -1544,18 +1735,18 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
 </html>`;
 
     // Create blob and download
-    const blob = new Blob([htmlContent], { type: 'text/html' });
+    const blob = new Blob([htmlContent], { type: "text/html" });
     const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
+    const a = document.createElement("a");
     a.href = url;
-    a.download = `${reportData.child.name}_Learning_Report_${reportData.period.range}_${reportData.generatedAt.toISOString().split('T')[0]}.html`;
+    a.download = `${reportData.child.name}_Learning_Report_${reportData.period.range}_${reportData.generatedAt.toISOString().split("T")[0]}.html`;
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
     URL.revokeObjectURL(url);
 
     // Also open in new window for immediate viewing/printing
-    const newWindow = window.open('', '_blank');
+    const newWindow = window.open("", "_blank");
     if (newWindow) {
       newWindow.document.write(htmlContent);
       newWindow.document.close();
@@ -1577,8 +1768,10 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
             <div>
               <Label htmlFor="report-child">Select Child</Label>
               <Select
-                value={selectedChild?.id || ''}
-                onValueChange={(value) => setSelectedChild(children.find(c => c.id === value) || null)}
+                value={selectedChild?.id || ""}
+                onValueChange={(value) =>
+                  setSelectedChild(children.find((c) => c.id === value) || null)
+                }
               >
                 <SelectTrigger>
                   <SelectValue placeholder="Choose child" />
@@ -1595,7 +1788,10 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
 
             <div>
               <Label htmlFor="report-type">Report Type</Label>
-              <Select value={reportType} onValueChange={(value: any) => setReportType(value)}>
+              <Select
+                value={reportType}
+                onValueChange={(value: any) => setReportType(value)}
+              >
                 <SelectTrigger>
                   <SelectValue />
                 </SelectTrigger>
@@ -1609,7 +1805,10 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
 
             <div>
               <Label htmlFor="date-range">Time Period</Label>
-              <Select value={reportDateRange} onValueChange={(value: any) => setReportDateRange(value)}>
+              <Select
+                value={reportDateRange}
+                onValueChange={(value: any) => setReportDateRange(value)}
+              >
                 <SelectTrigger>
                   <SelectValue />
                 </SelectTrigger>
@@ -1625,11 +1824,18 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
 
           <div className="flex gap-2">
             <Button
-              onClick={() => selectedChild && generateLearningReport(selectedChild, reportDateRange, reportType)}
+              onClick={() =>
+                selectedChild &&
+                generateLearningReport(
+                  selectedChild,
+                  reportDateRange,
+                  reportType,
+                )
+              }
               disabled={!selectedChild || generatingReport}
               className="bg-educational-blue text-white"
             >
-              {generatingReport ? 'Generating...' : 'Generate Report'}
+              {generatingReport ? "Generating..." : "Generate Report"}
             </Button>
 
             {reportData && (
@@ -1654,7 +1860,9 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
                   <div>
                     <h3>{reportData.child.name}'s Learning Report</h3>
                     <p className="text-sm text-slate-600 font-normal">
-                      {reportData.period.range.toUpperCase()} Report • {reportData.period.start.toLocaleDateString()} - {reportData.period.end.toLocaleDateString()}
+                      {reportData.period.range.toUpperCase()} Report •{" "}
+                      {reportData.period.start.toLocaleDateString()} -{" "}
+                      {reportData.period.end.toLocaleDateString()}
                     </p>
                   </div>
                 </div>
@@ -1670,7 +1878,9 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
             <Card>
               <CardContent className="p-4 text-center">
                 <Clock className="w-8 h-8 text-blue-500 mx-auto mb-2" />
-                <div className="text-2xl font-bold">{reportData.summary.totalLearningTime}m</div>
+                <div className="text-2xl font-bold">
+                  {reportData.summary.totalLearningTime}m
+                </div>
                 <div className="text-sm text-slate-600">Learning Time</div>
               </CardContent>
             </Card>
@@ -1678,7 +1888,9 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
             <Card>
               <CardContent className="p-4 text-center">
                 <BookOpen className="w-8 h-8 text-green-500 mx-auto mb-2" />
-                <div className="text-2xl font-bold">{reportData.summary.wordsLearned}</div>
+                <div className="text-2xl font-bold">
+                  {reportData.summary.wordsLearned}
+                </div>
                 <div className="text-sm text-slate-600">Words Learned</div>
               </CardContent>
             </Card>
@@ -1686,7 +1898,9 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
             <Card>
               <CardContent className="p-4 text-center">
                 <Target className="w-8 h-8 text-purple-500 mx-auto mb-2" />
-                <div className="text-2xl font-bold">{reportData.summary.averageAccuracy}%</div>
+                <div className="text-2xl font-bold">
+                  {reportData.summary.averageAccuracy}%
+                </div>
                 <div className="text-sm text-slate-600">Accuracy</div>
               </CardContent>
             </Card>
@@ -1694,7 +1908,9 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
             <Card>
               <CardContent className="p-4 text-center">
                 <Zap className="w-8 h-8 text-orange-500 mx-auto mb-2" />
-                <div className="text-2xl font-bold">{reportData.summary.streakDays}</div>
+                <div className="text-2xl font-bold">
+                  {reportData.summary.streakDays}
+                </div>
                 <div className="text-sm text-slate-600">Day Streak</div>
               </CardContent>
             </Card>
@@ -1713,22 +1929,33 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
                 <div>
                   <h4 className="font-semibold mb-2">Strong Categories</h4>
                   <div className="flex flex-wrap gap-2">
-                    {reportData.learningPath.strengthCategories.map((category: string) => (
-                      <Badge key={category} className="bg-green-100 text-green-800">
-                        {category}
-                      </Badge>
-                    ))}
+                    {reportData.learningPath.strengthCategories.map(
+                      (category: string) => (
+                        <Badge
+                          key={category}
+                          className="bg-green-100 text-green-800"
+                        >
+                          {category}
+                        </Badge>
+                      ),
+                    )}
                   </div>
                 </div>
 
                 <div>
                   <h4 className="font-semibold mb-2">Mastered Words</h4>
                   <div className="flex flex-wrap gap-2">
-                    {reportData.learningPath.masteredWords.map((word: string) => (
-                      <Badge key={word} variant="outline" className="text-green-600 border-green-300">
-                        {word}
-                      </Badge>
-                    ))}
+                    {reportData.learningPath.masteredWords.map(
+                      (word: string) => (
+                        <Badge
+                          key={word}
+                          variant="outline"
+                          className="text-green-600 border-green-300"
+                        >
+                          {word}
+                        </Badge>
+                      ),
+                    )}
                   </div>
                 </div>
               </CardContent>
@@ -1745,22 +1972,33 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
                 <div>
                   <h4 className="font-semibold mb-2">Practice Categories</h4>
                   <div className="flex flex-wrap gap-2">
-                    {reportData.learningPath.strugglingCategories.map((category: string) => (
-                      <Badge key={category} className="bg-orange-100 text-orange-800">
-                        {category}
-                      </Badge>
-                    ))}
+                    {reportData.learningPath.strugglingCategories.map(
+                      (category: string) => (
+                        <Badge
+                          key={category}
+                          className="bg-orange-100 text-orange-800"
+                        >
+                          {category}
+                        </Badge>
+                      ),
+                    )}
                   </div>
                 </div>
 
                 <div>
                   <h4 className="font-semibold mb-2">Words to Practice</h4>
                   <div className="flex flex-wrap gap-2">
-                    {reportData.learningPath.practiceNeeded.map((word: string) => (
-                      <Badge key={word} variant="outline" className="text-orange-600 border-orange-300">
-                        {word}
-                      </Badge>
-                    ))}
+                    {reportData.learningPath.practiceNeeded.map(
+                      (word: string) => (
+                        <Badge
+                          key={word}
+                          variant="outline"
+                          className="text-orange-600 border-orange-300"
+                        >
+                          {word}
+                        </Badge>
+                      ),
+                    )}
                   </div>
                 </div>
               </CardContent>
@@ -1777,25 +2015,34 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
-                {reportData.progressAnalytics.categoryProgress.map((category: any) => (
-                  <div key={category.category} className="space-y-2">
-                    <div className="flex justify-between items-center">
-                      <span className="font-medium">{category.category}</span>
-                      <div className="flex items-center gap-2">
-                        <span className="text-sm text-slate-600">{category.mastery}%</span>
-                        <Badge className={
-                          category.trend === 'improving' ? 'bg-green-100 text-green-800' :
-                          category.trend === 'stable' ? 'bg-blue-100 text-blue-800' :
-                          category.trend === 'mastered' ? 'bg-purple-100 text-purple-800' :
-                          'bg-orange-100 text-orange-800'
-                        }>
-                          {category.trend.replace('_', ' ')}
-                        </Badge>
+                {reportData.progressAnalytics.categoryProgress.map(
+                  (category: any) => (
+                    <div key={category.category} className="space-y-2">
+                      <div className="flex justify-between items-center">
+                        <span className="font-medium">{category.category}</span>
+                        <div className="flex items-center gap-2">
+                          <span className="text-sm text-slate-600">
+                            {category.mastery}%
+                          </span>
+                          <Badge
+                            className={
+                              category.trend === "improving"
+                                ? "bg-green-100 text-green-800"
+                                : category.trend === "stable"
+                                  ? "bg-blue-100 text-blue-800"
+                                  : category.trend === "mastered"
+                                    ? "bg-purple-100 text-purple-800"
+                                    : "bg-orange-100 text-orange-800"
+                            }
+                          >
+                            {category.trend.replace("_", " ")}
+                          </Badge>
+                        </div>
                       </div>
+                      <Progress value={category.mastery} className="h-2" />
                     </div>
-                    <Progress value={category.mastery} className="h-2" />
-                  </div>
-                ))}
+                  ),
+                )}
               </div>
             </CardContent>
           </Card>
@@ -1815,12 +2062,17 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
                   Key Strengths
                 </h4>
                 <ul className="space-y-1">
-                  {reportData.parentInsights.keyStrengths.map((strength: string, index: number) => (
-                    <li key={index} className="text-sm text-slate-700 flex items-start gap-2">
-                      <Check className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
-                      {strength}
-                    </li>
-                  ))}
+                  {reportData.parentInsights.keyStrengths.map(
+                    (strength: string, index: number) => (
+                      <li
+                        key={index}
+                        className="text-sm text-slate-700 flex items-start gap-2"
+                      >
+                        <Check className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
+                        {strength}
+                      </li>
+                    ),
+                  )}
                 </ul>
               </div>
 
@@ -1830,12 +2082,17 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
                   Growth Opportunities
                 </h4>
                 <ul className="space-y-1">
-                  {reportData.parentInsights.areasForGrowth.map((area: string, index: number) => (
-                    <li key={index} className="text-sm text-slate-700 flex items-start gap-2">
-                      <Target className="w-4 h-4 text-orange-500 mt-0.5 flex-shrink-0" />
-                      {area}
-                    </li>
-                  ))}
+                  {reportData.parentInsights.areasForGrowth.map(
+                    (area: string, index: number) => (
+                      <li
+                        key={index}
+                        className="text-sm text-slate-700 flex items-start gap-2"
+                      >
+                        <Target className="w-4 h-4 text-orange-500 mt-0.5 flex-shrink-0" />
+                        {area}
+                      </li>
+                    ),
+                  )}
                 </ul>
               </div>
 
@@ -1845,12 +2102,17 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
                   Recommended Actions
                 </h4>
                 <ul className="space-y-1">
-                  {reportData.parentInsights.recommendations.map((recommendation: string, index: number) => (
-                    <li key={index} className="text-sm text-slate-700 flex items-start gap-2">
-                      <Heart className="w-4 h-4 text-purple-500 mt-0.5 flex-shrink-0" />
-                      {recommendation}
-                    </li>
-                  ))}
+                  {reportData.parentInsights.recommendations.map(
+                    (recommendation: string, index: number) => (
+                      <li
+                        key={index}
+                        className="text-sm text-slate-700 flex items-start gap-2"
+                      >
+                        <Heart className="w-4 h-4 text-purple-500 mt-0.5 flex-shrink-0" />
+                        {recommendation}
+                      </li>
+                    ),
+                  )}
                 </ul>
               </div>
             </CardContent>
@@ -1866,16 +2128,27 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
             </CardHeader>
             <CardContent>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                {reportData.achievements.map((achievement: any, index: number) => (
-                  <div key={index} className="flex items-center gap-3 p-3 bg-yellow-50 rounded-lg">
-                    <div className="text-2xl">🏆</div>
-                    <div>
-                      <h4 className="font-semibold text-sm">{achievement.title}</h4>
-                      <p className="text-xs text-slate-600">{achievement.description}</p>
-                      <p className="text-xs text-slate-500 mt-1">{achievement.earnedAt.toLocaleDateString()}</p>
+                {reportData.achievements.map(
+                  (achievement: any, index: number) => (
+                    <div
+                      key={index}
+                      className="flex items-center gap-3 p-3 bg-yellow-50 rounded-lg"
+                    >
+                      <div className="text-2xl">🏆</div>
+                      <div>
+                        <h4 className="font-semibold text-sm">
+                          {achievement.title}
+                        </h4>
+                        <p className="text-xs text-slate-600">
+                          {achievement.description}
+                        </p>
+                        <p className="text-xs text-slate-500 mt-1">
+                          {achievement.earnedAt.toLocaleDateString()}
+                        </p>
+                      </div>
                     </div>
-                  </div>
-                ))}
+                  ),
+                )}
               </div>
             </CardContent>
           </Card>
@@ -1887,9 +2160,12 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
         <Card>
           <CardContent className="p-12 text-center">
             <FileText className="w-16 h-16 text-slate-300 mx-auto mb-4" />
-            <h3 className="text-xl font-semibold mb-2 text-slate-600">No Report Generated</h3>
+            <h3 className="text-xl font-semibold mb-2 text-slate-600">
+              No Report Generated
+            </h3>
             <p className="text-slate-500 mb-4">
-              Select a child and click "Generate Report" to create a detailed learning analysis.
+              Select a child and click "Generate Report" to create a detailed
+              learning analysis.
             </p>
           </CardContent>
         </Card>
@@ -1914,16 +2190,16 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
             </Button>
           )}
           <div>
-            <h1 className="text-3xl font-bold text-slate-800">Parent Dashboard</h1>
-            <p className="text-slate-600">Comprehensive learning management for your family</p>
+            <h1 className="text-3xl font-bold text-slate-800">
+              Parent Dashboard
+            </h1>
+            <p className="text-slate-600">
+              Comprehensive learning management for your family
+            </p>
           </div>
         </div>
         <div className="flex gap-2">
-          <Button 
-            variant="outline" 
-            size="sm"
-            className="relative"
-          >
+          <Button variant="outline" size="sm" className="relative">
             <Bell className="w-4 h-4 mr-2" />
             Notifications
             {unreadNotifications > 0 && (
@@ -1954,7 +2230,10 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
             <BarChart3 className="w-4 h-4" />
             Analytics
           </TabsTrigger>
-          <TabsTrigger value="notifications" className="flex items-center gap-2">
+          <TabsTrigger
+            value="notifications"
+            className="flex items-center gap-2"
+          >
             <Bell className="w-4 h-4" />
             Alerts
             {unreadNotifications > 0 && (
@@ -1992,21 +2271,28 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
               <Input
                 id="childName"
                 value={newChildData.name}
-                onChange={(e) => setNewChildData(prev => ({ ...prev, name: e.target.value }))}
+                onChange={(e) =>
+                  setNewChildData((prev) => ({ ...prev, name: e.target.value }))
+                }
                 placeholder="Enter child's name"
               />
             </div>
             <div>
               <Label htmlFor="childAge">Age</Label>
-              <Select value={newChildData.age.toString()} onValueChange={(value) => 
-                setNewChildData(prev => ({ ...prev, age: parseInt(value) }))
-              }>
+              <Select
+                value={newChildData.age.toString()}
+                onValueChange={(value) =>
+                  setNewChildData((prev) => ({ ...prev, age: parseInt(value) }))
+                }
+              >
                 <SelectTrigger>
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
-                  {[4, 5, 6, 7, 8, 9, 10, 11, 12].map(age => (
-                    <SelectItem key={age} value={age.toString()}>{age} years old</SelectItem>
+                  {[4, 5, 6, 7, 8, 9, 10, 11, 12].map((age) => (
+                    <SelectItem key={age} value={age.toString()}>
+                      {age} years old
+                    </SelectItem>
                   ))}
                 </SelectContent>
               </Select>
@@ -2014,28 +2300,43 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
             <div>
               <Label htmlFor="avatar">Avatar</Label>
               <div className="flex gap-2 mt-2">
-                {['👦', '👧', '🧒', '👶', '🦸‍♂️', '🦸‍♀️', '🧑‍🎓', '👨‍🎓', '👩‍🎓'].map(emoji => (
-                  <Button
-                    key={emoji}
-                    variant={newChildData.avatar === emoji ? "default" : "outline"}
-                    size="sm"
-                    onClick={() => setNewChildData(prev => ({ ...prev, avatar: emoji }))}
-                  >
-                    {emoji}
-                  </Button>
-                ))}
+                {["👦", "👧", "🧒", "👶", "🦸‍♂️", "🦸‍♀️", "🧑‍🎓", "👨‍🎓", "👩‍🎓"].map(
+                  (emoji) => (
+                    <Button
+                      key={emoji}
+                      variant={
+                        newChildData.avatar === emoji ? "default" : "outline"
+                      }
+                      size="sm"
+                      onClick={() =>
+                        setNewChildData((prev) => ({ ...prev, avatar: emoji }))
+                      }
+                    >
+                      {emoji}
+                    </Button>
+                  ),
+                )}
               </div>
             </div>
           </div>
           <DialogFooter>
-            <Button variant="outline" onClick={() => setShowAddChildDialog(false)}>
+            <Button
+              variant="outline"
+              onClick={() => setShowAddChildDialog(false)}
+            >
               Cancel
             </Button>
-            <Button 
+            <Button
               onClick={() => {
                 // In a real app, this would create the child profile
                 setShowAddChildDialog(false);
-                setNewChildData({ name: "", age: 6, avatar: "👶", preferredLearningTime: "", difficultyPreference: "easy" });
+                setNewChildData({
+                  name: "",
+                  age: 6,
+                  avatar: "👶",
+                  preferredLearningTime: "",
+                  difficultyPreference: "easy",
+                });
               }}
               className="bg-educational-blue"
             >
@@ -2060,7 +2361,9 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
               <Input
                 id="goalTitle"
                 value={newGoalData.title}
-                onChange={(e) => setNewGoalData(prev => ({ ...prev, title: e.target.value }))}
+                onChange={(e) =>
+                  setNewGoalData((prev) => ({ ...prev, title: e.target.value }))
+                }
                 placeholder="e.g., Weekly Word Challenge"
               />
             </div>
@@ -2069,7 +2372,12 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
               <Textarea
                 id="goalDescription"
                 value={newGoalData.description}
-                onChange={(e) => setNewGoalData(prev => ({ ...prev, description: e.target.value }))}
+                onChange={(e) =>
+                  setNewGoalData((prev) => ({
+                    ...prev,
+                    description: e.target.value,
+                  }))
+                }
                 placeholder="Describe the goal..."
               />
             </div>
@@ -2080,14 +2388,22 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
                   id="targetValue"
                   type="number"
                   value={newGoalData.targetValue}
-                  onChange={(e) => setNewGoalData(prev => ({ ...prev, targetValue: parseInt(e.target.value) }))}
+                  onChange={(e) =>
+                    setNewGoalData((prev) => ({
+                      ...prev,
+                      targetValue: parseInt(e.target.value),
+                    }))
+                  }
                 />
               </div>
               <div>
                 <Label htmlFor="goalType">Goal Type</Label>
-                <Select value={newGoalData.type} onValueChange={(value: any) => 
-                  setNewGoalData(prev => ({ ...prev, type: value }))
-                }>
+                <Select
+                  value={newGoalData.type}
+                  onValueChange={(value: any) =>
+                    setNewGoalData((prev) => ({ ...prev, type: value }))
+                  }
+                >
                   <SelectTrigger>
                     <SelectValue />
                   </SelectTrigger>
@@ -2104,13 +2420,21 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
               <Input
                 id="reward"
                 value={newGoalData.reward}
-                onChange={(e) => setNewGoalData(prev => ({ ...prev, reward: e.target.value }))}
+                onChange={(e) =>
+                  setNewGoalData((prev) => ({
+                    ...prev,
+                    reward: e.target.value,
+                  }))
+                }
                 placeholder="What reward will they earn?"
               />
             </div>
           </div>
           <DialogFooter>
-            <Button variant="outline" onClick={() => setShowAddGoalDialog(false)}>
+            <Button
+              variant="outline"
+              onClick={() => setShowAddGoalDialog(false)}
+            >
               Cancel
             </Button>
             <Button onClick={createGoal} className="bg-educational-blue">
@@ -2121,7 +2445,10 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
       </Dialog>
 
       {/* Add Custom Word Dialog */}
-      <Dialog open={showCustomWordDialog} onOpenChange={setShowCustomWordDialog}>
+      <Dialog
+        open={showCustomWordDialog}
+        onOpenChange={setShowCustomWordDialog}
+      >
         <DialogContent>
           <DialogHeader>
             <DialogTitle>Add Custom Word</DialogTitle>
@@ -2141,11 +2468,15 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
             </div>
             <div className="text-sm text-slate-600">
               <Lightbulb className="w-4 h-4 inline mr-2" />
-              Ideas: Family names, pet names, favorite places, hobby terms, school subjects
+              Ideas: Family names, pet names, favorite places, hobby terms,
+              school subjects
             </div>
           </div>
           <DialogFooter>
-            <Button variant="outline" onClick={() => setShowCustomWordDialog(false)}>
+            <Button
+              variant="outline"
+              onClick={() => setShowCustomWordDialog(false)}
+            >
               Cancel
             </Button>
             <Button onClick={addCustomWord} className="bg-educational-green">

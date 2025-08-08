@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Progress } from '@/components/ui/progress';
-import { Badge } from '@/components/ui/badge';
+import React, { useState, useEffect } from "react";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Progress } from "@/components/ui/progress";
+import { Badge } from "@/components/ui/badge";
 import {
   CheckCircle2,
   XCircle,
@@ -11,8 +11,8 @@ import {
   ArrowRight,
   RotateCcw,
   X,
-  AlertTriangle
-} from 'lucide-react';
+  AlertTriangle,
+} from "lucide-react";
 
 interface QuizQuestion {
   id: number;
@@ -35,7 +35,7 @@ export const QuizGame: React.FC<QuizGameProps> = ({
   questions,
   onComplete,
   onProgress,
-  onExit
+  onExit,
 }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
@@ -51,8 +51,12 @@ export const QuizGame: React.FC<QuizGameProps> = ({
       <div className="max-w-4xl mx-auto">
         <Card>
           <CardContent className="p-8 text-center">
-            <h2 className="text-2xl font-bold text-slate-800 mb-4">No Questions Available</h2>
-            <p className="text-slate-600 mb-6">Sorry, there are no quiz questions available for this quiz type.</p>
+            <h2 className="text-2xl font-bold text-slate-800 mb-4">
+              No Questions Available
+            </h2>
+            <p className="text-slate-600 mb-6">
+              Sorry, there are no quiz questions available for this quiz type.
+            </p>
             <Button onClick={onExit} className="bg-educational-blue text-white">
               Return to Quiz Selection
             </Button>
@@ -72,8 +76,12 @@ export const QuizGame: React.FC<QuizGameProps> = ({
       <div className="max-w-4xl mx-auto">
         <Card>
           <CardContent className="p-8 text-center">
-            <h2 className="text-2xl font-bold text-slate-800 mb-4">Question Not Found</h2>
-            <p className="text-slate-600 mb-6">There was an issue loading the current question.</p>
+            <h2 className="text-2xl font-bold text-slate-800 mb-4">
+              Question Not Found
+            </h2>
+            <p className="text-slate-600 mb-6">
+              There was an issue loading the current question.
+            </p>
             <Button onClick={onExit} className="bg-educational-blue text-white">
               Return to Quiz Selection
             </Button>
@@ -100,7 +108,7 @@ export const QuizGame: React.FC<QuizGameProps> = ({
     setSelectedAnswer(null);
     setShowFeedback(true);
     setIsTimerActive(false);
-    
+
     setTimeout(() => {
       if (isLastQuestion) {
         onComplete(score, questions.length);
@@ -112,16 +120,16 @@ export const QuizGame: React.FC<QuizGameProps> = ({
 
   const handleAnswerSelect = (answer: string) => {
     if (showFeedback) return;
-    
+
     setSelectedAnswer(answer);
     setShowFeedback(true);
     setIsTimerActive(false);
-    
+
     const isCorrect = answer === currentQuestion.correctAnswer;
     if (isCorrect) {
       setScore(score + 1);
     }
-    
+
     setTimeout(() => {
       if (isLastQuestion) {
         onComplete(score + (isCorrect ? 1 : 0), questions.length);
@@ -166,31 +174,31 @@ export const QuizGame: React.FC<QuizGameProps> = ({
 
   const getButtonVariant = (option: string) => {
     if (!showFeedback) {
-      return selectedAnswer === option ? 'default' : 'outline';
+      return selectedAnswer === option ? "default" : "outline";
     }
-    
+
     if (option === currentQuestion.correctAnswer) {
-      return 'default';
+      return "default";
     }
-    
+
     if (option === selectedAnswer && option !== currentQuestion.correctAnswer) {
-      return 'destructive';
+      return "destructive";
     }
-    
-    return 'outline';
+
+    return "outline";
   };
 
   const getButtonIcon = (option: string) => {
     if (!showFeedback) return null;
-    
+
     if (option === currentQuestion.correctAnswer) {
       return <CheckCircle2 className="w-5 h-5 text-green-600" />;
     }
-    
+
     if (option === selectedAnswer && option !== currentQuestion.correctAnswer) {
       return <XCircle className="w-5 h-5 text-red-600" />;
     }
-    
+
     return null;
   };
 
@@ -222,10 +230,12 @@ export const QuizGame: React.FC<QuizGameProps> = ({
               </Button>
             </div>
           </div>
-          
+
           <div className="space-y-2">
             <div className="flex justify-between text-sm text-slate-600">
-              <span>Question {currentIndex + 1} of {questions.length}</span>
+              <span>
+                Question {currentIndex + 1} of {questions.length}
+              </span>
               <span>{Math.round(progressPercentage)}% Complete</span>
             </div>
             <Progress value={progressPercentage} className="h-2" />
@@ -236,19 +246,17 @@ export const QuizGame: React.FC<QuizGameProps> = ({
       {/* Question Card */}
       <Card className="relative overflow-hidden">
         <div className="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-educational-blue via-educational-purple to-educational-pink" />
-        
+
         <CardContent className="pt-8 pb-6">
           <div className="text-center mb-8">
-            <div className="text-6xl mb-4">{currentQuestion.emoji || '📚'}</div>
+            <div className="text-6xl mb-4">{currentQuestion.emoji || "📚"}</div>
             <h2 className="text-2xl font-bold text-slate-800 mb-4">
               {currentQuestion.question}
             </h2>
-            
+
             {currentQuestion.word && (
               <div className="inline-block">
-                <Badge 
-                  className="text-lg px-4 py-2 bg-educational-blue text-white"
-                >
+                <Badge className="text-lg px-4 py-2 bg-educational-blue text-white">
                   {currentQuestion.word}
                 </Badge>
               </div>
@@ -274,34 +282,41 @@ export const QuizGame: React.FC<QuizGameProps> = ({
           {/* Feedback */}
           {showFeedback && (
             <div className="mt-8 max-w-2xl mx-auto">
-              <div className={`p-4 rounded-lg ${
-                selectedAnswer === currentQuestion.correctAnswer 
-                  ? 'bg-green-50 border border-green-200' 
-                  : timeLeft === 0
-                  ? 'bg-orange-50 border border-orange-200'
-                  : 'bg-red-50 border border-red-200'
-              }`}>
+              <div
+                className={`p-4 rounded-lg ${
+                  selectedAnswer === currentQuestion.correctAnswer
+                    ? "bg-green-50 border border-green-200"
+                    : timeLeft === 0
+                      ? "bg-orange-50 border border-orange-200"
+                      : "bg-red-50 border border-red-200"
+                }`}
+              >
                 <div className="flex items-center gap-2 mb-2">
                   {selectedAnswer === currentQuestion.correctAnswer ? (
                     <>
                       <CheckCircle2 className="w-6 h-6 text-green-600" />
-                      <span className="font-semibold text-green-800">Correct! 🎉</span>
+                      <span className="font-semibold text-green-800">
+                        Correct! 🎉
+                      </span>
                     </>
                   ) : timeLeft === 0 ? (
                     <>
                       <Clock className="w-6 h-6 text-orange-600" />
-                      <span className="font-semibold text-orange-800">Time's up! ⏰</span>
+                      <span className="font-semibold text-orange-800">
+                        Time's up! ⏰
+                      </span>
                     </>
                   ) : (
                     <>
                       <XCircle className="w-6 h-6 text-red-600" />
                       <span className="font-semibold text-red-800">
-                        Incorrect. The correct answer is: {currentQuestion.correctAnswer}
+                        Incorrect. The correct answer is:{" "}
+                        {currentQuestion.correctAnswer}
                       </span>
                     </>
                   )}
                 </div>
-                
+
                 {currentQuestion.explanation && (
                   <p className="text-slate-700 text-sm">
                     {currentQuestion.explanation}
@@ -324,7 +339,7 @@ export const QuizGame: React.FC<QuizGameProps> = ({
             <RotateCcw className="w-4 h-4" />
             Restart Quiz
           </Button>
-          
+
           {!isLastQuestion && (
             <Button
               onClick={nextQuestion}
@@ -349,7 +364,8 @@ export const QuizGame: React.FC<QuizGameProps> = ({
             </CardHeader>
             <CardContent className="space-y-4">
               <p className="text-slate-600">
-                Are you sure you want to quit this quiz? Your progress will be lost and you'll return to the quiz selection screen.
+                Are you sure you want to quit this quiz? Your progress will be
+                lost and you'll return to the quiz selection screen.
               </p>
               <div className="flex gap-3">
                 <Button

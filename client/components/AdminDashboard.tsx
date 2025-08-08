@@ -98,7 +98,7 @@ import {
   Music,
   Camera,
   Gamepad2,
-  Puzzle
+  Puzzle,
 } from "lucide-react";
 import { AnimatedCounter } from "@/components/AnimatedCounter";
 
@@ -109,11 +109,11 @@ interface AdminWord {
   definition: string;
   example: string;
   category: string;
-  difficulty: 'easy' | 'medium' | 'hard';
+  difficulty: "easy" | "medium" | "hard";
   funFact?: string;
   imageUrl?: string;
   audioUrl?: string;
-  status: 'approved' | 'pending' | 'rejected';
+  status: "approved" | "pending" | "rejected";
   submittedBy?: string;
   submittedAt: Date;
   approvedBy?: string;
@@ -126,14 +126,14 @@ interface AdminUser {
   id: string;
   name: string;
   email: string;
-  role: 'admin' | 'parent' | 'child';
-  status: 'active' | 'suspended' | 'inactive';
+  role: "admin" | "parent" | "child";
+  status: "active" | "suspended" | "inactive";
   createdAt: Date;
   lastActive: Date;
   childrenCount?: number;
   totalSessions: number;
   supportTickets: number;
-  subscriptionType: 'free' | 'premium' | 'family';
+  subscriptionType: "free" | "premium" | "family";
 }
 
 interface AdminCategory {
@@ -142,7 +142,7 @@ interface AdminCategory {
   emoji: string;
   description: string;
   wordCount: number;
-  difficulty: 'easy' | 'medium' | 'hard';
+  difficulty: "easy" | "medium" | "hard";
   isActive: boolean;
   createdAt: Date;
   updatedAt: Date;
@@ -155,8 +155,8 @@ interface SupportTicket {
   userEmail: string;
   subject: string;
   description: string;
-  priority: 'low' | 'medium' | 'high' | 'urgent';
-  status: 'open' | 'in_progress' | 'resolved' | 'closed';
+  priority: "low" | "medium" | "high" | "urgent";
+  status: "open" | "in_progress" | "resolved" | "closed";
   assignedTo?: string;
   createdAt: Date;
   updatedAt: Date;
@@ -194,13 +194,13 @@ const sampleWords: AdminWord[] = [
     definition: "A large mammal with a trunk and tusks",
     example: "The elephant sprayed water with its trunk.",
     category: "Animals",
-    difficulty: 'easy',
+    difficulty: "easy",
     funFact: "Elephants can live up to 70 years!",
-    status: 'approved',
+    status: "approved",
     submittedAt: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000),
     approvedAt: new Date(Date.now() - 4 * 24 * 60 * 60 * 1000),
     usageCount: 1247,
-    accuracy: 87
+    accuracy: 87,
   },
   {
     id: "2",
@@ -209,13 +209,13 @@ const sampleWords: AdminWord[] = [
     definition: "To form into crystals or become clear",
     example: "The solution will crystallize overnight.",
     category: "Science",
-    difficulty: 'hard',
-    status: 'pending',
+    difficulty: "hard",
+    status: "pending",
     submittedBy: "teacher@school.edu",
     submittedAt: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000),
     usageCount: 0,
-    accuracy: 0
-  }
+    accuracy: 0,
+  },
 ];
 
 const sampleUsers: AdminUser[] = [
@@ -223,27 +223,27 @@ const sampleUsers: AdminUser[] = [
     id: "1",
     name: "John Parent",
     email: "john@example.com",
-    role: 'parent',
-    status: 'active',
+    role: "parent",
+    status: "active",
     createdAt: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000),
     lastActive: new Date(Date.now() - 2 * 60 * 60 * 1000),
     childrenCount: 2,
     totalSessions: 145,
     supportTickets: 1,
-    subscriptionType: 'premium'
+    subscriptionType: "premium",
   },
   {
     id: "2",
     name: "Alex Child",
     email: "alex@example.com",
-    role: 'child',
-    status: 'active',
+    role: "child",
+    status: "active",
     createdAt: new Date(Date.now() - 25 * 24 * 60 * 60 * 1000),
     lastActive: new Date(Date.now() - 30 * 60 * 1000),
     totalSessions: 87,
     supportTickets: 0,
-    subscriptionType: 'family'
-  }
+    subscriptionType: "family",
+  },
 ];
 
 const sampleCategories: AdminCategory[] = [
@@ -253,10 +253,10 @@ const sampleCategories: AdminCategory[] = [
     emoji: "🐘",
     description: "Learn about creatures from around the world",
     wordCount: 45,
-    difficulty: 'easy',
+    difficulty: "easy",
     isActive: true,
     createdAt: new Date(Date.now() - 60 * 24 * 60 * 60 * 1000),
-    updatedAt: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000)
+    updatedAt: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000),
   },
   {
     id: "2",
@@ -264,11 +264,11 @@ const sampleCategories: AdminCategory[] = [
     emoji: "🔬",
     description: "Explore scientific terms and concepts",
     wordCount: 32,
-    difficulty: 'medium',
+    difficulty: "medium",
     isActive: true,
     createdAt: new Date(Date.now() - 45 * 24 * 60 * 60 * 1000),
-    updatedAt: new Date(Date.now() - 10 * 24 * 60 * 60 * 1000)
-  }
+    updatedAt: new Date(Date.now() - 10 * 24 * 60 * 60 * 1000),
+  },
 ];
 
 const sampleTickets: SupportTicket[] = [
@@ -278,12 +278,13 @@ const sampleTickets: SupportTicket[] = [
     userName: "John Parent",
     userEmail: "john@example.com",
     subject: "Unable to track child's progress",
-    description: "The dashboard is not showing my child's recent learning sessions.",
-    priority: 'medium',
-    status: 'open',
+    description:
+      "The dashboard is not showing my child's recent learning sessions.",
+    priority: "medium",
+    status: "open",
     createdAt: new Date(Date.now() - 6 * 60 * 60 * 1000),
     updatedAt: new Date(Date.now() - 6 * 60 * 60 * 1000),
-    responses: []
+    responses: [],
   },
   {
     id: "2",
@@ -291,37 +292,40 @@ const sampleTickets: SupportTicket[] = [
     userName: "Sarah Teacher",
     userEmail: "sarah@school.edu",
     subject: "Request for bulk word upload",
-    description: "I have 200+ educational words I'd like to contribute to the platform.",
-    priority: 'low',
-    status: 'in_progress',
+    description:
+      "I have 200+ educational words I'd like to contribute to the platform.",
+    priority: "low",
+    status: "in_progress",
     assignedTo: "admin@wordadventure.com",
     createdAt: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000),
     updatedAt: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000),
     responses: [
       {
         id: "1",
-        message: "Thank you for your contribution! Please send the word list in CSV format.",
+        message:
+          "Thank you for your contribution! Please send the word list in CSV format.",
         isAdmin: true,
         timestamp: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000),
-        author: "Admin Support"
-      }
-    ]
-  }
+        author: "Admin Support",
+      },
+    ],
+  },
 ];
 
 const AdminDashboard: React.FC<AdminDashboardProps> = ({ onNavigateBack }) => {
   const [activeTab, setActiveTab] = useState("overview");
   const [words, setWords] = useState<AdminWord[]>(sampleWords);
   const [users, setUsers] = useState<AdminUser[]>(sampleUsers);
-  const [categories, setCategories] = useState<AdminCategory[]>(sampleCategories);
+  const [categories, setCategories] =
+    useState<AdminCategory[]>(sampleCategories);
   const [tickets, setTickets] = useState<SupportTicket[]>(sampleTickets);
-  
+
   // Dialog states
   const [showWordDialog, setShowWordDialog] = useState(false);
   const [showUserDialog, setShowUserDialog] = useState(false);
   const [showCategoryDialog, setShowCategoryDialog] = useState(false);
   const [showTicketDialog, setShowTicketDialog] = useState(false);
-  
+
   // Form states
   const [newWordData, setNewWordData] = useState({
     word: "",
@@ -330,16 +334,16 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onNavigateBack }) => {
     example: "",
     category: "",
     difficulty: "easy" as const,
-    funFact: ""
+    funFact: "",
   });
-  
+
   const [newCategoryData, setNewCategoryData] = useState({
     name: "",
     emoji: "",
     description: "",
-    difficulty: "easy" as const
+    difficulty: "easy" as const,
   });
-  
+
   // Filter states
   const [wordFilter, setWordFilter] = useState("all");
   const [userFilter, setUserFilter] = useState("all");
@@ -357,7 +361,7 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onNavigateBack }) => {
     userGrowthRate: 15.3,
     contentApprovalRate: 92,
     supportResponseTime: 4.2,
-    systemUptime: 99.8
+    systemUptime: 99.8,
   };
 
   const renderOverview = () => (
@@ -367,14 +371,19 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onNavigateBack }) => {
         <CardContent className="p-8">
           <div className="flex items-center justify-between">
             <div>
-              <h2 className="text-2xl font-bold mb-2">🛡️ Administrator Dashboard</h2>
+              <h2 className="text-2xl font-bold mb-2">
+                🛡️ Administrator Dashboard
+              </h2>
               <p className="text-slate-300">
-                System Overview • {new Date().toLocaleDateString()} • 
-                <span className="ml-2 text-green-400">●</span> All Systems Operational
+                System Overview • {new Date().toLocaleDateString()} •
+                <span className="ml-2 text-green-400">●</span> All Systems
+                Operational
               </p>
             </div>
             <div className="text-right">
-              <div className="text-3xl font-bold">{analytics.systemUptime}%</div>
+              <div className="text-3xl font-bold">
+                {analytics.systemUptime}%
+              </div>
               <p className="text-sm text-slate-300">System Uptime</p>
             </div>
           </div>
@@ -404,7 +413,8 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onNavigateBack }) => {
             </div>
             <p className="text-sm text-slate-600">Active Users</p>
             <div className="mt-2 text-xs text-slate-500">
-              {Math.round((analytics.activeUsers / analytics.totalUsers) * 100)}% engagement
+              {Math.round((analytics.activeUsers / analytics.totalUsers) * 100)}
+              % engagement
             </div>
           </CardContent>
         </Card>
@@ -446,19 +456,35 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onNavigateBack }) => {
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            <Button variant="outline" className="h-20 flex-col gap-2" onClick={() => setShowWordDialog(true)}>
+            <Button
+              variant="outline"
+              className="h-20 flex-col gap-2"
+              onClick={() => setShowWordDialog(true)}
+            >
               <Plus className="w-5 h-5" />
               Add Word
             </Button>
-            <Button variant="outline" className="h-20 flex-col gap-2" onClick={() => setShowCategoryDialog(true)}>
+            <Button
+              variant="outline"
+              className="h-20 flex-col gap-2"
+              onClick={() => setShowCategoryDialog(true)}
+            >
               <Layers className="w-5 h-5" />
               New Category
             </Button>
-            <Button variant="outline" className="h-20 flex-col gap-2" onClick={() => setActiveTab("tickets")}>
+            <Button
+              variant="outline"
+              className="h-20 flex-col gap-2"
+              onClick={() => setActiveTab("tickets")}
+            >
               <MessageSquare className="w-5 h-5" />
               Support Queue
             </Button>
-            <Button variant="outline" className="h-20 flex-col gap-2" onClick={() => setActiveTab("analytics")}>
+            <Button
+              variant="outline"
+              className="h-20 flex-col gap-2"
+              onClick={() => setActiveTab("analytics")}
+            >
               <BarChart3 className="w-5 h-5" />
               View Analytics
             </Button>
@@ -480,21 +506,27 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onNavigateBack }) => {
               <div className="flex items-center gap-3 p-3 bg-green-50 rounded-lg">
                 <CheckCircle className="w-5 h-5 text-green-500" />
                 <div className="flex-1">
-                  <p className="font-medium text-sm">Word "elephant" approved</p>
+                  <p className="font-medium text-sm">
+                    Word "elephant" approved
+                  </p>
                   <p className="text-xs text-slate-600">2 hours ago</p>
                 </div>
               </div>
               <div className="flex items-center gap-3 p-3 bg-blue-50 rounded-lg">
                 <Users className="w-5 h-5 text-blue-500" />
                 <div className="flex-1">
-                  <p className="font-medium text-sm">15 new user registrations</p>
+                  <p className="font-medium text-sm">
+                    15 new user registrations
+                  </p>
                   <p className="text-xs text-slate-600">Today</p>
                 </div>
               </div>
               <div className="flex items-center gap-3 p-3 bg-orange-50 rounded-lg">
                 <Flag className="w-5 h-5 text-orange-500" />
                 <div className="flex-1">
-                  <p className="font-medium text-sm">2 support tickets opened</p>
+                  <p className="font-medium text-sm">
+                    2 support tickets opened
+                  </p>
                   <p className="text-xs text-slate-600">4 hours ago</p>
                 </div>
               </div>
@@ -515,8 +547,12 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onNavigateBack }) => {
                 <div className="flex items-center gap-3">
                   <XCircle className="w-5 h-5 text-red-500" />
                   <div>
-                    <p className="font-medium text-sm">3 words pending review</p>
-                    <p className="text-xs text-slate-600">Submitted 2 days ago</p>
+                    <p className="font-medium text-sm">
+                      3 words pending review
+                    </p>
+                    <p className="text-xs text-slate-600">
+                      Submitted 2 days ago
+                    </p>
                   </div>
                 </div>
                 <Button size="sm" onClick={() => setActiveTab("content")}>
@@ -527,8 +563,12 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onNavigateBack }) => {
                 <div className="flex items-center gap-3">
                   <AlertTriangle className="w-5 h-5 text-yellow-500" />
                   <div>
-                    <p className="font-medium text-sm">2 urgent support tickets</p>
-                    <p className="text-xs text-slate-600">Requires immediate attention</p>
+                    <p className="font-medium text-sm">
+                      2 urgent support tickets
+                    </p>
+                    <p className="text-xs text-slate-600">
+                      Requires immediate attention
+                    </p>
                   </div>
                 </div>
                 <Button size="sm" onClick={() => setActiveTab("tickets")}>
@@ -548,7 +588,9 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onNavigateBack }) => {
       <div className="flex items-center justify-between">
         <div>
           <h2 className="text-2xl font-bold">📚 Content Management</h2>
-          <p className="text-slate-600">Manage words, categories, and content quality</p>
+          <p className="text-slate-600">
+            Manage words, categories, and content quality
+          </p>
         </div>
         <div className="flex gap-2">
           <Button variant="outline" size="sm">
@@ -595,10 +637,12 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onNavigateBack }) => {
       {/* Words List */}
       <div className="space-y-4">
         {words
-          .filter(word => wordFilter === "all" || word.status === wordFilter)
-          .filter(word => searchTerm === "" || 
-            word.word.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            word.category.toLowerCase().includes(searchTerm.toLowerCase())
+          .filter((word) => wordFilter === "all" || word.status === wordFilter)
+          .filter(
+            (word) =>
+              searchTerm === "" ||
+              word.word.toLowerCase().includes(searchTerm.toLowerCase()) ||
+              word.category.toLowerCase().includes(searchTerm.toLowerCase()),
           )
           .map((word) => (
             <Card key={word.id} className="hover:shadow-md transition-shadow">
@@ -607,11 +651,15 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onNavigateBack }) => {
                   <div className="flex-1">
                     <div className="flex items-center gap-3 mb-2">
                       <h3 className="text-xl font-bold">{word.word}</h3>
-                      <Badge className={
-                        word.status === 'approved' ? 'bg-green-100 text-green-800' :
-                        word.status === 'pending' ? 'bg-yellow-100 text-yellow-800' :
-                        'bg-red-100 text-red-800'
-                      }>
+                      <Badge
+                        className={
+                          word.status === "approved"
+                            ? "bg-green-100 text-green-800"
+                            : word.status === "pending"
+                              ? "bg-yellow-100 text-yellow-800"
+                              : "bg-red-100 text-red-800"
+                        }
+                      >
                         {word.status}
                       </Badge>
                       <Badge variant="outline">{word.category}</Badge>
@@ -630,7 +678,7 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onNavigateBack }) => {
                     </div>
                   </div>
                   <div className="flex items-center gap-2">
-                    {word.status === 'pending' && (
+                    {word.status === "pending" && (
                       <>
                         <Button size="sm" className="bg-green-600 text-white">
                           <CheckCircle className="w-4 h-4 mr-1" />
@@ -672,19 +720,32 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onNavigateBack }) => {
         <CardContent>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {categories.map((category) => (
-              <Card key={category.id} className="hover:shadow-md transition-shadow">
+              <Card
+                key={category.id}
+                className="hover:shadow-md transition-shadow"
+              >
                 <CardContent className="p-4">
                   <div className="flex items-center gap-3 mb-3">
                     <span className="text-2xl">{category.emoji}</span>
                     <div className="flex-1">
                       <h4 className="font-semibold">{category.name}</h4>
-                      <p className="text-sm text-slate-600">{category.wordCount} words</p>
+                      <p className="text-sm text-slate-600">
+                        {category.wordCount} words
+                      </p>
                     </div>
-                    <Badge className={category.isActive ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800'}>
-                      {category.isActive ? 'Active' : 'Inactive'}
+                    <Badge
+                      className={
+                        category.isActive
+                          ? "bg-green-100 text-green-800"
+                          : "bg-gray-100 text-gray-800"
+                      }
+                    >
+                      {category.isActive ? "Active" : "Inactive"}
                     </Badge>
                   </div>
-                  <p className="text-sm text-slate-600 mb-3">{category.description}</p>
+                  <p className="text-sm text-slate-600 mb-3">
+                    {category.description}
+                  </p>
                   <div className="flex justify-between items-center">
                     <Badge variant="outline">{category.difficulty}</Badge>
                     <div className="flex gap-1">
@@ -711,7 +772,9 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onNavigateBack }) => {
       <div className="flex items-center justify-between">
         <div>
           <h2 className="text-2xl font-bold">👥 User Management</h2>
-          <p className="text-slate-600">Manage user accounts, roles, and permissions</p>
+          <p className="text-slate-600">
+            Manage user accounts, roles, and permissions
+          </p>
         </div>
         <div className="flex gap-2">
           <Button variant="outline" size="sm">
@@ -731,7 +794,7 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onNavigateBack }) => {
           <CardContent className="p-4 text-center">
             <UserCheck className="w-8 h-8 text-green-500 mx-auto mb-2" />
             <div className="text-2xl font-bold text-green-600">
-              {users.filter(u => u.status === 'active').length}
+              {users.filter((u) => u.status === "active").length}
             </div>
             <p className="text-sm text-slate-600">Active Users</p>
           </CardContent>
@@ -740,7 +803,7 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onNavigateBack }) => {
           <CardContent className="p-4 text-center">
             <Users className="w-8 h-8 text-blue-500 mx-auto mb-2" />
             <div className="text-2xl font-bold text-blue-600">
-              {users.filter(u => u.role === 'parent').length}
+              {users.filter((u) => u.role === "parent").length}
             </div>
             <p className="text-sm text-slate-600">Parents</p>
           </CardContent>
@@ -749,7 +812,7 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onNavigateBack }) => {
           <CardContent className="p-4 text-center">
             <GraduationCap className="w-8 h-8 text-purple-500 mx-auto mb-2" />
             <div className="text-2xl font-bold text-purple-600">
-              {users.filter(u => u.role === 'child').length}
+              {users.filter((u) => u.role === "child").length}
             </div>
             <p className="text-sm text-slate-600">Children</p>
           </CardContent>
@@ -758,7 +821,7 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onNavigateBack }) => {
           <CardContent className="p-4 text-center">
             <CreditCard className="w-8 h-8 text-orange-500 mx-auto mb-2" />
             <div className="text-2xl font-bold text-orange-600">
-              {users.filter(u => u.subscriptionType === 'premium').length}
+              {users.filter((u) => u.subscriptionType === "premium").length}
             </div>
             <p className="text-sm text-slate-600">Premium Users</p>
           </CardContent>
@@ -799,13 +862,17 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onNavigateBack }) => {
       {/* Users List */}
       <div className="space-y-4">
         {users
-          .filter(user => userFilter === "all" || 
-            user.role === userFilter || 
-            user.status === userFilter
+          .filter(
+            (user) =>
+              userFilter === "all" ||
+              user.role === userFilter ||
+              user.status === userFilter,
           )
-          .filter(user => searchTerm === "" ||
-            user.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            user.email.toLowerCase().includes(searchTerm.toLowerCase())
+          .filter(
+            (user) =>
+              searchTerm === "" ||
+              user.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+              user.email.toLowerCase().includes(searchTerm.toLowerCase()),
           )
           .map((user) => (
             <Card key={user.id} className="hover:shadow-md transition-shadow">
@@ -818,29 +885,45 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onNavigateBack }) => {
                     <div className="flex-1">
                       <div className="flex items-center gap-3 mb-1">
                         <h3 className="font-semibold text-lg">{user.name}</h3>
-                        <Badge className={
-                          user.status === 'active' ? 'bg-green-100 text-green-800' :
-                          user.status === 'suspended' ? 'bg-red-100 text-red-800' :
-                          'bg-gray-100 text-gray-800'
-                        }>
+                        <Badge
+                          className={
+                            user.status === "active"
+                              ? "bg-green-100 text-green-800"
+                              : user.status === "suspended"
+                                ? "bg-red-100 text-red-800"
+                                : "bg-gray-100 text-gray-800"
+                          }
+                        >
                           {user.status}
                         </Badge>
                         <Badge variant="outline">{user.role}</Badge>
-                        <Badge className={
-                          user.subscriptionType === 'premium' ? 'bg-purple-100 text-purple-800' :
-                          user.subscriptionType === 'family' ? 'bg-blue-100 text-blue-800' :
-                          'bg-gray-100 text-gray-800'
-                        }>
+                        <Badge
+                          className={
+                            user.subscriptionType === "premium"
+                              ? "bg-purple-100 text-purple-800"
+                              : user.subscriptionType === "family"
+                                ? "bg-blue-100 text-blue-800"
+                                : "bg-gray-100 text-gray-800"
+                          }
+                        >
                           {user.subscriptionType}
                         </Badge>
                       </div>
                       <p className="text-slate-600 mb-2">{user.email}</p>
                       <div className="flex items-center gap-6 text-sm text-slate-500">
-                        <span>📅 Joined {user.createdAt.toLocaleDateString()}</span>
-                        <span>🕒 Last active {user.lastActive.toLocaleDateString()}</span>
+                        <span>
+                          📅 Joined {user.createdAt.toLocaleDateString()}
+                        </span>
+                        <span>
+                          🕒 Last active {user.lastActive.toLocaleDateString()}
+                        </span>
                         <span>📚 {user.totalSessions} sessions</span>
-                        {user.childrenCount && <span>👥 {user.childrenCount} children</span>}
-                        {user.supportTickets > 0 && <span>🎫 {user.supportTickets} tickets</span>}
+                        {user.childrenCount && (
+                          <span>👥 {user.childrenCount} children</span>
+                        )}
+                        {user.supportTickets > 0 && (
+                          <span>🎫 {user.supportTickets} tickets</span>
+                        )}
                       </div>
                     </div>
                   </div>
@@ -853,12 +936,20 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onNavigateBack }) => {
                       <Edit className="w-4 h-4 mr-1" />
                       Edit
                     </Button>
-                    <Button 
-                      size="sm" 
+                    <Button
+                      size="sm"
                       variant="outline"
-                      className={user.status === 'active' ? 'text-red-600' : 'text-green-600'}
+                      className={
+                        user.status === "active"
+                          ? "text-red-600"
+                          : "text-green-600"
+                      }
                     >
-                      {user.status === 'active' ? <Ban className="w-4 h-4" /> : <Unlock className="w-4 h-4" />}
+                      {user.status === "active" ? (
+                        <Ban className="w-4 h-4" />
+                      ) : (
+                        <Unlock className="w-4 h-4" />
+                      )}
                     </Button>
                     <Button size="sm" variant="outline">
                       <MoreVertical className="w-4 h-4" />
@@ -878,7 +969,9 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onNavigateBack }) => {
       <div className="flex items-center justify-between">
         <div>
           <h2 className="text-2xl font-bold">📊 System Analytics</h2>
-          <p className="text-slate-600">Platform insights and performance metrics</p>
+          <p className="text-slate-600">
+            Platform insights and performance metrics
+          </p>
         </div>
         <div className="flex gap-2">
           <Button variant="outline" size="sm">
@@ -900,9 +993,13 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onNavigateBack }) => {
               <h3 className="font-semibold">Platform Engagement</h3>
               <TrendingUp className="w-5 h-5 text-green-500" />
             </div>
-            <div className="text-3xl font-bold text-green-600 mb-2">{analytics.platformEngagement}%</div>
+            <div className="text-3xl font-bold text-green-600 mb-2">
+              {analytics.platformEngagement}%
+            </div>
             <Progress value={analytics.platformEngagement} className="mb-2" />
-            <p className="text-sm text-slate-600">Daily active users / Total users</p>
+            <p className="text-sm text-slate-600">
+              Daily active users / Total users
+            </p>
           </CardContent>
         </Card>
 
@@ -912,7 +1009,9 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onNavigateBack }) => {
               <h3 className="font-semibold">Content Quality</h3>
               <Star className="w-5 h-5 text-yellow-500" />
             </div>
-            <div className="text-3xl font-bold text-yellow-600 mb-2">{analytics.contentApprovalRate}%</div>
+            <div className="text-3xl font-bold text-yellow-600 mb-2">
+              {analytics.contentApprovalRate}%
+            </div>
             <Progress value={analytics.contentApprovalRate} className="mb-2" />
             <p className="text-sm text-slate-600">Content approval rate</p>
           </CardContent>
@@ -924,7 +1023,9 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onNavigateBack }) => {
               <h3 className="font-semibold">Support Response</h3>
               <Clock className="w-5 h-5 text-blue-500" />
             </div>
-            <div className="text-3xl font-bold text-blue-600 mb-2">{analytics.supportResponseTime}h</div>
+            <div className="text-3xl font-bold text-blue-600 mb-2">
+              {analytics.supportResponseTime}h
+            </div>
             <Progress value={75} className="mb-2" />
             <p className="text-sm text-slate-600">Average response time</p>
           </CardContent>
@@ -944,15 +1045,21 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onNavigateBack }) => {
             <div className="space-y-4">
               <div className="flex justify-between items-center">
                 <span>This Month</span>
-                <span className="font-bold text-green-600">+{analytics.userGrowthRate}%</span>
+                <span className="font-bold text-green-600">
+                  +{analytics.userGrowthRate}%
+                </span>
               </div>
               <div className="flex justify-between items-center">
                 <span>Session Duration</span>
-                <span className="font-bold">{analytics.avgSessionDuration}min</span>
+                <span className="font-bold">
+                  {analytics.avgSessionDuration}min
+                </span>
               </div>
               <div className="flex justify-between items-center">
                 <span>Total Sessions</span>
-                <span className="font-bold">{analytics.totalSessions.toLocaleString()}</span>
+                <span className="font-bold">
+                  {analytics.totalSessions.toLocaleString()}
+                </span>
               </div>
               <div className="h-40 bg-gradient-to-r from-blue-100 to-purple-100 rounded-lg flex items-center justify-center text-slate-500">
                 📈 Detailed chart visualization would go here
@@ -971,15 +1078,20 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onNavigateBack }) => {
           <CardContent>
             <div className="space-y-4">
               {categories.map((category, index) => (
-                <div key={category.id} className="flex items-center justify-between">
+                <div
+                  key={category.id}
+                  className="flex items-center justify-between"
+                >
                   <div className="flex items-center gap-2">
                     <span>{category.emoji}</span>
                     <span>{category.name}</span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <span className="text-sm text-slate-600">{category.wordCount}</span>
+                    <span className="text-sm text-slate-600">
+                      {category.wordCount}
+                    </span>
                     <div className="w-16 h-2 bg-slate-200 rounded-full overflow-hidden">
-                      <div 
+                      <div
                         className="h-full bg-gradient-to-r from-blue-500 to-purple-500 rounded-full"
                         style={{ width: `${(category.wordCount / 50) * 100}%` }}
                       />
@@ -1006,11 +1118,16 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onNavigateBack }) => {
         <CardContent>
           <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
             <div className="text-center">
-              <div className="text-2xl font-bold text-green-600">{analytics.systemUptime}%</div>
+              <div className="text-2xl font-bold text-green-600">
+                {analytics.systemUptime}%
+              </div>
               <p className="text-sm text-slate-600">System Uptime</p>
               <div className="mt-2">
                 <div className="w-full h-2 bg-slate-200 rounded-full overflow-hidden">
-                  <div className="h-full bg-green-500 rounded-full" style={{ width: `${analytics.systemUptime}%` }} />
+                  <div
+                    className="h-full bg-green-500 rounded-full"
+                    style={{ width: `${analytics.systemUptime}%` }}
+                  />
                 </div>
               </div>
             </div>
@@ -1019,7 +1136,10 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onNavigateBack }) => {
               <p className="text-sm text-slate-600">Avg Load Time</p>
               <div className="mt-2">
                 <div className="w-full h-2 bg-slate-200 rounded-full overflow-hidden">
-                  <div className="h-full bg-blue-500 rounded-full" style={{ width: '85%' }} />
+                  <div
+                    className="h-full bg-blue-500 rounded-full"
+                    style={{ width: "85%" }}
+                  />
                 </div>
               </div>
             </div>
@@ -1028,7 +1148,10 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onNavigateBack }) => {
               <p className="text-sm text-slate-600">API Success Rate</p>
               <div className="mt-2">
                 <div className="w-full h-2 bg-slate-200 rounded-full overflow-hidden">
-                  <div className="h-full bg-purple-500 rounded-full" style={{ width: '99%' }} />
+                  <div
+                    className="h-full bg-purple-500 rounded-full"
+                    style={{ width: "99%" }}
+                  />
                 </div>
               </div>
             </div>
@@ -1037,7 +1160,10 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onNavigateBack }) => {
               <p className="text-sm text-slate-600">Memory Usage</p>
               <div className="mt-2">
                 <div className="w-full h-2 bg-slate-200 rounded-full overflow-hidden">
-                  <div className="h-full bg-orange-500 rounded-full" style={{ width: '62%' }} />
+                  <div
+                    className="h-full bg-orange-500 rounded-full"
+                    style={{ width: "62%" }}
+                  />
                 </div>
               </div>
             </div>
@@ -1053,7 +1179,9 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onNavigateBack }) => {
       <div className="flex items-center justify-between">
         <div>
           <h2 className="text-2xl font-bold">🎫 Support Management</h2>
-          <p className="text-slate-600">Handle user support requests and tickets</p>
+          <p className="text-slate-600">
+            Handle user support requests and tickets
+          </p>
         </div>
         <div className="flex gap-2">
           <Button variant="outline" size="sm">
@@ -1073,7 +1201,7 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onNavigateBack }) => {
           <CardContent className="p-4 text-center">
             <AlertCircle className="w-8 h-8 text-red-500 mx-auto mb-2" />
             <div className="text-2xl font-bold text-red-600">
-              {tickets.filter(t => t.status === 'open').length}
+              {tickets.filter((t) => t.status === "open").length}
             </div>
             <p className="text-sm text-slate-600">Open Tickets</p>
           </CardContent>
@@ -1082,7 +1210,7 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onNavigateBack }) => {
           <CardContent className="p-4 text-center">
             <Clock className="w-8 h-8 text-yellow-500 mx-auto mb-2" />
             <div className="text-2xl font-bold text-yellow-600">
-              {tickets.filter(t => t.status === 'in_progress').length}
+              {tickets.filter((t) => t.status === "in_progress").length}
             </div>
             <p className="text-sm text-slate-600">In Progress</p>
           </CardContent>
@@ -1091,7 +1219,7 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onNavigateBack }) => {
           <CardContent className="p-4 text-center">
             <CheckCircle className="w-8 h-8 text-green-500 mx-auto mb-2" />
             <div className="text-2xl font-bold text-green-600">
-              {tickets.filter(t => t.status === 'resolved').length}
+              {tickets.filter((t) => t.status === "resolved").length}
             </div>
             <p className="text-sm text-slate-600">Resolved</p>
           </CardContent>
@@ -1100,7 +1228,7 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onNavigateBack }) => {
           <CardContent className="p-4 text-center">
             <Archive className="w-8 h-8 text-gray-500 mx-auto mb-2" />
             <div className="text-2xl font-bold text-gray-600">
-              {tickets.filter(t => t.status === 'closed').length}
+              {tickets.filter((t) => t.status === "closed").length}
             </div>
             <p className="text-sm text-slate-600">Closed</p>
           </CardContent>
@@ -1141,10 +1269,15 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onNavigateBack }) => {
       {/* Tickets List */}
       <div className="space-y-4">
         {tickets
-          .filter(ticket => ticketFilter === "all" || ticket.status === ticketFilter)
-          .filter(ticket => searchTerm === "" ||
-            ticket.subject.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            ticket.userName.toLowerCase().includes(searchTerm.toLowerCase())
+          .filter(
+            (ticket) =>
+              ticketFilter === "all" || ticket.status === ticketFilter,
+          )
+          .filter(
+            (ticket) =>
+              searchTerm === "" ||
+              ticket.subject.toLowerCase().includes(searchTerm.toLowerCase()) ||
+              ticket.userName.toLowerCase().includes(searchTerm.toLowerCase()),
           )
           .map((ticket) => (
             <Card key={ticket.id} className="hover:shadow-md transition-shadow">
@@ -1152,21 +1285,33 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onNavigateBack }) => {
                 <div className="flex items-start justify-between">
                   <div className="flex-1">
                     <div className="flex items-center gap-3 mb-2">
-                      <h3 className="font-semibold text-lg">{ticket.subject}</h3>
-                      <Badge className={
-                        ticket.status === 'open' ? 'bg-red-100 text-red-800' :
-                        ticket.status === 'in_progress' ? 'bg-yellow-100 text-yellow-800' :
-                        ticket.status === 'resolved' ? 'bg-green-100 text-green-800' :
-                        'bg-gray-100 text-gray-800'
-                      }>
-                        {ticket.status.replace('_', ' ')}
+                      <h3 className="font-semibold text-lg">
+                        {ticket.subject}
+                      </h3>
+                      <Badge
+                        className={
+                          ticket.status === "open"
+                            ? "bg-red-100 text-red-800"
+                            : ticket.status === "in_progress"
+                              ? "bg-yellow-100 text-yellow-800"
+                              : ticket.status === "resolved"
+                                ? "bg-green-100 text-green-800"
+                                : "bg-gray-100 text-gray-800"
+                        }
+                      >
+                        {ticket.status.replace("_", " ")}
                       </Badge>
-                      <Badge className={
-                        ticket.priority === 'urgent' ? 'bg-red-500 text-white' :
-                        ticket.priority === 'high' ? 'bg-orange-500 text-white' :
-                        ticket.priority === 'medium' ? 'bg-yellow-500 text-white' :
-                        'bg-gray-500 text-white'
-                      }>
+                      <Badge
+                        className={
+                          ticket.priority === "urgent"
+                            ? "bg-red-500 text-white"
+                            : ticket.priority === "high"
+                              ? "bg-orange-500 text-white"
+                              : ticket.priority === "medium"
+                                ? "bg-yellow-500 text-white"
+                                : "bg-gray-500 text-white"
+                        }
+                      >
                         {ticket.priority}
                       </Badge>
                     </div>
@@ -1176,7 +1321,9 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onNavigateBack }) => {
                       <span>📧 {ticket.userEmail}</span>
                       <span>📅 {ticket.createdAt.toLocaleDateString()}</span>
                       <span>💬 {ticket.responses.length} responses</span>
-                      {ticket.assignedTo && <span>👨‍💼 Assigned to {ticket.assignedTo}</span>}
+                      {ticket.assignedTo && (
+                        <span>👨‍💼 Assigned to {ticket.assignedTo}</span>
+                      )}
                     </div>
                   </div>
                   <div className="flex items-center gap-2">
@@ -1217,8 +1364,12 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onNavigateBack }) => {
             </Button>
           )}
           <div>
-            <h1 className="text-3xl font-bold text-slate-800">🛡️ Administrator Dashboard</h1>
-            <p className="text-slate-600">System management and oversight platform</p>
+            <h1 className="text-3xl font-bold text-slate-800">
+              🛡️ Administrator Dashboard
+            </h1>
+            <p className="text-slate-600">
+              System management and oversight platform
+            </p>
           </div>
         </div>
         <div className="flex gap-2">
@@ -1283,7 +1434,9 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onNavigateBack }) => {
               <Input
                 id="word"
                 value={newWordData.word}
-                onChange={(e) => setNewWordData(prev => ({ ...prev, word: e.target.value }))}
+                onChange={(e) =>
+                  setNewWordData((prev) => ({ ...prev, word: e.target.value }))
+                }
                 placeholder="Enter word"
               />
             </div>
@@ -1292,7 +1445,12 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onNavigateBack }) => {
               <Input
                 id="pronunciation"
                 value={newWordData.pronunciation}
-                onChange={(e) => setNewWordData(prev => ({ ...prev, pronunciation: e.target.value }))}
+                onChange={(e) =>
+                  setNewWordData((prev) => ({
+                    ...prev,
+                    pronunciation: e.target.value,
+                  }))
+                }
                 placeholder="EX-am-ple"
               />
             </div>
@@ -1301,7 +1459,12 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onNavigateBack }) => {
               <Textarea
                 id="definition"
                 value={newWordData.definition}
-                onChange={(e) => setNewWordData(prev => ({ ...prev, definition: e.target.value }))}
+                onChange={(e) =>
+                  setNewWordData((prev) => ({
+                    ...prev,
+                    definition: e.target.value,
+                  }))
+                }
                 placeholder="Word definition..."
               />
             </div>
@@ -1310,15 +1473,23 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onNavigateBack }) => {
               <Textarea
                 id="example"
                 value={newWordData.example}
-                onChange={(e) => setNewWordData(prev => ({ ...prev, example: e.target.value }))}
+                onChange={(e) =>
+                  setNewWordData((prev) => ({
+                    ...prev,
+                    example: e.target.value,
+                  }))
+                }
                 placeholder="Example sentence using the word..."
               />
             </div>
             <div>
               <Label htmlFor="category">Category</Label>
-              <Select value={newWordData.category} onValueChange={(value) => 
-                setNewWordData(prev => ({ ...prev, category: value }))
-              }>
+              <Select
+                value={newWordData.category}
+                onValueChange={(value) =>
+                  setNewWordData((prev) => ({ ...prev, category: value }))
+                }
+              >
                 <SelectTrigger>
                   <SelectValue placeholder="Select category" />
                 </SelectTrigger>
@@ -1333,9 +1504,12 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onNavigateBack }) => {
             </div>
             <div>
               <Label htmlFor="difficulty">Difficulty</Label>
-              <Select value={newWordData.difficulty} onValueChange={(value: any) => 
-                setNewWordData(prev => ({ ...prev, difficulty: value }))
-              }>
+              <Select
+                value={newWordData.difficulty}
+                onValueChange={(value: any) =>
+                  setNewWordData((prev) => ({ ...prev, difficulty: value }))
+                }
+              >
                 <SelectTrigger>
                   <SelectValue />
                 </SelectTrigger>
@@ -1351,7 +1525,12 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onNavigateBack }) => {
               <Textarea
                 id="funFact"
                 value={newWordData.funFact}
-                onChange={(e) => setNewWordData(prev => ({ ...prev, funFact: e.target.value }))}
+                onChange={(e) =>
+                  setNewWordData((prev) => ({
+                    ...prev,
+                    funFact: e.target.value,
+                  }))
+                }
                 placeholder="Interesting fact about this word..."
               />
             </div>
@@ -1360,9 +1539,7 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onNavigateBack }) => {
             <Button variant="outline" onClick={() => setShowWordDialog(false)}>
               Cancel
             </Button>
-            <Button onClick={() => setShowWordDialog(false)}>
-              Add Word
-            </Button>
+            <Button onClick={() => setShowWordDialog(false)}>Add Word</Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>
@@ -1382,7 +1559,12 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onNavigateBack }) => {
               <Input
                 id="categoryName"
                 value={newCategoryData.name}
-                onChange={(e) => setNewCategoryData(prev => ({ ...prev, name: e.target.value }))}
+                onChange={(e) =>
+                  setNewCategoryData((prev) => ({
+                    ...prev,
+                    name: e.target.value,
+                  }))
+                }
                 placeholder="Category name"
               />
             </div>
@@ -1391,7 +1573,12 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onNavigateBack }) => {
               <Input
                 id="categoryEmoji"
                 value={newCategoryData.emoji}
-                onChange={(e) => setNewCategoryData(prev => ({ ...prev, emoji: e.target.value }))}
+                onChange={(e) =>
+                  setNewCategoryData((prev) => ({
+                    ...prev,
+                    emoji: e.target.value,
+                  }))
+                }
                 placeholder="Choose an emoji"
               />
             </div>
@@ -1400,15 +1587,23 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onNavigateBack }) => {
               <Textarea
                 id="categoryDescription"
                 value={newCategoryData.description}
-                onChange={(e) => setNewCategoryData(prev => ({ ...prev, description: e.target.value }))}
+                onChange={(e) =>
+                  setNewCategoryData((prev) => ({
+                    ...prev,
+                    description: e.target.value,
+                  }))
+                }
                 placeholder="Category description..."
               />
             </div>
             <div>
               <Label htmlFor="categoryDifficulty">Default Difficulty</Label>
-              <Select value={newCategoryData.difficulty} onValueChange={(value: any) => 
-                setNewCategoryData(prev => ({ ...prev, difficulty: value }))
-              }>
+              <Select
+                value={newCategoryData.difficulty}
+                onValueChange={(value: any) =>
+                  setNewCategoryData((prev) => ({ ...prev, difficulty: value }))
+                }
+              >
                 <SelectTrigger>
                   <SelectValue />
                 </SelectTrigger>
@@ -1421,7 +1616,10 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onNavigateBack }) => {
             </div>
           </div>
           <DialogFooter>
-            <Button variant="outline" onClick={() => setShowCategoryDialog(false)}>
+            <Button
+              variant="outline"
+              onClick={() => setShowCategoryDialog(false)}
+            >
               Cancel
             </Button>
             <Button onClick={() => setShowCategoryDialog(false)}>

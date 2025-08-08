@@ -182,7 +182,8 @@ const quickQuizQuestions = [
     question: "What color is a typical apple?",
     options: ["Blue", "Purple", "Red", "Black"],
     correctAnswer: "Red",
-    explanation: "Apples are commonly red, though they can also be green or yellow.",
+    explanation:
+      "Apples are commonly red, though they can also be green or yellow.",
     emoji: "🍎",
   },
   {
@@ -220,27 +221,41 @@ const challengeQuizQuestions = [
     id: 1,
     word: "magnificent",
     question: "What does 'magnificent' mean?",
-    options: ["Very small", "Extremely beautiful or impressive", "Quite ugly", "Somewhat boring"],
+    options: [
+      "Very small",
+      "Extremely beautiful or impressive",
+      "Quite ugly",
+      "Somewhat boring",
+    ],
     correctAnswer: "Extremely beautiful or impressive",
-    explanation: "Magnificent means something is extremely beautiful, impressive, or grand in scale.",
+    explanation:
+      "Magnificent means something is extremely beautiful, impressive, or grand in scale.",
     emoji: "✨",
   },
   {
     id: 2,
     word: "constellation",
     question: "What is a constellation?",
-    options: ["A type of building", "A group of stars forming a pattern", "A musical instrument", "A kind of flower"],
+    options: [
+      "A type of building",
+      "A group of stars forming a pattern",
+      "A musical instrument",
+      "A kind of flower",
+    ],
     correctAnswer: "A group of stars forming a pattern",
-    explanation: "Constellations are groups of stars that form recognizable patterns in the night sky.",
+    explanation:
+      "Constellations are groups of stars that form recognizable patterns in the night sky.",
     emoji: "⭐",
   },
   {
     id: 3,
     word: "hibernation",
-    question: "During hibernation, a bear's heart rate drops from 40 beats per minute to approximately how many?",
+    question:
+      "During hibernation, a bear's heart rate drops from 40 beats per minute to approximately how many?",
     options: ["35 beats", "20 beats", "8 beats", "2 beats"],
     correctAnswer: "8 beats",
-    explanation: "During hibernation, a bear's heart rate dramatically slows down to just 8 beats per minute!",
+    explanation:
+      "During hibernation, a bear's heart rate dramatically slows down to just 8 beats per minute!",
     emoji: "🐻",
   },
   {
@@ -256,54 +271,90 @@ const challengeQuizQuestions = [
     id: 5,
     word: "chameleon",
     question: "What unique ability do chameleon eyes have?",
-    options: ["See in the dark", "Change color", "Move independently", "See through walls"],
+    options: [
+      "See in the dark",
+      "Change color",
+      "Move independently",
+      "See through walls",
+    ],
     correctAnswer: "Move independently",
-    explanation: "Chameleons can move their eyes independently - one can look forward while the other looks backward!",
+    explanation:
+      "Chameleons can move their eyes independently - one can look forward while the other looks backward!",
     emoji: "🦎",
   },
   {
     id: 6,
     word: "velocity",
     question: "Velocity is a measure of:",
-    options: ["Weight and mass", "Speed and direction", "Height and width", "Temperature and pressure"],
+    options: [
+      "Weight and mass",
+      "Speed and direction",
+      "Height and width",
+      "Temperature and pressure",
+    ],
     correctAnswer: "Speed and direction",
-    explanation: "Velocity measures both how fast something is moving and in which direction.",
+    explanation:
+      "Velocity measures both how fast something is moving and in which direction.",
     emoji: "��",
   },
   {
     id: 7,
     word: "laboratory",
     question: "The word 'laboratory' comes from Latin meaning:",
-    options: ["Place of learning", "House of science", "A place for work", "Room of experiments"],
+    options: [
+      "Place of learning",
+      "House of science",
+      "A place for work",
+      "Room of experiments",
+    ],
     correctAnswer: "A place for work",
-    explanation: "Laboratory comes from the Latin word meaning 'a place for work'.",
+    explanation:
+      "Laboratory comes from the Latin word meaning 'a place for work'.",
     emoji: "🧪",
   },
   {
     id: 8,
     word: "symphony",
     question: "A symphony is typically performed by:",
-    options: ["A single musician", "A small band", "A large orchestra", "A choir only"],
+    options: [
+      "A single musician",
+      "A small band",
+      "A large orchestra",
+      "A choir only",
+    ],
     correctAnswer: "A large orchestra",
-    explanation: "Symphonies are complex musical compositions performed by large orchestras.",
+    explanation:
+      "Symphonies are complex musical compositions performed by large orchestras.",
     emoji: "🎼",
   },
   {
     id: 9,
     word: "photosynthesis",
     question: "Photosynthesis is the process by which:",
-    options: ["Animals breathe", "Plants make food using sunlight", "Water evaporates", "Rocks form crystals"],
+    options: [
+      "Animals breathe",
+      "Plants make food using sunlight",
+      "Water evaporates",
+      "Rocks form crystals",
+    ],
     correctAnswer: "Plants make food using sunlight",
-    explanation: "Photosynthesis is how plants convert sunlight, water, and carbon dioxide into food.",
+    explanation:
+      "Photosynthesis is how plants convert sunlight, water, and carbon dioxide into food.",
     emoji: "🌱",
   },
   {
     id: 10,
     word: "archaeology",
     question: "Archaeology is the study of:",
-    options: ["Stars and planets", "Human history through artifacts", "Animals in the wild", "Weather patterns"],
+    options: [
+      "Stars and planets",
+      "Human history through artifacts",
+      "Animals in the wild",
+      "Weather patterns",
+    ],
     correctAnswer: "Human history through artifacts",
-    explanation: "Archaeologists study human history by examining artifacts and remains from the past.",
+    explanation:
+      "Archaeologists study human history by examining artifacts and remains from the past.",
     emoji: "🏺",
   },
 ];
@@ -317,16 +368,23 @@ const pictureQuizQuestions = [
     question: "What food does this emoji represent?",
     options: ["Hamburger", "Pizza", "Sandwich", "Pasta"],
     correctAnswer: "Pizza",
-    explanation: "This emoji represents pizza - a delicious round flatbread with toppings!",
+    explanation:
+      "This emoji represents pizza - a delicious round flatbread with toppings!",
   },
   {
     id: 2,
     word: "lion",
     emoji: "🦁",
     question: "This animal is known as the:",
-    options: ["Prince of the jungle", "King of the jungle", "Duke of the forest", "Lord of the savanna"],
+    options: [
+      "Prince of the jungle",
+      "King of the jungle",
+      "Duke of the forest",
+      "Lord of the savanna",
+    ],
     correctAnswer: "King of the jungle",
-    explanation: "Lions are often called the 'King of the jungle' because of their majestic appearance.",
+    explanation:
+      "Lions are often called the 'King of the jungle' because of their majestic appearance.",
   },
   {
     id: 3,
@@ -335,7 +393,8 @@ const pictureQuizQuestions = [
     question: "How many colors are traditionally said to be in a rainbow?",
     options: ["Five", "Six", "Seven", "Eight"],
     correctAnswer: "Seven",
-    explanation: "Rainbows traditionally have seven colors: red, orange, yellow, green, blue, indigo, and violet.",
+    explanation:
+      "Rainbows traditionally have seven colors: red, orange, yellow, green, blue, indigo, and violet.",
   },
   {
     id: 4,
@@ -344,25 +403,38 @@ const pictureQuizQuestions = [
     question: "What sound does this vehicle make?",
     options: ["Beep beep", "Choo choo", "Vroom vroom", "Ring ring"],
     correctAnswer: "Choo choo",
-    explanation: "Trains make a 'choo choo' sound from their steam engines and whistles.",
+    explanation:
+      "Trains make a 'choo choo' sound from their steam engines and whistles.",
   },
   {
     id: 5,
     word: "cake",
     emoji: "🎂",
     question: "When do we typically see this item?",
-    options: ["At breakfast", "At birthday parties", "At school", "At the doctor"],
+    options: [
+      "At breakfast",
+      "At birthday parties",
+      "At school",
+      "At the doctor",
+    ],
     correctAnswer: "At birthday parties",
-    explanation: "Birthday cakes are a special treat we enjoy at birthday celebrations!",
+    explanation:
+      "Birthday cakes are a special treat we enjoy at birthday celebrations!",
   },
   {
     id: 6,
     word: "moon",
     emoji: "🌙",
     question: "When can we see this in the sky?",
-    options: ["Only at sunrise", "During the day", "At night", "Only in winter"],
+    options: [
+      "Only at sunrise",
+      "During the day",
+      "At night",
+      "Only in winter",
+    ],
     correctAnswer: "At night",
-    explanation: "We can see the moon in the night sky, and sometimes during the day too!",
+    explanation:
+      "We can see the moon in the night sky, and sometimes during the day too!",
   },
   {
     id: 7,
@@ -371,7 +443,8 @@ const pictureQuizQuestions = [
     question: "Before becoming this, it was a:",
     options: ["Tadpole", "Caterpillar", "Seed", "Egg"],
     correctAnswer: "Caterpillar",
-    explanation: "Butterflies start life as caterpillars before transforming in a process called metamorphosis.",
+    explanation:
+      "Butterflies start life as caterpillars before transforming in a process called metamorphosis.",
   },
   {
     id: 8,
@@ -380,7 +453,8 @@ const pictureQuizQuestions = [
     question: "In which sport is this item used?",
     options: ["Basketball", "Tennis", "Soccer", "Baseball"],
     correctAnswer: "Soccer",
-    explanation: "This is a soccer ball, used in the world's most popular sport!",
+    explanation:
+      "This is a soccer ball, used in the world's most popular sport!",
   },
 ];
 
@@ -392,7 +466,8 @@ const spellingQuizQuestions = [
     question: "How do you spell the word for a colorful insect with wings?",
     options: ["butterfly", "buterfly", "butterflie", "buttrefly"],
     correctAnswer: "butterfly",
-    explanation: "Butterfly - a colorful insect that transforms from a caterpillar!",
+    explanation:
+      "Butterfly - a colorful insect that transforms from a caterpillar!",
     emoji: "🦋",
   },
   {
@@ -425,7 +500,8 @@ const spellingQuizQuestions = [
   {
     id: 5,
     word: "telescope",
-    question: "How do you spell the word for a device that sees distant objects?",
+    question:
+      "How do you spell the word for a device that sees distant objects?",
     options: ["telescope", "telescop", "telascope", "telecsope"],
     correctAnswer: "telescope",
     explanation: "Telescope - helps us see stars and planets far away!",
@@ -464,7 +540,8 @@ const spellingQuizQuestions = [
     question: "How do you spell the word for creating ideas in your mind?",
     options: ["imagination", "imagenation", "imaginashion", "imaignation"],
     correctAnswer: "imagination",
-    explanation: "Imagination - the ability to create wonderful ideas and stories!",
+    explanation:
+      "Imagination - the ability to create wonderful ideas and stories!",
     emoji: "💭",
   },
   {
@@ -480,37 +557,142 @@ const spellingQuizQuestions = [
 
 // Speed Round Questions (endless, quick questions)
 const speedRoundQuestions = [
-  { id: 1, word: "cat", question: "Pet that says meow", options: ["Dog", "Cat", "Bird", "Fish"], correctAnswer: "Cat", emoji: "🐱" },
-  { id: 2, word: "red", question: "Color of fire", options: ["Blue", "Green", "Red", "Yellow"], correctAnswer: "Red", emoji: "🔴" },
-  { id: 3, word: "sun", question: "Shines during the day", options: ["Moon", "Star", "Sun", "Cloud"], correctAnswer: "Sun", emoji: "☀️" },
-  { id: 4, word: "book", question: "You read this", options: ["Phone", "Book", "TV", "Car"], correctAnswer: "Book", emoji: "📚" },
-  { id: 5, word: "tree", question: "Has leaves and branches", options: ["Rock", "Tree", "House", "Car"], correctAnswer: "Tree", emoji: "🌳" },
-  { id: 6, word: "happy", question: "Feeling joyful", options: ["Sad", "Angry", "Happy", "Tired"], correctAnswer: "Happy", emoji: "😊" },
-  { id: 7, word: "water", question: "You drink this", options: ["Sand", "Water", "Air", "Fire"], correctAnswer: "Water", emoji: "💧" },
-  { id: 8, word: "bird", question: "Animal that flies", options: ["Fish", "Dog", "Bird", "Cat"], correctAnswer: "Bird", emoji: "🐦" },
-  { id: 9, word: "house", question: "Where people live", options: ["Car", "Tree", "House", "Rock"], correctAnswer: "House", emoji: "🏠" },
-  { id: 10, word: "flower", question: "Colorful plant part", options: ["Root", "Flower", "Stone", "Metal"], correctAnswer: "Flower", emoji: "🌸" },
-  { id: 11, word: "ball", question: "Round toy for games", options: ["Square", "Ball", "Triangle", "Line"], correctAnswer: "Ball", emoji: "⚽" },
-  { id: 12, word: "ice", question: "Frozen water", options: ["Hot", "Ice", "Steam", "Warm"], correctAnswer: "Ice", emoji: "🧊" },
-  { id: 13, word: "star", question: "Twinkles in the sky", options: ["Rock", "Star", "Cloud", "Tree"], correctAnswer: "Star", emoji: "⭐" },
-  { id: 14, word: "fish", question: "Lives in water", options: ["Bird", "Dog", "Fish", "Cat"], correctAnswer: "Fish", emoji: "🐟" },
-  { id: 15, word: "cake", question: "Sweet birthday treat", options: ["Soup", "Cake", "Salad", "Bread"], correctAnswer: "Cake", emoji: "🎂" },
+  {
+    id: 1,
+    word: "cat",
+    question: "Pet that says meow",
+    options: ["Dog", "Cat", "Bird", "Fish"],
+    correctAnswer: "Cat",
+    emoji: "🐱",
+  },
+  {
+    id: 2,
+    word: "red",
+    question: "Color of fire",
+    options: ["Blue", "Green", "Red", "Yellow"],
+    correctAnswer: "Red",
+    emoji: "🔴",
+  },
+  {
+    id: 3,
+    word: "sun",
+    question: "Shines during the day",
+    options: ["Moon", "Star", "Sun", "Cloud"],
+    correctAnswer: "Sun",
+    emoji: "☀️",
+  },
+  {
+    id: 4,
+    word: "book",
+    question: "You read this",
+    options: ["Phone", "Book", "TV", "Car"],
+    correctAnswer: "Book",
+    emoji: "📚",
+  },
+  {
+    id: 5,
+    word: "tree",
+    question: "Has leaves and branches",
+    options: ["Rock", "Tree", "House", "Car"],
+    correctAnswer: "Tree",
+    emoji: "🌳",
+  },
+  {
+    id: 6,
+    word: "happy",
+    question: "Feeling joyful",
+    options: ["Sad", "Angry", "Happy", "Tired"],
+    correctAnswer: "Happy",
+    emoji: "😊",
+  },
+  {
+    id: 7,
+    word: "water",
+    question: "You drink this",
+    options: ["Sand", "Water", "Air", "Fire"],
+    correctAnswer: "Water",
+    emoji: "💧",
+  },
+  {
+    id: 8,
+    word: "bird",
+    question: "Animal that flies",
+    options: ["Fish", "Dog", "Bird", "Cat"],
+    correctAnswer: "Bird",
+    emoji: "🐦",
+  },
+  {
+    id: 9,
+    word: "house",
+    question: "Where people live",
+    options: ["Car", "Tree", "House", "Rock"],
+    correctAnswer: "House",
+    emoji: "🏠",
+  },
+  {
+    id: 10,
+    word: "flower",
+    question: "Colorful plant part",
+    options: ["Root", "Flower", "Stone", "Metal"],
+    correctAnswer: "Flower",
+    emoji: "🌸",
+  },
+  {
+    id: 11,
+    word: "ball",
+    question: "Round toy for games",
+    options: ["Square", "Ball", "Triangle", "Line"],
+    correctAnswer: "Ball",
+    emoji: "⚽",
+  },
+  {
+    id: 12,
+    word: "ice",
+    question: "Frozen water",
+    options: ["Hot", "Ice", "Steam", "Warm"],
+    correctAnswer: "Ice",
+    emoji: "🧊",
+  },
+  {
+    id: 13,
+    word: "star",
+    question: "Twinkles in the sky",
+    options: ["Rock", "Star", "Cloud", "Tree"],
+    correctAnswer: "Star",
+    emoji: "⭐",
+  },
+  {
+    id: 14,
+    word: "fish",
+    question: "Lives in water",
+    options: ["Bird", "Dog", "Fish", "Cat"],
+    correctAnswer: "Fish",
+    emoji: "🐟",
+  },
+  {
+    id: 15,
+    word: "cake",
+    question: "Sweet birthday treat",
+    options: ["Soup", "Cake", "Salad", "Bread"],
+    correctAnswer: "Cake",
+    emoji: "🎂",
+  },
 ];
 
 // Function to get questions based on quiz type
 const getQuizQuestions = (type: string) => {
   switch (type) {
-    case 'quick':
+    case "quick":
       return quickQuizQuestions;
-    case 'standard':
+    case "standard":
       return sampleQuizQuestions;
-    case 'challenge':
+    case "challenge":
       return challengeQuizQuestions;
-    case 'picture':
+    case "picture":
       return pictureQuizQuestions;
-    case 'spelling':
+    case "spelling":
       return spellingQuizQuestions;
-    case 'speed':
+    case "speed":
       return speedRoundQuestions;
     default:
       return sampleQuizQuestions;
@@ -613,7 +795,9 @@ export default function Index() {
   const [activeTab, setActiveTab] = useState("dashboard");
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
   const [showQuiz, setShowQuiz] = useState(false);
-  const [selectedQuizType, setSelectedQuizType] = useState<'quick' | 'standard' | 'challenge' | 'picture' | 'spelling' | 'speed'>('standard');
+  const [selectedQuizType, setSelectedQuizType] = useState<
+    "quick" | "standard" | "challenge" | "picture" | "spelling" | "speed"
+  >("standard");
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [learningMode, setLearningMode] = useState<
     "cards" | "builder" | "matching"
@@ -1142,7 +1326,8 @@ export default function Index() {
                             Choose Your Quiz Adventure
                           </h2>
                           <p className="text-slate-600 mb-8">
-                            Pick a quiz mode that matches your learning style and challenge level!
+                            Pick a quiz mode that matches your learning style
+                            and challenge level!
                           </p>
                         </div>
 
@@ -1154,32 +1339,45 @@ export default function Index() {
                                 <div className="w-12 h-12 rounded-lg bg-educational-blue/20 flex items-center justify-center">
                                   <Zap className="w-6 h-6 text-educational-blue" />
                                 </div>
-                                <Badge className="bg-educational-blue text-white">QUICK</Badge>
+                                <Badge className="bg-educational-blue text-white">
+                                  QUICK
+                                </Badge>
                               </div>
-                              <CardTitle className="text-educational-blue">Quick Quiz</CardTitle>
+                              <CardTitle className="text-educational-blue">
+                                Quick Quiz
+                              </CardTitle>
                             </CardHeader>
                             <CardContent className="space-y-4">
                               <p className="text-sm text-slate-600">
-                                Fast-paced multiple choice quiz to test your vocabulary knowledge
+                                Fast-paced multiple choice quiz to test your
+                                vocabulary knowledge
                               </p>
                               <div className="grid grid-cols-3 gap-2 text-center text-xs">
                                 <div>
-                                  <div className="font-bold text-educational-blue">5</div>
-                                  <div className="text-slate-500">Questions</div>
+                                  <div className="font-bold text-educational-blue">
+                                    5
+                                  </div>
+                                  <div className="text-slate-500">
+                                    Questions
+                                  </div>
                                 </div>
                                 <div>
-                                  <div className="font-bold text-educational-purple">15s</div>
+                                  <div className="font-bold text-educational-purple">
+                                    15s
+                                  </div>
                                   <div className="text-slate-500">Per Q</div>
                                 </div>
                                 <div>
-                                  <div className="font-bold text-educational-orange">50</div>
+                                  <div className="font-bold text-educational-orange">
+                                    50
+                                  </div>
                                   <div className="text-slate-500">Points</div>
                                 </div>
                               </div>
                               <Button
                                 className="w-full bg-educational-blue hover:bg-educational-blue/90"
                                 onClick={() => {
-                                  setSelectedQuizType('quick');
+                                  setSelectedQuizType("quick");
                                   setShowQuiz(true);
                                 }}
                               >
@@ -1196,32 +1394,45 @@ export default function Index() {
                                 <div className="w-12 h-12 rounded-lg bg-educational-purple/20 flex items-center justify-center">
                                   <Brain className="w-6 h-6 text-educational-purple" />
                                 </div>
-                                <Badge className="bg-educational-purple text-white">STANDARD</Badge>
+                                <Badge className="bg-educational-purple text-white">
+                                  STANDARD
+                                </Badge>
                               </div>
-                              <CardTitle className="text-educational-purple">Standard Quiz</CardTitle>
+                              <CardTitle className="text-educational-purple">
+                                Standard Quiz
+                              </CardTitle>
                             </CardHeader>
                             <CardContent className="space-y-4">
                               <p className="text-sm text-slate-600">
-                                Balanced quiz with multiple choice questions and explanations
+                                Balanced quiz with multiple choice questions and
+                                explanations
                               </p>
                               <div className="grid grid-cols-3 gap-2 text-center text-xs">
                                 <div>
-                                  <div className="font-bold text-educational-blue">10</div>
-                                  <div className="text-slate-500">Questions</div>
+                                  <div className="font-bold text-educational-blue">
+                                    10
+                                  </div>
+                                  <div className="text-slate-500">
+                                    Questions
+                                  </div>
                                 </div>
                                 <div>
-                                  <div className="font-bold text-educational-purple">30s</div>
+                                  <div className="font-bold text-educational-purple">
+                                    30s
+                                  </div>
                                   <div className="text-slate-500">Per Q</div>
                                 </div>
                                 <div>
-                                  <div className="font-bold text-educational-orange">100</div>
+                                  <div className="font-bold text-educational-orange">
+                                    100
+                                  </div>
                                   <div className="text-slate-500">Points</div>
                                 </div>
                               </div>
                               <Button
                                 className="w-full bg-educational-purple hover:bg-educational-purple/90"
                                 onClick={() => {
-                                  setSelectedQuizType('standard');
+                                  setSelectedQuizType("standard");
                                   setShowQuiz(true);
                                 }}
                               >
@@ -1238,32 +1449,45 @@ export default function Index() {
                                 <div className="w-12 h-12 rounded-lg bg-educational-orange/20 flex items-center justify-center">
                                   <Target className="w-6 h-6 text-educational-orange" />
                                 </div>
-                                <Badge className="bg-educational-orange text-white">CHALLENGE</Badge>
+                                <Badge className="bg-educational-orange text-white">
+                                  CHALLENGE
+                                </Badge>
                               </div>
-                              <CardTitle className="text-educational-orange">Challenge Quiz</CardTitle>
+                              <CardTitle className="text-educational-orange">
+                                Challenge Quiz
+                              </CardTitle>
                             </CardHeader>
                             <CardContent className="space-y-4">
                               <p className="text-sm text-slate-600">
-                                Difficult questions with tricky options for advanced learners
+                                Difficult questions with tricky options for
+                                advanced learners
                               </p>
                               <div className="grid grid-cols-3 gap-2 text-center text-xs">
                                 <div>
-                                  <div className="font-bold text-educational-blue">15</div>
-                                  <div className="text-slate-500">Questions</div>
+                                  <div className="font-bold text-educational-blue">
+                                    15
+                                  </div>
+                                  <div className="text-slate-500">
+                                    Questions
+                                  </div>
                                 </div>
                                 <div>
-                                  <div className="font-bold text-educational-purple">45s</div>
+                                  <div className="font-bold text-educational-purple">
+                                    45s
+                                  </div>
                                   <div className="text-slate-500">Per Q</div>
                                 </div>
                                 <div>
-                                  <div className="font-bold text-educational-orange">200</div>
+                                  <div className="font-bold text-educational-orange">
+                                    200
+                                  </div>
                                   <div className="text-slate-500">Points</div>
                                 </div>
                               </div>
                               <Button
                                 className="w-full bg-educational-orange hover:bg-educational-orange/90"
                                 onClick={() => {
-                                  setSelectedQuizType('challenge');
+                                  setSelectedQuizType("challenge");
                                   setShowQuiz(true);
                                 }}
                               >
@@ -1280,32 +1504,45 @@ export default function Index() {
                                 <div className="w-12 h-12 rounded-lg bg-educational-green/20 flex items-center justify-center">
                                   <ImageIcon className="w-6 h-6 text-educational-green" />
                                 </div>
-                                <Badge className="bg-educational-green text-white">VISUAL</Badge>
+                                <Badge className="bg-educational-green text-white">
+                                  VISUAL
+                                </Badge>
                               </div>
-                              <CardTitle className="text-educational-green">Picture Quiz</CardTitle>
+                              <CardTitle className="text-educational-green">
+                                Picture Quiz
+                              </CardTitle>
                             </CardHeader>
                             <CardContent className="space-y-4">
                               <p className="text-sm text-slate-600">
-                                Visual quiz using emojis and images to test word recognition
+                                Visual quiz using emojis and images to test word
+                                recognition
                               </p>
                               <div className="grid grid-cols-3 gap-2 text-center text-xs">
                                 <div>
-                                  <div className="font-bold text-educational-blue">8</div>
-                                  <div className="text-slate-500">Questions</div>
+                                  <div className="font-bold text-educational-blue">
+                                    8
+                                  </div>
+                                  <div className="text-slate-500">
+                                    Questions
+                                  </div>
                                 </div>
                                 <div>
-                                  <div className="font-bold text-educational-purple">20s</div>
+                                  <div className="font-bold text-educational-purple">
+                                    20s
+                                  </div>
                                   <div className="text-slate-500">Per Q</div>
                                 </div>
                                 <div>
-                                  <div className="font-bold text-educational-orange">80</div>
+                                  <div className="font-bold text-educational-orange">
+                                    80
+                                  </div>
                                   <div className="text-slate-500">Points</div>
                                 </div>
                               </div>
                               <Button
                                 className="w-full bg-educational-green hover:bg-educational-green/90"
                                 onClick={() => {
-                                  setSelectedQuizType('picture');
+                                  setSelectedQuizType("picture");
                                   setShowQuiz(true);
                                 }}
                               >
@@ -1322,32 +1559,43 @@ export default function Index() {
                                 <div className="w-12 h-12 rounded-lg bg-educational-pink/20 flex items-center justify-center">
                                   <PenTool className="w-6 h-6 text-educational-pink" />
                                 </div>
-                                <Badge className="bg-educational-pink text-white">SPELLING</Badge>
+                                <Badge className="bg-educational-pink text-white">
+                                  SPELLING
+                                </Badge>
                               </div>
-                              <CardTitle className="text-educational-pink">Spelling Bee</CardTitle>
+                              <CardTitle className="text-educational-pink">
+                                Spelling Bee
+                              </CardTitle>
                             </CardHeader>
                             <CardContent className="space-y-4">
                               <p className="text-sm text-slate-600">
-                                Listen to pronunciations and type the correct spelling
+                                Listen to pronunciations and type the correct
+                                spelling
                               </p>
                               <div className="grid grid-cols-3 gap-2 text-center text-xs">
                                 <div>
-                                  <div className="font-bold text-educational-blue">10</div>
+                                  <div className="font-bold text-educational-blue">
+                                    10
+                                  </div>
                                   <div className="text-slate-500">Words</div>
                                 </div>
                                 <div>
-                                  <div className="font-bold text-educational-purple">60s</div>
+                                  <div className="font-bold text-educational-purple">
+                                    60s
+                                  </div>
                                   <div className="text-slate-500">Per Word</div>
                                 </div>
                                 <div>
-                                  <div className="font-bold text-educational-orange">150</div>
+                                  <div className="font-bold text-educational-orange">
+                                    150
+                                  </div>
                                   <div className="text-slate-500">Points</div>
                                 </div>
                               </div>
                               <Button
                                 className="w-full bg-educational-pink hover:bg-educational-pink/90"
                                 onClick={() => {
-                                  setSelectedQuizType('spelling');
+                                  setSelectedQuizType("spelling");
                                   setShowQuiz(true);
                                 }}
                               >
@@ -1364,32 +1612,47 @@ export default function Index() {
                                 <div className="w-12 h-12 rounded-lg bg-red-400/20 flex items-center justify-center">
                                   <Clock className="w-6 h-6 text-red-500" />
                                 </div>
-                                <Badge className="bg-red-500 text-white">SPEED</Badge>
+                                <Badge className="bg-red-500 text-white">
+                                  SPEED
+                                </Badge>
                               </div>
-                              <CardTitle className="text-red-500">Speed Round</CardTitle>
+                              <CardTitle className="text-red-500">
+                                Speed Round
+                              </CardTitle>
                             </CardHeader>
                             <CardContent className="space-y-4">
                               <p className="text-sm text-slate-600">
-                                Lightning fast quiz - answer as many as you can in 2 minutes!
+                                Lightning fast quiz - answer as many as you can
+                                in 2 minutes!
                               </p>
                               <div className="grid grid-cols-3 gap-2 text-center text-xs">
                                 <div>
-                                  <div className="font-bold text-educational-blue">∞</div>
-                                  <div className="text-slate-500">Questions</div>
+                                  <div className="font-bold text-educational-blue">
+                                    ∞
+                                  </div>
+                                  <div className="text-slate-500">
+                                    Questions
+                                  </div>
                                 </div>
                                 <div>
-                                  <div className="font-bold text-educational-purple">2min</div>
+                                  <div className="font-bold text-educational-purple">
+                                    2min
+                                  </div>
                                   <div className="text-slate-500">Total</div>
                                 </div>
                                 <div>
-                                  <div className="font-bold text-educational-orange">5x</div>
-                                  <div className="text-slate-500">Multiplier</div>
+                                  <div className="font-bold text-educational-orange">
+                                    5x
+                                  </div>
+                                  <div className="text-slate-500">
+                                    Multiplier
+                                  </div>
                                 </div>
                               </div>
                               <Button
                                 className="w-full bg-red-500 hover:bg-red-600"
                                 onClick={() => {
-                                  setSelectedQuizType('speed');
+                                  setSelectedQuizType("speed");
                                   setShowQuiz(true);
                                 }}
                               >
