@@ -57,6 +57,21 @@ export default {
           border: "hsl(var(--sidebar-border))",
           ring: "hsl(var(--sidebar-ring))",
         },
+        // Educational color palette
+        educational: {
+          blue: "hsl(var(--educational-blue))",
+          "blue-light": "hsl(var(--educational-blue-light))",
+          purple: "hsl(var(--educational-purple))",
+          "purple-light": "hsl(var(--educational-purple-light))",
+          green: "hsl(var(--educational-green))",
+          "green-light": "hsl(var(--educational-green-light))",
+          orange: "hsl(var(--educational-orange))",
+          "orange-light": "hsl(var(--educational-orange-light))",
+          pink: "hsl(var(--educational-pink))",
+          "pink-light": "hsl(var(--educational-pink-light))",
+          yellow: "hsl(var(--educational-yellow))",
+          "yellow-light": "hsl(var(--educational-yellow-light))",
+        },
       },
       borderRadius: {
         lg: "var(--radius)",
