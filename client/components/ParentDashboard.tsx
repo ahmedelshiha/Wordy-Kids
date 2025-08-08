@@ -1508,7 +1508,7 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
             <!-- Achievements -->
             <div class="section">
                 <h2 class="section-title">
-                    🏆 Recent Achievements
+                    �� Recent Achievements
                 </h2>
                 <div class="achievement-grid">
                     ${reportData.achievements.map(achievement => `
@@ -1535,48 +1535,8 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
     </div>
 
     <script>
-        // Helper functions for dynamic content
-        function getCategoryEmoji(category) {
-            const emojis = {
-                'Animals': '🐘',
-                'Science': '🔬',
-                'Colors': '🌈',
-                'Food': '🍎',
-                'Transportation': '🚗',
-                'Nature': '🌲',
-                'Sports': '⚽',
-                'Music': '🎵'
-            };
-            return emojis[category] || '📚';
-        }
-
-        function getTrendEmoji(trend) {
-            const emojis = {
-                'improving': '📈',
-                'stable': '➡️',
-                'mastered': '🏆',
-                'needs_focus': '🎯',
-                'challenging': '💪'
-            };
-            return emojis[trend] || '📊';
-        }
-
-        function getTrendBadgeClass(trend) {
-            if (trend === 'improving' || trend === 'mastered') return 'badge-green';
-            if (trend === 'stable') return 'badge badge-blue';
-            return 'badge-orange';
-        }
-
-        function getProgressClass(mastery) {
-            if (mastery >= 90) return 'progress-excellent';
-            if (mastery >= 75) return 'progress-good';
-            if (mastery >= 60) return 'progress-average';
-            return 'progress-needs-work';
-        }
-
-        // Apply dynamic content
+        // Auto-print functionality
         document.addEventListener('DOMContentLoaded', function() {
-            // Auto-print functionality
             setTimeout(() => {
                 if (confirm('🖨️ Would you like to print or save this report as PDF?')) {
                     window.print();
