@@ -330,6 +330,7 @@ const pictureQuizQuestions = [
   },
   {
     id: 3,
+    word: "rainbow",
     emoji: "🌈",
     question: "How many colors are traditionally said to be in a rainbow?",
     options: ["Five", "Six", "Seven", "Eight"],
@@ -338,6 +339,7 @@ const pictureQuizQuestions = [
   },
   {
     id: 4,
+    word: "train",
     emoji: "🚂",
     question: "What sound does this vehicle make?",
     options: ["Beep beep", "Choo choo", "Vroom vroom", "Ring ring"],
@@ -346,6 +348,7 @@ const pictureQuizQuestions = [
   },
   {
     id: 5,
+    word: "cake",
     emoji: "🎂",
     question: "When do we typically see this item?",
     options: ["At breakfast", "At birthday parties", "At school", "At the doctor"],
@@ -354,6 +357,7 @@ const pictureQuizQuestions = [
   },
   {
     id: 6,
+    word: "moon",
     emoji: "🌙",
     question: "When can we see this in the sky?",
     options: ["Only at sunrise", "During the day", "At night", "Only in winter"],
