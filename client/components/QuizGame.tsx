@@ -28,6 +28,7 @@ interface QuizGameProps {
   questions: QuizQuestion[];
   onComplete: (score: number, totalQuestions: number) => void;
   onProgress?: (current: number, total: number) => void;
+  onExit?: () => void;
 }
 
 export const QuizGame: React.FC<QuizGameProps> = ({
