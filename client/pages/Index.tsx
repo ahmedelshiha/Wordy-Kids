@@ -765,6 +765,13 @@ export default function Index() {
         isOpen={showSettings}
         onClose={() => setShowSettings(false)}
       />
+
+      {showWordCreator && (
+        <WordCreator
+          onWordCreated={handleWordCreated}
+          onClose={() => setShowWordCreator(false)}
+        />
+      )}
     </div>
   );
 }
