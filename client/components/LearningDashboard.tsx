@@ -2,6 +2,7 @@ import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
 import { Badge } from '@/components/ui/badge';
+import { AnimatedCounter } from '@/components/AnimatedCounter';
 import { 
   Trophy, 
   Star, 
@@ -64,7 +65,10 @@ export const LearningDashboard: React.FC<LearningDashboardProps> = ({
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm opacity-90">Words Learned</p>
-                <p className="text-3xl font-bold">{stats.wordsLearned}</p>
+                <AnimatedCounter
+                  value={stats.wordsLearned}
+                  className="text-3xl font-bold"
+                />
                 <p className="text-xs opacity-80">of {stats.totalWords}</p>
               </div>
               <BookOpen className="w-8 h-8 opacity-80" />
@@ -83,7 +87,10 @@ export const LearningDashboard: React.FC<LearningDashboardProps> = ({
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm opacity-90">Current Streak</p>
-                <p className="text-3xl font-bold">{stats.currentStreak}</p>
+                <AnimatedCounter
+                  value={stats.currentStreak}
+                  className="text-3xl font-bold"
+                />
                 <p className="text-xs opacity-80">days</p>
               </div>
               <Zap className="w-8 h-8 opacity-80" />
@@ -97,7 +104,10 @@ export const LearningDashboard: React.FC<LearningDashboardProps> = ({
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm opacity-90">Weekly Goal</p>
-                <p className="text-3xl font-bold">{stats.weeklyProgress}</p>
+                <AnimatedCounter
+                  value={stats.weeklyProgress}
+                  className="text-3xl font-bold"
+                />
                 <p className="text-xs opacity-80">of {stats.weeklyGoal} words</p>
               </div>
               <Target className="w-8 h-8 opacity-80" />
@@ -116,7 +126,11 @@ export const LearningDashboard: React.FC<LearningDashboardProps> = ({
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm opacity-90">Accuracy</p>
-                <p className="text-3xl font-bold">{stats.accuracyRate}%</p>
+                <AnimatedCounter
+                  value={stats.accuracyRate}
+                  suffix="%"
+                  className="text-3xl font-bold"
+                />
                 <p className="text-xs opacity-80">average</p>
               </div>
               <TrendingUp className="w-8 h-8 opacity-80" />
