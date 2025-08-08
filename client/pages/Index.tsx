@@ -775,55 +775,269 @@ export default function Index() {
                 <TabsContent value="quiz">
                   <div className="space-y-6">
                     {!showQuiz ? (
-                      <div className="text-center max-w-2xl mx-auto">
-                        <h2 className="text-3xl font-bold text-slate-800 mb-4">
-                          Test Your Knowledge
-                        </h2>
-                        <p className="text-slate-600 mb-8">
-                          Challenge yourself with our interactive quiz! Answer
-                          questions about the words you've learned and earn
-                          points.
-                        </p>
+                      <div className="max-w-4xl mx-auto">
+                        <div className="text-center mb-8">
+                          <h2 className="text-3xl font-bold text-slate-800 mb-4">
+                            Choose Your Quiz Adventure
+                          </h2>
+                          <p className="text-slate-600 mb-8">
+                            Pick a quiz mode that matches your learning style and challenge level!
+                          </p>
+                        </div>
 
-                        <Card className="p-8 bg-gradient-to-br from-educational-purple/10 to-educational-blue/10">
-                          <CardContent className="space-y-6">
-                            <div className="grid grid-cols-3 gap-4 text-center">
-                              <div>
-                                <div className="text-2xl font-bold text-educational-blue">
-                                  {sampleQuizQuestions.length}
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                          {/* Quick Quiz */}
+                          <Card className="hover:shadow-lg transition-all duration-300 cursor-pointer group bg-gradient-to-br from-educational-blue/10 to-educational-blue/20">
+                            <CardHeader className="pb-4">
+                              <div className="flex items-center justify-between">
+                                <div className="w-12 h-12 rounded-lg bg-educational-blue/20 flex items-center justify-center">
+                                  <Zap className="w-6 h-6 text-educational-blue" />
                                 </div>
-                                <div className="text-sm text-slate-600">
-                                  Questions
+                                <Badge className="bg-educational-blue text-white">QUICK</Badge>
+                              </div>
+                              <CardTitle className="text-educational-blue">Quick Quiz</CardTitle>
+                            </CardHeader>
+                            <CardContent className="space-y-4">
+                              <p className="text-sm text-slate-600">
+                                Fast-paced multiple choice quiz to test your vocabulary knowledge
+                              </p>
+                              <div className="grid grid-cols-3 gap-2 text-center text-xs">
+                                <div>
+                                  <div className="font-bold text-educational-blue">5</div>
+                                  <div className="text-slate-500">Questions</div>
+                                </div>
+                                <div>
+                                  <div className="font-bold text-educational-purple">15s</div>
+                                  <div className="text-slate-500">Per Q</div>
+                                </div>
+                                <div>
+                                  <div className="font-bold text-educational-orange">50</div>
+                                  <div className="text-slate-500">Points</div>
                                 </div>
                               </div>
-                              <div>
-                                <div className="text-2xl font-bold text-educational-purple">
-                                  30s
-                                </div>
-                                <div className="text-sm text-slate-600">
-                                  Per Question
-                                </div>
-                              </div>
-                              <div>
-                                <div className="text-2xl font-bold text-educational-orange">
-                                  {sampleQuizQuestions.length * 10}
-                                </div>
-                                <div className="text-sm text-slate-600">
-                                  Max Points
-                                </div>
-                              </div>
-                            </div>
+                              <Button
+                                className="w-full bg-educational-blue hover:bg-educational-blue/90"
+                                onClick={() => {
+                                  setSelectedQuizType('quick');
+                                  setShowQuiz(true);
+                                }}
+                              >
+                                <Play className="w-4 h-4 mr-2" />
+                                Start Quick Quiz
+                              </Button>
+                            </CardContent>
+                          </Card>
 
-                            <Button
-                              size="lg"
-                              onClick={() => setShowQuiz(true)}
-                              className="bg-educational-blue text-white hover:bg-educational-blue/90"
-                            >
-                              <Play className="w-5 h-5 mr-2" />
-                              Start Quiz
-                            </Button>
-                          </CardContent>
-                        </Card>
+                          {/* Standard Quiz */}
+                          <Card className="hover:shadow-lg transition-all duration-300 cursor-pointer group bg-gradient-to-br from-educational-purple/10 to-educational-purple/20">
+                            <CardHeader className="pb-4">
+                              <div className="flex items-center justify-between">
+                                <div className="w-12 h-12 rounded-lg bg-educational-purple/20 flex items-center justify-center">
+                                  <Brain className="w-6 h-6 text-educational-purple" />
+                                </div>
+                                <Badge className="bg-educational-purple text-white">STANDARD</Badge>
+                              </div>
+                              <CardTitle className="text-educational-purple">Standard Quiz</CardTitle>
+                            </CardHeader>
+                            <CardContent className="space-y-4">
+                              <p className="text-sm text-slate-600">
+                                Balanced quiz with multiple choice questions and explanations
+                              </p>
+                              <div className="grid grid-cols-3 gap-2 text-center text-xs">
+                                <div>
+                                  <div className="font-bold text-educational-blue">10</div>
+                                  <div className="text-slate-500">Questions</div>
+                                </div>
+                                <div>
+                                  <div className="font-bold text-educational-purple">30s</div>
+                                  <div className="text-slate-500">Per Q</div>
+                                </div>
+                                <div>
+                                  <div className="font-bold text-educational-orange">100</div>
+                                  <div className="text-slate-500">Points</div>
+                                </div>
+                              </div>
+                              <Button
+                                className="w-full bg-educational-purple hover:bg-educational-purple/90"
+                                onClick={() => {
+                                  setSelectedQuizType('standard');
+                                  setShowQuiz(true);
+                                }}
+                              >
+                                <Play className="w-4 h-4 mr-2" />
+                                Start Standard Quiz
+                              </Button>
+                            </CardContent>
+                          </Card>
+
+                          {/* Challenge Quiz */}
+                          <Card className="hover:shadow-lg transition-all duration-300 cursor-pointer group bg-gradient-to-br from-educational-orange/10 to-educational-orange/20">
+                            <CardHeader className="pb-4">
+                              <div className="flex items-center justify-between">
+                                <div className="w-12 h-12 rounded-lg bg-educational-orange/20 flex items-center justify-center">
+                                  <Target className="w-6 h-6 text-educational-orange" />
+                                </div>
+                                <Badge className="bg-educational-orange text-white">CHALLENGE</Badge>
+                              </div>
+                              <CardTitle className="text-educational-orange">Challenge Quiz</CardTitle>
+                            </CardHeader>
+                            <CardContent className="space-y-4">
+                              <p className="text-sm text-slate-600">
+                                Difficult questions with tricky options for advanced learners
+                              </p>
+                              <div className="grid grid-cols-3 gap-2 text-center text-xs">
+                                <div>
+                                  <div className="font-bold text-educational-blue">15</div>
+                                  <div className="text-slate-500">Questions</div>
+                                </div>
+                                <div>
+                                  <div className="font-bold text-educational-purple">45s</div>
+                                  <div className="text-slate-500">Per Q</div>
+                                </div>
+                                <div>
+                                  <div className="font-bold text-educational-orange">200</div>
+                                  <div className="text-slate-500">Points</div>
+                                </div>
+                              </div>
+                              <Button
+                                className="w-full bg-educational-orange hover:bg-educational-orange/90"
+                                onClick={() => {
+                                  setSelectedQuizType('challenge');
+                                  setShowQuiz(true);
+                                }}
+                              >
+                                <Play className="w-4 h-4 mr-2" />
+                                Start Challenge
+                              </Button>
+                            </CardContent>
+                          </Card>
+
+                          {/* Picture Quiz */}
+                          <Card className="hover:shadow-lg transition-all duration-300 cursor-pointer group bg-gradient-to-br from-educational-green/10 to-educational-green/20">
+                            <CardHeader className="pb-4">
+                              <div className="flex items-center justify-between">
+                                <div className="w-12 h-12 rounded-lg bg-educational-green/20 flex items-center justify-center">
+                                  <ImageIcon className="w-6 h-6 text-educational-green" />
+                                </div>
+                                <Badge className="bg-educational-green text-white">VISUAL</Badge>
+                              </div>
+                              <CardTitle className="text-educational-green">Picture Quiz</CardTitle>
+                            </CardHeader>
+                            <CardContent className="space-y-4">
+                              <p className="text-sm text-slate-600">
+                                Visual quiz using emojis and images to test word recognition
+                              </p>
+                              <div className="grid grid-cols-3 gap-2 text-center text-xs">
+                                <div>
+                                  <div className="font-bold text-educational-blue">8</div>
+                                  <div className="text-slate-500">Questions</div>
+                                </div>
+                                <div>
+                                  <div className="font-bold text-educational-purple">20s</div>
+                                  <div className="text-slate-500">Per Q</div>
+                                </div>
+                                <div>
+                                  <div className="font-bold text-educational-orange">80</div>
+                                  <div className="text-slate-500">Points</div>
+                                </div>
+                              </div>
+                              <Button
+                                className="w-full bg-educational-green hover:bg-educational-green/90"
+                                onClick={() => {
+                                  setSelectedQuizType('picture');
+                                  setShowQuiz(true);
+                                }}
+                              >
+                                <Play className="w-4 h-4 mr-2" />
+                                Start Picture Quiz
+                              </Button>
+                            </CardContent>
+                          </Card>
+
+                          {/* Spelling Quiz */}
+                          <Card className="hover:shadow-lg transition-all duration-300 cursor-pointer group bg-gradient-to-br from-educational-pink/10 to-educational-pink/20">
+                            <CardHeader className="pb-4">
+                              <div className="flex items-center justify-between">
+                                <div className="w-12 h-12 rounded-lg bg-educational-pink/20 flex items-center justify-center">
+                                  <PenTool className="w-6 h-6 text-educational-pink" />
+                                </div>
+                                <Badge className="bg-educational-pink text-white">SPELLING</Badge>
+                              </div>
+                              <CardTitle className="text-educational-pink">Spelling Bee</CardTitle>
+                            </CardHeader>
+                            <CardContent className="space-y-4">
+                              <p className="text-sm text-slate-600">
+                                Listen to pronunciations and type the correct spelling
+                              </p>
+                              <div className="grid grid-cols-3 gap-2 text-center text-xs">
+                                <div>
+                                  <div className="font-bold text-educational-blue">10</div>
+                                  <div className="text-slate-500">Words</div>
+                                </div>
+                                <div>
+                                  <div className="font-bold text-educational-purple">60s</div>
+                                  <div className="text-slate-500">Per Word</div>
+                                </div>
+                                <div>
+                                  <div className="font-bold text-educational-orange">150</div>
+                                  <div className="text-slate-500">Points</div>
+                                </div>
+                              </div>
+                              <Button
+                                className="w-full bg-educational-pink hover:bg-educational-pink/90"
+                                onClick={() => {
+                                  setSelectedQuizType('spelling');
+                                  setShowQuiz(true);
+                                }}
+                              >
+                                <Play className="w-4 h-4 mr-2" />
+                                Start Spelling Bee
+                              </Button>
+                            </CardContent>
+                          </Card>
+
+                          {/* Speed Round */}
+                          <Card className="hover:shadow-lg transition-all duration-300 cursor-pointer group bg-gradient-to-br from-red-400/10 to-red-500/20">
+                            <CardHeader className="pb-4">
+                              <div className="flex items-center justify-between">
+                                <div className="w-12 h-12 rounded-lg bg-red-400/20 flex items-center justify-center">
+                                  <Clock className="w-6 h-6 text-red-500" />
+                                </div>
+                                <Badge className="bg-red-500 text-white">SPEED</Badge>
+                              </div>
+                              <CardTitle className="text-red-500">Speed Round</CardTitle>
+                            </CardHeader>
+                            <CardContent className="space-y-4">
+                              <p className="text-sm text-slate-600">
+                                Lightning fast quiz - answer as many as you can in 2 minutes!
+                              </p>
+                              <div className="grid grid-cols-3 gap-2 text-center text-xs">
+                                <div>
+                                  <div className="font-bold text-educational-blue">∞</div>
+                                  <div className="text-slate-500">Questions</div>
+                                </div>
+                                <div>
+                                  <div className="font-bold text-educational-purple">2min</div>
+                                  <div className="text-slate-500">Total</div>
+                                </div>
+                                <div>
+                                  <div className="font-bold text-educational-orange">5x</div>
+                                  <div className="text-slate-500">Multiplier</div>
+                                </div>
+                              </div>
+                              <Button
+                                className="w-full bg-red-500 hover:bg-red-600"
+                                onClick={() => {
+                                  setSelectedQuizType('speed');
+                                  setShowQuiz(true);
+                                }}
+                              >
+                                <Play className="w-4 h-4 mr-2" />
+                                Start Speed Round
+                              </Button>
+                            </CardContent>
+                          </Card>
+                        </div>
                       </div>
                     ) : (
                       <QuizGame
