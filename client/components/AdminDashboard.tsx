@@ -1656,6 +1656,34 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onNavigateBack }) => {
           </DialogFooter>
         </DialogContent>
       </Dialog>
+
+      {/* Bulk Import Dialog */}
+      <BulkWordImport
+        open={showBulkImport}
+        onOpenChange={setShowBulkImport}
+        categories={categories}
+        onImport={(words) => {
+          console.log('Importing words:', words);
+          setShowBulkImport(false);
+        }}
+      />
+
+      {/* Word Editor Dialog */}
+      <WordEditor
+        open={showWordEditor}
+        onOpenChange={setShowWordEditor}
+        word={editingWord}
+        categories={categories}
+        mode={wordEditorMode}
+        onSave={(word) => {
+          if (wordEditorMode === "create") {
+            setWords(prev => [...prev, word]);
+          } else {
+            setWords(prev => prev.map(w => w.id === word.id ? word : w));
+          }
+          setShowWordEditor(false);
+        }}
+      />
     </div>
   );
 };
