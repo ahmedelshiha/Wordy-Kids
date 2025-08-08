@@ -303,6 +303,7 @@ export default function Index() {
             <ParentDashboard
               children={undefined} // Will use default sample data
               sessions={undefined} // Will use default sample data
+              onNavigateBack={() => setUserRole('child')}
             />
           </div>
         ) : (
