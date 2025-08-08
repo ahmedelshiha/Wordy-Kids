@@ -32,7 +32,8 @@ import {
   Shuffle,
   Settings,
   Calendar,
-  FileText
+  FileText,
+  Plus
 } from 'lucide-react';
 
 // Sample data for learning
