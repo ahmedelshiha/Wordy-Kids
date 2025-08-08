@@ -43,6 +43,7 @@ export const QuizGame: React.FC<QuizGameProps> = ({
   const [score, setScore] = useState(0);
   const [timeLeft, setTimeLeft] = useState(30);
   const [isTimerActive, setIsTimerActive] = useState(true);
+  const [showExitConfirm, setShowExitConfirm] = useState(false);
 
   const currentQuestion = questions[currentIndex];
   const isLastQuestion = currentIndex === questions.length - 1;
