@@ -15,11 +15,11 @@ import { CelebrationEffect } from '@/components/CelebrationEffect';
 import { DailyChallenge } from '@/components/DailyChallenge';
 import { ReadingComprehension } from '@/components/ReadingComprehension';
 import { ParentDashboard } from '@/components/ParentDashboard';
-import { 
-  BookOpen, 
-  Play, 
-  Trophy, 
-  Users, 
+import {
+  BookOpen,
+  Play,
+  Trophy,
+  Users,
   Sparkles,
   ArrowRight,
   Star,
@@ -30,8 +30,7 @@ import {
   Shuffle,
   Settings,
   Calendar,
-  FileText,
-  Users
+  FileText
 } from 'lucide-react';
 
 // Sample data for learning
