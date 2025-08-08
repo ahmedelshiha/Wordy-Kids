@@ -507,7 +507,12 @@ export default function Index() {
 
                   {learningMode === 'builder' && (
                     <VocabularyBuilder
-                      words={vocabularyWords}
+                      words={wordsDatabase.map(word => ({
+                        ...word,
+                        masteryLevel: Math.floor(Math.random() * 100),
+                        lastReviewed: new Date(Date.now() - Math.random() * 7 * 24 * 60 * 60 * 1000),
+                        nextReview: new Date(Date.now() + Math.random() * 3 * 24 * 60 * 60 * 1000)
+                      }))}
                       onWordMastered={handleWordMastered}
                       onSessionComplete={handleVocabularySessionComplete}
                     />
