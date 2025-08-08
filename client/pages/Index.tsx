@@ -196,29 +196,6 @@ export default function Index({ initialProfile }: IndexProps) {
     setTimeout(() => setShowCelebration(false), 3000);
   };
 
-  const handleLogin = (profile: any) => {
-    setCurrentProfile(profile);
-    setIsLoggedIn(true);
-    setFeedback({
-      type: "success",
-      title: `Welcome back, ${profile.name}! 🌟`,
-      message: "Ready to continue your vocabulary adventure?",
-      onContinue: () => setFeedback(null),
-      autoHide: true,
-    });
-  };
-
-  const handleProfileCreation = (newProfile: any) => {
-    setCurrentProfile(newProfile);
-    setIsLoggedIn(true);
-    setShowProfileCreation(false);
-    setFeedback({
-      type: "celebration",
-      title: "Profile Created! 🎉",
-      message: `Welcome to Word Adventure, ${newProfile.name}! Your learning journey begins now!`,
-      onContinue: () => setFeedback(null),
-    });
-  };
 
   const handleGameComplete = (score: number, totalWords: number) => {
     setGameMode(false);
