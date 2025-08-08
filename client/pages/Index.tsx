@@ -164,15 +164,15 @@ const vocabularyWords = sampleWords.map(word => ({
 }));
 
 const learningStats = {
-  wordsLearned: 47,
-  totalWords: 200,
-  currentStreak: 5,
-  weeklyGoal: 15,
-  weeklyProgress: 12,
-  accuracyRate: 87,
+  wordsLearned: 68,
+  totalWords: wordsDatabase.length,
+  currentStreak: 7,
+  weeklyGoal: 20,
+  weeklyProgress: 18,
+  accuracyRate: 92,
   favoriteCategory: "Animals",
-  totalPoints: 1250,
-  level: 3,
+  totalPoints: 2850,
+  level: 4,
   badges: [
     {
       id: "first-word",
@@ -183,10 +183,24 @@ const learningStats = {
     },
     {
       id: "streak-starter",
-      name: "Streak Starter",
+      name: "Streak Master",
       icon: "🔥",
       earned: true,
-      description: "5-day learning streak"
+      description: "7-day learning streak"
+    },
+    {
+      id: "category-explorer",
+      name: "Category Explorer",
+      icon: "🗺️",
+      earned: true,
+      description: "Explored 5+ categories"
+    },
+    {
+      id: "science-star",
+      name: "Science Star",
+      icon: "🔬",
+      earned: true,
+      description: "Mastered 10 science words"
     },
     {
       id: "quiz-master",
@@ -196,11 +210,11 @@ const learningStats = {
       description: "Score 100% on 5 quizzes"
     },
     {
-      id: "explorer",
-      name: "Explorer",
-      icon: "🚀",
+      id: "vocabulary-champion",
+      name: "Vocabulary Champion",
+      icon: "🏆",
       earned: false,
-      description: "Try all categories"
+      description: "Learn 100 words"
     }
   ]
 };
