@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
-import { Card, CardContent } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import { Volume2, Heart, RotateCcw } from 'lucide-react';
-import { playSoundIfEnabled } from '@/lib/soundEffects';
+import React, { useState } from "react";
+import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { Volume2, Heart, RotateCcw } from "lucide-react";
+import { playSoundIfEnabled } from "@/lib/soundEffects";
 
 interface Word {
   id: number;
@@ -14,7 +14,7 @@ interface Word {
   funFact?: string;
   emoji?: string;
   category: string;
-  difficulty: 'easy' | 'medium' | 'hard';
+  difficulty: "easy" | "medium" | "hard";
   imageUrl?: string;
 }
 
@@ -31,7 +31,7 @@ export const WordCard: React.FC<WordCardProps> = ({
   showDefinition = false,
   onPronounce,
   onFavorite,
-  className = ''
+  className = "",
 }) => {
   const [isFlipped, setIsFlipped] = useState(showDefinition);
   const [isPlaying, setIsPlaying] = useState(false);
@@ -58,47 +58,54 @@ export const WordCard: React.FC<WordCardProps> = ({
 
   const getDifficultyColor = (difficulty: string) => {
     switch (difficulty) {
-      case 'easy': return 'bg-educational-green text-white';
-      case 'medium': return 'bg-educational-orange text-white';
-      case 'hard': return 'bg-educational-pink text-white';
-      default: return 'bg-gray-500 text-white';
+      case "easy":
+        return "bg-educational-green text-white";
+      case "medium":
+        return "bg-educational-orange text-white";
+      case "hard":
+        return "bg-educational-pink text-white";
+      default:
+        return "bg-gray-500 text-white";
     }
   };
 
   const getCategoryColor = (category: string) => {
     const colors = {
-      animals: 'bg-educational-blue',
-      food: 'bg-educational-orange',
-      nature: 'bg-educational-green',
-      general: 'bg-educational-purple',
-      science: 'bg-educational-pink',
-      sports: 'bg-educational-yellow'
+      animals: "bg-educational-blue",
+      food: "bg-educational-orange",
+      nature: "bg-educational-green",
+      general: "bg-educational-purple",
+      science: "bg-educational-pink",
+      sports: "bg-educational-yellow",
     };
-    return colors[category as keyof typeof colors] || 'bg-educational-blue';
+    return colors[category as keyof typeof colors] || "bg-educational-blue";
   };
 
   return (
     <div className={`relative w-full max-w-sm mx-auto ${className}`}>
       <Card
         className={`h-80 cursor-pointer transition-all duration-700 transform-gpu hover:scale-105 ${
-          isFlipped ? '[transform:rotateY(180deg)]' : ''
+          isFlipped ? "[transform:rotateY(180deg)]" : ""
         }`}
-        style={{ transformStyle: 'preserve-3d' }}
+        style={{ transformStyle: "preserve-3d" }}
         onClick={() => {
           setIsFlipped(!isFlipped);
           playSoundIfEnabled.click();
         }}
       >
         {/* Front of card */}
-        <CardContent 
+        <CardContent
           className={`absolute inset-0 w-full h-full ${getCategoryColor(word.category)} rounded-xl p-6 flex flex-col items-center justify-center text-white`}
-          style={{ backfaceVisibility: 'hidden' }}
+          style={{ backfaceVisibility: "hidden" }}
         >
           <div className="absolute top-4 left-4 flex gap-2">
             <Badge className={getDifficultyColor(word.difficulty)}>
               {word.difficulty}
             </Badge>
-            <Badge variant="outline" className="bg-white/20 border-white/30 text-white">
+            <Badge
+              variant="outline"
+              className="bg-white/20 border-white/30 text-white"
+            >
               {word.category}
             </Badge>
           </div>
@@ -113,7 +120,9 @@ export const WordCard: React.FC<WordCardProps> = ({
                 handleFavorite();
               }}
             >
-              <Heart className={`w-4 h-4 ${isFavorited ? 'fill-current' : ''}`} />
+              <Heart
+                className={`w-4 h-4 ${isFavorited ? "fill-current" : ""}`}
+              />
             </Button>
           </div>
 
@@ -125,14 +134,12 @@ export const WordCard: React.FC<WordCardProps> = ({
             />
           ) : (
             <div className="w-24 h-24 rounded-full bg-white/20 flex items-center justify-center mb-4 text-6xl">
-              {word.emoji || '📚'}
+              {word.emoji || "📚"}
             </div>
           )}
-          
-          <h2 className="text-4xl font-bold mb-3 text-center">
-            {word.word}
-          </h2>
-          
+
+          <h2 className="text-4xl font-bold mb-3 text-center">{word.word}</h2>
+
           {word.pronunciation && (
             <div className="flex items-center gap-2 mb-4">
               <span className="text-lg opacity-90">{word.pronunciation}</span>
@@ -146,11 +153,13 @@ export const WordCard: React.FC<WordCardProps> = ({
                 disabled={isPlaying}
                 className="text-white hover:bg-white/20 p-2 h-auto"
               >
-                <Volume2 className={`w-5 h-5 ${isPlaying ? 'animate-pulse' : ''}`} />
+                <Volume2
+                  className={`w-5 h-5 ${isPlaying ? "animate-pulse" : ""}`}
+                />
               </Button>
             </div>
           )}
-          
+
           <p className="text-center text-sm opacity-75 mt-auto">
             <RotateCcw className="w-4 h-4 inline mr-1" />
             Tap to see definition
@@ -160,9 +169,9 @@ export const WordCard: React.FC<WordCardProps> = ({
         {/* Back of card */}
         <CardContent
           className="absolute inset-0 w-full h-full bg-gradient-to-br from-slate-700 to-slate-900 rounded-xl p-6 flex flex-col justify-center text-white"
-          style={{ 
-            backfaceVisibility: 'hidden', 
-            transform: 'rotateY(180deg)' 
+          style={{
+            backfaceVisibility: "hidden",
+            transform: "rotateY(180deg)",
           }}
         >
           <div className="absolute top-4 right-4">
@@ -182,23 +191,29 @@ export const WordCard: React.FC<WordCardProps> = ({
           <h3 className="text-2xl font-semibold mb-4 text-center">
             {word.word} {word.emoji}
           </h3>
-          
+
           <div className="space-y-4 flex-1">
             <div>
-              <h4 className="text-sm font-medium mb-2 text-yellow-300">Definition:</h4>
+              <h4 className="text-sm font-medium mb-2 text-yellow-300">
+                Definition:
+              </h4>
               <p className="text-lg leading-relaxed">{word.definition}</p>
             </div>
-            
+
             {word.example && (
               <div>
-                <h4 className="text-sm font-medium mb-2 text-green-300">Example:</h4>
+                <h4 className="text-sm font-medium mb-2 text-green-300">
+                  Example:
+                </h4>
                 <p className="italic opacity-90">"{word.example}"</p>
               </div>
             )}
-            
+
             {word.funFact && (
               <div>
-                <h4 className="text-sm font-medium mb-2 text-pink-300">Fun Fact:</h4>
+                <h4 className="text-sm font-medium mb-2 text-pink-300">
+                  Fun Fact:
+                </h4>
                 <p className="text-sm opacity-90">{word.funFact}</p>
               </div>
             )}

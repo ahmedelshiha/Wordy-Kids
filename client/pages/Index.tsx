@@ -1,23 +1,27 @@
-import React, { useState } from 'react';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { WordCard } from '@/components/WordCard';
-import { LearningDashboard } from '@/components/LearningDashboard';
-import { QuizGame } from '@/components/QuizGame';
-import { CategorySelector } from '@/components/CategorySelector';
-import { WordMatchingGame } from '@/components/WordMatchingGame';
-import { VocabularyBuilder } from '@/components/VocabularyBuilder';
-import { SettingsPanel } from '@/components/SettingsPanel';
-import { FloatingBubbles } from '@/components/FloatingBubbles';
-import { CelebrationEffect } from '@/components/CelebrationEffect';
-import { DailyChallenge } from '@/components/DailyChallenge';
-import { ReadingComprehension } from '@/components/ReadingComprehension';
-import { ParentDashboard } from '@/components/ParentDashboard';
-import { WordCreator } from '@/components/WordCreator';
-import { LearningAnalytics } from '@/components/LearningAnalytics';
-import { wordsDatabase, getWordsByCategory, getRandomWords } from '@/data/wordsDatabase';
+import React, { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { WordCard } from "@/components/WordCard";
+import { LearningDashboard } from "@/components/LearningDashboard";
+import { QuizGame } from "@/components/QuizGame";
+import { CategorySelector } from "@/components/CategorySelector";
+import { WordMatchingGame } from "@/components/WordMatchingGame";
+import { VocabularyBuilder } from "@/components/VocabularyBuilder";
+import { SettingsPanel } from "@/components/SettingsPanel";
+import { FloatingBubbles } from "@/components/FloatingBubbles";
+import { CelebrationEffect } from "@/components/CelebrationEffect";
+import { DailyChallenge } from "@/components/DailyChallenge";
+import { ReadingComprehension } from "@/components/ReadingComprehension";
+import { ParentDashboard } from "@/components/ParentDashboard";
+import { WordCreator } from "@/components/WordCreator";
+import { LearningAnalytics } from "@/components/LearningAnalytics";
+import {
+  wordsDatabase,
+  getWordsByCategory,
+  getRandomWords,
+} from "@/data/wordsDatabase";
 import {
   BookOpen,
   Play,
@@ -35,8 +39,8 @@ import {
   Calendar,
   FileText,
   Plus,
-  TrendingUp
-} from 'lucide-react';
+  TrendingUp,
+} from "lucide-react";
 
 // Sample data for learning
 const sampleWords = [
@@ -44,49 +48,56 @@ const sampleWords = [
     id: 1,
     word: "adventure",
     pronunciation: "/ədˈven(t)SHər/",
-    definition: "An exciting or unusual experience, often involving exploration or discovery",
+    definition:
+      "An exciting or unusual experience, often involving exploration or discovery",
     example: "Reading books takes you on amazing adventures to new worlds",
-    funFact: "The word 'adventure' comes from Latin 'adventurus' meaning 'about to arrive'",
+    funFact:
+      "The word 'adventure' comes from Latin 'adventurus' meaning 'about to arrive'",
     emoji: "🗺️",
     category: "general",
     difficulty: "medium" as const,
-    imageUrl: undefined
+    imageUrl: undefined,
   },
   {
     id: 2,
     word: "butterfly",
     pronunciation: "/ˈbʌdərˌflaɪ/",
-    definition: "A colorful flying insect with large, often brightly colored wings",
+    definition:
+      "A colorful flying insect with large, often brightly colored wings",
     example: "The butterfly landed gently on the bright yellow flower",
-    funFact: "Butterflies taste with their feet and can see ultraviolet colors!",
+    funFact:
+      "Butterflies taste with their feet and can see ultraviolet colors!",
     emoji: "🦋",
     category: "animals",
     difficulty: "easy" as const,
-    imageUrl: undefined
+    imageUrl: undefined,
   },
   {
     id: 3,
     word: "telescope",
     pronunciation: "/ˈtelɪskoʊp/",
-    definition: "An instrument used to see distant objects, especially stars and planets",
+    definition:
+      "An instrument used to see distant objects, especially stars and planets",
     example: "Through the telescope, we could see the craters on the moon",
-    funFact: "The first telescope was invented in 1608 and made stars look 20 times closer!",
+    funFact:
+      "The first telescope was invented in 1608 and made stars look 20 times closer!",
     emoji: "🔭",
     category: "science",
     difficulty: "hard" as const,
-    imageUrl: undefined
+    imageUrl: undefined,
   },
   {
     id: 4,
     word: "rainbow",
     pronunciation: "/ˈreɪnboʊ/",
-    definition: "A colorful arc in the sky formed by sunlight and water droplets",
+    definition:
+      "A colorful arc in the sky formed by sunlight and water droplets",
     example: "After the rain, a beautiful rainbow appeared in the sky",
     funFact: "Rainbows always appear in the opposite direction from the sun!",
     emoji: "🌈",
     category: "nature",
     difficulty: "easy" as const,
-    imageUrl: undefined
+    imageUrl: undefined,
   },
   {
     id: 5,
@@ -98,8 +109,8 @@ const sampleWords = [
     emoji: "✨",
     category: "general",
     difficulty: "hard" as const,
-    imageUrl: undefined
-  }
+    imageUrl: undefined,
+  },
 ];
 
 const sampleQuizQuestions = [
@@ -111,11 +122,12 @@ const sampleQuizQuestions = [
       "A boring experience",
       "An exciting or unusual experience",
       "A type of food",
-      "A musical instrument"
+      "A musical instrument",
     ],
     correctAnswer: "An exciting or unusual experience",
-    explanation: "Adventure means an exciting journey or experience that often involves exploration.",
-    emoji: "🗺️"
+    explanation:
+      "Adventure means an exciting journey or experience that often involves exploration.",
+    emoji: "🗺️",
   },
   {
     id: 2,
@@ -125,11 +137,12 @@ const sampleQuizQuestions = [
       "With their tongue",
       "With their wings",
       "With their feet",
-      "With their antennae"
+      "With their antennae",
     ],
     correctAnswer: "With their feet",
-    explanation: "Butterflies have taste receptors on their feet to help them find the right plants for their eggs.",
-    emoji: "🦋"
+    explanation:
+      "Butterflies have taste receptors on their feet to help them find the right plants for their eggs.",
+    emoji: "🦋",
   },
   {
     id: 3,
@@ -139,28 +152,49 @@ const sampleQuizQuestions = [
       "Cooking food",
       "Seeing distant objects",
       "Playing music",
-      "Writing stories"
+      "Writing stories",
     ],
     correctAnswer: "Seeing distant objects",
-    explanation: "Telescopes help us see things that are very far away, like stars and planets.",
-    emoji: "🔭"
-  }
+    explanation:
+      "Telescopes help us see things that are very far away, like stars and planets.",
+    emoji: "🔭",
+  },
 ];
 
 // Sample data for matching game
 const matchingPairs = [
-  { id: 1, word: "adventure", definition: "An exciting or unusual experience", matched: false },
-  { id: 2, word: "butterfly", definition: "A colorful flying insect with large wings", matched: false },
-  { id: 3, word: "telescope", definition: "An instrument used to see distant objects", matched: false },
-  { id: 4, word: "rainbow", definition: "A colorful arc in the sky", matched: false }
+  {
+    id: 1,
+    word: "adventure",
+    definition: "An exciting or unusual experience",
+    matched: false,
+  },
+  {
+    id: 2,
+    word: "butterfly",
+    definition: "A colorful flying insect with large wings",
+    matched: false,
+  },
+  {
+    id: 3,
+    word: "telescope",
+    definition: "An instrument used to see distant objects",
+    matched: false,
+  },
+  {
+    id: 4,
+    word: "rainbow",
+    definition: "A colorful arc in the sky",
+    matched: false,
+  },
 ];
 
 // Sample vocabulary builder words
-const vocabularyWords = sampleWords.map(word => ({
+const vocabularyWords = sampleWords.map((word) => ({
   ...word,
   masteryLevel: Math.floor(Math.random() * 100),
   lastReviewed: new Date(Date.now() - Math.random() * 7 * 24 * 60 * 60 * 1000),
-  nextReview: new Date(Date.now() + Math.random() * 3 * 24 * 60 * 60 * 1000)
+  nextReview: new Date(Date.now() + Math.random() * 3 * 24 * 60 * 60 * 1000),
 }));
 
 const learningStats = {
@@ -179,55 +213,57 @@ const learningStats = {
       name: "First Word",
       icon: "🎯",
       earned: true,
-      description: "Learned your first word"
+      description: "Learned your first word",
     },
     {
       id: "streak-starter",
       name: "Streak Master",
       icon: "🔥",
       earned: true,
-      description: "7-day learning streak"
+      description: "7-day learning streak",
     },
     {
       id: "category-explorer",
       name: "Category Explorer",
       icon: "🗺️",
       earned: true,
-      description: "Explored 5+ categories"
+      description: "Explored 5+ categories",
     },
     {
       id: "science-star",
       name: "Science Star",
       icon: "🔬",
       earned: true,
-      description: "Mastered 10 science words"
+      description: "Mastered 10 science words",
     },
     {
       id: "quiz-master",
       name: "Quiz Master",
       icon: "🧠",
       earned: false,
-      description: "Score 100% on 5 quizzes"
+      description: "Score 100% on 5 quizzes",
     },
     {
       id: "vocabulary-champion",
       name: "Vocabulary Champion",
       icon: "🏆",
       earned: false,
-      description: "Learn 100 words"
-    }
-  ]
+      description: "Learn 100 words",
+    },
+  ],
 };
 
 export default function Index() {
   const [activeTab, setActiveTab] = useState("dashboard");
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
   const [showQuiz, setShowQuiz] = useState(false);
-  const [selectedCategory, setSelectedCategory] = useState('all');
-  const [learningMode, setLearningMode] = useState<'cards' | 'builder' | 'matching'>('cards');
+  const [selectedCategory, setSelectedCategory] = useState("all");
+  const [learningMode, setLearningMode] = useState<
+    "cards" | "builder" | "matching"
+  >("cards");
   const [showSettings, setShowSettings] = useState(false);
   const [showCelebration, setShowCelebration] = useState(false);
-  const [userRole, setUserRole] = useState<'child' | 'parent'>('child');
+  const [userRole, setUserRole] = useState<"child" | "parent">("child");
   const [showWordCreator, setShowWordCreator] = useState(false);
   const [customWords, setCustomWords] = useState<any[]>([]);
 
@@ -240,20 +276,30 @@ export default function Index() {
   const handleMatchingComplete = (score: number, timeSpent: number) => {
     setShowCelebration(true);
     setTimeout(() => {
-      alert(`Matching Game Complete! You matched ${score} pairs in ${timeSpent} seconds!`);
+      alert(
+        `Matching Game Complete! You matched ${score} pairs in ${timeSpent} seconds!`,
+      );
       setShowCelebration(false);
     }, 2000);
   };
 
-  const handleVocabularySessionComplete = (wordsReviewed: number, accuracy: number) => {
+  const handleVocabularySessionComplete = (
+    wordsReviewed: number,
+    accuracy: number,
+  ) => {
     setShowCelebration(true);
     setTimeout(() => {
-      alert(`Vocabulary Session Complete! Reviewed ${wordsReviewed} words with ${accuracy}% accuracy!`);
+      alert(
+        `Vocabulary Session Complete! Reviewed ${wordsReviewed} words with ${accuracy}% accuracy!`,
+      );
       setShowCelebration(false);
     }, 2000);
   };
 
-  const handleWordMastered = (wordId: number, rating: 'easy' | 'medium' | 'hard') => {
+  const handleWordMastered = (
+    wordId: number,
+    rating: "easy" | "medium" | "hard",
+  ) => {
     console.log(`Word ${wordId} rated as ${rating}`);
   };
 
@@ -284,26 +330,34 @@ export default function Index() {
               ⭐ Word Adventure
             </h1>
             <p className="text-lg md:text-xl mb-6 opacity-90">
-              Embark on an exciting journey to discover new words! 
+              Embark on an exciting journey to discover new words!
             </p>
           </div>
         </div>
-        
+
         {/* Floating Elements */}
-        <div className="absolute top-10 left-10 text-3xl animate-bounce">🌟</div>
-        <div className="absolute top-20 right-20 text-2xl animate-pulse">📚</div>
-        <div className="absolute bottom-10 left-20 text-4xl animate-bounce delay-1000">🎯</div>
-        <div className="absolute bottom-20 right-10 text-3xl animate-pulse delay-500">🚀</div>
+        <div className="absolute top-10 left-10 text-3xl animate-bounce">
+          🌟
+        </div>
+        <div className="absolute top-20 right-20 text-2xl animate-pulse">
+          📚
+        </div>
+        <div className="absolute bottom-10 left-20 text-4xl animate-bounce delay-1000">
+          🎯
+        </div>
+        <div className="absolute bottom-20 right-10 text-3xl animate-pulse delay-500">
+          🚀
+        </div>
       </header>
 
       {/* Main Content with Sidebar Layout */}
       <main className="flex min-h-screen">
-        {userRole === 'parent' ? (
+        {userRole === "parent" ? (
           <div className="w-full p-8">
             <ParentDashboard
               children={undefined} // Will use default sample data
               sessions={undefined} // Will use default sample data
-              onNavigateBack={() => setUserRole('child')}
+              onNavigateBack={() => setUserRole("child")}
             />
           </div>
         ) : (
@@ -322,7 +376,10 @@ export default function Index() {
                     <span className="text-sm text-gray-600">Level 5</span>
                   </div>
                   <div className="bg-gray-100 rounded-full h-2 mb-2">
-                    <div className="bg-gradient-to-r from-purple-400 to-pink-400 h-2 rounded-full" style={{ width: '0%' }}></div>
+                    <div
+                      className="bg-gradient-to-r from-purple-400 to-pink-400 h-2 rounded-full"
+                      style={{ width: "0%" }}
+                    ></div>
                   </div>
                   <p className="text-xs text-gray-500">Progress: 0%</p>
                   <p className="text-xs text-gray-500">0 of 5 words learned</p>
@@ -334,13 +391,17 @@ export default function Index() {
                 <button
                   onClick={() => setActiveTab("dashboard")}
                   className={`w-full flex items-center gap-4 p-4 rounded-2xl transition-all ${
-                    activeTab === "dashboard" 
-                      ? "bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-lg" 
+                    activeTab === "dashboard"
+                      ? "bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-lg"
                       : "bg-white text-gray-700 hover:bg-purple-50"
                   }`}
                 >
-                  <div className={`p-2 rounded-xl ${activeTab === "dashboard" ? "bg-white/20" : "bg-purple-100"}`}>
-                    <Target className={`w-5 h-5 ${activeTab === "dashboard" ? "text-white" : "text-purple-600"}`} />
+                  <div
+                    className={`p-2 rounded-xl ${activeTab === "dashboard" ? "bg-white/20" : "bg-purple-100"}`}
+                  >
+                    <Target
+                      className={`w-5 h-5 ${activeTab === "dashboard" ? "text-white" : "text-purple-600"}`}
+                    />
                   </div>
                   <span className="font-semibold">Dashboard</span>
                 </button>
@@ -348,13 +409,17 @@ export default function Index() {
                 <button
                   onClick={() => setActiveTab("learn")}
                   className={`w-full flex items-center gap-4 p-4 rounded-2xl transition-all ${
-                    activeTab === "learn" 
-                      ? "bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-lg" 
+                    activeTab === "learn"
+                      ? "bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-lg"
                       : "bg-white text-gray-700 hover:bg-purple-50"
                   }`}
                 >
-                  <div className={`p-2 rounded-xl ${activeTab === "learn" ? "bg-white/20" : "bg-blue-100"}`}>
-                    <BookOpen className={`w-5 h-5 ${activeTab === "learn" ? "text-white" : "text-blue-600"}`} />
+                  <div
+                    className={`p-2 rounded-xl ${activeTab === "learn" ? "bg-white/20" : "bg-blue-100"}`}
+                  >
+                    <BookOpen
+                      className={`w-5 h-5 ${activeTab === "learn" ? "text-white" : "text-blue-600"}`}
+                    />
                   </div>
                   <span className="font-semibold">Word Library</span>
                 </button>
@@ -362,13 +427,17 @@ export default function Index() {
                 <button
                   onClick={() => setActiveTab("quiz")}
                   className={`w-full flex items-center gap-4 p-4 rounded-2xl transition-all ${
-                    activeTab === "quiz" 
-                      ? "bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-lg" 
+                    activeTab === "quiz"
+                      ? "bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-lg"
                       : "bg-white text-gray-700 hover:bg-purple-50"
                   }`}
                 >
-                  <div className={`p-2 rounded-xl ${activeTab === "quiz" ? "bg-white/20" : "bg-pink-100"}`}>
-                    <Brain className={`w-5 h-5 ${activeTab === "quiz" ? "text-white" : "text-pink-600"}`} />
+                  <div
+                    className={`p-2 rounded-xl ${activeTab === "quiz" ? "bg-white/20" : "bg-pink-100"}`}
+                  >
+                    <Brain
+                      className={`w-5 h-5 ${activeTab === "quiz" ? "text-white" : "text-pink-600"}`}
+                    />
                   </div>
                   <span className="font-semibold">Quiz Time</span>
                 </button>
@@ -376,13 +445,17 @@ export default function Index() {
                 <button
                   onClick={() => setActiveTab("progress")}
                   className={`w-full flex items-center gap-4 p-4 rounded-2xl transition-all ${
-                    activeTab === "progress" 
-                      ? "bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-lg" 
+                    activeTab === "progress"
+                      ? "bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-lg"
                       : "bg-white text-gray-700 hover:bg-purple-50"
                   }`}
                 >
-                  <div className={`p-2 rounded-xl ${activeTab === "progress" ? "bg-white/20" : "bg-yellow-100"}`}>
-                    <Trophy className={`w-5 h-5 ${activeTab === "progress" ? "text-white" : "text-yellow-600"}`} />
+                  <div
+                    className={`p-2 rounded-xl ${activeTab === "progress" ? "bg-white/20" : "bg-yellow-100"}`}
+                  >
+                    <Trophy
+                      className={`w-5 h-5 ${activeTab === "progress" ? "text-white" : "text-yellow-600"}`}
+                    />
                   </div>
                   <span className="font-semibold">Results</span>
                 </button>
@@ -390,13 +463,17 @@ export default function Index() {
                 <button
                   onClick={() => setActiveTab("analytics")}
                   className={`w-full flex items-center gap-4 p-4 rounded-2xl transition-all ${
-                    activeTab === "analytics" 
-                      ? "bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-lg" 
+                    activeTab === "analytics"
+                      ? "bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-lg"
                       : "bg-white text-gray-700 hover:bg-purple-50"
                   }`}
                 >
-                  <div className={`p-2 rounded-xl ${activeTab === "analytics" ? "bg-white/20" : "bg-green-100"}`}>
-                    <TrendingUp className={`w-5 h-5 ${activeTab === "analytics" ? "text-white" : "text-green-600"}`} />
+                  <div
+                    className={`p-2 rounded-xl ${activeTab === "analytics" ? "bg-white/20" : "bg-green-100"}`}
+                  >
+                    <TrendingUp
+                      className={`w-5 h-5 ${activeTab === "analytics" ? "text-white" : "text-green-600"}`}
+                    />
                   </div>
                   <span className="font-semibold">Progress</span>
                 </button>
@@ -425,17 +502,17 @@ export default function Index() {
                 </Button>
                 <div className="flex gap-2">
                   <Button
-                    variant={userRole === 'child' ? 'default' : 'outline'}
+                    variant={userRole === "child" ? "default" : "outline"}
                     size="sm"
-                    onClick={() => setUserRole('child')}
+                    onClick={() => setUserRole("child")}
                     className="flex-1"
                   >
                     Child
                   </Button>
                   <Button
-                    variant={userRole === 'parent' ? 'default' : 'outline'}
+                    variant={userRole === "parent" ? "default" : "outline"}
                     size="sm"
-                    onClick={() => setUserRole('parent')}
+                    onClick={() => setUserRole("parent")}
                     className="flex-1"
                   >
                     Parent
@@ -446,20 +523,24 @@ export default function Index() {
 
             {/* Main Content Area */}
             <div className="flex-1 p-8 bg-gradient-to-br from-blue-50 via-white to-purple-50">
-              <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
+              <Tabs
+                value={activeTab}
+                onValueChange={setActiveTab}
+                className="w-full"
+              >
                 <TabsContent value="dashboard">
                   <LearningDashboard stats={learningStats} userName="Alex" />
                 </TabsContent>
 
                 <TabsContent value="learn">
                   <div className="space-y-8">
-                    {selectedCategory === 'all' ? (
+                    {selectedCategory === "all" ? (
                       <CategorySelector
                         categories={[]}
                         selectedCategory={selectedCategory}
                         onSelectCategory={(category) => {
                           handleCategoryChange(category);
-                          setLearningMode('cards');
+                          setLearningMode("cards");
                         }}
                       />
                     ) : (
@@ -471,26 +552,32 @@ export default function Index() {
                           <p className="text-slate-600 mb-8">
                             Choose how you'd like to learn your vocabulary!
                           </p>
-                          
+
                           <div className="flex justify-center gap-4 mb-8">
                             <Button
-                              onClick={() => setLearningMode('cards')}
-                              variant={learningMode === 'cards' ? 'default' : 'outline'}
+                              onClick={() => setLearningMode("cards")}
+                              variant={
+                                learningMode === "cards" ? "default" : "outline"
+                              }
                               className="flex items-center gap-2"
                             >
                               <BookOpen className="w-4 h-4" />
                               Word Cards
                             </Button>
                             <Button
-                              onClick={() => setLearningMode('builder')}
-                              variant={learningMode === 'builder' ? 'default' : 'outline'}
+                              onClick={() => setLearningMode("builder")}
+                              variant={
+                                learningMode === "builder"
+                                  ? "default"
+                                  : "outline"
+                              }
                               className="flex items-center gap-2"
                             >
                               <Brain className="w-4 h-4" />
                               Vocabulary Builder
                             </Button>
                             <Button
-                              onClick={() => setSelectedCategory('all')}
+                              onClick={() => setSelectedCategory("all")}
                               variant="ghost"
                             >
                               ← Back to Categories
@@ -498,12 +585,13 @@ export default function Index() {
                           </div>
                         </div>
 
-                        {learningMode === 'cards' && (
+                        {learningMode === "cards" && (
                           <>
                             {(() => {
-                              const categoryWords = selectedCategory === 'all'
-                                ? getRandomWords(20)
-                                : getWordsByCategory(selectedCategory);
+                              const categoryWords =
+                                selectedCategory === "all"
+                                  ? getRandomWords(20)
+                                  : getWordsByCategory(selectedCategory);
                               const displayWords = categoryWords.slice(0, 20); // Limit to 20 for better performance
 
                               return (
@@ -514,8 +602,14 @@ export default function Index() {
                                         <Button
                                           key={index}
                                           size="sm"
-                                          variant={currentWordIndex === index ? "default" : "outline"}
-                                          onClick={() => setCurrentWordIndex(index)}
+                                          variant={
+                                            currentWordIndex === index
+                                              ? "default"
+                                              : "outline"
+                                          }
+                                          onClick={() =>
+                                            setCurrentWordIndex(index)
+                                          }
                                           className="w-8 h-8 p-0"
                                         >
                                           {index + 1}
@@ -528,23 +622,47 @@ export default function Index() {
                                     <>
                                       <div className="max-w-md mx-auto">
                                         <WordCard
-                                          word={displayWords[currentWordIndex] || displayWords[0]}
-                                          onPronounce={(word) => console.log('Playing pronunciation for:', word.word)}
-                                          onFavorite={(word) => console.log('Favorited:', word.word)}
+                                          word={
+                                            displayWords[currentWordIndex] ||
+                                            displayWords[0]
+                                          }
+                                          onPronounce={(word) =>
+                                            console.log(
+                                              "Playing pronunciation for:",
+                                              word.word,
+                                            )
+                                          }
+                                          onFavorite={(word) =>
+                                            console.log("Favorited:", word.word)
+                                          }
                                         />
                                       </div>
 
                                       <div className="flex justify-center gap-4">
                                         <Button
-                                          onClick={() => setCurrentWordIndex(Math.max(0, currentWordIndex - 1))}
+                                          onClick={() =>
+                                            setCurrentWordIndex(
+                                              Math.max(0, currentWordIndex - 1),
+                                            )
+                                          }
                                           disabled={currentWordIndex === 0}
                                           variant="outline"
                                         >
                                           Previous
                                         </Button>
                                         <Button
-                                          onClick={() => setCurrentWordIndex(Math.min(displayWords.length - 1, currentWordIndex + 1))}
-                                          disabled={currentWordIndex === displayWords.length - 1}
+                                          onClick={() =>
+                                            setCurrentWordIndex(
+                                              Math.min(
+                                                displayWords.length - 1,
+                                                currentWordIndex + 1,
+                                              ),
+                                            )
+                                          }
+                                          disabled={
+                                            currentWordIndex ===
+                                            displayWords.length - 1
+                                          }
                                         >
                                           Next
                                           <ArrowRight className="w-4 h-4 ml-2" />
@@ -552,9 +670,15 @@ export default function Index() {
                                       </div>
 
                                       <div className="text-center mt-4">
-                                        <Badge variant="outline" className="text-sm">
-                                          {selectedCategory === 'all' ? 'Random Selection' : `${selectedCategory} Category`} -
-                                          Word {currentWordIndex + 1} of {displayWords.length}
+                                        <Badge
+                                          variant="outline"
+                                          className="text-sm"
+                                        >
+                                          {selectedCategory === "all"
+                                            ? "Random Selection"
+                                            : `${selectedCategory} Category`}{" "}
+                                          - Word {currentWordIndex + 1} of{" "}
+                                          {displayWords.length}
                                         </Badge>
                                       </div>
                                     </>
@@ -565,13 +689,19 @@ export default function Index() {
                           </>
                         )}
 
-                        {learningMode === 'builder' && (
+                        {learningMode === "builder" && (
                           <VocabularyBuilder
-                            words={wordsDatabase.map(word => ({
+                            words={wordsDatabase.map((word) => ({
                               ...word,
                               masteryLevel: Math.floor(Math.random() * 100),
-                              lastReviewed: new Date(Date.now() - Math.random() * 7 * 24 * 60 * 60 * 1000),
-                              nextReview: new Date(Date.now() + Math.random() * 3 * 24 * 60 * 60 * 1000)
+                              lastReviewed: new Date(
+                                Date.now() -
+                                  Math.random() * 7 * 24 * 60 * 60 * 1000,
+                              ),
+                              nextReview: new Date(
+                                Date.now() +
+                                  Math.random() * 3 * 24 * 60 * 60 * 1000,
+                              ),
                             }))}
                             onWordMastered={handleWordMastered}
                             onSessionComplete={handleVocabularySessionComplete}
@@ -597,13 +727,16 @@ export default function Index() {
                       <Card className="cursor-pointer hover:shadow-lg transition-all duration-300 hover:scale-105">
                         <CardContent className="p-8 text-center">
                           <div className="text-6xl mb-4">🎯</div>
-                          <h3 className="text-xl font-semibold mb-2">Word Matching</h3>
+                          <h3 className="text-xl font-semibold mb-2">
+                            Word Matching
+                          </h3>
                           <p className="text-slate-600 mb-4">
-                            Match words with their definitions in this fun memory game!
+                            Match words with their definitions in this fun
+                            memory game!
                           </p>
-                          <Button 
+                          <Button
                             className="bg-educational-blue text-white"
-                            onClick={() => setLearningMode('matching')}
+                            onClick={() => setLearningMode("matching")}
                           >
                             <Shuffle className="w-4 h-4 mr-2" />
                             Start Matching
@@ -614,21 +747,21 @@ export default function Index() {
                       <Card className="cursor-pointer hover:shadow-lg transition-all duration-300 hover:scale-105">
                         <CardContent className="p-8 text-center">
                           <div className="text-6xl mb-4">🧩</div>
-                          <h3 className="text-xl font-semibold mb-2">Word Puzzle</h3>
+                          <h3 className="text-xl font-semibold mb-2">
+                            Word Puzzle
+                          </h3>
                           <p className="text-slate-600 mb-4">
-                            Solve word puzzles and unscramble letters to form vocabulary words!
+                            Solve word puzzles and unscramble letters to form
+                            vocabulary words!
                           </p>
-                          <Button 
-                            variant="outline"
-                            disabled
-                          >
+                          <Button variant="outline" disabled>
                             Coming Soon
                           </Button>
                         </CardContent>
                       </Card>
                     </div>
 
-                    {learningMode === 'matching' && (
+                    {learningMode === "matching" && (
                       <div className="mt-8">
                         <WordMatchingGame
                           pairs={matchingPairs}
@@ -647,10 +780,11 @@ export default function Index() {
                           Test Your Knowledge
                         </h2>
                         <p className="text-slate-600 mb-8">
-                          Challenge yourself with our interactive quiz! Answer questions about 
-                          the words you've learned and earn points.
+                          Challenge yourself with our interactive quiz! Answer
+                          questions about the words you've learned and earn
+                          points.
                         </p>
-                        
+
                         <Card className="p-8 bg-gradient-to-br from-educational-purple/10 to-educational-blue/10">
                           <CardContent className="space-y-6">
                             <div className="grid grid-cols-3 gap-4 text-center">
@@ -658,22 +792,30 @@ export default function Index() {
                                 <div className="text-2xl font-bold text-educational-blue">
                                   {sampleQuizQuestions.length}
                                 </div>
-                                <div className="text-sm text-slate-600">Questions</div>
+                                <div className="text-sm text-slate-600">
+                                  Questions
+                                </div>
                               </div>
                               <div>
-                                <div className="text-2xl font-bold text-educational-purple">30s</div>
-                                <div className="text-sm text-slate-600">Per Question</div>
+                                <div className="text-2xl font-bold text-educational-purple">
+                                  30s
+                                </div>
+                                <div className="text-sm text-slate-600">
+                                  Per Question
+                                </div>
                               </div>
                               <div>
                                 <div className="text-2xl font-bold text-educational-orange">
                                   {sampleQuizQuestions.length * 10}
                                 </div>
-                                <div className="text-sm text-slate-600">Max Points</div>
+                                <div className="text-sm text-slate-600">
+                                  Max Points
+                                </div>
                               </div>
                             </div>
-                            
-                            <Button 
-                              size="lg" 
+
+                            <Button
+                              size="lg"
                               onClick={() => setShowQuiz(true)}
                               className="bg-educational-blue text-white hover:bg-educational-blue/90"
                             >
@@ -687,7 +829,7 @@ export default function Index() {
                       <QuizGame
                         questions={sampleQuizQuestions}
                         onComplete={handleQuizComplete}
-                        onProgress={(current, total) => 
+                        onProgress={(current, total) =>
                           console.log(`Quiz progress: ${current}/${total}`)
                         }
                       />
@@ -715,7 +857,9 @@ export default function Index() {
                           </CardTitle>
                         </CardHeader>
                         <CardContent>
-                          <div className="text-3xl font-bold mb-2">{learningStats.wordsLearned}</div>
+                          <div className="text-3xl font-bold mb-2">
+                            {learningStats.wordsLearned}
+                          </div>
                           <p className="text-sm text-slate-600">
                             Keep going! You're doing amazing.
                           </p>
@@ -730,7 +874,9 @@ export default function Index() {
                           </CardTitle>
                         </CardHeader>
                         <CardContent>
-                          <div className="text-3xl font-bold mb-2">{learningStats.currentStreak} days</div>
+                          <div className="text-3xl font-bold mb-2">
+                            {learningStats.currentStreak} days
+                          </div>
                           <p className="text-sm text-slate-600">
                             You're on fire! Keep it up.
                           </p>
@@ -745,7 +891,9 @@ export default function Index() {
                           </CardTitle>
                         </CardHeader>
                         <CardContent>
-                          <div className="text-3xl font-bold mb-2">Level {learningStats.level}</div>
+                          <div className="text-3xl font-bold mb-2">
+                            Level {learningStats.level}
+                          </div>
                           <p className="text-sm text-slate-600">
                             {learningStats.totalPoints} total points earned
                           </p>
@@ -755,17 +903,19 @@ export default function Index() {
 
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                       {learningStats.badges.map((badge) => (
-                        <Card 
+                        <Card
                           key={badge.id}
                           className={`text-center p-4 transition-all ${
-                            badge.earned 
-                              ? 'bg-gradient-to-br from-yellow-400/20 to-yellow-600/20 border-yellow-300' 
-                              : 'bg-slate-50 border-slate-200'
+                            badge.earned
+                              ? "bg-gradient-to-br from-yellow-400/20 to-yellow-600/20 border-yellow-300"
+                              : "bg-slate-50 border-slate-200"
                           }`}
                         >
                           <div className="text-4xl mb-2">{badge.icon}</div>
                           <h4 className="font-semibold mb-1">{badge.name}</h4>
-                          <p className="text-xs text-slate-600">{badge.description}</p>
+                          <p className="text-xs text-slate-600">
+                            {badge.description}
+                          </p>
                         </Card>
                       ))}
                     </div>
@@ -779,7 +929,8 @@ export default function Index() {
                         Reading Comprehension
                       </h2>
                       <p className="text-slate-600 mb-8">
-                        Improve your reading skills and vocabulary through engaging stories!
+                        Improve your reading skills and vocabulary through
+                        engaging stories!
                       </p>
                     </div>
 
@@ -788,7 +939,9 @@ export default function Index() {
                       onComplete={(score, total) => {
                         setShowCelebration(true);
                         setTimeout(() => {
-                          alert(`Reading Complete! You scored ${score}/${total}!`);
+                          alert(
+                            `Reading Complete! You scored ${score}/${total}!`,
+                          );
                           setShowCelebration(false);
                         }, 2000);
                       }}
@@ -807,19 +960,20 @@ export default function Index() {
                         Daily Challenges
                       </h2>
                       <p className="text-slate-600 mb-8">
-                        Complete daily challenges to earn rewards and build learning habits!
+                        Complete daily challenges to earn rewards and build
+                        learning habits!
                       </p>
                     </div>
 
                     <DailyChallenge
                       challenges={[]}
                       onChallengeComplete={(challengeId) => {
-                        console.log('Challenge completed:', challengeId);
+                        console.log("Challenge completed:", challengeId);
                         setShowCelebration(true);
                         setTimeout(() => setShowCelebration(false), 3000);
                       }}
                       onStartChallenge={(challengeId) => {
-                        console.log('Starting challenge:', challengeId);
+                        console.log("Starting challenge:", challengeId);
                         // In a real app, this would navigate to the appropriate learning activity
                       }}
                     />
@@ -837,10 +991,13 @@ export default function Index() {
           <div className="text-center">
             <div className="flex justify-center items-center gap-2 mb-4">
               <BookOpen className="w-6 h-6 text-educational-blue" />
-              <span className="text-xl font-bold text-slate-800">Word Adventure</span>
+              <span className="text-xl font-bold text-slate-800">
+                Word Adventure
+              </span>
             </div>
             <p className="text-slate-600 mb-4">
-              Making vocabulary learning fun and engaging for children everywhere
+              Making vocabulary learning fun and engaging for children
+              everywhere
             </p>
             <div className="flex justify-center gap-6 text-sm text-slate-500">
               <span>© 2024 Word Adventure</span>

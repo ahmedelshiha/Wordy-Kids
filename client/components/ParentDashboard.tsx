@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import { Progress } from '@/components/ui/progress';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import React, { useState } from "react";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { Progress } from "@/components/ui/progress";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
   Users,
   Calendar,
@@ -18,9 +18,9 @@ import {
   Eye,
   MessageCircle,
   Bell,
-  ArrowLeft
-} from 'lucide-react';
-import { AnimatedCounter } from '@/components/AnimatedCounter';
+  ArrowLeft,
+} from "lucide-react";
+import { AnimatedCounter } from "@/components/AnimatedCounter";
 
 interface ChildProfile {
   id: string;
@@ -62,123 +62,133 @@ interface ParentDashboardProps {
 
 const sampleChildren: ChildProfile[] = [
   {
-    id: '1',
-    name: 'Alex',
+    id: "1",
+    name: "Alex",
     age: 8,
-    avatar: '👦',
+    avatar: "👦",
     level: 3,
     totalPoints: 1250,
     wordsLearned: 47,
     currentStreak: 5,
     weeklyGoal: 15,
     weeklyProgress: 12,
-    favoriteCategory: 'Animals',
+    favoriteCategory: "Animals",
     lastActive: new Date(Date.now() - 2 * 60 * 60 * 1000), // 2 hours ago
     recentAchievements: [
       {
-        id: 'streak-5',
-        title: 'Streak Master',
-        description: '5-day learning streak',
-        icon: '🔥',
-        earnedAt: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000)
+        id: "streak-5",
+        title: "Streak Master",
+        description: "5-day learning streak",
+        icon: "🔥",
+        earnedAt: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000),
       },
       {
-        id: 'words-50',
-        title: 'Word Collector',
-        description: 'Learned 50 words',
-        icon: '📚',
-        earnedAt: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000)
-      }
-    ]
+        id: "words-50",
+        title: "Word Collector",
+        description: "Learned 50 words",
+        icon: "📚",
+        earnedAt: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000),
+      },
+    ],
   },
   {
-    id: '2',
-    name: 'Emma',
+    id: "2",
+    name: "Emma",
     age: 6,
-    avatar: '👧',
+    avatar: "👧",
     level: 2,
     totalPoints: 850,
     wordsLearned: 32,
     currentStreak: 3,
     weeklyGoal: 10,
     weeklyProgress: 8,
-    favoriteCategory: 'Nature',
+    favoriteCategory: "Nature",
     lastActive: new Date(Date.now() - 4 * 60 * 60 * 1000), // 4 hours ago
     recentAchievements: [
       {
-        id: 'first-quiz',
-        title: 'Quiz Rookie',
-        description: 'Completed first quiz',
-        icon: '🎯',
-        earnedAt: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000)
-      }
-    ]
-  }
+        id: "first-quiz",
+        title: "Quiz Rookie",
+        description: "Completed first quiz",
+        icon: "🎯",
+        earnedAt: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000),
+      },
+    ],
+  },
 ];
 
 const sampleSessions: LearningSession[] = [
   {
-    id: '1',
-    childId: '1',
-    activity: 'Word Cards',
+    id: "1",
+    childId: "1",
+    activity: "Word Cards",
     duration: 15,
     wordsLearned: 5,
     accuracy: 90,
-    completedAt: new Date(Date.now() - 2 * 60 * 60 * 1000)
+    completedAt: new Date(Date.now() - 2 * 60 * 60 * 1000),
   },
   {
-    id: '2',
-    childId: '1',
-    activity: 'Quiz Challenge',
+    id: "2",
+    childId: "1",
+    activity: "Quiz Challenge",
     duration: 8,
     wordsLearned: 0,
     accuracy: 85,
-    completedAt: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000)
+    completedAt: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000),
   },
   {
-    id: '3',
-    childId: '2',
-    activity: 'Matching Game',
+    id: "3",
+    childId: "2",
+    activity: "Matching Game",
     duration: 12,
     wordsLearned: 3,
     accuracy: 95,
-    completedAt: new Date(Date.now() - 4 * 60 * 60 * 1000)
-  }
+    completedAt: new Date(Date.now() - 4 * 60 * 60 * 1000),
+  },
 ];
 
 export const ParentDashboard: React.FC<ParentDashboardProps> = ({
   children = sampleChildren,
   sessions = sampleSessions,
-  onNavigateBack
+  onNavigateBack,
 }) => {
-  const [selectedChild, setSelectedChild] = useState<ChildProfile | null>(children[0] || null);
-  const [activeTab, setActiveTab] = useState('overview');
+  const [selectedChild, setSelectedChild] = useState<ChildProfile | null>(
+    children[0] || null,
+  );
+  const [activeTab, setActiveTab] = useState("overview");
 
   const getTimeAgo = (date: Date) => {
     const now = new Date();
-    const diffInHours = Math.floor((now.getTime() - date.getTime()) / (1000 * 60 * 60));
-    
-    if (diffInHours < 1) return 'Just now';
+    const diffInHours = Math.floor(
+      (now.getTime() - date.getTime()) / (1000 * 60 * 60),
+    );
+
+    if (diffInHours < 1) return "Just now";
     if (diffInHours < 24) return `${diffInHours}h ago`;
     const diffInDays = Math.floor(diffInHours / 24);
     return `${diffInDays}d ago`;
   };
 
   const getChildSessions = (childId: string) => {
-    return sessions.filter(session => session.childId === childId);
+    return sessions.filter((session) => session.childId === childId);
   };
 
   const calculateWeeklyStats = (childId: string) => {
     const childSessions = getChildSessions(childId);
     const weekAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
-    const recentSessions = childSessions.filter(s => s.completedAt >= weekAgo);
-    
+    const recentSessions = childSessions.filter(
+      (s) => s.completedAt >= weekAgo,
+    );
+
     return {
       totalTime: recentSessions.reduce((sum, s) => sum + s.duration, 0),
-      averageAccuracy: recentSessions.length > 0 
-        ? Math.round(recentSessions.reduce((sum, s) => sum + s.accuracy, 0) / recentSessions.length)
-        : 0,
-      sessionsCount: recentSessions.length
+      averageAccuracy:
+        recentSessions.length > 0
+          ? Math.round(
+              recentSessions.reduce((sum, s) => sum + s.accuracy, 0) /
+                recentSessions.length,
+            )
+          : 0,
+      sessionsCount: recentSessions.length,
     };
   };
 
@@ -202,19 +212,33 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
             </div>
             <div className="text-center p-4 bg-educational-green/5 rounded-lg">
               <div className="text-2xl font-bold text-educational-green">
-                <AnimatedCounter value={children.reduce((sum, child) => sum + child.wordsLearned, 0)} />
+                <AnimatedCounter
+                  value={children.reduce(
+                    (sum, child) => sum + child.wordsLearned,
+                    0,
+                  )}
+                />
               </div>
               <p className="text-sm text-slate-600">Total Words Learned</p>
             </div>
             <div className="text-center p-4 bg-educational-orange/5 rounded-lg">
               <div className="text-2xl font-bold text-educational-orange">
-                <AnimatedCounter value={children.reduce((sum, child) => sum + child.totalPoints, 0)} />
+                <AnimatedCounter
+                  value={children.reduce(
+                    (sum, child) => sum + child.totalPoints,
+                    0,
+                  )}
+                />
               </div>
               <p className="text-sm text-slate-600">Total Points Earned</p>
             </div>
             <div className="text-center p-4 bg-educational-purple/5 rounded-lg">
               <div className="text-2xl font-bold text-educational-purple">
-                <AnimatedCounter value={Math.max(...children.map(child => child.currentStreak))} />
+                <AnimatedCounter
+                  value={Math.max(
+                    ...children.map((child) => child.currentStreak),
+                  )}
+                />
               </div>
               <p className="text-sm text-slate-600">Longest Streak</p>
             </div>
@@ -226,10 +250,11 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {children.map((child) => {
           const weeklyStats = calculateWeeklyStats(child.id);
-          const progressPercentage = (child.weeklyProgress / child.weeklyGoal) * 100;
+          const progressPercentage =
+            (child.weeklyProgress / child.weeklyGoal) * 100;
 
           return (
-            <Card 
+            <Card
               key={child.id}
               className="cursor-pointer hover:shadow-lg transition-all duration-300 hover:scale-105"
               onClick={() => setSelectedChild(child)}
@@ -258,7 +283,9 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
                 <div>
                   <div className="flex justify-between text-sm mb-2">
                     <span>Weekly Goal</span>
-                    <span>{child.weeklyProgress}/{child.weeklyGoal} words</span>
+                    <span>
+                      {child.weeklyProgress}/{child.weeklyGoal} words
+                    </span>
                   </div>
                   <Progress value={progressPercentage} className="h-2" />
                 </div>
@@ -289,9 +316,13 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
                 {child.recentAchievements.length > 0 && (
                   <div className="bg-yellow-50 p-3 rounded-lg">
                     <div className="flex items-center gap-2">
-                      <span className="text-lg">{child.recentAchievements[0].icon}</span>
+                      <span className="text-lg">
+                        {child.recentAchievements[0].icon}
+                      </span>
                       <div>
-                        <p className="font-medium text-sm">{child.recentAchievements[0].title}</p>
+                        <p className="font-medium text-sm">
+                          {child.recentAchievements[0].title}
+                        </p>
                         <p className="text-xs text-slate-600">
                           {getTimeAgo(child.recentAchievements[0].earnedAt)}
                         </p>
@@ -369,7 +400,10 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
             <CardContent className="p-4 text-center">
               <Target className="w-8 h-8 text-educational-orange mx-auto mb-2" />
               <div className="text-2xl font-bold">
-                <AnimatedCounter value={weeklyStats.averageAccuracy} suffix="%" />
+                <AnimatedCounter
+                  value={weeklyStats.averageAccuracy}
+                  suffix="%"
+                />
               </div>
               <p className="text-sm text-slate-600">Avg Accuracy</p>
             </CardContent>
@@ -378,7 +412,9 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
             <CardContent className="p-4 text-center">
               <Award className="w-8 h-8 text-educational-purple mx-auto mb-2" />
               <div className="text-2xl font-bold">
-                <AnimatedCounter value={selectedChild.recentAchievements.length} />
+                <AnimatedCounter
+                  value={selectedChild.recentAchievements.length}
+                />
               </div>
               <p className="text-sm text-slate-600">Recent Badges</p>
             </CardContent>
@@ -396,7 +432,10 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
           <CardContent>
             <div className="space-y-3">
               {childSessions.slice(0, 5).map((session) => (
-                <div key={session.id} className="flex items-center justify-between p-3 bg-slate-50 rounded-lg">
+                <div
+                  key={session.id}
+                  className="flex items-center justify-between p-3 bg-slate-50 rounded-lg"
+                >
                   <div className="flex items-center gap-3">
                     <div className="w-10 h-10 bg-educational-blue/10 rounded-full flex items-center justify-center">
                       <BookOpen className="w-5 h-5 text-educational-blue" />
@@ -440,11 +479,16 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
           <CardContent>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {selectedChild.recentAchievements.map((achievement) => (
-                <div key={achievement.id} className="flex items-center gap-3 p-4 bg-yellow-50 rounded-lg">
+                <div
+                  key={achievement.id}
+                  className="flex items-center gap-3 p-4 bg-yellow-50 rounded-lg"
+                >
                   <div className="text-3xl">{achievement.icon}</div>
                   <div>
                     <h4 className="font-semibold">{achievement.title}</h4>
-                    <p className="text-sm text-slate-600">{achievement.description}</p>
+                    <p className="text-sm text-slate-600">
+                      {achievement.description}
+                    </p>
                     <p className="text-xs text-slate-500 mt-1">
                       {getTimeAgo(achievement.earnedAt)}
                     </p>
@@ -475,8 +519,12 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
             </Button>
           )}
           <div>
-            <h1 className="text-3xl font-bold text-slate-800">Parent Dashboard</h1>
-            <p className="text-slate-600">Monitor your children's learning progress</p>
+            <h1 className="text-3xl font-bold text-slate-800">
+              Parent Dashboard
+            </h1>
+            <p className="text-slate-600">
+              Monitor your children's learning progress
+            </p>
           </div>
         </div>
         <div className="flex gap-2">
@@ -508,15 +556,17 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
           </TabsTrigger>
         </TabsList>
 
-        <TabsContent value="overview">
-          {renderOverview()}
-        </TabsContent>
+        <TabsContent value="overview">{renderOverview()}</TabsContent>
 
         <TabsContent value="detailed">
-          {selectedChild ? renderChildDetails() : (
+          {selectedChild ? (
+            renderChildDetails()
+          ) : (
             <Card>
               <CardContent className="p-8 text-center">
-                <p className="text-slate-600">Select a child from the overview to see detailed information</p>
+                <p className="text-slate-600">
+                  Select a child from the overview to see detailed information
+                </p>
               </CardContent>
             </Card>
           )}
@@ -526,7 +576,9 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
           <Card>
             <CardContent className="p-8 text-center">
               <MessageCircle className="w-16 h-16 text-slate-400 mx-auto mb-4" />
-              <h3 className="text-xl font-semibold mb-2">Communication Center</h3>
+              <h3 className="text-xl font-semibold mb-2">
+                Communication Center
+              </h3>
               <p className="text-slate-600 mb-4">
                 Stay connected with your children's learning journey
               </p>
