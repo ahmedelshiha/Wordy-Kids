@@ -794,6 +794,7 @@ const learningStats = {
 };
 
 export default function Index() {
+  const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState("dashboard");
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
   const [showQuiz, setShowQuiz] = useState(false);
