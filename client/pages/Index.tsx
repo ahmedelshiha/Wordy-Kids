@@ -44,7 +44,9 @@ import {
   ImageIcon,
   PenTool,
   Clock,
+  Shield,
 } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 // Sample data for learning
 const sampleWords = [
@@ -792,6 +794,7 @@ const learningStats = {
 };
 
 export default function Index() {
+  const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState("dashboard");
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
   const [showQuiz, setShowQuiz] = useState(false);
@@ -1045,6 +1048,17 @@ export default function Index() {
                   <Plus className="w-4 h-4 mr-2" />
                   Create Word
                 </Button>
+                {userRole === "parent" && (
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => navigate("/admin")}
+                    className="w-full bg-red-500 text-white hover:bg-red-600 border-0"
+                  >
+                    <Shield className="w-4 h-4 mr-2" />
+                    Admin Access
+                  </Button>
+                )}
                 <div className="flex gap-2">
                   <Button
                     variant={userRole === "child" ? "default" : "outline"}
