@@ -302,6 +302,41 @@ export const QuizGame: React.FC<QuizGameProps> = ({
           )}
         </div>
       )}
+
+      {/* Exit Confirmation Dialog */}
+      {showExitConfirm && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+          <Card className="w-full max-w-md mx-4">
+            <CardHeader className="pb-4">
+              <CardTitle className="flex items-center gap-2 text-orange-600">
+                <AlertTriangle className="w-6 h-6" />
+                Quit Quiz?
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <p className="text-slate-600">
+                Are you sure you want to quit this quiz? Your progress will be lost and you'll return to the quiz selection screen.
+              </p>
+              <div className="flex gap-3">
+                <Button
+                  onClick={cancelExit}
+                  variant="outline"
+                  className="flex-1"
+                >
+                  Continue Quiz
+                </Button>
+                <Button
+                  onClick={confirmExit}
+                  variant="destructive"
+                  className="flex-1"
+                >
+                  Quit Quiz
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+      )}
     </div>
   );
 };
