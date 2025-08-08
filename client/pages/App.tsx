@@ -16,10 +16,30 @@ export default function App() {
   const [showLevelSelection, setShowLevelSelection] = useState(false);
 
   useEffect(() => {
-    if (mode === "create") {
+    const authenticated = searchParams.get("authenticated");
+
+    if (authenticated === "true") {
+      // User has successfully logged in from LoginForm, create a profile and auto-login
+      const defaultProfile = {
+        id: "logged-in-user",
+        name: "Player",
+        level: 1,
+        levelName: "Beginner",
+        skillLevel: 1,
+        avatar: { emoji: "🎯", name: "Explorer" },
+        theme: { gradient: "from-purple-400 to-pink-400" },
+        wordsLearned: 0,
+        points: 0,
+        streak: 0
+      };
+      setCurrentProfile(defaultProfile);
+      setIsLoggedIn(true);
+      // Clean up the URL by removing the authenticated parameter
+      navigate("/app", { replace: true });
+    } else if (mode === "create") {
       setShowProfileCreation(true);
     }
-  }, [mode]);
+  }, [mode, searchParams, navigate]);
 
   const handleLogin = (profile: any) => {
     setCurrentProfile(profile);
