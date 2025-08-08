@@ -312,6 +312,7 @@ const challengeQuizQuestions = [
 const pictureQuizQuestions = [
   {
     id: 1,
+    word: "pizza",
     emoji: "🍕",
     question: "What food does this emoji represent?",
     options: ["Hamburger", "Pizza", "Sandwich", "Pasta"],
@@ -320,6 +321,7 @@ const pictureQuizQuestions = [
   },
   {
     id: 2,
+    word: "lion",
     emoji: "🦁",
     question: "This animal is known as the:",
     options: ["Prince of the jungle", "King of the jungle", "Duke of the forest", "Lord of the savanna"],
