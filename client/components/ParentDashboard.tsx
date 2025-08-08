@@ -4,10 +4,10 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { 
-  Users, 
-  Calendar, 
-  BookOpen, 
+import {
+  Users,
+  Calendar,
+  BookOpen,
   TrendingUp,
   Clock,
   Award,
@@ -17,7 +17,8 @@ import {
   Download,
   Eye,
   MessageCircle,
-  Bell
+  Bell,
+  ArrowLeft
 } from 'lucide-react';
 import { AnimatedCounter } from '@/components/AnimatedCounter';
 
