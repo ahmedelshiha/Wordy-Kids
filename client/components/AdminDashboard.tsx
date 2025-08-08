@@ -99,6 +99,9 @@ import {
   Camera,
   Gamepad2,
   Puzzle,
+  Bell,
+  SaveIcon,
+  Send,
 } from "lucide-react";
 import { AnimatedCounter } from "@/components/AnimatedCounter";
 
