@@ -423,10 +423,6 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
                 <UserPlus className="w-4 h-4 mr-2" />
                 Add Child
               </Button>
-              <Button size="sm" className="bg-educational-blue">
-                <Download className="w-4 h-4 mr-2" />
-                Weekly Report
-              </Button>
             </div>
           </div>
         </CardContent>
@@ -1090,7 +1086,7 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
         }
 
         .header::before {
-            content: '✨📚🌟';
+            content: '✨📚����';
             position: absolute;
             top: 15px;
             left: 40px;
