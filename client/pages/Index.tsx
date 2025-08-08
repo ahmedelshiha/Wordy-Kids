@@ -399,11 +399,11 @@ export default function Index() {
           <TabsContent value="learn">
             <div className="space-y-8">
               {selectedCategory === 'all' ? (
-                <CategorySelector 
-                  categories={[]} 
+                <CategorySelector
+                  categories={[]}
                   selectedCategory={selectedCategory}
                   onSelectCategory={(category) => {
-                    setSelectedCategory(category);
+                    handleCategoryChange(category);
                     setLearningMode('cards');
                   }}
                 />
