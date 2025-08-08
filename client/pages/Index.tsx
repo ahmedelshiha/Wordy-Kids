@@ -261,6 +261,7 @@ export default function Index() {
   const [activeTab, setActiveTab] = useState("dashboard");
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
   const [showQuiz, setShowQuiz] = useState(false);
+  const [selectedQuizType, setSelectedQuizType] = useState<'quick' | 'standard' | 'challenge' | 'picture' | 'spelling' | 'speed'>('standard');
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [learningMode, setLearningMode] = useState<
     "cards" | "builder" | "matching"
