@@ -1,62 +1,442 @@
-import { DemoResponse } from "@shared/api";
-import { useEffect, useState } from "react";
+import React, { useState } from 'react';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { WordCard } from '@/components/WordCard';
+import { LearningDashboard } from '@/components/LearningDashboard';
+import { QuizGame } from '@/components/QuizGame';
+import { 
+  BookOpen, 
+  Play, 
+  Trophy, 
+  Users, 
+  Sparkles,
+  ArrowRight,
+  Star,
+  Target,
+  Heart
+} from 'lucide-react';
+
+// Sample data
+const sampleWords = [
+  {
+    id: 1,
+    word: "adventure",
+    pronunciation: "/ədˈven(t)SHər/",
+    definition: "An exciting or unusual experience, often involving exploration or discovery",
+    example: "Reading books takes you on amazing adventures to new worlds",
+    funFact: "The word 'adventure' comes from Latin 'adventurus' meaning 'about to arrive'",
+    emoji: "🗺️",
+    category: "general",
+    difficulty: "medium" as const,
+    imageUrl: undefined
+  },
+  {
+    id: 2,
+    word: "butterfly",
+    pronunciation: "/ˈbʌdərˌflaɪ/",
+    definition: "A colorful flying insect with large, often brightly colored wings",
+    example: "The butterfly landed gently on the bright yellow flower",
+    funFact: "Butterflies taste with their feet and can see ultraviolet colors!",
+    emoji: "🦋",
+    category: "animals",
+    difficulty: "easy" as const,
+    imageUrl: undefined
+  },
+  {
+    id: 3,
+    word: "telescope",
+    pronunciation: "/ˈtelɪˌskoʊp/",
+    definition: "An instrument used to see distant objects, especially stars and planets",
+    example: "Through the telescope, we could see the craters on the moon",
+    funFact: "The first telescope was invented in 1608 and made stars look 20 times closer!",
+    emoji: "🔭",
+    category: "science",
+    difficulty: "hard" as const,
+    imageUrl: undefined
+  }
+];
+
+const sampleQuizQuestions = [
+  {
+    id: 1,
+    word: "adventure",
+    question: "What does 'adventure' mean?",
+    options: [
+      "A boring experience",
+      "An exciting or unusual experience",
+      "A type of food",
+      "A musical instrument"
+    ],
+    correctAnswer: "An exciting or unusual experience",
+    explanation: "Adventure means an exciting journey or experience that often involves exploration.",
+    emoji: "🗺️"
+  },
+  {
+    id: 2,
+    word: "butterfly",
+    question: "How do butterflies taste their food?",
+    options: [
+      "With their tongue",
+      "With their wings",
+      "With their feet",
+      "With their antennae"
+    ],
+    correctAnswer: "With their feet",
+    explanation: "Butterflies have taste receptors on their feet to help them find the right plants for their eggs.",
+    emoji: "🦋"
+  },
+  {
+    id: 3,
+    word: "telescope",
+    question: "What is a telescope used for?",
+    options: [
+      "Cooking food",
+      "Seeing distant objects",
+      "Playing music",
+      "Writing stories"
+    ],
+    correctAnswer: "Seeing distant objects",
+    explanation: "Telescopes help us see things that are very far away, like stars and planets.",
+    emoji: "🔭"
+  }
+];
+
+const learningStats = {
+  wordsLearned: 47,
+  totalWords: 200,
+  currentStreak: 5,
+  weeklyGoal: 15,
+  weeklyProgress: 12,
+  accuracyRate: 87,
+  favoriteCategory: "Animals",
+  totalPoints: 1250,
+  level: 3,
+  badges: [
+    {
+      id: "first-word",
+      name: "First Word",
+      icon: "🎯",
+      earned: true,
+      description: "Learned your first word"
+    },
+    {
+      id: "streak-starter",
+      name: "Streak Starter",
+      icon: "🔥",
+      earned: true,
+      description: "5-day learning streak"
+    },
+    {
+      id: "quiz-master",
+      name: "Quiz Master",
+      icon: "🧠",
+      earned: false,
+      description: "Score 100% on 5 quizzes"
+    },
+    {
+      id: "explorer",
+      name: "Explorer",
+      icon: "🚀",
+      earned: false,
+      description: "Try all categories"
+    }
+  ]
+};
 
 export default function Index() {
-  const [exampleFromServer, setExampleFromServer] = useState("");
-  // Fetch users on component mount
-  useEffect(() => {
-    fetchDemo();
-  }, []);
+  const [activeTab, setActiveTab] = useState("dashboard");
+  const [currentWordIndex, setCurrentWordIndex] = useState(0);
+  const [showQuiz, setShowQuiz] = useState(false);
 
-  // Example of how to fetch data from the server (if needed)
-  const fetchDemo = async () => {
-    try {
-      const response = await fetch("/api/demo");
-      const data = (await response.json()) as DemoResponse;
-      setExampleFromServer(data.message);
-    } catch (error) {
-      console.error("Error fetching hello:", error);
-    }
+  const handleQuizComplete = (score: number, total: number) => {
+    const percentage = Math.round((score / total) * 100);
+    alert(`Quiz Complete! You scored ${score}/${total} (${percentage}%)`);
+    setShowQuiz(false);
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-100 to-slate-200">
-      <div className="text-center">
-        {/* TODO: FUSION_GENERATION_APP_PLACEHOLDER replace everything here with the actual app! */}
-        <h1 className="text-2xl font-semibold text-slate-800 flex items-center justify-center gap-3">
-          <svg
-            className="animate-spin h-8 w-8 text-slate-400"
-            viewBox="0 0 50 50"
-          >
-            <circle
-              className="opacity-30"
-              cx="25"
-              cy="25"
-              r="20"
-              stroke="currentColor"
-              strokeWidth="5"
-              fill="none"
-            />
-            <circle
-              className="text-slate-600"
-              cx="25"
-              cy="25"
-              r="20"
-              stroke="currentColor"
-              strokeWidth="5"
-              fill="none"
-              strokeDasharray="100"
-              strokeDashoffset="75"
-            />
-          </svg>
-          Generating your app...
-        </h1>
-        <p className="mt-4 text-slate-600 max-w-md">
-          Watch the chat on the left for updates that might need your attention
-          to finish generating
-        </p>
-        <p className="mt-4 hidden max-w-md">{exampleFromServer}</p>
-      </div>
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50">
+      {/* Hero Header */}
+      <header className="relative overflow-hidden bg-gradient-to-r from-educational-blue via-educational-purple to-educational-pink text-white">
+        <div className="absolute inset-0 bg-black/10"></div>
+        <div className="relative container mx-auto px-4 py-12">
+          <div className="text-center max-w-4xl mx-auto">
+            <div className="flex justify-center mb-6">
+              <div className="bg-white/20 backdrop-blur-sm rounded-full p-6">
+                <BookOpen className="w-16 h-16 text-white" />
+              </div>
+            </div>
+            <h1 className="text-5xl md:text-6xl font-bold mb-4">
+              Word Adventure
+            </h1>
+            <p className="text-xl md:text-2xl mb-8 opacity-90">
+              Embark on an exciting journey to discover new words and expand your vocabulary! 
+            </p>
+            <div className="flex flex-wrap justify-center gap-4">
+              <Button 
+                size="lg" 
+                className="bg-white text-educational-blue hover:bg-slate-100 font-semibold"
+                onClick={() => setActiveTab("learn")}
+              >
+                <Play className="w-5 h-5 mr-2" />
+                Start Learning
+              </Button>
+              <Button 
+                size="lg" 
+                variant="outline" 
+                className="border-white text-white hover:bg-white/10"
+                onClick={() => setActiveTab("quiz")}
+              >
+                <Trophy className="w-5 h-5 mr-2" />
+                Take Quiz
+              </Button>
+            </div>
+          </div>
+        </div>
+        
+        {/* Floating Elements */}
+        <div className="absolute top-10 left-10 text-4xl animate-bounce">🌟</div>
+        <div className="absolute top-20 right-20 text-3xl animate-pulse">📚</div>
+        <div className="absolute bottom-10 left-20 text-5xl animate-bounce delay-1000">🎯</div>
+        <div className="absolute bottom-20 right-10 text-4xl animate-pulse delay-500">🚀</div>
+      </header>
+
+      {/* Main Content */}
+      <main className="container mx-auto px-4 py-8">
+        <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
+          <TabsList className="grid w-full grid-cols-4 lg:w-auto lg:inline-flex mb-8">
+            <TabsTrigger value="dashboard" className="flex items-center gap-2">
+              <Target className="w-4 h-4" />
+              Dashboard
+            </TabsTrigger>
+            <TabsTrigger value="learn" className="flex items-center gap-2">
+              <BookOpen className="w-4 h-4" />
+              Learn
+            </TabsTrigger>
+            <TabsTrigger value="quiz" className="flex items-center gap-2">
+              <Trophy className="w-4 h-4" />
+              Quiz
+            </TabsTrigger>
+            <TabsTrigger value="progress" className="flex items-center gap-2">
+              <Star className="w-4 h-4" />
+              Progress
+            </TabsTrigger>
+          </TabsList>
+
+          <TabsContent value="dashboard">
+            <LearningDashboard stats={learningStats} userName="Alex" />
+          </TabsContent>
+
+          <TabsContent value="learn">
+            <div className="space-y-8">
+              <div className="text-center">
+                <h2 className="text-3xl font-bold text-slate-800 mb-4">
+                  Discover New Words
+                </h2>
+                <p className="text-slate-600 mb-8">
+                  Explore vocabulary through interactive word cards. Click to flip and learn!
+                </p>
+              </div>
+
+              <div className="flex justify-center mb-6">
+                <div className="flex gap-2">
+                  {sampleWords.map((_, index) => (
+                    <Button
+                      key={index}
+                      size="sm"
+                      variant={currentWordIndex === index ? "default" : "outline"}
+                      onClick={() => setCurrentWordIndex(index)}
+                      className="w-8 h-8 p-0"
+                    >
+                      {index + 1}
+                    </Button>
+                  ))}
+                </div>
+              </div>
+
+              <div className="max-w-md mx-auto">
+                <WordCard 
+                  word={sampleWords[currentWordIndex]}
+                  onPronounce={(word) => console.log('Playing pronunciation for:', word.word)}
+                  onFavorite={(word) => console.log('Favorited:', word.word)}
+                />
+              </div>
+
+              <div className="flex justify-center gap-4">
+                <Button
+                  onClick={() => setCurrentWordIndex(Math.max(0, currentWordIndex - 1))}
+                  disabled={currentWordIndex === 0}
+                  variant="outline"
+                >
+                  Previous
+                </Button>
+                <Button
+                  onClick={() => setCurrentWordIndex(Math.min(sampleWords.length - 1, currentWordIndex + 1))}
+                  disabled={currentWordIndex === sampleWords.length - 1}
+                >
+                  Next
+                  <ArrowRight className="w-4 h-4 ml-2" />
+                </Button>
+              </div>
+            </div>
+          </TabsContent>
+
+          <TabsContent value="quiz">
+            <div className="space-y-6">
+              {!showQuiz ? (
+                <div className="text-center max-w-2xl mx-auto">
+                  <h2 className="text-3xl font-bold text-slate-800 mb-4">
+                    Test Your Knowledge
+                  </h2>
+                  <p className="text-slate-600 mb-8">
+                    Challenge yourself with our interactive quiz! Answer questions about 
+                    the words you've learned and earn points.
+                  </p>
+                  
+                  <Card className="p-8 bg-gradient-to-br from-educational-purple/10 to-educational-blue/10">
+                    <CardContent className="space-y-6">
+                      <div className="grid grid-cols-3 gap-4 text-center">
+                        <div>
+                          <div className="text-2xl font-bold text-educational-blue">
+                            {sampleQuizQuestions.length}
+                          </div>
+                          <div className="text-sm text-slate-600">Questions</div>
+                        </div>
+                        <div>
+                          <div className="text-2xl font-bold text-educational-purple">30s</div>
+                          <div className="text-sm text-slate-600">Per Question</div>
+                        </div>
+                        <div>
+                          <div className="text-2xl font-bold text-educational-orange">
+                            {sampleQuizQuestions.length * 10}
+                          </div>
+                          <div className="text-sm text-slate-600">Max Points</div>
+                        </div>
+                      </div>
+                      
+                      <Button 
+                        size="lg" 
+                        onClick={() => setShowQuiz(true)}
+                        className="bg-educational-blue text-white hover:bg-educational-blue/90"
+                      >
+                        <Play className="w-5 h-5 mr-2" />
+                        Start Quiz
+                      </Button>
+                    </CardContent>
+                  </Card>
+                </div>
+              ) : (
+                <QuizGame
+                  questions={sampleQuizQuestions}
+                  onComplete={handleQuizComplete}
+                  onProgress={(current, total) => 
+                    console.log(`Quiz progress: ${current}/${total}`)
+                  }
+                />
+              )}
+            </div>
+          </TabsContent>
+
+          <TabsContent value="progress">
+            <div className="space-y-8">
+              <div className="text-center">
+                <h2 className="text-3xl font-bold text-slate-800 mb-4">
+                  Your Learning Journey
+                </h2>
+                <p className="text-slate-600 mb-8">
+                  Track your progress and celebrate your achievements!
+                </p>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <Card className="bg-gradient-to-br from-educational-green/10 to-educational-green/20">
+                  <CardHeader className="pb-3">
+                    <CardTitle className="flex items-center gap-2 text-educational-green">
+                      <Heart className="w-5 h-5" />
+                      Words Mastered
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="text-3xl font-bold mb-2">{learningStats.wordsLearned}</div>
+                    <p className="text-sm text-slate-600">
+                      Keep going! You're doing amazing.
+                    </p>
+                  </CardContent>
+                </Card>
+
+                <Card className="bg-gradient-to-br from-educational-orange/10 to-educational-orange/20">
+                  <CardHeader className="pb-3">
+                    <CardTitle className="flex items-center gap-2 text-educational-orange">
+                      <Sparkles className="w-5 h-5" />
+                      Current Streak
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="text-3xl font-bold mb-2">{learningStats.currentStreak} days</div>
+                    <p className="text-sm text-slate-600">
+                      You're on fire! Keep it up.
+                    </p>
+                  </CardContent>
+                </Card>
+
+                <Card className="bg-gradient-to-br from-educational-purple/10 to-educational-purple/20">
+                  <CardHeader className="pb-3">
+                    <CardTitle className="flex items-center gap-2 text-educational-purple">
+                      <Trophy className="w-5 h-5" />
+                      Level
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="text-3xl font-bold mb-2">Level {learningStats.level}</div>
+                    <p className="text-sm text-slate-600">
+                      {learningStats.totalPoints} total points earned
+                    </p>
+                  </CardContent>
+                </Card>
+              </div>
+
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                {learningStats.badges.map((badge) => (
+                  <Card 
+                    key={badge.id}
+                    className={`text-center p-4 transition-all ${
+                      badge.earned 
+                        ? 'bg-gradient-to-br from-yellow-400/20 to-yellow-600/20 border-yellow-300' 
+                        : 'bg-slate-50 border-slate-200'
+                    }`}
+                  >
+                    <div className="text-4xl mb-2">{badge.icon}</div>
+                    <h4 className="font-semibold mb-1">{badge.name}</h4>
+                    <p className="text-xs text-slate-600">{badge.description}</p>
+                  </Card>
+                ))}
+              </div>
+            </div>
+          </TabsContent>
+        </Tabs>
+      </main>
+
+      {/* Footer */}
+      <footer className="bg-slate-100 border-t border-slate-200 mt-16">
+        <div className="container mx-auto px-4 py-8">
+          <div className="text-center">
+            <div className="flex justify-center items-center gap-2 mb-4">
+              <BookOpen className="w-6 h-6 text-educational-blue" />
+              <span className="text-xl font-bold text-slate-800">Word Adventure</span>
+            </div>
+            <p className="text-slate-600 mb-4">
+              Making vocabulary learning fun and engaging for children everywhere
+            </p>
+            <div className="flex justify-center gap-6 text-sm text-slate-500">
+              <span>© 2024 Word Adventure</span>
+              <span>•</span>
+              <span>Made with ❤️ for young learners</span>
+            </div>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 }
