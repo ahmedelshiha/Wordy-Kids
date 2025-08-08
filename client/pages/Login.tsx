@@ -13,7 +13,7 @@ export default function Login() {
   };
 
   const handleExistingUser = () => {
-    navigate("/app?mode=login");
+    navigate("/login");
   };
 
   return (
