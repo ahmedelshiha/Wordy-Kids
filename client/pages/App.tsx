@@ -7,6 +7,7 @@ import Index from "./Index";
 
 export default function App() {
   const [searchParams] = useSearchParams();
+  const navigate = useNavigate();
   const mode = searchParams.get("mode");
   
   const [isLoggedIn, setIsLoggedIn] = useState(false);
