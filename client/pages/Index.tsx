@@ -7,7 +7,7 @@ import { WordCard } from "@/components/WordCard";
 import { LearningDashboard } from "@/components/LearningDashboard";
 import { QuizGame } from "@/components/QuizGame";
 import { ChildFriendlyCategorySelector } from "@/components/ChildFriendlyCategorySelector";
-import { ChildLogin } from "@/components/ChildLogin";
+import { EnhancedChildLogin } from "@/components/EnhancedChildLogin";
 import { AvatarCustomization } from "@/components/AvatarCustomization";
 import { AchievementSystem } from "@/components/AchievementSystem";
 import { EncouragingFeedback } from "@/components/EncouragingFeedback";
