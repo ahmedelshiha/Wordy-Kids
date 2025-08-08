@@ -12,6 +12,7 @@ export default function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [currentProfile, setCurrentProfile] = useState<any>(null);
   const [showProfileCreation, setShowProfileCreation] = useState(false);
+  const [showLevelSelection, setShowLevelSelection] = useState(false);
 
   useEffect(() => {
     if (mode === "create") {
