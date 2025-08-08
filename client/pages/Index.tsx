@@ -702,7 +702,10 @@ export default function Index({ initialProfile }: IndexProps) {
       <FloatingBubbles />
 
       {/* Settings Panel */}
-      {showSettings && <SettingsPanel onClose={() => setShowSettings(false)} />}
+      <SettingsPanel
+        isOpen={showSettings}
+        onClose={() => setShowSettings(false)}
+      />
 
       {/* Word Creator */}
       {showWordCreator && (
