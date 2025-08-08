@@ -213,25 +213,6 @@ export default function Index({ initialProfile }: IndexProps) {
     setCurrentWordIndex(0);
   };
 
-  // Show login screen for children
-  if (!isLoggedIn) {
-    if (showProfileCreation) {
-      return (
-        <AvatarCustomization
-          onCreateProfile={handleProfileCreation}
-          onBack={() => setShowProfileCreation(false)}
-        />
-      );
-    }
-
-    return (
-      <EnhancedChildLogin
-        onLogin={handleLogin}
-        onCreateProfile={() => setShowProfileCreation(true)}
-      />
-    );
-  }
-
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 relative">
       {/* Hero Header */}
