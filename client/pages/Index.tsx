@@ -67,7 +67,7 @@ const sampleWords = [
   {
     id: 3,
     word: "telescope",
-    pronunciation: "/ˈtelɪ��skoʊp/",
+    pronunciation: "/ˈtelɪskoʊp/",
     definition: "An instrument used to see distant objects, especially stars and planets",
     example: "Through the telescope, we could see the craters on the moon",
     funFact: "The first telescope was invented in 1608 and made stars look 20 times closer!",
@@ -273,518 +273,560 @@ export default function Index() {
       {/* Hero Header */}
       <header className="relative overflow-hidden bg-gradient-to-r from-educational-blue via-educational-purple to-educational-pink text-white">
         <div className="absolute inset-0 bg-black/10"></div>
-        <div className="relative container mx-auto px-4 py-12">
+        <div className="relative container mx-auto px-4 py-8">
           <div className="text-center max-w-4xl mx-auto">
-            <div className="flex justify-center mb-6">
-              <div className="bg-white/20 backdrop-blur-sm rounded-full p-6">
-                <BookOpen className="w-16 h-16 text-white" />
+            <div className="flex justify-center mb-4">
+              <div className="bg-white/20 backdrop-blur-sm rounded-full p-4">
+                <BookOpen className="w-12 h-12 text-white" />
               </div>
             </div>
-            <h1 className="text-5xl md:text-6xl font-bold mb-4">
-              Word Adventure
+            <h1 className="text-4xl md:text-5xl font-bold mb-3">
+              ⭐ Word Adventure
             </h1>
-            <p className="text-xl md:text-2xl mb-8 opacity-90">
-              Embark on an exciting journey to discover new words and expand your vocabulary! 
+            <p className="text-lg md:text-xl mb-6 opacity-90">
+              Embark on an exciting journey to discover new words! 
             </p>
-            <div className="flex flex-wrap justify-center gap-4">
-              <Button 
-                size="lg" 
-                className="bg-white text-educational-blue hover:bg-slate-100 font-semibold"
-                onClick={() => setActiveTab("learn")}
-              >
-                <Play className="w-5 h-5 mr-2" />
-                Start Learning
-              </Button>
-              <Button 
-                size="lg" 
-                variant="outline" 
-                className="border-white text-white hover:bg-white/10"
-                onClick={() => setActiveTab("games")}
-              >
-                <Gamepad2 className="w-5 h-5 mr-2" />
-                Play Games
-              </Button>
-              <Button 
-                size="lg" 
-                variant="outline" 
-                className="border-white text-white hover:bg-white/10"
-                onClick={() => setActiveTab("quiz")}
-              >
-                <Trophy className="w-5 h-5 mr-2" />
-                Take Quiz
-              </Button>
-            </div>
           </div>
         </div>
         
         {/* Floating Elements */}
-        <div className="absolute top-10 left-10 text-4xl animate-bounce">🌟</div>
-        <div className="absolute top-20 right-20 text-3xl animate-pulse">📚</div>
-        <div className="absolute bottom-10 left-20 text-5xl animate-bounce delay-1000">🎯</div>
-        <div className="absolute bottom-20 right-10 text-4xl animate-pulse delay-500">🚀</div>
+        <div className="absolute top-10 left-10 text-3xl animate-bounce">🌟</div>
+        <div className="absolute top-20 right-20 text-2xl animate-pulse">📚</div>
+        <div className="absolute bottom-10 left-20 text-4xl animate-bounce delay-1000">🎯</div>
+        <div className="absolute bottom-20 right-10 text-3xl animate-pulse delay-500">🚀</div>
       </header>
 
-      {/* Main Content */}
-      <main className="container mx-auto px-4 py-8">
+      {/* Main Content with Sidebar Layout */}
+      <main className="flex min-h-screen">
         {userRole === 'parent' ? (
-          <ParentDashboard
-            children={undefined} // Will use default sample data
-            sessions={undefined} // Will use default sample data
-          />
-        ) : (
-          <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-          <div className="flex items-center justify-between mb-8">
-            <TabsList className="grid w-full grid-cols-8 lg:w-auto lg:inline-flex max-w-5xl">
-              <TabsTrigger value="dashboard" className="flex items-center gap-2">
-                <Target className="w-4 h-4" />
-                Dashboard
-              </TabsTrigger>
-              <TabsTrigger value="learn" className="flex items-center gap-2">
-                <BookOpen className="w-4 h-4" />
-                Learn
-              </TabsTrigger>
-              <TabsTrigger value="games" className="flex items-center gap-2">
-                <Gamepad2 className="w-4 h-4" />
-                Games
-              </TabsTrigger>
-              <TabsTrigger value="reading" className="flex items-center gap-2">
-                <FileText className="w-4 h-4" />
-                Reading
-              </TabsTrigger>
-              <TabsTrigger value="challenges" className="flex items-center gap-2">
-                <Calendar className="w-4 h-4" />
-                Challenges
-              </TabsTrigger>
-              <TabsTrigger value="quiz" className="flex items-center gap-2">
-                <Trophy className="w-4 h-4" />
-                Quiz
-              </TabsTrigger>
-              <TabsTrigger value="analytics" className="flex items-center gap-2">
-                <TrendingUp className="w-4 h-4" />
-                Analytics
-              </TabsTrigger>
-              <TabsTrigger value="progress" className="flex items-center gap-2">
-                <Star className="w-4 h-4" />
-                Progress
-              </TabsTrigger>
-            </TabsList>
-
-            <div className="flex gap-2">
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => setShowWordCreator(true)}
-                className="bg-educational-green text-white hover:bg-educational-green/90"
-              >
-                <Plus className="w-4 h-4 mr-1" />
-                Create Word
-              </Button>
-              <Button
-                variant={userRole === 'child' ? 'default' : 'outline'}
-                size="sm"
-                onClick={() => setUserRole('child')}
-              >
-                Child
-              </Button>
-              <Button
-                variant={userRole === 'parent' ? 'default' : 'outline'}
-                size="sm"
-                onClick={() => setUserRole('parent')}
-              >
-                <Users className="w-4 h-4 mr-1" />
-                Parent
-              </Button>
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => setShowSettings(true)}
-                className="lg:flex hidden items-center gap-2"
-              >
-                <Settings className="w-4 h-4" />
-                Settings
-              </Button>
-            </div>
+          <div className="w-full p-8">
+            <ParentDashboard
+              children={undefined} // Will use default sample data
+              sessions={undefined} // Will use default sample data
+            />
           </div>
-
-          <TabsContent value="dashboard">
-            <LearningDashboard stats={learningStats} userName="Alex" />
-          </TabsContent>
-
-          <TabsContent value="learn">
-            <div className="space-y-8">
-              {selectedCategory === 'all' ? (
-                <CategorySelector
-                  categories={[]}
-                  selectedCategory={selectedCategory}
-                  onSelectCategory={(category) => {
-                    handleCategoryChange(category);
-                    setLearningMode('cards');
-                  }}
-                />
-              ) : (
-                <>
-                  <div className="text-center">
-                    <h2 className="text-3xl font-bold text-slate-800 mb-4">
-                      Learning Mode
-                    </h2>
-                    <p className="text-slate-600 mb-8">
-                      Choose how you'd like to learn your vocabulary!
-                    </p>
-                    
-                    <div className="flex justify-center gap-4 mb-8">
-                      <Button
-                        onClick={() => setLearningMode('cards')}
-                        variant={learningMode === 'cards' ? 'default' : 'outline'}
-                        className="flex items-center gap-2"
-                      >
-                        <BookOpen className="w-4 h-4" />
-                        Word Cards
-                      </Button>
-                      <Button
-                        onClick={() => setLearningMode('builder')}
-                        variant={learningMode === 'builder' ? 'default' : 'outline'}
-                        className="flex items-center gap-2"
-                      >
-                        <Brain className="w-4 h-4" />
-                        Vocabulary Builder
-                      </Button>
-                      <Button
-                        onClick={() => setSelectedCategory('all')}
-                        variant="ghost"
-                      >
-                        ← Back to Categories
-                      </Button>
-                    </div>
+        ) : (
+          <div className="flex w-full">
+            {/* Left Sidebar */}
+            <aside className="w-72 bg-gradient-to-b from-purple-100 to-pink-100 border-r border-purple-200 p-6 flex flex-col">
+              {/* User Profile Section */}
+              <div className="bg-white rounded-3xl p-6 mb-6 shadow-lg">
+                <div className="text-center">
+                  <div className="w-16 h-16 bg-gradient-to-r from-purple-400 to-pink-400 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <Users className="w-8 h-8 text-white" />
                   </div>
+                  <h3 className="font-bold text-lg text-gray-800">demo</h3>
+                  <div className="flex items-center justify-center gap-1 mb-2">
+                    <Star className="w-4 h-4 text-yellow-500 fill-current" />
+                    <span className="text-sm text-gray-600">Level 5</span>
+                  </div>
+                  <div className="bg-gray-100 rounded-full h-2 mb-2">
+                    <div className="bg-gradient-to-r from-purple-400 to-pink-400 h-2 rounded-full" style={{ width: '0%' }}></div>
+                  </div>
+                  <p className="text-xs text-gray-500">Progress: 0%</p>
+                  <p className="text-xs text-gray-500">0 of 5 words learned</p>
+                </div>
+              </div>
 
-                  {learningMode === 'cards' && (
-                    <>
-                      {(() => {
-                        const categoryWords = selectedCategory === 'all'
-                          ? getRandomWords(20)
-                          : getWordsByCategory(selectedCategory);
-                        const displayWords = categoryWords.slice(0, 20); // Limit to 20 for better performance
+              {/* Navigation Menu */}
+              <nav className="flex-1 space-y-3">
+                <button
+                  onClick={() => setActiveTab("dashboard")}
+                  className={`w-full flex items-center gap-4 p-4 rounded-2xl transition-all ${
+                    activeTab === "dashboard" 
+                      ? "bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-lg" 
+                      : "bg-white text-gray-700 hover:bg-purple-50"
+                  }`}
+                >
+                  <div className={`p-2 rounded-xl ${activeTab === "dashboard" ? "bg-white/20" : "bg-purple-100"}`}>
+                    <Target className={`w-5 h-5 ${activeTab === "dashboard" ? "text-white" : "text-purple-600"}`} />
+                  </div>
+                  <span className="font-semibold">Dashboard</span>
+                </button>
 
-                        return (
+                <button
+                  onClick={() => setActiveTab("learn")}
+                  className={`w-full flex items-center gap-4 p-4 rounded-2xl transition-all ${
+                    activeTab === "learn" 
+                      ? "bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-lg" 
+                      : "bg-white text-gray-700 hover:bg-purple-50"
+                  }`}
+                >
+                  <div className={`p-2 rounded-xl ${activeTab === "learn" ? "bg-white/20" : "bg-blue-100"}`}>
+                    <BookOpen className={`w-5 h-5 ${activeTab === "learn" ? "text-white" : "text-blue-600"}`} />
+                  </div>
+                  <span className="font-semibold">Word Library</span>
+                </button>
+
+                <button
+                  onClick={() => setActiveTab("quiz")}
+                  className={`w-full flex items-center gap-4 p-4 rounded-2xl transition-all ${
+                    activeTab === "quiz" 
+                      ? "bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-lg" 
+                      : "bg-white text-gray-700 hover:bg-purple-50"
+                  }`}
+                >
+                  <div className={`p-2 rounded-xl ${activeTab === "quiz" ? "bg-white/20" : "bg-pink-100"}`}>
+                    <Brain className={`w-5 h-5 ${activeTab === "quiz" ? "text-white" : "text-pink-600"}`} />
+                  </div>
+                  <span className="font-semibold">Quiz Time</span>
+                </button>
+
+                <button
+                  onClick={() => setActiveTab("progress")}
+                  className={`w-full flex items-center gap-4 p-4 rounded-2xl transition-all ${
+                    activeTab === "progress" 
+                      ? "bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-lg" 
+                      : "bg-white text-gray-700 hover:bg-purple-50"
+                  }`}
+                >
+                  <div className={`p-2 rounded-xl ${activeTab === "progress" ? "bg-white/20" : "bg-yellow-100"}`}>
+                    <Trophy className={`w-5 h-5 ${activeTab === "progress" ? "text-white" : "text-yellow-600"}`} />
+                  </div>
+                  <span className="font-semibold">Results</span>
+                </button>
+
+                <button
+                  onClick={() => setActiveTab("analytics")}
+                  className={`w-full flex items-center gap-4 p-4 rounded-2xl transition-all ${
+                    activeTab === "analytics" 
+                      ? "bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-lg" 
+                      : "bg-white text-gray-700 hover:bg-purple-50"
+                  }`}
+                >
+                  <div className={`p-2 rounded-xl ${activeTab === "analytics" ? "bg-white/20" : "bg-green-100"}`}>
+                    <TrendingUp className={`w-5 h-5 ${activeTab === "analytics" ? "text-white" : "text-green-600"}`} />
+                  </div>
+                  <span className="font-semibold">Progress</span>
+                </button>
+
+                <button
+                  onClick={() => setShowSettings(true)}
+                  className="w-full flex items-center gap-4 p-4 rounded-2xl bg-white text-gray-700 hover:bg-purple-50 transition-all border border-purple-200"
+                >
+                  <div className="p-2 rounded-xl bg-gray-100">
+                    <Settings className="w-5 h-5 text-gray-600" />
+                  </div>
+                  <span className="font-semibold">Settings</span>
+                </button>
+              </nav>
+
+              {/* Bottom Actions */}
+              <div className="mt-6 space-y-2">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => setShowWordCreator(true)}
+                  className="w-full bg-educational-green text-white hover:bg-educational-green/90 border-0"
+                >
+                  <Plus className="w-4 h-4 mr-2" />
+                  Create Word
+                </Button>
+                <div className="flex gap-2">
+                  <Button
+                    variant={userRole === 'child' ? 'default' : 'outline'}
+                    size="sm"
+                    onClick={() => setUserRole('child')}
+                    className="flex-1"
+                  >
+                    Child
+                  </Button>
+                  <Button
+                    variant={userRole === 'parent' ? 'default' : 'outline'}
+                    size="sm"
+                    onClick={() => setUserRole('parent')}
+                    className="flex-1"
+                  >
+                    Parent
+                  </Button>
+                </div>
+              </div>
+            </aside>
+
+            {/* Main Content Area */}
+            <div className="flex-1 p-8 bg-gradient-to-br from-blue-50 via-white to-purple-50">
+              <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
+                <TabsContent value="dashboard">
+                  <LearningDashboard stats={learningStats} userName="Alex" />
+                </TabsContent>
+
+                <TabsContent value="learn">
+                  <div className="space-y-8">
+                    {selectedCategory === 'all' ? (
+                      <CategorySelector
+                        categories={[]}
+                        selectedCategory={selectedCategory}
+                        onSelectCategory={(category) => {
+                          handleCategoryChange(category);
+                          setLearningMode('cards');
+                        }}
+                      />
+                    ) : (
+                      <>
+                        <div className="text-center">
+                          <h2 className="text-3xl font-bold text-slate-800 mb-4">
+                            Learning Mode
+                          </h2>
+                          <p className="text-slate-600 mb-8">
+                            Choose how you'd like to learn your vocabulary!
+                          </p>
+                          
+                          <div className="flex justify-center gap-4 mb-8">
+                            <Button
+                              onClick={() => setLearningMode('cards')}
+                              variant={learningMode === 'cards' ? 'default' : 'outline'}
+                              className="flex items-center gap-2"
+                            >
+                              <BookOpen className="w-4 h-4" />
+                              Word Cards
+                            </Button>
+                            <Button
+                              onClick={() => setLearningMode('builder')}
+                              variant={learningMode === 'builder' ? 'default' : 'outline'}
+                              className="flex items-center gap-2"
+                            >
+                              <Brain className="w-4 h-4" />
+                              Vocabulary Builder
+                            </Button>
+                            <Button
+                              onClick={() => setSelectedCategory('all')}
+                              variant="ghost"
+                            >
+                              ← Back to Categories
+                            </Button>
+                          </div>
+                        </div>
+
+                        {learningMode === 'cards' && (
                           <>
-                            <div className="flex justify-center mb-6">
-                              <div className="flex flex-wrap gap-2 max-w-lg">
-                                {displayWords.map((_, index) => (
-                                  <Button
-                                    key={index}
-                                    size="sm"
-                                    variant={currentWordIndex === index ? "default" : "outline"}
-                                    onClick={() => setCurrentWordIndex(index)}
-                                    className="w-8 h-8 p-0"
-                                  >
-                                    {index + 1}
-                                  </Button>
-                                ))}
+                            {(() => {
+                              const categoryWords = selectedCategory === 'all'
+                                ? getRandomWords(20)
+                                : getWordsByCategory(selectedCategory);
+                              const displayWords = categoryWords.slice(0, 20); // Limit to 20 for better performance
+
+                              return (
+                                <>
+                                  <div className="flex justify-center mb-6">
+                                    <div className="flex flex-wrap gap-2 max-w-lg">
+                                      {displayWords.map((_, index) => (
+                                        <Button
+                                          key={index}
+                                          size="sm"
+                                          variant={currentWordIndex === index ? "default" : "outline"}
+                                          onClick={() => setCurrentWordIndex(index)}
+                                          className="w-8 h-8 p-0"
+                                        >
+                                          {index + 1}
+                                        </Button>
+                                      ))}
+                                    </div>
+                                  </div>
+
+                                  {displayWords.length > 0 && (
+                                    <>
+                                      <div className="max-w-md mx-auto">
+                                        <WordCard
+                                          word={displayWords[currentWordIndex] || displayWords[0]}
+                                          onPronounce={(word) => console.log('Playing pronunciation for:', word.word)}
+                                          onFavorite={(word) => console.log('Favorited:', word.word)}
+                                        />
+                                      </div>
+
+                                      <div className="flex justify-center gap-4">
+                                        <Button
+                                          onClick={() => setCurrentWordIndex(Math.max(0, currentWordIndex - 1))}
+                                          disabled={currentWordIndex === 0}
+                                          variant="outline"
+                                        >
+                                          Previous
+                                        </Button>
+                                        <Button
+                                          onClick={() => setCurrentWordIndex(Math.min(displayWords.length - 1, currentWordIndex + 1))}
+                                          disabled={currentWordIndex === displayWords.length - 1}
+                                        >
+                                          Next
+                                          <ArrowRight className="w-4 h-4 ml-2" />
+                                        </Button>
+                                      </div>
+
+                                      <div className="text-center mt-4">
+                                        <Badge variant="outline" className="text-sm">
+                                          {selectedCategory === 'all' ? 'Random Selection' : `${selectedCategory} Category`} -
+                                          Word {currentWordIndex + 1} of {displayWords.length}
+                                        </Badge>
+                                      </div>
+                                    </>
+                                  )}
+                                </>
+                              );
+                            })()}
+                          </>
+                        )}
+
+                        {learningMode === 'builder' && (
+                          <VocabularyBuilder
+                            words={wordsDatabase.map(word => ({
+                              ...word,
+                              masteryLevel: Math.floor(Math.random() * 100),
+                              lastReviewed: new Date(Date.now() - Math.random() * 7 * 24 * 60 * 60 * 1000),
+                              nextReview: new Date(Date.now() + Math.random() * 3 * 24 * 60 * 60 * 1000)
+                            }))}
+                            onWordMastered={handleWordMastered}
+                            onSessionComplete={handleVocabularySessionComplete}
+                          />
+                        )}
+                      </>
+                    )}
+                  </div>
+                </TabsContent>
+
+                <TabsContent value="games">
+                  <div className="space-y-8">
+                    <div className="text-center">
+                      <h2 className="text-3xl font-bold text-slate-800 mb-4">
+                        Learning Games
+                      </h2>
+                      <p className="text-slate-600 mb-8">
+                        Make learning fun with our interactive vocabulary games!
+                      </p>
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+                      <Card className="cursor-pointer hover:shadow-lg transition-all duration-300 hover:scale-105">
+                        <CardContent className="p-8 text-center">
+                          <div className="text-6xl mb-4">🎯</div>
+                          <h3 className="text-xl font-semibold mb-2">Word Matching</h3>
+                          <p className="text-slate-600 mb-4">
+                            Match words with their definitions in this fun memory game!
+                          </p>
+                          <Button 
+                            className="bg-educational-blue text-white"
+                            onClick={() => setLearningMode('matching')}
+                          >
+                            <Shuffle className="w-4 h-4 mr-2" />
+                            Start Matching
+                          </Button>
+                        </CardContent>
+                      </Card>
+
+                      <Card className="cursor-pointer hover:shadow-lg transition-all duration-300 hover:scale-105">
+                        <CardContent className="p-8 text-center">
+                          <div className="text-6xl mb-4">🧩</div>
+                          <h3 className="text-xl font-semibold mb-2">Word Puzzle</h3>
+                          <p className="text-slate-600 mb-4">
+                            Solve word puzzles and unscramble letters to form vocabulary words!
+                          </p>
+                          <Button 
+                            variant="outline"
+                            disabled
+                          >
+                            Coming Soon
+                          </Button>
+                        </CardContent>
+                      </Card>
+                    </div>
+
+                    {learningMode === 'matching' && (
+                      <div className="mt-8">
+                        <WordMatchingGame
+                          pairs={matchingPairs}
+                          onComplete={handleMatchingComplete}
+                        />
+                      </div>
+                    )}
+                  </div>
+                </TabsContent>
+
+                <TabsContent value="quiz">
+                  <div className="space-y-6">
+                    {!showQuiz ? (
+                      <div className="text-center max-w-2xl mx-auto">
+                        <h2 className="text-3xl font-bold text-slate-800 mb-4">
+                          Test Your Knowledge
+                        </h2>
+                        <p className="text-slate-600 mb-8">
+                          Challenge yourself with our interactive quiz! Answer questions about 
+                          the words you've learned and earn points.
+                        </p>
+                        
+                        <Card className="p-8 bg-gradient-to-br from-educational-purple/10 to-educational-blue/10">
+                          <CardContent className="space-y-6">
+                            <div className="grid grid-cols-3 gap-4 text-center">
+                              <div>
+                                <div className="text-2xl font-bold text-educational-blue">
+                                  {sampleQuizQuestions.length}
+                                </div>
+                                <div className="text-sm text-slate-600">Questions</div>
+                              </div>
+                              <div>
+                                <div className="text-2xl font-bold text-educational-purple">30s</div>
+                                <div className="text-sm text-slate-600">Per Question</div>
+                              </div>
+                              <div>
+                                <div className="text-2xl font-bold text-educational-orange">
+                                  {sampleQuizQuestions.length * 10}
+                                </div>
+                                <div className="text-sm text-slate-600">Max Points</div>
                               </div>
                             </div>
-
-                            {displayWords.length > 0 && (
-                              <>
-                                <div className="max-w-md mx-auto">
-                                  <WordCard
-                                    word={displayWords[currentWordIndex] || displayWords[0]}
-                                    onPronounce={(word) => console.log('Playing pronunciation for:', word.word)}
-                                    onFavorite={(word) => console.log('Favorited:', word.word)}
-                                  />
-                                </div>
-
-                                <div className="flex justify-center gap-4">
-                                  <Button
-                                    onClick={() => setCurrentWordIndex(Math.max(0, currentWordIndex - 1))}
-                                    disabled={currentWordIndex === 0}
-                                    variant="outline"
-                                  >
-                                    Previous
-                                  </Button>
-                                  <Button
-                                    onClick={() => setCurrentWordIndex(Math.min(displayWords.length - 1, currentWordIndex + 1))}
-                                    disabled={currentWordIndex === displayWords.length - 1}
-                                  >
-                                    Next
-                                    <ArrowRight className="w-4 h-4 ml-2" />
-                                  </Button>
-                                </div>
-
-                                <div className="text-center mt-4">
-                                  <Badge variant="outline" className="text-sm">
-                                    {selectedCategory === 'all' ? 'Random Selection' : `${selectedCategory} Category`} -
-                                    Word {currentWordIndex + 1} of {displayWords.length}
-                                  </Badge>
-                                </div>
-                              </>
-                            )}
-                          </>
-                        );
-                      })()}
-                    </>
-                  )}
-
-                  {learningMode === 'builder' && (
-                    <VocabularyBuilder
-                      words={wordsDatabase.map(word => ({
-                        ...word,
-                        masteryLevel: Math.floor(Math.random() * 100),
-                        lastReviewed: new Date(Date.now() - Math.random() * 7 * 24 * 60 * 60 * 1000),
-                        nextReview: new Date(Date.now() + Math.random() * 3 * 24 * 60 * 60 * 1000)
-                      }))}
-                      onWordMastered={handleWordMastered}
-                      onSessionComplete={handleVocabularySessionComplete}
-                    />
-                  )}
-                </>
-              )}
-            </div>
-          </TabsContent>
-
-          <TabsContent value="games">
-            <div className="space-y-8">
-              <div className="text-center">
-                <h2 className="text-3xl font-bold text-slate-800 mb-4">
-                  Learning Games
-                </h2>
-                <p className="text-slate-600 mb-8">
-                  Make learning fun with our interactive vocabulary games!
-                </p>
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
-                <Card className="cursor-pointer hover:shadow-lg transition-all duration-300 hover:scale-105">
-                  <CardContent className="p-8 text-center">
-                    <div className="text-6xl mb-4">🎯</div>
-                    <h3 className="text-xl font-semibold mb-2">Word Matching</h3>
-                    <p className="text-slate-600 mb-4">
-                      Match words with their definitions in this fun memory game!
-                    </p>
-                    <Button 
-                      className="bg-educational-blue text-white"
-                      onClick={() => setLearningMode('matching')}
-                    >
-                      <Shuffle className="w-4 h-4 mr-2" />
-                      Start Matching
-                    </Button>
-                  </CardContent>
-                </Card>
-
-                <Card className="cursor-pointer hover:shadow-lg transition-all duration-300 hover:scale-105">
-                  <CardContent className="p-8 text-center">
-                    <div className="text-6xl mb-4">🧩</div>
-                    <h3 className="text-xl font-semibold mb-2">Word Puzzle</h3>
-                    <p className="text-slate-600 mb-4">
-                      Solve word puzzles and unscramble letters to form vocabulary words!
-                    </p>
-                    <Button 
-                      variant="outline"
-                      disabled
-                    >
-                      Coming Soon
-                    </Button>
-                  </CardContent>
-                </Card>
-              </div>
-
-              {learningMode === 'matching' && (
-                <div className="mt-8">
-                  <WordMatchingGame
-                    pairs={matchingPairs}
-                    onComplete={handleMatchingComplete}
-                  />
-                </div>
-              )}
-            </div>
-          </TabsContent>
-
-          <TabsContent value="quiz">
-            <div className="space-y-6">
-              {!showQuiz ? (
-                <div className="text-center max-w-2xl mx-auto">
-                  <h2 className="text-3xl font-bold text-slate-800 mb-4">
-                    Test Your Knowledge
-                  </h2>
-                  <p className="text-slate-600 mb-8">
-                    Challenge yourself with our interactive quiz! Answer questions about 
-                    the words you've learned and earn points.
-                  </p>
-                  
-                  <Card className="p-8 bg-gradient-to-br from-educational-purple/10 to-educational-blue/10">
-                    <CardContent className="space-y-6">
-                      <div className="grid grid-cols-3 gap-4 text-center">
-                        <div>
-                          <div className="text-2xl font-bold text-educational-blue">
-                            {sampleQuizQuestions.length}
-                          </div>
-                          <div className="text-sm text-slate-600">Questions</div>
-                        </div>
-                        <div>
-                          <div className="text-2xl font-bold text-educational-purple">30s</div>
-                          <div className="text-sm text-slate-600">Per Question</div>
-                        </div>
-                        <div>
-                          <div className="text-2xl font-bold text-educational-orange">
-                            {sampleQuizQuestions.length * 10}
-                          </div>
-                          <div className="text-sm text-slate-600">Max Points</div>
-                        </div>
+                            
+                            <Button 
+                              size="lg" 
+                              onClick={() => setShowQuiz(true)}
+                              className="bg-educational-blue text-white hover:bg-educational-blue/90"
+                            >
+                              <Play className="w-5 h-5 mr-2" />
+                              Start Quiz
+                            </Button>
+                          </CardContent>
+                        </Card>
                       </div>
-                      
-                      <Button 
-                        size="lg" 
-                        onClick={() => setShowQuiz(true)}
-                        className="bg-educational-blue text-white hover:bg-educational-blue/90"
-                      >
-                        <Play className="w-5 h-5 mr-2" />
-                        Start Quiz
-                      </Button>
-                    </CardContent>
-                  </Card>
-                </div>
-              ) : (
-                <QuizGame
-                  questions={sampleQuizQuestions}
-                  onComplete={handleQuizComplete}
-                  onProgress={(current, total) => 
-                    console.log(`Quiz progress: ${current}/${total}`)
-                  }
-                />
-              )}
+                    ) : (
+                      <QuizGame
+                        questions={sampleQuizQuestions}
+                        onComplete={handleQuizComplete}
+                        onProgress={(current, total) => 
+                          console.log(`Quiz progress: ${current}/${total}`)
+                        }
+                      />
+                    )}
+                  </div>
+                </TabsContent>
+
+                <TabsContent value="progress">
+                  <div className="space-y-8">
+                    <div className="text-center">
+                      <h2 className="text-3xl font-bold text-slate-800 mb-4">
+                        Your Learning Journey
+                      </h2>
+                      <p className="text-slate-600 mb-8">
+                        Track your progress and celebrate your achievements!
+                      </p>
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                      <Card className="bg-gradient-to-br from-educational-green/10 to-educational-green/20">
+                        <CardHeader className="pb-3">
+                          <CardTitle className="flex items-center gap-2 text-educational-green">
+                            <Heart className="w-5 h-5" />
+                            Words Mastered
+                          </CardTitle>
+                        </CardHeader>
+                        <CardContent>
+                          <div className="text-3xl font-bold mb-2">{learningStats.wordsLearned}</div>
+                          <p className="text-sm text-slate-600">
+                            Keep going! You're doing amazing.
+                          </p>
+                        </CardContent>
+                      </Card>
+
+                      <Card className="bg-gradient-to-br from-educational-orange/10 to-educational-orange/20">
+                        <CardHeader className="pb-3">
+                          <CardTitle className="flex items-center gap-2 text-educational-orange">
+                            <Sparkles className="w-5 h-5" />
+                            Current Streak
+                          </CardTitle>
+                        </CardHeader>
+                        <CardContent>
+                          <div className="text-3xl font-bold mb-2">{learningStats.currentStreak} days</div>
+                          <p className="text-sm text-slate-600">
+                            You're on fire! Keep it up.
+                          </p>
+                        </CardContent>
+                      </Card>
+
+                      <Card className="bg-gradient-to-br from-educational-purple/10 to-educational-purple/20">
+                        <CardHeader className="pb-3">
+                          <CardTitle className="flex items-center gap-2 text-educational-purple">
+                            <Trophy className="w-5 h-5" />
+                            Level
+                          </CardTitle>
+                        </CardHeader>
+                        <CardContent>
+                          <div className="text-3xl font-bold mb-2">Level {learningStats.level}</div>
+                          <p className="text-sm text-slate-600">
+                            {learningStats.totalPoints} total points earned
+                          </p>
+                        </CardContent>
+                      </Card>
+                    </div>
+
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                      {learningStats.badges.map((badge) => (
+                        <Card 
+                          key={badge.id}
+                          className={`text-center p-4 transition-all ${
+                            badge.earned 
+                              ? 'bg-gradient-to-br from-yellow-400/20 to-yellow-600/20 border-yellow-300' 
+                              : 'bg-slate-50 border-slate-200'
+                          }`}
+                        >
+                          <div className="text-4xl mb-2">{badge.icon}</div>
+                          <h4 className="font-semibold mb-1">{badge.name}</h4>
+                          <p className="text-xs text-slate-600">{badge.description}</p>
+                        </Card>
+                      ))}
+                    </div>
+                  </div>
+                </TabsContent>
+
+                <TabsContent value="reading">
+                  <div className="space-y-8">
+                    <div className="text-center">
+                      <h2 className="text-3xl font-bold text-slate-800 mb-4">
+                        Reading Comprehension
+                      </h2>
+                      <p className="text-slate-600 mb-8">
+                        Improve your reading skills and vocabulary through engaging stories!
+                      </p>
+                    </div>
+
+                    <ReadingComprehension
+                      passage={undefined} // Will use default sample passage
+                      onComplete={(score, total) => {
+                        setShowCelebration(true);
+                        setTimeout(() => {
+                          alert(`Reading Complete! You scored ${score}/${total}!`);
+                          setShowCelebration(false);
+                        }, 2000);
+                      }}
+                    />
+                  </div>
+                </TabsContent>
+
+                <TabsContent value="analytics">
+                  <LearningAnalytics />
+                </TabsContent>
+
+                <TabsContent value="challenges">
+                  <div className="space-y-8">
+                    <div className="text-center">
+                      <h2 className="text-3xl font-bold text-slate-800 mb-4">
+                        Daily Challenges
+                      </h2>
+                      <p className="text-slate-600 mb-8">
+                        Complete daily challenges to earn rewards and build learning habits!
+                      </p>
+                    </div>
+
+                    <DailyChallenge
+                      challenges={[]}
+                      onChallengeComplete={(challengeId) => {
+                        console.log('Challenge completed:', challengeId);
+                        setShowCelebration(true);
+                        setTimeout(() => setShowCelebration(false), 3000);
+                      }}
+                      onStartChallenge={(challengeId) => {
+                        console.log('Starting challenge:', challengeId);
+                        // In a real app, this would navigate to the appropriate learning activity
+                      }}
+                    />
+                  </div>
+                </TabsContent>
+              </Tabs>
             </div>
-          </TabsContent>
-
-          <TabsContent value="progress">
-            <div className="space-y-8">
-              <div className="text-center">
-                <h2 className="text-3xl font-bold text-slate-800 mb-4">
-                  Your Learning Journey
-                </h2>
-                <p className="text-slate-600 mb-8">
-                  Track your progress and celebrate your achievements!
-                </p>
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <Card className="bg-gradient-to-br from-educational-green/10 to-educational-green/20">
-                  <CardHeader className="pb-3">
-                    <CardTitle className="flex items-center gap-2 text-educational-green">
-                      <Heart className="w-5 h-5" />
-                      Words Mastered
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="text-3xl font-bold mb-2">{learningStats.wordsLearned}</div>
-                    <p className="text-sm text-slate-600">
-                      Keep going! You're doing amazing.
-                    </p>
-                  </CardContent>
-                </Card>
-
-                <Card className="bg-gradient-to-br from-educational-orange/10 to-educational-orange/20">
-                  <CardHeader className="pb-3">
-                    <CardTitle className="flex items-center gap-2 text-educational-orange">
-                      <Sparkles className="w-5 h-5" />
-                      Current Streak
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="text-3xl font-bold mb-2">{learningStats.currentStreak} days</div>
-                    <p className="text-sm text-slate-600">
-                      You're on fire! Keep it up.
-                    </p>
-                  </CardContent>
-                </Card>
-
-                <Card className="bg-gradient-to-br from-educational-purple/10 to-educational-purple/20">
-                  <CardHeader className="pb-3">
-                    <CardTitle className="flex items-center gap-2 text-educational-purple">
-                      <Trophy className="w-5 h-5" />
-                      Level
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="text-3xl font-bold mb-2">Level {learningStats.level}</div>
-                    <p className="text-sm text-slate-600">
-                      {learningStats.totalPoints} total points earned
-                    </p>
-                  </CardContent>
-                </Card>
-              </div>
-
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                {learningStats.badges.map((badge) => (
-                  <Card 
-                    key={badge.id}
-                    className={`text-center p-4 transition-all ${
-                      badge.earned 
-                        ? 'bg-gradient-to-br from-yellow-400/20 to-yellow-600/20 border-yellow-300' 
-                        : 'bg-slate-50 border-slate-200'
-                    }`}
-                  >
-                    <div className="text-4xl mb-2">{badge.icon}</div>
-                    <h4 className="font-semibold mb-1">{badge.name}</h4>
-                    <p className="text-xs text-slate-600">{badge.description}</p>
-                  </Card>
-                ))}
-              </div>
-            </div>
-          </TabsContent>
-
-          <TabsContent value="reading">
-            <div className="space-y-8">
-              <div className="text-center">
-                <h2 className="text-3xl font-bold text-slate-800 mb-4">
-                  Reading Comprehension
-                </h2>
-                <p className="text-slate-600 mb-8">
-                  Improve your reading skills and vocabulary through engaging stories!
-                </p>
-              </div>
-
-              <ReadingComprehension
-                passage={undefined} // Will use default sample passage
-                onComplete={(score, total) => {
-                  setShowCelebration(true);
-                  setTimeout(() => {
-                    alert(`Reading Complete! You scored ${score}/${total}!`);
-                    setShowCelebration(false);
-                  }, 2000);
-                }}
-              />
-            </div>
-          </TabsContent>
-
-          <TabsContent value="analytics">
-            <LearningAnalytics />
-          </TabsContent>
-
-          <TabsContent value="challenges">
-            <div className="space-y-8">
-              <div className="text-center">
-                <h2 className="text-3xl font-bold text-slate-800 mb-4">
-                  Daily Challenges
-                </h2>
-                <p className="text-slate-600 mb-8">
-                  Complete daily challenges to earn rewards and build learning habits!
-                </p>
-              </div>
-
-              <DailyChallenge
-                challenges={[]}
-                onChallengeComplete={(challengeId) => {
-                  console.log('Challenge completed:', challengeId);
-                  setShowCelebration(true);
-                  setTimeout(() => setShowCelebration(false), 3000);
-                }}
-                onStartChallenge={(challengeId) => {
-                  console.log('Starting challenge:', challengeId);
-                  // In a real app, this would navigate to the appropriate learning activity
-                }}
-              />
-            </div>
-          </TabsContent>
-        </Tabs>
+          </div>
         )}
       </main>
 
@@ -819,6 +861,9 @@ export default function Index() {
           onClose={() => setShowWordCreator(false)}
         />
       )}
+
+      {showCelebration && <CelebrationEffect />}
+      <FloatingBubbles />
     </div>
   );
 }
