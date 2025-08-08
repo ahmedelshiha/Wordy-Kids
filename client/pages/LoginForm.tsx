@@ -46,8 +46,12 @@ export default function LoginForm() {
     setIsLoading(true);
     setMessage(null);
 
+    // Trim whitespace from inputs
+    const username = formData.username.trim();
+    const password = formData.password.trim();
+
     // Basic validation
-    if (!formData.username || !formData.password) {
+    if (!username || !password) {
       setMessage({
         type: "error",
         text: "Please enter both username and password! 😊"
@@ -60,9 +64,9 @@ export default function LoginForm() {
     setTimeout(() => {
       // Demo credentials - replace with real authentication
       if (
-        (formData.username === "demo" && formData.password === "demo123") ||
-        (formData.username === "alex" && formData.password === "alex123") ||
-        (formData.username === "sam" && formData.password === "sam123")
+        (username === "demo" && password === "demo123") ||
+        (username === "alex" && password === "alex123") ||
+        (username === "sam" && password === "sam123")
       ) {
         setMessage({ 
           type: "success", 
