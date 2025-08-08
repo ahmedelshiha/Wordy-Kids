@@ -178,6 +178,14 @@ export const QuizGame: React.FC<QuizGameProps> = ({
               <Badge className="bg-educational-purple text-white">
                 {score}/{questions.length}
               </Badge>
+              <Button
+                onClick={handleExit}
+                variant="ghost"
+                size="sm"
+                className="text-slate-500 hover:text-red-500 hover:bg-red-50"
+              >
+                <X className="w-5 h-5" />
+              </Button>
             </div>
           </div>
           
