@@ -128,7 +128,7 @@ const enrichedCategories: Category[] = [
   {
     id: 'sports',
     name: 'Sports',
-    icon: '��',
+    icon: '⚽',
     color: 'bg-green-500',
     gradient: 'from-green-400 to-green-600',
     wordCount: getWordsByCategory('sports').length,
@@ -229,46 +229,126 @@ export const CategorySelector: React.FC<CategorySelectorProps> = ({
   selectedCategory = 'all',
   onSelectCategory
 }) => {
+  const categories = enrichedCategories;
+
   return (
-    <div className="space-y-6">
+    <div className="space-y-8">
       <div className="text-center">
-        <h2 className="text-2xl font-bold text-slate-800 mb-2">
-          Choose Your Adventure
+        <h2 className="text-4xl font-bold text-slate-800 mb-4">
+          🌟 Choose Your Learning Adventure! 🌟
         </h2>
-        <p className="text-slate-600">
-          Select a category to start learning new words!
+        <p className="text-lg text-slate-600 max-w-2xl mx-auto">
+          Explore our rich collection of vocabulary across exciting categories.
+          Each category is packed with words, fun facts, and amazing discoveries!
         </p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      {/* Featured Stats */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-4xl mx-auto mb-8">
+        <Card className="bg-gradient-to-r from-educational-blue to-educational-purple text-white">
+          <CardContent className="p-6 text-center">
+            <div className="text-3xl font-bold">{wordsDatabase.length}</div>
+            <p className="text-sm opacity-90">Total Words</p>
+          </CardContent>
+        </Card>
+        <Card className="bg-gradient-to-r from-educational-green to-educational-blue text-white">
+          <CardContent className="p-6 text-center">
+            <div className="text-3xl font-bold">{categories.length - 1}</div>
+            <p className="text-sm opacity-90">Categories</p>
+          </CardContent>
+        </Card>
+        <Card className="bg-gradient-to-r from-educational-orange to-educational-pink text-white">
+          <CardContent className="p-6 text-center">
+            <div className="text-3xl font-bold">3</div>
+            <p className="text-sm opacity-90">Difficulty Levels</p>
+          </CardContent>
+        </Card>
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
         {categories.map((category) => (
           <Card
             key={category.id}
-            className={`cursor-pointer transition-all duration-300 hover:scale-105 hover:shadow-lg ${
-              selectedCategory === category.id 
-                ? 'ring-2 ring-educational-blue shadow-lg' 
-                : ''
+            className={`cursor-pointer transition-all duration-300 hover:scale-105 hover:shadow-xl transform ${
+              selectedCategory === category.id
+                ? 'ring-4 ring-educational-blue shadow-2xl scale-105'
+                : 'hover:shadow-lg'
             }`}
             onClick={() => onSelectCategory(category.id)}
           >
-            <CardContent className="p-6 text-center">
-              <div className="text-5xl mb-4">{category.icon}</div>
-              <h3 className="text-xl font-semibold text-slate-800 mb-2">
-                {category.name}
-              </h3>
-              <p className="text-sm text-slate-600 mb-4">
-                {category.description}
-              </p>
-              <div className="flex items-center justify-between">
-                <Badge 
-                  className={`${category.color} text-white`}
+            <CardContent className="p-0 overflow-hidden">
+              {/* Header with gradient */}
+              <div className={`bg-gradient-to-r ${category.gradient} p-6 text-white text-center`}>
+                <div className="text-6xl mb-3">{category.icon}</div>
+                <h3 className="text-xl font-bold mb-1">
+                  {category.name}
+                </h3>
+                <Badge
+                  className="bg-white/20 border-white/30 text-white"
                 >
                   {category.wordCount} words
                 </Badge>
+              </div>
+
+              {/* Content */}
+              <div className="p-6 space-y-4">
+                <p className="text-sm text-slate-600 leading-relaxed">
+                  {category.description}
+                </p>
+
+                {/* Difficulty breakdown */}
+                <div className="space-y-2">
+                  <div className="flex justify-between text-xs text-slate-500 mb-1">
+                    <span>Difficulty Levels</span>
+                    <span>{category.difficultyBreakdown.easy + category.difficultyBreakdown.medium + category.difficultyBreakdown.hard} total</span>
+                  </div>
+
+                  <div className="grid grid-cols-3 gap-2 text-xs">
+                    <div className="text-center">
+                      <div className="w-full bg-green-100 rounded-full h-2 mb-1">
+                        <div
+                          className="bg-green-500 h-2 rounded-full"
+                          style={{
+                            width: `${category.wordCount > 0 ? (category.difficultyBreakdown.easy / category.wordCount) * 100 : 0}%`
+                          }}
+                        ></div>
+                      </div>
+                      <span className="text-green-600 font-medium">{category.difficultyBreakdown.easy} Easy</span>
+                    </div>
+
+                    <div className="text-center">
+                      <div className="w-full bg-orange-100 rounded-full h-2 mb-1">
+                        <div
+                          className="bg-orange-500 h-2 rounded-full"
+                          style={{
+                            width: `${category.wordCount > 0 ? (category.difficultyBreakdown.medium / category.wordCount) * 100 : 0}%`
+                          }}
+                        ></div>
+                      </div>
+                      <span className="text-orange-600 font-medium">{category.difficultyBreakdown.medium} Medium</span>
+                    </div>
+
+                    <div className="text-center">
+                      <div className="w-full bg-red-100 rounded-full h-2 mb-1">
+                        <div
+                          className="bg-red-500 h-2 rounded-full"
+                          style={{
+                            width: `${category.wordCount > 0 ? (category.difficultyBreakdown.hard / category.wordCount) * 100 : 0}%`
+                          }}
+                        ></div>
+                      </div>
+                      <span className="text-red-600 font-medium">{category.difficultyBreakdown.hard} Hard</span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Selection indicator */}
                 {selectedCategory === category.id && (
-                  <Badge className="bg-green-500 text-white">
-                    ✓ Selected
-                  </Badge>
+                  <div className="flex items-center justify-center">
+                    <Badge className="bg-green-500 text-white animate-pulse">
+                      ✓ Selected - Ready to Learn!
+                    </Badge>
+                  </div>
                 )}
               </div>
             </CardContent>
@@ -277,12 +357,12 @@ export const CategorySelector: React.FC<CategorySelectorProps> = ({
       </div>
 
       <div className="text-center">
-        <Button 
+        <Button
           size="lg"
           onClick={() => onSelectCategory(selectedCategory)}
-          className="bg-educational-blue text-white hover:bg-educational-blue/90"
+          className="bg-gradient-to-r from-educational-blue to-educational-purple text-white hover:from-educational-blue/90 hover:to-educational-purple/90 text-lg px-8 py-3 rounded-full font-semibold transform hover:scale-105 transition-all duration-300"
         >
-          Start Learning {categories.find(c => c.id === selectedCategory)?.name}
+          🚀 Start Learning {categories.find(c => c.id === selectedCategory)?.name}! 🚀
         </Button>
       </div>
     </div>
