@@ -462,9 +462,22 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
     <div className="space-y-6">
       {/* Header */}
       <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-3xl font-bold text-slate-800">Parent Dashboard</h1>
-          <p className="text-slate-600">Monitor your children's learning progress</p>
+        <div className="flex items-center gap-4">
+          {onNavigateBack && (
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={onNavigateBack}
+              className="flex items-center gap-2"
+            >
+              <ArrowLeft className="w-4 h-4" />
+              Back to Main
+            </Button>
+          )}
+          <div>
+            <h1 className="text-3xl font-bold text-slate-800">Parent Dashboard</h1>
+            <p className="text-slate-600">Monitor your children's learning progress</p>
+          </div>
         </div>
         <div className="flex gap-2">
           <Button variant="outline" size="sm">
