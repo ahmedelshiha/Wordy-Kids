@@ -351,6 +351,15 @@ export default function Index() {
 
             <div className="flex gap-2">
               <Button
+                variant="outline"
+                size="sm"
+                onClick={() => setShowWordCreator(true)}
+                className="bg-educational-green text-white hover:bg-educational-green/90"
+              >
+                <Plus className="w-4 h-4 mr-1" />
+                Create Word
+              </Button>
+              <Button
                 variant={userRole === 'child' ? 'default' : 'outline'}
                 size="sm"
                 onClick={() => setUserRole('child')}
