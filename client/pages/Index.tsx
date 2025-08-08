@@ -313,7 +313,7 @@ export default function Index() {
         ) : (
           <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
           <div className="flex items-center justify-between mb-8">
-            <TabsList className="grid w-full grid-cols-7 lg:w-auto lg:inline-flex max-w-4xl">
+            <TabsList className="grid w-full grid-cols-8 lg:w-auto lg:inline-flex max-w-5xl">
               <TabsTrigger value="dashboard" className="flex items-center gap-2">
                 <Target className="w-4 h-4" />
                 Dashboard
@@ -337,6 +337,10 @@ export default function Index() {
               <TabsTrigger value="quiz" className="flex items-center gap-2">
                 <Trophy className="w-4 h-4" />
                 Quiz
+              </TabsTrigger>
+              <TabsTrigger value="analytics" className="flex items-center gap-2">
+                <TrendingUp className="w-4 h-4" />
+                Analytics
               </TabsTrigger>
               <TabsTrigger value="progress" className="flex items-center gap-2">
                 <Star className="w-4 h-4" />
