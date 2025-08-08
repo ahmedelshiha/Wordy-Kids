@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useSearchParams, useNavigate } from "react-router-dom";
 import { EnhancedChildLogin } from "@/components/EnhancedChildLogin";
 import { AvatarCustomization } from "@/components/AvatarCustomization";
 import { LevelSelection } from "@/components/LevelSelection";
