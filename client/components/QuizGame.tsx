@@ -16,7 +16,7 @@ import {
 
 interface QuizQuestion {
   id: number;
-  word: string;
+  word?: string;
   question: string;
   options: string[];
   correctAnswer: string;
