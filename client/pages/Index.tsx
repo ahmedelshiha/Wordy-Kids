@@ -336,16 +336,6 @@ export default function Index() {
                 </button>
 
                 <button
-                  onClick={() => navigate("/admin")}
-                  className="w-full flex items-center gap-4 p-4 rounded-2xl transition-all bg-white text-gray-700 hover:bg-red-50 hover:border-red-200 border-2 border-transparent"
-                >
-                  <div className="p-2 rounded-xl bg-red-100">
-                    <Shield className="w-5 h-5 text-red-600" />
-                  </div>
-                  <span className="font-semibold">Administrator Dashboard</span>
-                </button>
-
-                <button
                   onClick={() => setActiveTab("quiz")}
                   className={`w-full flex items-center gap-4 p-4 rounded-2xl transition-all ${
                     activeTab === "quiz"
