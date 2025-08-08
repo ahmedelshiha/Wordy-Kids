@@ -911,6 +911,497 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
     </div>
   );
 
+  // Helper function to generate comprehensive learning report
+  const generateLearningReport = async (child: ChildProfile, dateRange: string, reportType: string) => {
+    setGeneratingReport(true);
+
+    // Simulate API call delay
+    await new Promise(resolve => setTimeout(resolve, 2000));
+
+    const now = new Date();
+    const startDate = new Date();
+
+    switch (dateRange) {
+      case 'week':
+        startDate.setDate(now.getDate() - 7);
+        break;
+      case 'month':
+        startDate.setMonth(now.getMonth() - 1);
+        break;
+      case 'quarter':
+        startDate.setMonth(now.getMonth() - 3);
+        break;
+      case 'year':
+        startDate.setFullYear(now.getFullYear() - 1);
+        break;
+    }
+
+    // Generate detailed learning analytics
+    const report = {
+      generatedAt: now,
+      period: { start: startDate, end: now, range: dateRange },
+      child: child,
+      summary: {
+        totalLearningTime: Math.floor(Math.random() * 120) + 60, // 60-180 minutes
+        sessionsCompleted: Math.floor(Math.random() * 30) + 15,
+        wordsLearned: Math.floor(Math.random() * 50) + 25,
+        averageAccuracy: Math.floor(Math.random() * 20) + 75, // 75-95%
+        streakDays: Math.floor(Math.random() * 15) + 5,
+        levelUps: Math.floor(Math.random() * 3) + 1,
+      },
+      learningPath: {
+        strengthCategories: ['Animals', 'Science', 'Colors'],
+        strugglingCategories: ['Food', 'Transportation'],
+        masteredWords: ['elephant', 'microscope', 'rainbow', 'volcano', 'constellation'],
+        practiceNeeded: ['helicopter', 'restaurant', 'apartment', 'orchestra'],
+        recommendedActivities: [
+          'Focus on transportation vocabulary through picture matching',
+          'Practice food words using cooking-themed games',
+          'Reinforce helicopter/orchestra pronunciation with audio exercises'
+        ]
+      },
+      progressAnalytics: {
+        weeklyTrends: [
+          { week: 'Week 1', accuracy: 78, wordsLearned: 12, timeSpent: 145 },
+          { week: 'Week 2', accuracy: 82, wordsLearned: 15, timeSpent: 160 },
+          { week: 'Week 3', accuracy: 85, wordsLearned: 18, timeSpent: 175 },
+          { week: 'Week 4', accuracy: 88, wordsLearned: 22, timeSpent: 190 }
+        ],
+        categoryProgress: [
+          { category: 'Animals', mastery: 92, timeSpent: 45, trend: 'improving' },
+          { category: 'Science', mastery: 87, timeSpent: 38, trend: 'stable' },
+          { category: 'Colors', mastery: 95, timeSpent: 25, trend: 'mastered' },
+          { category: 'Food', mastery: 65, timeSpent: 42, trend: 'needs_focus' },
+          { category: 'Transportation', mastery: 58, timeSpent: 35, trend: 'challenging' }
+        ]
+      },
+      achievements: [
+        { title: 'Vocabulary Star', description: 'Learned 50+ new words', earnedAt: new Date(now.getTime() - 3 * 24 * 60 * 60 * 1000) },
+        { title: 'Streak Champion', description: '10-day learning streak', earnedAt: new Date(now.getTime() - 5 * 24 * 60 * 60 * 1000) },
+        { title: 'Animal Expert', description: 'Mastered all animal words', earnedAt: new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000) }
+      ],
+      parentInsights: {
+        keyStrengths: [
+          'Excellent visual memory - retains information well through pictures',
+          'High engagement with interactive content',
+          'Consistent daily practice habits'
+        ],
+        areasForGrowth: [
+          'Spelling accuracy could improve with more writing practice',
+          'Pronunciation of complex words needs attention',
+          'Speed of word recognition in timed activities'
+        ],
+        recommendations: [
+          'Introduce spelling games to reinforce visual learning',
+          'Use audio repetition for difficult pronunciations',
+          'Gradually increase difficulty in timed exercises',
+          'Celebrate transportation vocabulary progress to boost confidence'
+        ]
+      }
+    };
+
+    setReportData(report);
+    setGeneratingReport(false);
+    return report;
+  };
+
+  // Export report as PDF-like content
+  const exportReport = () => {
+    if (!reportData) return;
+
+    const reportContent = `
+LEARNING PROGRESS REPORT
+========================
+
+Child: ${reportData.child.name}
+Age: ${reportData.child.age}
+Report Period: ${reportData.period.range.toUpperCase()} (${reportData.period.start.toLocaleDateString()} - ${reportData.period.end.toLocaleDateString()})
+Generated: ${reportData.generatedAt.toLocaleDateString()}
+
+SUMMARY
+-------
+Total Learning Time: ${reportData.summary.totalLearningTime} minutes
+Sessions Completed: ${reportData.summary.sessionsCompleted}
+Words Learned: ${reportData.summary.wordsLearned}
+Average Accuracy: ${reportData.summary.averageAccuracy}%
+Current Streak: ${reportData.summary.streakDays} days
+Level Progress: +${reportData.summary.levelUps} levels
+
+LEARNING PATH ANALYSIS
+----------------------
+Strong Categories: ${reportData.learningPath.strengthCategories.join(', ')}
+Needs Practice: ${reportData.learningPath.strugglingCategories.join(', ')}
+
+Mastered Words: ${reportData.learningPath.masteredWords.join(', ')}
+Practice Needed: ${reportData.learningPath.practiceNeeded.join(', ')}
+
+RECOMMENDATIONS
+---------------
+${reportData.learningPath.recommendedActivities.map((activity, i) => `${i + 1}. ${activity}`).join('\n')}
+
+PARENT INSIGHTS
+---------------
+Key Strengths:
+${reportData.parentInsights.keyStrengths.map((strength, i) => `• ${strength}`).join('\n')}
+
+Areas for Growth:
+${reportData.parentInsights.areasForGrowth.map((area, i) => `• ${area}`).join('\n')}
+
+Recommendations:
+${reportData.parentInsights.recommendations.map((rec, i) => `• ${rec}`).join('\n')}
+
+ACHIEVEMENTS
+------------
+${reportData.achievements.map(achievement => `🏆 ${achievement.title}: ${achievement.description} (${achievement.earnedAt.toLocaleDateString()})`).join('\n')}
+`;
+
+    // Create downloadable file
+    const blob = new Blob([reportContent], { type: 'text/plain' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `${reportData.child.name}_Learning_Report_${reportData.period.range}_${reportData.generatedAt.toISOString().split('T')[0]}.txt`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  };
+
+  const renderDetailedReports = () => (
+    <div className="space-y-6">
+      {/* Report Configuration */}
+      <Card>
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            <FileText className="w-5 h-5" />
+            Generate Learning Progress Report
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div>
+              <Label htmlFor="report-child">Select Child</Label>
+              <Select
+                value={selectedChild?.id || ''}
+                onValueChange={(value) => setSelectedChild(children.find(c => c.id === value) || null)}
+              >
+                <SelectTrigger>
+                  <SelectValue placeholder="Choose child" />
+                </SelectTrigger>
+                <SelectContent>
+                  {children.map((child) => (
+                    <SelectItem key={child.id} value={child.id}>
+                      {child.avatar} {child.name}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+
+            <div>
+              <Label htmlFor="report-type">Report Type</Label>
+              <Select value={reportType} onValueChange={(value: any) => setReportType(value)}>
+                <SelectTrigger>
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="summary">Quick Summary</SelectItem>
+                  <SelectItem value="detailed">Detailed Analysis</SelectItem>
+                  <SelectItem value="progress">Progress Tracking</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+
+            <div>
+              <Label htmlFor="date-range">Time Period</Label>
+              <Select value={reportDateRange} onValueChange={(value: any) => setReportDateRange(value)}>
+                <SelectTrigger>
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="week">Last Week</SelectItem>
+                  <SelectItem value="month">Last Month</SelectItem>
+                  <SelectItem value="quarter">Last 3 Months</SelectItem>
+                  <SelectItem value="year">Last Year</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+          </div>
+
+          <div className="flex gap-2">
+            <Button
+              onClick={() => selectedChild && generateLearningReport(selectedChild, reportDateRange, reportType)}
+              disabled={!selectedChild || generatingReport}
+              className="bg-educational-blue text-white"
+            >
+              {generatingReport ? 'Generating...' : 'Generate Report'}
+            </Button>
+
+            {reportData && (
+              <Button variant="outline" onClick={exportReport}>
+                <Download className="w-4 h-4 mr-2" />
+                Export Report
+              </Button>
+            )}
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Generated Report Display */}
+      {reportData && (
+        <div className="space-y-6">
+          {/* Report Header */}
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <div className="text-2xl">{reportData.child.avatar}</div>
+                  <div>
+                    <h3>{reportData.child.name}'s Learning Report</h3>
+                    <p className="text-sm text-slate-600 font-normal">
+                      {reportData.period.range.toUpperCase()} Report • {reportData.period.start.toLocaleDateString()} - {reportData.period.end.toLocaleDateString()}
+                    </p>
+                  </div>
+                </div>
+                <Badge className="bg-green-100 text-green-800">
+                  Generated {reportData.generatedAt.toLocaleDateString()}
+                </Badge>
+              </CardTitle>
+            </CardHeader>
+          </Card>
+
+          {/* Summary Stats */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <Card>
+              <CardContent className="p-4 text-center">
+                <Clock className="w-8 h-8 text-blue-500 mx-auto mb-2" />
+                <div className="text-2xl font-bold">{reportData.summary.totalLearningTime}m</div>
+                <div className="text-sm text-slate-600">Learning Time</div>
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardContent className="p-4 text-center">
+                <BookOpen className="w-8 h-8 text-green-500 mx-auto mb-2" />
+                <div className="text-2xl font-bold">{reportData.summary.wordsLearned}</div>
+                <div className="text-sm text-slate-600">Words Learned</div>
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardContent className="p-4 text-center">
+                <Target className="w-8 h-8 text-purple-500 mx-auto mb-2" />
+                <div className="text-2xl font-bold">{reportData.summary.averageAccuracy}%</div>
+                <div className="text-sm text-slate-600">Accuracy</div>
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardContent className="p-4 text-center">
+                <Zap className="w-8 h-8 text-orange-500 mx-auto mb-2" />
+                <div className="text-2xl font-bold">{reportData.summary.streakDays}</div>
+                <div className="text-sm text-slate-600">Day Streak</div>
+              </CardContent>
+            </Card>
+          </div>
+
+          {/* Learning Path Analysis */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <TrendingUp className="w-5 h-5 text-green-500" />
+                  Strengths & Progress
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div>
+                  <h4 className="font-semibold mb-2">Strong Categories</h4>
+                  <div className="flex flex-wrap gap-2">
+                    {reportData.learningPath.strengthCategories.map((category: string) => (
+                      <Badge key={category} className="bg-green-100 text-green-800">
+                        {category}
+                      </Badge>
+                    ))}
+                  </div>
+                </div>
+
+                <div>
+                  <h4 className="font-semibold mb-2">Mastered Words</h4>
+                  <div className="flex flex-wrap gap-2">
+                    {reportData.learningPath.masteredWords.map((word: string) => (
+                      <Badge key={word} variant="outline" className="text-green-600 border-green-300">
+                        {word}
+                      </Badge>
+                    ))}
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <Target className="w-5 h-5 text-orange-500" />
+                  Areas for Growth
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div>
+                  <h4 className="font-semibold mb-2">Practice Categories</h4>
+                  <div className="flex flex-wrap gap-2">
+                    {reportData.learningPath.strugglingCategories.map((category: string) => (
+                      <Badge key={category} className="bg-orange-100 text-orange-800">
+                        {category}
+                      </Badge>
+                    ))}
+                  </div>
+                </div>
+
+                <div>
+                  <h4 className="font-semibold mb-2">Words to Practice</h4>
+                  <div className="flex flex-wrap gap-2">
+                    {reportData.learningPath.practiceNeeded.map((word: string) => (
+                      <Badge key={word} variant="outline" className="text-orange-600 border-orange-300">
+                        {word}
+                      </Badge>
+                    ))}
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+
+          {/* Category Progress */}
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <BarChart3 className="w-5 h-5" />
+                Category Mastery Progress
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-4">
+                {reportData.progressAnalytics.categoryProgress.map((category: any) => (
+                  <div key={category.category} className="space-y-2">
+                    <div className="flex justify-between items-center">
+                      <span className="font-medium">{category.category}</span>
+                      <div className="flex items-center gap-2">
+                        <span className="text-sm text-slate-600">{category.mastery}%</span>
+                        <Badge className={
+                          category.trend === 'improving' ? 'bg-green-100 text-green-800' :
+                          category.trend === 'stable' ? 'bg-blue-100 text-blue-800' :
+                          category.trend === 'mastered' ? 'bg-purple-100 text-purple-800' :
+                          'bg-orange-100 text-orange-800'
+                        }>
+                          {category.trend.replace('_', ' ')}
+                        </Badge>
+                      </div>
+                    </div>
+                    <Progress value={category.mastery} className="h-2" />
+                  </div>
+                ))}
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* Parent Insights */}
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <Lightbulb className="w-5 h-5 text-yellow-500" />
+                Parent Insights & Recommendations
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div>
+                <h4 className="font-semibold mb-2 flex items-center gap-2">
+                  <Star className="w-4 h-4 text-yellow-500" />
+                  Key Strengths
+                </h4>
+                <ul className="space-y-1">
+                  {reportData.parentInsights.keyStrengths.map((strength: string, index: number) => (
+                    <li key={index} className="text-sm text-slate-700 flex items-start gap-2">
+                      <Check className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
+                      {strength}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              <div>
+                <h4 className="font-semibold mb-2 flex items-center gap-2">
+                  <TrendingUp className="w-4 h-4 text-blue-500" />
+                  Growth Opportunities
+                </h4>
+                <ul className="space-y-1">
+                  {reportData.parentInsights.areasForGrowth.map((area: string, index: number) => (
+                    <li key={index} className="text-sm text-slate-700 flex items-start gap-2">
+                      <Target className="w-4 h-4 text-orange-500 mt-0.5 flex-shrink-0" />
+                      {area}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              <div>
+                <h4 className="font-semibold mb-2 flex items-center gap-2">
+                  <Lightbulb className="w-4 h-4 text-purple-500" />
+                  Recommended Actions
+                </h4>
+                <ul className="space-y-1">
+                  {reportData.parentInsights.recommendations.map((recommendation: string, index: number) => (
+                    <li key={index} className="text-sm text-slate-700 flex items-start gap-2">
+                      <Heart className="w-4 h-4 text-purple-500 mt-0.5 flex-shrink-0" />
+                      {recommendation}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* Recent Achievements */}
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <Award className="w-5 h-5 text-yellow-500" />
+                Recent Achievements
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                {reportData.achievements.map((achievement: any, index: number) => (
+                  <div key={index} className="flex items-center gap-3 p-3 bg-yellow-50 rounded-lg">
+                    <div className="text-2xl">🏆</div>
+                    <div>
+                      <h4 className="font-semibold text-sm">{achievement.title}</h4>
+                      <p className="text-xs text-slate-600">{achievement.description}</p>
+                      <p className="text-xs text-slate-500 mt-1">{achievement.earnedAt.toLocaleDateString()}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+      )}
+
+      {/* Empty State */}
+      {!reportData && !generatingReport && (
+        <Card>
+          <CardContent className="p-12 text-center">
+            <FileText className="w-16 h-16 text-slate-300 mx-auto mb-4" />
+            <h3 className="text-xl font-semibold mb-2 text-slate-600">No Report Generated</h3>
+            <p className="text-slate-500 mb-4">
+              Select a child and click "Generate Report" to create a detailed learning analysis.
+            </p>
+          </CardContent>
+        </Card>
+      )}
+    </div>
+  );
+
   return (
     <div className="space-y-6">
       {/* Header */}
