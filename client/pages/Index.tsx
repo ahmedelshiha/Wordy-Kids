@@ -212,6 +212,8 @@ export default function Index() {
   const [showSettings, setShowSettings] = useState(false);
   const [showCelebration, setShowCelebration] = useState(false);
   const [userRole, setUserRole] = useState<'child' | 'parent'>('child');
+  const [showWordCreator, setShowWordCreator] = useState(false);
+  const [customWords, setCustomWords] = useState<any[]>([]);
 
   const handleQuizComplete = (score: number, total: number) => {
     const percentage = Math.round((score / total) * 100);
