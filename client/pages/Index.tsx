@@ -392,6 +392,26 @@ export default function Index() {
                 </button>
 
                 <button
+                  onClick={() => setUserRole("parent")}
+                  className="w-full flex items-center gap-4 p-4 rounded-2xl transition-all bg-white text-gray-700 hover:bg-blue-50 hover:border-blue-200 border-2 border-transparent"
+                >
+                  <div className="p-2 rounded-xl bg-blue-100">
+                    <Users className="w-5 h-5 text-blue-600" />
+                  </div>
+                  <span className="font-semibold">Parent Dashboard</span>
+                </button>
+
+                <button
+                  onClick={() => navigate("/admin")}
+                  className="w-full flex items-center gap-4 p-4 rounded-2xl transition-all bg-white text-gray-700 hover:bg-red-50 hover:border-red-200 border-2 border-transparent"
+                >
+                  <div className="p-2 rounded-xl bg-red-100">
+                    <Shield className="w-5 h-5 text-red-600" />
+                  </div>
+                  <span className="font-semibold">Administrator Dashboard</span>
+                </button>
+
+                <button
                   onClick={() => setShowSettings(true)}
                   className="w-full flex items-center gap-4 p-4 rounded-2xl bg-white text-gray-700 hover:bg-purple-50 transition-all border border-purple-200"
                 >
