@@ -109,7 +109,11 @@ const learningStats = {
   ],
 };
 
-export default function Index() {
+interface IndexProps {
+  initialProfile?: any;
+}
+
+export default function Index({ initialProfile }: IndexProps) {
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState("dashboard");
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
@@ -128,9 +132,7 @@ export default function Index() {
   const [customWords, setCustomWords] = useState<any[]>([]);
 
   // New child-friendly states
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [currentProfile, setCurrentProfile] = useState<any>(null);
-  const [showProfileCreation, setShowProfileCreation] = useState(false);
+  const [currentProfile, setCurrentProfile] = useState<any>(initialProfile || null);
   const [feedback, setFeedback] = useState<any>(null);
   const [gameMode, setGameMode] = useState(false);
 
