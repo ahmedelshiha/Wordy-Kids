@@ -287,7 +287,13 @@ export default function Index() {
 
       {/* Main Content */}
       <main className="container mx-auto px-4 py-8">
-        <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
+        {userRole === 'parent' ? (
+          <ParentDashboard
+            children={[]}
+            sessions={[]}
+          />
+        ) : (
+          <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
           <div className="flex items-center justify-between mb-8">
             <TabsList className="grid w-full grid-cols-7 lg:w-auto lg:inline-flex max-w-4xl">
               <TabsTrigger value="dashboard" className="flex items-center gap-2">
@@ -696,6 +702,7 @@ export default function Index() {
             </div>
           </TabsContent>
         </Tabs>
+        )}
       </main>
 
       {/* Footer */}
@@ -717,6 +724,11 @@ export default function Index() {
           </div>
         </div>
       </footer>
+
+      <SettingsPanel
+        isOpen={showSettings}
+        onClose={() => setShowSettings(false)}
+      />
     </div>
   );
 }
