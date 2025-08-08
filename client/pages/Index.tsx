@@ -422,36 +422,6 @@ export default function Index() {
                 </button>
               </nav>
 
-              {/* Bottom Actions */}
-              <div className="mt-6 space-y-2">
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={() => setShowWordCreator(true)}
-                  className="w-full bg-educational-green text-white hover:bg-educational-green/90 border-0"
-                >
-                  <Plus className="w-4 h-4 mr-2" />
-                  Create Word
-                </Button>
-                <div className="flex gap-2">
-                  <Button
-                    variant={userRole === "child" ? "default" : "outline"}
-                    size="sm"
-                    onClick={() => setUserRole("child")}
-                    className="flex-1"
-                  >
-                    Child
-                  </Button>
-                  <Button
-                    variant={userRole === "parent" ? "default" : "outline"}
-                    size="sm"
-                    onClick={() => setUserRole("parent")}
-                    className="flex-1"
-                  >
-                    Parent
-                  </Button>
-                </div>
-              </div>
             </aside>
 
             {/* Main Content Area */}
