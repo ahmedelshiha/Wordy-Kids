@@ -249,6 +249,11 @@ export default function Index() {
     setTimeout(() => setShowCelebration(false), 3000);
   };
 
+  const handleCategoryChange = (categoryId: string) => {
+    setSelectedCategory(categoryId);
+    setCurrentWordIndex(0); // Reset to first word when changing category
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50">
       {/* Hero Header */}
