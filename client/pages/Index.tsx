@@ -40,6 +40,10 @@ import {
   FileText,
   Plus,
   TrendingUp,
+  Zap,
+  ImageIcon,
+  PenTool,
+  Clock,
 } from "lucide-react";
 
 // Sample data for learning
