@@ -1005,6 +1005,45 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
     return report;
   };
 
+  // Helper functions for dynamic content
+  const getCategoryEmoji = (category: string) => {
+    const emojis: Record<string, string> = {
+      'Animals': '🐘',
+      'Science': '🔬',
+      'Colors': '🌈',
+      'Food': '🍎',
+      'Transportation': '🚗',
+      'Nature': '🌲',
+      'Sports': '⚽',
+      'Music': '🎵'
+    };
+    return emojis[category] || '📚';
+  };
+
+  const getTrendEmoji = (trend: string) => {
+    const emojis: Record<string, string> = {
+      'improving': '📈',
+      'stable': '➡️',
+      'mastered': '🏆',
+      'needs_focus': '🎯',
+      'challenging': '💪'
+    };
+    return emojis[trend] || '📊';
+  };
+
+  const getTrendBadgeClass = (trend: string) => {
+    if (trend === 'improving' || trend === 'mastered') return 'badge-green';
+    if (trend === 'stable') return 'badge badge-blue';
+    return 'badge-orange';
+  };
+
+  const getProgressClass = (mastery: number) => {
+    if (mastery >= 90) return 'progress-excellent';
+    if (mastery >= 75) return 'progress-good';
+    if (mastery >= 60) return 'progress-average';
+    return 'progress-needs-work';
+  };
+
   // Export report as PDF-friendly HTML with attractive design
   const exportReport = () => {
     if (!reportData) return;
