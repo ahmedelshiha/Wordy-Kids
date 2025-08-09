@@ -369,12 +369,12 @@ export default function SignUp() {
                 {isLoading ? (
                   <div className="flex items-center gap-2">
                     <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-                    Creating Account...
+                    Creating Profile...
                   </div>
                 ) : (
                   <>
-                    <UserPlus className="w-4 h-4 mr-2" />
-                    Create Account
+                    <Baby className="w-4 h-4 mr-2" />
+                    Create Child Profile
                   </>
                 )}
               </Button>
