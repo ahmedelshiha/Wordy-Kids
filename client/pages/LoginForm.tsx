@@ -153,7 +153,7 @@ export default function LoginForm() {
                   id="email"
                   name="email"
                   type="email"
-                  placeholder="Enter your email"
+                  placeholder="Enter parent email here"
                   value={formData.email}
                   onChange={handleInputChange}
                   className="mt-2 text-center border-gray-300 focus:border-blue-500"
