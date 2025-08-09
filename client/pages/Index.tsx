@@ -223,8 +223,29 @@ export default function Index({ initialProfile }: IndexProps) {
       {/* Hero Header */}
       <header className="relative overflow-hidden bg-gradient-to-r from-educational-blue via-educational-purple to-educational-pink text-white">
         <div className="absolute inset-0 bg-black/10"></div>
-        <div className="relative container mx-auto px-4 py-8">
-          <div className="text-center max-w-4xl mx-auto">
+        <div className="relative container mx-auto px-4 py-4 md:py-8">
+          {/* Mobile header with hamburger menu */}
+          <div className="flex items-center justify-between mb-4 md:hidden">
+            <div className="flex items-center gap-2">
+              <div className="bg-white/20 backdrop-blur-sm rounded-full p-2">
+                <BookOpen className="w-8 h-8 text-white" />
+              </div>
+              <h1 className="text-xl font-bold">Word Adventure</h1>
+            </div>
+            <button
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              className="bg-white/20 backdrop-blur-sm rounded-full p-2 transition-all hover:bg-white/30"
+            >
+              {isMobileMenuOpen ? (
+                <X className="w-6 h-6 text-white" />
+              ) : (
+                <Menu className="w-6 h-6 text-white" />
+              )}
+            </button>
+          </div>
+
+          {/* Desktop header */}
+          <div className="text-center max-w-4xl mx-auto hidden md:block">
             <div className="flex justify-center mb-4">
               <div className="bg-white/20 backdrop-blur-sm rounded-full p-4">
                 <BookOpen className="w-12 h-12 text-white" />
@@ -236,6 +257,13 @@ export default function Index({ initialProfile }: IndexProps) {
             <p className="text-lg md:text-xl mb-6 opacity-90">
               Welcome back, {currentProfile?.name}! Ready for more vocabulary
               fun?
+            </p>
+          </div>
+
+          {/* Mobile simplified header */}
+          <div className="text-center md:hidden">
+            <p className="text-sm opacity-90">
+              Welcome back, {currentProfile?.name}!
             </p>
           </div>
         </div>
