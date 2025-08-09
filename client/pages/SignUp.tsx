@@ -142,10 +142,10 @@ export default function SignUp() {
             </div>
           </div>
           <h1 className="text-3xl md:text-4xl font-bold text-gray-800 mb-4">
-            Join Word Adventure
+            Create Child Profile
           </h1>
           <p className="text-lg text-gray-600">
-            Create your account to start learning
+            Set up a learning profile for your child
           </p>
         </div>
 
