@@ -258,6 +258,82 @@ const enrichedCategories: Category[] = [
         .length,
     },
   },
+  {
+    id: "greetings",
+    name: "Greetings",
+    icon: "👋",
+    color: "bg-yellow-500",
+    gradient: "from-yellow-400 to-yellow-600",
+    wordCount: getWordsByCategory("greetings").length,
+    description: "Learn friendly ways to say hello and goodbye!",
+    funFact: "Greeting people politely makes them smile!",
+    difficultyBreakdown: {
+      easy: getWordsByCategory("greetings").filter((w) => w.difficulty === "easy")
+        .length,
+      medium: getWordsByCategory("greetings").filter(
+        (w) => w.difficulty === "medium",
+      ).length,
+      hard: getWordsByCategory("greetings").filter((w) => w.difficulty === "hard")
+        .length,
+    },
+  },
+  {
+    id: "technology",
+    name: "Technology",
+    icon: "🤖",
+    color: "bg-slate-600",
+    gradient: "from-slate-500 to-slate-700",
+    wordCount: getWordsByCategory("technology").length,
+    description: "Discover amazing gadgets and modern inventions!",
+    funFact: "Technology makes our lives easier and more fun!",
+    difficultyBreakdown: {
+      easy: getWordsByCategory("technology").filter((w) => w.difficulty === "easy")
+        .length,
+      medium: getWordsByCategory("technology").filter(
+        (w) => w.difficulty === "medium",
+      ).length,
+      hard: getWordsByCategory("technology").filter((w) => w.difficulty === "hard")
+        .length,
+    },
+  },
+  {
+    id: "transportation",
+    name: "Transportation",
+    icon: "🚗",
+    color: "bg-red-500",
+    gradient: "from-red-400 to-red-600",
+    wordCount: getWordsByCategory("transportation").length,
+    description: "Explore different ways to travel and move around!",
+    funFact: "Transportation helps us go to amazing places!",
+    difficultyBreakdown: {
+      easy: getWordsByCategory("transportation").filter((w) => w.difficulty === "easy")
+        .length,
+      medium: getWordsByCategory("transportation").filter(
+        (w) => w.difficulty === "medium",
+      ).length,
+      hard: getWordsByCategory("transportation").filter((w) => w.difficulty === "hard")
+        .length,
+    },
+  },
+  {
+    id: "weather",
+    name: "Weather",
+    icon: "🌤️",
+    color: "bg-cyan-500",
+    gradient: "from-cyan-400 to-cyan-600",
+    wordCount: getWordsByCategory("weather").length,
+    description: "Learn about different weather and sky conditions!",
+    funFact: "Weather affects how we feel and what we do!",
+    difficultyBreakdown: {
+      easy: getWordsByCategory("weather").filter((w) => w.difficulty === "easy")
+        .length,
+      medium: getWordsByCategory("weather").filter(
+        (w) => w.difficulty === "medium",
+      ).length,
+      hard: getWordsByCategory("weather").filter((w) => w.difficulty === "hard")
+        .length,
+    },
+  },
 ].filter((category) => category.wordCount > 0 || category.id === "all");
 
 export function ChildFriendlyCategorySelector({
