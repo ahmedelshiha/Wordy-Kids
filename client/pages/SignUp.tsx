@@ -77,8 +77,31 @@ export default function SignUp() {
       return;
     }
 
-    // Simulate sign up process
+    // Check if username already exists
+    const existingUsers = JSON.parse(localStorage.getItem("wordAdventureUsers") || "[]");
+    const userExists = existingUsers.some((u: any) => u.username === formData.username || u.email === formData.email);
+
+    if (userExists) {
+      setMessage({
+        type: "error",
+        text: "Username or email already exists. Please choose different ones.",
+      });
+      setIsLoading(false);
+      return;
+    }
+
+    // Save user to localStorage
     setTimeout(() => {
+      const newUser = {
+        username: formData.username,
+        email: formData.email,
+        password: formData.password,
+        createdAt: new Date().toISOString()
+      };
+
+      existingUsers.push(newUser);
+      localStorage.setItem("wordAdventureUsers", JSON.stringify(existingUsers));
+
       setMessage({
         type: "success",
         text: "Account created successfully! Welcome to Word Adventure!",
