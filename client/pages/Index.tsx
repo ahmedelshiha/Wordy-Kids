@@ -135,6 +135,7 @@ export default function Index({ initialProfile }: IndexProps) {
   const [userRole, setUserRole] = useState<"child" | "parent">("child");
   const [showWordCreator, setShowWordCreator] = useState(false);
   const [customWords, setCustomWords] = useState<any[]>([]);
+  const [backgroundAnimationsEnabled, setBackgroundAnimationsEnabled] = useState(false);
 
   // New child-friendly states
   const [currentProfile, setCurrentProfile] = useState<any>(
