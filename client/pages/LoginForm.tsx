@@ -71,11 +71,11 @@ export default function LoginForm() {
     const username = formData.username.trim();
     const password = formData.password.trim();
 
-    // Basic validation
+    // Basic validation with kid-friendly messages
     if (!username || !password) {
       setMessage({
         type: "error",
-        text: "Please enter both username and password! 😊",
+        text: "Oops! Don't forget your username and secret password! 🤗",
       });
       setIsLoading(false);
       return;
