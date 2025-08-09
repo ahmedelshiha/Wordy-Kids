@@ -363,7 +363,7 @@ export default function SignUp() {
               {/* Sign Up Button */}
               <Button
                 type="submit"
-                disabled={isLoading || !formData.username || !formData.email || !formData.password || !formData.confirmPassword}
+                disabled={isLoading || !formData.childName || !formData.birthDate || !formData.email || !formData.password || !formData.confirmPassword}
                 className="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white hover:from-blue-700 hover:to-purple-700"
               >
                 {isLoading ? (
