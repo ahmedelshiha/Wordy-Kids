@@ -505,6 +505,7 @@ export default function Index({ initialProfile }: IndexProps) {
                           return categoryWords.slice(0, 10);
                         })()}
                         onComplete={handleGameComplete}
+                        onBack={() => setGameMode(false)}
                         userProfile={currentProfile}
                       />
                     ) : (
@@ -834,7 +835,7 @@ export default function Index({ initialProfile }: IndexProps) {
                         {/* Spelling Quiz */}
                         <Card className="cursor-pointer hover:shadow-xl transition-all duration-300 hover:scale-105 border-2 border-educational-pink/30">
                           <CardContent className="p-6 text-center">
-                            <div className="text-6xl mb-4">✏���</div>
+                            <div className="text-6xl mb-4">✏️</div>
                             <h3 className="text-xl font-bold text-educational-pink mb-2">
                               Spelling Quiz
                             </h3>

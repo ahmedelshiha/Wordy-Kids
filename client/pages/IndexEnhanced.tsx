@@ -592,6 +592,7 @@ export default function IndexEnhanced() {
                           return categoryWords.slice(0, 10);
                         })()}
                         onComplete={handleGameComplete}
+                        onBack={() => setGameMode(false)}
                         userProfile={currentProfile}
                       />
                     ) : (
@@ -803,7 +804,7 @@ export default function IndexEnhanced() {
                     onUnlock={(achievement) => {
                       setFeedback({
                         type: "celebration",
-                        title: "Achievement Unlocked! 🏆",
+                        title: "Achievement Unlocked! ��",
                         message: `You earned: ${achievement.name}`,
                         onContinue: () => setFeedback(null),
                       });

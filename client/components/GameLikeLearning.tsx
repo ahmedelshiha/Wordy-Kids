@@ -18,6 +18,7 @@ import {
   Shuffle,
   ChevronRight,
   RotateCcw,
+  ArrowLeft,
 } from "lucide-react";
 import { audioService } from "@/lib/audioService";
 import { EncouragingFeedback } from "./EncouragingFeedback";
@@ -56,6 +57,7 @@ interface GameSession {
 interface GameLikeLearningProps {
   words: Word[];
   onComplete: (score: number, totalWords: number) => void;
+  onBack?: () => void;
   userProfile?: {
     name: string;
     avatar: any;
@@ -166,6 +168,7 @@ const powerUps = [
 export function GameLikeLearning({
   words,
   onComplete,
+  onBack,
   userProfile,
 }: GameLikeLearningProps) {
   const [selectedGame, setSelectedGame] = useState<string>("");
@@ -349,7 +352,18 @@ export function GameLikeLearning({
   const renderGameSelection = () => (
     <div className="space-y-8">
       {/* Header */}
-      <div className="text-center">
+      <div className="text-center relative">
+        {onBack && (
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={onBack}
+            className="absolute left-0 top-0 flex items-center gap-2 text-educational-blue hover:text-educational-purple"
+          >
+            <ArrowLeft className="w-4 h-4" />
+            Back to Word Library
+          </Button>
+        )}
         <div className="flex justify-center mb-4">
           <div className="bg-gradient-to-r from-educational-blue to-educational-purple p-4 rounded-full animate-pulse">
             <Gamepad2 className="w-12 h-12 text-white" />
@@ -411,7 +425,7 @@ export function GameLikeLearning({
                 {game.difficulty === "easy"
                   ? "🌟 Easy"
                   : game.difficulty === "medium"
-                    ? "⭐ Medium"
+                    ? "�� Medium"
                     : "🔥 Hard"}
               </Badge>
             </CardHeader>
