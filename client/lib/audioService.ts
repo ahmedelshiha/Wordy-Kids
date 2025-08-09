@@ -1,9 +1,12 @@
 // Audio service for pronunciation and sound effects
+export type VoiceType = 'man' | 'woman' | 'kid';
+
 export class AudioService {
   private static instance: AudioService;
   private speechSynthesis: SpeechSynthesis;
   private voices: SpeechSynthesisVoice[] = [];
   private isEnabled: boolean = true;
+  private selectedVoiceType: VoiceType = 'woman';
 
   private constructor() {
     this.speechSynthesis = window.speechSynthesis;
