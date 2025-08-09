@@ -1139,6 +1139,39 @@ export default function Index({ initialProfile }: IndexProps) {
         )}
       </main>
 
+      {/* Matching Game Modal */}
+      {showMatchingGame && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-xl max-w-4xl w-full max-h-[90vh] overflow-y-auto">
+            <div className="p-6">
+              <div className="flex items-center justify-between mb-6">
+                <h2 className="text-2xl font-bold text-gray-800">🧩 Word Matching Game</h2>
+                <Button
+                  onClick={() => setShowMatchingGame(false)}
+                  variant="outline"
+                  size="sm"
+                >
+                  Close
+                </Button>
+              </div>
+              <WordMatchingGame
+                pairs={generateMatchingPairs(6, undefined, selectedCategory)}
+                onComplete={(score, timeSpent) => {
+                  setShowMatchingGame(false);
+                  setFeedback({
+                    type: "celebration",
+                    title: "Matching Game Complete! 🎯",
+                    message: `You matched ${score} pairs in ${timeSpent} seconds!`,
+                    points: score * 15,
+                    onContinue: () => setFeedback(null),
+                  });
+                }}
+              />
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Enhanced Components */}
       {showCelebration && <CelebrationEffect />}
       {backgroundAnimationsEnabled && <FloatingBubbles />}
