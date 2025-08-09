@@ -49,6 +49,7 @@ import {
   MessageCircle,
   Bell,
   ArrowLeft,
+  UserPlus,
   Edit,
   Trash2,
   PieChart,
