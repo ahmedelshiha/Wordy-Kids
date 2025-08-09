@@ -212,7 +212,7 @@ export default function SignUp() {
                   id="email"
                   name="email"
                   type="email"
-                  placeholder="Enter your email"
+                  placeholder="Enter parent's email"
                   value={formData.email}
                   onChange={handleInputChange}
                   className="mt-2 border-gray-300 focus:border-blue-500"
