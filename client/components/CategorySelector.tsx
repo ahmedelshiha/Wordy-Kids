@@ -38,7 +38,7 @@ const enrichedCategories: Category[] = [
     color: "bg-slate-500",
     gradient: "from-slate-400 to-slate-600",
     wordCount: wordsDatabase.length,
-    description: "Explore our complete vocabulary collection",
+    description: "Explore our complete vocabulary collection with 105+ words",
     difficultyBreakdown: {
       easy: wordsDatabase.filter((w) => w.difficulty === "easy").length,
       medium: wordsDatabase.filter((w) => w.difficulty === "medium").length,
@@ -46,8 +46,22 @@ const enrichedCategories: Category[] = [
     },
   },
   {
+    id: "food",
+    name: "Food & Nutrition",
+    icon: "🍎",
+    color: "bg-red-500",
+    gradient: "from-red-400 to-orange-500",
+    wordCount: getWordsByCategory("food").length,
+    description: "Learn about healthy foods, fruits, and nutrition",
+    difficultyBreakdown: {
+      easy: getWordsByCategory("food").filter((w) => w.difficulty === "easy").length,
+      medium: getWordsByCategory("food").filter((w) => w.difficulty === "medium").length,
+      hard: getWordsByCategory("food").filter((w) => w.difficulty === "hard").length,
+    },
+  },
+  {
     id: "animals",
-    name: "Animals",
+    name: "Animals & Wildlife",
     icon: "🦋",
     color: "bg-educational-blue",
     gradient: "from-blue-400 to-blue-600",
