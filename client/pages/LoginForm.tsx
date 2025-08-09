@@ -101,7 +101,7 @@ export default function LoginForm() {
       } else {
         setMessage({
           type: "error",
-          text: "Invalid username or password. Please try again! 🤗",
+          text: "Hmm, that doesn't look right! Let's try again, buddy! 🤗💫",
         });
       }
       setIsLoading(false);
