@@ -71,6 +71,14 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({
     playSoundIfEnabled.click();
   };
 
+  const handleBackgroundAnimationsToggle = (checked: boolean) => {
+    setBackgroundAnimations(checked);
+    localStorage.setItem('backgroundAnimations', checked.toString());
+    // Dispatch custom event for other components to listen
+    window.dispatchEvent(new CustomEvent('backgroundAnimationsChanged', { detail: checked }));
+    playSoundIfEnabled.click();
+  };
+
   const handleVoiceTypeChange = (voiceType: VoiceType) => {
     setSelectedVoiceType(voiceType);
     audioService.setVoiceType(voiceType);
