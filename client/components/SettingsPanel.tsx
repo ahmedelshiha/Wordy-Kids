@@ -34,6 +34,17 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({
   const [animationSpeed, setAnimationSpeed] = useState([1]);
   const [dailyGoal, setDailyGoal] = useState([10]);
   const [difficulty, setDifficulty] = useState('medium');
+  const [selectedVoiceType, setSelectedVoiceType] = useState<VoiceType>('woman');
+  const [availableVoices, setAvailableVoices] = useState<any[]>([]);
+
+  useEffect(() => {
+    // Initialize voice type from audio service
+    setSelectedVoiceType(audioService.getVoiceType());
+
+    // Get available voices
+    const voices = audioService.getAvailableVoices();
+    setAvailableVoices(voices);
+  }, [isOpen]);
 
   const handleSoundToggle = (checked: boolean) => {
     setSoundOn(checked);
