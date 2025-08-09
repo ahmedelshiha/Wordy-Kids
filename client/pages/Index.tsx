@@ -499,7 +499,7 @@ export default function Index({ initialProfile }: IndexProps) {
                 <TabsContent value="dashboard">
                   <LearningDashboard
                     stats={learningStats}
-                    userName={currentProfile?.name || "Alex"}
+                    userName="Explorer"
                   />
                 </TabsContent>
 
