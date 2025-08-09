@@ -10,7 +10,7 @@ export default function App() {
   const navigate = useNavigate();
   const mode = searchParams.get("mode");
 
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(true); // Auto-login enabled
   const [currentProfile, setCurrentProfile] = useState<any>(null);
   const [showProfileCreation, setShowProfileCreation] = useState(false);
   const [showLevelSelection, setShowLevelSelection] = useState(false);
@@ -18,33 +18,37 @@ export default function App() {
   useEffect(() => {
     const authenticated = searchParams.get("authenticated");
 
-    if (authenticated === "true") {
-      // User has successfully logged in from LoginForm, create a profile and auto-login
-      const defaultProfile = {
-        id: "logged-in-user",
-        name: "Word Explorer",
-        level: 3,
-        levelName: "Story Builder",
-        skillLevel: 3,
-        avatar: { emoji: "🌟", name: "Star Learner" },
-        theme: { gradient: "from-educational-blue to-educational-purple" },
-        wordsLearned: 45,
-        points: 1850,
-        streak: 12,
-        totalQuizzes: 8,
-        accuracy: 87,
-        favoriteCategory: "Adventure",
-        joinedDate: new Date().toLocaleDateString(),
-        lastActive: "Today",
-      };
+    // Always create a default profile and auto-login to the dashboard
+    const defaultProfile = {
+      id: "default-user",
+      name: "Word Explorer",
+      level: 3,
+      levelName: "Story Builder",
+      skillLevel: 3,
+      avatar: { emoji: "🌟", name: "Star Learner" },
+      theme: { gradient: "from-educational-blue to-educational-purple" },
+      wordsLearned: 45,
+      points: 1850,
+      streak: 12,
+      totalQuizzes: 8,
+      accuracy: 87,
+      favoriteCategory: "Adventure",
+      joinedDate: new Date().toLocaleDateString(),
+      lastActive: "Today",
+    };
+
+    if (!currentProfile) {
       setCurrentProfile(defaultProfile);
       setIsLoggedIn(true);
+    }
+
+    if (authenticated === "true") {
       // Clean up the URL by removing the authenticated parameter
       navigate("/app", { replace: true });
     } else if (mode === "create") {
       setShowProfileCreation(true);
     }
-  }, [mode, searchParams, navigate]);
+  }, [mode, searchParams, navigate, currentProfile]);
 
   const handleLogin = (profile: any) => {
     setCurrentProfile(profile);
