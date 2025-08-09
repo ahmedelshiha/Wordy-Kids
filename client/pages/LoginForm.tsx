@@ -308,7 +308,7 @@ export default function LoginForm() {
             <span className="text-sm">New to Word Adventure?</span>
             <Button
               variant="link"
-              onClick={() => navigate("/")}
+              onClick={() => navigate("/app?mode=create")}
               className="text-educational-blue p-0 h-auto font-semibold"
               disabled={isLoading}
             >
