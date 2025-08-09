@@ -33,7 +33,7 @@ export default function LoginForm() {
   const [welcomeMessage, setWelcomeMessage] = useState("Hey there, word explorer!");
 
   // Mascot rotation for fun
-  const mascots = ["🐙", "🦄", "🐸", "🦁", "🐨", "🐧", "🦊", "🐼"];
+  const mascots = ["🐙", "🦄", "����", "🦁", "🐨", "🐧", "🦊", "🐼"];
   const welcomeMessages = [
     "Hey there, word explorer!",
     "Ready for an amazing adventure?",
@@ -134,29 +134,16 @@ export default function LoginForm() {
         {/* Header */}
         <div className="text-center mb-8">
           <div className="flex justify-center mb-6">
-            <div className="bg-gradient-to-r from-yellow-400 via-pink-400 to-purple-500 p-8 rounded-full shadow-2xl transform hover:scale-110 transition-all duration-300 animate-pulse">
-              <div className="text-6xl animate-bounce">{currentMascot}</div>
+            <div className="bg-gradient-to-r from-blue-500 to-purple-600 p-6 rounded-full shadow-lg">
+              <BookOpen className="w-12 h-12 text-white" />
             </div>
           </div>
-          <h1 className="text-4xl md:text-6xl font-bold bg-gradient-to-r from-purple-600 via-pink-500 to-orange-500 bg-clip-text text-transparent mb-4 animate-bounce">
-            🌟 Word Adventure Land! 🌟
+          <h1 className="text-3xl md:text-4xl font-bold text-gray-800 mb-4">
+            Welcome to Word Adventure
           </h1>
-          <div className="bg-gradient-to-r from-blue-100 to-purple-100 rounded-xl p-4 mb-6 border-4 border-dashed border-rainbow">
-            <p className="text-2xl font-bold text-purple-700 animate-pulse">
-              {welcomeMessage} ✨
-            </p>
-          </div>
-          <div className="flex justify-center gap-2 mb-4">
-            <span className="bg-yellow-200 text-yellow-800 px-3 py-1 rounded-full text-sm font-bold animate-bounce">
-              🎮 PLAY
-            </span>
-            <span className="bg-green-200 text-green-800 px-3 py-1 rounded-full text-sm font-bold animate-bounce delay-100">
-              📚 LEARN
-            </span>
-            <span className="bg-pink-200 text-pink-800 px-3 py-1 rounded-full text-sm font-bold animate-bounce delay-200">
-              🏆 WIN
-            </span>
-          </div>
+          <p className="text-lg text-gray-600">
+            Sign in to continue your learning journey
+          </p>
         </div>
 
         {/* Login Form */}
