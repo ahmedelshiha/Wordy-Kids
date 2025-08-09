@@ -443,10 +443,10 @@ export function ChildFriendlyCategorySelector({
             <Sparkles className="w-12 h-12 text-white" />
           </div>
         </div>
-        <h2 className="text-4xl font-bold text-slate-800 mb-4 bg-gradient-to-r from-educational-blue to-educational-purple bg-clip-text text-transparent">
+        <h2 className="text-2xl md:text-4xl font-bold text-slate-800 mb-4 bg-gradient-to-r from-educational-blue to-educational-purple bg-clip-text text-transparent">
           🌟 Choose Your Learning Adventure! 🌟
         </h2>
-        <p className="text-lg text-slate-600 max-w-2xl mx-auto mb-4">
+        <p className="text-base md:text-lg text-slate-600 max-w-2xl mx-auto mb-4">
           {getPersonalizedMessage()}
         </p>
         <div className="flex justify-center gap-2 mb-6 flex-wrap">
