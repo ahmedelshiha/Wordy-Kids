@@ -22,15 +22,20 @@ export default function App() {
       // User has successfully logged in from LoginForm, create a profile and auto-login
       const defaultProfile = {
         id: "logged-in-user",
-        name: "Player",
-        level: 1,
-        levelName: "Beginner",
-        skillLevel: 1,
-        avatar: { emoji: "🎯", name: "Explorer" },
-        theme: { gradient: "from-purple-400 to-pink-400" },
-        wordsLearned: 0,
-        points: 0,
-        streak: 0
+        name: "Word Explorer",
+        level: 3,
+        levelName: "Story Builder",
+        skillLevel: 3,
+        avatar: { emoji: "🌟", name: "Star Learner" },
+        theme: { gradient: "from-educational-blue to-educational-purple" },
+        wordsLearned: 45,
+        points: 1850,
+        streak: 12,
+        totalQuizzes: 8,
+        accuracy: 87,
+        favoriteCategory: "Adventure",
+        joinedDate: new Date().toLocaleDateString(),
+        lastActive: "Today"
       };
       setCurrentProfile(defaultProfile);
       setIsLoggedIn(true);
