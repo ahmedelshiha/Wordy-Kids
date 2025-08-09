@@ -279,23 +279,16 @@ export default function LoginForm() {
         </div>
 
         {/* Footer */}
-        <div className="text-center mt-8">
-          <div className="bg-gradient-to-r from-purple-100 to-pink-100 rounded-2xl p-6 border-4 border-dashed border-purple-300">
-            <div className="flex justify-center items-center gap-3 text-purple-700 text-lg font-bold mb-4">
-              <Sparkles className="w-6 h-6 text-yellow-500 animate-spin" style={{ animationDuration: "3s" }} />
-              <span className="animate-pulse">First time here?</span>
-              <Sparkles className="w-6 h-6 text-pink-500 animate-spin" style={{ animationDuration: "3s" }} />
-            </div>
+        <div className="text-center mt-6">
+          <div className="flex justify-center items-center gap-2 text-gray-600">
+            <span className="text-sm">Don't have an account?</span>
             <Button
-              onClick={() => navigate("/app?mode=create")}
-              className="bg-gradient-to-r from-orange-400 via-pink-400 to-purple-500 text-white font-bold py-4 px-8 rounded-2xl text-xl hover:scale-110 transform transition-all shadow-2xl border-4 border-white"
+              variant="link"
+              onClick={() => navigate("/signup")}
+              className="text-blue-600 p-0 h-auto font-semibold hover:text-blue-700"
               disabled={isLoading}
             >
-              <div className="flex items-center gap-3">
-                <span className="text-2xl animate-bounce">🌟</span>
-                <span>CREATE MY EXPLORER PROFILE!</span>
-                <span className="text-2xl animate-bounce delay-100">🚀</span>
-              </div>
+              Sign up
             </Button>
           </div>
         </div>
