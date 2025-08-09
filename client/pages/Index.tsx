@@ -27,6 +27,7 @@ import {
   getWordsByCategory,
   getRandomWords,
 } from "@/data/wordsDatabase";
+import { isBackgroundAnimationsEnabled } from "@/lib/backgroundAnimations";
 import {
   BookOpen,
   Play,
@@ -99,7 +100,7 @@ const learningStats = {
     {
       id: "quiz-master",
       name: "Quiz Master",
-      icon: "����",
+      icon: "🧠",
       earned: false,
       description: "Score 100% on 5 quizzes",
     },
