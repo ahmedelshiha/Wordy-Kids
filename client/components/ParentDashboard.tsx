@@ -307,10 +307,16 @@ const sampleNotifications: ParentNotification[] = [
 ];
 
 export const ParentDashboard: React.FC<ParentDashboardProps> = ({
-  children = sampleChildren,
+  children: propChildren,
   sessions = [],
   onNavigateBack,
 }) => {
+  // Load children from localStorage or use empty array
+  const [children, setChildren] = useState<ChildProfile[]>(() => {
+    const savedChildren = localStorage.getItem("parentDashboardChildren");
+    return savedChildren ? JSON.parse(savedChildren) : [];
+  });
+
   const [selectedChild, setSelectedChild] = useState<ChildProfile | null>(
     children[0] || null,
   );
@@ -337,6 +343,11 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
     deadline: "",
   });
   const [customWordInput, setCustomWordInput] = useState("");
+
+  // Save children to localStorage whenever children state changes
+  React.useEffect(() => {
+    localStorage.setItem("parentDashboardChildren", JSON.stringify(children));
+  }, [children]);
   const [filterCategory, setFilterCategory] = useState("all");
   const [searchTerm, setSearchTerm] = useState("");
   const [reportData, setReportData] = useState<any>(null);
