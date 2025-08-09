@@ -88,7 +88,7 @@ export default function LoginForm() {
   };
 
   const handleBackToMain = () => {
-    navigate("/");
+    navigate("/app");
   };
 
   const handleForgotPassword = () => {
