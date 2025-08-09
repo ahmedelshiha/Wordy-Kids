@@ -358,6 +358,24 @@ export default function Index({ initialProfile }: IndexProps) {
                 </button>
 
                 <button
+                  onClick={() => setActiveTab("learn")}
+                  className={`w-full flex items-center gap-4 p-4 rounded-2xl transition-all ${
+                    activeTab === "learn"
+                      ? "bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-lg"
+                      : "bg-white text-gray-700 hover:bg-purple-50"
+                  }`}
+                >
+                  <div
+                    className={`p-2 rounded-xl ${activeTab === "learn" ? "bg-white/20" : "bg-green-100"}`}
+                  >
+                    <BookOpen
+                      className={`w-5 h-5 ${activeTab === "learn" ? "text-white" : "text-green-600"}`}
+                    />
+                  </div>
+                  <span className="font-semibold">Word Library</span>
+                </button>
+
+                <button
                   onClick={() => setActiveTab("quiz")}
                   className={`w-full flex items-center gap-4 p-4 rounded-2xl transition-all ${
                     activeTab === "quiz"
@@ -772,7 +790,7 @@ export default function Index({ initialProfile }: IndexProps) {
                         {/* Spelling Quiz */}
                         <Card className="cursor-pointer hover:shadow-xl transition-all duration-300 hover:scale-105 border-2 border-educational-pink/30">
                           <CardContent className="p-6 text-center">
-                            <div className="text-6xl mb-4">✏️</div>
+                            <div className="text-6xl mb-4">✏���</div>
                             <h3 className="text-xl font-bold text-educational-pink mb-2">Spelling Quiz</h3>
                             <p className="text-gray-600 mb-4">Test your spelling skills with audio challenges.</p>
                             <div className="flex justify-center gap-2 mb-4">
@@ -855,7 +873,7 @@ export default function Index({ initialProfile }: IndexProps) {
                               </div>
                               <div className="flex justify-between items-center p-3 bg-white rounded-lg">
                                 <div className="flex items-center gap-3">
-                                  <span className="text-2xl">🏆</span>
+                                  <span className="text-2xl">��</span>
                                   <div>
                                     <div className="font-semibold">Challenge Quiz</div>
                                     <div className="text-sm text-gray-600">3 days ago</div>
