@@ -35,6 +35,7 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({
 }) => {
   const [soundOn, setSoundOn] = useState(isSoundEnabled());
   const [darkMode, setDarkMode] = useState(false);
+  const [backgroundAnimations, setBackgroundAnimations] = useState(false);
   const [animationSpeed, setAnimationSpeed] = useState([1]);
   const [dailyGoal, setDailyGoal] = useState([10]);
   const [difficulty, setDifficulty] = useState("medium");
