@@ -292,10 +292,132 @@ export default function Index({ initialProfile }: IndexProps) {
         </div>
       </header>
 
+      {/* Mobile Menu Overlay */}
+      {isMobileMenuOpen && (
+        <div className="fixed inset-0 z-50 md:hidden">
+          <div className="absolute inset-0 bg-black/50" onClick={() => setIsMobileMenuOpen(false)} />
+          <aside className="absolute left-0 top-0 w-80 h-full bg-gradient-to-b from-purple-100 to-pink-100 p-6 flex flex-col shadow-2xl">
+            {/* Mobile Sidebar Content */}
+            <div className="bg-gradient-to-br from-educational-yellow-light to-educational-pink-light rounded-2xl p-3 mb-4 shadow-lg border-2 border-white/50">
+              <div className="text-center">
+                <div className="relative mb-3">
+                  <div className="w-12 h-12 mx-auto rounded-full bg-gradient-to-r from-educational-blue to-educational-purple flex items-center justify-center text-2xl shadow-lg border-2 border-white">
+                    {currentProfile?.avatar?.emoji || "🌟"}
+                  </div>
+                  <div className="absolute -bottom-0 -right-0 w-4 h-4 bg-educational-green rounded-full border-2 border-white shadow-sm flex items-center justify-center text-xs">
+                    ✨
+                  </div>
+                </div>
+                <div className="bg-white/80 rounded-xl p-2 mb-3 border border-educational-purple/20">
+                  <div className="flex items-center justify-center gap-1 mb-1">
+                    <span className="text-sm">🏆</span>
+                    <span className="text-sm font-bold text-educational-purple">
+                      Level {currentProfile?.level || 3}
+                    </span>
+                  </div>
+                  <div className="bg-educational-purple/20 rounded-full text-educational-purple px-2 py-1 text-xs font-bold">
+                    {currentProfile?.levelName || "Story Builder"}
+                  </div>
+                </div>
+                <div className="grid grid-cols-2 gap-2 mb-3">
+                  <div className="bg-white/90 rounded-xl p-2 border border-educational-blue/30">
+                    <div className="text-sm">📝</div>
+                    <div className="text-sm font-bold text-educational-blue">
+                      {currentProfile?.wordsLearned || 45}
+                    </div>
+                    <div className="text-xs text-gray-600">Words</div>
+                  </div>
+                  <div className="bg-white/90 rounded-xl p-2 border border-educational-orange/30">
+                    <div className="text-sm">🔥</div>
+                    <div className="text-sm font-bold text-educational-orange">
+                      {currentProfile?.streak || 12}
+                    </div>
+                    <div className="text-xs text-gray-600">Days</div>
+                  </div>
+                </div>
+                <div className="bg-white/90 rounded-xl p-2 border border-educational-green/30">
+                  <div className="flex items-center justify-between text-xs font-bold text-educational-green mb-1">
+                    <span>🚀 Progress</span>
+                    <span>
+                      {Math.min(
+                        Math.round(
+                          ((currentProfile?.wordsLearned || 45) / 100) * 100,
+                        ),
+                        100,
+                      )}%
+                    </span>
+                  </div>
+                  <div className="bg-gray-200 rounded-full h-2 overflow-hidden">
+                    <div
+                      className="bg-gradient-to-r from-educational-green to-educational-blue h-2 rounded-full transition-all duration-500"
+                      style={{
+                        width: `${Math.min(((currentProfile?.wordsLearned || 45) / 100) * 100, 100)}%`,
+                      }}
+                    ></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Mobile Navigation */}
+            <nav className="flex-1 space-y-2">
+              {[
+                { id: "dashboard", icon: Target, label: "Dashboard", color: "purple" },
+                { id: "learn", icon: BookOpen, label: "Word Library", color: "green" },
+                { id: "quiz", icon: Brain, label: "Quiz Time", color: "pink" },
+                { id: "progress", icon: Trophy, label: "Achievements", color: "yellow" },
+                { id: "analytics", icon: TrendingUp, label: "Progress", color: "green" },
+              ].map(({ id, icon: Icon, label, color }) => (
+                <button
+                  key={id}
+                  onClick={() => {
+                    setActiveTab(id);
+                    setIsMobileMenuOpen(false);
+                  }}
+                  className={`w-full flex items-center gap-3 p-3 rounded-xl transition-all ${
+                    activeTab === id
+                      ? "bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-lg"
+                      : "bg-white text-gray-700 hover:bg-purple-50"
+                  }`}
+                >
+                  <div className={`p-2 rounded-lg ${activeTab === id ? "bg-white/20" : `bg-${color}-100`}`}>
+                    <Icon className={`w-4 h-4 ${activeTab === id ? "text-white" : `text-${color}-600`}`} />
+                  </div>
+                  <span className="font-semibold text-sm">{label}</span>
+                </button>
+              ))}
+
+              <button
+                onClick={() => {
+                  setUserRole("parent");
+                  setIsMobileMenuOpen(false);
+                }}
+                className="w-full flex items-center gap-3 p-3 rounded-xl transition-all bg-white text-gray-700 hover:bg-blue-50 border-2 border-transparent"
+              >
+                <div className="p-2 rounded-lg bg-blue-100">
+                  <Users className="w-4 h-4 text-blue-600" />
+                </div>
+                <span className="font-semibold text-sm">Parent Dashboard</span>
+              </button>
+
+              <button
+                onClick={() => setShowSettings(true)}
+                className="w-full flex items-center gap-3 p-3 rounded-xl bg-white text-gray-700 hover:bg-purple-50 transition-all border border-purple-200"
+              >
+                <div className="p-2 rounded-lg bg-gray-100">
+                  <Settings className="w-4 h-4 text-gray-600" />
+                </div>
+                <span className="font-semibold text-sm">Settings</span>
+              </button>
+            </nav>
+          </aside>
+        </div>
+      )}
+
       {/* Main Content with Sidebar Layout */}
       <main className="flex min-h-screen">
         {userRole === "parent" ? (
-          <div className="w-full p-8">
+          <div className="w-full p-4 md:p-8">
             <ParentDashboard
               children={undefined}
               sessions={undefined}
@@ -304,8 +426,8 @@ export default function Index({ initialProfile }: IndexProps) {
           </div>
         ) : (
           <div className="flex w-full">
-            {/* Left Sidebar */}
-            <aside className="w-72 bg-gradient-to-b from-purple-100 to-pink-100 border-r border-purple-200 p-6 flex flex-col">
+            {/* Desktop Left Sidebar */}
+            <aside className="hidden md:flex w-72 bg-gradient-to-b from-purple-100 to-pink-100 border-r border-purple-200 p-6 flex-col">
               {/* Compact Kid-Friendly User Profile Section */}
               <div className="bg-gradient-to-br from-educational-yellow-light to-educational-pink-light rounded-2xl p-3 mb-4 shadow-lg border-2 border-white/50">
                 <div className="text-center">
