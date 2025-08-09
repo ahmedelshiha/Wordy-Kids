@@ -771,7 +771,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                         />
                                       </div>
 
-                                      <div className="flex justify-center gap-4">
+                                      <div className="flex justify-center gap-2 md:gap-4 px-4 md:px-0">
                                         <Button
                                           onClick={() =>
                                             setCurrentWordIndex(
