@@ -345,7 +345,7 @@ export default function LoginForm() {
                 </p>
                 <div className="text-sm text-purple-700 space-y-3 font-bold">
                   <div className="bg-white rounded-xl p-3 border-2 border-yellow-300">
-                    ���� Explorer <strong>demo</strong> with secret code <strong>demo123</strong>
+                    🌟 Explorer <strong>demo</strong> with secret code <strong>demo123</strong>
                   </div>
                   <div className="bg-white rounded-xl p-3 border-2 border-pink-300">
                     🚀 Adventurer <strong>alex</strong> with secret code <strong>alex123</strong>
@@ -374,18 +374,23 @@ export default function LoginForm() {
 
         {/* Footer */}
         <div className="text-center mt-8">
-          <div className="flex justify-center items-center gap-2 text-gray-600">
-            <Sparkles className="w-4 h-4" />
-            <span className="text-sm">New to Word Adventure?</span>
+          <div className="bg-gradient-to-r from-purple-100 to-pink-100 rounded-2xl p-6 border-4 border-dashed border-purple-300">
+            <div className="flex justify-center items-center gap-3 text-purple-700 text-lg font-bold mb-4">
+              <Sparkles className="w-6 h-6 text-yellow-500 animate-spin" style={{ animationDuration: "3s" }} />
+              <span className="animate-pulse">First time here?</span>
+              <Sparkles className="w-6 h-6 text-pink-500 animate-spin" style={{ animationDuration: "3s" }} />
+            </div>
             <Button
-              variant="link"
               onClick={() => navigate("/app?mode=create")}
-              className="text-educational-blue p-0 h-auto font-semibold"
+              className="bg-gradient-to-r from-orange-400 via-pink-400 to-purple-500 text-white font-bold py-4 px-8 rounded-2xl text-xl hover:scale-110 transform transition-all shadow-2xl border-4 border-white"
               disabled={isLoading}
             >
-              Create an account
+              <div className="flex items-center gap-3">
+                <span className="text-2xl animate-bounce">🌟</span>
+                <span>CREATE MY EXPLORER PROFILE!</span>
+                <span className="text-2xl animate-bounce delay-100">🚀</span>
+              </div>
             </Button>
-            <Sparkles className="w-4 h-4" />
           </div>
         </div>
       </div>
