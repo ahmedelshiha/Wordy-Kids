@@ -309,7 +309,7 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({
                 playSoundIfEnabled.click();
                 onClose();
               }}
-              className="flex-1 bg-educational-blue text-white"
+              className="flex-1 w-full bg-educational-blue text-white"
             >
               Save & Close
             </Button>
