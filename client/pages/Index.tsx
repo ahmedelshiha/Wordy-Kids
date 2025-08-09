@@ -136,6 +136,7 @@ export default function Index({ initialProfile }: IndexProps) {
   const [learningMode, setLearningMode] = useState<
     "cards" | "builder" | "matching" | "selector"
   >("selector");
+  const [showMatchingGame, setShowMatchingGame] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
   const [showCelebration, setShowCelebration] = useState(false);
   const [userRole, setUserRole] = useState<"child" | "parent">("child");
@@ -205,7 +206,7 @@ export default function Index({ initialProfile }: IndexProps) {
     setTimeout(() => {
       setFeedback({
         type: "celebration",
-        title: "Vocabulary Session Complete! ����",
+        title: "Vocabulary Session Complete! �����",
         message: `Reviewed ${wordsReviewed} words with ${accuracy}% accuracy!`,
         points: wordsReviewed * accuracy,
         onContinue: () => setFeedback(null),
