@@ -53,6 +53,7 @@ import {
   Crown,
   Menu,
   X,
+  LogOut,
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
