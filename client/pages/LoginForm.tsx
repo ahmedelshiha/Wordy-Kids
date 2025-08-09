@@ -297,7 +297,7 @@ export default function LoginForm() {
             disabled={isLoading}
           >
             <ArrowLeft className="w-4 h-4 mr-2" />
-            Back to Main Page
+            Continue as Guest
           </Button>
         </div>
 
