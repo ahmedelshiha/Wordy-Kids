@@ -284,7 +284,7 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({
           </div>
 
           {/* Action Buttons */}
-          <div className="flex gap-4 pt-4 border-t">
+          <div className="flex flex-col md:flex-row gap-3 md:gap-4 pt-4 border-t">
             <Button
               variant="outline"
               onClick={() => {
