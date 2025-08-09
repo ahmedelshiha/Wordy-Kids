@@ -22,10 +22,11 @@ import { useNavigate } from "react-router-dom";
 export default function SignUp() {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
-    username: "",
+    childName: "",
     email: "",
     password: "",
     confirmPassword: "",
+    birthDate: "",
   });
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
