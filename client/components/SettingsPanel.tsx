@@ -52,8 +52,10 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({
     setAvailableVoices(voices);
 
     // Load background animations setting (default: false)
-    const savedBackgroundAnimations = localStorage.getItem('backgroundAnimations');
-    setBackgroundAnimations(savedBackgroundAnimations === 'true');
+    const savedBackgroundAnimations = localStorage.getItem(
+      "backgroundAnimations",
+    );
+    setBackgroundAnimations(savedBackgroundAnimations === "true");
   }, [isOpen]);
 
   const handleSoundToggle = (checked: boolean) => {
@@ -73,9 +75,11 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({
 
   const handleBackgroundAnimationsToggle = (checked: boolean) => {
     setBackgroundAnimations(checked);
-    localStorage.setItem('backgroundAnimations', checked.toString());
+    localStorage.setItem("backgroundAnimations", checked.toString());
     // Dispatch custom event for other components to listen
-    window.dispatchEvent(new CustomEvent('backgroundAnimationsChanged', { detail: checked }));
+    window.dispatchEvent(
+      new CustomEvent("backgroundAnimationsChanged", { detail: checked }),
+    );
     playSoundIfEnabled.click();
   };
 
@@ -251,7 +255,9 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({
             <div className="flex items-center justify-between">
               <div>
                 <p className="font-medium">Background Animations</p>
-                <p className="text-sm text-slate-600">Show floating elements and bubbles</p>
+                <p className="text-sm text-slate-600">
+                  Show floating elements and bubbles
+                </p>
               </div>
               <Switch
                 checked={backgroundAnimations}
@@ -359,8 +365,12 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({
                 setSoundEnabled(true);
                 setDarkMode(false);
                 setBackgroundAnimations(false);
-                localStorage.setItem('backgroundAnimations', 'false');
-                window.dispatchEvent(new CustomEvent('backgroundAnimationsChanged', { detail: false }));
+                localStorage.setItem("backgroundAnimations", "false");
+                window.dispatchEvent(
+                  new CustomEvent("backgroundAnimationsChanged", {
+                    detail: false,
+                  }),
+                );
                 setAnimationSpeed([1]);
                 setDailyGoal([10]);
                 setDifficulty("medium");

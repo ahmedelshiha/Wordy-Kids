@@ -32,7 +32,7 @@ import {
   generateQuizQuestions,
   generateMatchingPairs,
   generateFillInBlank,
-  shuffleArray
+  shuffleArray,
 } from "@/lib/gameGeneration";
 import {
   BookOpen,
@@ -142,7 +142,8 @@ export default function Index({ initialProfile }: IndexProps) {
   const [userRole, setUserRole] = useState<"child" | "parent">("child");
   const [showWordCreator, setShowWordCreator] = useState(false);
   const [customWords, setCustomWords] = useState<any[]>([]);
-  const [backgroundAnimationsEnabled, setBackgroundAnimationsEnabled] = useState(false);
+  const [backgroundAnimationsEnabled, setBackgroundAnimationsEnabled] =
+    useState(false);
 
   // New child-friendly states
   const [currentProfile, setCurrentProfile] = useState<any>(
@@ -161,10 +162,16 @@ export default function Index({ initialProfile }: IndexProps) {
       setBackgroundAnimationsEnabled(event.detail);
     };
 
-    window.addEventListener('backgroundAnimationsChanged', handleAnimationsChange as EventListener);
+    window.addEventListener(
+      "backgroundAnimationsChanged",
+      handleAnimationsChange as EventListener,
+    );
 
     return () => {
-      window.removeEventListener('backgroundAnimationsChanged', handleAnimationsChange as EventListener);
+      window.removeEventListener(
+        "backgroundAnimationsChanged",
+        handleAnimationsChange as EventListener,
+      );
     };
   }, []);
 
@@ -697,7 +704,6 @@ export default function Index({ initialProfile }: IndexProps) {
 
                               return (
                                 <>
-
                                   {displayWords.length > 0 && (
                                     <>
                                       <div className="max-w-sm md:max-w-md mx-auto px-2 md:px-0">
@@ -1087,25 +1093,60 @@ export default function Index({ initialProfile }: IndexProps) {
                         const generateQuizQuestionsByType = (type: string) => {
                           switch (type) {
                             case "quick":
-                              return generateQuizQuestions(5, "easy", selectedCategory, "definition");
+                              return generateQuizQuestions(
+                                5,
+                                "easy",
+                                selectedCategory,
+                                "definition",
+                              );
 
                             case "standard":
-                              return generateQuizQuestions(10, undefined, selectedCategory, "definition");
+                              return generateQuizQuestions(
+                                10,
+                                undefined,
+                                selectedCategory,
+                                "definition",
+                              );
 
                             case "challenge":
-                              return generateQuizQuestions(15, "hard", selectedCategory, "definition");
+                              return generateQuizQuestions(
+                                15,
+                                "hard",
+                                selectedCategory,
+                                "definition",
+                              );
 
                             case "picture":
-                              return generateQuizQuestions(8, undefined, selectedCategory, "picture");
+                              return generateQuizQuestions(
+                                8,
+                                undefined,
+                                selectedCategory,
+                                "picture",
+                              );
 
                             case "spelling":
-                              return generateQuizQuestions(10, undefined, selectedCategory, "spelling");
+                              return generateQuizQuestions(
+                                10,
+                                undefined,
+                                selectedCategory,
+                                "spelling",
+                              );
 
                             case "speed":
-                              return generateQuizQuestions(20, undefined, selectedCategory, "definition");
+                              return generateQuizQuestions(
+                                20,
+                                undefined,
+                                selectedCategory,
+                                "definition",
+                              );
 
                             default:
-                              return generateQuizQuestions(10, undefined, selectedCategory, "definition");
+                              return generateQuizQuestions(
+                                10,
+                                undefined,
+                                selectedCategory,
+                                "definition",
+                              );
                           }
                         };
 
@@ -1145,7 +1186,9 @@ export default function Index({ initialProfile }: IndexProps) {
           <div className="bg-white rounded-xl max-w-4xl w-full max-h-[90vh] overflow-y-auto">
             <div className="p-6">
               <div className="flex items-center justify-between mb-6">
-                <h2 className="text-2xl font-bold text-gray-800">🧩 Word Matching Game</h2>
+                <h2 className="text-2xl font-bold text-gray-800">
+                  🧩 Word Matching Game
+                </h2>
                 <Button
                   onClick={() => setShowMatchingGame(false)}
                   variant="outline"

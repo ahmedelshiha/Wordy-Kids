@@ -54,9 +54,13 @@ const enrichedCategories: Category[] = [
     wordCount: getWordsByCategory("food").length,
     description: "Learn about healthy foods, fruits, and nutrition",
     difficultyBreakdown: {
-      easy: getWordsByCategory("food").filter((w) => w.difficulty === "easy").length,
-      medium: getWordsByCategory("food").filter((w) => w.difficulty === "medium").length,
-      hard: getWordsByCategory("food").filter((w) => w.difficulty === "hard").length,
+      easy: getWordsByCategory("food").filter((w) => w.difficulty === "easy")
+        .length,
+      medium: getWordsByCategory("food").filter(
+        (w) => w.difficulty === "medium",
+      ).length,
+      hard: getWordsByCategory("food").filter((w) => w.difficulty === "hard")
+        .length,
     },
   },
   {
@@ -68,9 +72,13 @@ const enrichedCategories: Category[] = [
     wordCount: getWordsByCategory("animals").length,
     description: "Discover amazing creatures from around the world",
     difficultyBreakdown: {
-      easy: getWordsByCategory("animals").filter((w) => w.difficulty === "easy").length,
-      medium: getWordsByCategory("animals").filter((w) => w.difficulty === "medium").length,
-      hard: getWordsByCategory("animals").filter((w) => w.difficulty === "hard").length,
+      easy: getWordsByCategory("animals").filter((w) => w.difficulty === "easy")
+        .length,
+      medium: getWordsByCategory("animals").filter(
+        (w) => w.difficulty === "medium",
+      ).length,
+      hard: getWordsByCategory("animals").filter((w) => w.difficulty === "hard")
+        .length,
     },
   },
   {
@@ -82,9 +90,13 @@ const enrichedCategories: Category[] = [
     wordCount: getWordsByCategory("body").length,
     description: "Learn about the human body and health",
     difficultyBreakdown: {
-      easy: getWordsByCategory("body").filter((w) => w.difficulty === "easy").length,
-      medium: getWordsByCategory("body").filter((w) => w.difficulty === "medium").length,
-      hard: getWordsByCategory("body").filter((w) => w.difficulty === "hard").length,
+      easy: getWordsByCategory("body").filter((w) => w.difficulty === "easy")
+        .length,
+      medium: getWordsByCategory("body").filter(
+        (w) => w.difficulty === "medium",
+      ).length,
+      hard: getWordsByCategory("body").filter((w) => w.difficulty === "hard")
+        .length,
     },
   },
   {
@@ -96,9 +108,13 @@ const enrichedCategories: Category[] = [
     wordCount: getWordsByCategory("family").length,
     description: "Family members, relationships, and social connections",
     difficultyBreakdown: {
-      easy: getWordsByCategory("family").filter((w) => w.difficulty === "easy").length,
-      medium: getWordsByCategory("family").filter((w) => w.difficulty === "medium").length,
-      hard: getWordsByCategory("family").filter((w) => w.difficulty === "hard").length,
+      easy: getWordsByCategory("family").filter((w) => w.difficulty === "easy")
+        .length,
+      medium: getWordsByCategory("family").filter(
+        (w) => w.difficulty === "medium",
+      ).length,
+      hard: getWordsByCategory("family").filter((w) => w.difficulty === "hard")
+        .length,
     },
   },
   {
@@ -110,9 +126,13 @@ const enrichedCategories: Category[] = [
     wordCount: getWordsByCategory("colors").length,
     description: "Explore the vibrant world of colors and creativity",
     difficultyBreakdown: {
-      easy: getWordsByCategory("colors").filter((w) => w.difficulty === "easy").length,
-      medium: getWordsByCategory("colors").filter((w) => w.difficulty === "medium").length,
-      hard: getWordsByCategory("colors").filter((w) => w.difficulty === "hard").length,
+      easy: getWordsByCategory("colors").filter((w) => w.difficulty === "easy")
+        .length,
+      medium: getWordsByCategory("colors").filter(
+        (w) => w.difficulty === "medium",
+      ).length,
+      hard: getWordsByCategory("colors").filter((w) => w.difficulty === "hard")
+        .length,
     },
   },
   {
@@ -124,9 +144,13 @@ const enrichedCategories: Category[] = [
     wordCount: getWordsByCategory("numbers").length,
     description: "Foundation mathematics and counting skills",
     difficultyBreakdown: {
-      easy: getWordsByCategory("numbers").filter((w) => w.difficulty === "easy").length,
-      medium: getWordsByCategory("numbers").filter((w) => w.difficulty === "medium").length,
-      hard: getWordsByCategory("numbers").filter((w) => w.difficulty === "hard").length,
+      easy: getWordsByCategory("numbers").filter((w) => w.difficulty === "easy")
+        .length,
+      medium: getWordsByCategory("numbers").filter(
+        (w) => w.difficulty === "medium",
+      ).length,
+      hard: getWordsByCategory("numbers").filter((w) => w.difficulty === "hard")
+        .length,
     },
   },
   {
@@ -138,9 +162,13 @@ const enrichedCategories: Category[] = [
     wordCount: getWordsByCategory("nature").length,
     description: "Explore the wonders of our natural world",
     difficultyBreakdown: {
-      easy: getWordsByCategory("nature").filter((w) => w.difficulty === "easy").length,
-      medium: getWordsByCategory("nature").filter((w) => w.difficulty === "medium").length,
-      hard: getWordsByCategory("nature").filter((w) => w.difficulty === "hard").length,
+      easy: getWordsByCategory("nature").filter((w) => w.difficulty === "easy")
+        .length,
+      medium: getWordsByCategory("nature").filter(
+        (w) => w.difficulty === "medium",
+      ).length,
+      hard: getWordsByCategory("nature").filter((w) => w.difficulty === "hard")
+        .length,
     },
   },
   {
@@ -152,9 +180,13 @@ const enrichedCategories: Category[] = [
     wordCount: getWordsByCategory("school").length,
     description: "Educational tools, classroom items, and learning",
     difficultyBreakdown: {
-      easy: getWordsByCategory("school").filter((w) => w.difficulty === "easy").length,
-      medium: getWordsByCategory("school").filter((w) => w.difficulty === "medium").length,
-      hard: getWordsByCategory("school").filter((w) => w.difficulty === "hard").length,
+      easy: getWordsByCategory("school").filter((w) => w.difficulty === "easy")
+        .length,
+      medium: getWordsByCategory("school").filter(
+        (w) => w.difficulty === "medium",
+      ).length,
+      hard: getWordsByCategory("school").filter((w) => w.difficulty === "hard")
+        .length,
     },
   },
   {
@@ -166,9 +198,15 @@ const enrichedCategories: Category[] = [
     wordCount: getWordsByCategory("transport").length,
     description: "Vehicles, travel, and getting around",
     difficultyBreakdown: {
-      easy: getWordsByCategory("transport").filter((w) => w.difficulty === "easy").length,
-      medium: getWordsByCategory("transport").filter((w) => w.difficulty === "medium").length,
-      hard: getWordsByCategory("transport").filter((w) => w.difficulty === "hard").length,
+      easy: getWordsByCategory("transport").filter(
+        (w) => w.difficulty === "easy",
+      ).length,
+      medium: getWordsByCategory("transport").filter(
+        (w) => w.difficulty === "medium",
+      ).length,
+      hard: getWordsByCategory("transport").filter(
+        (w) => w.difficulty === "hard",
+      ).length,
     },
   },
   {
@@ -180,9 +218,15 @@ const enrichedCategories: Category[] = [
     wordCount: getWordsByCategory("emotions").length,
     description: "Understanding feelings, moods, and emotional intelligence",
     difficultyBreakdown: {
-      easy: getWordsByCategory("emotions").filter((w) => w.difficulty === "easy").length,
-      medium: getWordsByCategory("emotions").filter((w) => w.difficulty === "medium").length,
-      hard: getWordsByCategory("emotions").filter((w) => w.difficulty === "hard").length,
+      easy: getWordsByCategory("emotions").filter(
+        (w) => w.difficulty === "easy",
+      ).length,
+      medium: getWordsByCategory("emotions").filter(
+        (w) => w.difficulty === "medium",
+      ).length,
+      hard: getWordsByCategory("emotions").filter(
+        (w) => w.difficulty === "hard",
+      ).length,
     },
   },
   {
@@ -194,9 +238,13 @@ const enrichedCategories: Category[] = [
     wordCount: getWordsByCategory("weather").length,
     description: "Weather patterns, seasons, and climate awareness",
     difficultyBreakdown: {
-      easy: getWordsByCategory("weather").filter((w) => w.difficulty === "easy").length,
-      medium: getWordsByCategory("weather").filter((w) => w.difficulty === "medium").length,
-      hard: getWordsByCategory("weather").filter((w) => w.difficulty === "hard").length,
+      easy: getWordsByCategory("weather").filter((w) => w.difficulty === "easy")
+        .length,
+      medium: getWordsByCategory("weather").filter(
+        (w) => w.difficulty === "medium",
+      ).length,
+      hard: getWordsByCategory("weather").filter((w) => w.difficulty === "hard")
+        .length,
     },
   },
   {
@@ -208,9 +256,13 @@ const enrichedCategories: Category[] = [
     wordCount: getWordsByCategory("actions").length,
     description: "Action words, movement, and daily activities",
     difficultyBreakdown: {
-      easy: getWordsByCategory("actions").filter((w) => w.difficulty === "easy").length,
-      medium: getWordsByCategory("actions").filter((w) => w.difficulty === "medium").length,
-      hard: getWordsByCategory("actions").filter((w) => w.difficulty === "hard").length,
+      easy: getWordsByCategory("actions").filter((w) => w.difficulty === "easy")
+        .length,
+      medium: getWordsByCategory("actions").filter(
+        (w) => w.difficulty === "medium",
+      ).length,
+      hard: getWordsByCategory("actions").filter((w) => w.difficulty === "hard")
+        .length,
     },
   },
   {
@@ -222,9 +274,13 @@ const enrichedCategories: Category[] = [
     wordCount: getWordsByCategory("hobbies").length,
     description: "Fun activities, recreation, and creative pursuits",
     difficultyBreakdown: {
-      easy: getWordsByCategory("hobbies").filter((w) => w.difficulty === "easy").length,
-      medium: getWordsByCategory("hobbies").filter((w) => w.difficulty === "medium").length,
-      hard: getWordsByCategory("hobbies").filter((w) => w.difficulty === "hard").length,
+      easy: getWordsByCategory("hobbies").filter((w) => w.difficulty === "easy")
+        .length,
+      medium: getWordsByCategory("hobbies").filter(
+        (w) => w.difficulty === "medium",
+      ).length,
+      hard: getWordsByCategory("hobbies").filter((w) => w.difficulty === "hard")
+        .length,
     },
   },
   {
@@ -236,9 +292,13 @@ const enrichedCategories: Category[] = [
     wordCount: getWordsByCategory("science").length,
     description: "Scientific concepts, experiments, and STEM learning",
     difficultyBreakdown: {
-      easy: getWordsByCategory("science").filter((w) => w.difficulty === "easy").length,
-      medium: getWordsByCategory("science").filter((w) => w.difficulty === "medium").length,
-      hard: getWordsByCategory("science").filter((w) => w.difficulty === "hard").length,
+      easy: getWordsByCategory("science").filter((w) => w.difficulty === "easy")
+        .length,
+      medium: getWordsByCategory("science").filter(
+        (w) => w.difficulty === "medium",
+      ).length,
+      hard: getWordsByCategory("science").filter((w) => w.difficulty === "hard")
+        .length,
     },
   },
   {
@@ -250,9 +310,13 @@ const enrichedCategories: Category[] = [
     wordCount: getWordsByCategory("sports").length,
     description: "Sports, games, physical activity, and health",
     difficultyBreakdown: {
-      easy: getWordsByCategory("sports").filter((w) => w.difficulty === "easy").length,
-      medium: getWordsByCategory("sports").filter((w) => w.difficulty === "medium").length,
-      hard: getWordsByCategory("sports").filter((w) => w.difficulty === "hard").length,
+      easy: getWordsByCategory("sports").filter((w) => w.difficulty === "easy")
+        .length,
+      medium: getWordsByCategory("sports").filter(
+        (w) => w.difficulty === "medium",
+      ).length,
+      hard: getWordsByCategory("sports").filter((w) => w.difficulty === "hard")
+        .length,
     },
   },
   {
@@ -264,9 +328,13 @@ const enrichedCategories: Category[] = [
     wordCount: getWordsByCategory("house").length,
     description: "Home, rooms, furniture, and living spaces",
     difficultyBreakdown: {
-      easy: getWordsByCategory("house").filter((w) => w.difficulty === "easy").length,
-      medium: getWordsByCategory("house").filter((w) => w.difficulty === "medium").length,
-      hard: getWordsByCategory("house").filter((w) => w.difficulty === "hard").length,
+      easy: getWordsByCategory("house").filter((w) => w.difficulty === "easy")
+        .length,
+      medium: getWordsByCategory("house").filter(
+        (w) => w.difficulty === "medium",
+      ).length,
+      hard: getWordsByCategory("house").filter((w) => w.difficulty === "hard")
+        .length,
     },
   },
 ];
@@ -290,9 +358,10 @@ export const CategorySelector: React.FC<CategorySelectorProps> = ({
   };
 
   const getProgressPercentage = (category: Category) => {
-    const total = category.difficultyBreakdown.easy + 
-                 category.difficultyBreakdown.medium + 
-                 category.difficultyBreakdown.hard;
+    const total =
+      category.difficultyBreakdown.easy +
+      category.difficultyBreakdown.medium +
+      category.difficultyBreakdown.hard;
     return total > 0 ? (category.difficultyBreakdown.easy / total) * 100 : 0;
   };
 
@@ -309,26 +378,31 @@ export const CategorySelector: React.FC<CategorySelectorProps> = ({
           🎓 Choose Your Learning Adventure!
         </h2>
         <p className="text-base md:text-xl text-gray-600 mb-6 md:mb-8">
-          Select a category to start your vocabulary journey. Each category is designed following Oxford learning paths!
+          Select a category to start your vocabulary journey. Each category is
+          designed following Oxford learning paths!
         </p>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-2xl mx-auto mb-8">
           <div className="text-center">
-            <div className="text-2xl font-bold text-educational-blue">{wordsDatabase.length}</div>
+            <div className="text-2xl font-bold text-educational-blue">
+              {wordsDatabase.length}
+            </div>
             <div className="text-sm text-gray-600">Total Words</div>
           </div>
           <div className="text-center">
-            <div className="text-2xl font-bold text-educational-green">{categories.length - 1}</div>
+            <div className="text-2xl font-bold text-educational-green">
+              {categories.length - 1}
+            </div>
             <div className="text-sm text-gray-600">Categories</div>
           </div>
           <div className="text-center">
             <div className="text-2xl font-bold text-educational-orange">
-              {wordsDatabase.filter(w => w.difficulty === 'easy').length}
+              {wordsDatabase.filter((w) => w.difficulty === "easy").length}
             </div>
             <div className="text-sm text-gray-600">Easy Words</div>
           </div>
           <div className="text-center">
             <div className="text-2xl font-bold text-educational-purple">
-              {wordsDatabase.filter(w => w.difficulty === 'hard').length}
+              {wordsDatabase.filter((w) => w.difficulty === "hard").length}
             </div>
             <div className="text-sm text-gray-600">Challenge Words</div>
           </div>
@@ -380,23 +454,37 @@ export const CategorySelector: React.FC<CategorySelectorProps> = ({
                 <div className="space-y-2 mb-4">
                   <div className="flex justify-between text-xs">
                     <span>Learning Progress</span>
-                    <span>{Math.round(getProgressPercentage(category))}% Easy</span>
+                    <span>
+                      {Math.round(getProgressPercentage(category))}% Easy
+                    </span>
                   </div>
-                  <Progress value={getProgressPercentage(category)} className="h-2" />
-                  
+                  <Progress
+                    value={getProgressPercentage(category)}
+                    className="h-2"
+                  />
+
                   <div className="flex gap-1 justify-center mt-3">
                     {category.difficultyBreakdown.easy > 0 && (
-                      <Badge className={getDifficultyColor("easy")} variant="secondary">
+                      <Badge
+                        className={getDifficultyColor("easy")}
+                        variant="secondary"
+                      >
                         {category.difficultyBreakdown.easy} Easy
                       </Badge>
                     )}
                     {category.difficultyBreakdown.medium > 0 && (
-                      <Badge className={getDifficultyColor("medium")} variant="secondary">
+                      <Badge
+                        className={getDifficultyColor("medium")}
+                        variant="secondary"
+                      >
                         {category.difficultyBreakdown.medium} Medium
                       </Badge>
                     )}
                     {category.difficultyBreakdown.hard > 0 && (
-                      <Badge className={getDifficultyColor("hard")} variant="secondary">
+                      <Badge
+                        className={getDifficultyColor("hard")}
+                        variant="secondary"
+                      >
                         {category.difficultyBreakdown.hard} Hard
                       </Badge>
                     )}
@@ -410,7 +498,9 @@ export const CategorySelector: React.FC<CategorySelectorProps> = ({
                       ? "bg-educational-blue text-white"
                       : "bg-white border border-educational-blue text-educational-blue hover:bg-educational-blue hover:text-white"
                   }`}
-                  variant={selectedCategory === category.id ? "default" : "outline"}
+                  variant={
+                    selectedCategory === category.id ? "default" : "outline"
+                  }
                 >
                   {selectedCategory === category.id ? "Selected ✓" : "Explore"}
                 </Button>
@@ -427,14 +517,17 @@ export const CategorySelector: React.FC<CategorySelectorProps> = ({
             🎯 Oxford Learning Path Structure
           </h3>
           <p className="text-gray-600 mb-4">
-            Our vocabulary is carefully structured using Oxford's progressive learning methodology, 
-            ensuring age-appropriate content and systematic skill development.
+            Our vocabulary is carefully structured using Oxford's progressive
+            learning methodology, ensuring age-appropriate content and
+            systematic skill development.
           </p>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-2xl mx-auto">
             <div className="bg-white rounded-lg p-4">
               <div className="text-green-600 text-2xl mb-2">🌱</div>
               <div className="font-semibold text-green-700">Foundation</div>
-              <div className="text-sm text-gray-600">Basic everyday vocabulary</div>
+              <div className="text-sm text-gray-600">
+                Basic everyday vocabulary
+              </div>
             </div>
             <div className="bg-white rounded-lg p-4">
               <div className="text-orange-600 text-2xl mb-2">🌿</div>
@@ -444,7 +537,9 @@ export const CategorySelector: React.FC<CategorySelectorProps> = ({
             <div className="bg-white rounded-lg p-4">
               <div className="text-purple-600 text-2xl mb-2">🌳</div>
               <div className="font-semibold text-purple-700">Advanced</div>
-              <div className="text-sm text-gray-600">Complex concepts & expressions</div>
+              <div className="text-sm text-gray-600">
+                Complex concepts & expressions
+              </div>
             </div>
           </div>
         </div>
