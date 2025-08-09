@@ -186,8 +186,11 @@ export class AudioService {
   ): void {
     if (!this.isEnabled) return;
 
+    // Get voice-type specific defaults, but slower for definitions
+    const voiceDefaults = this.getVoiceDefaults(this.selectedVoiceType);
+
     const {
-      rate = 0.7, // Slower for definitions
+      rate = voiceDefaults.rate * 0.85, // Slightly slower for definitions
       onStart,
       onEnd,
     } = options;
@@ -196,7 +199,7 @@ export class AudioService {
 
     const utterance = new SpeechSynthesisUtterance(definition);
     utterance.rate = rate;
-    utterance.pitch = 1.1;
+    utterance.pitch = voiceDefaults.pitch * 0.95; // Slightly lower pitch for definitions
     utterance.volume = 1.0;
 
     const voice = this.getChildFriendlyVoice();
