@@ -263,8 +263,11 @@ export class AudioService {
         Math.floor(Math.random() * encouragementPhrases.length)
       ];
     const utterance = new SpeechSynthesisUtterance(phrase);
-    utterance.rate = 0.9;
-    utterance.pitch = 1.2;
+
+    // Use voice type defaults with encouraging tone
+    const voiceDefaults = this.getVoiceDefaults(this.selectedVoiceType);
+    utterance.rate = voiceDefaults.rate;
+    utterance.pitch = voiceDefaults.pitch;
     utterance.volume = 0.7;
 
     const voice = this.getChildFriendlyVoice();
