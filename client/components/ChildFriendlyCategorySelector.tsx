@@ -513,11 +513,11 @@ export function ChildFriendlyCategorySelector({
           return (
             <Card
               key={category.id}
-              className={`cursor-pointer transition-all duration-500 hover:scale-110 hover:shadow-2xl transform hover:-translate-y-2 ${
+              className={`cursor-pointer transition-all duration-500 md:hover:scale-110 hover:shadow-2xl md:transform md:hover:-translate-y-2 ${
                 selectedCategory === category.id
-                  ? "ring-4 ring-educational-blue shadow-2xl scale-105 bg-gradient-to-br from-blue-50 to-purple-50"
+                  ? "ring-4 ring-educational-blue shadow-2xl md:scale-105 bg-gradient-to-br from-blue-50 to-purple-50"
                   : hoveredCategory === category.id
-                    ? "ring-2 ring-educational-purple shadow-xl scale-105"
+                    ? "ring-2 ring-educational-purple shadow-xl md:scale-105"
                     : "hover:shadow-lg"
               }`}
               style={{
