@@ -227,7 +227,7 @@ export default function SignUp() {
                   className="text-sm font-medium text-gray-700 flex items-center gap-2"
                 >
                   <Lock className="w-4 h-4" />
-                  Password
+                  Parent Password
                 </Label>
                 <div className="relative mt-2">
                   <Input
