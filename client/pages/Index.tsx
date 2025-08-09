@@ -1338,9 +1338,9 @@ export default function Index({ initialProfile }: IndexProps) {
       )}
 
       {/* Floating Helper */}
-      <div className="fixed bottom-6 right-6 z-40">
+      <div className="fixed bottom-4 md:bottom-6 right-4 md:right-6 z-40">
         <div
-          className="bg-gradient-to-r from-educational-purple to-educational-pink p-4 rounded-full shadow-2xl cursor-pointer hover:scale-110 transition-all duration-300"
+          className="bg-gradient-to-r from-educational-purple to-educational-pink p-3 md:p-4 rounded-full shadow-2xl cursor-pointer md:hover:scale-110 transition-all duration-300 min-w-[48px] min-h-[48px] flex items-center justify-center"
           onClick={() =>
             setFeedback({
               type: "encouragement",
@@ -1351,7 +1351,7 @@ export default function Index({ initialProfile }: IndexProps) {
             })
           }
         >
-          <Heart className="w-6 h-6 text-white fill-current animate-pulse" />
+          <Heart className="w-5 md:w-6 h-5 md:h-6 text-white fill-current animate-pulse" />
         </div>
       </div>
     </div>
