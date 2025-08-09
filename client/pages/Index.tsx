@@ -729,8 +729,8 @@ export default function Index({ initialProfile }: IndexProps) {
 
                               return (
                                 <>
-                                  <div className="flex justify-center mb-6">
-                                    <div className="flex flex-wrap gap-2 max-w-lg">
+                                  <div className="flex justify-center mb-4 md:mb-6">
+                                    <div className="flex flex-wrap gap-1 md:gap-2 max-w-xs md:max-w-lg">
                                       {displayWords.map((_, index) => (
                                         <Button
                                           key={index}
