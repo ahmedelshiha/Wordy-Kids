@@ -53,6 +53,7 @@ import {
   Crown,
   Menu,
   X,
+  LogOut,
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
@@ -218,6 +219,10 @@ export default function Index({ initialProfile }: IndexProps) {
     setCurrentWordIndex(0);
   };
 
+  const handleSignOut = () => {
+    navigate("/");
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 relative">
       {/* Hero Header */}
@@ -373,6 +378,16 @@ export default function Index({ initialProfile }: IndexProps) {
                 </div>
                 <span className="font-semibold text-sm">Settings</span>
               </button>
+
+              <button
+                onClick={handleSignOut}
+                className="w-full flex items-center gap-3 p-3 rounded-xl bg-white text-gray-700 hover:bg-red-50 transition-all border border-red-200"
+              >
+                <div className="p-2 rounded-lg bg-red-100">
+                  <LogOut className="w-4 h-4 text-red-600" />
+                </div>
+                <span className="font-semibold text-sm">Sign Out</span>
+              </button>
             </nav>
           </aside>
         </div>
@@ -512,6 +527,16 @@ export default function Index({ initialProfile }: IndexProps) {
                     <Settings className="w-5 h-5 text-gray-600" />
                   </div>
                   <span className="font-semibold">Settings</span>
+                </button>
+
+                <button
+                  onClick={handleSignOut}
+                  className="w-full flex items-center gap-4 p-4 rounded-2xl bg-white text-gray-700 hover:bg-red-50 transition-all border border-red-200"
+                >
+                  <div className="p-2 rounded-xl bg-red-100">
+                    <LogOut className="w-5 h-5 text-red-600" />
+                  </div>
+                  <span className="font-semibold">Sign Out</span>
                 </button>
               </nav>
             </aside>
