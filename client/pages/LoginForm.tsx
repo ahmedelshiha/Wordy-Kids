@@ -211,11 +211,12 @@ export default function LoginForm() {
         </div>
 
         {/* Login Form */}
-        <Card className="bg-white/90 backdrop-blur-sm shadow-2xl border-2 border-white/50">
-          <CardHeader>
-            <CardTitle className="text-center text-2xl text-gray-800 flex items-center justify-center gap-2">
-              <LogIn className="w-6 h-6 text-educational-blue" />
-              Sign In to Your Account
+        <Card className="bg-gradient-to-br from-white via-yellow-50 to-pink-50 backdrop-blur-sm shadow-2xl border-4 border-rainbow rounded-3xl transform hover:scale-105 transition-all duration-300">
+          <CardHeader className="bg-gradient-to-r from-purple-400 via-pink-400 to-yellow-400 rounded-t-3xl -m-1 mb-0">
+            <CardTitle className="text-center text-2xl text-white flex items-center justify-center gap-3 py-4">
+              <div className="text-3xl animate-spin" style={{ animationDuration: "3s" }}>🎪</div>
+              <span className="font-bold text-shadow">Ready to Explore?</span>
+              <div className="text-3xl animate-bounce">🚀</div>
             </CardTitle>
           </CardHeader>
           <CardContent>
