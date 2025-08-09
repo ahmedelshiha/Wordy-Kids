@@ -314,7 +314,19 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
   // Load children from localStorage or use empty array
   const [children, setChildren] = useState<ChildProfile[]>(() => {
     const savedChildren = localStorage.getItem("parentDashboardChildren");
-    return savedChildren ? JSON.parse(savedChildren) : [];
+    if (savedChildren) {
+      const parsed = JSON.parse(savedChildren);
+      // Convert date strings back to Date objects
+      return parsed.map((child: any) => ({
+        ...child,
+        lastActive: new Date(child.lastActive),
+        recentAchievements: child.recentAchievements?.map((achievement: any) => ({
+          ...achievement,
+          earnedAt: new Date(achievement.earnedAt),
+        })) || [],
+      }));
+    }
+    return [];
   });
 
   const [selectedChild, setSelectedChild] = useState<ChildProfile | null>(
