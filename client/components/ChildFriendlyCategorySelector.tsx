@@ -692,7 +692,7 @@ export function ChildFriendlyCategorySelector({
             onSelectCategory(selectedCategory);
           }}
           disabled={!selectedCategory || selectedCategory === ""}
-          className="bg-gradient-to-r from-educational-blue via-educational-purple to-educational-pink text-white hover:from-educational-blue/90 hover:via-educational-purple/90 hover:to-educational-pink/90 text-xl px-12 py-4 rounded-full font-bold transform hover:scale-110 transition-all duration-300 shadow-2xl relative overflow-hidden"
+          className="bg-gradient-to-r from-educational-blue via-educational-purple to-educational-pink text-white hover:from-educational-blue/90 hover:via-educational-purple/90 hover:to-educational-pink/90 text-lg md:text-xl px-8 md:px-12 py-3 md:py-4 rounded-full font-bold transform md:hover:scale-110 transition-all duration-300 shadow-2xl relative overflow-hidden w-full md:w-auto"
         >
           <span className="relative z-10 flex items-center gap-2">
             <Sparkles className="w-6 h-6 animate-spin" />
