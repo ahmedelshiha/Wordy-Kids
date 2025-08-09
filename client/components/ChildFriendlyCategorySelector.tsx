@@ -182,6 +182,82 @@ const enrichedCategories: Category[] = [
         .length,
     },
   },
+  {
+    id: "body",
+    name: "Body Parts",
+    icon: "👤",
+    color: "bg-educational-pink",
+    gradient: "from-pink-400 to-pink-600",
+    wordCount: getWordsByCategory("body").length,
+    description: "Learn about your amazing body and all its parts!",
+    funFact: "Your body has 206 bones when you're an adult!",
+    difficultyBreakdown: {
+      easy: getWordsByCategory("body").filter((w) => w.difficulty === "easy")
+        .length,
+      medium: getWordsByCategory("body").filter(
+        (w) => w.difficulty === "medium",
+      ).length,
+      hard: getWordsByCategory("body").filter((w) => w.difficulty === "hard")
+        .length,
+    },
+  },
+  {
+    id: "clothes",
+    name: "Clothes",
+    icon: "👕",
+    color: "bg-blue-500",
+    gradient: "from-blue-400 to-blue-600",
+    wordCount: getWordsByCategory("clothes").length,
+    description: "Discover different types of clothing and fashion!",
+    funFact: "The first clothing was made from animal skins!",
+    difficultyBreakdown: {
+      easy: getWordsByCategory("clothes").filter((w) => w.difficulty === "easy")
+        .length,
+      medium: getWordsByCategory("clothes").filter(
+        (w) => w.difficulty === "medium",
+      ).length,
+      hard: getWordsByCategory("clothes").filter((w) => w.difficulty === "hard")
+        .length,
+    },
+  },
+  {
+    id: "family",
+    name: "Family",
+    icon: "👪",
+    color: "bg-educational-yellow",
+    gradient: "from-yellow-400 to-yellow-600",
+    wordCount: getWordsByCategory("family").length,
+    description: "Learn about family members who love and care for you!",
+    funFact: "Family is the most important thing in life!",
+    difficultyBreakdown: {
+      easy: getWordsByCategory("family").filter((w) => w.difficulty === "easy")
+        .length,
+      medium: getWordsByCategory("family").filter(
+        (w) => w.difficulty === "medium",
+      ).length,
+      hard: getWordsByCategory("family").filter((w) => w.difficulty === "hard")
+        .length,
+    },
+  },
+  {
+    id: "feelings",
+    name: "Feelings",
+    icon: "😊",
+    color: "bg-educational-purple",
+    gradient: "from-purple-400 to-purple-600",
+    wordCount: getWordsByCategory("feelings").length,
+    description: "Understand different emotions and how you feel!",
+    funFact: "It's healthy to talk about your feelings!",
+    difficultyBreakdown: {
+      easy: getWordsByCategory("feelings").filter((w) => w.difficulty === "easy")
+        .length,
+      medium: getWordsByCategory("feelings").filter(
+        (w) => w.difficulty === "medium",
+      ).length,
+      hard: getWordsByCategory("feelings").filter((w) => w.difficulty === "hard")
+        .length,
+    },
+  },
 ].filter((category) => category.wordCount > 0 || category.id === "all");
 
 export function ChildFriendlyCategorySelector({
