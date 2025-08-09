@@ -1,21 +1,24 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Switch } from '@/components/ui/switch';
 import { Slider } from '@/components/ui/slider';
-import { 
-  Settings, 
-  Volume2, 
-  VolumeX, 
-  Palette, 
+import {
+  Settings,
+  Volume2,
+  VolumeX,
+  Palette,
   Clock,
   Target,
   User,
   Moon,
-  Sun
+  Sun,
+  Mic,
+  Play
 } from 'lucide-react';
 import { setSoundEnabled, isSoundEnabled, playSoundIfEnabled } from '@/lib/soundEffects';
+import { audioService, VoiceType } from '@/lib/audioService';
 
 interface SettingsPanelProps {
   isOpen: boolean;
