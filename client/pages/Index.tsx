@@ -29,6 +29,12 @@ import {
 } from "@/data/wordsDatabase";
 import { isBackgroundAnimationsEnabled } from "@/lib/backgroundAnimations";
 import {
+  generateQuizQuestions,
+  generateMatchingPairs,
+  generateFillInBlank,
+  shuffleArray
+} from "@/lib/gameGeneration";
+import {
   BookOpen,
   Play,
   Trophy,
