@@ -681,10 +681,11 @@ export default function Index({ initialProfile }: IndexProps) {
                               variant={
                                 learningMode === "cards" ? "default" : "outline"
                               }
-                              className="flex items-center gap-2"
+                              className="flex items-center gap-1 md:gap-2 text-sm md:text-base px-3 md:px-4"
                             >
                               <BookOpen className="w-4 h-4" />
-                              Word Cards
+                              <span className="hidden sm:inline">Word Cards</span>
+                              <span className="sm:hidden">Cards</span>
                             </Button>
                             <Button
                               onClick={() => setLearningMode("builder")}
@@ -693,18 +694,20 @@ export default function Index({ initialProfile }: IndexProps) {
                                   ? "default"
                                   : "outline"
                               }
-                              className="flex items-center gap-2"
+                              className="flex items-center gap-1 md:gap-2 text-sm md:text-base px-3 md:px-4"
                             >
                               <Brain className="w-4 h-4" />
-                              Vocabulary Builder
+                              <span className="hidden sm:inline">Vocabulary Builder</span>
+                              <span className="sm:hidden">Builder</span>
                             </Button>
                             <Button
                               onClick={() => setGameMode(true)}
                               variant="default"
-                              className="flex items-center gap-2 bg-gradient-to-r from-educational-green to-educational-blue text-white"
+                              className="flex items-center gap-1 md:gap-2 bg-gradient-to-r from-educational-green to-educational-blue text-white text-sm md:text-base px-3 md:px-4"
                             >
                               <Gamepad2 className="w-4 h-4" />
-                              Game Mode! 🎮
+                              <span className="hidden sm:inline">Game Mode! 🎮</span>
+                              <span className="sm:hidden">Game 🎮</span>
                             </Button>
                             <Button
                               onClick={() => {
@@ -1089,7 +1092,7 @@ export default function Index({ initialProfile }: IndexProps) {
                               </div>
                               <div className="flex justify-between items-center p-3 bg-white rounded-lg">
                                 <div className="flex items-center gap-3">
-                                  <span className="text-2xl">🌱</span>
+                                  <span className="text-2xl">����</span>
                                   <div>
                                     <div className="font-semibold">
                                       Easy Quiz
