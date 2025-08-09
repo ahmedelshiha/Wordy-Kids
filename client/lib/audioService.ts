@@ -262,6 +262,67 @@ export class AudioService {
     this.speechSynthesis.cancel();
   }
 
+  public setVoiceType(voiceType: VoiceType): void {
+    this.selectedVoiceType = voiceType;
+    // Save to localStorage for persistence
+    localStorage.setItem('preferred-voice-type', voiceType);
+  }
+
+  public getVoiceType(): VoiceType {
+    return this.selectedVoiceType;
+  }
+
+  public getAvailableVoices(): { type: VoiceType; voice: SpeechSynthesisVoice | null; available: boolean }[] {
+    return [
+      {
+        type: 'woman',
+        voice: this.getVoiceByType('woman'),
+        available: this.getVoiceByType('woman') !== null
+      },
+      {
+        type: 'man',
+        voice: this.getVoiceByType('man'),
+        available: this.getVoiceByType('man') !== null
+      },
+      {
+        type: 'kid',
+        voice: this.getVoiceByType('kid'),
+        available: this.getVoiceByType('kid') !== null
+      }
+    ];
+  }
+
+  public previewVoice(voiceType: VoiceType, text: string = "Hello! This is how I sound."): void {
+    if (!this.isEnabled) return;
+
+    const voice = this.getVoiceByType(voiceType);
+    if (!voice) return;
+
+    this.speechSynthesis.cancel();
+
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.voice = voice;
+
+    // Adjust settings based on voice type
+    switch (voiceType) {
+      case 'kid':
+        utterance.rate = 0.9;
+        utterance.pitch = 1.4;
+        break;
+      case 'woman':
+        utterance.rate = 0.8;
+        utterance.pitch = 1.2;
+        break;
+      case 'man':
+        utterance.rate = 0.8;
+        utterance.pitch = 0.9;
+        break;
+    }
+
+    utterance.volume = 1.0;
+    this.speechSynthesis.speak(utterance);
+  }
+
   // Fun sound effects using Web Audio API for better child engagement
   public playCheerSound(): void {
     if (!this.isEnabled) return;
