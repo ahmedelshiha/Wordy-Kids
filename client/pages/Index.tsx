@@ -753,7 +753,7 @@ export default function Index({ initialProfile }: IndexProps) {
 
                                   {displayWords.length > 0 && (
                                     <>
-                                      <div className="max-w-md mx-auto">
+                                      <div className="max-w-sm md:max-w-md mx-auto px-2 md:px-0">
                                         <WordCard
                                           word={
                                             displayWords[currentWordIndex] ||
