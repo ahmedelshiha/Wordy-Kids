@@ -220,7 +220,7 @@ export default function Index({ initialProfile }: IndexProps) {
   };
 
   const handleSignOut = () => {
-    navigate("/login");
+    navigate("/");
   };
 
   return (
