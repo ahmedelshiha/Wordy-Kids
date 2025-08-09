@@ -139,21 +139,21 @@ export default function LoginForm() {
           </CardHeader>
           <CardContent>
             <form onSubmit={handleLogin} className="space-y-6">
-              {/* Username Field */}
+              {/* Email Field */}
               <div>
                 <Label
-                  htmlFor="username"
+                  htmlFor="email"
                   className="text-sm font-medium text-gray-700 flex items-center gap-2"
                 >
                   <User className="w-4 h-4" />
-                  Username
+                  Email
                 </Label>
                 <Input
-                  id="username"
-                  name="username"
-                  type="text"
-                  placeholder="Enter your username"
-                  value={formData.username}
+                  id="email"
+                  name="email"
+                  type="email"
+                  placeholder="Enter your email"
+                  value={formData.email}
                   onChange={handleInputChange}
                   className="mt-2 text-center border-gray-300 focus:border-blue-500"
                   disabled={isLoading}
