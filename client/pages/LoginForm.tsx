@@ -284,19 +284,24 @@ export default function LoginForm() {
               {/* Message Display */}
               {message && (
                 <div
-                  className={`text-center p-4 rounded-lg ${
+                  className={`text-center p-6 rounded-2xl border-4 animate-bounce ${
                     message.type === "success"
-                      ? "bg-green-50 text-green-700 border border-green-200"
-                      : "bg-red-50 text-red-700 border border-red-200"
+                      ? "bg-gradient-to-r from-green-100 to-emerald-100 text-green-800 border-green-400"
+                      : "bg-gradient-to-r from-red-100 to-pink-100 text-red-800 border-red-400"
                   }`}
                 >
-                  <div className="flex items-center justify-center gap-2">
+                  <div className="flex items-center justify-center gap-3 text-lg font-bold">
                     {message.type === "success" ? (
-                      <CheckCircle className="w-5 h-5" />
+                      <div className="text-3xl animate-spin" style={{ animationDuration: "2s" }}>🎉</div>
                     ) : (
-                      <AlertCircle className="w-5 h-5" />
+                      <div className="text-3xl animate-bounce">🤗</div>
                     )}
                     {message.text}
+                    {message.type === "success" ? (
+                      <div className="text-3xl animate-pulse">✨</div>
+                    ) : (
+                      <div className="text-3xl animate-bounce delay-100">💫</div>
+                    )}
                   </div>
                 </div>
               )}
