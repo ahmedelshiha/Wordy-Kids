@@ -268,26 +268,26 @@ export default function Index({ initialProfile }: IndexProps) {
           </div>
         </div>
 
-        {/* Enhanced Floating Elements */}
-        <div className="absolute top-10 left-10 text-3xl animate-bounce">
+        {/* Enhanced Floating Elements - hidden on mobile to reduce clutter */}
+        <div className="hidden md:block absolute top-10 left-10 text-3xl animate-bounce">
           🌟
         </div>
-        <div className="absolute top-20 right-20 text-2xl animate-pulse">
+        <div className="hidden md:block absolute top-20 right-20 text-2xl animate-pulse">
           📚
         </div>
-        <div className="absolute bottom-10 left-20 text-4xl animate-bounce delay-1000">
+        <div className="hidden md:block absolute bottom-10 left-20 text-4xl animate-bounce delay-1000">
           🎯
         </div>
-        <div className="absolute bottom-20 right-10 text-3xl animate-pulse delay-500">
+        <div className="hidden md:block absolute bottom-20 right-10 text-3xl animate-pulse delay-500">
           🚀
         </div>
         <div
-          className="absolute top-1/2 left-5 text-2xl animate-spin"
+          className="hidden md:block absolute top-1/2 left-5 text-2xl animate-spin"
           style={{ animationDuration: "3s" }}
         >
           ✨
         </div>
-        <div className="absolute top-1/3 right-5 text-2xl animate-bounce delay-700">
+        <div className="hidden md:block absolute top-1/3 right-5 text-2xl animate-bounce delay-700">
           🎪
         </div>
       </header>
@@ -1092,7 +1092,7 @@ export default function Index({ initialProfile }: IndexProps) {
                               </div>
                               <div className="flex justify-between items-center p-3 bg-white rounded-lg">
                                 <div className="flex items-center gap-3">
-                                  <span className="text-2xl">����</span>
+                                  <span className="text-2xl">🌱</span>
                                   <div>
                                     <div className="font-semibold">
                                       Easy Quiz
