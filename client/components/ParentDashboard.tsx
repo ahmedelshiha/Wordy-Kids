@@ -541,7 +541,25 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
 
       {/* Children Cards with Enhanced Information */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {children.map((child) => {
+        {children.length === 0 ? (
+          <Card className="col-span-2 text-center py-12">
+            <CardContent>
+              <div className="text-6xl mb-4">👶</div>
+              <h3 className="text-xl font-semibold mb-2">No Children Added Yet</h3>
+              <p className="text-gray-600 mb-6">
+                Add your first child to start tracking their learning progress
+              </p>
+              <Button
+                onClick={() => setShowAddChildDialog(true)}
+                className="bg-educational-blue"
+              >
+                <UserPlus className="w-4 h-4 mr-2" />
+                Add Your First Child
+              </Button>
+            </CardContent>
+          </Card>
+        ) : (
+          children.map((child) => {
           const weeklyStats = calculateWeeklyStats(child.id);
           const progressPercentage =
             (child.weeklyProgress / child.weeklyGoal) * 100;
@@ -664,7 +682,8 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
               </CardContent>
             </Card>
           );
-        })}
+          })
+        )}
       </div>
     </div>
   );
@@ -1667,7 +1686,7 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
 
                 <div style="margin-bottom: 30px;">
                     <h3 style="color: #d97706; margin-bottom: 15px; display: flex; align-items: center; gap: 8px;">
-                        🎯 Growth Opportunities
+                        �� Growth Opportunities
                     </h3>
                     <ul class="insights-list">
                         ${reportData.parentInsights.areasForGrowth
