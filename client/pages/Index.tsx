@@ -486,12 +486,16 @@ export default function Index({ initialProfile }: IndexProps) {
 
                 <TabsContent value="learn">
                   <div className="space-y-8">
-                    {selectedCategory === "all" ? (
+                    {selectedCategory === "all" && learningMode === "selector" ? (
                       <ChildFriendlyCategorySelector
                         selectedCategory={selectedCategory}
                         onSelectCategory={(category) => {
                           handleCategoryChange(category);
-                          setLearningMode("cards");
+                          if (category === "all") {
+                            setLearningMode("cards");
+                          } else {
+                            setLearningMode("cards");
+                          }
                         }}
                         userInterests={currentProfile?.interests || []}
                       />
