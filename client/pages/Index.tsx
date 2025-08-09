@@ -624,7 +624,7 @@ export default function Index({ initialProfile }: IndexProps) {
             </aside>
 
             {/* Main Content Area */}
-            <div className="flex-1 p-8 bg-gradient-to-br from-blue-50 via-white to-purple-50">
+            <div className="flex-1 p-4 md:p-8 bg-gradient-to-br from-blue-50 via-white to-purple-50">
               <Tabs
                 value={activeTab}
                 onValueChange={setActiveTab}
