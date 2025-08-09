@@ -53,7 +53,7 @@ export default function SignUp() {
     setMessage(null);
 
     // Basic validation
-    if (!formData.username || !formData.email || !formData.password || !formData.confirmPassword) {
+    if (!formData.childName || !formData.birthDate || !formData.email || !formData.password || !formData.confirmPassword) {
       setMessage({
         type: "error",
         text: "Please fill in all fields",
