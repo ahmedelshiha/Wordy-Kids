@@ -13,14 +13,14 @@ import {
   AlertCircle,
   CheckCircle,
   BookOpen,
-  Sparkles,
+  Mail,
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 export default function LoginForm() {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
-    username: "",
+    email: "",
     password: "",
   });
   const [showPassword, setShowPassword] = useState(false);
@@ -47,40 +47,49 @@ export default function LoginForm() {
     setMessage(null);
 
     // Trim whitespace from inputs
-    const username = formData.username.trim();
+    const email = formData.email.trim();
     const password = formData.password.trim();
 
     // Basic validation
-    if (!username || !password) {
+    if (!email || !password) {
       setMessage({
         type: "error",
-        text: "Please enter both username and password! 😊",
+        text: "Please enter both email and password",
       });
       setIsLoading(false);
       return;
     }
 
-    // Simulate login process (replace with real authentication)
+    // Simulate login process with localStorage check
     setTimeout(() => {
-      // Demo credentials - replace with real authentication
-      if (
-        (username === "demo" && password === "demo123") ||
-        (username === "alex" && password === "alex123") ||
-        (username === "sam" && password === "sam123")
-      ) {
+      // Check localStorage for registered users
+      const registeredUsers = JSON.parse(
+        localStorage.getItem("wordAdventureUsers") || "[]",
+      );
+      const user = registeredUsers.find(
+        (u: any) => u.email === email && u.password === password,
+      );
+
+      // Also check demo credentials (keep username-based for demo accounts)
+      const isDemoUser =
+        (email === "demo@example.com" && password === "demo123") ||
+        (email === "alex@example.com" && password === "alex123") ||
+        (email === "sam@example.com" && password === "sam123");
+
+      if (user || isDemoUser) {
         setMessage({
           type: "success",
-          text: "Login successful! Welcome back! 🎉",
+          text: "Login successful! Welcome back!",
         });
 
         // Navigate to main app after successful login
         setTimeout(() => {
-          navigate("/app?authenticated=true");
+          navigate("/app");
         }, 1500);
       } else {
         setMessage({
           type: "error",
-          text: "Invalid username or password. Please try again! 🤗",
+          text: "Invalid username or password. Please try again.",
         });
       }
       setIsLoading(false);
@@ -88,47 +97,24 @@ export default function LoginForm() {
   };
 
   const handleBackToMain = () => {
-    navigate("/");
+    navigate("/app");
   };
 
   const handleForgotPassword = () => {
     setMessage({
       type: "success",
-      text: "Password reset instructions sent! Check your email! 📧",
+      text: "Password reset instructions sent! Check your email.",
     });
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-educational-blue-light via-educational-purple-light to-educational-pink-light flex items-center justify-center p-4 relative overflow-hidden">
-      {/* Background Pattern */}
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-purple-100 flex items-center justify-center p-4">
+      {/* Simple Background Pattern */}
       <div className="absolute inset-0 opacity-10">
-        <div className="absolute top-16 left-16 text-5xl animate-bounce delay-0">
-          ⭐
-        </div>
-        <div className="absolute top-24 right-20 text-4xl animate-pulse delay-300">
-          📚
-        </div>
-        <div className="absolute bottom-24 left-20 text-5xl animate-bounce delay-600">
-          🎯
-        </div>
-        <div className="absolute bottom-16 right-16 text-4xl animate-pulse delay-900">
-          🚀
-        </div>
-        <div
-          className="absolute top-1/2 left-8 text-3xl animate-spin"
-          style={{ animationDuration: "4s" }}
-        >
-          ✨
-        </div>
-        <div className="absolute top-1/3 right-8 text-3xl animate-bounce delay-700">
-          🎪
-        </div>
-        <div className="absolute bottom-1/3 left-1/4 text-2xl animate-pulse delay-1100">
-          🌈
-        </div>
-        <div className="absolute top-1/4 right-1/4 text-3xl animate-bounce delay-500">
-          🎨
-        </div>
+        <div className="absolute top-20 left-20 text-3xl">📚</div>
+        <div className="absolute top-32 right-20 text-3xl">✨</div>
+        <div className="absolute bottom-20 left-20 text-3xl">🎯</div>
+        <div className="absolute bottom-32 right-20 text-3xl">🌟</div>
       </div>
 
       {/* Main Content */}
@@ -136,45 +122,44 @@ export default function LoginForm() {
         {/* Header */}
         <div className="text-center mb-8">
           <div className="flex justify-center mb-6">
-            <div className="bg-gradient-to-r from-educational-blue via-educational-purple to-educational-pink p-6 rounded-full shadow-2xl">
-              <BookOpen className="w-16 h-16 text-white" />
+            <div className="bg-gradient-to-r from-blue-500 to-purple-600 p-6 rounded-full shadow-lg">
+              <BookOpen className="w-12 h-12 text-white" />
             </div>
           </div>
-          <h1 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-educational-blue via-educational-purple to-educational-pink bg-clip-text text-transparent mb-3">
-            Welcome Back!
+          <h1 className="text-3xl md:text-4xl font-bold text-gray-800 mb-4">
+            Welcome to Word Adventure
           </h1>
-          <p className="text-xl text-gray-700 mb-6">
-            Continue your word adventure! 🌟
+          <p className="text-lg text-gray-600">
+            Sign in to continue your learning journey
           </p>
         </div>
 
         {/* Login Form */}
-        <Card className="bg-white/90 backdrop-blur-sm shadow-2xl border-2 border-white/50">
+        <Card className="bg-white/95 backdrop-blur-sm shadow-xl border border-gray-200 rounded-lg">
           <CardHeader>
-            <CardTitle className="text-center text-2xl text-gray-800 flex items-center justify-center gap-2">
-              <LogIn className="w-6 h-6 text-educational-blue" />
-              Sign In to Your Account
+            <CardTitle className="text-center text-xl text-gray-800">
+              Sign In
             </CardTitle>
           </CardHeader>
           <CardContent>
             <form onSubmit={handleLogin} className="space-y-6">
-              {/* Username Field */}
+              {/* Email Field */}
               <div>
                 <Label
-                  htmlFor="username"
-                  className="text-lg font-semibold text-gray-700 flex items-center gap-2"
+                  htmlFor="email"
+                  className="text-sm font-medium text-gray-700 flex items-center gap-2"
                 >
-                  <User className="w-4 h-4" />
-                  Username
+                  <Mail className="w-4 h-4" />
+                  Email
                 </Label>
                 <Input
-                  id="username"
-                  name="username"
-                  type="text"
-                  placeholder="Enter your username"
-                  value={formData.username}
+                  id="email"
+                  name="email"
+                  type="email"
+                  placeholder="Enter parent email here"
+                  value={formData.email}
                   onChange={handleInputChange}
-                  className="mt-2 text-center text-lg py-3 border-2 focus:border-educational-blue"
+                  className="mt-2 text-center border-gray-300 focus:border-blue-500"
                   disabled={isLoading}
                 />
               </div>
@@ -183,7 +168,7 @@ export default function LoginForm() {
               <div>
                 <Label
                   htmlFor="password"
-                  className="text-lg font-semibold text-gray-700 flex items-center gap-2"
+                  className="text-sm font-medium text-gray-700 flex items-center gap-2"
                 >
                   <Lock className="w-4 h-4" />
                   Password
@@ -196,7 +181,7 @@ export default function LoginForm() {
                     placeholder="Enter your password"
                     value={formData.password}
                     onChange={handleInputChange}
-                    className="text-center text-lg py-3 border-2 focus:border-educational-blue pr-12"
+                    className="text-center border-gray-300 focus:border-blue-500 pr-10"
                     disabled={isLoading}
                   />
                   <button
@@ -206,9 +191,9 @@ export default function LoginForm() {
                     disabled={isLoading}
                   >
                     {showPassword ? (
-                      <EyeOff className="w-5 h-5" />
+                      <EyeOff className="w-4 h-4" />
                     ) : (
-                      <Eye className="w-5 h-5" />
+                      <Eye className="w-4 h-4" />
                     )}
                   </button>
                 </div>
@@ -237,18 +222,18 @@ export default function LoginForm() {
               {/* Login Button */}
               <Button
                 type="submit"
-                disabled={isLoading || !formData.username || !formData.password}
-                className="w-full bg-gradient-to-r from-educational-blue to-educational-purple text-white text-lg py-4 font-semibold"
+                disabled={isLoading || !formData.email || !formData.password}
+                className="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white hover:from-blue-700 hover:to-purple-700"
               >
                 {isLoading ? (
                   <div className="flex items-center gap-2">
-                    <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                    <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
                     Signing In...
                   </div>
                 ) : (
                   <>
-                    <LogIn className="w-5 h-5 mr-2" />
-                    Sign In & Continue Adventure! 🚀
+                    <LogIn className="w-4 h-4 mr-2" />
+                    Sign In
                   </>
                 )}
               </Button>
@@ -258,63 +243,40 @@ export default function LoginForm() {
                 type="button"
                 variant="ghost"
                 onClick={handleForgotPassword}
-                className="w-full text-gray-600 hover:text-educational-blue"
+                className="w-full text-gray-600 hover:text-blue-600"
                 disabled={isLoading}
               >
-                Forgot your password? 🤔
+                Forgot your password?
               </Button>
-
-              {/* Demo Info */}
-              <div className="text-center bg-blue-50 rounded-lg p-4">
-                <p className="text-sm text-blue-800 mb-2">
-                  <strong>🎮 Demo Accounts:</strong>
-                </p>
-                <div className="text-xs text-blue-700 space-y-1">
-                  <div>
-                    • Username: <strong>demo</strong> / Password:{" "}
-                    <strong>demo123</strong>
-                  </div>
-                  <div>
-                    • Username: <strong>alex</strong> / Password:{" "}
-                    <strong>alex123</strong>
-                  </div>
-                  <div>
-                    • Username: <strong>sam</strong> / Password:{" "}
-                    <strong>sam123</strong>
-                  </div>
-                </div>
-              </div>
             </form>
           </CardContent>
         </Card>
 
         {/* Back Button */}
-        <div className="text-center mt-8">
+        <div className="text-center mt-6">
           <Button
             onClick={handleBackToMain}
             variant="outline"
-            className="bg-white/80 backdrop-blur-sm border-white/50 text-gray-700 hover:bg-white"
+            className="text-gray-600 hover:text-gray-800"
             disabled={isLoading}
           >
             <ArrowLeft className="w-4 h-4 mr-2" />
-            Back to Main Page
+            Continue as Guest
           </Button>
         </div>
 
         {/* Footer */}
-        <div className="text-center mt-8">
+        <div className="text-center mt-6">
           <div className="flex justify-center items-center gap-2 text-gray-600">
-            <Sparkles className="w-4 h-4" />
-            <span className="text-sm">New to Word Adventure?</span>
+            <span className="text-sm">Don't have an account?</span>
             <Button
               variant="link"
-              onClick={() => navigate("/")}
-              className="text-educational-blue p-0 h-auto font-semibold"
+              onClick={() => navigate("/signup")}
+              className="text-blue-600 p-0 h-auto font-semibold hover:text-blue-700"
               disabled={isLoading}
             >
-              Create an account
+              Sign up
             </Button>
-            <Sparkles className="w-4 h-4" />
           </div>
         </div>
       </div>
