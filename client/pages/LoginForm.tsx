@@ -166,16 +166,16 @@ export default function LoginForm() {
 
       {/* Floating Words Background */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-32 left-1/4 text-lg font-bold text-purple-400 opacity-30 animate-float">
+        <div className="absolute top-32 left-1/4 text-lg font-bold text-purple-400 opacity-30 animate-kid-float">
           ADVENTURE
         </div>
-        <div className="absolute top-1/2 right-1/4 text-lg font-bold text-pink-400 opacity-30 animate-float-delayed">
+        <div className="absolute top-1/2 right-1/4 text-lg font-bold text-pink-400 opacity-30 animate-kid-float-delayed">
           LEARN
         </div>
-        <div className="absolute bottom-32 left-1/3 text-lg font-bold text-blue-400 opacity-30 animate-float">
+        <div className="absolute bottom-32 left-1/3 text-lg font-bold text-blue-400 opacity-30 animate-kid-float">
           EXPLORE
         </div>
-        <div className="absolute top-1/4 left-1/6 text-lg font-bold text-green-400 opacity-30 animate-float-delayed">
+        <div className="absolute top-1/4 left-1/6 text-lg font-bold text-green-400 opacity-30 animate-kid-float-delayed">
           DISCOVER
         </div>
       </div>
