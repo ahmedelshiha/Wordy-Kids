@@ -168,6 +168,7 @@ const powerUps = [
 export function GameLikeLearning({
   words,
   onComplete,
+  onBack,
   userProfile,
 }: GameLikeLearningProps) {
   const [selectedGame, setSelectedGame] = useState<string>("");
