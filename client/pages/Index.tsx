@@ -378,6 +378,16 @@ export default function Index({ initialProfile }: IndexProps) {
                 </div>
                 <span className="font-semibold text-sm">Settings</span>
               </button>
+
+              <button
+                onClick={handleSignOut}
+                className="w-full flex items-center gap-3 p-3 rounded-xl bg-white text-gray-700 hover:bg-red-50 transition-all border border-red-200"
+              >
+                <div className="p-2 rounded-lg bg-red-100">
+                  <LogOut className="w-4 h-4 text-red-600" />
+                </div>
+                <span className="font-semibold text-sm">Sign Out</span>
+              </button>
             </nav>
           </aside>
         </div>
