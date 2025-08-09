@@ -1,13 +1,24 @@
 // Audio service for pronunciation and sound effects
+export type VoiceType = "man" | "woman" | "kid";
+
 export class AudioService {
   private static instance: AudioService;
   private speechSynthesis: SpeechSynthesis;
   private voices: SpeechSynthesisVoice[] = [];
   private isEnabled: boolean = true;
+  private selectedVoiceType: VoiceType = "woman";
 
   private constructor() {
     this.speechSynthesis = window.speechSynthesis;
     this.loadVoices();
+
+    // Load saved voice preference
+    const savedVoiceType = localStorage.getItem(
+      "preferred-voice-type",
+    ) as VoiceType;
+    if (savedVoiceType && ["man", "woman", "kid"].includes(savedVoiceType)) {
+      this.selectedVoiceType = savedVoiceType;
+    }
 
     // Listen for voices changed event
     this.speechSynthesis.onvoiceschanged = () => {
@@ -26,27 +37,93 @@ export class AudioService {
     this.voices = this.speechSynthesis.getVoices();
   }
 
-  private getChildFriendlyVoice(): SpeechSynthesisVoice | null {
-    // Prefer female voices as they tend to be more child-friendly
-    const preferredVoices = this.voices.filter(
-      (voice) =>
-        voice.lang.startsWith("en") &&
-        (voice.name.toLowerCase().includes("female") ||
-          voice.name.toLowerCase().includes("woman") ||
-          voice.name.toLowerCase().includes("karen") ||
-          voice.name.toLowerCase().includes("alex") ||
-          voice.name.toLowerCase().includes("samantha")),
-    );
-
-    if (preferredVoices.length > 0) {
-      return preferredVoices[0];
-    }
-
-    // Fallback to any English voice
+  private getVoiceByType(voiceType: VoiceType): SpeechSynthesisVoice | null {
     const englishVoices = this.voices.filter((voice) =>
       voice.lang.startsWith("en"),
     );
+
+    let filteredVoices: SpeechSynthesisVoice[] = [];
+
+    switch (voiceType) {
+      case "woman":
+        filteredVoices = englishVoices.filter(
+          (voice) =>
+            voice.name.toLowerCase().includes("female") ||
+            voice.name.toLowerCase().includes("woman") ||
+            voice.name.toLowerCase().includes("karen") ||
+            voice.name.toLowerCase().includes("samantha") ||
+            voice.name.toLowerCase().includes("susan") ||
+            voice.name.toLowerCase().includes("allison") ||
+            voice.name.toLowerCase().includes("zira") ||
+            (voice.name.toLowerCase().includes("google") &&
+              voice.name.toLowerCase().includes("female")),
+        );
+        break;
+
+      case "man":
+        filteredVoices = englishVoices.filter(
+          (voice) =>
+            voice.name.toLowerCase().includes("male") ||
+            voice.name.toLowerCase().includes("man") ||
+            voice.name.toLowerCase().includes("david") ||
+            voice.name.toLowerCase().includes("mark") ||
+            voice.name.toLowerCase().includes("alex") ||
+            voice.name.toLowerCase().includes("daniel") ||
+            (voice.name.toLowerCase().includes("google") &&
+              voice.name.toLowerCase().includes("male")),
+        );
+        break;
+
+      case "kid":
+        // Look for higher-pitched or child-specific voices
+        filteredVoices = englishVoices.filter(
+          (voice) =>
+            voice.name.toLowerCase().includes("child") ||
+            voice.name.toLowerCase().includes("kid") ||
+            voice.name.toLowerCase().includes("junior") ||
+            voice.name.toLowerCase().includes("young") ||
+            // Some voices that tend to sound younger
+            voice.name.toLowerCase().includes("kate") ||
+            voice.name.toLowerCase().includes("vicki"),
+        );
+
+        // If no kid-specific voices, fall back to female voices (often sound more child-friendly)
+        if (filteredVoices.length === 0) {
+          filteredVoices = englishVoices.filter(
+            (voice) =>
+              voice.name.toLowerCase().includes("female") ||
+              voice.name.toLowerCase().includes("woman"),
+          );
+        }
+        break;
+    }
+
+    // Return the first matching voice, or fall back to any English voice
+    if (filteredVoices.length > 0) {
+      return filteredVoices[0];
+    }
+
     return englishVoices.length > 0 ? englishVoices[0] : null;
+  }
+
+  private getChildFriendlyVoice(): SpeechSynthesisVoice | null {
+    return this.getVoiceByType(this.selectedVoiceType);
+  }
+
+  private getVoiceDefaults(voiceType: VoiceType): {
+    rate: number;
+    pitch: number;
+  } {
+    switch (voiceType) {
+      case "kid":
+        return { rate: 0.9, pitch: 1.4 };
+      case "woman":
+        return { rate: 0.8, pitch: 1.2 };
+      case "man":
+        return { rate: 0.8, pitch: 0.9 };
+      default:
+        return { rate: 0.8, pitch: 1.2 };
+    }
   }
 
   public pronounceWord(
@@ -62,9 +139,12 @@ export class AudioService {
   ): void {
     if (!this.isEnabled) return;
 
+    // Get voice-type specific defaults
+    const voiceDefaults = this.getVoiceDefaults(this.selectedVoiceType);
+
     const {
-      rate = 0.8, // Slightly slower for children
-      pitch = 1.2, // Slightly higher pitch for friendliness
+      rate = voiceDefaults.rate,
+      pitch = voiceDefaults.pitch,
       volume = 1.0,
       onStart,
       onEnd,
@@ -117,8 +197,11 @@ export class AudioService {
   ): void {
     if (!this.isEnabled) return;
 
+    // Get voice-type specific defaults, but slower for definitions
+    const voiceDefaults = this.getVoiceDefaults(this.selectedVoiceType);
+
     const {
-      rate = 0.7, // Slower for definitions
+      rate = voiceDefaults.rate * 0.85, // Slightly slower for definitions
       onStart,
       onEnd,
     } = options;
@@ -127,7 +210,7 @@ export class AudioService {
 
     const utterance = new SpeechSynthesisUtterance(definition);
     utterance.rate = rate;
-    utterance.pitch = 1.1;
+    utterance.pitch = voiceDefaults.pitch * 0.95; // Slightly lower pitch for definitions
     utterance.volume = 1.0;
 
     const voice = this.getChildFriendlyVoice();
@@ -159,8 +242,11 @@ export class AudioService {
     const phrase =
       successPhrases[Math.floor(Math.random() * successPhrases.length)];
     const utterance = new SpeechSynthesisUtterance(phrase);
-    utterance.rate = 1.0;
-    utterance.pitch = 1.3;
+
+    // Use voice type defaults with celebratory adjustments
+    const voiceDefaults = this.getVoiceDefaults(this.selectedVoiceType);
+    utterance.rate = Math.min(voiceDefaults.rate + 0.2, 1.2); // Slightly faster for excitement
+    utterance.pitch = Math.min(voiceDefaults.pitch + 0.1, 1.5); // Slightly higher for celebration
     utterance.volume = 0.8;
 
     const voice = this.getChildFriendlyVoice();
@@ -188,8 +274,11 @@ export class AudioService {
         Math.floor(Math.random() * encouragementPhrases.length)
       ];
     const utterance = new SpeechSynthesisUtterance(phrase);
-    utterance.rate = 0.9;
-    utterance.pitch = 1.2;
+
+    // Use voice type defaults with encouraging tone
+    const voiceDefaults = this.getVoiceDefaults(this.selectedVoiceType);
+    utterance.rate = voiceDefaults.rate;
+    utterance.pitch = voiceDefaults.pitch;
     utterance.volume = 0.7;
 
     const voice = this.getChildFriendlyVoice();
@@ -213,6 +302,74 @@ export class AudioService {
 
   public stop(): void {
     this.speechSynthesis.cancel();
+  }
+
+  public setVoiceType(voiceType: VoiceType): void {
+    this.selectedVoiceType = voiceType;
+    // Save to localStorage for persistence
+    localStorage.setItem("preferred-voice-type", voiceType);
+  }
+
+  public getVoiceType(): VoiceType {
+    return this.selectedVoiceType;
+  }
+
+  public getAvailableVoices(): {
+    type: VoiceType;
+    voice: SpeechSynthesisVoice | null;
+    available: boolean;
+  }[] {
+    return [
+      {
+        type: "woman",
+        voice: this.getVoiceByType("woman"),
+        available: this.getVoiceByType("woman") !== null,
+      },
+      {
+        type: "man",
+        voice: this.getVoiceByType("man"),
+        available: this.getVoiceByType("man") !== null,
+      },
+      {
+        type: "kid",
+        voice: this.getVoiceByType("kid"),
+        available: this.getVoiceByType("kid") !== null,
+      },
+    ];
+  }
+
+  public previewVoice(
+    voiceType: VoiceType,
+    text: string = "Hello! This is how I sound.",
+  ): void {
+    if (!this.isEnabled) return;
+
+    const voice = this.getVoiceByType(voiceType);
+    if (!voice) return;
+
+    this.speechSynthesis.cancel();
+
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.voice = voice;
+
+    // Adjust settings based on voice type
+    switch (voiceType) {
+      case "kid":
+        utterance.rate = 0.9;
+        utterance.pitch = 1.4;
+        break;
+      case "woman":
+        utterance.rate = 0.8;
+        utterance.pitch = 1.2;
+        break;
+      case "man":
+        utterance.rate = 0.8;
+        utterance.pitch = 0.9;
+        break;
+    }
+
+    utterance.volume = 1.0;
+    this.speechSynthesis.speak(utterance);
   }
 
   // Fun sound effects using Web Audio API for better child engagement

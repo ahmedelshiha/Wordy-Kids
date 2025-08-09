@@ -108,9 +108,11 @@ export const WordCard: React.FC<WordCardProps> = ({
   };
 
   return (
-    <div className={`relative w-full max-w-sm mx-auto ${className}`}>
+    <div
+      className={`relative w-full max-w-xs md:max-w-sm mx-auto ${className}`}
+    >
       <Card
-        className={`h-80 cursor-pointer transition-all duration-700 transform-gpu hover:scale-105 ${
+        className={`h-72 md:h-80 cursor-pointer transition-all duration-700 transform-gpu md:hover:scale-105 ${
           isFlipped ? "[transform:rotateY(180deg)]" : ""
         }`}
         style={{ transformStyle: "preserve-3d" }}
@@ -121,7 +123,7 @@ export const WordCard: React.FC<WordCardProps> = ({
       >
         {/* Front of card */}
         <CardContent
-          className={`absolute inset-0 w-full h-full ${getCategoryColor(word.category)} rounded-xl p-6 flex flex-col items-center justify-center text-white`}
+          className={`absolute inset-0 w-full h-full ${getCategoryColor(word.category)} rounded-xl p-4 md:p-6 flex flex-col items-center justify-center text-white`}
           style={{ backfaceVisibility: "hidden" }}
         >
           <div className="absolute top-4 left-4 flex gap-2">
@@ -167,19 +169,23 @@ export const WordCard: React.FC<WordCardProps> = ({
             <img
               src={word.imageUrl}
               alt={word.word}
-              className="w-24 h-24 object-cover rounded-full mb-4 shadow-lg"
+              className="w-20 md:w-24 h-20 md:h-24 object-cover rounded-full mb-3 md:mb-4 shadow-lg"
             />
           ) : (
-            <div className="w-24 h-24 rounded-full bg-white/20 flex items-center justify-center mb-4 text-6xl">
+            <div className="w-20 md:w-24 h-20 md:h-24 rounded-full bg-white/20 flex items-center justify-center mb-3 md:mb-4 text-4xl md:text-6xl">
               {word.emoji || "📚"}
             </div>
           )}
 
-          <h2 className="text-4xl font-bold mb-3 text-center">{word.word}</h2>
+          <h2 className="text-2xl md:text-4xl font-bold mb-2 md:mb-3 text-center">
+            {word.word}
+          </h2>
 
           {word.pronunciation && (
-            <div className="flex items-center gap-2 mb-4">
-              <span className="text-lg opacity-90">{word.pronunciation}</span>
+            <div className="flex items-center gap-2 mb-3 md:mb-4">
+              <span className="text-base md:text-lg opacity-90">
+                {word.pronunciation}
+              </span>
               <Button
                 size="sm"
                 variant="ghost"
@@ -217,7 +223,7 @@ export const WordCard: React.FC<WordCardProps> = ({
 
         {/* Back of card */}
         <CardContent
-          className="absolute inset-0 w-full h-full bg-gradient-to-br from-slate-700 to-slate-900 rounded-xl p-6 flex flex-col justify-center text-white"
+          className="absolute inset-0 w-full h-full bg-gradient-to-br from-slate-700 to-slate-900 rounded-xl p-4 md:p-6 flex flex-col justify-center text-white"
           style={{
             backfaceVisibility: "hidden",
             transform: "rotateY(180deg)",
@@ -237,33 +243,37 @@ export const WordCard: React.FC<WordCardProps> = ({
             </Button>
           </div>
 
-          <h3 className="text-2xl font-semibold mb-4 text-center">
+          <h3 className="text-xl md:text-2xl font-semibold mb-3 md:mb-4 text-center">
             {word.word} {word.emoji}
           </h3>
 
-          <div className="space-y-4 flex-1">
+          <div className="space-y-3 md:space-y-4 flex-1">
             <div>
-              <h4 className="text-sm font-medium mb-2 text-yellow-300">
+              <h4 className="text-xs md:text-sm font-medium mb-2 text-yellow-300">
                 Definition:
               </h4>
-              <p className="text-lg leading-relaxed">{word.definition}</p>
+              <p className="text-base md:text-lg leading-relaxed">
+                {word.definition}
+              </p>
             </div>
 
             {word.example && (
               <div>
-                <h4 className="text-sm font-medium mb-2 text-green-300">
+                <h4 className="text-xs md:text-sm font-medium mb-2 text-green-300">
                   Example:
                 </h4>
-                <p className="italic opacity-90">"{word.example}"</p>
+                <p className="text-sm md:text-base italic opacity-90">
+                  "{word.example}"
+                </p>
               </div>
             )}
 
             {word.funFact && (
               <div>
-                <h4 className="text-sm font-medium mb-2 text-pink-300">
+                <h4 className="text-xs md:text-sm font-medium mb-2 text-pink-300">
                   Fun Fact:
                 </h4>
-                <p className="text-sm opacity-90">{word.funFact}</p>
+                <p className="text-xs md:text-sm opacity-90">{word.funFact}</p>
               </div>
             )}
           </div>

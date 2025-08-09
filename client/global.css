@@ -123,6 +123,56 @@
 
   body {
     @apply bg-background text-foreground;
+    -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+  }
+
+  /* Mobile touch improvements */
+  @media (max-width: 768px) {
+    /* Increase tap targets for better mobile usability */
+    button,
+    [role="button"],
+    input,
+    select,
+    textarea {
+      min-height: 44px; /* iOS recommended tap target size */
+      min-width: 44px;
+    }
+
+    /* Prevent zoom on input focus */
+    input,
+    select,
+    textarea {
+      font-size: 16px;
+    }
+
+    /* Smooth scrolling */
+    html {
+      scroll-behavior: smooth;
+    }
+
+    /* Prevent horizontal overflow */
+    body {
+      overflow-x: hidden;
+    }
+  }
+
+  /* Touch-friendly scrollbars */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 4px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgba(0, 0, 0, 0.3);
   }
 }
 

@@ -182,6 +182,166 @@ const enrichedCategories: Category[] = [
         .length,
     },
   },
+  {
+    id: "body",
+    name: "Body Parts",
+    icon: "👤",
+    color: "bg-educational-pink",
+    gradient: "from-pink-400 to-pink-600",
+    wordCount: getWordsByCategory("body").length,
+    description: "Learn about your amazing body and all its parts!",
+    funFact: "Your body has 206 bones when you're an adult!",
+    difficultyBreakdown: {
+      easy: getWordsByCategory("body").filter((w) => w.difficulty === "easy")
+        .length,
+      medium: getWordsByCategory("body").filter(
+        (w) => w.difficulty === "medium",
+      ).length,
+      hard: getWordsByCategory("body").filter((w) => w.difficulty === "hard")
+        .length,
+    },
+  },
+  {
+    id: "clothes",
+    name: "Clothes",
+    icon: "👕",
+    color: "bg-blue-500",
+    gradient: "from-blue-400 to-blue-600",
+    wordCount: getWordsByCategory("clothes").length,
+    description: "Discover different types of clothing and fashion!",
+    funFact: "The first clothing was made from animal skins!",
+    difficultyBreakdown: {
+      easy: getWordsByCategory("clothes").filter((w) => w.difficulty === "easy")
+        .length,
+      medium: getWordsByCategory("clothes").filter(
+        (w) => w.difficulty === "medium",
+      ).length,
+      hard: getWordsByCategory("clothes").filter((w) => w.difficulty === "hard")
+        .length,
+    },
+  },
+  {
+    id: "family",
+    name: "Family",
+    icon: "👪",
+    color: "bg-educational-yellow",
+    gradient: "from-yellow-400 to-yellow-600",
+    wordCount: getWordsByCategory("family").length,
+    description: "Learn about family members who love and care for you!",
+    funFact: "Family is the most important thing in life!",
+    difficultyBreakdown: {
+      easy: getWordsByCategory("family").filter((w) => w.difficulty === "easy")
+        .length,
+      medium: getWordsByCategory("family").filter(
+        (w) => w.difficulty === "medium",
+      ).length,
+      hard: getWordsByCategory("family").filter((w) => w.difficulty === "hard")
+        .length,
+    },
+  },
+  {
+    id: "feelings",
+    name: "Feelings",
+    icon: "😊",
+    color: "bg-educational-purple",
+    gradient: "from-purple-400 to-purple-600",
+    wordCount: getWordsByCategory("feelings").length,
+    description: "Understand different emotions and how you feel!",
+    funFact: "It's healthy to talk about your feelings!",
+    difficultyBreakdown: {
+      easy: getWordsByCategory("feelings").filter(
+        (w) => w.difficulty === "easy",
+      ).length,
+      medium: getWordsByCategory("feelings").filter(
+        (w) => w.difficulty === "medium",
+      ).length,
+      hard: getWordsByCategory("feelings").filter(
+        (w) => w.difficulty === "hard",
+      ).length,
+    },
+  },
+  {
+    id: "greetings",
+    name: "Greetings",
+    icon: "👋",
+    color: "bg-yellow-500",
+    gradient: "from-yellow-400 to-yellow-600",
+    wordCount: getWordsByCategory("greetings").length,
+    description: "Learn friendly ways to say hello and goodbye!",
+    funFact: "Greeting people politely makes them smile!",
+    difficultyBreakdown: {
+      easy: getWordsByCategory("greetings").filter(
+        (w) => w.difficulty === "easy",
+      ).length,
+      medium: getWordsByCategory("greetings").filter(
+        (w) => w.difficulty === "medium",
+      ).length,
+      hard: getWordsByCategory("greetings").filter(
+        (w) => w.difficulty === "hard",
+      ).length,
+    },
+  },
+  {
+    id: "technology",
+    name: "Technology",
+    icon: "🤖",
+    color: "bg-slate-600",
+    gradient: "from-slate-500 to-slate-700",
+    wordCount: getWordsByCategory("technology").length,
+    description: "Discover amazing gadgets and modern inventions!",
+    funFact: "Technology makes our lives easier and more fun!",
+    difficultyBreakdown: {
+      easy: getWordsByCategory("technology").filter(
+        (w) => w.difficulty === "easy",
+      ).length,
+      medium: getWordsByCategory("technology").filter(
+        (w) => w.difficulty === "medium",
+      ).length,
+      hard: getWordsByCategory("technology").filter(
+        (w) => w.difficulty === "hard",
+      ).length,
+    },
+  },
+  {
+    id: "transportation",
+    name: "Transportation",
+    icon: "🚗",
+    color: "bg-red-500",
+    gradient: "from-red-400 to-red-600",
+    wordCount: getWordsByCategory("transportation").length,
+    description: "Explore different ways to travel and move around!",
+    funFact: "Transportation helps us go to amazing places!",
+    difficultyBreakdown: {
+      easy: getWordsByCategory("transportation").filter(
+        (w) => w.difficulty === "easy",
+      ).length,
+      medium: getWordsByCategory("transportation").filter(
+        (w) => w.difficulty === "medium",
+      ).length,
+      hard: getWordsByCategory("transportation").filter(
+        (w) => w.difficulty === "hard",
+      ).length,
+    },
+  },
+  {
+    id: "weather",
+    name: "Weather",
+    icon: "🌤️",
+    color: "bg-cyan-500",
+    gradient: "from-cyan-400 to-cyan-600",
+    wordCount: getWordsByCategory("weather").length,
+    description: "Learn about different weather and sky conditions!",
+    funFact: "Weather affects how we feel and what we do!",
+    difficultyBreakdown: {
+      easy: getWordsByCategory("weather").filter((w) => w.difficulty === "easy")
+        .length,
+      medium: getWordsByCategory("weather").filter(
+        (w) => w.difficulty === "medium",
+      ).length,
+      hard: getWordsByCategory("weather").filter((w) => w.difficulty === "hard")
+        .length,
+    },
+  },
 ].filter((category) => category.wordCount > 0 || category.id === "all");
 
 export function ChildFriendlyCategorySelector({
@@ -291,10 +451,10 @@ export function ChildFriendlyCategorySelector({
             <Sparkles className="w-12 h-12 text-white" />
           </div>
         </div>
-        <h2 className="text-4xl font-bold text-slate-800 mb-4 bg-gradient-to-r from-educational-blue to-educational-purple bg-clip-text text-transparent">
+        <h2 className="text-2xl md:text-4xl font-bold text-slate-800 mb-4 bg-gradient-to-r from-educational-blue to-educational-purple bg-clip-text text-transparent">
           🌟 Choose Your Learning Adventure! 🌟
         </h2>
-        <p className="text-lg text-slate-600 max-w-2xl mx-auto mb-4">
+        <p className="text-base md:text-lg text-slate-600 max-w-2xl mx-auto mb-4">
           {getPersonalizedMessage()}
         </p>
         <div className="flex justify-center gap-2 mb-6 flex-wrap">
@@ -325,7 +485,7 @@ export function ChildFriendlyCategorySelector({
       )}
 
       {/* Featured Stats */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-4xl mx-auto mb-8">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-4xl mx-auto mb-6 md:mb-8">
         <Card className="bg-gradient-to-r from-educational-blue to-educational-purple text-white transform hover:scale-105 transition-all duration-300">
           <CardContent className="p-6 text-center">
             <Crown className="w-8 h-8 mx-auto mb-2" />
@@ -350,7 +510,7 @@ export function ChildFriendlyCategorySelector({
       </div>
 
       {/* Categories Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6">
         {categories.map((category, index) => {
           const isRecommended = userInterests.some(
             (interest) =>
@@ -361,11 +521,11 @@ export function ChildFriendlyCategorySelector({
           return (
             <Card
               key={category.id}
-              className={`cursor-pointer transition-all duration-500 hover:scale-110 hover:shadow-2xl transform hover:-translate-y-2 ${
+              className={`cursor-pointer transition-all duration-500 md:hover:scale-110 hover:shadow-2xl md:transform md:hover:-translate-y-2 ${
                 selectedCategory === category.id
-                  ? "ring-4 ring-educational-blue shadow-2xl scale-105 bg-gradient-to-br from-blue-50 to-purple-50"
+                  ? "ring-4 ring-educational-blue shadow-2xl md:scale-105 bg-gradient-to-br from-blue-50 to-purple-50"
                   : hoveredCategory === category.id
-                    ? "ring-2 ring-educational-purple shadow-xl scale-105"
+                    ? "ring-2 ring-educational-purple shadow-xl md:scale-105"
                     : "hover:shadow-lg"
               }`}
               style={{
@@ -399,15 +559,17 @@ export function ChildFriendlyCategorySelector({
                   )}
 
                   <div
-                    className={`text-6xl mb-3 transition-transform duration-300 ${
+                    className={`text-4xl md:text-6xl mb-3 transition-transform duration-300 ${
                       hoveredCategory === category.id
-                        ? "animate-bounce scale-110"
+                        ? "animate-bounce md:scale-110"
                         : ""
                     }`}
                   >
                     {category.icon}
                   </div>
-                  <h3 className="text-xl font-bold mb-1">{category.name}</h3>
+                  <h3 className="text-lg md:text-xl font-bold mb-1">
+                    {category.name}
+                  </h3>
                   <Badge className="bg-white/20 border-white/30 text-white">
                     <Zap className="w-3 h-3 mr-1" />
                     {category.wordCount} words
@@ -535,9 +697,12 @@ export function ChildFriendlyCategorySelector({
 
         <Button
           size="lg"
-          onClick={() => handleCategoryClick(selectedCategory)}
+          onClick={() => {
+            audioService.playCheerSound();
+            onSelectCategory(selectedCategory);
+          }}
           disabled={!selectedCategory || selectedCategory === ""}
-          className="bg-gradient-to-r from-educational-blue via-educational-purple to-educational-pink text-white hover:from-educational-blue/90 hover:via-educational-purple/90 hover:to-educational-pink/90 text-xl px-12 py-4 rounded-full font-bold transform hover:scale-110 transition-all duration-300 shadow-2xl relative overflow-hidden"
+          className="bg-gradient-to-r from-educational-blue via-educational-purple to-educational-pink text-white hover:from-educational-blue/90 hover:via-educational-purple/90 hover:to-educational-pink/90 text-lg md:text-xl px-8 md:px-12 py-3 md:py-4 rounded-full font-bold transform md:hover:scale-110 transition-all duration-300 shadow-2xl relative overflow-hidden w-full md:w-auto"
         >
           <span className="relative z-10 flex items-center gap-2">
             <Sparkles className="w-6 h-6 animate-spin" />

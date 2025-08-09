@@ -51,6 +51,8 @@ import {
   Clock,
   Shield,
   Crown,
+  Menu,
+  X,
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
@@ -124,8 +126,8 @@ export default function Index({ initialProfile }: IndexProps) {
   >("standard");
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [learningMode, setLearningMode] = useState<
-    "cards" | "builder" | "matching"
-  >("cards");
+    "cards" | "builder" | "matching" | "selector"
+  >("selector");
   const [showSettings, setShowSettings] = useState(false);
   const [showCelebration, setShowCelebration] = useState(false);
   const [userRole, setUserRole] = useState<"child" | "parent">("child");
@@ -138,6 +140,7 @@ export default function Index({ initialProfile }: IndexProps) {
   );
   const [feedback, setFeedback] = useState<any>(null);
   const [gameMode, setGameMode] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const handleQuizComplete = (score: number, total: number) => {
     const percentage = Math.round((score / total) * 100);
@@ -220,8 +223,29 @@ export default function Index({ initialProfile }: IndexProps) {
       {/* Hero Header */}
       <header className="relative overflow-hidden bg-gradient-to-r from-educational-blue via-educational-purple to-educational-pink text-white">
         <div className="absolute inset-0 bg-black/10"></div>
-        <div className="relative container mx-auto px-4 py-8">
-          <div className="text-center max-w-4xl mx-auto">
+        <div className="relative container mx-auto px-4 py-4 md:py-8">
+          {/* Mobile header with hamburger menu */}
+          <div className="flex items-center justify-between mb-4 md:hidden">
+            <div className="flex items-center gap-2">
+              <div className="bg-white/20 backdrop-blur-sm rounded-full p-2">
+                <BookOpen className="w-8 h-8 text-white" />
+              </div>
+              <h1 className="text-xl font-bold">Word Adventure</h1>
+            </div>
+            <button
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              className="bg-white/20 backdrop-blur-sm rounded-full p-2 transition-all hover:bg-white/30"
+            >
+              {isMobileMenuOpen ? (
+                <X className="w-6 h-6 text-white" />
+              ) : (
+                <Menu className="w-6 h-6 text-white" />
+              )}
+            </button>
+          </div>
+
+          {/* Desktop header */}
+          <div className="text-center max-w-4xl mx-auto hidden md:block">
             <div className="flex justify-center mb-4">
               <div className="bg-white/20 backdrop-blur-sm rounded-full p-4">
                 <BookOpen className="w-12 h-12 text-white" />
@@ -231,40 +255,133 @@ export default function Index({ initialProfile }: IndexProps) {
               ⭐ Word Adventure
             </h1>
             <p className="text-lg md:text-xl mb-6 opacity-90">
-              Welcome back, {currentProfile?.name}! Ready for more vocabulary
-              fun?
+              Welcome to your vocabulary adventure! Ready for some learning fun?
+            </p>
+          </div>
+
+          {/* Mobile simplified header */}
+          <div className="text-center md:hidden">
+            <p className="text-sm opacity-90">
+              Ready for your vocabulary adventure?
             </p>
           </div>
         </div>
 
-        {/* Enhanced Floating Elements */}
-        <div className="absolute top-10 left-10 text-3xl animate-bounce">
+        {/* Enhanced Floating Elements - hidden on mobile to reduce clutter */}
+        <div className="hidden md:block absolute top-10 left-10 text-3xl animate-bounce">
           🌟
         </div>
-        <div className="absolute top-20 right-20 text-2xl animate-pulse">
+        <div className="hidden md:block absolute top-20 right-20 text-2xl animate-pulse">
           📚
         </div>
-        <div className="absolute bottom-10 left-20 text-4xl animate-bounce delay-1000">
+        <div className="hidden md:block absolute bottom-10 left-20 text-4xl animate-bounce delay-1000">
           🎯
         </div>
-        <div className="absolute bottom-20 right-10 text-3xl animate-pulse delay-500">
+        <div className="hidden md:block absolute bottom-20 right-10 text-3xl animate-pulse delay-500">
           🚀
         </div>
         <div
-          className="absolute top-1/2 left-5 text-2xl animate-spin"
+          className="hidden md:block absolute top-1/2 left-5 text-2xl animate-spin"
           style={{ animationDuration: "3s" }}
         >
           ✨
         </div>
-        <div className="absolute top-1/3 right-5 text-2xl animate-bounce delay-700">
+        <div className="hidden md:block absolute top-1/3 right-5 text-2xl animate-bounce delay-700">
           🎪
         </div>
       </header>
 
+      {/* Mobile Menu Overlay */}
+      {isMobileMenuOpen && (
+        <div className="fixed inset-0 z-50 md:hidden">
+          <div
+            className="absolute inset-0 bg-black/50"
+            onClick={() => setIsMobileMenuOpen(false)}
+          />
+          <aside className="absolute left-0 top-0 w-80 h-full bg-gradient-to-b from-purple-100 to-pink-100 p-6 flex flex-col shadow-2xl">
+            {/* Mobile Navigation */}
+            <nav className="flex-1 space-y-2">
+              {[
+                {
+                  id: "dashboard",
+                  icon: Target,
+                  label: "Dashboard",
+                  color: "purple",
+                },
+                {
+                  id: "learn",
+                  icon: BookOpen,
+                  label: "Word Library",
+                  color: "green",
+                },
+                { id: "quiz", icon: Brain, label: "Quiz Time", color: "pink" },
+                {
+                  id: "progress",
+                  icon: Trophy,
+                  label: "Achievements",
+                  color: "yellow",
+                },
+                {
+                  id: "analytics",
+                  icon: TrendingUp,
+                  label: "Progress",
+                  color: "green",
+                },
+              ].map(({ id, icon: Icon, label, color }) => (
+                <button
+                  key={id}
+                  onClick={() => {
+                    setActiveTab(id);
+                    setIsMobileMenuOpen(false);
+                  }}
+                  className={`w-full flex items-center gap-3 p-3 rounded-xl transition-all ${
+                    activeTab === id
+                      ? "bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-lg"
+                      : "bg-white text-gray-700 hover:bg-purple-50"
+                  }`}
+                >
+                  <div
+                    className={`p-2 rounded-lg ${activeTab === id ? "bg-white/20" : `bg-${color}-100`}`}
+                  >
+                    <Icon
+                      className={`w-4 h-4 ${activeTab === id ? "text-white" : `text-${color}-600`}`}
+                    />
+                  </div>
+                  <span className="font-semibold text-sm">{label}</span>
+                </button>
+              ))}
+
+              <button
+                onClick={() => {
+                  setUserRole("parent");
+                  setIsMobileMenuOpen(false);
+                }}
+                className="w-full flex items-center gap-3 p-3 rounded-xl transition-all bg-white text-gray-700 hover:bg-blue-50 border-2 border-transparent"
+              >
+                <div className="p-2 rounded-lg bg-blue-100">
+                  <Users className="w-4 h-4 text-blue-600" />
+                </div>
+                <span className="font-semibold text-sm">Parent Dashboard</span>
+              </button>
+
+              <button
+                onClick={() => setShowSettings(true)}
+                className="w-full flex items-center gap-3 p-3 rounded-xl bg-white text-gray-700 hover:bg-purple-50 transition-all border border-purple-200"
+              >
+                <div className="p-2 rounded-lg bg-gray-100">
+                  <Settings className="w-4 h-4 text-gray-600" />
+                </div>
+                <span className="font-semibold text-sm">Settings</span>
+              </button>
+            </nav>
+          </aside>
+        </div>
+      )}
+
       {/* Main Content with Sidebar Layout */}
       <main className="flex min-h-screen">
         {userRole === "parent" ? (
-          <div className="w-full p-8">
+          <div className="w-full p-4 md:p-8">
             <ParentDashboard
               children={undefined}
               sessions={undefined}
@@ -273,79 +390,8 @@ export default function Index({ initialProfile }: IndexProps) {
           </div>
         ) : (
           <div className="flex w-full">
-            {/* Left Sidebar */}
-            <aside className="w-72 bg-gradient-to-b from-purple-100 to-pink-100 border-r border-purple-200 p-6 flex flex-col">
-              {/* Compact Kid-Friendly User Profile Section */}
-              <div className="bg-gradient-to-br from-educational-yellow-light to-educational-pink-light rounded-2xl p-3 mb-4 shadow-lg border-2 border-white/50">
-                <div className="text-center">
-                  {/* Smaller Avatar */}
-                  <div className="relative mb-3">
-                    <div className="w-12 h-12 mx-auto rounded-full bg-gradient-to-r from-educational-blue to-educational-purple flex items-center justify-center text-2xl shadow-lg border-2 border-white">
-                      {currentProfile?.avatar?.emoji || "🌟"}
-                    </div>
-                    {/* Smaller Online Dot */}
-                    <div className="absolute -bottom-0 -right-0 w-4 h-4 bg-educational-green rounded-full border-2 border-white shadow-sm flex items-center justify-center text-xs">
-                      ✨
-                    </div>
-                  </div>
-
-                  {/* Compact Level Display */}
-                  <div className="bg-white/80 rounded-xl p-2 mb-3 border border-educational-purple/20">
-                    <div className="flex items-center justify-center gap-1 mb-1">
-                      <span className="text-sm">🏆</span>
-                      <span className="text-sm font-bold text-educational-purple">
-                        Level {currentProfile?.level || 3}
-                      </span>
-                    </div>
-                    <div className="bg-educational-purple/20 rounded-full text-educational-purple px-2 py-1 text-xs font-bold">
-                      {currentProfile?.levelName || "Story Builder"}
-                    </div>
-                  </div>
-
-                  {/* Compact Stats */}
-                  <div className="grid grid-cols-2 gap-2 mb-3">
-                    <div className="bg-white/90 rounded-xl p-2 border border-educational-blue/30">
-                      <div className="text-sm">📝</div>
-                      <div className="text-sm font-bold text-educational-blue">
-                        {currentProfile?.wordsLearned || 45}
-                      </div>
-                      <div className="text-xs text-gray-600">Words</div>
-                    </div>
-                    <div className="bg-white/90 rounded-xl p-2 border border-educational-orange/30">
-                      <div className="text-sm">🔥</div>
-                      <div className="text-sm font-bold text-educational-orange">
-                        {currentProfile?.streak || 12}
-                      </div>
-                      <div className="text-xs text-gray-600">Days</div>
-                    </div>
-                  </div>
-
-                  {/* Compact Progress Bar */}
-                  <div className="bg-white/90 rounded-xl p-2 border border-educational-green/30">
-                    <div className="flex items-center justify-between text-xs font-bold text-educational-green mb-1">
-                      <span>🚀 Progress</span>
-                      <span>
-                        {Math.min(
-                          Math.round(
-                            ((currentProfile?.wordsLearned || 45) / 100) * 100,
-                          ),
-                          100,
-                        )}
-                        %
-                      </span>
-                    </div>
-                    <div className="bg-gray-200 rounded-full h-2 overflow-hidden">
-                      <div
-                        className="bg-gradient-to-r from-educational-green to-educational-blue h-2 rounded-full transition-all duration-500"
-                        style={{
-                          width: `${Math.min(((currentProfile?.wordsLearned || 45) / 100) * 100, 100)}%`,
-                        }}
-                      ></div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
+            {/* Desktop Left Sidebar */}
+            <aside className="hidden md:flex w-72 bg-gradient-to-b from-purple-100 to-pink-100 border-r border-purple-200 p-6 flex-col">
               {/* Navigation Menu */}
               <nav className="flex-1 space-y-3">
                 <button
@@ -471,7 +517,7 @@ export default function Index({ initialProfile }: IndexProps) {
             </aside>
 
             {/* Main Content Area */}
-            <div className="flex-1 p-8 bg-gradient-to-br from-blue-50 via-white to-purple-50">
+            <div className="flex-1 p-4 md:p-8 bg-gradient-to-br from-blue-50 via-white to-purple-50">
               <Tabs
                 value={activeTab}
                 onValueChange={setActiveTab}
@@ -480,18 +526,23 @@ export default function Index({ initialProfile }: IndexProps) {
                 <TabsContent value="dashboard">
                   <LearningDashboard
                     stats={learningStats}
-                    userName={currentProfile?.name || "Alex"}
+                    userName="Explorer"
                   />
                 </TabsContent>
 
                 <TabsContent value="learn">
                   <div className="space-y-8">
-                    {selectedCategory === "all" ? (
+                    {selectedCategory === "all" &&
+                    learningMode === "selector" ? (
                       <ChildFriendlyCategorySelector
                         selectedCategory={selectedCategory}
                         onSelectCategory={(category) => {
                           handleCategoryChange(category);
-                          setLearningMode("cards");
+                          if (category === "all") {
+                            setLearningMode("cards");
+                          } else {
+                            setLearningMode("cards");
+                          }
                         }}
                         userInterests={currentProfile?.interests || []}
                       />
@@ -518,16 +569,19 @@ export default function Index({ initialProfile }: IndexProps) {
                             Choose how you'd like to learn your vocabulary!
                           </p>
 
-                          <div className="flex justify-center gap-4 mb-8 flex-wrap">
+                          <div className="flex justify-center gap-2 md:gap-4 mb-6 md:mb-8 flex-wrap px-4 md:px-0">
                             <Button
                               onClick={() => setLearningMode("cards")}
                               variant={
                                 learningMode === "cards" ? "default" : "outline"
                               }
-                              className="flex items-center gap-2"
+                              className="flex items-center gap-1 md:gap-2 text-sm md:text-base px-3 md:px-4"
                             >
                               <BookOpen className="w-4 h-4" />
-                              Word Cards
+                              <span className="hidden sm:inline">
+                                Word Cards
+                              </span>
+                              <span className="sm:hidden">Cards</span>
                             </Button>
                             <Button
                               onClick={() => setLearningMode("builder")}
@@ -536,21 +590,30 @@ export default function Index({ initialProfile }: IndexProps) {
                                   ? "default"
                                   : "outline"
                               }
-                              className="flex items-center gap-2"
+                              className="flex items-center gap-1 md:gap-2 text-sm md:text-base px-3 md:px-4"
                             >
                               <Brain className="w-4 h-4" />
-                              Vocabulary Builder
+                              <span className="hidden sm:inline">
+                                Vocabulary Builder
+                              </span>
+                              <span className="sm:hidden">Builder</span>
                             </Button>
                             <Button
                               onClick={() => setGameMode(true)}
                               variant="default"
-                              className="flex items-center gap-2 bg-gradient-to-r from-educational-green to-educational-blue text-white"
+                              className="flex items-center gap-1 md:gap-2 bg-gradient-to-r from-educational-green to-educational-blue text-white text-sm md:text-base px-3 md:px-4"
                             >
                               <Gamepad2 className="w-4 h-4" />
-                              Game Mode! 🎮
+                              <span className="hidden sm:inline">
+                                Game Mode! 🎮
+                              </span>
+                              <span className="sm:hidden">Game 🎮</span>
                             </Button>
                             <Button
-                              onClick={() => setSelectedCategory("all")}
+                              onClick={() => {
+                                setSelectedCategory("all");
+                                setLearningMode("selector");
+                              }}
                               variant="ghost"
                             >
                               ← Back to Categories
@@ -569,8 +632,8 @@ export default function Index({ initialProfile }: IndexProps) {
 
                               return (
                                 <>
-                                  <div className="flex justify-center mb-6">
-                                    <div className="flex flex-wrap gap-2 max-w-lg">
+                                  <div className="flex justify-center mb-4 md:mb-6">
+                                    <div className="flex flex-wrap gap-1 md:gap-2 max-w-xs md:max-w-lg">
                                       {displayWords.map((_, index) => (
                                         <Button
                                           key={index}
@@ -593,7 +656,7 @@ export default function Index({ initialProfile }: IndexProps) {
 
                                   {displayWords.length > 0 && (
                                     <>
-                                      <div className="max-w-md mx-auto">
+                                      <div className="max-w-sm md:max-w-md mx-auto px-2 md:px-0">
                                         <WordCard
                                           word={
                                             displayWords[currentWordIndex] ||
@@ -611,7 +674,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                         />
                                       </div>
 
-                                      <div className="flex justify-center gap-4">
+                                      <div className="flex justify-center gap-2 md:gap-4 px-4 md:px-0">
                                         <Button
                                           onClick={() =>
                                             setCurrentWordIndex(
@@ -695,19 +758,19 @@ export default function Index({ initialProfile }: IndexProps) {
                             <Brain className="w-16 h-16 text-white" />
                           </div>
                         </div>
-                        <h2 className="text-4xl font-bold text-gray-800 mb-4">
+                        <h2 className="text-2xl md:text-4xl font-bold text-gray-800 mb-4">
                           🧠 Quiz Time!
                         </h2>
-                        <p className="text-xl text-gray-600 mb-8">
+                        <p className="text-base md:text-xl text-gray-600 mb-6 md:mb-8">
                           Test your vocabulary knowledge with fun quizzes!
                           Choose your challenge level below.
                         </p>
                       </div>
 
                       {/* Quiz Options */}
-                      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-4xl mx-auto">
+                      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 max-w-4xl mx-auto">
                         {/* Easy Quiz */}
-                        <Card className="cursor-pointer hover:shadow-xl transition-all duration-300 hover:scale-105 border-2 border-educational-green/30">
+                        <Card className="cursor-pointer hover:shadow-xl transition-all duration-300 md:hover:scale-105 border-2 border-educational-green/30">
                           <CardContent className="p-6 text-center">
                             <div className="text-6xl mb-4">🌱</div>
                             <h3 className="text-xl font-bold text-educational-green mb-2">
@@ -1175,9 +1238,9 @@ export default function Index({ initialProfile }: IndexProps) {
       )}
 
       {/* Floating Helper */}
-      <div className="fixed bottom-6 right-6 z-40">
+      <div className="fixed bottom-4 md:bottom-6 right-4 md:right-6 z-40">
         <div
-          className="bg-gradient-to-r from-educational-purple to-educational-pink p-4 rounded-full shadow-2xl cursor-pointer hover:scale-110 transition-all duration-300"
+          className="bg-gradient-to-r from-educational-purple to-educational-pink p-3 md:p-4 rounded-full shadow-2xl cursor-pointer md:hover:scale-110 transition-all duration-300 min-w-[48px] min-h-[48px] flex items-center justify-center"
           onClick={() =>
             setFeedback({
               type: "encouragement",
@@ -1188,7 +1251,7 @@ export default function Index({ initialProfile }: IndexProps) {
             })
           }
         >
-          <Heart className="w-6 h-6 text-white fill-current animate-pulse" />
+          <Heart className="w-5 md:w-6 h-5 md:h-6 text-white fill-current animate-pulse" />
         </div>
       </div>
     </div>
