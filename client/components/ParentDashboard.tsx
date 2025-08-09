@@ -701,6 +701,7 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
         <Button
           onClick={() => setShowAddGoalDialog(true)}
           className="bg-educational-blue"
+          disabled={children.length === 0}
         >
           <Plus className="w-4 h-4 mr-2" />
           Create Goal
