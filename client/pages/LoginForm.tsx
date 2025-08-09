@@ -69,7 +69,7 @@ export default function LoginForm() {
       ) {
         setMessage({
           type: "success",
-          text: "Yay! Welcome back, awesome word explorer! 🎉✨",
+          text: "Login successful! Welcome back!",
         });
 
         // Navigate to main app after successful login
