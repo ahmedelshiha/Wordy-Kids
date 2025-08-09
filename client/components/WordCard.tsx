@@ -108,7 +108,9 @@ export const WordCard: React.FC<WordCardProps> = ({
   };
 
   return (
-    <div className={`relative w-full max-w-xs md:max-w-sm mx-auto ${className}`}>
+    <div
+      className={`relative w-full max-w-xs md:max-w-sm mx-auto ${className}`}
+    >
       <Card
         className={`h-72 md:h-80 cursor-pointer transition-all duration-700 transform-gpu md:hover:scale-105 ${
           isFlipped ? "[transform:rotateY(180deg)]" : ""
@@ -175,11 +177,15 @@ export const WordCard: React.FC<WordCardProps> = ({
             </div>
           )}
 
-          <h2 className="text-2xl md:text-4xl font-bold mb-2 md:mb-3 text-center">{word.word}</h2>
+          <h2 className="text-2xl md:text-4xl font-bold mb-2 md:mb-3 text-center">
+            {word.word}
+          </h2>
 
           {word.pronunciation && (
             <div className="flex items-center gap-2 mb-3 md:mb-4">
-              <span className="text-base md:text-lg opacity-90">{word.pronunciation}</span>
+              <span className="text-base md:text-lg opacity-90">
+                {word.pronunciation}
+              </span>
               <Button
                 size="sm"
                 variant="ghost"
@@ -246,7 +252,9 @@ export const WordCard: React.FC<WordCardProps> = ({
               <h4 className="text-xs md:text-sm font-medium mb-2 text-yellow-300">
                 Definition:
               </h4>
-              <p className="text-base md:text-lg leading-relaxed">{word.definition}</p>
+              <p className="text-base md:text-lg leading-relaxed">
+                {word.definition}
+              </p>
             </div>
 
             {word.example && (
@@ -254,7 +262,9 @@ export const WordCard: React.FC<WordCardProps> = ({
                 <h4 className="text-xs md:text-sm font-medium mb-2 text-green-300">
                   Example:
                 </h4>
-                <p className="text-sm md:text-base italic opacity-90">"{word.example}"</p>
+                <p className="text-sm md:text-base italic opacity-90">
+                  "{word.example}"
+                </p>
               </div>
             )}
 

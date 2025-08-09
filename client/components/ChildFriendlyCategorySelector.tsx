@@ -249,13 +249,15 @@ const enrichedCategories: Category[] = [
     description: "Understand different emotions and how you feel!",
     funFact: "It's healthy to talk about your feelings!",
     difficultyBreakdown: {
-      easy: getWordsByCategory("feelings").filter((w) => w.difficulty === "easy")
-        .length,
+      easy: getWordsByCategory("feelings").filter(
+        (w) => w.difficulty === "easy",
+      ).length,
       medium: getWordsByCategory("feelings").filter(
         (w) => w.difficulty === "medium",
       ).length,
-      hard: getWordsByCategory("feelings").filter((w) => w.difficulty === "hard")
-        .length,
+      hard: getWordsByCategory("feelings").filter(
+        (w) => w.difficulty === "hard",
+      ).length,
     },
   },
   {
@@ -268,13 +270,15 @@ const enrichedCategories: Category[] = [
     description: "Learn friendly ways to say hello and goodbye!",
     funFact: "Greeting people politely makes them smile!",
     difficultyBreakdown: {
-      easy: getWordsByCategory("greetings").filter((w) => w.difficulty === "easy")
-        .length,
+      easy: getWordsByCategory("greetings").filter(
+        (w) => w.difficulty === "easy",
+      ).length,
       medium: getWordsByCategory("greetings").filter(
         (w) => w.difficulty === "medium",
       ).length,
-      hard: getWordsByCategory("greetings").filter((w) => w.difficulty === "hard")
-        .length,
+      hard: getWordsByCategory("greetings").filter(
+        (w) => w.difficulty === "hard",
+      ).length,
     },
   },
   {
@@ -287,13 +291,15 @@ const enrichedCategories: Category[] = [
     description: "Discover amazing gadgets and modern inventions!",
     funFact: "Technology makes our lives easier and more fun!",
     difficultyBreakdown: {
-      easy: getWordsByCategory("technology").filter((w) => w.difficulty === "easy")
-        .length,
+      easy: getWordsByCategory("technology").filter(
+        (w) => w.difficulty === "easy",
+      ).length,
       medium: getWordsByCategory("technology").filter(
         (w) => w.difficulty === "medium",
       ).length,
-      hard: getWordsByCategory("technology").filter((w) => w.difficulty === "hard")
-        .length,
+      hard: getWordsByCategory("technology").filter(
+        (w) => w.difficulty === "hard",
+      ).length,
     },
   },
   {
@@ -306,13 +312,15 @@ const enrichedCategories: Category[] = [
     description: "Explore different ways to travel and move around!",
     funFact: "Transportation helps us go to amazing places!",
     difficultyBreakdown: {
-      easy: getWordsByCategory("transportation").filter((w) => w.difficulty === "easy")
-        .length,
+      easy: getWordsByCategory("transportation").filter(
+        (w) => w.difficulty === "easy",
+      ).length,
       medium: getWordsByCategory("transportation").filter(
         (w) => w.difficulty === "medium",
       ).length,
-      hard: getWordsByCategory("transportation").filter((w) => w.difficulty === "hard")
-        .length,
+      hard: getWordsByCategory("transportation").filter(
+        (w) => w.difficulty === "hard",
+      ).length,
     },
   },
   {
@@ -559,7 +567,9 @@ export function ChildFriendlyCategorySelector({
                   >
                     {category.icon}
                   </div>
-                  <h3 className="text-lg md:text-xl font-bold mb-1">{category.name}</h3>
+                  <h3 className="text-lg md:text-xl font-bold mb-1">
+                    {category.name}
+                  </h3>
                   <Badge className="bg-white/20 border-white/30 text-white">
                     <Zap className="w-3 h-3 mr-1" />
                     {category.wordCount} words

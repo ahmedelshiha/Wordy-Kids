@@ -294,16 +294,39 @@ export default function Index({ initialProfile }: IndexProps) {
       {/* Mobile Menu Overlay */}
       {isMobileMenuOpen && (
         <div className="fixed inset-0 z-50 md:hidden">
-          <div className="absolute inset-0 bg-black/50" onClick={() => setIsMobileMenuOpen(false)} />
+          <div
+            className="absolute inset-0 bg-black/50"
+            onClick={() => setIsMobileMenuOpen(false)}
+          />
           <aside className="absolute left-0 top-0 w-80 h-full bg-gradient-to-b from-purple-100 to-pink-100 p-6 flex flex-col shadow-2xl">
             {/* Mobile Navigation */}
             <nav className="flex-1 space-y-2">
               {[
-                { id: "dashboard", icon: Target, label: "Dashboard", color: "purple" },
-                { id: "learn", icon: BookOpen, label: "Word Library", color: "green" },
+                {
+                  id: "dashboard",
+                  icon: Target,
+                  label: "Dashboard",
+                  color: "purple",
+                },
+                {
+                  id: "learn",
+                  icon: BookOpen,
+                  label: "Word Library",
+                  color: "green",
+                },
                 { id: "quiz", icon: Brain, label: "Quiz Time", color: "pink" },
-                { id: "progress", icon: Trophy, label: "Achievements", color: "yellow" },
-                { id: "analytics", icon: TrendingUp, label: "Progress", color: "green" },
+                {
+                  id: "progress",
+                  icon: Trophy,
+                  label: "Achievements",
+                  color: "yellow",
+                },
+                {
+                  id: "analytics",
+                  icon: TrendingUp,
+                  label: "Progress",
+                  color: "green",
+                },
               ].map(({ id, icon: Icon, label, color }) => (
                 <button
                   key={id}
@@ -317,8 +340,12 @@ export default function Index({ initialProfile }: IndexProps) {
                       : "bg-white text-gray-700 hover:bg-purple-50"
                   }`}
                 >
-                  <div className={`p-2 rounded-lg ${activeTab === id ? "bg-white/20" : `bg-${color}-100`}`}>
-                    <Icon className={`w-4 h-4 ${activeTab === id ? "text-white" : `text-${color}-600`}`} />
+                  <div
+                    className={`p-2 rounded-lg ${activeTab === id ? "bg-white/20" : `bg-${color}-100`}`}
+                  >
+                    <Icon
+                      className={`w-4 h-4 ${activeTab === id ? "text-white" : `text-${color}-600`}`}
+                    />
                   </div>
                   <span className="font-semibold text-sm">{label}</span>
                 </button>
@@ -505,7 +532,8 @@ export default function Index({ initialProfile }: IndexProps) {
 
                 <TabsContent value="learn">
                   <div className="space-y-8">
-                    {selectedCategory === "all" && learningMode === "selector" ? (
+                    {selectedCategory === "all" &&
+                    learningMode === "selector" ? (
                       <ChildFriendlyCategorySelector
                         selectedCategory={selectedCategory}
                         onSelectCategory={(category) => {
@@ -550,7 +578,9 @@ export default function Index({ initialProfile }: IndexProps) {
                               className="flex items-center gap-1 md:gap-2 text-sm md:text-base px-3 md:px-4"
                             >
                               <BookOpen className="w-4 h-4" />
-                              <span className="hidden sm:inline">Word Cards</span>
+                              <span className="hidden sm:inline">
+                                Word Cards
+                              </span>
                               <span className="sm:hidden">Cards</span>
                             </Button>
                             <Button
@@ -563,7 +593,9 @@ export default function Index({ initialProfile }: IndexProps) {
                               className="flex items-center gap-1 md:gap-2 text-sm md:text-base px-3 md:px-4"
                             >
                               <Brain className="w-4 h-4" />
-                              <span className="hidden sm:inline">Vocabulary Builder</span>
+                              <span className="hidden sm:inline">
+                                Vocabulary Builder
+                              </span>
                               <span className="sm:hidden">Builder</span>
                             </Button>
                             <Button
@@ -572,7 +604,9 @@ export default function Index({ initialProfile }: IndexProps) {
                               className="flex items-center gap-1 md:gap-2 bg-gradient-to-r from-educational-green to-educational-blue text-white text-sm md:text-base px-3 md:px-4"
                             >
                               <Gamepad2 className="w-4 h-4" />
-                              <span className="hidden sm:inline">Game Mode! 🎮</span>
+                              <span className="hidden sm:inline">
+                                Game Mode! 🎮
+                              </span>
                               <span className="sm:hidden">Game 🎮</span>
                             </Button>
                             <Button

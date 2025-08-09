@@ -1,20 +1,22 @@
 // Audio service for pronunciation and sound effects
-export type VoiceType = 'man' | 'woman' | 'kid';
+export type VoiceType = "man" | "woman" | "kid";
 
 export class AudioService {
   private static instance: AudioService;
   private speechSynthesis: SpeechSynthesis;
   private voices: SpeechSynthesisVoice[] = [];
   private isEnabled: boolean = true;
-  private selectedVoiceType: VoiceType = 'woman';
+  private selectedVoiceType: VoiceType = "woman";
 
   private constructor() {
     this.speechSynthesis = window.speechSynthesis;
     this.loadVoices();
 
     // Load saved voice preference
-    const savedVoiceType = localStorage.getItem('preferred-voice-type') as VoiceType;
-    if (savedVoiceType && ['man', 'woman', 'kid'].includes(savedVoiceType)) {
+    const savedVoiceType = localStorage.getItem(
+      "preferred-voice-type",
+    ) as VoiceType;
+    if (savedVoiceType && ["man", "woman", "kid"].includes(savedVoiceType)) {
       this.selectedVoiceType = savedVoiceType;
     }
 
@@ -37,54 +39,60 @@ export class AudioService {
 
   private getVoiceByType(voiceType: VoiceType): SpeechSynthesisVoice | null {
     const englishVoices = this.voices.filter((voice) =>
-      voice.lang.startsWith("en")
+      voice.lang.startsWith("en"),
     );
 
     let filteredVoices: SpeechSynthesisVoice[] = [];
 
     switch (voiceType) {
-      case 'woman':
-        filteredVoices = englishVoices.filter((voice) =>
-          voice.name.toLowerCase().includes("female") ||
-          voice.name.toLowerCase().includes("woman") ||
-          voice.name.toLowerCase().includes("karen") ||
-          voice.name.toLowerCase().includes("samantha") ||
-          voice.name.toLowerCase().includes("susan") ||
-          voice.name.toLowerCase().includes("allison") ||
-          voice.name.toLowerCase().includes("zira") ||
-          (voice.name.toLowerCase().includes("google") && voice.name.toLowerCase().includes("female"))
+      case "woman":
+        filteredVoices = englishVoices.filter(
+          (voice) =>
+            voice.name.toLowerCase().includes("female") ||
+            voice.name.toLowerCase().includes("woman") ||
+            voice.name.toLowerCase().includes("karen") ||
+            voice.name.toLowerCase().includes("samantha") ||
+            voice.name.toLowerCase().includes("susan") ||
+            voice.name.toLowerCase().includes("allison") ||
+            voice.name.toLowerCase().includes("zira") ||
+            (voice.name.toLowerCase().includes("google") &&
+              voice.name.toLowerCase().includes("female")),
         );
         break;
 
-      case 'man':
-        filteredVoices = englishVoices.filter((voice) =>
-          voice.name.toLowerCase().includes("male") ||
-          voice.name.toLowerCase().includes("man") ||
-          voice.name.toLowerCase().includes("david") ||
-          voice.name.toLowerCase().includes("mark") ||
-          voice.name.toLowerCase().includes("alex") ||
-          voice.name.toLowerCase().includes("daniel") ||
-          (voice.name.toLowerCase().includes("google") && voice.name.toLowerCase().includes("male"))
+      case "man":
+        filteredVoices = englishVoices.filter(
+          (voice) =>
+            voice.name.toLowerCase().includes("male") ||
+            voice.name.toLowerCase().includes("man") ||
+            voice.name.toLowerCase().includes("david") ||
+            voice.name.toLowerCase().includes("mark") ||
+            voice.name.toLowerCase().includes("alex") ||
+            voice.name.toLowerCase().includes("daniel") ||
+            (voice.name.toLowerCase().includes("google") &&
+              voice.name.toLowerCase().includes("male")),
         );
         break;
 
-      case 'kid':
+      case "kid":
         // Look for higher-pitched or child-specific voices
-        filteredVoices = englishVoices.filter((voice) =>
-          voice.name.toLowerCase().includes("child") ||
-          voice.name.toLowerCase().includes("kid") ||
-          voice.name.toLowerCase().includes("junior") ||
-          voice.name.toLowerCase().includes("young") ||
-          // Some voices that tend to sound younger
-          voice.name.toLowerCase().includes("kate") ||
-          voice.name.toLowerCase().includes("vicki")
+        filteredVoices = englishVoices.filter(
+          (voice) =>
+            voice.name.toLowerCase().includes("child") ||
+            voice.name.toLowerCase().includes("kid") ||
+            voice.name.toLowerCase().includes("junior") ||
+            voice.name.toLowerCase().includes("young") ||
+            // Some voices that tend to sound younger
+            voice.name.toLowerCase().includes("kate") ||
+            voice.name.toLowerCase().includes("vicki"),
         );
 
         // If no kid-specific voices, fall back to female voices (often sound more child-friendly)
         if (filteredVoices.length === 0) {
-          filteredVoices = englishVoices.filter((voice) =>
-            voice.name.toLowerCase().includes("female") ||
-            voice.name.toLowerCase().includes("woman")
+          filteredVoices = englishVoices.filter(
+            (voice) =>
+              voice.name.toLowerCase().includes("female") ||
+              voice.name.toLowerCase().includes("woman"),
           );
         }
         break;
@@ -102,13 +110,16 @@ export class AudioService {
     return this.getVoiceByType(this.selectedVoiceType);
   }
 
-  private getVoiceDefaults(voiceType: VoiceType): { rate: number; pitch: number } {
+  private getVoiceDefaults(voiceType: VoiceType): {
+    rate: number;
+    pitch: number;
+  } {
     switch (voiceType) {
-      case 'kid':
+      case "kid":
         return { rate: 0.9, pitch: 1.4 };
-      case 'woman':
+      case "woman":
         return { rate: 0.8, pitch: 1.2 };
-      case 'man':
+      case "man":
         return { rate: 0.8, pitch: 0.9 };
       default:
         return { rate: 0.8, pitch: 1.2 };
@@ -296,34 +307,41 @@ export class AudioService {
   public setVoiceType(voiceType: VoiceType): void {
     this.selectedVoiceType = voiceType;
     // Save to localStorage for persistence
-    localStorage.setItem('preferred-voice-type', voiceType);
+    localStorage.setItem("preferred-voice-type", voiceType);
   }
 
   public getVoiceType(): VoiceType {
     return this.selectedVoiceType;
   }
 
-  public getAvailableVoices(): { type: VoiceType; voice: SpeechSynthesisVoice | null; available: boolean }[] {
+  public getAvailableVoices(): {
+    type: VoiceType;
+    voice: SpeechSynthesisVoice | null;
+    available: boolean;
+  }[] {
     return [
       {
-        type: 'woman',
-        voice: this.getVoiceByType('woman'),
-        available: this.getVoiceByType('woman') !== null
+        type: "woman",
+        voice: this.getVoiceByType("woman"),
+        available: this.getVoiceByType("woman") !== null,
       },
       {
-        type: 'man',
-        voice: this.getVoiceByType('man'),
-        available: this.getVoiceByType('man') !== null
+        type: "man",
+        voice: this.getVoiceByType("man"),
+        available: this.getVoiceByType("man") !== null,
       },
       {
-        type: 'kid',
-        voice: this.getVoiceByType('kid'),
-        available: this.getVoiceByType('kid') !== null
-      }
+        type: "kid",
+        voice: this.getVoiceByType("kid"),
+        available: this.getVoiceByType("kid") !== null,
+      },
     ];
   }
 
-  public previewVoice(voiceType: VoiceType, text: string = "Hello! This is how I sound."): void {
+  public previewVoice(
+    voiceType: VoiceType,
+    text: string = "Hello! This is how I sound.",
+  ): void {
     if (!this.isEnabled) return;
 
     const voice = this.getVoiceByType(voiceType);
@@ -336,15 +354,15 @@ export class AudioService {
 
     // Adjust settings based on voice type
     switch (voiceType) {
-      case 'kid':
+      case "kid":
         utterance.rate = 0.9;
         utterance.pitch = 1.4;
         break;
-      case 'woman':
+      case "woman":
         utterance.rate = 0.8;
         utterance.pitch = 1.2;
         break;
-      case 'man':
+      case "man":
         utterance.rate = 0.8;
         utterance.pitch = 0.9;
         break;
