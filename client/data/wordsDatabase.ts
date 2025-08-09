@@ -847,6 +847,17 @@ export const wordsDatabase: Word[] = [
     category: "body",
     difficulty: "medium",
   },
+  {
+    id: 75.1,
+    word: "Face",
+    pronunciation: "/feɪs/",
+    definition: "The front part of your head with eyes, nose, and mouth",
+    example: "I wash my face every morning",
+    funFact: "Your face has 43 muscles for expressions!",
+    emoji: "😊",
+    category: "body",
+    difficulty: "easy",
+  },
 
   // COLORS CATEGORY
   {
