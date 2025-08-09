@@ -300,7 +300,7 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({
                 document.documentElement.classList.remove('dark');
                 playSoundIfEnabled.click();
               }}
-              className="flex-1"
+              className="flex-1 w-full"
             >
               Reset to Defaults
             </Button>
