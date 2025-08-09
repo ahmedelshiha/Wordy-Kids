@@ -63,13 +63,13 @@ export default function LoginForm() {
     setTimeout(() => {
       // Check localStorage for registered users
       const registeredUsers = JSON.parse(localStorage.getItem("wordAdventureUsers") || "[]");
-      const user = registeredUsers.find((u: any) => u.username === username && u.password === password);
+      const user = registeredUsers.find((u: any) => u.email === email && u.password === password);
 
-      // Also check demo credentials
+      // Also check demo credentials (keep username-based for demo accounts)
       const isDemoUser = (
-        (username === "demo" && password === "demo123") ||
-        (username === "alex" && password === "alex123") ||
-        (username === "sam" && password === "sam123")
+        (email === "demo@example.com" && password === "demo123") ||
+        (email === "alex@example.com" && password === "alex123") ||
+        (email === "sam@example.com" && password === "sam123")
       );
 
       if (user || isDemoUser) {
