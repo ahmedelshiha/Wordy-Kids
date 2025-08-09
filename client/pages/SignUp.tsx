@@ -179,6 +179,26 @@ export default function SignUp() {
                 />
               </div>
 
+              {/* Birth Date Field */}
+              <div>
+                <Label
+                  htmlFor="birthDate"
+                  className="text-sm font-medium text-gray-700 flex items-center gap-2"
+                >
+                  <Calendar className="w-4 h-4" />
+                  Birth Date
+                </Label>
+                <Input
+                  id="birthDate"
+                  name="birthDate"
+                  type="date"
+                  value={formData.birthDate}
+                  onChange={handleInputChange}
+                  className="mt-2 border-gray-300 focus:border-blue-500"
+                  disabled={isLoading}
+                />
+              </div>
+
               {/* Email Field */}
               <div>
                 <Label
