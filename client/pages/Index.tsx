@@ -865,7 +865,7 @@ export default function Index({ initialProfile }: IndexProps) {
                       </div>
 
                       {/* Quiz Options */}
-                      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-4xl mx-auto">
+                      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 max-w-4xl mx-auto">
                         {/* Easy Quiz */}
                         <Card className="cursor-pointer hover:shadow-xl transition-all duration-300 hover:scale-105 border-2 border-educational-green/30">
                           <CardContent className="p-6 text-center">
