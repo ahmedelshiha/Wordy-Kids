@@ -379,10 +379,18 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
     (n) => n.priority === "high" && !n.read,
   ).length;
 
-  const getTimeAgo = (date: Date) => {
+  const getTimeAgo = (date: Date | string) => {
+    // Ensure we have a valid Date object
+    const dateObj = date instanceof Date ? date : new Date(date);
+
+    // Check if the date is valid
+    if (isNaN(dateObj.getTime())) {
+      return "Unknown";
+    }
+
     const now = new Date();
     const diffInHours = Math.floor(
-      (now.getTime() - date.getTime()) / (1000 * 60 * 60),
+      (now.getTime() - dateObj.getTime()) / (1000 * 60 * 60),
     );
     if (diffInHours < 1) return "Just now";
     if (diffInHours < 24) return `${diffInHours}h ago`;
