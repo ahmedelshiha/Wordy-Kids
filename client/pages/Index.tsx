@@ -274,79 +274,64 @@ export default function Index({ initialProfile }: IndexProps) {
           <div className="flex w-full">
             {/* Left Sidebar */}
             <aside className="w-72 bg-gradient-to-b from-purple-100 to-pink-100 border-r border-purple-200 p-6 flex flex-col">
-              {/* Kid-Friendly User Profile Section */}
-              <div className="bg-gradient-to-br from-educational-yellow-light to-educational-pink-light rounded-3xl p-4 mb-6 shadow-xl border-4 border-white/50">
+              {/* Compact Kid-Friendly User Profile Section */}
+              <div className="bg-gradient-to-br from-educational-yellow-light to-educational-pink-light rounded-2xl p-3 mb-4 shadow-lg border-2 border-white/50">
                 <div className="text-center">
-                  {/* Big Avatar at Top */}
-                  <div className="relative mb-4">
-                    <div className="w-20 h-20 mx-auto rounded-full bg-gradient-to-r from-educational-blue to-educational-purple flex items-center justify-center text-4xl shadow-2xl border-4 border-white">
+                  {/* Smaller Avatar */}
+                  <div className="relative mb-3">
+                    <div className="w-12 h-12 mx-auto rounded-full bg-gradient-to-r from-educational-blue to-educational-purple flex items-center justify-center text-2xl shadow-lg border-2 border-white">
                       {currentProfile?.avatar?.emoji || "🌟"}
                     </div>
-                    {/* Fun Online Dot */}
-                    <div className="absolute -bottom-1 -right-1 w-6 h-6 bg-educational-green rounded-full border-3 border-white shadow-lg flex items-center justify-center text-xs">
+                    {/* Smaller Online Dot */}
+                    <div className="absolute -bottom-0 -right-0 w-4 h-4 bg-educational-green rounded-full border-2 border-white shadow-sm flex items-center justify-center text-xs">
                       ✨
                     </div>
                   </div>
 
-                  {/* Fun Level Display */}
-                  <div className="bg-white/80 rounded-2xl p-3 mb-4 border-2 border-educational-purple/20">
-                    <div className="flex items-center justify-center gap-2 mb-2">
-                      <div className="text-2xl">🏆</div>
-                      <span className="text-lg font-bold text-educational-purple">
+                  {/* Compact Level Display */}
+                  <div className="bg-white/80 rounded-xl p-2 mb-3 border border-educational-purple/20">
+                    <div className="flex items-center justify-center gap-1 mb-1">
+                      <span className="text-sm">🏆</span>
+                      <span className="text-sm font-bold text-educational-purple">
                         Level {currentProfile?.level || 3}
                       </span>
                     </div>
-                    <div className="bg-educational-purple/20 rounded-full text-educational-purple px-3 py-1 text-sm font-bold">
-                      {currentProfile?.levelName || "Story Builder"} 📚
+                    <div className="bg-educational-purple/20 rounded-full text-educational-purple px-2 py-1 text-xs font-bold">
+                      {currentProfile?.levelName || "Story Builder"}
                     </div>
                   </div>
 
-                  {/* Fun Stats Bubbles */}
-                  <div className="grid grid-cols-2 gap-2 mb-4">
-                    <div className="bg-white/90 rounded-2xl p-3 border-2 border-educational-blue/30">
-                      <div className="text-xl mb-1">📝</div>
-                      <div className="text-lg font-bold text-educational-blue">
+                  {/* Compact Stats */}
+                  <div className="grid grid-cols-2 gap-2 mb-3">
+                    <div className="bg-white/90 rounded-xl p-2 border border-educational-blue/30">
+                      <div className="text-sm">📝</div>
+                      <div className="text-sm font-bold text-educational-blue">
                         {currentProfile?.wordsLearned || 45}
                       </div>
-                      <div className="text-xs text-gray-600 font-semibold">Words!</div>
+                      <div className="text-xs text-gray-600">Words</div>
                     </div>
-                    <div className="bg-white/90 rounded-2xl p-3 border-2 border-educational-orange/30">
-                      <div className="text-xl mb-1">🔥</div>
-                      <div className="text-lg font-bold text-educational-orange">
+                    <div className="bg-white/90 rounded-xl p-2 border border-educational-orange/30">
+                      <div className="text-sm">🔥</div>
+                      <div className="text-sm font-bold text-educational-orange">
                         {currentProfile?.streak || 12}
                       </div>
-                      <div className="text-xs text-gray-600 font-semibold">Days</div>
+                      <div className="text-xs text-gray-600">Days</div>
                     </div>
                   </div>
 
-                  {/* Fun Progress Bar */}
-                  <div className="bg-white/90 rounded-2xl p-3 mb-4 border-2 border-educational-green/30">
-                    <div className="flex items-center justify-center gap-2 mb-2">
-                      <span className="text-lg">🚀</span>
-                      <span className="text-sm font-bold text-educational-green">Next Level!</span>
+                  {/* Compact Progress Bar */}
+                  <div className="bg-white/90 rounded-xl p-2 border border-educational-green/30">
+                    <div className="flex items-center justify-between text-xs font-bold text-educational-green mb-1">
+                      <span>🚀 Progress</span>
+                      <span>{Math.min(Math.round(((currentProfile?.wordsLearned || 45) / 100) * 100), 100)}%</span>
                     </div>
-                    <div className="bg-gray-200 rounded-full h-4 overflow-hidden">
+                    <div className="bg-gray-200 rounded-full h-2 overflow-hidden">
                       <div
-                        className="bg-gradient-to-r from-educational-green to-educational-blue h-4 rounded-full transition-all duration-500 flex items-center justify-end pr-1"
+                        className="bg-gradient-to-r from-educational-green to-educational-blue h-2 rounded-full transition-all duration-500"
                         style={{
                           width: `${Math.min(((currentProfile?.wordsLearned || 45) / 100) * 100, 100)}%`,
                         }}
-                      >
-                        <span className="text-xs text-white font-bold">
-                          {Math.min(Math.round(((currentProfile?.wordsLearned || 45) / 100) * 100), 100)}%
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Achievement Sticker */}
-                  <div className="bg-white/90 rounded-2xl p-3 border-2 border-educational-purple/30">
-                    <div className="flex items-center justify-center gap-2">
-                      <span className="text-lg">⭐</span>
-                      <span className="text-sm font-bold text-educational-purple">
-                        Great Job! {currentProfile?.accuracy || 87}% Score
-                      </span>
-                      <span className="text-lg">⭐</span>
+                      ></div>
                     </div>
                   </div>
                 </div>
