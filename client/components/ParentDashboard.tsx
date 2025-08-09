@@ -545,7 +545,9 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
           <Card className="col-span-2 text-center py-12">
             <CardContent>
               <div className="text-6xl mb-4">👶</div>
-              <h3 className="text-xl font-semibold mb-2">No Children Added Yet</h3>
+              <h3 className="text-xl font-semibold mb-2">
+                No Children Added Yet
+              </h3>
               <p className="text-gray-600 mb-6">
                 Add your first child to start tracking their learning progress
               </p>
@@ -560,128 +562,128 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
           </Card>
         ) : (
           children.map((child) => {
-          const weeklyStats = calculateWeeklyStats(child.id);
-          const progressPercentage =
-            (child.weeklyProgress / child.weeklyGoal) * 100;
-          const childGoals = getChildGoals(child.id);
-          const activeGoals = childGoals.filter((g) => g.status === "active");
-          const childNotifications = getChildNotifications(child.id);
+            const weeklyStats = calculateWeeklyStats(child.id);
+            const progressPercentage =
+              (child.weeklyProgress / child.weeklyGoal) * 100;
+            const childGoals = getChildGoals(child.id);
+            const activeGoals = childGoals.filter((g) => g.status === "active");
+            const childNotifications = getChildNotifications(child.id);
 
-          return (
-            <Card
-              key={child.id}
-              className="cursor-pointer hover:shadow-lg transition-all duration-300 hover:scale-[1.02] border-l-4 border-l-educational-blue"
-              onClick={() => setSelectedChild(child)}
-            >
-              <CardHeader>
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-3">
-                    <div className="text-4xl">{child.avatar}</div>
-                    <div>
-                      <CardTitle className="text-xl">{child.name}</CardTitle>
-                      <p className="text-sm text-slate-600">
-                        {child.age} years old • Level {child.level}
-                      </p>
-                      <Badge variant="outline" className="text-xs mt-1">
-                        {child.preferredLearningTime}
-                      </Badge>
-                    </div>
-                  </div>
-                  <div className="text-right">
-                    <Badge variant="outline" className="mb-1">
-                      {getTimeAgo(child.lastActive)}
-                    </Badge>
-                    <p className="text-xs text-slate-500">Last active</p>
-                    {activeGoals.length > 0 && (
-                      <Badge className="bg-educational-purple text-white text-xs mt-1">
-                        {activeGoals.length} active goal
-                        {activeGoals.length !== 1 ? "s" : ""}
-                      </Badge>
-                    )}
-                  </div>
-                </div>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                {/* Weekly Goal Progress */}
-                <div>
-                  <div className="flex justify-between text-sm mb-2">
-                    <span>Weekly Goal</span>
-                    <span>
-                      {child.weeklyProgress}/{child.weeklyGoal} words
-                    </span>
-                  </div>
-                  <Progress value={progressPercentage} className="h-2" />
-                  <p className="text-xs text-slate-500 mt-1">
-                    {Math.round(progressPercentage)}% complete
-                  </p>
-                </div>
-
-                {/* Quick Stats */}
-                <div className="grid grid-cols-3 gap-4 text-center">
-                  <div>
-                    <div className="text-lg font-bold text-educational-blue">
-                      {child.wordsLearned}
-                    </div>
-                    <p className="text-xs text-slate-600">Words</p>
-                  </div>
-                  <div>
-                    <div className="text-lg font-bold text-educational-orange">
-                      {child.currentStreak}
-                    </div>
-                    <p className="text-xs text-slate-600">Streak</p>
-                  </div>
-                  <div>
-                    <div className="text-lg font-bold text-educational-green">
-                      {weeklyStats.averageAccuracy}%
-                    </div>
-                    <p className="text-xs text-slate-600">Accuracy</p>
-                  </div>
-                </div>
-
-                {/* Recent Notifications */}
-                {childNotifications.length > 0 && (
-                  <div className="bg-blue-50 p-3 rounded-lg">
-                    <div className="flex items-center gap-2 mb-2">
-                      <Bell className="w-4 h-4 text-educational-blue" />
-                      <span className="text-sm font-medium">
-                        Recent Updates
-                      </span>
-                    </div>
-                    {childNotifications.slice(0, 1).map((notif) => (
-                      <div key={notif.id} className="text-sm text-slate-600">
-                        {notif.message}
-                      </div>
-                    ))}
-                    {childNotifications.length > 1 && (
-                      <p className="text-xs text-slate-500 mt-1">
-                        +{childNotifications.length - 1} more update
-                        {childNotifications.length - 1 !== 1 ? "s" : ""}
-                      </p>
-                    )}
-                  </div>
-                )}
-
-                {/* Recent Achievement */}
-                {child.recentAchievements.length > 0 && (
-                  <div className="bg-yellow-50 p-3 rounded-lg">
-                    <div className="flex items-center gap-2">
-                      <span className="text-lg">
-                        {child.recentAchievements[0].icon}
-                      </span>
+            return (
+              <Card
+                key={child.id}
+                className="cursor-pointer hover:shadow-lg transition-all duration-300 hover:scale-[1.02] border-l-4 border-l-educational-blue"
+                onClick={() => setSelectedChild(child)}
+              >
+                <CardHeader>
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-3">
+                      <div className="text-4xl">{child.avatar}</div>
                       <div>
-                        <p className="font-medium text-sm">
-                          {child.recentAchievements[0].title}
+                        <CardTitle className="text-xl">{child.name}</CardTitle>
+                        <p className="text-sm text-slate-600">
+                          {child.age} years old • Level {child.level}
                         </p>
-                        <p className="text-xs text-slate-600">
-                          {getTimeAgo(child.recentAchievements[0].earnedAt)}
-                        </p>
+                        <Badge variant="outline" className="text-xs mt-1">
+                          {child.preferredLearningTime}
+                        </Badge>
                       </div>
                     </div>
+                    <div className="text-right">
+                      <Badge variant="outline" className="mb-1">
+                        {getTimeAgo(child.lastActive)}
+                      </Badge>
+                      <p className="text-xs text-slate-500">Last active</p>
+                      {activeGoals.length > 0 && (
+                        <Badge className="bg-educational-purple text-white text-xs mt-1">
+                          {activeGoals.length} active goal
+                          {activeGoals.length !== 1 ? "s" : ""}
+                        </Badge>
+                      )}
+                    </div>
                   </div>
-                )}
-              </CardContent>
-            </Card>
-          );
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  {/* Weekly Goal Progress */}
+                  <div>
+                    <div className="flex justify-between text-sm mb-2">
+                      <span>Weekly Goal</span>
+                      <span>
+                        {child.weeklyProgress}/{child.weeklyGoal} words
+                      </span>
+                    </div>
+                    <Progress value={progressPercentage} className="h-2" />
+                    <p className="text-xs text-slate-500 mt-1">
+                      {Math.round(progressPercentage)}% complete
+                    </p>
+                  </div>
+
+                  {/* Quick Stats */}
+                  <div className="grid grid-cols-3 gap-4 text-center">
+                    <div>
+                      <div className="text-lg font-bold text-educational-blue">
+                        {child.wordsLearned}
+                      </div>
+                      <p className="text-xs text-slate-600">Words</p>
+                    </div>
+                    <div>
+                      <div className="text-lg font-bold text-educational-orange">
+                        {child.currentStreak}
+                      </div>
+                      <p className="text-xs text-slate-600">Streak</p>
+                    </div>
+                    <div>
+                      <div className="text-lg font-bold text-educational-green">
+                        {weeklyStats.averageAccuracy}%
+                      </div>
+                      <p className="text-xs text-slate-600">Accuracy</p>
+                    </div>
+                  </div>
+
+                  {/* Recent Notifications */}
+                  {childNotifications.length > 0 && (
+                    <div className="bg-blue-50 p-3 rounded-lg">
+                      <div className="flex items-center gap-2 mb-2">
+                        <Bell className="w-4 h-4 text-educational-blue" />
+                        <span className="text-sm font-medium">
+                          Recent Updates
+                        </span>
+                      </div>
+                      {childNotifications.slice(0, 1).map((notif) => (
+                        <div key={notif.id} className="text-sm text-slate-600">
+                          {notif.message}
+                        </div>
+                      ))}
+                      {childNotifications.length > 1 && (
+                        <p className="text-xs text-slate-500 mt-1">
+                          +{childNotifications.length - 1} more update
+                          {childNotifications.length - 1 !== 1 ? "s" : ""}
+                        </p>
+                      )}
+                    </div>
+                  )}
+
+                  {/* Recent Achievement */}
+                  {child.recentAchievements.length > 0 && (
+                    <div className="bg-yellow-50 p-3 rounded-lg">
+                      <div className="flex items-center gap-2">
+                        <span className="text-lg">
+                          {child.recentAchievements[0].icon}
+                        </span>
+                        <div>
+                          <p className="font-medium text-sm">
+                            {child.recentAchievements[0].title}
+                          </p>
+                          <p className="text-xs text-slate-600">
+                            {getTimeAgo(child.recentAchievements[0].earnedAt)}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                </CardContent>
+              </Card>
+            );
           })
         )}
       </div>
@@ -713,91 +715,97 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
           <CardContent>
             <div className="text-4xl mb-4">🎯</div>
             <h3 className="text-lg font-semibold mb-2">No Goals Yet</h3>
-            <p className="text-gray-600">Add children first to create learning goals</p>
+            <p className="text-gray-600">
+              Add children first to create learning goals
+            </p>
           </CardContent>
         </Card>
       ) : (
         children.map((child) => {
-        const childGoals = getChildGoals(child.id);
-        if (childGoals.length === 0) return null;
+          const childGoals = getChildGoals(child.id);
+          if (childGoals.length === 0) return null;
 
-        return (
-          <Card key={child.id}>
-            <CardHeader>
-              <CardTitle className="flex items-center gap-3">
-                <span className="text-2xl">{child.avatar}</span>
-                {child.name}'s Goals
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="grid gap-4">
-                {childGoals.map((goal) => {
-                  const progressPercentage = Math.min(
-                    (goal.currentValue / goal.targetValue) * 100,
-                    100,
-                  );
-                  const isCompleted = goal.status === "completed";
-                  const isOverdue = new Date() > goal.deadline && !isCompleted;
+          return (
+            <Card key={child.id}>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-3">
+                  <span className="text-2xl">{child.avatar}</span>
+                  {child.name}'s Goals
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="grid gap-4">
+                  {childGoals.map((goal) => {
+                    const progressPercentage = Math.min(
+                      (goal.currentValue / goal.targetValue) * 100,
+                      100,
+                    );
+                    const isCompleted = goal.status === "completed";
+                    const isOverdue =
+                      new Date() > goal.deadline && !isCompleted;
 
-                  return (
-                    <div
-                      key={goal.id}
-                      className={`p-4 rounded-lg border ${
-                        isCompleted
-                          ? "bg-green-50 border-green-200"
-                          : isOverdue
-                            ? "bg-red-50 border-red-200"
-                            : "bg-slate-50 border-slate-200"
-                      }`}
-                    >
-                      <div className="flex items-center justify-between mb-3">
-                        <div>
-                          <h4 className="font-semibold">{goal.title}</h4>
-                          <p className="text-sm text-slate-600">
-                            {goal.description}
-                          </p>
+                    return (
+                      <div
+                        key={goal.id}
+                        className={`p-4 rounded-lg border ${
+                          isCompleted
+                            ? "bg-green-50 border-green-200"
+                            : isOverdue
+                              ? "bg-red-50 border-red-200"
+                              : "bg-slate-50 border-slate-200"
+                        }`}
+                      >
+                        <div className="flex items-center justify-between mb-3">
+                          <div>
+                            <h4 className="font-semibold">{goal.title}</h4>
+                            <p className="text-sm text-slate-600">
+                              {goal.description}
+                            </p>
+                          </div>
+                          <div className="text-right">
+                            <Badge
+                              className={
+                                isCompleted
+                                  ? "bg-green-500"
+                                  : isOverdue
+                                    ? "bg-red-500"
+                                    : "bg-educational-blue"
+                              }
+                            >
+                              {goal.status}
+                            </Badge>
+                            <p className="text-xs text-slate-500 mt-1">
+                              Due: {goal.deadline.toLocaleDateString()}
+                            </p>
+                          </div>
                         </div>
-                        <div className="text-right">
-                          <Badge
-                            className={
-                              isCompleted
-                                ? "bg-green-500"
-                                : isOverdue
-                                  ? "bg-red-500"
-                                  : "bg-educational-blue"
-                            }
-                          >
-                            {goal.status}
-                          </Badge>
-                          <p className="text-xs text-slate-500 mt-1">
-                            Due: {goal.deadline.toLocaleDateString()}
-                          </p>
+
+                        <div className="mb-3">
+                          <div className="flex justify-between text-sm mb-1">
+                            <span>Progress</span>
+                            <span>
+                              {goal.currentValue}/{goal.targetValue}
+                            </span>
+                          </div>
+                          <Progress
+                            value={progressPercentage}
+                            className="h-2"
+                          />
                         </div>
+
+                        {goal.reward && (
+                          <div className="flex items-center gap-2 text-sm text-slate-600">
+                            <Star className="w-4 h-4 text-yellow-500" />
+                            Reward: {goal.reward}
+                          </div>
+                        )}
                       </div>
-
-                      <div className="mb-3">
-                        <div className="flex justify-between text-sm mb-1">
-                          <span>Progress</span>
-                          <span>
-                            {goal.currentValue}/{goal.targetValue}
-                          </span>
-                        </div>
-                        <Progress value={progressPercentage} className="h-2" />
-                      </div>
-
-                      {goal.reward && (
-                        <div className="flex items-center gap-2 text-sm text-slate-600">
-                          <Star className="w-4 h-4 text-yellow-500" />
-                          Reward: {goal.reward}
-                        </div>
-                      )}
-                    </div>
-                  );
-                })}
-              </div>
-            </CardContent>
-          </Card>
-        );
+                    );
+                  })}
+                </div>
+              </CardContent>
+            </Card>
+          );
         })
       )}
     </div>
@@ -2386,7 +2394,9 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
                     weeklyProgress: 0,
                     favoriteCategory: "Animals",
                     lastActive: new Date(),
-                    preferredLearningTime: newChildData.preferredLearningTime || "After school (4-6 PM)",
+                    preferredLearningTime:
+                      newChildData.preferredLearningTime ||
+                      "After school (4-6 PM)",
                     difficultyPreference: newChildData.difficultyPreference,
                     parentNotes: "",
                     customWords: [],

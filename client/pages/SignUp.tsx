@@ -53,7 +53,13 @@ export default function SignUp() {
     setMessage(null);
 
     // Basic validation
-    if (!formData.childName || !formData.birthDate || !formData.email || !formData.password || !formData.confirmPassword) {
+    if (
+      !formData.childName ||
+      !formData.birthDate ||
+      !formData.email ||
+      !formData.password ||
+      !formData.confirmPassword
+    ) {
       setMessage({
         type: "error",
         text: "Please fill in all fields",
@@ -85,7 +91,11 @@ export default function SignUp() {
     const today = new Date();
     const age = today.getFullYear() - birthDate.getFullYear();
     const monthDiff = today.getMonth() - birthDate.getMonth();
-    const actualAge = monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate()) ? age - 1 : age;
+    const actualAge =
+      monthDiff < 0 ||
+      (monthDiff === 0 && today.getDate() < birthDate.getDate())
+        ? age - 1
+        : age;
 
     if (actualAge < 3 || actualAge > 18) {
       setMessage({
@@ -97,8 +107,12 @@ export default function SignUp() {
     }
 
     // Check if email already exists for parents
-    const existingUsers = JSON.parse(localStorage.getItem("wordAdventureUsers") || "[]");
-    const userExists = existingUsers.some((u: any) => u.email === formData.email);
+    const existingUsers = JSON.parse(
+      localStorage.getItem("wordAdventureUsers") || "[]",
+    );
+    const userExists = existingUsers.some(
+      (u: any) => u.email === formData.email,
+    );
 
     if (userExists) {
       setMessage({
@@ -113,23 +127,32 @@ export default function SignUp() {
     setTimeout(() => {
       // Create parent user account
       const newUser = {
-        username: formData.email.split('@')[0], // Use email prefix as username
+        username: formData.email.split("@")[0], // Use email prefix as username
         email: formData.email,
         password: formData.password,
         createdAt: new Date().toISOString(),
-        isParent: true
+        isParent: true,
       };
 
       existingUsers.push(newUser);
       localStorage.setItem("wordAdventureUsers", JSON.stringify(existingUsers));
 
       // Create child profile for parent dashboard
-      const existingChildren = JSON.parse(localStorage.getItem("parentDashboardChildren") || "[]");
+      const existingChildren = JSON.parse(
+        localStorage.getItem("parentDashboardChildren") || "[]",
+      );
       const newChild = {
         id: Date.now().toString(),
         name: formData.childName.trim(),
         age: actualAge,
-        avatar: actualAge <= 6 ? "👶" : actualAge <= 10 ? "🧒" : actualAge <= 14 ? "👦" : "👨‍🎓",
+        avatar:
+          actualAge <= 6
+            ? "👶"
+            : actualAge <= 10
+              ? "🧒"
+              : actualAge <= 14
+                ? "👦"
+                : "👨‍🎓",
         level: 1,
         totalPoints: 0,
         wordsLearned: 0,
@@ -139,7 +162,8 @@ export default function SignUp() {
         favoriteCategory: "Animals",
         lastActive: new Date(),
         preferredLearningTime: "After school (4-6 PM)",
-        difficultyPreference: actualAge <= 6 ? "easy" : actualAge <= 10 ? "medium" : "medium",
+        difficultyPreference:
+          actualAge <= 6 ? "easy" : actualAge <= 10 ? "medium" : "medium",
         parentNotes: "",
         customWords: [],
         weeklyTarget: actualAge <= 6 ? 10 : actualAge <= 10 ? 15 : 20,
@@ -149,11 +173,14 @@ export default function SignUp() {
         areasForImprovement: [],
         motivationalRewards: [],
         birthDate: formData.birthDate,
-        parentEmail: formData.email
+        parentEmail: formData.email,
       };
 
       existingChildren.push(newChild);
-      localStorage.setItem("parentDashboardChildren", JSON.stringify(existingChildren));
+      localStorage.setItem(
+        "parentDashboardChildren",
+        JSON.stringify(existingChildren),
+      );
 
       setMessage({
         type: "success",
@@ -363,7 +390,14 @@ export default function SignUp() {
               {/* Sign Up Button */}
               <Button
                 type="submit"
-                disabled={isLoading || !formData.childName || !formData.birthDate || !formData.email || !formData.password || !formData.confirmPassword}
+                disabled={
+                  isLoading ||
+                  !formData.childName ||
+                  !formData.birthDate ||
+                  !formData.email ||
+                  !formData.password ||
+                  !formData.confirmPassword
+                }
                 className="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white hover:from-blue-700 hover:to-purple-700"
               >
                 {isLoading ? (

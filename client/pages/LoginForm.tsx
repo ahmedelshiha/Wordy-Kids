@@ -63,15 +63,18 @@ export default function LoginForm() {
     // Simulate login process with localStorage check
     setTimeout(() => {
       // Check localStorage for registered users
-      const registeredUsers = JSON.parse(localStorage.getItem("wordAdventureUsers") || "[]");
-      const user = registeredUsers.find((u: any) => u.email === email && u.password === password);
+      const registeredUsers = JSON.parse(
+        localStorage.getItem("wordAdventureUsers") || "[]",
+      );
+      const user = registeredUsers.find(
+        (u: any) => u.email === email && u.password === password,
+      );
 
       // Also check demo credentials (keep username-based for demo accounts)
-      const isDemoUser = (
+      const isDemoUser =
         (email === "demo@example.com" && password === "demo123") ||
         (email === "alex@example.com" && password === "alex123") ||
-        (email === "sam@example.com" && password === "sam123")
-      );
+        (email === "sam@example.com" && password === "sam123");
 
       if (user || isDemoUser) {
         setMessage({
@@ -245,7 +248,6 @@ export default function LoginForm() {
               >
                 Forgot your password?
               </Button>
-
             </form>
           </CardContent>
         </Card>

@@ -218,33 +218,73 @@
 
 /* Kid-friendly animations */
 @keyframes kidFloat {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-20px); }
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
 }
 
 @keyframes kidFloatDelayed {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-15px); }
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-15px);
+  }
 }
 
 @keyframes rainbowBorder {
-  0% { border-color: #ff6b6b; }
-  16.66% { border-color: #feca57; }
-  33.33% { border-color: #48dbfb; }
-  50% { border-color: #ff9ff3; }
-  66.66% { border-color: #54a0ff; }
-  83.33% { border-color: #5f27cd; }
-  100% { border-color: #ff6b6b; }
+  0% {
+    border-color: #ff6b6b;
+  }
+  16.66% {
+    border-color: #feca57;
+  }
+  33.33% {
+    border-color: #48dbfb;
+  }
+  50% {
+    border-color: #ff9ff3;
+  }
+  66.66% {
+    border-color: #54a0ff;
+  }
+  83.33% {
+    border-color: #5f27cd;
+  }
+  100% {
+    border-color: #ff6b6b;
+  }
 }
 
 @keyframes wiggle {
-  0%, 7% { transform: rotateZ(0); }
-  15% { transform: rotateZ(-15deg); }
-  20% { transform: rotateZ(10deg); }
-  25% { transform: rotateZ(-10deg); }
-  30% { transform: rotateZ(6deg); }
-  35% { transform: rotateZ(-4deg); }
-  40%, 100% { transform: rotateZ(0); }
+  0%,
+  7% {
+    transform: rotateZ(0);
+  }
+  15% {
+    transform: rotateZ(-15deg);
+  }
+  20% {
+    transform: rotateZ(10deg);
+  }
+  25% {
+    transform: rotateZ(-10deg);
+  }
+  30% {
+    transform: rotateZ(6deg);
+  }
+  35% {
+    transform: rotateZ(-4deg);
+  }
+  40%,
+  100% {
+    transform: rotateZ(0);
+  }
 }
 
 .animate-float {
@@ -280,5 +320,5 @@
 }
 
 .text-shadow {
-  text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
 }
