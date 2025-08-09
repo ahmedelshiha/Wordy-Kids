@@ -145,6 +145,22 @@ export default function Index({ initialProfile }: IndexProps) {
   const [gameMode, setGameMode] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
+  // Load background animations setting on mount
+  useEffect(() => {
+    setBackgroundAnimationsEnabled(isBackgroundAnimationsEnabled());
+
+    // Listen for setting changes
+    const handleAnimationsChange = (event: CustomEvent) => {
+      setBackgroundAnimationsEnabled(event.detail);
+    };
+
+    window.addEventListener('backgroundAnimationsChanged', handleAnimationsChange as EventListener);
+
+    return () => {
+      window.removeEventListener('backgroundAnimationsChanged', handleAnimationsChange as EventListener);
+    };
+  }, []);
+
   const handleQuizComplete = (score: number, total: number) => {
     const percentage = Math.round((score / total) * 100);
     setFeedback({
