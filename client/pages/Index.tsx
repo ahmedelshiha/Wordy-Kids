@@ -206,7 +206,7 @@ export default function Index({ initialProfile }: IndexProps) {
     setTimeout(() => {
       setFeedback({
         type: "celebration",
-        title: "Vocabulary Session Complete! �����",
+        title: "Vocabulary Session Complete! ����",
         message: `Reviewed ${wordsReviewed} words with ${accuracy}% accuracy!`,
         points: wordsReviewed * accuracy,
         onContinue: () => setFeedback(null),
@@ -651,6 +651,17 @@ export default function Index({ initialProfile }: IndexProps) {
                                 Vocabulary Builder
                               </span>
                               <span className="sm:hidden">Builder</span>
+                            </Button>
+                            <Button
+                              onClick={() => setShowMatchingGame(true)}
+                              variant="outline"
+                              className="flex items-center gap-1 md:gap-2 text-sm md:text-base px-3 md:px-4"
+                            >
+                              <Shuffle className="w-4 h-4" />
+                              <span className="hidden sm:inline">
+                                Matching Game
+                              </span>
+                              <span className="sm:hidden">Match</span>
                             </Button>
                             <Button
                               onClick={() => setGameMode(true)}
