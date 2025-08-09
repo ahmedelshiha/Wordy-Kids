@@ -345,9 +345,12 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
   const [customWordInput, setCustomWordInput] = useState("");
 
   // Save children to localStorage whenever children state changes
-  React.useEffect(() => {
+  useEffect(() => {
     localStorage.setItem("parentDashboardChildren", JSON.stringify(children));
-  }, [children]);
+    if (children.length > 0 && !selectedChild) {
+      setSelectedChild(children[0]);
+    }
+  }, [children, selectedChild]);
   const [filterCategory, setFilterCategory] = useState("all");
   const [searchTerm, setSearchTerm] = useState("");
   const [reportData, setReportData] = useState<any>(null);
