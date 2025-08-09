@@ -59,14 +59,20 @@ export default function LoginForm() {
       return;
     }
 
-    // Simulate login process (replace with real authentication)
+    // Simulate login process with localStorage check
     setTimeout(() => {
-      // Demo credentials - replace with real authentication
-      if (
+      // Check localStorage for registered users
+      const registeredUsers = JSON.parse(localStorage.getItem("wordAdventureUsers") || "[]");
+      const user = registeredUsers.find((u: any) => u.username === username && u.password === password);
+
+      // Also check demo credentials
+      const isDemoUser = (
         (username === "demo" && password === "demo123") ||
         (username === "alex" && password === "alex123") ||
         (username === "sam" && password === "sam123")
-      ) {
+      );
+
+      if (user || isDemoUser) {
         setMessage({
           type: "success",
           text: "Login successful! Welcome back!",
