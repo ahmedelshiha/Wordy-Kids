@@ -358,6 +358,9 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({
                 setSoundOn(true);
                 setSoundEnabled(true);
                 setDarkMode(false);
+                setBackgroundAnimations(false);
+                localStorage.setItem('backgroundAnimations', 'false');
+                window.dispatchEvent(new CustomEvent('backgroundAnimationsChanged', { detail: false }));
                 setAnimationSpeed([1]);
                 setDailyGoal([10]);
                 setDifficulty("medium");
