@@ -535,7 +535,10 @@ export function ChildFriendlyCategorySelector({
 
         <Button
           size="lg"
-          onClick={() => handleCategoryClick(selectedCategory)}
+          onClick={() => {
+            audioService.playCheerSound();
+            onSelectCategory(selectedCategory);
+          }}
           disabled={!selectedCategory || selectedCategory === ""}
           className="bg-gradient-to-r from-educational-blue via-educational-purple to-educational-pink text-white hover:from-educational-blue/90 hover:via-educational-purple/90 hover:to-educational-pink/90 text-xl px-12 py-4 rounded-full font-bold transform hover:scale-110 transition-all duration-300 shadow-2xl relative overflow-hidden"
         >
