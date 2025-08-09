@@ -29,27 +29,71 @@ export class AudioService {
     this.voices = this.speechSynthesis.getVoices();
   }
 
-  private getChildFriendlyVoice(): SpeechSynthesisVoice | null {
-    // Prefer female voices as they tend to be more child-friendly
-    const preferredVoices = this.voices.filter(
-      (voice) =>
-        voice.lang.startsWith("en") &&
-        (voice.name.toLowerCase().includes("female") ||
+  private getVoiceByType(voiceType: VoiceType): SpeechSynthesisVoice | null {
+    const englishVoices = this.voices.filter((voice) =>
+      voice.lang.startsWith("en")
+    );
+
+    let filteredVoices: SpeechSynthesisVoice[] = [];
+
+    switch (voiceType) {
+      case 'woman':
+        filteredVoices = englishVoices.filter((voice) =>
+          voice.name.toLowerCase().includes("female") ||
           voice.name.toLowerCase().includes("woman") ||
           voice.name.toLowerCase().includes("karen") ||
-          voice.name.toLowerCase().includes("alex") ||
-          voice.name.toLowerCase().includes("samantha")),
-    );
+          voice.name.toLowerCase().includes("samantha") ||
+          voice.name.toLowerCase().includes("susan") ||
+          voice.name.toLowerCase().includes("allison") ||
+          voice.name.toLowerCase().includes("zira") ||
+          (voice.name.toLowerCase().includes("google") && voice.name.toLowerCase().includes("female"))
+        );
+        break;
 
-    if (preferredVoices.length > 0) {
-      return preferredVoices[0];
+      case 'man':
+        filteredVoices = englishVoices.filter((voice) =>
+          voice.name.toLowerCase().includes("male") ||
+          voice.name.toLowerCase().includes("man") ||
+          voice.name.toLowerCase().includes("david") ||
+          voice.name.toLowerCase().includes("mark") ||
+          voice.name.toLowerCase().includes("alex") ||
+          voice.name.toLowerCase().includes("daniel") ||
+          (voice.name.toLowerCase().includes("google") && voice.name.toLowerCase().includes("male"))
+        );
+        break;
+
+      case 'kid':
+        // Look for higher-pitched or child-specific voices
+        filteredVoices = englishVoices.filter((voice) =>
+          voice.name.toLowerCase().includes("child") ||
+          voice.name.toLowerCase().includes("kid") ||
+          voice.name.toLowerCase().includes("junior") ||
+          voice.name.toLowerCase().includes("young") ||
+          // Some voices that tend to sound younger
+          voice.name.toLowerCase().includes("kate") ||
+          voice.name.toLowerCase().includes("vicki")
+        );
+
+        // If no kid-specific voices, fall back to female voices (often sound more child-friendly)
+        if (filteredVoices.length === 0) {
+          filteredVoices = englishVoices.filter((voice) =>
+            voice.name.toLowerCase().includes("female") ||
+            voice.name.toLowerCase().includes("woman")
+          );
+        }
+        break;
     }
 
-    // Fallback to any English voice
-    const englishVoices = this.voices.filter((voice) =>
-      voice.lang.startsWith("en"),
-    );
+    // Return the first matching voice, or fall back to any English voice
+    if (filteredVoices.length > 0) {
+      return filteredVoices[0];
+    }
+
     return englishVoices.length > 0 ? englishVoices[0] : null;
+  }
+
+  private getChildFriendlyVoice(): SpeechSynthesisVoice | null {
+    return this.getVoiceByType(this.selectedVoiceType);
   }
 
   public pronounceWord(
