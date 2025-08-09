@@ -153,7 +153,7 @@ export default function SignUp() {
         <Card className="bg-white/95 backdrop-blur-sm shadow-xl border border-gray-200 rounded-lg">
           <CardHeader>
             <CardTitle className="text-center text-xl text-gray-800">
-              Create Account
+              Create Child Profile
             </CardTitle>
           </CardHeader>
           <CardContent>
