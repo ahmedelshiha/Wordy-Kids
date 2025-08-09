@@ -110,6 +110,70 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({
                 onCheckedChange={handleSoundToggle}
               />
             </div>
+
+            {/* Voice Type Selection */}
+            <div className="space-y-3">
+              <div className="flex items-center gap-2">
+                <Mic className="w-4 h-4" />
+                <p className="font-medium">Pronunciation Voice</p>
+              </div>
+              <p className="text-sm text-slate-600 mb-3">Choose who you'd like to hear speaking the words</p>
+
+              <div className="grid grid-cols-1 gap-3">
+                {[
+                  { type: 'woman' as VoiceType, label: 'Woman Voice', emoji: '👩', description: 'Friendly female voice' },
+                  { type: 'man' as VoiceType, label: 'Man Voice', emoji: '👨', description: 'Strong male voice' },
+                  { type: 'kid' as VoiceType, label: 'Kid Voice', emoji: '🧒', description: 'Fun child-like voice' }
+                ].map((voice) => {
+                  const isAvailable = availableVoices.find(v => v.type === voice.type)?.available ?? true;
+                  const isSelected = selectedVoiceType === voice.type;
+
+                  return (
+                    <div
+                      key={voice.type}
+                      className={`flex items-center justify-between p-3 rounded-lg border-2 transition-all ${
+                        isSelected
+                          ? 'border-educational-blue bg-educational-blue/10'
+                          : 'border-slate-200 hover:border-slate-300'
+                      } ${!isAvailable ? 'opacity-50' : 'cursor-pointer'}`}
+                      onClick={() => isAvailable && handleVoiceTypeChange(voice.type)}
+                    >
+                      <div className="flex items-center gap-3">
+                        <span className="text-2xl">{voice.emoji}</span>
+                        <div>
+                          <p className={`font-medium ${isSelected ? 'text-educational-blue' : ''}`}>
+                            {voice.label}
+                          </p>
+                          <p className="text-sm text-slate-600">{voice.description}</p>
+                          {!isAvailable && (
+                            <p className="text-xs text-red-500">Not available on this device</p>
+                          )}
+                        </div>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        {isSelected && (
+                          <Badge className="bg-educational-blue text-white">Selected</Badge>
+                        )}
+                        {isAvailable && (
+                          <Button
+                            size="sm"
+                            variant="outline"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              handleVoicePreview(voice.type);
+                            }}
+                            className="flex items-center gap-1"
+                          >
+                            <Play className="w-3 h-3" />
+                            Preview
+                          </Button>
+                        )}
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
           </div>
 
           {/* Appearance Settings */}
