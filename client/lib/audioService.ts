@@ -12,6 +12,12 @@ export class AudioService {
     this.speechSynthesis = window.speechSynthesis;
     this.loadVoices();
 
+    // Load saved voice preference
+    const savedVoiceType = localStorage.getItem('preferred-voice-type') as VoiceType;
+    if (savedVoiceType && ['man', 'woman', 'kid'].includes(savedVoiceType)) {
+      this.selectedVoiceType = savedVoiceType;
+    }
+
     // Listen for voices changed event
     this.speechSynthesis.onvoiceschanged = () => {
       this.loadVoices();
