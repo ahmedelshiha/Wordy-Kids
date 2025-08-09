@@ -219,6 +219,10 @@ export default function Index({ initialProfile }: IndexProps) {
     setCurrentWordIndex(0);
   };
 
+  const handleSignOut = () => {
+    navigate('/');
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 relative">
       {/* Hero Header */}
