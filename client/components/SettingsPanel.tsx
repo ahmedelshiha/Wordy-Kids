@@ -131,11 +131,11 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({
                   return (
                     <div
                       key={voice.type}
-                      className={`flex items-center justify-between p-3 rounded-lg border-2 transition-all ${
+                      className={`flex items-center justify-between p-3 md:p-4 rounded-lg border-2 transition-all ${
                         isSelected
                           ? 'border-educational-blue bg-educational-blue/10'
                           : 'border-slate-200 hover:border-slate-300'
-                      } ${!isAvailable ? 'opacity-50' : 'cursor-pointer'}`}
+                      } ${!isAvailable ? 'opacity-50' : 'cursor-pointer'} min-h-[60px]`}
                       onClick={() => isAvailable && handleVoiceTypeChange(voice.type)}
                     >
                       <div className="flex items-center gap-3">
