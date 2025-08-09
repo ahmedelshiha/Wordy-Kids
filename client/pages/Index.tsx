@@ -290,28 +290,32 @@ export default function Index({ initialProfile }: IndexProps) {
           </div>
         </div>
 
-        {/* Enhanced Floating Elements - hidden on mobile to reduce clutter */}
-        <div className="hidden md:block absolute top-10 left-10 text-3xl animate-bounce">
-          🌟
-        </div>
-        <div className="hidden md:block absolute top-20 right-20 text-2xl animate-pulse">
-          📚
-        </div>
-        <div className="hidden md:block absolute bottom-10 left-20 text-4xl animate-bounce delay-1000">
-          🎯
-        </div>
-        <div className="hidden md:block absolute bottom-20 right-10 text-3xl animate-pulse delay-500">
-          🚀
-        </div>
-        <div
-          className="hidden md:block absolute top-1/2 left-5 text-2xl animate-spin"
-          style={{ animationDuration: "3s" }}
-        >
-          ✨
-        </div>
-        <div className="hidden md:block absolute top-1/3 right-5 text-2xl animate-bounce delay-700">
-          🎪
-        </div>
+        {/* Enhanced Floating Elements - hidden on mobile to reduce clutter, conditional on setting */}
+        {backgroundAnimationsEnabled && (
+          <>
+            <div className="hidden md:block absolute top-10 left-10 text-3xl animate-bounce">
+              🌟
+            </div>
+            <div className="hidden md:block absolute top-20 right-20 text-2xl animate-pulse">
+              📚
+            </div>
+            <div className="hidden md:block absolute bottom-10 left-20 text-4xl animate-bounce delay-1000">
+              🎯
+            </div>
+            <div className="hidden md:block absolute bottom-20 right-10 text-3xl animate-pulse delay-500">
+              🚀
+            </div>
+            <div
+              className="hidden md:block absolute top-1/2 left-5 text-2xl animate-spin"
+              style={{ animationDuration: "3s" }}
+            >
+              ✨
+            </div>
+            <div className="hidden md:block absolute top-1/3 right-5 text-2xl animate-bounce delay-700">
+              🎪
+            </div>
+          </>
+        )}
       </header>
 
       {/* Mobile Menu Overlay */}
