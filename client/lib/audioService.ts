@@ -115,9 +115,12 @@ export class AudioService {
   ): void {
     if (!this.isEnabled) return;
 
+    // Get voice-type specific defaults
+    const voiceDefaults = this.getVoiceDefaults(this.selectedVoiceType);
+
     const {
-      rate = 0.8, // Slightly slower for children
-      pitch = 1.2, // Slightly higher pitch for friendliness
+      rate = voiceDefaults.rate,
+      pitch = voiceDefaults.pitch,
       volume = 1.0,
       onStart,
       onEnd,
