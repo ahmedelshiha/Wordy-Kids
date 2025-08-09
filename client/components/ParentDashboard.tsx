@@ -708,7 +708,16 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
       </div>
 
       {/* Goals by Child */}
-      {children.map((child) => {
+      {children.length === 0 ? (
+        <Card className="text-center py-8">
+          <CardContent>
+            <div className="text-4xl mb-4">🎯</div>
+            <h3 className="text-lg font-semibold mb-2">No Goals Yet</h3>
+            <p className="text-gray-600">Add children first to create learning goals</p>
+          </CardContent>
+        </Card>
+      ) : (
+        children.map((child) => {
         const childGoals = getChildGoals(child.id);
         if (childGoals.length === 0) return null;
 
@@ -789,7 +798,8 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
             </CardContent>
           </Card>
         );
-      })}
+        })
+      )}
     </div>
   );
 
