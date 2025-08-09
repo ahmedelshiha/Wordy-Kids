@@ -93,7 +93,7 @@ export default function LoginForm() {
   const handleForgotPassword = () => {
     setMessage({
       type: "success",
-      text: "No worries! Ask a grown-up to help you reset your secret password! 📧🦸‍♀️",
+      text: "Password reset instructions sent! Check your email.",
     });
   };
 
