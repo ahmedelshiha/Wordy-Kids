@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -99,7 +99,7 @@ const learningStats = {
     {
       id: "quiz-master",
       name: "Quiz Master",
-      icon: "🧠",
+      icon: "����",
       earned: false,
       description: "Score 100% on 5 quizzes",
     },
