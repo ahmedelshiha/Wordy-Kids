@@ -279,7 +279,7 @@ export default function Index({ initialProfile }: IndexProps) {
                 <div className="text-center">
                   {/* Avatar with Status Ring */}
                   <div className="relative mb-4">
-                    <div className="absolute inset-0 bg-gradient-to-r from-educational-green to-educational-blue rounded-full p-1 animate-pulse">
+                    <div className="absolute inset-0 bg-gradient-to-r from-educational-green to-educational-blue rounded-full p-1">
                       <div className="bg-white rounded-full p-1">
                         <div
                           className={`w-16 h-16 rounded-full bg-gradient-to-r ${currentProfile?.theme?.gradient || "from-educational-blue to-educational-purple"} flex items-center justify-center text-3xl shadow-lg`}
@@ -289,7 +289,7 @@ export default function Index({ initialProfile }: IndexProps) {
                       </div>
                     </div>
                     {/* Online Status Indicator */}
-                    <div className="absolute bottom-1 right-1 w-4 h-4 bg-green-500 rounded-full border-2 border-white shadow-sm animate-pulse"></div>
+                    <div className="absolute bottom-1 right-1 w-4 h-4 bg-green-500 rounded-full border-2 border-white shadow-sm"></div>
                   </div>
 
                   {/* User Name and Title */}
@@ -329,7 +329,7 @@ export default function Index({ initialProfile }: IndexProps) {
                           width: `${Math.min(((currentProfile?.wordsLearned || 45) / 100) * 100, 100)}%`,
                         }}
                       >
-                        <div className="absolute inset-0 bg-white/30 animate-pulse"></div>
+                        <div className="absolute inset-0 bg-white/30"></div>
                       </div>
                     </div>
                   </div>
@@ -366,7 +366,7 @@ export default function Index({ initialProfile }: IndexProps) {
 
                   {/* Quick Status */}
                   <div className="flex items-center justify-center gap-2 text-xs text-gray-500">
-                    <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+                    <div className="w-2 h-2 bg-green-500 rounded-full"></div>
                     <span>Active {currentProfile?.lastActive || "Today"}</span>
                   </div>
                 </div>
