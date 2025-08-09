@@ -109,24 +109,58 @@ export default function SignUp() {
       return;
     }
 
-    // Save user to localStorage
+    // Create parent account and child profile
     setTimeout(() => {
+      // Create parent user account
       const newUser = {
-        username: formData.username,
+        username: formData.email.split('@')[0], // Use email prefix as username
         email: formData.email,
         password: formData.password,
-        createdAt: new Date().toISOString()
+        createdAt: new Date().toISOString(),
+        isParent: true
       };
 
       existingUsers.push(newUser);
       localStorage.setItem("wordAdventureUsers", JSON.stringify(existingUsers));
 
+      // Create child profile for parent dashboard
+      const existingChildren = JSON.parse(localStorage.getItem("parentDashboardChildren") || "[]");
+      const newChild = {
+        id: Date.now().toString(),
+        name: formData.childName.trim(),
+        age: actualAge,
+        avatar: actualAge <= 6 ? "👶" : actualAge <= 10 ? "🧒" : actualAge <= 14 ? "👦" : "👨‍🎓",
+        level: 1,
+        totalPoints: 0,
+        wordsLearned: 0,
+        currentStreak: 0,
+        weeklyGoal: actualAge <= 6 ? 5 : actualAge <= 10 ? 10 : 15,
+        weeklyProgress: 0,
+        favoriteCategory: "Animals",
+        lastActive: new Date(),
+        preferredLearningTime: "After school (4-6 PM)",
+        difficultyPreference: actualAge <= 6 ? "easy" : actualAge <= 10 ? "medium" : "medium",
+        parentNotes: "",
+        customWords: [],
+        weeklyTarget: actualAge <= 6 ? 10 : actualAge <= 10 ? 15 : 20,
+        monthlyTarget: actualAge <= 6 ? 40 : actualAge <= 10 ? 60 : 80,
+        recentAchievements: [],
+        learningStrengths: [],
+        areasForImprovement: [],
+        motivationalRewards: [],
+        birthDate: formData.birthDate,
+        parentEmail: formData.email
+      };
+
+      existingChildren.push(newChild);
+      localStorage.setItem("parentDashboardChildren", JSON.stringify(existingChildren));
+
       setMessage({
         type: "success",
-        text: "Account created successfully! Welcome to Word Adventure!",
+        text: `Child profile created successfully! ${formData.childName} is ready to start learning!`,
       });
 
-      // Navigate to login page after successful sign up
+      // Navigate to login page after successful creation
       setTimeout(() => {
         navigate("/");
       }, 1500);
