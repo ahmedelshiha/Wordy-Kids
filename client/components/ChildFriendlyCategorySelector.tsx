@@ -551,15 +551,15 @@ export function ChildFriendlyCategorySelector({
                   )}
 
                   <div
-                    className={`text-6xl mb-3 transition-transform duration-300 ${
+                    className={`text-4xl md:text-6xl mb-3 transition-transform duration-300 ${
                       hoveredCategory === category.id
-                        ? "animate-bounce scale-110"
+                        ? "animate-bounce md:scale-110"
                         : ""
                     }`}
                   >
                     {category.icon}
                   </div>
-                  <h3 className="text-xl font-bold mb-1">{category.name}</h3>
+                  <h3 className="text-lg md:text-xl font-bold mb-1">{category.name}</h3>
                   <Badge className="bg-white/20 border-white/30 text-white">
                     <Zap className="w-3 h-3 mr-1" />
                     {category.wordCount} words
