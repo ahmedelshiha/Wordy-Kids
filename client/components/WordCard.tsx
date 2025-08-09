@@ -167,15 +167,15 @@ export const WordCard: React.FC<WordCardProps> = ({
             <img
               src={word.imageUrl}
               alt={word.word}
-              className="w-24 h-24 object-cover rounded-full mb-4 shadow-lg"
+              className="w-20 md:w-24 h-20 md:h-24 object-cover rounded-full mb-3 md:mb-4 shadow-lg"
             />
           ) : (
-            <div className="w-24 h-24 rounded-full bg-white/20 flex items-center justify-center mb-4 text-6xl">
+            <div className="w-20 md:w-24 h-20 md:h-24 rounded-full bg-white/20 flex items-center justify-center mb-3 md:mb-4 text-4xl md:text-6xl">
               {word.emoji || "📚"}
             </div>
           )}
 
-          <h2 className="text-4xl font-bold mb-3 text-center">{word.word}</h2>
+          <h2 className="text-2xl md:text-4xl font-bold mb-2 md:mb-3 text-center">{word.word}</h2>
 
           {word.pronunciation && (
             <div className="flex items-center gap-2 mb-4">
