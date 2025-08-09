@@ -156,24 +156,22 @@ export default function LoginForm() {
           <CardContent>
             <form onSubmit={handleLogin} className="space-y-6">
               {/* Username Field */}
-              <div className="bg-gradient-to-r from-blue-50 to-purple-50 p-4 rounded-2xl border-3 border-dashed border-blue-300">
+              <div>
                 <Label
                   htmlFor="username"
-                  className="text-xl font-bold text-purple-700 flex items-center gap-3 mb-3"
+                  className="text-sm font-medium text-gray-700 flex items-center gap-2"
                 >
-                  <div className="bg-yellow-300 p-2 rounded-full">
-                    <User className="w-5 h-5 text-purple-700" />
-                  </div>
-                  🎭 What's your explorer name?
+                  <User className="w-4 h-4" />
+                  Username
                 </Label>
                 <Input
                   id="username"
                   name="username"
                   type="text"
-                  placeholder="🌟 Enter your awesome username! 🌟"
+                  placeholder="Enter your username"
                   value={formData.username}
                   onChange={handleInputChange}
-                  className="mt-2 text-center text-xl py-4 border-4 border-purple-300 focus:border-pink-400 rounded-2xl bg-white font-bold text-purple-700 placeholder-purple-400 transform hover:scale-105 transition-all"
+                  className="mt-2 text-center border-gray-300 focus:border-blue-500"
                   disabled={isLoading}
                 />
               </div>
