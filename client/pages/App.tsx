@@ -16,8 +16,6 @@ export default function App() {
   const [showLevelSelection, setShowLevelSelection] = useState(false);
 
   useEffect(() => {
-    const authenticated = searchParams.get("authenticated");
-
     // Always create a default profile and auto-login to the dashboard
     const defaultProfile = {
       id: "default-user",
@@ -42,13 +40,10 @@ export default function App() {
       setIsLoggedIn(true);
     }
 
-    if (authenticated === "true") {
-      // Clean up the URL by removing the authenticated parameter
-      navigate("/app", { replace: true });
-    } else if (mode === "create") {
+    if (mode === "create") {
       setShowProfileCreation(true);
     }
-  }, [mode, searchParams, navigate, currentProfile]);
+  }, [mode, currentProfile]);
 
   const handleLogin = (profile: any) => {
     setCurrentProfile(profile);
