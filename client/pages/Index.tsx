@@ -51,6 +51,8 @@ import {
   Clock,
   Shield,
   Crown,
+  Menu,
+  X,
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
