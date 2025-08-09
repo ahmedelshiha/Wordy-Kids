@@ -2339,17 +2339,47 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
             </Button>
             <Button
               onClick={() => {
-                // In a real app, this would create the child profile
-                setShowAddChildDialog(false);
-                setNewChildData({
-                  name: "",
-                  age: 6,
-                  avatar: "👶",
-                  preferredLearningTime: "",
-                  difficultyPreference: "easy",
-                });
+                if (newChildData.name.trim()) {
+                  const newChild: ChildProfile = {
+                    id: Date.now().toString(),
+                    name: newChildData.name.trim(),
+                    age: newChildData.age,
+                    avatar: newChildData.avatar,
+                    level: 1,
+                    totalPoints: 0,
+                    wordsLearned: 0,
+                    currentStreak: 0,
+                    weeklyGoal: 10,
+                    weeklyProgress: 0,
+                    favoriteCategory: "Animals",
+                    lastActive: new Date(),
+                    preferredLearningTime: newChildData.preferredLearningTime || "After school (4-6 PM)",
+                    difficultyPreference: newChildData.difficultyPreference,
+                    parentNotes: "",
+                    customWords: [],
+                    weeklyTarget: 15,
+                    monthlyTarget: 60,
+                    recentAchievements: [],
+                    learningStrengths: [],
+                    areasForImprovement: [],
+                    motivationalRewards: [],
+                  };
+
+                  const updatedChildren = [...children, newChild];
+                  setChildren(updatedChildren);
+                  setSelectedChild(newChild);
+                  setShowAddChildDialog(false);
+                  setNewChildData({
+                    name: "",
+                    age: 6,
+                    avatar: "👶",
+                    preferredLearningTime: "",
+                    difficultyPreference: "easy",
+                  });
+                }
               }}
               className="bg-educational-blue"
+              disabled={!newChildData.name.trim()}
             >
               Create Profile
             </Button>
