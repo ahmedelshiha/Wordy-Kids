@@ -248,6 +248,17 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({
               </div>
             </div>
 
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="font-medium">Background Animations</p>
+                <p className="text-sm text-slate-600">Show floating elements and bubbles</p>
+              </div>
+              <Switch
+                checked={backgroundAnimations}
+                onCheckedChange={handleBackgroundAnimationsToggle}
+              />
+            </div>
+
             <div className="space-y-2">
               <div className="flex items-center justify-between">
                 <p className="font-medium">Animation Speed</p>
