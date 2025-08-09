@@ -158,21 +158,21 @@ export default function SignUp() {
           </CardHeader>
           <CardContent>
             <form onSubmit={handleSignUp} className="space-y-4">
-              {/* Username Field */}
+              {/* Child Name Field */}
               <div>
                 <Label
-                  htmlFor="username"
+                  htmlFor="childName"
                   className="text-sm font-medium text-gray-700 flex items-center gap-2"
                 >
-                  <User className="w-4 h-4" />
-                  Username
+                  <Baby className="w-4 h-4" />
+                  Child's Name
                 </Label>
                 <Input
-                  id="username"
-                  name="username"
+                  id="childName"
+                  name="childName"
                   type="text"
-                  placeholder="Choose a username"
-                  value={formData.username}
+                  placeholder="Enter your child's name"
+                  value={formData.childName}
                   onChange={handleInputChange}
                   className="mt-2 border-gray-300 focus:border-blue-500"
                   disabled={isLoading}
