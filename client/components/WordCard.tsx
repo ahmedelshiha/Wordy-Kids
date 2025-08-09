@@ -251,10 +251,10 @@ export const WordCard: React.FC<WordCardProps> = ({
 
             {word.example && (
               <div>
-                <h4 className="text-sm font-medium mb-2 text-green-300">
+                <h4 className="text-xs md:text-sm font-medium mb-2 text-green-300">
                   Example:
                 </h4>
-                <p className="italic opacity-90">"{word.example}"</p>
+                <p className="text-sm md:text-base italic opacity-90">"{word.example}"</p>
               </div>
             )}
 
