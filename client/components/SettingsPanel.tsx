@@ -119,7 +119,7 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({
               </div>
               <p className="text-sm text-slate-600 mb-3">Choose who you'd like to hear speaking the words</p>
 
-              <div className="grid grid-cols-1 gap-3">
+              <div className="grid grid-cols-1 gap-2 md:gap-3">
                 {[
                   { type: 'woman' as VoiceType, label: 'Woman Voice', emoji: '👩', description: 'Friendly female voice' },
                   { type: 'man' as VoiceType, label: 'Man Voice', emoji: '👨', description: 'Strong male voice' },
