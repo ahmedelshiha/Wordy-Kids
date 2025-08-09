@@ -29,6 +29,27 @@ export default function LoginForm() {
     type: "success" | "error";
     text: string;
   } | null>(null);
+  const [currentMascot, setCurrentMascot] = useState("🐙");
+  const [welcomeMessage, setWelcomeMessage] = useState("Hey there, word explorer!");
+
+  // Mascot rotation for fun
+  const mascots = ["🐙", "🦄", "🐸", "🦁", "🐨", "🐧", "🦊", "🐼"];
+  const welcomeMessages = [
+    "Hey there, word explorer!",
+    "Ready for an amazing adventure?",
+    "Let's discover new words together!",
+    "Welcome to the most fun learning place!",
+    "Time to become a word wizard!"
+  ];
+
+  // Rotate mascot every 3 seconds
+  React.useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentMascot(mascots[Math.floor(Math.random() * mascots.length)]);
+      setWelcomeMessage(welcomeMessages[Math.floor(Math.random() * welcomeMessages.length)]);
+    }, 3000);
+    return () => clearInterval(interval);
+  }, []);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({
