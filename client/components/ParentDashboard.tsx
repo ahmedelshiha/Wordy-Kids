@@ -320,10 +320,11 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
       return parsed.map((child: any) => ({
         ...child,
         lastActive: new Date(child.lastActive),
-        recentAchievements: child.recentAchievements?.map((achievement: any) => ({
-          ...achievement,
-          earnedAt: new Date(achievement.earnedAt),
-        })) || [],
+        recentAchievements:
+          child.recentAchievements?.map((achievement: any) => ({
+            ...achievement,
+            earnedAt: new Date(achievement.earnedAt),
+          })) || [],
       }));
     }
     return [];
