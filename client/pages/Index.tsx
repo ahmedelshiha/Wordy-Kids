@@ -273,41 +273,101 @@ export default function Index({ initialProfile }: IndexProps) {
           <div className="flex w-full">
             {/* Left Sidebar */}
             <aside className="w-72 bg-gradient-to-b from-purple-100 to-pink-100 border-r border-purple-200 p-6 flex flex-col">
-              {/* User Profile Section */}
-              <div className="bg-white rounded-3xl p-6 mb-6 shadow-lg">
+              {/* Enhanced User Profile Section */}
+              <div className="bg-gradient-to-br from-white to-purple-50 rounded-3xl p-6 mb-6 shadow-xl border border-purple-100">
                 <div className="text-center">
-                  <div
-                    className={`w-16 h-16 rounded-full bg-gradient-to-r ${currentProfile?.theme?.gradient || "from-purple-400 to-pink-400"} flex items-center justify-center mx-auto mb-4 text-3xl`}
-                  >
-                    {currentProfile?.avatar?.emoji || "🎯"}
+                  {/* Avatar with Status Ring */}
+                  <div className="relative mb-4">
+                    <div className="absolute inset-0 bg-gradient-to-r from-educational-green to-educational-blue rounded-full p-1 animate-pulse">
+                      <div className="bg-white rounded-full p-1">
+                        <div
+                          className={`w-16 h-16 rounded-full bg-gradient-to-r ${currentProfile?.theme?.gradient || "from-educational-blue to-educational-purple"} flex items-center justify-center text-3xl shadow-lg`}
+                        >
+                          {currentProfile?.avatar?.emoji || "🌟"}
+                        </div>
+                      </div>
+                    </div>
+                    {/* Online Status Indicator */}
+                    <div className="absolute bottom-1 right-1 w-4 h-4 bg-green-500 rounded-full border-2 border-white shadow-sm animate-pulse"></div>
                   </div>
-                  <h3 className="font-bold text-lg text-gray-800">
-                    {currentProfile?.name || "demo"}
+
+                  {/* User Name and Title */}
+                  <h3 className="font-bold text-xl text-gray-800 mb-1">
+                    {currentProfile?.name || "Word Explorer"}
                   </h3>
-                  <div className="flex items-center justify-center gap-1 mb-2">
-                    <Star className="w-4 h-4 text-yellow-500 fill-current" />
-                    <span className="text-sm text-gray-600">
-                      Level {currentProfile?.level || 5}
+                  <div className="flex items-center justify-center gap-1 mb-3">
+                    <Crown className="w-4 h-4 text-educational-orange fill-current" />
+                    <span className="text-sm font-semibold text-educational-purple">
+                      {currentProfile?.levelName || "Story Builder"}
                     </span>
                   </div>
-                  <div className="bg-gray-100 rounded-full h-2 mb-2">
-                    <div
-                      className={`bg-gradient-to-r ${currentProfile?.theme?.gradient || "from-purple-400 to-pink-400"} h-2 rounded-full`}
-                      style={{
-                        width: `${Math.min(((currentProfile?.wordsLearned || 0) / 100) * 100, 100)}%`,
-                      }}
-                    ></div>
+
+                  {/* Level and XP */}
+                  <div className="flex items-center justify-center gap-2 mb-3">
+                    <Star className="w-4 h-4 text-yellow-500 fill-current" />
+                    <span className="text-lg font-bold text-gray-700">
+                      Level {currentProfile?.level || 3}
+                    </span>
+                    <div className="ml-2 bg-educational-orange text-white px-2 py-1 rounded-full text-xs font-bold">
+                      {currentProfile?.points || 1850} XP
+                    </div>
                   </div>
-                  <p className="text-xs text-gray-500">
-                    Progress:{" "}
-                    {Math.round(
-                      ((currentProfile?.wordsLearned || 0) / 100) * 100,
-                    )}
-                    %
-                  </p>
-                  <p className="text-xs text-gray-500">
-                    {currentProfile?.wordsLearned || 0} words learned
-                  </p>
+
+                  {/* Progress Bar with Better Calculation */}
+                  <div className="mb-3">
+                    <div className="flex justify-between items-center mb-1">
+                      <span className="text-xs font-medium text-gray-600">Progress to Level {(currentProfile?.level || 3) + 1}</span>
+                      <span className="text-xs font-bold text-educational-purple">
+                        {Math.min(Math.round(((currentProfile?.wordsLearned || 45) / 100) * 100), 100)}%
+                      </span>
+                    </div>
+                    <div className="bg-gray-200 rounded-full h-3 overflow-hidden">
+                      <div
+                        className={`bg-gradient-to-r ${currentProfile?.theme?.gradient || "from-educational-blue to-educational-purple"} h-3 rounded-full transition-all duration-500 relative`}
+                        style={{
+                          width: `${Math.min(((currentProfile?.wordsLearned || 45) / 100) * 100, 100)}%`,
+                        }}
+                      >
+                        <div className="absolute inset-0 bg-white/30 animate-pulse"></div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Stats Grid */}
+                  <div className="grid grid-cols-2 gap-3 mb-4">
+                    <div className="bg-educational-blue/10 rounded-xl p-3">
+                      <div className="text-lg font-bold text-educational-blue">
+                        {currentProfile?.wordsLearned || 45}
+                      </div>
+                      <div className="text-xs text-gray-600">Words Mastered</div>
+                    </div>
+                    <div className="bg-educational-orange/10 rounded-xl p-3">
+                      <div className="text-lg font-bold text-educational-orange flex items-center justify-center gap-1">
+                        <span>{currentProfile?.streak || 12}</span>
+                        <span className="text-sm">🔥</span>
+                      </div>
+                      <div className="text-xs text-gray-600">Day Streak</div>
+                    </div>
+                  </div>
+
+                  {/* Achievements Badge */}
+                  <div className="bg-gradient-to-r from-educational-purple/10 to-educational-pink/10 rounded-xl p-3 mb-3">
+                    <div className="flex items-center justify-center gap-2 mb-1">
+                      <Trophy className="w-4 h-4 text-educational-purple" />
+                      <span className="text-sm font-semibold text-educational-purple">
+                        {currentProfile?.accuracy || 87}% Accuracy
+                      </span>
+                    </div>
+                    <div className="text-xs text-gray-600">
+                      {currentProfile?.totalQuizzes || 8} quizzes completed
+                    </div>
+                  </div>
+
+                  {/* Quick Status */}
+                  <div className="flex items-center justify-center gap-2 text-xs text-gray-500">
+                    <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+                    <span>Active {currentProfile?.lastActive || "Today"}</span>
+                  </div>
                 </div>
               </div>
 
