@@ -280,7 +280,7 @@ export default function Index({ initialProfile }: IndexProps) {
                   {/* Avatar with Status Ring */}
                   <div className="relative mb-4">
                     <div className="absolute inset-0 bg-gradient-to-r from-educational-green to-educational-blue rounded-full p-1">
-                      <div className="bg-white rounded-full p-1">
+                      <div className="rounded-full p-1">
                         <div
                           className={`w-16 h-16 rounded-full bg-gradient-to-r ${currentProfile?.theme?.gradient || "from-educational-blue to-educational-purple"} flex items-center justify-center text-3xl shadow-lg`}
                         >
