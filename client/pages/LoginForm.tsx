@@ -120,35 +120,63 @@ export default function LoginForm() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-educational-blue-light via-educational-purple-light to-educational-pink-light flex items-center justify-center p-4 relative overflow-hidden">
-      {/* Background Pattern */}
-      <div className="absolute inset-0 opacity-10">
-        <div className="absolute top-16 left-16 text-5xl animate-bounce delay-0">
-          ⭐
+    <div className="min-h-screen bg-gradient-to-br from-yellow-200 via-pink-200 to-purple-300 flex items-center justify-center p-4 relative overflow-hidden">
+      {/* Enhanced Background Pattern */}
+      <div className="absolute inset-0 opacity-20">
+        <div className="absolute top-16 left-16 text-6xl animate-bounce delay-0 hover:scale-125 transition-transform cursor-pointer">
+          🌟
         </div>
-        <div className="absolute top-24 right-20 text-4xl animate-pulse delay-300">
+        <div className="absolute top-24 right-20 text-5xl animate-pulse delay-300 hover:scale-125 transition-transform cursor-pointer">
           📚
         </div>
-        <div className="absolute bottom-24 left-20 text-5xl animate-bounce delay-600">
+        <div className="absolute bottom-24 left-20 text-6xl animate-bounce delay-600 hover:scale-125 transition-transform cursor-pointer">
           🎯
         </div>
-        <div className="absolute bottom-16 right-16 text-4xl animate-pulse delay-900">
+        <div className="absolute bottom-16 right-16 text-5xl animate-pulse delay-900 hover:scale-125 transition-transform cursor-pointer">
           🚀
         </div>
         <div
-          className="absolute top-1/2 left-8 text-3xl animate-spin"
+          className="absolute top-1/2 left-8 text-4xl animate-spin hover:scale-125 transition-transform cursor-pointer"
           style={{ animationDuration: "4s" }}
         >
           ✨
         </div>
-        <div className="absolute top-1/3 right-8 text-3xl animate-bounce delay-700">
+        <div className="absolute top-1/3 right-8 text-4xl animate-bounce delay-700 hover:scale-125 transition-transform cursor-pointer">
           🎪
         </div>
-        <div className="absolute bottom-1/3 left-1/4 text-2xl animate-pulse delay-1100">
+        <div className="absolute bottom-1/3 left-1/4 text-3xl animate-pulse delay-1100 hover:scale-125 transition-transform cursor-pointer">
           🌈
         </div>
-        <div className="absolute top-1/4 right-1/4 text-3xl animate-bounce delay-500">
+        <div className="absolute top-1/4 right-1/4 text-4xl animate-bounce delay-500 hover:scale-125 transition-transform cursor-pointer">
           🎨
+        </div>
+        <div className="absolute top-1/3 left-1/3 text-3xl animate-pulse delay-1500 hover:scale-125 transition-transform cursor-pointer">
+          🦋
+        </div>
+        <div className="absolute bottom-1/4 right-1/3 text-4xl animate-bounce delay-800 hover:scale-125 transition-transform cursor-pointer">
+          🐝
+        </div>
+        <div className="absolute top-3/4 left-1/6 text-3xl animate-pulse delay-400 hover:scale-125 transition-transform cursor-pointer">
+          🍀
+        </div>
+        <div className="absolute top-1/6 right-1/6 text-4xl animate-bounce delay-1200 hover:scale-125 transition-transform cursor-pointer">
+          🎭
+        </div>
+      </div>
+
+      {/* Floating Words Background */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute top-32 left-1/4 text-lg font-bold text-purple-400 opacity-30 animate-float">
+          ADVENTURE
+        </div>
+        <div className="absolute top-1/2 right-1/4 text-lg font-bold text-pink-400 opacity-30 animate-float-delayed">
+          LEARN
+        </div>
+        <div className="absolute bottom-32 left-1/3 text-lg font-bold text-blue-400 opacity-30 animate-float">
+          EXPLORE
+        </div>
+        <div className="absolute top-1/4 left-1/6 text-lg font-bold text-green-400 opacity-30 animate-float-delayed">
+          DISCOVER
         </div>
       </div>
 
