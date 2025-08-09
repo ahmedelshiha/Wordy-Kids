@@ -679,27 +679,6 @@ export default function Index({ initialProfile }: IndexProps) {
 
                               return (
                                 <>
-                                  <div className="flex justify-center mb-4 md:mb-6">
-                                    <div className="flex flex-wrap gap-1 md:gap-2 max-w-xs md:max-w-lg">
-                                      {displayWords.map((_, index) => (
-                                        <Button
-                                          key={index}
-                                          size="sm"
-                                          variant={
-                                            currentWordIndex === index
-                                              ? "default"
-                                              : "outline"
-                                          }
-                                          onClick={() =>
-                                            setCurrentWordIndex(index)
-                                          }
-                                          className="w-8 h-8 p-0"
-                                        >
-                                          {index + 1}
-                                        </Button>
-                                      ))}
-                                    </div>
-                                  </div>
 
                                   {displayWords.length > 0 && (
                                     <>
