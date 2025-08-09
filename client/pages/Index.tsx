@@ -255,8 +255,7 @@ export default function Index({ initialProfile }: IndexProps) {
               ⭐ Word Adventure
             </h1>
             <p className="text-lg md:text-xl mb-6 opacity-90">
-              Welcome back, {currentProfile?.name}! Ready for more vocabulary
-              fun?
+              Welcome to your vocabulary adventure! Ready for some learning fun?
             </p>
           </div>
 
