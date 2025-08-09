@@ -505,6 +505,7 @@ export default function Index({ initialProfile }: IndexProps) {
                           return categoryWords.slice(0, 10);
                         })()}
                         onComplete={handleGameComplete}
+                        onBack={() => setGameMode(false)}
                         userProfile={currentProfile}
                       />
                     ) : (
