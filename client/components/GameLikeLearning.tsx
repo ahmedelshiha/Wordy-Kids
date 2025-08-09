@@ -57,6 +57,7 @@ interface GameSession {
 interface GameLikeLearningProps {
   words: Word[];
   onComplete: (score: number, totalWords: number) => void;
+  onBack?: () => void;
   userProfile?: {
     name: string;
     avatar: any;
