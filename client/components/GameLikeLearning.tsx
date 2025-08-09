@@ -18,6 +18,7 @@ import {
   Shuffle,
   ChevronRight,
   RotateCcw,
+  ArrowLeft,
 } from "lucide-react";
 import { audioService } from "@/lib/audioService";
 import { EncouragingFeedback } from "./EncouragingFeedback";
