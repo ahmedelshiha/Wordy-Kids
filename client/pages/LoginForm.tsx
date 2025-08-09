@@ -245,35 +245,37 @@ export default function LoginForm() {
               </div>
 
               {/* Password Field */}
-              <div>
+              <div className="bg-gradient-to-r from-pink-50 to-yellow-50 p-4 rounded-2xl border-3 border-dashed border-pink-300">
                 <Label
                   htmlFor="password"
-                  className="text-lg font-semibold text-gray-700 flex items-center gap-2"
+                  className="text-xl font-bold text-purple-700 flex items-center gap-3 mb-3"
                 >
-                  <Lock className="w-4 h-4" />
-                  Password
+                  <div className="bg-pink-300 p-2 rounded-full">
+                    <Lock className="w-5 h-5 text-purple-700" />
+                  </div>
+                  🔑 What's your secret code?
                 </Label>
                 <div className="relative mt-2">
                   <Input
                     id="password"
                     name="password"
                     type={showPassword ? "text" : "password"}
-                    placeholder="Enter your password"
+                    placeholder="🔐 Enter your super secret password! 🔐"
                     value={formData.password}
                     onChange={handleInputChange}
-                    className="text-center text-lg py-3 border-2 focus:border-educational-blue pr-12"
+                    className="text-center text-xl py-4 border-4 border-pink-300 focus:border-yellow-400 rounded-2xl bg-white font-bold text-purple-700 placeholder-pink-400 pr-14 transform hover:scale-105 transition-all"
                     disabled={isLoading}
                   />
                   <button
                     type="button"
                     onClick={() => setShowPassword(!showPassword)}
-                    className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700"
+                    className="absolute right-3 top-1/2 transform -translate-y-1/2 bg-yellow-300 p-2 rounded-full hover:bg-yellow-400 transition-colors"
                     disabled={isLoading}
                   >
                     {showPassword ? (
-                      <EyeOff className="w-5 h-5" />
+                      <EyeOff className="w-5 h-5 text-purple-700" />
                     ) : (
-                      <Eye className="w-5 h-5" />
+                      <Eye className="w-5 h-5 text-purple-700" />
                     )}
                   </button>
                 </div>
