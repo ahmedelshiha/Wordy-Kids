@@ -1260,7 +1260,7 @@ export default function Index({ initialProfile }: IndexProps) {
 
       {/* Enhanced Components */}
       {showCelebration && <CelebrationEffect />}
-      <FloatingBubbles />
+      {backgroundAnimationsEnabled && <FloatingBubbles />}
 
       {/* Settings Panel */}
       <SettingsPanel
