@@ -178,8 +178,8 @@ export const WordCard: React.FC<WordCardProps> = ({
           <h2 className="text-2xl md:text-4xl font-bold mb-2 md:mb-3 text-center">{word.word}</h2>
 
           {word.pronunciation && (
-            <div className="flex items-center gap-2 mb-4">
-              <span className="text-lg opacity-90">{word.pronunciation}</span>
+            <div className="flex items-center gap-2 mb-3 md:mb-4">
+              <span className="text-base md:text-lg opacity-90">{word.pronunciation}</span>
               <Button
                 size="sm"
                 variant="ghost"
