@@ -205,7 +205,7 @@ export default function Index({ initialProfile }: IndexProps) {
     setTimeout(() => {
       setFeedback({
         type: "celebration",
-        title: "Vocabulary Session Complete! 📚",
+        title: "Vocabulary Session Complete! ����",
         message: `Reviewed ${wordsReviewed} words with ${accuracy}% accuracy!`,
         points: wordsReviewed * accuracy,
         onContinue: () => setFeedback(null),
@@ -1072,148 +1072,32 @@ export default function Index({ initialProfile }: IndexProps) {
                   ) : (
                     <QuizGame
                       questions={(() => {
-                        const generateQuizQuestions = (type: string) => {
-                          const shuffleArray = (array: any[]) => {
-                            const shuffled = [...array];
-                            for (let i = shuffled.length - 1; i > 0; i--) {
-                              const j = Math.floor(Math.random() * (i + 1));
-                              [shuffled[i], shuffled[j]] = [
-                                shuffled[j],
-                                shuffled[i],
-                              ];
-                            }
-                            return shuffled;
-                          };
-
-                          const getRandomWords = (
-                            count: number,
-                            difficulty?: string,
-                          ) => {
-                            let filteredWords = wordsDatabase;
-                            if (difficulty) {
-                              filteredWords = wordsDatabase.filter(
-                                (w) => w.difficulty === difficulty,
-                              );
-                            }
-                            return shuffleArray(filteredWords).slice(0, count);
-                          };
-
-                          const createQuestionFromWord = (
-                            word: any,
-                            allWords: any[],
-                          ) => {
-                            const wrongAnswers = shuffleArray(
-                              allWords.filter((w) => w.id !== word.id),
-                            ).slice(0, 3);
-
-                            const options = shuffleArray([
-                              word.definition,
-                              ...wrongAnswers.map((w) => w.definition),
-                            ]);
-
-                            return {
-                              id: word.id,
-                              word: word.word,
-                              question: `What does "${word.word}" mean?`,
-                              options,
-                              correctAnswer: word.definition,
-                              explanation: word.funFact,
-                              emoji: word.emoji,
-                            };
-                          };
-
+                        const generateQuizQuestionsByType = (type: string) => {
                           switch (type) {
                             case "quick":
-                              const easyWords = getRandomWords(5, "easy");
-                              return easyWords.map((word) =>
-                                createQuestionFromWord(word, wordsDatabase),
-                              );
+                              return generateQuizQuestions(5, "easy", selectedCategory, "definition");
 
                             case "standard":
-                              const mediumWords = getRandomWords(10);
-                              return mediumWords.map((word) =>
-                                createQuestionFromWord(word, wordsDatabase),
-                              );
+                              return generateQuizQuestions(10, undefined, selectedCategory, "definition");
 
                             case "challenge":
-                              const hardWords = getRandomWords(15, "hard");
-                              if (hardWords.length < 15) {
-                                const additionalWords = getRandomWords(
-                                  15 - hardWords.length,
-                                );
-                                hardWords.push(...additionalWords);
-                              }
-                              return hardWords.map((word) =>
-                                createQuestionFromWord(word, wordsDatabase),
-                              );
+                              return generateQuizQuestions(15, "hard", selectedCategory, "definition");
 
                             case "picture":
-                              const pictureWords = getRandomWords(8);
-                              return pictureWords.map((word) => ({
-                                id: word.id,
-                                word: word.word,
-                                question: `Which word matches this emoji?`,
-                                options: shuffleArray([
-                                  word.word,
-                                  ...shuffleArray(
-                                    wordsDatabase.filter(
-                                      (w) => w.id !== word.id,
-                                    ),
-                                  )
-                                    .slice(0, 3)
-                                    .map((w) => w.word),
-                                ]),
-                                correctAnswer: word.word,
-                                explanation: word.definition,
-                                emoji: word.emoji,
-                              }));
+                              return generateQuizQuestions(8, undefined, selectedCategory, "picture");
 
                             case "spelling":
-                              const spellingWords = getRandomWords(10);
-                              return spellingWords.map((word) => {
-                                const correctSpelling = word.word;
-                                const wrongSpellings = [
-                                  correctSpelling.slice(0, -1) +
-                                    (correctSpelling.slice(-1) === "e"
-                                      ? "ing"
-                                      : "e"),
-                                  correctSpelling.replace(/[aeiou]/, "x"),
-                                  correctSpelling.slice(0, -2) +
-                                    correctSpelling
-                                      .slice(-2)
-                                      .split("")
-                                      .reverse()
-                                      .join(""),
-                                ];
-
-                                return {
-                                  id: word.id,
-                                  word: word.word,
-                                  question: `How do you spell this word? (Pronunciation: ${word.pronunciation})`,
-                                  options: shuffleArray([
-                                    correctSpelling,
-                                    ...wrongSpellings.slice(0, 3),
-                                  ]),
-                                  correctAnswer: correctSpelling,
-                                  explanation: word.definition,
-                                  emoji: word.emoji,
-                                };
-                              });
+                              return generateQuizQuestions(10, undefined, selectedCategory, "spelling");
 
                             case "speed":
-                              const speedWords = getRandomWords(20);
-                              return speedWords.map((word) =>
-                                createQuestionFromWord(word, wordsDatabase),
-                              );
+                              return generateQuizQuestions(20, undefined, selectedCategory, "definition");
 
                             default:
-                              return getRandomWords(10).map((word) =>
-                                createQuestionFromWord(word, wordsDatabase),
-                              );
+                              return generateQuizQuestions(10, undefined, selectedCategory, "definition");
                           }
                         };
 
-                        return generateQuizQuestions(selectedQuizType);
+                        return generateQuizQuestionsByType(selectedQuizType);
                       })()}
                       onComplete={handleQuizComplete}
                       onExit={handleQuizExit}
