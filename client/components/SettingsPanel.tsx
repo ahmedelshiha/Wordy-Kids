@@ -61,6 +61,21 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({
     playSoundIfEnabled.click();
   };
 
+  const handleVoiceTypeChange = (voiceType: VoiceType) => {
+    setSelectedVoiceType(voiceType);
+    audioService.setVoiceType(voiceType);
+    playSoundIfEnabled.click();
+  };
+
+  const handleVoicePreview = (voiceType: VoiceType) => {
+    const previewTexts = {
+      woman: "Hi there! I'm a friendly woman's voice. I love helping you learn new words!",
+      man: "Hello! I'm a man's voice. Let's discover some amazing vocabulary together!",
+      kid: "Hey! I'm a fun kid's voice. Learning words is super exciting!"
+    };
+    audioService.previewVoice(voiceType, previewTexts[voiceType]);
+  };
+
   const difficultyLevels = [
     { value: 'easy', label: 'Easy', color: 'bg-educational-green' },
     { value: 'medium', label: 'Medium', color: 'bg-educational-orange' },
