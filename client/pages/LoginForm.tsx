@@ -46,14 +46,14 @@ export default function LoginForm() {
     setMessage(null);
 
     // Trim whitespace from inputs
-    const username = formData.username.trim();
+    const email = formData.email.trim();
     const password = formData.password.trim();
 
     // Basic validation
-    if (!username || !password) {
+    if (!email || !password) {
       setMessage({
         type: "error",
-        text: "Please enter both username and password",
+        text: "Please enter both email and password",
       });
       setIsLoading(false);
       return;
