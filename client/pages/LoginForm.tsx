@@ -33,7 +33,7 @@ export default function LoginForm() {
   const [welcomeMessage, setWelcomeMessage] = useState("Hey there, word explorer!");
 
   // Mascot rotation for fun
-  const mascots = ["🐙", "🦄", "����", "🦁", "🐨", "🐧", "🦊", "🐼"];
+  const mascots = ["🐙", "🦄", "🐸", "🦁", "🐨", "🐧", "🦊", "🐼"];
   const welcomeMessages = [
     "Hey there, word explorer!",
     "Ready for an amazing adventure?",
@@ -147,12 +147,10 @@ export default function LoginForm() {
         </div>
 
         {/* Login Form */}
-        <Card className="bg-gradient-to-br from-white via-yellow-50 to-pink-50 backdrop-blur-sm shadow-2xl border-4 border-rainbow rounded-3xl transform hover:scale-105 transition-all duration-300">
-          <CardHeader className="bg-gradient-to-r from-purple-400 via-pink-400 to-yellow-400 rounded-t-3xl -m-1 mb-0">
-            <CardTitle className="text-center text-2xl text-white flex items-center justify-center gap-3 py-4">
-              <div className="text-3xl animate-spin" style={{ animationDuration: "3s" }}>🎪</div>
-              <span className="font-bold text-shadow">Ready to Explore?</span>
-              <div className="text-3xl animate-bounce">🚀</div>
+        <Card className="bg-white/95 backdrop-blur-sm shadow-xl border border-gray-200 rounded-lg">
+          <CardHeader>
+            <CardTitle className="text-center text-xl text-gray-800">
+              Sign In
             </CardTitle>
           </CardHeader>
           <CardContent>
