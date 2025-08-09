@@ -75,7 +75,7 @@ export default function LoginForm() {
 
         // Navigate to main app after successful login
         setTimeout(() => {
-          navigate("/app?authenticated=true");
+          navigate("/app");
         }, 1500);
       } else {
         setMessage({
