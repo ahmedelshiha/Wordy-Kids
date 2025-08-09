@@ -50,6 +50,10 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({
     // Get available voices
     const voices = audioService.getAvailableVoices();
     setAvailableVoices(voices);
+
+    // Load background animations setting (default: false)
+    const savedBackgroundAnimations = localStorage.getItem('backgroundAnimations');
+    setBackgroundAnimations(savedBackgroundAnimations === 'true');
   }, [isOpen]);
 
   const handleSoundToggle = (checked: boolean) => {
