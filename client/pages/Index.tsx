@@ -140,6 +140,7 @@ export default function Index({ initialProfile }: IndexProps) {
   );
   const [feedback, setFeedback] = useState<any>(null);
   const [gameMode, setGameMode] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const handleQuizComplete = (score: number, total: number) => {
     const percentage = Math.round((score / total) * 100);
