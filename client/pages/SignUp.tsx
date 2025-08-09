@@ -80,14 +80,30 @@ export default function SignUp() {
       return;
     }
 
-    // Check if username already exists
+    // Calculate age from birth date
+    const birthDate = new Date(formData.birthDate);
+    const today = new Date();
+    const age = today.getFullYear() - birthDate.getFullYear();
+    const monthDiff = today.getMonth() - birthDate.getMonth();
+    const actualAge = monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate()) ? age - 1 : age;
+
+    if (actualAge < 3 || actualAge > 18) {
+      setMessage({
+        type: "error",
+        text: "Child must be between 3 and 18 years old for this platform.",
+      });
+      setIsLoading(false);
+      return;
+    }
+
+    // Check if email already exists for parents
     const existingUsers = JSON.parse(localStorage.getItem("wordAdventureUsers") || "[]");
-    const userExists = existingUsers.some((u: any) => u.username === formData.username || u.email === formData.email);
+    const userExists = existingUsers.some((u: any) => u.email === formData.email);
 
     if (userExists) {
       setMessage({
         type: "error",
-        text: "Username or email already exists. Please choose different ones.",
+        text: "Email already exists. Please use a different email.",
       });
       setIsLoading(false);
       return;
