@@ -231,8 +231,11 @@ export class AudioService {
     const phrase =
       successPhrases[Math.floor(Math.random() * successPhrases.length)];
     const utterance = new SpeechSynthesisUtterance(phrase);
-    utterance.rate = 1.0;
-    utterance.pitch = 1.3;
+
+    // Use voice type defaults with celebratory adjustments
+    const voiceDefaults = this.getVoiceDefaults(this.selectedVoiceType);
+    utterance.rate = Math.min(voiceDefaults.rate + 0.2, 1.2); // Slightly faster for excitement
+    utterance.pitch = Math.min(voiceDefaults.pitch + 0.1, 1.5); // Slightly higher for celebration
     utterance.volume = 0.8;
 
     const voice = this.getChildFriendlyVoice();
