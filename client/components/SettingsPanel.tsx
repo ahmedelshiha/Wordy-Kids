@@ -295,6 +295,8 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({
                 setAnimationSpeed([1]);
                 setDailyGoal([10]);
                 setDifficulty('medium');
+                setSelectedVoiceType('woman');
+                audioService.setVoiceType('woman');
                 document.documentElement.classList.remove('dark');
                 playSoundIfEnabled.click();
               }}
