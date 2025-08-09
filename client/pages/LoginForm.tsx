@@ -310,18 +310,20 @@ export default function LoginForm() {
               <Button
                 type="submit"
                 disabled={isLoading || !formData.username || !formData.password}
-                className="w-full bg-gradient-to-r from-educational-blue to-educational-purple text-white text-lg py-4 font-semibold"
+                className="w-full bg-gradient-to-r from-purple-500 via-pink-500 to-yellow-500 text-white text-xl py-6 font-bold rounded-2xl transform hover:scale-110 transition-all duration-300 shadow-2xl border-4 border-white"
               >
                 {isLoading ? (
-                  <div className="flex items-center gap-2">
-                    <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-                    Signing In...
+                  <div className="flex items-center gap-3 text-xl">
+                    <div className="text-3xl animate-spin">🌟</div>
+                    Getting ready for adventure...
+                    <div className="text-3xl animate-bounce">🚀</div>
                   </div>
                 ) : (
-                  <>
-                    <LogIn className="w-5 h-5 mr-2" />
-                    Sign In & Continue Adventure! 🚀
-                  </>
+                  <div className="flex items-center justify-center gap-3 text-xl">
+                    <div className="text-3xl animate-bounce">🎮</div>
+                    <span>START MY ADVENTURE!</span>
+                    <div className="text-3xl animate-pulse">✨</div>
+                  </div>
                 )}
               </Button>
 
