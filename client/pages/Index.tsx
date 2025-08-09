@@ -554,7 +554,10 @@ export default function Index({ initialProfile }: IndexProps) {
                               Game Mode! 🎮
                             </Button>
                             <Button
-                              onClick={() => setSelectedCategory("all")}
+                              onClick={() => {
+                                setSelectedCategory("all");
+                                setLearningMode("selector");
+                              }}
                               variant="ghost"
                             >
                               ← Back to Categories
