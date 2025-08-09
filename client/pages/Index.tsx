@@ -675,7 +675,7 @@ export default function Index({ initialProfile }: IndexProps) {
                             Choose how you'd like to learn your vocabulary!
                           </p>
 
-                          <div className="flex justify-center gap-4 mb-8 flex-wrap">
+                          <div className="flex justify-center gap-2 md:gap-4 mb-6 md:mb-8 flex-wrap px-4 md:px-0">
                             <Button
                               onClick={() => setLearningMode("cards")}
                               variant={
