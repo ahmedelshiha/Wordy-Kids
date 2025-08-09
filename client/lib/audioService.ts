@@ -102,6 +102,19 @@ export class AudioService {
     return this.getVoiceByType(this.selectedVoiceType);
   }
 
+  private getVoiceDefaults(voiceType: VoiceType): { rate: number; pitch: number } {
+    switch (voiceType) {
+      case 'kid':
+        return { rate: 0.9, pitch: 1.4 };
+      case 'woman':
+        return { rate: 0.8, pitch: 1.2 };
+      case 'man':
+        return { rate: 0.8, pitch: 0.9 };
+      default:
+        return { rate: 0.8, pitch: 1.2 };
+    }
+  }
+
   public pronounceWord(
     word: string,
     options: {
