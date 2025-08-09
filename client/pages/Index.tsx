@@ -133,7 +133,9 @@ export default function Index({ initialProfile }: IndexProps) {
   const [customWords, setCustomWords] = useState<any[]>([]);
 
   // New child-friendly states
-  const [currentProfile, setCurrentProfile] = useState<any>(initialProfile || null);
+  const [currentProfile, setCurrentProfile] = useState<any>(
+    initialProfile || null,
+  );
   const [feedback, setFeedback] = useState<any>(null);
   const [gameMode, setGameMode] = useState(false);
 
@@ -196,7 +198,6 @@ export default function Index({ initialProfile }: IndexProps) {
     setShowCelebration(true);
     setTimeout(() => setShowCelebration(false), 3000);
   };
-
 
   const handleGameComplete = (score: number, totalWords: number) => {
     setGameMode(false);
@@ -323,7 +324,15 @@ export default function Index({ initialProfile }: IndexProps) {
                   <div className="bg-white/90 rounded-xl p-2 border border-educational-green/30">
                     <div className="flex items-center justify-between text-xs font-bold text-educational-green mb-1">
                       <span>🚀 Progress</span>
-                      <span>{Math.min(Math.round(((currentProfile?.wordsLearned || 45) / 100) * 100), 100)}%</span>
+                      <span>
+                        {Math.min(
+                          Math.round(
+                            ((currentProfile?.wordsLearned || 45) / 100) * 100,
+                          ),
+                          100,
+                        )}
+                        %
+                      </span>
                     </div>
                     <div className="bg-gray-200 rounded-full h-2 overflow-hidden">
                       <div
@@ -689,7 +698,8 @@ export default function Index({ initialProfile }: IndexProps) {
                           🧠 Quiz Time!
                         </h2>
                         <p className="text-xl text-gray-600 mb-8">
-                          Test your vocabulary knowledge with fun quizzes! Choose your challenge level below.
+                          Test your vocabulary knowledge with fun quizzes!
+                          Choose your challenge level below.
                         </p>
                       </div>
 
@@ -699,11 +709,20 @@ export default function Index({ initialProfile }: IndexProps) {
                         <Card className="cursor-pointer hover:shadow-xl transition-all duration-300 hover:scale-105 border-2 border-educational-green/30">
                           <CardContent className="p-6 text-center">
                             <div className="text-6xl mb-4">🌱</div>
-                            <h3 className="text-xl font-bold text-educational-green mb-2">Easy Quiz</h3>
-                            <p className="text-gray-600 mb-4">Perfect for beginners! Simple words and definitions.</p>
+                            <h3 className="text-xl font-bold text-educational-green mb-2">
+                              Easy Quiz
+                            </h3>
+                            <p className="text-gray-600 mb-4">
+                              Perfect for beginners! Simple words and
+                              definitions.
+                            </p>
                             <div className="flex justify-center gap-2 mb-4">
-                              <span className="bg-educational-green/20 text-educational-green px-2 py-1 rounded-full text-xs">5 Questions</span>
-                              <span className="bg-educational-green/20 text-educational-green px-2 py-1 rounded-full text-xs">30s Each</span>
+                              <span className="bg-educational-green/20 text-educational-green px-2 py-1 rounded-full text-xs">
+                                5 Questions
+                              </span>
+                              <span className="bg-educational-green/20 text-educational-green px-2 py-1 rounded-full text-xs">
+                                30s Each
+                              </span>
                             </div>
                             <Button
                               onClick={() => {
@@ -722,11 +741,20 @@ export default function Index({ initialProfile }: IndexProps) {
                         <Card className="cursor-pointer hover:shadow-xl transition-all duration-300 hover:scale-105 border-2 border-educational-blue/30">
                           <CardContent className="p-6 text-center">
                             <div className="text-6xl mb-4">🎯</div>
-                            <h3 className="text-xl font-bold text-educational-blue mb-2">Standard Quiz</h3>
-                            <p className="text-gray-600 mb-4">Medium difficulty with mixed vocabulary challenges.</p>
+                            <h3 className="text-xl font-bold text-educational-blue mb-2">
+                              Standard Quiz
+                            </h3>
+                            <p className="text-gray-600 mb-4">
+                              Medium difficulty with mixed vocabulary
+                              challenges.
+                            </p>
                             <div className="flex justify-center gap-2 mb-4">
-                              <span className="bg-educational-blue/20 text-educational-blue px-2 py-1 rounded-full text-xs">10 Questions</span>
-                              <span className="bg-educational-blue/20 text-educational-blue px-2 py-1 rounded-full text-xs">30s Each</span>
+                              <span className="bg-educational-blue/20 text-educational-blue px-2 py-1 rounded-full text-xs">
+                                10 Questions
+                              </span>
+                              <span className="bg-educational-blue/20 text-educational-blue px-2 py-1 rounded-full text-xs">
+                                30s Each
+                              </span>
                             </div>
                             <Button
                               onClick={() => {
@@ -745,11 +773,19 @@ export default function Index({ initialProfile }: IndexProps) {
                         <Card className="cursor-pointer hover:shadow-xl transition-all duration-300 hover:scale-105 border-2 border-educational-purple/30">
                           <CardContent className="p-6 text-center">
                             <div className="text-6xl mb-4">🏆</div>
-                            <h3 className="text-xl font-bold text-educational-purple mb-2">Challenge Quiz</h3>
-                            <p className="text-gray-600 mb-4">For advanced learners! Tricky words and concepts.</p>
+                            <h3 className="text-xl font-bold text-educational-purple mb-2">
+                              Challenge Quiz
+                            </h3>
+                            <p className="text-gray-600 mb-4">
+                              For advanced learners! Tricky words and concepts.
+                            </p>
                             <div className="flex justify-center gap-2 mb-4">
-                              <span className="bg-educational-purple/20 text-educational-purple px-2 py-1 rounded-full text-xs">15 Questions</span>
-                              <span className="bg-educational-purple/20 text-educational-purple px-2 py-1 rounded-full text-xs">25s Each</span>
+                              <span className="bg-educational-purple/20 text-educational-purple px-2 py-1 rounded-full text-xs">
+                                15 Questions
+                              </span>
+                              <span className="bg-educational-purple/20 text-educational-purple px-2 py-1 rounded-full text-xs">
+                                25s Each
+                              </span>
                             </div>
                             <Button
                               onClick={() => {
@@ -768,11 +804,19 @@ export default function Index({ initialProfile }: IndexProps) {
                         <Card className="cursor-pointer hover:shadow-xl transition-all duration-300 hover:scale-105 border-2 border-educational-orange/30">
                           <CardContent className="p-6 text-center">
                             <div className="text-6xl mb-4">🖼️</div>
-                            <h3 className="text-xl font-bold text-educational-orange mb-2">Picture Quiz</h3>
-                            <p className="text-gray-600 mb-4">Visual learning! Match pictures with words.</p>
+                            <h3 className="text-xl font-bold text-educational-orange mb-2">
+                              Picture Quiz
+                            </h3>
+                            <p className="text-gray-600 mb-4">
+                              Visual learning! Match pictures with words.
+                            </p>
                             <div className="flex justify-center gap-2 mb-4">
-                              <span className="bg-educational-orange/20 text-educational-orange px-2 py-1 rounded-full text-xs">8 Questions</span>
-                              <span className="bg-educational-orange/20 text-educational-orange px-2 py-1 rounded-full text-xs">35s Each</span>
+                              <span className="bg-educational-orange/20 text-educational-orange px-2 py-1 rounded-full text-xs">
+                                8 Questions
+                              </span>
+                              <span className="bg-educational-orange/20 text-educational-orange px-2 py-1 rounded-full text-xs">
+                                35s Each
+                              </span>
                             </div>
                             <Button
                               onClick={() => {
@@ -791,11 +835,19 @@ export default function Index({ initialProfile }: IndexProps) {
                         <Card className="cursor-pointer hover:shadow-xl transition-all duration-300 hover:scale-105 border-2 border-educational-pink/30">
                           <CardContent className="p-6 text-center">
                             <div className="text-6xl mb-4">✏���</div>
-                            <h3 className="text-xl font-bold text-educational-pink mb-2">Spelling Quiz</h3>
-                            <p className="text-gray-600 mb-4">Test your spelling skills with audio challenges.</p>
+                            <h3 className="text-xl font-bold text-educational-pink mb-2">
+                              Spelling Quiz
+                            </h3>
+                            <p className="text-gray-600 mb-4">
+                              Test your spelling skills with audio challenges.
+                            </p>
                             <div className="flex justify-center gap-2 mb-4">
-                              <span className="bg-educational-pink/20 text-educational-pink px-2 py-1 rounded-full text-xs">10 Questions</span>
-                              <span className="bg-educational-pink/20 text-educational-pink px-2 py-1 rounded-full text-xs">45s Each</span>
+                              <span className="bg-educational-pink/20 text-educational-pink px-2 py-1 rounded-full text-xs">
+                                10 Questions
+                              </span>
+                              <span className="bg-educational-pink/20 text-educational-pink px-2 py-1 rounded-full text-xs">
+                                45s Each
+                              </span>
                             </div>
                             <Button
                               onClick={() => {
@@ -814,11 +866,19 @@ export default function Index({ initialProfile }: IndexProps) {
                         <Card className="cursor-pointer hover:shadow-xl transition-all duration-300 hover:scale-105 border-2 border-educational-yellow/30">
                           <CardContent className="p-6 text-center">
                             <div className="text-6xl mb-4">⚡</div>
-                            <h3 className="text-xl font-bold text-educational-yellow mb-2">Speed Quiz</h3>
-                            <p className="text-gray-600 mb-4">Quick-fire questions! How fast can you answer?</p>
+                            <h3 className="text-xl font-bold text-educational-yellow mb-2">
+                              Speed Quiz
+                            </h3>
+                            <p className="text-gray-600 mb-4">
+                              Quick-fire questions! How fast can you answer?
+                            </p>
                             <div className="flex justify-center gap-2 mb-4">
-                              <span className="bg-educational-yellow/20 text-educational-yellow px-2 py-1 rounded-full text-xs">20 Questions</span>
-                              <span className="bg-educational-yellow/20 text-educational-yellow px-2 py-1 rounded-full text-xs">15s Each</span>
+                              <span className="bg-educational-yellow/20 text-educational-yellow px-2 py-1 rounded-full text-xs">
+                                20 Questions
+                              </span>
+                              <span className="bg-educational-yellow/20 text-educational-yellow px-2 py-1 rounded-full text-xs">
+                                15s Each
+                              </span>
                             </div>
                             <Button
                               onClick={() => {
@@ -849,39 +909,63 @@ export default function Index({ initialProfile }: IndexProps) {
                                 <div className="flex items-center gap-3">
                                   <span className="text-2xl">🎯</span>
                                   <div>
-                                    <div className="font-semibold">Standard Quiz</div>
-                                    <div className="text-sm text-gray-600">Yesterday</div>
+                                    <div className="font-semibold">
+                                      Standard Quiz
+                                    </div>
+                                    <div className="text-sm text-gray-600">
+                                      Yesterday
+                                    </div>
                                   </div>
                                 </div>
                                 <div className="text-right">
-                                  <div className="font-bold text-educational-blue">8/10</div>
-                                  <div className="text-sm text-gray-600">80%</div>
+                                  <div className="font-bold text-educational-blue">
+                                    8/10
+                                  </div>
+                                  <div className="text-sm text-gray-600">
+                                    80%
+                                  </div>
                                 </div>
                               </div>
                               <div className="flex justify-between items-center p-3 bg-white rounded-lg">
                                 <div className="flex items-center gap-3">
                                   <span className="text-2xl">🌱</span>
                                   <div>
-                                    <div className="font-semibold">Easy Quiz</div>
-                                    <div className="text-sm text-gray-600">2 days ago</div>
+                                    <div className="font-semibold">
+                                      Easy Quiz
+                                    </div>
+                                    <div className="text-sm text-gray-600">
+                                      2 days ago
+                                    </div>
                                   </div>
                                 </div>
                                 <div className="text-right">
-                                  <div className="font-bold text-educational-green">5/5</div>
-                                  <div className="text-sm text-gray-600">100%</div>
+                                  <div className="font-bold text-educational-green">
+                                    5/5
+                                  </div>
+                                  <div className="text-sm text-gray-600">
+                                    100%
+                                  </div>
                                 </div>
                               </div>
                               <div className="flex justify-between items-center p-3 bg-white rounded-lg">
                                 <div className="flex items-center gap-3">
                                   <span className="text-2xl">��</span>
                                   <div>
-                                    <div className="font-semibold">Challenge Quiz</div>
-                                    <div className="text-sm text-gray-600">3 days ago</div>
+                                    <div className="font-semibold">
+                                      Challenge Quiz
+                                    </div>
+                                    <div className="text-sm text-gray-600">
+                                      3 days ago
+                                    </div>
                                   </div>
                                 </div>
                                 <div className="text-right">
-                                  <div className="font-bold text-educational-purple">12/15</div>
-                                  <div className="text-sm text-gray-600">80%</div>
+                                  <div className="font-bold text-educational-purple">
+                                    12/15
+                                  </div>
+                                  <div className="text-sm text-gray-600">
+                                    80%
+                                  </div>
                                 </div>
                               </div>
                             </div>
@@ -897,27 +981,38 @@ export default function Index({ initialProfile }: IndexProps) {
                             const shuffled = [...array];
                             for (let i = shuffled.length - 1; i > 0; i--) {
                               const j = Math.floor(Math.random() * (i + 1));
-                              [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+                              [shuffled[i], shuffled[j]] = [
+                                shuffled[j],
+                                shuffled[i],
+                              ];
                             }
                             return shuffled;
                           };
 
-                          const getRandomWords = (count: number, difficulty?: string) => {
+                          const getRandomWords = (
+                            count: number,
+                            difficulty?: string,
+                          ) => {
                             let filteredWords = wordsDatabase;
                             if (difficulty) {
-                              filteredWords = wordsDatabase.filter(w => w.difficulty === difficulty);
+                              filteredWords = wordsDatabase.filter(
+                                (w) => w.difficulty === difficulty,
+                              );
                             }
                             return shuffleArray(filteredWords).slice(0, count);
                           };
 
-                          const createQuestionFromWord = (word: any, allWords: any[]) => {
+                          const createQuestionFromWord = (
+                            word: any,
+                            allWords: any[],
+                          ) => {
                             const wrongAnswers = shuffleArray(
-                              allWords.filter(w => w.id !== word.id)
+                              allWords.filter((w) => w.id !== word.id),
                             ).slice(0, 3);
 
                             const options = shuffleArray([
                               word.definition,
-                              ...wrongAnswers.map(w => w.definition)
+                              ...wrongAnswers.map((w) => w.definition),
                             ]);
 
                             return {
@@ -927,69 +1022,98 @@ export default function Index({ initialProfile }: IndexProps) {
                               options,
                               correctAnswer: word.definition,
                               explanation: word.funFact,
-                              emoji: word.emoji
+                              emoji: word.emoji,
                             };
                           };
 
                           switch (type) {
                             case "quick":
                               const easyWords = getRandomWords(5, "easy");
-                              return easyWords.map(word => createQuestionFromWord(word, wordsDatabase));
+                              return easyWords.map((word) =>
+                                createQuestionFromWord(word, wordsDatabase),
+                              );
 
                             case "standard":
                               const mediumWords = getRandomWords(10);
-                              return mediumWords.map(word => createQuestionFromWord(word, wordsDatabase));
+                              return mediumWords.map((word) =>
+                                createQuestionFromWord(word, wordsDatabase),
+                              );
 
                             case "challenge":
                               const hardWords = getRandomWords(15, "hard");
                               if (hardWords.length < 15) {
-                                const additionalWords = getRandomWords(15 - hardWords.length);
+                                const additionalWords = getRandomWords(
+                                  15 - hardWords.length,
+                                );
                                 hardWords.push(...additionalWords);
                               }
-                              return hardWords.map(word => createQuestionFromWord(word, wordsDatabase));
+                              return hardWords.map((word) =>
+                                createQuestionFromWord(word, wordsDatabase),
+                              );
 
                             case "picture":
                               const pictureWords = getRandomWords(8);
-                              return pictureWords.map(word => ({
+                              return pictureWords.map((word) => ({
                                 id: word.id,
                                 word: word.word,
                                 question: `Which word matches this emoji?`,
                                 options: shuffleArray([
                                   word.word,
-                                  ...shuffleArray(wordsDatabase.filter(w => w.id !== word.id)).slice(0, 3).map(w => w.word)
+                                  ...shuffleArray(
+                                    wordsDatabase.filter(
+                                      (w) => w.id !== word.id,
+                                    ),
+                                  )
+                                    .slice(0, 3)
+                                    .map((w) => w.word),
                                 ]),
                                 correctAnswer: word.word,
                                 explanation: word.definition,
-                                emoji: word.emoji
+                                emoji: word.emoji,
                               }));
 
                             case "spelling":
                               const spellingWords = getRandomWords(10);
-                              return spellingWords.map(word => {
+                              return spellingWords.map((word) => {
                                 const correctSpelling = word.word;
                                 const wrongSpellings = [
-                                  correctSpelling.slice(0, -1) + (correctSpelling.slice(-1) === 'e' ? 'ing' : 'e'),
-                                  correctSpelling.replace(/[aeiou]/, 'x'),
-                                  correctSpelling.slice(0, -2) + correctSpelling.slice(-2).split('').reverse().join('')
+                                  correctSpelling.slice(0, -1) +
+                                    (correctSpelling.slice(-1) === "e"
+                                      ? "ing"
+                                      : "e"),
+                                  correctSpelling.replace(/[aeiou]/, "x"),
+                                  correctSpelling.slice(0, -2) +
+                                    correctSpelling
+                                      .slice(-2)
+                                      .split("")
+                                      .reverse()
+                                      .join(""),
                                 ];
 
                                 return {
                                   id: word.id,
                                   word: word.word,
                                   question: `How do you spell this word? (Pronunciation: ${word.pronunciation})`,
-                                  options: shuffleArray([correctSpelling, ...wrongSpellings.slice(0, 3)]),
+                                  options: shuffleArray([
+                                    correctSpelling,
+                                    ...wrongSpellings.slice(0, 3),
+                                  ]),
                                   correctAnswer: correctSpelling,
                                   explanation: word.definition,
-                                  emoji: word.emoji
+                                  emoji: word.emoji,
                                 };
                               });
 
                             case "speed":
                               const speedWords = getRandomWords(20);
-                              return speedWords.map(word => createQuestionFromWord(word, wordsDatabase));
+                              return speedWords.map((word) =>
+                                createQuestionFromWord(word, wordsDatabase),
+                              );
 
                             default:
-                              return getRandomWords(10).map(word => createQuestionFromWord(word, wordsDatabase));
+                              return getRandomWords(10).map((word) =>
+                                createQuestionFromWord(word, wordsDatabase),
+                              );
                           }
                         };
 

@@ -3,17 +3,17 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { 
-  ArrowLeft, 
-  LogIn, 
-  Eye, 
-  EyeOff, 
-  User, 
+import {
+  ArrowLeft,
+  LogIn,
+  Eye,
+  EyeOff,
+  User,
   Lock,
   AlertCircle,
   CheckCircle,
   BookOpen,
-  Sparkles
+  Sparkles,
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
@@ -21,7 +21,7 @@ export default function LoginForm() {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     username: "",
-    password: ""
+    password: "",
   });
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -33,7 +33,7 @@ export default function LoginForm() {
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value.trim()
+      [e.target.name]: e.target.value.trim(),
     });
     // Clear any existing messages when user starts typing
     if (message) {
@@ -54,7 +54,7 @@ export default function LoginForm() {
     if (!username || !password) {
       setMessage({
         type: "error",
-        text: "Please enter both username and password! 😊"
+        text: "Please enter both username and password! 😊",
       });
       setIsLoading(false);
       return;
@@ -68,11 +68,11 @@ export default function LoginForm() {
         (username === "alex" && password === "alex123") ||
         (username === "sam" && password === "sam123")
       ) {
-        setMessage({ 
-          type: "success", 
-          text: "Login successful! Welcome back! 🎉" 
+        setMessage({
+          type: "success",
+          text: "Login successful! Welcome back! 🎉",
         });
-        
+
         // Navigate to main app after successful login
         setTimeout(() => {
           navigate("/app?authenticated=true");
@@ -80,7 +80,7 @@ export default function LoginForm() {
       } else {
         setMessage({
           type: "error",
-          text: "Invalid username or password. Please try again! 🤗"
+          text: "Invalid username or password. Please try again! 🤗",
         });
       }
       setIsLoading(false);
@@ -94,7 +94,7 @@ export default function LoginForm() {
   const handleForgotPassword = () => {
     setMessage({
       type: "success",
-      text: "Password reset instructions sent! Check your email! 📧"
+      text: "Password reset instructions sent! Check your email! 📧",
     });
   };
 
@@ -102,14 +102,33 @@ export default function LoginForm() {
     <div className="min-h-screen bg-gradient-to-br from-educational-blue-light via-educational-purple-light to-educational-pink-light flex items-center justify-center p-4 relative overflow-hidden">
       {/* Background Pattern */}
       <div className="absolute inset-0 opacity-10">
-        <div className="absolute top-16 left-16 text-5xl animate-bounce delay-0">⭐</div>
-        <div className="absolute top-24 right-20 text-4xl animate-pulse delay-300">📚</div>
-        <div className="absolute bottom-24 left-20 text-5xl animate-bounce delay-600">🎯</div>
-        <div className="absolute bottom-16 right-16 text-4xl animate-pulse delay-900">🚀</div>
-        <div className="absolute top-1/2 left-8 text-3xl animate-spin" style={{ animationDuration: "4s" }}>✨</div>
-        <div className="absolute top-1/3 right-8 text-3xl animate-bounce delay-700">🎪</div>
-        <div className="absolute bottom-1/3 left-1/4 text-2xl animate-pulse delay-1100">🌈</div>
-        <div className="absolute top-1/4 right-1/4 text-3xl animate-bounce delay-500">🎨</div>
+        <div className="absolute top-16 left-16 text-5xl animate-bounce delay-0">
+          ⭐
+        </div>
+        <div className="absolute top-24 right-20 text-4xl animate-pulse delay-300">
+          📚
+        </div>
+        <div className="absolute bottom-24 left-20 text-5xl animate-bounce delay-600">
+          🎯
+        </div>
+        <div className="absolute bottom-16 right-16 text-4xl animate-pulse delay-900">
+          🚀
+        </div>
+        <div
+          className="absolute top-1/2 left-8 text-3xl animate-spin"
+          style={{ animationDuration: "4s" }}
+        >
+          ✨
+        </div>
+        <div className="absolute top-1/3 right-8 text-3xl animate-bounce delay-700">
+          🎪
+        </div>
+        <div className="absolute bottom-1/3 left-1/4 text-2xl animate-pulse delay-1100">
+          🌈
+        </div>
+        <div className="absolute top-1/4 right-1/4 text-3xl animate-bounce delay-500">
+          🎨
+        </div>
       </div>
 
       {/* Main Content */}
@@ -141,7 +160,10 @@ export default function LoginForm() {
             <form onSubmit={handleLogin} className="space-y-6">
               {/* Username Field */}
               <div>
-                <Label htmlFor="username" className="text-lg font-semibold text-gray-700 flex items-center gap-2">
+                <Label
+                  htmlFor="username"
+                  className="text-lg font-semibold text-gray-700 flex items-center gap-2"
+                >
                   <User className="w-4 h-4" />
                   Username
                 </Label>
@@ -159,7 +181,10 @@ export default function LoginForm() {
 
               {/* Password Field */}
               <div>
-                <Label htmlFor="password" className="text-lg font-semibold text-gray-700 flex items-center gap-2">
+                <Label
+                  htmlFor="password"
+                  className="text-lg font-semibold text-gray-700 flex items-center gap-2"
+                >
                   <Lock className="w-4 h-4" />
                   Password
                 </Label>
@@ -180,7 +205,11 @@ export default function LoginForm() {
                     className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700"
                     disabled={isLoading}
                   >
-                    {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+                    {showPassword ? (
+                      <EyeOff className="w-5 h-5" />
+                    ) : (
+                      <Eye className="w-5 h-5" />
+                    )}
                   </button>
                 </div>
               </div>
@@ -241,9 +270,18 @@ export default function LoginForm() {
                   <strong>🎮 Demo Accounts:</strong>
                 </p>
                 <div className="text-xs text-blue-700 space-y-1">
-                  <div>• Username: <strong>demo</strong> / Password: <strong>demo123</strong></div>
-                  <div>• Username: <strong>alex</strong> / Password: <strong>alex123</strong></div>
-                  <div>• Username: <strong>sam</strong> / Password: <strong>sam123</strong></div>
+                  <div>
+                    • Username: <strong>demo</strong> / Password:{" "}
+                    <strong>demo123</strong>
+                  </div>
+                  <div>
+                    • Username: <strong>alex</strong> / Password:{" "}
+                    <strong>alex123</strong>
+                  </div>
+                  <div>
+                    • Username: <strong>sam</strong> / Password:{" "}
+                    <strong>sam123</strong>
+                  </div>
                 </div>
               </div>
             </form>

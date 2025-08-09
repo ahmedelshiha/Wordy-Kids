@@ -9,7 +9,7 @@ export default function App() {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
   const mode = searchParams.get("mode");
-  
+
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [currentProfile, setCurrentProfile] = useState<any>(null);
   const [showProfileCreation, setShowProfileCreation] = useState(false);
@@ -35,7 +35,7 @@ export default function App() {
         accuracy: 87,
         favoriteCategory: "Adventure",
         joinedDate: new Date().toLocaleDateString(),
-        lastActive: "Today"
+        lastActive: "Today",
       };
       setCurrentProfile(defaultProfile);
       setIsLoggedIn(true);
@@ -63,7 +63,7 @@ export default function App() {
       ...currentProfile,
       level,
       levelName,
-      skillLevel: level
+      skillLevel: level,
     };
     setCurrentProfile(updatedProfile);
     setShowLevelSelection(false);

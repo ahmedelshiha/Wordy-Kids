@@ -145,7 +145,8 @@
 }
 
 @keyframes gentleFloat {
-  0%, 100% {
+  0%,
+  100% {
     transform: translateY(0px);
   }
   50% {
@@ -154,7 +155,8 @@
 }
 
 @keyframes sparkle {
-  0%, 100% {
+  0%,
+  100% {
     transform: scale(1) rotate(0deg);
     opacity: 1;
   }
