@@ -314,7 +314,20 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
   // Load children from localStorage or use empty array
   const [children, setChildren] = useState<ChildProfile[]>(() => {
     const savedChildren = localStorage.getItem("parentDashboardChildren");
-    return savedChildren ? JSON.parse(savedChildren) : [];
+    if (savedChildren) {
+      const parsed = JSON.parse(savedChildren);
+      // Convert date strings back to Date objects
+      return parsed.map((child: any) => ({
+        ...child,
+        lastActive: new Date(child.lastActive),
+        recentAchievements:
+          child.recentAchievements?.map((achievement: any) => ({
+            ...achievement,
+            earnedAt: new Date(achievement.earnedAt),
+          })) || [],
+      }));
+    }
+    return [];
   });
 
   const [selectedChild, setSelectedChild] = useState<ChildProfile | null>(
@@ -367,10 +380,18 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
     (n) => n.priority === "high" && !n.read,
   ).length;
 
-  const getTimeAgo = (date: Date) => {
+  const getTimeAgo = (date: Date | string) => {
+    // Ensure we have a valid Date object
+    const dateObj = date instanceof Date ? date : new Date(date);
+
+    // Check if the date is valid
+    if (isNaN(dateObj.getTime())) {
+      return "Unknown";
+    }
+
     const now = new Date();
     const diffInHours = Math.floor(
-      (now.getTime() - date.getTime()) / (1000 * 60 * 60),
+      (now.getTime() - dateObj.getTime()) / (1000 * 60 * 60),
     );
     if (diffInHours < 1) return "Just now";
     if (diffInHours < 24) return `${diffInHours}h ago`;
