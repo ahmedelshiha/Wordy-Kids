@@ -218,7 +218,7 @@ export default function LoginForm() {
               {/* Login Button */}
               <Button
                 type="submit"
-                disabled={isLoading || !formData.username || !formData.password}
+                disabled={isLoading || !formData.email || !formData.password}
                 className="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white hover:from-blue-700 hover:to-purple-700"
               >
                 {isLoading ? (
