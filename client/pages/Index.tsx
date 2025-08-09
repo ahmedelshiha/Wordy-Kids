@@ -263,7 +263,7 @@ export default function Index({ initialProfile }: IndexProps) {
           {/* Mobile simplified header */}
           <div className="text-center md:hidden">
             <p className="text-sm opacity-90">
-              Welcome back, {currentProfile?.name}!
+              Ready for your vocabulary adventure?
             </p>
           </div>
         </div>
