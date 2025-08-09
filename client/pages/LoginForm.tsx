@@ -33,7 +33,7 @@ export default function LoginForm() {
   const [welcomeMessage, setWelcomeMessage] = useState("Hey there, word explorer!");
 
   // Mascot rotation for fun
-  const mascots = ["🐙", "🦄", "🐸", "🦁", "🐨", "🐧", "🦊", "🐼"];
+  const mascots = ["🐙", "🦄", "🐸", "���", "🐨", "🐧", "🦊", "🐼"];
   const welcomeMessages = [
     "Hey there, word explorer!",
     "Ready for an amazing adventure?",
@@ -332,10 +332,10 @@ export default function LoginForm() {
                 type="button"
                 variant="ghost"
                 onClick={handleForgotPassword}
-                className="w-full text-gray-600 hover:text-educational-blue"
+                className="w-full text-purple-600 hover:text-pink-600 text-lg font-bold py-3 hover:bg-purple-50 rounded-xl"
                 disabled={isLoading}
               >
-                Forgot your password? 🤔
+                🤔 Forgot your secret code? No problem!
               </Button>
 
               {/* Demo Info */}
