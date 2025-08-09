@@ -19,7 +19,7 @@ import { useNavigate } from "react-router-dom";
 export default function LoginForm() {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
-    username: "",
+    email: "",
     password: "",
   });
   const [showPassword, setShowPassword] = useState(false);
