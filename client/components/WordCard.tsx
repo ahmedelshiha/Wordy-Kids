@@ -260,10 +260,10 @@ export const WordCard: React.FC<WordCardProps> = ({
 
             {word.funFact && (
               <div>
-                <h4 className="text-sm font-medium mb-2 text-pink-300">
+                <h4 className="text-xs md:text-sm font-medium mb-2 text-pink-300">
                   Fun Fact:
                 </h4>
-                <p className="text-sm opacity-90">{word.funFact}</p>
+                <p className="text-xs md:text-sm opacity-90">{word.funFact}</p>
               </div>
             )}
           </div>
