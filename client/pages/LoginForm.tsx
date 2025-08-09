@@ -266,15 +266,15 @@ export default function LoginForm() {
         </Card>
 
         {/* Back Button */}
-        <div className="text-center mt-8">
+        <div className="text-center mt-6">
           <Button
             onClick={handleBackToMain}
             variant="outline"
-            className="bg-gradient-to-r from-green-200 to-blue-200 border-4 border-green-400 text-green-800 font-bold py-4 px-8 rounded-2xl hover:scale-110 transform transition-all text-lg"
+            className="text-gray-600 hover:text-gray-800"
             disabled={isLoading}
           >
-            <ArrowLeft className="w-5 h-5 mr-3" />
-            🎪 Explore as Guest Adventurer! 🎪
+            <ArrowLeft className="w-4 h-4 mr-2" />
+            Continue as Guest
           </Button>
         </div>
 
