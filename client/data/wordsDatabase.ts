@@ -724,6 +724,28 @@ export const wordsDatabase: Word[] = [
     category: "nature",
     difficulty: "easy",
   },
+  {
+    id: 60.1,
+    word: "Grass",
+    pronunciation: "/ɡræs/",
+    definition: "Small green plants that cover the ground",
+    example: "I like to play on the soft grass",
+    funFact: "Grass grows from the bottom, not the top!",
+    emoji: "🌱",
+    category: "nature",
+    difficulty: "easy",
+  },
+  {
+    id: 60.2,
+    word: "Rock",
+    pronunciation: "/rɑːk/",
+    definition: "A hard piece of stone from the earth",
+    example: "I found a smooth rock by the river",
+    funFact: "Some rocks are millions of years old!",
+    emoji: "🪨",
+    category: "nature",
+    difficulty: "easy",
+  },
 
   // BODY PARTS CATEGORY
   {
@@ -1569,7 +1591,7 @@ export const wordsDatabase: Word[] = [
     definition: "The number after thirteen",
     example: "There are fourteen days in two weeks",
     funFact: "Fourteen is twice seven!",
-    emoji: "1️⃣4️⃣",
+    emoji: "1���⃣4️⃣",
     category: "numbers",
     difficulty: "medium",
   },
