@@ -234,7 +234,7 @@ export default function SignUp() {
                     id="password"
                     name="password"
                     type={showPassword ? "text" : "password"}
-                    placeholder="Create a password"
+                    placeholder="Create parent password"
                     value={formData.password}
                     onChange={handleInputChange}
                     className="border-gray-300 focus:border-blue-500 pr-10"
