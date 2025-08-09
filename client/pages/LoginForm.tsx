@@ -33,7 +33,7 @@ export default function LoginForm() {
   const [welcomeMessage, setWelcomeMessage] = useState("Hey there, word explorer!");
 
   // Mascot rotation for fun
-  const mascots = ["🐙", "🦄", "🐸", "���", "🐨", "🐧", "🦊", "🐼"];
+  const mascots = ["🐙", "🦄", "🐸", "🦁", "🐨", "🐧", "🦊", "🐼"];
   const welcomeMessages = [
     "Hey there, word explorer!",
     "Ready for an amazing adventure?",
@@ -339,22 +339,19 @@ export default function LoginForm() {
               </Button>
 
               {/* Demo Info */}
-              <div className="text-center bg-blue-50 rounded-lg p-4">
-                <p className="text-sm text-blue-800 mb-2">
-                  <strong>🎮 Demo Accounts:</strong>
+              <div className="text-center bg-gradient-to-r from-yellow-100 via-pink-100 to-purple-100 rounded-2xl p-6 border-4 border-dashed border-rainbow">
+                <p className="text-lg text-purple-800 mb-4 font-bold">
+                  🎮 <span className="animate-pulse">Try These Super Cool Accounts!</span> 🎮
                 </p>
-                <div className="text-xs text-blue-700 space-y-1">
-                  <div>
-                    • Username: <strong>demo</strong> / Password:{" "}
-                    <strong>demo123</strong>
+                <div className="text-sm text-purple-700 space-y-3 font-bold">
+                  <div className="bg-white rounded-xl p-3 border-2 border-yellow-300">
+                    🌟 Explorer <strong>demo</strong> with secret code <strong>demo123</strong>
                   </div>
-                  <div>
-                    • Username: <strong>alex</strong> / Password:{" "}
-                    <strong>alex123</strong>
+                  <div className="bg-white rounded-xl p-3 border-2 border-pink-300">
+                    🚀 Adventurer <strong>alex</strong> with secret code <strong>alex123</strong>
                   </div>
-                  <div>
-                    • Username: <strong>sam</strong> / Password:{" "}
-                    <strong>sam123</strong>
+                  <div className="bg-white rounded-xl p-3 border-2 border-purple-300">
+                    🎭 Hero <strong>sam</strong> with secret code <strong>sam123</strong>
                   </div>
                 </div>
               </div>
