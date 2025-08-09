@@ -855,10 +855,10 @@ export default function Index({ initialProfile }: IndexProps) {
                             <Brain className="w-16 h-16 text-white" />
                           </div>
                         </div>
-                        <h2 className="text-4xl font-bold text-gray-800 mb-4">
+                        <h2 className="text-2xl md:text-4xl font-bold text-gray-800 mb-4">
                           🧠 Quiz Time!
                         </h2>
-                        <p className="text-xl text-gray-600 mb-8">
+                        <p className="text-base md:text-xl text-gray-600 mb-6 md:mb-8">
                           Test your vocabulary knowledge with fun quizzes!
                           Choose your challenge level below.
                         </p>
