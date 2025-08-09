@@ -206,7 +206,7 @@ export default function SignUp() {
                   className="text-sm font-medium text-gray-700 flex items-center gap-2"
                 >
                   <Mail className="w-4 h-4" />
-                  Email
+                  Parent Email
                 </Label>
                 <Input
                   id="email"
