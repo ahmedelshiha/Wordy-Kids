@@ -345,7 +345,7 @@ export default function LoginForm() {
                 </p>
                 <div className="text-sm text-purple-700 space-y-3 font-bold">
                   <div className="bg-white rounded-xl p-3 border-2 border-yellow-300">
-                    🌟 Explorer <strong>demo</strong> with secret code <strong>demo123</strong>
+                    ���� Explorer <strong>demo</strong> with secret code <strong>demo123</strong>
                   </div>
                   <div className="bg-white rounded-xl p-3 border-2 border-pink-300">
                     🚀 Adventurer <strong>alex</strong> with secret code <strong>alex123</strong>
@@ -364,11 +364,11 @@ export default function LoginForm() {
           <Button
             onClick={handleBackToMain}
             variant="outline"
-            className="bg-white/80 backdrop-blur-sm border-white/50 text-gray-700 hover:bg-white"
+            className="bg-gradient-to-r from-green-200 to-blue-200 border-4 border-green-400 text-green-800 font-bold py-4 px-8 rounded-2xl hover:scale-110 transform transition-all text-lg"
             disabled={isLoading}
           >
-            <ArrowLeft className="w-4 h-4 mr-2" />
-            Continue as Guest
+            <ArrowLeft className="w-5 h-5 mr-3" />
+            🎪 Explore as Guest Adventurer! 🎪
           </Button>
         </div>
 
