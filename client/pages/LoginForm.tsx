@@ -79,7 +79,7 @@ export default function LoginForm() {
       } else {
         setMessage({
           type: "error",
-          text: "Hmm, that doesn't look right! Let's try again, buddy! 🤗💫",
+          text: "Invalid username or password. Please try again.",
         });
       }
       setIsLoading(false);
