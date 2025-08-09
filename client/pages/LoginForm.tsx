@@ -146,7 +146,7 @@ export default function LoginForm() {
                   htmlFor="email"
                   className="text-sm font-medium text-gray-700 flex items-center gap-2"
                 >
-                  <User className="w-4 h-4" />
+                  <Mail className="w-4 h-4" />
                   Email
                 </Label>
                 <Input
