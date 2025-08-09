@@ -124,8 +124,8 @@ export default function Index({ initialProfile }: IndexProps) {
   >("standard");
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [learningMode, setLearningMode] = useState<
-    "cards" | "builder" | "matching"
-  >("cards");
+    "cards" | "builder" | "matching" | "selector"
+  >("selector");
   const [showSettings, setShowSettings] = useState(false);
   const [showCelebration, setShowCelebration] = useState(false);
   const [userRole, setUserRole] = useState<"child" | "parent">("child");
