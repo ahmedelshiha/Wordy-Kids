@@ -477,7 +477,7 @@ export function ChildFriendlyCategorySelector({
       )}
 
       {/* Featured Stats */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-4xl mx-auto mb-8">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-4xl mx-auto mb-6 md:mb-8">
         <Card className="bg-gradient-to-r from-educational-blue to-educational-purple text-white transform hover:scale-105 transition-all duration-300">
           <CardContent className="p-6 text-center">
             <Crown className="w-8 h-8 mx-auto mb-2" />
