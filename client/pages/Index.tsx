@@ -793,34 +793,6 @@ export default function Index({ initialProfile }: IndexProps) {
                         </Card>
 
 
-                        {/* Pronunciation Party */}
-                        <Card className="cursor-pointer hover:shadow-xl transition-all duration-300 hover:scale-105 border-2 border-educational-blue/30">
-                          <CardContent className="p-6 text-center">
-                            <div className="text-6xl mb-4">🎤</div>
-                            <h3 className="text-xl font-bold text-educational-blue mb-2">
-                              Pronunciation Party
-                            </h3>
-                            <p className="text-gray-600 mb-4">
-                              Learn to say words perfectly with fun audio
-                              challenges!
-                            </p>
-                            <div className="flex justify-center gap-2 mb-4">
-                              <span className="bg-educational-blue/20 text-educational-blue px-2 py-1 rounded-full text-xs">
-                                Easy
-                              </span>
-                              <span className="bg-educational-blue/20 text-educational-blue px-2 py-1 rounded-full text-xs">
-                                2-4 min
-                              </span>
-                            </div>
-                            <Button
-                              onClick={() => setShowPronunciationParty(true)}
-                              className="w-full bg-educational-blue text-white hover:bg-educational-blue/90"
-                            >
-                              <Volume2 className="w-4 h-4 mr-2" />
-                              Start Party!
-                            </Button>
-                          </CardContent>
-                        </Card>
 
                         {/* Matching Game */}
                         <Card className="cursor-pointer hover:shadow-xl transition-all duration-300 hover:scale-105 border-2 border-educational-purple/30">
