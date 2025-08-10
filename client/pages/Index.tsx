@@ -597,7 +597,7 @@ export default function Index({ initialProfile }: IndexProps) {
               📚
             </div>
             <div className="hidden md:block absolute bottom-10 left-20 text-4xl animate-bounce delay-1000">
-              🎯
+              ����
             </div>
             <div className="hidden md:block absolute bottom-20 right-10 text-3xl animate-pulse delay-500">
               🚀
@@ -1908,6 +1908,7 @@ export default function Index({ initialProfile }: IndexProps) {
           {[
             { id: "dashboard", icon: Target, label: "Dashboard", color: "purple" },
             { id: "learn", icon: BookOpen, label: "Learn", color: "green" },
+            { id: "adventure", icon: Sword, label: "Adventure", color: "red" },
             { id: "quiz", icon: Brain, label: "Quiz", color: "pink" },
             { id: "progress", icon: Trophy, label: "Progress", color: "yellow" },
           ].map(({ id, icon: Icon, label, color }) => (
