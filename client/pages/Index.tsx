@@ -876,7 +876,7 @@ export default function Index({ initialProfile }: IndexProps) {
             </aside>
 
             {/* Main Content Area */}
-            <div className="flex-1 p-4 lg:p-8 pb-20 lg:pb-8 overflow-y-auto">
+            <div className="flex-1 p-4 lg:p-8 pb-20 lg:pb-8 overflow-y-auto scroll-smooth">
               <Tabs
                 value={activeTab}
                 onValueChange={setActiveTab}
