@@ -128,6 +128,8 @@ export default function Index({ initialProfile }: IndexProps) {
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState("dashboard");
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
+  const [forgottenWords, setForgottenWords] = useState<Set<number>>(new Set());
+  const [rememberedWords, setRememberedWords] = useState<Set<number>>(new Set());
   const [showQuiz, setShowQuiz] = useState(false);
   const [selectedQuizType, setSelectedQuizType] = useState<
     "quick" | "standard" | "challenge" | "picture" | "spelling" | "speed"
@@ -662,35 +664,125 @@ export default function Index({ initialProfile }: IndexProps) {
                                         />
                                       </div>
 
-                                      <div className="flex justify-center gap-2 md:gap-4 px-4 md:px-0">
-                                        <Button
-                                          onClick={() =>
-                                            setCurrentWordIndex(
-                                              Math.max(0, currentWordIndex - 1),
-                                            )
-                                          }
-                                          disabled={currentWordIndex === 0}
-                                          variant="outline"
-                                        >
-                                          Previous
-                                        </Button>
-                                        <Button
-                                          onClick={() =>
-                                            setCurrentWordIndex(
-                                              Math.min(
-                                                displayWords.length - 1,
-                                                currentWordIndex + 1,
-                                              ),
-                                            )
-                                          }
-                                          disabled={
-                                            currentWordIndex ===
-                                            displayWords.length - 1
-                                          }
-                                        >
-                                          Next
-                                          <ArrowRight className="w-4 h-4 ml-2" />
-                                        </Button>
+                                      <div className="space-y-4">
+                                        {/* Learning Progress Buttons */}
+                                        <div className="flex justify-center gap-3 md:gap-4 px-4 md:px-0">
+                                          <Button
+                                            onClick={() => {
+                                              const currentWord = displayWords[currentWordIndex];
+                                              if (currentWord) {
+                                                // Mark as forgotten for extra practice
+                                                setForgottenWords(prev => new Set([...prev, currentWord.id]));
+                                                setRememberedWords(prev => {
+                                                  const newSet = new Set(prev);
+                                                  newSet.delete(currentWord.id);
+                                                  return newSet;
+                                                });
+                                                // Track as hard for spaced repetition
+                                                handleWordMastered(currentWord.id, 'hard');
+                                                // Show celebration effect briefly
+                                                setShowCelebration(true);
+                                                setTimeout(() => setShowCelebration(false), 1000);
+                                              }
+                                              // Auto-advance to next word
+                                              if (currentWordIndex < displayWords.length - 1) {
+                                                setCurrentWordIndex(currentWordIndex + 1);
+                                              } else {
+                                                // Restart with forgotten words for practice
+                                                setCurrentWordIndex(0);
+                                              }
+                                            }}
+                                            variant="outline"
+                                            className="flex-1 bg-red-50 hover:bg-red-100 border-red-200 hover:border-red-300 text-red-700 hover:text-red-800 transition-all duration-300 transform hover:scale-105 py-4 px-6"
+                                          >
+                                            <span className="text-xl mr-2">❌</span>
+                                            <div className="text-center">
+                                              <div className="font-bold text-lg">I Forgot</div>
+                                              <div className="text-xs opacity-75">Need practice</div>
+                                            </div>
+                                          </Button>
+
+                                          <Button
+                                            onClick={() => {
+                                              const currentWord = displayWords[currentWordIndex];
+                                              if (currentWord) {
+                                                // Mark as remembered
+                                                setRememberedWords(prev => new Set([...prev, currentWord.id]));
+                                                setForgottenWords(prev => {
+                                                  const newSet = new Set(prev);
+                                                  newSet.delete(currentWord.id);
+                                                  return newSet;
+                                                });
+                                                // Track as easy for spaced repetition
+                                                handleWordMastered(currentWord.id, 'easy');
+                                                // Show celebration effect
+                                                setShowCelebration(true);
+                                                setTimeout(() => setShowCelebration(false), 1500);
+                                              }
+                                              // Auto-advance to next word
+                                              if (currentWordIndex < displayWords.length - 1) {
+                                                setCurrentWordIndex(currentWordIndex + 1);
+                                              } else {
+                                                // Show completion message
+                                                setFeedback({
+                                                  type: "celebration",
+                                                  title: "Amazing Work! 🎉",
+                                                  message: `You've reviewed all words! You remembered ${rememberedWords.size + 1} words and ${forgottenWords.size} need more practice.`,
+                                                  points: (rememberedWords.size + 1) * 10,
+                                                  onContinue: () => {
+                                                    setFeedback(null);
+                                                    setCurrentWordIndex(0);
+                                                  },
+                                                });
+                                              }
+                                            }}
+                                            className="flex-1 bg-green-50 hover:bg-green-100 border-green-200 hover:border-green-300 text-green-700 hover:text-green-800 transition-all duration-300 transform hover:scale-105 py-4 px-6"
+                                          >
+                                            <span className="text-xl mr-2">✅</span>
+                                            <div className="text-center">
+                                              <div className="font-bold text-lg">I Remember!</div>
+                                              <div className="text-xs opacity-75">Got it!</div>
+                                            </div>
+                                          </Button>
+                                        </div>
+
+                                        {/* Learning Progress Indicator */}
+                                        <div className="text-center space-y-2">
+                                          <div className="flex justify-center gap-4 text-sm">
+                                            <div className="flex items-center gap-1 text-green-600">
+                                              <span className="text-base">✅</span>
+                                              <span className="font-medium">{rememberedWords.size}</span>
+                                              <span className="text-xs opacity-75">remembered</span>
+                                            </div>
+                                            <div className="flex items-center gap-1 text-red-600">
+                                              <span className="text-base">❌</span>
+                                              <span className="font-medium">{forgottenWords.size}</span>
+                                              <span className="text-xs opacity-75">to practice</span>
+                                            </div>
+                                          </div>
+
+                                          {/* Quick Navigation */}
+                                          <div className="flex justify-center gap-2 mt-3">
+                                            <Button
+                                              onClick={() => setCurrentWordIndex(Math.max(0, currentWordIndex - 1))}
+                                              disabled={currentWordIndex === 0}
+                                              variant="ghost"
+                                              size="sm"
+                                              className="text-xs text-slate-500 hover:text-slate-700"
+                                            >
+                                              ← Back
+                                            </Button>
+                                            <Button
+                                              onClick={() => setCurrentWordIndex(Math.min(displayWords.length - 1, currentWordIndex + 1))}
+                                              disabled={currentWordIndex === displayWords.length - 1}
+                                              variant="ghost"
+                                              size="sm"
+                                              className="text-xs text-slate-500 hover:text-slate-700"
+                                            >
+                                              Skip →
+                                            </Button>
+                                          </div>
+                                        </div>
                                       </div>
 
                                       <div className="text-center mt-4">
