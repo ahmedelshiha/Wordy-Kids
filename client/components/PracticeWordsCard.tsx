@@ -241,7 +241,7 @@ export const PracticeWordsCard: React.FC<PracticeWordsCardProps> = ({
 
         {/* Motivational footer */}
         <div className="text-center">
-          <p className="text-sm text-gray-600">
+          <p className="text-xs sm:text-sm text-gray-600 px-2">
             Hey {childName}! <span className="font-semibold text-orange-600">Practice makes perfect!</span> 💪✨
           </p>
         </div>
