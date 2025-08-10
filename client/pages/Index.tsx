@@ -864,7 +864,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                                   setFeedback({
                                                     type: "celebration",
                                                     title: "Category Review Complete! 📚",
-                                                    message: `You've reviewed all ${completionResult.totalWords} words in ${selectedCategory}!\\n\\n✅ Remembered: ${completionResult.totalRemembered} words\\n❌ Need practice: ${completionResult.totalWords - completionResult.totalRemembered} words\\n\\n${completionResult.totalWords - completionResult.totalRemembered > 0 ? "Don't worry! Let's practice the tricky ones again! 💪" : "Amazing work! 🎉"}`,
+                                                    message: `You've reviewed all ${completionResult.totalWords} words in ${selectedCategory === "all" ? "this word set" : selectedCategory}!\\n\\n✅ Remembered: ${completionResult.totalRemembered} words\\n❌ Need practice: ${completionResult.totalWords - completionResult.totalRemembered} words\\n\\n${completionResult.totalWords - completionResult.totalRemembered > 0 ? "Don't worry! Let's practice the tricky ones again! 💪" : "Amazing work! 🎉"}`,
                                                     points: completionResult.totalRemembered * 10, // Fewer points since words were forgotten
                                                     onContinue: () => {
                                                       setFeedback(null);
@@ -1167,7 +1167,7 @@ export default function Index({ initialProfile }: IndexProps) {
                         {/* Easy Quiz */}
                         <Card className="cursor-pointer hover:shadow-xl transition-all duration-300 md:hover:scale-105 border-2 border-educational-green/30">
                           <CardContent className="p-6 text-center">
-                            <div className="text-6xl mb-4">🌱</div>
+                            <div className="text-6xl mb-4">���</div>
                             <h3 className="text-xl font-bold text-educational-green mb-2">
                               Easy Quiz
                             </h3>
