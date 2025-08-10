@@ -158,6 +158,9 @@ export default function Index({ initialProfile }: IndexProps) {
   const [feedback, setFeedback] = useState<any>(null);
   const [gameMode, setGameMode] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [currentSessionId, setCurrentSessionId] = useState<string | null>(null);
+  const [childStats, setChildStats] = useState<ChildWordStats | null>(null);
+  const [isLoadingProgress, setIsLoadingProgress] = useState(false);
 
   // Load background animations setting on mount
   useEffect(() => {
