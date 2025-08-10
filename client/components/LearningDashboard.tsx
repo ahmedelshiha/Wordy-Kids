@@ -3,15 +3,19 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
 import { Badge } from '@/components/ui/badge';
 import { AnimatedCounter } from '@/components/AnimatedCounter';
-import { 
-  Trophy, 
-  Star, 
-  BookOpen, 
-  Target, 
-  Zap, 
+import { ChildWordStats } from '@shared/api';
+import {
+  Trophy,
+  Star,
+  BookOpen,
+  Target,
+  Zap,
   Calendar,
   TrendingUp,
-  Award
+  Award,
+  Brain,
+  CheckCircle,
+  AlertCircle
 } from 'lucide-react';
 
 interface LearningStats {
