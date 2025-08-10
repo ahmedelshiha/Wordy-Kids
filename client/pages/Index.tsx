@@ -918,6 +918,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                               }
                                             }}
                                             className="flex-1 bg-green-50 hover:bg-green-100 border-green-200 hover:border-green-300 text-green-700 hover:text-green-800 transition-all duration-300 transform hover:scale-105 py-4 px-6"
+                                            disabled={isLoadingProgress}
                                           >
                                             <span className="text-xl mr-2">
                                               ✅
