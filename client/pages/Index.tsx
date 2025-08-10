@@ -184,6 +184,30 @@ export default function Index({ initialProfile }: IndexProps) {
     };
   }, []);
 
+  // Initialize learning session and load child stats
+  useEffect(() => {
+    const initializeSession = async () => {
+      if (currentProfile?.id && activeTab === "learn" && !currentSessionId) {
+        try {
+          const sessionResponse = await WordProgressAPI.startSession({
+            childId: currentProfile.id,
+            sessionType: "word_cards",
+            category: selectedCategory !== "all" ? selectedCategory : undefined,
+          });
+          setCurrentSessionId(sessionResponse.sessionId);
+
+          // Load child stats
+          const statsResponse = await WordProgressAPI.getChildStats(currentProfile.id);
+          setChildStats(statsResponse.stats);
+        } catch (error) {
+          console.error("Failed to initialize session:", error);
+        }
+      }
+    };
+
+    initializeSession();
+  }, [currentProfile?.id, activeTab, selectedCategory, currentSessionId]);
+
   const handleQuizComplete = (score: number, total: number) => {
     const percentage = Math.round((score / total) * 100);
     setFeedback({
