@@ -285,6 +285,73 @@ export const WordCard: React.FC<WordCardProps> = ({
               </div>
             )}
           </div>
+
+          {/* Vocabulary Builder Features */}
+          {showVocabularyBuilder && (
+            <div className="border-t border-white/20 pt-4 mt-4">
+              {/* Mastery Level */}
+              <div className="mb-4">
+                <div className="flex items-center justify-between mb-2">
+                  <h4 className="text-xs md:text-sm font-medium text-blue-300 flex items-center gap-1">
+                    <Brain className="w-3 h-3" />
+                    Mastery Level
+                  </h4>
+                  <span className="text-xs text-white/70">
+                    {word.masteryLevel || 0}%
+                  </span>
+                </div>
+                <Progress
+                  value={word.masteryLevel || 0}
+                  className="h-2 bg-white/20"
+                />
+              </div>
+
+              {/* Rating Buttons */}
+              <div className="space-y-2">
+                <h4 className="text-xs md:text-sm font-medium text-purple-300 mb-2">
+                  How well do you know this word?
+                </h4>
+                <div className="flex gap-2 justify-center">
+                  <Button
+                    size="sm"
+                    variant="ghost"
+                    className="flex-1 bg-red-500/20 hover:bg-red-500/30 text-red-200 border border-red-500/30"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      onWordMastered?.(word.id, 'hard');
+                    }}
+                  >
+                    <ThumbsDown className="w-3 h-3 mr-1" />
+                    Hard
+                  </Button>
+                  <Button
+                    size="sm"
+                    variant="ghost"
+                    className="flex-1 bg-yellow-500/20 hover:bg-yellow-500/30 text-yellow-200 border border-yellow-500/30"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      onWordMastered?.(word.id, 'medium');
+                    }}
+                  >
+                    <Star className="w-3 h-3 mr-1" />
+                    OK
+                  </Button>
+                  <Button
+                    size="sm"
+                    variant="ghost"
+                    className="flex-1 bg-green-500/20 hover:bg-green-500/30 text-green-200 border border-green-500/30"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      onWordMastered?.(word.id, 'easy');
+                    }}
+                  >
+                    <ThumbsUp className="w-3 h-3 mr-1" />
+                    Easy
+                  </Button>
+                </div>
+              </div>
+            </div>
+          )}
         </CardContent>
       </Card>
     </div>
