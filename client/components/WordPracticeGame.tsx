@@ -135,30 +135,30 @@ export const WordPracticeGame: React.FC<WordPracticeGameProps> = ({
       </p>
 
       {/* Words preview */}
-      <div className="bg-white p-6 rounded-2xl shadow-lg border-2 border-purple-200">
-        <h3 className="text-lg font-semibold text-purple-700 mb-4 flex items-center justify-center gap-2">
+      <div className="bg-white p-4 sm:p-6 rounded-2xl shadow-lg border-2 border-purple-200 mx-2 sm:mx-0">
+        <h3 className="text-base sm:text-lg font-semibold text-purple-700 mb-3 sm:mb-4 flex items-center justify-center gap-2">
           <span>📚</span> Your Challenge Words <span>📚</span>
         </h3>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-3 max-w-2xl mx-auto">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 max-w-2xl mx-auto">
           {practiceWords.slice(0, 4).map((word, index) => (
             <div key={word.id} className="bg-gradient-to-r from-blue-50 to-purple-50 p-3 rounded-lg border border-purple-200">
               <div className="flex items-center gap-2">
-                <div className="text-2xl">
+                <div className="text-xl sm:text-2xl flex-shrink-0">
                   {word.category === 'Science' ? '🔬' :
                    word.category === 'Transportation' ? '🚁' :
                    word.category === 'Space' ? '🌟' :
                    word.category === 'History' ? '🏺' :
                    word.category === 'Education' ? '📚' : '📖'}
                 </div>
-                <div className="text-left">
-                  <div className="font-bold text-gray-800">{word.word}</div>
-                  <div className="text-xs text-gray-500">{word.category}</div>
+                <div className="text-left min-w-0 flex-1">
+                  <div className="font-bold text-gray-800 text-sm sm:text-base truncate">{word.word}</div>
+                  <div className="text-xs text-gray-500 truncate">{word.category}</div>
                 </div>
               </div>
             </div>
           ))}
           {practiceWords.length > 4 && (
-            <div className="col-span-full text-center text-gray-500 text-sm py-2">
+            <div className="col-span-full text-center text-gray-500 text-xs sm:text-sm py-2">
               ... and {practiceWords.length - 4} more amazing words! 🎉
             </div>
           )}
