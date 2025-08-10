@@ -469,19 +469,14 @@ export default function Index({ initialProfile }: IndexProps) {
 
   // Helper function to get all words from the database
   const getAllWords = () => {
-    const allWords: any[] = [];
-    Object.values(wordsDatabase).forEach(category => {
-      allWords.push(...category);
-    });
-    return allWords;
+    return wordsDatabase || [];
   };
 
   // Helper function to get words for a specific category
   const getWordsForCategory = (categoryName: string) => {
-    const categoryKey = Object.keys(wordsDatabase).find(key =>
-      key.toLowerCase().replace(/[^a-z]/g, '') === categoryName.toLowerCase().replace(/[^a-z]/g, '')
+    return wordsDatabase.filter(word =>
+      word.category.toLowerCase().replace(/[^a-z]/g, '') === categoryName.toLowerCase().replace(/[^a-z]/g, '')
     );
-    return categoryKey ? wordsDatabase[categoryKey] : [];
   };
 
   const startPracticeGame = () => {
