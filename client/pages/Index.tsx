@@ -153,7 +153,13 @@ export default function Index({ initialProfile }: IndexProps) {
 
   // New child-friendly states
   const [currentProfile, setCurrentProfile] = useState<any>(
-    initialProfile || null,
+    initialProfile || {
+      id: "demo-child-1",
+      name: "Alex",
+      age: 8,
+      avatar: "👦",
+      interests: ["Animals", "Science", "Space"]
+    },
   );
   const [feedback, setFeedback] = useState<any>(null);
   const [gameMode, setGameMode] = useState(false);
@@ -890,7 +896,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                                 setFeedback({
                                                   type: "celebration",
                                                   title: `${encouragementMessage}`,
-                                                  message: `You completed ${totalWords} words with ${accuracy}% accuracy!\\n\\n✅ Remembered: ${totalRemembered} words\\n❌ Need practice: ${totalForgotten} words\\n\\n${totalForgotten > 0 ? "Don't worry about the ones you forgot - that's how we learn! 🧠" : "Perfect score! You're amazing! 🏆"}`,
+                                                  message: `You completed ${totalWords} words with ${accuracy}% accuracy!\\n\\n✅ Remembered: ${totalRemembered} words\\n❌ Need practice: ${totalForgotten} words\\n\\n${totalForgotten > 0 ? "Don't worry about the ones you forgot - that's how we learn! 🧠" : "Perfect score! You're amazing! ��"}`,
                                                   points:
                                                     totalRemembered * 15 +
                                                     (accuracy >= 90
