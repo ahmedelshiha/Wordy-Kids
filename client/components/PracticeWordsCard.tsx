@@ -96,10 +96,10 @@ export const PracticeWordsCard: React.FC<PracticeWordsCardProps> = ({
   };
 
   return (
-    <Card 
+    <Card
       className={`bg-gradient-to-br from-orange-50 via-pink-50 to-purple-50 border-2 transition-all duration-300 cursor-pointer ${
-        isHovered 
-          ? 'border-orange-300 shadow-2xl scale-[1.02]' 
+        isHovered
+          ? 'border-orange-300 shadow-2xl md:scale-[1.02]'
           : 'border-orange-200 shadow-lg hover:shadow-xl'
       }`}
       onMouseEnter={() => setIsHovered(true)}
