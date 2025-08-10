@@ -801,23 +801,23 @@ export default function Index({ initialProfile }: IndexProps) {
                     <span className="font-medium lg:font-semibold text-sm lg:text-base">Quiz Time</span>
                   </button>
 
-                <button
-                  onClick={() => setActiveTab("progress")}
-                  className={`w-full flex items-center gap-4 p-4 rounded-2xl transition-all ${
-                    activeTab === "progress"
-                      ? "bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-lg"
-                      : "bg-white text-gray-700 hover:bg-purple-50"
-                  }`}
-                >
-                  <div
-                    className={`p-2 rounded-xl ${activeTab === "progress" ? "bg-white/20" : "bg-yellow-100"}`}
+                  <button
+                    onClick={() => setActiveTab("progress")}
+                    className={`w-full flex items-center gap-3 p-3 lg:p-4 rounded-xl lg:rounded-2xl transition-all ${
+                      activeTab === "progress"
+                        ? "bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-lg"
+                        : "bg-white text-gray-700 hover:bg-purple-50 border border-purple-100"
+                    }`}
                   >
-                    <Trophy
-                      className={`w-5 h-5 ${activeTab === "progress" ? "text-white" : "text-yellow-600"}`}
-                    />
-                  </div>
-                  <span className="font-semibold">🌟 My Journey</span>
-                </button>
+                    <div
+                      className={`p-2 rounded-lg lg:rounded-xl ${activeTab === "progress" ? "bg-white/20" : "bg-yellow-100"}`}
+                    >
+                      <Trophy
+                        className={`w-4 h-4 lg:w-5 lg:h-5 ${activeTab === "progress" ? "text-white" : "text-yellow-600"}`}
+                      />
+                    </div>
+                    <span className="font-medium lg:font-semibold text-sm lg:text-base">🌟 My Journey</span>
+                  </button>
 
                 <button
                   onClick={startPracticeGame}
