@@ -265,45 +265,45 @@ export const WordPracticeGame: React.FC<WordPracticeGameProps> = ({
       </div>
 
       {/* Word card */}
-      <Card className="bg-gradient-to-br from-yellow-50 to-orange-50 border-2 border-yellow-200 shadow-xl">
-        <CardContent className="p-8 text-center">
-          <div className="space-y-6">
+      <Card className="bg-gradient-to-br from-yellow-50 to-orange-50 border-2 border-yellow-200 shadow-xl mx-2 sm:mx-0">
+        <CardContent className="p-4 sm:p-8 text-center">
+          <div className="space-y-4 sm:space-y-6">
             {/* Word display */}
-            <div className="bg-white p-6 rounded-2xl shadow-inner">
-              <div className="text-5xl font-bold text-gray-800 mb-4">
+            <div className="bg-white p-4 sm:p-6 rounded-2xl shadow-inner">
+              <div className="text-3xl sm:text-5xl font-bold text-gray-800 mb-3 sm:mb-4 break-words">
                 {currentWord.word}
               </div>
               <Button
                 onClick={playPronunciation}
                 variant="outline"
-                className="bg-blue-50 hover:bg-blue-100 border-blue-200"
+                className="bg-blue-50 hover:bg-blue-100 border-blue-200 min-h-[44px] px-4"
               >
-                <Volume2 className="w-5 h-5 mr-2" />
-                🔊 Hear it!
+                <Volume2 className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
+                <span className="text-sm sm:text-base">🔊 Hear it!</span>
               </Button>
             </div>
 
             {/* Hint buttons */}
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-2 gap-3 sm:gap-4">
               <Button
                 onClick={() => setShowDefinition(!showDefinition)}
                 variant="outline"
-                className={`p-4 h-auto ${showDefinition ? 'bg-green-50 border-green-300' : 'bg-white'}`}
+                className={`p-3 sm:p-4 h-auto min-h-[60px] ${showDefinition ? 'bg-green-50 border-green-300' : 'bg-white'}`}
               >
                 <div className="text-center">
-                  <Sparkles className="w-6 h-6 mx-auto mb-2 text-green-500" />
-                  <div className="font-semibold">Definition Hint</div>
+                  <Sparkles className="w-5 h-5 sm:w-6 sm:h-6 mx-auto mb-2 text-green-500" />
+                  <div className="font-semibold text-xs sm:text-sm">Definition Hint</div>
                 </div>
               </Button>
-              
+
               <Button
                 onClick={() => setShowExample(!showExample)}
                 variant="outline"
-                className={`p-4 h-auto ${showExample ? 'bg-blue-50 border-blue-300' : 'bg-white'}`}
+                className={`p-3 sm:p-4 h-auto min-h-[60px] ${showExample ? 'bg-blue-50 border-blue-300' : 'bg-white'}`}
               >
                 <div className="text-center">
-                  <Star className="w-6 h-6 mx-auto mb-2 text-blue-500" />
-                  <div className="font-semibold">Example Hint</div>
+                  <Star className="w-5 h-5 sm:w-6 sm:h-6 mx-auto mb-2 text-blue-500" />
+                  <div className="font-semibold text-xs sm:text-sm">Example Hint</div>
                 </div>
               </Button>
             </div>
