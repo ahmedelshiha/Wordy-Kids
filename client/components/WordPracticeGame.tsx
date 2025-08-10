@@ -116,54 +116,113 @@ export const WordPracticeGame: React.FC<WordPracticeGameProps> = ({
 
   const renderIntro = () => (
     <div className="text-center space-y-6 p-8">
+      {/* Animated header */}
       <div className="relative">
         <div className="text-8xl mb-4 animate-bounce">🎯</div>
         <div className="absolute -top-2 -right-2 text-3xl animate-spin">✨</div>
+        <div className="absolute -bottom-2 -left-2 text-2xl animate-pulse">🚀</div>
       </div>
-      
-      <h1 className="text-4xl font-bold text-purple-700 mb-2">
-        Practice Challenge! 💪
-      </h1>
-      
+
+      <div className="space-y-2">
+        <h1 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent mb-2">
+          Practice Challenge!
+        </h1>
+        <div className="text-3xl animate-bounce">💪</div>
+      </div>
+
       <p className="text-xl text-gray-600 mb-4">
-        Hey {childName}! Ready to practice your tricky words?
+        Hey {childName}! Time to become a <span className="font-bold text-purple-600">Word Master!</span> 🏆
       </p>
-      
+
+      {/* Words preview */}
+      <div className="bg-white p-6 rounded-2xl shadow-lg border-2 border-purple-200">
+        <h3 className="text-lg font-semibold text-purple-700 mb-4 flex items-center justify-center gap-2">
+          <span>📚</span> Your Challenge Words <span>📚</span>
+        </h3>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-3 max-w-2xl mx-auto">
+          {practiceWords.slice(0, 4).map((word, index) => (
+            <div key={word.id} className="bg-gradient-to-r from-blue-50 to-purple-50 p-3 rounded-lg border border-purple-200">
+              <div className="flex items-center gap-2">
+                <div className="text-2xl">
+                  {word.category === 'Science' ? '🔬' :
+                   word.category === 'Transportation' ? '🚁' :
+                   word.category === 'Space' ? '🌟' :
+                   word.category === 'History' ? '🏺' :
+                   word.category === 'Education' ? '📚' : '📖'}
+                </div>
+                <div className="text-left">
+                  <div className="font-bold text-gray-800">{word.word}</div>
+                  <div className="text-xs text-gray-500">{word.category}</div>
+                </div>
+              </div>
+            </div>
+          ))}
+          {practiceWords.length > 4 && (
+            <div className="col-span-full text-center text-gray-500 text-sm py-2">
+              ... and {practiceWords.length - 4} more amazing words! 🎉
+            </div>
+          )}
+        </div>
+      </div>
+
       <div className="bg-purple-50 p-6 rounded-2xl">
-        <h3 className="text-lg font-semibold text-purple-700 mb-3">🎮 How to Play:</h3>
-        <div className="space-y-2 text-left">
-          <div className="flex items-center gap-3">
-            <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center text-blue-600 font-bold">1</div>
-            <span>Look at each word carefully</span>
+        <h3 className="text-lg font-semibold text-purple-700 mb-3 flex items-center justify-center gap-2">
+          <span>🎮</span> How to Play <span>🎮</span>
+        </h3>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-left max-w-3xl mx-auto">
+          <div className="flex items-center gap-3 bg-white p-3 rounded-lg">
+            <div className="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center text-blue-600 font-bold text-lg">1</div>
+            <span className="font-medium">Look at each word carefully 👀</span>
           </div>
-          <div className="flex items-center gap-3">
-            <div className="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center text-green-600 font-bold">2</div>
-            <span>Use hints if you need help</span>
+          <div className="flex items-center gap-3 bg-white p-3 rounded-lg">
+            <div className="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center text-green-600 font-bold text-lg">2</div>
+            <span className="font-medium">Use hints if you need help 💡</span>
           </div>
-          <div className="flex items-center gap-3">
-            <div className="w-8 h-8 bg-orange-100 rounded-full flex items-center justify-center text-orange-600 font-bold">3</div>
-            <span>Choose "I Remember!" or "Still Tricky"</span>
+          <div className="flex items-center gap-3 bg-white p-3 rounded-lg">
+            <div className="w-10 h-10 bg-orange-100 rounded-full flex items-center justify-center text-orange-600 font-bold text-lg">3</div>
+            <span className="font-medium">Choose your answer honestly ✨</span>
           </div>
-          <div className="flex items-center gap-3">
-            <div className="w-8 h-8 bg-purple-100 rounded-full flex items-center justify-center text-purple-600 font-bold">4</div>
-            <span>Earn points and build streaks!</span>
+          <div className="flex items-center gap-3 bg-white p-3 rounded-lg">
+            <div className="w-10 h-10 bg-purple-100 rounded-full flex items-center justify-center text-purple-600 font-bold text-lg">4</div>
+            <span className="font-medium">Earn points and build streaks! 🏆</span>
           </div>
         </div>
       </div>
-      
-      <div className="bg-yellow-50 p-4 rounded-xl">
-        <p className="text-lg font-semibold text-yellow-700">
-          🏆 {practiceWords.length} words to practice
+
+      {/* Game stats preview */}
+      <div className="grid grid-cols-3 gap-4 max-w-md mx-auto">
+        <div className="bg-yellow-50 p-4 rounded-xl border-2 border-yellow-200">
+          <div className="text-2xl font-bold text-yellow-600">{practiceWords.length}</div>
+          <div className="text-xs text-yellow-600">Words to Master</div>
+        </div>
+        <div className="bg-green-50 p-4 rounded-xl border-2 border-green-200">
+          <div className="text-2xl font-bold text-green-600">+{practiceWords.length * 15}</div>
+          <div className="text-xs text-green-600">Max Points</div>
+        </div>
+        <div className="bg-blue-50 p-4 rounded-xl border-2 border-blue-200">
+          <div className="text-2xl font-bold text-blue-600">~{Math.ceil(practiceWords.length * 1.5)}m</div>
+          <div className="text-xs text-blue-600">Est. Time</div>
+        </div>
+      </div>
+
+      <div className="space-y-4">
+        <Button
+          onClick={startGame}
+          className="bg-gradient-to-r from-purple-500 to-pink-500 text-white text-xl py-6 px-12 rounded-2xl shadow-lg hover:shadow-xl transition-all transform hover:scale-105"
+        >
+          <div className="flex items-center gap-3">
+            <Gamepad2 className="w-6 h-6" />
+            <div>
+              <div className="font-bold">Start Practice Adventure!</div>
+              <div className="text-sm opacity-90">Let's master these words! 🌟</div>
+            </div>
+          </div>
+        </Button>
+
+        <p className="text-sm text-gray-500">
+          Remember: Every practice makes you stronger! 💪✨
         </p>
       </div>
-      
-      <Button 
-        onClick={startGame}
-        className="bg-gradient-to-r from-purple-500 to-pink-500 text-white text-xl py-6 px-12 rounded-2xl shadow-lg hover:shadow-xl transition-all transform hover:scale-105"
-      >
-        <Gamepad2 className="w-6 h-6 mr-3" />
-        Start Practice Adventure!
-      </Button>
     </div>
   );
 
