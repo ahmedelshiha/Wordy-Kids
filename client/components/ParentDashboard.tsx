@@ -598,13 +598,18 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
             <Button
               onClick={() => setActiveTab("analytics")}
               variant="outline"
-              className="h-20 flex flex-col items-center gap-2 border-orange-200 hover:border-orange-300 hover:bg-orange-50"
+              className="h-20 flex flex-col items-center gap-2 border-orange-200 hover:border-orange-300 hover:bg-orange-50 relative"
             >
               <AlertCircle className="w-6 h-6 text-orange-500" />
               <div className="text-center">
                 <div className="font-semibold text-orange-700">Practice Words</div>
                 <div className="text-xs text-orange-600">View words that need help</div>
               </div>
+              {children.length > 0 && Object.values(childrenWordStats).some(stats => stats.wordsNeedingPractice > 0) && (
+                <Badge className="absolute -top-2 -right-2 bg-orange-500 text-white text-xs px-2">
+                  {Object.values(childrenWordStats).reduce((total, stats) => total + (stats.wordsNeedingPractice || 0), 0)}
+                </Badge>
+              )}
             </Button>
 
             <Button
