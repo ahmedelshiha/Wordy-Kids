@@ -107,32 +107,32 @@ export const PracticeWordsCard: React.FC<PracticeWordsCardProps> = ({
       onClick={onStartPractice}
     >
       <CardHeader className="pb-3">
-        <div className="flex items-center justify-between">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
           <div className="flex items-center gap-3">
-            <div className={`relative p-3 rounded-full bg-gradient-to-r from-orange-400 to-red-400 transition-transform duration-300 ${
-              isHovered ? 'scale-110' : ''
+            <div className={`relative p-2 sm:p-3 rounded-full bg-gradient-to-r from-orange-400 to-red-400 transition-transform duration-300 ${
+              isHovered ? 'md:scale-110' : ''
             }`}>
-              <Target className="w-8 h-8 text-white" />
-              <div className="absolute -top-1 -right-1 bg-white text-orange-500 text-xs font-bold rounded-full w-6 h-6 flex items-center justify-center animate-pulse">
+              <Target className="w-6 h-6 sm:w-8 sm:h-8 text-white" />
+              <div className="absolute -top-1 -right-1 bg-white text-orange-500 text-xs font-bold rounded-full w-5 h-5 sm:w-6 sm:h-6 flex items-center justify-center animate-pulse">
                 {practiceWords.length}
               </div>
             </div>
-            <div>
-              <CardTitle className="text-2xl font-bold text-orange-700 flex items-center gap-2">
-                Practice Challenge! 
+            <div className="flex-1">
+              <CardTitle className="text-xl sm:text-2xl font-bold text-orange-700 flex items-center gap-2">
+                Practice Challenge!
                 <div className={`transition-transform duration-500 ${
-                  animationPhase === 0 ? 'animate-bounce' : 
+                  animationPhase === 0 ? 'animate-bounce' :
                   animationPhase === 1 ? 'animate-pulse' : 'animate-spin'
                 }`}>
                   {animationPhase === 0 ? '🎯' : animationPhase === 1 ? '⚡' : '🌟'}
                 </div>
               </CardTitle>
-              <p className="text-orange-600 font-medium">
+              <p className="text-orange-600 font-medium text-sm sm:text-base">
                 {getEncouragingMessage()}
               </p>
             </div>
           </div>
-          <Badge className="bg-orange-500 text-white text-lg px-3 py-1">
+          <Badge className="bg-orange-500 text-white text-sm sm:text-lg px-2 sm:px-3 py-1 self-start sm:self-auto">
             Ready!
           </Badge>
         </div>
