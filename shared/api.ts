@@ -180,3 +180,153 @@ export interface GetAnalyticsResponse {
   timeSeriesData?: Record<string, any[]>;
   success: boolean;
 }
+
+/**
+ * Word Progress Tracking Types
+ */
+export interface WordProgress {
+  id: string;
+  childId: string;
+  wordId: string;
+  word: string;
+  category: string;
+  status: "remembered" | "needs_practice" | "new";
+  difficulty: "easy" | "medium" | "hard";
+  timesReviewed: number;
+  timesCorrect: number;
+  timesIncorrect: number;
+  accuracy: number;
+  lastReviewed: Date;
+  firstLearned?: Date;
+  masteryLevel: number; // 0-100
+  spacedRepetitionInterval: number; // days until next review
+  nextReviewDate: Date;
+  averageResponseTime: number; // milliseconds
+  learningSessionIds: string[];
+  notes?: string;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+export interface LearningSession {
+  id: string;
+  childId: string;
+  sessionType: "word_cards" | "quiz" | "matching" | "spelling" | "speed";
+  startTime: Date;
+  endTime: Date;
+  duration: number; // seconds
+  wordsReviewed: string[];
+  wordsRemembered: string[];
+  wordsNeedPractice: string[];
+  totalWords: number;
+  correctAnswers: number;
+  incorrectAnswers: number;
+  accuracy: number;
+  pointsEarned: number;
+  category?: string;
+  difficulty?: "easy" | "medium" | "hard";
+  createdAt: Date;
+}
+
+export interface ChildWordStats {
+  childId: string;
+  totalWordsLearned: number;
+  wordsRemembered: number;
+  wordsNeedingPractice: number;
+  averageAccuracy: number;
+  totalReviewSessions: number;
+  strongestCategories: string[];
+  weakestCategories: string[];
+  recentProgress: {
+    date: Date;
+    wordsReviewed: number;
+    accuracy: number;
+  }[];
+  masteryByCategory: {
+    category: string;
+    totalWords: number;
+    masteredWords: number;
+    needsPracticeWords: number;
+    averageAccuracy: number;
+  }[];
+}
+
+/**
+ * API Request/Response Types for Word Progress
+ */
+export interface RecordWordProgressRequest {
+  childId: string;
+  sessionId: string;
+  wordId: string;
+  word: string;
+  category: string;
+  status: "remembered" | "needs_practice";
+  responseTime?: number;
+  difficulty?: "easy" | "medium" | "hard";
+}
+
+export interface RecordWordProgressResponse {
+  success: boolean;
+  wordProgress: WordProgress;
+  updatedStats: ChildWordStats;
+  levelUp?: boolean;
+  achievements?: string[];
+}
+
+export interface StartLearningSessionRequest {
+  childId: string;
+  sessionType: "word_cards" | "quiz" | "matching" | "spelling" | "speed";
+  category?: string;
+  difficulty?: "easy" | "medium" | "hard";
+}
+
+export interface StartLearningSessionResponse {
+  success: boolean;
+  sessionId: string;
+  wordsToReview: Array<{
+    id: string;
+    word: string;
+    category: string;
+    definition: string;
+    example: string;
+    lastAccuracy?: number;
+  }>;
+}
+
+export interface EndLearningSessionRequest {
+  sessionId: string;
+  wordsRemembered: string[];
+  wordsNeedPractice: string[];
+  totalWords: number;
+  pointsEarned?: number;
+}
+
+export interface EndLearningSessionResponse {
+  success: boolean;
+  session: LearningSession;
+  updatedStats: ChildWordStats;
+  achievements?: string[];
+}
+
+export interface GetChildStatsRequest {
+  childId: string;
+  dateRange?: "week" | "month" | "quarter" | "all";
+}
+
+export interface GetChildStatsResponse {
+  success: boolean;
+  stats: ChildWordStats;
+  recentSessions: LearningSession[];
+  topWords: Array<{
+    word: string;
+    category: string;
+    accuracy: number;
+    timesReviewed: number;
+  }>;
+  strugglingWords: Array<{
+    word: string;
+    category: string;
+    accuracy: number;
+    timesReviewed: number;
+  }>;
+}
