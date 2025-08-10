@@ -677,22 +677,6 @@ export default function Index({ initialProfile }: IndexProps) {
 
               <button
                 onClick={() => {
-                  startPracticeGame();
-                  setIsMobileMenuOpen(false);
-                }}
-                className="w-full flex items-center gap-3 p-3 rounded-xl transition-all bg-white text-gray-700 hover:bg-orange-50 border-2 border-orange-200 relative"
-              >
-                <div className="p-2 rounded-lg bg-orange-100">
-                  <Target className="w-4 h-4 text-orange-600" />
-                </div>
-                <span className="font-semibold text-sm">🎯 Practice Words</span>
-                <div className="absolute -top-1 -right-1 bg-orange-500 text-white text-xs px-1.5 py-0.5 rounded-full">
-                  {getPracticeWords().length}
-                </div>
-              </button>
-
-              <button
-                onClick={() => {
                   setUserRole("parent");
                   setIsMobileMenuOpen(false);
                 }}
