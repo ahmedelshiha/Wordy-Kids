@@ -911,7 +911,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                                   currentWordIndex + 1,
                                                 );
                                               } else {
-                                                // Show completion message
+                                                // Check for category completion and show achievement
                                                 const totalRemembered =
                                                   rememberedWords.size + 1;
                                                 const totalForgotten =
