@@ -222,19 +222,19 @@ export const PracticeWordsCard: React.FC<PracticeWordsCardProps> = ({
 
         {/* Call to action */}
         <div className="pt-2">
-          <Button 
+          <Button
             onClick={onStartPractice}
-            className={`w-full bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-white text-lg py-6 rounded-xl shadow-lg transition-all duration-300 ${
-              isHovered ? 'shadow-2xl scale-[1.02]' : ''
+            className={`w-full bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-white text-base sm:text-lg py-4 sm:py-6 rounded-xl shadow-lg transition-all duration-300 min-h-[60px] sm:min-h-[auto] ${
+              isHovered ? 'shadow-2xl md:scale-[1.02]' : ''
             }`}
           >
-            <div className="flex items-center justify-center gap-3">
-              <Gamepad2 className="w-6 h-6" />
-              <div className="text-center">
-                <div className="font-bold">Start Practice Adventure!</div>
-                <div className="text-sm opacity-90">Let's master these words! 🚀</div>
+            <div className="flex items-center justify-center gap-2 sm:gap-3">
+              <Gamepad2 className="w-5 h-5 sm:w-6 sm:h-6 flex-shrink-0" />
+              <div className="text-center min-w-0">
+                <div className="font-bold text-sm sm:text-base">Start Practice Adventure!</div>
+                <div className="text-xs sm:text-sm opacity-90">Let's master these words! 🚀</div>
               </div>
-              <Play className="w-6 h-6" />
+              <Play className="w-5 h-5 sm:w-6 sm:h-6 flex-shrink-0" />
             </div>
           </Button>
         </div>
