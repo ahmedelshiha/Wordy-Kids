@@ -763,25 +763,24 @@ export default function Index({ initialProfile }: IndexProps) {
                         </p>
                       </div>
 
-                      {/* All Unique Games and Quizzes - Redesigned Without Duplicates */}
+                      {/* All Games and Quizzes - Unified Grid */}
                       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6 max-w-7xl mx-auto">
-
-                        {/* Word Adventure - Interactive Learning */}
-                        <Card className="cursor-pointer hover:shadow-xl transition-all duration-300 hover:scale-105 border-2 border-educational-green/30 bg-gradient-to-br from-green-50 to-emerald-50">
+                        {/* Word Adventure Quest */}
+                        <Card className="cursor-pointer hover:shadow-xl transition-all duration-300 hover:scale-105 border-2 border-educational-green/30">
                           <CardContent className="p-6 text-center">
                             <div className="text-6xl mb-4">🗺️</div>
                             <h3 className="text-xl font-bold text-educational-green mb-2">
-                              Word Adventure
+                              Word Adventure Quest
                             </h3>
                             <p className="text-gray-600 mb-4">
-                              Journey through words with interactive learning!
+                              Journey through words with your learning buddy!
                             </p>
                             <div className="flex justify-center gap-2 mb-4">
                               <span className="bg-educational-green/20 text-educational-green px-2 py-1 rounded-full text-xs">
                                 Easy
                               </span>
                               <span className="bg-educational-green/20 text-educational-green px-2 py-1 rounded-full text-xs">
-                                10 Words
+                                2-5 min
                               </span>
                             </div>
                             <Button
@@ -789,7 +788,7 @@ export default function Index({ initialProfile }: IndexProps) {
                               className="w-full bg-educational-green text-white hover:bg-educational-green/90"
                             >
                               <Play className="w-4 h-4 mr-2" />
-                              Start Adventure!
+                              Start Quest!
                             </Button>
                           </CardContent>
                         </Card>
