@@ -79,7 +79,7 @@ const learningStats = {
     {
       id: "first-word",
       name: "First Word",
-      icon: "🎯",
+      icon: "����",
       earned: true,
       description: "Learned your first word",
     },
@@ -152,7 +152,6 @@ export default function Index({ initialProfile }: IndexProps) {
   );
   const [feedback, setFeedback] = useState<any>(null);
   const [gameMode, setGameMode] = useState(false);
-  const [showWordAdventure, setShowWordAdventure] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   // Load background animations setting on mount
@@ -763,35 +762,6 @@ export default function Index({ initialProfile }: IndexProps) {
 
                       {/* All Unique Games and Quizzes - NO DUPLICATES, NO FOLDERS */}
                       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 max-w-7xl mx-auto">
-                        {/* Word Adventure Quest */}
-                        <Card className="cursor-pointer hover:shadow-xl transition-all duration-300 hover:scale-105 border-2 border-educational-green/30">
-                          <CardContent className="p-6 text-center">
-                            <div className="text-6xl mb-4">🗺️</div>
-                            <h3 className="text-xl font-bold text-educational-green mb-2">
-                              Word Adventure Quest
-                            </h3>
-                            <p className="text-gray-600 mb-4">
-                              Journey through words with your learning buddy!
-                            </p>
-                            <div className="flex justify-center gap-2 mb-4">
-                              <span className="bg-educational-green/20 text-educational-green px-2 py-1 rounded-full text-xs">
-                                Easy
-                              </span>
-                              <span className="bg-educational-green/20 text-educational-green px-2 py-1 rounded-full text-xs">
-                                2-5 min
-                              </span>
-                            </div>
-                            <Button
-                              onClick={() => setShowWordAdventure(true)}
-                              className="w-full bg-educational-green text-white hover:bg-educational-green/90"
-                            >
-                              <Play className="w-4 h-4 mr-2" />
-                              Start Quest!
-                            </Button>
-                          </CardContent>
-                        </Card>
-
-
 
                         {/* Matching Game */}
                         <Card className="cursor-pointer hover:shadow-xl transition-all duration-300 hover:scale-105 border-2 border-educational-purple/30">
@@ -1100,28 +1070,6 @@ export default function Index({ initialProfile }: IndexProps) {
                       })()}
                       onComplete={handleGameComplete}
                       onBack={() => setGameMode(false)}
-                      userProfile={currentProfile}
-                    />
-                  ) : showWordAdventure ? (
-                    <GameLikeLearning
-                      words={(() => {
-                        const categoryWords =
-                          selectedCategory === "all"
-                            ? getRandomWords(20)
-                            : getWordsByCategory(selectedCategory);
-                        return categoryWords.slice(0, 10);
-                      })()}
-                      onComplete={(score, totalWords) => {
-                        setShowWordAdventure(false);
-                        setFeedback({
-                          type: "celebration",
-                          title: "Word Adventure Complete! 🗺️",
-                          message: `You learned ${score} out of ${totalWords} words!`,
-                          points: score * 10,
-                          onContinue: () => setFeedback(null),
-                        });
-                      }}
-                      onBack={() => setShowWordAdventure(false)}
                       userProfile={currentProfile}
                     />
                   ) : showMatchingGame ? (
