@@ -118,19 +118,19 @@ export const WordPracticeGame: React.FC<WordPracticeGameProps> = ({
     <div className="text-center space-y-4 sm:space-y-6 p-4 sm:p-8">
       {/* Animated header */}
       <div className="relative">
-        <div className="text-8xl mb-4 animate-bounce">🎯</div>
-        <div className="absolute -top-2 -right-2 text-3xl animate-spin">✨</div>
-        <div className="absolute -bottom-2 -left-2 text-2xl animate-pulse">🚀</div>
+        <div className="text-6xl sm:text-8xl mb-4 animate-bounce">🎯</div>
+        <div className="absolute -top-2 -right-2 text-2xl sm:text-3xl animate-spin">✨</div>
+        <div className="absolute -bottom-2 -left-2 text-xl sm:text-2xl animate-pulse">🚀</div>
       </div>
 
       <div className="space-y-2">
-        <h1 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent mb-2">
+        <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent mb-2 px-2">
           Practice Challenge!
         </h1>
-        <div className="text-3xl animate-bounce">💪</div>
+        <div className="text-2xl sm:text-3xl animate-bounce">💪</div>
       </div>
 
-      <p className="text-xl text-gray-600 mb-4">
+      <p className="text-lg sm:text-xl text-gray-600 mb-4 px-4">
         Hey {childName}! Time to become a <span className="font-bold text-purple-600">Word Master!</span> 🏆
       </p>
 
