@@ -42,6 +42,8 @@ interface LearningDashboardProps {
   stats: LearningStats;
   userName?: string;
   childStats?: ChildWordStats | null;
+  onStartPractice?: () => void;
+  practiceWords?: any[];
 }
 
 export const LearningDashboard: React.FC<LearningDashboardProps> = ({
