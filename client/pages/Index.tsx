@@ -290,6 +290,59 @@ export default function Index({ initialProfile }: IndexProps) {
     setCurrentWordIndex(0);
   };
 
+  const checkCategoryCompletion = (displayWords: any[], rememberedWords: Set<number>, forgottenWords: Set<number>, currentWordId: number) => {
+    // Get all word IDs that have been reviewed (either remembered or forgotten)
+    const reviewedWordIds = new Set([...rememberedWords, ...forgottenWords, currentWordId]);
+
+    // Check if all words in the current set have been reviewed
+    const allWordsReviewed = displayWords.every(word => reviewedWordIds.has(word.id));
+
+    if (allWordsReviewed) {
+      const totalWords = displayWords.length;
+      const totalRemembered = rememberedWords.size + (rememberedWords.has(currentWordId) ? 0 : 1);
+      const accuracy = Math.round((totalRemembered / totalWords) * 100);
+
+      // Determine category completion achievement
+      let achievementTitle = "";
+      let achievementIcon = "";
+      let achievementMessage = "";
+
+      if (accuracy === 100) {
+        achievementTitle = "Perfect Category Mastery! 🏆";
+        achievementIcon = "🏆";
+        achievementMessage = `Outstanding! You remembered ALL ${totalWords} words in ${selectedCategory}! You're a true champion!`;
+      } else if (accuracy >= 90) {
+        achievementTitle = "Category Expert! ��";
+        achievementIcon = "⭐";
+        achievementMessage = `Excellent work! You mastered ${selectedCategory} with ${accuracy}% accuracy! Almost perfect!`;
+      } else if (accuracy >= 75) {
+        achievementTitle = "Category Scholar! 📚";
+        achievementIcon = "📚";
+        achievementMessage = `Great job! You completed ${selectedCategory} with ${accuracy}% accuracy! Keep up the good work!`;
+      } else if (accuracy >= 50) {
+        achievementTitle = "Category Explorer! 🎯";
+        achievementIcon = "🎯";
+        achievementMessage = `Good effort! You finished ${selectedCategory} with ${accuracy}% accuracy! Practice makes perfect!`;
+      } else {
+        achievementTitle = "Category Challenger! 💪";
+        achievementIcon = "💪";
+        achievementMessage = `Nice try! You completed ${selectedCategory} with ${accuracy}% accuracy! Every attempt makes you stronger!`;
+      }
+
+      return {
+        shouldShow: true,
+        title: achievementTitle,
+        icon: achievementIcon,
+        message: achievementMessage,
+        accuracy,
+        totalWords,
+        totalRemembered
+      };
+    }
+
+    return { shouldShow: false };
+  };
+
   const handleWordProgress = async (word: any, status: "remembered" | "needs_practice") => {
     if (!currentProfile?.id || !currentSessionId) {
       console.warn("Missing profile or session ID");
@@ -889,7 +942,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                                 setFeedback({
                                                   type: "celebration",
                                                   title: `${encouragementMessage}`,
-                                                  message: `You completed ${totalWords} words with ${accuracy}% accuracy!\\n\\n✅ Remembered: ${totalRemembered} words\\n�� Need practice: ${totalForgotten} words\\n\\n${totalForgotten > 0 ? "Don't worry about the ones you forgot - that's how we learn! 🧠" : "Perfect score! You're amazing! ��"}`,
+                                                  message: `You completed ${totalWords} words with ${accuracy}% accuracy!\\n\\n✅ Remembered: ${totalRemembered} words\\n❌ Need practice: ${totalForgotten} words\\n\\n${totalForgotten > 0 ? "Don't worry about the ones you forgot - that's how we learn! 🧠" : "Perfect score! You're amazing! ��"}`,
                                                   points:
                                                     totalRemembered * 15 +
                                                     (accuracy >= 90
