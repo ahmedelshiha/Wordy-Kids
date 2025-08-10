@@ -1170,7 +1170,7 @@ export default function Index({ initialProfile }: IndexProps) {
       </main>
 
       {/* Enhanced Components */}
-      {showCelebration && <CelebrationEffect />}
+      {showCelebration && <CelebrationEffect trigger={showCelebration} />}
       {backgroundAnimationsEnabled && <FloatingBubbles />}
 
       {/* Settings Panel */}
@@ -1182,7 +1182,7 @@ export default function Index({ initialProfile }: IndexProps) {
       {/* Word Creator */}
       {showWordCreator && (
         <WordCreator
-          onSave={handleWordCreated}
+          onWordCreated={handleWordCreated}
           onClose={() => setShowWordCreator(false)}
         />
       )}
