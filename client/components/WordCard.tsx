@@ -143,8 +143,8 @@ export const WordCard: React.FC<WordCardProps> = ({
           className={`absolute inset-0 w-full h-full ${getCategoryColor(word.category)} rounded-xl p-4 md:p-6 flex flex-col text-white`}
           style={{ backfaceVisibility: "hidden" }}
         >
-          <div className="absolute top-4 left-4 flex gap-2">
-            <Badge className={getDifficultyColor(word.difficulty)}>
+          <div className="absolute top-3 left-3 md:top-4 md:left-4 flex flex-col gap-1 md:flex-row md:gap-2">
+            <Badge className={`${getDifficultyColor(word.difficulty)} text-xs md:text-sm`}>
               {word.difficulty === "easy"
                 ? "🌟 Easy"
                 : word.difficulty === "medium"
@@ -153,7 +153,7 @@ export const WordCard: React.FC<WordCardProps> = ({
             </Badge>
             <Badge
               variant="outline"
-              className="bg-white/20 border-white/30 text-white"
+              className="bg-white/20 border-white/30 text-white text-xs md:text-sm"
             >
               {word.category}
             </Badge>
