@@ -1125,50 +1125,6 @@ export default function Index({ initialProfile }: IndexProps) {
                       onBack={() => setShowWordAdventure(false)}
                       userProfile={currentProfile}
                     />
-                  ) : showLightningLearning ? (
-                    <GameLikeLearning
-                      words={(() => {
-                        const categoryWords =
-                          selectedCategory === "all"
-                            ? getRandomWords(20, undefined, "hard")
-                            : getWordsByCategory(selectedCategory).filter(w => w.difficulty === "hard");
-                        return categoryWords.slice(0, 15);
-                      })()}
-                      onComplete={(score, totalWords) => {
-                        setShowLightningLearning(false);
-                        setFeedback({
-                          type: "celebration",
-                          title: "Lightning Learning Complete! ⚡",
-                          message: `Amazing speed! You learned ${score} out of ${totalWords} words!`,
-                          points: score * 30,
-                          onContinue: () => setFeedback(null),
-                        });
-                      }}
-                      onBack={() => setShowLightningLearning(false)}
-                      userProfile={currentProfile}
-                    />
-                  ) : showPronunciationParty ? (
-                    <GameLikeLearning
-                      words={(() => {
-                        const categoryWords =
-                          selectedCategory === "all"
-                            ? getRandomWords(12)
-                            : getWordsByCategory(selectedCategory);
-                        return categoryWords.slice(0, 8);
-                      })()}
-                      onComplete={(score, totalWords) => {
-                        setShowPronunciationParty(false);
-                        setFeedback({
-                          type: "celebration",
-                          title: "Pronunciation Party Complete! 🎤",
-                          message: `Great pronunciation! You mastered ${score} out of ${totalWords} words!`,
-                          points: score * 15,
-                          onContinue: () => setFeedback(null),
-                        });
-                      }}
-                      onBack={() => setShowPronunciationParty(false)}
-                      userProfile={currentProfile}
-                    />
                   ) : showMatchingGame ? (
                     <div className="space-y-6">
                       <div className="flex items-center justify-between">
