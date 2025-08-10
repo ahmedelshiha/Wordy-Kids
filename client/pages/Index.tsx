@@ -53,6 +53,7 @@ import {
   Plus,
   TrendingUp,
   Zap,
+  Volume2,
   ImageIcon,
   PenTool,
   Clock,
