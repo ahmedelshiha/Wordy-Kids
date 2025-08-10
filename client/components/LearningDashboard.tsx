@@ -192,6 +192,127 @@ export const LearningDashboard: React.FC<LearningDashboardProps> = ({
         </Card>
       </div>
 
+      {/* Word Progress Statistics */}
+      {childStats && (
+        <Card>
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              <Brain className="w-6 h-6 text-purple-500" />
+              Word Learning Progress
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {/* Overall Progress */}
+              <div className="space-y-4">
+                <h4 className="font-semibold text-lg flex items-center gap-2">
+                  <Target className="w-5 h-5 text-blue-500" />
+                  Overall Progress
+                </h4>
+                <div className="space-y-3">
+                  <div className="flex justify-between text-sm">
+                    <span>Words Learned</span>
+                    <span className="font-semibold">{childStats.totalWordsLearned}</span>
+                  </div>
+                  <div className="flex justify-between text-sm">
+                    <span>Average Accuracy</span>
+                    <span className="font-semibold">{childStats.averageAccuracy}%</span>
+                  </div>
+                  <div className="flex justify-between text-sm">
+                    <span>Review Sessions</span>
+                    <span className="font-semibold">{childStats.totalReviewSessions}</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Words Status */}
+              <div className="space-y-4">
+                <h4 className="font-semibold text-lg flex items-center gap-2">
+                  <CheckCircle className="w-5 h-5 text-green-500" />
+                  Word Status
+                </h4>
+                <div className="space-y-3">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                      <div className="w-3 h-3 bg-green-500 rounded-full"></div>
+                      <span className="text-sm">Remembered</span>
+                    </div>
+                    <span className="font-semibold text-green-600">{childStats.wordsRemembered}</span>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                      <div className="w-3 h-3 bg-orange-500 rounded-full"></div>
+                      <span className="text-sm">Need Practice</span>
+                    </div>
+                    <span className="font-semibold text-orange-600">{childStats.wordsNeedingPractice}</span>
+                  </div>
+                  <Progress
+                    value={childStats.totalWordsLearned > 0 ? (childStats.wordsRemembered / childStats.totalWordsLearned) * 100 : 0}
+                    className="mt-2"
+                  />
+                </div>
+              </div>
+
+              {/* Category Performance */}
+              <div className="space-y-4">
+                <h4 className="font-semibold text-lg flex items-center gap-2">
+                  <TrendingUp className="w-5 h-5 text-purple-500" />
+                  Category Performance
+                </h4>
+                <div className="space-y-2">
+                  {childStats.strongestCategories.length > 0 && (
+                    <div>
+                      <p className="text-sm text-gray-600 mb-1">Strongest Categories:</p>
+                      <div className="flex flex-wrap gap-1">
+                        {childStats.strongestCategories.slice(0, 2).map((category) => (
+                          <Badge key={category} className="bg-green-100 text-green-800 text-xs">
+                            {category}
+                          </Badge>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                  {childStats.weakestCategories.length > 0 && (
+                    <div>
+                      <p className="text-sm text-gray-600 mb-1">Focus Areas:</p>
+                      <div className="flex flex-wrap gap-1">
+                        {childStats.weakestCategories.slice(0, 2).map((category) => (
+                          <Badge key={category} className="bg-orange-100 text-orange-800 text-xs">
+                            {category}
+                          </Badge>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
+
+            {/* Category Mastery Details */}
+            {childStats.masteryByCategory.length > 0 && (
+              <div className="mt-6">
+                <h4 className="font-semibold text-lg mb-4">Category Mastery</h4>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+                  {childStats.masteryByCategory.map((category) => (
+                    <div key={category.category} className="bg-gray-50 p-3 rounded-lg">
+                      <div className="flex justify-between items-center mb-2">
+                        <h5 className="font-medium text-sm">{category.category}</h5>
+                        <span className="text-xs text-gray-600">{category.averageAccuracy}%</span>
+                      </div>
+                      <Progress value={category.averageAccuracy} className="h-2 mb-2" />
+                      <div className="flex justify-between text-xs text-gray-600">
+                        <span>{category.masteredWords} mastered</span>
+                        <span>{category.needsPracticeWords} need practice</span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+          </CardContent>
+        </Card>
+      )}
+
       {/* Badges Section */}
       <Card>
         <CardHeader>
