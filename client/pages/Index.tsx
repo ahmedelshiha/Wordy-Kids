@@ -724,14 +724,39 @@ export default function Index({ initialProfile }: IndexProps) {
                                                 setCurrentWordIndex(currentWordIndex + 1);
                                               } else {
                                                 // Show completion message
+                                                const totalRemembered = rememberedWords.size + 1;
+                                                const totalForgotten = forgottenWords.size;
+                                                const totalWords = displayWords.length;
+                                                const accuracy = Math.round((totalRemembered / totalWords) * 100);
+
+                                                let encouragementMessage = "";
+                                                if (accuracy >= 90) {
+                                                  encouragementMessage = "Outstanding! You're a vocabulary superstar! ⭐";
+                                                } else if (accuracy >= 75) {
+                                                  encouragementMessage = "Great job! You're doing really well! 🌟";
+                                                } else if (accuracy >= 50) {
+                                                  encouragementMessage = "Good effort! Keep practicing and you'll get even better! 💪";
+                                                } else {
+                                                  encouragementMessage = "Nice try! Remember, practice makes perfect! 🎯";
+                                                }
+
                                                 setFeedback({
                                                   type: "celebration",
-                                                  title: "Amazing Work! 🎉",
-                                                  message: `You've reviewed all words! You remembered ${rememberedWords.size + 1} words and ${forgottenWords.size} need more practice.`,
-                                                  points: (rememberedWords.size + 1) * 10,
+                                                  title: `${encouragementMessage}`,
+                                                  message: `You completed ${totalWords} words with ${accuracy}% accuracy!\\n\\n✅ Remembered: ${totalRemembered} words\\n❌ Need practice: ${totalForgotten} words\\n\\n${totalForgotten > 0 ? "Don't worry about the ones you forgot - that's how we learn! 🧠" : "Perfect score! You're amazing! 🏆"}`,
+                                                  points: totalRemembered * 15 + (accuracy >= 90 ? 50 : accuracy >= 75 ? 25 : 10),
                                                   onContinue: () => {
                                                     setFeedback(null);
-                                                    setCurrentWordIndex(0);
+                                                    // If there are forgotten words, restart with just those for focused practice
+                                                    if (totalForgotten > 0) {
+                                                      // Filter to show forgotten words first for practice
+                                                      setCurrentWordIndex(0);
+                                                    } else {
+                                                      // Reset for new round
+                                                      setCurrentWordIndex(0);
+                                                      setRememberedWords(new Set());
+                                                      setForgottenWords(new Set());
+                                                    }
                                                   },
                                                 });
                                               }
