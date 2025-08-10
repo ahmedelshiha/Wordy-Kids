@@ -546,7 +546,9 @@ export default function IndexEnhanced() {
                     Child
                   </Button>
                   <Button
-                    variant={(userRole as string) === "parent" ? "default" : "outline"}
+                    variant={
+                      (userRole as string) === "parent" ? "default" : "outline"
+                    }
                     size="sm"
                     onClick={() => setUserRole("parent")}
                     className="flex-1"
@@ -826,7 +828,12 @@ export default function IndexEnhanced() {
       <FloatingBubbles />
 
       {/* Settings Panel */}
-      {showSettings && <SettingsPanel isOpen={showSettings} onClose={() => setShowSettings(false)} />}
+      {showSettings && (
+        <SettingsPanel
+          isOpen={showSettings}
+          onClose={() => setShowSettings(false)}
+        />
+      )}
 
       {/* Word Creator */}
       {showWordCreator && (

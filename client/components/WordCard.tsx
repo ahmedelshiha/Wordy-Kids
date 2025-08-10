@@ -3,7 +3,16 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
-import { Volume2, Heart, RotateCcw, Sparkles, Star, ThumbsUp, ThumbsDown, Brain } from "lucide-react";
+import {
+  Volume2,
+  Heart,
+  RotateCcw,
+  Sparkles,
+  Star,
+  ThumbsUp,
+  ThumbsDown,
+  Brain,
+} from "lucide-react";
 import { playSoundIfEnabled } from "@/lib/soundEffects";
 import { audioService } from "@/lib/audioService";
 
@@ -28,7 +37,7 @@ interface WordCardProps {
   showDefinition?: boolean;
   onPronounce?: (word: Word) => void;
   onFavorite?: (word: Word) => void;
-  onWordMastered?: (wordId: number, rating: 'easy' | 'medium' | 'hard') => void;
+  onWordMastered?: (wordId: number, rating: "easy" | "medium" | "hard") => void;
   showVocabularyBuilder?: boolean;
   className?: string;
 }
@@ -318,7 +327,7 @@ export const WordCard: React.FC<WordCardProps> = ({
                     className="flex-1 bg-red-500/20 hover:bg-red-500/30 text-red-200 border border-red-500/30"
                     onClick={(e) => {
                       e.stopPropagation();
-                      onWordMastered?.(word.id, 'hard');
+                      onWordMastered?.(word.id, "hard");
                     }}
                   >
                     <ThumbsDown className="w-3 h-3 mr-1" />
@@ -330,7 +339,7 @@ export const WordCard: React.FC<WordCardProps> = ({
                     className="flex-1 bg-yellow-500/20 hover:bg-yellow-500/30 text-yellow-200 border border-yellow-500/30"
                     onClick={(e) => {
                       e.stopPropagation();
-                      onWordMastered?.(word.id, 'medium');
+                      onWordMastered?.(word.id, "medium");
                     }}
                   >
                     <Star className="w-3 h-3 mr-1" />
@@ -342,7 +351,7 @@ export const WordCard: React.FC<WordCardProps> = ({
                     className="flex-1 bg-green-500/20 hover:bg-green-500/30 text-green-200 border border-green-500/30"
                     onClick={(e) => {
                       e.stopPropagation();
-                      onWordMastered?.(word.id, 'easy');
+                      onWordMastered?.(word.id, "easy");
                     }}
                   >
                     <ThumbsUp className="w-3 h-3 mr-1" />

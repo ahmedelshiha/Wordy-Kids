@@ -129,7 +129,9 @@ export default function Index({ initialProfile }: IndexProps) {
   const [activeTab, setActiveTab] = useState("dashboard");
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
   const [forgottenWords, setForgottenWords] = useState<Set<number>>(new Set());
-  const [rememberedWords, setRememberedWords] = useState<Set<number>>(new Set());
+  const [rememberedWords, setRememberedWords] = useState<Set<number>>(
+    new Set(),
+  );
   const [showQuiz, setShowQuiz] = useState(false);
   const [selectedQuizType, setSelectedQuizType] = useState<
     "quick" | "standard" | "challenge" | "picture" | "spelling" | "speed"
@@ -638,16 +640,29 @@ export default function Index({ initialProfile }: IndexProps) {
                                       <div className="max-w-sm md:max-w-md mx-auto px-2 md:px-0">
                                         <WordCard
                                           word={{
-                                            ...(displayWords[currentWordIndex] ||
-                                            displayWords[0]),
-                                            masteryLevel: Math.floor(Math.random() * 100),
+                                            ...(displayWords[
+                                              currentWordIndex
+                                            ] || displayWords[0]),
+                                            masteryLevel: Math.floor(
+                                              Math.random() * 100,
+                                            ),
                                             lastReviewed: new Date(
                                               Date.now() -
-                                                Math.random() * 7 * 24 * 60 * 60 * 1000,
+                                                Math.random() *
+                                                  7 *
+                                                  24 *
+                                                  60 *
+                                                  60 *
+                                                  1000,
                                             ),
                                             nextReview: new Date(
                                               Date.now() +
-                                                Math.random() * 3 * 24 * 60 * 60 * 1000,
+                                                Math.random() *
+                                                  3 *
+                                                  24 *
+                                                  60 *
+                                                  60 *
+                                                  1000,
                                             ),
                                           }}
                                           onPronounce={(word) =>
@@ -669,24 +684,43 @@ export default function Index({ initialProfile }: IndexProps) {
                                         <div className="flex justify-center gap-3 md:gap-4 px-4 md:px-0">
                                           <Button
                                             onClick={() => {
-                                              const currentWord = displayWords[currentWordIndex];
+                                              const currentWord =
+                                                displayWords[currentWordIndex];
                                               if (currentWord) {
                                                 // Mark as forgotten for extra practice
-                                                setForgottenWords(prev => new Set([...prev, currentWord.id]));
-                                                setRememberedWords(prev => {
+                                                setForgottenWords(
+                                                  (prev) =>
+                                                    new Set([
+                                                      ...prev,
+                                                      currentWord.id,
+                                                    ]),
+                                                );
+                                                setRememberedWords((prev) => {
                                                   const newSet = new Set(prev);
                                                   newSet.delete(currentWord.id);
                                                   return newSet;
                                                 });
                                                 // Track as hard for spaced repetition
-                                                handleWordMastered(currentWord.id, 'hard');
+                                                handleWordMastered(
+                                                  currentWord.id,
+                                                  "hard",
+                                                );
                                                 // Show celebration effect briefly
                                                 setShowCelebration(true);
-                                                setTimeout(() => setShowCelebration(false), 1000);
+                                                setTimeout(
+                                                  () =>
+                                                    setShowCelebration(false),
+                                                  1000,
+                                                );
                                               }
                                               // Auto-advance to next word
-                                              if (currentWordIndex < displayWords.length - 1) {
-                                                setCurrentWordIndex(currentWordIndex + 1);
+                                              if (
+                                                currentWordIndex <
+                                                displayWords.length - 1
+                                              ) {
+                                                setCurrentWordIndex(
+                                                  currentWordIndex + 1,
+                                                );
                                               } else {
                                                 // Restart with forgotten words for practice
                                                 setCurrentWordIndex(0);
@@ -695,56 +729,98 @@ export default function Index({ initialProfile }: IndexProps) {
                                             variant="outline"
                                             className="flex-1 bg-red-50 hover:bg-red-100 border-red-200 hover:border-red-300 text-red-700 hover:text-red-800 transition-all duration-300 transform hover:scale-105 py-4 px-6"
                                           >
-                                            <span className="text-xl mr-2">❌</span>
+                                            <span className="text-xl mr-2">
+                                              ❌
+                                            </span>
                                             <div className="text-center">
-                                              <div className="font-bold text-lg">I Forgot</div>
-                                              <div className="text-xs opacity-75">Need practice</div>
+                                              <div className="font-bold text-lg">
+                                                I Forgot
+                                              </div>
+                                              <div className="text-xs opacity-75">
+                                                Need practice
+                                              </div>
                                             </div>
                                           </Button>
 
                                           <Button
                                             onClick={() => {
-                                              const currentWord = displayWords[currentWordIndex];
+                                              const currentWord =
+                                                displayWords[currentWordIndex];
                                               if (currentWord) {
                                                 // Mark as remembered
-                                                setRememberedWords(prev => new Set([...prev, currentWord.id]));
-                                                setForgottenWords(prev => {
+                                                setRememberedWords(
+                                                  (prev) =>
+                                                    new Set([
+                                                      ...prev,
+                                                      currentWord.id,
+                                                    ]),
+                                                );
+                                                setForgottenWords((prev) => {
                                                   const newSet = new Set(prev);
                                                   newSet.delete(currentWord.id);
                                                   return newSet;
                                                 });
                                                 // Track as easy for spaced repetition
-                                                handleWordMastered(currentWord.id, 'easy');
+                                                handleWordMastered(
+                                                  currentWord.id,
+                                                  "easy",
+                                                );
                                                 // Show celebration effect
                                                 setShowCelebration(true);
-                                                setTimeout(() => setShowCelebration(false), 1500);
+                                                setTimeout(
+                                                  () =>
+                                                    setShowCelebration(false),
+                                                  1500,
+                                                );
                                               }
                                               // Auto-advance to next word
-                                              if (currentWordIndex < displayWords.length - 1) {
-                                                setCurrentWordIndex(currentWordIndex + 1);
+                                              if (
+                                                currentWordIndex <
+                                                displayWords.length - 1
+                                              ) {
+                                                setCurrentWordIndex(
+                                                  currentWordIndex + 1,
+                                                );
                                               } else {
                                                 // Show completion message
-                                                const totalRemembered = rememberedWords.size + 1;
-                                                const totalForgotten = forgottenWords.size;
-                                                const totalWords = displayWords.length;
-                                                const accuracy = Math.round((totalRemembered / totalWords) * 100);
+                                                const totalRemembered =
+                                                  rememberedWords.size + 1;
+                                                const totalForgotten =
+                                                  forgottenWords.size;
+                                                const totalWords =
+                                                  displayWords.length;
+                                                const accuracy = Math.round(
+                                                  (totalRemembered /
+                                                    totalWords) *
+                                                    100,
+                                                );
 
                                                 let encouragementMessage = "";
                                                 if (accuracy >= 90) {
-                                                  encouragementMessage = "Outstanding! You're a vocabulary superstar! ⭐";
+                                                  encouragementMessage =
+                                                    "Outstanding! You're a vocabulary superstar! ⭐";
                                                 } else if (accuracy >= 75) {
-                                                  encouragementMessage = "Great job! You're doing really well! 🌟";
+                                                  encouragementMessage =
+                                                    "Great job! You're doing really well! 🌟";
                                                 } else if (accuracy >= 50) {
-                                                  encouragementMessage = "Good effort! Keep practicing and you'll get even better! 💪";
+                                                  encouragementMessage =
+                                                    "Good effort! Keep practicing and you'll get even better! 💪";
                                                 } else {
-                                                  encouragementMessage = "Nice try! Remember, practice makes perfect! 🎯";
+                                                  encouragementMessage =
+                                                    "Nice try! Remember, practice makes perfect! 🎯";
                                                 }
 
                                                 setFeedback({
                                                   type: "celebration",
                                                   title: `${encouragementMessage}`,
                                                   message: `You completed ${totalWords} words with ${accuracy}% accuracy!\\n\\n✅ Remembered: ${totalRemembered} words\\n❌ Need practice: ${totalForgotten} words\\n\\n${totalForgotten > 0 ? "Don't worry about the ones you forgot - that's how we learn! 🧠" : "Perfect score! You're amazing! 🏆"}`,
-                                                  points: totalRemembered * 15 + (accuracy >= 90 ? 50 : accuracy >= 75 ? 25 : 10),
+                                                  points:
+                                                    totalRemembered * 15 +
+                                                    (accuracy >= 90
+                                                      ? 50
+                                                      : accuracy >= 75
+                                                        ? 25
+                                                        : 10),
                                                   onContinue: () => {
                                                     setFeedback(null);
                                                     // If there are forgotten words, restart with just those for focused practice
@@ -754,8 +830,12 @@ export default function Index({ initialProfile }: IndexProps) {
                                                     } else {
                                                       // Reset for new round
                                                       setCurrentWordIndex(0);
-                                                      setRememberedWords(new Set());
-                                                      setForgottenWords(new Set());
+                                                      setRememberedWords(
+                                                        new Set(),
+                                                      );
+                                                      setForgottenWords(
+                                                        new Set(),
+                                                      );
                                                     }
                                                   },
                                                 });
@@ -763,10 +843,16 @@ export default function Index({ initialProfile }: IndexProps) {
                                             }}
                                             className="flex-1 bg-green-50 hover:bg-green-100 border-green-200 hover:border-green-300 text-green-700 hover:text-green-800 transition-all duration-300 transform hover:scale-105 py-4 px-6"
                                           >
-                                            <span className="text-xl mr-2">✅</span>
+                                            <span className="text-xl mr-2">
+                                              ✅
+                                            </span>
                                             <div className="text-center">
-                                              <div className="font-bold text-lg">I Remember!</div>
-                                              <div className="text-xs opacity-75">Got it!</div>
+                                              <div className="font-bold text-lg">
+                                                I Remember!
+                                              </div>
+                                              <div className="text-xs opacity-75">
+                                                Got it!
+                                              </div>
                                             </div>
                                           </Button>
                                         </div>
@@ -775,21 +861,40 @@ export default function Index({ initialProfile }: IndexProps) {
                                         <div className="text-center space-y-2">
                                           <div className="flex justify-center gap-4 text-sm">
                                             <div className="flex items-center gap-1 text-green-600">
-                                              <span className="text-base">✅</span>
-                                              <span className="font-medium">{rememberedWords.size}</span>
-                                              <span className="text-xs opacity-75">remembered</span>
+                                              <span className="text-base">
+                                                ✅
+                                              </span>
+                                              <span className="font-medium">
+                                                {rememberedWords.size}
+                                              </span>
+                                              <span className="text-xs opacity-75">
+                                                remembered
+                                              </span>
                                             </div>
                                             <div className="flex items-center gap-1 text-red-600">
-                                              <span className="text-base">❌</span>
-                                              <span className="font-medium">{forgottenWords.size}</span>
-                                              <span className="text-xs opacity-75">to practice</span>
+                                              <span className="text-base">
+                                                ❌
+                                              </span>
+                                              <span className="font-medium">
+                                                {forgottenWords.size}
+                                              </span>
+                                              <span className="text-xs opacity-75">
+                                                to practice
+                                              </span>
                                             </div>
                                           </div>
 
                                           {/* Quick Navigation */}
                                           <div className="flex justify-center gap-2 mt-3">
                                             <Button
-                                              onClick={() => setCurrentWordIndex(Math.max(0, currentWordIndex - 1))}
+                                              onClick={() =>
+                                                setCurrentWordIndex(
+                                                  Math.max(
+                                                    0,
+                                                    currentWordIndex - 1,
+                                                  ),
+                                                )
+                                              }
                                               disabled={currentWordIndex === 0}
                                               variant="ghost"
                                               size="sm"
@@ -798,8 +903,18 @@ export default function Index({ initialProfile }: IndexProps) {
                                               ← Back
                                             </Button>
                                             <Button
-                                              onClick={() => setCurrentWordIndex(Math.min(displayWords.length - 1, currentWordIndex + 1))}
-                                              disabled={currentWordIndex === displayWords.length - 1}
+                                              onClick={() =>
+                                                setCurrentWordIndex(
+                                                  Math.min(
+                                                    displayWords.length - 1,
+                                                    currentWordIndex + 1,
+                                                  ),
+                                                )
+                                              }
+                                              disabled={
+                                                currentWordIndex ===
+                                                displayWords.length - 1
+                                              }
                                               variant="ghost"
                                               size="sm"
                                               className="text-xs text-slate-500 hover:text-slate-700"
@@ -824,16 +939,21 @@ export default function Index({ initialProfile }: IndexProps) {
 
                                         {/* Current Word Status */}
                                         {(() => {
-                                          const currentWord = displayWords[currentWordIndex];
+                                          const currentWord =
+                                            displayWords[currentWordIndex];
                                           if (!currentWord) return null;
 
-                                          if (rememberedWords.has(currentWord.id)) {
+                                          if (
+                                            rememberedWords.has(currentWord.id)
+                                          ) {
                                             return (
                                               <Badge className="bg-green-100 text-green-700 border-green-300">
                                                 ✅ You remembered this word!
                                               </Badge>
                                             );
-                                          } else if (forgottenWords.has(currentWord.id)) {
+                                          } else if (
+                                            forgottenWords.has(currentWord.id)
+                                          ) {
                                             return (
                                               <Badge className="bg-red-100 text-red-700 border-red-300">
                                                 ❌ Marked for practice
@@ -841,7 +961,10 @@ export default function Index({ initialProfile }: IndexProps) {
                                             );
                                           } else {
                                             return (
-                                              <Badge variant="secondary" className="bg-blue-100 text-blue-700 border-blue-300">
+                                              <Badge
+                                                variant="secondary"
+                                                className="bg-blue-100 text-blue-700 border-blue-300"
+                                              >
                                                 🆕 New word to learn
                                               </Badge>
                                             );
@@ -855,7 +978,6 @@ export default function Index({ initialProfile }: IndexProps) {
                             })()}
                           </>
                         )}
-
                       </>
                     )}
                   </div>
