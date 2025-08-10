@@ -912,16 +912,13 @@ export default function Index({ initialProfile }: IndexProps) {
                                                 );
                                               } else {
                                                 // Check for category completion and show achievement
-                                                const totalRemembered =
-                                                  rememberedWords.size + 1;
-                                                const totalForgotten =
-                                                  forgottenWords.size;
-                                                const totalWords =
-                                                  displayWords.length;
-                                                const accuracy = Math.round(
-                                                  (totalRemembered /
-                                                    totalWords) *
-                                                    100,
+                                                const currentWord = displayWords[currentWordIndex];
+                                                const updatedRememberedWords = new Set([...rememberedWords, currentWord.id]);
+                                                const completionResult = checkCategoryCompletion(
+                                                  displayWords,
+                                                  updatedRememberedWords,
+                                                  forgottenWords,
+                                                  currentWord.id
                                                 );
 
                                                 let encouragementMessage = "";
