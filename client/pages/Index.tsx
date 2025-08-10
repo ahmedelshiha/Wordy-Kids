@@ -755,7 +755,7 @@ export default function Index({ initialProfile }: IndexProps) {
                           </div>
                         </div>
                         <h2 className="text-2xl md:text-4xl font-bold text-gray-800 mb-4">
-                          🧠 Quiz & Game Time!
+                          �� Quiz & Game Time!
                         </h2>
                         <p className="text-base md:text-xl text-gray-600 mb-6 md:mb-8">
                           Test your vocabulary knowledge with fun quizzes and
@@ -1158,6 +1158,72 @@ export default function Index({ initialProfile }: IndexProps) {
                       })()}
                       onComplete={handleGameComplete}
                       onBack={() => setGameMode(false)}
+                      userProfile={currentProfile}
+                    />
+                  ) : showWordAdventure ? (
+                    <GameLikeLearning
+                      words={(() => {
+                        const categoryWords =
+                          selectedCategory === "all"
+                            ? getRandomWords(20)
+                            : getWordsByCategory(selectedCategory);
+                        return categoryWords.slice(0, 10);
+                      })()}
+                      onComplete={(score, totalWords) => {
+                        setShowWordAdventure(false);
+                        setFeedback({
+                          type: "celebration",
+                          title: "Word Adventure Complete! 🗺️",
+                          message: `You learned ${score} out of ${totalWords} words!`,
+                          points: score * 10,
+                          onContinue: () => setFeedback(null),
+                        });
+                      }}
+                      onBack={() => setShowWordAdventure(false)}
+                      userProfile={currentProfile}
+                    />
+                  ) : showLightningLearning ? (
+                    <GameLikeLearning
+                      words={(() => {
+                        const categoryWords =
+                          selectedCategory === "all"
+                            ? getRandomWords(20, undefined, "hard")
+                            : getWordsByCategory(selectedCategory).filter(w => w.difficulty === "hard");
+                        return categoryWords.slice(0, 15);
+                      })()}
+                      onComplete={(score, totalWords) => {
+                        setShowLightningLearning(false);
+                        setFeedback({
+                          type: "celebration",
+                          title: "Lightning Learning Complete! ⚡",
+                          message: `Amazing speed! You learned ${score} out of ${totalWords} words!`,
+                          points: score * 30,
+                          onContinue: () => setFeedback(null),
+                        });
+                      }}
+                      onBack={() => setShowLightningLearning(false)}
+                      userProfile={currentProfile}
+                    />
+                  ) : showPronunciationParty ? (
+                    <GameLikeLearning
+                      words={(() => {
+                        const categoryWords =
+                          selectedCategory === "all"
+                            ? getRandomWords(12)
+                            : getWordsByCategory(selectedCategory);
+                        return categoryWords.slice(0, 8);
+                      })()}
+                      onComplete={(score, totalWords) => {
+                        setShowPronunciationParty(false);
+                        setFeedback({
+                          type: "celebration",
+                          title: "Pronunciation Party Complete! 🎤",
+                          message: `Great pronunciation! You mastered ${score} out of ${totalWords} words!`,
+                          points: score * 15,
+                          onContinue: () => setFeedback(null),
+                        });
+                      }}
+                      onBack={() => setShowPronunciationParty(false)}
                       userProfile={currentProfile}
                     />
                   ) : showMatchingGame ? (
