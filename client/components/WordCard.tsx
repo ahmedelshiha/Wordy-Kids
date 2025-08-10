@@ -159,11 +159,11 @@ export const WordCard: React.FC<WordCardProps> = ({
             </Badge>
           </div>
 
-          <div className="absolute top-4 right-4 flex gap-2">
+          <div className="absolute top-3 right-3 md:top-4 md:right-4">
             <Button
               size="sm"
               variant="ghost"
-              className={`text-white hover:bg-white/20 p-2 h-auto transition-all duration-300 ${
+              className={`text-white hover:bg-white/20 p-1.5 md:p-2 h-auto transition-all duration-300 ${
                 isFavorited ? "scale-110 text-red-300" : ""
               }`}
               onClick={(e) => {
@@ -172,12 +172,12 @@ export const WordCard: React.FC<WordCardProps> = ({
               }}
             >
               <Heart
-                className={`w-4 h-4 transition-all duration-300 ${
+                className={`w-3 h-3 md:w-4 md:h-4 transition-all duration-300 ${
                   isFavorited ? "fill-current animate-pulse" : ""
                 }`}
               />
               {showSparkles && isFavorited && (
-                <Star className="w-3 h-3 absolute -top-1 -right-1 text-yellow-300 animate-bounce" />
+                <Star className="w-2 h-2 md:w-3 md:h-3 absolute -top-1 -right-1 text-yellow-300 animate-bounce" />
               )}
             </Button>
           </div>
