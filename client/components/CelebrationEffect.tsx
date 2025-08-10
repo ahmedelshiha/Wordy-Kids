@@ -83,7 +83,7 @@ export const CelebrationEffect: React.FC<CelebrationEffectProps> = ({
 
           if (updatedParticles.length === 0) {
             setIsActive(false);
-            onComplete?.();
+            onCompleteRef.current?.();
           }
 
           return updatedParticles;
