@@ -126,7 +126,7 @@ export const WordCard: React.FC<WordCardProps> = ({
 
   return (
     <div
-      className={`relative w-full max-w-xs md:max-w-sm mx-auto ${className}`}
+      className={`relative w-full max-w-sm md:max-w-md lg:max-w-lg mx-auto ${className}`}
     >
       <Card
         className={`min-h-[600px] md:min-h-[700px] cursor-pointer transition-all duration-700 transform-gpu md:hover:scale-105 ${
