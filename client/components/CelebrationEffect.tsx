@@ -24,16 +24,21 @@ export const CelebrationEffect: React.FC<CelebrationEffectProps> = ({
   type = 'confetti'
 }) => {
   const [particles, setParticles] = useState<Particle[]>([]);
-  const [isActive, setIsActive] = useState(false);
+  const intervalRef = useRef<NodeJS.Timeout | null>(null);
   const onCompleteRef = useRef(onComplete);
+  const triggerRef = useRef(trigger);
 
-  // Update the ref when onComplete changes
+  // Update refs when props change
   useEffect(() => {
     onCompleteRef.current = onComplete;
   }, [onComplete]);
 
+  useEffect(() => {
+    triggerRef.current = trigger;
+  }, [trigger]);
+
   const colors = [
-    '#FF6B6B', '#4ECDC4', '#45B7D1', '#96CEB4', '#FFEAA7', 
+    '#FF6B6B', '#4ECDC4', '#45B7D1', '#96CEB4', '#FFEAA7',
     '#DDA0DD', '#98D8C8', '#FFB347', '#87CEEB', '#F0E68C'
   ];
 
@@ -46,7 +51,7 @@ export const CelebrationEffect: React.FC<CelebrationEffectProps> = ({
     for (let i = 0; i < particleCount; i++) {
       const centerX = window.innerWidth / 2;
       const centerY = window.innerHeight / 2;
-      
+
       newParticles.push({
         id: i,
         x: centerX + (Math.random() - 0.5) * 100,
@@ -60,20 +65,19 @@ export const CelebrationEffect: React.FC<CelebrationEffectProps> = ({
       });
     }
 
-    setParticles(newParticles);
+    return newParticles;
   };
 
-  // Handle trigger changes
-  useEffect(() => {
-    if (trigger && !isActive) {
-      setIsActive(true);
-      createParticles();
+  const stopAnimation = () => {
+    if (intervalRef.current) {
+      clearInterval(intervalRef.current);
+      intervalRef.current = null;
     }
-  }, [trigger, isActive]);
+  };
 
-  // Handle animation when active
-  useEffect(() => {
-    if (!isActive) return;
+  const startAnimation = () => {
+    const initialParticles = createParticles();
+    setParticles(initialParticles);
 
     const animateParticles = () => {
       setParticles(prevParticles => {
@@ -89,23 +93,31 @@ export const CelebrationEffect: React.FC<CelebrationEffectProps> = ({
           .filter(particle => particle.life < particle.maxLife);
 
         if (updatedParticles.length === 0) {
-          // Use setTimeout to avoid direct state update during render
-          setTimeout(() => {
-            setIsActive(false);
-            onCompleteRef.current?.();
-          }, 0);
+          stopAnimation();
+          onCompleteRef.current?.();
         }
 
         return updatedParticles;
       });
     };
 
-    const interval = setInterval(animateParticles, 16); // ~60 FPS
+    intervalRef.current = setInterval(animateParticles, 16);
+  };
+
+  // Handle trigger changes
+  useEffect(() => {
+    if (trigger) {
+      stopAnimation(); // Stop any existing animation
+      startAnimation(); // Start new animation
+    } else {
+      stopAnimation(); // Stop animation when trigger is false
+      setParticles([]); // Clear particles
+    }
 
     return () => {
-      clearInterval(interval);
+      stopAnimation(); // Cleanup on unmount
     };
-  }, [isActive]);
+  }, [trigger]);
 
   if (!isActive || particles.length === 0) {
     return null;
