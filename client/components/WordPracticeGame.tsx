@@ -115,7 +115,7 @@ export const WordPracticeGame: React.FC<WordPracticeGameProps> = ({
   };
 
   const renderIntro = () => (
-    <div className="text-center space-y-6 p-8">
+    <div className="text-center space-y-4 sm:space-y-6 p-4 sm:p-8">
       {/* Animated header */}
       <div className="relative">
         <div className="text-8xl mb-4 animate-bounce">🎯</div>
