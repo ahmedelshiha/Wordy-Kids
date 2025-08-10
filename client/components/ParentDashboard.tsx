@@ -2568,9 +2568,14 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
             <BookMarked className="w-4 h-4" />
             Custom Words
           </TabsTrigger>
-          <TabsTrigger value="analytics" className="flex items-center gap-2">
+          <TabsTrigger value="analytics" className="flex items-center gap-2 relative">
             <BarChart3 className="w-4 h-4" />
             Analytics
+            {Object.values(childrenWordStats).some(stats => stats.wordsNeedingPractice > 0) && (
+              <Badge className="bg-orange-500 text-white text-xs px-1 ml-1">
+                {Object.values(childrenWordStats).reduce((total, stats) => total + (stats.wordsNeedingPractice || 0), 0)}
+              </Badge>
+            )}
           </TabsTrigger>
           <TabsTrigger
             value="notifications"
