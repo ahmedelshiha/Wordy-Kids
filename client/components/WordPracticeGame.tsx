@@ -330,22 +330,22 @@ export const WordPracticeGame: React.FC<WordPracticeGameProps> = ({
             )}
 
             {/* Action buttons */}
-            <div className="grid grid-cols-2 gap-4 mt-8">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 mt-6 sm:mt-8">
               <Button
                 onClick={handleForgot}
                 variant="outline"
-                className="bg-orange-50 hover:bg-orange-100 border-orange-300 text-orange-700 py-6 text-lg"
+                className="bg-orange-50 hover:bg-orange-100 border-orange-300 text-orange-700 py-4 sm:py-6 text-base sm:text-lg min-h-[60px] order-2 sm:order-1"
               >
-                <XCircle className="w-6 h-6 mr-2" />
-                Still Tricky 🤔
+                <XCircle className="w-5 h-5 sm:w-6 sm:h-6 mr-2 flex-shrink-0" />
+                <span>Still Tricky 🤔</span>
               </Button>
-              
+
               <Button
                 onClick={handleRemember}
-                className="bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 text-white py-6 text-lg shadow-lg"
+                className="bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 text-white py-4 sm:py-6 text-base sm:text-lg shadow-lg min-h-[60px] order-1 sm:order-2"
               >
-                <CheckCircle className="w-6 h-6 mr-2" />
-                I Remember! 🎉
+                <CheckCircle className="w-5 h-5 sm:w-6 sm:h-6 mr-2 flex-shrink-0" />
+                <span>I Remember! 🎉</span>
               </Button>
             </div>
           </div>
