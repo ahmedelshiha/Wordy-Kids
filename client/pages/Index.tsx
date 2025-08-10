@@ -284,6 +284,46 @@ export default function Index({ initialProfile }: IndexProps) {
     setCurrentWordIndex(0);
   };
 
+  const handleWordProgress = async (word: any, status: "remembered" | "needs_practice") => {
+    if (!currentProfile?.id || !currentSessionId) {
+      console.warn("Missing profile or session ID");
+      return;
+    }
+
+    setIsLoadingProgress(true);
+    try {
+      const response = await WordProgressAPI.recordWordProgress({
+        childId: currentProfile.id,
+        sessionId: currentSessionId,
+        wordId: word.id.toString(),
+        word: word.word,
+        category: word.category,
+        status,
+        responseTime: Math.random() * 3000 + 1000, // Simulated response time
+        difficulty: word.difficulty || "medium",
+      });
+
+      // Update child stats
+      setChildStats(response.updatedStats);
+
+      // Show achievements if any
+      if (response.achievements && response.achievements.length > 0) {
+        setFeedback({
+          type: "celebration",
+          title: "Achievement Unlocked! 🏆",
+          message: `You earned: ${response.achievements.join(", ")}`,
+          onContinue: () => setFeedback(null),
+        });
+      }
+
+      console.log("Word progress recorded:", response);
+    } catch (error) {
+      console.error("Failed to record word progress:", error);
+    } finally {
+      setIsLoadingProgress(false);
+    }
+  };
+
   const handleSignOut = () => {
     navigate("/");
   };
