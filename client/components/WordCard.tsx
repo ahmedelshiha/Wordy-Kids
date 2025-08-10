@@ -38,6 +38,8 @@ export const WordCard: React.FC<WordCardProps> = ({
   showDefinition = false,
   onPronounce,
   onFavorite,
+  onWordMastered,
+  showVocabularyBuilder = false,
   className = "",
 }) => {
   const [isFlipped, setIsFlipped] = useState(showDefinition);
