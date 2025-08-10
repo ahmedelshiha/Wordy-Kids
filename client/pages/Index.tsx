@@ -813,11 +813,11 @@ export default function Index({ initialProfile }: IndexProps) {
                               </span>
                             </div>
                             <Button
-                              onClick={() => setGameMode(true)}
+                              onClick={() => setShowLightningLearning(true)}
                               className="w-full bg-educational-orange text-white hover:bg-educational-orange/90"
                             >
                               <Zap className="w-4 h-4 mr-2" />
-                              Start Speed Run!
+                              Start Lightning!
                             </Button>
                           </CardContent>
                         </Card>
