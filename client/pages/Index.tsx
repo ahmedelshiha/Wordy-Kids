@@ -760,30 +760,86 @@ export default function Index({ initialProfile }: IndexProps) {
 
                       {/* All Games and Quizzes - Unified Grid */}
                       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6 max-w-7xl mx-auto">
-                        {/* Adventure Games */}
+                        {/* Word Adventure Quest */}
                         <Card className="cursor-pointer hover:shadow-xl transition-all duration-300 hover:scale-105 border-2 border-educational-green/30">
                           <CardContent className="p-6 text-center">
-                            <div className="text-6xl mb-4">🎮</div>
+                            <div className="text-6xl mb-4">🗺️</div>
                             <h3 className="text-xl font-bold text-educational-green mb-2">
-                              Adventure Games
+                              Word Adventure Quest
                             </h3>
                             <p className="text-gray-600 mb-4">
-                              Journey through words with exciting game challenges!
+                              Journey through words with your learning buddy!
                             </p>
                             <div className="flex justify-center gap-2 mb-4">
                               <span className="bg-educational-green/20 text-educational-green px-2 py-1 rounded-full text-xs">
-                                Multiple Games
+                                Easy
                               </span>
                               <span className="bg-educational-green/20 text-educational-green px-2 py-1 rounded-full text-xs">
-                                Power-ups
+                                2-5 min
                               </span>
                             </div>
                             <Button
                               onClick={() => setGameMode(true)}
                               className="w-full bg-educational-green text-white hover:bg-educational-green/90"
                             >
-                              <Gamepad2 className="w-4 h-4 mr-2" />
-                              Start Adventure!
+                              <Play className="w-4 h-4 mr-2" />
+                              Start Quest!
+                            </Button>
+                          </CardContent>
+                        </Card>
+
+                        {/* Lightning Learning */}
+                        <Card className="cursor-pointer hover:shadow-xl transition-all duration-300 hover:scale-105 border-2 border-educational-orange/30">
+                          <CardContent className="p-6 text-center">
+                            <div className="text-6xl mb-4">⚡</div>
+                            <h3 className="text-xl font-bold text-educational-orange mb-2">
+                              Lightning Learning
+                            </h3>
+                            <p className="text-gray-600 mb-4">
+                              Learn words at lightning speed! How fast can you go?
+                            </p>
+                            <div className="flex justify-center gap-2 mb-4">
+                              <span className="bg-educational-orange/20 text-educational-orange px-2 py-1 rounded-full text-xs">
+                                Hard
+                              </span>
+                              <span className="bg-educational-orange/20 text-educational-orange px-2 py-1 rounded-full text-xs">
+                                1-3 min
+                              </span>
+                            </div>
+                            <Button
+                              onClick={() => setGameMode(true)}
+                              className="w-full bg-educational-orange text-white hover:bg-educational-orange/90"
+                            >
+                              <Zap className="w-4 h-4 mr-2" />
+                              Start Speed Run!
+                            </Button>
+                          </CardContent>
+                        </Card>
+
+                        {/* Pronunciation Party */}
+                        <Card className="cursor-pointer hover:shadow-xl transition-all duration-300 hover:scale-105 border-2 border-educational-blue/30">
+                          <CardContent className="p-6 text-center">
+                            <div className="text-6xl mb-4">🎤</div>
+                            <h3 className="text-xl font-bold text-educational-blue mb-2">
+                              Pronunciation Party
+                            </h3>
+                            <p className="text-gray-600 mb-4">
+                              Learn to say words perfectly with fun audio challenges!
+                            </p>
+                            <div className="flex justify-center gap-2 mb-4">
+                              <span className="bg-educational-blue/20 text-educational-blue px-2 py-1 rounded-full text-xs">
+                                Easy
+                              </span>
+                              <span className="bg-educational-blue/20 text-educational-blue px-2 py-1 rounded-full text-xs">
+                                2-4 min
+                              </span>
+                            </div>
+                            <Button
+                              onClick={() => setGameMode(true)}
+                              className="w-full bg-educational-blue text-white hover:bg-educational-blue/90"
+                            >
+                              <Volume2 className="w-4 h-4 mr-2" />
+                              Start Party!
                             </Button>
                           </CardContent>
                         </Card>
