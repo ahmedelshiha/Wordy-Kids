@@ -1881,8 +1881,35 @@ export default function Index({ initialProfile }: IndexProps) {
         </div>
       )}
 
+      {/* Mobile Bottom Navigation */}
+      <nav className="fixed bottom-0 left-0 right-0 bg-white/90 backdrop-blur-md border-t border-purple-200 p-2 lg:hidden z-40">
+        <div className="flex justify-around">
+          {[
+            { id: "dashboard", icon: Target, label: "Dashboard", color: "purple" },
+            { id: "learn", icon: BookOpen, label: "Learn", color: "green" },
+            { id: "quiz", icon: Brain, label: "Quiz", color: "pink" },
+            { id: "progress", icon: Trophy, label: "Progress", color: "yellow" },
+          ].map(({ id, icon: Icon, label, color }) => (
+            <button
+              key={id}
+              onClick={() => setActiveTab(id)}
+              className={`flex flex-col items-center gap-1 p-3 rounded-xl transition-all ${
+                activeTab === id
+                  ? "bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-lg"
+                  : "text-gray-600 hover:text-purple-600"
+              }`}
+            >
+              <Icon className={`w-5 h-5 ${activeTab === id ? "text-white" : ""}`} />
+              <span className={`text-xs font-medium ${activeTab === id ? "text-white" : ""}`}>
+                {label}
+              </span>
+            </button>
+          ))}
+        </div>
+      </nav>
+
       {/* Floating Helper */}
-      <div className="fixed bottom-4 md:bottom-6 right-4 md:right-6 z-40">
+      <div className="fixed bottom-20 lg:bottom-4 md:bottom-6 right-4 md:right-6 z-40">
         <div
           className="bg-gradient-to-r from-educational-purple to-educational-pink p-3 md:p-4 rounded-full shadow-2xl cursor-pointer md:hover:scale-110 transition-all duration-300 min-w-[48px] min-h-[48px] flex items-center justify-center"
           onClick={() =>
