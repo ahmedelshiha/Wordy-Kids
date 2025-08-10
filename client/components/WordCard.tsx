@@ -183,14 +183,31 @@ export const WordCard: React.FC<WordCardProps> = ({
           </div>
 
           {word.imageUrl ? (
-            <img
-              src={word.imageUrl}
-              alt={word.word}
-              className="w-40 md:w-48 h-96 md:h-[448px] object-cover rounded-full mt-12 mb-4 md:mb-6 shadow-xl ring-4 ring-white/30"
-            />
+            <div className="relative mx-auto mt-8 mb-6">
+              <div className="w-48 h-48 md:w-56 md:h-56 lg:w-64 lg:h-64 rounded-full bg-white/20 backdrop-blur-sm shadow-2xl ring-4 ring-white/30 flex items-center justify-center">
+                <img
+                  src={word.imageUrl}
+                  alt={word.word}
+                  className="w-40 h-40 md:w-48 md:h-48 lg:w-56 lg:h-56 object-cover rounded-full shadow-lg"
+                />
+              </div>
+            </div>
           ) : (
-            <div className="w-40 md:w-48 h-[480px] md:h-[560px] rounded-full bg-white/20 flex items-center justify-center mt-12 mb-4 md:mb-6 text-6xl md:text-8xl shadow-xl ring-4 ring-white/30 backdrop-blur-sm">
-              {word.emoji || "📚"}
+            <div className="relative mx-auto mt-8 mb-6">
+              <div className="w-48 h-48 md:w-56 md:h-56 lg:w-64 lg:h-64 rounded-full bg-gradient-to-br from-white/30 via-white/20 to-white/10 backdrop-blur-md shadow-2xl ring-4 ring-white/30 flex items-center justify-center relative overflow-hidden">
+                {/* Decorative background elements */}
+                <div className="absolute top-2 left-2 w-6 h-6 bg-white/20 rounded-full animate-pulse"></div>
+                <div className="absolute bottom-4 right-4 w-4 h-4 bg-white/15 rounded-full animate-bounce delay-300"></div>
+                <div className="absolute top-1/2 right-2 w-3 h-3 bg-white/25 rounded-full animate-ping delay-700"></div>
+
+                {/* Main emoji */}
+                <span className="text-5xl md:text-6xl lg:text-7xl relative z-10 drop-shadow-lg animate-gentle-float">
+                  {word.emoji || "📚"}
+                </span>
+
+                {/* Subtle glow effect */}
+                <div className="absolute inset-0 rounded-full bg-gradient-to-t from-transparent via-white/5 to-white/10"></div>
+              </div>
             </div>
           )}
 
