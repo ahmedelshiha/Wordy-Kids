@@ -92,7 +92,7 @@ const learningStats = {
     {
       id: "category-explorer",
       name: "Category Explorer",
-      icon: "��️",
+      icon: "🗂️",
       earned: true,
       description: "Explored 5+ categories",
     },
