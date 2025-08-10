@@ -227,25 +227,25 @@ export const WordPracticeGame: React.FC<WordPracticeGameProps> = ({
   );
 
   const renderPlaying = () => (
-    <div className="space-y-6">
+    <div className="space-y-4 sm:space-y-6">
       {/* Header with progress */}
-      <div className="bg-gradient-to-r from-blue-500 to-purple-500 text-white p-6 rounded-2xl">
-        <div className="flex items-center justify-between mb-4">
-          <div className="flex items-center gap-3">
+      <div className="bg-gradient-to-r from-blue-500 to-purple-500 text-white p-4 sm:p-6 rounded-2xl mx-2 sm:mx-0">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-4">
+          <div className="flex items-center gap-2 sm:gap-3">
             <div className="bg-white/20 rounded-full p-2">
-              <Target className="w-6 h-6" />
+              <Target className="w-5 h-5 sm:w-6 sm:h-6" />
             </div>
-            <div>
-              <h2 className="text-xl font-bold">Word {currentWordIndex + 1} of {practiceWords.length}</h2>
-              <p className="text-blue-100">Category: {currentWord.category}</p>
+            <div className="min-w-0 flex-1">
+              <h2 className="text-lg sm:text-xl font-bold">Word {currentWordIndex + 1} of {practiceWords.length}</h2>
+              <p className="text-blue-100 text-sm truncate">Category: {currentWord.category}</p>
             </div>
           </div>
-          <div className="text-right">
-            <div className="text-2xl font-bold">{points}</div>
+          <div className="text-left sm:text-right">
+            <div className="text-xl sm:text-2xl font-bold">{points}</div>
             <div className="text-sm text-blue-100">Points</div>
           </div>
         </div>
-        <Progress value={progress} className="h-3 bg-white/20" />
+        <Progress value={progress} className="h-2 sm:h-3 bg-white/20" />
       </div>
 
       {/* Stats bar */}
