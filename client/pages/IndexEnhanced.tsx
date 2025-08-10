@@ -822,16 +822,16 @@ export default function IndexEnhanced() {
       </main>
 
       {/* Enhanced Components */}
-      {showCelebration && <CelebrationEffect />}
+      {showCelebration && <CelebrationEffect trigger={showCelebration} />}
       <FloatingBubbles />
 
       {/* Settings Panel */}
-      {showSettings && <SettingsPanel onClose={() => setShowSettings(false)} />}
+      {showSettings && <SettingsPanel isOpen={showSettings} onClose={() => setShowSettings(false)} />}
 
       {/* Word Creator */}
       {showWordCreator && (
         <WordCreator
-          onSave={handleWordCreated}
+          onWordCreated={handleWordCreated}
           onClose={() => setShowWordCreator(false)}
         />
       )}
