@@ -63,6 +63,8 @@ import {
   LogOut,
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { WordProgressAPI } from "@/lib/wordProgressApi";
+import { ChildWordStats } from "@shared/api";
 
 const learningStats = {
   wordsLearned: 68,
