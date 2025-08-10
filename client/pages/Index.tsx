@@ -752,10 +752,13 @@ export default function Index({ initialProfile }: IndexProps) {
                                         {/* Learning Progress Buttons */}
                                         <div className="flex justify-center gap-3 md:gap-4 px-4 md:px-0">
                                           <Button
-                                            onClick={() => {
+                                            onClick={async () => {
                                               const currentWord =
                                                 displayWords[currentWordIndex];
                                               if (currentWord) {
+                                                // Record progress in database
+                                                await handleWordProgress(currentWord, "needs_practice");
+
                                                 // Mark as forgotten for extra practice
                                                 setForgottenWords(
                                                   (prev) =>
@@ -797,6 +800,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                             }}
                                             variant="outline"
                                             className="flex-1 bg-red-50 hover:bg-red-100 border-red-200 hover:border-red-300 text-red-700 hover:text-red-800 transition-all duration-300 transform hover:scale-105 py-4 px-6"
+                                            disabled={isLoadingProgress}
                                           >
                                             <span className="text-xl mr-2">
                                               ❌
