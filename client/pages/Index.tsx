@@ -153,8 +153,7 @@ export default function Index({ initialProfile }: IndexProps) {
   const [feedback, setFeedback] = useState<any>(null);
   const [gameMode, setGameMode] = useState(false);
   const [showWordAdventure, setShowWordAdventure] = useState(false);
-  const [showLightningLearning, setShowLightningLearning] = useState(false);
-  const [showPronunciationParty, setShowPronunciationParty] = useState(false);
+  const [showDefinitionDetective, setShowDefinitionDetective] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   // Load background animations setting on mount
