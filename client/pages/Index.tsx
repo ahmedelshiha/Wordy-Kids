@@ -747,59 +747,59 @@ export default function Index({ initialProfile }: IndexProps) {
 
                 {/* Navigation Menu */}
                 <nav className="space-y-2">
-                <button
-                  onClick={() => setActiveTab("dashboard")}
-                  className={`w-full flex items-center gap-4 p-4 rounded-2xl transition-all ${
-                    activeTab === "dashboard"
-                      ? "bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-lg"
-                      : "bg-white text-gray-700 hover:bg-purple-50"
-                  }`}
-                >
-                  <div
-                    className={`p-2 rounded-xl ${activeTab === "dashboard" ? "bg-white/20" : "bg-purple-100"}`}
+                  <button
+                    onClick={() => setActiveTab("dashboard")}
+                    className={`w-full flex items-center gap-3 p-3 lg:p-4 rounded-xl lg:rounded-2xl transition-all ${
+                      activeTab === "dashboard"
+                        ? "bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-lg"
+                        : "bg-white text-gray-700 hover:bg-purple-50 border border-purple-100"
+                    }`}
                   >
-                    <Target
-                      className={`w-5 h-5 ${activeTab === "dashboard" ? "text-white" : "text-purple-600"}`}
-                    />
-                  </div>
-                  <span className="font-semibold">Dashboard</span>
-                </button>
+                    <div
+                      className={`p-2 rounded-lg lg:rounded-xl ${activeTab === "dashboard" ? "bg-white/20" : "bg-purple-100"}`}
+                    >
+                      <Target
+                        className={`w-4 h-4 lg:w-5 lg:h-5 ${activeTab === "dashboard" ? "text-white" : "text-purple-600"}`}
+                      />
+                    </div>
+                    <span className="font-medium lg:font-semibold text-sm lg:text-base">Dashboard</span>
+                  </button>
 
-                <button
-                  onClick={() => setActiveTab("learn")}
-                  className={`w-full flex items-center gap-4 p-4 rounded-2xl transition-all ${
-                    activeTab === "learn"
-                      ? "bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-lg"
-                      : "bg-white text-gray-700 hover:bg-purple-50"
-                  }`}
-                >
-                  <div
-                    className={`p-2 rounded-xl ${activeTab === "learn" ? "bg-white/20" : "bg-green-100"}`}
+                  <button
+                    onClick={() => setActiveTab("learn")}
+                    className={`w-full flex items-center gap-3 p-3 lg:p-4 rounded-xl lg:rounded-2xl transition-all ${
+                      activeTab === "learn"
+                        ? "bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-lg"
+                        : "bg-white text-gray-700 hover:bg-purple-50 border border-purple-100"
+                    }`}
                   >
-                    <BookOpen
-                      className={`w-5 h-5 ${activeTab === "learn" ? "text-white" : "text-green-600"}`}
-                    />
-                  </div>
-                  <span className="font-semibold">Word Library</span>
-                </button>
+                    <div
+                      className={`p-2 rounded-lg lg:rounded-xl ${activeTab === "learn" ? "bg-white/20" : "bg-green-100"}`}
+                    >
+                      <BookOpen
+                        className={`w-4 h-4 lg:w-5 lg:h-5 ${activeTab === "learn" ? "text-white" : "text-green-600"}`}
+                      />
+                    </div>
+                    <span className="font-medium lg:font-semibold text-sm lg:text-base">Word Library</span>
+                  </button>
 
-                <button
-                  onClick={() => setActiveTab("quiz")}
-                  className={`w-full flex items-center gap-4 p-4 rounded-2xl transition-all ${
-                    activeTab === "quiz"
-                      ? "bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-lg"
-                      : "bg-white text-gray-700 hover:bg-purple-50"
-                  }`}
-                >
-                  <div
-                    className={`p-2 rounded-xl ${activeTab === "quiz" ? "bg-white/20" : "bg-pink-100"}`}
+                  <button
+                    onClick={() => setActiveTab("quiz")}
+                    className={`w-full flex items-center gap-3 p-3 lg:p-4 rounded-xl lg:rounded-2xl transition-all ${
+                      activeTab === "quiz"
+                        ? "bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-lg"
+                        : "bg-white text-gray-700 hover:bg-purple-50 border border-purple-100"
+                    }`}
                   >
-                    <Brain
-                      className={`w-5 h-5 ${activeTab === "quiz" ? "text-white" : "text-pink-600"}`}
-                    />
-                  </div>
-                  <span className="font-semibold">Quiz Time</span>
-                </button>
+                    <div
+                      className={`p-2 rounded-lg lg:rounded-xl ${activeTab === "quiz" ? "bg-white/20" : "bg-pink-100"}`}
+                    >
+                      <Brain
+                        className={`w-4 h-4 lg:w-5 lg:h-5 ${activeTab === "quiz" ? "text-white" : "text-pink-600"}`}
+                      />
+                    </div>
+                    <span className="font-medium lg:font-semibold text-sm lg:text-base">Quiz Time</span>
+                  </button>
 
                 <button
                   onClick={() => setActiveTab("progress")}
