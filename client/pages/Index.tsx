@@ -281,7 +281,7 @@ export default function Index({ initialProfile }: IndexProps) {
     setGameMode(false);
     setFeedback({
       type: "celebration",
-      title: "Amazing Game! 🏆",
+      title: "Amazing Game! ���",
       message: `You scored ${score} points and learned ${totalWords} words!`,
       points: score,
       onContinue: () => setFeedback(null),
@@ -716,6 +716,19 @@ export default function Index({ initialProfile }: IndexProps) {
                     />
                   </div>
                   <span className="font-semibold">🌟 My Journey</span>
+                </button>
+
+                <button
+                  onClick={startPracticeGame}
+                  className="w-full flex items-center gap-4 p-4 rounded-2xl transition-all bg-white text-gray-700 hover:bg-orange-50 hover:border-orange-200 border-2 border-transparent relative"
+                >
+                  <div className="p-2 rounded-xl bg-orange-100">
+                    <Target className="w-5 h-5 text-orange-600" />
+                  </div>
+                  <span className="font-semibold">🎯 Practice Words</span>
+                  <div className="absolute -top-1 -right-1 bg-orange-500 text-white text-xs px-2 py-1 rounded-full">
+                    {getPracticeWords().length}
+                  </div>
                 </button>
 
                 <button
@@ -1548,7 +1561,7 @@ export default function Index({ initialProfile }: IndexProps) {
                           setShowMatchingGame(false);
                           setFeedback({
                             type: "celebration",
-                            title: "Matching Game Complete! 🎯",
+                            title: "Matching Game Complete! ����",
                             message: `You matched ${score} pairs in ${timeSpent} seconds!`,
                             points: score * 15,
                             onContinue: () => setFeedback(null),
