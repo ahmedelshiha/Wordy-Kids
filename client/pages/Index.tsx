@@ -785,7 +785,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                         </div>
                                       </div>
 
-                                      <div className="text-center mt-4">
+                                      <div className="text-center mt-4 space-y-2">
                                         <Badge
                                           variant="outline"
                                           className="text-sm"
@@ -796,6 +796,32 @@ export default function Index({ initialProfile }: IndexProps) {
                                           - Word {currentWordIndex + 1} of{" "}
                                           {displayWords.length}
                                         </Badge>
+
+                                        {/* Current Word Status */}
+                                        {(() => {
+                                          const currentWord = displayWords[currentWordIndex];
+                                          if (!currentWord) return null;
+
+                                          if (rememberedWords.has(currentWord.id)) {
+                                            return (
+                                              <Badge className="bg-green-100 text-green-700 border-green-300">
+                                                ✅ You remembered this word!
+                                              </Badge>
+                                            );
+                                          } else if (forgottenWords.has(currentWord.id)) {
+                                            return (
+                                              <Badge className="bg-red-100 text-red-700 border-red-300">
+                                                ❌ Marked for practice
+                                              </Badge>
+                                            );
+                                          } else {
+                                            return (
+                                              <Badge variant="secondary" className="bg-blue-100 text-blue-700 border-blue-300">
+                                                🆕 New word to learn
+                                              </Badge>
+                                            );
+                                          }
+                                        })()}
                                       </div>
                                     </>
                                   )}
