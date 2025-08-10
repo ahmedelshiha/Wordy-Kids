@@ -15,6 +15,13 @@ import {
   getSupportTickets,
   getSystemHealth,
 } from "./routes/admin";
+import {
+  startLearningSession,
+  recordWordProgress,
+  endLearningSession,
+  getChildStats,
+  getAllChildrenProgress,
+} from "./routes/word-progress";
 
 export function createServer() {
   const app = express();
