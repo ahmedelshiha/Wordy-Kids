@@ -885,8 +885,6 @@ export default function Index({ initialProfile }: IndexProps) {
                     stats={learningStats}
                     userName="Explorer"
                     childStats={childStats}
-                    onStartPractice={startPracticeGame}
-                    practiceWords={getPracticeWords()}
                   />
                 </TabsContent>
 
