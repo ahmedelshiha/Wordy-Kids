@@ -472,26 +472,26 @@ export const WordPracticeGame: React.FC<WordPracticeGameProps> = ({
   );
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-50 via-pink-50 to-yellow-50 p-4">
+    <div className="min-h-screen bg-gradient-to-br from-purple-50 via-pink-50 to-yellow-50 p-2 sm:p-4">
       {/* Header */}
-      <div className="flex items-center justify-between mb-6">
+      <div className="flex items-center justify-between mb-4 sm:mb-6">
         <Button
           onClick={onBack}
           variant="outline"
-          className="bg-white hover:bg-gray-50"
+          className="bg-white hover:bg-gray-50 min-h-[44px] px-3 sm:px-4"
         >
-          <ArrowLeft className="w-4 h-4 mr-2" />
-          Back
+          <ArrowLeft className="w-4 h-4 mr-1 sm:mr-2" />
+          <span className="text-sm sm:text-base">Back</span>
         </Button>
-        
-        <div className="flex items-center gap-3">
-          <Heart className="w-6 h-6 text-red-500 animate-pulse" />
-          <span className="text-lg font-semibold text-gray-700">Practice Mode</span>
+
+        <div className="flex items-center gap-2 sm:gap-3">
+          <Heart className="w-5 h-5 sm:w-6 sm:h-6 text-red-500 animate-pulse" />
+          <span className="text-base sm:text-lg font-semibold text-gray-700">Practice Mode</span>
         </div>
       </div>
 
       {/* Game content */}
-      <div className="max-w-4xl mx-auto">
+      <div className="max-w-4xl mx-auto px-2 sm:px-0">
         {gamePhase === 'intro' && renderIntro()}
         {gamePhase === 'playing' && renderPlaying()}
         {gamePhase === 'result' && renderResult()}
