@@ -64,6 +64,16 @@ export const WordCard: React.FC<WordCardProps> = ({
   const [isPlaying, setIsPlaying] = useState(false);
   const [isFavorited, setIsFavorited] = useState(false);
   const [showSparkles, setShowSparkles] = useState(false);
+  const [adventureStatus, setAdventureStatus] = useState<WordAdventureStatus | null>(null);
+
+  // Initialize adventure status for this word
+  React.useEffect(() => {
+    let status = adventureService.getWordAdventureStatus(word.id.toString());
+    if (!status) {
+      status = adventureService.initializeWordAdventure(word.id.toString());
+    }
+    setAdventureStatus(status);
+  }, [word.id]);
 
   const handlePronounce = async () => {
     if (isPlaying) return;
