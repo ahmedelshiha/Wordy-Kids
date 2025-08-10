@@ -68,6 +68,15 @@ export const LearningDashboard: React.FC<LearningDashboardProps> = ({
         </p>
       </div>
 
+      {/* Practice Words Card - Prominent placement */}
+      {practiceWords.length > 0 && onStartPractice && (
+        <PracticeWordsCard
+          practiceWords={practiceWords}
+          onStartPractice={onStartPractice}
+          childName={userName}
+        />
+      )}
+
       {/* Main Stats Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         {/* Words Learned */}
