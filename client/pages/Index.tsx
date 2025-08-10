@@ -733,8 +733,20 @@ export default function Index({ initialProfile }: IndexProps) {
           <div className="flex flex-col lg:flex-row min-h-screen">
             {/* Desktop/Mobile Sidebar */}
             <aside className="lg:w-80 xl:w-96 bg-gradient-to-b from-purple-50 to-pink-50 border-r border-purple-200 lg:border-b-0 border-b overflow-y-auto lg:max-h-screen">
-              {/* Navigation Menu */}
-              <nav className="flex-1 space-y-3">
+              <div className="p-4 lg:p-6">
+                {/* Logo Section - Mobile & Desktop */}
+                <div className="flex items-center gap-3 mb-6 lg:mb-8">
+                  <div className="w-8 h-8 lg:w-10 lg:h-10 bg-gradient-to-r from-purple-500 to-pink-500 rounded-xl flex items-center justify-center">
+                    <Sparkles className="w-5 h-5 lg:w-6 lg:h-6 text-white" />
+                  </div>
+                  <div>
+                    <h1 className="text-lg lg:text-xl font-bold text-gray-800">WordWise</h1>
+                    <p className="text-xs lg:text-sm text-gray-600">Learning Adventure</p>
+                  </div>
+                </div>
+
+                {/* Navigation Menu */}
+                <nav className="space-y-2">
                 <button
                   onClick={() => setActiveTab("dashboard")}
                   className={`w-full flex items-center gap-4 p-4 rounded-2xl transition-all ${
@@ -859,11 +871,12 @@ export default function Index({ initialProfile }: IndexProps) {
                   </div>
                   <span className="font-semibold">Sign Out</span>
                 </button>
-              </nav>
+                </nav>
+              </div>
             </aside>
 
             {/* Main Content Area */}
-            <div className="flex-1 p-4 md:p-8 bg-gradient-to-br from-blue-50 via-white to-purple-50 overflow-y-auto">
+            <div className="flex-1 p-4 lg:p-8 overflow-y-auto">
               <Tabs
                 value={activeTab}
                 onValueChange={setActiveTab}
