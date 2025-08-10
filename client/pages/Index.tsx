@@ -842,7 +842,7 @@ export default function Index({ initialProfile }: IndexProps) {
                               </span>
                             </div>
                             <Button
-                              onClick={() => setGameMode(true)}
+                              onClick={() => setShowPronunciationParty(true)}
                               className="w-full bg-educational-blue text-white hover:bg-educational-blue/90"
                             >
                               <Volume2 className="w-4 h-4 mr-2" />
