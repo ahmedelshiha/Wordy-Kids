@@ -3,20 +3,21 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
 import { Badge } from '@/components/ui/badge';
-import { 
-  ArrowLeft, 
-  Target, 
-  Star, 
-  Zap, 
-  Trophy, 
-  Heart, 
+import {
+  ArrowLeft,
+  Target,
+  Star,
+  Zap,
+  Trophy,
+  Heart,
   Sparkles,
   Volume2,
   RotateCcw,
   CheckCircle,
   XCircle,
   Award,
-  Gamepad2
+  Gamepad2,
+  Rocket
 } from 'lucide-react';
 
 interface PracticeWord {
@@ -431,7 +432,7 @@ export const WordPracticeGame: React.FC<WordPracticeGameProps> = ({
             <div className="text-center">
               <div className="text-4xl mb-3 animate-pulse">💪</div>
               <p className="text-xl font-bold text-orange-700 mb-3">
-                🌟 Heroes never give up! You're getting stronger! 🌟
+                🌟 Heroes never give up! You're getting stronger! ��
               </p>
               <p className="text-lg text-orange-600 mb-2">
                 This tricky word wants to challenge you again!
