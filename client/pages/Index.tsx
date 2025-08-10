@@ -313,23 +313,23 @@ export default function Index({ initialProfile }: IndexProps) {
       if (accuracy === 100) {
         achievementTitle = "Perfect Category Mastery! 🏆";
         achievementIcon = "🏆";
-        achievementMessage = `Outstanding! You remembered ALL ${totalWords} words in ${selectedCategory}! You're a true champion!`;
+        achievementMessage = `Outstanding! You remembered ALL ${totalWords} words in ${categoryDisplayName}! You're a true champion!`;
       } else if (accuracy >= 90) {
         achievementTitle = "Category Expert! ��";
         achievementIcon = "⭐";
-        achievementMessage = `Excellent work! You mastered ${selectedCategory} with ${accuracy}% accuracy! Almost perfect!`;
+        achievementMessage = `Excellent work! You mastered ${categoryDisplayName} with ${accuracy}% accuracy! Almost perfect!`;
       } else if (accuracy >= 75) {
         achievementTitle = "Category Scholar! 📚";
         achievementIcon = "📚";
-        achievementMessage = `Great job! You completed ${selectedCategory} with ${accuracy}% accuracy! Keep up the good work!`;
+        achievementMessage = `Great job! You completed ${categoryDisplayName} with ${accuracy}% accuracy! Keep up the good work!`;
       } else if (accuracy >= 50) {
         achievementTitle = "Category Explorer! 🎯";
         achievementIcon = "🎯";
-        achievementMessage = `Good effort! You finished ${selectedCategory} with ${accuracy}% accuracy! Practice makes perfect!`;
+        achievementMessage = `Good effort! You finished ${categoryDisplayName} with ${accuracy}% accuracy! Practice makes perfect!`;
       } else {
         achievementTitle = "Category Challenger! 💪";
         achievementIcon = "💪";
-        achievementMessage = `Nice try! You completed ${selectedCategory} with ${accuracy}% accuracy! Every attempt makes you stronger!`;
+        achievementMessage = `Nice try! You completed ${categoryDisplayName} with ${accuracy}% accuracy! Every attempt makes you stronger!`;
       }
 
       return {
