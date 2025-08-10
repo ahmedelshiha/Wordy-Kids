@@ -336,21 +336,63 @@ export const WordCard: React.FC<WordCardProps> = ({
           {/* Vocabulary Builder Features */}
           {showVocabularyBuilder && (
             <div className="border-t border-white/20 pt-4 mt-4">
-              {/* Mastery Level */}
+              {/* Adventure Word Health */}
               <div className="mb-4">
                 <div className="flex items-center justify-between mb-2">
                   <h4 className="text-xs md:text-sm font-medium text-blue-300 flex items-center gap-1">
-                    <Brain className="w-3 h-3" />
-                    Mastery Level
+                    <Heart className="w-3 h-3" />
+                    Word Health
                   </h4>
-                  <span className="text-xs text-white/70">
-                    {word.masteryLevel || 0}%
-                  </span>
+                  <div className="flex items-center gap-2">
+                    <span className={`text-xs font-bold ${
+                      (adventureStatus?.health || 100) >= 80 ? 'text-green-300' :
+                      (adventureStatus?.health || 100) >= 50 ? 'text-yellow-300' :
+                      (adventureStatus?.health || 100) >= 30 ? 'text-orange-300' : 'text-red-300'
+                    }`}>
+                      {adventureStatus?.health || 100}%
+                    </span>
+                    {(adventureStatus?.health || 100) < 50 && (
+                      <AlertTriangle className="w-3 h-3 text-orange-300 animate-pulse" />
+                    )}
+                  </div>
                 </div>
                 <Progress
-                  value={word.masteryLevel || 0}
-                  className="h-2 bg-white/20"
+                  value={adventureStatus?.health || 100}
+                  className={`h-2 ${
+                    (adventureStatus?.health || 100) >= 50 ? 'bg-green-100/20' :
+                    (adventureStatus?.health || 100) >= 30 ? 'bg-orange-100/20' : 'bg-red-100/20'
+                  }`}
                 />
+
+                {/* Adventure Status */}
+                <div className="mt-2 flex items-center justify-between text-xs">
+                  <div className="flex items-center gap-1">
+                    {(adventureStatus?.health || 100) < 30 ? (
+                      <>
+                        <Flame className="w-3 h-3 text-red-400 animate-pulse" />
+                        <span className="text-red-300 font-medium">Needs Rescue!</span>
+                      </>
+                    ) : (adventureStatus?.health || 100) < 50 ? (
+                      <>
+                        <Target className="w-3 h-3 text-orange-400" />
+                        <span className="text-orange-300">Needs Practice</span>
+                      </>
+                    ) : (adventureStatus?.health || 100) < 80 ? (
+                      <>
+                        <Shield className="w-3 h-3 text-yellow-400" />
+                        <span className="text-yellow-300">Good</span>
+                      </>
+                    ) : (
+                      <>
+                        <Crown className="w-3 h-3 text-green-400" />
+                        <span className="text-green-300">Mastered</span>
+                      </>
+                    )}
+                  </div>
+                  <span className="text-white/60">
+                    Forgot {adventureStatus?.forget_count || 0}x
+                  </span>
+                </div>
               </div>
 
               {/* Rating Buttons */}
