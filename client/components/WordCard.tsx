@@ -150,6 +150,12 @@ export const WordCard: React.FC<WordCardProps> = ({
       <Card
         className={`h-[480px] md:h-[520px] lg:h-[560px] cursor-pointer transition-all duration-700 transform-gpu md:hover:scale-105 ${
           isFlipped ? "[transform:rotateY(180deg)]" : ""
+        } ${
+          adventureStatus && adventureStatus.health < 30
+            ? "ring-2 ring-red-400/50 shadow-red-400/20 shadow-xl animate-pulse"
+            : adventureStatus && adventureStatus.health < 50
+            ? "ring-2 ring-orange-400/50 shadow-orange-400/20 shadow-lg"
+            : ""
         }`}
         style={{ transformStyle: "preserve-3d" }}
         onClick={() => {
