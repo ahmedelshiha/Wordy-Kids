@@ -260,7 +260,7 @@ export default function Index({ initialProfile }: IndexProps) {
     setTimeout(() => {
       setFeedback({
         type: "celebration",
-        title: "Vocabulary Session Complete! ������",
+        title: "Vocabulary Session Complete! ��������",
         message: `Reviewed ${wordsReviewed} words with ${accuracy}% accuracy!`,
         points: wordsReviewed * accuracy,
         onContinue: () => setFeedback(null),
@@ -1878,25 +1878,6 @@ export default function Index({ initialProfile }: IndexProps) {
         />
       )}
 
-      {/* Floating Practice Words Reminder */}
-      {getPracticeWords().length > 0 && !showPracticeGame && (
-        <div className="fixed bottom-20 md:bottom-24 right-4 md:right-6 z-40">
-          <div
-            onClick={startPracticeGame}
-            className="bg-gradient-to-r from-orange-500 to-red-500 p-3 md:p-4 rounded-full shadow-2xl cursor-pointer hover:scale-110 transition-all duration-300 min-w-[48px] min-h-[48px] flex items-center justify-center animate-pulse"
-          >
-            <div className="relative">
-              <Target className="w-5 md:w-6 h-5 md:h-6 text-white" />
-              <div className="absolute -top-2 -right-2 bg-white text-orange-500 text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
-                {getPracticeWords().length}
-              </div>
-            </div>
-          </div>
-          <div className="absolute -top-12 left-1/2 transform -translate-x-1/2 bg-black text-white text-xs px-2 py-1 rounded whitespace-nowrap opacity-0 hover:opacity-100 transition-opacity">
-            Practice Words!
-          </div>
-        </div>
-      )}
 
       {/* Mobile Bottom Navigation */}
       <nav className="fixed bottom-0 left-0 right-0 bg-white/90 backdrop-blur-md border-t border-purple-200 p-2 lg:hidden z-40">
