@@ -25,6 +25,12 @@ export const CelebrationEffect: React.FC<CelebrationEffectProps> = ({
 }) => {
   const [particles, setParticles] = useState<Particle[]>([]);
   const [isActive, setIsActive] = useState(false);
+  const onCompleteRef = useRef(onComplete);
+
+  // Update the ref when onComplete changes
+  useEffect(() => {
+    onCompleteRef.current = onComplete;
+  }, [onComplete]);
 
   const colors = [
     '#FF6B6B', '#4ECDC4', '#45B7D1', '#96CEB4', '#FFEAA7', 
