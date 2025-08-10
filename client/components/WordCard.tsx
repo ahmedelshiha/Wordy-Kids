@@ -18,7 +18,7 @@ import {
   Flame,
   Target,
   Zap,
-  Crown
+  Crown,
 } from "lucide-react";
 import { playSoundIfEnabled } from "@/lib/soundEffects";
 import { audioService } from "@/lib/audioService";
@@ -64,7 +64,8 @@ export const WordCard: React.FC<WordCardProps> = ({
   const [isPlaying, setIsPlaying] = useState(false);
   const [isFavorited, setIsFavorited] = useState(false);
   const [showSparkles, setShowSparkles] = useState(false);
-  const [adventureStatus, setAdventureStatus] = useState<WordAdventureStatus | null>(null);
+  const [adventureStatus, setAdventureStatus] =
+    useState<WordAdventureStatus | null>(null);
 
   // Initialize adventure status for this word
   React.useEffect(() => {
@@ -154,8 +155,8 @@ export const WordCard: React.FC<WordCardProps> = ({
           adventureStatus && adventureStatus.health < 30
             ? "ring-2 ring-red-400/50 shadow-red-400/20 shadow-xl animate-pulse"
             : adventureStatus && adventureStatus.health < 50
-            ? "ring-2 ring-orange-400/50 shadow-orange-400/20 shadow-lg"
-            : ""
+              ? "ring-2 ring-orange-400/50 shadow-orange-400/20 shadow-lg"
+              : ""
         }`}
         style={{ transformStyle: "preserve-3d" }}
         onClick={() => {
@@ -169,7 +170,9 @@ export const WordCard: React.FC<WordCardProps> = ({
           style={{ backfaceVisibility: "hidden" }}
         >
           <div className="absolute top-3 left-3 md:top-4 md:left-4 flex flex-col gap-1 md:flex-row md:gap-2">
-            <Badge className={`${getDifficultyColor(word.difficulty)} text-xs md:text-sm`}>
+            <Badge
+              className={`${getDifficultyColor(word.difficulty)} text-xs md:text-sm`}
+            >
               {word.difficulty === "easy"
                 ? "🌟 Easy"
                 : word.difficulty === "medium"
@@ -189,12 +192,12 @@ export const WordCard: React.FC<WordCardProps> = ({
                 variant="outline"
                 className={`text-xs md:text-sm flex items-center gap-1 ${
                   adventureStatus.health >= 80
-                    ? 'bg-green-500/20 border-green-400/50 text-green-200'
+                    ? "bg-green-500/20 border-green-400/50 text-green-200"
                     : adventureStatus.health >= 50
-                    ? 'bg-yellow-500/20 border-yellow-400/50 text-yellow-200'
-                    : adventureStatus.health >= 30
-                    ? 'bg-orange-500/20 border-orange-400/50 text-orange-200'
-                    : 'bg-red-500/20 border-red-400/50 text-red-200 animate-pulse'
+                      ? "bg-yellow-500/20 border-yellow-400/50 text-yellow-200"
+                      : adventureStatus.health >= 30
+                        ? "bg-orange-500/20 border-orange-400/50 text-orange-200"
+                        : "bg-red-500/20 border-red-400/50 text-red-200 animate-pulse"
                 }`}
               >
                 {adventureStatus.health >= 80 ? (
@@ -312,7 +315,8 @@ export const WordCard: React.FC<WordCardProps> = ({
             {/* Adventure Last Practice Info */}
             {adventureStatus && (
               <p className="text-xs opacity-60 mb-1">
-                Last seen: {new Date(adventureStatus.last_seen).toLocaleDateString()}
+                Last seen:{" "}
+                {new Date(adventureStatus.last_seen).toLocaleDateString()}
               </p>
             )}
             <p className="text-xs md:text-sm opacity-75 mb-2">
@@ -395,11 +399,17 @@ export const WordCard: React.FC<WordCardProps> = ({
                     Word Health
                   </h4>
                   <div className="flex items-center gap-2">
-                    <span className={`text-xs font-bold ${
-                      (adventureStatus?.health || 100) >= 80 ? 'text-green-300' :
-                      (adventureStatus?.health || 100) >= 50 ? 'text-yellow-300' :
-                      (adventureStatus?.health || 100) >= 30 ? 'text-orange-300' : 'text-red-300'
-                    }`}>
+                    <span
+                      className={`text-xs font-bold ${
+                        (adventureStatus?.health || 100) >= 80
+                          ? "text-green-300"
+                          : (adventureStatus?.health || 100) >= 50
+                            ? "text-yellow-300"
+                            : (adventureStatus?.health || 100) >= 30
+                              ? "text-orange-300"
+                              : "text-red-300"
+                      }`}
+                    >
                       {adventureStatus?.health || 100}%
                     </span>
                     {(adventureStatus?.health || 100) < 50 && (
@@ -410,8 +420,11 @@ export const WordCard: React.FC<WordCardProps> = ({
                 <Progress
                   value={adventureStatus?.health || 100}
                   className={`h-2 ${
-                    (adventureStatus?.health || 100) >= 50 ? 'bg-green-100/20' :
-                    (adventureStatus?.health || 100) >= 30 ? 'bg-orange-100/20' : 'bg-red-100/20'
+                    (adventureStatus?.health || 100) >= 50
+                      ? "bg-green-100/20"
+                      : (adventureStatus?.health || 100) >= 30
+                        ? "bg-orange-100/20"
+                        : "bg-red-100/20"
                   }`}
                 />
 
@@ -421,7 +434,9 @@ export const WordCard: React.FC<WordCardProps> = ({
                     {(adventureStatus?.health || 100) < 30 ? (
                       <>
                         <Flame className="w-3 h-3 text-red-400 animate-pulse" />
-                        <span className="text-red-300 font-medium">Needs Rescue!</span>
+                        <span className="text-red-300 font-medium">
+                          Needs Rescue!
+                        </span>
                       </>
                     ) : (adventureStatus?.health || 100) < 50 ? (
                       <>
@@ -460,11 +475,12 @@ export const WordCard: React.FC<WordCardProps> = ({
                     onClick={(e) => {
                       e.stopPropagation();
                       // Track in adventure system
-                      const updatedStatus = adventureService.trackWordInteraction(
-                        word.id.toString(),
-                        false, // incorrect/hard
-                        false
-                      );
+                      const updatedStatus =
+                        adventureService.trackWordInteraction(
+                          word.id.toString(),
+                          false, // incorrect/hard
+                          false,
+                        );
                       setAdventureStatus(updatedStatus);
                       // Also call the original handler
                       onWordMastered?.(word.id, "hard");
@@ -480,11 +496,12 @@ export const WordCard: React.FC<WordCardProps> = ({
                     onClick={(e) => {
                       e.stopPropagation();
                       // Track in adventure system with hesitation
-                      const updatedStatus = adventureService.trackWordInteraction(
-                        word.id.toString(),
-                        true, // correct but with hesitation
-                        true
-                      );
+                      const updatedStatus =
+                        adventureService.trackWordInteraction(
+                          word.id.toString(),
+                          true, // correct but with hesitation
+                          true,
+                        );
                       setAdventureStatus(updatedStatus);
                       // Also call the original handler
                       onWordMastered?.(word.id, "medium");
@@ -500,11 +517,12 @@ export const WordCard: React.FC<WordCardProps> = ({
                     onClick={(e) => {
                       e.stopPropagation();
                       // Track in adventure system as correct
-                      const updatedStatus = adventureService.trackWordInteraction(
-                        word.id.toString(),
-                        true, // correct
-                        false
-                      );
+                      const updatedStatus =
+                        adventureService.trackWordInteraction(
+                          word.id.toString(),
+                          true, // correct
+                          false,
+                        );
                       setAdventureStatus(updatedStatus);
                       // Also call the original handler
                       onWordMastered?.(word.id, "easy");
@@ -531,7 +549,10 @@ export const WordCard: React.FC<WordCardProps> = ({
                         onClick={(e) => {
                           e.stopPropagation();
                           // Trigger adventure rescue - this could open adventure dashboard
-                          console.log("Opening rescue mission for word:", word.word);
+                          console.log(
+                            "Opening rescue mission for word:",
+                            word.word,
+                          );
                         }}
                       >
                         <Sword className="w-3 h-3 mr-1" />

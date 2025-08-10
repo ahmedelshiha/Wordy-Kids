@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
-import { Card, CardContent } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import { Progress } from '@/components/ui/progress';
+import React, { useState, useEffect } from "react";
+import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { Progress } from "@/components/ui/progress";
 import {
   Crown,
   Star,
@@ -15,9 +15,9 @@ import {
   Coins,
   TrendingUp,
   Award,
-  X
-} from 'lucide-react';
-import { WordHero, Badge as AdventureBadge } from '@shared/adventure';
+  X,
+} from "lucide-react";
+import { WordHero, Badge as AdventureBadge } from "@shared/adventure";
 
 interface WordHeroProgressionProps {
   hero: WordHero;
@@ -34,7 +34,7 @@ export const WordHeroProgression: React.FC<WordHeroProgressionProps> = ({
   levelUp = false,
   xpGained = 0,
   coinsGained = 0,
-  onClose
+  onClose,
 }) => {
   const [showLevelUp, setShowLevelUp] = useState(levelUp);
   const [showBadges, setShowBadges] = useState(newBadges.length > 0);
@@ -71,16 +71,16 @@ export const WordHeroProgression: React.FC<WordHeroProgressionProps> = ({
             <div className="absolute top-4 left-4 w-8 h-8 bg-yellow-300/30 rounded-full animate-ping"></div>
             <div className="absolute top-8 right-6 w-6 h-6 bg-pink-300/30 rounded-full animate-pulse"></div>
             <div className="absolute bottom-6 left-8 w-4 h-4 bg-blue-300/30 rounded-full animate-bounce"></div>
-            
+
             <div className="relative z-10">
               <div className="w-24 h-24 bg-gradient-to-r from-yellow-400 to-orange-500 rounded-full flex items-center justify-center mx-auto mb-6 animate-pulse">
                 <Crown className="w-12 h-12 text-white" />
               </div>
-              
+
               <h2 className="text-4xl font-bold mb-4 animate-bounce">
                 LEVEL UP! 🎉
               </h2>
-              
+
               <div className="space-y-4 mb-8">
                 <div className="text-6xl font-bold text-yellow-300">
                   {hero.level}
@@ -88,16 +88,20 @@ export const WordHeroProgression: React.FC<WordHeroProgressionProps> = ({
                 <div className="text-xl">
                   You are now a Level {hero.level} Word Hero!
                 </div>
-                
+
                 <div className="grid grid-cols-2 gap-4 mt-6">
                   <div className="bg-white/20 p-4 rounded-xl backdrop-blur-sm">
                     <Zap className="w-8 h-8 mx-auto mb-2 text-yellow-300" />
-                    <div className="font-bold text-yellow-300">+{xpGained} XP</div>
+                    <div className="font-bold text-yellow-300">
+                      +{xpGained} XP
+                    </div>
                     <div className="text-sm opacity-90">Experience</div>
                   </div>
                   <div className="bg-white/20 p-4 rounded-xl backdrop-blur-sm">
                     <Coins className="w-8 h-8 mx-auto mb-2 text-yellow-300" />
-                    <div className="font-bold text-yellow-300">+{50 + (hero.level * 10)}</div>
+                    <div className="font-bold text-yellow-300">
+                      +{50 + hero.level * 10}
+                    </div>
                     <div className="text-sm opacity-90">Bonus Coins</div>
                   </div>
                 </div>
@@ -119,7 +123,7 @@ export const WordHeroProgression: React.FC<WordHeroProgressionProps> = ({
 
   if (showBadges && newBadges.length > 0) {
     const currentBadge = newBadges[currentBadgeIndex];
-    
+
     return (
       <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-50 p-4">
         <Card className="max-w-md w-full bg-gradient-to-br from-green-500 via-blue-500 to-purple-600 text-white border-0">
@@ -129,16 +133,14 @@ export const WordHeroProgression: React.FC<WordHeroProgressionProps> = ({
             <div className="absolute top-2 left-2 w-6 h-6 bg-yellow-300/30 rounded-full animate-ping"></div>
             <div className="absolute top-6 right-4 w-8 h-8 bg-pink-300/30 rounded-full animate-pulse"></div>
             <div className="absolute bottom-4 left-6 w-5 h-5 bg-blue-300/30 rounded-full animate-bounce"></div>
-            
+
             <div className="relative z-10">
               <div className="w-24 h-24 bg-gradient-to-r from-yellow-400 to-orange-500 rounded-full flex items-center justify-center mx-auto mb-6 animate-spin-slow">
                 <Trophy className="w-12 h-12 text-white" />
               </div>
-              
-              <h2 className="text-3xl font-bold mb-4">
-                Badge Earned! 🏆
-              </h2>
-              
+
+              <h2 className="text-3xl font-bold mb-4">Badge Earned! 🏆</h2>
+
               <div className="space-y-4 mb-8">
                 <div className="text-6xl mb-4">{currentBadge.icon}</div>
                 <div className="text-2xl font-bold text-yellow-300">
@@ -147,7 +149,7 @@ export const WordHeroProgression: React.FC<WordHeroProgressionProps> = ({
                 <div className="text-lg opacity-90">
                   {currentBadge.description}
                 </div>
-                
+
                 <div className="bg-white/20 p-4 rounded-xl backdrop-blur-sm">
                   <div className="flex items-center justify-center gap-2 mb-2">
                     <Award className="w-5 h-5 text-yellow-300" />
@@ -156,7 +158,8 @@ export const WordHeroProgression: React.FC<WordHeroProgressionProps> = ({
                     </span>
                   </div>
                   <div className="text-sm opacity-90">
-                    Progress: {currentBadge.criteria.current_progress}/{currentBadge.criteria.threshold}
+                    Progress: {currentBadge.criteria.current_progress}/
+                    {currentBadge.criteria.threshold}
                   </div>
                 </div>
               </div>
@@ -219,16 +222,11 @@ export const WordHeroProgression: React.FC<WordHeroProgressionProps> = ({
               </div>
             </div>
           </div>
-          
+
           <div className="text-right">
-            <div className="text-sm text-gray-600 mb-1">
-              Next Level
-            </div>
+            <div className="text-sm text-gray-600 mb-1">Next Level</div>
             <div className="flex items-center gap-2">
-              <Progress 
-                value={currentLevelProgress} 
-                className="w-24 h-2"
-              />
+              <Progress value={currentLevelProgress} className="w-24 h-2" />
               <span className="text-xs text-gray-500">
                 {currentLevelProgress}%
               </span>

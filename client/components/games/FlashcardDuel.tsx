@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import { Card, CardContent } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Progress } from '@/components/ui/progress';
+import React, { useState, useEffect } from "react";
+import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Progress } from "@/components/ui/progress";
 import {
   Sword,
   Shield,
@@ -11,8 +11,8 @@ import {
   Heart,
   Trophy,
   X,
-  CheckCircle
-} from 'lucide-react';
+  CheckCircle,
+} from "lucide-react";
 
 interface Word {
   id: number;
@@ -39,7 +39,7 @@ interface FlashcardDuelProps {
 export const FlashcardDuel: React.FC<FlashcardDuelProps> = ({
   word,
   onGameComplete,
-  onClose
+  onClose,
 }) => {
   const [timeLeft, setTimeLeft] = useState(30);
   const [gameStarted, setGameStarted] = useState(false);
@@ -55,12 +55,12 @@ export const FlashcardDuel: React.FC<FlashcardDuelProps> = ({
     "A type of ancient tool used by early humans",
     "A scientific term for weather patterns",
     "A mathematical concept related to geometry",
-    "A historical event from the medieval period"
+    "A historical event from the medieval period",
   ];
 
   const allOptions = [word.definition, ...wrongDefinitions.slice(0, 3)];
-  const [shuffledOptions] = useState(() => 
-    allOptions.sort(() => Math.random() - 0.5)
+  const [shuffledOptions] = useState(() =>
+    allOptions.sort(() => Math.random() - 0.5),
   );
 
   useEffect(() => {
@@ -87,7 +87,7 @@ export const FlashcardDuel: React.FC<FlashcardDuelProps> = ({
 
   const handleAnswerSelect = (answer: string) => {
     if (gameEnded || selectedAnswer) return;
-    
+
     setSelectedAnswer(answer);
     const correct = answer === word.definition;
     setIsCorrect(correct);
@@ -96,11 +96,11 @@ export const FlashcardDuel: React.FC<FlashcardDuelProps> = ({
     if (correct) {
       const timeTaken = 30 - timeLeft;
       let gameScore = 100;
-      
+
       // Bonus points for speed
       if (timeTaken <= 10) gameScore += 50; // Speed bonus
       if (timeTaken <= 5) gameScore += 25; // Super speed bonus
-      
+
       setScore(gameScore);
     }
 
@@ -112,7 +112,7 @@ export const FlashcardDuel: React.FC<FlashcardDuelProps> = ({
   const completeGame = (success: boolean) => {
     const timeTaken = Math.floor((Date.now() - startTime) / 1000);
     const perfectScore = success && timeTaken <= 10;
-    
+
     const result = {
       success,
       score: success ? score : 0,
@@ -120,7 +120,7 @@ export const FlashcardDuel: React.FC<FlashcardDuelProps> = ({
       perfect_score: perfectScore,
       xp_earned: success ? (perfectScore ? 75 : 50) : 10,
       coins_earned: success ? (perfectScore ? 15 : 10) : 2,
-      health_restored: success ? (perfectScore ? 50 : 30) : 5
+      health_restored: success ? (perfectScore ? 50 : 30) : 5,
     };
 
     setShowResult(true);
@@ -134,27 +134,30 @@ export const FlashcardDuel: React.FC<FlashcardDuelProps> = ({
       <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-50 p-4">
         <Card className="max-w-md w-full">
           <CardContent className="p-8 text-center">
-            <div className={`w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6 ${
-              isCorrect ? 'bg-green-100' : 'bg-red-100'
-            }`}>
+            <div
+              className={`w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6 ${
+                isCorrect ? "bg-green-100" : "bg-red-100"
+              }`}
+            >
               {isCorrect ? (
                 <Trophy className="w-10 h-10 text-green-600" />
               ) : (
                 <X className="w-10 h-10 text-red-600" />
               )}
             </div>
-            
-            <h2 className={`text-3xl font-bold mb-4 ${
-              isCorrect ? 'text-green-600' : 'text-red-600'
-            }`}>
-              {isCorrect ? '🎉 Victory!' : '💔 Better Luck Next Time!'}
+
+            <h2
+              className={`text-3xl font-bold mb-4 ${
+                isCorrect ? "text-green-600" : "text-red-600"
+              }`}
+            >
+              {isCorrect ? "🎉 Victory!" : "💔 Better Luck Next Time!"}
             </h2>
-            
+
             <p className="text-gray-600 mb-6">
-              {isCorrect 
+              {isCorrect
                 ? `You rescued "${word.word}" with ${score} points!`
-                : `The word "${word.word}" escaped this time...`
-              }
+                : `The word "${word.word}" escaped this time...`}
             </p>
 
             <div className="space-y-2 text-sm">
@@ -210,7 +213,9 @@ export const FlashcardDuel: React.FC<FlashcardDuelProps> = ({
               <div className="flex items-center gap-4">
                 <div className="flex items-center gap-2">
                   <Clock className="w-5 h-5" />
-                  <span className={`text-lg font-bold ${timeLeft <= 10 ? 'animate-pulse' : ''}`}>
+                  <span
+                    className={`text-lg font-bold ${timeLeft <= 10 ? "animate-pulse" : ""}`}
+                  >
                     {timeLeft}s
                   </span>
                 </div>
@@ -219,8 +224,8 @@ export const FlashcardDuel: React.FC<FlashcardDuelProps> = ({
                   <span>Score: {score}</span>
                 </div>
               </div>
-              <Progress 
-                value={(timeLeft / 30) * 100} 
+              <Progress
+                value={(timeLeft / 30) * 100}
                 className="w-32 h-2 bg-white/20"
               />
             </div>
@@ -237,8 +242,8 @@ export const FlashcardDuel: React.FC<FlashcardDuelProps> = ({
                   Ready for Battle?
                 </h2>
                 <p className="text-gray-600 mb-8">
-                  You have 30 seconds to select the correct definition for the word.
-                  Choose wisely, Word Hero!
+                  You have 30 seconds to select the correct definition for the
+                  word. Choose wisely, Word Hero!
                 </p>
                 <Button
                   onClick={startGame}
@@ -252,13 +257,11 @@ export const FlashcardDuel: React.FC<FlashcardDuelProps> = ({
               <div className="space-y-8">
                 {/* Word Display */}
                 <div className="text-center">
-                  <div className="text-6xl mb-4">{word.emoji || '📚'}</div>
+                  <div className="text-6xl mb-4">{word.emoji || "📚"}</div>
                   <h2 className="text-4xl font-bold text-gray-800 mb-2">
                     {word.word}
                   </h2>
-                  <p className="text-gray-600">
-                    What does this word mean?
-                  </p>
+                  <p className="text-gray-600">What does this word mean?</p>
                 </div>
 
                 {/* Answer Options */}
@@ -266,19 +269,23 @@ export const FlashcardDuel: React.FC<FlashcardDuelProps> = ({
                   {shuffledOptions.map((option, index) => {
                     const isSelected = selectedAnswer === option;
                     const isCorrectAnswer = option === word.definition;
-                    
-                    let buttonClass = "w-full p-4 text-left border-2 rounded-xl transition-all duration-300 ";
-                    
+
+                    let buttonClass =
+                      "w-full p-4 text-left border-2 rounded-xl transition-all duration-300 ";
+
                     if (gameEnded) {
                       if (isCorrectAnswer) {
-                        buttonClass += "border-green-500 bg-green-50 text-green-800";
+                        buttonClass +=
+                          "border-green-500 bg-green-50 text-green-800";
                       } else if (isSelected && !isCorrectAnswer) {
                         buttonClass += "border-red-500 bg-red-50 text-red-800";
                       } else {
-                        buttonClass += "border-gray-200 bg-gray-50 text-gray-500";
+                        buttonClass +=
+                          "border-gray-200 bg-gray-50 text-gray-500";
                       }
                     } else {
-                      buttonClass += "border-purple-200 hover:border-purple-400 hover:bg-purple-50 cursor-pointer";
+                      buttonClass +=
+                        "border-purple-200 hover:border-purple-400 hover:bg-purple-50 cursor-pointer";
                     }
 
                     return (
@@ -289,7 +296,9 @@ export const FlashcardDuel: React.FC<FlashcardDuelProps> = ({
                         className={buttonClass}
                       >
                         <div className="flex items-center justify-between">
-                          <span className="text-sm leading-relaxed">{option}</span>
+                          <span className="text-sm leading-relaxed">
+                            {option}
+                          </span>
                           {gameEnded && (
                             <div className="flex-shrink-0 ml-3">
                               {isCorrectAnswer ? (
@@ -308,16 +317,17 @@ export const FlashcardDuel: React.FC<FlashcardDuelProps> = ({
                 {/* Result Display */}
                 {gameEnded && (
                   <div className="text-center">
-                    <div className={`text-2xl font-bold mb-2 ${
-                      isCorrect ? 'text-green-600' : 'text-red-600'
-                    }`}>
-                      {isCorrect ? '⚔️ Victory!' : '💔 Defeat!'}
+                    <div
+                      className={`text-2xl font-bold mb-2 ${
+                        isCorrect ? "text-green-600" : "text-red-600"
+                      }`}
+                    >
+                      {isCorrect ? "⚔️ Victory!" : "💔 Defeat!"}
                     </div>
                     <p className="text-gray-600">
-                      {isCorrect 
+                      {isCorrect
                         ? `Great job! You rescued "${word.word}" successfully!`
-                        : `The word "${word.word}" means: "${word.definition}"`
-                      }
+                        : `The word "${word.word}" means: "${word.definition}"`}
                     </p>
                   </div>
                 )}

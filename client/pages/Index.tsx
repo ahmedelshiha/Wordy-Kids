@@ -277,7 +277,11 @@ export default function Index({ initialProfile }: IndexProps) {
     const isCorrect = rating === "easy"; // Easy means they knew it well
     const hasHesitation = rating === "medium"; // Medium means some hesitation
 
-    adventureService.trackWordInteraction(wordId.toString(), isCorrect, hasHesitation);
+    adventureService.trackWordInteraction(
+      wordId.toString(),
+      isCorrect,
+      hasHesitation,
+    );
   };
 
   const handleWordCreated = (newWord: any) => {
@@ -731,8 +735,12 @@ export default function Index({ initialProfile }: IndexProps) {
                     <Sparkles className="w-5 h-5 lg:w-6 lg:h-6 text-white" />
                   </div>
                   <div>
-                    <h1 className="text-lg lg:text-xl font-bold text-gray-800">WordWise</h1>
-                    <p className="text-xs lg:text-sm text-gray-600">Learning Adventure</p>
+                    <h1 className="text-lg lg:text-xl font-bold text-gray-800">
+                      WordWise
+                    </h1>
+                    <p className="text-xs lg:text-sm text-gray-600">
+                      Learning Adventure
+                    </p>
                   </div>
                 </div>
 
@@ -753,7 +761,9 @@ export default function Index({ initialProfile }: IndexProps) {
                         className={`w-4 h-4 lg:w-5 lg:h-5 ${activeTab === "dashboard" ? "text-white" : "text-purple-600"}`}
                       />
                     </div>
-                    <span className="font-medium lg:font-semibold text-sm lg:text-base">Dashboard</span>
+                    <span className="font-medium lg:font-semibold text-sm lg:text-base">
+                      Dashboard
+                    </span>
                   </button>
 
                   <button
@@ -771,7 +781,9 @@ export default function Index({ initialProfile }: IndexProps) {
                         className={`w-4 h-4 lg:w-5 lg:h-5 ${activeTab === "learn" ? "text-white" : "text-green-600"}`}
                       />
                     </div>
-                    <span className="font-medium lg:font-semibold text-sm lg:text-base">Word Library</span>
+                    <span className="font-medium lg:font-semibold text-sm lg:text-base">
+                      Word Library
+                    </span>
                   </button>
 
                   <button
@@ -789,7 +801,9 @@ export default function Index({ initialProfile }: IndexProps) {
                         className={`w-4 h-4 lg:w-5 lg:h-5 ${activeTab === "quiz" ? "text-white" : "text-pink-600"}`}
                       />
                     </div>
-                    <span className="font-medium lg:font-semibold text-sm lg:text-base">Quiz Time</span>
+                    <span className="font-medium lg:font-semibold text-sm lg:text-base">
+                      Quiz Time
+                    </span>
                   </button>
 
                   <button
@@ -807,7 +821,9 @@ export default function Index({ initialProfile }: IndexProps) {
                         className={`w-4 h-4 lg:w-5 lg:h-5 ${activeTab === "progress" ? "text-white" : "text-yellow-600"}`}
                       />
                     </div>
-                    <span className="font-medium lg:font-semibold text-sm lg:text-base">🌟 My Journey</span>
+                    <span className="font-medium lg:font-semibold text-sm lg:text-base">
+                      🌟 My Journey
+                    </span>
                   </button>
 
                   <button
@@ -825,48 +841,52 @@ export default function Index({ initialProfile }: IndexProps) {
                         className={`w-4 h-4 lg:w-5 lg:h-5 ${activeTab === "adventure" ? "text-white" : "text-red-600"}`}
                       />
                     </div>
-                    <span className="font-medium lg:font-semibold text-sm lg:text-base">🏰 Adventure</span>
+                    <span className="font-medium lg:font-semibold text-sm lg:text-base">
+                      🏰 Adventure
+                    </span>
                   </button>
 
-                <button
-                  onClick={() => setUserRole("parent")}
-                  className="w-full flex items-center gap-4 p-4 rounded-2xl transition-all bg-white text-gray-700 hover:bg-blue-50 hover:border-blue-200 border-2 border-transparent"
-                >
-                  <div className="p-2 rounded-xl bg-blue-100">
-                    <Users className="w-5 h-5 text-blue-600" />
-                  </div>
-                  <span className="font-semibold">Parent Dashboard</span>
-                </button>
+                  <button
+                    onClick={() => setUserRole("parent")}
+                    className="w-full flex items-center gap-4 p-4 rounded-2xl transition-all bg-white text-gray-700 hover:bg-blue-50 hover:border-blue-200 border-2 border-transparent"
+                  >
+                    <div className="p-2 rounded-xl bg-blue-100">
+                      <Users className="w-5 h-5 text-blue-600" />
+                    </div>
+                    <span className="font-semibold">Parent Dashboard</span>
+                  </button>
 
-                <button
-                  onClick={() => navigate("/admin")}
-                  className="w-full flex items-center gap-4 p-4 rounded-2xl transition-all bg-white text-gray-700 hover:bg-red-50 hover:border-red-200 border-2 border-transparent"
-                >
-                  <div className="p-2 rounded-xl bg-red-100">
-                    <Shield className="w-5 h-5 text-red-600" />
-                  </div>
-                  <span className="font-semibold">Administrator Dashboard</span>
-                </button>
+                  <button
+                    onClick={() => navigate("/admin")}
+                    className="w-full flex items-center gap-4 p-4 rounded-2xl transition-all bg-white text-gray-700 hover:bg-red-50 hover:border-red-200 border-2 border-transparent"
+                  >
+                    <div className="p-2 rounded-xl bg-red-100">
+                      <Shield className="w-5 h-5 text-red-600" />
+                    </div>
+                    <span className="font-semibold">
+                      Administrator Dashboard
+                    </span>
+                  </button>
 
-                <button
-                  onClick={() => setShowSettings(true)}
-                  className="w-full flex items-center gap-4 p-4 rounded-2xl bg-white text-gray-700 hover:bg-purple-50 transition-all border border-purple-200"
-                >
-                  <div className="p-2 rounded-xl bg-gray-100">
-                    <Settings className="w-5 h-5 text-gray-600" />
-                  </div>
-                  <span className="font-semibold">Settings</span>
-                </button>
+                  <button
+                    onClick={() => setShowSettings(true)}
+                    className="w-full flex items-center gap-4 p-4 rounded-2xl bg-white text-gray-700 hover:bg-purple-50 transition-all border border-purple-200"
+                  >
+                    <div className="p-2 rounded-xl bg-gray-100">
+                      <Settings className="w-5 h-5 text-gray-600" />
+                    </div>
+                    <span className="font-semibold">Settings</span>
+                  </button>
 
-                <button
-                  onClick={handleSignOut}
-                  className="w-full flex items-center gap-4 p-4 rounded-2xl bg-white text-gray-700 hover:bg-red-50 transition-all border border-red-200"
-                >
-                  <div className="p-2 rounded-xl bg-red-100">
-                    <LogOut className="w-5 h-5 text-red-600" />
-                  </div>
-                  <span className="font-semibold">Sign Out</span>
-                </button>
+                  <button
+                    onClick={handleSignOut}
+                    className="w-full flex items-center gap-4 p-4 rounded-2xl bg-white text-gray-700 hover:bg-red-50 transition-all border border-red-200"
+                  >
+                    <div className="p-2 rounded-xl bg-red-100">
+                      <LogOut className="w-5 h-5 text-red-600" />
+                    </div>
+                    <span className="font-semibold">Sign Out</span>
+                  </button>
                 </nav>
               </div>
             </aside>
@@ -1785,7 +1805,7 @@ export default function Index({ initialProfile }: IndexProps) {
 
                 <TabsContent value="adventure">
                   <AdventureDashboard
-                    words={wordsDatabase.map(word => ({
+                    words={wordsDatabase.map((word) => ({
                       id: word.id,
                       word: word.word,
                       definition: word.definition,
@@ -1795,9 +1815,9 @@ export default function Index({ initialProfile }: IndexProps) {
                         "A type of ancient tool used by early humans",
                         "A scientific term for weather patterns",
                         "A mathematical concept related to geometry",
-                        "A historical event from the medieval period"
+                        "A historical event from the medieval period",
                       ],
-                      hint: `This word starts with "${word.word.charAt(0)}" and relates to ${word.category}`
+                      hint: `This word starts with "${word.word.charAt(0)}" and relates to ${word.category}`,
                     }))}
                   />
                 </TabsContent>
@@ -1848,16 +1868,25 @@ export default function Index({ initialProfile }: IndexProps) {
         />
       )}
 
-
       {/* Mobile Bottom Navigation */}
       <nav className="fixed bottom-0 left-0 right-0 bg-white/90 backdrop-blur-md border-t border-purple-200 p-2 lg:hidden z-40">
         <div className="flex justify-around">
           {[
-            { id: "dashboard", icon: Target, label: "Dashboard", color: "purple" },
+            {
+              id: "dashboard",
+              icon: Target,
+              label: "Dashboard",
+              color: "purple",
+            },
             { id: "learn", icon: BookOpen, label: "Learn", color: "green" },
             { id: "adventure", icon: Sword, label: "Adventure", color: "red" },
             { id: "quiz", icon: Brain, label: "Quiz", color: "pink" },
-            { id: "progress", icon: Trophy, label: "Progress", color: "yellow" },
+            {
+              id: "progress",
+              icon: Trophy,
+              label: "Progress",
+              color: "yellow",
+            },
           ].map(({ id, icon: Icon, label, color }) => (
             <button
               key={id}
@@ -1868,8 +1897,12 @@ export default function Index({ initialProfile }: IndexProps) {
                   : "text-gray-600 hover:text-purple-600"
               }`}
             >
-              <Icon className={`w-5 h-5 ${activeTab === id ? "text-white" : ""}`} />
-              <span className={`text-xs font-medium ${activeTab === id ? "text-white" : ""}`}>
+              <Icon
+                className={`w-5 h-5 ${activeTab === id ? "text-white" : ""}`}
+              />
+              <span
+                className={`text-xs font-medium ${activeTab === id ? "text-white" : ""}`}
+              >
                 {label}
               </span>
             </button>
