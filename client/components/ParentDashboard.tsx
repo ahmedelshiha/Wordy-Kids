@@ -70,6 +70,8 @@ import {
   ChevronDown,
   Palette,
   Shield,
+  AlertCircle,
+  CheckCircle,
 } from "lucide-react";
 import { AnimatedCounter } from "@/components/AnimatedCounter";
 import { WordProgressAPI } from "@/lib/wordProgressApi";
