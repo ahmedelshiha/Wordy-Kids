@@ -178,20 +178,20 @@ export const PracticeWordsCard: React.FC<PracticeWordsCardProps> = ({
         </div>
 
         {/* Practice session info */}
-        <div className="grid grid-cols-3 gap-3">
-          <div className="bg-blue-50 p-3 rounded-lg text-center">
-            <Timer className="w-6 h-6 text-blue-500 mx-auto mb-1" />
-            <div className="text-lg font-bold text-blue-600">{getEstimatedTime()}</div>
+        <div className="grid grid-cols-3 gap-2 sm:gap-3">
+          <div className="bg-blue-50 p-2 sm:p-3 rounded-lg text-center">
+            <Timer className="w-5 h-5 sm:w-6 sm:h-6 text-blue-500 mx-auto mb-1" />
+            <div className="text-sm sm:text-lg font-bold text-blue-600">{getEstimatedTime()}</div>
             <div className="text-xs text-blue-500">Estimated</div>
           </div>
-          <div className="bg-purple-50 p-3 rounded-lg text-center">
-            <Brain className="w-6 h-6 text-purple-500 mx-auto mb-1" />
-            <div className="text-lg font-bold text-purple-600">{practiceWords.length}</div>
+          <div className="bg-purple-50 p-2 sm:p-3 rounded-lg text-center">
+            <Brain className="w-5 h-5 sm:w-6 sm:h-6 text-purple-500 mx-auto mb-1" />
+            <div className="text-sm sm:text-lg font-bold text-purple-600">{practiceWords.length}</div>
             <div className="text-xs text-purple-500">Words</div>
           </div>
-          <div className="bg-yellow-50 p-3 rounded-lg text-center">
-            <Star className="w-6 h-6 text-yellow-500 mx-auto mb-1" />
-            <div className="text-lg font-bold text-yellow-600">+{practiceWords.length * 15}</div>
+          <div className="bg-yellow-50 p-2 sm:p-3 rounded-lg text-center">
+            <Star className="w-5 h-5 sm:w-6 sm:h-6 text-yellow-500 mx-auto mb-1" />
+            <div className="text-sm sm:text-lg font-bold text-yellow-600">+{practiceWords.length * 15}</div>
             <div className="text-xs text-yellow-500">Max Points</div>
           </div>
         </div>
