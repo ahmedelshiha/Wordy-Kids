@@ -45,7 +45,8 @@ interface LearningDashboardProps {
 
 export const LearningDashboard: React.FC<LearningDashboardProps> = ({
   stats,
-  userName = "Learner"
+  userName = "Learner",
+  childStats
 }) => {
   const completionPercentage = Math.round((stats.wordsLearned / stats.totalWords) * 100);
   const weeklyPercentage = Math.round((stats.weeklyProgress / stats.weeklyGoal) * 100);
