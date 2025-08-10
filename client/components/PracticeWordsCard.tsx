@@ -140,37 +140,37 @@ export const PracticeWordsCard: React.FC<PracticeWordsCardProps> = ({
 
       <CardContent className="space-y-4">
         {/* Preview words */}
-        <div className="bg-white/70 backdrop-blur-sm p-4 rounded-xl">
-          <h4 className="font-semibold text-gray-700 mb-3 flex items-center gap-2">
-            <BookOpen className="w-5 h-5 text-purple-500" />
+        <div className="bg-white/70 backdrop-blur-sm p-3 sm:p-4 rounded-xl">
+          <h4 className="font-semibold text-gray-700 mb-3 flex items-center gap-2 text-sm sm:text-base">
+            <BookOpen className="w-4 h-4 sm:w-5 sm:h-5 text-purple-500" />
             Words Waiting for You:
           </h4>
           <div className="grid grid-cols-1 gap-2">
             {practiceWords.slice(0, 3).map((word, index) => (
-              <div key={word.id} className="flex items-center justify-between bg-gray-50 p-2 rounded-lg">
-                <div className="flex items-center gap-3">
-                  <div className="text-2xl">
+              <div key={word.id} className="flex items-center justify-between bg-gray-50 p-2 sm:p-3 rounded-lg">
+                <div className="flex items-center gap-2 sm:gap-3 flex-1 min-w-0">
+                  <div className="text-xl sm:text-2xl flex-shrink-0">
                     {word.category === 'Science' ? '🔬' :
                      word.category === 'Transportation' ? '🚁' :
                      word.category === 'Space' ? '🌟' :
                      word.category === 'History' ? '🏺' :
                      word.category === 'Education' ? '📚' : '📖'}
                   </div>
-                  <div>
-                    <span className="font-semibold text-gray-800">{word.word}</span>
-                    <div className="text-xs text-gray-500">{word.category}</div>
+                  <div className="min-w-0 flex-1">
+                    <span className="font-semibold text-gray-800 text-sm sm:text-base truncate block">{word.word}</span>
+                    <div className="text-xs text-gray-500 truncate">{word.category}</div>
                   </div>
                 </div>
-                <Badge 
-                  variant="outline" 
-                  className={`text-xs ${getDifficultyColor(word.difficulty)}`}
+                <Badge
+                  variant="outline"
+                  className={`text-xs flex-shrink-0 ${getDifficultyColor(word.difficulty)}`}
                 >
                   {word.difficulty}
                 </Badge>
               </div>
             ))}
             {practiceWords.length > 3 && (
-              <div className="text-center text-gray-500 text-sm py-2">
+              <div className="text-center text-gray-500 text-xs sm:text-sm py-2">
                 ... and {practiceWords.length - 3} more words! 🎉
               </div>
             )}
