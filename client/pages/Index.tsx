@@ -14,7 +14,6 @@ import { EncouragingFeedback } from "@/components/EncouragingFeedback";
 import { GameLikeLearning } from "@/components/GameLikeLearning";
 import { WordMatchingGame } from "@/components/WordMatchingGame";
 import { GameHub } from "@/components/games/GameHub";
-import { VocabularyBuilder } from "@/components/VocabularyBuilder";
 import { SettingsPanel } from "@/components/SettingsPanel";
 import { FloatingBubbles } from "@/components/FloatingBubbles";
 import { CelebrationEffect } from "@/components/CelebrationEffect";
@@ -610,21 +609,6 @@ export default function Index({ initialProfile }: IndexProps) {
                               <span className="sm:hidden">Cards</span>
                             </Button>
                             <Button
-                              onClick={() => setLearningMode("builder")}
-                              variant={
-                                learningMode === "builder"
-                                  ? "default"
-                                  : "outline"
-                              }
-                              className="flex items-center gap-1 md:gap-2 text-sm md:text-base px-3 md:px-4"
-                            >
-                              <Brain className="w-4 h-4" />
-                              <span className="hidden sm:inline">
-                                Vocabulary Builder
-                              </span>
-                              <span className="sm:hidden">Builder</span>
-                            </Button>
-                            <Button
                               onClick={() => {
                                 setSelectedCategory("all");
                                 setLearningMode("selector");
@@ -718,24 +702,6 @@ export default function Index({ initialProfile }: IndexProps) {
                           </>
                         )}
 
-                        {learningMode === "builder" && (
-                          <VocabularyBuilder
-                            words={wordsDatabase.map((word) => ({
-                              ...word,
-                              masteryLevel: Math.floor(Math.random() * 100),
-                              lastReviewed: new Date(
-                                Date.now() -
-                                  Math.random() * 7 * 24 * 60 * 60 * 1000,
-                              ),
-                              nextReview: new Date(
-                                Date.now() +
-                                  Math.random() * 3 * 24 * 60 * 60 * 1000,
-                              ),
-                            }))}
-                            onWordMastered={handleWordMastered}
-                            onSessionComplete={handleVocabularySessionComplete}
-                          />
-                        )}
                       </>
                     )}
                   </div>
