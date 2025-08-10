@@ -312,15 +312,8 @@ export default function Index({ initialProfile }: IndexProps) {
       // Update child stats
       setChildStats(response.updatedStats);
 
-      // Show achievements if any
-      if (response.achievements && response.achievements.length > 0) {
-        setFeedback({
-          type: "celebration",
-          title: "Achievement Unlocked! 🏆",
-          message: `You earned: ${response.achievements.join(", ")}`,
-          onContinue: () => setFeedback(null),
-        });
-      }
+      // Note: Achievement popups will be shown only on category completion
+      // Store any achievements for potential category completion celebration
 
       console.log("Word progress recorded:", response);
     } catch (error) {
@@ -896,7 +889,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                                 setFeedback({
                                                   type: "celebration",
                                                   title: `${encouragementMessage}`,
-                                                  message: `You completed ${totalWords} words with ${accuracy}% accuracy!\\n\\n✅ Remembered: ${totalRemembered} words\\n❌ Need practice: ${totalForgotten} words\\n\\n${totalForgotten > 0 ? "Don't worry about the ones you forgot - that's how we learn! 🧠" : "Perfect score! You're amazing! ��"}`,
+                                                  message: `You completed ${totalWords} words with ${accuracy}% accuracy!\\n\\n✅ Remembered: ${totalRemembered} words\\n�� Need practice: ${totalForgotten} words\\n\\n${totalForgotten > 0 ? "Don't worry about the ones you forgot - that's how we learn! 🧠" : "Perfect score! You're amazing! ��"}`,
                                                   points:
                                                     totalRemembered * 15 +
                                                     (accuracy >= 90
