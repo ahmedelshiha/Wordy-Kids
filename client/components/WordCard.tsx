@@ -176,6 +176,45 @@ export const WordCard: React.FC<WordCardProps> = ({
             >
               {word.category}
             </Badge>
+
+            {/* Adventure Health Status */}
+            {adventureStatus && (
+              <Badge
+                variant="outline"
+                className={`text-xs md:text-sm flex items-center gap-1 ${
+                  adventureStatus.health >= 80
+                    ? 'bg-green-500/20 border-green-400/50 text-green-200'
+                    : adventureStatus.health >= 50
+                    ? 'bg-yellow-500/20 border-yellow-400/50 text-yellow-200'
+                    : adventureStatus.health >= 30
+                    ? 'bg-orange-500/20 border-orange-400/50 text-orange-200'
+                    : 'bg-red-500/20 border-red-400/50 text-red-200 animate-pulse'
+                }`}
+              >
+                {adventureStatus.health >= 80 ? (
+                  <>
+                    <Crown className="w-3 h-3" />
+                    <span className="hidden md:inline">Strong</span>
+                  </>
+                ) : adventureStatus.health >= 50 ? (
+                  <>
+                    <Shield className="w-3 h-3" />
+                    <span className="hidden md:inline">Good</span>
+                  </>
+                ) : adventureStatus.health >= 30 ? (
+                  <>
+                    <Target className="w-3 h-3" />
+                    <span className="hidden md:inline">Weak</span>
+                  </>
+                ) : (
+                  <>
+                    <Flame className="w-3 h-3" />
+                    <span className="hidden md:inline">Critical</span>
+                  </>
+                )}
+                <span>{adventureStatus.health}%</span>
+              </Badge>
+            )}
           </div>
 
           <div className="absolute top-3 right-3 md:top-4 md:right-4">
