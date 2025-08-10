@@ -274,6 +274,12 @@ export default function Index({ initialProfile }: IndexProps) {
     rating: "easy" | "medium" | "hard",
   ) => {
     console.log(`Word ${wordId} rated as ${rating}`);
+
+    // Track in Adventure system
+    const isCorrect = rating === "easy"; // Easy means they knew it well
+    const hasHesitation = rating === "medium"; // Medium means some hesitation
+
+    adventureService.trackWordInteraction(wordId.toString(), isCorrect, hasHesitation);
   };
 
   const handleWordCreated = (newWord: any) => {
@@ -597,7 +603,7 @@ export default function Index({ initialProfile }: IndexProps) {
               📚
             </div>
             <div className="hidden md:block absolute bottom-10 left-20 text-4xl animate-bounce delay-1000">
-              ����
+              ������
             </div>
             <div className="hidden md:block absolute bottom-20 right-10 text-3xl animate-pulse delay-500">
               🚀
