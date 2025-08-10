@@ -372,18 +372,18 @@ export const WordPracticeGame: React.FC<WordPracticeGameProps> = ({
               <Button
                 onClick={handleForgot}
                 variant="outline"
-                className="bg-orange-50 hover:bg-orange-100 border-orange-300 text-orange-700 py-4 sm:py-6 text-base sm:text-lg min-h-[60px] order-2 sm:order-1"
+                className="bg-gradient-to-r from-orange-50 to-yellow-50 hover:from-orange-100 hover:to-yellow-100 border-2 border-orange-300 text-orange-700 py-4 sm:py-6 text-base sm:text-lg min-h-[60px] order-2 sm:order-1 font-semibold shadow-md hover:shadow-lg transition-all transform hover:scale-105"
               >
                 <XCircle className="w-5 h-5 sm:w-6 sm:h-6 mr-2 flex-shrink-0" />
-                <span>Still Tricky 🤔</span>
+                <span>🤔 Still Learning!</span>
               </Button>
 
               <Button
                 onClick={handleRemember}
-                className="bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 text-white py-4 sm:py-6 text-base sm:text-lg shadow-lg min-h-[60px] order-1 sm:order-2"
+                className="bg-gradient-to-r from-green-500 via-emerald-500 to-green-600 hover:from-green-600 hover:via-emerald-600 hover:to-green-700 text-white py-4 sm:py-6 text-base sm:text-lg shadow-xl min-h-[60px] order-1 sm:order-2 font-bold hover:shadow-2xl transition-all transform hover:scale-105 animate-pulse"
               >
                 <CheckCircle className="w-5 h-5 sm:w-6 sm:h-6 mr-2 flex-shrink-0" />
-                <span>I Remember! 🎉</span>
+                <span>🦸‍♂️ I Got This! 🎆</span>
               </Button>
             </div>
           </div>
@@ -463,69 +463,114 @@ export const WordPracticeGame: React.FC<WordPracticeGameProps> = ({
 
   const renderComplete = () => (
     <div className="text-center space-y-6 p-8">
-      <div className="text-8xl mb-4 animate-bounce">🏆</div>
-      
-      <h1 className="text-4xl font-bold text-purple-700 mb-2">
-        Practice Complete!
-      </h1>
-      
-      <p className="text-xl text-gray-600 mb-6">
-        Amazing work, {childName}! You're getting stronger! 💪
-      </p>
+      <div className="relative">
+        <div className="text-9xl mb-4 animate-bounce">🦸‍♂️</div>
+        <div className="absolute -top-4 -left-8 text-4xl animate-spin">🏆</div>
+        <div className="absolute -top-4 -right-8 text-4xl animate-pulse">🎆</div>
+        <div className="absolute -bottom-4 -left-4 text-3xl animate-bounce delay-500">✨</div>
+        <div className="absolute -bottom-4 -right-4 text-3xl animate-bounce delay-700">🌟</div>
+      </div>
+
+      <div className="bg-gradient-to-r from-purple-50 via-pink-50 to-orange-50 p-6 rounded-2xl border-2 border-purple-300 shadow-xl">
+        <h1 className="text-5xl font-bold bg-gradient-to-r from-purple-600 via-pink-500 to-orange-500 bg-clip-text text-transparent mb-4">
+          🎉 Quest Complete! 🎉
+        </h1>
+
+        <p className="text-2xl font-bold text-purple-700 mb-2">
+          🌟 Legendary work, {childName}! 🌟
+        </p>
+
+        <p className="text-lg text-purple-600">
+          You're officially a <span className="font-bold text-orange-600">Word Hero!</span> 🦸‍♂️💪
+        </p>
+      </div>
       
       {/* Results summary */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-        <div className="bg-green-50 p-6 rounded-2xl">
-          <div className="text-3xl font-bold text-green-600">{correctWords.length}</div>
-          <div className="text-green-600">Words Remembered ✅</div>
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+        <div className="bg-gradient-to-br from-green-50 to-emerald-100 p-6 rounded-2xl border-2 border-green-300 shadow-lg hover:shadow-xl transition-shadow">
+          <div className="text-5xl mb-2 animate-bounce">✅</div>
+          <div className="text-4xl font-bold text-green-600 mb-2">{correctWords.length}</div>
+          <div className="text-green-700 font-semibold text-lg">Words Mastered!</div>
+          <div className="text-sm text-green-600 mt-1">You're a champion! 🏆</div>
         </div>
-        <div className="bg-orange-50 p-6 rounded-2xl">
-          <div className="text-3xl font-bold text-orange-600">{incorrectWords.length}</div>
-          <div className="text-orange-600">Still Practicing 🎯</div>
+        <div className="bg-gradient-to-br from-orange-50 to-yellow-100 p-6 rounded-2xl border-2 border-orange-300 shadow-lg hover:shadow-xl transition-shadow">
+          <div className="text-5xl mb-2 animate-pulse">🎯</div>
+          <div className="text-4xl font-bold text-orange-600 mb-2">{incorrectWords.length}</div>
+          <div className="text-orange-700 font-semibold text-lg">Future Conquests</div>
+          <div className="text-sm text-orange-600 mt-1">Heroes return stronger! 💪</div>
         </div>
-        <div className="bg-purple-50 p-6 rounded-2xl">
-          <div className="text-3xl font-bold text-purple-600">{points}</div>
-          <div className="text-purple-600">Total Points 🌟</div>
+        <div className="bg-gradient-to-br from-purple-50 to-pink-100 p-6 rounded-2xl border-2 border-purple-300 shadow-lg hover:shadow-xl transition-shadow">
+          <div className="text-5xl mb-2 animate-spin">🌟</div>
+          <div className="text-4xl font-bold text-purple-600 mb-2">{points}</div>
+          <div className="text-purple-700 font-semibold text-lg">Hero Points Earned</div>
+          <div className="text-sm text-purple-600 mt-1">Epic achievement! 🚀</div>
         </div>
       </div>
       
       {/* Achievement badges */}
       <div className="space-y-4">
         {accuracy >= 90 && (
-          <Badge className="bg-gradient-to-r from-yellow-400 to-yellow-600 text-white text-lg py-2 px-4">
-            🏆 Super Learner! 90%+ accuracy!
-          </Badge>
+          <div className="bg-gradient-to-r from-yellow-400 to-orange-500 text-white text-xl py-4 px-6 rounded-2xl shadow-xl animate-pulse">
+            <div className="flex items-center justify-center gap-3">
+              <span className="text-3xl">🦸‍♂️</span>
+              <span className="font-bold">SUPER HERO! 90%+ accuracy!</span>
+              <span className="text-3xl">🏆</span>
+            </div>
+          </div>
         )}
         {bestStreak >= 5 && (
-          <Badge className="bg-gradient-to-r from-red-400 to-orange-400 text-white text-lg py-2 px-4">
-            ��� Streak Master! {bestStreak} in a row!
-          </Badge>
+          <div className="bg-gradient-to-r from-red-400 to-pink-500 text-white text-xl py-4 px-6 rounded-2xl shadow-xl animate-pulse">
+            <div className="flex items-center justify-center gap-3">
+              <span className="text-3xl">🔥</span>
+              <span className="font-bold">STREAK LEGEND! {bestStreak} in a row!</span>
+              <span className="text-3xl">⚡</span>
+            </div>
+          </div>
         )}
         {correctWords.length === practiceWords.length && (
-          <Badge className="bg-gradient-to-r from-green-400 to-emerald-400 text-white text-lg py-2 px-4">
-            ⭐ Perfect Practice! All words remembered!
-          </Badge>
+          <div className="bg-gradient-to-r from-green-400 to-emerald-500 text-white text-xl py-4 px-6 rounded-2xl shadow-xl animate-pulse">
+            <div className="flex items-center justify-center gap-3">
+              <span className="text-3xl">🎆</span>
+              <span className="font-bold">PERFECT HERO! All words conquered!</span>
+              <span className="text-3xl">🤩</span>
+            </div>
+          </div>
+        )}
+        {streak >= 3 && (
+          <div className="bg-gradient-to-r from-blue-400 to-purple-500 text-white text-lg py-3 px-5 rounded-xl shadow-lg">
+            <div className="flex items-center justify-center gap-2">
+              <span className="text-2xl">✨</span>
+              <span className="font-semibold">Word Warrior! Great focus!</span>
+              <span className="text-2xl">🧠</span>
+            </div>
+          </div>
         )}
       </div>
       
-      <div className="grid grid-cols-2 gap-4 mt-8">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-8">
         {incorrectWords.length > 0 && (
           <Button
             onClick={() => window.location.reload()} // In real app, restart with missed words
             variant="outline"
-            className="bg-orange-50 hover:bg-orange-100 border-orange-300 text-orange-700 py-4"
+            className="bg-gradient-to-r from-orange-50 to-yellow-50 hover:from-orange-100 hover:to-yellow-100 border-2 border-orange-300 text-orange-700 py-6 text-lg font-bold rounded-xl shadow-lg hover:shadow-xl transition-all transform hover:scale-105"
           >
-            <RotateCcw className="w-5 h-5 mr-2" />
-            Practice Again
+            <div className="flex items-center justify-center gap-2">
+              <RotateCcw className="w-6 h-6" />
+              <span>🔥 Train Again!</span>
+              <span className="text-xl">💪</span>
+            </div>
           </Button>
         )}
-        
+
         <Button
           onClick={onBack}
-          className="bg-gradient-to-r from-blue-500 to-purple-500 text-white py-4"
+          className="bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 hover:from-blue-600 hover:via-purple-600 hover:to-pink-600 text-white py-6 text-lg font-bold rounded-xl shadow-xl hover:shadow-2xl transition-all transform hover:scale-105"
         >
-          <Trophy className="w-5 h-5 mr-2" />
-          Back to Learning
+          <div className="flex items-center justify-center gap-2">
+            <Trophy className="w-6 h-6" />
+            <span>🎆 Continue Quest!</span>
+            <span className="text-xl">🚀</span>
+          </div>
         </Button>
       </div>
     </div>
