@@ -118,110 +118,148 @@ export const WordPracticeGame: React.FC<WordPracticeGameProps> = ({
     <div className="text-center space-y-4 sm:space-y-6 p-4 sm:p-8">
       {/* Animated header */}
       <div className="relative">
-        <div className="text-6xl sm:text-8xl mb-4 animate-bounce">🎯</div>
-        <div className="absolute -top-2 -right-2 text-2xl sm:text-3xl animate-spin">✨</div>
-        <div className="absolute -bottom-2 -left-2 text-xl sm:text-2xl animate-pulse">🚀</div>
+        <div className="text-8xl sm:text-9xl mb-4 animate-bounce">🎮</div>
+        <div className="absolute -top-4 -right-4 text-3xl sm:text-4xl animate-spin">✨</div>
+        <div className="absolute -bottom-4 -left-4 text-2xl sm:text-3xl animate-pulse">🚀</div>
+        <div className="absolute top-2 left-2 text-2xl animate-bounce delay-500">🌟</div>
+        <div className="absolute bottom-2 right-2 text-xl animate-pulse delay-700">⚡</div>
       </div>
 
-      <div className="space-y-2">
-        <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent mb-2 px-2">
-          Practice Challenge!
+      <div className="space-y-3">
+        <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold bg-gradient-to-r from-purple-600 via-pink-500 to-orange-500 bg-clip-text text-transparent mb-2 px-2">
+          🎆 Word Hero Quest! 🎆
         </h1>
-        <div className="text-2xl sm:text-3xl animate-bounce">💪</div>
+        <div className="flex items-center justify-center gap-2 text-3xl sm:text-4xl">
+          <span className="animate-bounce">🦸‍♂️</span>
+          <span className="animate-pulse">💪</span>
+          <span className="animate-bounce delay-300">🦸‍♀️</span>
+        </div>
       </div>
 
-      <p className="text-lg sm:text-xl text-gray-600 mb-4 px-4">
-        Hey {childName}! Time to become a <span className="font-bold text-purple-600">Word Master!</span> 🏆
-      </p>
+      <div className="bg-gradient-to-r from-purple-50 via-pink-50 to-orange-50 p-4 sm:p-6 rounded-2xl border-2 border-purple-200 mx-2 sm:mx-0 shadow-lg">
+        <p className="text-xl sm:text-2xl text-purple-700 font-bold mb-2 px-4">
+          🌟 Hey {childName}! Ready to become a <span className="text-orange-600">Word Hero?</span> 🦸‍♂️
+        </p>
+        <p className="text-base sm:text-lg text-purple-600 px-4">
+          Show these tricky words who's boss! You've got the power! 💪✨
+        </p>
+      </div>
 
       {/* Words preview */}
-      <div className="bg-white p-4 sm:p-6 rounded-2xl shadow-lg border-2 border-purple-200 mx-2 sm:mx-0">
-        <h3 className="text-base sm:text-lg font-semibold text-purple-700 mb-3 sm:mb-4 flex items-center justify-center gap-2">
-          <span>📚</span> Your Challenge Words <span>📚</span>
+      <div className="bg-gradient-to-br from-white via-purple-50 to-pink-50 p-4 sm:p-6 rounded-2xl shadow-xl border-2 border-purple-300 mx-2 sm:mx-0">
+        <h3 className="text-lg sm:text-xl font-bold text-purple-700 mb-3 sm:mb-4 flex items-center justify-center gap-2">
+          <span className="animate-bounce">🎯</span>
+          <span className="bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">Your Word Challenges</span>
+          <span className="animate-bounce delay-300">🎯</span>
         </h3>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 max-w-2xl mx-auto">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 max-w-3xl mx-auto">
           {practiceWords.slice(0, 4).map((word, index) => (
-            <div key={word.id} className="bg-gradient-to-r from-blue-50 to-purple-50 p-3 rounded-lg border border-purple-200">
-              <div className="flex items-center gap-2">
-                <div className="text-xl sm:text-2xl flex-shrink-0">
+            <div key={word.id} className={`bg-gradient-to-r from-blue-50 via-purple-50 to-pink-50 p-3 sm:p-4 rounded-xl border-2 border-purple-200 shadow-md hover:shadow-lg transition-all duration-300 ${index === 0 ? 'ring-2 ring-orange-300 ring-offset-2' : ''}`}>
+              <div className="flex items-center gap-3">
+                <div className="text-2xl sm:text-3xl flex-shrink-0 animate-pulse">
                   {word.category === 'Science' ? '🔬' :
                    word.category === 'Transportation' ? '🚁' :
                    word.category === 'Space' ? '🌟' :
                    word.category === 'History' ? '🏺' :
-                   word.category === 'Education' ? '📚' : '📖'}
+                   word.category === 'Education' ? '📚' :
+                   word.category === 'Animals' ? '🦁' :
+                   word.category === 'Nature' ? '🌿' :
+                   word.category === 'Geography' ? '🗺️' :
+                   word.category === 'Music' ? '🎵' : '📖'}
                 </div>
                 <div className="text-left min-w-0 flex-1">
-                  <div className="font-bold text-gray-800 text-sm sm:text-base truncate">{word.word}</div>
-                  <div className="text-xs text-gray-500 truncate">{word.category}</div>
+                  <div className="font-bold text-gray-800 text-base sm:text-lg truncate">{word.word}</div>
+                  <div className="text-sm text-purple-600 truncate font-medium">{word.category}</div>
+                  {index === 0 && (
+                    <div className="text-xs text-orange-600 font-bold animate-pulse mt-1">👆 Coming up first!</div>
+                  )}
                 </div>
               </div>
             </div>
           ))}
           {practiceWords.length > 4 && (
-            <div className="col-span-full text-center text-gray-500 text-xs sm:text-sm py-2">
-              ... and {practiceWords.length - 4} more amazing words! 🎉
+            <div className="col-span-full text-center bg-gradient-to-r from-orange-50 to-yellow-50 p-3 rounded-xl border border-orange-200">
+              <div className="text-orange-600 font-bold text-sm sm:text-base mb-1">
+                🎆 + {practiceWords.length - 4} more epic words waiting!
+              </div>
+              <div className="text-xs text-orange-500">
+                This is going to be an awesome adventure! 🚀🌟
+              </div>
             </div>
           )}
         </div>
       </div>
 
-      <div className="bg-purple-50 p-4 sm:p-6 rounded-2xl mx-2 sm:mx-0">
-        <h3 className="text-base sm:text-lg font-semibold text-purple-700 mb-3 flex items-center justify-center gap-2">
-          <span>🎮</span> How to Play <span>🎮</span>
+      <div className="bg-gradient-to-br from-purple-50 via-pink-50 to-blue-50 p-4 sm:p-6 rounded-2xl mx-2 sm:mx-0 border-2 border-purple-200 shadow-lg">
+        <h3 className="text-lg sm:text-xl font-bold text-purple-700 mb-4 flex items-center justify-center gap-2">
+          <span className="animate-bounce">🎮</span>
+          <span className="bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent">How to Be a Word Hero</span>
+          <span className="animate-bounce delay-300">🎮</span>
         </h3>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 text-left max-w-3xl mx-auto">
-          <div className="flex items-center gap-3 bg-white p-3 rounded-lg">
-            <div className="w-8 h-8 sm:w-10 sm:h-10 bg-blue-100 rounded-full flex items-center justify-center text-blue-600 font-bold text-sm sm:text-lg flex-shrink-0">1</div>
-            <span className="font-medium text-sm sm:text-base">Look at each word carefully 👀</span>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 text-left max-w-4xl mx-auto">
+          <div className="flex items-center gap-3 bg-gradient-to-r from-white to-blue-50 p-4 rounded-xl border border-blue-200 shadow-md hover:shadow-lg transition-shadow">
+            <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-r from-blue-400 to-blue-600 rounded-full flex items-center justify-center text-white font-bold text-lg sm:text-xl flex-shrink-0 animate-pulse">1</div>
+            <span className="font-semibold text-sm sm:text-base text-blue-700">Study each word like a detective! 🕵️‍♂️</span>
           </div>
-          <div className="flex items-center gap-3 bg-white p-3 rounded-lg">
-            <div className="w-8 h-8 sm:w-10 sm:h-10 bg-green-100 rounded-full flex items-center justify-center text-green-600 font-bold text-sm sm:text-lg flex-shrink-0">2</div>
-            <span className="font-medium text-sm sm:text-base">Use hints if you need help 💡</span>
+          <div className="flex items-center gap-3 bg-gradient-to-r from-white to-green-50 p-4 rounded-xl border border-green-200 shadow-md hover:shadow-lg transition-shadow">
+            <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-r from-green-400 to-green-600 rounded-full flex items-center justify-center text-white font-bold text-lg sm:text-xl flex-shrink-0 animate-pulse delay-300">2</div>
+            <span className="font-semibold text-sm sm:text-base text-green-700">Use your super hints when stuck! 💫</span>
           </div>
-          <div className="flex items-center gap-3 bg-white p-3 rounded-lg">
-            <div className="w-8 h-8 sm:w-10 sm:h-10 bg-orange-100 rounded-full flex items-center justify-center text-orange-600 font-bold text-sm sm:text-lg flex-shrink-0">3</div>
-            <span className="font-medium text-sm sm:text-base">Choose your answer honestly ✨</span>
+          <div className="flex items-center gap-3 bg-gradient-to-r from-white to-orange-50 p-4 rounded-xl border border-orange-200 shadow-md hover:shadow-lg transition-shadow">
+            <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-r from-orange-400 to-orange-600 rounded-full flex items-center justify-center text-white font-bold text-lg sm:text-xl flex-shrink-0 animate-pulse delay-500">3</div>
+            <span className="font-semibold text-sm sm:text-base text-orange-700">Be honest - heroes always are! 🦸‍♂️</span>
           </div>
-          <div className="flex items-center gap-3 bg-white p-3 rounded-lg">
-            <div className="w-8 h-8 sm:w-10 sm:h-10 bg-purple-100 rounded-full flex items-center justify-center text-purple-600 font-bold text-sm sm:text-lg flex-shrink-0">4</div>
-            <span className="font-medium text-sm sm:text-base">Earn points and build streaks! 🏆</span>
+          <div className="flex items-center gap-3 bg-gradient-to-r from-white to-purple-50 p-4 rounded-xl border border-purple-200 shadow-md hover:shadow-lg transition-shadow">
+            <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-r from-purple-400 to-purple-600 rounded-full flex items-center justify-center text-white font-bold text-lg sm:text-xl flex-shrink-0 animate-pulse delay-700">4</div>
+            <span className="font-semibold text-sm sm:text-base text-purple-700">Collect points and build epic streaks! 🔥</span>
           </div>
         </div>
       </div>
 
       {/* Game stats preview */}
-      <div className="grid grid-cols-3 gap-2 sm:gap-4 max-w-md mx-auto px-2 sm:px-0">
-        <div className="bg-yellow-50 p-3 sm:p-4 rounded-xl border-2 border-yellow-200">
-          <div className="text-lg sm:text-2xl font-bold text-yellow-600">{practiceWords.length}</div>
-          <div className="text-xs text-yellow-600">Words to Master</div>
+      <div className="grid grid-cols-3 gap-3 sm:gap-4 max-w-lg mx-auto px-2 sm:px-0">
+        <div className="bg-gradient-to-br from-yellow-50 to-orange-50 p-3 sm:p-4 rounded-xl border-2 border-yellow-300 shadow-lg hover:shadow-xl transition-shadow">
+          <div className="text-xl sm:text-3xl font-bold text-yellow-600 mb-1">{practiceWords.length}</div>
+          <div className="text-xs sm:text-sm text-yellow-600 font-semibold">🎯 Word Challenges</div>
         </div>
-        <div className="bg-green-50 p-3 sm:p-4 rounded-xl border-2 border-green-200">
-          <div className="text-lg sm:text-2xl font-bold text-green-600">+{practiceWords.length * 15}</div>
-          <div className="text-xs text-green-600">Max Points</div>
+        <div className="bg-gradient-to-br from-green-50 to-emerald-50 p-3 sm:p-4 rounded-xl border-2 border-green-300 shadow-lg hover:shadow-xl transition-shadow">
+          <div className="text-xl sm:text-3xl font-bold text-green-600 mb-1">+{practiceWords.length * 15}</div>
+          <div className="text-xs sm:text-sm text-green-600 font-semibold">🌟 Max Hero Points</div>
         </div>
-        <div className="bg-blue-50 p-3 sm:p-4 rounded-xl border-2 border-blue-200">
-          <div className="text-lg sm:text-2xl font-bold text-blue-600">~{Math.ceil(practiceWords.length * 1.5)}m</div>
-          <div className="text-xs text-blue-600">Est. Time</div>
+        <div className="bg-gradient-to-br from-blue-50 to-cyan-50 p-3 sm:p-4 rounded-xl border-2 border-blue-300 shadow-lg hover:shadow-xl transition-shadow">
+          <div className="text-xl sm:text-3xl font-bold text-blue-600 mb-1">~{Math.ceil(practiceWords.length * 1.5)}m</div>
+          <div className="text-xs sm:text-sm text-blue-600 font-semibold">⏰ Adventure Time</div>
         </div>
       </div>
 
       <div className="space-y-4 px-4 sm:px-0">
         <Button
           onClick={startGame}
-          className="w-full sm:w-auto bg-gradient-to-r from-purple-500 to-pink-500 text-white text-lg sm:text-xl py-5 sm:py-6 px-8 sm:px-12 rounded-2xl shadow-lg hover:shadow-xl transition-all transform hover:scale-105 min-h-[60px]"
+          className="w-full sm:w-auto bg-gradient-to-r from-purple-500 via-pink-500 to-orange-500 hover:from-purple-600 hover:via-pink-600 hover:to-orange-600 text-white text-lg sm:text-xl py-6 sm:py-8 px-8 sm:px-12 rounded-2xl shadow-2xl hover:shadow-3xl transition-all transform hover:scale-105 min-h-[70px] relative overflow-hidden animate-pulse"
         >
-          <div className="flex items-center justify-center gap-2 sm:gap-3">
-            <Gamepad2 className="w-5 h-5 sm:w-6 sm:h-6 flex-shrink-0" />
+          <div className="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300"></div>
+          <div className="relative flex items-center justify-center gap-3 sm:gap-4">
+            <Gamepad2 className="w-6 h-6 sm:w-8 sm:h-8 flex-shrink-0 animate-bounce" />
             <div className="text-center">
-              <div className="font-bold text-sm sm:text-base">Start Practice Adventure!</div>
-              <div className="text-xs sm:text-sm opacity-90">Let's master these words! 🌟</div>
+              <div className="font-bold text-base sm:text-lg flex items-center gap-2">
+                🦸‍♂️ Start Hero Quest! 🎆
+              </div>
+              <div className="text-sm sm:text-base opacity-95 font-medium">
+                Time to show your word power! 💪🌟
+              </div>
             </div>
+            <Rocket className="w-6 h-6 sm:w-8 sm:h-8 flex-shrink-0 animate-pulse" />
           </div>
         </Button>
 
-        <p className="text-xs sm:text-sm text-gray-500 text-center px-2">
-          Remember: Every practice makes you stronger! 💪✨
-        </p>
+        <div className="bg-gradient-to-r from-purple-50 via-pink-50 to-orange-50 p-4 rounded-xl border border-purple-200">
+          <p className="text-sm sm:text-base text-purple-700 font-bold text-center px-2">
+            🌟 Remember: Every hero trains to become legendary! 🌟
+          </p>
+          <p className="text-xs sm:text-sm text-purple-600 text-center mt-1">
+            You've got this, Word Hero! 💪✨🦸‍♂️
+          </p>
+        </div>
       </div>
     </div>
   );
@@ -363,39 +401,61 @@ export const WordPracticeGame: React.FC<WordPracticeGameProps> = ({
           {isCorrect ? '🎉' : '💪'}
         </div>
         
-        <h2 className={`text-3xl font-bold mb-4 ${isCorrect ? 'text-green-600' : 'text-orange-600'}`}>
-          {isCorrect ? 'Awesome! You remembered!' : "That's okay! Keep practicing!"}
+        <h2 className={`text-4xl font-bold mb-4 ${isCorrect ? 'bg-gradient-to-r from-green-500 to-emerald-500 bg-clip-text text-transparent' : 'bg-gradient-to-r from-orange-500 to-red-500 bg-clip-text text-transparent'}`}>
+          {isCorrect ? '🎉 Amazing! You\'re a Word Hero! 🦸‍♂️' : '💪 That\'s okay! Heroes never give up! 🚀'}
         </h2>
         
         {isCorrect && (
-          <div className="bg-green-50 p-6 rounded-2xl">
-            <p className="text-lg text-green-700 mb-2">
-              🏆 +{10 * (streak)} points! 
-            </p>
-            {streak > 1 && (
-              <p className="text-green-600">
-                🔥 {streak} word streak bonus!
+          <div className="bg-gradient-to-br from-green-50 via-emerald-50 to-green-100 p-6 rounded-2xl border-2 border-green-300 shadow-lg">
+            <div className="text-center">
+              <div className="text-4xl mb-3 animate-bounce">🏆</div>
+              <p className="text-xl font-bold text-green-700 mb-2">
+                🌟 +{10 * (streak)} Hero Points Earned! 🌟
               </p>
-            )}
+              {streak > 1 && (
+                <div className="bg-orange-100 p-3 rounded-xl border border-orange-300 mt-3">
+                  <p className="text-lg font-bold text-orange-600">
+                    🔥 Epic {streak} Word Streak! You're on fire! 🔥
+                  </p>
+                </div>
+              )}
+              {streak >= 5 && (
+                <div className="text-2xl mt-2 animate-pulse">🦸‍♂️ Legendary Streak! 🦸‍♂️</div>
+              )}
+            </div>
           </div>
         )}
         
         {!isCorrect && (
-          <div className="bg-orange-50 p-6 rounded-2xl">
-            <p className="text-lg text-orange-700 mb-2">
-              Don't worry! Every practice makes you stronger! 💪
-            </p>
-            <p className="text-orange-600">
-              This word will come back for more practice.
-            </p>
+          <div className="bg-gradient-to-br from-orange-50 via-yellow-50 to-orange-100 p-6 rounded-2xl border-2 border-orange-300 shadow-lg">
+            <div className="text-center">
+              <div className="text-4xl mb-3 animate-pulse">💪</div>
+              <p className="text-xl font-bold text-orange-700 mb-3">
+                🌟 Heroes never give up! You're getting stronger! 🌟
+              </p>
+              <p className="text-lg text-orange-600 mb-2">
+                This tricky word wants to challenge you again!
+              </p>
+              <div className="bg-blue-100 p-3 rounded-xl border border-blue-300">
+                <p className="text-blue-700 font-semibold">
+                  🚀 Every hero faces challenges - that's how they become legendary! 🦸‍♂️
+                </p>
+              </div>
+            </div>
           </div>
         )}
         
         <Button
           onClick={nextWord}
-          className="bg-gradient-to-r from-purple-500 to-pink-500 text-white text-xl py-4 px-8 rounded-xl"
+          className="bg-gradient-to-r from-purple-500 via-pink-500 to-orange-500 hover:from-purple-600 hover:via-pink-600 hover:to-orange-600 text-white text-xl py-6 px-10 rounded-2xl shadow-xl hover:shadow-2xl transition-all transform hover:scale-105 animate-pulse"
         >
-          {currentWordIndex < practiceWords.length - 1 ? 'Next Word! 🚀' : 'See Results! 🏆'}
+          <div className="flex items-center gap-3">
+            <span className="text-2xl">{currentWordIndex < practiceWords.length - 1 ? '🚀' : '🏆'}</span>
+            <span className="font-bold">
+              {currentWordIndex < practiceWords.length - 1 ? 'Next Challenge!' : 'Hero Results!'}
+            </span>
+            <span className="text-2xl">{currentWordIndex < practiceWords.length - 1 ? '🌟' : '🎆'}</span>
+          </div>
         </Button>
       </div>
     );
@@ -438,7 +498,7 @@ export const WordPracticeGame: React.FC<WordPracticeGameProps> = ({
         )}
         {bestStreak >= 5 && (
           <Badge className="bg-gradient-to-r from-red-400 to-orange-400 text-white text-lg py-2 px-4">
-            🔥 Streak Master! {bestStreak} in a row!
+            ��� Streak Master! {bestStreak} in a row!
           </Badge>
         )}
         {correctWords.length === practiceWords.length && (
