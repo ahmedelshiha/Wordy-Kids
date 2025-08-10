@@ -395,49 +395,100 @@ export const WordCard: React.FC<WordCardProps> = ({
                 </div>
               </div>
 
-              {/* Rating Buttons */}
+              {/* Adventure Rating Buttons */}
               <div className="space-y-2">
-                <h4 className="text-xs md:text-sm font-medium text-purple-300 mb-2">
-                  How well do you know this word?
+                <h4 className="text-xs md:text-sm font-medium text-purple-300 mb-2 flex items-center gap-1">
+                  <Sword className="w-3 h-3" />
+                  Rate Your Knowledge
                 </h4>
                 <div className="flex gap-2 justify-center">
                   <Button
                     size="sm"
                     variant="ghost"
-                    className="flex-1 bg-red-500/20 hover:bg-red-500/30 text-red-200 border border-red-500/30"
+                    className="flex-1 bg-red-500/20 hover:bg-red-500/30 text-red-200 border border-red-500/30 transition-all hover:scale-105"
                     onClick={(e) => {
                       e.stopPropagation();
+                      // Track in adventure system
+                      const updatedStatus = adventureService.trackWordInteraction(
+                        word.id.toString(),
+                        false, // incorrect/hard
+                        false
+                      );
+                      setAdventureStatus(updatedStatus);
+                      // Also call the original handler
                       onWordMastered?.(word.id, "hard");
                     }}
                   >
                     <ThumbsDown className="w-3 h-3 mr-1" />
-                    Hard
+                    Forgot
                   </Button>
                   <Button
                     size="sm"
                     variant="ghost"
-                    className="flex-1 bg-yellow-500/20 hover:bg-yellow-500/30 text-yellow-200 border border-yellow-500/30"
+                    className="flex-1 bg-yellow-500/20 hover:bg-yellow-500/30 text-yellow-200 border border-yellow-500/30 transition-all hover:scale-105"
                     onClick={(e) => {
                       e.stopPropagation();
+                      // Track in adventure system with hesitation
+                      const updatedStatus = adventureService.trackWordInteraction(
+                        word.id.toString(),
+                        true, // correct but with hesitation
+                        true
+                      );
+                      setAdventureStatus(updatedStatus);
+                      // Also call the original handler
                       onWordMastered?.(word.id, "medium");
                     }}
                   >
                     <Star className="w-3 h-3 mr-1" />
-                    OK
+                    Kinda
                   </Button>
                   <Button
                     size="sm"
                     variant="ghost"
-                    className="flex-1 bg-green-500/20 hover:bg-green-500/30 text-green-200 border border-green-500/30"
+                    className="flex-1 bg-green-500/20 hover:bg-green-500/30 text-green-200 border border-green-500/30 transition-all hover:scale-105"
                     onClick={(e) => {
                       e.stopPropagation();
+                      // Track in adventure system as correct
+                      const updatedStatus = adventureService.trackWordInteraction(
+                        word.id.toString(),
+                        true, // correct
+                        false
+                      );
+                      setAdventureStatus(updatedStatus);
+                      // Also call the original handler
                       onWordMastered?.(word.id, "easy");
                     }}
                   >
                     <ThumbsUp className="w-3 h-3 mr-1" />
-                    Easy
+                    Easy!
                   </Button>
                 </div>
+
+                {/* Adventure Quick Actions */}
+                {(adventureStatus?.health || 100) < 50 && (
+                  <div className="mt-3 p-2 bg-orange-500/10 rounded-lg border border-orange-500/20">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-2">
+                        <AlertTriangle className="w-4 h-4 text-orange-400" />
+                        <span className="text-xs text-orange-300 font-medium">
+                          This word needs practice!
+                        </span>
+                      </div>
+                      <Button
+                        size="sm"
+                        className="bg-orange-500/20 hover:bg-orange-500/30 text-orange-200 border border-orange-500/30 px-2 py-1 h-auto text-xs"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          // Trigger adventure rescue - this could open adventure dashboard
+                          console.log("Opening rescue mission for word:", word.word);
+                        }}
+                      >
+                        <Sword className="w-3 h-3 mr-1" />
+                        Rescue
+                      </Button>
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
           )}
