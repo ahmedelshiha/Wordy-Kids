@@ -182,24 +182,27 @@ export const WordCard: React.FC<WordCardProps> = ({
             </Button>
           </div>
 
+          {/* Add spacing to push image down */}
+          <div className="mt-4"></div>
+
           {word.imageUrl ? (
             <img
               src={word.imageUrl}
               alt={word.word}
-              className="w-32 md:w-40 h-32 md:h-40 object-cover rounded-full mb-4 md:mb-6 shadow-xl ring-4 ring-white/30"
+              className="w-32 md:w-40 h-32 md:h-40 object-cover rounded-full mb-6 md:mb-8 shadow-xl ring-4 ring-white/30"
             />
           ) : (
-            <div className="w-32 md:w-40 h-32 md:h-40 rounded-full bg-white/20 flex items-center justify-center mb-4 md:mb-6 text-6xl md:text-8xl shadow-xl ring-4 ring-white/30 backdrop-blur-sm">
+            <div className="w-32 md:w-40 h-32 md:h-40 rounded-full bg-white/20 flex items-center justify-center mb-6 md:mb-8 text-6xl md:text-8xl shadow-xl ring-4 ring-white/30 backdrop-blur-sm">
               {word.emoji || "📚"}
             </div>
           )}
 
-          <h2 className="text-2xl md:text-4xl font-bold mb-2 md:mb-3 text-center">
+          <h2 className="text-2xl md:text-4xl font-bold mb-4 md:mb-6 text-center">
             {word.word}
           </h2>
 
           {word.pronunciation && (
-            <div className="flex items-center gap-2 mb-3 md:mb-4">
+            <div className="flex items-center gap-2 mb-6 md:mb-8">
               <span className="text-base md:text-lg opacity-90">
                 {word.pronunciation}
               </span>
