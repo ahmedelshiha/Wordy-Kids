@@ -585,6 +585,55 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
         </CardContent>
       </Card>
 
+      {/* Quick Actions */}
+      <Card>
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            <Zap className="w-6 h-6 text-purple-500" />
+            Quick Actions
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <Button
+              onClick={() => setActiveTab("analytics")}
+              variant="outline"
+              className="h-20 flex flex-col items-center gap-2 border-orange-200 hover:border-orange-300 hover:bg-orange-50"
+            >
+              <AlertCircle className="w-6 h-6 text-orange-500" />
+              <div className="text-center">
+                <div className="font-semibold text-orange-700">Practice Words</div>
+                <div className="text-xs text-orange-600">View words that need help</div>
+              </div>
+            </Button>
+
+            <Button
+              onClick={() => setActiveTab("analytics")}
+              variant="outline"
+              className="h-20 flex flex-col items-center gap-2 border-green-200 hover:border-green-300 hover:bg-green-50"
+            >
+              <CheckCircle className="w-6 h-6 text-green-500" />
+              <div className="text-center">
+                <div className="font-semibold text-green-700">Mastered Words</div>
+                <div className="text-xs text-green-600">See progress & achievements</div>
+              </div>
+            </Button>
+
+            <Button
+              onClick={() => setActiveTab("goals")}
+              variant="outline"
+              className="h-20 flex flex-col items-center gap-2 border-blue-200 hover:border-blue-300 hover:bg-blue-50"
+            >
+              <Target className="w-6 h-6 text-blue-500" />
+              <div className="text-center">
+                <div className="font-semibold text-blue-700">Set Goals</div>
+                <div className="text-xs text-blue-600">Create learning objectives</div>
+              </div>
+            </Button>
+          </div>
+        </CardContent>
+      </Card>
+
       {/* Children Cards with Enhanced Information */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {children.length === 0 ? (
