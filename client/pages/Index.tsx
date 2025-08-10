@@ -414,7 +414,7 @@ export default function Index({ initialProfile }: IndexProps) {
               </div>
             </div>
             <h1 className="text-4xl md:text-5xl font-bold mb-3">
-              ⭐ Word Adventure
+              ��� Word Adventure
             </h1>
             <p className="text-lg md:text-xl mb-6 opacity-90">
               Welcome to your vocabulary adventure! Ready for some learning fun?
@@ -921,50 +921,29 @@ export default function Index({ initialProfile }: IndexProps) {
                                                   currentWord.id
                                                 );
 
-                                                let encouragementMessage = "";
-                                                if (accuracy >= 90) {
-                                                  encouragementMessage =
-                                                    "Outstanding! You're a vocabulary superstar! ⭐";
-                                                } else if (accuracy >= 75) {
-                                                  encouragementMessage =
-                                                    "Great job! You're doing really well! 🌟";
-                                                } else if (accuracy >= 50) {
-                                                  encouragementMessage =
-                                                    "Good effort! Keep practicing and you'll get even better! 💪";
-                                                } else {
-                                                  encouragementMessage =
-                                                    "Nice try! Remember, practice makes perfect! 🎯";
+                                                if (completionResult.shouldShow) {
+                                                  // Show enhanced category completion achievement
+                                                  setFeedback({
+                                                    type: "celebration",
+                                                    title: completionResult.title,
+                                                    message: `${completionResult.message}\n\n✅ Remembered: ${completionResult.totalRemembered} words\n❌ Need practice: ${completionResult.totalWords - completionResult.totalRemembered} words\n\n🎉 Category Achievement Unlocked! 🎉`,
+                                                    points: completionResult.totalRemembered * 20 + (completionResult.accuracy >= 90 ? 100 : completionResult.accuracy >= 75 ? 75 : completionResult.accuracy >= 50 ? 50 : 25),
+                                                    onContinue: () => {
+                                                      setFeedback(null);
+                                                      // Reset for new category or continue practicing
+                                                      const totalForgotten = completionResult.totalWords - completionResult.totalRemembered;
+                                                      if (totalForgotten > 0) {
+                                                        // Restart with forgotten words for focused practice
+                                                        setCurrentWordIndex(0);
+                                                      } else {
+                                                        // Perfect completion - reset for new round
+                                                        setCurrentWordIndex(0);
+                                                        setRememberedWords(new Set());
+                                                        setForgottenWords(new Set());
+                                                      }
+                                                    },
+                                                  });
                                                 }
-
-                                                setFeedback({
-                                                  type: "celebration",
-                                                  title: `${encouragementMessage}`,
-                                                  message: `You completed ${totalWords} words with ${accuracy}% accuracy!\\n\\n✅ Remembered: ${totalRemembered} words\\n❌ Need practice: ${totalForgotten} words\\n\\n${totalForgotten > 0 ? "Don't worry about the ones you forgot - that's how we learn! 🧠" : "Perfect score! You're amazing! ��"}`,
-                                                  points:
-                                                    totalRemembered * 15 +
-                                                    (accuracy >= 90
-                                                      ? 50
-                                                      : accuracy >= 75
-                                                        ? 25
-                                                        : 10),
-                                                  onContinue: () => {
-                                                    setFeedback(null);
-                                                    // If there are forgotten words, restart with just those for focused practice
-                                                    if (totalForgotten > 0) {
-                                                      // Filter to show forgotten words first for practice
-                                                      setCurrentWordIndex(0);
-                                                    } else {
-                                                      // Reset for new round
-                                                      setCurrentWordIndex(0);
-                                                      setRememberedWords(
-                                                        new Set(),
-                                                      );
-                                                      setForgottenWords(
-                                                        new Set(),
-                                                      );
-                                                    }
-                                                  },
-                                                });
                                               }
                                             }}
                                             className="flex-1 bg-green-50 hover:bg-green-100 border-green-200 hover:border-green-300 text-green-700 hover:text-green-800 transition-all duration-300 transform hover:scale-105 py-4 px-6"
@@ -1027,7 +1006,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                               size="sm"
                                               className="text-xs text-slate-500 hover:text-slate-700"
                                             >
-                                              ← Back
+                                              �� Back
                                             </Button>
                                             <Button
                                               onClick={() =>
