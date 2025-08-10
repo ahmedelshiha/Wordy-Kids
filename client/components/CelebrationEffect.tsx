@@ -63,41 +63,49 @@ export const CelebrationEffect: React.FC<CelebrationEffectProps> = ({
     setParticles(newParticles);
   };
 
+  // Handle trigger changes
   useEffect(() => {
     if (trigger && !isActive) {
       setIsActive(true);
       createParticles();
-
-      const animateParticles = () => {
-        setParticles(prevParticles => {
-          const updatedParticles = prevParticles
-            .map(particle => ({
-              ...particle,
-              x: particle.x + particle.vx,
-              y: particle.y + particle.vy,
-              vx: particle.vx * 0.98,
-              vy: particle.vy + 0.3, // gravity
-              life: particle.life + 1
-            }))
-            .filter(particle => particle.life < particle.maxLife);
-
-          if (updatedParticles.length === 0) {
-            setIsActive(false);
-            onCompleteRef.current?.();
-          }
-
-          return updatedParticles;
-        });
-      };
-
-      const interval = setInterval(animateParticles, 16); // ~60 FPS
-
-      return () => {
-        clearInterval(interval);
-        setIsActive(false);
-      };
     }
   }, [trigger, isActive]);
+
+  // Handle animation when active
+  useEffect(() => {
+    if (!isActive) return;
+
+    const animateParticles = () => {
+      setParticles(prevParticles => {
+        const updatedParticles = prevParticles
+          .map(particle => ({
+            ...particle,
+            x: particle.x + particle.vx,
+            y: particle.y + particle.vy,
+            vx: particle.vx * 0.98,
+            vy: particle.vy + 0.3, // gravity
+            life: particle.life + 1
+          }))
+          .filter(particle => particle.life < particle.maxLife);
+
+        if (updatedParticles.length === 0) {
+          // Use setTimeout to avoid direct state update during render
+          setTimeout(() => {
+            setIsActive(false);
+            onCompleteRef.current?.();
+          }, 0);
+        }
+
+        return updatedParticles;
+      });
+    };
+
+    const interval = setInterval(animateParticles, 16); // ~60 FPS
+
+    return () => {
+      clearInterval(interval);
+    };
+  }, [isActive]);
 
   if (!isActive || particles.length === 0) {
     return null;
