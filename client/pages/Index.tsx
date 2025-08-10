@@ -931,22 +931,6 @@ export default function Index({ initialProfile }: IndexProps) {
                               </span>
                               <span className="sm:hidden">Cards</span>
                             </Button>
-                            {getPracticeWords().length > 0 && (
-                              <Button
-                                onClick={startPracticeGame}
-                                variant="outline"
-                                className="flex items-center gap-1 md:gap-2 text-sm md:text-base px-3 md:px-4 bg-orange-50 border-orange-200 text-orange-700 hover:bg-orange-100 relative"
-                              >
-                                <Target className="w-4 h-4" />
-                                <span className="hidden sm:inline">
-                                  Practice Words
-                                </span>
-                                <span className="sm:hidden">Practice</span>
-                                <div className="absolute -top-2 -right-2 bg-orange-500 text-white text-xs px-1.5 py-0.5 rounded-full">
-                                  {getPracticeWords().length}
-                                </div>
-                              </Button>
-                            )}
                             <Button
                               onClick={() => {
                                 setSelectedCategory("all");
