@@ -459,13 +459,13 @@ export function ChildFriendlyCategorySelector({
         </p>
         <div className="flex justify-center gap-2 mb-6 flex-wrap">
           <Badge className="bg-educational-green text-white px-3 py-1 text-sm animate-pulse">
-            🎮 Interactive Learning
+            📚 {wordsDatabase.length} Amazing Words
           </Badge>
           <Badge className="bg-educational-blue text-white px-3 py-1 text-sm animate-pulse delay-100">
-            🔊 Audio Pronunciation
+            🎯 {categories.length - 1} Fun Categories
           </Badge>
           <Badge className="bg-educational-purple text-white px-3 py-1 text-sm animate-pulse delay-200">
-            🏆 Achievement System
+            ⭐ 3 Difficulty Levels
           </Badge>
         </div>
       </div>
