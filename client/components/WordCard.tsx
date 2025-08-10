@@ -186,10 +186,10 @@ export const WordCard: React.FC<WordCardProps> = ({
             <img
               src={word.imageUrl}
               alt={word.word}
-              className="w-32 md:w-40 h-32 md:h-40 object-cover rounded-full mb-4 md:mb-6 shadow-xl ring-4 ring-white/30"
+              className="w-32 md:w-40 h-40 md:h-48 object-cover rounded-full mt-8 mb-4 md:mb-6 shadow-xl ring-4 ring-white/30"
             />
           ) : (
-            <div className="w-32 md:w-40 h-32 md:h-40 rounded-full bg-white/20 flex items-center justify-center mb-4 md:mb-6 text-6xl md:text-8xl shadow-xl ring-4 ring-white/30 backdrop-blur-sm">
+            <div className="w-32 md:w-40 h-40 md:h-48 rounded-full bg-white/20 flex items-center justify-center mt-8 mb-4 md:mb-6 text-6xl md:text-8xl shadow-xl ring-4 ring-white/30 backdrop-blur-sm">
               {word.emoji || "📚"}
             </div>
           )}
