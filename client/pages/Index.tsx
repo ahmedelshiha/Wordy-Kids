@@ -637,6 +637,7 @@ export default function Index({ initialProfile }: IndexProps) {
                   <LearningDashboard
                     stats={learningStats}
                     userName="Explorer"
+                    childStats={childStats}
                   />
                 </TabsContent>
 
