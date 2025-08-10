@@ -648,7 +648,7 @@ export default function Index({ initialProfile }: IndexProps) {
                 {
                   id: "progress",
                   icon: Trophy,
-                  label: "🌟 My Journey",
+                  label: "���� My Journey",
                   color: "yellow",
                 },
               ].map(({ id, icon: Icon, label, color }) => (
@@ -1823,16 +1823,6 @@ export default function Index({ initialProfile }: IndexProps) {
       </main>
 
       {/* Word Practice Game */}
-      {showPracticeGame && (
-        <div className="fixed inset-0 z-50 bg-white">
-          <WordPracticeGame
-            practiceWords={practiceWords}
-            onComplete={handlePracticeComplete}
-            onBack={() => setShowPracticeGame(false)}
-            childName={currentProfile?.name || "Champion"}
-          />
-        </div>
-      )}
 
       {/* Enhanced Components */}
       {showCelebration && <CelebrationEffect trigger={showCelebration} />}
