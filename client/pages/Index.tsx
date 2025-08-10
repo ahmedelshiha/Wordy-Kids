@@ -318,7 +318,7 @@ export default function Index({ initialProfile }: IndexProps) {
         achievementIcon = "🏆";
         achievementMessage = `Outstanding! You remembered ALL ${totalWords} words in ${categoryDisplayName}! You're a true champion!`;
       } else if (accuracy >= 90) {
-        achievementTitle = "Category Expert! ���";
+        achievementTitle = "Category Expert! ��";
         achievementIcon = "⭐";
         achievementMessage = `Excellent work! You mastered ${categoryDisplayName} with ${accuracy}% accuracy! Almost perfect!`;
       } else if (accuracy >= 75) {
@@ -384,6 +384,82 @@ export default function Index({ initialProfile }: IndexProps) {
 
   const handleSignOut = () => {
     navigate("/");
+  };
+
+  const getPracticeWords = () => {
+    // Get words that need practice (simulated data - in real app would come from API)
+    const wordsNeedingPractice = [
+      {
+        id: "1",
+        word: "helicopter",
+        definition: "An aircraft with rotating blades that can hover and move in any direction",
+        example: "The rescue helicopter landed on the hospital roof.",
+        category: "Transportation",
+        difficulty: "hard" as const,
+        attempts: 3,
+        lastAccuracy: 25
+      },
+      {
+        id: "2",
+        word: "encyclopedia",
+        definition: "A comprehensive reference work containing information on many subjects",
+        example: "I looked up dinosaurs in the encyclopedia for my school project.",
+        category: "Education",
+        difficulty: "hard" as const,
+        attempts: 2,
+        lastAccuracy: 40
+      },
+      {
+        id: "3",
+        word: "microscope",
+        definition: "An instrument used to see very small things by making them appear larger",
+        example: "We used a microscope to look at tiny cells in science class.",
+        category: "Science",
+        difficulty: "medium" as const,
+        attempts: 4,
+        lastAccuracy: 30
+      },
+      {
+        id: "4",
+        word: "constellation",
+        definition: "A group of stars that form a pattern in the night sky",
+        example: "I can see the Big Dipper constellation on clear nights.",
+        category: "Space",
+        difficulty: "medium" as const,
+        attempts: 2,
+        lastAccuracy: 45
+      },
+      {
+        id: "5",
+        word: "archaeology",
+        definition: "The study of ancient people and cultures through their remains and artifacts",
+        example: "The archaeology team discovered ancient pottery in the dig site.",
+        category: "History",
+        difficulty: "hard" as const,
+        attempts: 3,
+        lastAccuracy: 20
+      }
+    ];
+    return wordsNeedingPractice;
+  };
+
+  const startPracticeGame = () => {
+    const words = getPracticeWords();
+    setPracticeWords(words);
+    setShowPracticeGame(true);
+  };
+
+  const handlePracticeComplete = (results: { correctWords: string[], totalAttempts: number, accuracy: number }) => {
+    setShowPracticeGame(false);
+
+    // Show completion feedback
+    setFeedback({
+      type: "celebration",
+      title: "Practice Complete! 🏆",
+      message: `Great job practicing your tricky words!\n\n✅ Remembered: ${results.correctWords.length} words\n🎯 Accuracy: ${results.accuracy}%\n\nKeep practicing to master all your words!`,
+      points: results.correctWords.length * 15,
+      onContinue: () => setFeedback(null),
+    });
   };
 
   return (
