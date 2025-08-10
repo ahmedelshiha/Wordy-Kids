@@ -784,7 +784,7 @@ export default function Index({ initialProfile }: IndexProps) {
                               </span>
                             </div>
                             <Button
-                              onClick={() => setGameMode(true)}
+                              onClick={() => setShowWordAdventure(true)}
                               className="w-full bg-educational-green text-white hover:bg-educational-green/90"
                             >
                               <Play className="w-4 h-4 mr-2" />
