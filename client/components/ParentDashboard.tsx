@@ -368,6 +368,27 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
       setSelectedChild(children[0]);
     }
   }, [children, selectedChild]);
+
+  // Load children's word progress data
+  useEffect(() => {
+    const loadChildrenWordStats = async () => {
+      if (children.length === 0) return;
+
+      setLoadingWordStats(true);
+      try {
+        const response = await WordProgressAPI.getAllChildrenProgress();
+        if (response.success) {
+          setChildrenWordStats(response.childrenStats);
+        }
+      } catch (error) {
+        console.error("Failed to load children word stats:", error);
+      } finally {
+        setLoadingWordStats(false);
+      }
+    };
+
+    loadChildrenWordStats();
+  }, [children.length]);
   const [filterCategory, setFilterCategory] = useState("all");
   const [searchTerm, setSearchTerm] = useState("");
   const [reportData, setReportData] = useState<any>(null);
