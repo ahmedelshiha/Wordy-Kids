@@ -12,9 +12,18 @@ import {
   ThumbsUp,
   ThumbsDown,
   Brain,
+  Sword,
+  Shield,
+  AlertTriangle,
+  Flame,
+  Target,
+  Zap,
+  Crown
 } from "lucide-react";
 import { playSoundIfEnabled } from "@/lib/soundEffects";
 import { audioService } from "@/lib/audioService";
+import { adventureService } from "@/lib/adventureService";
+import { WordAdventureStatus } from "@shared/adventure";
 
 interface Word {
   id: number;
