@@ -720,7 +720,7 @@ export default function Index({ initialProfile }: IndexProps) {
       )}
 
       {/* Main Content with Sidebar Layout */}
-      <main className="flex min-h-screen">
+      <main className="flex min-h-screen h-screen overflow-hidden">
         {userRole === "parent" ? (
           <div className="w-full p-4 md:p-8">
             <ParentDashboard
