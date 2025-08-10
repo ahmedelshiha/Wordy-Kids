@@ -91,7 +91,7 @@ export const CelebrationEffect: React.FC<CelebrationEffectProps> = ({
         setIsActive(false);
       };
     }
-  }, [trigger, isActive, onComplete]);
+  }, [trigger, isActive]);
 
   if (!isActive || particles.length === 0) {
     return null;
