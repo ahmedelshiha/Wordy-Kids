@@ -190,36 +190,36 @@ export const WordPracticeGame: React.FC<WordPracticeGameProps> = ({
       </div>
 
       {/* Game stats preview */}
-      <div className="grid grid-cols-3 gap-4 max-w-md mx-auto">
-        <div className="bg-yellow-50 p-4 rounded-xl border-2 border-yellow-200">
-          <div className="text-2xl font-bold text-yellow-600">{practiceWords.length}</div>
+      <div className="grid grid-cols-3 gap-2 sm:gap-4 max-w-md mx-auto px-2 sm:px-0">
+        <div className="bg-yellow-50 p-3 sm:p-4 rounded-xl border-2 border-yellow-200">
+          <div className="text-lg sm:text-2xl font-bold text-yellow-600">{practiceWords.length}</div>
           <div className="text-xs text-yellow-600">Words to Master</div>
         </div>
-        <div className="bg-green-50 p-4 rounded-xl border-2 border-green-200">
-          <div className="text-2xl font-bold text-green-600">+{practiceWords.length * 15}</div>
+        <div className="bg-green-50 p-3 sm:p-4 rounded-xl border-2 border-green-200">
+          <div className="text-lg sm:text-2xl font-bold text-green-600">+{practiceWords.length * 15}</div>
           <div className="text-xs text-green-600">Max Points</div>
         </div>
-        <div className="bg-blue-50 p-4 rounded-xl border-2 border-blue-200">
-          <div className="text-2xl font-bold text-blue-600">~{Math.ceil(practiceWords.length * 1.5)}m</div>
+        <div className="bg-blue-50 p-3 sm:p-4 rounded-xl border-2 border-blue-200">
+          <div className="text-lg sm:text-2xl font-bold text-blue-600">~{Math.ceil(practiceWords.length * 1.5)}m</div>
           <div className="text-xs text-blue-600">Est. Time</div>
         </div>
       </div>
 
-      <div className="space-y-4">
+      <div className="space-y-4 px-4 sm:px-0">
         <Button
           onClick={startGame}
-          className="bg-gradient-to-r from-purple-500 to-pink-500 text-white text-xl py-6 px-12 rounded-2xl shadow-lg hover:shadow-xl transition-all transform hover:scale-105"
+          className="w-full sm:w-auto bg-gradient-to-r from-purple-500 to-pink-500 text-white text-lg sm:text-xl py-5 sm:py-6 px-8 sm:px-12 rounded-2xl shadow-lg hover:shadow-xl transition-all transform hover:scale-105 min-h-[60px]"
         >
-          <div className="flex items-center gap-3">
-            <Gamepad2 className="w-6 h-6" />
-            <div>
-              <div className="font-bold">Start Practice Adventure!</div>
-              <div className="text-sm opacity-90">Let's master these words! 🌟</div>
+          <div className="flex items-center justify-center gap-2 sm:gap-3">
+            <Gamepad2 className="w-5 h-5 sm:w-6 sm:h-6 flex-shrink-0" />
+            <div className="text-center">
+              <div className="font-bold text-sm sm:text-base">Start Practice Adventure!</div>
+              <div className="text-xs sm:text-sm opacity-90">Let's master these words! 🌟</div>
             </div>
           </div>
         </Button>
 
-        <p className="text-sm text-gray-500">
+        <p className="text-xs sm:text-sm text-gray-500 text-center px-2">
           Remember: Every practice makes you stronger! 💪✨
         </p>
       </div>
