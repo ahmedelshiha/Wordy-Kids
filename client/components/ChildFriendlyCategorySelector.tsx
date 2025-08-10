@@ -459,13 +459,13 @@ export function ChildFriendlyCategorySelector({
         </p>
         <div className="flex justify-center gap-2 mb-6 flex-wrap">
           <Badge className="bg-educational-green text-white px-3 py-1 text-sm animate-pulse">
-            🎮 Interactive Learning
+            📚 {wordsDatabase.length} Amazing Words
           </Badge>
           <Badge className="bg-educational-blue text-white px-3 py-1 text-sm animate-pulse delay-100">
-            🔊 Audio Pronunciation
+            🎯 {categories.length - 1} Fun Categories
           </Badge>
           <Badge className="bg-educational-purple text-white px-3 py-1 text-sm animate-pulse delay-200">
-            🏆 Achievement System
+            ⭐ 3 Difficulty Levels
           </Badge>
         </div>
       </div>
@@ -483,31 +483,6 @@ export function ChildFriendlyCategorySelector({
           </Card>
         </div>
       )}
-
-      {/* Featured Stats */}
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-4xl mx-auto mb-6 md:mb-8">
-        <Card className="bg-gradient-to-r from-educational-blue to-educational-purple text-white transform hover:scale-105 transition-all duration-300">
-          <CardContent className="p-6 text-center">
-            <Crown className="w-8 h-8 mx-auto mb-2" />
-            <div className="text-3xl font-bold">{wordsDatabase.length}</div>
-            <p className="text-sm opacity-90">Amazing Words</p>
-          </CardContent>
-        </Card>
-        <Card className="bg-gradient-to-r from-educational-green to-educational-blue text-white transform hover:scale-105 transition-all duration-300">
-          <CardContent className="p-6 text-center">
-            <Gift className="w-8 h-8 mx-auto mb-2" />
-            <div className="text-3xl font-bold">{categories.length - 1}</div>
-            <p className="text-sm opacity-90">Fun Categories</p>
-          </CardContent>
-        </Card>
-        <Card className="bg-gradient-to-r from-educational-orange to-educational-pink text-white transform hover:scale-105 transition-all duration-300">
-          <CardContent className="p-6 text-center">
-            <Zap className="w-8 h-8 mx-auto mb-2" />
-            <div className="text-3xl font-bold">3</div>
-            <p className="text-sm opacity-90">Difficulty Levels</p>
-          </CardContent>
-        </Card>
-      </div>
 
       {/* Categories Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6">

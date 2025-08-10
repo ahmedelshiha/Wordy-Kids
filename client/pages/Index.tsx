@@ -13,6 +13,7 @@ import { AchievementSystem } from "@/components/AchievementSystem";
 import { EncouragingFeedback } from "@/components/EncouragingFeedback";
 import { GameLikeLearning } from "@/components/GameLikeLearning";
 import { WordMatchingGame } from "@/components/WordMatchingGame";
+import { GameHub } from "@/components/games/GameHub";
 import { VocabularyBuilder } from "@/components/VocabularyBuilder";
 import { SettingsPanel } from "@/components/SettingsPanel";
 import { FloatingBubbles } from "@/components/FloatingBubbles";
@@ -21,7 +22,6 @@ import { DailyChallenge } from "@/components/DailyChallenge";
 import { ReadingComprehension } from "@/components/ReadingComprehension";
 import { ParentDashboard } from "@/components/ParentDashboard";
 import { WordCreator } from "@/components/WordCreator";
-import { LearningAnalytics } from "@/components/LearningAnalytics";
 import {
   wordsDatabase,
   getWordsByCategory,
@@ -53,6 +53,7 @@ import {
   Plus,
   TrendingUp,
   Zap,
+  Volume2,
   ImageIcon,
   PenTool,
   Clock,
@@ -213,7 +214,7 @@ export default function Index({ initialProfile }: IndexProps) {
     setTimeout(() => {
       setFeedback({
         type: "celebration",
-        title: "Vocabulary Session Complete! ����",
+        title: "Vocabulary Session Complete! ������",
         message: `Reviewed ${wordsReviewed} words with ${accuracy}% accuracy!`,
         points: wordsReviewed * accuracy,
         onContinue: () => setFeedback(null),
@@ -359,14 +360,8 @@ export default function Index({ initialProfile }: IndexProps) {
                 {
                   id: "progress",
                   icon: Trophy,
-                  label: "Achievements",
+                  label: "🌟 My Journey",
                   color: "yellow",
-                },
-                {
-                  id: "analytics",
-                  icon: TrendingUp,
-                  label: "Progress",
-                  color: "green",
                 },
               ].map(({ id, icon: Icon, label, color }) => (
                 <button
@@ -514,25 +509,7 @@ export default function Index({ initialProfile }: IndexProps) {
                       className={`w-5 h-5 ${activeTab === "progress" ? "text-white" : "text-yellow-600"}`}
                     />
                   </div>
-                  <span className="font-semibold">Achievements</span>
-                </button>
-
-                <button
-                  onClick={() => setActiveTab("analytics")}
-                  className={`w-full flex items-center gap-4 p-4 rounded-2xl transition-all ${
-                    activeTab === "analytics"
-                      ? "bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-lg"
-                      : "bg-white text-gray-700 hover:bg-purple-50"
-                  }`}
-                >
-                  <div
-                    className={`p-2 rounded-xl ${activeTab === "analytics" ? "bg-white/20" : "bg-green-100"}`}
-                  >
-                    <TrendingUp
-                      className={`w-5 h-5 ${activeTab === "analytics" ? "text-white" : "text-green-600"}`}
-                    />
-                  </div>
-                  <span className="font-semibold">Progress</span>
+                  <span className="font-semibold">🌟 My Journey</span>
                 </button>
 
                 <button
@@ -607,27 +584,15 @@ export default function Index({ initialProfile }: IndexProps) {
                         }}
                         userInterests={currentProfile?.interests || []}
                       />
-                    ) : gameMode ? (
-                      <GameLikeLearning
-                        words={(() => {
-                          const categoryWords =
-                            selectedCategory === "all"
-                              ? getRandomWords(20)
-                              : getWordsByCategory(selectedCategory);
-                          return categoryWords.slice(0, 10);
-                        })()}
-                        onComplete={handleGameComplete}
-                        onBack={() => setGameMode(false)}
-                        userProfile={currentProfile}
-                      />
                     ) : (
                       <>
                         <div className="text-center">
                           <h2 className="text-3xl font-bold text-slate-800 mb-4">
-                            Learning Mode
+                            Word Library
                           </h2>
                           <p className="text-slate-600 mb-8">
-                            Choose how you'd like to learn your vocabulary!
+                            Choose how you'd like to explore and learn
+                            vocabulary!
                           </p>
 
                           <div className="flex justify-center gap-2 md:gap-4 mb-6 md:mb-8 flex-wrap px-4 md:px-0">
@@ -658,28 +623,6 @@ export default function Index({ initialProfile }: IndexProps) {
                                 Vocabulary Builder
                               </span>
                               <span className="sm:hidden">Builder</span>
-                            </Button>
-                            <Button
-                              onClick={() => setShowMatchingGame(true)}
-                              variant="outline"
-                              className="flex items-center gap-1 md:gap-2 text-sm md:text-base px-3 md:px-4"
-                            >
-                              <Shuffle className="w-4 h-4" />
-                              <span className="hidden sm:inline">
-                                Matching Game
-                              </span>
-                              <span className="sm:hidden">Match</span>
-                            </Button>
-                            <Button
-                              onClick={() => setGameMode(true)}
-                              variant="default"
-                              className="flex items-center gap-1 md:gap-2 bg-gradient-to-r from-educational-green to-educational-blue text-white text-sm md:text-base px-3 md:px-4"
-                            >
-                              <Gamepad2 className="w-4 h-4" />
-                              <span className="hidden sm:inline">
-                                Game Mode! 🎮
-                              </span>
-                              <span className="sm:hidden">Game 🎮</span>
                             </Button>
                             <Button
                               onClick={() => {
@@ -799,7 +742,7 @@ export default function Index({ initialProfile }: IndexProps) {
                 </TabsContent>
 
                 <TabsContent value="quiz">
-                  {!showQuiz ? (
+                  {!showQuiz && !gameMode && !showMatchingGame ? (
                     <div className="space-y-8">
                       {/* Quiz Header */}
                       <div className="text-center">
@@ -809,16 +752,130 @@ export default function Index({ initialProfile }: IndexProps) {
                           </div>
                         </div>
                         <h2 className="text-2xl md:text-4xl font-bold text-gray-800 mb-4">
-                          🧠 Quiz Time!
+                          🧠 Quiz & Game Time!
                         </h2>
                         <p className="text-base md:text-xl text-gray-600 mb-6 md:mb-8">
-                          Test your vocabulary knowledge with fun quizzes!
-                          Choose your challenge level below.
+                          Test your vocabulary knowledge with fun quizzes and
+                          interactive games! Choose your challenge below.
                         </p>
                       </div>
 
-                      {/* Quiz Options */}
-                      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 max-w-4xl mx-auto">
+                      {/* All Games and Quizzes - Unified Grid */}
+                      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6 max-w-7xl mx-auto">
+                        {/* Word Adventure Quest */}
+                        <Card className="cursor-pointer hover:shadow-xl transition-all duration-300 hover:scale-105 border-2 border-educational-green/30">
+                          <CardContent className="p-6 text-center">
+                            <div className="text-6xl mb-4">🗺️</div>
+                            <h3 className="text-xl font-bold text-educational-green mb-2">
+                              Word Adventure Quest
+                            </h3>
+                            <p className="text-gray-600 mb-4">
+                              Journey through words with your learning buddy!
+                            </p>
+                            <div className="flex justify-center gap-2 mb-4">
+                              <span className="bg-educational-green/20 text-educational-green px-2 py-1 rounded-full text-xs">
+                                Easy
+                              </span>
+                              <span className="bg-educational-green/20 text-educational-green px-2 py-1 rounded-full text-xs">
+                                2-5 min
+                              </span>
+                            </div>
+                            <Button
+                              onClick={() => setGameMode(true)}
+                              className="w-full bg-educational-green text-white hover:bg-educational-green/90"
+                            >
+                              <Play className="w-4 h-4 mr-2" />
+                              Start Quest!
+                            </Button>
+                          </CardContent>
+                        </Card>
+
+                        {/* Lightning Learning */}
+                        <Card className="cursor-pointer hover:shadow-xl transition-all duration-300 hover:scale-105 border-2 border-educational-orange/30">
+                          <CardContent className="p-6 text-center">
+                            <div className="text-6xl mb-4">⚡</div>
+                            <h3 className="text-xl font-bold text-educational-orange mb-2">
+                              Lightning Learning
+                            </h3>
+                            <p className="text-gray-600 mb-4">
+                              Learn words at lightning speed! How fast can you
+                              go?
+                            </p>
+                            <div className="flex justify-center gap-2 mb-4">
+                              <span className="bg-educational-orange/20 text-educational-orange px-2 py-1 rounded-full text-xs">
+                                Hard
+                              </span>
+                              <span className="bg-educational-orange/20 text-educational-orange px-2 py-1 rounded-full text-xs">
+                                1-3 min
+                              </span>
+                            </div>
+                            <Button
+                              onClick={() => setGameMode(true)}
+                              className="w-full bg-educational-orange text-white hover:bg-educational-orange/90"
+                            >
+                              <Zap className="w-4 h-4 mr-2" />
+                              Start Speed Run!
+                            </Button>
+                          </CardContent>
+                        </Card>
+
+                        {/* Pronunciation Party */}
+                        <Card className="cursor-pointer hover:shadow-xl transition-all duration-300 hover:scale-105 border-2 border-educational-blue/30">
+                          <CardContent className="p-6 text-center">
+                            <div className="text-6xl mb-4">🎤</div>
+                            <h3 className="text-xl font-bold text-educational-blue mb-2">
+                              Pronunciation Party
+                            </h3>
+                            <p className="text-gray-600 mb-4">
+                              Learn to say words perfectly with fun audio
+                              challenges!
+                            </p>
+                            <div className="flex justify-center gap-2 mb-4">
+                              <span className="bg-educational-blue/20 text-educational-blue px-2 py-1 rounded-full text-xs">
+                                Easy
+                              </span>
+                              <span className="bg-educational-blue/20 text-educational-blue px-2 py-1 rounded-full text-xs">
+                                2-4 min
+                              </span>
+                            </div>
+                            <Button
+                              onClick={() => setGameMode(true)}
+                              className="w-full bg-educational-blue text-white hover:bg-educational-blue/90"
+                            >
+                              <Volume2 className="w-4 h-4 mr-2" />
+                              Start Party!
+                            </Button>
+                          </CardContent>
+                        </Card>
+
+                        {/* Matching Game */}
+                        <Card className="cursor-pointer hover:shadow-xl transition-all duration-300 hover:scale-105 border-2 border-educational-purple/30">
+                          <CardContent className="p-6 text-center">
+                            <div className="text-6xl mb-4">🧩</div>
+                            <h3 className="text-xl font-bold text-educational-purple mb-2">
+                              Matching Game
+                            </h3>
+                            <p className="text-gray-600 mb-4">
+                              Match words with their meanings in this brain
+                              game!
+                            </p>
+                            <div className="flex justify-center gap-2 mb-4">
+                              <span className="bg-educational-purple/20 text-educational-purple px-2 py-1 rounded-full text-xs">
+                                Memory Challenge
+                              </span>
+                              <span className="bg-educational-purple/20 text-educational-purple px-2 py-1 rounded-full text-xs">
+                                Timed
+                              </span>
+                            </div>
+                            <Button
+                              onClick={() => setShowMatchingGame(true)}
+                              className="w-full bg-educational-purple text-white hover:bg-educational-purple/90"
+                            >
+                              <Shuffle className="w-4 h-4 mr-2" />
+                              Start Matching!
+                            </Button>
+                          </CardContent>
+                        </Card>
                         {/* Easy Quiz */}
                         <Card className="cursor-pointer hover:shadow-xl transition-all duration-300 md:hover:scale-105 border-2 border-educational-green/30">
                           <CardContent className="p-6 text-center">
@@ -1063,7 +1120,7 @@ export default function Index({ initialProfile }: IndexProps) {
                               </div>
                               <div className="flex justify-between items-center p-3 bg-white rounded-lg">
                                 <div className="flex items-center gap-3">
-                                  <span className="text-2xl">��</span>
+                                  <span className="text-2xl">🏆</span>
                                   <div>
                                     <div className="font-semibold">
                                       Challenge Quiz
@@ -1086,6 +1143,51 @@ export default function Index({ initialProfile }: IndexProps) {
                           </CardContent>
                         </Card>
                       </div>
+                    </div>
+                  ) : gameMode ? (
+                    <GameLikeLearning
+                      words={(() => {
+                        const categoryWords =
+                          selectedCategory === "all"
+                            ? getRandomWords(20)
+                            : getWordsByCategory(selectedCategory);
+                        return categoryWords.slice(0, 10);
+                      })()}
+                      onComplete={handleGameComplete}
+                      onBack={() => setGameMode(false)}
+                      userProfile={currentProfile}
+                    />
+                  ) : showMatchingGame ? (
+                    <div className="space-y-6">
+                      <div className="flex items-center justify-between">
+                        <h2 className="text-2xl font-bold text-gray-800">
+                          🧩 Word Matching Game
+                        </h2>
+                        <Button
+                          onClick={() => setShowMatchingGame(false)}
+                          variant="outline"
+                          size="sm"
+                        >
+                          ← Back to Games
+                        </Button>
+                      </div>
+                      <WordMatchingGame
+                        pairs={generateMatchingPairs(
+                          6,
+                          undefined,
+                          selectedCategory,
+                        )}
+                        onComplete={(score, timeSpent) => {
+                          setShowMatchingGame(false);
+                          setFeedback({
+                            type: "celebration",
+                            title: "Matching Game Complete! 🎯",
+                            message: `You matched ${score} pairs in ${timeSpent} seconds!`,
+                            points: score * 15,
+                            onContinue: () => setFeedback(null),
+                          });
+                        }}
+                      />
                     </div>
                   ) : (
                     <QuizGame
@@ -1170,50 +1272,11 @@ export default function Index({ initialProfile }: IndexProps) {
                     }}
                   />
                 </TabsContent>
-
-                <TabsContent value="analytics">
-                  <LearningAnalytics />
-                </TabsContent>
               </Tabs>
             </div>
           </div>
         )}
       </main>
-
-      {/* Matching Game Modal */}
-      {showMatchingGame && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-xl max-w-4xl w-full max-h-[90vh] overflow-y-auto">
-            <div className="p-6">
-              <div className="flex items-center justify-between mb-6">
-                <h2 className="text-2xl font-bold text-gray-800">
-                  🧩 Word Matching Game
-                </h2>
-                <Button
-                  onClick={() => setShowMatchingGame(false)}
-                  variant="outline"
-                  size="sm"
-                >
-                  Close
-                </Button>
-              </div>
-              <WordMatchingGame
-                pairs={generateMatchingPairs(6, undefined, selectedCategory)}
-                onComplete={(score, timeSpent) => {
-                  setShowMatchingGame(false);
-                  setFeedback({
-                    type: "celebration",
-                    title: "Matching Game Complete! 🎯",
-                    message: `You matched ${score} pairs in ${timeSpent} seconds!`,
-                    points: score * 15,
-                    onContinue: () => setFeedback(null),
-                  });
-                }}
-              />
-            </div>
-          </div>
-        </div>
-      )}
 
       {/* Enhanced Components */}
       {showCelebration && <CelebrationEffect />}
