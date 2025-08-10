@@ -546,7 +546,7 @@ export default function IndexEnhanced() {
                     Child
                   </Button>
                   <Button
-                    variant={userRole === "parent" ? "default" : "outline"}
+                    variant={(userRole as string) === "parent" ? "default" : "outline"}
                     size="sm"
                     onClick={() => setUserRole("parent")}
                     className="flex-1"
