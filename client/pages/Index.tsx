@@ -168,6 +168,8 @@ export default function Index({ initialProfile }: IndexProps) {
   const [currentSessionId, setCurrentSessionId] = useState<string | null>(null);
   const [childStats, setChildStats] = useState<ChildWordStats | null>(null);
   const [isLoadingProgress, setIsLoadingProgress] = useState(false);
+  const [showPracticeGame, setShowPracticeGame] = useState(false);
+  const [practiceWords, setPracticeWords] = useState<any[]>([]);
 
   // Load background animations setting on mount
   useEffect(() => {
@@ -316,7 +318,7 @@ export default function Index({ initialProfile }: IndexProps) {
         achievementIcon = "🏆";
         achievementMessage = `Outstanding! You remembered ALL ${totalWords} words in ${categoryDisplayName}! You're a true champion!`;
       } else if (accuracy >= 90) {
-        achievementTitle = "Category Expert! ��";
+        achievementTitle = "Category Expert! ���";
         achievementIcon = "⭐";
         achievementMessage = `Excellent work! You mastered ${categoryDisplayName} with ${accuracy}% accuracy! Almost perfect!`;
       } else if (accuracy >= 75) {
