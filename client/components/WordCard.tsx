@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Volume2, Heart, RotateCcw, Sparkles, Star } from "lucide-react";
+import { Progress } from "@/components/ui/progress";
+import { Volume2, Heart, RotateCcw, Sparkles, Star, ThumbsUp, ThumbsDown, Brain } from "lucide-react";
 import { playSoundIfEnabled } from "@/lib/soundEffects";
 import { audioService } from "@/lib/audioService";
 
@@ -17,6 +18,9 @@ interface Word {
   category: string;
   difficulty: "easy" | "medium" | "hard";
   imageUrl?: string;
+  masteryLevel?: number;
+  lastReviewed?: Date;
+  nextReview?: Date;
 }
 
 interface WordCardProps {
@@ -24,6 +28,8 @@ interface WordCardProps {
   showDefinition?: boolean;
   onPronounce?: (word: Word) => void;
   onFavorite?: (word: Word) => void;
+  onWordMastered?: (wordId: number, rating: 'easy' | 'medium' | 'hard') => void;
+  showVocabularyBuilder?: boolean;
   className?: string;
 }
 
