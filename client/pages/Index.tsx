@@ -752,7 +752,7 @@ export default function Index({ initialProfile }: IndexProps) {
                           </div>
                         </div>
                         <h2 className="text-2xl md:text-4xl font-bold text-gray-800 mb-4">
-                          �� Quiz & Game Time!
+                          🎮 Quiz & Game Time!
                         </h2>
                         <p className="text-base md:text-xl text-gray-600 mb-6 md:mb-8">
                           Test your vocabulary knowledge with fun quizzes and
