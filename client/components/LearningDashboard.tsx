@@ -3,6 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
 import { Badge } from '@/components/ui/badge';
 import { AnimatedCounter } from '@/components/AnimatedCounter';
+import { PracticeWordsCard } from '@/components/PracticeWordsCard';
 import { ChildWordStats } from '@shared/api';
 import {
   Trophy,
