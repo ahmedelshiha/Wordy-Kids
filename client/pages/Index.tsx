@@ -635,10 +635,19 @@ export default function Index({ initialProfile }: IndexProps) {
                                     <>
                                       <div className="max-w-sm md:max-w-md mx-auto px-2 md:px-0">
                                         <WordCard
-                                          word={
-                                            displayWords[currentWordIndex] ||
-                                            displayWords[0]
-                                          }
+                                          word={{
+                                            ...(displayWords[currentWordIndex] ||
+                                            displayWords[0]),
+                                            masteryLevel: Math.floor(Math.random() * 100),
+                                            lastReviewed: new Date(
+                                              Date.now() -
+                                                Math.random() * 7 * 24 * 60 * 60 * 1000,
+                                            ),
+                                            nextReview: new Date(
+                                              Date.now() +
+                                                Math.random() * 3 * 24 * 60 * 60 * 1000,
+                                            ),
+                                          }}
                                           onPronounce={(word) =>
                                             console.log(
                                               "Playing pronunciation for:",
@@ -648,6 +657,8 @@ export default function Index({ initialProfile }: IndexProps) {
                                           onFavorite={(word) =>
                                             console.log("Favorited:", word.word)
                                           }
+                                          onWordMastered={handleWordMastered}
+                                          showVocabularyBuilder={true}
                                         />
                                       </div>
 
