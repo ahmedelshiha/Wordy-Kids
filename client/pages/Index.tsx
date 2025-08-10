@@ -13,6 +13,7 @@ import { AchievementSystem } from "@/components/AchievementSystem";
 import { EncouragingFeedback } from "@/components/EncouragingFeedback";
 import { GameLikeLearning } from "@/components/GameLikeLearning";
 import { WordMatchingGame } from "@/components/WordMatchingGame";
+import { GameHub } from "@/components/games/GameHub";
 import { VocabularyBuilder } from "@/components/VocabularyBuilder";
 import { SettingsPanel } from "@/components/SettingsPanel";
 import { FloatingBubbles } from "@/components/FloatingBubbles";
@@ -212,7 +213,7 @@ export default function Index({ initialProfile }: IndexProps) {
     setTimeout(() => {
       setFeedback({
         type: "celebration",
-        title: "Vocabulary Session Complete! ����",
+        title: "Vocabulary Session Complete! ������",
         message: `Reviewed ${wordsReviewed} words with ${accuracy}% accuracy!`,
         points: wordsReviewed * accuracy,
         onContinue: () => setFeedback(null),
