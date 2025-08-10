@@ -12,9 +12,18 @@ import {
   ThumbsUp,
   ThumbsDown,
   Brain,
+  Sword,
+  Shield,
+  AlertTriangle,
+  Flame,
+  Target,
+  Zap,
+  Crown,
 } from "lucide-react";
 import { playSoundIfEnabled } from "@/lib/soundEffects";
 import { audioService } from "@/lib/audioService";
+import { adventureService } from "@/lib/adventureService";
+import { WordAdventureStatus } from "@shared/adventure";
 
 interface Word {
   id: number;
@@ -55,6 +64,17 @@ export const WordCard: React.FC<WordCardProps> = ({
   const [isPlaying, setIsPlaying] = useState(false);
   const [isFavorited, setIsFavorited] = useState(false);
   const [showSparkles, setShowSparkles] = useState(false);
+  const [adventureStatus, setAdventureStatus] =
+    useState<WordAdventureStatus | null>(null);
+
+  // Initialize adventure status for this word
+  React.useEffect(() => {
+    let status = adventureService.getWordAdventureStatus(word.id.toString());
+    if (!status) {
+      status = adventureService.initializeWordAdventure(word.id.toString());
+    }
+    setAdventureStatus(status);
+  }, [word.id]);
 
   const handlePronounce = async () => {
     if (isPlaying) return;
@@ -126,11 +146,17 @@ export const WordCard: React.FC<WordCardProps> = ({
 
   return (
     <div
-      className={`relative w-full max-w-xs md:max-w-sm mx-auto ${className}`}
+      className={`relative w-full max-w-xs md:max-w-sm lg:max-w-md mx-auto ${className}`}
     >
       <Card
-        className={`h-72 md:h-80 cursor-pointer transition-all duration-700 transform-gpu md:hover:scale-105 ${
+        className={`h-[480px] md:h-[520px] lg:h-[560px] cursor-pointer transition-all duration-700 transform-gpu md:hover:scale-105 ${
           isFlipped ? "[transform:rotateY(180deg)]" : ""
+        } ${
+          adventureStatus && adventureStatus.health < 30
+            ? "ring-2 ring-red-400/50 shadow-red-400/20 shadow-xl animate-pulse"
+            : adventureStatus && adventureStatus.health < 50
+              ? "ring-2 ring-orange-400/50 shadow-orange-400/20 shadow-lg"
+              : ""
         }`}
         style={{ transformStyle: "preserve-3d" }}
         onClick={() => {
@@ -140,11 +166,13 @@ export const WordCard: React.FC<WordCardProps> = ({
       >
         {/* Front of card */}
         <CardContent
-          className={`absolute inset-0 w-full h-full ${getCategoryColor(word.category)} rounded-xl p-4 md:p-6 flex flex-col items-center justify-center text-white`}
+          className={`absolute inset-0 w-full h-full ${getCategoryColor(word.category)} rounded-xl p-4 md:p-6 flex flex-col text-white`}
           style={{ backfaceVisibility: "hidden" }}
         >
-          <div className="absolute top-4 left-4 flex gap-2">
-            <Badge className={getDifficultyColor(word.difficulty)}>
+          <div className="absolute top-3 left-3 md:top-4 md:left-4 flex flex-col gap-1 md:flex-row md:gap-2">
+            <Badge
+              className={`${getDifficultyColor(word.difficulty)} text-xs md:text-sm`}
+            >
               {word.difficulty === "easy"
                 ? "🌟 Easy"
                 : word.difficulty === "medium"
@@ -153,17 +181,56 @@ export const WordCard: React.FC<WordCardProps> = ({
             </Badge>
             <Badge
               variant="outline"
-              className="bg-white/20 border-white/30 text-white"
+              className="bg-white/20 border-white/30 text-white text-xs md:text-sm"
             >
               {word.category}
             </Badge>
+
+            {/* Adventure Health Status */}
+            {adventureStatus && (
+              <Badge
+                variant="outline"
+                className={`text-xs md:text-sm flex items-center gap-1 ${
+                  adventureStatus.health >= 80
+                    ? "bg-green-500/20 border-green-400/50 text-green-200"
+                    : adventureStatus.health >= 50
+                      ? "bg-yellow-500/20 border-yellow-400/50 text-yellow-200"
+                      : adventureStatus.health >= 30
+                        ? "bg-orange-500/20 border-orange-400/50 text-orange-200"
+                        : "bg-red-500/20 border-red-400/50 text-red-200 animate-pulse"
+                }`}
+              >
+                {adventureStatus.health >= 80 ? (
+                  <>
+                    <Crown className="w-3 h-3" />
+                    <span className="hidden md:inline">Strong</span>
+                  </>
+                ) : adventureStatus.health >= 50 ? (
+                  <>
+                    <Shield className="w-3 h-3" />
+                    <span className="hidden md:inline">Good</span>
+                  </>
+                ) : adventureStatus.health >= 30 ? (
+                  <>
+                    <Target className="w-3 h-3" />
+                    <span className="hidden md:inline">Weak</span>
+                  </>
+                ) : (
+                  <>
+                    <Flame className="w-3 h-3" />
+                    <span className="hidden md:inline">Critical</span>
+                  </>
+                )}
+                <span>{adventureStatus.health}%</span>
+              </Badge>
+            )}
           </div>
 
-          <div className="absolute top-4 right-4 flex gap-2">
+          <div className="absolute top-3 right-3 md:top-4 md:right-4">
             <Button
               size="sm"
               variant="ghost"
-              className={`text-white hover:bg-white/20 p-2 h-auto transition-all duration-300 ${
+              className={`text-white hover:bg-white/20 p-1.5 md:p-2 h-auto transition-all duration-300 ${
                 isFavorited ? "scale-110 text-red-300" : ""
               }`}
               onClick={(e) => {
@@ -172,68 +239,94 @@ export const WordCard: React.FC<WordCardProps> = ({
               }}
             >
               <Heart
-                className={`w-4 h-4 transition-all duration-300 ${
+                className={`w-3 h-3 md:w-4 md:h-4 transition-all duration-300 ${
                   isFavorited ? "fill-current animate-pulse" : ""
                 }`}
               />
               {showSparkles && isFavorited && (
-                <Star className="w-3 h-3 absolute -top-1 -right-1 text-yellow-300 animate-bounce" />
+                <Star className="w-2 h-2 md:w-3 md:h-3 absolute -top-1 -right-1 text-yellow-300 animate-bounce" />
               )}
             </Button>
           </div>
 
           {word.imageUrl ? (
-            <img
-              src={word.imageUrl}
-              alt={word.word}
-              className="w-32 md:w-40 h-32 md:h-40 object-cover rounded-full mb-4 md:mb-6 shadow-xl ring-4 ring-white/30"
-            />
-          ) : (
-            <div className="w-32 md:w-40 h-32 md:h-40 rounded-full bg-white/20 flex items-center justify-center mb-4 md:mb-6 text-6xl md:text-8xl shadow-xl ring-4 ring-white/30 backdrop-blur-sm">
-              {word.emoji || "📚"}
-            </div>
-          )}
-
-          <h2 className="text-2xl md:text-4xl font-bold mb-2 md:mb-3 text-center">
-            {word.word}
-          </h2>
-
-          {word.pronunciation && (
-            <div className="flex items-center gap-2 mb-3 md:mb-4">
-              <span className="text-base md:text-lg opacity-90">
-                {word.pronunciation}
-              </span>
-              <Button
-                size="sm"
-                variant="ghost"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  handlePronounce();
-                }}
-                disabled={isPlaying}
-                className={`text-white hover:bg-white/20 p-2 h-auto transition-all duration-300 ${
-                  isPlaying ? "scale-110 bg-white/30" : ""
-                }`}
-              >
-                <Volume2
-                  className={`w-5 h-5 ${isPlaying ? "animate-pulse text-yellow-300" : ""}`}
+            <div className="relative mx-auto mt-8 mb-6">
+              <div className="w-48 h-48 md:w-56 md:h-56 lg:w-64 lg:h-64 rounded-full bg-white/20 backdrop-blur-sm shadow-2xl ring-4 ring-white/30 flex items-center justify-center">
+                <img
+                  src={word.imageUrl}
+                  alt={word.word}
+                  className="w-40 h-40 md:w-48 md:h-48 lg:w-56 lg:h-56 object-cover rounded-full shadow-lg"
                 />
-                {showSparkles && (
-                  <Sparkles className="w-4 h-4 absolute -top-1 -right-1 text-yellow-300 animate-spin" />
-                )}
-              </Button>
+              </div>
+            </div>
+          ) : (
+            <div className="relative mx-auto mt-8 mb-6">
+              <div className="w-48 h-48 md:w-56 md:h-56 lg:w-64 lg:h-64 rounded-full bg-gradient-to-br from-white/30 via-white/20 to-white/10 backdrop-blur-md shadow-2xl ring-4 ring-white/30 flex items-center justify-center relative overflow-hidden">
+                {/* Decorative background elements */}
+                <div className="absolute top-2 left-2 w-6 h-6 bg-white/20 rounded-full animate-pulse"></div>
+                <div className="absolute bottom-4 right-4 w-4 h-4 bg-white/15 rounded-full animate-bounce delay-300"></div>
+                <div className="absolute top-1/2 right-2 w-3 h-3 bg-white/25 rounded-full animate-ping delay-700"></div>
+
+                {/* Main emoji */}
+                <span className="text-5xl md:text-6xl lg:text-7xl relative z-10 drop-shadow-lg animate-gentle-float">
+                  {word.emoji || "📚"}
+                </span>
+
+                {/* Subtle glow effect */}
+                <div className="absolute inset-0 rounded-full bg-gradient-to-t from-transparent via-white/5 to-white/10"></div>
+              </div>
             </div>
           )}
 
-          <div className="text-center mt-auto">
-            <p className="text-sm opacity-75 mb-2">
-              <RotateCcw className="w-4 h-4 inline mr-1" />
+          <div className="flex-1 flex flex-col justify-center items-center text-center space-y-3">
+            <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold tracking-wide drop-shadow-md">
+              {word.word}
+            </h2>
+
+            {word.pronunciation && (
+              <div className="flex items-center gap-2">
+                <span className="text-sm md:text-base lg:text-lg opacity-90 font-medium">
+                  {word.pronunciation}
+                </span>
+                <Button
+                  size="sm"
+                  variant="ghost"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handlePronounce();
+                  }}
+                  disabled={isPlaying}
+                  className={`text-white hover:bg-white/20 p-2 h-auto transition-all duration-300 ${
+                    isPlaying ? "scale-110 bg-white/30" : ""
+                  }`}
+                >
+                  <Volume2
+                    className={`w-4 h-4 lg:w-5 lg:h-5 ${isPlaying ? "animate-pulse text-yellow-300" : ""}`}
+                  />
+                  {showSparkles && (
+                    <Sparkles className="w-3 h-3 lg:w-4 lg:h-4 absolute -top-1 -right-1 text-yellow-300 animate-spin" />
+                  )}
+                </Button>
+              </div>
+            )}
+          </div>
+
+          <div className="text-center">
+            {/* Adventure Last Practice Info */}
+            {adventureStatus && (
+              <p className="text-xs opacity-60 mb-1">
+                Last seen:{" "}
+                {new Date(adventureStatus.last_seen).toLocaleDateString()}
+              </p>
+            )}
+            <p className="text-xs md:text-sm opacity-75 mb-2">
+              <RotateCcw className="w-3 h-3 md:w-4 md:h-4 inline mr-1" />
               Tap to see definition
             </p>
             <div className="flex justify-center gap-1">
-              <div className="w-2 h-2 bg-white/50 rounded-full animate-bounce"></div>
-              <div className="w-2 h-2 bg-white/50 rounded-full animate-bounce delay-100"></div>
-              <div className="w-2 h-2 bg-white/50 rounded-full animate-bounce delay-200"></div>
+              <div className="w-1.5 h-1.5 md:w-2 md:h-2 bg-white/50 rounded-full animate-bounce"></div>
+              <div className="w-1.5 h-1.5 md:w-2 md:h-2 bg-white/50 rounded-full animate-bounce delay-100"></div>
+              <div className="w-1.5 h-1.5 md:w-2 md:h-2 bg-white/50 rounded-full animate-bounce delay-200"></div>
             </div>
           </div>
         </CardContent>
@@ -298,66 +391,176 @@ export const WordCard: React.FC<WordCardProps> = ({
           {/* Vocabulary Builder Features */}
           {showVocabularyBuilder && (
             <div className="border-t border-white/20 pt-4 mt-4">
-              {/* Mastery Level */}
+              {/* Adventure Word Health */}
               <div className="mb-4">
                 <div className="flex items-center justify-between mb-2">
                   <h4 className="text-xs md:text-sm font-medium text-blue-300 flex items-center gap-1">
-                    <Brain className="w-3 h-3" />
-                    Mastery Level
+                    <Heart className="w-3 h-3" />
+                    Word Health
                   </h4>
-                  <span className="text-xs text-white/70">
-                    {word.masteryLevel || 0}%
-                  </span>
+                  <div className="flex items-center gap-2">
+                    <span
+                      className={`text-xs font-bold ${
+                        (adventureStatus?.health || 100) >= 80
+                          ? "text-green-300"
+                          : (adventureStatus?.health || 100) >= 50
+                            ? "text-yellow-300"
+                            : (adventureStatus?.health || 100) >= 30
+                              ? "text-orange-300"
+                              : "text-red-300"
+                      }`}
+                    >
+                      {adventureStatus?.health || 100}%
+                    </span>
+                    {(adventureStatus?.health || 100) < 50 && (
+                      <AlertTriangle className="w-3 h-3 text-orange-300 animate-pulse" />
+                    )}
+                  </div>
                 </div>
                 <Progress
-                  value={word.masteryLevel || 0}
-                  className="h-2 bg-white/20"
+                  value={adventureStatus?.health || 100}
+                  className={`h-2 ${
+                    (adventureStatus?.health || 100) >= 50
+                      ? "bg-green-100/20"
+                      : (adventureStatus?.health || 100) >= 30
+                        ? "bg-orange-100/20"
+                        : "bg-red-100/20"
+                  }`}
                 />
+
+                {/* Adventure Status */}
+                <div className="mt-2 flex items-center justify-between text-xs">
+                  <div className="flex items-center gap-1">
+                    {(adventureStatus?.health || 100) < 30 ? (
+                      <>
+                        <Flame className="w-3 h-3 text-red-400 animate-pulse" />
+                        <span className="text-red-300 font-medium">
+                          Needs Rescue!
+                        </span>
+                      </>
+                    ) : (adventureStatus?.health || 100) < 50 ? (
+                      <>
+                        <Target className="w-3 h-3 text-orange-400" />
+                        <span className="text-orange-300">Needs Practice</span>
+                      </>
+                    ) : (adventureStatus?.health || 100) < 80 ? (
+                      <>
+                        <Shield className="w-3 h-3 text-yellow-400" />
+                        <span className="text-yellow-300">Good</span>
+                      </>
+                    ) : (
+                      <>
+                        <Crown className="w-3 h-3 text-green-400" />
+                        <span className="text-green-300">Mastered</span>
+                      </>
+                    )}
+                  </div>
+                  <span className="text-white/60">
+                    Forgot {adventureStatus?.forget_count || 0}x
+                  </span>
+                </div>
               </div>
 
-              {/* Rating Buttons */}
+              {/* Adventure Rating Buttons */}
               <div className="space-y-2">
-                <h4 className="text-xs md:text-sm font-medium text-purple-300 mb-2">
-                  How well do you know this word?
+                <h4 className="text-xs md:text-sm font-medium text-purple-300 mb-2 flex items-center gap-1">
+                  <Sword className="w-3 h-3" />
+                  Rate Your Knowledge
                 </h4>
                 <div className="flex gap-2 justify-center">
                   <Button
                     size="sm"
                     variant="ghost"
-                    className="flex-1 bg-red-500/20 hover:bg-red-500/30 text-red-200 border border-red-500/30"
+                    className="flex-1 bg-red-500/20 hover:bg-red-500/30 text-red-200 border border-red-500/30 transition-all hover:scale-105"
                     onClick={(e) => {
                       e.stopPropagation();
+                      // Track in adventure system
+                      const updatedStatus =
+                        adventureService.trackWordInteraction(
+                          word.id.toString(),
+                          false, // incorrect/hard
+                          false,
+                        );
+                      setAdventureStatus(updatedStatus);
+                      // Also call the original handler
                       onWordMastered?.(word.id, "hard");
                     }}
                   >
                     <ThumbsDown className="w-3 h-3 mr-1" />
-                    Hard
+                    Forgot
                   </Button>
                   <Button
                     size="sm"
                     variant="ghost"
-                    className="flex-1 bg-yellow-500/20 hover:bg-yellow-500/30 text-yellow-200 border border-yellow-500/30"
+                    className="flex-1 bg-yellow-500/20 hover:bg-yellow-500/30 text-yellow-200 border border-yellow-500/30 transition-all hover:scale-105"
                     onClick={(e) => {
                       e.stopPropagation();
+                      // Track in adventure system with hesitation
+                      const updatedStatus =
+                        adventureService.trackWordInteraction(
+                          word.id.toString(),
+                          true, // correct but with hesitation
+                          true,
+                        );
+                      setAdventureStatus(updatedStatus);
+                      // Also call the original handler
                       onWordMastered?.(word.id, "medium");
                     }}
                   >
                     <Star className="w-3 h-3 mr-1" />
-                    OK
+                    Kinda
                   </Button>
                   <Button
                     size="sm"
                     variant="ghost"
-                    className="flex-1 bg-green-500/20 hover:bg-green-500/30 text-green-200 border border-green-500/30"
+                    className="flex-1 bg-green-500/20 hover:bg-green-500/30 text-green-200 border border-green-500/30 transition-all hover:scale-105"
                     onClick={(e) => {
                       e.stopPropagation();
+                      // Track in adventure system as correct
+                      const updatedStatus =
+                        adventureService.trackWordInteraction(
+                          word.id.toString(),
+                          true, // correct
+                          false,
+                        );
+                      setAdventureStatus(updatedStatus);
+                      // Also call the original handler
                       onWordMastered?.(word.id, "easy");
                     }}
                   >
                     <ThumbsUp className="w-3 h-3 mr-1" />
-                    Easy
+                    Easy!
                   </Button>
                 </div>
+
+                {/* Adventure Quick Actions */}
+                {(adventureStatus?.health || 100) < 50 && (
+                  <div className="mt-3 p-2 bg-orange-500/10 rounded-lg border border-orange-500/20">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-2">
+                        <AlertTriangle className="w-4 h-4 text-orange-400" />
+                        <span className="text-xs text-orange-300 font-medium">
+                          This word needs practice!
+                        </span>
+                      </div>
+                      <Button
+                        size="sm"
+                        className="bg-orange-500/20 hover:bg-orange-500/30 text-orange-200 border border-orange-500/30 px-2 py-1 h-auto text-xs"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          // Trigger adventure rescue - this could open adventure dashboard
+                          console.log(
+                            "Opening rescue mission for word:",
+                            word.word,
+                          );
+                        }}
+                      >
+                        <Sword className="w-3 h-3 mr-1" />
+                        Rescue
+                      </Button>
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
           )}

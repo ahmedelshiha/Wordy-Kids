@@ -15,13 +15,14 @@ import { GameLikeLearning } from "@/components/GameLikeLearning";
 import { WordMatchingGame } from "@/components/WordMatchingGame";
 import { GameHub } from "@/components/games/GameHub";
 import { SettingsPanel } from "@/components/SettingsPanel";
-import { WordPracticeGame } from "@/components/WordPracticeGame";
 import { FloatingBubbles } from "@/components/FloatingBubbles";
 import { CelebrationEffect } from "@/components/CelebrationEffect";
 import { DailyChallenge } from "@/components/DailyChallenge";
 import { ReadingComprehension } from "@/components/ReadingComprehension";
 import { ParentDashboard } from "@/components/ParentDashboard";
 import { WordCreator } from "@/components/WordCreator";
+import { AdventureDashboard } from "@/components/AdventureDashboard";
+import { adventureService } from "@/lib/adventureService";
 import {
   wordsDatabase,
   getWordsByCategory,
@@ -62,6 +63,7 @@ import {
   Menu,
   X,
   LogOut,
+  Sword,
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { WordProgressAPI } from "@/lib/wordProgressApi";
@@ -169,7 +171,6 @@ export default function Index({ initialProfile }: IndexProps) {
   const [childStats, setChildStats] = useState<ChildWordStats | null>(null);
   const [isLoadingProgress, setIsLoadingProgress] = useState(false);
   const [showPracticeGame, setShowPracticeGame] = useState(false);
-  const [practiceWords, setPracticeWords] = useState<any[]>([]);
 
   // Load background animations setting on mount
   useEffect(() => {
@@ -257,7 +258,7 @@ export default function Index({ initialProfile }: IndexProps) {
     setTimeout(() => {
       setFeedback({
         type: "celebration",
-        title: "Vocabulary Session Complete! ������",
+        title: "Vocabulary Session Complete! ��������",
         message: `Reviewed ${wordsReviewed} words with ${accuracy}% accuracy!`,
         points: wordsReviewed * accuracy,
         onContinue: () => setFeedback(null),
@@ -271,6 +272,16 @@ export default function Index({ initialProfile }: IndexProps) {
     rating: "easy" | "medium" | "hard",
   ) => {
     console.log(`Word ${wordId} rated as ${rating}`);
+
+    // Track in Adventure system
+    const isCorrect = rating === "easy"; // Easy means they knew it well
+    const hasHesitation = rating === "medium"; // Medium means some hesitation
+
+    adventureService.trackWordInteraction(
+      wordId.toString(),
+      isCorrect,
+      hasHesitation,
+    );
   };
 
   const handleWordCreated = (newWord: any) => {
@@ -334,7 +345,7 @@ export default function Index({ initialProfile }: IndexProps) {
         achievementMessage = `Outstanding! You remembered ALL ${totalWords} words in ${categoryDisplayName}! You're a true champion!`;
       } else if (accuracy >= 90) {
         achievementTitle = "Category Expert! ��";
-        achievementIcon = "⭐";
+        achievementIcon = "���";
         achievementMessage = `Excellent work! You mastered ${categoryDisplayName} with ${accuracy}% accuracy! Almost perfect!`;
       } else if (accuracy >= 75) {
         achievementTitle = "Category Scholar! 📚";
@@ -594,7 +605,7 @@ export default function Index({ initialProfile }: IndexProps) {
               📚
             </div>
             <div className="hidden md:block absolute bottom-10 left-20 text-4xl animate-bounce delay-1000">
-              🎯
+              ������
             </div>
             <div className="hidden md:block absolute bottom-20 right-10 text-3xl animate-pulse delay-500">
               🚀
@@ -639,7 +650,7 @@ export default function Index({ initialProfile }: IndexProps) {
                 {
                   id: "progress",
                   icon: Trophy,
-                  label: "🌟 My Journey",
+                  label: "���� My Journey",
                   color: "yellow",
                 },
               ].map(({ id, icon: Icon, label, color }) => (
@@ -665,22 +676,6 @@ export default function Index({ initialProfile }: IndexProps) {
                   <span className="font-semibold text-sm">{label}</span>
                 </button>
               ))}
-
-              <button
-                onClick={() => {
-                  startPracticeGame();
-                  setIsMobileMenuOpen(false);
-                }}
-                className="w-full flex items-center gap-3 p-3 rounded-xl transition-all bg-white text-gray-700 hover:bg-orange-50 border-2 border-orange-200 relative"
-              >
-                <div className="p-2 rounded-lg bg-orange-100">
-                  <Target className="w-4 h-4 text-orange-600" />
-                </div>
-                <span className="font-semibold text-sm">🎯 Practice Words</span>
-                <div className="absolute -top-1 -right-1 bg-orange-500 text-white text-xs px-1.5 py-0.5 rounded-full">
-                  {getPracticeWords().length}
-                </div>
-              </button>
 
               <button
                 onClick={() => {
@@ -720,7 +715,7 @@ export default function Index({ initialProfile }: IndexProps) {
       )}
 
       {/* Main Content with Sidebar Layout */}
-      <main className="flex min-h-screen">
+      <main className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 scroll-smooth">
         {userRole === "parent" ? (
           <div className="w-full p-4 md:p-8">
             <ParentDashboard
@@ -730,140 +725,174 @@ export default function Index({ initialProfile }: IndexProps) {
             />
           </div>
         ) : (
-          <div className="flex w-full">
-            {/* Desktop Left Sidebar */}
-            <aside className="hidden md:flex w-72 bg-gradient-to-b from-purple-100 to-pink-100 border-r border-purple-200 p-6 flex-col">
-              {/* Navigation Menu */}
-              <nav className="flex-1 space-y-3">
-                <button
-                  onClick={() => setActiveTab("dashboard")}
-                  className={`w-full flex items-center gap-4 p-4 rounded-2xl transition-all ${
-                    activeTab === "dashboard"
-                      ? "bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-lg"
-                      : "bg-white text-gray-700 hover:bg-purple-50"
-                  }`}
-                >
-                  <div
-                    className={`p-2 rounded-xl ${activeTab === "dashboard" ? "bg-white/20" : "bg-purple-100"}`}
+          <div className="flex flex-col lg:flex-row min-h-screen">
+            {/* Desktop/Mobile Sidebar */}
+            <aside className="lg:w-80 xl:w-96 bg-gradient-to-b from-purple-50 to-pink-50 border-r border-purple-200 lg:border-b-0 border-b overflow-y-auto lg:max-h-screen">
+              <div className="p-4 lg:p-6">
+                {/* Logo Section - Mobile & Desktop */}
+                <div className="flex items-center gap-3 mb-6 lg:mb-8">
+                  <div className="w-8 h-8 lg:w-10 lg:h-10 bg-gradient-to-r from-purple-500 to-pink-500 rounded-xl flex items-center justify-center">
+                    <Sparkles className="w-5 h-5 lg:w-6 lg:h-6 text-white" />
+                  </div>
+                  <div>
+                    <h1 className="text-lg lg:text-xl font-bold text-gray-800">
+                      WordWise
+                    </h1>
+                    <p className="text-xs lg:text-sm text-gray-600">
+                      Learning Adventure
+                    </p>
+                  </div>
+                </div>
+
+                {/* Navigation Menu */}
+                <nav className="space-y-2">
+                  <button
+                    onClick={() => setActiveTab("dashboard")}
+                    className={`w-full flex items-center gap-3 p-3 lg:p-4 rounded-xl lg:rounded-2xl transition-all ${
+                      activeTab === "dashboard"
+                        ? "bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-lg"
+                        : "bg-white text-gray-700 hover:bg-purple-50 border border-purple-100"
+                    }`}
                   >
-                    <Target
-                      className={`w-5 h-5 ${activeTab === "dashboard" ? "text-white" : "text-purple-600"}`}
-                    />
-                  </div>
-                  <span className="font-semibold">Dashboard</span>
-                </button>
+                    <div
+                      className={`p-2 rounded-lg lg:rounded-xl ${activeTab === "dashboard" ? "bg-white/20" : "bg-purple-100"}`}
+                    >
+                      <Target
+                        className={`w-4 h-4 lg:w-5 lg:h-5 ${activeTab === "dashboard" ? "text-white" : "text-purple-600"}`}
+                      />
+                    </div>
+                    <span className="font-medium lg:font-semibold text-sm lg:text-base">
+                      Dashboard
+                    </span>
+                  </button>
 
-                <button
-                  onClick={() => setActiveTab("learn")}
-                  className={`w-full flex items-center gap-4 p-4 rounded-2xl transition-all ${
-                    activeTab === "learn"
-                      ? "bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-lg"
-                      : "bg-white text-gray-700 hover:bg-purple-50"
-                  }`}
-                >
-                  <div
-                    className={`p-2 rounded-xl ${activeTab === "learn" ? "bg-white/20" : "bg-green-100"}`}
+                  <button
+                    onClick={() => setActiveTab("learn")}
+                    className={`w-full flex items-center gap-3 p-3 lg:p-4 rounded-xl lg:rounded-2xl transition-all ${
+                      activeTab === "learn"
+                        ? "bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-lg"
+                        : "bg-white text-gray-700 hover:bg-purple-50 border border-purple-100"
+                    }`}
                   >
-                    <BookOpen
-                      className={`w-5 h-5 ${activeTab === "learn" ? "text-white" : "text-green-600"}`}
-                    />
-                  </div>
-                  <span className="font-semibold">Word Library</span>
-                </button>
+                    <div
+                      className={`p-2 rounded-lg lg:rounded-xl ${activeTab === "learn" ? "bg-white/20" : "bg-green-100"}`}
+                    >
+                      <BookOpen
+                        className={`w-4 h-4 lg:w-5 lg:h-5 ${activeTab === "learn" ? "text-white" : "text-green-600"}`}
+                      />
+                    </div>
+                    <span className="font-medium lg:font-semibold text-sm lg:text-base">
+                      Word Library
+                    </span>
+                  </button>
 
-                <button
-                  onClick={() => setActiveTab("quiz")}
-                  className={`w-full flex items-center gap-4 p-4 rounded-2xl transition-all ${
-                    activeTab === "quiz"
-                      ? "bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-lg"
-                      : "bg-white text-gray-700 hover:bg-purple-50"
-                  }`}
-                >
-                  <div
-                    className={`p-2 rounded-xl ${activeTab === "quiz" ? "bg-white/20" : "bg-pink-100"}`}
+                  <button
+                    onClick={() => setActiveTab("quiz")}
+                    className={`w-full flex items-center gap-3 p-3 lg:p-4 rounded-xl lg:rounded-2xl transition-all ${
+                      activeTab === "quiz"
+                        ? "bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-lg"
+                        : "bg-white text-gray-700 hover:bg-purple-50 border border-purple-100"
+                    }`}
                   >
-                    <Brain
-                      className={`w-5 h-5 ${activeTab === "quiz" ? "text-white" : "text-pink-600"}`}
-                    />
-                  </div>
-                  <span className="font-semibold">Quiz Time</span>
-                </button>
+                    <div
+                      className={`p-2 rounded-lg lg:rounded-xl ${activeTab === "quiz" ? "bg-white/20" : "bg-pink-100"}`}
+                    >
+                      <Brain
+                        className={`w-4 h-4 lg:w-5 lg:h-5 ${activeTab === "quiz" ? "text-white" : "text-pink-600"}`}
+                      />
+                    </div>
+                    <span className="font-medium lg:font-semibold text-sm lg:text-base">
+                      Quiz Time
+                    </span>
+                  </button>
 
-                <button
-                  onClick={() => setActiveTab("progress")}
-                  className={`w-full flex items-center gap-4 p-4 rounded-2xl transition-all ${
-                    activeTab === "progress"
-                      ? "bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-lg"
-                      : "bg-white text-gray-700 hover:bg-purple-50"
-                  }`}
-                >
-                  <div
-                    className={`p-2 rounded-xl ${activeTab === "progress" ? "bg-white/20" : "bg-yellow-100"}`}
+                  <button
+                    onClick={() => setActiveTab("progress")}
+                    className={`w-full flex items-center gap-3 p-3 lg:p-4 rounded-xl lg:rounded-2xl transition-all ${
+                      activeTab === "progress"
+                        ? "bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-lg"
+                        : "bg-white text-gray-700 hover:bg-purple-50 border border-purple-100"
+                    }`}
                   >
-                    <Trophy
-                      className={`w-5 h-5 ${activeTab === "progress" ? "text-white" : "text-yellow-600"}`}
-                    />
-                  </div>
-                  <span className="font-semibold">🌟 My Journey</span>
-                </button>
+                    <div
+                      className={`p-2 rounded-lg lg:rounded-xl ${activeTab === "progress" ? "bg-white/20" : "bg-yellow-100"}`}
+                    >
+                      <Trophy
+                        className={`w-4 h-4 lg:w-5 lg:h-5 ${activeTab === "progress" ? "text-white" : "text-yellow-600"}`}
+                      />
+                    </div>
+                    <span className="font-medium lg:font-semibold text-sm lg:text-base">
+                      🌟 My Journey
+                    </span>
+                  </button>
 
-                <button
-                  onClick={startPracticeGame}
-                  className="w-full flex items-center gap-4 p-4 rounded-2xl transition-all bg-white text-gray-700 hover:bg-orange-50 hover:border-orange-200 border-2 border-transparent relative"
-                >
-                  <div className="p-2 rounded-xl bg-orange-100">
-                    <Target className="w-5 h-5 text-orange-600" />
-                  </div>
-                  <span className="font-semibold">🎯 Practice Words</span>
-                  <div className="absolute -top-1 -right-1 bg-orange-500 text-white text-xs px-2 py-1 rounded-full">
-                    {getPracticeWords().length}
-                  </div>
-                </button>
+                  <button
+                    onClick={() => setActiveTab("adventure")}
+                    className={`w-full flex items-center gap-3 p-3 lg:p-4 rounded-xl lg:rounded-2xl transition-all ${
+                      activeTab === "adventure"
+                        ? "bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-lg"
+                        : "bg-white text-gray-700 hover:bg-purple-50 border border-purple-100"
+                    }`}
+                  >
+                    <div
+                      className={`p-2 rounded-lg lg:rounded-xl ${activeTab === "adventure" ? "bg-white/20" : "bg-red-100"}`}
+                    >
+                      <Sword
+                        className={`w-4 h-4 lg:w-5 lg:h-5 ${activeTab === "adventure" ? "text-white" : "text-red-600"}`}
+                      />
+                    </div>
+                    <span className="font-medium lg:font-semibold text-sm lg:text-base">
+                      🏰 Adventure
+                    </span>
+                  </button>
 
-                <button
-                  onClick={() => setUserRole("parent")}
-                  className="w-full flex items-center gap-4 p-4 rounded-2xl transition-all bg-white text-gray-700 hover:bg-blue-50 hover:border-blue-200 border-2 border-transparent"
-                >
-                  <div className="p-2 rounded-xl bg-blue-100">
-                    <Users className="w-5 h-5 text-blue-600" />
-                  </div>
-                  <span className="font-semibold">Parent Dashboard</span>
-                </button>
+                  <button
+                    onClick={() => setUserRole("parent")}
+                    className="w-full flex items-center gap-4 p-4 rounded-2xl transition-all bg-white text-gray-700 hover:bg-blue-50 hover:border-blue-200 border-2 border-transparent"
+                  >
+                    <div className="p-2 rounded-xl bg-blue-100">
+                      <Users className="w-5 h-5 text-blue-600" />
+                    </div>
+                    <span className="font-semibold">Parent Dashboard</span>
+                  </button>
 
-                <button
-                  onClick={() => navigate("/admin")}
-                  className="w-full flex items-center gap-4 p-4 rounded-2xl transition-all bg-white text-gray-700 hover:bg-red-50 hover:border-red-200 border-2 border-transparent"
-                >
-                  <div className="p-2 rounded-xl bg-red-100">
-                    <Shield className="w-5 h-5 text-red-600" />
-                  </div>
-                  <span className="font-semibold">Administrator Dashboard</span>
-                </button>
+                  <button
+                    onClick={() => navigate("/admin")}
+                    className="w-full flex items-center gap-4 p-4 rounded-2xl transition-all bg-white text-gray-700 hover:bg-red-50 hover:border-red-200 border-2 border-transparent"
+                  >
+                    <div className="p-2 rounded-xl bg-red-100">
+                      <Shield className="w-5 h-5 text-red-600" />
+                    </div>
+                    <span className="font-semibold">
+                      Administrator Dashboard
+                    </span>
+                  </button>
 
-                <button
-                  onClick={() => setShowSettings(true)}
-                  className="w-full flex items-center gap-4 p-4 rounded-2xl bg-white text-gray-700 hover:bg-purple-50 transition-all border border-purple-200"
-                >
-                  <div className="p-2 rounded-xl bg-gray-100">
-                    <Settings className="w-5 h-5 text-gray-600" />
-                  </div>
-                  <span className="font-semibold">Settings</span>
-                </button>
+                  <button
+                    onClick={() => setShowSettings(true)}
+                    className="w-full flex items-center gap-4 p-4 rounded-2xl bg-white text-gray-700 hover:bg-purple-50 transition-all border border-purple-200"
+                  >
+                    <div className="p-2 rounded-xl bg-gray-100">
+                      <Settings className="w-5 h-5 text-gray-600" />
+                    </div>
+                    <span className="font-semibold">Settings</span>
+                  </button>
 
-                <button
-                  onClick={handleSignOut}
-                  className="w-full flex items-center gap-4 p-4 rounded-2xl bg-white text-gray-700 hover:bg-red-50 transition-all border border-red-200"
-                >
-                  <div className="p-2 rounded-xl bg-red-100">
-                    <LogOut className="w-5 h-5 text-red-600" />
-                  </div>
-                  <span className="font-semibold">Sign Out</span>
-                </button>
-              </nav>
+                  <button
+                    onClick={handleSignOut}
+                    className="w-full flex items-center gap-4 p-4 rounded-2xl bg-white text-gray-700 hover:bg-red-50 transition-all border border-red-200"
+                  >
+                    <div className="p-2 rounded-xl bg-red-100">
+                      <LogOut className="w-5 h-5 text-red-600" />
+                    </div>
+                    <span className="font-semibold">Sign Out</span>
+                  </button>
+                </nav>
+              </div>
             </aside>
 
             {/* Main Content Area */}
-            <div className="flex-1 p-4 md:p-8 bg-gradient-to-br from-blue-50 via-white to-purple-50">
+            <div className="flex-1 p-4 lg:p-8 pb-20 lg:pb-8 overflow-y-auto scroll-smooth">
               <Tabs
                 value={activeTab}
                 onValueChange={setActiveTab}
@@ -874,8 +903,6 @@ export default function Index({ initialProfile }: IndexProps) {
                     stats={learningStats}
                     userName="Explorer"
                     childStats={childStats}
-                    onStartPractice={startPracticeGame}
-                    practiceWords={getPracticeWords()}
                   />
                 </TabsContent>
 
@@ -920,22 +947,6 @@ export default function Index({ initialProfile }: IndexProps) {
                               </span>
                               <span className="sm:hidden">Cards</span>
                             </Button>
-                            {getPracticeWords().length > 0 && (
-                              <Button
-                                onClick={startPracticeGame}
-                                variant="outline"
-                                className="flex items-center gap-1 md:gap-2 text-sm md:text-base px-3 md:px-4 bg-orange-50 border-orange-200 text-orange-700 hover:bg-orange-100 relative"
-                              >
-                                <Target className="w-4 h-4" />
-                                <span className="hidden sm:inline">
-                                  Practice Words
-                                </span>
-                                <span className="sm:hidden">Practice</span>
-                                <div className="absolute -top-2 -right-2 bg-orange-500 text-white text-xs px-1.5 py-0.5 rounded-full">
-                                  {getPracticeWords().length}
-                                </div>
-                              </Button>
-                            )}
                             <Button
                               onClick={() => {
                                 setSelectedCategory("all");
@@ -1074,7 +1085,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                                     type: "celebration",
                                                     title:
                                                       "Category Review Complete! 📚",
-                                                    message: `You've reviewed all ${completionResult.totalWords} words in ${selectedCategory === "all" ? "this word set" : selectedCategory}!\\n\\n✅ Remembered: ${completionResult.totalRemembered} words\\n❌ Need practice: ${completionResult.totalWords - completionResult.totalRemembered} words\\n\\n${completionResult.totalWords - completionResult.totalRemembered > 0 ? "Don't worry! Let's practice the tricky ones again! 💪" : "Amazing work! 🎉"}`,
+                                                    message: `You've reviewed all ${completionResult.totalWords} words in ${selectedCategory === "all" ? "this word set" : selectedCategory}!\\n\\n✅ Remembered: ${completionResult.totalRemembered} words\\n❌ Need practice: ${completionResult.totalWords - completionResult.totalRemembered} words\\n\\n${completionResult.totalWords - completionResult.totalRemembered > 0 ? "Don't worry! Let's practice the tricky ones again! ����" : "Amazing work! 🎉"}`,
                                                     points:
                                                       completionResult.totalRemembered *
                                                       10, // Fewer points since words were forgotten
@@ -1506,7 +1517,7 @@ export default function Index({ initialProfile }: IndexProps) {
                         {/* Picture Quiz */}
                         <Card className="cursor-pointer hover:shadow-xl transition-all duration-300 hover:scale-105 border-2 border-educational-orange/30">
                           <CardContent className="p-6 text-center">
-                            <div className="text-6xl mb-4">📸</div>
+                            <div className="text-6xl mb-4">��</div>
                             <h3 className="text-xl font-bold text-educational-orange mb-2">
                               Picture Quiz
                             </h3>
@@ -1792,6 +1803,25 @@ export default function Index({ initialProfile }: IndexProps) {
                   )}
                 </TabsContent>
 
+                <TabsContent value="adventure">
+                  <AdventureDashboard
+                    words={wordsDatabase.map((word) => ({
+                      id: word.id,
+                      word: word.word,
+                      definition: word.definition,
+                      emoji: word.emoji,
+                      imageUrl: word.imageUrl,
+                      wrongDefinitions: [
+                        "A type of ancient tool used by early humans",
+                        "A scientific term for weather patterns",
+                        "A mathematical concept related to geometry",
+                        "A historical event from the medieval period",
+                      ],
+                      hint: `This word starts with "${word.word.charAt(0)}" and relates to ${word.category}`,
+                    }))}
+                  />
+                </TabsContent>
+
                 <TabsContent value="progress">
                   <AchievementSystem
                     onUnlock={(achievement) => {
@@ -1811,16 +1841,6 @@ export default function Index({ initialProfile }: IndexProps) {
       </main>
 
       {/* Word Practice Game */}
-      {showPracticeGame && (
-        <div className="fixed inset-0 z-50 bg-white">
-          <WordPracticeGame
-            practiceWords={practiceWords}
-            onComplete={handlePracticeComplete}
-            onBack={() => setShowPracticeGame(false)}
-            childName={currentProfile?.name || "Champion"}
-          />
-        </div>
-      )}
 
       {/* Enhanced Components */}
       {showCelebration && <CelebrationEffect trigger={showCelebration} />}
@@ -1848,28 +1868,50 @@ export default function Index({ initialProfile }: IndexProps) {
         />
       )}
 
-      {/* Floating Practice Words Reminder */}
-      {getPracticeWords().length > 0 && !showPracticeGame && (
-        <div className="fixed bottom-20 md:bottom-24 right-4 md:right-6 z-40">
-          <div
-            onClick={startPracticeGame}
-            className="bg-gradient-to-r from-orange-500 to-red-500 p-3 md:p-4 rounded-full shadow-2xl cursor-pointer hover:scale-110 transition-all duration-300 min-w-[48px] min-h-[48px] flex items-center justify-center animate-pulse"
-          >
-            <div className="relative">
-              <Target className="w-5 md:w-6 h-5 md:h-6 text-white" />
-              <div className="absolute -top-2 -right-2 bg-white text-orange-500 text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
-                {getPracticeWords().length}
-              </div>
-            </div>
-          </div>
-          <div className="absolute -top-12 left-1/2 transform -translate-x-1/2 bg-black text-white text-xs px-2 py-1 rounded whitespace-nowrap opacity-0 hover:opacity-100 transition-opacity">
-            Practice Words!
-          </div>
+      {/* Mobile Bottom Navigation */}
+      <nav className="fixed bottom-0 left-0 right-0 bg-white/90 backdrop-blur-md border-t border-purple-200 p-2 lg:hidden z-40">
+        <div className="flex justify-around">
+          {[
+            {
+              id: "dashboard",
+              icon: Target,
+              label: "Dashboard",
+              color: "purple",
+            },
+            { id: "learn", icon: BookOpen, label: "Learn", color: "green" },
+            { id: "adventure", icon: Sword, label: "Adventure", color: "red" },
+            { id: "quiz", icon: Brain, label: "Quiz", color: "pink" },
+            {
+              id: "progress",
+              icon: Trophy,
+              label: "Progress",
+              color: "yellow",
+            },
+          ].map(({ id, icon: Icon, label, color }) => (
+            <button
+              key={id}
+              onClick={() => setActiveTab(id)}
+              className={`flex flex-col items-center gap-1 p-3 rounded-xl transition-all ${
+                activeTab === id
+                  ? "bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-lg"
+                  : "text-gray-600 hover:text-purple-600"
+              }`}
+            >
+              <Icon
+                className={`w-5 h-5 ${activeTab === id ? "text-white" : ""}`}
+              />
+              <span
+                className={`text-xs font-medium ${activeTab === id ? "text-white" : ""}`}
+              >
+                {label}
+              </span>
+            </button>
+          ))}
         </div>
-      )}
+      </nav>
 
       {/* Floating Helper */}
-      <div className="fixed bottom-4 md:bottom-6 right-4 md:right-6 z-40">
+      <div className="fixed bottom-20 lg:bottom-4 md:bottom-6 right-4 md:right-6 z-40">
         <div
           className="bg-gradient-to-r from-educational-purple to-educational-pink p-3 md:p-4 rounded-full shadow-2xl cursor-pointer md:hover:scale-110 transition-all duration-300 min-w-[48px] min-h-[48px] flex items-center justify-center"
           onClick={() =>
