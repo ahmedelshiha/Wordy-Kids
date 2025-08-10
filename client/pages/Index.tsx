@@ -792,34 +792,6 @@ export default function Index({ initialProfile }: IndexProps) {
                           </CardContent>
                         </Card>
 
-                        {/* Lightning Learning */}
-                        <Card className="cursor-pointer hover:shadow-xl transition-all duration-300 hover:scale-105 border-2 border-educational-orange/30">
-                          <CardContent className="p-6 text-center">
-                            <div className="text-6xl mb-4">⚡</div>
-                            <h3 className="text-xl font-bold text-educational-orange mb-2">
-                              Lightning Learning
-                            </h3>
-                            <p className="text-gray-600 mb-4">
-                              Learn words at lightning speed! How fast can you
-                              go?
-                            </p>
-                            <div className="flex justify-center gap-2 mb-4">
-                              <span className="bg-educational-orange/20 text-educational-orange px-2 py-1 rounded-full text-xs">
-                                Hard
-                              </span>
-                              <span className="bg-educational-orange/20 text-educational-orange px-2 py-1 rounded-full text-xs">
-                                1-3 min
-                              </span>
-                            </div>
-                            <Button
-                              onClick={() => setShowLightningLearning(true)}
-                              className="w-full bg-educational-orange text-white hover:bg-educational-orange/90"
-                            >
-                              <Zap className="w-4 h-4 mr-2" />
-                              Start Lightning!
-                            </Button>
-                          </CardContent>
-                        </Card>
 
                         {/* Pronunciation Party */}
                         <Card className="cursor-pointer hover:shadow-xl transition-all duration-300 hover:scale-105 border-2 border-educational-blue/30">
