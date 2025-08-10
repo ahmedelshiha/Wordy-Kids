@@ -816,10 +816,13 @@ export default function Index({ initialProfile }: IndexProps) {
                                           </Button>
 
                                           <Button
-                                            onClick={() => {
+                                            onClick={async () => {
                                               const currentWord =
                                                 displayWords[currentWordIndex];
                                               if (currentWord) {
+                                                // Record progress in database
+                                                await handleWordProgress(currentWord, "remembered");
+
                                                 // Mark as remembered
                                                 setRememberedWords(
                                                   (prev) =>
