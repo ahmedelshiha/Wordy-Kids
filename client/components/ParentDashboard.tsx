@@ -72,6 +72,8 @@ import {
   Shield,
 } from "lucide-react";
 import { AnimatedCounter } from "@/components/AnimatedCounter";
+import { WordProgressAPI } from "@/lib/wordProgressApi";
+import { ChildWordStats } from "@shared/api";
 
 interface ChildProfile {
   id: string;
