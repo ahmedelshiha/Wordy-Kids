@@ -731,8 +731,8 @@ export default function Index({ initialProfile }: IndexProps) {
           </div>
         ) : (
           <div className="flex flex-col lg:flex-row min-h-screen">
-            {/* Desktop Left Sidebar */}
-            <aside className="hidden md:flex w-72 bg-gradient-to-b from-purple-100 to-pink-100 border-r border-purple-200 p-6 flex-col overflow-y-auto">
+            {/* Desktop/Mobile Sidebar */}
+            <aside className="lg:w-80 xl:w-96 bg-gradient-to-b from-purple-50 to-pink-50 border-r border-purple-200 lg:border-b-0 border-b overflow-y-auto lg:max-h-screen">
               {/* Navigation Menu */}
               <nav className="flex-1 space-y-3">
                 <button
