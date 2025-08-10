@@ -359,14 +359,8 @@ export default function Index({ initialProfile }: IndexProps) {
                 {
                   id: "progress",
                   icon: Trophy,
-                  label: "Achievements",
+                  label: "🌟 My Journey",
                   color: "yellow",
-                },
-                {
-                  id: "analytics",
-                  icon: TrendingUp,
-                  label: "Progress",
-                  color: "green",
                 },
               ].map(({ id, icon: Icon, label, color }) => (
                 <button
@@ -1264,9 +1258,6 @@ export default function Index({ initialProfile }: IndexProps) {
                   />
                 </TabsContent>
 
-                <TabsContent value="analytics">
-                  <LearningAnalytics />
-                </TabsContent>
               </Tabs>
             </div>
           </div>
