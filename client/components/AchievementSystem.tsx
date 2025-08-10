@@ -393,7 +393,7 @@ export function AchievementSystem({ onUnlock, stats = learningStats }: Achieveme
               const maxValue = Math.max(...stats.weeklyProgress);
               const height = (value / maxValue) * 100;
               const days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
-              const emojis = ['🌟', '⭐', '✨', '����', '🔥', '🎉', '🚀'];
+              const emojis = ['🌟', '⭐', '✨', '🎯', '🔥', '🎉', '🚀'];
               
               return (
                 <div key={index} className="flex flex-col items-center">
