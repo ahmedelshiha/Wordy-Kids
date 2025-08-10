@@ -727,6 +727,54 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
                       </div>
                     </div>
                   )}
+
+                  {/* Word Progress Summary */}
+                  {childrenWordStats[child.id] && (
+                    <div className="bg-purple-50 p-3 rounded-lg">
+                      <div className="flex items-center gap-2 mb-2">
+                        <BookOpen className="w-4 h-4 text-purple-600" />
+                        <span className="font-medium text-sm">Word Progress</span>
+                      </div>
+                      <div className="grid grid-cols-2 gap-3 text-xs">
+                        <div>
+                          <div className="flex items-center gap-1">
+                            <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                            <span className="text-gray-600">Remembered:</span>
+                          </div>
+                          <span className="font-semibold text-green-600">
+                            {childrenWordStats[child.id].wordsRemembered}
+                          </span>
+                        </div>
+                        <div>
+                          <div className="flex items-center gap-1">
+                            <div className="w-2 h-2 bg-orange-500 rounded-full"></div>
+                            <span className="text-gray-600">Practice:</span>
+                          </div>
+                          <span className="font-semibold text-orange-600">
+                            {childrenWordStats[child.id].wordsNeedingPractice}
+                          </span>
+                        </div>
+                      </div>
+                      <div className="mt-2">
+                        <div className="flex justify-between text-xs mb-1">
+                          <span className="text-gray-600">Accuracy</span>
+                          <span className="font-semibold">{childrenWordStats[child.id].averageAccuracy}%</span>
+                        </div>
+                        <Progress
+                          value={childrenWordStats[child.id].averageAccuracy}
+                          className="h-2"
+                        />
+                      </div>
+                      {childrenWordStats[child.id].strongestCategories.length > 0 && (
+                        <div className="mt-2">
+                          <span className="text-xs text-gray-600">Strong in: </span>
+                          <span className="text-xs font-medium text-green-600">
+                            {childrenWordStats[child.id].strongestCategories.slice(0, 2).join(", ")}
+                          </span>
+                        </div>
+                      )}
+                    </div>
+                  )}
                 </CardContent>
               </Card>
             );
