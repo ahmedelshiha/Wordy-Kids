@@ -15,6 +15,13 @@ import {
   getSupportTickets,
   getSystemHealth,
 } from "./routes/admin";
+import {
+  startLearningSession,
+  recordWordProgress,
+  endLearningSession,
+  getChildStats,
+  getAllChildrenProgress,
+} from "./routes/word-progress";
 
 export function createServer() {
   const app = express();
@@ -46,6 +53,13 @@ export function createServer() {
   app.get("/api/admin/analytics", getAnalytics);
   app.get("/api/admin/support/tickets", getSupportTickets);
   app.get("/api/admin/system/health", getSystemHealth);
+
+  // Word Progress API routes
+  app.post("/api/learning/session/start", startLearningSession);
+  app.post("/api/learning/word/progress", recordWordProgress);
+  app.post("/api/learning/session/end", endLearningSession);
+  app.get("/api/learning/child/:childId/stats", getChildStats);
+  app.get("/api/learning/children/progress", getAllChildrenProgress);
 
   return app;
 }

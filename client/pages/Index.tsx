@@ -15,6 +15,7 @@ import { GameLikeLearning } from "@/components/GameLikeLearning";
 import { WordMatchingGame } from "@/components/WordMatchingGame";
 import { GameHub } from "@/components/games/GameHub";
 import { SettingsPanel } from "@/components/SettingsPanel";
+import { WordPracticeGame } from "@/components/WordPracticeGame";
 import { FloatingBubbles } from "@/components/FloatingBubbles";
 import { CelebrationEffect } from "@/components/CelebrationEffect";
 import { DailyChallenge } from "@/components/DailyChallenge";
@@ -63,6 +64,8 @@ import {
   LogOut,
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { WordProgressAPI } from "@/lib/wordProgressApi";
+import { ChildWordStats } from "@shared/api";
 
 const learningStats = {
   wordsLearned: 68,
@@ -151,11 +154,22 @@ export default function Index({ initialProfile }: IndexProps) {
 
   // New child-friendly states
   const [currentProfile, setCurrentProfile] = useState<any>(
-    initialProfile || null,
+    initialProfile || {
+      id: "demo-child-1",
+      name: "Alex",
+      age: 8,
+      avatar: "👦",
+      interests: ["Animals", "Science", "Space"],
+    },
   );
   const [feedback, setFeedback] = useState<any>(null);
   const [gameMode, setGameMode] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [currentSessionId, setCurrentSessionId] = useState<string | null>(null);
+  const [childStats, setChildStats] = useState<ChildWordStats | null>(null);
+  const [isLoadingProgress, setIsLoadingProgress] = useState(false);
+  const [showPracticeGame, setShowPracticeGame] = useState(false);
+  const [practiceWords, setPracticeWords] = useState<any[]>([]);
 
   // Load background animations setting on mount
   useEffect(() => {
@@ -178,6 +192,32 @@ export default function Index({ initialProfile }: IndexProps) {
       );
     };
   }, []);
+
+  // Initialize learning session and load child stats
+  useEffect(() => {
+    const initializeSession = async () => {
+      if (currentProfile?.id && activeTab === "learn" && !currentSessionId) {
+        try {
+          const sessionResponse = await WordProgressAPI.startSession({
+            childId: currentProfile.id,
+            sessionType: "word_cards",
+            category: selectedCategory !== "all" ? selectedCategory : undefined,
+          });
+          setCurrentSessionId(sessionResponse.sessionId);
+
+          // Load child stats
+          const statsResponse = await WordProgressAPI.getChildStats(
+            currentProfile.id,
+          );
+          setChildStats(statsResponse.stats);
+        } catch (error) {
+          console.error("Failed to initialize session:", error);
+        }
+      }
+    };
+
+    initializeSession();
+  }, [currentProfile?.id, activeTab, selectedCategory, currentSessionId]);
 
   const handleQuizComplete = (score: number, total: number) => {
     const percentage = Math.round((score / total) * 100);
@@ -243,7 +283,7 @@ export default function Index({ initialProfile }: IndexProps) {
     setGameMode(false);
     setFeedback({
       type: "celebration",
-      title: "Amazing Game! 🏆",
+      title: "Amazing Game! ���",
       message: `You scored ${score} points and learned ${totalWords} words!`,
       points: score,
       onContinue: () => setFeedback(null),
@@ -255,8 +295,244 @@ export default function Index({ initialProfile }: IndexProps) {
     setCurrentWordIndex(0);
   };
 
+  const checkCategoryCompletion = (
+    displayWords: any[],
+    rememberedWords: Set<number>,
+    forgottenWords: Set<number>,
+    currentWordId: number,
+  ) => {
+    // Get all word IDs that have been reviewed (either remembered or forgotten)
+    const reviewedWordIds = new Set([
+      ...rememberedWords,
+      ...forgottenWords,
+      currentWordId,
+    ]);
+
+    // Check if all words in the current set have been reviewed
+    const allWordsReviewed = displayWords.every((word) =>
+      reviewedWordIds.has(word.id),
+    );
+
+    if (allWordsReviewed) {
+      const totalWords = displayWords.length;
+      const totalRemembered =
+        rememberedWords.size + (rememberedWords.has(currentWordId) ? 0 : 1);
+      const accuracy = Math.round((totalRemembered / totalWords) * 100);
+
+      // Determine category completion achievement
+      let achievementTitle = "";
+      let achievementIcon = "";
+      let achievementMessage = "";
+
+      // Format category name for display
+      const categoryDisplayName =
+        selectedCategory === "all" ? "this word set" : selectedCategory;
+
+      if (accuracy === 100) {
+        achievementTitle = "Perfect Category Mastery! 🏆";
+        achievementIcon = "🏆";
+        achievementMessage = `Outstanding! You remembered ALL ${totalWords} words in ${categoryDisplayName}! You're a true champion!`;
+      } else if (accuracy >= 90) {
+        achievementTitle = "Category Expert! ��";
+        achievementIcon = "⭐";
+        achievementMessage = `Excellent work! You mastered ${categoryDisplayName} with ${accuracy}% accuracy! Almost perfect!`;
+      } else if (accuracy >= 75) {
+        achievementTitle = "Category Scholar! 📚";
+        achievementIcon = "📚";
+        achievementMessage = `Great job! You completed ${categoryDisplayName} with ${accuracy}% accuracy! Keep up the good work!`;
+      } else if (accuracy >= 50) {
+        achievementTitle = "Category Explorer! 🎯";
+        achievementIcon = "🎯";
+        achievementMessage = `Good effort! You finished ${categoryDisplayName} with ${accuracy}% accuracy! Practice makes perfect!`;
+      } else {
+        achievementTitle = "Category Challenger! 💪";
+        achievementIcon = "💪";
+        achievementMessage = `Nice try! You completed ${categoryDisplayName} with ${accuracy}% accuracy! Every attempt makes you stronger!`;
+      }
+
+      return {
+        shouldShow: true,
+        title: achievementTitle,
+        icon: achievementIcon,
+        message: achievementMessage,
+        accuracy,
+        totalWords,
+        totalRemembered,
+      };
+    }
+
+    return { shouldShow: false };
+  };
+
+  const handleWordProgress = async (
+    word: any,
+    status: "remembered" | "needs_practice",
+  ) => {
+    if (!currentProfile?.id || !currentSessionId) {
+      console.warn("Missing profile or session ID");
+      return;
+    }
+
+    setIsLoadingProgress(true);
+    try {
+      const response = await WordProgressAPI.recordWordProgress({
+        childId: currentProfile.id,
+        sessionId: currentSessionId,
+        wordId: word.id.toString(),
+        word: word.word,
+        category: word.category,
+        status,
+        responseTime: Math.random() * 3000 + 1000, // Simulated response time
+        difficulty: word.difficulty || "medium",
+      });
+
+      // Update child stats
+      setChildStats(response.updatedStats);
+
+      // Note: Achievement popups will be shown only on category completion
+      // Store any achievements for potential category completion celebration
+
+      console.log("Word progress recorded:", response);
+    } catch (error) {
+      console.error("Failed to record word progress:", error);
+    } finally {
+      setIsLoadingProgress(false);
+    }
+  };
+
   const handleSignOut = () => {
     navigate("/");
+  };
+
+  const getPracticeWords = () => {
+    if (!childStats) return [];
+
+    // Get actual words that need practice from child stats
+    const practiceWordsFromStats: any[] = [];
+
+    // If we have mastery by category data, extract words needing practice
+    if (childStats.masteryByCategory) {
+      childStats.masteryByCategory.forEach((category) => {
+        if (category.needsPracticeWords > 0) {
+          // For each category with practice words, we'll get actual word data
+          // This is a simplified approach - in a full implementation,
+          // the API would return specific word details
+          const categoryWords = getWordsForCategory(category.category)
+            .filter((word) => {
+              // Get words from current learning set that might need practice
+              const wordKey = `${currentProfile?.id}-${word.id}`;
+              return (
+                forgottenWords.has(Number(word.id)) ||
+                (word.accuracy && word.accuracy < 70)
+              );
+            })
+            .slice(0, category.needsPracticeWords)
+            .map((word) => ({
+              id: word.id.toString(),
+              word: word.word,
+              definition: word.definition,
+              example: word.example,
+              category: word.category,
+              difficulty: (word.difficulty || "medium") as
+                | "easy"
+                | "medium"
+                | "hard",
+              attempts: word.attempts || 1,
+              lastAccuracy: word.accuracy || 0,
+            }));
+
+          practiceWordsFromStats.push(...categoryWords);
+        }
+      });
+    }
+
+    // If no stats data yet, get words from forgotten words set
+    if (practiceWordsFromStats.length === 0 && forgottenWords.size > 0) {
+      const allWords = getAllWords();
+      const forgottenWordsList = Array.from(forgottenWords)
+        .map((wordId) => allWords.find((w) => w.id === wordId))
+        .filter(Boolean)
+        .slice(0, 8) // Limit to 8 words for better gaming experience
+        .map((word) => ({
+          id: word!.id.toString(),
+          word: word!.word,
+          definition: word!.definition,
+          example: word!.example,
+          category: word!.category,
+          difficulty: (word!.difficulty || "medium") as
+            | "easy"
+            | "medium"
+            | "hard",
+          attempts: 1,
+          lastAccuracy: 0,
+        }));
+
+      return forgottenWordsList;
+    }
+
+    // If still no practice words, return some challenging words as backup
+    if (practiceWordsFromStats.length === 0) {
+      const allWords = getAllWords();
+      const challengingWords = allWords
+        .filter(
+          (word) => word.difficulty === "hard" || word.difficulty === "medium",
+        )
+        .slice(0, 5)
+        .map((word) => ({
+          id: word.id.toString(),
+          word: word.word,
+          definition: word.definition,
+          example: word.example,
+          category: word.category,
+          difficulty: (word.difficulty || "medium") as
+            | "easy"
+            | "medium"
+            | "hard",
+          attempts: 0,
+          lastAccuracy: 0,
+        }));
+
+      return challengingWords;
+    }
+
+    return practiceWordsFromStats.slice(0, 10); // Limit to 10 for optimal gaming experience
+  };
+
+  // Helper function to get all words from the database
+  const getAllWords = () => {
+    return wordsDatabase || [];
+  };
+
+  // Helper function to get words for a specific category
+  const getWordsForCategory = (categoryName: string) => {
+    return wordsDatabase.filter(
+      (word) =>
+        word.category.toLowerCase().replace(/[^a-z]/g, "") ===
+        categoryName.toLowerCase().replace(/[^a-z]/g, ""),
+    );
+  };
+
+  const startPracticeGame = () => {
+    const words = getPracticeWords();
+    setPracticeWords(words);
+    setShowPracticeGame(true);
+  };
+
+  const handlePracticeComplete = (results: {
+    correctWords: string[];
+    totalAttempts: number;
+    accuracy: number;
+  }) => {
+    setShowPracticeGame(false);
+
+    // Show completion feedback
+    setFeedback({
+      type: "celebration",
+      title: "Practice Complete! 🏆",
+      message: `Great job practicing your tricky words!\n\n✅ Remembered: ${results.correctWords.length} words\n🎯 Accuracy: ${results.accuracy}%\n\nKeep practicing to master all your words!`,
+      points: results.correctWords.length * 15,
+      onContinue: () => setFeedback(null),
+    });
   };
 
   return (
@@ -312,7 +588,7 @@ export default function Index({ initialProfile }: IndexProps) {
         {backgroundAnimationsEnabled && (
           <>
             <div className="hidden md:block absolute top-10 left-10 text-3xl animate-bounce">
-              🌟
+              ���
             </div>
             <div className="hidden md:block absolute top-20 right-20 text-2xl animate-pulse">
               📚
@@ -389,6 +665,22 @@ export default function Index({ initialProfile }: IndexProps) {
                   <span className="font-semibold text-sm">{label}</span>
                 </button>
               ))}
+
+              <button
+                onClick={() => {
+                  startPracticeGame();
+                  setIsMobileMenuOpen(false);
+                }}
+                className="w-full flex items-center gap-3 p-3 rounded-xl transition-all bg-white text-gray-700 hover:bg-orange-50 border-2 border-orange-200 relative"
+              >
+                <div className="p-2 rounded-lg bg-orange-100">
+                  <Target className="w-4 h-4 text-orange-600" />
+                </div>
+                <span className="font-semibold text-sm">🎯 Practice Words</span>
+                <div className="absolute -top-1 -right-1 bg-orange-500 text-white text-xs px-1.5 py-0.5 rounded-full">
+                  {getPracticeWords().length}
+                </div>
+              </button>
 
               <button
                 onClick={() => {
@@ -516,6 +808,19 @@ export default function Index({ initialProfile }: IndexProps) {
                 </button>
 
                 <button
+                  onClick={startPracticeGame}
+                  className="w-full flex items-center gap-4 p-4 rounded-2xl transition-all bg-white text-gray-700 hover:bg-orange-50 hover:border-orange-200 border-2 border-transparent relative"
+                >
+                  <div className="p-2 rounded-xl bg-orange-100">
+                    <Target className="w-5 h-5 text-orange-600" />
+                  </div>
+                  <span className="font-semibold">🎯 Practice Words</span>
+                  <div className="absolute -top-1 -right-1 bg-orange-500 text-white text-xs px-2 py-1 rounded-full">
+                    {getPracticeWords().length}
+                  </div>
+                </button>
+
+                <button
                   onClick={() => setUserRole("parent")}
                   className="w-full flex items-center gap-4 p-4 rounded-2xl transition-all bg-white text-gray-700 hover:bg-blue-50 hover:border-blue-200 border-2 border-transparent"
                 >
@@ -568,6 +873,9 @@ export default function Index({ initialProfile }: IndexProps) {
                   <LearningDashboard
                     stats={learningStats}
                     userName="Explorer"
+                    childStats={childStats}
+                    onStartPractice={startPracticeGame}
+                    practiceWords={getPracticeWords()}
                   />
                 </TabsContent>
 
@@ -612,6 +920,22 @@ export default function Index({ initialProfile }: IndexProps) {
                               </span>
                               <span className="sm:hidden">Cards</span>
                             </Button>
+                            {getPracticeWords().length > 0 && (
+                              <Button
+                                onClick={startPracticeGame}
+                                variant="outline"
+                                className="flex items-center gap-1 md:gap-2 text-sm md:text-base px-3 md:px-4 bg-orange-50 border-orange-200 text-orange-700 hover:bg-orange-100 relative"
+                              >
+                                <Target className="w-4 h-4" />
+                                <span className="hidden sm:inline">
+                                  Practice Words
+                                </span>
+                                <span className="sm:hidden">Practice</span>
+                                <div className="absolute -top-2 -right-2 bg-orange-500 text-white text-xs px-1.5 py-0.5 rounded-full">
+                                  {getPracticeWords().length}
+                                </div>
+                              </Button>
+                            )}
                             <Button
                               onClick={() => {
                                 setSelectedCategory("all");
@@ -683,10 +1007,16 @@ export default function Index({ initialProfile }: IndexProps) {
                                         {/* Learning Progress Buttons */}
                                         <div className="flex justify-center gap-3 md:gap-4 px-4 md:px-0">
                                           <Button
-                                            onClick={() => {
+                                            onClick={async () => {
                                               const currentWord =
                                                 displayWords[currentWordIndex];
                                               if (currentWord) {
+                                                // Record progress in database
+                                                await handleWordProgress(
+                                                  currentWord,
+                                                  "needs_practice",
+                                                );
+
                                                 // Mark as forgotten for extra practice
                                                 setForgottenWords(
                                                   (prev) =>
@@ -722,12 +1052,46 @@ export default function Index({ initialProfile }: IndexProps) {
                                                   currentWordIndex + 1,
                                                 );
                                               } else {
-                                                // Restart with forgotten words for practice
-                                                setCurrentWordIndex(0);
+                                                // Check if we've reviewed all words in category
+                                                const updatedForgottenWords =
+                                                  new Set([
+                                                    ...forgottenWords,
+                                                    currentWord.id,
+                                                  ]);
+                                                const completionResult =
+                                                  checkCategoryCompletion(
+                                                    displayWords,
+                                                    rememberedWords,
+                                                    updatedForgottenWords,
+                                                    currentWord.id,
+                                                  );
+
+                                                if (
+                                                  completionResult.shouldShow
+                                                ) {
+                                                  // Show category completion feedback (not achievement since words were forgotten)
+                                                  setFeedback({
+                                                    type: "celebration",
+                                                    title:
+                                                      "Category Review Complete! 📚",
+                                                    message: `You've reviewed all ${completionResult.totalWords} words in ${selectedCategory === "all" ? "this word set" : selectedCategory}!\\n\\n✅ Remembered: ${completionResult.totalRemembered} words\\n❌ Need practice: ${completionResult.totalWords - completionResult.totalRemembered} words\\n\\n${completionResult.totalWords - completionResult.totalRemembered > 0 ? "Don't worry! Let's practice the tricky ones again! 💪" : "Amazing work! 🎉"}`,
+                                                    points:
+                                                      completionResult.totalRemembered *
+                                                      10, // Fewer points since words were forgotten
+                                                    onContinue: () => {
+                                                      setFeedback(null);
+                                                      setCurrentWordIndex(0);
+                                                    },
+                                                  });
+                                                } else {
+                                                  // Restart with forgotten words for practice
+                                                  setCurrentWordIndex(0);
+                                                }
                                               }
                                             }}
                                             variant="outline"
                                             className="flex-1 bg-red-50 hover:bg-red-100 border-red-200 hover:border-red-300 text-red-700 hover:text-red-800 transition-all duration-300 transform hover:scale-105 py-4 px-6"
+                                            disabled={isLoadingProgress}
                                           >
                                             <span className="text-xl mr-2">
                                               ❌
@@ -743,10 +1107,16 @@ export default function Index({ initialProfile }: IndexProps) {
                                           </Button>
 
                                           <Button
-                                            onClick={() => {
+                                            onClick={async () => {
                                               const currentWord =
                                                 displayWords[currentWordIndex];
                                               if (currentWord) {
+                                                // Record progress in database
+                                                await handleWordProgress(
+                                                  currentWord,
+                                                  "remembered",
+                                                );
+
                                                 // Mark as remembered
                                                 setRememberedWords(
                                                   (prev) =>
@@ -782,66 +1152,72 @@ export default function Index({ initialProfile }: IndexProps) {
                                                   currentWordIndex + 1,
                                                 );
                                               } else {
-                                                // Show completion message
-                                                const totalRemembered =
-                                                  rememberedWords.size + 1;
-                                                const totalForgotten =
-                                                  forgottenWords.size;
-                                                const totalWords =
-                                                  displayWords.length;
-                                                const accuracy = Math.round(
-                                                  (totalRemembered /
-                                                    totalWords) *
-                                                    100,
-                                                );
+                                                // Check for category completion and show achievement
+                                                const currentWord =
+                                                  displayWords[
+                                                    currentWordIndex
+                                                  ];
+                                                const updatedRememberedWords =
+                                                  new Set([
+                                                    ...rememberedWords,
+                                                    currentWord.id,
+                                                  ]);
+                                                const completionResult =
+                                                  checkCategoryCompletion(
+                                                    displayWords,
+                                                    updatedRememberedWords,
+                                                    forgottenWords,
+                                                    currentWord.id,
+                                                  );
 
-                                                let encouragementMessage = "";
-                                                if (accuracy >= 90) {
-                                                  encouragementMessage =
-                                                    "Outstanding! You're a vocabulary superstar! ⭐";
-                                                } else if (accuracy >= 75) {
-                                                  encouragementMessage =
-                                                    "Great job! You're doing really well! 🌟";
-                                                } else if (accuracy >= 50) {
-                                                  encouragementMessage =
-                                                    "Good effort! Keep practicing and you'll get even better! 💪";
-                                                } else {
-                                                  encouragementMessage =
-                                                    "Nice try! Remember, practice makes perfect! 🎯";
+                                                if (
+                                                  completionResult.shouldShow
+                                                ) {
+                                                  // Show enhanced category completion achievement
+                                                  setFeedback({
+                                                    type: "celebration",
+                                                    title:
+                                                      completionResult.title,
+                                                    message: `${completionResult.message}\n\n✅ Remembered: ${completionResult.totalRemembered} words\n❌ Need practice: ${completionResult.totalWords - completionResult.totalRemembered} words\n\n🎉 Category Achievement Unlocked! 🎉`,
+                                                    points:
+                                                      completionResult.totalRemembered *
+                                                        20 +
+                                                      (completionResult.accuracy >=
+                                                      90
+                                                        ? 100
+                                                        : completionResult.accuracy >=
+                                                            75
+                                                          ? 75
+                                                          : completionResult.accuracy >=
+                                                              50
+                                                            ? 50
+                                                            : 25),
+                                                    onContinue: () => {
+                                                      setFeedback(null);
+                                                      // Reset for new category or continue practicing
+                                                      const totalForgotten =
+                                                        completionResult.totalWords -
+                                                        completionResult.totalRemembered;
+                                                      if (totalForgotten > 0) {
+                                                        // Restart with forgotten words for focused practice
+                                                        setCurrentWordIndex(0);
+                                                      } else {
+                                                        // Perfect completion - reset for new round
+                                                        setCurrentWordIndex(0);
+                                                        setRememberedWords(
+                                                          new Set(),
+                                                        );
+                                                        setForgottenWords(
+                                                          new Set(),
+                                                        );
+                                                      }
+                                                    },
+                                                  });
                                                 }
-
-                                                setFeedback({
-                                                  type: "celebration",
-                                                  title: `${encouragementMessage}`,
-                                                  message: `You completed ${totalWords} words with ${accuracy}% accuracy!\\n\\n✅ Remembered: ${totalRemembered} words\\n❌ Need practice: ${totalForgotten} words\\n\\n${totalForgotten > 0 ? "Don't worry about the ones you forgot - that's how we learn! 🧠" : "Perfect score! You're amazing! 🏆"}`,
-                                                  points:
-                                                    totalRemembered * 15 +
-                                                    (accuracy >= 90
-                                                      ? 50
-                                                      : accuracy >= 75
-                                                        ? 25
-                                                        : 10),
-                                                  onContinue: () => {
-                                                    setFeedback(null);
-                                                    // If there are forgotten words, restart with just those for focused practice
-                                                    if (totalForgotten > 0) {
-                                                      // Filter to show forgotten words first for practice
-                                                      setCurrentWordIndex(0);
-                                                    } else {
-                                                      // Reset for new round
-                                                      setCurrentWordIndex(0);
-                                                      setRememberedWords(
-                                                        new Set(),
-                                                      );
-                                                      setForgottenWords(
-                                                        new Set(),
-                                                      );
-                                                    }
-                                                  },
-                                                });
                                               }
                                             }}
                                             className="flex-1 bg-green-50 hover:bg-green-100 border-green-200 hover:border-green-300 text-green-700 hover:text-green-800 transition-all duration-300 transform hover:scale-105 py-4 px-6"
+                                            disabled={isLoadingProgress}
                                           >
                                             <span className="text-xl mr-2">
                                               ✅
@@ -900,7 +1276,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                               size="sm"
                                               className="text-xs text-slate-500 hover:text-slate-700"
                                             >
-                                              ← Back
+                                              �� Back
                                             </Button>
                                             <Button
                                               onClick={() =>
@@ -1035,7 +1411,7 @@ export default function Index({ initialProfile }: IndexProps) {
                         {/* Easy Quiz */}
                         <Card className="cursor-pointer hover:shadow-xl transition-all duration-300 md:hover:scale-105 border-2 border-educational-green/30">
                           <CardContent className="p-6 text-center">
-                            <div className="text-6xl mb-4">🌱</div>
+                            <div className="text-6xl mb-4">���</div>
                             <h3 className="text-xl font-bold text-educational-green mb-2">
                               Easy Quiz
                             </h3>
@@ -1337,7 +1713,7 @@ export default function Index({ initialProfile }: IndexProps) {
                           setShowMatchingGame(false);
                           setFeedback({
                             type: "celebration",
-                            title: "Matching Game Complete! 🎯",
+                            title: "Matching Game Complete! ����",
                             message: `You matched ${score} pairs in ${timeSpent} seconds!`,
                             points: score * 15,
                             onContinue: () => setFeedback(null),
@@ -1434,6 +1810,18 @@ export default function Index({ initialProfile }: IndexProps) {
         )}
       </main>
 
+      {/* Word Practice Game */}
+      {showPracticeGame && (
+        <div className="fixed inset-0 z-50 bg-white">
+          <WordPracticeGame
+            practiceWords={practiceWords}
+            onComplete={handlePracticeComplete}
+            onBack={() => setShowPracticeGame(false)}
+            childName={currentProfile?.name || "Champion"}
+          />
+        </div>
+      )}
+
       {/* Enhanced Components */}
       {showCelebration && <CelebrationEffect trigger={showCelebration} />}
       {backgroundAnimationsEnabled && <FloatingBubbles />}
@@ -1458,6 +1846,26 @@ export default function Index({ initialProfile }: IndexProps) {
           feedback={feedback}
           onClose={() => setFeedback(null)}
         />
+      )}
+
+      {/* Floating Practice Words Reminder */}
+      {getPracticeWords().length > 0 && !showPracticeGame && (
+        <div className="fixed bottom-20 md:bottom-24 right-4 md:right-6 z-40">
+          <div
+            onClick={startPracticeGame}
+            className="bg-gradient-to-r from-orange-500 to-red-500 p-3 md:p-4 rounded-full shadow-2xl cursor-pointer hover:scale-110 transition-all duration-300 min-w-[48px] min-h-[48px] flex items-center justify-center animate-pulse"
+          >
+            <div className="relative">
+              <Target className="w-5 md:w-6 h-5 md:h-6 text-white" />
+              <div className="absolute -top-2 -right-2 bg-white text-orange-500 text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
+                {getPracticeWords().length}
+              </div>
+            </div>
+          </div>
+          <div className="absolute -top-12 left-1/2 transform -translate-x-1/2 bg-black text-white text-xs px-2 py-1 rounded whitespace-nowrap opacity-0 hover:opacity-100 transition-opacity">
+            Practice Words!
+          </div>
+        </div>
       )}
 
       {/* Floating Helper */}

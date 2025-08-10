@@ -70,8 +70,12 @@ import {
   ChevronDown,
   Palette,
   Shield,
+  AlertCircle,
+  CheckCircle,
 } from "lucide-react";
 import { AnimatedCounter } from "@/components/AnimatedCounter";
+import { WordProgressAPI } from "@/lib/wordProgressApi";
+import { ChildWordStats } from "@shared/api";
 
 interface ChildProfile {
   id: string;
@@ -356,6 +360,10 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
     deadline: "",
   });
   const [customWordInput, setCustomWordInput] = useState("");
+  const [childrenWordStats, setChildrenWordStats] = useState<
+    Record<string, ChildWordStats>
+  >({});
+  const [loadingWordStats, setLoadingWordStats] = useState(false);
 
   // Save children to localStorage whenever children state changes
   useEffect(() => {
@@ -364,6 +372,27 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
       setSelectedChild(children[0]);
     }
   }, [children, selectedChild]);
+
+  // Load children's word progress data
+  useEffect(() => {
+    const loadChildrenWordStats = async () => {
+      if (children.length === 0) return;
+
+      setLoadingWordStats(true);
+      try {
+        const response = await WordProgressAPI.getAllChildrenProgress();
+        if (response.success) {
+          setChildrenWordStats(response.childrenStats);
+        }
+      } catch (error) {
+        console.error("Failed to load children word stats:", error);
+      } finally {
+        setLoadingWordStats(false);
+      }
+    };
+
+    loadChildrenWordStats();
+  }, [children.length]);
   const [filterCategory, setFilterCategory] = useState("all");
   const [searchTerm, setSearchTerm] = useState("");
   const [reportData, setReportData] = useState<any>(null);
@@ -560,6 +589,77 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
         </CardContent>
       </Card>
 
+      {/* Quick Actions */}
+      <Card>
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            <Zap className="w-6 h-6 text-purple-500" />
+            Quick Actions
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <Button
+              onClick={() => setActiveTab("analytics")}
+              variant="outline"
+              className="h-20 flex flex-col items-center gap-2 border-orange-200 hover:border-orange-300 hover:bg-orange-50 relative"
+            >
+              <AlertCircle className="w-6 h-6 text-orange-500" />
+              <div className="text-center">
+                <div className="font-semibold text-orange-700">
+                  Practice Words
+                </div>
+                <div className="text-xs text-orange-600">
+                  View words that need help
+                </div>
+              </div>
+              {children.length > 0 &&
+                Object.values(childrenWordStats).some(
+                  (stats) => stats.wordsNeedingPractice > 0,
+                ) && (
+                  <Badge className="absolute -top-2 -right-2 bg-orange-500 text-white text-xs px-2">
+                    {Object.values(childrenWordStats).reduce(
+                      (total, stats) =>
+                        total + (stats.wordsNeedingPractice || 0),
+                      0,
+                    )}
+                  </Badge>
+                )}
+            </Button>
+
+            <Button
+              onClick={() => setActiveTab("analytics")}
+              variant="outline"
+              className="h-20 flex flex-col items-center gap-2 border-green-200 hover:border-green-300 hover:bg-green-50"
+            >
+              <CheckCircle className="w-6 h-6 text-green-500" />
+              <div className="text-center">
+                <div className="font-semibold text-green-700">
+                  Mastered Words
+                </div>
+                <div className="text-xs text-green-600">
+                  See progress & achievements
+                </div>
+              </div>
+            </Button>
+
+            <Button
+              onClick={() => setActiveTab("goals")}
+              variant="outline"
+              className="h-20 flex flex-col items-center gap-2 border-blue-200 hover:border-blue-300 hover:bg-blue-50"
+            >
+              <Target className="w-6 h-6 text-blue-500" />
+              <div className="text-center">
+                <div className="font-semibold text-blue-700">Set Goals</div>
+                <div className="text-xs text-blue-600">
+                  Create learning objectives
+                </div>
+              </div>
+            </Button>
+          </div>
+        </CardContent>
+      </Card>
+
       {/* Children Cards with Enhanced Information */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {children.length === 0 ? (
@@ -700,6 +800,63 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
                           </p>
                         </div>
                       </div>
+                    </div>
+                  )}
+
+                  {/* Word Progress Summary */}
+                  {childrenWordStats[child.id] && (
+                    <div className="bg-purple-50 p-3 rounded-lg">
+                      <div className="flex items-center gap-2 mb-2">
+                        <BookOpen className="w-4 h-4 text-purple-600" />
+                        <span className="font-medium text-sm">
+                          Word Progress
+                        </span>
+                      </div>
+                      <div className="grid grid-cols-2 gap-3 text-xs">
+                        <div>
+                          <div className="flex items-center gap-1">
+                            <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                            <span className="text-gray-600">Remembered:</span>
+                          </div>
+                          <span className="font-semibold text-green-600">
+                            {childrenWordStats[child.id].wordsRemembered}
+                          </span>
+                        </div>
+                        <div>
+                          <div className="flex items-center gap-1">
+                            <div className="w-2 h-2 bg-orange-500 rounded-full"></div>
+                            <span className="text-gray-600">Practice:</span>
+                          </div>
+                          <span className="font-semibold text-orange-600">
+                            {childrenWordStats[child.id].wordsNeedingPractice}
+                          </span>
+                        </div>
+                      </div>
+                      <div className="mt-2">
+                        <div className="flex justify-between text-xs mb-1">
+                          <span className="text-gray-600">Accuracy</span>
+                          <span className="font-semibold">
+                            {childrenWordStats[child.id].averageAccuracy}%
+                          </span>
+                        </div>
+                        <Progress
+                          value={childrenWordStats[child.id].averageAccuracy}
+                          className="h-2"
+                        />
+                      </div>
+                      {childrenWordStats[child.id].strongestCategories.length >
+                        0 && (
+                        <div className="mt-2">
+                          <span className="text-xs text-gray-600">
+                            Strong in:{" "}
+                          </span>
+                          <span className="text-xs font-medium text-green-600">
+                            {childrenWordStats[child.id].strongestCategories
+                              .slice(0, 2)
+                              .join(", ")}
+                          </span>
+                        </div>
+                      )}
                     </div>
                   )}
                 </CardContent>
@@ -924,6 +1081,189 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
             </Button>
           </div>
         </div>
+
+        {/* Word Progress Tracking Section */}
+        {childrenWordStats[selectedChild.id] && (
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <BookOpen className="w-6 h-6 text-blue-500" />
+                Word Progress Tracking
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                {/* Words That Need Practice */}
+                <div>
+                  <div className="flex items-center gap-2 mb-4">
+                    <AlertCircle className="w-5 h-5 text-orange-500" />
+                    <h3 className="text-lg font-semibold text-orange-700">
+                      Words Needing Practice
+                    </h3>
+                  </div>
+                  <div className="bg-orange-50 p-4 rounded-lg">
+                    <p className="text-sm text-gray-600 mb-3">
+                      These words were marked as "I Forgot" or have low accuracy
+                      rates. Focus practice sessions on these:
+                    </p>
+                    <div className="space-y-2 max-h-48 overflow-y-auto">
+                      {/* Simulated struggling words - in real app this would come from API */}
+                      {[
+                        "helicopter",
+                        "encyclopedia",
+                        "microscope",
+                        "constellation",
+                        "archaeology",
+                      ].map((word, index) => (
+                        <div
+                          key={word}
+                          className="flex items-center justify-between bg-white p-3 rounded border"
+                        >
+                          <div>
+                            <span className="font-medium">{word}</span>
+                            <div className="text-xs text-gray-500">
+                              {index === 0 &&
+                                "Science • Last reviewed: 2 days ago"}
+                              {index === 1 &&
+                                "Technology • Last reviewed: 1 day ago"}
+                              {index === 2 &&
+                                "Science • Last reviewed: 3 days ago"}
+                              {index === 3 &&
+                                "Space • Last reviewed: 1 day ago"}
+                              {index === 4 &&
+                                "History • Last reviewed: 4 days ago"}
+                            </div>
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <Badge className="bg-red-100 text-red-700 text-xs">
+                              {index === 0 && "25% accuracy"}
+                              {index === 1 && "40% accuracy"}
+                              {index === 2 && "30% accuracy"}
+                              {index === 3 && "45% accuracy"}
+                              {index === 4 && "20% accuracy"}
+                            </Badge>
+                            <Button
+                              size="sm"
+                              variant="outline"
+                              className="text-xs"
+                            >
+                              Practice
+                            </Button>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                    <div className="mt-3 pt-3 border-t">
+                      <Button
+                        size="sm"
+                        className="bg-orange-500 hover:bg-orange-600 text-white"
+                      >
+                        <Target className="w-4 h-4 mr-2" />
+                        Start Practice Session
+                      </Button>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Words Well Remembered */}
+                <div>
+                  <div className="flex items-center gap-2 mb-4">
+                    <CheckCircle className="w-5 h-5 text-green-500" />
+                    <h3 className="text-lg font-semibold text-green-700">
+                      Words Mastered
+                    </h3>
+                  </div>
+                  <div className="bg-green-50 p-4 rounded-lg">
+                    <p className="text-sm text-gray-600 mb-3">
+                      These words have been consistently remembered with high
+                      accuracy:
+                    </p>
+                    <div className="space-y-2 max-h-48 overflow-y-auto">
+                      {/* Simulated mastered words */}
+                      {[
+                        "elephant",
+                        "rainbow",
+                        "butterfly",
+                        "ocean",
+                        "mountain",
+                      ].map((word, index) => (
+                        <div
+                          key={word}
+                          className="flex items-center justify-between bg-white p-3 rounded border"
+                        >
+                          <div>
+                            <span className="font-medium">{word}</span>
+                            <div className="text-xs text-gray-500">
+                              {index === 0 && "Animals • Mastered 5 days ago"}
+                              {index === 1 && "Nature • Mastered 3 days ago"}
+                              {index === 2 && "Animals • Mastered 1 week ago"}
+                              {index === 3 && "Nature • Mastered 4 days ago"}
+                              {index === 4 && "Geography • Mastered 2 days ago"}
+                            </div>
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <Badge className="bg-green-100 text-green-700 text-xs">
+                              {index === 0 && "100% accuracy"}
+                              {index === 1 && "95% accuracy"}
+                              {index === 2 && "90% accuracy"}
+                              {index === 3 && "100% accuracy"}
+                              {index === 4 && "85% accuracy"}
+                            </Badge>
+                            <div className="text-green-500">
+                              <Star className="w-4 h-4 fill-current" />
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                    <div className="mt-3 pt-3 border-t text-center">
+                      <span className="text-sm text-green-600 font-medium">
+                        🎉{" "}
+                        {childrenWordStats[selectedChild.id]?.wordsRemembered ||
+                          0}{" "}
+                        words mastered total!
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Quick Stats Summary */}
+              <div className="mt-6 grid grid-cols-1 md:grid-cols-4 gap-4">
+                <div className="bg-blue-50 p-4 rounded-lg text-center">
+                  <BookOpen className="w-8 h-8 text-blue-500 mx-auto mb-2" />
+                  <div className="text-2xl font-bold text-blue-700">
+                    {childrenWordStats[selectedChild.id]?.totalWordsLearned ||
+                      0}
+                  </div>
+                  <div className="text-sm text-blue-600">Total Words</div>
+                </div>
+                <div className="bg-green-50 p-4 rounded-lg text-center">
+                  <CheckCircle className="w-8 h-8 text-green-500 mx-auto mb-2" />
+                  <div className="text-2xl font-bold text-green-700">
+                    {childrenWordStats[selectedChild.id]?.wordsRemembered || 0}
+                  </div>
+                  <div className="text-sm text-green-600">Remembered</div>
+                </div>
+                <div className="bg-orange-50 p-4 rounded-lg text-center">
+                  <AlertCircle className="w-8 h-8 text-orange-500 mx-auto mb-2" />
+                  <div className="text-2xl font-bold text-orange-700">
+                    {childrenWordStats[selectedChild.id]
+                      ?.wordsNeedingPractice || 0}
+                  </div>
+                  <div className="text-sm text-orange-600">Need Practice</div>
+                </div>
+                <div className="bg-purple-50 p-4 rounded-lg text-center">
+                  <Target className="w-8 h-8 text-purple-500 mx-auto mb-2" />
+                  <div className="text-2xl font-bold text-purple-700">
+                    {childrenWordStats[selectedChild.id]?.averageAccuracy || 0}%
+                  </div>
+                  <div className="text-sm text-purple-600">Accuracy</div>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        )}
 
         {/* Learning Strengths & Areas for Improvement */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -2299,9 +2639,22 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
             <BookMarked className="w-4 h-4" />
             Custom Words
           </TabsTrigger>
-          <TabsTrigger value="analytics" className="flex items-center gap-2">
+          <TabsTrigger
+            value="analytics"
+            className="flex items-center gap-2 relative"
+          >
             <BarChart3 className="w-4 h-4" />
             Analytics
+            {Object.values(childrenWordStats).some(
+              (stats) => stats.wordsNeedingPractice > 0,
+            ) && (
+              <Badge className="bg-orange-500 text-white text-xs px-1 ml-1">
+                {Object.values(childrenWordStats).reduce(
+                  (total, stats) => total + (stats.wordsNeedingPractice || 0),
+                  0,
+                )}
+              </Badge>
+            )}
           </TabsTrigger>
           <TabsTrigger
             value="notifications"
