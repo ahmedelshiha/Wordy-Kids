@@ -40,6 +40,7 @@ interface LearningStats {
 interface LearningDashboardProps {
   stats: LearningStats;
   userName?: string;
+  childStats?: ChildWordStats | null;
 }
 
 export const LearningDashboard: React.FC<LearningDashboardProps> = ({
