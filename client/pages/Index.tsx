@@ -64,6 +64,7 @@ import {
   Menu,
   X,
   LogOut,
+  Sword,
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { WordProgressAPI } from "@/lib/wordProgressApi";
