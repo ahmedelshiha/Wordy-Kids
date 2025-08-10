@@ -12,7 +12,7 @@ const API_BASE = "/api/learning";
 
 export class WordProgressAPI {
   static async startSession(
-    request: StartLearningSessionRequest
+    request: StartLearningSessionRequest,
   ): Promise<StartLearningSessionResponse> {
     const response = await fetch(`${API_BASE}/session/start`, {
       method: "POST",
@@ -30,7 +30,7 @@ export class WordProgressAPI {
   }
 
   static async recordWordProgress(
-    request: RecordWordProgressRequest
+    request: RecordWordProgressRequest,
   ): Promise<RecordWordProgressResponse> {
     const response = await fetch(`${API_BASE}/word/progress`, {
       method: "POST",
@@ -48,7 +48,7 @@ export class WordProgressAPI {
   }
 
   static async endSession(
-    request: EndLearningSessionRequest
+    request: EndLearningSessionRequest,
   ): Promise<EndLearningSessionResponse> {
     const response = await fetch(`${API_BASE}/session/end`, {
       method: "POST",
@@ -82,7 +82,9 @@ export class WordProgressAPI {
     const response = await fetch(`${API_BASE}/children/progress`);
 
     if (!response.ok) {
-      throw new Error(`Failed to get children progress: ${response.statusText}`);
+      throw new Error(
+        `Failed to get children progress: ${response.statusText}`,
+      );
     }
 
     return response.json();

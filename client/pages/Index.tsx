@@ -159,7 +159,7 @@ export default function Index({ initialProfile }: IndexProps) {
       name: "Alex",
       age: 8,
       avatar: "👦",
-      interests: ["Animals", "Science", "Space"]
+      interests: ["Animals", "Science", "Space"],
     },
   );
   const [feedback, setFeedback] = useState<any>(null);
@@ -206,7 +206,9 @@ export default function Index({ initialProfile }: IndexProps) {
           setCurrentSessionId(sessionResponse.sessionId);
 
           // Load child stats
-          const statsResponse = await WordProgressAPI.getChildStats(currentProfile.id);
+          const statsResponse = await WordProgressAPI.getChildStats(
+            currentProfile.id,
+          );
           setChildStats(statsResponse.stats);
         } catch (error) {
           console.error("Failed to initialize session:", error);
@@ -293,16 +295,28 @@ export default function Index({ initialProfile }: IndexProps) {
     setCurrentWordIndex(0);
   };
 
-  const checkCategoryCompletion = (displayWords: any[], rememberedWords: Set<number>, forgottenWords: Set<number>, currentWordId: number) => {
+  const checkCategoryCompletion = (
+    displayWords: any[],
+    rememberedWords: Set<number>,
+    forgottenWords: Set<number>,
+    currentWordId: number,
+  ) => {
     // Get all word IDs that have been reviewed (either remembered or forgotten)
-    const reviewedWordIds = new Set([...rememberedWords, ...forgottenWords, currentWordId]);
+    const reviewedWordIds = new Set([
+      ...rememberedWords,
+      ...forgottenWords,
+      currentWordId,
+    ]);
 
     // Check if all words in the current set have been reviewed
-    const allWordsReviewed = displayWords.every(word => reviewedWordIds.has(word.id));
+    const allWordsReviewed = displayWords.every((word) =>
+      reviewedWordIds.has(word.id),
+    );
 
     if (allWordsReviewed) {
       const totalWords = displayWords.length;
-      const totalRemembered = rememberedWords.size + (rememberedWords.has(currentWordId) ? 0 : 1);
+      const totalRemembered =
+        rememberedWords.size + (rememberedWords.has(currentWordId) ? 0 : 1);
       const accuracy = Math.round((totalRemembered / totalWords) * 100);
 
       // Determine category completion achievement
@@ -311,7 +325,8 @@ export default function Index({ initialProfile }: IndexProps) {
       let achievementMessage = "";
 
       // Format category name for display
-      const categoryDisplayName = selectedCategory === "all" ? "this word set" : selectedCategory;
+      const categoryDisplayName =
+        selectedCategory === "all" ? "this word set" : selectedCategory;
 
       if (accuracy === 100) {
         achievementTitle = "Perfect Category Mastery! 🏆";
@@ -342,14 +357,17 @@ export default function Index({ initialProfile }: IndexProps) {
         message: achievementMessage,
         accuracy,
         totalWords,
-        totalRemembered
+        totalRemembered,
       };
     }
 
     return { shouldShow: false };
   };
 
-  const handleWordProgress = async (word: any, status: "remembered" | "needs_practice") => {
+  const handleWordProgress = async (
+    word: any,
+    status: "remembered" | "needs_practice",
+  ) => {
     if (!currentProfile?.id || !currentSessionId) {
       console.warn("Missing profile or session ID");
       return;
@@ -394,28 +412,33 @@ export default function Index({ initialProfile }: IndexProps) {
 
     // If we have mastery by category data, extract words needing practice
     if (childStats.masteryByCategory) {
-      childStats.masteryByCategory.forEach(category => {
+      childStats.masteryByCategory.forEach((category) => {
         if (category.needsPracticeWords > 0) {
           // For each category with practice words, we'll get actual word data
           // This is a simplified approach - in a full implementation,
           // the API would return specific word details
           const categoryWords = getWordsForCategory(category.category)
-            .filter(word => {
+            .filter((word) => {
               // Get words from current learning set that might need practice
               const wordKey = `${currentProfile?.id}-${word.id}`;
-              return forgottenWords.has(Number(word.id)) ||
-                     (word.accuracy && word.accuracy < 70);
+              return (
+                forgottenWords.has(Number(word.id)) ||
+                (word.accuracy && word.accuracy < 70)
+              );
             })
             .slice(0, category.needsPracticeWords)
-            .map(word => ({
+            .map((word) => ({
               id: word.id.toString(),
               word: word.word,
               definition: word.definition,
               example: word.example,
               category: word.category,
-              difficulty: (word.difficulty || "medium") as "easy" | "medium" | "hard",
+              difficulty: (word.difficulty || "medium") as
+                | "easy"
+                | "medium"
+                | "hard",
               attempts: word.attempts || 1,
-              lastAccuracy: word.accuracy || 0
+              lastAccuracy: word.accuracy || 0,
             }));
 
           practiceWordsFromStats.push(...categoryWords);
@@ -427,18 +450,21 @@ export default function Index({ initialProfile }: IndexProps) {
     if (practiceWordsFromStats.length === 0 && forgottenWords.size > 0) {
       const allWords = getAllWords();
       const forgottenWordsList = Array.from(forgottenWords)
-        .map(wordId => allWords.find(w => w.id === wordId))
+        .map((wordId) => allWords.find((w) => w.id === wordId))
         .filter(Boolean)
         .slice(0, 8) // Limit to 8 words for better gaming experience
-        .map(word => ({
+        .map((word) => ({
           id: word!.id.toString(),
           word: word!.word,
           definition: word!.definition,
           example: word!.example,
           category: word!.category,
-          difficulty: (word!.difficulty || "medium") as "easy" | "medium" | "hard",
+          difficulty: (word!.difficulty || "medium") as
+            | "easy"
+            | "medium"
+            | "hard",
           attempts: 1,
-          lastAccuracy: 0
+          lastAccuracy: 0,
         }));
 
       return forgottenWordsList;
@@ -448,17 +474,22 @@ export default function Index({ initialProfile }: IndexProps) {
     if (practiceWordsFromStats.length === 0) {
       const allWords = getAllWords();
       const challengingWords = allWords
-        .filter(word => word.difficulty === "hard" || word.difficulty === "medium")
+        .filter(
+          (word) => word.difficulty === "hard" || word.difficulty === "medium",
+        )
         .slice(0, 5)
-        .map(word => ({
+        .map((word) => ({
           id: word.id.toString(),
           word: word.word,
           definition: word.definition,
           example: word.example,
           category: word.category,
-          difficulty: (word.difficulty || "medium") as "easy" | "medium" | "hard",
+          difficulty: (word.difficulty || "medium") as
+            | "easy"
+            | "medium"
+            | "hard",
           attempts: 0,
-          lastAccuracy: 0
+          lastAccuracy: 0,
         }));
 
       return challengingWords;
@@ -474,8 +505,10 @@ export default function Index({ initialProfile }: IndexProps) {
 
   // Helper function to get words for a specific category
   const getWordsForCategory = (categoryName: string) => {
-    return wordsDatabase.filter(word =>
-      word.category.toLowerCase().replace(/[^a-z]/g, '') === categoryName.toLowerCase().replace(/[^a-z]/g, '')
+    return wordsDatabase.filter(
+      (word) =>
+        word.category.toLowerCase().replace(/[^a-z]/g, "") ===
+        categoryName.toLowerCase().replace(/[^a-z]/g, ""),
     );
   };
 
@@ -485,7 +518,11 @@ export default function Index({ initialProfile }: IndexProps) {
     setShowPracticeGame(true);
   };
 
-  const handlePracticeComplete = (results: { correctWords: string[], totalAttempts: number, accuracy: number }) => {
+  const handlePracticeComplete = (results: {
+    correctWords: string[];
+    totalAttempts: number;
+    accuracy: number;
+  }) => {
     setShowPracticeGame(false);
 
     // Show completion feedback
@@ -975,7 +1012,10 @@ export default function Index({ initialProfile }: IndexProps) {
                                                 displayWords[currentWordIndex];
                                               if (currentWord) {
                                                 // Record progress in database
-                                                await handleWordProgress(currentWord, "needs_practice");
+                                                await handleWordProgress(
+                                                  currentWord,
+                                                  "needs_practice",
+                                                );
 
                                                 // Mark as forgotten for extra practice
                                                 setForgottenWords(
@@ -1013,21 +1053,31 @@ export default function Index({ initialProfile }: IndexProps) {
                                                 );
                                               } else {
                                                 // Check if we've reviewed all words in category
-                                                const updatedForgottenWords = new Set([...forgottenWords, currentWord.id]);
-                                                const completionResult = checkCategoryCompletion(
-                                                  displayWords,
-                                                  rememberedWords,
-                                                  updatedForgottenWords,
-                                                  currentWord.id
-                                                );
+                                                const updatedForgottenWords =
+                                                  new Set([
+                                                    ...forgottenWords,
+                                                    currentWord.id,
+                                                  ]);
+                                                const completionResult =
+                                                  checkCategoryCompletion(
+                                                    displayWords,
+                                                    rememberedWords,
+                                                    updatedForgottenWords,
+                                                    currentWord.id,
+                                                  );
 
-                                                if (completionResult.shouldShow) {
+                                                if (
+                                                  completionResult.shouldShow
+                                                ) {
                                                   // Show category completion feedback (not achievement since words were forgotten)
                                                   setFeedback({
                                                     type: "celebration",
-                                                    title: "Category Review Complete! 📚",
+                                                    title:
+                                                      "Category Review Complete! 📚",
                                                     message: `You've reviewed all ${completionResult.totalWords} words in ${selectedCategory === "all" ? "this word set" : selectedCategory}!\\n\\n✅ Remembered: ${completionResult.totalRemembered} words\\n❌ Need practice: ${completionResult.totalWords - completionResult.totalRemembered} words\\n\\n${completionResult.totalWords - completionResult.totalRemembered > 0 ? "Don't worry! Let's practice the tricky ones again! 💪" : "Amazing work! 🎉"}`,
-                                                    points: completionResult.totalRemembered * 10, // Fewer points since words were forgotten
+                                                    points:
+                                                      completionResult.totalRemembered *
+                                                      10, // Fewer points since words were forgotten
                                                     onContinue: () => {
                                                       setFeedback(null);
                                                       setCurrentWordIndex(0);
@@ -1062,7 +1112,10 @@ export default function Index({ initialProfile }: IndexProps) {
                                                 displayWords[currentWordIndex];
                                               if (currentWord) {
                                                 // Record progress in database
-                                                await handleWordProgress(currentWord, "remembered");
+                                                await handleWordProgress(
+                                                  currentWord,
+                                                  "remembered",
+                                                );
 
                                                 // Mark as remembered
                                                 setRememberedWords(
@@ -1100,34 +1153,63 @@ export default function Index({ initialProfile }: IndexProps) {
                                                 );
                                               } else {
                                                 // Check for category completion and show achievement
-                                                const currentWord = displayWords[currentWordIndex];
-                                                const updatedRememberedWords = new Set([...rememberedWords, currentWord.id]);
-                                                const completionResult = checkCategoryCompletion(
-                                                  displayWords,
-                                                  updatedRememberedWords,
-                                                  forgottenWords,
-                                                  currentWord.id
-                                                );
+                                                const currentWord =
+                                                  displayWords[
+                                                    currentWordIndex
+                                                  ];
+                                                const updatedRememberedWords =
+                                                  new Set([
+                                                    ...rememberedWords,
+                                                    currentWord.id,
+                                                  ]);
+                                                const completionResult =
+                                                  checkCategoryCompletion(
+                                                    displayWords,
+                                                    updatedRememberedWords,
+                                                    forgottenWords,
+                                                    currentWord.id,
+                                                  );
 
-                                                if (completionResult.shouldShow) {
+                                                if (
+                                                  completionResult.shouldShow
+                                                ) {
                                                   // Show enhanced category completion achievement
                                                   setFeedback({
                                                     type: "celebration",
-                                                    title: completionResult.title,
+                                                    title:
+                                                      completionResult.title,
                                                     message: `${completionResult.message}\n\n✅ Remembered: ${completionResult.totalRemembered} words\n❌ Need practice: ${completionResult.totalWords - completionResult.totalRemembered} words\n\n🎉 Category Achievement Unlocked! 🎉`,
-                                                    points: completionResult.totalRemembered * 20 + (completionResult.accuracy >= 90 ? 100 : completionResult.accuracy >= 75 ? 75 : completionResult.accuracy >= 50 ? 50 : 25),
+                                                    points:
+                                                      completionResult.totalRemembered *
+                                                        20 +
+                                                      (completionResult.accuracy >=
+                                                      90
+                                                        ? 100
+                                                        : completionResult.accuracy >=
+                                                            75
+                                                          ? 75
+                                                          : completionResult.accuracy >=
+                                                              50
+                                                            ? 50
+                                                            : 25),
                                                     onContinue: () => {
                                                       setFeedback(null);
                                                       // Reset for new category or continue practicing
-                                                      const totalForgotten = completionResult.totalWords - completionResult.totalRemembered;
+                                                      const totalForgotten =
+                                                        completionResult.totalWords -
+                                                        completionResult.totalRemembered;
                                                       if (totalForgotten > 0) {
                                                         // Restart with forgotten words for focused practice
                                                         setCurrentWordIndex(0);
                                                       } else {
                                                         // Perfect completion - reset for new round
                                                         setCurrentWordIndex(0);
-                                                        setRememberedWords(new Set());
-                                                        setForgottenWords(new Set());
+                                                        setRememberedWords(
+                                                          new Set(),
+                                                        );
+                                                        setForgottenWords(
+                                                          new Set(),
+                                                        );
                                                       }
                                                     },
                                                   });

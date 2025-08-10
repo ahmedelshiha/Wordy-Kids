@@ -1,10 +1,10 @@
-import React from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Progress } from '@/components/ui/progress';
-import { Badge } from '@/components/ui/badge';
-import { AnimatedCounter } from '@/components/AnimatedCounter';
-import { PracticeWordsCard } from '@/components/PracticeWordsCard';
-import { ChildWordStats } from '@shared/api';
+import React from "react";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Progress } from "@/components/ui/progress";
+import { Badge } from "@/components/ui/badge";
+import { AnimatedCounter } from "@/components/AnimatedCounter";
+import { PracticeWordsCard } from "@/components/PracticeWordsCard";
+import { ChildWordStats } from "@shared/api";
 import {
   Trophy,
   Star,
@@ -16,8 +16,8 @@ import {
   Award,
   Brain,
   CheckCircle,
-  AlertCircle
-} from 'lucide-react';
+  AlertCircle,
+} from "lucide-react";
 
 interface LearningStats {
   wordsLearned: number;
@@ -51,10 +51,14 @@ export const LearningDashboard: React.FC<LearningDashboardProps> = ({
   userName = "Learner",
   childStats,
   onStartPractice,
-  practiceWords = []
+  practiceWords = [],
 }) => {
-  const completionPercentage = Math.round((stats.wordsLearned / stats.totalWords) * 100);
-  const weeklyPercentage = Math.round((stats.weeklyProgress / stats.weeklyGoal) * 100);
+  const completionPercentage = Math.round(
+    (stats.wordsLearned / stats.totalWords) * 100,
+  );
+  const weeklyPercentage = Math.round(
+    (stats.weeklyProgress / stats.weeklyGoal) * 100,
+  );
 
   return (
     <div className="space-y-6">
@@ -63,9 +67,7 @@ export const LearningDashboard: React.FC<LearningDashboardProps> = ({
         <h1 className="text-3xl font-bold text-slate-800 mb-2">
           Welcome back, {userName}! 🌟
         </h1>
-        <p className="text-slate-600">
-          Ready to continue your word adventure?
-        </p>
+        <p className="text-slate-600">Ready to continue your word adventure?</p>
       </div>
 
       {/* Practice Words Card - Prominent placement */}
@@ -93,8 +95,8 @@ export const LearningDashboard: React.FC<LearningDashboardProps> = ({
               </div>
               <BookOpen className="w-8 h-8 opacity-80" />
             </div>
-            <Progress 
-              value={completionPercentage} 
+            <Progress
+              value={completionPercentage}
               className="mt-3 bg-white/20"
             />
             <p className="text-xs mt-1">{completionPercentage}% Complete</p>
@@ -128,14 +130,13 @@ export const LearningDashboard: React.FC<LearningDashboardProps> = ({
                   value={stats.weeklyProgress}
                   className="text-3xl font-bold"
                 />
-                <p className="text-xs opacity-80">of {stats.weeklyGoal} words</p>
+                <p className="text-xs opacity-80">
+                  of {stats.weeklyGoal} words
+                </p>
               </div>
               <Target className="w-8 h-8 opacity-80" />
             </div>
-            <Progress 
-              value={weeklyPercentage} 
-              className="mt-3 bg-white/20"
-            />
+            <Progress value={weeklyPercentage} className="mt-3 bg-white/20" />
             <p className="text-xs mt-1">{weeklyPercentage}% of goal</p>
           </CardContent>
         </Card>
@@ -193,9 +194,7 @@ export const LearningDashboard: React.FC<LearningDashboardProps> = ({
           </CardHeader>
           <CardContent>
             <div className="text-center">
-              <Badge 
-                className="text-lg px-4 py-2 bg-educational-blue text-white"
-              >
+              <Badge className="text-lg px-4 py-2 bg-educational-blue text-white">
                 {stats.favoriteCategory}
               </Badge>
               <p className="text-sm text-slate-600 mt-2">
@@ -226,15 +225,21 @@ export const LearningDashboard: React.FC<LearningDashboardProps> = ({
                 <div className="space-y-3">
                   <div className="flex justify-between text-sm">
                     <span>Words Learned</span>
-                    <span className="font-semibold">{childStats.totalWordsLearned}</span>
+                    <span className="font-semibold">
+                      {childStats.totalWordsLearned}
+                    </span>
                   </div>
                   <div className="flex justify-between text-sm">
                     <span>Average Accuracy</span>
-                    <span className="font-semibold">{childStats.averageAccuracy}%</span>
+                    <span className="font-semibold">
+                      {childStats.averageAccuracy}%
+                    </span>
                   </div>
                   <div className="flex justify-between text-sm">
                     <span>Review Sessions</span>
-                    <span className="font-semibold">{childStats.totalReviewSessions}</span>
+                    <span className="font-semibold">
+                      {childStats.totalReviewSessions}
+                    </span>
                   </div>
                 </div>
               </div>
@@ -251,17 +256,27 @@ export const LearningDashboard: React.FC<LearningDashboardProps> = ({
                       <div className="w-3 h-3 bg-green-500 rounded-full"></div>
                       <span className="text-sm">Remembered</span>
                     </div>
-                    <span className="font-semibold text-green-600">{childStats.wordsRemembered}</span>
+                    <span className="font-semibold text-green-600">
+                      {childStats.wordsRemembered}
+                    </span>
                   </div>
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
                       <div className="w-3 h-3 bg-orange-500 rounded-full"></div>
                       <span className="text-sm">Need Practice</span>
                     </div>
-                    <span className="font-semibold text-orange-600">{childStats.wordsNeedingPractice}</span>
+                    <span className="font-semibold text-orange-600">
+                      {childStats.wordsNeedingPractice}
+                    </span>
                   </div>
                   <Progress
-                    value={childStats.totalWordsLearned > 0 ? (childStats.wordsRemembered / childStats.totalWordsLearned) * 100 : 0}
+                    value={
+                      childStats.totalWordsLearned > 0
+                        ? (childStats.wordsRemembered /
+                            childStats.totalWordsLearned) *
+                          100
+                        : 0
+                    }
                     className="mt-2"
                   />
                 </div>
@@ -276,13 +291,20 @@ export const LearningDashboard: React.FC<LearningDashboardProps> = ({
                 <div className="space-y-2">
                   {childStats.strongestCategories.length > 0 && (
                     <div>
-                      <p className="text-sm text-gray-600 mb-1">Strongest Categories:</p>
+                      <p className="text-sm text-gray-600 mb-1">
+                        Strongest Categories:
+                      </p>
                       <div className="flex flex-wrap gap-1">
-                        {childStats.strongestCategories.slice(0, 2).map((category) => (
-                          <Badge key={category} className="bg-green-100 text-green-800 text-xs">
-                            {category}
-                          </Badge>
-                        ))}
+                        {childStats.strongestCategories
+                          .slice(0, 2)
+                          .map((category) => (
+                            <Badge
+                              key={category}
+                              className="bg-green-100 text-green-800 text-xs"
+                            >
+                              {category}
+                            </Badge>
+                          ))}
                       </div>
                     </div>
                   )}
@@ -290,11 +312,16 @@ export const LearningDashboard: React.FC<LearningDashboardProps> = ({
                     <div>
                       <p className="text-sm text-gray-600 mb-1">Focus Areas:</p>
                       <div className="flex flex-wrap gap-1">
-                        {childStats.weakestCategories.slice(0, 2).map((category) => (
-                          <Badge key={category} className="bg-orange-100 text-orange-800 text-xs">
-                            {category}
-                          </Badge>
-                        ))}
+                        {childStats.weakestCategories
+                          .slice(0, 2)
+                          .map((category) => (
+                            <Badge
+                              key={category}
+                              className="bg-orange-100 text-orange-800 text-xs"
+                            >
+                              {category}
+                            </Badge>
+                          ))}
                       </div>
                     </div>
                   )}
@@ -308,12 +335,22 @@ export const LearningDashboard: React.FC<LearningDashboardProps> = ({
                 <h4 className="font-semibold text-lg mb-4">Category Mastery</h4>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
                   {childStats.masteryByCategory.map((category) => (
-                    <div key={category.category} className="bg-gray-50 p-3 rounded-lg">
+                    <div
+                      key={category.category}
+                      className="bg-gray-50 p-3 rounded-lg"
+                    >
                       <div className="flex justify-between items-center mb-2">
-                        <h5 className="font-medium text-sm">{category.category}</h5>
-                        <span className="text-xs text-gray-600">{category.averageAccuracy}%</span>
+                        <h5 className="font-medium text-sm">
+                          {category.category}
+                        </h5>
+                        <span className="text-xs text-gray-600">
+                          {category.averageAccuracy}%
+                        </span>
                       </div>
-                      <Progress value={category.averageAccuracy} className="h-2 mb-2" />
+                      <Progress
+                        value={category.averageAccuracy}
+                        className="h-2 mb-2"
+                      />
                       <div className="flex justify-between text-xs text-gray-600">
                         <span>{category.masteredWords} mastered</span>
                         <span>{category.needsPracticeWords} need practice</span>
@@ -342,8 +379,8 @@ export const LearningDashboard: React.FC<LearningDashboardProps> = ({
                 key={badge.id}
                 className={`text-center p-4 rounded-lg transition-all ${
                   badge.earned
-                    ? 'bg-gradient-to-br from-yellow-400 to-yellow-600 text-white shadow-lg'
-                    : 'bg-slate-100 text-slate-400'
+                    ? "bg-gradient-to-br from-yellow-400 to-yellow-600 text-white shadow-lg"
+                    : "bg-slate-100 text-slate-400"
                 }`}
               >
                 <div className="text-3xl mb-2">{badge.icon}</div>

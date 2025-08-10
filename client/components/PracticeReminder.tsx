@@ -1,14 +1,8 @@
-import React, { useState } from 'react';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { 
-  Target, 
-  X, 
-  Sparkles,
-  Timer,
-  Brain
-} from 'lucide-react';
+import React, { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Target, X, Sparkles, Timer, Brain } from "lucide-react";
 
 interface PracticeReminderProps {
   practiceWordCount: number;
@@ -19,7 +13,7 @@ interface PracticeReminderProps {
 export const PracticeReminder: React.FC<PracticeReminderProps> = ({
   practiceWordCount,
   onStartPractice,
-  onDismiss
+  onDismiss,
 }) => {
   const [isVisible, setIsVisible] = useState(true);
 
@@ -31,9 +25,13 @@ export const PracticeReminder: React.FC<PracticeReminderProps> = ({
   if (!isVisible) return null;
 
   return (
-    <Card className={`mb-6 bg-gradient-to-r from-orange-50 to-yellow-50 border-2 border-orange-200 transition-all duration-300 ${
-      isVisible ? 'opacity-100 transform translate-y-0' : 'opacity-0 transform -translate-y-4'
-    }`}>
+    <Card
+      className={`mb-6 bg-gradient-to-r from-orange-50 to-yellow-50 border-2 border-orange-200 transition-all duration-300 ${
+        isVisible
+          ? "opacity-100 transform translate-y-0"
+          : "opacity-0 transform -translate-y-4"
+      }`}
+    >
       <CardContent className="p-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-4">
@@ -45,17 +43,21 @@ export const PracticeReminder: React.FC<PracticeReminderProps> = ({
                 {practiceWordCount}
               </div>
             </div>
-            
+
             <div className="flex-1">
               <div className="flex items-center gap-2 mb-1">
                 <h3 className="font-bold text-orange-700 text-lg">
-                  Quick Practice Break? 
+                  Quick Practice Break?
                 </h3>
                 <Sparkles className="w-5 h-5 text-yellow-500 animate-spin" />
               </div>
               <p className="text-orange-600 text-sm">
-                You have <span className="font-semibold">{practiceWordCount} words</span> that could use some extra love! 
-                <span className="ml-1">Ready for a quick 2-minute practice? 🎯</span>
+                You have{" "}
+                <span className="font-semibold">{practiceWordCount} words</span>{" "}
+                that could use some extra love!
+                <span className="ml-1">
+                  Ready for a quick 2-minute practice? 🎯
+                </span>
               </p>
             </div>
           </div>
@@ -71,7 +73,7 @@ export const PracticeReminder: React.FC<PracticeReminderProps> = ({
                 <span>Quick practice</span>
               </div>
             </div>
-            
+
             <Button
               onClick={onStartPractice}
               className="bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-white shadow-lg hover:shadow-xl transition-all"
@@ -79,7 +81,7 @@ export const PracticeReminder: React.FC<PracticeReminderProps> = ({
               <Target className="w-4 h-4 mr-2" />
               Practice Now! 🚀
             </Button>
-            
+
             <Button
               onClick={handleDismiss}
               variant="ghost"
