@@ -847,8 +847,31 @@ export default function Index({ initialProfile }: IndexProps) {
                                                   currentWordIndex + 1,
                                                 );
                                               } else {
-                                                // Restart with forgotten words for practice
-                                                setCurrentWordIndex(0);
+                                                // Check if we've reviewed all words in category
+                                                const updatedForgottenWords = new Set([...forgottenWords, currentWord.id]);
+                                                const completionResult = checkCategoryCompletion(
+                                                  displayWords,
+                                                  rememberedWords,
+                                                  updatedForgottenWords,
+                                                  currentWord.id
+                                                );
+
+                                                if (completionResult.shouldShow) {
+                                                  // Show category completion feedback (not achievement since words were forgotten)
+                                                  setFeedback({
+                                                    type: "celebration",
+                                                    title: "Category Review Complete! 📚",
+                                                    message: `You've reviewed all ${completionResult.totalWords} words in ${selectedCategory}!\\n\\n✅ Remembered: ${completionResult.totalRemembered} words\\n❌ Need practice: ${completionResult.totalWords - completionResult.totalRemembered} words\\n\\n${completionResult.totalWords - completionResult.totalRemembered > 0 ? "Don't worry! Let's practice the tricky ones again! 💪" : "Amazing work! 🎉"}`,
+                                                    points: completionResult.totalRemembered * 10, // Fewer points since words were forgotten
+                                                    onContinue: () => {
+                                                      setFeedback(null);
+                                                      setCurrentWordIndex(0);
+                                                    },
+                                                  });
+                                                } else {
+                                                  // Restart with forgotten words for practice
+                                                  setCurrentWordIndex(0);
+                                                }
                                               }
                                             }}
                                             variant="outline"
