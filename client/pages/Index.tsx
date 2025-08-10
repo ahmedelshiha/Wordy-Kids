@@ -79,7 +79,7 @@ const learningStats = {
     {
       id: "first-word",
       name: "First Word",
-      icon: "����",
+      icon: "🎯",
       earned: true,
       description: "Learned your first word",
     },
