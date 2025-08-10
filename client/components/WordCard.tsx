@@ -211,46 +211,48 @@ export const WordCard: React.FC<WordCardProps> = ({
             </div>
           )}
 
-          <h2 className="text-2xl md:text-4xl font-bold mb-2 md:mb-3 text-center">
-            {word.word}
-          </h2>
+          <div className="flex-1 flex flex-col justify-center items-center text-center space-y-3">
+            <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold tracking-wide drop-shadow-md">
+              {word.word}
+            </h2>
 
-          {word.pronunciation && (
-            <div className="flex items-center gap-2 mb-3 md:mb-4">
-              <span className="text-base md:text-lg opacity-90">
-                {word.pronunciation}
-              </span>
-              <Button
-                size="sm"
-                variant="ghost"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  handlePronounce();
-                }}
-                disabled={isPlaying}
-                className={`text-white hover:bg-white/20 p-2 h-auto transition-all duration-300 ${
-                  isPlaying ? "scale-110 bg-white/30" : ""
-                }`}
-              >
-                <Volume2
-                  className={`w-5 h-5 ${isPlaying ? "animate-pulse text-yellow-300" : ""}`}
-                />
-                {showSparkles && (
-                  <Sparkles className="w-4 h-4 absolute -top-1 -right-1 text-yellow-300 animate-spin" />
-                )}
-              </Button>
-            </div>
-          )}
+            {word.pronunciation && (
+              <div className="flex items-center gap-2">
+                <span className="text-sm md:text-base lg:text-lg opacity-90 font-medium">
+                  {word.pronunciation}
+                </span>
+                <Button
+                  size="sm"
+                  variant="ghost"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handlePronounce();
+                  }}
+                  disabled={isPlaying}
+                  className={`text-white hover:bg-white/20 p-2 h-auto transition-all duration-300 ${
+                    isPlaying ? "scale-110 bg-white/30" : ""
+                  }`}
+                >
+                  <Volume2
+                    className={`w-4 h-4 lg:w-5 lg:h-5 ${isPlaying ? "animate-pulse text-yellow-300" : ""}`}
+                  />
+                  {showSparkles && (
+                    <Sparkles className="w-3 h-3 lg:w-4 lg:h-4 absolute -top-1 -right-1 text-yellow-300 animate-spin" />
+                  )}
+                </Button>
+              </div>
+            )}
+          </div>
 
-          <div className="text-center mt-auto">
-            <p className="text-sm opacity-75 mb-2">
-              <RotateCcw className="w-4 h-4 inline mr-1" />
+          <div className="text-center">
+            <p className="text-xs md:text-sm opacity-75 mb-2">
+              <RotateCcw className="w-3 h-3 md:w-4 md:h-4 inline mr-1" />
               Tap to see definition
             </p>
             <div className="flex justify-center gap-1">
-              <div className="w-2 h-2 bg-white/50 rounded-full animate-bounce"></div>
-              <div className="w-2 h-2 bg-white/50 rounded-full animate-bounce delay-100"></div>
-              <div className="w-2 h-2 bg-white/50 rounded-full animate-bounce delay-200"></div>
+              <div className="w-1.5 h-1.5 md:w-2 md:h-2 bg-white/50 rounded-full animate-bounce"></div>
+              <div className="w-1.5 h-1.5 md:w-2 md:h-2 bg-white/50 rounded-full animate-bounce delay-100"></div>
+              <div className="w-1.5 h-1.5 md:w-2 md:h-2 bg-white/50 rounded-full animate-bounce delay-200"></div>
             </div>
           </div>
         </CardContent>
