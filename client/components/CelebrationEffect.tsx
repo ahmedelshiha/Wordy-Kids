@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from "react";
 
 interface CelebrationEffectProps {
   trigger: boolean;
   onComplete?: () => void;
-  type?: 'confetti' | 'stars' | 'fireworks';
+  type?: "confetti" | "stars" | "fireworks";
 }
 
 interface Particle {
@@ -21,26 +21,45 @@ interface Particle {
 export const CelebrationEffect: React.FC<CelebrationEffectProps> = ({
   trigger,
   onComplete,
-  type = 'confetti'
+  type = "confetti",
 }) => {
   const [particles, setParticles] = useState<Particle[]>([]);
-  const [isActive, setIsActive] = useState(false);
+  const intervalRef = useRef<NodeJS.Timeout | null>(null);
+  const onCompleteRef = useRef(onComplete);
+  const triggerRef = useRef(trigger);
+
+  // Update refs when props change
+  useEffect(() => {
+    onCompleteRef.current = onComplete;
+  }, [onComplete]);
+
+  useEffect(() => {
+    triggerRef.current = trigger;
+  }, [trigger]);
 
   const colors = [
-    '#FF6B6B', '#4ECDC4', '#45B7D1', '#96CEB4', '#FFEAA7', 
-    '#DDA0DD', '#98D8C8', '#FFB347', '#87CEEB', '#F0E68C'
+    "#FF6B6B",
+    "#4ECDC4",
+    "#45B7D1",
+    "#96CEB4",
+    "#FFEAA7",
+    "#DDA0DD",
+    "#98D8C8",
+    "#FFB347",
+    "#87CEEB",
+    "#F0E68C",
   ];
 
-  const emojis = ['🎉', '🌟', '✨', '🎊', '🏆', '🎯', '💎', '🚀'];
+  const emojis = ["🎉", "🌟", "✨", "🎊", "🏆", "🎯", "💎", "🚀"];
 
   const createParticles = () => {
     const newParticles: Particle[] = [];
-    const particleCount = type === 'fireworks' ? 50 : 30;
+    const particleCount = type === "fireworks" ? 50 : 30;
 
     for (let i = 0; i < particleCount; i++) {
       const centerX = window.innerWidth / 2;
       const centerY = window.innerHeight / 2;
-      
+
       newParticles.push({
         id: i,
         x: centerX + (Math.random() - 0.5) * 100,
@@ -48,58 +67,76 @@ export const CelebrationEffect: React.FC<CelebrationEffectProps> = ({
         vx: (Math.random() - 0.5) * 10,
         vy: (Math.random() - 0.5) * 10 - 5,
         color: colors[Math.floor(Math.random() * colors.length)],
-        emoji: type === 'stars' ? emojis[Math.floor(Math.random() * emojis.length)] : undefined,
+        emoji:
+          type === "stars"
+            ? emojis[Math.floor(Math.random() * emojis.length)]
+            : undefined,
         life: 0,
-        maxLife: 60 + Math.random() * 40
+        maxLife: 60 + Math.random() * 40,
       });
     }
 
-    setParticles(newParticles);
+    return newParticles;
   };
 
-  useEffect(() => {
-    if (trigger && !isActive) {
-      setIsActive(true);
-      createParticles();
-
-      const animateParticles = () => {
-        setParticles(prevParticles => {
-          const updatedParticles = prevParticles
-            .map(particle => ({
-              ...particle,
-              x: particle.x + particle.vx,
-              y: particle.y + particle.vy,
-              vx: particle.vx * 0.98,
-              vy: particle.vy + 0.3, // gravity
-              life: particle.life + 1
-            }))
-            .filter(particle => particle.life < particle.maxLife);
-
-          if (updatedParticles.length === 0) {
-            setIsActive(false);
-            onComplete?.();
-          }
-
-          return updatedParticles;
-        });
-      };
-
-      const interval = setInterval(animateParticles, 16); // ~60 FPS
-
-      return () => {
-        clearInterval(interval);
-        setIsActive(false);
-      };
+  const stopAnimation = () => {
+    if (intervalRef.current) {
+      clearInterval(intervalRef.current);
+      intervalRef.current = null;
     }
-  }, [trigger, isActive, onComplete]);
+  };
 
-  if (!isActive || particles.length === 0) {
+  const startAnimation = () => {
+    const initialParticles = createParticles();
+    setParticles(initialParticles);
+
+    const animateParticles = () => {
+      setParticles((prevParticles) => {
+        const updatedParticles = prevParticles
+          .map((particle) => ({
+            ...particle,
+            x: particle.x + particle.vx,
+            y: particle.y + particle.vy,
+            vx: particle.vx * 0.98,
+            vy: particle.vy + 0.3, // gravity
+            life: particle.life + 1,
+          }))
+          .filter((particle) => particle.life < particle.maxLife);
+
+        if (updatedParticles.length === 0) {
+          stopAnimation();
+          onCompleteRef.current?.();
+        }
+
+        return updatedParticles;
+      });
+    };
+
+    intervalRef.current = setInterval(animateParticles, 16);
+  };
+
+  // Handle trigger changes
+  useEffect(() => {
+    if (trigger) {
+      stopAnimation(); // Stop any existing animation
+      startAnimation(); // Start new animation
+    } else {
+      stopAnimation(); // Stop animation when trigger is false
+      setParticles([]); // Clear particles
+    }
+
+    return () => {
+      stopAnimation(); // Cleanup on unmount
+    };
+  }, [trigger]);
+
+  if (particles.length === 0) {
     return null;
   }
 
   return (
     <div className="fixed inset-0 pointer-events-none z-50">
-      {particles.map(particle => (
+      {particles.map((particle) => (
         <div
           key={particle.id}
           className="absolute transition-opacity duration-300"
@@ -107,12 +144,12 @@ export const CelebrationEffect: React.FC<CelebrationEffectProps> = ({
             left: particle.x,
             top: particle.y,
             color: particle.color,
-            opacity: 1 - (particle.life / particle.maxLife),
-            fontSize: type === 'stars' ? '24px' : '12px',
+            opacity: 1 - particle.life / particle.maxLife,
+            fontSize: type === "stars" ? "24px" : "12px",
             transform: `rotate(${particle.life * 10}deg)`,
           }}
         >
-          {particle.emoji || (type === 'confetti' ? '■' : '●')}
+          {particle.emoji || (type === "confetti" ? "■" : "●")}
         </div>
       ))}
     </div>

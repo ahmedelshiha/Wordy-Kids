@@ -2,7 +2,17 @@ import React, { useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Volume2, Heart, RotateCcw, Sparkles, Star } from "lucide-react";
+import { Progress } from "@/components/ui/progress";
+import {
+  Volume2,
+  Heart,
+  RotateCcw,
+  Sparkles,
+  Star,
+  ThumbsUp,
+  ThumbsDown,
+  Brain,
+} from "lucide-react";
 import { playSoundIfEnabled } from "@/lib/soundEffects";
 import { audioService } from "@/lib/audioService";
 
@@ -17,6 +27,9 @@ interface Word {
   category: string;
   difficulty: "easy" | "medium" | "hard";
   imageUrl?: string;
+  masteryLevel?: number;
+  lastReviewed?: Date;
+  nextReview?: Date;
 }
 
 interface WordCardProps {
@@ -24,6 +37,8 @@ interface WordCardProps {
   showDefinition?: boolean;
   onPronounce?: (word: Word) => void;
   onFavorite?: (word: Word) => void;
+  onWordMastered?: (wordId: number, rating: "easy" | "medium" | "hard") => void;
+  showVocabularyBuilder?: boolean;
   className?: string;
 }
 
@@ -32,6 +47,8 @@ export const WordCard: React.FC<WordCardProps> = ({
   showDefinition = false,
   onPronounce,
   onFavorite,
+  onWordMastered,
+  showVocabularyBuilder = false,
   className = "",
 }) => {
   const [isFlipped, setIsFlipped] = useState(showDefinition);
@@ -169,10 +186,10 @@ export const WordCard: React.FC<WordCardProps> = ({
             <img
               src={word.imageUrl}
               alt={word.word}
-              className="w-20 md:w-24 h-20 md:h-24 object-cover rounded-full mb-3 md:mb-4 shadow-lg"
+              className="w-32 md:w-40 h-32 md:h-40 object-cover rounded-full mb-4 md:mb-6 shadow-xl ring-4 ring-white/30"
             />
           ) : (
-            <div className="w-20 md:w-24 h-20 md:h-24 rounded-full bg-white/20 flex items-center justify-center mb-3 md:mb-4 text-4xl md:text-6xl">
+            <div className="w-32 md:w-40 h-32 md:h-40 rounded-full bg-white/20 flex items-center justify-center mb-4 md:mb-6 text-6xl md:text-8xl shadow-xl ring-4 ring-white/30 backdrop-blur-sm">
               {word.emoji || "📚"}
             </div>
           )}
@@ -277,6 +294,73 @@ export const WordCard: React.FC<WordCardProps> = ({
               </div>
             )}
           </div>
+
+          {/* Vocabulary Builder Features */}
+          {showVocabularyBuilder && (
+            <div className="border-t border-white/20 pt-4 mt-4">
+              {/* Mastery Level */}
+              <div className="mb-4">
+                <div className="flex items-center justify-between mb-2">
+                  <h4 className="text-xs md:text-sm font-medium text-blue-300 flex items-center gap-1">
+                    <Brain className="w-3 h-3" />
+                    Mastery Level
+                  </h4>
+                  <span className="text-xs text-white/70">
+                    {word.masteryLevel || 0}%
+                  </span>
+                </div>
+                <Progress
+                  value={word.masteryLevel || 0}
+                  className="h-2 bg-white/20"
+                />
+              </div>
+
+              {/* Rating Buttons */}
+              <div className="space-y-2">
+                <h4 className="text-xs md:text-sm font-medium text-purple-300 mb-2">
+                  How well do you know this word?
+                </h4>
+                <div className="flex gap-2 justify-center">
+                  <Button
+                    size="sm"
+                    variant="ghost"
+                    className="flex-1 bg-red-500/20 hover:bg-red-500/30 text-red-200 border border-red-500/30"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      onWordMastered?.(word.id, "hard");
+                    }}
+                  >
+                    <ThumbsDown className="w-3 h-3 mr-1" />
+                    Hard
+                  </Button>
+                  <Button
+                    size="sm"
+                    variant="ghost"
+                    className="flex-1 bg-yellow-500/20 hover:bg-yellow-500/30 text-yellow-200 border border-yellow-500/30"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      onWordMastered?.(word.id, "medium");
+                    }}
+                  >
+                    <Star className="w-3 h-3 mr-1" />
+                    OK
+                  </Button>
+                  <Button
+                    size="sm"
+                    variant="ghost"
+                    className="flex-1 bg-green-500/20 hover:bg-green-500/30 text-green-200 border border-green-500/30"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      onWordMastered?.(word.id, "easy");
+                    }}
+                  >
+                    <ThumbsUp className="w-3 h-3 mr-1" />
+                    Easy
+                  </Button>
+                </div>
+              </div>
+            </div>
+          )}
         </CardContent>
       </Card>
     </div>
