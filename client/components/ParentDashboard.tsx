@@ -998,6 +998,148 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
           </div>
         </div>
 
+        {/* Word Progress Tracking Section */}
+        {childrenWordStats[selectedChild.id] && (
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <BookOpen className="w-6 h-6 text-blue-500" />
+                Word Progress Tracking
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                {/* Words That Need Practice */}
+                <div>
+                  <div className="flex items-center gap-2 mb-4">
+                    <AlertCircle className="w-5 h-5 text-orange-500" />
+                    <h3 className="text-lg font-semibold text-orange-700">Words Needing Practice</h3>
+                  </div>
+                  <div className="bg-orange-50 p-4 rounded-lg">
+                    <p className="text-sm text-gray-600 mb-3">
+                      These words were marked as "I Forgot" or have low accuracy rates. Focus practice sessions on these:
+                    </p>
+                    <div className="space-y-2 max-h-48 overflow-y-auto">
+                      {/* Simulated struggling words - in real app this would come from API */}
+                      {["helicopter", "encyclopedia", "microscope", "constellation", "archaeology"].map((word, index) => (
+                        <div key={word} className="flex items-center justify-between bg-white p-3 rounded border">
+                          <div>
+                            <span className="font-medium">{word}</span>
+                            <div className="text-xs text-gray-500">
+                              {index === 0 && "Science • Last reviewed: 2 days ago"}
+                              {index === 1 && "Technology • Last reviewed: 1 day ago"}
+                              {index === 2 && "Science • Last reviewed: 3 days ago"}
+                              {index === 3 && "Space • Last reviewed: 1 day ago"}
+                              {index === 4 && "History • Last reviewed: 4 days ago"}
+                            </div>
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <Badge className="bg-red-100 text-red-700 text-xs">
+                              {index === 0 && "25% accuracy"}
+                              {index === 1 && "40% accuracy"}
+                              {index === 2 && "30% accuracy"}
+                              {index === 3 && "45% accuracy"}
+                              {index === 4 && "20% accuracy"}
+                            </Badge>
+                            <Button size="sm" variant="outline" className="text-xs">
+                              Practice
+                            </Button>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                    <div className="mt-3 pt-3 border-t">
+                      <Button size="sm" className="bg-orange-500 hover:bg-orange-600 text-white">
+                        <Target className="w-4 h-4 mr-2" />
+                        Start Practice Session
+                      </Button>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Words Well Remembered */}
+                <div>
+                  <div className="flex items-center gap-2 mb-4">
+                    <CheckCircle className="w-5 h-5 text-green-500" />
+                    <h3 className="text-lg font-semibold text-green-700">Words Mastered</h3>
+                  </div>
+                  <div className="bg-green-50 p-4 rounded-lg">
+                    <p className="text-sm text-gray-600 mb-3">
+                      These words have been consistently remembered with high accuracy:
+                    </p>
+                    <div className="space-y-2 max-h-48 overflow-y-auto">
+                      {/* Simulated mastered words */}
+                      {["elephant", "rainbow", "butterfly", "ocean", "mountain"].map((word, index) => (
+                        <div key={word} className="flex items-center justify-between bg-white p-3 rounded border">
+                          <div>
+                            <span className="font-medium">{word}</span>
+                            <div className="text-xs text-gray-500">
+                              {index === 0 && "Animals • Mastered 5 days ago"}
+                              {index === 1 && "Nature • Mastered 3 days ago"}
+                              {index === 2 && "Animals • Mastered 1 week ago"}
+                              {index === 3 && "Nature • Mastered 4 days ago"}
+                              {index === 4 && "Geography • Mastered 2 days ago"}
+                            </div>
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <Badge className="bg-green-100 text-green-700 text-xs">
+                              {index === 0 && "100% accuracy"}
+                              {index === 1 && "95% accuracy"}
+                              {index === 2 && "90% accuracy"}
+                              {index === 3 && "100% accuracy"}
+                              {index === 4 && "85% accuracy"}
+                            </Badge>
+                            <div className="text-green-500">
+                              <Star className="w-4 h-4 fill-current" />
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                    <div className="mt-3 pt-3 border-t text-center">
+                      <span className="text-sm text-green-600 font-medium">
+                        🎉 {childrenWordStats[selectedChild.id]?.wordsRemembered || 0} words mastered total!
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Quick Stats Summary */}
+              <div className="mt-6 grid grid-cols-1 md:grid-cols-4 gap-4">
+                <div className="bg-blue-50 p-4 rounded-lg text-center">
+                  <BookOpen className="w-8 h-8 text-blue-500 mx-auto mb-2" />
+                  <div className="text-2xl font-bold text-blue-700">
+                    {childrenWordStats[selectedChild.id]?.totalWordsLearned || 0}
+                  </div>
+                  <div className="text-sm text-blue-600">Total Words</div>
+                </div>
+                <div className="bg-green-50 p-4 rounded-lg text-center">
+                  <CheckCircle className="w-8 h-8 text-green-500 mx-auto mb-2" />
+                  <div className="text-2xl font-bold text-green-700">
+                    {childrenWordStats[selectedChild.id]?.wordsRemembered || 0}
+                  </div>
+                  <div className="text-sm text-green-600">Remembered</div>
+                </div>
+                <div className="bg-orange-50 p-4 rounded-lg text-center">
+                  <AlertCircle className="w-8 h-8 text-orange-500 mx-auto mb-2" />
+                  <div className="text-2xl font-bold text-orange-700">
+                    {childrenWordStats[selectedChild.id]?.wordsNeedingPractice || 0}
+                  </div>
+                  <div className="text-sm text-orange-600">Need Practice</div>
+                </div>
+                <div className="bg-purple-50 p-4 rounded-lg text-center">
+                  <Target className="w-8 h-8 text-purple-500 mx-auto mb-2" />
+                  <div className="text-2xl font-bold text-purple-700">
+                    {childrenWordStats[selectedChild.id]?.averageAccuracy || 0}%
+                  </div>
+                  <div className="text-sm text-purple-600">Accuracy</div>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        )}
+
         {/* Learning Strengths & Areas for Improvement */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <Card>
