@@ -165,26 +165,26 @@ export const WordPracticeGame: React.FC<WordPracticeGameProps> = ({
         </div>
       </div>
 
-      <div className="bg-purple-50 p-6 rounded-2xl">
-        <h3 className="text-lg font-semibold text-purple-700 mb-3 flex items-center justify-center gap-2">
+      <div className="bg-purple-50 p-4 sm:p-6 rounded-2xl mx-2 sm:mx-0">
+        <h3 className="text-base sm:text-lg font-semibold text-purple-700 mb-3 flex items-center justify-center gap-2">
           <span>🎮</span> How to Play <span>🎮</span>
         </h3>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-left max-w-3xl mx-auto">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 text-left max-w-3xl mx-auto">
           <div className="flex items-center gap-3 bg-white p-3 rounded-lg">
-            <div className="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center text-blue-600 font-bold text-lg">1</div>
-            <span className="font-medium">Look at each word carefully 👀</span>
+            <div className="w-8 h-8 sm:w-10 sm:h-10 bg-blue-100 rounded-full flex items-center justify-center text-blue-600 font-bold text-sm sm:text-lg flex-shrink-0">1</div>
+            <span className="font-medium text-sm sm:text-base">Look at each word carefully 👀</span>
           </div>
           <div className="flex items-center gap-3 bg-white p-3 rounded-lg">
-            <div className="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center text-green-600 font-bold text-lg">2</div>
-            <span className="font-medium">Use hints if you need help 💡</span>
+            <div className="w-8 h-8 sm:w-10 sm:h-10 bg-green-100 rounded-full flex items-center justify-center text-green-600 font-bold text-sm sm:text-lg flex-shrink-0">2</div>
+            <span className="font-medium text-sm sm:text-base">Use hints if you need help 💡</span>
           </div>
           <div className="flex items-center gap-3 bg-white p-3 rounded-lg">
-            <div className="w-10 h-10 bg-orange-100 rounded-full flex items-center justify-center text-orange-600 font-bold text-lg">3</div>
-            <span className="font-medium">Choose your answer honestly ✨</span>
+            <div className="w-8 h-8 sm:w-10 sm:h-10 bg-orange-100 rounded-full flex items-center justify-center text-orange-600 font-bold text-sm sm:text-lg flex-shrink-0">3</div>
+            <span className="font-medium text-sm sm:text-base">Choose your answer honestly ✨</span>
           </div>
           <div className="flex items-center gap-3 bg-white p-3 rounded-lg">
-            <div className="w-10 h-10 bg-purple-100 rounded-full flex items-center justify-center text-purple-600 font-bold text-lg">4</div>
-            <span className="font-medium">Earn points and build streaks! 🏆</span>
+            <div className="w-8 h-8 sm:w-10 sm:h-10 bg-purple-100 rounded-full flex items-center justify-center text-purple-600 font-bold text-sm sm:text-lg flex-shrink-0">4</div>
+            <span className="font-medium text-sm sm:text-base">Earn points and build streaks! 🏆</span>
           </div>
         </div>
       </div>
