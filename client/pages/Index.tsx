@@ -732,7 +732,7 @@ export default function Index({ initialProfile }: IndexProps) {
         ) : (
           <div className="flex w-full">
             {/* Desktop Left Sidebar */}
-            <aside className="hidden md:flex w-72 bg-gradient-to-b from-purple-100 to-pink-100 border-r border-purple-200 p-6 flex-col">
+            <aside className="hidden md:flex w-72 bg-gradient-to-b from-purple-100 to-pink-100 border-r border-purple-200 p-6 flex-col overflow-y-auto">
               {/* Navigation Menu */}
               <nav className="flex-1 space-y-3">
                 <button
