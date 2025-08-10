@@ -74,7 +74,7 @@ interface LearningStats {
     timeSpent: number;
   }>;
   difficultyProgress: Array<{
-    difficulty: 'easy' | 'medium' | 'hard';
+    difficulty: "easy" | "medium" | "hard";
     completed: number;
     total: number;
   }>;
@@ -91,25 +91,27 @@ const learningStats: LearningStats = {
   totalWordsLearned: 127,
   weeklyProgress: [5, 8, 12, 7, 15, 10, 18],
   categoryBreakdown: [
-    { category: 'Animals', wordsLearned: 28, accuracy: 92, timeSpent: 45 },
-    { category: 'Nature', wordsLearned: 24, accuracy: 88, timeSpent: 38 },
-    { category: 'Science', wordsLearned: 21, accuracy: 85, timeSpent: 52 },
-    { category: 'Food', wordsLearned: 19, accuracy: 94, timeSpent: 31 },
-    { category: 'General', wordsLearned: 18, accuracy: 87, timeSpent: 42 },
-    { category: 'Sports', wordsLearned: 17, accuracy: 90, timeSpent: 28 }
+    { category: "Animals", wordsLearned: 28, accuracy: 92, timeSpent: 45 },
+    { category: "Nature", wordsLearned: 24, accuracy: 88, timeSpent: 38 },
+    { category: "Science", wordsLearned: 21, accuracy: 85, timeSpent: 52 },
+    { category: "Food", wordsLearned: 19, accuracy: 94, timeSpent: 31 },
+    { category: "General", wordsLearned: 18, accuracy: 87, timeSpent: 42 },
+    { category: "Sports", wordsLearned: 17, accuracy: 90, timeSpent: 28 },
   ],
   difficultyProgress: [
-    { difficulty: 'easy', completed: 68, total: 80 },
-    { difficulty: 'medium', completed: 42, total: 70 },
-    { difficulty: 'hard', completed: 17, total: 50 }
+    { difficulty: "easy", completed: 68, total: 80 },
+    { difficulty: "medium", completed: 42, total: 70 },
+    { difficulty: "hard", completed: 17, total: 50 },
   ],
   streakData: Array.from({ length: 30 }, (_, i) => ({
-    date: new Date(Date.now() - (29 - i) * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
+    date: new Date(Date.now() - (29 - i) * 24 * 60 * 60 * 1000)
+      .toISOString()
+      .split("T")[0],
     active: Math.random() > 0.3,
-    wordsLearned: Math.floor(Math.random() * 12) + 1
+    wordsLearned: Math.floor(Math.random() * 12) + 1,
   })),
   learningSpeed: 5.2,
-  currentAccuracy: 91
+  currentAccuracy: 91,
 };
 
 const achievements: Achievement[] = [
@@ -286,7 +288,10 @@ interface AchievementSystemProps {
   stats?: LearningStats;
 }
 
-export function AchievementSystem({ onUnlock, stats = learningStats }: AchievementSystemProps) {
+export function AchievementSystem({
+  onUnlock,
+  stats = learningStats,
+}: AchievementSystemProps) {
   const [selectedCategory, setSelectedCategory] = useState<string>("all");
   const [showUnlockables, setShowUnlockables] = useState(false);
   const [celebratingAchievement, setCelebratingAchievement] =
@@ -360,7 +365,10 @@ export function AchievementSystem({ onUnlock, stats = learningStats }: Achieveme
 
         <Card className="bg-gradient-to-br from-educational-orange to-educational-pink text-white hover:scale-105 transition-all">
           <CardContent className="p-6 text-center">
-            <Target className="w-8 h-8 mx-auto mb-2 animate-spin" style={{animationDuration: '3s'}} />
+            <Target
+              className="w-8 h-8 mx-auto mb-2 animate-spin"
+              style={{ animationDuration: "3s" }}
+            />
             <div className="text-3xl font-bold mb-1">
               <AnimatedCounter value={stats.currentAccuracy} suffix="%" />
             </div>
@@ -392,9 +400,9 @@ export function AchievementSystem({ onUnlock, stats = learningStats }: Achieveme
             {stats.weeklyProgress.map((value, index) => {
               const maxValue = Math.max(...stats.weeklyProgress);
               const height = (value / maxValue) * 100;
-              const days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
-              const emojis = ['🌟', '⭐', '✨', '🎯', '🔥', '🎉', '🚀'];
-              
+              const days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+              const emojis = ["🌟", "⭐", "✨", "🎯", "🔥", "🎉", "🚀"];
+
               return (
                 <div key={index} className="flex flex-col items-center">
                   <div className="flex-1 flex flex-col justify-end">
@@ -405,12 +413,16 @@ export function AchievementSystem({ onUnlock, stats = learningStats }: Achieveme
                   </div>
                   <p className="text-xs text-slate-600 mt-2">{days[index]}</p>
                   <p className="text-lg">{emojis[index]}</p>
-                  <p className="text-sm font-bold text-educational-blue">{value}</p>
+                  <p className="text-sm font-bold text-educational-blue">
+                    {value}
+                  </p>
                 </div>
               );
             })}
           </div>
-          <p className="text-center text-educational-purple font-semibold">Keep up the fantastic work! 🎊</p>
+          <p className="text-center text-educational-purple font-semibold">
+            Keep up the fantastic work! 🎊
+          </p>
         </CardContent>
       </Card>
     </div>
@@ -429,27 +441,33 @@ export function AchievementSystem({ onUnlock, stats = learningStats }: Achieveme
           <div className="space-y-4">
             {stats.categoryBreakdown.map((category, index) => {
               const colors = [
-                'from-educational-blue to-blue-400',
-                'from-educational-green to-green-400',
-                'from-educational-orange to-orange-400',
-                'from-educational-purple to-purple-400',
-                'from-educational-pink to-pink-400',
-                'from-educational-yellow to-yellow-400'
+                "from-educational-blue to-blue-400",
+                "from-educational-green to-green-400",
+                "from-educational-orange to-orange-400",
+                "from-educational-purple to-purple-400",
+                "from-educational-pink to-pink-400",
+                "from-educational-yellow to-yellow-400",
               ];
-              const icons = ['🐾', '🌿', '🔬', '🍎', '⚽', '🎪'];
+              const icons = ["🐾", "🌿", "🔬", "🍎", "⚽", "🎪"];
               const color = colors[index % colors.length];
               const icon = icons[index % icons.length];
-              
+
               return (
                 <div key={category.category} className="space-y-3">
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-3">
-                      <div className={`w-8 h-8 rounded-full bg-gradient-to-r ${color} flex items-center justify-center text-white shadow-lg`}>
+                      <div
+                        className={`w-8 h-8 rounded-full bg-gradient-to-r ${color} flex items-center justify-center text-white shadow-lg`}
+                      >
                         {icon}
                       </div>
                       <div>
-                        <span className="font-bold text-gray-800">{category.category}</span>
-                        <p className="text-xs text-gray-500">You're doing amazing! 🌟</p>
+                        <span className="font-bold text-gray-800">
+                          {category.category}
+                        </span>
+                        <p className="text-xs text-gray-500">
+                          You're doing amazing! 🌟
+                        </p>
                       </div>
                     </div>
                     <div className="flex gap-4 text-sm">
@@ -462,9 +480,11 @@ export function AchievementSystem({ onUnlock, stats = learningStats }: Achieveme
                     </div>
                   </div>
                   <div className="bg-gray-200 rounded-full h-3 overflow-hidden">
-                    <div 
+                    <div
                       className={`h-full bg-gradient-to-r ${color} transition-all duration-1000 rounded-full`}
-                      style={{ width: `${(category.wordsLearned / stats.totalWordsLearned) * 100}%` }}
+                      style={{
+                        width: `${(category.wordsLearned / stats.totalWordsLearned) * 100}%`,
+                      }}
                     />
                   </div>
                 </div>
@@ -488,50 +508,72 @@ export function AchievementSystem({ onUnlock, stats = learningStats }: Achieveme
         <CardContent>
           <div className="space-y-4">
             <p className="text-center text-educational-purple font-semibold">
-              Look at all the days you've been learning! Each square is a day of adventure! 🗺️
+              Look at all the days you've been learning! Each square is a day of
+              adventure! 🗺️
             </p>
-            
+
             <div className="grid grid-cols-10 gap-1 justify-center">
               {stats.streakData.map((day, index) => {
-                const emojis = ['💫', '⭐', '🌟', '✨', '🎊'];
-                const randomEmoji = emojis[Math.floor(Math.random() * emojis.length)];
-                
+                const emojis = ["💫", "⭐", "🌟", "✨", "🎊"];
+                const randomEmoji =
+                  emojis[Math.floor(Math.random() * emojis.length)];
+
                 return (
                   <div
                     key={index}
                     className={`w-6 h-6 rounded-lg flex items-center justify-center text-xs font-bold transition-all hover:scale-125 cursor-pointer ${
-                      day.active 
-                        ? day.wordsLearned > 8 
-                          ? 'bg-gradient-to-br from-educational-green to-green-400 text-white shadow-lg' 
+                      day.active
+                        ? day.wordsLearned > 8
+                          ? "bg-gradient-to-br from-educational-green to-green-400 text-white shadow-lg"
                           : day.wordsLearned > 4
-                          ? 'bg-gradient-to-br from-educational-blue to-blue-400 text-white shadow-md'
-                          : 'bg-gradient-to-br from-educational-orange to-orange-400 text-white shadow-sm'
-                        : 'bg-gray-100 text-gray-400 hover:bg-gray-200'
+                            ? "bg-gradient-to-br from-educational-blue to-blue-400 text-white shadow-md"
+                            : "bg-gradient-to-br from-educational-orange to-orange-400 text-white shadow-sm"
+                        : "bg-gray-100 text-gray-400 hover:bg-gray-200"
                     }`}
-                    title={`${day.date}: ${day.active ? `${day.wordsLearned} words learned! ${randomEmoji}` : 'Rest day 😴'}`}
+                    title={`${day.date}: ${day.active ? `${day.wordsLearned} words learned! ${randomEmoji}` : "Rest day 😴"}`}
                   >
-                    {day.active ? (day.wordsLearned > 8 ? '🏆' : day.wordsLearned > 4 ? '⭐' : '✨') : '💤'}
+                    {day.active
+                      ? day.wordsLearned > 8
+                        ? "🏆"
+                        : day.wordsLearned > 4
+                          ? "⭐"
+                          : "✨"
+                      : "💤"}
                   </div>
                 );
               })}
             </div>
-            
+
             <div className="flex items-center justify-center gap-4 text-sm">
               <div className="flex items-center gap-2">
-                <div className="w-4 h-4 bg-gray-100 rounded-sm flex items-center justify-center">💤</div>
+                <div className="w-4 h-4 bg-gray-100 rounded-sm flex items-center justify-center">
+                  💤
+                </div>
                 <span className="text-gray-600">Rest day</span>
               </div>
               <div className="flex items-center gap-2">
-                <div className="w-4 h-4 bg-educational-orange rounded-sm flex items-center justify-center text-white">✨</div>
-                <span className="text-educational-orange font-semibold">Learning day</span>
+                <div className="w-4 h-4 bg-educational-orange rounded-sm flex items-center justify-center text-white">
+                  ✨
+                </div>
+                <span className="text-educational-orange font-semibold">
+                  Learning day
+                </span>
               </div>
               <div className="flex items-center gap-2">
-                <div className="w-4 h-4 bg-educational-blue rounded-sm flex items-center justify-center text-white">⭐</div>
-                <span className="text-educational-blue font-semibold">Great day</span>
+                <div className="w-4 h-4 bg-educational-blue rounded-sm flex items-center justify-center text-white">
+                  ⭐
+                </div>
+                <span className="text-educational-blue font-semibold">
+                  Great day
+                </span>
               </div>
               <div className="flex items-center gap-2">
-                <div className="w-4 h-4 bg-educational-green rounded-sm flex items-center justify-center text-white">🏆</div>
-                <span className="text-educational-green font-semibold">Amazing day!</span>
+                <div className="w-4 h-4 bg-educational-green rounded-sm flex items-center justify-center text-white">
+                  🏆
+                </div>
+                <span className="text-educational-green font-semibold">
+                  Amazing day!
+                </span>
               </div>
             </div>
           </div>
@@ -555,19 +597,31 @@ export function AchievementSystem({ onUnlock, stats = learningStats }: Achieveme
       {/* Fun Tabs */}
       <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
         <TabsList className="grid w-full grid-cols-4 bg-gradient-to-r from-educational-blue/10 to-educational-purple/10">
-          <TabsTrigger value="achievements" className="flex items-center gap-2 data-[state=active]:bg-educational-blue data-[state=active]:text-white">
+          <TabsTrigger
+            value="achievements"
+            className="flex items-center gap-2 data-[state=active]:bg-educational-blue data-[state=active]:text-white"
+          >
             <Trophy className="w-4 h-4" />
             🏆 Trophies
           </TabsTrigger>
-          <TabsTrigger value="progress" className="flex items-center gap-2 data-[state=active]:bg-educational-green data-[state=active]:text-white">
+          <TabsTrigger
+            value="progress"
+            className="flex items-center gap-2 data-[state=active]:bg-educational-green data-[state=active]:text-white"
+          >
             <TrendingUp className="w-4 h-4" />
             📈 My Stats
           </TabsTrigger>
-          <TabsTrigger value="categories" className="flex items-center gap-2 data-[state=active]:bg-educational-orange data-[state=active]:text-white">
+          <TabsTrigger
+            value="categories"
+            className="flex items-center gap-2 data-[state=active]:bg-educational-orange data-[state=active]:text-white"
+          >
             <PieChart className="w-4 h-4" />
             🎨 Topics
           </TabsTrigger>
-          <TabsTrigger value="streaks" className="flex items-center gap-2 data-[state=active]:bg-educational-purple data-[state=active]:text-white">
+          <TabsTrigger
+            value="streaks"
+            className="flex items-center gap-2 data-[state=active]:bg-educational-purple data-[state=active]:text-white"
+          >
             <Activity className="w-4 h-4" />
             🔥 Adventure
           </TabsTrigger>
@@ -610,7 +664,9 @@ export function AchievementSystem({ onUnlock, stats = learningStats }: Achieveme
               {categories.map((category) => (
                 <Button
                   key={category.id}
-                  variant={selectedCategory === category.id ? "default" : "outline"}
+                  variant={
+                    selectedCategory === category.id ? "default" : "outline"
+                  }
                   size="sm"
                   onClick={() => setSelectedCategory(category.id)}
                   className="flex items-center gap-2 hover:scale-105 transition-all"
@@ -665,7 +721,9 @@ export function AchievementSystem({ onUnlock, stats = learningStats }: Achieveme
                         </div>
                         <CardTitle
                           className={`text-lg ${
-                            achievement.unlocked ? "text-white" : "text-gray-800"
+                            achievement.unlocked
+                              ? "text-white"
+                              : "text-gray-800"
                           }`}
                         >
                           {achievement.name}
@@ -674,7 +732,9 @@ export function AchievementSystem({ onUnlock, stats = learningStats }: Achieveme
                       <CardContent className="space-y-3">
                         <p
                           className={`text-sm ${
-                            achievement.unlocked ? "text-white/90" : "text-gray-600"
+                            achievement.unlocked
+                              ? "text-white/90"
+                              : "text-gray-600"
                           }`}
                         >
                           {achievement.description}
@@ -689,7 +749,10 @@ export function AchievementSystem({ onUnlock, stats = learningStats }: Achieveme
                                 {achievement.requirements}
                               </span>
                             </div>
-                            <Progress value={progressPercentage} className="h-2" />
+                            <Progress
+                              value={progressPercentage}
+                              className="h-2"
+                            />
                             {isComplete && (
                               <div className="text-center">
                                 <Badge className="bg-educational-green text-white animate-pulse">
@@ -713,7 +776,8 @@ export function AchievementSystem({ onUnlock, stats = learningStats }: Achieveme
 
                         {achievement.unlocked && achievement.dateUnlocked && (
                           <div className="text-xs text-white/70">
-                            Unlocked: {achievement.dateUnlocked.toLocaleDateString()}
+                            Unlocked:{" "}
+                            {achievement.dateUnlocked.toLocaleDateString()}
                           </div>
                         )}
                       </CardContent>
@@ -767,8 +831,9 @@ export function AchievementSystem({ onUnlock, stats = learningStats }: Achieveme
                             <Lock className="w-3 h-3 mr-1" />
                             Complete "
                             {
-                              achievements.find((a) => a.id === content.unlockedBy)
-                                ?.name
+                              achievements.find(
+                                (a) => a.id === content.unlockedBy,
+                              )?.name
                             }
                             "
                           </Badge>

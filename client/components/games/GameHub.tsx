@@ -2,13 +2,7 @@ import React, { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import {
-  Brain,
-  Gamepad2,
-  Trophy,
-  Zap,
-  ArrowLeft,
-} from "lucide-react";
+import { Brain, Gamepad2, Trophy, Zap, ArrowLeft } from "lucide-react";
 import { AdventureGames } from "./AdventureGames";
 import { QuizGames } from "./QuizGames";
 
@@ -27,9 +21,11 @@ export function GameHub({
   onQuizComplete,
   onMatchingComplete,
   onBack,
-  userProfile
+  userProfile,
 }: GameHubProps) {
-  const [activeSection, setActiveSection] = useState<"hub" | "games" | "quizzes">("hub");
+  const [activeSection, setActiveSection] = useState<
+    "hub" | "games" | "quizzes"
+  >("hub");
 
   const handleSectionChange = (section: "hub" | "games" | "quizzes") => {
     setActiveSection(section);
@@ -104,8 +100,10 @@ export function GameHub({
       {/* Side by Side Layout */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         {/* Adventure Games Section */}
-        <Card className="bg-gradient-to-br from-green-50 to-blue-50 hover:shadow-xl transition-all duration-300 hover:scale-[1.02] cursor-pointer border-2 border-educational-green/30"
-          onClick={() => handleSectionChange("games")}>
+        <Card
+          className="bg-gradient-to-br from-green-50 to-blue-50 hover:shadow-xl transition-all duration-300 hover:scale-[1.02] cursor-pointer border-2 border-educational-green/30"
+          onClick={() => handleSectionChange("games")}
+        >
           <CardHeader>
             <div className="flex items-center justify-between mb-4">
               <div className="bg-gradient-to-r from-educational-green to-educational-blue p-3 rounded-full">
@@ -121,25 +119,34 @@ export function GameHub({
           </CardHeader>
           <CardContent className="space-y-4">
             <p className="text-gray-700">
-              Interactive learning adventures with power-ups, achievements, and exciting challenges!
+              Interactive learning adventures with power-ups, achievements, and
+              exciting challenges!
             </p>
-            
+
             <div className="grid grid-cols-2 gap-3">
               <div className="bg-white/80 rounded-lg p-3 text-center">
                 <div className="text-2xl mb-1">🗺️</div>
-                <div className="text-sm font-semibold text-gray-700">Word Quest</div>
+                <div className="text-sm font-semibold text-gray-700">
+                  Word Quest
+                </div>
               </div>
               <div className="bg-white/80 rounded-lg p-3 text-center">
                 <div className="text-2xl mb-1">🧩</div>
-                <div className="text-sm font-semibold text-gray-700">Memory Match</div>
+                <div className="text-sm font-semibold text-gray-700">
+                  Memory Match
+                </div>
               </div>
               <div className="bg-white/80 rounded-lg p-3 text-center">
                 <div className="text-2xl mb-1">⚡</div>
-                <div className="text-sm font-semibold text-gray-700">Speed Learning</div>
+                <div className="text-sm font-semibold text-gray-700">
+                  Speed Learning
+                </div>
               </div>
               <div className="bg-white/80 rounded-lg p-3 text-center">
                 <div className="text-2xl mb-1">🎤</div>
-                <div className="text-sm font-semibold text-gray-700">Pronunciation</div>
+                <div className="text-sm font-semibold text-gray-700">
+                  Pronunciation
+                </div>
               </div>
             </div>
 
@@ -155,7 +162,7 @@ export function GameHub({
               </ul>
             </div>
 
-            <Button 
+            <Button
               className="w-full bg-educational-green text-white hover:bg-educational-green/90"
               onClick={(e) => {
                 e.stopPropagation();
@@ -169,8 +176,10 @@ export function GameHub({
         </Card>
 
         {/* Quiz Games Section */}
-        <Card className="bg-gradient-to-br from-purple-50 to-pink-50 hover:shadow-xl transition-all duration-300 hover:scale-[1.02] cursor-pointer border-2 border-educational-purple/30"
-          onClick={() => handleSectionChange("quizzes")}>
+        <Card
+          className="bg-gradient-to-br from-purple-50 to-pink-50 hover:shadow-xl transition-all duration-300 hover:scale-[1.02] cursor-pointer border-2 border-educational-purple/30"
+          onClick={() => handleSectionChange("quizzes")}
+        >
           <CardHeader>
             <div className="flex items-center justify-between mb-4">
               <div className="bg-gradient-to-r from-educational-purple to-educational-pink p-3 rounded-full">
@@ -186,25 +195,34 @@ export function GameHub({
           </CardHeader>
           <CardContent className="space-y-4">
             <p className="text-gray-700">
-              Test your knowledge with structured quizzes from beginner to expert level!
+              Test your knowledge with structured quizzes from beginner to
+              expert level!
             </p>
-            
+
             <div className="grid grid-cols-2 gap-3">
               <div className="bg-white/80 rounded-lg p-3 text-center">
                 <div className="text-2xl mb-1">🌱</div>
-                <div className="text-sm font-semibold text-gray-700">Quick Quiz</div>
+                <div className="text-sm font-semibold text-gray-700">
+                  Quick Quiz
+                </div>
               </div>
               <div className="bg-white/80 rounded-lg p-3 text-center">
                 <div className="text-2xl mb-1">🎯</div>
-                <div className="text-sm font-semibold text-gray-700">Standard</div>
+                <div className="text-sm font-semibold text-gray-700">
+                  Standard
+                </div>
               </div>
               <div className="bg-white/80 rounded-lg p-3 text-center">
                 <div className="text-2xl mb-1">🏆</div>
-                <div className="text-sm font-semibold text-gray-700">Challenge</div>
+                <div className="text-sm font-semibold text-gray-700">
+                  Challenge
+                </div>
               </div>
               <div className="bg-white/80 rounded-lg p-3 text-center">
                 <div className="text-2xl mb-1">📸</div>
-                <div className="text-sm font-semibold text-gray-700">Picture Quiz</div>
+                <div className="text-sm font-semibold text-gray-700">
+                  Picture Quiz
+                </div>
               </div>
             </div>
 
@@ -220,7 +238,7 @@ export function GameHub({
               </ul>
             </div>
 
-            <Button 
+            <Button
               className="w-full bg-educational-purple text-white hover:bg-educational-purple/90"
               onClick={(e) => {
                 e.stopPropagation();

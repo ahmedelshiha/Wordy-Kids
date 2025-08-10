@@ -2,13 +2,7 @@ import React, { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import {
-  Brain,
-  Play,
-  Clock,
-  Target,
-  Trophy,
-} from "lucide-react";
+import { Brain, Play, Clock, Target, Trophy } from "lucide-react";
 import { QuizGame } from "../QuizGame";
 import { generateQuizQuestions } from "@/lib/gameGeneration";
 
@@ -18,10 +12,10 @@ interface QuizGamesProps {
   onQuizExit: () => void;
 }
 
-export function QuizGames({ 
-  selectedCategory, 
-  onQuizComplete, 
-  onQuizExit 
+export function QuizGames({
+  selectedCategory,
+  onQuizComplete,
+  onQuizExit,
 }: QuizGamesProps) {
   const [activeQuiz, setActiveQuiz] = useState<string | null>(null);
 
@@ -35,7 +29,7 @@ export function QuizGames({
       questions: 5,
       timePerQuestion: "30s",
       color: "from-educational-green to-green-400",
-      points: "50-100 pts"
+      points: "50-100 pts",
     },
     {
       id: "standard",
@@ -46,7 +40,7 @@ export function QuizGames({
       questions: 10,
       timePerQuestion: "30s",
       color: "from-educational-blue to-blue-400",
-      points: "100-200 pts"
+      points: "100-200 pts",
     },
     {
       id: "challenge",
@@ -57,7 +51,7 @@ export function QuizGames({
       questions: 15,
       timePerQuestion: "25s",
       color: "from-educational-purple to-purple-400",
-      points: "200-400 pts"
+      points: "200-400 pts",
     },
     {
       id: "picture",
@@ -68,7 +62,7 @@ export function QuizGames({
       questions: 8,
       timePerQuestion: "35s",
       color: "from-educational-orange to-orange-400",
-      points: "80-160 pts"
+      points: "80-160 pts",
     },
     {
       id: "spelling",
@@ -79,7 +73,7 @@ export function QuizGames({
       questions: 10,
       timePerQuestion: "45s",
       color: "from-educational-pink to-pink-400",
-      points: "100-200 pts"
+      points: "100-200 pts",
     },
     {
       id: "speed",
@@ -90,8 +84,8 @@ export function QuizGames({
       questions: 20,
       timePerQuestion: "15s",
       color: "from-educational-yellow to-yellow-400",
-      points: "200-500 pts"
-    }
+      points: "200-500 pts",
+    },
   ];
 
   const handleQuizStart = (quizType: string) => {
@@ -107,19 +101,54 @@ export function QuizGames({
     const generateQuizQuestionsByType = (type: string) => {
       switch (type) {
         case "quick":
-          return generateQuizQuestions(5, "easy", selectedCategory, "definition");
+          return generateQuizQuestions(
+            5,
+            "easy",
+            selectedCategory,
+            "definition",
+          );
         case "standard":
-          return generateQuizQuestions(10, undefined, selectedCategory, "definition");
+          return generateQuizQuestions(
+            10,
+            undefined,
+            selectedCategory,
+            "definition",
+          );
         case "challenge":
-          return generateQuizQuestions(15, "hard", selectedCategory, "definition");
+          return generateQuizQuestions(
+            15,
+            "hard",
+            selectedCategory,
+            "definition",
+          );
         case "picture":
-          return generateQuizQuestions(8, undefined, selectedCategory, "picture");
+          return generateQuizQuestions(
+            8,
+            undefined,
+            selectedCategory,
+            "picture",
+          );
         case "spelling":
-          return generateQuizQuestions(10, undefined, selectedCategory, "spelling");
+          return generateQuizQuestions(
+            10,
+            undefined,
+            selectedCategory,
+            "spelling",
+          );
         case "speed":
-          return generateQuizQuestions(20, undefined, selectedCategory, "definition");
+          return generateQuizQuestions(
+            20,
+            undefined,
+            selectedCategory,
+            "definition",
+          );
         default:
-          return generateQuizQuestions(10, undefined, selectedCategory, "definition");
+          return generateQuizQuestions(
+            10,
+            undefined,
+            selectedCategory,
+            "definition",
+          );
       }
     };
 
@@ -147,8 +176,8 @@ export function QuizGames({
       {/* Quiz Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {quizTypes.map((quiz, index) => (
-          <Card 
-            key={quiz.id} 
+          <Card
+            key={quiz.id}
             className={`hover:shadow-xl transition-all duration-300 hover:scale-105 border-2 hover:border-solid cursor-pointer bg-gradient-to-br ${quiz.color} text-white`}
             onClick={() => handleQuizStart(quiz.id)}
           >
@@ -159,14 +188,10 @@ export function QuizGames({
                   {quiz.difficulty}
                 </Badge>
               </div>
-              <CardTitle className="text-lg text-white">
-                {quiz.title}
-              </CardTitle>
+              <CardTitle className="text-lg text-white">{quiz.title}</CardTitle>
             </CardHeader>
             <CardContent className="space-y-3">
-              <p className="text-white/90 text-sm">
-                {quiz.description}
-              </p>
+              <p className="text-white/90 text-sm">{quiz.description}</p>
 
               <div className="grid grid-cols-2 gap-2 text-xs">
                 <div className="bg-white/10 rounded-lg p-2 text-center">

@@ -591,7 +591,8 @@ export default function Index({ initialProfile }: IndexProps) {
                             Word Library
                           </h2>
                           <p className="text-slate-600 mb-8">
-                            Choose how you'd like to explore and learn vocabulary!
+                            Choose how you'd like to explore and learn
+                            vocabulary!
                           </p>
 
                           <div className="flex justify-center gap-2 md:gap-4 mb-6 md:mb-8 flex-wrap px-4 md:px-0">
@@ -754,8 +755,8 @@ export default function Index({ initialProfile }: IndexProps) {
                           🧠 Quiz & Game Time!
                         </h2>
                         <p className="text-base md:text-xl text-gray-600 mb-6 md:mb-8">
-                          Test your vocabulary knowledge with fun quizzes and interactive games!
-                          Choose your challenge below.
+                          Test your vocabulary knowledge with fun quizzes and
+                          interactive games! Choose your challenge below.
                         </p>
                       </div>
 
@@ -797,7 +798,8 @@ export default function Index({ initialProfile }: IndexProps) {
                               Lightning Learning
                             </h3>
                             <p className="text-gray-600 mb-4">
-                              Learn words at lightning speed! How fast can you go?
+                              Learn words at lightning speed! How fast can you
+                              go?
                             </p>
                             <div className="flex justify-center gap-2 mb-4">
                               <span className="bg-educational-orange/20 text-educational-orange px-2 py-1 rounded-full text-xs">
@@ -825,7 +827,8 @@ export default function Index({ initialProfile }: IndexProps) {
                               Pronunciation Party
                             </h3>
                             <p className="text-gray-600 mb-4">
-                              Learn to say words perfectly with fun audio challenges!
+                              Learn to say words perfectly with fun audio
+                              challenges!
                             </p>
                             <div className="flex justify-center gap-2 mb-4">
                               <span className="bg-educational-blue/20 text-educational-blue px-2 py-1 rounded-full text-xs">
@@ -853,7 +856,8 @@ export default function Index({ initialProfile }: IndexProps) {
                               Matching Game
                             </h3>
                             <p className="text-gray-600 mb-4">
-                              Match words with their meanings in this brain game!
+                              Match words with their meanings in this brain
+                              game!
                             </p>
                             <div className="flex justify-center gap-2 mb-4">
                               <span className="bg-educational-purple/20 text-educational-purple px-2 py-1 rounded-full text-xs">
@@ -1168,7 +1172,11 @@ export default function Index({ initialProfile }: IndexProps) {
                         </Button>
                       </div>
                       <WordMatchingGame
-                        pairs={generateMatchingPairs(6, undefined, selectedCategory)}
+                        pairs={generateMatchingPairs(
+                          6,
+                          undefined,
+                          selectedCategory,
+                        )}
                         onComplete={(score, timeSpent) => {
                           setShowMatchingGame(false);
                           setFeedback({
@@ -1264,13 +1272,11 @@ export default function Index({ initialProfile }: IndexProps) {
                     }}
                   />
                 </TabsContent>
-
               </Tabs>
             </div>
           </div>
         )}
       </main>
-
 
       {/* Enhanced Components */}
       {showCelebration && <CelebrationEffect />}
