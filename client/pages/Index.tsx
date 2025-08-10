@@ -508,25 +508,7 @@ export default function Index({ initialProfile }: IndexProps) {
                       className={`w-5 h-5 ${activeTab === "progress" ? "text-white" : "text-yellow-600"}`}
                     />
                   </div>
-                  <span className="font-semibold">Achievements</span>
-                </button>
-
-                <button
-                  onClick={() => setActiveTab("analytics")}
-                  className={`w-full flex items-center gap-4 p-4 rounded-2xl transition-all ${
-                    activeTab === "analytics"
-                      ? "bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-lg"
-                      : "bg-white text-gray-700 hover:bg-purple-50"
-                  }`}
-                >
-                  <div
-                    className={`p-2 rounded-xl ${activeTab === "analytics" ? "bg-white/20" : "bg-green-100"}`}
-                  >
-                    <TrendingUp
-                      className={`w-5 h-5 ${activeTab === "analytics" ? "text-white" : "text-green-600"}`}
-                    />
-                  </div>
-                  <span className="font-semibold">Progress</span>
+                  <span className="font-semibold">🌟 My Journey</span>
                 </button>
 
                 <button
