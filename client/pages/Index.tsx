@@ -607,27 +607,14 @@ export default function Index({ initialProfile }: IndexProps) {
                         }}
                         userInterests={currentProfile?.interests || []}
                       />
-                    ) : gameMode ? (
-                      <GameLikeLearning
-                        words={(() => {
-                          const categoryWords =
-                            selectedCategory === "all"
-                              ? getRandomWords(20)
-                              : getWordsByCategory(selectedCategory);
-                          return categoryWords.slice(0, 10);
-                        })()}
-                        onComplete={handleGameComplete}
-                        onBack={() => setGameMode(false)}
-                        userProfile={currentProfile}
-                      />
                     ) : (
                       <>
                         <div className="text-center">
                           <h2 className="text-3xl font-bold text-slate-800 mb-4">
-                            Learning Mode
+                            Word Library
                           </h2>
                           <p className="text-slate-600 mb-8">
-                            Choose how you'd like to learn your vocabulary!
+                            Choose how you'd like to explore and learn vocabulary!
                           </p>
 
                           <div className="flex justify-center gap-2 md:gap-4 mb-6 md:mb-8 flex-wrap px-4 md:px-0">
@@ -658,28 +645,6 @@ export default function Index({ initialProfile }: IndexProps) {
                                 Vocabulary Builder
                               </span>
                               <span className="sm:hidden">Builder</span>
-                            </Button>
-                            <Button
-                              onClick={() => setShowMatchingGame(true)}
-                              variant="outline"
-                              className="flex items-center gap-1 md:gap-2 text-sm md:text-base px-3 md:px-4"
-                            >
-                              <Shuffle className="w-4 h-4" />
-                              <span className="hidden sm:inline">
-                                Matching Game
-                              </span>
-                              <span className="sm:hidden">Match</span>
-                            </Button>
-                            <Button
-                              onClick={() => setGameMode(true)}
-                              variant="default"
-                              className="flex items-center gap-1 md:gap-2 bg-gradient-to-r from-educational-green to-educational-blue text-white text-sm md:text-base px-3 md:px-4"
-                            >
-                              <Gamepad2 className="w-4 h-4" />
-                              <span className="hidden sm:inline">
-                                Game Mode! 🎮
-                              </span>
-                              <span className="sm:hidden">Game 🎮</span>
                             </Button>
                             <Button
                               onClick={() => {
@@ -799,7 +764,7 @@ export default function Index({ initialProfile }: IndexProps) {
                 </TabsContent>
 
                 <TabsContent value="quiz">
-                  {!showQuiz ? (
+                  {!showQuiz && !gameMode && !showMatchingGame ? (
                     <div className="space-y-8">
                       {/* Quiz Header */}
                       <div className="text-center">
@@ -809,11 +774,98 @@ export default function Index({ initialProfile }: IndexProps) {
                           </div>
                         </div>
                         <h2 className="text-2xl md:text-4xl font-bold text-gray-800 mb-4">
-                          🧠 Quiz Time!
+                          🧠 Quiz & Game Time!
                         </h2>
                         <p className="text-base md:text-xl text-gray-600 mb-6 md:mb-8">
-                          Test your vocabulary knowledge with fun quizzes!
-                          Choose your challenge level below.
+                          Test your vocabulary knowledge with fun quizzes and interactive games!
+                          Choose your challenge below.
+                        </p>
+                      </div>
+
+                      {/* Game Mode Section */}
+                      <div className="space-y-6">
+                        <div className="text-center">
+                          <h3 className="text-xl font-bold text-gray-800 mb-4">
+                            🎮 Interactive Games
+                          </h3>
+                          <p className="text-gray-600 mb-6">
+                            Learn through exciting game adventures!
+                          </p>
+                        </div>
+
+                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 max-w-4xl mx-auto">
+                          {/* Game Mode Card */}
+                          <Card className="cursor-pointer hover:shadow-xl transition-all duration-300 hover:scale-105 border-2 border-educational-green/30">
+                            <CardContent className="p-6 text-center">
+                              <div className="text-6xl mb-4">🎮</div>
+                              <h3 className="text-xl font-bold text-educational-green mb-2">
+                                Adventure Games
+                              </h3>
+                              <p className="text-gray-600 mb-4">
+                                Journey through words with exciting game challenges!
+                              </p>
+                              <div className="flex justify-center gap-2 mb-4">
+                                <span className="bg-educational-green/20 text-educational-green px-2 py-1 rounded-full text-xs">
+                                  Multiple Games
+                                </span>
+                                <span className="bg-educational-green/20 text-educational-green px-2 py-1 rounded-full text-xs">
+                                  Power-ups
+                                </span>
+                              </div>
+                              <Button
+                                onClick={() => setGameMode(true)}
+                                className="w-full bg-educational-green text-white hover:bg-educational-green/90"
+                              >
+                                <Gamepad2 className="w-4 h-4 mr-2" />
+                                Start Adventure!
+                              </Button>
+                            </CardContent>
+                          </Card>
+
+                          {/* Matching Game Card */}
+                          <Card className="cursor-pointer hover:shadow-xl transition-all duration-300 hover:scale-105 border-2 border-educational-purple/30">
+                            <CardContent className="p-6 text-center">
+                              <div className="text-6xl mb-4">🧩</div>
+                              <h3 className="text-xl font-bold text-educational-purple mb-2">
+                                Matching Game
+                              </h3>
+                              <p className="text-gray-600 mb-4">
+                                Match words with their meanings in this brain game!
+                              </p>
+                              <div className="flex justify-center gap-2 mb-4">
+                                <span className="bg-educational-purple/20 text-educational-purple px-2 py-1 rounded-full text-xs">
+                                  Memory Challenge
+                                </span>
+                                <span className="bg-educational-purple/20 text-educational-purple px-2 py-1 rounded-full text-xs">
+                                  Timed
+                                </span>
+                              </div>
+                              <Button
+                                onClick={() => setShowMatchingGame(true)}
+                                className="w-full bg-educational-purple text-white hover:bg-educational-purple/90"
+                              >
+                                <Shuffle className="w-4 h-4 mr-2" />
+                                Start Matching!
+                              </Button>
+                            </CardContent>
+                          </Card>
+                        </div>
+                      </div>
+
+                      {/* Divider */}
+                      <div className="flex items-center gap-4 max-w-2xl mx-auto">
+                        <div className="flex-1 h-px bg-gradient-to-r from-transparent via-gray-300 to-transparent"></div>
+                        <span className="text-gray-500 font-medium">OR</span>
+                        <div className="flex-1 h-px bg-gradient-to-r from-transparent via-gray-300 to-transparent"></div>
+                      </div>
+
+                      {/* Quiz Section Header */}
+                      <div className="text-center">
+                        <h3 className="text-xl font-bold text-gray-800 mb-4">
+                          📝 Traditional Quizzes
+                        </h3>
+                        <p className="text-gray-600 mb-6">
+                          Test your knowledge with structured quiz challenges!
                         </p>
                       </div>
 
@@ -1087,6 +1139,47 @@ export default function Index({ initialProfile }: IndexProps) {
                         </Card>
                       </div>
                     </div>
+                  ) : gameMode ? (
+                    <GameLikeLearning
+                      words={(() => {
+                        const categoryWords =
+                          selectedCategory === "all"
+                            ? getRandomWords(20)
+                            : getWordsByCategory(selectedCategory);
+                        return categoryWords.slice(0, 10);
+                      })()}
+                      onComplete={handleGameComplete}
+                      onBack={() => setGameMode(false)}
+                      userProfile={currentProfile}
+                    />
+                  ) : showMatchingGame ? (
+                    <div className="space-y-6">
+                      <div className="flex items-center justify-between">
+                        <h2 className="text-2xl font-bold text-gray-800">
+                          🧩 Word Matching Game
+                        </h2>
+                        <Button
+                          onClick={() => setShowMatchingGame(false)}
+                          variant="outline"
+                          size="sm"
+                        >
+                          ← Back to Games
+                        </Button>
+                      </div>
+                      <WordMatchingGame
+                        pairs={generateMatchingPairs(6, undefined, selectedCategory)}
+                        onComplete={(score, timeSpent) => {
+                          setShowMatchingGame(false);
+                          setFeedback({
+                            type: "celebration",
+                            title: "Matching Game Complete! 🎯",
+                            message: `You matched ${score} pairs in ${timeSpent} seconds!`,
+                            points: score * 15,
+                            onContinue: () => setFeedback(null),
+                          });
+                        }}
+                      />
+                    </div>
                   ) : (
                     <QuizGame
                       questions={(() => {
@@ -1180,40 +1273,6 @@ export default function Index({ initialProfile }: IndexProps) {
         )}
       </main>
 
-      {/* Matching Game Modal */}
-      {showMatchingGame && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-xl max-w-4xl w-full max-h-[90vh] overflow-y-auto">
-            <div className="p-6">
-              <div className="flex items-center justify-between mb-6">
-                <h2 className="text-2xl font-bold text-gray-800">
-                  🧩 Word Matching Game
-                </h2>
-                <Button
-                  onClick={() => setShowMatchingGame(false)}
-                  variant="outline"
-                  size="sm"
-                >
-                  Close
-                </Button>
-              </div>
-              <WordMatchingGame
-                pairs={generateMatchingPairs(6, undefined, selectedCategory)}
-                onComplete={(score, timeSpent) => {
-                  setShowMatchingGame(false);
-                  setFeedback({
-                    type: "celebration",
-                    title: "Matching Game Complete! 🎯",
-                    message: `You matched ${score} pairs in ${timeSpent} seconds!`,
-                    points: score * 15,
-                    onContinue: () => setFeedback(null),
-                  });
-                }}
-              />
-            </div>
-          </div>
-        </div>
-      )}
 
       {/* Enhanced Components */}
       {showCelebration && <CelebrationEffect />}
