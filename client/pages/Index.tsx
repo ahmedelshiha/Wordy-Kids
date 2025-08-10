@@ -92,7 +92,7 @@ const learningStats = {
     {
       id: "category-explorer",
       name: "Category Explorer",
-      icon: "🗺️",
+      icon: "��️",
       earned: true,
       description: "Explored 5+ categories",
     },
@@ -134,7 +134,7 @@ export default function Index({ initialProfile }: IndexProps) {
   >("standard");
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [learningMode, setLearningMode] = useState<
-    "cards" | "builder" | "matching" | "selector"
+    "cards" | "matching" | "selector"
   >("selector");
   const [showMatchingGame, setShowMatchingGame] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
