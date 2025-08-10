@@ -387,60 +387,101 @@ export default function Index({ initialProfile }: IndexProps) {
   };
 
   const getPracticeWords = () => {
-    // Get words that need practice (simulated data - in real app would come from API)
-    const wordsNeedingPractice = [
-      {
-        id: "1",
-        word: "helicopter",
-        definition: "An aircraft with rotating blades that can hover and move in any direction",
-        example: "The rescue helicopter landed on the hospital roof.",
-        category: "Transportation",
-        difficulty: "hard" as const,
-        attempts: 3,
-        lastAccuracy: 25
-      },
-      {
-        id: "2",
-        word: "encyclopedia",
-        definition: "A comprehensive reference work containing information on many subjects",
-        example: "I looked up dinosaurs in the encyclopedia for my school project.",
-        category: "Education",
-        difficulty: "hard" as const,
-        attempts: 2,
-        lastAccuracy: 40
-      },
-      {
-        id: "3",
-        word: "microscope",
-        definition: "An instrument used to see very small things by making them appear larger",
-        example: "We used a microscope to look at tiny cells in science class.",
-        category: "Science",
-        difficulty: "medium" as const,
-        attempts: 4,
-        lastAccuracy: 30
-      },
-      {
-        id: "4",
-        word: "constellation",
-        definition: "A group of stars that form a pattern in the night sky",
-        example: "I can see the Big Dipper constellation on clear nights.",
-        category: "Space",
-        difficulty: "medium" as const,
-        attempts: 2,
-        lastAccuracy: 45
-      },
-      {
-        id: "5",
-        word: "archaeology",
-        definition: "The study of ancient people and cultures through their remains and artifacts",
-        example: "The archaeology team discovered ancient pottery in the dig site.",
-        category: "History",
-        difficulty: "hard" as const,
-        attempts: 3,
-        lastAccuracy: 20
-      }
-    ];
-    return wordsNeedingPractice;
+    if (!childStats) return [];
+
+    // Get actual words that need practice from child stats
+    const practiceWordsFromStats: any[] = [];
+
+    // If we have mastery by category data, extract words needing practice
+    if (childStats.masteryByCategory) {
+      childStats.masteryByCategory.forEach(category => {
+        if (category.needsPracticeWords > 0) {
+          // For each category with practice words, we'll get actual word data
+          // This is a simplified approach - in a full implementation,
+          // the API would return specific word details
+          const categoryWords = getWordsForCategory(category.category)
+            .filter(word => {
+              // Get words from current learning set that might need practice
+              const wordKey = `${currentProfile?.id}-${word.id}`;
+              return forgottenWords.has(Number(word.id)) ||
+                     (word.accuracy && word.accuracy < 70);
+            })
+            .slice(0, category.needsPracticeWords)
+            .map(word => ({
+              id: word.id.toString(),
+              word: word.word,
+              definition: word.definition,
+              example: word.example,
+              category: word.category,
+              difficulty: (word.difficulty || "medium") as "easy" | "medium" | "hard",
+              attempts: word.attempts || 1,
+              lastAccuracy: word.accuracy || 0
+            }));
+
+          practiceWordsFromStats.push(...categoryWords);
+        }
+      });
+    }
+
+    // If no stats data yet, get words from forgotten words set
+    if (practiceWordsFromStats.length === 0 && forgottenWords.size > 0) {
+      const allWords = getAllWords();
+      const forgottenWordsList = Array.from(forgottenWords)
+        .map(wordId => allWords.find(w => w.id === wordId))
+        .filter(Boolean)
+        .slice(0, 8) // Limit to 8 words for better gaming experience
+        .map(word => ({
+          id: word!.id.toString(),
+          word: word!.word,
+          definition: word!.definition,
+          example: word!.example,
+          category: word!.category,
+          difficulty: (word!.difficulty || "medium") as "easy" | "medium" | "hard",
+          attempts: 1,
+          lastAccuracy: 0
+        }));
+
+      return forgottenWordsList;
+    }
+
+    // If still no practice words, return some challenging words as backup
+    if (practiceWordsFromStats.length === 0) {
+      const allWords = getAllWords();
+      const challengingWords = allWords
+        .filter(word => word.difficulty === "hard" || word.difficulty === "medium")
+        .slice(0, 5)
+        .map(word => ({
+          id: word.id.toString(),
+          word: word.word,
+          definition: word.definition,
+          example: word.example,
+          category: word.category,
+          difficulty: (word.difficulty || "medium") as "easy" | "medium" | "hard",
+          attempts: 0,
+          lastAccuracy: 0
+        }));
+
+      return challengingWords;
+    }
+
+    return practiceWordsFromStats.slice(0, 10); // Limit to 10 for optimal gaming experience
+  };
+
+  // Helper function to get all words from the database
+  const getAllWords = () => {
+    const allWords: any[] = [];
+    Object.values(wordsDatabase).forEach(category => {
+      allWords.push(...category);
+    });
+    return allWords;
+  };
+
+  // Helper function to get words for a specific category
+  const getWordsForCategory = (categoryName: string) => {
+    const categoryKey = Object.keys(wordsDatabase).find(key =>
+      key.toLowerCase().replace(/[^a-z]/g, '') === categoryName.toLowerCase().replace(/[^a-z]/g, '')
+    );
+    return categoryKey ? wordsDatabase[categoryKey] : [];
   };
 
   const startPracticeGame = () => {
