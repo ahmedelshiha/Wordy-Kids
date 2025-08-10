@@ -358,6 +358,8 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
     deadline: "",
   });
   const [customWordInput, setCustomWordInput] = useState("");
+  const [childrenWordStats, setChildrenWordStats] = useState<Record<string, ChildWordStats>>({});
+  const [loadingWordStats, setLoadingWordStats] = useState(false);
 
   // Save children to localStorage whenever children state changes
   useEffect(() => {
