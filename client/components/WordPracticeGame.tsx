@@ -249,18 +249,18 @@ export const WordPracticeGame: React.FC<WordPracticeGameProps> = ({
       </div>
 
       {/* Stats bar */}
-      <div className="grid grid-cols-3 gap-4">
-        <div className="bg-green-50 p-4 rounded-xl text-center">
-          <div className="text-2xl font-bold text-green-600">{streak}</div>
-          <div className="text-sm text-green-600">Current Streak 🔥</div>
+      <div className="grid grid-cols-3 gap-2 sm:gap-4 px-2 sm:px-0">
+        <div className="bg-green-50 p-2 sm:p-4 rounded-xl text-center">
+          <div className="text-lg sm:text-2xl font-bold text-green-600">{streak}</div>
+          <div className="text-xs sm:text-sm text-green-600">Current Streak 🔥</div>
         </div>
-        <div className="bg-blue-50 p-4 rounded-xl text-center">
-          <div className="text-2xl font-bold text-blue-600">{bestStreak}</div>
-          <div className="text-sm text-blue-600">Best Streak ⭐</div>
+        <div className="bg-blue-50 p-2 sm:p-4 rounded-xl text-center">
+          <div className="text-lg sm:text-2xl font-bold text-blue-600">{bestStreak}</div>
+          <div className="text-xs sm:text-sm text-blue-600">Best Streak ⭐</div>
         </div>
-        <div className="bg-purple-50 p-4 rounded-xl text-center">
-          <div className="text-2xl font-bold text-purple-600">{accuracy}%</div>
-          <div className="text-sm text-purple-600">Accuracy 🎯</div>
+        <div className="bg-purple-50 p-2 sm:p-4 rounded-xl text-center">
+          <div className="text-lg sm:text-2xl font-bold text-purple-600">{accuracy}%</div>
+          <div className="text-xs sm:text-sm text-purple-600">Accuracy 🎯</div>
         </div>
       </div>
 
