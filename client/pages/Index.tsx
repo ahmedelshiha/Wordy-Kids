@@ -307,6 +307,9 @@ export default function Index({ initialProfile }: IndexProps) {
       let achievementIcon = "";
       let achievementMessage = "";
 
+      // Format category name for display
+      const categoryDisplayName = selectedCategory === "all" ? "this word set" : selectedCategory;
+
       if (accuracy === 100) {
         achievementTitle = "Perfect Category Mastery! 🏆";
         achievementIcon = "🏆";
