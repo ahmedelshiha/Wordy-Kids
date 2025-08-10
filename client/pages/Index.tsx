@@ -343,7 +343,7 @@ export default function Index({ initialProfile }: IndexProps) {
         achievementMessage = `Outstanding! You remembered ALL ${totalWords} words in ${categoryDisplayName}! You're a true champion!`;
       } else if (accuracy >= 90) {
         achievementTitle = "Category Expert! ��";
-        achievementIcon = "⭐";
+        achievementIcon = "���";
         achievementMessage = `Excellent work! You mastered ${categoryDisplayName} with ${accuracy}% accuracy! Almost perfect!`;
       } else if (accuracy >= 75) {
         achievementTitle = "Category Scholar! 📚";
@@ -844,19 +844,6 @@ export default function Index({ initialProfile }: IndexProps) {
                       />
                     </div>
                     <span className="font-medium lg:font-semibold text-sm lg:text-base">🏰 Adventure</span>
-                  </button>
-
-                  <button
-                    onClick={startPracticeGame}
-                    className="w-full flex items-center gap-3 p-3 lg:p-4 rounded-xl lg:rounded-2xl transition-all bg-white text-gray-700 hover:bg-orange-50 hover:border-orange-200 border border-orange-100 relative"
-                  >
-                    <div className="p-2 rounded-lg lg:rounded-xl bg-orange-100">
-                      <Target className="w-4 h-4 lg:w-5 lg:h-5 text-orange-600" />
-                    </div>
-                    <span className="font-medium lg:font-semibold text-sm lg:text-base">🎯 Practice Words</span>
-                    <div className="absolute -top-1 -right-1 bg-orange-500 text-white text-xs px-2 py-1 rounded-full">
-                      {getPracticeWords().length}
-                    </div>
                   </button>
 
                 <button
