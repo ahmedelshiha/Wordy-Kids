@@ -368,7 +368,7 @@ export function InteractiveDashboardWordCard({
           {showWordName && (
             <div className="space-y-4 mb-8">
               {/* Word Name */}
-              <div className="text-center bg-gradient-to-r from-green-50 to-blue-50 p-6 rounded-2xl border-2 border-green-200">
+              <div className="text-center bg-gradient-to-r from-green-50 to-blue-50 p-4 rounded-2xl border-2 border-green-200">
                 <div className="flex items-center justify-center gap-3 mb-3">
                   <div className="text-3xl">{currentWord.emoji}</div>
                   <h1 className="text-lg md:text-xl font-bold text-gray-800 tracking-wide">
