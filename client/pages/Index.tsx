@@ -29,6 +29,7 @@ import {
   getWordsByCategory,
   getRandomWords,
 } from "@/data/wordsDatabase";
+import { SmartWordSelector, getSmartWordSelection } from "@/lib/smartWordSelection";
 import { isBackgroundAnimationsEnabled } from "@/lib/backgroundAnimations";
 import {
   generateQuizQuestions,
