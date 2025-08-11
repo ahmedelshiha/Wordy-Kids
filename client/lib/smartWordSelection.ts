@@ -465,6 +465,215 @@ export class SmartWordSelector {
 }
 
 /**
+ * Dynamic Difficulty Adjustment System
+ * Adjusts word difficulty based on real-time performance
+ */
+export class DynamicDifficultyAdjuster {
+
+  /**
+   * Calculate optimal difficulty based on recent performance
+   */
+  static calculateOptimalDifficulty(
+    childStats?: ChildWordStats | null,
+    recentAccuracy?: number
+  ): "easy" | "medium" | "hard" {
+    if (!childStats && !recentAccuracy) return "easy";
+
+    // Use recent accuracy if available, otherwise use overall accuracy
+    const accuracy = recentAccuracy || childStats?.averageAccuracy || 0;
+    const totalSessions = childStats?.totalReviewSessions || 0;
+
+    // For new learners, start with easy
+    if (totalSessions < 5) return "easy";
+
+    // Performance-based difficulty adjustment
+    if (accuracy >= 90) {
+      // High performer - can handle harder content
+      return totalSessions > 20 ? "hard" : "medium";
+    } else if (accuracy >= 75) {
+      // Good performer - standard progression
+      return "medium";
+    } else if (accuracy >= 60) {
+      // Struggling - stay with easier content
+      return "easy";
+    } else {
+      // Very struggling - focus on basic words
+      return "easy";
+    }
+  }
+
+  /**
+   * Adjust word selection based on performance patterns
+   */
+  static adjustWordSelection(
+    words: Word[],
+    childStats?: ChildWordStats | null,
+    recentPerformance?: {
+      lastFiveAccuracy: number[];
+      timeSpentPerWord: number[];
+      strugglingCategories: string[];
+    }
+  ): Word[] {
+    if (!childStats && !recentPerformance) return words;
+
+    const optimalDifficulty = this.calculateOptimalDifficulty(childStats);
+
+    // Filter words based on optimal difficulty
+    let adjustedWords = words.filter(word => {
+      if (optimalDifficulty === "easy") {
+        return word.difficulty === "easy";
+      } else if (optimalDifficulty === "medium") {
+        return word.difficulty === "easy" || word.difficulty === "medium";
+      } else {
+        // For hard difficulty, include all levels but weight towards harder
+        return true;
+      }
+    });
+
+    // If we don't have enough words at the target difficulty, expand selection
+    if (adjustedWords.length < Math.ceil(words.length * 0.8)) {
+      adjustedWords = words; // Fall back to original selection
+    }
+
+    // Sort by difficulty preference
+    adjustedWords.sort((a, b) => {
+      const difficultyOrder = { easy: 1, medium: 2, hard: 3 };
+      if (optimalDifficulty === "hard") {
+        return difficultyOrder[b.difficulty] - difficultyOrder[a.difficulty];
+      }
+      return difficultyOrder[a.difficulty] - difficultyOrder[b.difficulty];
+    });
+
+    return adjustedWords;
+  }
+
+  /**
+   * Adaptive session configuration based on performance
+   */
+  static getAdaptiveSessionConfig(childStats?: ChildWordStats | null) {
+    if (!childStats) {
+      return {
+        wordsPerSession: 10,
+        allowedMistakes: 3,
+        timePerWord: 30, // seconds
+        encouragementFrequency: 2, // every 2 words
+      };
+    }
+
+    const accuracy = childStats.averageAccuracy || 0;
+    const sessions = childStats.totalReviewSessions || 0;
+
+    if (accuracy >= 85 && sessions > 15) {
+      // Advanced learner
+      return {
+        wordsPerSession: 15,
+        allowedMistakes: 2,
+        timePerWord: 25,
+        encouragementFrequency: 3,
+      };
+    } else if (accuracy >= 70) {
+      // Intermediate learner
+      return {
+        wordsPerSession: 12,
+        allowedMistakes: 3,
+        timePerWord: 30,
+        encouragementFrequency: 2,
+      };
+    } else {
+      // Beginning learner
+      return {
+        wordsPerSession: 8,
+        allowedMistakes: 4,
+        timePerWord: 45,
+        encouragementFrequency: 1,
+      };
+    }
+  }
+}
+
+/**
+ * Enhanced Spaced Repetition Algorithm
+ */
+export class EnhancedSpacedRepetition {
+
+  /**
+   * Calculate next review date based on performance and difficulty
+   */
+  static calculateNextReview(
+    word: Word,
+    wasCorrect: boolean,
+    previousAttempts: number = 0,
+    previousAccuracy: number = 0
+  ): Date {
+    const now = new Date();
+    const baseInterval = this.getBaseInterval(word.difficulty);
+
+    let multiplier = 1;
+
+    if (wasCorrect) {
+      // Correct answer - increase interval
+      if (previousAccuracy >= 90) {
+        multiplier = 2.5; // Strong memory
+      } else if (previousAccuracy >= 70) {
+        multiplier = 2.0; // Good memory
+      } else {
+        multiplier = 1.5; // Building memory
+      }
+    } else {
+      // Incorrect answer - decrease interval
+      multiplier = 0.5;
+    }
+
+    // Adjust for number of attempts
+    const attemptMultiplier = Math.max(0.5, 1 - (previousAttempts * 0.1));
+
+    const finalInterval = baseInterval * multiplier * attemptMultiplier;
+
+    // Ensure minimum and maximum intervals
+    const clampedInterval = Math.max(1, Math.min(30, finalInterval));
+
+    const nextReview = new Date(now);
+    nextReview.setDate(nextReview.getDate() + clampedInterval);
+
+    return nextReview;
+  }
+
+  /**
+   * Get base interval in days based on difficulty
+   */
+  private static getBaseInterval(difficulty: "easy" | "medium" | "hard"): number {
+    switch (difficulty) {
+      case "easy": return 3;
+      case "medium": return 2;
+      case "hard": return 1;
+      default: return 2;
+    }
+  }
+
+  /**
+   * Determine if a word should be reviewed today
+   */
+  static shouldReviewToday(
+    lastReviewDate: Date,
+    nextReviewDate: Date,
+    accuracy: number
+  ): boolean {
+    const today = new Date();
+    const daysSinceReview = Math.floor(
+      (today.getTime() - lastReviewDate.getTime()) / (1000 * 60 * 60 * 24)
+    );
+
+    // Always review if past due date
+    if (today >= nextReviewDate) return true;
+
+    // Review early if accuracy is low
+    if (accuracy < 60 && daysSinceReview >= 1) return true;
+
+    return false;
+  }
+}
+
+/**
  * Utility function for backward compatibility
  */
 export function getSmartWordSelection(
@@ -481,6 +690,12 @@ export function getSmartWordSelection(
     forgottenWords,
     childStats,
   });
-  
-  return selection.words;
+
+  // Apply dynamic difficulty adjustment
+  const adjustedWords = DynamicDifficultyAdjuster.adjustWordSelection(
+    selection.words,
+    childStats
+  );
+
+  return adjustedWords;
 }
