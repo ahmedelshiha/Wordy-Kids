@@ -961,12 +961,14 @@ export default function Index({ initialProfile }: IndexProps) {
                     onQuickQuiz={() => {
                       setSelectedQuizType("quick");
                       setShowQuiz(true);
+                      setActiveTab("quiz"); // Navigate to quiz tab
                     }}
                     onAdventure={() => {
                       setActiveTab("adventure");
                     }}
                     onPracticeForgotten={() => {
                       startPracticeGame();
+                      setActiveTab("learn"); // Navigate to learn tab where practice games are handled
                     }}
                   />
                 </TabsContent>
