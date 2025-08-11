@@ -22,6 +22,7 @@ import { ReadingComprehension } from "@/components/ReadingComprehension";
 import { ParentDashboard } from "@/components/ParentDashboard";
 import { WordCreator } from "@/components/WordCreator";
 import { AdventureDashboard } from "@/components/AdventureDashboard";
+import { MobileBottomNav } from "@/components/MobileBottomNav";
 import { adventureService } from "@/lib/adventureService";
 import {
   wordsDatabase,
@@ -171,6 +172,8 @@ export default function Index({ initialProfile }: IndexProps) {
   const [childStats, setChildStats] = useState<ChildWordStats | null>(null);
   const [isLoadingProgress, setIsLoadingProgress] = useState(false);
   const [showPracticeGame, setShowPracticeGame] = useState(false);
+  const [practiceWords, setPracticeWords] = useState<any[]>([]);
+  const [showMobileMoreMenu, setShowMobileMoreMenu] = useState(false);
 
   // Load background animations setting on mount
   useEffect(() => {
@@ -552,24 +555,14 @@ export default function Index({ initialProfile }: IndexProps) {
       <header className="relative overflow-hidden bg-gradient-to-r from-educational-blue via-educational-purple to-educational-pink text-white">
         <div className="absolute inset-0 bg-black/10"></div>
         <div className="relative container mx-auto px-4 py-4 md:py-8">
-          {/* Mobile header with hamburger menu */}
-          <div className="flex items-center justify-between mb-4 md:hidden">
+          {/* Mobile header - simplified */}
+          <div className="flex items-center justify-center mb-4 md:hidden">
             <div className="flex items-center gap-2">
               <div className="bg-white/20 backdrop-blur-sm rounded-full p-2">
                 <BookOpen className="w-8 h-8 text-white" />
               </div>
               <h1 className="text-xl font-bold">Word Adventure</h1>
             </div>
-            <button
-              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="bg-white/20 backdrop-blur-sm rounded-full p-2 transition-all hover:bg-white/30"
-            >
-              {isMobileMenuOpen ? (
-                <X className="w-6 h-6 text-white" />
-              ) : (
-                <Menu className="w-6 h-6 text-white" />
-              )}
-            </button>
           </div>
 
           {/* Desktop header */}
@@ -726,8 +719,8 @@ export default function Index({ initialProfile }: IndexProps) {
           </div>
         ) : (
           <div className="flex flex-col lg:flex-row min-h-screen">
-            {/* Desktop/Mobile Sidebar */}
-            <aside className="lg:w-80 xl:w-96 bg-gradient-to-b from-purple-50 to-pink-50 border-r border-purple-200 lg:border-b-0 border-b overflow-y-auto lg:max-h-screen">
+            {/* Desktop Sidebar - Hidden on Mobile */}
+            <aside className="hidden lg:flex lg:w-80 xl:w-96 bg-gradient-to-b from-purple-50 to-pink-50 border-r border-purple-200 overflow-y-auto lg:max-h-screen">
               <div className="p-4 lg:p-6">
                 {/* Logo Section - Mobile & Desktop */}
                 <div className="flex items-center gap-3 mb-6 lg:mb-8">
@@ -892,7 +885,7 @@ export default function Index({ initialProfile }: IndexProps) {
             </aside>
 
             {/* Main Content Area */}
-            <div className="flex-1 p-4 lg:p-8 pb-20 lg:pb-8 overflow-y-auto scroll-smooth">
+            <div className="flex-1 p-4 lg:p-8 pb-24 lg:pb-8 overflow-y-auto scroll-smooth">
               <Tabs
                 value={activeTab}
                 onValueChange={setActiveTab}
@@ -903,6 +896,79 @@ export default function Index({ initialProfile }: IndexProps) {
                     stats={learningStats}
                     userName="Explorer"
                     childStats={childStats}
+                    availableWords={(() => {
+                      // Smart word selection logic
+                      const allWords =
+                        selectedCategory === "all"
+                          ? getRandomWords(10)
+                          : getWordsByCategory(selectedCategory);
+
+                      // Prioritize forgotten words, then new words
+                      const forgottenWordsList = allWords.filter((word) =>
+                        forgottenWords.has(word.id),
+                      );
+                      const newWords = allWords.filter(
+                        (word) =>
+                          !forgottenWords.has(word.id) &&
+                          !rememberedWords.has(word.id),
+                      );
+                      const reviewWords = allWords.filter((word) =>
+                        rememberedWords.has(word.id),
+                      );
+
+                      // Mix: 40% forgotten, 40% new, 20% review
+                      const smartSelection = [
+                        ...forgottenWordsList.slice(0, 4),
+                        ...newWords.slice(0, 4),
+                        ...reviewWords.slice(0, 2),
+                      ];
+
+                      return smartSelection.length > 0
+                        ? smartSelection
+                        : allWords.slice(0, 10);
+                    })()}
+                    onWordProgress={async (word, status) => {
+                      // Handle word progress in dashboard
+                      if (status === "remembered") {
+                        setRememberedWords(
+                          (prev) => new Set([...prev, word.id]),
+                        );
+                        setForgottenWords((prev) => {
+                          const newSet = new Set(prev);
+                          newSet.delete(word.id);
+                          return newSet;
+                        });
+                        handleWordMastered(word.id, "easy");
+                      } else if (status === "needs_practice") {
+                        setForgottenWords(
+                          (prev) => new Set([...prev, word.id]),
+                        );
+                        setRememberedWords((prev) => {
+                          const newSet = new Set(prev);
+                          newSet.delete(word.id);
+                          return newSet;
+                        });
+                        handleWordMastered(word.id, "hard");
+                      }
+
+                      // Record progress in database
+                      await handleWordProgress(
+                        word,
+                        status === "remembered"
+                          ? "remembered"
+                          : "needs_practice",
+                      );
+                    }}
+                    onQuickQuiz={() => {
+                      setSelectedQuizType("quick");
+                      setShowQuiz(true);
+                    }}
+                    onAdventure={() => {
+                      setActiveTab("adventure");
+                    }}
+                    onPracticeForgotten={() => {
+                      startPracticeGame();
+                    }}
                   />
                 </TabsContent>
 
@@ -1869,46 +1935,32 @@ export default function Index({ initialProfile }: IndexProps) {
       )}
 
       {/* Mobile Bottom Navigation */}
-      <nav className="fixed bottom-0 left-0 right-0 bg-white/90 backdrop-blur-md border-t border-purple-200 p-2 lg:hidden z-40">
-        <div className="flex justify-around">
-          {[
-            {
-              id: "dashboard",
-              icon: Target,
-              label: "Dashboard",
-              color: "purple",
-            },
-            { id: "learn", icon: BookOpen, label: "Learn", color: "green" },
-            { id: "adventure", icon: Sword, label: "Adventure", color: "red" },
-            { id: "quiz", icon: Brain, label: "Quiz", color: "pink" },
-            {
-              id: "progress",
-              icon: Trophy,
-              label: "Progress",
-              color: "yellow",
-            },
-          ].map(({ id, icon: Icon, label, color }) => (
-            <button
-              key={id}
-              onClick={() => setActiveTab(id)}
-              className={`flex flex-col items-center gap-1 p-3 rounded-xl transition-all ${
-                activeTab === id
-                  ? "bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-lg"
-                  : "text-gray-600 hover:text-purple-600"
-              }`}
-            >
-              <Icon
-                className={`w-5 h-5 ${activeTab === id ? "text-white" : ""}`}
-              />
-              <span
-                className={`text-xs font-medium ${activeTab === id ? "text-white" : ""}`}
-              >
-                {label}
-              </span>
-            </button>
-          ))}
-        </div>
-      </nav>
+      <MobileBottomNav
+        activeTab={activeTab}
+        onTabChange={(tab) => {
+          setActiveTab(tab);
+          setShowMobileMoreMenu(false);
+        }}
+        onSettingsClick={() => {
+          setShowSettings(true);
+          setShowMobileMoreMenu(false);
+        }}
+        onParentClick={() => {
+          setUserRole("parent");
+          setShowMobileMoreMenu(false);
+        }}
+        onAdminClick={() => {
+          navigate("/admin");
+          setShowMobileMoreMenu(false);
+        }}
+        onSignOut={() => {
+          handleSignOut();
+          setShowMobileMoreMenu(false);
+        }}
+        showMoreMenu={showMobileMoreMenu}
+        onMoreToggle={() => setShowMobileMoreMenu(!showMobileMoreMenu)}
+        achievementCount={learningStats.badges.filter((b) => b.earned).length}
+      />
 
       {/* Floating Helper */}
       <div className="fixed bottom-20 lg:bottom-4 md:bottom-6 right-4 md:right-6 z-40">
