@@ -75,16 +75,6 @@ export function MobileBottomNav({
       bgColor: "bg-green-100",
       textColor: "text-green-600",
     },
-    {
-      id: "progress",
-      emoji: "🌟",
-      label: "Journey",
-      icon: Trophy,
-      color: "from-yellow-500 to-orange-500",
-      bgColor: "bg-yellow-100",
-      textColor: "text-yellow-600",
-      badge: achievementCount > 0 ? achievementCount : undefined,
-    },
   ];
 
   const secondaryMenuItems = [
