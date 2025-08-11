@@ -451,7 +451,12 @@ export class AudioService {
     if (!this.isEnabled) return;
 
     const voice = this.getVoiceByType(voiceType);
-    if (!voice) return;
+    if (!voice) {
+      console.warn(`No voice found for type: ${voiceType}`);
+      return;
+    }
+
+    console.log(`Preview voice for ${voiceType}:`, voice.name, voice.lang);
 
     this.speechSynthesis.cancel();
 
@@ -476,6 +481,43 @@ export class AudioService {
 
     utterance.volume = 1.0;
     this.speechSynthesis.speak(utterance);
+  }
+
+  // Debug method to see all available voices
+  public debugVoices(): void {
+    console.log("=== Available Voices Debug ===");
+    console.log("Total voices:", this.voices.length);
+
+    const englishVoices = this.voices.filter((voice) =>
+      voice.lang.startsWith("en"),
+    );
+    console.log("English voices:", englishVoices.length);
+
+    englishVoices.forEach((voice, index) => {
+      console.log(`${index + 1}. ${voice.name} (${voice.lang}) - Local: ${voice.localService}`);
+    });
+
+    console.log("\n=== Voice Type Assignments ===");
+    ["woman", "man", "kid"].forEach((type) => {
+      const voice = this.getVoiceByType(type as VoiceType);
+      console.log(`${type}: ${voice ? `${voice.name} (${voice.lang})` : 'None found'}`);
+    });
+  }
+
+  // Get detailed voice information for settings panel
+  public getVoiceInfo(voiceType: VoiceType): {
+    name: string;
+    language: string;
+    isLocal: boolean;
+  } | null {
+    const voice = this.getVoiceByType(voiceType);
+    if (!voice) return null;
+
+    return {
+      name: voice.name,
+      language: voice.lang,
+      isLocal: voice.localService,
+    };
   }
 
   // Fun sound effects using Web Audio API for better child engagement
