@@ -465,8 +465,8 @@ export function InteractiveDashboardWordCard({
         </Button>
       </div>
 
-      {/* Live Stats Footer */}
-      <div className="flex justify-center gap-6 text-center max-w-3xl mx-auto bg-white/50 backdrop-blur-sm p-4 rounded-2xl">
+      {/* Live Stats Footer - Hidden */}
+      {/* <div className="flex justify-center gap-6 text-center max-w-3xl mx-auto bg-white/50 backdrop-blur-sm p-4 rounded-2xl">
         <div className="flex items-center gap-2">
           <Zap className="w-5 h-5 text-orange-500" />
           <div>
@@ -490,7 +490,7 @@ export function InteractiveDashboardWordCard({
             <div className="text-sm text-gray-600">daily goal</div>
           </div>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 }
