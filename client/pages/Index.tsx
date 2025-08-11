@@ -391,6 +391,7 @@ export default function Index({ initialProfile }: IndexProps) {
   const handleWordProgress = async (
     word: any,
     status: "remembered" | "needs_practice",
+    responseTime?: number,
   ) => {
     if (!currentProfile?.id || !currentSessionId) {
       console.warn("Missing profile or session ID");
@@ -406,19 +407,62 @@ export default function Index({ initialProfile }: IndexProps) {
         word: word.word,
         category: word.category,
         status,
-        responseTime: Math.random() * 3000 + 1000, // Simulated response time
+        responseTime: responseTime || Math.random() * 3000 + 1000,
         difficulty: word.difficulty || "medium",
       });
 
-      // Update child stats
+      // Update child stats immediately for real-time feedback
       setChildStats(response.updatedStats);
 
-      // Note: Achievement popups will be shown only on category completion
-      // Store any achievements for potential category completion celebration
+      // Update learning stats with new data
+      setLearningStats(prevStats => ({
+        ...prevStats,
+        wordsLearned: response.updatedStats.totalWordsLearned,
+        weeklyProgress: response.updatedStats.wordsRemembered,
+        accuracyRate: response.updatedStats.averageAccuracy,
+        totalPoints: prevStats.totalPoints + (status === "remembered" ? 10 : 5),
+      }));
+
+      // Show level up celebration if applicable
+      if (response.levelUp) {
+        setFeedback({
+          type: "celebration",
+          title: "🎉 Level Up! 🎉",
+          message: `Congratulations! You've reached a new level!\n\n🌟 Keep up the amazing work!`,
+          points: 50,
+          onContinue: () => setFeedback(null),
+        });
+      }
+
+      // Show achievement notifications
+      if (response.achievements && response.achievements.length > 0) {
+        setTimeout(() => {
+          response.achievements?.forEach((achievement, index) => {
+            setTimeout(() => {
+              setFeedback({
+                type: "achievement",
+                title: `🏆 Achievement Unlocked!`,
+                message: achievement,
+                points: 25,
+                onContinue: () => setFeedback(null),
+              });
+            }, index * 2000);
+          });
+        }, 1000);
+      }
 
       console.log("Word progress recorded:", response);
     } catch (error) {
       console.error("Failed to record word progress:", error);
+
+      // Show user-friendly error message
+      setFeedback({
+        type: "error",
+        title: "Oops! Something went wrong",
+        message: "We couldn't save your progress right now, but keep learning! Your progress is still being tracked locally.",
+        points: 0,
+        onContinue: () => setFeedback(null),
+      });
     } finally {
       setIsLoadingProgress(false);
     }
@@ -604,7 +648,7 @@ export default function Index({ initialProfile }: IndexProps) {
                 {
                   id: "progress",
                   icon: Trophy,
-                  label: "����� My Journey",
+                  label: "���� My Journey",
                   color: "yellow",
                 },
               ].map(({ id, icon: Icon, label, color }) => (
