@@ -378,15 +378,15 @@ export function InteractiveDashboardWordCard({
           {/* Action Buttons - Always visible */}
           {!isAnswered && (
             <div className="space-y-4">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="grid grid-cols-2 gap-3">
                 <Button
                   onClick={() => handleWordAction("needs_practice")}
                   variant="outline"
-                  className="flex-1 bg-red-50 hover:bg-red-100 border-red-200 hover:border-red-300 text-red-700 hover:text-red-800 transition-all duration-300 transform hover:scale-105 py-8"
+                  className="flex-1 bg-red-50 hover:bg-red-100 border-red-200 hover:border-red-300 text-red-700 hover:text-red-800 transition-all duration-300 transform hover:scale-105 py-3 px-2"
                 >
-                  <XCircle className="w-8 h-8 mr-3" />
+                  <XCircle className="w-5 h-5 mr-1 md:w-8 md:h-8 md:mr-3" />
                   <div className="text-center">
-                    <div className="font-bold text-2xl">😔 I Forgot</div>
+                    <div className="font-bold text-lg md:text-2xl">😔 I Forgot</div>
                     <div className="text-sm opacity-75 mt-1">
                       Need more practice
                     </div>
@@ -395,11 +395,11 @@ export function InteractiveDashboardWordCard({
 
                 <Button
                   onClick={() => handleWordAction("remembered")}
-                  className="flex-1 bg-green-50 hover:bg-green-100 border-green-200 hover:border-green-300 text-green-700 hover:text-green-800 transition-all duration-300 transform hover:scale-105 py-8"
+                  className="flex-1 bg-green-50 hover:bg-green-100 border-green-200 hover:border-green-300 text-green-700 hover:text-green-800 transition-all duration-300 transform hover:scale-105 py-3 px-2"
                 >
-                  <CheckCircle className="w-8 h-8 mr-3" />
+                  <CheckCircle className="w-5 h-5 mr-1 md:w-8 md:h-8 md:mr-3" />
                   <div className="text-center">
-                    <div className="font-bold text-2xl">😊 I Remember</div>
+                    <div className="font-bold text-lg md:text-2xl">😊 I Remember</div>
                     <div className="text-sm opacity-75 mt-1">Got it right!</div>
                   </div>
                 </Button>
