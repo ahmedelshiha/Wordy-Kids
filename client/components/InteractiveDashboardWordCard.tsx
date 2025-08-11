@@ -13,8 +13,12 @@ import {
   Target,
   Trophy,
   Zap,
+  Eye,
+  EyeOff,
+  Lightbulb,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { audioService } from "@/lib/audioService";
 
 interface Word {
   id: number;
@@ -24,6 +28,8 @@ interface Word {
   category: string;
   difficulty?: "easy" | "medium" | "hard";
   pronunciation?: string;
+  emoji?: string;
+  imageUrl?: string;
 }
 
 interface DailyGoal {
@@ -59,9 +65,12 @@ export function InteractiveDashboardWordCard({
   className,
 }: InteractiveDashboardWordCardProps) {
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
-  const [showDefinition, setShowDefinition] = useState(false);
+  const [showWordName, setShowWordName] = useState(false);
   const [isAnswered, setIsAnswered] = useState(false);
   const [celebrationEffect, setCelebrationEffect] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [guess, setGuess] = useState("");
+  const [showHint, setShowHint] = useState(false);
 
   const currentWord = words[currentWordIndex] || null;
   const dailyProgress = Math.round(
@@ -77,14 +86,20 @@ export function InteractiveDashboardWordCard({
 
   // Reset card state when word changes
   useEffect(() => {
-    setShowDefinition(false);
+    setShowWordName(false);
     setIsAnswered(false);
+    setGuess("");
+    setShowHint(false);
   }, [currentWordIndex]);
 
   const playPronunciation = () => {
-    if (currentWord) {
-      // Simulate pronunciation - in real app this would use text-to-speech
-      console.log(`Playing pronunciation for: ${currentWord.word}`);
+    if (currentWord && !isPlaying) {
+      setIsPlaying(true);
+      audioService.pronounceWord(currentWord.word, {
+        onStart: () => setIsPlaying(true),
+        onEnd: () => setIsPlaying(false),
+        onError: () => setIsPlaying(false),
+      });
     }
   };
 
@@ -96,7 +111,10 @@ export function InteractiveDashboardWordCard({
     // Show celebration effect for successful interactions
     if (status === "remembered") {
       setCelebrationEffect(true);
+      audioService.playSuccessSound();
       setTimeout(() => setCelebrationEffect(false), 2000);
+    } else if (status === "needs_practice") {
+      audioService.playEncouragementSound();
     }
 
     // Mark as answered
@@ -134,6 +152,39 @@ export function InteractiveDashboardWordCard({
       default:
         return "bg-gray-100 text-gray-700 border-gray-300";
     }
+  };
+
+  const renderWordImage = () => {
+    if (currentWord?.imageUrl) {
+      return (
+        <img
+          src={currentWord.imageUrl}
+          alt="Picture to guess"
+          className="w-full h-64 object-cover rounded-2xl shadow-lg"
+        />
+      );
+    }
+
+    // Fallback to emoji if no image URL
+    if (currentWord?.emoji) {
+      return (
+        <div className="w-full h-64 flex items-center justify-center bg-gradient-to-br from-blue-100 to-purple-100 rounded-2xl shadow-lg">
+          <div className="text-8xl animate-gentle-float filter drop-shadow-lg">
+            {currentWord.emoji}
+          </div>
+        </div>
+      );
+    }
+
+    // Default placeholder
+    return (
+      <div className="w-full h-64 flex items-center justify-center bg-gradient-to-br from-gray-100 to-gray-200 rounded-2xl shadow-lg">
+        <div className="text-center text-gray-500">
+          <div className="text-4xl mb-2">🖼️</div>
+          <p className="text-lg">Picture coming soon!</p>
+        </div>
+      </div>
+    );
   };
 
   if (!currentWord) {
@@ -181,7 +232,7 @@ export function InteractiveDashboardWordCard({
       >
         {/* Celebration Sparkles */}
         {celebrationEffect && (
-          <div className="absolute inset-0 bg-gradient-to-r from-yellow-400/20 to-pink-400/20 animate-pulse">
+          <div className="absolute inset-0 bg-gradient-to-r from-yellow-400/20 to-pink-400/20 animate-pulse z-20">
             <div className="absolute top-4 left-4 text-2xl animate-bounce">
               ✨
             </div>
@@ -198,7 +249,7 @@ export function InteractiveDashboardWordCard({
         )}
 
         <CardContent className="p-8 relative z-10">
-          {/* Word Header */}
+          {/* Category and Progress Header */}
           <div className="text-center mb-6">
             <div className="flex items-center justify-center gap-4 mb-4">
               <Badge
@@ -213,70 +264,120 @@ export function InteractiveDashboardWordCard({
                 {currentWordIndex + 1} / {words.length}
               </Badge>
             </div>
-
-            {/* Main Word */}
-            <div className="space-y-4">
-              <h1 className="text-5xl md:text-6xl font-bold text-gray-800 tracking-wide">
-                {currentWord.word.toUpperCase()}
-              </h1>
-
-              {/* Pronunciation */}
-              {currentWord.pronunciation && (
-                <div className="flex items-center justify-center gap-2">
-                  <span className="text-lg text-gray-600 font-mono">
-                    /{currentWord.pronunciation}/
-                  </span>
-                  <Button
-                    onClick={playPronunciation}
-                    variant="ghost"
-                    size="sm"
-                    className="p-2 hover:bg-blue-100"
-                  >
-                    <Volume2 className="w-5 h-5 text-blue-600" />
-                  </Button>
-                </div>
-              )}
-            </div>
           </div>
 
-          {/* Show Answer Button */}
-          {!showDefinition && (
+          {/* Picture Display */}
+          <div className="mb-6">
+            {renderWordImage()}
+          </div>
+
+          {/* Game Instructions */}
+          <div className="text-center mb-4">
+            <h2 className="text-2xl font-bold text-gray-800 mb-2">
+              🎯 What is this?
+            </h2>
+            <p className="text-gray-600">
+              Look at the picture and guess the word!
+            </p>
+          </div>
+
+          {/* Pronunciation Button */}
+          <div className="flex justify-center gap-4 mb-6">
+            <Button
+              onClick={playPronunciation}
+              disabled={isPlaying}
+              className="bg-educational-blue hover:bg-educational-blue/90 text-white px-6 py-3 text-lg rounded-2xl transition-all duration-300 transform hover:scale-105"
+            >
+              <Volume2 className={cn("w-5 h-5 mr-2", isPlaying && "animate-pulse")} />
+              {isPlaying ? "Playing..." : "🔊 Hear the word"}
+            </Button>
+
+            {!showHint && !showWordName && (
+              <Button
+                onClick={() => setShowHint(true)}
+                variant="outline"
+                className="px-6 py-3 text-lg rounded-2xl transition-all duration-300 transform hover:scale-105"
+              >
+                <Lightbulb className="w-5 h-5 mr-2" />
+                💡 Hint
+              </Button>
+            )}
+          </div>
+
+          {/* Hint Display */}
+          {showHint && !showWordName && (
+            <div className="bg-yellow-50 border-2 border-yellow-200 rounded-2xl p-4 mb-6 text-center">
+              <div className="flex items-center justify-center gap-2 mb-2">
+                <Lightbulb className="w-5 h-5 text-yellow-600" />
+                <h3 className="text-lg font-semibold text-yellow-800">Hint:</h3>
+              </div>
+              <p className="text-yellow-700 text-lg">
+                "{currentWord.definition}"
+              </p>
+            </div>
+          )}
+
+          {/* Show Word Name Button */}
+          {!showWordName && (
             <div className="text-center mb-6">
               <Button
-                onClick={() => setShowDefinition(true)}
+                onClick={() => setShowWordName(true)}
                 className="bg-educational-purple hover:bg-educational-purple/90 text-white px-8 py-3 text-lg rounded-2xl transition-all duration-300 transform hover:scale-105"
               >
-                <RotateCcw className="w-5 h-5 mr-2" />
-                Show Definition
+                <Eye className="w-5 h-5 mr-2" />
+                👁️ Show Word Name
               </Button>
             </div>
           )}
 
-          {/* Definition and Example */}
-          {showDefinition && (
-            <div className="space-y-4 mb-8 bg-gray-50 p-6 rounded-2xl">
-              <div>
-                <h3 className="text-lg font-semibold text-gray-700 mb-2">
-                  Definition:
-                </h3>
-                <p className="text-xl text-gray-800 leading-relaxed">
-                  {currentWord.definition}
-                </p>
+          {/* Word Name and Details */}
+          {showWordName && (
+            <div className="space-y-4 mb-8">
+              {/* Word Name */}
+              <div className="text-center bg-gradient-to-r from-green-50 to-blue-50 p-6 rounded-2xl border-2 border-green-200">
+                <div className="flex items-center justify-center gap-3 mb-3">
+                  <div className="text-3xl">{currentWord.emoji}</div>
+                  <h1 className="text-4xl md:text-5xl font-bold text-gray-800 tracking-wide">
+                    {currentWord.word.toUpperCase()}
+                  </h1>
+                  <div className="text-3xl">{currentWord.emoji}</div>
+                </div>
+
+                {/* Pronunciation */}
+                {currentWord.pronunciation && (
+                  <div className="flex items-center justify-center gap-2">
+                    <span className="text-lg text-gray-600 font-mono">
+                      /{currentWord.pronunciation}/
+                    </span>
+                  </div>
+                )}
               </div>
 
-              <div>
-                <h3 className="text-lg font-semibold text-gray-700 mb-2">
-                  Example:
-                </h3>
-                <p className="text-lg text-gray-700 italic leading-relaxed">
-                  "{currentWord.example}"
-                </p>
+              {/* Definition and Example */}
+              <div className="bg-gray-50 p-6 rounded-2xl">
+                <div className="mb-4">
+                  <h3 className="text-lg font-semibold text-gray-700 mb-2">
+                    📖 Definition:
+                  </h3>
+                  <p className="text-xl text-gray-800 leading-relaxed">
+                    {currentWord.definition}
+                  </p>
+                </div>
+
+                <div>
+                  <h3 className="text-lg font-semibold text-gray-700 mb-2">
+                    💬 Example:
+                  </h3>
+                  <p className="text-lg text-gray-700 italic leading-relaxed">
+                    "{currentWord.example}"
+                  </p>
+                </div>
               </div>
             </div>
           )}
 
           {/* Action Buttons */}
-          {showDefinition && !isAnswered && (
+          {showWordName && !isAnswered && (
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <Button
                 onClick={() => handleWordAction("needs_practice")}
@@ -285,8 +386,8 @@ export function InteractiveDashboardWordCard({
               >
                 <XCircle className="w-6 h-6 mr-2" />
                 <div className="text-center">
-                  <div className="font-bold text-lg">I Forgot</div>
-                  <div className="text-sm opacity-75">Need practice</div>
+                  <div className="font-bold text-lg">Hard to Remember</div>
+                  <div className="text-sm opacity-75">Need more practice</div>
                 </div>
               </Button>
 
@@ -308,8 +409,8 @@ export function InteractiveDashboardWordCard({
               >
                 <CheckCircle className="w-6 h-6 mr-2" />
                 <div className="text-center">
-                  <div className="font-bold text-lg">I Remember!</div>
-                  <div className="text-sm opacity-75">Got it!</div>
+                  <div className="font-bold text-lg">I Got It!</div>
+                  <div className="text-sm opacity-75">Easy to remember</div>
                 </div>
               </Button>
             </div>
