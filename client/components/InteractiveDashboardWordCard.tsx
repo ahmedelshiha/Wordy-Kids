@@ -336,7 +336,7 @@ export function InteractiveDashboardWordCard({
               <div className="text-center bg-gradient-to-r from-green-50 to-blue-50 p-6 rounded-2xl border-2 border-green-200">
                 <div className="flex items-center justify-center gap-3 mb-3">
                   <div className="text-3xl">{currentWord.emoji}</div>
-                  <h1 className="text-4xl md:text-5xl font-bold text-gray-800 tracking-wide">
+                  <h1 className="text-2xl md:text-3xl font-bold text-gray-800 tracking-wide">
                     {currentWord.word.toUpperCase()}
                   </h1>
                   <div className="text-3xl">{currentWord.emoji}</div>
