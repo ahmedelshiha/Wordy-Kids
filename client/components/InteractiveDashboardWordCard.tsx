@@ -431,7 +431,7 @@ export function InteractiveDashboardWordCard({
       </Card>
 
       {/* Quick Action Buttons */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-3xl mx-auto">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-2xl mx-auto">
         <Button
           onClick={onQuickQuiz}
           className="bg-educational-pink hover:bg-educational-pink/90 text-white py-4 rounded-2xl transition-all duration-300 transform hover:scale-105"
@@ -440,17 +440,6 @@ export function InteractiveDashboardWordCard({
           <div>
             <div className="font-bold">Quick Quiz</div>
             <div className="text-sm opacity-90">5 questions</div>
-          </div>
-        </Button>
-
-        <Button
-          onClick={onAdventure}
-          className="bg-educational-orange hover:bg-educational-orange/90 text-white py-4 rounded-2xl transition-all duration-300 transform hover:scale-105"
-        >
-          <Sparkles className="w-5 h-5 mr-2" />
-          <div>
-            <div className="font-bold">Adventure</div>
-            <div className="text-sm opacity-90">Explore worlds</div>
           </div>
         </Button>
 
