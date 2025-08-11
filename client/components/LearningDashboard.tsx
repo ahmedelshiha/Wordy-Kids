@@ -112,81 +112,49 @@ export const LearningDashboard: React.FC<LearningDashboardProps> = ({
 
       {/* Compact Stats Row - Secondary Information */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        {/* Words Learned */}
+        {/* Compact Stats Cards */}
         <Card className="bg-gradient-to-br from-educational-blue to-educational-blue-light text-white">
-          <CardContent className="p-6">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm opacity-90">Words Learned</p>
-                <AnimatedCounter
-                  value={stats.wordsLearned}
-                  className="text-3xl font-bold"
-                />
-                <p className="text-xs opacity-80">of {stats.totalWords}</p>
-              </div>
-              <BookOpen className="w-8 h-8 opacity-80" />
-            </div>
-            <Progress
-              value={completionPercentage}
-              className="mt-3 bg-white/20"
+          <CardContent className="p-4 text-center">
+            <BookOpen className="w-6 h-6 mx-auto mb-1 opacity-80" />
+            <AnimatedCounter
+              value={stats.wordsLearned}
+              className="text-2xl font-bold block"
             />
-            <p className="text-xs mt-1">{completionPercentage}% Complete</p>
+            <p className="text-xs opacity-90">Words Learned</p>
           </CardContent>
         </Card>
 
-        {/* Current Streak */}
         <Card className="bg-gradient-to-br from-educational-orange to-educational-orange-light text-white">
-          <CardContent className="p-6">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm opacity-90">Current Streak</p>
-                <AnimatedCounter
-                  value={stats.currentStreak}
-                  className="text-3xl font-bold"
-                />
-                <p className="text-xs opacity-80">days</p>
-              </div>
-              <Zap className="w-8 h-8 opacity-80" />
-            </div>
+          <CardContent className="p-4 text-center">
+            <Zap className="w-6 h-6 mx-auto mb-1 opacity-80" />
+            <AnimatedCounter
+              value={stats.currentStreak}
+              className="text-2xl font-bold block"
+            />
+            <p className="text-xs opacity-90">Day Streak</p>
           </CardContent>
         </Card>
 
-        {/* Weekly Goal */}
         <Card className="bg-gradient-to-br from-educational-green to-educational-green-light text-white">
-          <CardContent className="p-6">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm opacity-90">Weekly Goal</p>
-                <AnimatedCounter
-                  value={stats.weeklyProgress}
-                  className="text-3xl font-bold"
-                />
-                <p className="text-xs opacity-80">
-                  of {stats.weeklyGoal} words
-                </p>
-              </div>
-              <Target className="w-8 h-8 opacity-80" />
-            </div>
-            <Progress value={weeklyPercentage} className="mt-3 bg-white/20" />
-            <p className="text-xs mt-1">{weeklyPercentage}% of goal</p>
+          <CardContent className="p-4 text-center">
+            <Target className="w-6 h-6 mx-auto mb-1 opacity-80" />
+            <AnimatedCounter
+              value={stats.weeklyProgress}
+              className="text-2xl font-bold block"
+            />
+            <p className="text-xs opacity-90">Weekly Goal</p>
           </CardContent>
         </Card>
 
-        {/* Accuracy Rate */}
         <Card className="bg-gradient-to-br from-educational-purple to-educational-purple-light text-white">
-          <CardContent className="p-6">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm opacity-90">Accuracy</p>
-                <AnimatedCounter
-                  value={stats.accuracyRate}
-                  suffix="%"
-                  className="text-3xl font-bold"
-                />
-                <p className="text-xs opacity-80">average</p>
-              </div>
-              <TrendingUp className="w-8 h-8 opacity-80" />
-            </div>
+          <CardContent className="p-4 text-center">
+            <TrendingUp className="w-6 h-6 mx-auto mb-1 opacity-80" />
+            <AnimatedCounter
+              value={stats.accuracyRate}
+              suffix="%"
+              className="text-2xl font-bold block"
+            />
+            <p className="text-xs opacity-90">Accuracy</p>
           </CardContent>
         </Card>
       </div>
