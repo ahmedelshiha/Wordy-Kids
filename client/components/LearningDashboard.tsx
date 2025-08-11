@@ -54,6 +54,7 @@ interface LearningDashboardProps {
   onQuickQuiz?: () => void;
   onAdventure?: () => void;
   onPracticeForgotten?: () => void;
+  forgottenWordsCount?: number;
 }
 
 export const LearningDashboard: React.FC<LearningDashboardProps> = ({
@@ -67,6 +68,7 @@ export const LearningDashboard: React.FC<LearningDashboardProps> = ({
   onQuickQuiz,
   onAdventure,
   onPracticeForgotten,
+  forgottenWordsCount = 0,
 }) => {
   const completionPercentage = Math.round(
     (stats.wordsLearned / stats.totalWords) * 100,
@@ -169,6 +171,7 @@ export const LearningDashboard: React.FC<LearningDashboardProps> = ({
           }}
           currentLevel={stats.level}
           totalPoints={stats.totalPoints}
+          forgottenWordsCount={forgottenWordsCount}
         />
       ) : (
         // Fallback welcome section if no words available
