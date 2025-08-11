@@ -902,6 +902,7 @@ export default function Index({ initialProfile }: IndexProps) {
                     stats={learningStats}
                     userName="Explorer"
                     childStats={childStats}
+                    forgottenWordsCount={forgottenWords.size}
                     availableWords={(() => {
                       // Smart word selection logic
                       const allWords =
