@@ -159,46 +159,38 @@ export const LearningDashboard: React.FC<LearningDashboardProps> = ({
         </Card>
       </div>
 
-      {/* Level and Points */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {/* Level Progress */}
-        <Card>
-          <CardHeader className="pb-3">
-            <CardTitle className="flex items-center gap-2 text-lg">
-              <Star className="w-5 h-5 text-yellow-500" />
-              Level {stats.level}
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-3">
-              <div className="flex justify-between text-sm">
-                <span>Progress to Level {stats.level + 1}</span>
-                <span>{stats.totalPoints} points</span>
+      {/* Compact Progress and Achievement Row */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <Card className="bg-gradient-to-r from-yellow-400 to-orange-500 text-white">
+          <CardContent className="p-4">
+            <div className="flex items-center justify-between">
+              <div>
+                <div className="flex items-center gap-2 mb-1">
+                  <Star className="w-5 h-5" />
+                  <span className="font-bold text-lg">Level {stats.level}</span>
+                </div>
+                <p className="text-sm opacity-90">{stats.totalPoints} points</p>
               </div>
-              <Progress value={75} className="h-3" />
-              <p className="text-xs text-slate-600">
-                325 more points to reach Level {stats.level + 1}
-              </p>
+              <div className="text-right">
+                <Progress value={75} className="h-2 w-24 bg-white/20" />
+                <p className="text-xs opacity-90 mt-1">Next level</p>
+              </div>
             </div>
           </CardContent>
         </Card>
 
-        {/* Favorite Category */}
-        <Card>
-          <CardHeader className="pb-3">
-            <CardTitle className="flex items-center gap-2 text-lg">
-              <Trophy className="w-5 h-5 text-educational-orange" />
-              Favorite Category
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="text-center">
-              <Badge className="text-lg px-4 py-2 bg-educational-blue text-white">
-                {stats.favoriteCategory}
-              </Badge>
-              <p className="text-sm text-slate-600 mt-2">
-                You've mastered the most words in this category!
-              </p>
+        <Card className="bg-gradient-to-r from-purple-500 to-pink-500 text-white">
+          <CardContent className="p-4">
+            <div className="flex items-center justify-between">
+              <div>
+                <div className="flex items-center gap-2 mb-1">
+                  <Trophy className="w-5 h-5" />
+                  <span className="font-bold text-lg">Top Category</span>
+                </div>
+                <Badge className="bg-white/20 text-white border-white/30">
+                  {stats.favoriteCategory}
+                </Badge>
+              </div>
             </div>
           </CardContent>
         </Card>
