@@ -253,49 +253,12 @@ export const WordCard: React.FC<WordCardProps> = ({
           <div className="mt-12"></div>
 
           {word.imageUrl ? (
-<<<<<<< HEAD
-            <img
-              src={word.imageUrl}
-              alt={word.word}
-              className="w-40 md:w-48 h-48 md:h-56 object-cover rounded-full mb-6 md:mb-8 shadow-xl ring-4 ring-white/30"
-            />
-          ) : (
-            <div className="w-40 md:w-48 h-48 md:h-56 rounded-full bg-white/20 flex items-center justify-center mb-6 md:mb-8 text-7xl md:text-9xl shadow-xl ring-4 ring-white/30 backdrop-blur-sm">
-              {word.emoji || "📚"}
-            </div>
-          )}
-
-          <h2 className="text-2xl md:text-4xl font-bold mb-4 md:mb-6 text-center">
-            {word.word}
-          </h2>
-
-          {word.pronunciation && (
-            <div className="flex items-center gap-2 mb-6 md:mb-8">
-              <span className="text-base md:text-lg opacity-90">
-                {word.pronunciation}
-              </span>
-              <Button
-                size="sm"
-                variant="ghost"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  handlePronounce();
-                }}
-                disabled={isPlaying}
-                className={`text-white hover:bg-white/20 p-2 h-auto transition-all duration-300 ${
-                  isPlaying ? "scale-110 bg-white/30" : ""
-                }`}
-              >
-                <Volume2
-                  className={`w-5 h-5 ${isPlaying ? "animate-pulse text-yellow-300" : ""}`}
-=======
             <div className="relative mx-auto mt-8 mb-6">
               <div className="w-48 h-48 md:w-56 md:h-56 lg:w-64 lg:h-64 rounded-full bg-white/20 backdrop-blur-sm shadow-2xl ring-4 ring-white/30 flex items-center justify-center">
                 <img
                   src={word.imageUrl}
                   alt={word.word}
                   className="w-40 h-40 md:w-48 md:h-48 lg:w-56 lg:h-56 object-cover rounded-full shadow-lg"
->>>>>>> origin/main
                 />
               </div>
             </div>
