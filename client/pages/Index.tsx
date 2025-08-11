@@ -435,10 +435,7 @@ export default function Index({ initialProfile }: IndexProps) {
             .filter((word) => {
               // Get words from current learning set that might need practice
               const wordKey = `${currentProfile?.id}-${word.id}`;
-              return (
-                forgottenWords.has(Number(word.id)) ||
-                (word.accuracy && word.accuracy < 70)
-              );
+              return forgottenWords.has(Number(word.id));
             })
             .slice(0, category.needsPracticeWords)
             .map((word) => ({
