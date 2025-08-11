@@ -378,41 +378,44 @@ export function InteractiveDashboardWordCard({
 
           {/* Action Buttons */}
           {showWordName && !isAnswered && (
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <Button
-                onClick={() => handleWordAction("needs_practice")}
-                variant="outline"
-                className="flex-1 bg-red-50 hover:bg-red-100 border-red-200 hover:border-red-300 text-red-700 hover:text-red-800 transition-all duration-300 transform hover:scale-105 py-6"
-              >
-                <XCircle className="w-6 h-6 mr-2" />
-                <div className="text-center">
-                  <div className="font-bold text-lg">Hard to Remember</div>
-                  <div className="text-sm opacity-75">Need more practice</div>
-                </div>
-              </Button>
+            <div className="space-y-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <Button
+                  onClick={() => handleWordAction("needs_practice")}
+                  variant="outline"
+                  className="flex-1 bg-red-50 hover:bg-red-100 border-red-200 hover:border-red-300 text-red-700 hover:text-red-800 transition-all duration-300 transform hover:scale-105 py-8"
+                >
+                  <XCircle className="w-8 h-8 mr-3" />
+                  <div className="text-center">
+                    <div className="font-bold text-2xl">😔 I Forgot</div>
+                    <div className="text-sm opacity-75 mt-1">Need more practice</div>
+                  </div>
+                </Button>
 
-              <Button
-                onClick={() => handleWordAction("skipped")}
-                variant="ghost"
-                className="flex-1 py-6 text-gray-600 hover:text-gray-800 hover:bg-gray-100"
-              >
-                <SkipForward className="w-5 h-5 mr-2" />
-                <div>
-                  <div className="font-medium">Skip</div>
-                  <div className="text-xs opacity-75">Too easy/hard</div>
-                </div>
-              </Button>
+                <Button
+                  onClick={() => handleWordAction("remembered")}
+                  className="flex-1 bg-green-50 hover:bg-green-100 border-green-200 hover:border-green-300 text-green-700 hover:text-green-800 transition-all duration-300 transform hover:scale-105 py-8"
+                >
+                  <CheckCircle className="w-8 h-8 mr-3" />
+                  <div className="text-center">
+                    <div className="font-bold text-2xl">😊 I Remember</div>
+                    <div className="text-sm opacity-75 mt-1">Got it right!</div>
+                  </div>
+                </Button>
+              </div>
 
-              <Button
-                onClick={() => handleWordAction("remembered")}
-                className="flex-1 bg-green-50 hover:bg-green-100 border-green-200 hover:border-green-300 text-green-700 hover:text-green-800 transition-all duration-300 transform hover:scale-105 py-6"
-              >
-                <CheckCircle className="w-6 h-6 mr-2" />
-                <div className="text-center">
-                  <div className="font-bold text-lg">I Got It!</div>
-                  <div className="text-sm opacity-75">Easy to remember</div>
-                </div>
-              </Button>
+              {/* Skip button (smaller, less prominent) */}
+              <div className="text-center">
+                <Button
+                  onClick={() => handleWordAction("skipped")}
+                  variant="ghost"
+                  size="sm"
+                  className="text-gray-500 hover:text-gray-700 hover:bg-gray-100"
+                >
+                  <SkipForward className="w-4 h-4 mr-2" />
+                  Skip this word
+                </Button>
+              </div>
             </div>
           )}
 
