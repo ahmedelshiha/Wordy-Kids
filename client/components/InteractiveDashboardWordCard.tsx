@@ -50,6 +50,7 @@ interface InteractiveDashboardWordCardProps {
   dailyGoal: DailyGoal;
   currentLevel: number;
   totalPoints: number;
+  forgottenWordsCount?: number;
   className?: string;
 }
 
@@ -62,6 +63,7 @@ export function InteractiveDashboardWordCard({
   dailyGoal,
   currentLevel,
   totalPoints,
+  forgottenWordsCount = 0,
   className,
 }: InteractiveDashboardWordCardProps) {
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
@@ -484,13 +486,23 @@ export function InteractiveDashboardWordCard({
 
         <Button
           onClick={onPracticeForgotten}
-          className="bg-educational-yellow hover:bg-educational-yellow/90 text-white py-4 rounded-2xl transition-all duration-300 transform hover:scale-105"
+          className="bg-educational-yellow hover:bg-educational-yellow/90 text-white py-4 rounded-2xl transition-all duration-300 transform hover:scale-105 relative"
         >
           <RotateCcw className="w-5 h-5 mr-2" />
           <div>
             <div className="font-bold">Practice</div>
-            <div className="text-sm opacity-90">Review words</div>
+            <div className="text-sm opacity-90">
+              {forgottenWordsCount > 0
+                ? `${forgottenWordsCount} words to review`
+                : "Review words"
+              }
+            </div>
           </div>
+          {forgottenWordsCount > 0 && (
+            <Badge className="absolute -top-2 -right-2 bg-red-500 text-white text-xs px-2 py-1 rounded-full border-2 border-white min-w-[24px] h-6 flex items-center justify-center animate-pulse">
+              {forgottenWordsCount}
+            </Badge>
+          )}
         </Button>
       </div>
 
