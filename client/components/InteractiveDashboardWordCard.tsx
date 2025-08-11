@@ -109,6 +109,11 @@ export function InteractiveDashboardWordCard({
   ) => {
     if (!currentWord) return;
 
+    // Set visual feedback type
+    if (status !== "skipped") {
+      setFeedbackType(status);
+    }
+
     // Show celebration effect for successful interactions
     if (status === "remembered") {
       setCelebrationEffect(true);
