@@ -172,6 +172,7 @@ export default function Index({ initialProfile }: IndexProps) {
   const [childStats, setChildStats] = useState<ChildWordStats | null>(null);
   const [isLoadingProgress, setIsLoadingProgress] = useState(false);
   const [showPracticeGame, setShowPracticeGame] = useState(false);
+  const [showMobileMoreMenu, setShowMobileMoreMenu] = useState(false);
 
   // Load background animations setting on mount
   useEffect(() => {
