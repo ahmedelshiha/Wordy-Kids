@@ -69,6 +69,7 @@ export function InteractiveDashboardWordCard({
   const [isAnswered, setIsAnswered] = useState(false);
   const [celebrationEffect, setCelebrationEffect] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
+  const [feedbackType, setFeedbackType] = useState<"remembered" | "needs_practice" | null>(null);
   const [guess, setGuess] = useState("");
   const [showHint, setShowHint] = useState(false);
 
