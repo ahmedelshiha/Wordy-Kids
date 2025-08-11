@@ -36,7 +36,7 @@ export interface SmartWordSelection {
 export class SmartWordSelector {
   
   /**
-   * Get optimal word selection for learning session
+   * Get optimal word selection for learning session with dynamic difficulty adjustment
    */
   static selectWords(options: WordSelectionOptions): SmartWordSelection {
     const {
