@@ -554,24 +554,14 @@ export default function Index({ initialProfile }: IndexProps) {
       <header className="relative overflow-hidden bg-gradient-to-r from-educational-blue via-educational-purple to-educational-pink text-white">
         <div className="absolute inset-0 bg-black/10"></div>
         <div className="relative container mx-auto px-4 py-4 md:py-8">
-          {/* Mobile header with hamburger menu */}
-          <div className="flex items-center justify-between mb-4 md:hidden">
+          {/* Mobile header - simplified */}
+          <div className="flex items-center justify-center mb-4 md:hidden">
             <div className="flex items-center gap-2">
               <div className="bg-white/20 backdrop-blur-sm rounded-full p-2">
                 <BookOpen className="w-8 h-8 text-white" />
               </div>
               <h1 className="text-xl font-bold">Word Adventure</h1>
             </div>
-            <button
-              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="bg-white/20 backdrop-blur-sm rounded-full p-2 transition-all hover:bg-white/30"
-            >
-              {isMobileMenuOpen ? (
-                <X className="w-6 h-6 text-white" />
-              ) : (
-                <Menu className="w-6 h-6 text-white" />
-              )}
-            </button>
           </div>
 
           {/* Desktop header */}
