@@ -218,30 +218,34 @@ export const LearningDashboard: React.FC<LearningDashboardProps> = ({
         </Card>
       )}
 
-      {/* Badges Section */}
+      {/* Recent Achievements - Compact */}
       <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
+        <CardHeader className="pb-3">
+          <CardTitle className="flex items-center gap-2 text-lg">
             <Award className="w-5 h-5 text-educational-purple" />
-            Achievement Badges
+            Recent Achievements
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            {stats.badges.map((badge) => (
-              <div
-                key={badge.id}
-                className={`text-center p-4 rounded-lg transition-all ${
-                  badge.earned
-                    ? "bg-gradient-to-br from-yellow-400 to-yellow-600 text-white shadow-lg"
-                    : "bg-slate-100 text-slate-400"
-                }`}
-              >
-                <div className="text-3xl mb-2">{badge.icon}</div>
-                <h4 className="font-semibold text-sm">{badge.name}</h4>
-                <p className="text-xs mt-1 opacity-90">{badge.description}</p>
+          <div className="flex gap-3 overflow-x-auto pb-2">
+            {stats.badges
+              .filter((badge) => badge.earned)
+              .slice(0, 6)
+              .map((badge) => (
+                <div
+                  key={badge.id}
+                  className="text-center p-3 rounded-xl bg-gradient-to-br from-yellow-400 to-yellow-600 text-white shadow-lg min-w-[80px] flex-shrink-0"
+                >
+                  <div className="text-2xl mb-1">{badge.icon}</div>
+                  <h4 className="font-semibold text-xs">{badge.name}</h4>
+                </div>
+              ))}
+            {stats.badges.filter((badge) => badge.earned).length === 0 && (
+              <div className="text-center text-gray-500 w-full py-4">
+                <div className="text-4xl mb-2">🎯</div>
+                <p className="text-sm">Start learning to earn your first badge!</p>
               </div>
-            ))}
+            )}
           </div>
         </CardContent>
       </Card>
