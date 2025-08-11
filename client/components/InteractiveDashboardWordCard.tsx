@@ -139,6 +139,11 @@ export function InteractiveDashboardWordCard({
   };
 
   const advanceToNextWord = () => {
+    // Reset states for next word
+    setIsAnswered(false);
+    setFeedbackType(null);
+    setCelebrationEffect(false);
+
     if (currentWordIndex < words.length - 1) {
       setCurrentWordIndex(currentWordIndex + 1);
     } else {
