@@ -70,16 +70,17 @@ import { useNavigate } from "react-router-dom";
 import { WordProgressAPI } from "@/lib/wordProgressApi";
 import { ChildWordStats } from "@shared/api";
 
+// Dynamic learning stats that reflect actual progress
 const learningStats = {
-  wordsLearned: 68,
+  wordsLearned: rememberedWords.size,
   totalWords: wordsDatabase.length,
   currentStreak: 7,
   weeklyGoal: 20,
-  weeklyProgress: 18,
-  accuracyRate: 92,
+  weeklyProgress: rememberedWords.size, // Use actual remembered words for today's goal
+  accuracyRate: rememberedWords.size > 0 ? Math.round((rememberedWords.size / (rememberedWords.size + forgottenWords.size)) * 100) : 0,
   favoriteCategory: "Animals",
-  totalPoints: 2850,
-  level: 4,
+  totalPoints: rememberedWords.size * 50 + (rememberedWords.size > 10 ? 500 : 0), // Dynamic points
+  level: Math.floor(rememberedWords.size / 5) + 1, // Level up every 5 words
   badges: [
     {
       id: "first-word",
