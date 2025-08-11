@@ -205,8 +205,8 @@ export function InteractiveDashboardWordCard({
 
   return (
     <div className={cn("space-y-6", className)}>
-      {/* Daily Goal Header */}
-      <div className="text-center bg-gradient-to-r from-educational-blue to-educational-purple text-white p-4 rounded-2xl shadow-lg">
+      {/* Daily Goal Header - Hidden */}
+      {/* <div className="text-center bg-gradient-to-r from-educational-blue to-educational-purple text-white p-4 rounded-2xl shadow-lg">
         <div className="flex items-center justify-center gap-4 mb-3">
           <Target className="w-6 h-6" />
           <h2 className="text-lg font-bold">
@@ -220,7 +220,7 @@ export function InteractiveDashboardWordCard({
         </div>
         <Progress value={dailyProgress} className="h-3 bg-white/20" />
         <p className="text-sm mt-2 opacity-90">{dailyProgress}% complete</p>
-      </div>
+      </div> */}
 
       {/* Interactive Word Card */}
       <Card
