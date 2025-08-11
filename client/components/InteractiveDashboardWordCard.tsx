@@ -461,15 +461,23 @@ export function InteractiveDashboardWordCard({
                   {/* Remembered Words */}
                   <div className="bg-green-100 rounded-lg p-2 border border-green-300 text-center flex-1">
                     <div className="text-lg">🎉</div>
-                    <div className="text-lg font-bold text-green-700">{rememberedWordsCount}</div>
-                    <div className="text-xs text-green-600 font-medium">I Know!</div>
+                    <div className="text-lg font-bold text-green-700">
+                      {rememberedWordsCount}
+                    </div>
+                    <div className="text-xs text-green-600 font-medium">
+                      I Know!
+                    </div>
                   </div>
 
                   {/* Forgotten Words */}
                   <div className="bg-orange-100 rounded-lg p-2 border border-orange-300 text-center flex-1">
                     <div className="text-lg">💪</div>
-                    <div className="text-lg font-bold text-orange-700">{forgottenWordsCount}</div>
-                    <div className="text-xs text-orange-600 font-medium">Practice</div>
+                    <div className="text-lg font-bold text-orange-700">
+                      {forgottenWordsCount}
+                    </div>
+                    <div className="text-xs text-orange-600 font-medium">
+                      Practice
+                    </div>
                   </div>
                 </div>
 

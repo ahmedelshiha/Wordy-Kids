@@ -29,7 +29,10 @@ import {
   getWordsByCategory,
   getRandomWords,
 } from "@/data/wordsDatabase";
-import { SmartWordSelector, getSmartWordSelection } from "@/lib/smartWordSelection";
+import {
+  SmartWordSelector,
+  getSmartWordSelection,
+} from "@/lib/smartWordSelection";
 import { isBackgroundAnimationsEnabled } from "@/lib/backgroundAnimations";
 import {
   generateQuizQuestions,
@@ -382,8 +385,26 @@ export default function Index({ initialProfile }: IndexProps) {
         accuracy,
         totalWords,
         totalRemembered,
-        bonusPoints: accuracy === 100 ? 200 : accuracy >= 90 ? 150 : accuracy >= 75 ? 100 : accuracy >= 50 ? 75 : 50,
-        badgeEarned: accuracy === 100 ? 'master' : accuracy >= 90 ? 'expert' : accuracy >= 75 ? 'scholar' : accuracy >= 50 ? 'explorer' : 'challenger',
+        bonusPoints:
+          accuracy === 100
+            ? 200
+            : accuracy >= 90
+              ? 150
+              : accuracy >= 75
+                ? 100
+                : accuracy >= 50
+                  ? 75
+                  : 50,
+        badgeEarned:
+          accuracy === 100
+            ? "master"
+            : accuracy >= 90
+              ? "expert"
+              : accuracy >= 75
+                ? "scholar"
+                : accuracy >= 50
+                  ? "explorer"
+                  : "challenger",
       };
     }
 
@@ -417,7 +438,7 @@ export default function Index({ initialProfile }: IndexProps) {
       setChildStats(response.updatedStats);
 
       // Update learning stats with new data
-      setLearningStats(prevStats => ({
+      setLearningStats((prevStats) => ({
         ...prevStats,
         wordsLearned: response.updatedStats.totalWordsLearned,
         weeklyProgress: response.updatedStats.wordsRemembered,
@@ -429,7 +450,7 @@ export default function Index({ initialProfile }: IndexProps) {
       adventureService.trackWordInteraction(
         word.id.toString(),
         status === "remembered",
-        responseTime ? responseTime > 2000 : false
+        responseTime ? responseTime > 2000 : false,
       );
 
       // Show level up celebration if applicable
@@ -468,7 +489,8 @@ export default function Index({ initialProfile }: IndexProps) {
       setFeedback({
         type: "error",
         title: "Oops! Something went wrong",
-        message: "We couldn't save your progress right now, but keep learning! Your progress is still being tracked locally.",
+        message:
+          "We couldn't save your progress right now, but keep learning! Your progress is still being tracked locally.",
         points: 0,
         onContinue: () => setFeedback(null),
       });
@@ -486,7 +508,7 @@ export default function Index({ initialProfile }: IndexProps) {
     const practiceWords = SmartWordSelector.getPracticeWords(
       forgottenWords,
       childStats,
-      10
+      10,
     );
 
     // If no forgotten words, get challenging words for practice

@@ -1,4 +1,9 @@
-import { Word, wordsDatabase, getWordsByCategory, getRandomWords } from "@/data/wordsDatabase";
+import {
+  Word,
+  wordsDatabase,
+  getWordsByCategory,
+  getRandomWords,
+} from "@/data/wordsDatabase";
 import { ChildWordStats } from "@shared/api";
 
 export interface WordSelectionOptions {
@@ -34,7 +39,6 @@ export interface SmartWordSelection {
  * - Engagement optimization
  */
 export class SmartWordSelector {
-  
   /**
    * Get optimal word selection for learning session with dynamic difficulty adjustment
    */
@@ -50,30 +54,29 @@ export class SmartWordSelector {
     } = options;
 
     // Get base word pool
-    let wordPool = category === "all" 
-      ? wordsDatabase 
-      : getWordsByCategory(category);
+    let wordPool =
+      category === "all" ? wordsDatabase : getWordsByCategory(category);
 
     // Categorize words by learning status
-    const forgottenWordsList = wordPool.filter(word => 
-      forgottenWords.has(word.id)
+    const forgottenWordsList = wordPool.filter((word) =>
+      forgottenWords.has(word.id),
     );
-    
-    const rememberedWordsList = wordPool.filter(word => 
-      rememberedWords.has(word.id)
+
+    const rememberedWordsList = wordPool.filter((word) =>
+      rememberedWords.has(word.id),
     );
-    
-    const newWords = wordPool.filter(word => 
-      !forgottenWords.has(word.id) && !rememberedWords.has(word.id)
+
+    const newWords = wordPool.filter(
+      (word) => !forgottenWords.has(word.id) && !rememberedWords.has(word.id),
     );
 
     // Determine optimal distribution based on learning science
     const distribution = this.calculateOptimalDistribution(
-      count, 
+      count,
       forgottenWordsList.length,
       newWords.length,
       rememberedWordsList.length,
-      childStats
+      childStats,
     );
 
     // Select words with smart algorithms
@@ -88,9 +91,9 @@ export class SmartWordSelector {
     // 1. Priority: Forgotten words (spaced repetition)
     if (distribution.forgotten > 0 && forgottenWordsList.length > 0) {
       const forgottenSelection = this.selectForgottenWords(
-        forgottenWordsList, 
+        forgottenWordsList,
         distribution.forgotten,
-        childStats
+        childStats,
       );
       selectedWords.push(...forgottenSelection);
       selectionReason.forgottenCount = forgottenSelection.length;
@@ -102,18 +105,22 @@ export class SmartWordSelector {
         newWords,
         distribution.new,
         childStats,
-        prioritizeWeakCategories
+        prioritizeWeakCategories,
       );
       selectedWords.push(...newWordsSelection);
       selectionReason.newCount = newWordsSelection.length;
     }
 
     // 3. Review words for reinforcement
-    if (distribution.review > 0 && rememberedWordsList.length > 0 && includeReviewWords) {
+    if (
+      distribution.review > 0 &&
+      rememberedWordsList.length > 0 &&
+      includeReviewWords
+    ) {
       const reviewSelection = this.selectReviewWords(
         rememberedWordsList,
         distribution.review,
-        childStats
+        childStats,
       );
       selectedWords.push(...reviewSelection);
       selectionReason.reviewCount = reviewSelection.length;
@@ -123,11 +130,11 @@ export class SmartWordSelector {
     const remaining = count - selectedWords.length;
     if (remaining > 0) {
       const adaptiveSelection = this.selectAdaptiveWords(
-        wordPool.filter(word => 
-          !selectedWords.some(selected => selected.id === word.id)
+        wordPool.filter(
+          (word) => !selectedWords.some((selected) => selected.id === word.id),
         ),
         remaining,
-        childStats
+        childStats,
       );
       selectedWords.push(...adaptiveSelection);
       selectionReason.adaptiveCount = adaptiveSelection.length;
@@ -136,15 +143,18 @@ export class SmartWordSelector {
     // Apply dynamic difficulty adjustment
     const adjustedWords = DynamicDifficultyAdjuster.adjustWordSelection(
       selectedWords,
-      childStats
+      childStats,
     );
 
     // Shuffle for varied presentation
     const shuffledWords = this.shuffleWords(adjustedWords);
 
     // Determine session difficulty and categories
-    const sessionDifficulty = this.calculateSessionDifficulty(shuffledWords, childStats);
-    const categories = [...new Set(shuffledWords.map(word => word.category))];
+    const sessionDifficulty = this.calculateSessionDifficulty(
+      shuffledWords,
+      childStats,
+    );
+    const categories = [...new Set(shuffledWords.map((word) => word.category))];
 
     return {
       words: shuffledWords.slice(0, count),
@@ -162,7 +172,7 @@ export class SmartWordSelector {
     forgottenCount: number,
     newWordsCount: number,
     reviewCount: number,
-    childStats?: ChildWordStats | null
+    childStats?: ChildWordStats | null,
   ) {
     // Base distribution following 40-40-20 rule (forgotten-new-review)
     let forgottenRatio = 0.4;
@@ -172,7 +182,7 @@ export class SmartWordSelector {
     // Adapt based on performance
     if (childStats) {
       const accuracy = childStats.averageAccuracy || 0;
-      
+
       // If struggling (low accuracy), focus more on forgotten words
       if (accuracy < 60) {
         forgottenRatio = 0.6;
@@ -189,16 +199,16 @@ export class SmartWordSelector {
 
     // Calculate actual counts
     const forgotten = Math.min(
-      Math.floor(totalCount * forgottenRatio), 
-      forgottenCount
+      Math.floor(totalCount * forgottenRatio),
+      forgottenCount,
     );
-    
+
     const remaining = totalCount - forgotten;
     const newWords = Math.min(
-      Math.floor(remaining * (newRatio / (newRatio + reviewRatio))), 
-      newWordsCount
+      Math.floor(remaining * (newRatio / (newRatio + reviewRatio))),
+      newWordsCount,
     );
-    
+
     const review = Math.min(totalCount - forgotten - newWords, reviewCount);
 
     return { forgotten, new: newWords, review };
@@ -210,14 +220,14 @@ export class SmartWordSelector {
   private static selectForgottenWords(
     forgottenWords: Word[],
     count: number,
-    childStats?: ChildWordStats | null
+    childStats?: ChildWordStats | null,
   ): Word[] {
     if (forgottenWords.length === 0) return [];
 
     // Prioritize by category weakness if stats available
     if (childStats?.weakestCategories) {
       const categorizedWords = new Map<string, Word[]>();
-      forgottenWords.forEach(word => {
+      forgottenWords.forEach((word) => {
         if (!categorizedWords.has(word.category)) {
           categorizedWords.set(word.category, []);
         }
@@ -225,20 +235,23 @@ export class SmartWordSelector {
       });
 
       const selected: Word[] = [];
-      
+
       // First, select from weakest categories
-      childStats.weakestCategories.forEach(category => {
+      childStats.weakestCategories.forEach((category) => {
         if (selected.length < count && categorizedWords.has(category)) {
           const categoryWords = categorizedWords.get(category)!;
-          const needed = Math.min(count - selected.length, categoryWords.length);
+          const needed = Math.min(
+            count - selected.length,
+            categoryWords.length,
+          );
           selected.push(...categoryWords.slice(0, needed));
         }
       });
 
       // Fill remaining with other forgotten words
       if (selected.length < count) {
-        const remaining = forgottenWords.filter(word => 
-          !selected.some(s => s.id === word.id)
+        const remaining = forgottenWords.filter(
+          (word) => !selected.some((s) => s.id === word.id),
         );
         selected.push(...remaining.slice(0, count - selected.length));
       }
@@ -263,13 +276,13 @@ export class SmartWordSelector {
     newWords: Word[],
     count: number,
     childStats?: ChildWordStats | null,
-    prioritizeWeakCategories: boolean = true
+    prioritizeWeakCategories: boolean = true,
   ): Word[] {
     if (newWords.length === 0) return [];
 
     // Determine appropriate difficulty level
     let targetDifficulty: "easy" | "medium" | "hard" = "easy";
-    
+
     if (childStats) {
       const accuracy = childStats.averageAccuracy || 0;
       if (accuracy > 85) targetDifficulty = "medium";
@@ -277,39 +290,38 @@ export class SmartWordSelector {
     }
 
     // Filter by difficulty
-    let candidateWords = newWords.filter(word => 
-      word.difficulty === targetDifficulty
+    let candidateWords = newWords.filter(
+      (word) => word.difficulty === targetDifficulty,
     );
 
     // If not enough words at target difficulty, expand
     if (candidateWords.length < count) {
-      candidateWords = newWords.filter(word => 
-        word.difficulty === "easy" || word.difficulty === targetDifficulty
+      candidateWords = newWords.filter(
+        (word) =>
+          word.difficulty === "easy" || word.difficulty === targetDifficulty,
       );
     }
 
     // Prioritize weak categories if applicable
     if (prioritizeWeakCategories && childStats?.weakestCategories) {
-      const weakCategoryWords = candidateWords.filter(word =>
-        childStats.weakestCategories.includes(word.category)
+      const weakCategoryWords = candidateWords.filter((word) =>
+        childStats.weakestCategories.includes(word.category),
       );
-      
+
       if (weakCategoryWords.length > 0) {
         const selectedWeak = weakCategoryWords.slice(0, Math.ceil(count * 0.6));
-        const remaining = candidateWords.filter(word => 
-          !selectedWeak.some(w => w.id === word.id)
+        const remaining = candidateWords.filter(
+          (word) => !selectedWeak.some((w) => w.id === word.id),
         );
         return [
           ...selectedWeak,
-          ...remaining.slice(0, count - selectedWeak.length)
+          ...remaining.slice(0, count - selectedWeak.length),
         ];
       }
     }
 
     // Random selection from candidates
-    return candidateWords
-      .sort(() => Math.random() - 0.5)
-      .slice(0, count);
+    return candidateWords.sort(() => Math.random() - 0.5).slice(0, count);
   }
 
   /**
@@ -318,25 +330,23 @@ export class SmartWordSelector {
   private static selectReviewWords(
     reviewWords: Word[],
     count: number,
-    childStats?: ChildWordStats | null
+    childStats?: ChildWordStats | null,
   ): Word[] {
     if (reviewWords.length === 0) return [];
 
     // Prioritize stronger categories for confidence
     if (childStats?.strongestCategories) {
-      const strongCategoryWords = reviewWords.filter(word =>
-        childStats.strongestCategories.includes(word.category)
+      const strongCategoryWords = reviewWords.filter((word) =>
+        childStats.strongestCategories.includes(word.category),
       );
-      
+
       if (strongCategoryWords.length >= count) {
         return strongCategoryWords.slice(0, count);
       }
     }
 
     // Random selection for review
-    return reviewWords
-      .sort(() => Math.random() - 0.5)
-      .slice(0, count);
+    return reviewWords.sort(() => Math.random() - 0.5).slice(0, count);
   }
 
   /**
@@ -345,7 +355,7 @@ export class SmartWordSelector {
   private static selectAdaptiveWords(
     availableWords: Word[],
     count: number,
-    childStats?: ChildWordStats | null
+    childStats?: ChildWordStats | null,
   ): Word[] {
     if (availableWords.length === 0) return [];
 
@@ -354,8 +364,8 @@ export class SmartWordSelector {
     const selected: Word[] = [];
 
     Object.entries(difficultyMix).forEach(([difficulty, ratio]) => {
-      const difficultyWords = availableWords.filter(word => 
-        word.difficulty === difficulty
+      const difficultyWords = availableWords.filter(
+        (word) => word.difficulty === difficulty,
       );
       const needed = Math.floor(count * ratio);
       selected.push(...difficultyWords.slice(0, needed));
@@ -363,8 +373,8 @@ export class SmartWordSelector {
 
     // Fill any remaining slots
     if (selected.length < count) {
-      const remaining = availableWords.filter(word => 
-        !selected.some(s => s.id === word.id)
+      const remaining = availableWords.filter(
+        (word) => !selected.some((s) => s.id === word.id),
       );
       selected.push(...remaining.slice(0, count - selected.length));
     }
@@ -395,15 +405,18 @@ export class SmartWordSelector {
    * Calculate appropriate session difficulty
    */
   private static calculateSessionDifficulty(
-    words: Word[], 
-    childStats?: ChildWordStats | null
+    words: Word[],
+    childStats?: ChildWordStats | null,
   ): "easy" | "medium" | "hard" {
     if (words.length === 0) return "easy";
 
-    const difficultyCount = words.reduce((acc, word) => {
-      acc[word.difficulty] = (acc[word.difficulty] || 0) + 1;
-      return acc;
-    }, {} as Record<string, number>);
+    const difficultyCount = words.reduce(
+      (acc, word) => {
+        acc[word.difficulty] = (acc[word.difficulty] || 0) + 1;
+        return acc;
+      },
+      {} as Record<string, number>,
+    );
 
     const total = words.length;
     const hardRatio = (difficultyCount.hard || 0) / total;
@@ -420,14 +433,13 @@ export class SmartWordSelector {
   private static shuffleWords(words: Word[]): Word[] {
     // Simple shuffle with slight difficulty progression
     const shuffled = [...words];
-    
-    // Sort by difficulty first, then shuffle within groups
-    const easy = shuffled.filter(w => w.difficulty === "easy");
-    const medium = shuffled.filter(w => w.difficulty === "medium");
-    const hard = shuffled.filter(w => w.difficulty === "hard");
 
-    const shuffleArray = (arr: Word[]) => 
-      arr.sort(() => Math.random() - 0.5);
+    // Sort by difficulty first, then shuffle within groups
+    const easy = shuffled.filter((w) => w.difficulty === "easy");
+    const medium = shuffled.filter((w) => w.difficulty === "medium");
+    const hard = shuffled.filter((w) => w.difficulty === "hard");
+
+    const shuffleArray = (arr: Word[]) => arr.sort(() => Math.random() - 0.5);
 
     return [
       ...shuffleArray(easy),
@@ -442,10 +454,10 @@ export class SmartWordSelector {
   static getPracticeWords(
     forgottenWords: Set<number>,
     childStats?: ChildWordStats | null,
-    maxCount: number = 10
+    maxCount: number = 10,
   ): Word[] {
-    const forgottenWordsList = wordsDatabase.filter(word => 
-      forgottenWords.has(word.id)
+    const forgottenWordsList = wordsDatabase.filter((word) =>
+      forgottenWords.has(word.id),
     );
 
     if (forgottenWordsList.length === 0) return [];
@@ -458,7 +470,7 @@ export class SmartWordSelector {
    */
   static getCategoryWords(
     category: string,
-    options: Partial<WordSelectionOptions>
+    options: Partial<WordSelectionOptions>,
   ): SmartWordSelection {
     return this.selectWords({
       category,
@@ -475,13 +487,12 @@ export class SmartWordSelector {
  * Adjusts word difficulty based on real-time performance
  */
 export class DynamicDifficultyAdjuster {
-
   /**
    * Calculate optimal difficulty based on recent performance
    */
   static calculateOptimalDifficulty(
     childStats?: ChildWordStats | null,
-    recentAccuracy?: number
+    recentAccuracy?: number,
   ): "easy" | "medium" | "hard" {
     if (!childStats && !recentAccuracy) return "easy";
 
@@ -518,14 +529,14 @@ export class DynamicDifficultyAdjuster {
       lastFiveAccuracy: number[];
       timeSpentPerWord: number[];
       strugglingCategories: string[];
-    }
+    },
   ): Word[] {
     if (!childStats && !recentPerformance) return words;
 
     const optimalDifficulty = this.calculateOptimalDifficulty(childStats);
 
     // Filter words based on optimal difficulty
-    let adjustedWords = words.filter(word => {
+    let adjustedWords = words.filter((word) => {
       if (optimalDifficulty === "easy") {
         return word.difficulty === "easy";
       } else if (optimalDifficulty === "medium") {
@@ -601,7 +612,6 @@ export class DynamicDifficultyAdjuster {
  * Enhanced Spaced Repetition Algorithm
  */
 export class EnhancedSpacedRepetition {
-
   /**
    * Calculate next review date based on performance and difficulty
    */
@@ -609,7 +619,7 @@ export class EnhancedSpacedRepetition {
     word: Word,
     wasCorrect: boolean,
     previousAttempts: number = 0,
-    previousAccuracy: number = 0
+    previousAccuracy: number = 0,
   ): Date {
     const now = new Date();
     const baseInterval = this.getBaseInterval(word.difficulty);
@@ -631,7 +641,7 @@ export class EnhancedSpacedRepetition {
     }
 
     // Adjust for number of attempts
-    const attemptMultiplier = Math.max(0.5, 1 - (previousAttempts * 0.1));
+    const attemptMultiplier = Math.max(0.5, 1 - previousAttempts * 0.1);
 
     const finalInterval = baseInterval * multiplier * attemptMultiplier;
 
@@ -647,12 +657,18 @@ export class EnhancedSpacedRepetition {
   /**
    * Get base interval in days based on difficulty
    */
-  private static getBaseInterval(difficulty: "easy" | "medium" | "hard"): number {
+  private static getBaseInterval(
+    difficulty: "easy" | "medium" | "hard",
+  ): number {
     switch (difficulty) {
-      case "easy": return 3;
-      case "medium": return 2;
-      case "hard": return 1;
-      default: return 2;
+      case "easy":
+        return 3;
+      case "medium":
+        return 2;
+      case "hard":
+        return 1;
+      default:
+        return 2;
     }
   }
 
@@ -662,11 +678,11 @@ export class EnhancedSpacedRepetition {
   static shouldReviewToday(
     lastReviewDate: Date,
     nextReviewDate: Date,
-    accuracy: number
+    accuracy: number,
   ): boolean {
     const today = new Date();
     const daysSinceReview = Math.floor(
-      (today.getTime() - lastReviewDate.getTime()) / (1000 * 60 * 60 * 24)
+      (today.getTime() - lastReviewDate.getTime()) / (1000 * 60 * 60 * 24),
     );
 
     // Always review if past due date
@@ -687,7 +703,7 @@ export function getSmartWordSelection(
   count: number,
   rememberedWords: Set<number>,
   forgottenWords: Set<number>,
-  childStats?: ChildWordStats | null
+  childStats?: ChildWordStats | null,
 ): Word[] {
   const selection = SmartWordSelector.selectWords({
     category,
@@ -700,7 +716,7 @@ export function getSmartWordSelection(
   // Apply dynamic difficulty adjustment
   const adjustedWords = DynamicDifficultyAdjuster.adjustWordSelection(
     selection.words,
-    childStats
+    childStats,
   );
 
   return adjustedWords;
