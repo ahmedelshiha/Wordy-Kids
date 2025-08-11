@@ -55,6 +55,7 @@ interface LearningDashboardProps {
   onAdventure?: () => void;
   onPracticeForgotten?: () => void;
   forgottenWordsCount?: number;
+  rememberedWordsCount?: number;
 }
 
 export const LearningDashboard: React.FC<LearningDashboardProps> = ({
@@ -69,6 +70,7 @@ export const LearningDashboard: React.FC<LearningDashboardProps> = ({
   onAdventure,
   onPracticeForgotten,
   forgottenWordsCount = 0,
+  rememberedWordsCount = 0,
 }) => {
   const completionPercentage = Math.round(
     (stats.wordsLearned / stats.totalWords) * 100,
@@ -90,7 +92,7 @@ export const LearningDashboard: React.FC<LearningDashboardProps> = ({
     if (percentage >= 75) return "🚀 You're doing great!";
     if (percentage >= 50) return "💪 Keep going, champion!";
     if (percentage >= 25) return "🌱 Nice start!";
-    return "📚 Ready for an adventure?";
+    return "��� Ready for an adventure?";
   };
 
   const getProgressEmoji = (percentage: number) => {
@@ -172,6 +174,7 @@ export const LearningDashboard: React.FC<LearningDashboardProps> = ({
           currentLevel={stats.level}
           totalPoints={stats.totalPoints}
           forgottenWordsCount={forgottenWordsCount}
+          rememberedWordsCount={rememberedWordsCount}
         />
       ) : (
         // Fallback welcome section if no words available

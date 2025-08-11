@@ -76,6 +76,7 @@ import {
 import { AnimatedCounter } from "@/components/AnimatedCounter";
 import { WordProgressAPI } from "@/lib/wordProgressApi";
 import { ChildWordStats } from "@shared/api";
+import { SmartWordSelector } from "@/lib/smartWordSelection";
 
 interface ChildProfile {
   id: string;
@@ -392,6 +393,13 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
     };
 
     loadChildrenWordStats();
+
+    // Set up real-time refresh every 30 seconds for active sessions
+    const refreshInterval = setInterval(() => {
+      loadChildrenWordStats();
+    }, 30000);
+
+    return () => clearInterval(refreshInterval);
   }, [children.length]);
   const [filterCategory, setFilterCategory] = useState("all");
   const [searchTerm, setSearchTerm] = useState("");

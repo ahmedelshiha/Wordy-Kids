@@ -51,6 +51,7 @@ interface InteractiveDashboardWordCardProps {
   currentLevel: number;
   totalPoints: number;
   forgottenWordsCount?: number;
+  rememberedWordsCount?: number;
   className?: string;
 }
 
@@ -64,6 +65,7 @@ export function InteractiveDashboardWordCard({
   currentLevel,
   totalPoints,
   forgottenWordsCount = 0,
+  rememberedWordsCount = 0,
   className,
 }: InteractiveDashboardWordCardProps) {
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
@@ -452,6 +454,50 @@ export function InteractiveDashboardWordCard({
                   Skip this word
                 </Button>
               </div>
+
+              {/* Kid-friendly Learning Stats - Compact Version */}
+              <div className="mt-4 bg-gradient-to-r from-blue-50 to-purple-50 rounded-xl p-2 border border-blue-200">
+                <div className="flex items-center justify-center gap-4">
+                  {/* Remembered Words */}
+                  <div className="bg-green-100 rounded-lg p-2 border border-green-300 text-center flex-1">
+                    <div className="text-lg">🎉</div>
+                    <div className="text-lg font-bold text-green-700">
+                      {rememberedWordsCount}
+                    </div>
+                    <div className="text-xs text-green-600 font-medium">
+                      I Know!
+                    </div>
+                  </div>
+
+                  {/* Forgotten Words */}
+                  <div className="bg-orange-100 rounded-lg p-2 border border-orange-300 text-center flex-1">
+                    <div className="text-lg">💪</div>
+                    <div className="text-lg font-bold text-orange-700">
+                      {forgottenWordsCount}
+                    </div>
+                    <div className="text-xs text-orange-600 font-medium">
+                      Practice
+                    </div>
+                  </div>
+                </div>
+
+                {/* Compact encouraging message */}
+                <div className="mt-2 text-center">
+                  {rememberedWordsCount > forgottenWordsCount ? (
+                    <div className="text-green-600 font-medium text-xs">
+                      🌟 Great job!
+                    </div>
+                  ) : forgottenWordsCount > rememberedWordsCount ? (
+                    <div className="text-blue-600 font-medium text-xs">
+                      🔥 Keep practicing!
+                    </div>
+                  ) : (
+                    <div className="text-purple-600 font-medium text-xs">
+                      🎯 You're doing great!
+                    </div>
+                  )}
+                </div>
+              </div>
             </div>
           )}
 
@@ -465,8 +511,8 @@ export function InteractiveDashboardWordCard({
         </CardContent>
       </Card>
 
-      {/* Quick Action Buttons */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-2xl mx-auto">
+      {/* Quick Action Buttons - Hidden per user request */}
+      {/* <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-2xl mx-auto">
         <Button
           onClick={onQuickQuiz}
           className="bg-educational-pink hover:bg-educational-pink/90 text-white py-4 rounded-2xl transition-all duration-300 transform hover:scale-105"
@@ -497,7 +543,7 @@ export function InteractiveDashboardWordCard({
             </Badge>
           )}
         </Button>
-      </div>
+      </div> */}
 
       {/* Live Stats Footer - Hidden */}
       {/* <div className="flex justify-center gap-6 text-center max-w-3xl mx-auto bg-white/50 backdrop-blur-sm p-4 rounded-2xl">

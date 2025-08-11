@@ -29,6 +29,10 @@ import {
   getWordsByCategory,
   getRandomWords,
 } from "@/data/wordsDatabase";
+import {
+  SmartWordSelector,
+  getSmartWordSelection,
+} from "@/lib/smartWordSelection";
 import { isBackgroundAnimationsEnabled } from "@/lib/backgroundAnimations";
 import {
   generateQuizQuestions,
@@ -354,23 +358,23 @@ export default function Index({ initialProfile }: IndexProps) {
       if (accuracy === 100) {
         achievementTitle = "Perfect Category Mastery! 🏆";
         achievementIcon = "🏆";
-        achievementMessage = `Outstanding! You remembered ALL ${totalWords} words in ${categoryDisplayName}! You're a true champion!`;
+        achievementMessage = `Outstanding! You remembered ALL ${totalWords} words in ${categoryDisplayName}! You're a true champion!\n\n🎁 Perfect Mastery Bonus: 200 points!\n✨ New adventure zone unlocked!\n🏆 Master badge earned!`;
       } else if (accuracy >= 90) {
         achievementTitle = "Category Expert! ��";
         achievementIcon = "���";
-        achievementMessage = `Excellent work! You mastered ${categoryDisplayName} with ${accuracy}% accuracy! Almost perfect!`;
+        achievementMessage = `Excellent work! You mastered ${categoryDisplayName} with ${accuracy}% accuracy! Almost perfect!\n\n🎁 Expert Bonus: 150 points!\n⭐ Expert badge earned!`;
       } else if (accuracy >= 75) {
         achievementTitle = "Category Scholar! 📚";
         achievementIcon = "📚";
-        achievementMessage = `Great job! You completed ${categoryDisplayName} with ${accuracy}% accuracy! Keep up the good work!`;
+        achievementMessage = `Great job! You completed ${categoryDisplayName} with ${accuracy}% accuracy! Keep up the good work!\n\n🎁 Scholar Bonus: 100 points!\n📚 Scholar badge earned!`;
       } else if (accuracy >= 50) {
         achievementTitle = "Category Explorer! 🎯";
         achievementIcon = "🎯";
-        achievementMessage = `Good effort! You finished ${categoryDisplayName} with ${accuracy}% accuracy! Practice makes perfect!`;
+        achievementMessage = `Good effort! You finished ${categoryDisplayName} with ${accuracy}% accuracy! Practice makes perfect!\n\n🎁 Explorer Bonus: 75 points!\n🎯 Explorer badge earned!`;
       } else {
         achievementTitle = "Category Challenger! 💪";
         achievementIcon = "💪";
-        achievementMessage = `Nice try! You completed ${categoryDisplayName} with ${accuracy}% accuracy! Every attempt makes you stronger!`;
+        achievementMessage = `Nice try! You completed ${categoryDisplayName} with ${accuracy}% accuracy! Every attempt makes you stronger!\n\n🎁 Challenger Bonus: 50 points!\n💪 Challenger badge earned!`;
       }
 
       return {
@@ -381,6 +385,26 @@ export default function Index({ initialProfile }: IndexProps) {
         accuracy,
         totalWords,
         totalRemembered,
+        bonusPoints:
+          accuracy === 100
+            ? 200
+            : accuracy >= 90
+              ? 150
+              : accuracy >= 75
+                ? 100
+                : accuracy >= 50
+                  ? 75
+                  : 50,
+        badgeEarned:
+          accuracy === 100
+            ? "master"
+            : accuracy >= 90
+              ? "expert"
+              : accuracy >= 75
+                ? "scholar"
+                : accuracy >= 50
+                  ? "explorer"
+                  : "challenger",
       };
     }
 
@@ -390,6 +414,7 @@ export default function Index({ initialProfile }: IndexProps) {
   const handleWordProgress = async (
     word: any,
     status: "remembered" | "needs_practice",
+    responseTime?: number,
   ) => {
     if (!currentProfile?.id || !currentSessionId) {
       console.warn("Missing profile or session ID");
@@ -405,19 +430,70 @@ export default function Index({ initialProfile }: IndexProps) {
         word: word.word,
         category: word.category,
         status,
-        responseTime: Math.random() * 3000 + 1000, // Simulated response time
+        responseTime: responseTime || Math.random() * 3000 + 1000,
         difficulty: word.difficulty || "medium",
       });
 
-      // Update child stats
+      // Update child stats immediately for real-time feedback
       setChildStats(response.updatedStats);
 
-      // Note: Achievement popups will be shown only on category completion
-      // Store any achievements for potential category completion celebration
+      // Update learning stats with new data
+      setLearningStats((prevStats) => ({
+        ...prevStats,
+        wordsLearned: response.updatedStats.totalWordsLearned,
+        weeklyProgress: response.updatedStats.wordsRemembered,
+        accuracyRate: response.updatedStats.averageAccuracy,
+        totalPoints: prevStats.totalPoints + (status === "remembered" ? 10 : 5),
+      }));
+
+      // Update adventure system with word interaction
+      adventureService.trackWordInteraction(
+        word.id.toString(),
+        status === "remembered",
+        responseTime ? responseTime > 2000 : false,
+      );
+
+      // Show level up celebration if applicable
+      if (response.levelUp) {
+        setFeedback({
+          type: "celebration",
+          title: "🎉 Level Up! 🎉",
+          message: `Congratulations! You've reached a new level!\n\n🌟 Keep up the amazing work!`,
+          points: 50,
+          onContinue: () => setFeedback(null),
+        });
+      }
+
+      // Show achievement notifications
+      if (response.achievements && response.achievements.length > 0) {
+        setTimeout(() => {
+          response.achievements?.forEach((achievement, index) => {
+            setTimeout(() => {
+              setFeedback({
+                type: "achievement",
+                title: `🏆 Achievement Unlocked!`,
+                message: achievement,
+                points: 25,
+                onContinue: () => setFeedback(null),
+              });
+            }, index * 2000);
+          });
+        }, 1000);
+      }
 
       console.log("Word progress recorded:", response);
     } catch (error) {
       console.error("Failed to record word progress:", error);
+
+      // Show user-friendly error message
+      setFeedback({
+        type: "error",
+        title: "Oops! Something went wrong",
+        message:
+          "We couldn't save your progress right now, but keep learning! Your progress is still being tracked locally.",
+        points: 0,
+        onContinue: () => setFeedback(null),
+      });
     } finally {
       setIsLoadingProgress(false);
     }
@@ -428,94 +504,48 @@ export default function Index({ initialProfile }: IndexProps) {
   };
 
   const getPracticeWords = () => {
-    if (!childStats) return [];
+    // Use smart word selector for practice words
+    const practiceWords = SmartWordSelector.getPracticeWords(
+      forgottenWords,
+      childStats,
+      10,
+    );
 
-    // Get actual words that need practice from child stats
-    const practiceWordsFromStats: any[] = [];
-
-    // If we have mastery by category data, extract words needing practice
-    if (childStats.masteryByCategory) {
-      childStats.masteryByCategory.forEach((category) => {
-        if (category.needsPracticeWords > 0) {
-          // For each category with practice words, we'll get actual word data
-          // This is a simplified approach - in a full implementation,
-          // the API would return specific word details
-          const categoryWords = getWordsForCategory(category.category)
-            .filter((word) => {
-              // Get words from current learning set that might need practice
-              const wordKey = `${currentProfile?.id}-${word.id}`;
-              return forgottenWords.has(Number(word.id));
-            })
-            .slice(0, category.needsPracticeWords)
-            .map((word) => ({
-              id: word.id.toString(),
-              word: word.word,
-              definition: word.definition,
-              example: word.example,
-              category: word.category,
-              difficulty: (word.difficulty || "medium") as
-                | "easy"
-                | "medium"
-                | "hard",
-              attempts: 1,
-              lastAccuracy: 0,
-            }));
-
-          practiceWordsFromStats.push(...categoryWords);
-        }
+    // If no forgotten words, get challenging words for practice
+    if (practiceWords.length === 0) {
+      const challengingSelection = SmartWordSelector.selectWords({
+        category: selectedCategory,
+        count: 10,
+        rememberedWords,
+        forgottenWords,
+        childStats,
+        prioritizeWeakCategories: true,
+        includeReviewWords: false, // Focus on new/challenging words for practice
       });
+
+      return challengingSelection.words.map((word) => ({
+        id: word.id.toString(),
+        word: word.word,
+        definition: word.definition,
+        example: word.example,
+        category: word.category,
+        difficulty: word.difficulty,
+        attempts: 0,
+        lastAccuracy: 0,
+      }));
     }
 
-    // If no stats data yet, get words from forgotten words set
-    if (practiceWordsFromStats.length === 0 && forgottenWords.size > 0) {
-      const allWords = getAllWords();
-      const forgottenWordsList = Array.from(forgottenWords)
-        .map((wordId) => allWords.find((w) => w.id === wordId))
-        .filter(Boolean)
-        .slice(0, 8) // Limit to 8 words for better gaming experience
-        .map((word) => ({
-          id: word!.id.toString(),
-          word: word!.word,
-          definition: word!.definition,
-          example: word!.example,
-          category: word!.category,
-          difficulty: (word!.difficulty || "medium") as
-            | "easy"
-            | "medium"
-            | "hard",
-          attempts: 1,
-          lastAccuracy: 0,
-        }));
-
-      return forgottenWordsList;
-    }
-
-    // If still no practice words, return some challenging words as backup
-    if (practiceWordsFromStats.length === 0) {
-      const allWords = getAllWords();
-      const challengingWords = allWords
-        .filter(
-          (word) => word.difficulty === "hard" || word.difficulty === "medium",
-        )
-        .slice(0, 5)
-        .map((word) => ({
-          id: word.id.toString(),
-          word: word.word,
-          definition: word.definition,
-          example: word.example,
-          category: word.category,
-          difficulty: (word.difficulty || "medium") as
-            | "easy"
-            | "medium"
-            | "hard",
-          attempts: 0,
-          lastAccuracy: 0,
-        }));
-
-      return challengingWords;
-    }
-
-    return practiceWordsFromStats.slice(0, 10); // Limit to 10 for optimal gaming experience
+    // Convert to practice word format
+    return practiceWords.map((word) => ({
+      id: word.id.toString(),
+      word: word.word,
+      definition: word.definition,
+      example: word.example,
+      category: word.category,
+      difficulty: word.difficulty,
+      attempts: 1,
+      lastAccuracy: Math.random() * 40 + 30, // Simulate lower accuracy for practice words
+    }));
   };
 
   // Helper function to get all words from the database
@@ -903,36 +933,27 @@ export default function Index({ initialProfile }: IndexProps) {
                     userName="Explorer"
                     childStats={childStats}
                     forgottenWordsCount={forgottenWords.size}
+                    rememberedWordsCount={rememberedWords.size}
                     availableWords={(() => {
-                      // Smart word selection logic
-                      const allWords =
-                        selectedCategory === "all"
+                      // Enhanced smart word selection using machine learning principles
+                      const smartSelection = SmartWordSelector.selectWords({
+                        category: selectedCategory,
+                        count: 10,
+                        rememberedWords,
+                        forgottenWords,
+                        childStats,
+                        prioritizeWeakCategories: true,
+                        includeReviewWords: true,
+                      });
+
+                      // Fallback to simple random selection if smart selection fails
+                      if (smartSelection.words.length === 0) {
+                        return selectedCategory === "all"
                           ? getRandomWords(10)
-                          : getWordsByCategory(selectedCategory);
+                          : getWordsByCategory(selectedCategory).slice(0, 10);
+                      }
 
-                      // Prioritize forgotten words, then new words
-                      const forgottenWordsList = allWords.filter((word) =>
-                        forgottenWords.has(word.id),
-                      );
-                      const newWords = allWords.filter(
-                        (word) =>
-                          !forgottenWords.has(word.id) &&
-                          !rememberedWords.has(word.id),
-                      );
-                      const reviewWords = allWords.filter((word) =>
-                        rememberedWords.has(word.id),
-                      );
-
-                      // Mix: 40% forgotten, 40% new, 20% review
-                      const smartSelection = [
-                        ...forgottenWordsList.slice(0, 4),
-                        ...newWords.slice(0, 4),
-                        ...reviewWords.slice(0, 2),
-                      ];
-
-                      return smartSelection.length > 0
-                        ? smartSelection
-                        : allWords.slice(0, 10);
+                      return smartSelection.words;
                     })()}
                     onWordProgress={async (word, status) => {
                       // Handle word progress in dashboard
