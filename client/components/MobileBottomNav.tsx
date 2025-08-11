@@ -89,13 +89,6 @@ export function MobileBottomNav({
 
   const secondaryMenuItems = [
     {
-      id: "adventure",
-      emoji: "🎯",
-      label: "Word Practice",
-      icon: Sword,
-      onClick: () => onTabChange("adventure"),
-    },
-    {
       id: "parent",
       emoji: "👨‍👩‍👧‍👦",
       label: "Parent Zone",
