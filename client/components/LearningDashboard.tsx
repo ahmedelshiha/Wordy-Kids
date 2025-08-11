@@ -45,6 +45,12 @@ interface LearningDashboardProps {
   childStats?: ChildWordStats | null;
   onStartPractice?: () => void;
   practiceWords?: any[];
+  // Interactive word card props
+  availableWords?: any[];
+  onWordProgress?: (word: any, status: "remembered" | "needs_practice" | "skipped") => void;
+  onQuickQuiz?: () => void;
+  onAdventure?: () => void;
+  onPracticeForgotten?: () => void;
 }
 
 export const LearningDashboard: React.FC<LearningDashboardProps> = ({
