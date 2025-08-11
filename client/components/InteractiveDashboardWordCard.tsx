@@ -333,7 +333,7 @@ export function InteractiveDashboardWordCard({
                 className="px-6 py-3 text-lg rounded-2xl transition-all duration-300 transform hover:scale-105"
               >
                 <Lightbulb className="w-5 h-5 mr-2" />
-                💡 Hint
+                ��� Hint
               </Button>
             )}
           </div>
@@ -417,29 +417,29 @@ export function InteractiveDashboardWordCard({
                 <Button
                   onClick={() => handleWordAction("needs_practice")}
                   variant="outline"
-                  className="flex-1 bg-red-50 hover:bg-red-100 border-red-200 hover:border-red-300 text-red-700 hover:text-red-800 transition-all duration-300 transform hover:scale-105 py-3 px-2"
+                  className="flex-1 bg-gradient-to-br from-red-100 to-pink-100 hover:from-red-200 hover:to-pink-200 border-2 border-red-300 hover:border-red-400 text-red-700 hover:text-red-800 transition-all duration-300 transform hover:scale-110 hover:rotate-1 py-4 px-3 rounded-3xl shadow-lg hover:shadow-xl animate-kid-float"
                 >
-                  <XCircle className="w-5 h-5 mr-1 md:w-8 md:h-8 md:mr-3" />
+                  <XCircle className="w-4 h-4 mr-1 md:w-6 md:h-6 md:mr-2" />
                   <div className="text-center">
-                    <div className="font-bold text-xs md:text-sm">
+                    <div className="font-bold text-xs">
                       😔 I Forgot
                     </div>
-                    <div className="text-sm opacity-75 mt-1">
-                      Need more practice
+                    <div className="text-xs opacity-75 mt-0.5">
+                      Try again!
                     </div>
                   </div>
                 </Button>
 
                 <Button
                   onClick={() => handleWordAction("remembered")}
-                  className="flex-1 bg-green-50 hover:bg-green-100 border-green-200 hover:border-green-300 text-green-700 hover:text-green-800 transition-all duration-300 transform hover:scale-105 py-3 px-2"
+                  className="flex-1 bg-gradient-to-br from-green-100 to-emerald-100 hover:from-green-200 hover:to-emerald-200 border-2 border-green-300 hover:border-green-400 text-green-700 hover:text-green-800 transition-all duration-300 transform hover:scale-110 hover:-rotate-1 py-4 px-3 rounded-3xl shadow-lg hover:shadow-xl animate-kid-float-delayed"
                 >
-                  <CheckCircle className="w-5 h-5 mr-1 md:w-8 md:h-8 md:mr-3" />
+                  <CheckCircle className="w-4 h-4 mr-1 md:w-6 md:h-6 md:mr-2" />
                   <div className="text-center">
-                    <div className="font-bold text-xs md:text-sm">
+                    <div className="font-bold text-xs">
                       😊 I Remember
                     </div>
-                    <div className="text-sm opacity-75 mt-1">Got it right!</div>
+                    <div className="text-xs opacity-75 mt-0.5">Awesome!</div>
                   </div>
                 </Button>
               </div>
