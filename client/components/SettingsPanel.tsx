@@ -176,6 +176,7 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({
                     availableVoices.find((v) => v.type === voice.type)
                       ?.available ?? true;
                   const isSelected = selectedVoiceType === voice.type;
+                  const voiceInfo = audioService.getVoiceInfo(voice.type);
 
                   return (
                     <div
@@ -200,6 +201,11 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({
                           <p className="text-sm text-slate-600">
                             {voice.description}
                           </p>
+                          {voiceInfo && (
+                            <p className="text-xs text-slate-500">
+                              Using: {voiceInfo.name}
+                            </p>
+                          )}
                           {!isAvailable && (
                             <p className="text-xs text-red-500">
                               Not available on this device
