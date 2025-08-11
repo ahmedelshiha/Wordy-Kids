@@ -421,7 +421,7 @@ export function InteractiveDashboardWordCard({
                 >
                   <XCircle className="w-5 h-5 mr-1 md:w-8 md:h-8 md:mr-3" />
                   <div className="text-center">
-                    <div className="font-bold text-sm md:text-lg">
+                    <div className="font-bold text-xs md:text-sm">
                       😔 I Forgot
                     </div>
                     <div className="text-sm opacity-75 mt-1">
@@ -436,7 +436,7 @@ export function InteractiveDashboardWordCard({
                 >
                   <CheckCircle className="w-5 h-5 mr-1 md:w-8 md:h-8 md:mr-3" />
                   <div className="text-center">
-                    <div className="font-bold text-sm md:text-lg">
+                    <div className="font-bold text-xs md:text-sm">
                       😊 I Remember
                     </div>
                     <div className="text-sm opacity-75 mt-1">Got it right!</div>
