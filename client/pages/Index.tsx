@@ -905,35 +905,25 @@ export default function Index({ initialProfile }: IndexProps) {
                     childStats={childStats}
                     forgottenWordsCount={forgottenWords.size}
                     availableWords={(() => {
-                      // Smart word selection logic
-                      const allWords =
-                        selectedCategory === "all"
+                      // Enhanced smart word selection using machine learning principles
+                      const smartSelection = SmartWordSelector.selectWords({
+                        category: selectedCategory,
+                        count: 10,
+                        rememberedWords,
+                        forgottenWords,
+                        childStats,
+                        prioritizeWeakCategories: true,
+                        includeReviewWords: true,
+                      });
+
+                      // Fallback to simple random selection if smart selection fails
+                      if (smartSelection.words.length === 0) {
+                        return selectedCategory === "all"
                           ? getRandomWords(10)
-                          : getWordsByCategory(selectedCategory);
+                          : getWordsByCategory(selectedCategory).slice(0, 10);
+                      }
 
-                      // Prioritize forgotten words, then new words
-                      const forgottenWordsList = allWords.filter((word) =>
-                        forgottenWords.has(word.id),
-                      );
-                      const newWords = allWords.filter(
-                        (word) =>
-                          !forgottenWords.has(word.id) &&
-                          !rememberedWords.has(word.id),
-                      );
-                      const reviewWords = allWords.filter((word) =>
-                        rememberedWords.has(word.id),
-                      );
-
-                      // Mix: 40% forgotten, 40% new, 20% review
-                      const smartSelection = [
-                        ...forgottenWordsList.slice(0, 4),
-                        ...newWords.slice(0, 4),
-                        ...reviewWords.slice(0, 2),
-                      ];
-
-                      return smartSelection.length > 0
-                        ? smartSelection
-                        : allWords.slice(0, 10);
+                      return smartSelection.words;
                     })()}
                     onWordProgress={async (word, status) => {
                       // Handle word progress in dashboard
