@@ -371,7 +371,7 @@ export function InteractiveDashboardWordCard({
               <div className="text-center bg-gradient-to-r from-green-50 to-blue-50 p-6 rounded-2xl border-2 border-green-200">
                 <div className="flex items-center justify-center gap-3 mb-3">
                   <div className="text-3xl">{currentWord.emoji}</div>
-                  <h1 className="text-2xl md:text-3xl font-bold text-gray-800 tracking-wide">
+                  <h1 className="text-lg md:text-xl font-bold text-gray-800 tracking-wide">
                     {currentWord.word.toUpperCase()}
                   </h1>
                   <div className="text-3xl">{currentWord.emoji}</div>
@@ -421,7 +421,7 @@ export function InteractiveDashboardWordCard({
                 >
                   <XCircle className="w-5 h-5 mr-1 md:w-8 md:h-8 md:mr-3" />
                   <div className="text-center">
-                    <div className="font-bold text-lg md:text-2xl">
+                    <div className="font-bold text-sm md:text-lg">
                       😔 I Forgot
                     </div>
                     <div className="text-sm opacity-75 mt-1">
@@ -436,7 +436,7 @@ export function InteractiveDashboardWordCard({
                 >
                   <CheckCircle className="w-5 h-5 mr-1 md:w-8 md:h-8 md:mr-3" />
                   <div className="text-center">
-                    <div className="font-bold text-lg md:text-2xl">
+                    <div className="font-bold text-sm md:text-lg">
                       😊 I Remember
                     </div>
                     <div className="text-sm opacity-75 mt-1">Got it right!</div>

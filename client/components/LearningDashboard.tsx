@@ -100,7 +100,7 @@ export const LearningDashboard: React.FC<LearningDashboardProps> = ({
   };
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-4">
       {/* Today's Goal Progress - Kid-friendly with real data */}
       <Card className="bg-gradient-to-r from-educational-blue/10 to-educational-purple/10 border-educational-blue/20 hover:shadow-lg transition-all duration-300">
         <CardContent className="p-4">
