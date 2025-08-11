@@ -70,7 +70,6 @@ import { useNavigate } from "react-router-dom";
 import { WordProgressAPI } from "@/lib/wordProgressApi";
 import { ChildWordStats } from "@shared/api";
 
-
 interface IndexProps {
   initialProfile?: any;
 }
@@ -127,9 +126,17 @@ export default function Index({ initialProfile }: IndexProps) {
     currentStreak: 7,
     weeklyGoal: 20,
     weeklyProgress: rememberedWords.size, // Use actual remembered words for today's goal
-    accuracyRate: rememberedWords.size > 0 ? Math.round((rememberedWords.size / (rememberedWords.size + forgottenWords.size)) * 100) : 0,
+    accuracyRate:
+      rememberedWords.size > 0
+        ? Math.round(
+            (rememberedWords.size /
+              (rememberedWords.size + forgottenWords.size)) *
+              100,
+          )
+        : 0,
     favoriteCategory: "Animals",
-    totalPoints: rememberedWords.size * 50 + (rememberedWords.size > 10 ? 500 : 0), // Dynamic points
+    totalPoints:
+      rememberedWords.size * 50 + (rememberedWords.size > 10 ? 500 : 0), // Dynamic points
     level: Math.floor(rememberedWords.size / 5) + 1, // Level up every 5 words
     badges: [
       {

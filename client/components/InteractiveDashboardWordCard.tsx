@@ -69,7 +69,9 @@ export function InteractiveDashboardWordCard({
   const [isAnswered, setIsAnswered] = useState(false);
   const [celebrationEffect, setCelebrationEffect] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
-  const [feedbackType, setFeedbackType] = useState<"remembered" | "needs_practice" | null>(null);
+  const [feedbackType, setFeedbackType] = useState<
+    "remembered" | "needs_practice" | null
+  >(null);
   const [guess, setGuess] = useState("");
   const [showHint, setShowHint] = useState(false);
 
@@ -181,18 +183,18 @@ export function InteractiveDashboardWordCard({
       // Show feedback overlay if user has answered
       if (feedbackType) {
         const feedbackEmoji = feedbackType === "remembered" ? "🎉" : "💪";
-        const feedbackColor = feedbackType === "remembered"
-          ? "from-green-100 to-green-200"
-          : "from-orange-100 to-orange-200";
-        const feedbackMessage = feedbackType === "remembered"
-          ? "Great job!"
-          : "Keep practicing!";
+        const feedbackColor =
+          feedbackType === "remembered"
+            ? "from-green-100 to-green-200"
+            : "from-orange-100 to-orange-200";
+        const feedbackMessage =
+          feedbackType === "remembered" ? "Great job!" : "Keep practicing!";
 
         return (
-          <div className={`w-48 h-32 mx-auto flex flex-col items-center justify-center bg-gradient-to-br ${feedbackColor} rounded-2xl shadow-lg border-2 ${feedbackType === "remembered" ? "border-green-300" : "border-orange-300"} transition-all duration-500`}>
-            <div className="text-4xl animate-bounce mb-1">
-              {feedbackEmoji}
-            </div>
+          <div
+            className={`w-48 h-32 mx-auto flex flex-col items-center justify-center bg-gradient-to-br ${feedbackColor} rounded-2xl shadow-lg border-2 ${feedbackType === "remembered" ? "border-green-300" : "border-orange-300"} transition-all duration-500`}
+          >
+            <div className="text-4xl animate-bounce mb-1">{feedbackEmoji}</div>
             <div className="text-xs font-bold text-gray-700">
               {feedbackMessage}
             </div>
@@ -419,7 +421,9 @@ export function InteractiveDashboardWordCard({
                 >
                   <XCircle className="w-5 h-5 mr-1 md:w-8 md:h-8 md:mr-3" />
                   <div className="text-center">
-                    <div className="font-bold text-lg md:text-2xl">😔 I Forgot</div>
+                    <div className="font-bold text-lg md:text-2xl">
+                      😔 I Forgot
+                    </div>
                     <div className="text-sm opacity-75 mt-1">
                       Need more practice
                     </div>
@@ -432,7 +436,9 @@ export function InteractiveDashboardWordCard({
                 >
                   <CheckCircle className="w-5 h-5 mr-1 md:w-8 md:h-8 md:mr-3" />
                   <div className="text-center">
-                    <div className="font-bold text-lg md:text-2xl">😊 I Remember</div>
+                    <div className="font-bold text-lg md:text-2xl">
+                      😊 I Remember
+                    </div>
                     <div className="text-sm opacity-75 mt-1">Got it right!</div>
                   </div>
                 </Button>

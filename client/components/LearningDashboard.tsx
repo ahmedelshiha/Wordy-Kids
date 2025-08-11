@@ -76,7 +76,8 @@ export const LearningDashboard: React.FC<LearningDashboardProps> = ({
   );
 
   // Use actual word progress if childStats is available
-  const actualWordsLearned = childStats?.wordsRemembered || stats.weeklyProgress;
+  const actualWordsLearned =
+    childStats?.wordsRemembered || stats.weeklyProgress;
   const actualGoal = stats.weeklyGoal;
   const actualPercentage = Math.round((actualWordsLearned / actualGoal) * 100);
 
@@ -106,7 +107,9 @@ export const LearningDashboard: React.FC<LearningDashboardProps> = ({
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
               <div className="flex items-center gap-2">
-                <span className="text-2xl">{getProgressEmoji(actualPercentage)}</span>
+                <span className="text-2xl">
+                  {getProgressEmoji(actualPercentage)}
+                </span>
                 <div>
                   <span className="text-sm font-bold text-slate-800">
                     Today's Word Quest
@@ -126,7 +129,9 @@ export const LearningDashboard: React.FC<LearningDashboardProps> = ({
                   {actualWordsLearned}/{actualGoal} words
                 </Badge>
                 <div className="text-xs font-semibold text-educational-blue mt-1">
-                  {actualPercentage >= 100 ? "Quest Complete!" : `${actualPercentage}% done`}
+                  {actualPercentage >= 100
+                    ? "Quest Complete!"
+                    : `${actualPercentage}% done`}
                 </div>
               </div>
               <div className="flex flex-col items-center gap-1">
