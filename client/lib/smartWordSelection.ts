@@ -133,8 +133,14 @@ export class SmartWordSelector {
       selectionReason.adaptiveCount = adaptiveSelection.length;
     }
 
+    // Apply dynamic difficulty adjustment
+    const adjustedWords = DynamicDifficultyAdjuster.adjustWordSelection(
+      selectedWords,
+      childStats
+    );
+
     // Shuffle for varied presentation
-    const shuffledWords = this.shuffleWords(selectedWords);
+    const shuffledWords = this.shuffleWords(adjustedWords);
 
     // Determine session difficulty and categories
     const sessionDifficulty = this.calculateSessionDifficulty(shuffledWords, childStats);
