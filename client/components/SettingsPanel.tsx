@@ -61,16 +61,12 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({
   const handleSoundToggle = (checked: boolean) => {
     setSoundOn(checked);
     setSoundEnabled(checked);
-    if (checked) {
-      playSoundIfEnabled.click();
-    }
   };
 
   const handleDarkModeToggle = (checked: boolean) => {
     setDarkMode(checked);
     // In a real app, this would toggle the dark mode theme
     document.documentElement.classList.toggle("dark", checked);
-    playSoundIfEnabled.click();
   };
 
   const handleBackgroundAnimationsToggle = (checked: boolean) => {
@@ -80,13 +76,11 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({
     window.dispatchEvent(
       new CustomEvent("backgroundAnimationsChanged", { detail: checked }),
     );
-    playSoundIfEnabled.click();
   };
 
   const handleVoiceTypeChange = (voiceType: VoiceType) => {
     setSelectedVoiceType(voiceType);
     audioService.setVoiceType(voiceType);
-    playSoundIfEnabled.click();
   };
 
   const handleVoicePreview = (voiceType: VoiceType) => {
@@ -350,7 +344,6 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({
                     }
                     onClick={() => {
                       setDifficulty(level.value);
-                      playSoundIfEnabled.click();
                     }}
                   >
                     {level.label}
@@ -402,7 +395,6 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({
                 setSelectedVoiceType("woman");
                 audioService.setVoiceType("woman");
                 document.documentElement.classList.remove("dark");
-                playSoundIfEnabled.click();
               }}
               className="flex-1 w-full"
             >
@@ -410,7 +402,6 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({
             </Button>
             <Button
               onClick={() => {
-                playSoundIfEnabled.click();
                 onClose();
               }}
               className="flex-1 w-full bg-educational-blue text-white"
