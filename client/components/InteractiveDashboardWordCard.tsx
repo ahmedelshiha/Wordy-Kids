@@ -168,7 +168,7 @@ export function InteractiveDashboardWordCard({
     // Fallback to emoji if no image URL
     if (currentWord?.emoji) {
       return (
-        <div className="w-full h-64 flex items-center justify-center bg-gradient-to-br from-blue-100 to-purple-100 rounded-2xl shadow-lg">
+        <div className="w-48 h-32 mx-auto flex items-center justify-center bg-gradient-to-br from-blue-100 to-purple-100 rounded-2xl shadow-lg">
           <div className="text-8xl animate-gentle-float filter drop-shadow-lg">
             {currentWord.emoji}
           </div>
