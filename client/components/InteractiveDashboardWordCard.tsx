@@ -178,6 +178,28 @@ export function InteractiveDashboardWordCard({
 
     // Fallback to emoji if no image URL
     if (currentWord?.emoji) {
+      // Show feedback overlay if user has answered
+      if (feedbackType) {
+        const feedbackEmoji = feedbackType === "remembered" ? "🎉" : "💪";
+        const feedbackColor = feedbackType === "remembered"
+          ? "from-green-100 to-green-200"
+          : "from-orange-100 to-orange-200";
+        const feedbackMessage = feedbackType === "remembered"
+          ? "Great job!"
+          : "Keep practicing!";
+
+        return (
+          <div className={`w-48 h-32 mx-auto flex flex-col items-center justify-center bg-gradient-to-br ${feedbackColor} rounded-2xl shadow-lg border-2 ${feedbackType === "remembered" ? "border-green-300" : "border-orange-300"} transition-all duration-500`}>
+            <div className="text-4xl animate-bounce mb-1">
+              {feedbackEmoji}
+            </div>
+            <div className="text-xs font-bold text-gray-700">
+              {feedbackMessage}
+            </div>
+          </div>
+        );
+      }
+
       return (
         <div className="w-48 h-32 mx-auto flex items-center justify-center bg-gradient-to-br from-blue-100 to-purple-100 rounded-2xl shadow-lg">
           <div className="text-8xl animate-gentle-float filter drop-shadow-lg">
