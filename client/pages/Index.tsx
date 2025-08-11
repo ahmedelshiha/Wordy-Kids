@@ -902,6 +902,7 @@ export default function Index({ initialProfile }: IndexProps) {
                     stats={learningStats}
                     userName="Explorer"
                     childStats={childStats}
+                    forgottenWordsCount={forgottenWords.size}
                     availableWords={(() => {
                       // Smart word selection logic
                       const allWords =
@@ -975,7 +976,7 @@ export default function Index({ initialProfile }: IndexProps) {
                     }}
                     onPracticeForgotten={() => {
                       startPracticeGame();
-                      setActiveTab("learn"); // Navigate to learn tab where practice games are handled
+                      // Stay in current tab - practice component will show as overlay
                     }}
                   />
                 </TabsContent>
