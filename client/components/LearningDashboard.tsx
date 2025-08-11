@@ -73,26 +73,45 @@ export const LearningDashboard: React.FC<LearningDashboardProps> = ({
   );
 
   return (
-    <div className="space-y-6">
-      {/* Welcome Header */}
-      <div className="text-center">
-        <h1 className="text-3xl font-bold text-slate-800 mb-2">
-          Welcome back, {userName}! 🌟
-        </h1>
-        <p className="text-slate-600">Ready to continue your word adventure?</p>
-      </div>
-
-      {/* Practice Words Card - Prominent placement */}
-      {practiceWords.length > 0 && onStartPractice && (
-        <PracticeWordsCard
-          practiceWords={practiceWords}
-          onStartPractice={onStartPractice}
-          childName={userName}
+    <div className="space-y-8">
+      {/* Interactive Word Learning Hub - PRIMARY FEATURE */}
+      {availableWords.length > 0 && onWordProgress ? (
+        <InteractiveDashboardWordCard
+          words={availableWords}
+          onWordProgress={onWordProgress}
+          onQuickQuiz={onQuickQuiz || (() => console.log("Quick quiz"))}
+          onAdventure={onAdventure || (() => console.log("Adventure"))}
+          onPracticeForgotten={onPracticeForgotten || (() => console.log("Practice forgotten"))}
+          dailyGoal={{
+            target: stats.weeklyGoal, // Using weekly goal as daily for demo
+            completed: stats.weeklyProgress,
+            streak: stats.currentStreak,
+          }}
+          currentLevel={stats.level}
+          totalPoints={stats.totalPoints}
         />
+      ) : (
+        // Fallback welcome section if no words available
+        <div className="text-center py-12">
+          <div className="text-6xl mb-4">🌟</div>
+          <h1 className="text-3xl font-bold text-slate-800 mb-2">
+            Welcome back, {userName}!
+          </h1>
+          <p className="text-slate-600 mb-6">Ready to continue your word adventure?</p>
+
+          {/* Practice Words Card - Fallback */}
+          {practiceWords.length > 0 && onStartPractice && (
+            <PracticeWordsCard
+              practiceWords={practiceWords}
+              onStartPractice={onStartPractice}
+              childName={userName}
+            />
+          )}
+        </div>
       )}
 
-      {/* Main Stats Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+      {/* Compact Stats Row - Secondary Information */}
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         {/* Words Learned */}
         <Card className="bg-gradient-to-br from-educational-blue to-educational-blue-light text-white">
           <CardContent className="p-6">
