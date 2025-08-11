@@ -75,6 +75,29 @@ export const LearningDashboard: React.FC<LearningDashboardProps> = ({
     (stats.weeklyProgress / stats.weeklyGoal) * 100,
   );
 
+  // Use actual word progress if childStats is available
+  const actualWordsLearned = childStats?.wordsRemembered || stats.weeklyProgress;
+  const actualGoal = stats.weeklyGoal;
+  const actualPercentage = Math.round((actualWordsLearned / actualGoal) * 100);
+
+  // Kid-friendly messages based on progress
+  const getProgressMessage = (percentage: number) => {
+    if (percentage >= 100) return "🎉 Amazing! You did it!";
+    if (percentage >= 90) return "🌟 Almost there, superstar!";
+    if (percentage >= 75) return "🚀 You're doing great!";
+    if (percentage >= 50) return "💪 Keep going, champion!";
+    if (percentage >= 25) return "🌱 Nice start!";
+    return "📚 Ready for an adventure?";
+  };
+
+  const getProgressEmoji = (percentage: number) => {
+    if (percentage >= 100) return "🏆";
+    if (percentage >= 90) return "⭐";
+    if (percentage >= 75) return "🎯";
+    if (percentage >= 50) return "💫";
+    return "🌟";
+  };
+
   return (
     <div className="space-y-8">
       {/* Today's Goal Progress - Small compact indicator */}
