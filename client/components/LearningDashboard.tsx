@@ -4,6 +4,7 @@ import { Progress } from "@/components/ui/progress";
 import { Badge } from "@/components/ui/badge";
 import { AnimatedCounter } from "@/components/AnimatedCounter";
 import { PracticeWordsCard } from "@/components/PracticeWordsCard";
+import { InteractiveDashboardWordCard } from "@/components/InteractiveDashboardWordCard";
 import { ChildWordStats } from "@shared/api";
 import {
   Trophy,
@@ -44,6 +45,15 @@ interface LearningDashboardProps {
   childStats?: ChildWordStats | null;
   onStartPractice?: () => void;
   practiceWords?: any[];
+  // Interactive word card props
+  availableWords?: any[];
+  onWordProgress?: (
+    word: any,
+    status: "remembered" | "needs_practice" | "skipped",
+  ) => void;
+  onQuickQuiz?: () => void;
+  onAdventure?: () => void;
+  onPracticeForgotten?: () => void;
 }
 
 export const LearningDashboard: React.FC<LearningDashboardProps> = ({
@@ -52,6 +62,11 @@ export const LearningDashboard: React.FC<LearningDashboardProps> = ({
   childStats,
   onStartPractice,
   practiceWords = [],
+  availableWords = [],
+  onWordProgress,
+  onQuickQuiz,
+  onAdventure,
+  onPracticeForgotten,
 }) => {
   const completionPercentage = Math.round(
     (stats.wordsLearned / stats.totalWords) * 100,
@@ -61,333 +76,191 @@ export const LearningDashboard: React.FC<LearningDashboardProps> = ({
   );
 
   return (
-    <div className="space-y-6">
-      {/* Welcome Header */}
-      <div className="text-center">
-        <h1 className="text-3xl font-bold text-slate-800 mb-2">
-          Welcome back, {userName}! 🌟
-        </h1>
-        <p className="text-slate-600">Ready to continue your word adventure?</p>
-      </div>
-
-      {/* Practice Words Card - Prominent placement */}
-      {practiceWords.length > 0 && onStartPractice && (
-        <PracticeWordsCard
-          practiceWords={practiceWords}
-          onStartPractice={onStartPractice}
-          childName={userName}
+    <div className="space-y-8">
+      {/* Interactive Word Learning Hub - PRIMARY FEATURE */}
+      {availableWords.length > 0 && onWordProgress ? (
+        <InteractiveDashboardWordCard
+          words={availableWords}
+          onWordProgress={onWordProgress}
+          onQuickQuiz={onQuickQuiz || (() => console.log("Quick quiz"))}
+          onAdventure={onAdventure || (() => console.log("Adventure"))}
+          onPracticeForgotten={
+            onPracticeForgotten || (() => console.log("Practice forgotten"))
+          }
+          dailyGoal={{
+            target: stats.weeklyGoal, // Using weekly goal as daily for demo
+            completed: stats.weeklyProgress,
+            streak: stats.currentStreak,
+          }}
+          currentLevel={stats.level}
+          totalPoints={stats.totalPoints}
         />
+      ) : (
+        // Fallback welcome section if no words available
+        <div className="text-center py-12">
+          <div className="text-6xl mb-4">🌟</div>
+          <h1 className="text-3xl font-bold text-slate-800 mb-2">
+            Welcome back, {userName}!
+          </h1>
+          <p className="text-slate-600 mb-6">
+            Ready to continue your word adventure?
+          </p>
+
+          {/* Practice Words Card - Fallback */}
+          {practiceWords.length > 0 && onStartPractice && (
+            <PracticeWordsCard
+              practiceWords={practiceWords}
+              onStartPractice={onStartPractice}
+              childName={userName}
+            />
+          )}
+        </div>
       )}
 
-      {/* Main Stats Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-        {/* Words Learned */}
+      {/* Compact Stats Row - Secondary Information */}
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+        {/* Compact Stats Cards */}
         <Card className="bg-gradient-to-br from-educational-blue to-educational-blue-light text-white">
-          <CardContent className="p-6">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm opacity-90">Words Learned</p>
-                <AnimatedCounter
-                  value={stats.wordsLearned}
-                  className="text-3xl font-bold"
-                />
-                <p className="text-xs opacity-80">of {stats.totalWords}</p>
-              </div>
-              <BookOpen className="w-8 h-8 opacity-80" />
-            </div>
-            <Progress
-              value={completionPercentage}
-              className="mt-3 bg-white/20"
+          <CardContent className="p-4 text-center">
+            <BookOpen className="w-6 h-6 mx-auto mb-1 opacity-80" />
+            <AnimatedCounter
+              value={stats.wordsLearned}
+              className="text-2xl font-bold block"
             />
-            <p className="text-xs mt-1">{completionPercentage}% Complete</p>
+            <p className="text-xs opacity-90">Words Learned</p>
           </CardContent>
         </Card>
 
-        {/* Current Streak */}
         <Card className="bg-gradient-to-br from-educational-orange to-educational-orange-light text-white">
-          <CardContent className="p-6">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm opacity-90">Current Streak</p>
-                <AnimatedCounter
-                  value={stats.currentStreak}
-                  className="text-3xl font-bold"
-                />
-                <p className="text-xs opacity-80">days</p>
-              </div>
-              <Zap className="w-8 h-8 opacity-80" />
-            </div>
+          <CardContent className="p-4 text-center">
+            <Zap className="w-6 h-6 mx-auto mb-1 opacity-80" />
+            <AnimatedCounter
+              value={stats.currentStreak}
+              className="text-2xl font-bold block"
+            />
+            <p className="text-xs opacity-90">Day Streak</p>
           </CardContent>
         </Card>
 
-        {/* Weekly Goal */}
         <Card className="bg-gradient-to-br from-educational-green to-educational-green-light text-white">
-          <CardContent className="p-6">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm opacity-90">Weekly Goal</p>
-                <AnimatedCounter
-                  value={stats.weeklyProgress}
-                  className="text-3xl font-bold"
-                />
-                <p className="text-xs opacity-80">
-                  of {stats.weeklyGoal} words
-                </p>
-              </div>
-              <Target className="w-8 h-8 opacity-80" />
-            </div>
-            <Progress value={weeklyPercentage} className="mt-3 bg-white/20" />
-            <p className="text-xs mt-1">{weeklyPercentage}% of goal</p>
+          <CardContent className="p-4 text-center">
+            <Target className="w-6 h-6 mx-auto mb-1 opacity-80" />
+            <AnimatedCounter
+              value={stats.weeklyProgress}
+              className="text-2xl font-bold block"
+            />
+            <p className="text-xs opacity-90">Weekly Goal</p>
           </CardContent>
         </Card>
 
-        {/* Accuracy Rate */}
         <Card className="bg-gradient-to-br from-educational-purple to-educational-purple-light text-white">
-          <CardContent className="p-6">
+          <CardContent className="p-4 text-center">
+            <TrendingUp className="w-6 h-6 mx-auto mb-1 opacity-80" />
+            <AnimatedCounter
+              value={stats.accuracyRate}
+              suffix="%"
+              className="text-2xl font-bold block"
+            />
+            <p className="text-xs opacity-90">Accuracy</p>
+          </CardContent>
+        </Card>
+      </div>
+
+      {/* Compact Progress and Achievement Row */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <Card className="bg-gradient-to-r from-yellow-400 to-orange-500 text-white">
+          <CardContent className="p-4">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm opacity-90">Accuracy</p>
-                <AnimatedCounter
-                  value={stats.accuracyRate}
-                  suffix="%"
-                  className="text-3xl font-bold"
-                />
-                <p className="text-xs opacity-80">average</p>
+                <div className="flex items-center gap-2 mb-1">
+                  <Star className="w-5 h-5" />
+                  <span className="font-bold text-lg">Level {stats.level}</span>
+                </div>
+                <p className="text-sm opacity-90">{stats.totalPoints} points</p>
               </div>
-              <TrendingUp className="w-8 h-8 opacity-80" />
+              <div className="text-right">
+                <Progress value={75} className="h-2 w-24 bg-white/20" />
+                <p className="text-xs opacity-90 mt-1">Next level</p>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        <Card className="bg-gradient-to-r from-purple-500 to-pink-500 text-white">
+          <CardContent className="p-4">
+            <div className="flex items-center justify-between">
+              <div>
+                <div className="flex items-center gap-2 mb-1">
+                  <Trophy className="w-5 h-5" />
+                  <span className="font-bold text-lg">Top Category</span>
+                </div>
+                <Badge className="bg-white/20 text-white border-white/30">
+                  {stats.favoriteCategory}
+                </Badge>
+              </div>
             </div>
           </CardContent>
         </Card>
       </div>
 
-      {/* Level and Points */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {/* Level Progress */}
-        <Card>
-          <CardHeader className="pb-3">
-            <CardTitle className="flex items-center gap-2 text-lg">
-              <Star className="w-5 h-5 text-yellow-500" />
-              Level {stats.level}
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-3">
-              <div className="flex justify-between text-sm">
-                <span>Progress to Level {stats.level + 1}</span>
-                <span>{stats.totalPoints} points</span>
-              </div>
-              <Progress value={75} className="h-3" />
-              <p className="text-xs text-slate-600">
-                325 more points to reach Level {stats.level + 1}
-              </p>
-            </div>
-          </CardContent>
-        </Card>
-
-        {/* Favorite Category */}
-        <Card>
-          <CardHeader className="pb-3">
-            <CardTitle className="flex items-center gap-2 text-lg">
-              <Trophy className="w-5 h-5 text-educational-orange" />
-              Favorite Category
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="text-center">
-              <Badge className="text-lg px-4 py-2 bg-educational-blue text-white">
-                {stats.favoriteCategory}
-              </Badge>
-              <p className="text-sm text-slate-600 mt-2">
-                You've mastered the most words in this category!
-              </p>
-            </div>
-          </CardContent>
-        </Card>
-      </div>
-
-      {/* Word Progress Statistics */}
+      {/* Compact Word Progress Summary */}
       {childStats && (
         <Card>
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <Brain className="w-6 h-6 text-purple-500" />
-              Word Learning Progress
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {/* Overall Progress */}
-              <div className="space-y-4">
-                <h4 className="font-semibold text-lg flex items-center gap-2">
-                  <Target className="w-5 h-5 text-blue-500" />
-                  Overall Progress
-                </h4>
-                <div className="space-y-3">
-                  <div className="flex justify-between text-sm">
-                    <span>Words Learned</span>
-                    <span className="font-semibold">
-                      {childStats.totalWordsLearned}
-                    </span>
-                  </div>
-                  <div className="flex justify-between text-sm">
-                    <span>Average Accuracy</span>
-                    <span className="font-semibold">
-                      {childStats.averageAccuracy}%
-                    </span>
-                  </div>
-                  <div className="flex justify-between text-sm">
-                    <span>Review Sessions</span>
-                    <span className="font-semibold">
-                      {childStats.totalReviewSessions}
-                    </span>
-                  </div>
+          <CardContent className="p-4">
+            <div className="grid grid-cols-3 gap-4 text-center">
+              <div>
+                <div className="text-2xl font-bold text-green-600">
+                  {childStats.wordsRemembered}
                 </div>
+                <div className="text-sm text-gray-600">Remembered</div>
               </div>
-
-              {/* Words Status */}
-              <div className="space-y-4">
-                <h4 className="font-semibold text-lg flex items-center gap-2">
-                  <CheckCircle className="w-5 h-5 text-green-500" />
-                  Word Status
-                </h4>
-                <div className="space-y-3">
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-2">
-                      <div className="w-3 h-3 bg-green-500 rounded-full"></div>
-                      <span className="text-sm">Remembered</span>
-                    </div>
-                    <span className="font-semibold text-green-600">
-                      {childStats.wordsRemembered}
-                    </span>
-                  </div>
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-2">
-                      <div className="w-3 h-3 bg-orange-500 rounded-full"></div>
-                      <span className="text-sm">Need Practice</span>
-                    </div>
-                    <span className="font-semibold text-orange-600">
-                      {childStats.wordsNeedingPractice}
-                    </span>
-                  </div>
-                  <Progress
-                    value={
-                      childStats.totalWordsLearned > 0
-                        ? (childStats.wordsRemembered /
-                            childStats.totalWordsLearned) *
-                          100
-                        : 0
-                    }
-                    className="mt-2"
-                  />
+              <div>
+                <div className="text-2xl font-bold text-orange-600">
+                  {childStats.wordsNeedingPractice}
                 </div>
+                <div className="text-sm text-gray-600">Need Practice</div>
               </div>
-
-              {/* Category Performance */}
-              <div className="space-y-4">
-                <h4 className="font-semibold text-lg flex items-center gap-2">
-                  <TrendingUp className="w-5 h-5 text-purple-500" />
-                  Category Performance
-                </h4>
-                <div className="space-y-2">
-                  {childStats.strongestCategories.length > 0 && (
-                    <div>
-                      <p className="text-sm text-gray-600 mb-1">
-                        Strongest Categories:
-                      </p>
-                      <div className="flex flex-wrap gap-1">
-                        {childStats.strongestCategories
-                          .slice(0, 2)
-                          .map((category) => (
-                            <Badge
-                              key={category}
-                              className="bg-green-100 text-green-800 text-xs"
-                            >
-                              {category}
-                            </Badge>
-                          ))}
-                      </div>
-                    </div>
-                  )}
-                  {childStats.weakestCategories.length > 0 && (
-                    <div>
-                      <p className="text-sm text-gray-600 mb-1">Focus Areas:</p>
-                      <div className="flex flex-wrap gap-1">
-                        {childStats.weakestCategories
-                          .slice(0, 2)
-                          .map((category) => (
-                            <Badge
-                              key={category}
-                              className="bg-orange-100 text-orange-800 text-xs"
-                            >
-                              {category}
-                            </Badge>
-                          ))}
-                      </div>
-                    </div>
-                  )}
+              <div>
+                <div className="text-2xl font-bold text-purple-600">
+                  {childStats.averageAccuracy}%
                 </div>
+                <div className="text-sm text-gray-600">Accuracy</div>
               </div>
             </div>
-
-            {/* Category Mastery Details */}
-            {childStats.masteryByCategory.length > 0 && (
-              <div className="mt-6">
-                <h4 className="font-semibold text-lg mb-4">Category Mastery</h4>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
-                  {childStats.masteryByCategory.map((category) => (
-                    <div
-                      key={category.category}
-                      className="bg-gray-50 p-3 rounded-lg"
-                    >
-                      <div className="flex justify-between items-center mb-2">
-                        <h5 className="font-medium text-sm">
-                          {category.category}
-                        </h5>
-                        <span className="text-xs text-gray-600">
-                          {category.averageAccuracy}%
-                        </span>
-                      </div>
-                      <Progress
-                        value={category.averageAccuracy}
-                        className="h-2 mb-2"
-                      />
-                      <div className="flex justify-between text-xs text-gray-600">
-                        <span>{category.masteredWords} mastered</span>
-                        <span>{category.needsPracticeWords} need practice</span>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
           </CardContent>
         </Card>
       )}
 
-      {/* Badges Section */}
+      {/* Recent Achievements - Compact */}
       <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
+        <CardHeader className="pb-3">
+          <CardTitle className="flex items-center gap-2 text-lg">
             <Award className="w-5 h-5 text-educational-purple" />
-            Achievement Badges
+            Recent Achievements
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            {stats.badges.map((badge) => (
-              <div
-                key={badge.id}
-                className={`text-center p-4 rounded-lg transition-all ${
-                  badge.earned
-                    ? "bg-gradient-to-br from-yellow-400 to-yellow-600 text-white shadow-lg"
-                    : "bg-slate-100 text-slate-400"
-                }`}
-              >
-                <div className="text-3xl mb-2">{badge.icon}</div>
-                <h4 className="font-semibold text-sm">{badge.name}</h4>
-                <p className="text-xs mt-1 opacity-90">{badge.description}</p>
+          <div className="flex gap-3 overflow-x-auto pb-2">
+            {stats.badges
+              .filter((badge) => badge.earned)
+              .slice(0, 6)
+              .map((badge) => (
+                <div
+                  key={badge.id}
+                  className="text-center p-3 rounded-xl bg-gradient-to-br from-yellow-400 to-yellow-600 text-white shadow-lg min-w-[80px] flex-shrink-0"
+                >
+                  <div className="text-2xl mb-1">{badge.icon}</div>
+                  <h4 className="font-semibold text-xs">{badge.name}</h4>
+                </div>
+              ))}
+            {stats.badges.filter((badge) => badge.earned).length === 0 && (
+              <div className="text-center text-gray-500 w-full py-4">
+                <div className="text-4xl mb-2">🎯</div>
+                <p className="text-sm">
+                  Start learning to earn your first badge!
+                </p>
               </div>
-            ))}
+            )}
           </div>
         </CardContent>
       </Card>
