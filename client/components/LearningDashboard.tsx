@@ -165,8 +165,8 @@ export const LearningDashboard: React.FC<LearningDashboardProps> = ({
         </Card>
       </div> */}
 
-      {/* Compact Progress and Achievement Row */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      {/* Compact Progress and Achievement Row - Hidden */}
+      {/* <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <Card className="bg-gradient-to-r from-yellow-400 to-orange-500 text-white">
           <CardContent className="p-4">
             <div className="flex items-center justify-between">
@@ -200,7 +200,7 @@ export const LearningDashboard: React.FC<LearningDashboardProps> = ({
             </div>
           </CardContent>
         </Card>
-      </div>
+      </div> */}
 
       {/* Compact Word Progress Summary */}
       {childStats && (
