@@ -67,24 +67,23 @@ export function MobileBottomNav({
       textColor: "text-pink-600",
     },
     {
-      id: "progress",
-      emoji: "🌟",
-      label: "Journey",
-      icon: Trophy,
-      color: "from-yellow-500 to-orange-500",
-      bgColor: "bg-yellow-100",
-      textColor: "text-yellow-600",
-      badge: achievementCount > 0 ? achievementCount : undefined,
+      id: "adventure",
+      emoji: "🎯",
+      label: "Practice",
+      icon: Sword,
+      color: "from-green-500 to-emerald-500",
+      bgColor: "bg-green-100",
+      textColor: "text-green-600",
     },
   ];
 
   const secondaryMenuItems = [
     {
-      id: "adventure",
-      emoji: "🏰",
-      label: "Adventure",
-      icon: Sword,
-      onClick: () => onTabChange("adventure"),
+      id: "progress",
+      emoji: "🌟",
+      label: "My Journey",
+      icon: Trophy,
+      onClick: () => onTabChange("progress"),
     },
     {
       id: "parent",

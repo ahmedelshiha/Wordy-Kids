@@ -435,10 +435,7 @@ export default function Index({ initialProfile }: IndexProps) {
             .filter((word) => {
               // Get words from current learning set that might need practice
               const wordKey = `${currentProfile?.id}-${word.id}`;
-              return (
-                forgottenWords.has(Number(word.id)) ||
-                (word.accuracy && word.accuracy < 70)
-              );
+              return forgottenWords.has(Number(word.id));
             })
             .slice(0, category.needsPracticeWords)
             .map((word) => ({
@@ -451,8 +448,8 @@ export default function Index({ initialProfile }: IndexProps) {
                 | "easy"
                 | "medium"
                 | "hard",
-              attempts: word.attempts || 1,
-              lastAccuracy: word.accuracy || 0,
+              attempts: 1,
+              lastAccuracy: 0,
             }));
 
           practiceWordsFromStats.push(...categoryWords);
@@ -800,6 +797,26 @@ export default function Index({ initialProfile }: IndexProps) {
                   </button>
 
                   <button
+                    onClick={() => setActiveTab("adventure")}
+                    className={`w-full flex items-center gap-3 p-3 lg:p-4 rounded-xl lg:rounded-2xl transition-all ${
+                      activeTab === "adventure"
+                        ? "bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-lg"
+                        : "bg-white text-gray-700 hover:bg-purple-50 border border-purple-100"
+                    }`}
+                  >
+                    <div
+                      className={`p-2 rounded-lg lg:rounded-xl ${activeTab === "adventure" ? "bg-white/20" : "bg-green-100"}`}
+                    >
+                      <Sword
+                        className={`w-4 h-4 lg:w-5 lg:h-5 ${activeTab === "adventure" ? "text-white" : "text-green-600"}`}
+                      />
+                    </div>
+                    <span className="font-medium lg:font-semibold text-sm lg:text-base">
+                      🎯 Word Practice
+                    </span>
+                  </button>
+
+                  <button
                     onClick={() => setActiveTab("progress")}
                     className={`w-full flex items-center gap-3 p-3 lg:p-4 rounded-xl lg:rounded-2xl transition-all ${
                       activeTab === "progress"
@@ -816,26 +833,6 @@ export default function Index({ initialProfile }: IndexProps) {
                     </div>
                     <span className="font-medium lg:font-semibold text-sm lg:text-base">
                       🌟 My Journey
-                    </span>
-                  </button>
-
-                  <button
-                    onClick={() => setActiveTab("adventure")}
-                    className={`w-full flex items-center gap-3 p-3 lg:p-4 rounded-xl lg:rounded-2xl transition-all ${
-                      activeTab === "adventure"
-                        ? "bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-lg"
-                        : "bg-white text-gray-700 hover:bg-purple-50 border border-purple-100"
-                    }`}
-                  >
-                    <div
-                      className={`p-2 rounded-lg lg:rounded-xl ${activeTab === "adventure" ? "bg-white/20" : "bg-red-100"}`}
-                    >
-                      <Sword
-                        className={`w-4 h-4 lg:w-5 lg:h-5 ${activeTab === "adventure" ? "text-white" : "text-red-600"}`}
-                      />
-                    </div>
-                    <span className="font-medium lg:font-semibold text-sm lg:text-base">
-                      🏰 Adventure
                     </span>
                   </button>
 
@@ -1729,7 +1726,7 @@ export default function Index({ initialProfile }: IndexProps) {
                               </div>
                               <div className="flex justify-between items-center p-3 bg-white rounded-lg">
                                 <div className="flex items-center gap-3">
-                                  <span className="text-2xl">🏆</span>
+                                  <span className="text-2xl">����</span>
                                   <div>
                                     <div className="font-semibold">
                                       Challenge Quiz

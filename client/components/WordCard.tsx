@@ -249,6 +249,9 @@ export const WordCard: React.FC<WordCardProps> = ({
             </Button>
           </div>
 
+          {/* Add even more spacing to push image down further */}
+          <div className="mt-12"></div>
+
           {word.imageUrl ? (
             <div className="relative mx-auto mt-8 mb-6">
               <div className="w-48 h-48 md:w-56 md:h-56 lg:w-64 lg:h-64 rounded-full bg-white/20 backdrop-blur-sm shadow-2xl ring-4 ring-white/30 flex items-center justify-center">
