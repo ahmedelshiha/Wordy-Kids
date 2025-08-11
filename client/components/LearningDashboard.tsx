@@ -4,6 +4,7 @@ import { Progress } from "@/components/ui/progress";
 import { Badge } from "@/components/ui/badge";
 import { AnimatedCounter } from "@/components/AnimatedCounter";
 import { PracticeWordsCard } from "@/components/PracticeWordsCard";
+import { InteractiveDashboardWordCard } from "@/components/InteractiveDashboardWordCard";
 import { ChildWordStats } from "@shared/api";
 import {
   Trophy,
