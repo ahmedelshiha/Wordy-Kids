@@ -128,10 +128,12 @@ export function MobileBottomNav({
           <div className="absolute bottom-20 left-4 right-4 bg-white rounded-3xl shadow-2xl p-4 border-4 border-rainbow">
             <div className="text-center mb-4">
               <div className="text-2xl mb-2">🎪</div>
-              <h3 className="text-lg font-bold text-gray-800">More Fun Stuff!</h3>
+              <h3 className="text-lg font-bold text-gray-800">
+                More Fun Stuff!
+              </h3>
               <p className="text-sm text-gray-600">Tap what you want to do!</p>
             </div>
-            
+
             <div className="grid grid-cols-2 gap-3">
               {secondaryMenuItems.map((item) => (
                 <button
@@ -143,7 +145,9 @@ export function MobileBottomNav({
                   className="flex flex-col items-center gap-2 p-4 rounded-2xl bg-gradient-to-br from-blue-50 to-purple-50 hover:from-blue-100 hover:to-purple-100 transition-all duration-300 transform hover:scale-105 active:scale-95 border-2 border-purple-200"
                 >
                   <div className="text-3xl">{item.emoji}</div>
-                  <span className="text-sm font-bold text-gray-700">{item.label}</span>
+                  <span className="text-sm font-bold text-gray-700">
+                    {item.label}
+                  </span>
                 </button>
               ))}
             </div>
@@ -171,19 +175,19 @@ export function MobileBottomNav({
                   "flex flex-col items-center gap-1 p-3 rounded-2xl transition-all duration-300 transform hover:scale-105 active:scale-95 relative min-w-0 flex-1 mx-1",
                   activeTab === tab.id
                     ? `bg-gradient-to-br ${tab.color} text-white shadow-lg animate-gentle-float`
-                    : `${tab.bgColor} ${tab.textColor} hover:shadow-md`
+                    : `${tab.bgColor} ${tab.textColor} hover:shadow-md`,
                 )}
               >
                 {/* Emoji Icon */}
                 <div
                   className={cn(
                     "text-2xl transition-transform duration-300",
-                    activeTab === tab.id ? "animate-sparkle" : ""
+                    activeTab === tab.id ? "animate-sparkle" : "",
                   )}
                 >
                   {tab.emoji}
                 </div>
-                
+
                 {/* Label */}
                 <span className="text-xs font-bold leading-tight text-center">
                   {tab.label}
@@ -210,13 +214,13 @@ export function MobileBottomNav({
                 "flex flex-col items-center gap-1 p-3 rounded-2xl transition-all duration-300 transform hover:scale-105 active:scale-95 min-w-0 flex-1 mx-1",
                 showMoreMenu
                   ? "bg-gradient-to-br from-blue-500 to-purple-500 text-white shadow-lg"
-                  : "bg-blue-100 text-blue-600 hover:shadow-md"
+                  : "bg-blue-100 text-blue-600 hover:shadow-md",
               )}
             >
               <div
                 className={cn(
                   "text-2xl transition-transform duration-300",
-                  showMoreMenu ? "rotate-90" : ""
+                  showMoreMenu ? "rotate-90" : "",
                 )}
               >
                 🎪
@@ -224,7 +228,7 @@ export function MobileBottomNav({
               <span className="text-xs font-bold leading-tight text-center">
                 More
               </span>
-              
+
               {showMoreMenu && (
                 <div className="absolute -bottom-1 left-1/2 transform -translate-x-1/2 w-2 h-2 bg-white rounded-full shadow-lg"></div>
               )}

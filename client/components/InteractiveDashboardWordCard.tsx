@@ -36,7 +36,7 @@ interface InteractiveDashboardWordCardProps {
   words: Word[];
   onWordProgress: (
     word: Word,
-    status: "remembered" | "needs_practice" | "skipped"
+    status: "remembered" | "needs_practice" | "skipped",
   ) => void;
   onQuickQuiz: () => void;
   onAdventure: () => void;
@@ -64,7 +64,9 @@ export function InteractiveDashboardWordCard({
   const [celebrationEffect, setCelebrationEffect] = useState(false);
 
   const currentWord = words[currentWordIndex] || null;
-  const dailyProgress = Math.round((dailyGoal.completed / dailyGoal.target) * 100);
+  const dailyProgress = Math.round(
+    (dailyGoal.completed / dailyGoal.target) * 100,
+  );
 
   // Auto-advance to next word when words array changes
   useEffect(() => {
@@ -86,7 +88,9 @@ export function InteractiveDashboardWordCard({
     }
   };
 
-  const handleWordAction = (status: "remembered" | "needs_practice" | "skipped") => {
+  const handleWordAction = (
+    status: "remembered" | "needs_practice" | "skipped",
+  ) => {
     if (!currentWord) return;
 
     // Show celebration effect for successful interactions
@@ -102,9 +106,12 @@ export function InteractiveDashboardWordCard({
     onWordProgress(currentWord, status);
 
     // Auto-advance to next word after a brief delay
-    setTimeout(() => {
-      advanceToNextWord();
-    }, status === "remembered" ? 1500 : 800);
+    setTimeout(
+      () => {
+        advanceToNextWord();
+      },
+      status === "remembered" ? 1500 : 800,
+    );
   };
 
   const advanceToNextWord = () => {
@@ -160,25 +167,33 @@ export function InteractiveDashboardWordCard({
             <span className="font-bold">{dailyGoal.streak}</span>
           </div>
         </div>
-        <Progress 
-          value={dailyProgress} 
-          className="h-3 bg-white/20"
-        />
+        <Progress value={dailyProgress} className="h-3 bg-white/20" />
         <p className="text-sm mt-2 opacity-90">{dailyProgress}% complete</p>
       </div>
 
       {/* Interactive Word Card */}
-      <Card className={cn(
-        "w-full max-w-3xl mx-auto transition-all duration-500 transform hover:scale-[1.02] relative overflow-hidden",
-        celebrationEffect && "animate-pulse shadow-2xl border-yellow-400 border-4"
-      )}>
+      <Card
+        className={cn(
+          "w-full max-w-3xl mx-auto transition-all duration-500 transform hover:scale-[1.02] relative overflow-hidden",
+          celebrationEffect &&
+            "animate-pulse shadow-2xl border-yellow-400 border-4",
+        )}
+      >
         {/* Celebration Sparkles */}
         {celebrationEffect && (
           <div className="absolute inset-0 bg-gradient-to-r from-yellow-400/20 to-pink-400/20 animate-pulse">
-            <div className="absolute top-4 left-4 text-2xl animate-bounce">✨</div>
-            <div className="absolute top-6 right-6 text-3xl animate-spin">🌟</div>
-            <div className="absolute bottom-4 left-6 text-2xl animate-bounce delay-300">🎉</div>
-            <div className="absolute bottom-6 right-4 text-2xl animate-pulse delay-500">💫</div>
+            <div className="absolute top-4 left-4 text-2xl animate-bounce">
+              ✨
+            </div>
+            <div className="absolute top-6 right-6 text-3xl animate-spin">
+              🌟
+            </div>
+            <div className="absolute bottom-4 left-6 text-2xl animate-bounce delay-300">
+              🎉
+            </div>
+            <div className="absolute bottom-6 right-4 text-2xl animate-pulse delay-500">
+              💫
+            </div>
           </div>
         )}
 
@@ -186,7 +201,12 @@ export function InteractiveDashboardWordCard({
           {/* Word Header */}
           <div className="text-center mb-6">
             <div className="flex items-center justify-center gap-4 mb-4">
-              <Badge className={cn("text-sm px-3 py-1", getDifficultyColor(currentWord.difficulty))}>
+              <Badge
+                className={cn(
+                  "text-sm px-3 py-1",
+                  getDifficultyColor(currentWord.difficulty),
+                )}
+              >
                 {currentWord.category}
               </Badge>
               <Badge variant="outline" className="text-sm px-3 py-1">
@@ -199,7 +219,7 @@ export function InteractiveDashboardWordCard({
               <h1 className="text-5xl md:text-6xl font-bold text-gray-800 tracking-wide">
                 {currentWord.word.toUpperCase()}
               </h1>
-              
+
               {/* Pronunciation */}
               {currentWord.pronunciation && (
                 <div className="flex items-center justify-center gap-2">
@@ -236,14 +256,18 @@ export function InteractiveDashboardWordCard({
           {showDefinition && (
             <div className="space-y-4 mb-8 bg-gray-50 p-6 rounded-2xl">
               <div>
-                <h3 className="text-lg font-semibold text-gray-700 mb-2">Definition:</h3>
+                <h3 className="text-lg font-semibold text-gray-700 mb-2">
+                  Definition:
+                </h3>
                 <p className="text-xl text-gray-800 leading-relaxed">
                   {currentWord.definition}
                 </p>
               </div>
-              
+
               <div>
-                <h3 className="text-lg font-semibold text-gray-700 mb-2">Example:</h3>
+                <h3 className="text-lg font-semibold text-gray-700 mb-2">
+                  Example:
+                </h3>
                 <p className="text-lg text-gray-700 italic leading-relaxed">
                   "{currentWord.example}"
                 </p>
@@ -356,7 +380,9 @@ export function InteractiveDashboardWordCard({
         <div className="flex items-center gap-2">
           <Target className="w-5 h-5 text-blue-500" />
           <div>
-            <div className="font-bold text-lg">{dailyGoal.completed}/{dailyGoal.target}</div>
+            <div className="font-bold text-lg">
+              {dailyGoal.completed}/{dailyGoal.target}
+            </div>
             <div className="text-sm text-gray-600">daily goal</div>
           </div>
         </div>

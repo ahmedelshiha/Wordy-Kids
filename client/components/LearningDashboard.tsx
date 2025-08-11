@@ -47,7 +47,10 @@ interface LearningDashboardProps {
   practiceWords?: any[];
   // Interactive word card props
   availableWords?: any[];
-  onWordProgress?: (word: any, status: "remembered" | "needs_practice" | "skipped") => void;
+  onWordProgress?: (
+    word: any,
+    status: "remembered" | "needs_practice" | "skipped",
+  ) => void;
   onQuickQuiz?: () => void;
   onAdventure?: () => void;
   onPracticeForgotten?: () => void;
@@ -81,7 +84,9 @@ export const LearningDashboard: React.FC<LearningDashboardProps> = ({
           onWordProgress={onWordProgress}
           onQuickQuiz={onQuickQuiz || (() => console.log("Quick quiz"))}
           onAdventure={onAdventure || (() => console.log("Adventure"))}
-          onPracticeForgotten={onPracticeForgotten || (() => console.log("Practice forgotten"))}
+          onPracticeForgotten={
+            onPracticeForgotten || (() => console.log("Practice forgotten"))
+          }
           dailyGoal={{
             target: stats.weeklyGoal, // Using weekly goal as daily for demo
             completed: stats.weeklyProgress,
@@ -97,7 +102,9 @@ export const LearningDashboard: React.FC<LearningDashboardProps> = ({
           <h1 className="text-3xl font-bold text-slate-800 mb-2">
             Welcome back, {userName}!
           </h1>
-          <p className="text-slate-600 mb-6">Ready to continue your word adventure?</p>
+          <p className="text-slate-600 mb-6">
+            Ready to continue your word adventure?
+          </p>
 
           {/* Practice Words Card - Fallback */}
           {practiceWords.length > 0 && onStartPractice && (
@@ -202,15 +209,21 @@ export const LearningDashboard: React.FC<LearningDashboardProps> = ({
           <CardContent className="p-4">
             <div className="grid grid-cols-3 gap-4 text-center">
               <div>
-                <div className="text-2xl font-bold text-green-600">{childStats.wordsRemembered}</div>
+                <div className="text-2xl font-bold text-green-600">
+                  {childStats.wordsRemembered}
+                </div>
                 <div className="text-sm text-gray-600">Remembered</div>
               </div>
               <div>
-                <div className="text-2xl font-bold text-orange-600">{childStats.wordsNeedingPractice}</div>
+                <div className="text-2xl font-bold text-orange-600">
+                  {childStats.wordsNeedingPractice}
+                </div>
                 <div className="text-sm text-gray-600">Need Practice</div>
               </div>
               <div>
-                <div className="text-2xl font-bold text-purple-600">{childStats.averageAccuracy}%</div>
+                <div className="text-2xl font-bold text-purple-600">
+                  {childStats.averageAccuracy}%
+                </div>
                 <div className="text-sm text-gray-600">Accuracy</div>
               </div>
             </div>
@@ -243,7 +256,9 @@ export const LearningDashboard: React.FC<LearningDashboardProps> = ({
             {stats.badges.filter((badge) => badge.earned).length === 0 && (
               <div className="text-center text-gray-500 w-full py-4">
                 <div className="text-4xl mb-2">🎯</div>
-                <p className="text-sm">Start learning to earn your first badge!</p>
+                <p className="text-sm">
+                  Start learning to earn your first badge!
+                </p>
               </div>
             )}
           </div>

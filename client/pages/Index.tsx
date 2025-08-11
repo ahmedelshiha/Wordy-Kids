@@ -898,43 +898,52 @@ export default function Index({ initialProfile }: IndexProps) {
                     childStats={childStats}
                     availableWords={(() => {
                       // Smart word selection logic
-                      const allWords = selectedCategory === "all"
-                        ? getRandomWords(10)
-                        : getWordsByCategory(selectedCategory);
+                      const allWords =
+                        selectedCategory === "all"
+                          ? getRandomWords(10)
+                          : getWordsByCategory(selectedCategory);
 
                       // Prioritize forgotten words, then new words
-                      const forgottenWordsList = allWords.filter(word =>
-                        forgottenWords.has(word.id)
+                      const forgottenWordsList = allWords.filter((word) =>
+                        forgottenWords.has(word.id),
                       );
-                      const newWords = allWords.filter(word =>
-                        !forgottenWords.has(word.id) && !rememberedWords.has(word.id)
+                      const newWords = allWords.filter(
+                        (word) =>
+                          !forgottenWords.has(word.id) &&
+                          !rememberedWords.has(word.id),
                       );
-                      const reviewWords = allWords.filter(word =>
-                        rememberedWords.has(word.id)
+                      const reviewWords = allWords.filter((word) =>
+                        rememberedWords.has(word.id),
                       );
 
                       // Mix: 40% forgotten, 40% new, 20% review
                       const smartSelection = [
                         ...forgottenWordsList.slice(0, 4),
                         ...newWords.slice(0, 4),
-                        ...reviewWords.slice(0, 2)
+                        ...reviewWords.slice(0, 2),
                       ];
 
-                      return smartSelection.length > 0 ? smartSelection : allWords.slice(0, 10);
+                      return smartSelection.length > 0
+                        ? smartSelection
+                        : allWords.slice(0, 10);
                     })()}
                     onWordProgress={async (word, status) => {
                       // Handle word progress in dashboard
                       if (status === "remembered") {
-                        setRememberedWords(prev => new Set([...prev, word.id]));
-                        setForgottenWords(prev => {
+                        setRememberedWords(
+                          (prev) => new Set([...prev, word.id]),
+                        );
+                        setForgottenWords((prev) => {
                           const newSet = new Set(prev);
                           newSet.delete(word.id);
                           return newSet;
                         });
                         handleWordMastered(word.id, "easy");
                       } else if (status === "needs_practice") {
-                        setForgottenWords(prev => new Set([...prev, word.id]));
-                        setRememberedWords(prev => {
+                        setForgottenWords(
+                          (prev) => new Set([...prev, word.id]),
+                        );
+                        setRememberedWords((prev) => {
                           const newSet = new Set(prev);
                           newSet.delete(word.id);
                           return newSet;
@@ -943,7 +952,12 @@ export default function Index({ initialProfile }: IndexProps) {
                       }
 
                       // Record progress in database
-                      await handleWordProgress(word, status === "remembered" ? "remembered" : "needs_practice");
+                      await handleWordProgress(
+                        word,
+                        status === "remembered"
+                          ? "remembered"
+                          : "needs_practice",
+                      );
                     }}
                     onQuickQuiz={() => {
                       setSelectedQuizType("quick");
@@ -1945,7 +1959,7 @@ export default function Index({ initialProfile }: IndexProps) {
         }}
         showMoreMenu={showMobileMoreMenu}
         onMoreToggle={() => setShowMobileMoreMenu(!showMobileMoreMenu)}
-        achievementCount={learningStats.badges.filter(b => b.earned).length}
+        achievementCount={learningStats.badges.filter((b) => b.earned).length}
       />
 
       {/* Floating Helper */}
