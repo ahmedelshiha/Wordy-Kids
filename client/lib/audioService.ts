@@ -46,6 +46,7 @@ export class AudioService {
 
     switch (voiceType) {
       case "woman":
+        // First try explicit female voice names/indicators
         filteredVoices = englishVoices.filter(
           (voice) =>
             voice.name.toLowerCase().includes("female") ||
@@ -55,45 +56,140 @@ export class AudioService {
             voice.name.toLowerCase().includes("susan") ||
             voice.name.toLowerCase().includes("allison") ||
             voice.name.toLowerCase().includes("zira") ||
+            voice.name.toLowerCase().includes("hazel") ||
+            voice.name.toLowerCase().includes("serena") ||
+            voice.name.toLowerCase().includes("victoria") ||
+            voice.name.toLowerCase().includes("catherine") ||
+            voice.name.toLowerCase().includes("amelie") ||
+            voice.name.toLowerCase().includes("ava") ||
+            voice.name.toLowerCase().includes("emma") ||
+            voice.name.toLowerCase().includes("sophia") ||
             (voice.name.toLowerCase().includes("google") &&
               voice.name.toLowerCase().includes("female")),
         );
         break;
 
       case "man":
-        filteredVoices = englishVoices.filter(
-          (voice) =>
-            voice.name.toLowerCase().includes("male") ||
-            voice.name.toLowerCase().includes("man") ||
-            voice.name.toLowerCase().includes("david") ||
-            voice.name.toLowerCase().includes("mark") ||
-            voice.name.toLowerCase().includes("alex") ||
-            voice.name.toLowerCase().includes("daniel") ||
-            (voice.name.toLowerCase().includes("google") &&
-              voice.name.toLowerCase().includes("male")),
-        );
+        // Enhanced male voice detection with more comprehensive patterns
+        filteredVoices = englishVoices.filter((voice) => {
+          const name = voice.name.toLowerCase();
+          return (
+            name.includes("male") ||
+            name.includes("man") ||
+            name.includes("david") ||
+            name.includes("mark") ||
+            name.includes("alex") ||
+            name.includes("daniel") ||
+            name.includes("thomas") ||
+            name.includes("james") ||
+            name.includes("michael") ||
+            name.includes("william") ||
+            name.includes("robert") ||
+            name.includes("john") ||
+            name.includes("richard") ||
+            name.includes("christopher") ||
+            name.includes("matthew") ||
+            name.includes("anthony") ||
+            name.includes("donald") ||
+            name.includes("steven") ||
+            name.includes("paul") ||
+            name.includes("andrew") ||
+            name.includes("joshua") ||
+            name.includes("kenny") ||
+            name.includes("fred") ||
+            name.includes("ralph") ||
+            name.includes("jorge") ||
+            name.includes("aaron") ||
+            name.includes("oliver") ||
+            name.includes("evan") ||
+            (name.includes("google") && name.includes("male"))
+          );
+        });
+
+        // If still no male voices found, use heuristics based on voice properties
+        if (filteredVoices.length === 0) {
+          // Filter out obvious female names and get remaining voices
+          const nonFemaleVoices = englishVoices.filter((voice) => {
+            const name = voice.name.toLowerCase();
+            const hasObviousFemaleIndicators =
+              name.includes("female") ||
+              name.includes("woman") ||
+              name.includes("karen") ||
+              name.includes("samantha") ||
+              name.includes("susan") ||
+              name.includes("allison") ||
+              name.includes("zira") ||
+              name.includes("hazel") ||
+              name.includes("serena") ||
+              name.includes("victoria") ||
+              name.includes("catherine") ||
+              name.includes("amelie") ||
+              name.includes("ava") ||
+              name.includes("emma") ||
+              name.includes("sophia");
+
+            return !hasObviousFemaleIndicators;
+          });
+
+          // Prefer voices that sound more neutral or could be male
+          filteredVoices = nonFemaleVoices.filter((voice) => {
+            const name = voice.name.toLowerCase();
+            return (
+              name.includes("english") ||
+              name.includes("default") ||
+              name.includes("us") ||
+              name.includes("uk") ||
+              name.includes("british") ||
+              name.includes("american")
+            );
+          });
+
+          // If still nothing, take the first non-female voice
+          if (filteredVoices.length === 0 && nonFemaleVoices.length > 0) {
+            filteredVoices = [nonFemaleVoices[0]];
+          }
+        }
         break;
 
       case "kid":
         // Look for higher-pitched or child-specific voices
-        filteredVoices = englishVoices.filter(
-          (voice) =>
-            voice.name.toLowerCase().includes("child") ||
-            voice.name.toLowerCase().includes("kid") ||
-            voice.name.toLowerCase().includes("junior") ||
-            voice.name.toLowerCase().includes("young") ||
+        filteredVoices = englishVoices.filter((voice) => {
+          const name = voice.name.toLowerCase();
+          return (
+            name.includes("child") ||
+            name.includes("kid") ||
+            name.includes("junior") ||
+            name.includes("young") ||
+            name.includes("boy") ||
+            name.includes("girl") ||
             // Some voices that tend to sound younger
-            voice.name.toLowerCase().includes("kate") ||
-            voice.name.toLowerCase().includes("vicki"),
-        );
-
-        // If no kid-specific voices, fall back to female voices (often sound more child-friendly)
-        if (filteredVoices.length === 0) {
-          filteredVoices = englishVoices.filter(
-            (voice) =>
-              voice.name.toLowerCase().includes("female") ||
-              voice.name.toLowerCase().includes("woman"),
+            name.includes("kate") ||
+            name.includes("vicki") ||
+            name.includes("sara") ||
+            name.includes("lily") ||
+            name.includes("grace")
           );
+        });
+
+        // If no kid-specific voices, try to find higher-pitched female voices
+        if (filteredVoices.length === 0) {
+          const femaleVoices = englishVoices.filter((voice) => {
+            const name = voice.name.toLowerCase();
+            return (
+              name.includes("female") ||
+              name.includes("woman") ||
+              name.includes("sara") ||
+              name.includes("lily") ||
+              name.includes("grace") ||
+              name.includes("kate") ||
+              name.includes("vicki")
+            );
+          });
+
+          // Prefer the first available female voice for kid mode
+          if (femaleVoices.length > 0) {
+            filteredVoices = [femaleVoices[0]];
+          }
         }
         break;
     }
@@ -345,7 +441,12 @@ export class AudioService {
     if (!this.isEnabled) return;
 
     const voice = this.getVoiceByType(voiceType);
-    if (!voice) return;
+    if (!voice) {
+      console.warn(`No voice found for type: ${voiceType}`);
+      return;
+    }
+
+    console.log(`Preview voice for ${voiceType}:`, voice.name, voice.lang);
 
     this.speechSynthesis.cancel();
 
@@ -370,6 +471,47 @@ export class AudioService {
 
     utterance.volume = 1.0;
     this.speechSynthesis.speak(utterance);
+  }
+
+  // Debug method to see all available voices
+  public debugVoices(): void {
+    console.log("=== Available Voices Debug ===");
+    console.log("Total voices:", this.voices.length);
+
+    const englishVoices = this.voices.filter((voice) =>
+      voice.lang.startsWith("en"),
+    );
+    console.log("English voices:", englishVoices.length);
+
+    englishVoices.forEach((voice, index) => {
+      console.log(
+        `${index + 1}. ${voice.name} (${voice.lang}) - Local: ${voice.localService}`,
+      );
+    });
+
+    console.log("\n=== Voice Type Assignments ===");
+    ["woman", "man", "kid"].forEach((type) => {
+      const voice = this.getVoiceByType(type as VoiceType);
+      console.log(
+        `${type}: ${voice ? `${voice.name} (${voice.lang})` : "None found"}`,
+      );
+    });
+  }
+
+  // Get detailed voice information for settings panel
+  public getVoiceInfo(voiceType: VoiceType): {
+    name: string;
+    language: string;
+    isLocal: boolean;
+  } | null {
+    const voice = this.getVoiceByType(voiceType);
+    if (!voice) return null;
+
+    return {
+      name: voice.name,
+      language: voice.lang,
+      isLocal: voice.localService,
+    };
   }
 
   // Fun sound effects using Web Audio API for better child engagement

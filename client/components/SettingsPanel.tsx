@@ -61,16 +61,12 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({
   const handleSoundToggle = (checked: boolean) => {
     setSoundOn(checked);
     setSoundEnabled(checked);
-    if (checked) {
-      playSoundIfEnabled.click();
-    }
   };
 
   const handleDarkModeToggle = (checked: boolean) => {
     setDarkMode(checked);
     // In a real app, this would toggle the dark mode theme
     document.documentElement.classList.toggle("dark", checked);
-    playSoundIfEnabled.click();
   };
 
   const handleBackgroundAnimationsToggle = (checked: boolean) => {
@@ -80,13 +76,11 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({
     window.dispatchEvent(
       new CustomEvent("backgroundAnimationsChanged", { detail: checked }),
     );
-    playSoundIfEnabled.click();
   };
 
   const handleVoiceTypeChange = (voiceType: VoiceType) => {
     setSelectedVoiceType(voiceType);
     audioService.setVoiceType(voiceType);
-    playSoundIfEnabled.click();
   };
 
   const handleVoicePreview = (voiceType: VoiceType) => {
@@ -97,6 +91,10 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({
       kid: "Hey! I'm a fun kid's voice. Learning words is super exciting!",
     };
     audioService.previewVoice(voiceType, previewTexts[voiceType]);
+  };
+
+  const handleDebugVoices = () => {
+    audioService.debugVoices();
   };
 
   const difficultyLevels = [
@@ -172,6 +170,7 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({
                     availableVoices.find((v) => v.type === voice.type)
                       ?.available ?? true;
                   const isSelected = selectedVoiceType === voice.type;
+                  const voiceInfo = audioService.getVoiceInfo(voice.type);
 
                   return (
                     <div
@@ -196,6 +195,11 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({
                           <p className="text-sm text-slate-600">
                             {voice.description}
                           </p>
+                          {voiceInfo && (
+                            <p className="text-xs text-slate-500">
+                              Using: {voiceInfo.name}
+                            </p>
+                          )}
                           {!isAvailable && (
                             <p className="text-xs text-red-500">
                               Not available on this device
@@ -227,6 +231,22 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({
                     </div>
                   );
                 })}
+              </div>
+
+              {/* Debug Button for Voice Issues */}
+              <div className="mt-4 p-3 bg-slate-50 rounded-lg">
+                <p className="text-sm text-slate-600 mb-2">
+                  Having voice issues? Click the button below to see voice debug
+                  info in the browser console.
+                </p>
+                <Button
+                  size="sm"
+                  variant="outline"
+                  onClick={handleDebugVoices}
+                  className="text-xs"
+                >
+                  Debug Voice Info (Check Console)
+                </Button>
               </div>
             </div>
           </div>
@@ -325,7 +345,6 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({
                     }
                     onClick={() => {
                       setDifficulty(level.value);
-                      playSoundIfEnabled.click();
                     }}
                   >
                     {level.label}
@@ -377,7 +396,6 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({
                 setSelectedVoiceType("woman");
                 audioService.setVoiceType("woman");
                 document.documentElement.classList.remove("dark");
-                playSoundIfEnabled.click();
               }}
               className="flex-1 w-full"
             >
@@ -385,7 +403,6 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({
             </Button>
             <Button
               onClick={() => {
-                playSoundIfEnabled.click();
                 onClose();
               }}
               className="flex-1 w-full bg-educational-blue text-white"
