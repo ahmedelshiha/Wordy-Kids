@@ -429,94 +429,48 @@ export default function Index({ initialProfile }: IndexProps) {
   };
 
   const getPracticeWords = () => {
-    if (!childStats) return [];
+    // Use smart word selector for practice words
+    const practiceWords = SmartWordSelector.getPracticeWords(
+      forgottenWords,
+      childStats,
+      10
+    );
 
-    // Get actual words that need practice from child stats
-    const practiceWordsFromStats: any[] = [];
-
-    // If we have mastery by category data, extract words needing practice
-    if (childStats.masteryByCategory) {
-      childStats.masteryByCategory.forEach((category) => {
-        if (category.needsPracticeWords > 0) {
-          // For each category with practice words, we'll get actual word data
-          // This is a simplified approach - in a full implementation,
-          // the API would return specific word details
-          const categoryWords = getWordsForCategory(category.category)
-            .filter((word) => {
-              // Get words from current learning set that might need practice
-              const wordKey = `${currentProfile?.id}-${word.id}`;
-              return forgottenWords.has(Number(word.id));
-            })
-            .slice(0, category.needsPracticeWords)
-            .map((word) => ({
-              id: word.id.toString(),
-              word: word.word,
-              definition: word.definition,
-              example: word.example,
-              category: word.category,
-              difficulty: (word.difficulty || "medium") as
-                | "easy"
-                | "medium"
-                | "hard",
-              attempts: 1,
-              lastAccuracy: 0,
-            }));
-
-          practiceWordsFromStats.push(...categoryWords);
-        }
+    // If no forgotten words, get challenging words for practice
+    if (practiceWords.length === 0) {
+      const challengingSelection = SmartWordSelector.selectWords({
+        category: selectedCategory,
+        count: 10,
+        rememberedWords,
+        forgottenWords,
+        childStats,
+        prioritizeWeakCategories: true,
+        includeReviewWords: false, // Focus on new/challenging words for practice
       });
+
+      return challengingSelection.words.map((word) => ({
+        id: word.id.toString(),
+        word: word.word,
+        definition: word.definition,
+        example: word.example,
+        category: word.category,
+        difficulty: word.difficulty,
+        attempts: 0,
+        lastAccuracy: 0,
+      }));
     }
 
-    // If no stats data yet, get words from forgotten words set
-    if (practiceWordsFromStats.length === 0 && forgottenWords.size > 0) {
-      const allWords = getAllWords();
-      const forgottenWordsList = Array.from(forgottenWords)
-        .map((wordId) => allWords.find((w) => w.id === wordId))
-        .filter(Boolean)
-        .slice(0, 8) // Limit to 8 words for better gaming experience
-        .map((word) => ({
-          id: word!.id.toString(),
-          word: word!.word,
-          definition: word!.definition,
-          example: word!.example,
-          category: word!.category,
-          difficulty: (word!.difficulty || "medium") as
-            | "easy"
-            | "medium"
-            | "hard",
-          attempts: 1,
-          lastAccuracy: 0,
-        }));
-
-      return forgottenWordsList;
-    }
-
-    // If still no practice words, return some challenging words as backup
-    if (practiceWordsFromStats.length === 0) {
-      const allWords = getAllWords();
-      const challengingWords = allWords
-        .filter(
-          (word) => word.difficulty === "hard" || word.difficulty === "medium",
-        )
-        .slice(0, 5)
-        .map((word) => ({
-          id: word.id.toString(),
-          word: word.word,
-          definition: word.definition,
-          example: word.example,
-          category: word.category,
-          difficulty: (word.difficulty || "medium") as
-            | "easy"
-            | "medium"
-            | "hard",
-          attempts: 0,
-          lastAccuracy: 0,
-        }));
-
-      return challengingWords;
-    }
-
-    return practiceWordsFromStats.slice(0, 10); // Limit to 10 for optimal gaming experience
+    // Convert to practice word format
+    return practiceWords.map((word) => ({
+      id: word.id.toString(),
+      word: word.word,
+      definition: word.definition,
+      example: word.example,
+      category: word.category,
+      difficulty: word.difficulty,
+      attempts: 1,
+      lastAccuracy: Math.random() * 40 + 30, // Simulate lower accuracy for practice words
+    }));
   };
 
   // Helper function to get all words from the database
@@ -650,7 +604,7 @@ export default function Index({ initialProfile }: IndexProps) {
                 {
                   id: "progress",
                   icon: Trophy,
-                  label: "���� My Journey",
+                  label: "����� My Journey",
                   color: "yellow",
                 },
               ].map(({ id, icon: Icon, label, color }) => (
