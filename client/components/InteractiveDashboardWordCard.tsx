@@ -352,8 +352,8 @@ export function InteractiveDashboardWordCard({
                 )}
               </div>
 
-              {/* Definition and Example */}
-              <div className="bg-gray-50 p-6 rounded-2xl">
+              {/* Definition and Example - Hidden to show word name only */}
+              <div className="hidden bg-gray-50 p-6 rounded-2xl">
                 <div className="mb-4">
                   <h3 className="text-lg font-semibold text-gray-700 mb-2">
                     📖 Definition:
