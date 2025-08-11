@@ -267,9 +267,7 @@ export function InteractiveDashboardWordCard({
           </div>
 
           {/* Picture Display */}
-          <div className="mb-6">
-            {renderWordImage()}
-          </div>
+          <div className="mb-6">{renderWordImage()}</div>
 
           {/* Game Instructions */}
           <div className="text-center mb-4">
@@ -288,7 +286,9 @@ export function InteractiveDashboardWordCard({
               disabled={isPlaying}
               className="bg-educational-blue hover:bg-educational-blue/90 text-white p-3 rounded-full transition-all duration-300 transform hover:scale-105"
             >
-              <Volume2 className={cn("w-6 h-6", isPlaying && "animate-pulse")} />
+              <Volume2
+                className={cn("w-6 h-6", isPlaying && "animate-pulse")}
+              />
             </Button>
 
             {!showHint && !showWordName && (
@@ -387,7 +387,9 @@ export function InteractiveDashboardWordCard({
                   <XCircle className="w-8 h-8 mr-3" />
                   <div className="text-center">
                     <div className="font-bold text-2xl">😔 I Forgot</div>
-                    <div className="text-sm opacity-75 mt-1">Need more practice</div>
+                    <div className="text-sm opacity-75 mt-1">
+                      Need more practice
+                    </div>
                   </div>
                 </Button>
 
