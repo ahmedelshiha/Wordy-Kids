@@ -230,8 +230,8 @@ export const LearningDashboard: React.FC<LearningDashboardProps> = ({
         </Card>
       )}
 
-      {/* Recent Achievements - Compact */}
-      <Card>
+      {/* Recent Achievements - Hidden */}
+      {/* <Card>
         <CardHeader className="pb-3">
           <CardTitle className="flex items-center gap-2 text-lg">
             <Award className="w-5 h-5 text-educational-purple" />
@@ -262,7 +262,7 @@ export const LearningDashboard: React.FC<LearningDashboardProps> = ({
             )}
           </div>
         </CardContent>
-      </Card>
+      </Card> */}
     </div>
   );
 };
