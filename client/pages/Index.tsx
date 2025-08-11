@@ -448,8 +448,8 @@ export default function Index({ initialProfile }: IndexProps) {
                 | "easy"
                 | "medium"
                 | "hard",
-              attempts: word.attempts || 1,
-              lastAccuracy: word.accuracy || 0,
+              attempts: 1,
+              lastAccuracy: 0,
             }));
 
           practiceWordsFromStats.push(...categoryWords);
