@@ -423,12 +423,8 @@ export function InteractiveDashboardWordCard({
                 >
                   <XCircle className="w-4 h-4 mr-1 md:w-6 md:h-6 md:mr-2" />
                   <div className="text-center">
-                    <div className="font-bold text-xs">
-                      😔 I Forgot
-                    </div>
-                    <div className="text-xs opacity-75 mt-0.5">
-                      Try again!
-                    </div>
+                    <div className="font-bold text-xs">😔 I Forgot</div>
+                    <div className="text-xs opacity-75 mt-0.5">Try again!</div>
                   </div>
                 </Button>
 
@@ -438,9 +434,7 @@ export function InteractiveDashboardWordCard({
                 >
                   <CheckCircle className="w-4 h-4 mr-1 md:w-6 md:h-6 md:mr-2" />
                   <div className="text-center">
-                    <div className="font-bold text-xs">
-                      😊 I Remember
-                    </div>
+                    <div className="font-bold text-xs">😊 I Remember</div>
                     <div className="text-xs opacity-75 mt-0.5">Awesome!</div>
                   </div>
                 </Button>
@@ -494,8 +488,7 @@ export function InteractiveDashboardWordCard({
             <div className="text-sm opacity-90">
               {forgottenWordsCount > 0
                 ? `${forgottenWordsCount} words to review`
-                : "Review words"
-              }
+                : "Review words"}
             </div>
           </div>
           {forgottenWordsCount > 0 && (
