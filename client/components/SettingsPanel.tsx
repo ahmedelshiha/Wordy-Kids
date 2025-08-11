@@ -236,7 +236,8 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({
               {/* Debug Button for Voice Issues */}
               <div className="mt-4 p-3 bg-slate-50 rounded-lg">
                 <p className="text-sm text-slate-600 mb-2">
-                  Having voice issues? Click the button below to see voice debug info in the browser console.
+                  Having voice issues? Click the button below to see voice debug
+                  info in the browser console.
                 </p>
                 <Button
                   size="sm"

@@ -84,19 +84,29 @@ export const LearningDashboard: React.FC<LearningDashboardProps> = ({
             <div className="flex items-center gap-3">
               <div className="flex items-center gap-2">
                 <Target className="w-4 h-4 text-educational-blue" />
-                <span className="text-sm font-medium text-slate-700">Today's Goal:</span>
+                <span className="text-sm font-medium text-slate-700">
+                  Today's Goal:
+                </span>
               </div>
               <span className="text-sm text-slate-600">Learn 20 words</span>
-              <Badge variant="outline" className="text-xs px-2 py-0.5 bg-educational-blue/10 text-educational-blue border-educational-blue/30">
+              <Badge
+                variant="outline"
+                className="text-xs px-2 py-0.5 bg-educational-blue/10 text-educational-blue border-educational-blue/30"
+              >
                 18/20
               </Badge>
             </div>
             <div className="flex items-center gap-3">
               <div className="text-right">
-                <div className="text-sm font-semibold text-educational-blue">90% complete</div>
+                <div className="text-sm font-semibold text-educational-blue">
+                  90% complete
+                </div>
               </div>
               <div className="w-20 h-2 bg-slate-200 rounded-full overflow-hidden">
-                <div className="h-full bg-gradient-to-r from-educational-blue to-educational-purple rounded-full transition-all duration-300" style={{ width: "90%" }}></div>
+                <div
+                  className="h-full bg-gradient-to-r from-educational-blue to-educational-purple rounded-full transition-all duration-300"
+                  style={{ width: "90%" }}
+                ></div>
               </div>
               <CheckCircle className="w-4 h-4 text-educational-green" />
             </div>
