@@ -100,38 +100,48 @@ export const LearningDashboard: React.FC<LearningDashboardProps> = ({
 
   return (
     <div className="space-y-8">
-      {/* Today's Goal Progress - Small compact indicator */}
-      <Card className="bg-gradient-to-r from-educational-blue/10 to-educational-purple/10 border-educational-blue/20">
-        <CardContent className="p-3">
+      {/* Today's Goal Progress - Kid-friendly with real data */}
+      <Card className="bg-gradient-to-r from-educational-blue/10 to-educational-purple/10 border-educational-blue/20 hover:shadow-lg transition-all duration-300">
+        <CardContent className="p-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
               <div className="flex items-center gap-2">
-                <Target className="w-4 h-4 text-educational-blue" />
-                <span className="text-sm font-medium text-slate-700">
-                  Today's Goal:
-                </span>
-              </div>
-              <span className="text-sm text-slate-600">Learn 20 words</span>
-              <Badge
-                variant="outline"
-                className="text-xs px-2 py-0.5 bg-educational-blue/10 text-educational-blue border-educational-blue/30"
-              >
-                18/20
-              </Badge>
-            </div>
-            <div className="flex items-center gap-3">
-              <div className="text-right">
-                <div className="text-sm font-semibold text-educational-blue">
-                  90% complete
+                <span className="text-2xl">{getProgressEmoji(actualPercentage)}</span>
+                <div>
+                  <span className="text-sm font-bold text-slate-800">
+                    Today's Word Quest
+                  </span>
+                  <div className="text-xs text-slate-600 mt-0.5">
+                    {getProgressMessage(actualPercentage)}
+                  </div>
                 </div>
               </div>
-              <div className="w-20 h-2 bg-slate-200 rounded-full overflow-hidden">
-                <div
-                  className="h-full bg-gradient-to-r from-educational-blue to-educational-purple rounded-full transition-all duration-300"
-                  style={{ width: "90%" }}
-                ></div>
+            </div>
+            <div className="flex items-center gap-3">
+              <div className="text-center">
+                <Badge
+                  variant="outline"
+                  className="text-sm px-3 py-1 bg-educational-blue/10 text-educational-blue border-educational-blue/30 font-bold"
+                >
+                  {actualWordsLearned}/{actualGoal} words
+                </Badge>
+                <div className="text-xs font-semibold text-educational-blue mt-1">
+                  {actualPercentage >= 100 ? "Quest Complete!" : `${actualPercentage}% done`}
+                </div>
               </div>
-              <CheckCircle className="w-4 h-4 text-educational-green" />
+              <div className="flex flex-col items-center gap-1">
+                <div className="w-24 h-3 bg-slate-200 rounded-full overflow-hidden shadow-inner">
+                  <div
+                    className="h-full bg-gradient-to-r from-educational-blue to-educational-purple rounded-full transition-all duration-500 ease-out"
+                    style={{ width: `${Math.min(actualPercentage, 100)}%` }}
+                  ></div>
+                </div>
+                {actualPercentage >= 100 ? (
+                  <Trophy className="w-5 h-5 text-educational-yellow animate-bounce" />
+                ) : (
+                  <Target className="w-4 h-4 text-educational-blue/60" />
+                )}
+              </div>
             </div>
           </div>
         </CardContent>
