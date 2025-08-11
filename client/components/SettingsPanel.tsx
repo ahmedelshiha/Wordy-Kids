@@ -99,6 +99,10 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({
     audioService.previewVoice(voiceType, previewTexts[voiceType]);
   };
 
+  const handleDebugVoices = () => {
+    audioService.debugVoices();
+  };
+
   const difficultyLevels = [
     { value: "easy", label: "Easy", color: "bg-educational-green" },
     { value: "medium", label: "Medium", color: "bg-educational-orange" },
