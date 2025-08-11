@@ -718,8 +718,8 @@ export default function Index({ initialProfile }: IndexProps) {
           </div>
         ) : (
           <div className="flex flex-col lg:flex-row min-h-screen">
-            {/* Desktop/Mobile Sidebar */}
-            <aside className="lg:w-80 xl:w-96 bg-gradient-to-b from-purple-50 to-pink-50 border-r border-purple-200 lg:border-b-0 border-b overflow-y-auto lg:max-h-screen">
+            {/* Desktop Sidebar - Hidden on Mobile */}
+            <aside className="hidden lg:flex lg:w-80 xl:w-96 bg-gradient-to-b from-purple-50 to-pink-50 border-r border-purple-200 overflow-y-auto lg:max-h-screen">
               <div className="p-4 lg:p-6">
                 {/* Logo Section - Mobile & Desktop */}
                 <div className="flex items-center gap-3 mb-6 lg:mb-8">
