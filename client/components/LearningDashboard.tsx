@@ -117,9 +117,8 @@ export const LearningDashboard: React.FC<LearningDashboardProps> = ({
         </div>
       )}
 
-      {/* Compact Stats Row - Secondary Information */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        {/* Compact Stats Cards */}
+      {/* Compact Stats Row - Hidden */}
+      {/* <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         <Card className="bg-gradient-to-br from-educational-blue to-educational-blue-light text-white">
           <CardContent className="p-4 text-center">
             <BookOpen className="w-6 h-6 mx-auto mb-1 opacity-80" />
@@ -164,7 +163,7 @@ export const LearningDashboard: React.FC<LearningDashboardProps> = ({
             <p className="text-xs opacity-90">Accuracy</p>
           </CardContent>
         </Card>
-      </div>
+      </div> */}
 
       {/* Compact Progress and Achievement Row */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
