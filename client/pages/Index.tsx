@@ -975,7 +975,7 @@ export default function Index({ initialProfile }: IndexProps) {
                     }}
                     onPracticeForgotten={() => {
                       startPracticeGame();
-                      setActiveTab("learn"); // Navigate to learn tab where practice games are handled
+                      // Stay in current tab - practice component will show as overlay
                     }}
                   />
                 </TabsContent>
