@@ -70,62 +70,6 @@ import { useNavigate } from "react-router-dom";
 import { WordProgressAPI } from "@/lib/wordProgressApi";
 import { ChildWordStats } from "@shared/api";
 
-const learningStats = {
-  wordsLearned: 68,
-  totalWords: wordsDatabase.length,
-  currentStreak: 7,
-  weeklyGoal: 20,
-  weeklyProgress: 18,
-  accuracyRate: 92,
-  favoriteCategory: "Animals",
-  totalPoints: 2850,
-  level: 4,
-  badges: [
-    {
-      id: "first-word",
-      name: "First Word",
-      icon: "🎯",
-      earned: true,
-      description: "Learned your first word",
-    },
-    {
-      id: "streak-starter",
-      name: "Streak Master",
-      icon: "🔥",
-      earned: true,
-      description: "7-day learning streak",
-    },
-    {
-      id: "category-explorer",
-      name: "Category Explorer",
-      icon: "🗂️",
-      earned: true,
-      description: "Explored 5+ categories",
-    },
-    {
-      id: "science-star",
-      name: "Science Star",
-      icon: "🔬",
-      earned: true,
-      description: "Mastered 10 science words",
-    },
-    {
-      id: "quiz-master",
-      name: "Quiz Master",
-      icon: "🧠",
-      earned: false,
-      description: "Score 100% on 5 quizzes",
-    },
-    {
-      id: "vocabulary-champion",
-      name: "Vocabulary Champion",
-      icon: "🏆",
-      earned: false,
-      description: "Learn 100 words",
-    },
-  ],
-};
-
 interface IndexProps {
   initialProfile?: any;
 }
@@ -174,6 +118,71 @@ export default function Index({ initialProfile }: IndexProps) {
   const [showPracticeGame, setShowPracticeGame] = useState(false);
   const [practiceWords, setPracticeWords] = useState<any[]>([]);
   const [showMobileMoreMenu, setShowMobileMoreMenu] = useState(false);
+
+  // Dynamic learning stats that reflect actual progress
+  const learningStats = {
+    wordsLearned: rememberedWords.size,
+    totalWords: wordsDatabase.length,
+    currentStreak: 7,
+    weeklyGoal: 20,
+    weeklyProgress: rememberedWords.size, // Use actual remembered words for today's goal
+    accuracyRate:
+      rememberedWords.size > 0
+        ? Math.round(
+            (rememberedWords.size /
+              (rememberedWords.size + forgottenWords.size)) *
+              100,
+          )
+        : 0,
+    favoriteCategory: "Animals",
+    totalPoints:
+      rememberedWords.size * 50 + (rememberedWords.size > 10 ? 500 : 0), // Dynamic points
+    level: Math.floor(rememberedWords.size / 5) + 1, // Level up every 5 words
+    badges: [
+      {
+        id: "first-word",
+        name: "First Word",
+        icon: "🎯",
+        earned: rememberedWords.size >= 1,
+        description: "Learned your first word",
+      },
+      {
+        id: "streak-starter",
+        name: "Streak Master",
+        icon: "🔥",
+        earned: true,
+        description: "7-day learning streak",
+      },
+      {
+        id: "category-explorer",
+        name: "Category Explorer",
+        icon: "🗂️",
+        earned: rememberedWords.size >= 10,
+        description: "Explored 5+ categories",
+      },
+      {
+        id: "science-star",
+        name: "Science Star",
+        icon: "🔬",
+        earned: rememberedWords.size >= 15,
+        description: "Mastered 10 science words",
+      },
+      {
+        id: "quiz-master",
+        name: "Quiz Master",
+        icon: "🧠",
+        earned: false,
+        description: "Score 100% on 5 quizzes",
+      },
+      {
+        id: "vocabulary-champion",
+        name: "Vocabulary Champion",
+        icon: "🏆",
+        earned: rememberedWords.size >= 50,
+        description: "Learn 100 words",
+      },
+    ],
+  };
 
   // Load background animations setting on mount
   useEffect(() => {
@@ -553,7 +562,7 @@ export default function Index({ initialProfile }: IndexProps) {
         <div className="absolute inset-0 bg-black/10"></div>
         <div className="relative container mx-auto px-4 py-2 md:py-4">
           {/* Mobile header - simplified */}
-          <div className="flex items-center justify-center mb-2 md:hidden">
+          <div className="hidden flex items-center justify-center mb-2 md:hidden">
             <div className="flex items-center gap-2">
               <div className="bg-white/20 backdrop-blur-sm rounded-full p-1.5">
                 <BookOpen className="w-6 h-6 text-white" />
@@ -578,7 +587,7 @@ export default function Index({ initialProfile }: IndexProps) {
           </div>
 
           {/* Mobile simplified header */}
-          <div className="text-center md:hidden">
+          <div className="hidden text-center md:hidden">
             <p className="text-xs opacity-90">
               Ready for your vocabulary adventure?
             </p>
@@ -959,12 +968,14 @@ export default function Index({ initialProfile }: IndexProps) {
                     onQuickQuiz={() => {
                       setSelectedQuizType("quick");
                       setShowQuiz(true);
+                      setActiveTab("quiz"); // Navigate to quiz tab
                     }}
                     onAdventure={() => {
                       setActiveTab("adventure");
                     }}
                     onPracticeForgotten={() => {
                       startPracticeGame();
+                      setActiveTab("learn"); // Navigate to learn tab where practice games are handled
                     }}
                   />
                 </TabsContent>

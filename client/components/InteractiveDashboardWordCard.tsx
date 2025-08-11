@@ -69,6 +69,9 @@ export function InteractiveDashboardWordCard({
   const [isAnswered, setIsAnswered] = useState(false);
   const [celebrationEffect, setCelebrationEffect] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
+  const [feedbackType, setFeedbackType] = useState<
+    "remembered" | "needs_practice" | null
+  >(null);
   const [guess, setGuess] = useState("");
   const [showHint, setShowHint] = useState(false);
 
@@ -108,6 +111,11 @@ export function InteractiveDashboardWordCard({
   ) => {
     if (!currentWord) return;
 
+    // Set visual feedback type
+    if (status !== "skipped") {
+      setFeedbackType(status);
+    }
+
     // Show celebration effect for successful interactions
     if (status === "remembered") {
       setCelebrationEffect(true);
@@ -133,6 +141,11 @@ export function InteractiveDashboardWordCard({
   };
 
   const advanceToNextWord = () => {
+    // Reset states for next word
+    setIsAnswered(false);
+    setFeedbackType(null);
+    setCelebrationEffect(false);
+
     if (currentWordIndex < words.length - 1) {
       setCurrentWordIndex(currentWordIndex + 1);
     } else {
@@ -167,8 +180,30 @@ export function InteractiveDashboardWordCard({
 
     // Fallback to emoji if no image URL
     if (currentWord?.emoji) {
+      // Show feedback overlay if user has answered
+      if (feedbackType) {
+        const feedbackEmoji = feedbackType === "remembered" ? "🎉" : "💪";
+        const feedbackColor =
+          feedbackType === "remembered"
+            ? "from-green-100 to-green-200"
+            : "from-orange-100 to-orange-200";
+        const feedbackMessage =
+          feedbackType === "remembered" ? "Great job!" : "Keep practicing!";
+
+        return (
+          <div
+            className={`w-48 h-32 mx-auto flex flex-col items-center justify-center bg-gradient-to-br ${feedbackColor} rounded-2xl shadow-lg border-2 ${feedbackType === "remembered" ? "border-green-300" : "border-orange-300"} transition-all duration-500`}
+          >
+            <div className="text-4xl animate-bounce mb-1">{feedbackEmoji}</div>
+            <div className="text-xs font-bold text-gray-700">
+              {feedbackMessage}
+            </div>
+          </div>
+        );
+      }
+
       return (
-        <div className="w-full h-64 flex items-center justify-center bg-gradient-to-br from-blue-100 to-purple-100 rounded-2xl shadow-lg">
+        <div className="w-48 h-32 mx-auto flex items-center justify-center bg-gradient-to-br from-blue-100 to-purple-100 rounded-2xl shadow-lg">
           <div className="text-8xl animate-gentle-float filter drop-shadow-lg">
             {currentWord.emoji}
           </div>
@@ -336,7 +371,7 @@ export function InteractiveDashboardWordCard({
               <div className="text-center bg-gradient-to-r from-green-50 to-blue-50 p-6 rounded-2xl border-2 border-green-200">
                 <div className="flex items-center justify-center gap-3 mb-3">
                   <div className="text-3xl">{currentWord.emoji}</div>
-                  <h1 className="text-4xl md:text-5xl font-bold text-gray-800 tracking-wide">
+                  <h1 className="text-2xl md:text-3xl font-bold text-gray-800 tracking-wide">
                     {currentWord.word.toUpperCase()}
                   </h1>
                   <div className="text-3xl">{currentWord.emoji}</div>
@@ -352,8 +387,8 @@ export function InteractiveDashboardWordCard({
                 )}
               </div>
 
-              {/* Definition and Example */}
-              <div className="bg-gray-50 p-6 rounded-2xl">
+              {/* Definition and Example - Hidden to show word name only */}
+              <div className="hidden bg-gray-50 p-6 rounded-2xl">
                 <div className="mb-4">
                   <h3 className="text-lg font-semibold text-gray-700 mb-2">
                     📖 Definition:
@@ -378,15 +413,17 @@ export function InteractiveDashboardWordCard({
           {/* Action Buttons - Always visible */}
           {!isAnswered && (
             <div className="space-y-4">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="grid grid-cols-2 gap-3">
                 <Button
                   onClick={() => handleWordAction("needs_practice")}
                   variant="outline"
-                  className="flex-1 bg-red-50 hover:bg-red-100 border-red-200 hover:border-red-300 text-red-700 hover:text-red-800 transition-all duration-300 transform hover:scale-105 py-8"
+                  className="flex-1 bg-red-50 hover:bg-red-100 border-red-200 hover:border-red-300 text-red-700 hover:text-red-800 transition-all duration-300 transform hover:scale-105 py-3 px-2"
                 >
-                  <XCircle className="w-8 h-8 mr-3" />
+                  <XCircle className="w-5 h-5 mr-1 md:w-8 md:h-8 md:mr-3" />
                   <div className="text-center">
-                    <div className="font-bold text-2xl">😔 I Forgot</div>
+                    <div className="font-bold text-lg md:text-2xl">
+                      😔 I Forgot
+                    </div>
                     <div className="text-sm opacity-75 mt-1">
                       Need more practice
                     </div>
@@ -395,11 +432,13 @@ export function InteractiveDashboardWordCard({
 
                 <Button
                   onClick={() => handleWordAction("remembered")}
-                  className="flex-1 bg-green-50 hover:bg-green-100 border-green-200 hover:border-green-300 text-green-700 hover:text-green-800 transition-all duration-300 transform hover:scale-105 py-8"
+                  className="flex-1 bg-green-50 hover:bg-green-100 border-green-200 hover:border-green-300 text-green-700 hover:text-green-800 transition-all duration-300 transform hover:scale-105 py-3 px-2"
                 >
-                  <CheckCircle className="w-8 h-8 mr-3" />
+                  <CheckCircle className="w-5 h-5 mr-1 md:w-8 md:h-8 md:mr-3" />
                   <div className="text-center">
-                    <div className="font-bold text-2xl">😊 I Remember</div>
+                    <div className="font-bold text-lg md:text-2xl">
+                      😊 I Remember
+                    </div>
                     <div className="text-sm opacity-75 mt-1">Got it right!</div>
                   </div>
                 </Button>
