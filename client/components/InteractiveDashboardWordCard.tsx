@@ -51,6 +51,7 @@ interface InteractiveDashboardWordCardProps {
   currentLevel: number;
   totalPoints: number;
   forgottenWordsCount?: number;
+  rememberedWordsCount?: number;
   className?: string;
 }
 
@@ -64,6 +65,7 @@ export function InteractiveDashboardWordCard({
   currentLevel,
   totalPoints,
   forgottenWordsCount = 0,
+  rememberedWordsCount = 0,
   className,
 }: InteractiveDashboardWordCardProps) {
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
@@ -451,6 +453,49 @@ export function InteractiveDashboardWordCard({
                   <SkipForward className="w-4 h-4 mr-2" />
                   Skip this word
                 </Button>
+              </div>
+
+              {/* Kid-friendly Learning Stats */}
+              <div className="mt-6 bg-gradient-to-r from-blue-50 to-purple-50 rounded-2xl p-4 border-2 border-blue-200">
+                <h3 className="text-center text-lg font-bold text-blue-700 mb-3 flex items-center justify-center gap-2">
+                  <span className="text-2xl">📊</span>
+                  My Learning Journey!
+                  <span className="text-2xl">✨</span>
+                </h3>
+                <div className="grid grid-cols-2 gap-4">
+                  {/* Remembered Words */}
+                  <div className="bg-green-100 rounded-xl p-3 border-2 border-green-300 text-center">
+                    <div className="text-3xl mb-1 animate-bounce">🎉</div>
+                    <div className="text-2xl font-bold text-green-700">{rememberedWordsCount}</div>
+                    <div className="text-sm text-green-600 font-semibold">Words I Know!</div>
+                    <div className="text-xs text-green-500 mt-1">Keep it up! 🌟</div>
+                  </div>
+
+                  {/* Forgotten Words */}
+                  <div className="bg-orange-100 rounded-xl p-3 border-2 border-orange-300 text-center">
+                    <div className="text-3xl mb-1 animate-pulse">💪</div>
+                    <div className="text-2xl font-bold text-orange-700">{forgottenWordsCount}</div>
+                    <div className="text-sm text-orange-600 font-semibold">Practice More</div>
+                    <div className="text-xs text-orange-500 mt-1">You got this! 🚀</div>
+                  </div>
+                </div>
+
+                {/* Encouraging message based on progress */}
+                <div className="mt-3 text-center">
+                  {rememberedWordsCount > forgottenWordsCount ? (
+                    <div className="text-green-600 font-semibold text-sm animate-gentle-float">
+                      🌈 Amazing job! You're remembering more words! 🎯
+                    </div>
+                  ) : forgottenWordsCount > rememberedWordsCount ? (
+                    <div className="text-blue-600 font-semibold text-sm animate-gentle-float">
+                      ��� Practice makes perfect! Keep learning! 📚
+                    </div>
+                  ) : (
+                    <div className="text-purple-600 font-semibold text-sm animate-gentle-float">
+                      ⚖️ You're doing great! Keep going! 🎪
+                    </div>
+                  )}
+                </div>
               </div>
             </div>
           )}
