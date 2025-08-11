@@ -70,62 +70,6 @@ import { useNavigate } from "react-router-dom";
 import { WordProgressAPI } from "@/lib/wordProgressApi";
 import { ChildWordStats } from "@shared/api";
 
-// Dynamic learning stats that reflect actual progress
-const learningStats = {
-  wordsLearned: rememberedWords.size,
-  totalWords: wordsDatabase.length,
-  currentStreak: 7,
-  weeklyGoal: 20,
-  weeklyProgress: rememberedWords.size, // Use actual remembered words for today's goal
-  accuracyRate: rememberedWords.size > 0 ? Math.round((rememberedWords.size / (rememberedWords.size + forgottenWords.size)) * 100) : 0,
-  favoriteCategory: "Animals",
-  totalPoints: rememberedWords.size * 50 + (rememberedWords.size > 10 ? 500 : 0), // Dynamic points
-  level: Math.floor(rememberedWords.size / 5) + 1, // Level up every 5 words
-  badges: [
-    {
-      id: "first-word",
-      name: "First Word",
-      icon: "🎯",
-      earned: true,
-      description: "Learned your first word",
-    },
-    {
-      id: "streak-starter",
-      name: "Streak Master",
-      icon: "🔥",
-      earned: true,
-      description: "7-day learning streak",
-    },
-    {
-      id: "category-explorer",
-      name: "Category Explorer",
-      icon: "🗂️",
-      earned: true,
-      description: "Explored 5+ categories",
-    },
-    {
-      id: "science-star",
-      name: "Science Star",
-      icon: "🔬",
-      earned: true,
-      description: "Mastered 10 science words",
-    },
-    {
-      id: "quiz-master",
-      name: "Quiz Master",
-      icon: "🧠",
-      earned: false,
-      description: "Score 100% on 5 quizzes",
-    },
-    {
-      id: "vocabulary-champion",
-      name: "Vocabulary Champion",
-      icon: "🏆",
-      earned: false,
-      description: "Learn 100 words",
-    },
-  ],
-};
 
 interface IndexProps {
   initialProfile?: any;
