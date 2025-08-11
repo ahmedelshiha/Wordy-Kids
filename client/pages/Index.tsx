@@ -423,6 +423,13 @@ export default function Index({ initialProfile }: IndexProps) {
         totalPoints: prevStats.totalPoints + (status === "remembered" ? 10 : 5),
       }));
 
+      // Update adventure system with word interaction
+      adventureService.trackWordInteraction(
+        word.id.toString(),
+        status === "remembered",
+        responseTime ? responseTime > 2000 : false
+      );
+
       // Show level up celebration if applicable
       if (response.levelUp) {
         setFeedback({
