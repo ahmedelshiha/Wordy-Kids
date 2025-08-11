@@ -286,10 +286,9 @@ export function InteractiveDashboardWordCard({
             <Button
               onClick={playPronunciation}
               disabled={isPlaying}
-              className="bg-educational-blue hover:bg-educational-blue/90 text-white px-6 py-3 text-lg rounded-2xl transition-all duration-300 transform hover:scale-105"
+              className="bg-educational-blue hover:bg-educational-blue/90 text-white p-3 rounded-full transition-all duration-300 transform hover:scale-105"
             >
-              <Volume2 className={cn("w-5 h-5 mr-2", isPlaying && "animate-pulse")} />
-              {isPlaying ? "Playing..." : "🔊 Hear the word"}
+              <Volume2 className={cn("w-6 h-6", isPlaying && "animate-pulse")} />
             </Button>
 
             {!showHint && !showWordName && (
