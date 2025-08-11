@@ -465,8 +465,8 @@ export function InteractiveDashboardWordCard({
         </CardContent>
       </Card>
 
-      {/* Quick Action Buttons */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-2xl mx-auto">
+      {/* Quick Action Buttons - Hidden per user request */}
+      {/* <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-2xl mx-auto">
         <Button
           onClick={onQuickQuiz}
           className="bg-educational-pink hover:bg-educational-pink/90 text-white py-4 rounded-2xl transition-all duration-300 transform hover:scale-105"
@@ -497,7 +497,7 @@ export function InteractiveDashboardWordCard({
             </Badge>
           )}
         </Button>
-      </div>
+      </div> */}
 
       {/* Live Stats Footer - Hidden */}
       {/* <div className="flex justify-center gap-6 text-center max-w-3xl mx-auto bg-white/50 backdrop-blur-sm p-4 rounded-2xl">
