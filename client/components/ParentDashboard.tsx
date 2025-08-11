@@ -76,6 +76,7 @@ import {
 import { AnimatedCounter } from "@/components/AnimatedCounter";
 import { WordProgressAPI } from "@/lib/wordProgressApi";
 import { ChildWordStats } from "@shared/api";
+import { SmartWordSelector } from "@/lib/smartWordSelection";
 
 interface ChildProfile {
   id: string;
