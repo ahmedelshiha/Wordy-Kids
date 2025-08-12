@@ -52,7 +52,13 @@ export function MobileBottomNav({
       id: "learn",
       emoji: "📚",
       label: "Learn",
-      icon: BookOpen,
+      icon: () => (
+        <img
+          src="https://cdn.builder.io/api/v1/image/assets%2F122959266afa4d539a05a574b1531c32%2Fa3e1599156fb43479f1df1383fc15be2?format=webp&width=800"
+          alt="Wordy the Owl"
+          className="icon-sm"
+        />
+      ),
       color: "from-green-500 to-emerald-500",
       bgColor: "bg-green-100",
       textColor: "text-green-600",
