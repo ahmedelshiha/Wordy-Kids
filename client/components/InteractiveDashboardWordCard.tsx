@@ -832,69 +832,55 @@ export function InteractiveDashboardWordCard({
                 </Button>
               </div>
 
-              {/* Session Progress Display */}
-              <div className="mt-4 bg-gradient-to-r from-blue-50 to-purple-50 rounded-xl p-3 border border-blue-200">
-                {/* Session Progress Header */}
-                <div className="text-center mb-3">
-                  <div className="text-sm text-gray-700 font-bold">
-                    Session Progress
+              {/* Compact Session Progress */}
+              <div className="mt-3 bg-gradient-to-r from-blue-50 to-purple-50 rounded-lg p-2 border border-blue-200">
+                {/* Compact Progress Bar */}
+                <div className="flex items-center justify-between mb-2">
+                  <div className="text-xs font-bold text-gray-700">
+                    🚀 {sessionStats.wordsCompleted}/{SESSION_SIZE}
+                  </div>
+                  <div className="flex-1 mx-2">
+                    <div className="w-full bg-gray-200 rounded-full h-1.5">
+                      <div
+                        className="bg-gradient-to-r from-blue-500 to-purple-500 h-1.5 rounded-full transition-all duration-300"
+                        style={{
+                          width: `${(sessionStats.wordsCompleted / SESSION_SIZE) * 100}%`,
+                        }}
+                      ></div>
+                    </div>
                   </div>
                   <div className="text-xs text-gray-600">
-                    {sessionStats.wordsCompleted} / {SESSION_SIZE} words
-                    completed
-                  </div>
-                  <div className="w-full bg-gray-200 rounded-full h-2 mt-2">
-                    <div
-                      className="bg-gradient-to-r from-blue-500 to-purple-500 h-2 rounded-full transition-all duration-300"
-                      style={{
-                        width: `${(sessionStats.wordsCompleted / SESSION_SIZE) * 100}%`,
-                      }}
-                    ></div>
+                    {Math.round((sessionStats.wordsCompleted / SESSION_SIZE) * 100)}%
                   </div>
                 </div>
 
-                <div className="flex items-center justify-center gap-3">
-                  {/* Session Remembered */}
-                  <div className="bg-green-100 rounded-lg p-2 border border-green-300 text-center flex-1">
-                    <div className="text-lg">✅</div>
-                    <div className="text-lg font-bold text-green-700">
-                      {sessionStats.wordsRemembered}
-                    </div>
-                    <div className="text-xs text-green-600 font-medium">
-                      This Session
-                    </div>
+                <div className="flex items-center justify-center gap-2">
+                  {/* Compact Stats */}
+                  <div className="bg-green-100 rounded-md px-2 py-1 text-center">
+                    <div className="text-xs">😊 {sessionStats.wordsRemembered}</div>
                   </div>
-
-                  {/* Session Practice */}
-                  <div className="bg-orange-100 rounded-lg p-2 border border-orange-300 text-center flex-1">
-                    <div className="text-lg">💪</div>
-                    <div className="text-lg font-bold text-orange-700">
-                      {sessionStats.wordsForgotten}
-                    </div>
-                    <div className="text-xs text-orange-600 font-medium">
-                      To Practice
-                    </div>
+                  <div className="bg-orange-100 rounded-md px-2 py-1 text-center">
+                    <div className="text-xs">💪 {sessionStats.wordsForgotten}</div>
                   </div>
                 </div>
 
-                {/* Session encouraging message */}
-                <div className="mt-3 text-center">
+                {/* Compact encouraging message */}
+                <div className="mt-1 text-center">
                   {sessionStats.wordsRemembered >= 15 ? (
                     <div className="text-green-600 font-medium text-xs">
-                      🌟 Outstanding! {sessionStats.wordsRemembered} words
-                      mastered!
+                      🌟 You're a superstar!
                     </div>
                   ) : sessionStats.wordsRemembered >= 10 ? (
                     <div className="text-green-600 font-medium text-xs">
-                      🎯 Great progress! You're doing amazing!
+                      🎯 Awesome job!
                     </div>
                   ) : sessionStats.wordsCompleted >= 10 ? (
                     <div className="text-blue-600 font-medium text-xs">
-                      🔥 Halfway there! Keep going strong!
+                      🔥 Keep going!
                     </div>
                   ) : (
                     <div className="text-purple-600 font-medium text-xs">
-                      🎯 Great start! Every word counts!
+                      🌟 Great start!
                     </div>
                   )}
                 </div>
