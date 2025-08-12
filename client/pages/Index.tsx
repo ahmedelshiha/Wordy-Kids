@@ -1721,7 +1721,9 @@ export default function Index({ initialProfile }: IndexProps) {
                         {/* Standard Quiz */}
                         <Card className="hidden cursor-pointer hover:shadow-lg transition-all duration-300 hover:scale-105 border-2 border-educational-blue/30 animate-kid-float">
                           <CardContent className="p-3 md:p-4 text-center">
-                            <div className="text-3xl md:text-5xl mb-2 md:mb-3 animate-gentle-bounce">🎯</div>
+                            <div className="text-3xl md:text-5xl mb-2 md:mb-3 animate-gentle-bounce">
+                              🎯
+                            </div>
                             <h3 className="text-sm md:text-lg font-bold text-educational-blue mb-1 md:mb-2">
                               Challenge Me!
                             </h3>
@@ -1781,7 +1783,9 @@ export default function Index({ initialProfile }: IndexProps) {
                         {/* Picture Quiz - Kid-Friendly */}
                         <Card className="cursor-pointer hover:shadow-lg transition-all duration-300 hover:scale-105 border-2 border-educational-orange/30 animate-kid-float">
                           <CardContent className="p-3 md:p-4 text-center">
-                            <div className="text-3xl md:text-5xl mb-2 md:mb-3 animate-bounce">🖼️</div>
+                            <div className="text-3xl md:text-5xl mb-2 md:mb-3 animate-bounce">
+                              🖼️
+                            </div>
                             <h3 className="text-sm md:text-lg font-bold text-educational-orange mb-1 md:mb-2">
                               Picture Fun!
                             </h3>
