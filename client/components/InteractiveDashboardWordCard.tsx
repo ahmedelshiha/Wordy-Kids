@@ -588,7 +588,7 @@ export function InteractiveDashboardWordCard({
                 >
                   <CheckCircle className="w-4 h-4 mr-1 md:w-6 md:h-6 md:mr-2" />
                   <div className="text-center">
-                    <div className="font-bold text-xs">�� I Remember</div>
+                    <div className="font-bold text-xs">😊 I Remember</div>
                     <div className="text-xs opacity-75 mt-0.5">Awesome!</div>
                   </div>
                 </Button>
