@@ -645,17 +645,17 @@ export default function Index({ initialProfile }: IndexProps) {
         });
       }
 
-      // Add achievements to notifications
-      if (response.achievements && response.achievements.length > 0) {
-        response.achievements.forEach((achievement) => {
-          notifications.push({
-            type: "achievement",
-            title: `🏆 Achievement Unlocked!`,
-            message: achievement,
-            points: 25,
-          });
-        });
-      }
+      // OLD ACHIEVEMENT NOTIFICATIONS DISABLED - Using only the new enhanced orange achievement system
+      // if (response.achievements && response.achievements.length > 0) {
+      //   response.achievements.forEach((achievement) => {
+      //     notifications.push({
+      //       type: "achievement",
+      //       title: `🏆 Achievement Unlocked!`,
+      //       message: achievement,
+      //       points: 25,
+      //     });
+      //   });
+      // }
 
       // Show notifications in sequence
       if (notifications.length > 0) {
