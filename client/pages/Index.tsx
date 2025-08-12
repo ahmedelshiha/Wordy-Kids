@@ -1785,7 +1785,7 @@ export default function Index({ initialProfile }: IndexProps) {
                         {/* Picture Quiz */}
                         <Card className="cursor-pointer hover:shadow-xl transition-all duration-300 hover:scale-105 border-2 border-educational-orange/30">
                           <CardContent className="p-6 text-center">
-                            <div className="text-6xl mb-4">����</div>
+                            <div className="text-6xl mb-4">🖼️</div>
                             <h3 className="text-xl font-bold text-educational-orange mb-2">
                               Picture Quiz
                             </h3>
