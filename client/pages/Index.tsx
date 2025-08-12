@@ -1789,7 +1789,8 @@ export default function Index({ initialProfile }: IndexProps) {
                               Picture Fun!
                             </h3>
                             <p className="text-gray-600 mb-4">
-                              Look at fun pictures and find the matching words! Can you spot them all?
+                              Look at fun pictures and find the matching words!
+                              Can you spot them all?
                             </p>
                             <div className="flex justify-center gap-2 mb-4">
                               <span className="bg-educational-orange/20 text-educational-orange px-2 py-1 rounded-full text-xs">

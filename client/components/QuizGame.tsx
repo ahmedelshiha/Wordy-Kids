@@ -252,13 +252,14 @@ export const QuizGame: React.FC<QuizGameProps> = ({
             {/* Animated Picture Container */}
             <div className="inline-block mb-6">
               <div className="bg-gradient-to-br from-educational-blue-light to-educational-purple-light p-8 rounded-3xl shadow-lg border-3 border-rainbow animate-gentle-float">
-                <div className="text-8xl animate-sparkle">{currentQuestion.emoji || "📚"}</div>
+                <div className="text-8xl animate-sparkle">
+                  {currentQuestion.emoji || "📚"}
+                </div>
               </div>
             </div>
             <h2 className="text-2xl font-bold text-slate-800 mb-4">
               {currentQuestion.question}
             </h2>
-
           </div>
 
           {/* Answer Options */}
