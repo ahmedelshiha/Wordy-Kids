@@ -2074,7 +2074,7 @@ export default function Index({ initialProfile }: IndexProps) {
                               </div>
                               <div className="flex justify-between items-center p-3 bg-white rounded-lg">
                                 <div className="flex items-center gap-3">
-                                  <span className="text-2xl">����</span>
+                                  <span className="text-2xl">🏆</span>
                                   <div>
                                     <div className="font-semibold">
                                       Challenge Quiz
