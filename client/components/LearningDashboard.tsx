@@ -164,6 +164,10 @@ export const LearningDashboard: React.FC<LearningDashboardProps> = ({
                       : "Quest Complete!"
                     : `${actualPercentage}% done`}
                 </div>
+                {/* Debug info - remove in production */}
+                <div className="text-xs text-gray-500 mt-1">
+                  API: {childStats?.wordsRemembered || 0} | Local: {stats.weeklyProgress || 0}
+                </div>
               </div>
               <div className="flex flex-col items-center gap-1">
                 <div className="w-24 h-3 bg-slate-200 rounded-full overflow-hidden shadow-inner">
