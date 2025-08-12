@@ -621,7 +621,11 @@ export default function IndexEnhanced() {
                               }
                               className="flex items-center gap-2"
                             >
-                              <BookOpen className="w-4 h-4" />
+                              <img
+                                src="https://cdn.builder.io/api/v1/image/assets%2F122959266afa4d539a05a574b1531c32%2Fa3e1599156fb43479f1df1383fc15be2?format=webp&width=800"
+                                alt="Wordy the Owl"
+                                className="icon-sm"
+                              />
                               Word Cards
                             </Button>
                             <Button
