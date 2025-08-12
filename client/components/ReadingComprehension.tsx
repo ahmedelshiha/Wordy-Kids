@@ -1,26 +1,26 @@
-import React, { useState } from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import { Progress } from '@/components/ui/progress';
-import { 
-  BookOpen, 
-  Eye, 
-  CheckCircle2, 
-  XCircle, 
+import React, { useState } from "react";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { Progress } from "@/components/ui/progress";
+import {
+  BookOpen,
+  Eye,
+  CheckCircle2,
+  XCircle,
   Volume2,
   Lightbulb,
   Star,
-  ArrowRight
-} from 'lucide-react';
-import { playSoundIfEnabled } from '@/lib/soundEffects';
-import { audioService } from '@/lib/audioService';
+  ArrowRight,
+} from "lucide-react";
+import { playSoundIfEnabled } from "@/lib/soundEffects";
+import { audioService } from "@/lib/audioService";
 
 interface ReadingPassage {
   id: string;
   title: string;
   text: string;
-  difficulty: 'easy' | 'medium' | 'hard';
+  difficulty: "easy" | "medium" | "hard";
   category: string;
   readingTime: number; // in minutes
   vocabularyWords: Array<{
@@ -34,7 +34,7 @@ interface ReadingPassage {
     options: string[];
     correctAnswer: string;
     explanation: string;
-    type: 'vocabulary' | 'comprehension' | 'inference';
+    type: "vocabulary" | "comprehension" | "inference";
   }>;
 }
 
@@ -44,8 +44,8 @@ interface ReadingComprehensionProps {
 }
 
 const samplePassage: ReadingPassage = {
-  id: 'butterfly-garden',
-  title: 'The Magical Butterfly Garden',
+  id: "butterfly-garden",
+  title: "The Magical Butterfly Garden",
   text: `In a small village, there lived a girl named Maya who discovered a magnificent butterfly garden hidden behind her grandmother's house. The garden was filled with vibrant flowers of every color imaginable - brilliant red roses, sunny yellow daffodils, and deep purple violets.
 
 As Maya explored the garden, she noticed hundreds of butterflies dancing among the flowers. Each butterfly was unique and beautiful. Some had orange and black wings like tiny pieces of stained glass, while others shimmered with blue and green colors that seemed to change in the sunlight.
@@ -55,115 +55,125 @@ Maya observed that the butterflies were not just pretty to look at - they were w
 The most amazing discovery came when Maya found a chrysalis hanging from a tree branch. She watched patiently over several days as a caterpillar transformed into a magnificent butterfly. This incredible change, called metamorphosis, showed Maya that even the most ordinary-looking creatures can become something extraordinary.
 
 From that day on, Maya visited the garden every morning, learning something new about these wonderful insects and the important role they play in nature.`,
-  difficulty: 'medium',
-  category: 'nature',
+  difficulty: "medium",
+  category: "nature",
   readingTime: 3,
   vocabularyWords: [
     {
-      word: 'magnificent',
-      definition: 'extremely beautiful, impressive, or grand',
-      context: 'discovered a magnificent butterfly garden'
+      word: "magnificent",
+      definition: "extremely beautiful, impressive, or grand",
+      context: "discovered a magnificent butterfly garden",
     },
     {
-      word: 'vibrant',
-      definition: 'bright and striking in color',
-      context: 'filled with vibrant flowers of every color'
+      word: "vibrant",
+      definition: "bright and striking in color",
+      context: "filled with vibrant flowers of every color",
     },
     {
-      word: 'metamorphosis',
-      definition: 'the process of transformation from one form to another',
-      context: 'This incredible change, called metamorphosis'
+      word: "metamorphosis",
+      definition: "the process of transformation from one form to another",
+      context: "This incredible change, called metamorphosis",
     },
     {
-      word: 'pollination',
-      definition: 'the transfer of pollen from one flower to another',
-      context: 'This process, called pollination, helps flowers'
-    }
+      word: "pollination",
+      definition: "the transfer of pollen from one flower to another",
+      context: "This process, called pollination, helps flowers",
+    },
   ],
   questions: [
     {
-      id: 'q1',
-      question: 'Where did Maya discover the butterfly garden?',
+      id: "q1",
+      question: "Where did Maya discover the butterfly garden?",
       options: [
-        'In the village square',
-        'Behind her grandmother\'s house',
-        'In the school playground',
-        'At the local park'
+        "In the village square",
+        "Behind her grandmother's house",
+        "In the school playground",
+        "At the local park",
       ],
-      correctAnswer: 'Behind her grandmother\'s house',
-      explanation: 'The text states that Maya "discovered a magnificent butterfly garden hidden behind her grandmother\'s house."',
-      type: 'comprehension'
+      correctAnswer: "Behind her grandmother's house",
+      explanation:
+        'The text states that Maya "discovered a magnificent butterfly garden hidden behind her grandmother\'s house."',
+      type: "comprehension",
     },
     {
-      id: 'q2',
+      id: "q2",
       question: 'What does "pollination" mean in the story?',
       options: [
-        'Butterflies eating flowers',
-        'Flowers changing colors',
-        'Carrying pollen to help flowers create seeds',
-        'Butterflies sleeping on flowers'
+        "Butterflies eating flowers",
+        "Flowers changing colors",
+        "Carrying pollen to help flowers create seeds",
+        "Butterflies sleeping on flowers",
       ],
-      correctAnswer: 'Carrying pollen to help flowers create seeds',
-      explanation: 'The passage explains that pollination "helps flowers create new seeds so more beautiful plants can grow."',
-      type: 'vocabulary'
+      correctAnswer: "Carrying pollen to help flowers create seeds",
+      explanation:
+        'The passage explains that pollination "helps flowers create new seeds so more beautiful plants can grow."',
+      type: "vocabulary",
     },
     {
-      id: 'q3',
-      question: 'What can we infer about Maya\'s personality from the story?',
+      id: "q3",
+      question: "What can we infer about Maya's personality from the story?",
       options: [
-        'She is impatient and restless',
-        'She is curious and observant',
-        'She is afraid of insects',
-        'She prefers staying indoors'
+        "She is impatient and restless",
+        "She is curious and observant",
+        "She is afraid of insects",
+        "She prefers staying indoors",
       ],
-      correctAnswer: 'She is curious and observant',
-      explanation: 'Maya explores the garden, observes the butterflies carefully, and watches the chrysalis patiently, showing her curious and observant nature.',
-      type: 'inference'
+      correctAnswer: "She is curious and observant",
+      explanation:
+        "Maya explores the garden, observes the butterflies carefully, and watches the chrysalis patiently, showing her curious and observant nature.",
+      type: "inference",
     },
     {
-      id: 'q4',
+      id: "q4",
       question: 'What does "metamorphosis" describe in the passage?',
       options: [
-        'The butterfly flying away',
-        'The flowers changing colors',
-        'A caterpillar transforming into a butterfly',
-        'Maya growing taller'
+        "The butterfly flying away",
+        "The flowers changing colors",
+        "A caterpillar transforming into a butterfly",
+        "Maya growing taller",
       ],
-      correctAnswer: 'A caterpillar transforming into a butterfly',
-      explanation: 'The passage describes metamorphosis as the "incredible change" Maya observed when "a caterpillar transformed into a magnificent butterfly."',
-      type: 'vocabulary'
-    }
-  ]
+      correctAnswer: "A caterpillar transforming into a butterfly",
+      explanation:
+        'The passage describes metamorphosis as the "incredible change" Maya observed when "a caterpillar transformed into a magnificent butterfly."',
+      type: "vocabulary",
+    },
+  ],
 };
 
 export const ReadingComprehension: React.FC<ReadingComprehensionProps> = ({
   passage = samplePassage,
-  onComplete
+  onComplete,
 }) => {
-  const [currentStep, setCurrentStep] = useState<'vocabulary' | 'reading' | 'questions'>('vocabulary');
+  const [currentStep, setCurrentStep] = useState<
+    "vocabulary" | "reading" | "questions"
+  >("vocabulary");
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-  const [selectedAnswers, setSelectedAnswers] = useState<Record<string, string>>({});
+  const [selectedAnswers, setSelectedAnswers] = useState<
+    Record<string, string>
+  >({});
   const [showFeedback, setShowFeedback] = useState(false);
   const [score, setScore] = useState(0);
-  const [highlightedWords, setHighlightedWords] = useState<Set<string>>(new Set());
+  const [highlightedWords, setHighlightedWords] = useState<Set<string>>(
+    new Set(),
+  );
 
   const currentQuestion = passage.questions[currentQuestionIndex];
   const isLastQuestion = currentQuestionIndex === passage.questions.length - 1;
 
   const handleVocabularyComplete = () => {
-    setCurrentStep('reading');
+    setCurrentStep("reading");
     playSoundIfEnabled.success();
   };
 
   const handleReadingComplete = () => {
-    setCurrentStep('questions');
+    setCurrentStep("questions");
     playSoundIfEnabled.success();
   };
 
   const handleAnswerSelect = (answer: string) => {
     setSelectedAnswers({ ...selectedAnswers, [currentQuestion.id]: answer });
     setShowFeedback(true);
-    
+
     const isCorrect = answer === currentQuestion.correctAnswer;
     if (isCorrect) {
       setScore(score + 1);
@@ -185,10 +195,10 @@ export const ReadingComprehension: React.FC<ReadingComprehensionProps> = ({
   const highlightVocabularyWords = (text: string) => {
     let highlightedText = text;
     passage.vocabularyWords.forEach(({ word }) => {
-      const regex = new RegExp(`\\b${word}\\b`, 'gi');
+      const regex = new RegExp(`\\b${word}\\b`, "gi");
       highlightedText = highlightedText.replace(
         regex,
-        `<mark class="bg-educational-yellow/30 px-1 rounded cursor-pointer hover:bg-educational-yellow/50 transition-colors" onclick="showWordDefinition('${word}')">${word}</mark>`
+        `<mark class="bg-educational-yellow/30 px-1 rounded cursor-pointer hover:bg-educational-yellow/50 transition-colors" onclick="showWordDefinition('${word}')">${word}</mark>`,
       );
     });
     return highlightedText;
@@ -196,19 +206,27 @@ export const ReadingComprehension: React.FC<ReadingComprehensionProps> = ({
 
   const getDifficultyColor = (difficulty: string) => {
     switch (difficulty) {
-      case 'easy': return 'bg-educational-green';
-      case 'medium': return 'bg-educational-orange';
-      case 'hard': return 'bg-educational-pink';
-      default: return 'bg-educational-blue';
+      case "easy":
+        return "bg-educational-green";
+      case "medium":
+        return "bg-educational-orange";
+      case "hard":
+        return "bg-educational-pink";
+      default:
+        return "bg-educational-blue";
     }
   };
 
   const getQuestionTypeIcon = (type: string) => {
     switch (type) {
-      case 'vocabulary': return <BookOpen className="w-4 h-4" />;
-      case 'comprehension': return <Eye className="w-4 h-4" />;
-      case 'inference': return <Lightbulb className="w-4 h-4" />;
-      default: return <BookOpen className="w-4 h-4" />;
+      case "vocabulary":
+        return <BookOpen className="w-4 h-4" />;
+      case "comprehension":
+        return <Eye className="w-4 h-4" />;
+      case "inference":
+        return <Lightbulb className="w-4 h-4" />;
+      default:
+        return <BookOpen className="w-4 h-4" />;
     }
   };
 
@@ -225,7 +243,10 @@ export const ReadingComprehension: React.FC<ReadingComprehensionProps> = ({
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {passage.vocabularyWords.map((vocabWord, index) => (
-          <Card key={index} className="hover:shadow-lg transition-all duration-300">
+          <Card
+            key={index}
+            className="hover:shadow-lg transition-all duration-300"
+          >
             <CardContent className="p-6">
               <h3 className="text-xl font-bold text-educational-blue mb-2">
                 {vocabWord.word}
@@ -273,20 +294,20 @@ export const ReadingComprehension: React.FC<ReadingComprehensionProps> = ({
               {passage.title}
             </CardTitle>
             <div className="flex gap-2">
-              <Badge className={`${getDifficultyColor(passage.difficulty)} text-white`}>
+              <Badge
+                className={`${getDifficultyColor(passage.difficulty)} text-white`}
+              >
                 {passage.difficulty}
               </Badge>
-              <Badge variant="outline">
-                {passage.readingTime} min read
-              </Badge>
+              <Badge variant="outline">{passage.readingTime} min read</Badge>
             </div>
           </div>
         </CardHeader>
         <CardContent className="prose prose-lg max-w-none">
-          <div 
+          <div
             className="text-slate-700 leading-relaxed"
             dangerouslySetInnerHTML={{
-              __html: highlightVocabularyWords(passage.text)
+              __html: highlightVocabularyWords(passage.text),
             }}
           />
         </CardContent>
@@ -318,9 +339,11 @@ export const ReadingComprehension: React.FC<ReadingComprehensionProps> = ({
               {currentQuestion.type}
             </Badge>
           </div>
-          <Progress 
-            value={((currentQuestionIndex + 1) / passage.questions.length) * 100} 
-            className="h-2" 
+          <Progress
+            value={
+              ((currentQuestionIndex + 1) / passage.questions.length) * 100
+            }
+            className="h-2"
           />
         </CardHeader>
         <CardContent className="space-y-6">
@@ -336,13 +359,13 @@ export const ReadingComprehension: React.FC<ReadingComprehensionProps> = ({
                 className={`w-full p-4 text-left justify-start hover:scale-105 transition-all ${
                   showFeedback
                     ? option === currentQuestion.correctAnswer
-                      ? 'bg-green-100 border-green-300 text-green-800'
+                      ? "bg-green-100 border-green-300 text-green-800"
                       : selectedAnswers[currentQuestion.id] === option
-                      ? 'bg-red-100 border-red-300 text-red-800'
-                      : 'opacity-50'
+                        ? "bg-red-100 border-red-300 text-red-800"
+                        : "opacity-50"
                     : selectedAnswers[currentQuestion.id] === option
-                    ? 'bg-educational-blue text-white'
-                    : ''
+                      ? "bg-educational-blue text-white"
+                      : ""
                 }`}
                 disabled={showFeedback}
                 onClick={() => handleAnswerSelect(option)}
@@ -382,23 +405,25 @@ export const ReadingComprehension: React.FC<ReadingComprehensionProps> = ({
   const renderStepIndicator = () => (
     <div className="flex items-center justify-center space-x-4 mb-8">
       {[
-        { key: 'vocabulary', label: 'Vocabulary', icon: BookOpen },
-        { key: 'reading', label: 'Reading', icon: Eye },
-        { key: 'questions', label: 'Questions', icon: Star }
+        { key: "vocabulary", label: "Vocabulary", icon: BookOpen },
+        { key: "reading", label: "Reading", icon: Eye },
+        { key: "questions", label: "Questions", icon: Star },
       ].map(({ key, label, icon: Icon }, index) => (
         <div
           key={key}
           className={`flex items-center gap-2 px-4 py-2 rounded-full transition-all ${
             currentStep === key
-              ? 'bg-educational-blue text-white'
-              : index < ['vocabulary', 'reading', 'questions'].indexOf(currentStep)
-              ? 'bg-green-100 text-green-800'
-              : 'bg-slate-100 text-slate-500'
+              ? "bg-educational-blue text-white"
+              : index <
+                  ["vocabulary", "reading", "questions"].indexOf(currentStep)
+                ? "bg-green-100 text-green-800"
+                : "bg-slate-100 text-slate-500"
           }`}
         >
           <Icon className="w-4 h-4" />
           <span className="font-medium">{label}</span>
-          {index < ['vocabulary', 'reading', 'questions'].indexOf(currentStep) && (
+          {index <
+            ["vocabulary", "reading", "questions"].indexOf(currentStep) && (
             <CheckCircle2 className="w-4 h-4" />
           )}
         </div>
@@ -409,10 +434,10 @@ export const ReadingComprehension: React.FC<ReadingComprehensionProps> = ({
   return (
     <div className="max-w-4xl mx-auto space-y-6">
       {renderStepIndicator()}
-      
-      {currentStep === 'vocabulary' && renderVocabularyStep()}
-      {currentStep === 'reading' && renderReadingStep()}
-      {currentStep === 'questions' && renderQuestionsStep()}
+
+      {currentStep === "vocabulary" && renderVocabularyStep()}
+      {currentStep === "reading" && renderReadingStep()}
+      {currentStep === "questions" && renderQuestionsStep()}
     </div>
   );
 };
