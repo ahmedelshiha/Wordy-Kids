@@ -13,6 +13,9 @@ import {
   X,
   AlertTriangle,
 } from "lucide-react";
+import { audioService } from "@/lib/audioService";
+import { playSoundIfEnabled } from "@/lib/soundEffects";
+import { CelebrationEffect } from "@/components/CelebrationEffect";
 
 interface QuizQuestion {
   id: number;
@@ -44,6 +47,7 @@ export const QuizGame: React.FC<QuizGameProps> = ({
   const [timeLeft, setTimeLeft] = useState(30);
   const [isTimerActive, setIsTimerActive] = useState(true);
   const [showExitConfirm, setShowExitConfirm] = useState(false);
+  const [showCelebration, setShowCelebration] = useState(false);
 
   // Safety checks
   if (!questions || questions.length === 0) {
@@ -111,6 +115,8 @@ export const QuizGame: React.FC<QuizGameProps> = ({
 
     setTimeout(() => {
       if (isLastQuestion) {
+        // Play level up sound for quiz completion
+        audioService.playSuccessSound();
         onComplete(score, questions.length);
       } else {
         nextQuestion();
@@ -128,10 +134,19 @@ export const QuizGame: React.FC<QuizGameProps> = ({
     const isCorrect = answer === currentQuestion.correctAnswer;
     if (isCorrect) {
       setScore(score + 1);
+      // Play celebration effects
+      setShowCelebration(true);
+      audioService.playSuccessSound();
+      setTimeout(() => setShowCelebration(false), 2000);
+    } else {
+      // Play encouraging speech for wrong answers
+      audioService.playEncouragementSound();
     }
 
     setTimeout(() => {
       if (isLastQuestion) {
+        // Play level up sound for quiz completion
+        audioService.playSuccessSound();
         onComplete(score + (isCorrect ? 1 : 0), questions.length);
       } else {
         nextQuestion();
@@ -298,7 +313,7 @@ export const QuizGame: React.FC<QuizGameProps> = ({
                     <>
                       <CheckCircle2 className="w-6 h-6 text-green-600" />
                       <span className="font-semibold text-green-800">
-                        Correct! 🎉
+                        Perfect! Well done! 🎉
                       </span>
                     </>
                   ) : timeLeft === 0 ? (
@@ -389,6 +404,13 @@ export const QuizGame: React.FC<QuizGameProps> = ({
           </Card>
         </div>
       )}
+
+      {/* Celebration Effect */}
+      <CelebrationEffect
+        trigger={showCelebration}
+        type="confetti"
+        onComplete={() => setShowCelebration(false)}
+      />
     </div>
   );
 };
