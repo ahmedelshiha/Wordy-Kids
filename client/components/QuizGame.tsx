@@ -116,7 +116,6 @@ export const QuizGame: React.FC<QuizGameProps> = ({
     setTimeout(() => {
       if (isLastQuestion) {
         // Play level up sound for quiz completion
-        playSoundIfEnabled.levelUp();
         audioService.playSuccessSound();
         onComplete(score, questions.length);
       } else {
@@ -147,7 +146,6 @@ export const QuizGame: React.FC<QuizGameProps> = ({
     setTimeout(() => {
       if (isLastQuestion) {
         // Play level up sound for quiz completion
-        playSoundIfEnabled.levelUp();
         audioService.playSuccessSound();
         onComplete(score + (isCorrect ? 1 : 0), questions.length);
       } else {
