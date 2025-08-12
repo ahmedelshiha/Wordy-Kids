@@ -1574,7 +1574,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                               size="sm"
                                               className="text-gray-500 hover:text-gray-700 hover:bg-gray-100 py-1 px-3"
                                             >
-                                              🤔 Skip →
+                                              🤔 Try another word
                                             </Button>
                                           </div>
                                         </div>
