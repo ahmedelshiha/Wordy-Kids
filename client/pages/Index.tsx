@@ -692,12 +692,6 @@ export default function Index({ initialProfile }: IndexProps) {
             </p>
           </div>
 
-          {/* Mobile simplified header */}
-          <div className="hidden text-center md:hidden">
-            <p className="text-xs opacity-90">
-              Ready for your vocabulary adventure?
-            </p>
-          </div>
         </div>
 
         {/* Enhanced Floating Elements - hidden on mobile to reduce clutter, conditional on setting */}
