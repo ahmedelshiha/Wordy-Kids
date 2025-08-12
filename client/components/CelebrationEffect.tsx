@@ -105,7 +105,10 @@ export const CelebrationEffect: React.FC<CelebrationEffectProps> = ({
 
         if (updatedParticles.length === 0) {
           stopAnimation();
-          onCompleteRef.current?.();
+          // Use setTimeout to avoid calling onComplete during render
+          setTimeout(() => {
+            onCompleteRef.current?.();
+          }, 0);
         }
 
         return updatedParticles;
