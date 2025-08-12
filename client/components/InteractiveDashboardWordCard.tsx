@@ -318,6 +318,22 @@ export function InteractiveDashboardWordCard({
       console.log(
         `Session progress: ${newStats.wordsCompleted}/${SESSION_SIZE}, Accuracy: ${newStats.accuracy}%`,
       );
+
+      // Track journey achievements for word learning activity
+      const newJourneyAchievements = AchievementTracker.trackActivity({
+        type: "wordLearning",
+        wordsLearned: status === "remembered" ? 1 : 0,
+        accuracy: status === "remembered" ? 100 : status === "needs_practice" ? 0 : undefined,
+        category: currentWord.category,
+        timeSpent: 1 // Assume 1 minute per word on average
+      });
+
+      // Show journey achievements if any were unlocked
+      if (newJourneyAchievements.length > 0) {
+        setTimeout(() => {
+          setJourneyAchievements(newJourneyAchievements);
+        }, 1500); // Show after feedback animation
+      }
     } catch (error) {
       console.error("Error in word progress callback:", error);
     }
@@ -699,7 +715,7 @@ export function InteractiveDashboardWordCard({
           {/* Game Instructions */}
           <div className="text-center mb-3 md:mb-4">
             <h2 className="text-lg md:text-2xl font-bold text-gray-800 mb-1 md:mb-2">
-              🎯 What is this?
+              ��� What is this?
             </h2>
             <p className="text-sm md:text-base text-gray-600">
               Look at the picture and guess the word!
