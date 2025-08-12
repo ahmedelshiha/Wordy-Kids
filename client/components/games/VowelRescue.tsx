@@ -6,6 +6,9 @@ import { Progress } from "@/components/ui/progress";
 import { Volume2, Star, Trophy, ArrowLeft, Play, Clock } from "lucide-react";
 import { AchievementTracker } from "@/lib/achievementTracker";
 import { EnhancedAchievementPopup } from "@/components/EnhancedAchievementPopup";
+import { audioService } from "@/lib/audioService";
+import { playSoundIfEnabled } from "@/lib/soundEffects";
+import { CelebrationEffect } from "@/components/CelebrationEffect";
 
 const vowelOptions = ["A", "E", "I", "O", "U"];
 
@@ -45,6 +48,7 @@ export function VowelRescue({
   const [timeLeft, setTimeLeft] = useState(60);
   const [gameComplete, setGameComplete] = useState(false);
   const [newAchievements, setNewAchievements] = useState<any[]>([]);
+  const [showMainCelebration, setShowMainCelebration] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
   const currentQuestion = questions[currentIndex];
@@ -89,6 +93,8 @@ export function VowelRescue({
       // Show immediate feedback for wrong vowel
       setAttempts(attempts + 1);
       setShowFeedback(true);
+      // Play error sound for wrong vowel
+      playSoundIfEnabled.error();
 
       setTimeout(() => {
         // Clear the wrong vowel and allow trying again
@@ -127,11 +133,23 @@ export function VowelRescue({
         attempts === 0 ? 10 : attempts <= 2 ? 8 : attempts <= 4 ? 5 : 2;
       setScore(score + points);
       setShowReward(true);
-      setTimeout(() => setShowReward(false), 1500);
+
+      // Play celebration effects like main dashboard
+      setShowMainCelebration(true);
+      playSoundIfEnabled.success();
+      audioService.playSuccessSound();
+
+      setTimeout(() => {
+        setShowReward(false);
+        setShowMainCelebration(false);
+      }, 1500);
 
       setTimeout(() => {
         nextQuestion();
       }, 2000);
+    } else {
+      // Play error sound for wrong vowel
+      playSoundIfEnabled.error();
     }
   };
 
@@ -183,6 +201,12 @@ export function VowelRescue({
 
   const handleGameComplete = () => {
     setGameComplete(true);
+
+    // Play completion celebration
+    setShowMainCelebration(true);
+    playSoundIfEnabled.levelUp();
+    audioService.playSuccessSound();
+    setTimeout(() => setShowMainCelebration(false), 3000);
 
     // Calculate final accuracy
     const accuracy = Math.round((score / (questions.length * 10)) * 100);
@@ -545,7 +569,7 @@ export function VowelRescue({
                 ) ? (
                   <div className="space-y-3">
                     <div className="text-green-500 text-lg sm:text-xl font-bold">
-                      🎉 Excellent! 🎉
+                      🎉 Perfect! You did it! 🎉
                     </div>
                     <div className="text-xs sm:text-sm text-gray-600">
                       +
@@ -664,6 +688,13 @@ export function VowelRescue({
             }}
           />
         )}
+
+        {/* Main Celebration Effect */}
+        <CelebrationEffect
+          trigger={showMainCelebration}
+          type="stars"
+          onComplete={() => setShowMainCelebration(false)}
+        />
       </div>
     </div>
   );
