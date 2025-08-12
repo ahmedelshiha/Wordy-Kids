@@ -457,8 +457,10 @@ export default function IndexEnhanced() {
                   <div
                     className={`p-2 rounded-xl ${activeTab === "learn" ? "bg-white/20" : "bg-blue-100"}`}
                   >
-                    <BookOpen
-                      className={`w-5 h-5 ${activeTab === "learn" ? "text-white" : "text-blue-600"}`}
+                    <img
+                      src="https://cdn.builder.io/api/v1/image/assets%2F122959266afa4d539a05a574b1531c32%2Fa3e1599156fb43479f1df1383fc15be2?format=webp&width=800"
+                      alt="Wordy the Owl"
+                      className="icon-sm"
                     />
                   </div>
                   <span className="font-semibold">Word Library</span>
