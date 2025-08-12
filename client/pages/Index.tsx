@@ -662,7 +662,7 @@ export default function Index({ initialProfile }: IndexProps) {
           <div className="flex items-center justify-between py-1 md:hidden">
             <div className="flex items-center gap-2">
               <div className="bg-white/20 backdrop-blur-sm rounded-full p-1">
-                <BookOpen className="w-4 h-4 text-white" />
+                <img src="https://cdn.builder.io/api/v1/image/assets%2Fa33f74a2f97141a4a1ef43d9448f9bda%2F34c65c36a6f4415a9a48120417a492e0?format=webp&width=800" alt="Wordy Logo" className="w-6 h-6 rounded-full" />
               </div>
               <div>
                 <h1 className="text-sm font-bold leading-tight">
@@ -679,7 +679,7 @@ export default function Index({ initialProfile }: IndexProps) {
           <div className="text-center max-w-4xl mx-auto hidden md:block">
             <div className="flex justify-center items-center gap-6 mb-4">
               <div className="bg-white/20 backdrop-blur-sm rounded-full p-3">
-                <BookOpen className="w-8 h-8 text-white" />
+                <img src="https://cdn.builder.io/api/v1/image/assets%2Fa33f74a2f97141a4a1ef43d9448f9bda%2F34c65c36a6f4415a9a48120417a492e0?format=webp&width=800" alt="Wordy Logo" className="w-16 h-16 rounded-full" />
               </div>
             </div>
             <h1 className="text-2xl md:text-3xl font-bold mb-1">
@@ -827,8 +827,8 @@ Fun vocabulary learning for kids! 📚
               <div className="p-4 lg:p-6">
                 {/* Logo Section - Mobile & Desktop */}
                 <div className="flex items-center gap-3 mb-6 lg:mb-8">
-                  <div className="w-8 h-8 lg:w-10 lg:h-10 bg-gradient-to-r from-purple-500 to-pink-500 rounded-xl flex items-center justify-center">
-                    <Sparkles className="w-5 h-5 lg:w-6 lg:h-6 text-white" />
+                  <div className="w-8 h-8 lg:w-10 lg:h-10 bg-white rounded-xl flex items-center justify-center p-1">
+                    <img src="https://cdn.builder.io/api/v1/image/assets%2Fa33f74a2f97141a4a1ef43d9448f9bda%2F34c65c36a6f4415a9a48120417a492e0?format=webp&width=800" alt="Wordy Logo" className="w-full h-full rounded-lg" />
                   </div>
                   <div>
                     <h1 className="text-lg lg:text-xl font-bold text-gray-800">
