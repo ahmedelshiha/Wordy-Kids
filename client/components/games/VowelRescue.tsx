@@ -475,29 +475,29 @@ export function VowelRescue({
               })}
             </div>
 
-            {/* Enhanced Feedback with Try Again Options */}
+            {/* Enhanced Feedback with Try Again Options - Mobile Optimized */}
             {showFeedback && (
               <motion.div
                 initial={{ scale: 0.8, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
-                className="text-center mt-6"
+                className="text-center mt-4 sm:mt-6 px-2"
               >
                 {currentQuestion.missingIndex.every(idx =>
                   selectedVowels[idx]?.toLowerCase() === currentQuestion.word[idx].toLowerCase()
                 ) ? (
                   <div className="space-y-3">
-                    <div className="text-green-500 text-xl font-bold">
+                    <div className="text-green-500 text-lg sm:text-xl font-bold">
                       🎉 Excellent! 🎉
                     </div>
-                    <div className="text-sm text-gray-600">
+                    <div className="text-xs sm:text-sm text-gray-600">
                       +{attempts === 0 ? 10 : attempts <= 2 ? 8 : attempts <= 4 ? 5 : 2} points!
                     </div>
                     {currentQuestion.originalWord?.definition && (
-                      <div className="bg-educational-blue/10 p-3 rounded-lg mt-3">
-                        <div className="text-sm font-semibold text-educational-blue mb-1">
+                      <div className="bg-educational-blue/10 p-3 rounded-lg mt-3 text-left">
+                        <div className="text-xs sm:text-sm font-semibold text-educational-blue mb-1">
                           "{currentQuestion.word.toUpperCase()}" means:
                         </div>
-                        <div className="text-sm text-gray-700">
+                        <div className="text-xs sm:text-sm text-gray-700">
                           {currentQuestion.originalWord.definition}
                         </div>
                         {currentQuestion.originalWord.example && (
@@ -509,8 +509,8 @@ export function VowelRescue({
                     )}
                   </div>
                 ) : (
-                  <div className="space-y-4">
-                    <div className="text-orange-500 text-lg font-bold">
+                  <div className="space-y-3 sm:space-y-4">
+                    <div className="text-orange-500 text-base sm:text-lg font-bold">
                       {attempts === 1 ? "Oops! Try a different vowel! 🤔" :
                        attempts === 2 ? "Almost there! Think carefully! 🤗" :
                        attempts === 3 ? "One more try! You can do it! 💪" :
@@ -518,10 +518,10 @@ export function VowelRescue({
                     </div>
 
                     {attempts < 5 && !currentQuestion.missingIndex.every(idx => selectedVowels[idx]) && (
-                      <div className="flex gap-2 justify-center">
+                      <div className="flex flex-col sm:flex-row gap-2 justify-center items-center">
                         <Button
                           onClick={handleTryAgain}
-                          className="bg-educational-blue hover:bg-educational-blue/90 text-white px-6 py-2 rounded-full"
+                          className="bg-educational-blue hover:bg-educational-blue/90 text-white px-4 sm:px-6 py-2 rounded-full text-sm w-full sm:w-auto min-h-[44px]"
                           size="sm"
                         >
                           🔄 Try Again!
@@ -530,7 +530,7 @@ export function VowelRescue({
                         {attempts >= 3 && (
                           <Button
                             onClick={handleShowHint}
-                            className="bg-educational-green hover:bg-educational-green/90 text-white px-6 py-2 rounded-full"
+                            className="bg-educational-green hover:bg-educational-green/90 text-white px-4 sm:px-6 py-2 rounded-full text-sm w-full sm:w-auto min-h-[44px]"
                             size="sm"
                           >
                             💡 Show Me!
@@ -541,12 +541,12 @@ export function VowelRescue({
 
                     {attempts >= 5 && (
                       <div className="space-y-2">
-                        <div className="text-educational-purple text-base">
+                        <div className="text-educational-purple text-sm sm:text-base">
                           Let's see the answer together! 📖
                         </div>
                         <Button
                           onClick={handleShowHint}
-                          className="bg-educational-purple hover:bg-educational-purple/90 text-white px-6 py-2 rounded-full"
+                          className="bg-educational-purple hover:bg-educational-purple/90 text-white px-4 sm:px-6 py-2 rounded-full text-sm w-full sm:w-auto min-h-[44px]"
                           size="sm"
                         >
                           Show Answer ✨
