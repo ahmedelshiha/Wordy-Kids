@@ -290,12 +290,27 @@ export default function Index({ initialProfile }: IndexProps) {
 
   const handleQuizComplete = (score: number, total: number) => {
     const percentage = Math.round((score / total) * 100);
+
+    // Track quiz completion and check for achievements
+    const unlockedAchievements = AchievementTracker.trackActivity({
+      type: "quiz",
+      score: percentage,
+      accuracy: percentage,
+      category: selectedCategory !== "all" ? selectedCategory : undefined
+    });
+
     setFeedback({
       type: "celebration",
       title: "Quiz Complete! 🎉",
       message: `You scored ${score}/${total} (${percentage}%)`,
       points: score * 10,
-      onContinue: () => setFeedback(null),
+      onContinue: () => {
+        setFeedback(null);
+        // Show achievements after feedback is closed
+        if (unlockedAchievements.length > 0) {
+          setAchievementPopup(unlockedAchievements);
+        }
+      },
     });
     setShowQuiz(false);
   };
@@ -842,7 +857,7 @@ export default function Index({ initialProfile }: IndexProps) {
                 {
                   id: "progress",
                   icon: Trophy,
-                  label: "����� My Journey",
+                  label: "������� My Journey",
                   color: "yellow",
                 },
               ].map(({ id, icon: Icon, label, color }) => (
