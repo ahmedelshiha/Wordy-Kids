@@ -85,15 +85,8 @@ export function MobileBottomNav({
 
   const secondaryMenuItems = [
     {
-      id: "progress",
-      emoji: "🌟",
-      label: "My Journey",
-      icon: Trophy,
-      onClick: () => onTabChange("progress"),
-    },
-    {
       id: "parent",
-      emoji: "👨‍👩‍👧‍���",
+      emoji: "👨‍👩‍👧‍👦",
       label: "Parent Zone",
       icon: Users,
       onClick: onParentClick,
