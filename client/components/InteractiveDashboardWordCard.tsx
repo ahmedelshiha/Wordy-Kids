@@ -153,11 +153,46 @@ export function InteractiveDashboardWordCard({
     setFeedbackType(null);
     setCelebrationEffect(false);
 
-    if (currentWordIndex < words.length - 1) {
-      setCurrentWordIndex(currentWordIndex + 1);
-    } else {
-      // Loop back to start or load new words
-      setCurrentWordIndex(0);
+    // Mark current word as shown
+    if (currentWord) {
+      setShownWordIds(prev => new Set([...prev, currentWord.id]));
+    }
+
+    // Find next unseen word
+    let nextIndex = currentWordIndex + 1;
+    let foundUnseen = false;
+
+    // Search for next unseen word in current set
+    for (let i = nextIndex; i < words.length; i++) {
+      if (!shownWordIds.has(words[i].id) && words[i].id !== currentWord?.id) {
+        setCurrentWordIndex(i);
+        foundUnseen = true;
+        break;
+      }
+    }
+
+    // If no unseen words found in remaining set, check from beginning
+    if (!foundUnseen) {
+      for (let i = 0; i < currentWordIndex; i++) {
+        if (!shownWordIds.has(words[i].id)) {
+          setCurrentWordIndex(i);
+          foundUnseen = true;
+          break;
+        }
+      }
+    }
+
+    // If all words in current set have been shown, request new words
+    if (!foundUnseen) {
+      if (onRequestNewWords) {
+        onRequestNewWords();
+        // Reset tracking and start fresh
+        setShownWordIds(new Set());
+        setCurrentWordIndex(0);
+      } else {
+        // Fallback: loop back to start
+        setCurrentWordIndex(0);
+      }
     }
   };
 
