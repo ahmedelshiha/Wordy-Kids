@@ -95,7 +95,11 @@ export const LearningDashboard: React.FC<LearningDashboardProps> = ({
     statsWeeklyProgress: stats.weeklyProgress,
     actualWordsLearned,
     actualGoal,
-    actualPercentage
+    actualPercentage,
+    // Additional debug info
+    rememberedWordsCount,
+    forgottenWordsCount,
+    calculation: `max(${childStats?.wordsRemembered || 0}, ${stats.weeklyProgress || 0}) = ${actualWordsLearned}`
   });
 
   // Kid-friendly messages based on progress
