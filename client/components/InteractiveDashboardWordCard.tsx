@@ -175,33 +175,80 @@ export function InteractiveDashboardWordCard({
     }
   };
 
-  const checkForAchievements = (remembered: number, forgotten: number) => {
-    const total = remembered + forgotten;
-    const accuracy = total > 0 ? Math.round((remembered / total) * 100) : 0;
+  const checkSessionAchievements = (stats: SessionStats): Achievement[] => {
+    const achievements: Achievement[] = [];
+    const { wordsCompleted, wordsRemembered, accuracy } = stats;
 
-    // Milestone achievements
-    if (remembered === 5) {
-      setAchievementMessage("🌟 First 5 words! You're on fire!");
-      setTimeout(() => setAchievementMessage(null), 3000);
-    } else if (remembered === 10) {
-      setAchievementMessage("🎯 10 words mastered! Amazing!");
-      setTimeout(() => setAchievementMessage(null), 3000);
-    } else if (remembered === 20) {
-      setAchievementMessage("🏆 20 words! You're a vocabulary champion!");
-      setTimeout(() => setAchievementMessage(null), 3000);
-    } else if (remembered === 50) {
-      setAchievementMessage("⭐ 50 words! Absolutely incredible!");
-      setTimeout(() => setAchievementMessage(null), 3000);
+    // Session completion achievements based on performance
+    if (wordsCompleted === SESSION_SIZE) {
+      if (accuracy === 100) {
+        achievements.push({
+          id: 'perfect_session',
+          title: 'PERFECT SESSION!',
+          description: `Amazing! You got all ${SESSION_SIZE} words correct!`,
+          emoji: '🏆',
+          unlocked: true
+        });
+      } else if (accuracy >= 90) {
+        achievements.push({
+          id: 'excellent_session',
+          title: 'EXCELLENT SESSION!',
+          description: `Outstanding! ${accuracy}% accuracy on ${SESSION_SIZE} words!`,
+          emoji: '⭐',
+          unlocked: true
+        });
+      } else if (accuracy >= 75) {
+        achievements.push({
+          id: 'great_session',
+          title: 'GREAT SESSION!',
+          description: `Well done! ${accuracy}% accuracy. Keep it up!`,
+          emoji: '🎯',
+          unlocked: true
+        });
+      } else if (accuracy >= 50) {
+        achievements.push({
+          id: 'good_effort',
+          title: 'GOOD EFFORT!',
+          description: `Nice try! ${accuracy}% accuracy. Practice makes perfect!`,
+          emoji: '💪',
+          unlocked: true
+        });
+      } else {
+        achievements.push({
+          id: 'session_complete',
+          title: 'SESSION COMPLETE!',
+          description: `You finished all ${SESSION_SIZE} words! Every attempt helps you learn!`,
+          emoji: '🌟',
+          unlocked: true
+        });
+      }
+
+      // Speed bonus
+      const sessionTime = Date.now() - stats.sessionStartTime;
+      const minutes = Math.round(sessionTime / 60000);
+      if (minutes <= 5 && accuracy >= 80) {
+        achievements.push({
+          id: 'speed_demon',
+          title: 'SPEED DEMON!',
+          description: `Lightning fast! Completed in ${minutes} minutes with ${accuracy}% accuracy!`,
+          emoji: '⚡',
+          unlocked: true
+        });
+      }
+
+      // Streak achievements
+      if (wordsRemembered >= 15) {
+        achievements.push({
+          id: 'word_master',
+          title: 'WORD MASTER!',
+          description: `Incredible! You remembered ${wordsRemembered} out of ${SESSION_SIZE} words!`,
+          emoji: '🧠',
+          unlocked: true
+        });
+      }
     }
 
-    // Accuracy achievements
-    if (total >= 10 && accuracy === 100) {
-      setAchievementMessage("💯 Perfect score! No mistakes!");
-      setTimeout(() => setAchievementMessage(null), 3000);
-    } else if (total >= 10 && accuracy >= 90) {
-      setAchievementMessage("🎉 90%+ accuracy! Excellent work!");
-      setTimeout(() => setAchievementMessage(null), 3000);
-    }
+    return achievements;
   };
 
   const handleWordAction = async (
