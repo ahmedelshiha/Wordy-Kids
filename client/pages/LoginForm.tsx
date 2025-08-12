@@ -127,7 +127,7 @@ export default function LoginForm() {
             </div>
           </div>
           <h1 className="text-3xl md:text-4xl font-bold text-gray-800 mb-4">
-            Welcome to Word Adventure
+            Welcome to Wordy's Adventure!
           </h1>
           <p className="text-lg text-gray-600">
             Sign in to continue your learning journey
