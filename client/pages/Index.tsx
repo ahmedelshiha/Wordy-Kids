@@ -143,7 +143,7 @@ export default function Index({ initialProfile }: IndexProps) {
     totalWords: wordsDatabase.length,
     currentStreak: 7,
     weeklyGoal: 20,
-    weeklyProgress: rememberedWords.size, // Use actual remembered words for today's goal
+    weeklyProgress: Math.min(rememberedWords.size, 20), // Cap at goal to prevent overflow
     accuracyRate:
       rememberedWords.size > 0
         ? Math.round(
