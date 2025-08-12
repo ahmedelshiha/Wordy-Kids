@@ -357,7 +357,7 @@ export const WordCard: React.FC<WordCardProps> = ({
             </Button>
           </div>
 
-          <h3 className="text-lg md:text-xl font-semibold mb-2 md:mb-3 text-center">
+          <h3 className="text-base md:text-lg font-semibold mb-1 md:mb-2 text-center">
             {word.word} {word.emoji}
           </h3>
 
