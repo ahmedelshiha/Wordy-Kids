@@ -1844,7 +1844,6 @@ export default function Index({ initialProfile }: IndexProps) {
         )}
       </main>
 
-      {/* Word Practice Game */}
 
       {/* Enhanced Components */}
       {showCelebration && <CelebrationEffect trigger={showCelebration} />}
