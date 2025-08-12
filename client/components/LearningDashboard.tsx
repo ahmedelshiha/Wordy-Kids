@@ -81,9 +81,11 @@ export const LearningDashboard: React.FC<LearningDashboardProps> = ({
     (stats.weeklyProgress / stats.weeklyGoal) * 100,
   );
 
-  // Use actual word progress if childStats is available
-  const actualWordsLearned =
-    childStats?.wordsRemembered || stats.weeklyProgress;
+  // Use the higher value between API stats and local progress to prevent regression
+  const actualWordsLearned = Math.max(
+    childStats?.wordsRemembered || 0,
+    stats.weeklyProgress || 0
+  );
   const actualGoal = stats.weeklyGoal;
   const actualPercentage = Math.round((actualWordsLearned / actualGoal) * 100);
 
