@@ -266,43 +266,56 @@ export function VowelRescue({
   return (
     <div className="min-h-screen bg-gradient-to-br from-educational-yellow/20 to-educational-orange/20 p-4">
       <div className="max-w-2xl mx-auto">
-        {/* Header */}
-        <div className="flex items-center justify-between mb-6">
-          <Button
-            onClick={onExit}
-            variant="outline"
-            size="sm"
-            className="rounded-full"
-          >
-            <ArrowLeft className="w-4 h-4" />
-          </Button>
-          
-          <div className="flex items-center gap-4">
-            <div className="flex items-center gap-2 bg-white/80 px-3 py-2 rounded-full">
-              <Star className="w-4 h-4 text-educational-orange" />
-              <span className="font-bold text-educational-orange">{score}</span>
-            </div>
-            {isTimedMode && (
-              <div className="flex items-center gap-2 bg-white/80 px-3 py-2 rounded-full">
-                <Clock className="w-4 h-4 text-educational-blue" />
-                <span className="font-bold text-educational-blue">{timeLeft}s</span>
-              </div>
-            )}
-          </div>
-        </div>
+        {/* Enhanced Header with Close Function */}
+        <div className="bg-white/90 backdrop-blur-sm rounded-xl p-4 mb-6 shadow-lg">
+          <div className="flex items-center justify-between mb-3">
+            <Button
+              onClick={onExit}
+              variant="outline"
+              size="sm"
+              className="rounded-full hover:bg-red-50 hover:text-red-600 border-red-200"
+            >
+              <ArrowLeft className="w-4 h-4 mr-1" />
+              Close
+            </Button>
 
-        {/* Progress Bar */}
-        <div className="mb-6">
-          <Progress 
-            value={isTimedMode ? 0 : ((currentIndex + 1) / questions.length) * 100} 
-            className="h-3"
+            <div className="text-center">
+              <h3 className="text-lg font-bold text-educational-blue">
+                Vowel Quiz Challenge
+              </h3>
+            </div>
+
+            <div className="flex items-center gap-2">
+              {isTimedMode && (
+                <div className="flex items-center gap-1 bg-educational-blue/10 px-2 py-1 rounded-full">
+                  <Clock className="w-3 h-3 text-educational-blue" />
+                  <span className="font-bold text-educational-blue text-sm">{timeLeft}s</span>
+                </div>
+              )}
+              <div className="flex items-center gap-1 bg-educational-orange/10 px-2 py-1 rounded-full">
+                <Star className="w-3 h-3 text-educational-orange" />
+                <span className="font-bold text-educational-orange text-sm">
+                  {score}/{questions.length * 10}
+                </span>
+              </div>
+            </div>
+          </div>
+
+          {/* Progress Information */}
+          <div className="flex items-center justify-between text-sm text-gray-600 mb-2">
+            <span className="font-medium">
+              Question {currentIndex + 1} of {questions.length}
+            </span>
+            <span className="font-medium">
+              {Math.round(((currentIndex + 1) / questions.length) * 100)}% Complete
+            </span>
+          </div>
+
+          {/* Progress Bar */}
+          <Progress
+            value={((currentIndex + 1) / questions.length) * 100}
+            className="h-2"
           />
-          <p className="text-center text-sm text-gray-600 mt-2">
-            {isTimedMode 
-              ? `Word ${currentIndex + 1}`
-              : `${currentIndex + 1} of ${questions.length}`
-            }
-          </p>
         </div>
 
         {/* Game Card */}
