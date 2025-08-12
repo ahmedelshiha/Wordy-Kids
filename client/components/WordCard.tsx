@@ -337,7 +337,7 @@ export const WordCard: React.FC<WordCardProps> = ({
 
         {/* Back of card */}
         <CardContent
-          className="absolute inset-0 w-full h-full bg-gradient-to-br from-slate-700 to-slate-900 rounded-xl p-3 md:p-5 flex flex-col justify-center text-white"
+          className="absolute inset-0 w-full h-full bg-gradient-to-br from-slate-700 to-slate-900 rounded-xl p-2 md:p-4 flex flex-col text-white"
           style={{
             backfaceVisibility: "hidden",
             transform: "rotateY(180deg)",
