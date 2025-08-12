@@ -174,6 +174,22 @@ export function VowelRescue({
 
   const handleGameComplete = () => {
     setGameComplete(true);
+
+    // Calculate final accuracy
+    const accuracy = Math.round((score / (questions.length * 10)) * 100);
+
+    // Track vowel rescue completion and check for achievements
+    const unlockedAchievements = AchievementTracker.trackActivity({
+      type: "vowelRescue",
+      accuracy,
+      timeSpent: isTimedMode ? (60 - timeLeft) : undefined
+    });
+
+    // Show achievement popup if any achievements were unlocked
+    if (unlockedAchievements.length > 0) {
+      setNewAchievements(unlockedAchievements);
+    }
+
     setTimeout(() => {
       onComplete(score, questions.length * 10);
     }, 2000);
