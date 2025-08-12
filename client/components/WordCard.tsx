@@ -433,7 +433,7 @@ export const WordCard: React.FC<WordCardProps> = ({
                 />
 
                 {/* Adventure Status */}
-                <div className="mt-2 flex items-center justify-between text-xs">
+                <div className="mt-1 flex items-center justify-between text-xs">
                   <div className="flex items-center gap-1">
                     {(adventureStatus?.health || 100) < 30 ? (
                       <>
