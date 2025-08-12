@@ -703,15 +703,16 @@ export function InteractiveDashboardWordCard({
             </p>
           </div>
 
-          {/* Pronunciation Button */}
-          <div className="flex justify-center gap-3 md:gap-4 mb-4 md:mb-6">
+          {/* Action Buttons Row - Compact and Kid-Friendly */}
+          <div className="flex justify-center items-center gap-2 mb-3 md:mb-4">
             <Button
               onClick={playPronunciation}
               disabled={isPlaying}
-              className="bg-educational-blue hover:bg-educational-blue/90 text-white p-3 rounded-full transition-all duration-300 transform hover:scale-105"
+              size="sm"
+              className="bg-educational-blue hover:bg-educational-blue/90 text-white p-2 rounded-full transition-all duration-300 transform hover:scale-105"
             >
               <Volume2
-                className={cn("w-6 h-6", isPlaying && "animate-pulse")}
+                className={cn("w-4 h-4", isPlaying && "animate-pulse")}
               />
             </Button>
 
@@ -719,37 +720,36 @@ export function InteractiveDashboardWordCard({
               <Button
                 onClick={() => setShowHint(true)}
                 variant="outline"
-                className="px-6 py-3 text-lg rounded-2xl transition-all duration-300 transform hover:scale-105"
+                size="sm"
+                className="px-3 py-2 text-sm rounded-xl transition-all duration-300 transform hover:scale-105"
               >
-                <Lightbulb className="w-5 h-5 mr-2" />
-                Hint
+                <Lightbulb className="w-4 h-4 mr-1" />
+                💡 Hint
+              </Button>
+            )}
+
+            {!showWordName && (
+              <Button
+                onClick={() => setShowWordName(true)}
+                size="sm"
+                className="bg-educational-purple hover:bg-educational-purple/90 text-white px-3 py-2 text-sm rounded-xl transition-all duration-300 transform hover:scale-105"
+              >
+                <Eye className="w-4 h-4 mr-1" />
+                👁️ Show
               </Button>
             )}
           </div>
 
           {/* Hint Display */}
           {showHint && !showWordName && (
-            <div className="bg-yellow-50 border-2 border-yellow-200 rounded-2xl p-3 md:p-4 mb-4 md:mb-6 text-center">
-              <div className="flex items-center justify-center gap-2 mb-2">
-                <Lightbulb className="w-5 h-5 text-yellow-600" />
-                <h3 className="text-lg font-semibold text-yellow-800">Hint:</h3>
+            <div className="bg-yellow-50 border-2 border-yellow-200 rounded-xl p-3 mb-3 text-center">
+              <div className="flex items-center justify-center gap-2 mb-1">
+                <Lightbulb className="w-4 h-4 text-yellow-600" />
+                <h3 className="text-sm font-semibold text-yellow-800">💡 Hint:</h3>
               </div>
-              <p className="text-yellow-700 text-lg">
+              <p className="text-yellow-700 text-sm">
                 "{currentWord.definition}"
               </p>
-            </div>
-          )}
-
-          {/* Show Word Name Button */}
-          {!showWordName && (
-            <div className="text-center mb-4 md:mb-6">
-              <Button
-                onClick={() => setShowWordName(true)}
-                className="bg-educational-purple hover:bg-educational-purple/90 text-white px-8 py-3 text-lg rounded-2xl transition-all duration-300 transform hover:scale-105"
-              >
-                <Eye className="w-5 h-5 mr-2" />
-                👁️ Show Word Name
-              </Button>
             </div>
           )}
 
