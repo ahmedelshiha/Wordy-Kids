@@ -56,6 +56,7 @@ interface LearningDashboardProps {
   onPracticeForgotten?: () => void;
   forgottenWordsCount?: number;
   rememberedWordsCount?: number;
+  onRequestNewWords?: () => void;
 }
 
 export const LearningDashboard: React.FC<LearningDashboardProps> = ({
