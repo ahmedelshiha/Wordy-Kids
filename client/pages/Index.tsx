@@ -1660,7 +1660,7 @@ export default function Index({ initialProfile }: IndexProps) {
                       {/* All Unique Games and Quizzes - NO DUPLICATES, NO FOLDERS */}
                       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 max-w-7xl mx-auto">
                         {/* Matching Game */}
-                        <Card className="cursor-pointer hover:shadow-xl transition-all duration-300 hover:scale-105 border-2 border-educational-purple/30">
+                        <Card className="hidden cursor-pointer hover:shadow-xl transition-all duration-300 hover:scale-105 border-2 border-educational-purple/30">
                           <CardContent className="p-6 text-center">
                             <div className="text-6xl mb-4">🧩</div>
                             <h3 className="text-xl font-bold text-educational-purple mb-2">
@@ -1688,7 +1688,7 @@ export default function Index({ initialProfile }: IndexProps) {
                           </CardContent>
                         </Card>
                         {/* Easy Quiz */}
-                        <Card className="cursor-pointer hover:shadow-xl transition-all duration-300 md:hover:scale-105 border-2 border-educational-green/30">
+                        <Card className="hidden cursor-pointer hover:shadow-xl transition-all duration-300 md:hover:scale-105 border-2 border-educational-green/30">
                           <CardContent className="p-6 text-center">
                             <div className="text-6xl mb-4">���</div>
                             <h3 className="text-xl font-bold text-educational-green mb-2">
@@ -1720,7 +1720,7 @@ export default function Index({ initialProfile }: IndexProps) {
                         </Card>
 
                         {/* Standard Quiz */}
-                        <Card className="cursor-pointer hover:shadow-xl transition-all duration-300 hover:scale-105 border-2 border-educational-blue/30">
+                        <Card className="hidden cursor-pointer hover:shadow-xl transition-all duration-300 hover:scale-105 border-2 border-educational-blue/30">
                           <CardContent className="p-6 text-center">
                             <div className="text-6xl mb-4">🎯</div>
                             <h3 className="text-xl font-bold text-educational-blue mb-2">
@@ -1752,7 +1752,7 @@ export default function Index({ initialProfile }: IndexProps) {
                         </Card>
 
                         {/* Challenge Quiz */}
-                        <Card className="cursor-pointer hover:shadow-xl transition-all duration-300 hover:scale-105 border-2 border-educational-purple/30">
+                        <Card className="hidden cursor-pointer hover:shadow-xl transition-all duration-300 hover:scale-105 border-2 border-educational-purple/30">
                           <CardContent className="p-6 text-center">
                             <div className="text-6xl mb-4">🏆</div>
                             <h3 className="text-xl font-bold text-educational-purple mb-2">
@@ -1814,7 +1814,7 @@ export default function Index({ initialProfile }: IndexProps) {
                         </Card>
 
                         {/* Spelling Quiz */}
-                        <Card className="cursor-pointer hover:shadow-xl transition-all duration-300 hover:scale-105 border-2 border-educational-pink/30">
+                        <Card className="hidden cursor-pointer hover:shadow-xl transition-all duration-300 hover:scale-105 border-2 border-educational-pink/30">
                           <CardContent className="p-6 text-center">
                             <div className="text-6xl mb-4">✏️</div>
                             <h3 className="text-xl font-bold text-educational-pink mb-2">
@@ -1845,7 +1845,7 @@ export default function Index({ initialProfile }: IndexProps) {
                         </Card>
 
                         {/* Speed Quiz */}
-                        <Card className="cursor-pointer hover:shadow-xl transition-all duration-300 hover:scale-105 border-2 border-educational-yellow/30">
+                        <Card className="hidden cursor-pointer hover:shadow-xl transition-all duration-300 hover:scale-105 border-2 border-educational-yellow/30">
                           <CardContent className="p-6 text-center">
                             <div className="text-6xl mb-4">⚡</div>
                             <h3 className="text-xl font-bold text-educational-yellow mb-2">
