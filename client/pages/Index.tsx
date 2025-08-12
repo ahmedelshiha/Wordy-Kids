@@ -691,7 +691,6 @@ export default function Index({ initialProfile }: IndexProps) {
               Welcome to your vocabulary adventure! Ready for some learning fun?
             </p>
           </div>
-
         </div>
 
         {/* Enhanced Floating Elements - hidden on mobile to reduce clutter, conditional on setting */}
