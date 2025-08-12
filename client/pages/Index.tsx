@@ -499,14 +499,7 @@ export default function Index({ initialProfile }: IndexProps) {
       // Update child stats immediately for real-time feedback
       setChildStats(response.updatedStats);
 
-      // Update learning stats with new data
-      setLearningStats((prevStats) => ({
-        ...prevStats,
-        wordsLearned: response.updatedStats.totalWordsLearned,
-        weeklyProgress: response.updatedStats.wordsRemembered,
-        accuracyRate: response.updatedStats.averageAccuracy,
-        totalPoints: prevStats.totalPoints + (status === "remembered" ? 10 : 5),
-      }));
+      // Learning stats are computed dynamically from current state
 
       // Update adventure system with word interaction
       adventureService.trackWordInteraction(
