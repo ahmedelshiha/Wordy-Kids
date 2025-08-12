@@ -579,6 +579,22 @@ export const WordCard: React.FC<WordCardProps> = ({
                           false,
                         );
                       setAdventureStatus(updatedStatus);
+
+                      // Track word mastery for journey achievements (easy/learned!)
+                      const masteryAchievements = AchievementTracker.trackActivity({
+                        type: "wordLearning",
+                        wordsLearned: 1, // Fully learned
+                        accuracy: 100,
+                        category: word.category,
+                        timeSpent: 1
+                      });
+
+                      if (masteryAchievements.length > 0) {
+                        setTimeout(() => {
+                          setWordAchievements(masteryAchievements);
+                        }, 1000);
+                      }
+
                       // Also call the original handler
                       onWordMastered?.(word.id, "easy");
                     }}
