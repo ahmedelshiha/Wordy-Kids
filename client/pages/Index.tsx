@@ -1065,10 +1065,20 @@ export default function Index({ initialProfile }: IndexProps) {
                     rememberedWordsCount={rememberedWords.size}
                     availableWords={currentDashboardWords}
                     onWordProgress={async (word, status) => {
+                      console.log(`Word Progress: ${word.word} - ${status}`, {
+                        wordId: word.id,
+                        currentRemembered: rememberedWords.size,
+                        currentForgotten: forgottenWords.size
+                      });
+
                       // Handle word progress in dashboard
                       if (status === "remembered") {
                         setRememberedWords(
-                          (prev) => new Set([...prev, word.id]),
+                          (prev) => {
+                            const newSet = new Set([...prev, word.id]);
+                            console.log(`Updated remembered words: ${newSet.size}`, Array.from(newSet));
+                            return newSet;
+                          }
                         );
                         setForgottenWords((prev) => {
                           const newSet = new Set(prev);
@@ -1077,7 +1087,11 @@ export default function Index({ initialProfile }: IndexProps) {
                         });
                       } else if (status === "needs_practice") {
                         setForgottenWords(
-                          (prev) => new Set([...prev, word.id]),
+                          (prev) => {
+                            const newSet = new Set([...prev, word.id]);
+                            console.log(`Updated forgotten words: ${newSet.size}`, Array.from(newSet));
+                            return newSet;
+                          }
                         );
                         setRememberedWords((prev) => {
                           const newSet = new Set(prev);
