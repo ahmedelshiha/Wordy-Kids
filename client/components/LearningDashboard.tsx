@@ -97,8 +97,12 @@ export const LearningDashboard: React.FC<LearningDashboardProps> = ({
   });
 
   // Kid-friendly messages based on progress
-  const getProgressMessage = (percentage: number) => {
-    if (percentage >= 100) return "🎉 Amazing! You did it!";
+  const getProgressMessage = (percentage: number, wordsLearned: number, goal: number) => {
+    if (wordsLearned >= goal) {
+      if (wordsLearned >= goal * 2) return "🌟 SUPERSTAR! Amazing effort!";
+      if (wordsLearned >= goal * 1.5) return "🚀 Beyond awesome! Keep going!";
+      return "🎉 Goal achieved! You're incredible!";
+    }
     if (percentage >= 90) return "🌟 Almost there, superstar!";
     if (percentage >= 75) return "🚀 You're doing great!";
     if (percentage >= 50) return "💪 Keep going, champion!";
@@ -106,8 +110,12 @@ export const LearningDashboard: React.FC<LearningDashboardProps> = ({
     return "🌟 Ready for an adventure?";
   };
 
-  const getProgressEmoji = (percentage: number) => {
-    if (percentage >= 100) return "🏆";
+  const getProgressEmoji = (percentage: number, wordsLearned: number, goal: number) => {
+    if (wordsLearned >= goal) {
+      if (wordsLearned >= goal * 2) return "⭐";
+      if (wordsLearned >= goal * 1.5) return "🚀";
+      return "🏆";
+    }
     if (percentage >= 90) return "⭐";
     if (percentage >= 75) return "🎯";
     if (percentage >= 50) return "💪";
