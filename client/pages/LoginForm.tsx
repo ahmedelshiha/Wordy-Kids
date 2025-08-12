@@ -93,6 +93,13 @@ export default function LoginForm() {
     <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
       <div className="w-full max-w-md mx-auto">
         <div className="text-center mb-8">
+          <div className="flex justify-center mb-6">
+            <img
+              src="https://cdn.builder.io/api/v1/image/assets%2F783bb0e1cd3e4c73aa9ce79d668738ac%2Fee8d2c4de0ab40c1b0b38ee3c2ef1020?format=webp&width=800"
+              alt="Wordy Logo"
+              className="w-24 h-24 object-contain"
+            />
+          </div>
           <h1 className="text-2xl font-bold text-gray-900 mb-2">
             Welcome Back
           </h1>
