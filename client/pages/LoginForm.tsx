@@ -194,60 +194,74 @@ export default function LoginForm() {
             </CardTitle>
           </CardHeader>
           <CardContent className="p-8">
-            <form onSubmit={handleLogin} className="space-y-6">
+            <form onSubmit={handleLogin} className="space-y-8">
               {/* Email Field */}
-              <div>
+              <div className="relative">
                 <Label
                   htmlFor="email"
-                  className="text-sm font-medium text-gray-700 flex items-center gap-2"
+                  className="text-lg font-bold text-purple-700 flex items-center gap-3 justify-center"
                 >
-                  <Mail className="w-4 h-4" />
-                  Email
+                  <Mail className="w-6 h-6 text-pink-500" />
+                  📧 Parent's Magic Email
                 </Label>
-                <Input
-                  id="email"
-                  name="email"
-                  type="email"
-                  placeholder="Enter parent email here"
-                  value={formData.email}
-                  onChange={handleInputChange}
-                  className="mt-2 text-center border-gray-300 focus:border-blue-500"
-                  disabled={isLoading}
-                />
+                <div className="relative mt-3">
+                  <Input
+                    id="email"
+                    name="email"
+                    type="email"
+                    placeholder="Type your super secret email here! ✨"
+                    value={formData.email}
+                    onChange={handleInputChange}
+                    className="h-14 text-center text-lg border-4 border-purple-300 focus:border-pink-500 rounded-2xl bg-gradient-to-r from-purple-50 to-pink-50 font-medium placeholder:text-purple-400 focus:shadow-lg transform focus:scale-105 transition-all duration-300"
+                    disabled={isLoading}
+                  />
+                  {formData.email && (
+                    <div className="absolute -top-2 -right-2 text-2xl animate-bounce">⭐</div>
+                  )}
+                </div>
               </div>
 
               {/* Password Field */}
-              <div>
+              <div className="relative">
                 <Label
                   htmlFor="password"
-                  className="text-sm font-medium text-gray-700 flex items-center gap-2"
+                  className="text-lg font-bold text-purple-700 flex items-center gap-3 justify-center"
                 >
-                  <Lock className="w-4 h-4" />
-                  Password
+                  <Lock className="w-6 h-6 text-pink-500" />
+                  🔐 Secret Password
                 </Label>
-                <div className="relative mt-2">
+                <div className="relative mt-3">
                   <Input
                     id="password"
                     name="password"
                     type={showPassword ? "text" : "password"}
-                    placeholder="Enter your password"
+                    placeholder="Shh... enter your secret code! 🤫"
                     value={formData.password}
                     onChange={handleInputChange}
-                    className="text-center border-gray-300 focus:border-blue-500 pr-10"
+                    className="h-14 text-center text-lg border-4 border-purple-300 focus:border-pink-500 rounded-2xl bg-gradient-to-r from-purple-50 to-pink-50 font-medium placeholder:text-purple-400 pr-16 focus:shadow-lg transform focus:scale-105 transition-all duration-300"
                     disabled={isLoading}
                   />
                   <button
                     type="button"
                     onClick={() => setShowPassword(!showPassword)}
-                    className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700"
+                    className="absolute right-4 top-1/2 transform -translate-y-1/2 text-pink-500 hover:text-purple-600 hover:scale-125 transition-all duration-200"
                     disabled={isLoading}
                   >
                     {showPassword ? (
-                      <EyeOff className="w-4 h-4" />
+                      <div className="flex items-center gap-1">
+                        <EyeOff className="w-6 h-6" />
+                        <span className="text-sm">🙈</span>
+                      </div>
                     ) : (
-                      <Eye className="w-4 h-4" />
+                      <div className="flex items-center gap-1">
+                        <Eye className="w-6 h-6" />
+                        <span className="text-sm">👁️</span>
+                      </div>
                     )}
                   </button>
+                  {formData.password && (
+                    <div className="absolute -top-2 -right-2 text-2xl animate-bounce animation-delay-100">🎉</div>
+                  )}
                 </div>
               </div>
 
