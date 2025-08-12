@@ -87,6 +87,15 @@ export const LearningDashboard: React.FC<LearningDashboardProps> = ({
   const actualGoal = stats.weeklyGoal;
   const actualPercentage = Math.round((actualWordsLearned / actualGoal) * 100);
 
+  // Debug logging for progress tracking
+  console.log('Progress Debug:', {
+    childStatsWordsRemembered: childStats?.wordsRemembered,
+    statsWeeklyProgress: stats.weeklyProgress,
+    actualWordsLearned,
+    actualGoal,
+    actualPercentage
+  });
+
   // Kid-friendly messages based on progress
   const getProgressMessage = (percentage: number) => {
     if (percentage >= 100) return "🎉 Amazing! You did it!";
