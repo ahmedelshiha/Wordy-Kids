@@ -501,50 +501,6 @@ export default function Index({ initialProfile }: IndexProps) {
     navigate("/");
   };
 
-  const getPracticeWords = () => {
-    // Use smart word selector for practice words
-    const practiceWords = SmartWordSelector.getPracticeWords(
-      forgottenWords,
-      childStats,
-      10,
-    );
-
-    // If no forgotten words, get challenging words for practice
-    if (practiceWords.length === 0) {
-      const challengingSelection = SmartWordSelector.selectWords({
-        category: selectedCategory,
-        count: 10,
-        rememberedWords,
-        forgottenWords,
-        childStats,
-        prioritizeWeakCategories: true,
-        includeReviewWords: false, // Focus on new/challenging words for practice
-      });
-
-      return challengingSelection.words.map((word) => ({
-        id: word.id.toString(),
-        word: word.word,
-        definition: word.definition,
-        example: word.example,
-        category: word.category,
-        difficulty: word.difficulty,
-        attempts: 0,
-        lastAccuracy: 0,
-      }));
-    }
-
-    // Convert to practice word format
-    return practiceWords.map((word) => ({
-      id: word.id.toString(),
-      word: word.word,
-      definition: word.definition,
-      example: word.example,
-      category: word.category,
-      difficulty: word.difficulty,
-      attempts: 1,
-      lastAccuracy: Math.random() * 40 + 30, // Simulate lower accuracy for practice words
-    }));
-  };
 
   // Helper function to get all words from the database
   const getAllWords = () => {
