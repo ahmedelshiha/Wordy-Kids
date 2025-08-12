@@ -324,81 +324,52 @@ export function InteractiveDashboardWordCard({
   };
 
   const advanceToNextWord = () => {
-    console.log(`Advancing from word ${currentWordIndex + 1}/${words.length}`);
+    console.log(`Advancing from word ${currentWordIndex + 1}/${SESSION_SIZE}`);
 
     // Reset states for next word
     setIsAnswered(false);
     setFeedbackType(null);
     setCelebrationEffect(false);
 
-    // Mark current word as shown
-    if (currentWord) {
-      setShownWordIds((prev) => {
-        const newSet = new Set([...prev, currentWord.id]);
-        console.log(`Marked word ${currentWord.id} as shown. Total shown: ${newSet.size}`);
-        return newSet;
-      });
+    // Simply move to next word in session
+    const nextIndex = currentWordIndex + 1;
+
+    if (nextIndex < SESSION_SIZE && nextIndex < sessionWords.length) {
+      setCurrentWordIndex(nextIndex);
+      console.log(`Advanced to word ${nextIndex + 1}/${SESSION_SIZE}: ${sessionWords[nextIndex]?.word}`);
+    } else {
+      console.log('Reached end of session words');
+      // This shouldn't happen as session completion is handled in handleWordAction
+    }
+  };
+
+  const startNewSession = () => {
+    console.log('Starting new session...');
+
+    // Reset all session state
+    setShowSessionComplete(false);
+    setSessionAchievements([]);
+    setCurrentWordIndex(0);
+    setIsAnswered(false);
+    setFeedbackType(null);
+    setCelebrationEffect(false);
+
+    // Reset session stats
+    setSessionStats({
+      wordsCompleted: 0,
+      wordsRemembered: 0,
+      wordsForgotten: 0,
+      accuracy: 0,
+      sessionStartTime: Date.now()
+    });
+
+    // Request new words for next session
+    if (onRequestNewWords) {
+      onRequestNewWords();
     }
 
-    // Calculate how many words we've shown vs available
-    const totalShown = shownWordIds.size + (currentWord ? 1 : 0);
-    const wordsRemaining = words.length - totalShown;
-
-    console.log(`Words status: ${totalShown} shown, ${wordsRemaining} remaining, ${words.length} total`);
-
-    // If we've shown most words in current set (80% or more), request new words
-    if (wordsRemaining <= Math.max(1, Math.floor(words.length * 0.2))) {
-      console.log('Requesting new words - running low on current set');
-      if (onRequestNewWords) {
-        onRequestNewWords();
-        // Reset tracking and start fresh
-        setShownWordIds(new Set());
-        setCurrentWordIndex(0);
-        return;
-      }
-    }
-
-    // Find next unseen word
-    let nextIndex = currentWordIndex + 1;
-    let foundUnseen = false;
-
-    // Search for next unseen word in current set
-    for (let i = nextIndex; i < words.length; i++) {
-      if (!shownWordIds.has(words[i].id) && words[i].id !== currentWord?.id) {
-        console.log(`Found next unseen word at index ${i}: ${words[i].word}`);
-        setCurrentWordIndex(i);
-        foundUnseen = true;
-        break;
-      }
-    }
-
-    // If no unseen words found in remaining set, check from beginning
-    if (!foundUnseen) {
-      for (let i = 0; i < currentWordIndex; i++) {
-        if (!shownWordIds.has(words[i].id)) {
-          console.log(`Found unseen word at beginning, index ${i}: ${words[i].word}`);
-          setCurrentWordIndex(i);
-          foundUnseen = true;
-          break;
-        }
-      }
-    }
-
-    // If all words in current set have been shown, request new words
-    if (!foundUnseen) {
-      console.log('All words shown, requesting new set');
-      if (onRequestNewWords) {
-        onRequestNewWords();
-        // Reset tracking and start fresh
-        setShownWordIds(new Set());
-        setCurrentWordIndex(0);
-      } else {
-        // Fallback: restart current set
-        console.log('No new words available, restarting current set');
-        setShownWordIds(new Set());
-        setCurrentWordIndex(0);
-      }
-    }
+    // Clear current session words to trigger new session initialization
+    setSessionWords([]);
   };
 
   const getDifficultyColor = (difficulty?: string) => {
