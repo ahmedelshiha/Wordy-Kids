@@ -331,6 +331,14 @@
   animation: wiggle 2s ease-in-out infinite;
 }
 
+.animate-gentle-bounce {
+  animation: gentleBounce 3s ease-in-out infinite;
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.8s ease-out;
+}
+
 .border-rainbow {
   animation: rainbowBorder 3s linear infinite;
 }
