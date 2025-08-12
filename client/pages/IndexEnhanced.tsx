@@ -642,7 +642,7 @@ export default function IndexEnhanced() {
                               onClick={() => setSelectedCategory("all")}
                               variant="ghost"
                             >
-                              &larr; Back to Categories
+                              ← Back to Categories
                             </Button>
                           </div>
                         </div>

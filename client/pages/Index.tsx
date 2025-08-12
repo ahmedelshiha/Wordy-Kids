@@ -1257,7 +1257,7 @@ export default function Index({ initialProfile }: IndexProps) {
                               }}
                               variant="ghost"
                             >
-                              &larr; Back to Categories
+                              ← Back to Categories
                             </Button>
                           </div>
                         </div>
