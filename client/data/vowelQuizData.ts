@@ -133,51 +133,61 @@ export const vowelQuizData: VowelQuestion[] = [
   {
     word: "apple",
     missingIndex: [0],
+    image: "🍎",
     difficulty: "medium"
   },
   {
     word: "eagle",
     missingIndex: [0],
+    image: "🦅",
     difficulty: "medium"
   },
   {
     word: "olive",
     missingIndex: [0],
+    image: "🫒",
     difficulty: "medium"
   },
   {
     word: "uncle",
     missingIndex: [0],
+    image: "👨",
     difficulty: "medium"
   },
   {
     word: "inside",
     missingIndex: [0],
+    image: "🏠",
     difficulty: "medium"
   },
   {
     word: "ocean",
     missingIndex: [0],
+    image: "🌊",
     difficulty: "medium"
   },
   {
     word: "house",
     missingIndex: [1, 3],
+    image: "🏡",
     difficulty: "medium"
   },
   {
     word: "table",
     missingIndex: [1, 4],
+    image: "🪑",
     difficulty: "medium"
   },
   {
     word: "music",
     missingIndex: [1, 3],
+    image: "🎵",
     difficulty: "medium"
   },
   {
     word: "phone",
     missingIndex: [2, 4],
+    image: "📱",
     difficulty: "medium"
   },
   
