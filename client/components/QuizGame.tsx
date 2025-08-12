@@ -137,7 +137,6 @@ export const QuizGame: React.FC<QuizGameProps> = ({
       setScore(score + 1);
       // Play celebration effects
       setShowCelebration(true);
-      playSoundIfEnabled.success();
       audioService.playSuccessSound();
       setTimeout(() => setShowCelebration(false), 2000);
     } else {
