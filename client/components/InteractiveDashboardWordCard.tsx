@@ -767,17 +767,17 @@ export function InteractiveDashboardWordCard({
                   </div>
                 </div>
 
-                {/* Enhanced encouraging message */}
-                <div className="mt-2 text-center">
-                  {localRememberedCount >= 5 ? (
+                {/* Session encouraging message */}
+                <div className="mt-3 text-center">
+                  {sessionStats.wordsRemembered >= 15 ? (
                     <div className="text-green-600 font-medium text-xs">
-                      🌟 Amazing session! {localRememberedCount} words learned!
+                      🌟 Outstanding! {sessionStats.wordsRemembered} words mastered!
                     </div>
-                  ) : localRememberedCount > localForgottenCount ? (
+                  ) : sessionStats.wordsRemembered >= 10 ? (
                     <div className="text-green-600 font-medium text-xs">
-                      🎯 Doing great! Keep it up!
+                      🎯 Great progress! You're doing amazing!
                     </div>
-                  ) : localForgottenCount > localRememberedCount ? (
+                  ) : sessionStats.wordsCompleted >= 10 ? (
                     <div className="text-blue-600 font-medium text-xs">
                       🔥 Keep practicing! You're getting stronger!
                     </div>
