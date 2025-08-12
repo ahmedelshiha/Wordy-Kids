@@ -996,27 +996,7 @@ export default function Index({ initialProfile }: IndexProps) {
                     childStats={childStats}
                     forgottenWordsCount={forgottenWords.size}
                     rememberedWordsCount={rememberedWords.size}
-                    availableWords={(() => {
-                      // Enhanced smart word selection using machine learning principles
-                      const smartSelection = SmartWordSelector.selectWords({
-                        category: selectedCategory,
-                        count: 10,
-                        rememberedWords,
-                        forgottenWords,
-                        childStats,
-                        prioritizeWeakCategories: true,
-                        includeReviewWords: true,
-                      });
-
-                      // Fallback to simple random selection if smart selection fails
-                      if (smartSelection.words.length === 0) {
-                        return selectedCategory === "all"
-                          ? getRandomWords(10)
-                          : getWordsByCategory(selectedCategory).slice(0, 10);
-                      }
-
-                      return smartSelection.words;
-                    })()}
+                    availableWords={currentDashboardWords}
                     onWordProgress={async (word, status) => {
                       // Handle word progress in dashboard
                       if (status === "remembered") {
@@ -1112,7 +1092,7 @@ export default function Index({ initialProfile }: IndexProps) {
                               }}
                               variant="ghost"
                             >
-                              ← Back to Categories
+                              ��� Back to Categories
                             </Button>
                           </div>
                         </div>
