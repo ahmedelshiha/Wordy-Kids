@@ -75,7 +75,7 @@ export default function Login() {
 
           {/* App Title */}
           <h1 className="text-6xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-educational-blue via-educational-purple to-educational-pink bg-clip-text text-transparent drop-shadow-sm">
-            Word Adventure
+            Wordy's Adventure!
           </h1>
 
           {/* Subtitle */}
