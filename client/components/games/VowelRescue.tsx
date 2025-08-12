@@ -13,6 +13,9 @@ interface VowelQuestion {
   image?: string;
   audio?: string;
   difficulty?: "easy" | "medium" | "hard";
+  originalWord?: any; // Reference to the original word object
+  category?: string;
+  emoji?: string;
 }
 
 interface VowelRescueProps {
