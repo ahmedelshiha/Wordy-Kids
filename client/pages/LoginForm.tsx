@@ -329,32 +329,32 @@ export default function LoginForm() {
           </CardContent>
         </Card>
 
-        {/* Fun Back Button */}
-        <div className="text-center mt-8">
+        {/* Super Fun Back Button */}
+        <div className="text-center mt-4">
           <Button
             onClick={handleBackToMain}
             variant="outline"
-            className="bg-white/80 text-purple-700 hover:text-purple-900 border-3 border-purple-300 hover:border-purple-500 rounded-2xl px-8 py-4 text-lg font-bold shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300"
+            className="bg-gradient-to-r from-green-200 to-blue-200 text-purple-800 hover:text-purple-900 border-3 border-green-400 hover:border-blue-500 rounded-2xl px-6 py-3 text-sm md:text-lg font-bold shadow-lg hover:shadow-xl transform hover:scale-105 hover:rotate-1 transition-all duration-300"
             disabled={isLoading}
           >
-            <ArrowLeft className="w-5 h-5 mr-3" />
-            🎮 Play as Guest Adventure!
+            <ArrowLeft className="w-4 h-4 md:w-5 md:h-5 mr-2" />
+            🎮 Let's Play Together! 🎮
           </Button>
         </div>
 
-        {/* Fun Footer */}
-        <div className="text-center mt-8">
-          <div className="bg-white/80 rounded-2xl p-6 shadow-lg">
-            <div className="flex justify-center items-center gap-3 text-purple-700">
-              <span className="text-lg font-semibold">🆕 New to our magical world?</span>
+        {/* Magical Footer */}
+        <div className="text-center mt-4">
+          <div className="bg-gradient-to-r from-yellow-100 via-pink-100 to-purple-100 rounded-3xl p-4 shadow-xl border-3 border-rainbow">
+            <div className="flex justify-center items-center gap-2 text-purple-800 mb-2">
+              <span className="text-sm md:text-lg font-bold animate-gentle-bounce">🆕 New Little Explorer? 🌟</span>
             </div>
             <Button
               variant="link"
               onClick={() => navigate("/signup")}
-              className="text-pink-600 font-bold text-xl hover:text-pink-800 underline decoration-wavy decoration-pink-400 mt-2"
+              className="text-pink-700 font-bold text-base md:text-xl hover:text-pink-900 underline decoration-wavy decoration-pink-500 decoration-2 hover:decoration-4 transform hover:scale-110 hover:rotate-1 transition-all duration-300 animate-gentle-float"
               disabled={isLoading}
             >
-              ✨ Join the Adventure! ✨
+              ✨ Come Join Our Fun Club! ✨
             </Button>
           </div>
         </div>
