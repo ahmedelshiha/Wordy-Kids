@@ -517,22 +517,6 @@ export default function Index({ initialProfile }: IndexProps) {
   };
 
 
-  const handlePracticeComplete = (results: {
-    correctWords: string[];
-    totalAttempts: number;
-    accuracy: number;
-  }) => {
-    setShowPracticeGame(false);
-
-    // Show completion feedback
-    setFeedback({
-      type: "celebration",
-      title: "Practice Complete! 🏆",
-      message: `Great job practicing your tricky words!\n\n✅ Remembered: ${results.correctWords.length} words\n🎯 Accuracy: ${results.accuracy}%\n\nKeep practicing to master all your words!`,
-      points: results.correctWords.length * 15,
-      onContinue: () => setFeedback(null),
-    });
-  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 relative">
