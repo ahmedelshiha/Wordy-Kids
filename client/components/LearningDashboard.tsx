@@ -170,60 +170,8 @@ export const LearningDashboard: React.FC<LearningDashboardProps> = ({
                 </div>
               </div>
             </div>
-            <div className="flex items-center gap-3">
-              <div className="text-center">
-                <Badge
-                  variant="outline"
-                  className="text-sm px-3 py-1 bg-educational-blue/10 text-educational-blue border-educational-blue/30 font-bold"
-                >
-                  {actualWordsLearned}/{actualGoal} words
-                </Badge>
-                <div className="text-xs font-semibold text-educational-blue mt-1">
-                  {actualWordsLearned >= actualGoal
-                    ? actualWordsLearned > actualGoal
-                      ? `${Math.round(((actualWordsLearned - actualGoal) / actualGoal) * 100)}% beyond goal!`
-                      : "Quest Complete!"
-                    : `${actualPercentage}% done`}
-                </div>
-                {/* Debug info - remove in production */}
-                <div className="text-xs text-gray-500 mt-1">
-                  API: {childStats?.wordsRemembered || 0} | Local:{" "}
-                  {stats.weeklyProgress || 0}
-                </div>
-              </div>
-              <div className="flex flex-col items-center gap-1">
-                <div className="w-24 h-3 bg-slate-200 rounded-full overflow-hidden shadow-inner">
-                  <div
-                    className={`h-full rounded-full transition-all duration-500 ease-out ${
-                      actualWordsLearned >= actualGoal
-                        ? actualWordsLearned >= actualGoal * 1.5
-                          ? "bg-gradient-to-r from-yellow-400 to-orange-500"
-                          : "bg-gradient-to-r from-green-400 to-emerald-500"
-                        : "bg-gradient-to-r from-educational-blue to-educational-purple"
-                    }`}
-                    style={{ width: `${Math.min(actualPercentage, 100)}%` }}
-                  ></div>
-                </div>
-                {actualWordsLearned >= actualGoal ? (
-                  actualWordsLearned >= actualGoal * 1.5 ? (
-                    <div className="text-center">
-                      <Trophy className="w-5 h-5 text-yellow-500 animate-bounce" />
-                      <div className="text-xs text-yellow-600 font-bold">
-                        SUPERSTAR!
-                      </div>
-                    </div>
-                  ) : (
-                    <div className="text-center">
-                      <Trophy className="w-5 h-5 text-green-500 animate-bounce" />
-                      <div className="text-xs text-green-600 font-bold">
-                        GOAL!
-                      </div>
-                    </div>
-                  )
-                ) : (
-                  <Target className="w-4 h-4 text-educational-blue/60" />
-                )}
-              </div>
+            <div className="hidden">
+              {/* Hidden: Badge, progress percentage, debug info, and progress bar */}
             </div>
           </div>
         </CardContent>
