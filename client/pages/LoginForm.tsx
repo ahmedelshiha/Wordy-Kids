@@ -99,7 +99,7 @@ export default function LoginForm() {
       if (user || isDemoUser) {
         setMessage({
           type: "success",
-          text: "Login successful! Welcome back!",
+          text: "🎉 Hooray! Welcome back to the adventure! 🚀",
         });
 
         // Navigate to main app after successful login
@@ -109,7 +109,7 @@ export default function LoginForm() {
       } else {
         setMessage({
           type: "error",
-          text: "Invalid username or password. Please try again.",
+          text: "🤔 Hmm... those magic words don't match! Try again! ✨",
         });
       }
       setIsLoading(false);
