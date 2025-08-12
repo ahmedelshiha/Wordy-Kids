@@ -480,33 +480,39 @@ export function InteractiveDashboardWordCard({
     <div className={cn("space-y-6", className)}>
       {/* Session Completion Modal */}
       {showSessionComplete && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-3xl p-8 max-w-md w-full text-center shadow-2xl animate-in zoom-in-95 duration-300">
-            <div className="text-6xl mb-4">🎉</div>
-            <h2 className="text-3xl font-bold text-gray-800 mb-4">
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-1 sm:p-4">
+          <div className="bg-white rounded-xl sm:rounded-3xl p-2 sm:p-8 max-w-xs sm:max-w-md w-full text-center shadow-2xl animate-in zoom-in-95 duration-300">
+            <div className="text-3xl sm:text-6xl mb-1 sm:mb-4">🎉</div>
+            <h2 className="text-lg sm:text-3xl font-bold text-gray-800 mb-2 sm:mb-4">
               Session Complete!
             </h2>
 
             {/* Session Stats */}
-            <div className="bg-gradient-to-r from-blue-50 to-purple-50 rounded-2xl p-4 mb-6">
-              <div className="grid grid-cols-3 gap-4 text-center">
+            <div className="bg-gradient-to-r from-blue-50 to-purple-50 rounded-lg sm:rounded-2xl p-2 sm:p-4 mb-2 sm:mb-6">
+              <div className="grid grid-cols-3 gap-1 sm:gap-4 text-center">
                 <div>
-                  <div className="text-2xl font-bold text-green-600">
+                  <div className="text-sm sm:text-2xl font-bold text-green-600">
                     {sessionStats.wordsRemembered}
                   </div>
-                  <div className="text-sm text-gray-600">Remembered</div>
+                  <div className="text-xs sm:text-sm text-gray-600">
+                    Remembered
+                  </div>
                 </div>
                 <div>
-                  <div className="text-2xl font-bold text-orange-600">
+                  <div className="text-sm sm:text-2xl font-bold text-orange-600">
                     {sessionStats.wordsForgotten}
                   </div>
-                  <div className="text-sm text-gray-600">To Practice</div>
+                  <div className="text-xs sm:text-sm text-gray-600">
+                    To Practice
+                  </div>
                 </div>
                 <div>
-                  <div className="text-2xl font-bold text-purple-600">
+                  <div className="text-sm sm:text-2xl font-bold text-purple-600">
                     {sessionStats.accuracy}%
                   </div>
-                  <div className="text-sm text-gray-600">Accuracy</div>
+                  <div className="text-xs sm:text-sm text-gray-600">
+                    Accuracy
+                  </div>
                 </div>
               </div>
             </div>
@@ -515,13 +521,15 @@ export function InteractiveDashboardWordCard({
             {sessionAchievements.map((achievement, index) => (
               <div
                 key={achievement.id}
-                className="mb-4 p-4 bg-gradient-to-r from-yellow-100 to-orange-100 rounded-2xl border border-yellow-300"
+                className="mb-2 sm:mb-4 p-2 sm:p-4 bg-gradient-to-r from-yellow-100 to-orange-100 rounded-lg sm:rounded-2xl border border-yellow-300"
               >
-                <div className="text-3xl mb-2">{achievement.emoji}</div>
-                <div className="font-bold text-lg text-gray-800">
+                <div className="text-xl sm:text-3xl mb-0.5 sm:mb-2">
+                  {achievement.emoji}
+                </div>
+                <div className="font-bold text-xs sm:text-lg text-gray-800">
                   {achievement.title}
                 </div>
-                <div className="text-sm text-gray-600">
+                <div className="text-xs sm:text-sm text-gray-600 leading-tight">
                   {achievement.description}
                 </div>
               </div>
@@ -530,7 +538,7 @@ export function InteractiveDashboardWordCard({
             {/* Continue Button */}
             <button
               onClick={startNewSession}
-              className="w-full bg-gradient-to-r from-green-500 to-blue-500 text-white font-bold py-4 px-6 rounded-2xl hover:from-green-600 hover:to-blue-600 transition-all duration-300 transform hover:scale-105 shadow-lg"
+              className="w-full bg-gradient-to-r from-green-500 to-blue-500 text-white font-bold py-2 sm:py-4 px-3 sm:px-6 text-xs sm:text-base rounded-lg sm:rounded-2xl hover:from-green-600 hover:to-blue-600 transition-all duration-300 transform hover:scale-105 shadow-lg"
             >
               🚀 Start New Session
             </button>
@@ -573,7 +581,7 @@ export function InteractiveDashboardWordCard({
               🌟
             </div>
             <div className="absolute bottom-4 left-6 text-2xl animate-bounce delay-300">
-              ���
+              🎊
             </div>
             <div className="absolute bottom-6 right-4 text-2xl animate-pulse delay-500">
               💫
@@ -593,18 +601,7 @@ export function InteractiveDashboardWordCard({
               >
                 {currentWord.category}
               </Badge>
-              <Badge
-                variant="outline"
-                className="text-sm px-3 py-1 bg-blue-50 text-blue-700 border-blue-300"
-              >
-                Word {currentWordIndex + 1} / {SESSION_SIZE}
-              </Badge>
-              <Badge
-                variant="outline"
-                className="text-sm px-3 py-1 bg-green-50 text-green-700 border-green-300"
-              >
-                Session: {sessionStats.wordsCompleted} / {SESSION_SIZE}
-              </Badge>
+              {/* Hidden: Word progress and Session progress badges */}
               <Badge
                 variant="outline"
                 className="text-sm px-3 py-1 bg-purple-50 text-purple-700 border-purple-300"

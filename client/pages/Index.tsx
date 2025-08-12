@@ -33,6 +33,11 @@ import {
   SmartWordSelector,
   getSmartWordSelection,
 } from "@/lib/smartWordSelection";
+import {
+  EnhancedWordSelector,
+  WordHistory,
+  SystematicWordSelection,
+} from "@/lib/enhancedWordSelection";
 import { isBackgroundAnimationsEnabled } from "@/lib/backgroundAnimations";
 import {
   generateQuizQuestions,
@@ -125,6 +130,14 @@ export default function Index({ initialProfile }: IndexProps) {
     new Set(),
   );
   const [currentDashboardWords, setCurrentDashboardWords] = useState<any[]>([]);
+
+  // Enhanced word selection states
+  const [userWordHistory, setUserWordHistory] = useState<
+    Map<number, WordHistory>
+  >(new Map());
+  const [sessionNumber, setSessionNumber] = useState(1);
+  const [lastSystematicSelection, setLastSystematicSelection] =
+    useState<SystematicWordSelection | null>(null);
 
   // Initialize dashboard words when category changes or component mounts
   useEffect(() => {
@@ -352,132 +365,62 @@ export default function Index({ initialProfile }: IndexProps) {
     setCurrentWordIndex(0);
     // Reset excluded words when changing category
     setExcludedWordIds(new Set());
+
+    // Reset session number for new category
+    setSessionNumber(1);
   };
 
   const generateFreshWords = () => {
-    console.log(`Generating fresh words for category: ${selectedCategory}`);
-
-    // Get total available words for the category
-    const totalAvailableWords =
-      selectedCategory === "all"
-        ? wordsDatabase.length
-        : getWordsByCategory(selectedCategory).length;
-
     console.log(
-      `Total available words: ${totalAvailableWords}, Currently excluded: ${excludedWordIds.size}`,
+      `Generating fresh words with enhanced system for category: ${selectedCategory}`,
     );
 
-    // Reset excluded words if we've seen too many (more than 70% of available words)
-    const currentExcludedWords = excludedWordIds.size;
-    if (currentExcludedWords > totalAvailableWords * 0.7) {
-      console.log("Resetting excluded words to ensure fresh content");
-      setExcludedWordIds(new Set());
-    }
-
-    const allReviewedWords = new Set([
-      ...rememberedWords,
-      ...forgottenWords,
-      ...excludedWordIds,
-    ]);
-
     try {
-      let freshWords = [];
-
-      // If "all" categories, get a mix from different categories
-      if (selectedCategory === "all") {
-        const categories = [
-          "food",
-          "animals",
-          "colors",
-          "body",
-          "nature",
-          "objects",
-          "transportation",
-          "feelings",
-        ];
-        const wordsPerCategory = Math.ceil(12 / categories.length);
-
-        for (const cat of categories) {
-          const categoryWords = getWordsByCategory(cat)
-            .filter((word) => !allReviewedWords.has(word.id))
-            .slice(0, wordsPerCategory);
-          freshWords.push(...categoryWords);
-        }
-
-        // Shuffle for variety
-        freshWords = shuffleArray(freshWords);
-      } else {
-        // For specific categories, use smart selection
-        const smartSelection = SmartWordSelector.selectWords({
-          category: selectedCategory,
-          count: 15, // Request more words to have better selection
-          rememberedWords,
-          forgottenWords,
+      // Use the enhanced word selection system
+      const systematicSelection =
+        EnhancedWordSelector.generateSystematicSession(
+          selectedCategory,
+          userWordHistory,
+          {
+            rememberedWords,
+            forgottenWords,
+            excludedWordIds,
+          },
           childStats,
-          prioritizeWeakCategories: true,
-          includeReviewWords: false, // Focus on new words to avoid repetition
-        });
-
-        freshWords = smartSelection.words.filter(
-          (word) => !allReviewedWords.has(word.id),
+          sessionNumber,
         );
-      }
 
-      // If we don't have enough fresh words, get more from the category
-      if (freshWords.length < 8) {
-        const fallbackWords =
-          selectedCategory === "all"
-            ? getRandomWords(25) // Get more fallback words
-            : getWordsByCategory(selectedCategory);
+      const selectedWords = systematicSelection.words;
 
-        const additionalFreshWords = fallbackWords
-          .filter((word) => !allReviewedWords.has(word.id))
-          .slice(0, 12 - freshWords.length);
+      // Store the systematic selection for debugging and analysis
+      setLastSystematicSelection(systematicSelection);
 
-        freshWords.push(...additionalFreshWords);
-      }
-
-      // If still not enough words, include some reviewed words (but not recently remembered ones)
-      if (freshWords.length < 6) {
-        const reviewWords =
-          selectedCategory === "all"
-            ? getRandomWords(30)
-            : getWordsByCategory(selectedCategory);
-
-        const additionalWords = reviewWords
-          .filter((word) => !rememberedWords.has(word.id)) // Avoid recently remembered words
-          .slice(0, 10 - freshWords.length);
-
-        freshWords.push(...additionalWords);
-      }
-
-      // Ensure variety by shuffling
-      freshWords = shuffleArray(freshWords);
-
-      // Take the first 10 words for the game
-      const selectedWords = freshWords.slice(0, 10);
-
-      // Update excluded words to include the new words we're about to show
-      setExcludedWordIds(
-        (prev) => new Set([...prev, ...selectedWords.map((w) => w.id)]),
-      );
+      // Update states
       setCurrentDashboardWords(selectedWords);
+      setSessionNumber((prev) => prev + 1);
 
-      console.log(
-        `Generated ${selectedWords.length} fresh words:`,
-        selectedWords.map((w) => `${w.word} (${w.category})`),
-      );
-      console.log(
-        `Total excluded after generation: ${excludedWordIds.size + selectedWords.length}`,
-      );
+      console.log(`Enhanced Selection Results:`, {
+        strategy: systematicSelection.sessionInfo.sessionStrategy,
+        difficulty: systematicSelection.sessionInfo.difficulty,
+        newWords: systematicSelection.sessionInfo.totalNewWords,
+        reviewWords: systematicSelection.sessionInfo.reviewWords,
+        exhaustionLevel:
+          systematicSelection.sessionInfo.exhaustionLevel.toFixed(2),
+        categories: systematicSelection.sessionInfo.categories,
+        words: selectedWords.map(
+          (w) => `${w.word} (${w.category}, ${w.difficulty})`,
+        ),
+      });
+
       return selectedWords;
     } catch (error) {
-      console.error("Error generating fresh words:", error);
-      // Fallback to simple random selection
+      console.error("Error in enhanced word generation:", error);
+
+      // Fallback to original system
       const fallbackWords =
         selectedCategory === "all"
-          ? getRandomWords(10)
-          : getWordsByCategory(selectedCategory).slice(0, 10);
+          ? getRandomWords(20)
+          : getWordsByCategory(selectedCategory).slice(0, 20);
 
       setCurrentDashboardWords(fallbackWords);
       return fallbackWords;
@@ -578,6 +521,17 @@ export default function Index({ initialProfile }: IndexProps) {
     status: "remembered" | "needs_practice",
     responseTime?: number,
   ) => {
+    // Update enhanced word history first
+    const wasCorrect = status === "remembered";
+    EnhancedWordSelector.updateWordHistory(
+      word.id,
+      wasCorrect,
+      userWordHistory,
+    );
+
+    // Trigger re-render by updating the state
+    setUserWordHistory(new Map(userWordHistory));
+
     if (!currentProfile?.id || !currentSessionId) {
       console.warn("Missing profile or session ID");
       return;
@@ -1199,6 +1153,56 @@ export default function Index({ initialProfile }: IndexProps) {
                     }}
                     onRequestNewWords={generateFreshWords}
                   />
+
+                  {/* Enhanced Word Selection Debug Panel */}
+                  {process.env.NODE_ENV === "development" &&
+                    lastSystematicSelection && (
+                      <div className="mt-4 p-3 bg-gray-100 rounded-lg text-xs">
+                        <h4 className="font-bold mb-2">
+                          🔧 Enhanced Word Selection Debug
+                        </h4>
+                        <div className="grid grid-cols-2 gap-2">
+                          <div>
+                            <strong>Strategy:</strong>{" "}
+                            {
+                              lastSystematicSelection.sessionInfo
+                                .sessionStrategy
+                            }
+                          </div>
+                          <div>
+                            <strong>Difficulty:</strong>{" "}
+                            {lastSystematicSelection.sessionInfo.difficulty}
+                          </div>
+                          <div>
+                            <strong>New Words:</strong>{" "}
+                            {lastSystematicSelection.sessionInfo.totalNewWords}
+                          </div>
+                          <div>
+                            <strong>Review Words:</strong>{" "}
+                            {lastSystematicSelection.sessionInfo.reviewWords}
+                          </div>
+                          <div>
+                            <strong>Exhaustion:</strong>{" "}
+                            {(
+                              lastSystematicSelection.sessionInfo
+                                .exhaustionLevel * 100
+                            ).toFixed(1)}
+                            %
+                          </div>
+                          <div>
+                            <strong>Categories:</strong>{" "}
+                            {lastSystematicSelection.sessionInfo.categories.join(
+                              ", ",
+                            )}
+                          </div>
+                        </div>
+                        <div className="mt-2">
+                          <strong>Session #{sessionNumber - 1}</strong> |{" "}
+                          <strong>Word History:</strong> {userWordHistory.size}{" "}
+                          words tracked
+                        </div>
+                      </div>
+                    )}
                 </TabsContent>
 
                 <TabsContent value="learn">
