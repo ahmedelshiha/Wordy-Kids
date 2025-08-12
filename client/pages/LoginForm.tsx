@@ -311,39 +311,41 @@ export default function LoginForm() {
                 type="button"
                 variant="ghost"
                 onClick={handleForgotPassword}
-                className="w-full text-gray-600 hover:text-blue-600"
+                className="w-full text-purple-600 hover:text-pink-600 font-semibold text-lg hover:bg-purple-50 rounded-xl"
                 disabled={isLoading}
               >
-                Forgot your password?
+                🤔 Oops! Forgot your magic words?
               </Button>
             </form>
           </CardContent>
         </Card>
 
-        {/* Back Button */}
-        <div className="text-center mt-6">
+        {/* Fun Back Button */}
+        <div className="text-center mt-8">
           <Button
             onClick={handleBackToMain}
             variant="outline"
-            className="text-gray-600 hover:text-gray-800"
+            className="bg-white/80 text-purple-700 hover:text-purple-900 border-3 border-purple-300 hover:border-purple-500 rounded-2xl px-8 py-4 text-lg font-bold shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300"
             disabled={isLoading}
           >
-            <ArrowLeft className="w-4 h-4 mr-2" />
-            Continue as Guest
+            <ArrowLeft className="w-5 h-5 mr-3" />
+            🎮 Play as Guest Adventure!
           </Button>
         </div>
 
-        {/* Footer */}
-        <div className="text-center mt-6">
-          <div className="flex justify-center items-center gap-2 text-gray-600">
-            <span className="text-sm">Don't have an account?</span>
+        {/* Fun Footer */}
+        <div className="text-center mt-8">
+          <div className="bg-white/80 rounded-2xl p-6 shadow-lg">
+            <div className="flex justify-center items-center gap-3 text-purple-700">
+              <span className="text-lg font-semibold">🆕 New to our magical world?</span>
+            </div>
             <Button
               variant="link"
               onClick={() => navigate("/signup")}
-              className="text-blue-600 p-0 h-auto font-semibold hover:text-blue-700"
+              className="text-pink-600 font-bold text-xl hover:text-pink-800 underline decoration-wavy decoration-pink-400 mt-2"
               disabled={isLoading}
             >
-              Sign up
+              ✨ Join the Adventure! ✨
             </Button>
           </div>
         </div>
