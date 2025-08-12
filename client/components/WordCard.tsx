@@ -279,8 +279,8 @@ export const WordCard: React.FC<WordCardProps> = ({
             </div>
           )}
 
-          <div className="flex-1 flex flex-col justify-center items-center text-center space-y-2">
-            <h2 className="text-xl md:text-2xl font-bold tracking-wide drop-shadow-md">
+          <div className="flex-1 flex flex-col justify-center items-center text-center space-y-1">
+            <h2 className="text-lg md:text-xl font-bold tracking-wide drop-shadow-md">
               {word.word}
             </h2>
 
