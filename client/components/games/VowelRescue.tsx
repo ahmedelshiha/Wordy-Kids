@@ -203,7 +203,6 @@ export function VowelRescue({
 
     // Play completion celebration
     setShowMainCelebration(true);
-    playSoundIfEnabled.levelUp();
     audioService.playSuccessSound();
     setTimeout(() => setShowMainCelebration(false), 3000);
 
