@@ -79,7 +79,7 @@ export default function Login() {
 
           {/* App Title */}
           <h1 className="text-6xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-educational-blue via-educational-purple to-educational-pink bg-clip-text text-transparent drop-shadow-sm">
-            Word Adventure
+            🌟 Wordy's Adventure!
           </h1>
 
           {/* Subtitle */}
@@ -134,7 +134,7 @@ export default function Login() {
 
               {/* Title */}
               <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-4">
-                I'm New at Word Adventure
+                I'm New at Wordy's Adventure!
               </h2>
 
               {/* Description */}
