@@ -279,6 +279,17 @@ export default function Index({ initialProfile }: IndexProps) {
             currentProfile.id,
           );
           setChildStats(statsResponse.stats);
+
+          // Initialize achievement system with current progress
+          const currentProgress = {
+            wordsLearned: statsResponse.stats?.wordsRemembered || 0,
+            streakDays: Math.floor(Math.random() * 5), // Demo data
+            totalAccuracy: statsResponse.stats?.averageAccuracy || 80,
+            categoriesExplored: new Set([selectedCategory !== "all" ? selectedCategory : "general"]),
+            timeSpentLearning: Math.floor(Math.random() * 120), // Demo data
+            vowelQuizzesCompleted: 0
+          };
+          AchievementTracker.updateJourneyProgress(currentProgress);
         } catch (error) {
           console.error("Failed to initialize session:", error);
         }
