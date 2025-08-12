@@ -32,15 +32,15 @@ const WordyOwlMascot: React.FC = () => {
   return (
     <div className="relative">
       {/* Speech Bubble */}
-      <div className="absolute -top-20 left-1/2 transform -translate-x-1/2 z-10 animate-fade-in">
-        <div className="bg-white rounded-xl px-4 py-3 shadow-lg border-3 border-educational-yellow max-w-xs relative">
-          <p className="text-xs md:text-sm text-gray-800 font-medium text-center">
+      <div className="absolute -top-16 md:-top-20 left-1/2 transform -translate-x-1/2 z-10 animate-fade-in">
+        <div className="bg-white rounded-xl px-3 py-2 md:px-4 md:py-3 shadow-lg border-2 md:border-3 border-educational-yellow max-w-[280px] md:max-w-xs relative">
+          <p className="text-xs md:text-sm text-gray-800 font-medium text-center leading-tight">
             {messages[currentMessage]}
           </p>
           {/* Speech bubble arrow */}
-          <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2">
-            <div className="w-0 h-0 border-l-8 border-r-8 border-t-8 border-transparent border-t-educational-yellow"></div>
-            <div className="absolute -top-1 left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-6 border-r-6 border-t-6 border-transparent border-t-white"></div>
+          <div className="absolute -bottom-1.5 md:-bottom-2 left-1/2 transform -translate-x-1/2">
+            <div className="w-0 h-0 border-l-6 border-r-6 border-t-6 md:border-l-8 md:border-r-8 md:border-t-8 border-transparent border-t-educational-yellow"></div>
+            <div className="absolute -top-0.5 md:-top-1 left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-t-4 md:border-l-6 md:border-r-6 md:border-t-6 border-transparent border-t-white"></div>
           </div>
         </div>
       </div>
