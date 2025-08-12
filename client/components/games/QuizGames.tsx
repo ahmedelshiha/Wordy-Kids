@@ -133,6 +133,40 @@ export function QuizGames({
   };
 
   if (activeQuiz) {
+    // Handle Vowel Rescue games
+    if (activeQuiz.startsWith("vowel-")) {
+      let vowelQuestions;
+      let gameMode: "easy" | "challenge" | "timed" = "easy";
+
+      switch (activeQuiz) {
+        case "vowel-easy":
+          vowelQuestions = getEasyVowelQuestions(10);
+          gameMode = "easy";
+          break;
+        case "vowel-challenge":
+          vowelQuestions = getMediumVowelQuestions(8);
+          gameMode = "challenge";
+          break;
+        case "vowel-timed":
+          vowelQuestions = getTimedVowelQuestions();
+          gameMode = "timed";
+          break;
+        default:
+          vowelQuestions = getEasyVowelQuestions(10);
+          gameMode = "easy";
+      }
+
+      return (
+        <VowelRescue
+          questions={vowelQuestions}
+          onComplete={onQuizComplete}
+          onExit={handleQuizBack}
+          gameMode={gameMode}
+        />
+      );
+    }
+
+    // Handle regular quiz games
     const generateQuizQuestionsByType = (type: string) => {
       switch (type) {
         case "quick":
