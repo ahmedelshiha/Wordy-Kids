@@ -337,47 +337,48 @@ export function VowelRescue({
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-educational-yellow/20 to-educational-orange/20 p-4">
+    <div className="min-h-screen bg-gradient-to-br from-educational-yellow/20 to-educational-orange/20 p-2 sm:p-4">
       <div className="max-w-2xl mx-auto">
-        {/* Enhanced Header with Close Function */}
-        <div className="bg-white/90 backdrop-blur-sm rounded-xl p-4 mb-6 shadow-lg">
-          <div className="flex items-center justify-between mb-3">
+        {/* Enhanced Header with Close Function - Mobile Optimized */}
+        <div className="bg-white/90 backdrop-blur-sm rounded-xl p-3 sm:p-4 mb-4 sm:mb-6 shadow-lg">
+          <div className="flex items-center justify-between mb-2 sm:mb-3">
             <Button
               onClick={onExit}
               variant="outline"
               size="sm"
-              className="rounded-full hover:bg-red-50 hover:text-red-600 border-red-200"
+              className="rounded-full hover:bg-red-50 hover:text-red-600 border-red-200 px-2 sm:px-3"
             >
-              <ArrowLeft className="w-4 h-4 mr-1" />
-              Close
+              <ArrowLeft className="w-3 h-3 sm:w-4 sm:h-4 mr-1" />
+              <span className="hidden sm:inline">Close</span>
+              <span className="sm:hidden">✕</span>
             </Button>
 
-            <div className="text-center">
-              <h3 className="text-lg font-bold text-educational-blue">
+            <div className="text-center flex-1 mx-2">
+              <h3 className="text-sm sm:text-lg font-bold text-educational-blue">
                 Vowel Quiz Challenge
               </h3>
             </div>
 
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-1 sm:gap-2">
               {isTimedMode && (
-                <div className="flex items-center gap-1 bg-educational-blue/10 px-2 py-1 rounded-full">
+                <div className="flex items-center gap-1 bg-educational-blue/10 px-1.5 sm:px-2 py-1 rounded-full">
                   <Clock className="w-3 h-3 text-educational-blue" />
-                  <span className="font-bold text-educational-blue text-sm">{timeLeft}s</span>
+                  <span className="font-bold text-educational-blue text-xs sm:text-sm">{timeLeft}s</span>
                 </div>
               )}
-              <div className="flex items-center gap-1 bg-educational-orange/10 px-2 py-1 rounded-full">
+              <div className="flex items-center gap-1 bg-educational-orange/10 px-1.5 sm:px-2 py-1 rounded-full">
                 <Star className="w-3 h-3 text-educational-orange" />
-                <span className="font-bold text-educational-orange text-sm">
+                <span className="font-bold text-educational-orange text-xs sm:text-sm">
                   {score}/{questions.length * 10}
                 </span>
               </div>
             </div>
           </div>
 
-          {/* Progress Information */}
-          <div className="flex items-center justify-between text-sm text-gray-600 mb-2">
+          {/* Progress Information - Mobile Optimized */}
+          <div className="flex items-center justify-between text-xs sm:text-sm text-gray-600 mb-2">
             <span className="font-medium">
-              Question {currentIndex + 1} of {questions.length}
+              Q{currentIndex + 1}/{questions.length}
             </span>
             <span className="font-medium">
               {Math.round(((currentIndex + 1) / questions.length) * 100)}% Complete
