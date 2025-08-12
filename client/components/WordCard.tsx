@@ -100,7 +100,7 @@ export const WordCard: React.FC<WordCardProps> = ({
           type: "wordLearning",
           wordsLearned: 0, // Just listening, not learning
           category: word.category,
-          timeSpent: 0.1 // Just a few seconds
+          timeSpent: 0.1, // Just a few seconds
         });
 
         if (pronunciationAchievements.length > 0) {
@@ -507,13 +507,14 @@ export const WordCard: React.FC<WordCardProps> = ({
                       setAdventureStatus(updatedStatus);
 
                       // Track word mastery for journey achievements (hard/needs practice)
-                      const masteryAchievements = AchievementTracker.trackActivity({
-                        type: "wordLearning",
-                        wordsLearned: 0, // Not considered learned if marked as hard
-                        accuracy: 0,
-                        category: word.category,
-                        timeSpent: 1
-                      });
+                      const masteryAchievements =
+                        AchievementTracker.trackActivity({
+                          type: "wordLearning",
+                          wordsLearned: 0, // Not considered learned if marked as hard
+                          accuracy: 0,
+                          category: word.category,
+                          timeSpent: 1,
+                        });
 
                       if (masteryAchievements.length > 0) {
                         setTimeout(() => {
@@ -544,13 +545,14 @@ export const WordCard: React.FC<WordCardProps> = ({
                       setAdventureStatus(updatedStatus);
 
                       // Track word mastery for journey achievements (medium/kinda)
-                      const masteryAchievements = AchievementTracker.trackActivity({
-                        type: "wordLearning",
-                        wordsLearned: 0.5, // Partial learning
-                        accuracy: 50,
-                        category: word.category,
-                        timeSpent: 1
-                      });
+                      const masteryAchievements =
+                        AchievementTracker.trackActivity({
+                          type: "wordLearning",
+                          wordsLearned: 0.5, // Partial learning
+                          accuracy: 50,
+                          category: word.category,
+                          timeSpent: 1,
+                        });
 
                       if (masteryAchievements.length > 0) {
                         setTimeout(() => {
@@ -581,13 +583,14 @@ export const WordCard: React.FC<WordCardProps> = ({
                       setAdventureStatus(updatedStatus);
 
                       // Track word mastery for journey achievements (easy/learned!)
-                      const masteryAchievements = AchievementTracker.trackActivity({
-                        type: "wordLearning",
-                        wordsLearned: 1, // Fully learned
-                        accuracy: 100,
-                        category: word.category,
-                        timeSpent: 1
-                      });
+                      const masteryAchievements =
+                        AchievementTracker.trackActivity({
+                          type: "wordLearning",
+                          wordsLearned: 1, // Fully learned
+                          accuracy: 100,
+                          category: word.category,
+                          timeSpent: 1,
+                        });
 
                       if (masteryAchievements.length > 0) {
                         setTimeout(() => {
@@ -644,7 +647,7 @@ export const WordCard: React.FC<WordCardProps> = ({
           achievements={wordAchievements}
           onClose={() => setWordAchievements([])}
           onAchievementClaim={(achievement) => {
-            console.log('Word mastery achievement claimed:', achievement);
+            console.log("Word mastery achievement claimed:", achievement);
             // Could add additional reward logic here
           }}
         />

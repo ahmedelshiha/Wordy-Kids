@@ -9,7 +9,7 @@ import { VowelRescue } from "./VowelRescue";
 import {
   getSystematicEasyVowelQuestions,
   getSystematicMediumVowelQuestions,
-  getSystematicTimedVowelQuestions
+  getSystematicTimedVowelQuestions,
 } from "@/lib/vowelQuizGeneration";
 
 interface QuizGamesProps {
@@ -144,11 +144,17 @@ export function QuizGames({
 
       switch (activeQuiz) {
         case "vowel-easy":
-          vowelQuestions = getSystematicEasyVowelQuestions(10, selectedCategory);
+          vowelQuestions = getSystematicEasyVowelQuestions(
+            10,
+            selectedCategory,
+          );
           gameMode = "easy";
           break;
         case "vowel-challenge":
-          vowelQuestions = getSystematicMediumVowelQuestions(8, selectedCategory);
+          vowelQuestions = getSystematicMediumVowelQuestions(
+            8,
+            selectedCategory,
+          );
           gameMode = "challenge";
           break;
         case "vowel-timed":
@@ -156,7 +162,10 @@ export function QuizGames({
           gameMode = "timed";
           break;
         default:
-          vowelQuestions = getSystematicEasyVowelQuestions(10, selectedCategory);
+          vowelQuestions = getSystematicEasyVowelQuestions(
+            10,
+            selectedCategory,
+          );
           gameMode = "easy";
       }
 

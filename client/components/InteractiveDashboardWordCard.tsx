@@ -323,9 +323,14 @@ export function InteractiveDashboardWordCard({
       const newJourneyAchievements = AchievementTracker.trackActivity({
         type: "wordLearning",
         wordsLearned: status === "remembered" ? 1 : 0,
-        accuracy: status === "remembered" ? 100 : status === "needs_practice" ? 0 : undefined,
+        accuracy:
+          status === "remembered"
+            ? 100
+            : status === "needs_practice"
+              ? 0
+              : undefined,
         category: currentWord.category,
-        timeSpent: 1 // Assume 1 minute per word on average
+        timeSpent: 1, // Assume 1 minute per word on average
       });
 
       // Show journey achievements if any were unlocked
@@ -347,14 +352,19 @@ export function InteractiveDashboardWordCard({
       const sessionJourneyAchievements = AchievementTracker.trackActivity({
         type: "sessionComplete",
         accuracy: newStats.accuracy,
-        timeSpent: Math.round((Date.now() - newStats.sessionStartTime) / 1000 / 60), // Convert to minutes
-        wordsLearned: newStats.wordsRemembered
+        timeSpent: Math.round(
+          (Date.now() - newStats.sessionStartTime) / 1000 / 60,
+        ), // Convert to minutes
+        wordsLearned: newStats.wordsRemembered,
       });
 
       // Add session journey achievements to the display queue
       if (sessionJourneyAchievements.length > 0) {
         setTimeout(() => {
-          setJourneyAchievements(prev => [...prev, ...sessionJourneyAchievements]);
+          setJourneyAchievements((prev) => [
+            ...prev,
+            ...sessionJourneyAchievements,
+          ]);
         }, 3000); // Show after session completion celebration
       }
 
@@ -363,7 +373,7 @@ export function InteractiveDashboardWordCard({
       console.log("Session completed!", {
         stats: newStats,
         achievements: achievements.map((a) => a.title),
-        journeyAchievements: sessionJourneyAchievements.length
+        journeyAchievements: sessionJourneyAchievements.length,
       });
       return;
     }
@@ -1026,7 +1036,10 @@ export function InteractiveDashboardWordCard({
           achievements={journeyAchievements}
           onClose={() => setJourneyAchievements([])}
           onAchievementClaim={(achievement) => {
-            console.log('Journey achievement claimed in dashboard:', achievement);
+            console.log(
+              "Journey achievement claimed in dashboard:",
+              achievement,
+            );
             // Could add additional reward logic here
           }}
         />

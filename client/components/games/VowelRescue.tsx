@@ -27,15 +27,17 @@ interface VowelRescueProps {
   gameMode?: "easy" | "challenge" | "timed";
 }
 
-export function VowelRescue({ 
-  questions, 
-  onComplete, 
-  onExit, 
-  gameMode = "easy" 
+export function VowelRescue({
+  questions,
+  onComplete,
+  onExit,
+  gameMode = "easy",
 }: VowelRescueProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [score, setScore] = useState(0);
-  const [selectedVowels, setSelectedVowels] = useState<{ [key: number]: string }>({});
+  const [selectedVowels, setSelectedVowels] = useState<{
+    [key: number]: string;
+  }>({});
   const [showFeedback, setShowFeedback] = useState(false);
   const [showReward, setShowReward] = useState(false);
   const [gameStarted, setGameStarted] = useState(false);
@@ -60,7 +62,7 @@ export function VowelRescue({
 
   const playAudio = () => {
     // Use speech synthesis API with word pronunciation if available
-    if ('speechSynthesis' in window) {
+    if ("speechSynthesis" in window) {
       const wordToSpeak = currentQuestion.originalWord?.pronunciation
         ? currentQuestion.originalWord.word
         : currentQuestion.word;
@@ -99,8 +101,8 @@ export function VowelRescue({
     }
 
     // Check if all missing positions are filled with correct vowels
-    const allFilled = currentQuestion.missingIndex.every(idx =>
-      newSelectedVowels[idx] !== undefined
+    const allFilled = currentQuestion.missingIndex.every(
+      (idx) => newSelectedVowels[idx] !== undefined,
     );
 
     if (allFilled) {
@@ -109,16 +111,20 @@ export function VowelRescue({
   };
 
   const checkAnswer = (vowels: { [key: number]: string }) => {
-    const isCorrect = currentQuestion.missingIndex.every(idx => {
+    const isCorrect = currentQuestion.missingIndex.every((idx) => {
       const selectedVowel = vowels[idx];
       const correctVowel = currentQuestion.word[idx];
-      return selectedVowel && selectedVowel.toLowerCase() === correctVowel.toLowerCase();
+      return (
+        selectedVowel &&
+        selectedVowel.toLowerCase() === correctVowel.toLowerCase()
+      );
     });
 
     setShowFeedback(true);
 
     if (isCorrect) {
-      const points = attempts === 0 ? 10 : attempts <= 2 ? 8 : attempts <= 4 ? 5 : 2;
+      const points =
+        attempts === 0 ? 10 : attempts <= 2 ? 8 : attempts <= 4 ? 5 : 2;
       setScore(score + points);
       setShowReward(true);
       setTimeout(() => setShowReward(false), 1500);
@@ -132,12 +138,15 @@ export function VowelRescue({
   const handleTryAgain = () => {
     // Clear wrong selections but keep any correct ones
     const clearedVowels: { [key: number]: string } = {};
-    currentQuestion.missingIndex.forEach(idx => {
+    currentQuestion.missingIndex.forEach((idx) => {
       const selectedVowel = selectedVowels[idx];
       const correctVowel = currentQuestion.word[idx];
 
       // Keep correct vowels, clear wrong ones
-      if (selectedVowel && selectedVowel.toLowerCase() === correctVowel.toLowerCase()) {
+      if (
+        selectedVowel &&
+        selectedVowel.toLowerCase() === correctVowel.toLowerCase()
+      ) {
         clearedVowels[idx] = selectedVowel;
       }
     });
@@ -149,7 +158,7 @@ export function VowelRescue({
   const handleShowHint = () => {
     // Show the correct vowels as a hint
     const hintVowels: { [key: number]: string } = {};
-    currentQuestion.missingIndex.forEach(idx => {
+    currentQuestion.missingIndex.forEach((idx) => {
       hintVowels[idx] = currentQuestion.word[idx].toUpperCase();
     });
     setSelectedVowels(hintVowels);
@@ -164,7 +173,7 @@ export function VowelRescue({
     setShowFeedback(false);
     setSelectedVowels({});
     setAttempts(0);
-    
+
     if (currentIndex < questions.length - 1) {
       setCurrentIndex(currentIndex + 1);
     } else {
@@ -182,7 +191,7 @@ export function VowelRescue({
     const unlockedAchievements = AchievementTracker.trackActivity({
       type: "vowelRescue",
       accuracy,
-      timeSpent: isTimedMode ? (60 - timeLeft) : undefined
+      timeSpent: isTimedMode ? 60 - timeLeft : undefined,
     });
 
     // Show achievement popup if any achievements were unlocked
@@ -213,14 +222,17 @@ export function VowelRescue({
           transition={{ delay: index * 0.1 }}
         >
           {isMissing ? (
-            <span className={`
-              ${showFeedback
-                ? selectedVowel?.toLowerCase() === letter.toLowerCase()
-                  ? "text-green-500 animate-bounce"
-                  : "text-red-500 animate-pulse"
-                : "text-educational-blue"
+            <span
+              className={`
+              ${
+                showFeedback
+                  ? selectedVowel?.toLowerCase() === letter.toLowerCase()
+                    ? "text-green-500 animate-bounce"
+                    : "text-red-500 animate-pulse"
+                  : "text-educational-blue"
               }
-            `}>
+            `}
+            >
               {selectedVowel || "_"}
             </span>
           ) : (
@@ -232,7 +244,7 @@ export function VowelRescue({
   };
 
   const getMissingVowelPositions = () => {
-    return currentQuestion.missingIndex.filter(idx => !selectedVowels[idx]);
+    return currentQuestion.missingIndex.filter((idx) => !selectedVowels[idx]);
   };
 
   const getNextMissingPosition = () => {
@@ -265,7 +277,8 @@ export function VowelRescue({
               Vowel Rescue!
             </h1>
             <p className="text-sm sm:text-base text-gray-600 mb-6 px-2">
-              Help rescue the missing vowels! Look at the picture and complete the word by choosing the correct vowel letters.
+              Help rescue the missing vowels! Look at the picture and complete
+              the word by choosing the correct vowel letters.
             </p>
             <div className="mb-6">
               <div className="flex justify-center gap-2 mb-4">
@@ -284,8 +297,7 @@ export function VowelRescue({
               <p className="text-xs sm:text-sm text-gray-500 px-2">
                 {isTimedMode
                   ? `You have 60 seconds to complete as many words as possible!`
-                  : `${questions.length} words to complete`
-                }
+                  : `${questions.length} words to complete`}
               </p>
             </div>
             <div className="space-y-3">
@@ -382,7 +394,9 @@ export function VowelRescue({
               {isTimedMode && (
                 <div className="flex items-center gap-1 bg-educational-blue/10 px-1.5 sm:px-2 py-1 rounded-full">
                   <Clock className="w-3 h-3 text-educational-blue" />
-                  <span className="font-bold text-educational-blue text-xs sm:text-sm">{timeLeft}s</span>
+                  <span className="font-bold text-educational-blue text-xs sm:text-sm">
+                    {timeLeft}s
+                  </span>
                 </div>
               )}
               <div className="flex items-center gap-1 bg-educational-orange/10 px-1.5 sm:px-2 py-1 rounded-full">
@@ -400,7 +414,8 @@ export function VowelRescue({
               Q{currentIndex + 1}/{questions.length}
             </span>
             <span className="font-medium">
-              {Math.round(((currentIndex + 1) / questions.length) * 100)}% Complete
+              {Math.round(((currentIndex + 1) / questions.length) * 100)}%
+              Complete
             </span>
           </div>
 
@@ -423,18 +438,23 @@ export function VowelRescue({
                 className="relative inline-block"
               >
                 <div className="relative">
-                  <div className="w-24 h-24 sm:w-32 sm:h-32 md:w-48 md:h-48 bg-gradient-to-br from-educational-blue/20 to-educational-purple/20 rounded-2xl flex items-center justify-center text-4xl sm:text-6xl md:text-8xl cursor-pointer hover:scale-105 transition-transform active:scale-95 touch-manipulation select-none"
-                       onClick={playAudio}
-                       style={{
-                         WebkitTapHighlightColor: 'transparent',
-                         WebkitTouchCallout: 'none'
-                       }}>
-                    {currentQuestion.originalWord?.emoji || currentQuestion.image ? (
+                  <div
+                    className="w-24 h-24 sm:w-32 sm:h-32 md:w-48 md:h-48 bg-gradient-to-br from-educational-blue/20 to-educational-purple/20 rounded-2xl flex items-center justify-center text-4xl sm:text-6xl md:text-8xl cursor-pointer hover:scale-105 transition-transform active:scale-95 touch-manipulation select-none"
+                    onClick={playAudio}
+                    style={{
+                      WebkitTapHighlightColor: "transparent",
+                      WebkitTouchCallout: "none",
+                    }}
+                  >
+                    {currentQuestion.originalWord?.emoji ||
+                    currentQuestion.image ? (
                       // Display emoji from word database or fallback
                       <span className="text-4xl sm:text-6xl md:text-8xl animate-gentle-bounce">
-                        {currentQuestion.originalWord?.emoji || currentQuestion.image}
+                        {currentQuestion.originalWord?.emoji ||
+                          currentQuestion.image}
                       </span>
-                    ) : currentQuestion.image?.startsWith('http') || currentQuestion.image?.startsWith('/') ? (
+                    ) : currentQuestion.image?.startsWith("http") ||
+                      currentQuestion.image?.startsWith("/") ? (
                       <img
                         src={currentQuestion.image}
                         alt={currentQuestion.word}
@@ -474,27 +494,35 @@ export function VowelRescue({
               {vowelOptions.map((vowel) => {
                 const nextPosition = getNextMissingPosition();
                 const allCompleted = getMissingVowelPositions().length === 0;
-                const isCorrectlyCompleted = allCompleted && currentQuestion.missingIndex.every(idx =>
-                  selectedVowels[idx]?.toLowerCase() === currentQuestion.word[idx].toLowerCase()
-                );
-                const isDisabled = (showFeedback && isCorrectlyCompleted) || allCompleted;
+                const isCorrectlyCompleted =
+                  allCompleted &&
+                  currentQuestion.missingIndex.every(
+                    (idx) =>
+                      selectedVowels[idx]?.toLowerCase() ===
+                      currentQuestion.word[idx].toLowerCase(),
+                  );
+                const isDisabled =
+                  (showFeedback && isCorrectlyCompleted) || allCompleted;
 
                 return (
                   <motion.button
                     key={vowel}
                     className={`w-11 h-11 sm:w-12 sm:h-12 md:w-16 md:h-16 rounded-full font-bold text-lg sm:text-lg md:text-xl text-white transition-all min-h-[44px] min-w-[44px] touch-manipulation select-none
-                      ${isDisabled
-                        ? "bg-gray-400 cursor-not-allowed"
-                        : "bg-educational-blue hover:bg-educational-blue/90 hover:scale-110 active:scale-95 shadow-lg active:shadow-md"
+                      ${
+                        isDisabled
+                          ? "bg-gray-400 cursor-not-allowed"
+                          : "bg-educational-blue hover:bg-educational-blue/90 hover:scale-110 active:scale-95 shadow-lg active:shadow-md"
                       }
                     `}
                     whileTap={{ scale: 0.9 }}
-                    onClick={() => !isDisabled && handleVowelSelect(vowel, nextPosition)}
+                    onClick={() =>
+                      !isDisabled && handleVowelSelect(vowel, nextPosition)
+                    }
                     disabled={isDisabled}
                     style={{
-                      WebkitTapHighlightColor: 'transparent',
-                      WebkitTouchCallout: 'none',
-                      WebkitUserSelect: 'none'
+                      WebkitTapHighlightColor: "transparent",
+                      WebkitTouchCallout: "none",
+                      WebkitUserSelect: "none",
                     }}
                   >
                     {vowel}
@@ -510,15 +538,25 @@ export function VowelRescue({
                 animate={{ scale: 1, opacity: 1 }}
                 className="text-center mt-4 sm:mt-6 px-2"
               >
-                {currentQuestion.missingIndex.every(idx =>
-                  selectedVowels[idx]?.toLowerCase() === currentQuestion.word[idx].toLowerCase()
+                {currentQuestion.missingIndex.every(
+                  (idx) =>
+                    selectedVowels[idx]?.toLowerCase() ===
+                    currentQuestion.word[idx].toLowerCase(),
                 ) ? (
                   <div className="space-y-3">
                     <div className="text-green-500 text-lg sm:text-xl font-bold">
                       🎉 Excellent! 🎉
                     </div>
                     <div className="text-xs sm:text-sm text-gray-600">
-                      +{attempts === 0 ? 10 : attempts <= 2 ? 8 : attempts <= 4 ? 5 : 2} points!
+                      +
+                      {attempts === 0
+                        ? 10
+                        : attempts <= 2
+                          ? 8
+                          : attempts <= 4
+                            ? 5
+                            : 2}{" "}
+                      points!
                     </div>
                     {currentQuestion.originalWord?.definition && (
                       <div className="bg-educational-blue/10 p-3 rounded-lg mt-3 text-left">
@@ -539,33 +577,39 @@ export function VowelRescue({
                 ) : (
                   <div className="space-y-3 sm:space-y-4">
                     <div className="text-orange-500 text-base sm:text-lg font-bold">
-                      {attempts === 1 ? "Oops! Try a different vowel! 🤔" :
-                       attempts === 2 ? "Almost there! Think carefully! 🤗" :
-                       attempts === 3 ? "One more try! You can do it! 💪" :
-                       "Let's try again together! 😊"}
+                      {attempts === 1
+                        ? "Oops! Try a different vowel! 🤔"
+                        : attempts === 2
+                          ? "Almost there! Think carefully! 🤗"
+                          : attempts === 3
+                            ? "One more try! You can do it! 💪"
+                            : "Let's try again together! 😊"}
                     </div>
 
-                    {attempts < 5 && !currentQuestion.missingIndex.every(idx => selectedVowels[idx]) && (
-                      <div className="flex flex-col sm:flex-row gap-2 justify-center items-center">
-                        <Button
-                          onClick={handleTryAgain}
-                          className="bg-educational-blue hover:bg-educational-blue/90 text-white px-4 sm:px-6 py-2 rounded-full text-sm w-full sm:w-auto min-h-[44px]"
-                          size="sm"
-                        >
-                          🔄 Try Again!
-                        </Button>
-
-                        {attempts >= 3 && (
+                    {attempts < 5 &&
+                      !currentQuestion.missingIndex.every(
+                        (idx) => selectedVowels[idx],
+                      ) && (
+                        <div className="flex flex-col sm:flex-row gap-2 justify-center items-center">
                           <Button
-                            onClick={handleShowHint}
-                            className="bg-educational-green hover:bg-educational-green/90 text-white px-4 sm:px-6 py-2 rounded-full text-sm w-full sm:w-auto min-h-[44px]"
+                            onClick={handleTryAgain}
+                            className="bg-educational-blue hover:bg-educational-blue/90 text-white px-4 sm:px-6 py-2 rounded-full text-sm w-full sm:w-auto min-h-[44px]"
                             size="sm"
                           >
-                            💡 Show Me!
+                            🔄 Try Again!
                           </Button>
-                        )}
-                      </div>
-                    )}
+
+                          {attempts >= 3 && (
+                            <Button
+                              onClick={handleShowHint}
+                              className="bg-educational-green hover:bg-educational-green/90 text-white px-4 sm:px-6 py-2 rounded-full text-sm w-full sm:w-auto min-h-[44px]"
+                              size="sm"
+                            >
+                              💡 Show Me!
+                            </Button>
+                          )}
+                        </div>
+                      )}
 
                     {attempts >= 5 && (
                       <div className="space-y-2">
@@ -615,7 +659,7 @@ export function VowelRescue({
             achievements={newAchievements}
             onClose={() => setNewAchievements([])}
             onAchievementClaim={(achievement) => {
-              console.log('Achievement claimed:', achievement);
+              console.log("Achievement claimed:", achievement);
               // Could add additional reward logic here
             }}
           />

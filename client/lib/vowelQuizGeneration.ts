@@ -1,5 +1,8 @@
 import { Word, wordsDatabase, getWordsByCategory } from "@/data/wordsDatabase";
-import { SmartWordSelector, WordSelectionOptions } from "@/lib/smartWordSelection";
+import {
+  SmartWordSelector,
+  WordSelectionOptions,
+} from "@/lib/smartWordSelection";
 import { EnhancedWordSelector } from "@/lib/enhancedWordSelection";
 
 export interface VowelQuestion {
@@ -28,7 +31,18 @@ export interface VowelQuizOptions {
  * Integrates with the existing word database and systematic word selection
  */
 export class VowelQuizGenerator {
-  private static readonly vowels = ['a', 'e', 'i', 'o', 'u', 'A', 'E', 'I', 'O', 'U'];
+  private static readonly vowels = [
+    "a",
+    "e",
+    "i",
+    "o",
+    "u",
+    "A",
+    "E",
+    "I",
+    "O",
+    "U",
+  ];
 
   /**
    * Generate vowel quiz questions from the word database
@@ -41,7 +55,7 @@ export class VowelQuizGenerator {
       gameMode = "easy",
       rememberedWords = new Set(),
       forgottenWords = new Set(),
-      userProfile
+      userProfile,
     } = options;
 
     // Use smart word selection to get appropriate words
@@ -53,14 +67,14 @@ export class VowelQuizGenerator {
       forgottenWords,
       userProfile,
       prioritizeWeakCategories: true,
-      includeReviewWords: true
+      includeReviewWords: true,
     });
 
     // Convert selected words to vowel questions
     const vowelQuestions = this.convertWordsToVowelQuestions(
       wordSelection.words,
       gameMode,
-      count
+      count,
     );
 
     return vowelQuestions.slice(0, count);
@@ -72,7 +86,7 @@ export class VowelQuizGenerator {
   private static convertWordsToVowelQuestions(
     words: Word[],
     gameMode: "easy" | "challenge" | "timed",
-    maxCount: number
+    maxCount: number,
   ): VowelQuestion[] {
     const vowelQuestions: VowelQuestion[] = [];
 
@@ -87,7 +101,9 @@ export class VowelQuizGenerator {
 
     // If we don't have enough questions, supplement with more words
     if (vowelQuestions.length < maxCount) {
-      const additionalWords = this.getAdditionalWords(maxCount - vowelQuestions.length);
+      const additionalWords = this.getAdditionalWords(
+        maxCount - vowelQuestions.length,
+      );
       for (const word of additionalWords) {
         const vowelQuestion = this.createVowelQuestion(word, gameMode);
         if (vowelQuestion && vowelQuestions.length < maxCount) {
@@ -102,7 +118,10 @@ export class VowelQuizGenerator {
   /**
    * Create a vowel question from a Word object
    */
-  private static createVowelQuestion(word: Word, gameMode: "easy" | "challenge" | "timed"): VowelQuestion | null {
+  private static createVowelQuestion(
+    word: Word,
+    gameMode: "easy" | "challenge" | "timed",
+  ): VowelQuestion | null {
     const wordLower = word.word.toLowerCase();
     const vowelPositions = this.findVowelPositions(wordLower);
 
@@ -123,9 +142,10 @@ export class VowelQuizGenerator {
 
       case "timed":
         // Timed mode: Mix of easy and medium difficulty
-        missingIndex = wordLower.length <= 4 
-          ? [this.selectSingleVowel(vowelPositions, wordLower)]
-          : this.selectMultipleVowels(vowelPositions, wordLower, 2);
+        missingIndex =
+          wordLower.length <= 4
+            ? [this.selectSingleVowel(vowelPositions, wordLower)]
+            : this.selectMultipleVowels(vowelPositions, wordLower, 2);
         break;
 
       default:
@@ -139,7 +159,7 @@ export class VowelQuizGenerator {
       difficulty: word.difficulty,
       originalWord: word,
       category: word.category,
-      emoji: word.emoji
+      emoji: word.emoji,
     };
   }
 
@@ -159,11 +179,14 @@ export class VowelQuizGenerator {
   /**
    * Select a single vowel position (for easy mode)
    */
-  private static selectSingleVowel(vowelPositions: number[], word: string): number {
+  private static selectSingleVowel(
+    vowelPositions: number[],
+    word: string,
+  ): number {
     if (vowelPositions.length === 1) return vowelPositions[0];
 
     // Prefer vowels that are not at the beginning (easier to guess from context)
-    const nonFirstVowels = vowelPositions.filter(pos => pos > 0);
+    const nonFirstVowels = vowelPositions.filter((pos) => pos > 0);
     if (nonFirstVowels.length > 0) {
       return nonFirstVowels[Math.floor(Math.random() * nonFirstVowels.length)];
     }
@@ -174,10 +197,14 @@ export class VowelQuizGenerator {
   /**
    * Select multiple vowel positions (for challenge mode)
    */
-  private static selectMultipleVowels(vowelPositions: number[], word: string, maxVowels: number): number[] {
+  private static selectMultipleVowels(
+    vowelPositions: number[],
+    word: string,
+    maxVowels: number,
+  ): number[] {
     const numToSelect = Math.min(
       maxVowels,
-      Math.max(1, Math.floor(vowelPositions.length * 0.6)) // Select up to 60% of vowels
+      Math.max(1, Math.floor(vowelPositions.length * 0.6)), // Select up to 60% of vowels
     );
 
     if (numToSelect >= vowelPositions.length) {
@@ -214,7 +241,7 @@ export class VowelQuizGenerator {
       school: "🏫",
       transport: "🚗",
       clothes: "👕",
-      time: "⏰"
+      time: "⏰",
     };
 
     return categoryEmojis[category] || "📚";
@@ -225,9 +252,10 @@ export class VowelQuizGenerator {
    */
   private static getAdditionalWords(count: number): Word[] {
     // Get words suitable for vowel exercises (3-8 letters, contains vowels)
-    const suitableWords = wordsDatabase.filter(word => {
+    const suitableWords = wordsDatabase.filter((word) => {
       const wordLength = word.word.length;
-      const hasVowels = this.findVowelPositions(word.word.toLowerCase()).length > 0;
+      const hasVowels =
+        this.findVowelPositions(word.word.toLowerCase()).length > 0;
       return wordLength >= 3 && wordLength <= 8 && hasVowels;
     });
 
@@ -249,23 +277,28 @@ export class VowelQuizGenerator {
   /**
    * Get systematic vowel questions using enhanced word selection
    */
-  static getSystematicVowelQuestions(options: VowelQuizOptions): VowelQuestion[] {
+  static getSystematicVowelQuestions(
+    options: VowelQuizOptions,
+  ): VowelQuestion[] {
     try {
       // Use EnhancedWordSelector for more systematic selection
       const wordSession = EnhancedWordSelector.generateWordSession({
         category: options.category || "all",
         difficulty: options.difficulty,
         sessionSize: options.count,
-        userProfile: options.userProfile
+        userProfile: options.userProfile,
       });
 
       return this.convertWordsToVowelQuestions(
         wordSession.words,
         options.gameMode || "easy",
-        options.count
+        options.count,
       );
     } catch (error) {
-      console.warn("Enhanced word selection failed, falling back to smart selection:", error);
+      console.warn(
+        "Enhanced word selection failed, falling back to smart selection:",
+        error,
+      );
       return this.generateVowelQuiz(options);
     }
   }
@@ -277,13 +310,13 @@ export class VowelQuizGenerator {
     questions: VowelQuestion[],
     correctAnswers: number,
     totalAttempts: number,
-    userProfile?: any
+    userProfile?: any,
   ): void {
     try {
       // Track word exposure and performance
       const wordIds = questions
-        .map(q => q.originalWord?.id)
-        .filter(id => id !== undefined);
+        .map((q) => q.originalWord?.id)
+        .filter((id) => id !== undefined);
 
       // This would integrate with the existing progress tracking system
       console.log("Vowel Quiz Completion:", {
@@ -291,7 +324,7 @@ export class VowelQuizGenerator {
         correctAnswers,
         totalAttempts,
         accuracy: correctAnswers / questions.length,
-        userId: userProfile?.id
+        userId: userProfile?.id,
       });
 
       // In a real implementation, this would update the user's learning progress
@@ -304,54 +337,54 @@ export class VowelQuizGenerator {
 
 // Export convenient functions for different game modes
 export const getSystematicEasyVowelQuestions = (
-  count: number = 10, 
+  count: number = 10,
   category?: string,
-  userProfile?: any
+  userProfile?: any,
 ): VowelQuestion[] => {
   return VowelQuizGenerator.getSystematicVowelQuestions({
     count,
     category,
     difficulty: "easy",
     gameMode: "easy",
-    userProfile
+    userProfile,
   });
 };
 
 export const getSystematicMediumVowelQuestions = (
   count: number = 8,
   category?: string,
-  userProfile?: any
+  userProfile?: any,
 ): VowelQuestion[] => {
   return VowelQuizGenerator.getSystematicVowelQuestions({
     count,
     category,
     difficulty: "medium",
     gameMode: "challenge",
-    userProfile
+    userProfile,
   });
 };
 
 export const getSystematicTimedVowelQuestions = (
   category?: string,
-  userProfile?: any
+  userProfile?: any,
 ): VowelQuestion[] => {
   return VowelQuizGenerator.getSystematicVowelQuestions({
     count: 30, // More questions for timed mode
     category,
     gameMode: "timed",
-    userProfile
+    userProfile,
   });
 };
 
 export const getSystematicMixedVowelQuestions = (
   count: number = 12,
   category?: string,
-  userProfile?: any
+  userProfile?: any,
 ): VowelQuestion[] => {
   return VowelQuizGenerator.getSystematicVowelQuestions({
     count,
     category,
     gameMode: "challenge",
-    userProfile
+    userProfile,
   });
 };

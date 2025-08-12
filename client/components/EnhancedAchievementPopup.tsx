@@ -1,27 +1,33 @@
-import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Card, CardContent } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import { 
-  Trophy, 
-  Star, 
-  Sparkles, 
-  Gift, 
+import React, { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import {
+  Trophy,
+  Star,
+  Sparkles,
+  Gift,
   X,
   Crown,
   Gem,
   Award,
-  Zap
-} from 'lucide-react';
-import { audioService } from '@/lib/audioService';
+  Zap,
+} from "lucide-react";
+import { audioService } from "@/lib/audioService";
 
 interface Achievement {
   id: string;
   name: string;
   description: string;
   icon: string;
-  category: "learning" | "streak" | "quiz" | "exploration" | "social" | "journey";
+  category:
+    | "learning"
+    | "streak"
+    | "quiz"
+    | "exploration"
+    | "social"
+    | "journey";
   difficulty: "bronze" | "silver" | "gold" | "diamond";
   requirements: number;
   currentProgress: number;
@@ -49,7 +55,7 @@ interface EnhancedAchievementPopupProps {
 export function EnhancedAchievementPopup({
   achievements,
   onClose,
-  onAchievementClaim
+  onAchievementClaim,
 }: EnhancedAchievementPopupProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [showReward, setShowReward] = useState(false);
@@ -61,7 +67,7 @@ export function EnhancedAchievementPopup({
     if (achievements.length > 0) {
       // Play achievement unlock sound
       audioService.playSuccessSound();
-      
+
       // Show reward animation after a delay
       setTimeout(() => setShowReward(true), 1000);
     }
@@ -71,7 +77,7 @@ export function EnhancedAchievementPopup({
     switch (difficulty) {
       case "bronze":
         return "from-orange-400 to-amber-600";
-      case "silver": 
+      case "silver":
         return "from-gray-300 to-gray-500";
       case "gold":
         return "from-yellow-400 to-yellow-600";
@@ -116,7 +122,7 @@ export function EnhancedAchievementPopup({
 
   const handleClaimReward = () => {
     if (currentAchievement && !claimed.has(currentAchievement.id)) {
-      setClaimed(prev => new Set(prev).add(currentAchievement.id));
+      setClaimed((prev) => new Set(prev).add(currentAchievement.id));
       onAchievementClaim?.(currentAchievement);
       audioService.playCheerSound();
 
@@ -162,22 +168,22 @@ export function EnhancedAchievementPopup({
             <motion.div
               key={i}
               className="absolute text-yellow-400 text-2xl"
-              initial={{ 
+              initial={{
                 x: Math.random() * window.innerWidth,
                 y: window.innerHeight + 100,
                 rotate: 0,
-                opacity: 0
+                opacity: 0,
               }}
-              animate={{ 
+              animate={{
                 y: -100,
                 rotate: 360,
-                opacity: [0, 1, 1, 0]
+                opacity: [0, 1, 1, 0],
               }}
               transition={{
                 duration: 3 + Math.random() * 2,
                 delay: Math.random() * 2,
                 repeat: Infinity,
-                repeatDelay: 5 + Math.random() * 5
+                repeatDelay: 5 + Math.random() * 5,
               }}
             >
               ⭐
@@ -193,7 +199,9 @@ export function EnhancedAchievementPopup({
           transition={{ type: "spring", duration: 0.6 }}
           className="relative"
         >
-          <Card className={`w-full max-w-md mx-4 bg-gradient-to-br ${getDifficultyColor(currentAchievement.difficulty)} text-white shadow-2xl border-0 overflow-hidden`}>
+          <Card
+            className={`w-full max-w-md mx-4 bg-gradient-to-br ${getDifficultyColor(currentAchievement.difficulty)} text-white shadow-2xl border-0 overflow-hidden`}
+          >
             {/* Close Button */}
             <Button
               onClick={onClose}
@@ -213,7 +221,7 @@ export function EnhancedAchievementPopup({
                 className="text-7xl mb-4 relative"
               >
                 {currentAchievement.icon}
-                
+
                 {/* Sparkle Effects */}
                 <AnimatePresence>
                   {showReward && (
@@ -222,21 +230,21 @@ export function EnhancedAchievementPopup({
                         <motion.div
                           key={i}
                           className="absolute text-yellow-300 text-lg"
-                          initial={{ 
+                          initial={{
                             scale: 0,
                             x: 0,
                             y: 0,
-                            opacity: 1
+                            opacity: 1,
                           }}
-                          animate={{ 
+                          animate={{
                             scale: [0, 1, 0],
-                            x: (Math.cos((i * Math.PI * 2) / 8) * 60),
-                            y: (Math.sin((i * Math.PI * 2) / 8) * 60),
-                            opacity: [1, 1, 0]
+                            x: Math.cos((i * Math.PI * 2) / 8) * 60,
+                            y: Math.sin((i * Math.PI * 2) / 8) * 60,
+                            opacity: [1, 1, 0],
                           }}
                           transition={{
                             duration: 1.5,
-                            delay: i * 0.1
+                            delay: i * 0.1,
                           }}
                         >
                           ✨
@@ -268,7 +276,9 @@ export function EnhancedAchievementPopup({
 
                 {/* Category and Progress */}
                 <div className="flex items-center justify-center gap-2 mb-4">
-                  <Badge className={`${getCategoryColor(currentAchievement.category)} text-white border-0`}>
+                  <Badge
+                    className={`${getCategoryColor(currentAchievement.category)} text-white border-0`}
+                  >
                     {currentAchievement.category.toUpperCase()}
                   </Badge>
                   <Badge className="bg-white/20 text-white border-0">
@@ -277,19 +287,24 @@ export function EnhancedAchievementPopup({
                 </div>
 
                 {/* Journey Criteria Display */}
-                {currentAchievement.criteria && currentAchievement.criteria.length > 0 && (
-                  <div className="bg-white/20 rounded-lg p-3 mb-4 text-left">
-                    <div className="text-sm font-semibold mb-2 text-center">
-                      🎯 Achievement Criteria Met:
-                    </div>
-                    {currentAchievement.criteria.map((criterion, index) => (
-                      <div key={index} className="text-xs text-white/90 mb-1">
-                        ✅ {criterion.type.replace(/([A-Z])/g, ' $1').replace(/^./, str => str.toUpperCase())}: {criterion.target}
-                        {criterion.timeFrame && ` (${criterion.timeFrame})`}
+                {currentAchievement.criteria &&
+                  currentAchievement.criteria.length > 0 && (
+                    <div className="bg-white/20 rounded-lg p-3 mb-4 text-left">
+                      <div className="text-sm font-semibold mb-2 text-center">
+                        🎯 Achievement Criteria Met:
                       </div>
-                    ))}
-                  </div>
-                )}
+                      {currentAchievement.criteria.map((criterion, index) => (
+                        <div key={index} className="text-xs text-white/90 mb-1">
+                          ✅{" "}
+                          {criterion.type
+                            .replace(/([A-Z])/g, " $1")
+                            .replace(/^./, (str) => str.toUpperCase())}
+                          : {criterion.target}
+                          {criterion.timeFrame && ` (${criterion.timeFrame})`}
+                        </div>
+                      ))}
+                    </div>
+                  )}
 
                 {/* Reward Display */}
                 {currentAchievement.reward && (
@@ -303,7 +318,9 @@ export function EnhancedAchievementPopup({
                       >
                         <div className="flex items-center justify-center gap-2 mb-2">
                           <Gift className="w-5 h-5" />
-                          <span className="font-semibold">Reward Unlocked!</span>
+                          <span className="font-semibold">
+                            Reward Unlocked!
+                          </span>
                         </div>
                         <div className="text-lg font-bold">
                           🎁 {currentAchievement.reward.item}
@@ -334,22 +351,24 @@ export function EnhancedAchievementPopup({
 
                 {/* Action Buttons */}
                 <div className="space-y-3">
-                  {showReward && currentAchievement.reward && !claimed.has(currentAchievement.id) && (
-                    <motion.div
-                      initial={{ scale: 0.8, opacity: 0 }}
-                      animate={{ scale: 1, opacity: 1 }}
-                      transition={{ delay: 1.5 }}
-                    >
-                      <Button
-                        onClick={handleClaimReward}
-                        className="w-full bg-white text-gray-800 hover:bg-white/90 font-bold py-3 rounded-xl shadow-lg"
-                        size="lg"
+                  {showReward &&
+                    currentAchievement.reward &&
+                    !claimed.has(currentAchievement.id) && (
+                      <motion.div
+                        initial={{ scale: 0.8, opacity: 0 }}
+                        animate={{ scale: 1, opacity: 1 }}
+                        transition={{ delay: 1.5 }}
                       >
-                        <Zap className="w-5 h-5 mr-2" />
-                        Claim Reward!
-                      </Button>
-                    </motion.div>
-                  )}
+                        <Button
+                          onClick={handleClaimReward}
+                          className="w-full bg-white text-gray-800 hover:bg-white/90 font-bold py-3 rounded-xl shadow-lg"
+                          size="lg"
+                        >
+                          <Zap className="w-5 h-5 mr-2" />
+                          Claim Reward!
+                        </Button>
+                      </motion.div>
+                    )}
 
                   <div className="flex gap-2">
                     {currentIndex > 0 && (
@@ -361,13 +380,15 @@ export function EnhancedAchievementPopup({
                         Previous
                       </Button>
                     )}
-                    
+
                     <Button
                       onClick={achievements.length > 1 ? handleNext : onClose}
                       variant="outline"
                       className="flex-1 bg-white/20 text-white border-white/30 hover:bg-white/30"
                     >
-                      {currentIndex < achievements.length - 1 ? "Next" : "Continue"}
+                      {currentIndex < achievements.length - 1
+                        ? "Next"
+                        : "Continue"}
                     </Button>
                   </div>
                 </div>

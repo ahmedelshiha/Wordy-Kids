@@ -3,7 +3,13 @@ interface Achievement {
   name: string;
   description: string;
   icon: string;
-  category: "learning" | "streak" | "quiz" | "exploration" | "social" | "journey";
+  category:
+    | "learning"
+    | "streak"
+    | "quiz"
+    | "exploration"
+    | "social"
+    | "journey";
   difficulty: "bronze" | "silver" | "gold" | "diamond";
   requirements: number;
   currentProgress: number;
@@ -16,12 +22,20 @@ interface Achievement {
   };
   // Enhanced criteria for journey achievements
   criteria?: {
-    type: "wordsLearned" | "streakDays" | "quizScore" | "categoryMastery" | "accuracy" | "timeSpent" | "sessionComplete" | "vowelRescue";
+    type:
+      | "wordsLearned"
+      | "streakDays"
+      | "quizScore"
+      | "categoryMastery"
+      | "accuracy"
+      | "timeSpent"
+      | "sessionComplete"
+      | "vowelRescue";
     target: number;
     category?: string;
     difficulty?: string;
     timeFrame?: "daily" | "weekly" | "monthly" | "allTime";
-    operator?: ">="|">" | "=" | "<=" | "<";
+    operator?: ">=" | ">" | "=" | "<=" | "<";
     additionalRequirements?: Array<{
       type: string;
       target: number;
@@ -63,10 +77,10 @@ export class AchievementTracker {
         {
           type: "wordsLearned",
           target: 1,
-          operator: ">="
-        }
+          operator: ">=",
+        },
       ],
-      reward: { type: "avatar_accessory", item: "Beginner Badge" }
+      reward: { type: "avatar_accessory", item: "Beginner Badge" },
     },
 
     // Journey-specific Achievements
@@ -84,10 +98,10 @@ export class AchievementTracker {
         {
           type: "vowelRescue",
           target: 10,
-          operator: ">="
-        }
+          operator: ">=",
+        },
       ],
-      reward: { type: "title", item: "Vowel Master" }
+      reward: { type: "title", item: "Vowel Master" },
     },
 
     {
@@ -105,15 +119,15 @@ export class AchievementTracker {
           type: "accuracy",
           target: 90,
           operator: ">=",
-          timeFrame: "daily"
+          timeFrame: "daily",
         },
         {
           type: "streakDays",
           target: 7,
-          operator: ">="
-        }
+          operator: ">=",
+        },
       ],
-      reward: { type: "theme", item: "Scholar's Golden Theme" }
+      reward: { type: "theme", item: "Scholar's Golden Theme" },
     },
 
     {
@@ -135,12 +149,12 @@ export class AchievementTracker {
             {
               type: "accuracy",
               target: 85,
-              operator: ">="
-            }
-          ]
-        }
+              operator: ">=",
+            },
+          ],
+        },
       ],
-      reward: { type: "title", item: "Word Conqueror" }
+      reward: { type: "title", item: "Word Conqueror" },
     },
 
     {
@@ -158,10 +172,10 @@ export class AchievementTracker {
           type: "quizScore",
           target: 100,
           operator: "=",
-          timeFrame: "weekly"
-        }
+          timeFrame: "weekly",
+        },
       ],
-      reward: { type: "points", item: "Bonus Points", value: 500 }
+      reward: { type: "points", item: "Bonus Points", value: 500 },
     },
 
     {
@@ -179,10 +193,10 @@ export class AchievementTracker {
           type: "timeSpent",
           target: 300,
           operator: ">=",
-          timeFrame: "monthly"
-        }
+          timeFrame: "monthly",
+        },
       ],
-      reward: { type: "avatar_accessory", item: "Marathon Medal" }
+      reward: { type: "avatar_accessory", item: "Marathon Medal" },
     },
 
     {
@@ -204,13 +218,13 @@ export class AchievementTracker {
             {
               type: "accuracy",
               target: 100,
-              operator: "="
-            }
-          ]
-        }
+              operator: "=",
+            },
+          ],
+        },
       ],
-      reward: { type: "theme", item: "Perfectionist Crystal Theme" }
-    }
+      reward: { type: "theme", item: "Perfectionist Crystal Theme" },
+    },
   ];
 
   private static journeyProgress: JourneyProgress = {
@@ -225,20 +239,22 @@ export class AchievementTracker {
     sessionStats: {
       totalSessions: 0,
       perfectSessions: 0,
-      averageWordsPerSession: 0
-    }
+      averageWordsPerSession: 0,
+    },
   };
 
   /**
    * Update journey progress and check for newly unlocked achievements
    */
-  static updateJourneyProgress(progressUpdate: Partial<JourneyProgress>): Achievement[] {
+  static updateJourneyProgress(
+    progressUpdate: Partial<JourneyProgress>,
+  ): Achievement[] {
     // Update the journey progress
     Object.assign(this.journeyProgress, progressUpdate);
-    
+
     // Check for newly unlocked achievements
     const newlyUnlocked = this.checkForNewAchievements();
-    
+
     return newlyUnlocked;
   }
 
@@ -258,30 +274,33 @@ export class AchievementTracker {
     switch (activity.type) {
       case "quiz":
         if (activity.score === 100) {
-          progressUpdate.quizzesPerfect = this.journeyProgress.quizzesPerfect + 1;
+          progressUpdate.quizzesPerfect =
+            this.journeyProgress.quizzesPerfect + 1;
         }
         if (activity.accuracy) {
-          progressUpdate.totalAccuracy = 
+          progressUpdate.totalAccuracy =
             (this.journeyProgress.totalAccuracy + activity.accuracy) / 2;
         }
         break;
 
       case "vowelRescue":
-        progressUpdate.vowelQuizzesCompleted = 
+        progressUpdate.vowelQuizzesCompleted =
           this.journeyProgress.vowelQuizzesCompleted + 1;
         if (activity.accuracy) {
-          progressUpdate.totalAccuracy = 
+          progressUpdate.totalAccuracy =
             (this.journeyProgress.totalAccuracy + activity.accuracy) / 2;
         }
         break;
 
       case "wordLearning":
         if (activity.wordsLearned) {
-          progressUpdate.wordsLearned = 
+          progressUpdate.wordsLearned =
             this.journeyProgress.wordsLearned + activity.wordsLearned;
         }
         if (activity.category) {
-          const newCategories = new Set(this.journeyProgress.categoriesExplored);
+          const newCategories = new Set(
+            this.journeyProgress.categoriesExplored,
+          );
           newCategories.add(activity.category);
           progressUpdate.categoriesExplored = newCategories;
         }
@@ -291,15 +310,16 @@ export class AchievementTracker {
         progressUpdate.sessionStats = {
           ...this.journeyProgress.sessionStats,
           totalSessions: this.journeyProgress.sessionStats.totalSessions + 1,
-          perfectSessions: activity.accuracy === 100 
-            ? this.journeyProgress.sessionStats.perfectSessions + 1
-            : this.journeyProgress.sessionStats.perfectSessions
+          perfectSessions:
+            activity.accuracy === 100
+              ? this.journeyProgress.sessionStats.perfectSessions + 1
+              : this.journeyProgress.sessionStats.perfectSessions,
         };
         break;
     }
 
     if (activity.timeSpent) {
-      progressUpdate.timeSpentLearning = 
+      progressUpdate.timeSpentLearning =
         this.journeyProgress.timeSpentLearning + activity.timeSpent;
     }
 
@@ -318,7 +338,7 @@ export class AchievementTracker {
       if (achievement.unlocked || !achievement.criteria) continue;
 
       const isUnlocked = this.evaluateAchievementCriteria(achievement);
-      
+
       if (isUnlocked) {
         achievement.unlocked = true;
         achievement.dateUnlocked = new Date();
@@ -326,7 +346,8 @@ export class AchievementTracker {
         newlyUnlocked.push(achievement);
       } else {
         // Update current progress
-        achievement.currentProgress = this.calculateAchievementProgress(achievement);
+        achievement.currentProgress =
+          this.calculateAchievementProgress(achievement);
       }
     }
 
@@ -336,67 +357,71 @@ export class AchievementTracker {
   /**
    * Evaluate if achievement criteria are met
    */
-  private static evaluateAchievementCriteria(achievement: Achievement): boolean {
+  private static evaluateAchievementCriteria(
+    achievement: Achievement,
+  ): boolean {
     if (!achievement.criteria) return false;
 
-    return achievement.criteria.every(criterion => {
+    return achievement.criteria.every((criterion) => {
       switch (criterion.type) {
         case "wordsLearned":
           return this.evaluateNumericCriterion(
             this.journeyProgress.wordsLearned,
             criterion.target,
-            criterion.operator || ">="
+            criterion.operator || ">=",
           );
 
         case "vowelRescue":
           return this.evaluateNumericCriterion(
             this.journeyProgress.vowelQuizzesCompleted,
             criterion.target,
-            criterion.operator || ">="
+            criterion.operator || ">=",
           );
 
         case "streakDays":
           return this.evaluateNumericCriterion(
             this.journeyProgress.streakDays,
             criterion.target,
-            criterion.operator || ">="
+            criterion.operator || ">=",
           );
 
         case "quizScore":
           return this.evaluateNumericCriterion(
             this.journeyProgress.quizzesPerfect,
             criterion.target,
-            criterion.operator || ">="
+            criterion.operator || ">=",
           );
 
         case "accuracy":
           return this.evaluateNumericCriterion(
             this.journeyProgress.totalAccuracy,
             criterion.target,
-            criterion.operator || ">="
+            criterion.operator || ">=",
           );
 
         case "timeSpent":
           return this.evaluateNumericCriterion(
             this.journeyProgress.timeSpentLearning,
             criterion.target,
-            criterion.operator || ">="
+            criterion.operator || ">=",
           );
 
         case "categoryMastery":
-          const masteredCategories = this.journeyProgress.categoriesExplored.size;
+          const masteredCategories =
+            this.journeyProgress.categoriesExplored.size;
           return this.evaluateNumericCriterion(
             masteredCategories,
             criterion.target,
-            criterion.operator || ">="
+            criterion.operator || ">=",
           );
 
         case "sessionComplete":
-          const perfectSessions = this.journeyProgress.sessionStats.perfectSessions;
+          const perfectSessions =
+            this.journeyProgress.sessionStats.perfectSessions;
           return this.evaluateNumericCriterion(
             perfectSessions,
             criterion.target,
-            criterion.operator || ">="
+            criterion.operator || ">=",
           );
 
         default:
@@ -408,10 +433,12 @@ export class AchievementTracker {
   /**
    * Calculate current progress towards achievement
    */
-  private static calculateAchievementProgress(achievement: Achievement): number {
+  private static calculateAchievementProgress(
+    achievement: Achievement,
+  ): number {
     if (!achievement.criteria) return 0;
 
-    const criterionProgress = achievement.criteria.map(criterion => {
+    const criterionProgress = achievement.criteria.map((criterion) => {
       let currentValue = 0;
 
       switch (criterion.type) {
@@ -447,9 +474,9 @@ export class AchievementTracker {
    * Evaluate numeric criterion with operator
    */
   private static evaluateNumericCriterion(
-    current: number, 
-    target: number, 
-    operator: string
+    current: number,
+    target: number,
+    operator: string,
   ): boolean {
     switch (operator) {
       case ">=":
@@ -485,7 +512,7 @@ export class AchievementTracker {
    * Get unlocked achievements
    */
   static getUnlockedAchievements(): Achievement[] {
-    return this.achievements.filter(a => a.unlocked);
+    return this.achievements.filter((a) => a.unlocked);
   }
 
   /**
@@ -493,14 +520,14 @@ export class AchievementTracker {
    */
   static getAchievementsByCategory(category: string): Achievement[] {
     if (category === "all") return this.achievements;
-    return this.achievements.filter(a => a.category === category);
+    return this.achievements.filter((a) => a.category === category);
   }
 
   /**
    * Reset progress (for testing)
    */
   static resetProgress(): void {
-    this.achievements.forEach(achievement => {
+    this.achievements.forEach((achievement) => {
       achievement.unlocked = false;
       achievement.currentProgress = 0;
       achievement.dateUnlocked = undefined;
@@ -518,8 +545,8 @@ export class AchievementTracker {
       sessionStats: {
         totalSessions: 0,
         perfectSessions: 0,
-        averageWordsPerSession: 0
-      }
+        averageWordsPerSession: 0,
+      },
     };
   }
 
@@ -527,7 +554,7 @@ export class AchievementTracker {
    * Debug helper to manually trigger achievement unlock (for testing)
    */
   static debugUnlockAchievement(achievementId: string): Achievement[] {
-    const achievement = this.achievements.find(a => a.id === achievementId);
+    const achievement = this.achievements.find((a) => a.id === achievementId);
     if (achievement && !achievement.unlocked) {
       achievement.unlocked = true;
       achievement.dateUnlocked = new Date();
@@ -543,13 +570,13 @@ export class AchievementTracker {
   static debugGetProgress(): any {
     return {
       journeyProgress: this.journeyProgress,
-      achievements: this.achievements.map(a => ({
+      achievements: this.achievements.map((a) => ({
         id: a.id,
         name: a.name,
         unlocked: a.unlocked,
         progress: a.currentProgress,
-        requirement: a.requirements
-      }))
+        requirement: a.requirements,
+      })),
     };
   }
 }

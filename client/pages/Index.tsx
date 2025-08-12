@@ -18,7 +18,7 @@ import { VowelRescue } from "@/components/games/VowelRescue";
 import {
   getSystematicEasyVowelQuestions,
   getSystematicMediumVowelQuestions,
-  getSystematicTimedVowelQuestions
+  getSystematicTimedVowelQuestions,
 } from "@/lib/vowelQuizGeneration";
 import { AchievementTracker } from "@/lib/achievementTracker";
 import { EnhancedAchievementPopup } from "@/components/EnhancedAchievementPopup";
@@ -285,9 +285,11 @@ export default function Index({ initialProfile }: IndexProps) {
             wordsLearned: statsResponse.stats?.wordsRemembered || 0,
             streakDays: Math.floor(Math.random() * 5), // Demo data
             totalAccuracy: statsResponse.stats?.averageAccuracy || 80,
-            categoriesExplored: new Set([selectedCategory !== "all" ? selectedCategory : "general"]),
+            categoriesExplored: new Set([
+              selectedCategory !== "all" ? selectedCategory : "general",
+            ]),
             timeSpentLearning: Math.floor(Math.random() * 120), // Demo data
-            vowelQuizzesCompleted: 0
+            vowelQuizzesCompleted: 0,
           };
           AchievementTracker.updateJourneyProgress(currentProgress);
         } catch (error) {
@@ -307,7 +309,7 @@ export default function Index({ initialProfile }: IndexProps) {
       type: "quiz",
       score: percentage,
       accuracy: percentage,
-      category: selectedCategory !== "all" ? selectedCategory : undefined
+      category: selectedCategory !== "all" ? selectedCategory : undefined,
     });
 
     setFeedback({
@@ -620,7 +622,7 @@ export default function Index({ initialProfile }: IndexProps) {
         wordsLearned: status === "remembered" ? 1 : 0,
         accuracy: status === "remembered" ? 100 : 0,
         category: word.category,
-        timeSpent: responseTime ? Math.round(responseTime / 1000 / 60) : 1 // Convert to minutes
+        timeSpent: responseTime ? Math.round(responseTime / 1000 / 60) : 1, // Convert to minutes
       });
 
       // Show achievement notifications in sequence
@@ -2141,21 +2143,40 @@ export default function Index({ initialProfile }: IndexProps) {
                       questions={(() => {
                         switch (selectedQuizType) {
                           case "vowel-easy":
-                            return getSystematicEasyVowelQuestions(10, selectedCategory, currentProfile);
+                            return getSystematicEasyVowelQuestions(
+                              10,
+                              selectedCategory,
+                              currentProfile,
+                            );
                           case "vowel-challenge":
-                            return getSystematicMediumVowelQuestions(8, selectedCategory, currentProfile);
+                            return getSystematicMediumVowelQuestions(
+                              8,
+                              selectedCategory,
+                              currentProfile,
+                            );
                           case "vowel-timed":
-                            return getSystematicTimedVowelQuestions(selectedCategory, currentProfile);
+                            return getSystematicTimedVowelQuestions(
+                              selectedCategory,
+                              currentProfile,
+                            );
                           default:
-                            return getSystematicEasyVowelQuestions(10, selectedCategory, currentProfile);
+                            return getSystematicEasyVowelQuestions(
+                              10,
+                              selectedCategory,
+                              currentProfile,
+                            );
                         }
                       })()}
                       onComplete={handleQuizComplete}
                       onExit={handleQuizExit}
                       gameMode={
-                        selectedQuizType === "vowel-easy" ? "easy" :
-                        selectedQuizType === "vowel-challenge" ? "challenge" :
-                        selectedQuizType === "vowel-timed" ? "timed" : "easy"
+                        selectedQuizType === "vowel-easy"
+                          ? "easy"
+                          : selectedQuizType === "vowel-challenge"
+                            ? "challenge"
+                            : selectedQuizType === "vowel-timed"
+                              ? "timed"
+                              : "easy"
                       }
                     />
                   ) : (
@@ -2346,7 +2367,7 @@ export default function Index({ initialProfile }: IndexProps) {
           achievements={achievementPopup}
           onClose={() => setAchievementPopup([])}
           onAchievementClaim={(achievement) => {
-            console.log('Achievement claimed:', achievement);
+            console.log("Achievement claimed:", achievement);
             // Could add additional reward logic here like updating user points
           }}
         />
