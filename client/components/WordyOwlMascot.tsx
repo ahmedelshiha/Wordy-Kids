@@ -46,12 +46,12 @@ const WordyOwlMascot: React.FC = () => {
       </div>
 
       {/* Wordy the Owl SVG */}
-      <div className="animate-gentle-bounce">
-        <svg 
-          width="60" 
-          height="60" 
-          viewBox="0 0 120 120" 
-          className="w-12 h-12 md:w-16 md:h-16"
+      <div className="animate-gentle-bounce hover:scale-110 transition-transform duration-300 cursor-pointer">
+        <svg
+          width="60"
+          height="60"
+          viewBox="0 0 120 120"
+          className="w-12 h-12 md:w-16 md:h-16 drop-shadow-lg"
         >
           {/* Shadow */}
           <ellipse cx="60" cy="110" rx="25" ry="5" fill="rgba(0,0,0,0.1)" />
