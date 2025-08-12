@@ -402,24 +402,30 @@ export function VowelRescue({
                 animate={{ scale: 1, opacity: 1 }}
                 className="relative inline-block"
               >
-                <div className="w-32 h-32 md:w-48 md:h-48 bg-gradient-to-br from-educational-blue/20 to-educational-purple/20 rounded-2xl flex items-center justify-center text-6xl md:text-8xl cursor-pointer hover:scale-105 transition-transform"
-                     onClick={playAudio}>
-                  {currentQuestion.image ? (
-                    // Check if image is an emoji or URL
-                    currentQuestion.image.startsWith('http') || currentQuestion.image.startsWith('/') ? (
+                <div className="relative">
+                  <div className="w-32 h-32 md:w-48 md:h-48 bg-gradient-to-br from-educational-blue/20 to-educational-purple/20 rounded-2xl flex items-center justify-center text-6xl md:text-8xl cursor-pointer hover:scale-105 transition-transform"
+                       onClick={playAudio}>
+                    {currentQuestion.originalWord?.emoji || currentQuestion.image ? (
+                      // Display emoji from word database or fallback
+                      <span className="text-6xl md:text-8xl animate-gentle-bounce">
+                        {currentQuestion.originalWord?.emoji || currentQuestion.image}
+                      </span>
+                    ) : currentQuestion.image?.startsWith('http') || currentQuestion.image?.startsWith('/') ? (
                       <img
                         src={currentQuestion.image}
                         alt={currentQuestion.word}
                         className="w-full h-full object-contain rounded-2xl"
                       />
                     ) : (
-                      // Display emoji
-                      <span className="text-6xl md:text-8xl animate-gentle-bounce">
-                        {currentQuestion.image}
-                      </span>
-                    )
-                  ) : (
-                    "🖼️"
+                      "🎯"
+                    )}
+                  </div>
+
+                  {/* Category Badge */}
+                  {currentQuestion.originalWord?.category && (
+                    <div className="absolute -top-2 -right-2 bg-educational-blue text-white px-2 py-1 rounded-full text-xs font-bold capitalize">
+                      {currentQuestion.originalWord.category}
+                    </div>
                   )}
                 </div>
                 <Button
