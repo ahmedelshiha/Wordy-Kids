@@ -198,15 +198,20 @@ export default function LoginForm() {
         </Card>
 
         <div className="text-center mt-6 space-y-4">
-          <Button
-            onClick={handleBackToMain}
-            variant="outline"
-            className="flex items-center gap-2 bg-blue-50 hover:bg-blue-100 text-blue-700 border-blue-300 hover:border-blue-400 font-semibold"
-            disabled={isLoading}
-          >
-            <ArrowLeft className="w-4 h-4" />
-            Login as Guest
-          </Button>
+          <div className="flex justify-center">
+            <Button
+              onClick={handleBackToMain}
+              variant="outline"
+              className="px-8 py-4 bg-gradient-to-r from-orange-100 to-yellow-100 hover:from-orange-200 hover:to-yellow-200 text-orange-700 border-2 border-orange-300 hover:border-orange-400 font-bold text-lg rounded-xl shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300"
+              disabled={isLoading}
+            >
+              <div className="flex items-center gap-3">
+                <span className="text-2xl">🎮</span>
+                <span>Login as Guest</span>
+                <span className="text-2xl">✨</span>
+              </div>
+            </Button>
+          </div>
 
           <div className="text-sm text-gray-600">
             Don't have an account?{" "}
