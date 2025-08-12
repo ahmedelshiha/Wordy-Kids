@@ -2095,13 +2095,13 @@ export default function Index({ initialProfile }: IndexProps) {
                       questions={(() => {
                         switch (selectedQuizType) {
                           case "vowel-easy":
-                            return getEasyVowelQuestions(10);
+                            return getSystematicEasyVowelQuestions(10, selectedCategory, currentProfile);
                           case "vowel-challenge":
-                            return getMediumVowelQuestions(8);
+                            return getSystematicMediumVowelQuestions(8, selectedCategory, currentProfile);
                           case "vowel-timed":
-                            return getTimedVowelQuestions();
+                            return getSystematicTimedVowelQuestions(selectedCategory, currentProfile);
                           default:
-                            return getEasyVowelQuestions(10);
+                            return getSystematicEasyVowelQuestions(10, selectedCategory, currentProfile);
                         }
                       })()}
                       onComplete={handleQuizComplete}
