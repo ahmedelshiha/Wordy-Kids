@@ -125,10 +125,19 @@ export function InteractiveDashboardWordCard({
     }
   };
 
-  const handleWordAction = (
+  const handleWordAction = async (
     status: "remembered" | "needs_practice" | "skipped",
   ) => {
-    if (!currentWord) return;
+    if (!currentWord || isAnswered) return;
+
+    console.log(`Word Action: ${currentWord.word} - ${status}`, {
+      wordId: currentWord.id,
+      currentIndex: currentWordIndex,
+      totalWords: words.length
+    });
+
+    // Mark as answered immediately to prevent double-clicks
+    setIsAnswered(true);
 
     // Set visual feedback type
     if (status !== "skipped") {
@@ -144,13 +153,15 @@ export function InteractiveDashboardWordCard({
       audioService.playEncouragementSound();
     }
 
-    // Mark as answered
-    setIsAnswered(true);
+    try {
+      // Call the progress callback and wait for it to complete
+      await onWordProgress(currentWord, status);
+      console.log(`Word progress callback completed for: ${currentWord.word}`);
+    } catch (error) {
+      console.error('Error in word progress callback:', error);
+    }
 
-    // Call the callback
-    onWordProgress(currentWord, status);
-
-    // Auto-advance to next word after a brief delay
+    // Auto-advance to next word after progress is recorded
     setTimeout(
       () => {
         advanceToNextWord();
