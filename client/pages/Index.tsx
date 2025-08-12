@@ -23,7 +23,6 @@ import { ParentDashboard } from "@/components/ParentDashboard";
 import { WordCreator } from "@/components/WordCreator";
 import { AdventureDashboard } from "@/components/AdventureDashboard";
 import { MobileBottomNav } from "@/components/MobileBottomNav";
-import WordyOwlMascot from "@/components/WordyOwlMascot";
 import { adventureService } from "@/lib/adventureService";
 import {
   wordsDatabase,
@@ -42,11 +41,9 @@ import {
   shuffleArray,
 } from "@/lib/gameGeneration";
 import {
-  BookOpen,
   Play,
   Trophy,
   Users,
-  Sparkles,
   ArrowRight,
   Star,
   Target,
@@ -169,7 +166,7 @@ export default function Index({ initialProfile }: IndexProps) {
       {
         id: "streak-starter",
         name: "Streak Master",
-        icon: "🔥",
+        icon: "��",
         earned: true,
         description: "7-day learning streak",
       },
@@ -663,7 +660,11 @@ export default function Index({ initialProfile }: IndexProps) {
           <div className="flex items-center justify-between py-1 md:hidden">
             <div className="flex items-center gap-2">
               <div className="bg-white/20 backdrop-blur-sm rounded-full p-1">
-                <BookOpen className="w-4 h-4 text-white" />
+                <img
+                  src="https://cdn.builder.io/api/v1/image/assets%2Fa33f74a2f97141a4a1ef43d9448f9bda%2F2a4b7e4c3c38485b966cfd2cff50da9e?format=webp&width=800"
+                  alt="Wordy Logo"
+                  className="w-6 h-6 rounded-full"
+                />
               </div>
               <div>
                 <h1 className="text-sm font-bold leading-tight">
@@ -674,25 +675,24 @@ export default function Index({ initialProfile }: IndexProps) {
                 </p>
               </div>
             </div>
-            <WordyOwlMascot isDraggable={true} />
           </div>
 
           {/* Desktop header */}
           <div className="text-center max-w-4xl mx-auto hidden md:block">
             <div className="flex justify-center items-center gap-6 mb-4">
               <div className="bg-white/20 backdrop-blur-sm rounded-full p-3">
-                <BookOpen className="w-8 h-8 text-white" />
+                <img
+                  src="https://cdn.builder.io/api/v1/image/assets%2Fa33f74a2f97141a4a1ef43d9448f9bda%2F2a4b7e4c3c38485b966cfd2cff50da9e?format=webp&width=800"
+                  alt="Wordy Logo"
+                  className="w-16 h-16 rounded-full"
+                />
               </div>
-              <WordyOwlMascot />
             </div>
             <h1 className="text-2xl md:text-3xl font-bold mb-1">
               🌟 Wordy's Adventure!
             </h1>
             <p className="text-lg font-semibold text-educational-yellow-light mb-2">
-              WordWise with Wordy! 🦉
-            </p>
-            <p className="text-sm md:text-base mb-3 opacity-90">
-              Welcome to your vocabulary adventure! Ready for some learning fun?
+              Fun vocabulary learning for kids! 📚
             </p>
           </div>
         </div>
@@ -744,7 +744,13 @@ export default function Index({ initialProfile }: IndexProps) {
                 },
                 {
                   id: "learn",
-                  icon: BookOpen,
+                  icon: () => (
+                    <img
+                      src="https://cdn.builder.io/api/v1/image/assets%2Fa33f74a2f97141a4a1ef43d9448f9bda%2F2a4b7e4c3c38485b966cfd2cff50da9e?format=webp&width=800"
+                      alt="Wordy"
+                      className="w-4 h-4 lg:w-5 lg:h-5 rounded"
+                    />
+                  ),
                   label: "Word Library",
                   color: "green",
                 },
@@ -833,8 +839,12 @@ export default function Index({ initialProfile }: IndexProps) {
               <div className="p-4 lg:p-6">
                 {/* Logo Section - Mobile & Desktop */}
                 <div className="flex items-center gap-3 mb-6 lg:mb-8">
-                  <div className="w-8 h-8 lg:w-10 lg:h-10 bg-gradient-to-r from-purple-500 to-pink-500 rounded-xl flex items-center justify-center">
-                    <Sparkles className="w-5 h-5 lg:w-6 lg:h-6 text-white" />
+                  <div className="w-8 h-8 lg:w-10 lg:h-10 bg-white rounded-xl flex items-center justify-center p-1">
+                    <img
+                      src="https://cdn.builder.io/api/v1/image/assets%2Fa33f74a2f97141a4a1ef43d9448f9bda%2F2a4b7e4c3c38485b966cfd2cff50da9e?format=webp&width=800"
+                      alt="Wordy Logo"
+                      className="w-full h-full rounded-lg"
+                    />
                   </div>
                   <div>
                     <h1 className="text-lg lg:text-xl font-bold text-gray-800">
@@ -879,8 +889,10 @@ export default function Index({ initialProfile }: IndexProps) {
                     <div
                       className={`p-2 rounded-lg lg:rounded-xl ${activeTab === "learn" ? "bg-white/20" : "bg-green-100"}`}
                     >
-                      <BookOpen
-                        className={`w-4 h-4 lg:w-5 lg:h-5 ${activeTab === "learn" ? "text-white" : "text-green-600"}`}
+                      <img
+                        src="https://cdn.builder.io/api/v1/image/assets%2Fa33f74a2f97141a4a1ef43d9448f9bda%2F2a4b7e4c3c38485b966cfd2cff50da9e?format=webp&width=800"
+                        alt="Wordy"
+                        className={`w-4 h-4 lg:w-5 lg:h-5 rounded ${activeTab === "learn" ? "" : ""}`}
                       />
                     </div>
                     <span className="font-medium lg:font-semibold text-sm lg:text-base">
@@ -1091,7 +1103,11 @@ export default function Index({ initialProfile }: IndexProps) {
                               }
                               className="flex items-center gap-1 md:gap-2 text-sm md:text-base px-3 md:px-4"
                             >
-                              <BookOpen className="w-4 h-4" />
+                              <img
+                                src="https://cdn.builder.io/api/v1/image/assets%2Fa33f74a2f97141a4a1ef43d9448f9bda%2F2a4b7e4c3c38485b966cfd2cff50da9e?format=webp&width=800"
+                                alt="Wordy"
+                                className="w-4 h-4 rounded"
+                              />
                               <span className="hidden sm:inline">
                                 Word Cards
                               </span>
@@ -1104,7 +1120,7 @@ export default function Index({ initialProfile }: IndexProps) {
                               }}
                               variant="ghost"
                             >
-                              ��� Back to Categories
+                              ← Back to Categories
                             </Button>
                           </div>
                         </div>
