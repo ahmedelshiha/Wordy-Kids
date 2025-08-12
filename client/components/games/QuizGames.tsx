@@ -6,7 +6,11 @@ import { Brain, Play, Clock, Target, Trophy } from "lucide-react";
 import { QuizGame } from "../QuizGame";
 import { generateQuizQuestions } from "@/lib/gameGeneration";
 import { VowelRescue } from "./VowelRescue";
-import { getEasyVowelQuestions, getMediumVowelQuestions, getTimedVowelQuestions } from "@/data/vowelQuizData";
+import {
+  getSystematicEasyVowelQuestions,
+  getSystematicMediumVowelQuestions,
+  getSystematicTimedVowelQuestions
+} from "@/lib/vowelQuizGeneration";
 
 interface QuizGamesProps {
   selectedCategory: string;
