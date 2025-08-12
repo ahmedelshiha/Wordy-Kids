@@ -68,8 +68,27 @@ export function VowelRescue({
     const newSelectedVowels = { ...selectedVowels, [position]: vowel };
     setSelectedVowels(newSelectedVowels);
 
-    // Check if all missing positions are filled
-    const allFilled = currentQuestion.missingIndex.every(idx => 
+    // Immediately check this specific vowel
+    const correctVowel = currentQuestion.word[position];
+    const isVowelCorrect = vowel.toLowerCase() === correctVowel.toLowerCase();
+
+    if (!isVowelCorrect) {
+      // Show immediate feedback for wrong vowel
+      setAttempts(attempts + 1);
+      setShowFeedback(true);
+
+      setTimeout(() => {
+        // Clear the wrong vowel and allow trying again
+        const clearedVowels = { ...newSelectedVowels };
+        delete clearedVowels[position];
+        setSelectedVowels(clearedVowels);
+        setShowFeedback(false);
+      }, 1500);
+      return;
+    }
+
+    // Check if all missing positions are filled with correct vowels
+    const allFilled = currentQuestion.missingIndex.every(idx =>
       newSelectedVowels[idx] !== undefined
     );
 
@@ -85,23 +104,38 @@ export function VowelRescue({
       return selectedVowel && selectedVowel.toLowerCase() === correctVowel.toLowerCase();
     });
 
-    setAttempts(attempts + 1);
     setShowFeedback(true);
 
     if (isCorrect) {
-      const points = attempts === 0 ? 10 : attempts === 1 ? 5 : 2;
+      const points = attempts === 0 ? 10 : attempts <= 2 ? 8 : attempts <= 4 ? 5 : 2;
       setScore(score + points);
       setShowReward(true);
       setTimeout(() => setShowReward(false), 1500);
+
+      setTimeout(() => {
+        nextQuestion();
+      }, 2000);
     }
+  };
+
+  const handleTryAgain = () => {
+    setSelectedVowels({});
+    setShowFeedback(false);
+    setAttempts(attempts + 1);
+  };
+
+  const handleShowHint = () => {
+    // Show the correct vowels as a hint
+    const hintVowels: { [key: number]: string } = {};
+    currentQuestion.missingIndex.forEach(idx => {
+      hintVowels[idx] = currentQuestion.word[idx].toUpperCase();
+    });
+    setSelectedVowels(hintVowels);
+    setShowFeedback(true);
 
     setTimeout(() => {
-      if (isCorrect || attempts >= 2) {
-        nextQuestion();
-      } else {
-        setShowFeedback(false);
-      }
-    }, 2000);
+      nextQuestion();
+    }, 3000);
   };
 
   const nextQuestion = () => {
