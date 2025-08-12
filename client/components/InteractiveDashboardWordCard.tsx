@@ -19,6 +19,8 @@ import {
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { audioService } from "@/lib/audioService";
+import { AchievementTracker } from "@/lib/achievementTracker";
+import { EnhancedAchievementPopup } from "@/components/EnhancedAchievementPopup";
 
 interface Word {
   id: number;
@@ -103,6 +105,7 @@ export function InteractiveDashboardWordCard({
   const [sessionAchievements, setSessionAchievements] = useState<Achievement[]>(
     [],
   );
+  const [journeyAchievements, setJourneyAchievements] = useState<any[]>([]);
 
   // UI States
   const [showWordName, setShowWordName] = useState(false);
@@ -315,6 +318,27 @@ export function InteractiveDashboardWordCard({
       console.log(
         `Session progress: ${newStats.wordsCompleted}/${SESSION_SIZE}, Accuracy: ${newStats.accuracy}%`,
       );
+
+      // Track journey achievements for word learning activity
+      const newJourneyAchievements = AchievementTracker.trackActivity({
+        type: "wordLearning",
+        wordsLearned: status === "remembered" ? 1 : 0,
+        accuracy:
+          status === "remembered"
+            ? 100
+            : status === "needs_practice"
+              ? 0
+              : undefined,
+        category: currentWord.category,
+        timeSpent: 1, // Assume 1 minute per word on average
+      });
+
+      // Show journey achievements if any were unlocked
+      if (newJourneyAchievements.length > 0) {
+        setTimeout(() => {
+          setJourneyAchievements(newJourneyAchievements);
+        }, 1500); // Show after feedback animation
+      }
     } catch (error) {
       console.error("Error in word progress callback:", error);
     }
@@ -323,11 +347,33 @@ export function InteractiveDashboardWordCard({
     if (newStats.wordsCompleted >= SESSION_SIZE) {
       const achievements = checkSessionAchievements(newStats);
       setSessionAchievements(achievements);
+
+      // Track session completion for journey achievements
+      const sessionJourneyAchievements = AchievementTracker.trackActivity({
+        type: "sessionComplete",
+        accuracy: newStats.accuracy,
+        timeSpent: Math.round(
+          (Date.now() - newStats.sessionStartTime) / 1000 / 60,
+        ), // Convert to minutes
+        wordsLearned: newStats.wordsRemembered,
+      });
+
+      // Add session journey achievements to the display queue
+      if (sessionJourneyAchievements.length > 0) {
+        setTimeout(() => {
+          setJourneyAchievements((prev) => [
+            ...prev,
+            ...sessionJourneyAchievements,
+          ]);
+        }, 3000); // Show after session completion celebration
+      }
+
       setShowSessionComplete(true);
 
       console.log("Session completed!", {
         stats: newStats,
         achievements: achievements.map((a) => a.title),
+        journeyAchievements: sessionJourneyAchievements.length,
       });
       return;
     }
@@ -369,6 +415,7 @@ export function InteractiveDashboardWordCard({
     // Reset all session state
     setShowSessionComplete(false);
     setSessionAchievements([]);
+    setJourneyAchievements([]);
     setCurrentWordIndex(0);
     setIsAnswered(false);
     setFeedbackType(null);
@@ -696,7 +743,7 @@ export function InteractiveDashboardWordCard({
           {/* Game Instructions */}
           <div className="text-center mb-3 md:mb-4">
             <h2 className="text-lg md:text-2xl font-bold text-gray-800 mb-1 md:mb-2">
-              🎯 What is this?
+              🤔 What is this?
             </h2>
             <p className="text-sm md:text-base text-gray-600">
               Look at the picture and guess the word!
@@ -982,6 +1029,21 @@ export function InteractiveDashboardWordCard({
           </div>
         </div>
       </div> */}
+
+      {/* Enhanced Achievement Popup for Journey Achievements */}
+      {journeyAchievements.length > 0 && (
+        <EnhancedAchievementPopup
+          achievements={journeyAchievements}
+          onClose={() => setJourneyAchievements([])}
+          onAchievementClaim={(achievement) => {
+            console.log(
+              "Journey achievement claimed in dashboard:",
+              achievement,
+            );
+            // Could add additional reward logic here
+          }}
+        />
+      )}
     </div>
   );
 }

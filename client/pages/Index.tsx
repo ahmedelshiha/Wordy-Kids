@@ -14,6 +14,14 @@ import { EncouragingFeedback } from "@/components/EncouragingFeedback";
 import { GameLikeLearning } from "@/components/GameLikeLearning";
 import { WordMatchingGame } from "@/components/WordMatchingGame";
 import { GameHub } from "@/components/games/GameHub";
+import { VowelRescue } from "@/components/games/VowelRescue";
+import {
+  getSystematicEasyVowelQuestions,
+  getSystematicMediumVowelQuestions,
+  getSystematicTimedVowelQuestions,
+} from "@/lib/vowelQuizGeneration";
+import { AchievementTracker } from "@/lib/achievementTracker";
+import { EnhancedAchievementPopup } from "@/components/EnhancedAchievementPopup";
 import { SettingsPanel } from "@/components/SettingsPanel";
 import { FloatingBubbles } from "@/components/FloatingBubbles";
 import { CelebrationEffect } from "@/components/CelebrationEffect";
@@ -120,6 +128,7 @@ export default function Index({ initialProfile }: IndexProps) {
   const [feedback, setFeedback] = useState<any>(null);
   const [gameMode, setGameMode] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [achievementPopup, setAchievementPopup] = useState<any[]>([]);
   const [currentSessionId, setCurrentSessionId] = useState<string | null>(null);
   const [childStats, setChildStats] = useState<ChildWordStats | null>(null);
   const [isLoadingProgress, setIsLoadingProgress] = useState(false);
@@ -270,6 +279,19 @@ export default function Index({ initialProfile }: IndexProps) {
             currentProfile.id,
           );
           setChildStats(statsResponse.stats);
+
+          // Initialize achievement system with current progress
+          const currentProgress = {
+            wordsLearned: statsResponse.stats?.wordsRemembered || 0,
+            streakDays: Math.floor(Math.random() * 5), // Demo data
+            totalAccuracy: statsResponse.stats?.averageAccuracy || 80,
+            categoriesExplored: new Set([
+              selectedCategory !== "all" ? selectedCategory : "general",
+            ]),
+            timeSpentLearning: Math.floor(Math.random() * 120), // Demo data
+            vowelQuizzesCompleted: 0,
+          };
+          AchievementTracker.updateJourneyProgress(currentProgress);
         } catch (error) {
           console.error("Failed to initialize session:", error);
         }
@@ -281,12 +303,27 @@ export default function Index({ initialProfile }: IndexProps) {
 
   const handleQuizComplete = (score: number, total: number) => {
     const percentage = Math.round((score / total) * 100);
+
+    // Track quiz completion and check for achievements
+    const unlockedAchievements = AchievementTracker.trackActivity({
+      type: "quiz",
+      score: percentage,
+      accuracy: percentage,
+      category: selectedCategory !== "all" ? selectedCategory : undefined,
+    });
+
     setFeedback({
       type: "celebration",
       title: "Quiz Complete! 🎉",
       message: `You scored ${score}/${total} (${percentage}%)`,
       points: score * 10,
-      onContinue: () => setFeedback(null),
+      onContinue: () => {
+        setFeedback(null);
+        // Show achievements after feedback is closed
+        if (unlockedAchievements.length > 0) {
+          setAchievementPopup(unlockedAchievements);
+        }
+      },
     });
     setShowQuiz(false);
   };
@@ -317,7 +354,7 @@ export default function Index({ initialProfile }: IndexProps) {
     setTimeout(() => {
       setFeedback({
         type: "celebration",
-        title: "Vocabulary Session Complete! ��������",
+        title: "Vocabulary Session Complete! 🎉📚✨",
         message: `Reviewed ${wordsReviewed} words with ${accuracy}% accuracy!`,
         points: wordsReviewed * accuracy,
         onContinue: () => setFeedback(null),
@@ -353,7 +390,7 @@ export default function Index({ initialProfile }: IndexProps) {
     setGameMode(false);
     setFeedback({
       type: "celebration",
-      title: "Amazing Game! ���",
+      title: "Amazing Game! 🎮🌟",
       message: `You scored ${score} points and learned ${totalWords} words!`,
       points: score,
       onContinue: () => setFeedback(null),
@@ -465,15 +502,15 @@ export default function Index({ initialProfile }: IndexProps) {
         achievementIcon = "🏆";
         achievementMessage = `Outstanding! You remembered ALL ${totalWords} words in ${categoryDisplayName}! You're a true champion!\n\n🎁 Perfect Mastery Bonus: 200 points!\n✨ New adventure zone unlocked!\n🏆 Master badge earned!`;
       } else if (accuracy >= 90) {
-        achievementTitle = "Category Expert! ��";
-        achievementIcon = "���";
+        achievementTitle = "Category Expert! 🎓";
+        achievementIcon = "🎓⭐";
         achievementMessage = `Excellent work! You mastered ${categoryDisplayName} with ${accuracy}% accuracy! Almost perfect!\n\n🎁 Expert Bonus: 150 points!\n⭐ Expert badge earned!`;
       } else if (accuracy >= 75) {
-        achievementTitle = "Category Scholar! 📚";
+        achievementTitle = "Category Scholar! 📚✨";
         achievementIcon = "📚";
         achievementMessage = `Great job! You completed ${categoryDisplayName} with ${accuracy}% accuracy! Keep up the good work!\n\n🎁 Scholar Bonus: 100 points!\n📚 Scholar badge earned!`;
       } else if (accuracy >= 50) {
-        achievementTitle = "Category Explorer! ����";
+        achievementTitle = "Category Explorer! 🗺️🌟";
         achievementIcon = "🎯";
         achievementMessage = `Good effort! You finished ${categoryDisplayName} with ${accuracy}% accuracy! Practice makes perfect!\n\n🎁 Explorer Bonus: 75 points!\n🎯 Explorer badge earned!`;
       } else {
@@ -575,11 +612,28 @@ export default function Index({ initialProfile }: IndexProps) {
       adventureService.trackWordInteraction(
         word.id.toString(),
         status === "remembered",
+        status === "remembered",
         responseTime ? responseTime > 2000 : false,
       );
 
+      // Track journey achievements for word learning
+      const newAchievements = AchievementTracker.trackActivity({
+        type: "wordLearning",
+        wordsLearned: status === "remembered" ? 1 : 0,
+        accuracy: status === "remembered" ? 100 : 0,
+        category: word.category,
+        timeSpent: responseTime ? Math.round(responseTime / 1000 / 60) : 1, // Convert to minutes
+      });
+
       // Show achievement notifications in sequence
       const notifications = [];
+
+      // Add journey achievements to notifications
+      if (newAchievements.length > 0) {
+        setTimeout(() => {
+          setAchievementPopup(newAchievements);
+        }, 1000); // Show after a short delay
+      }
 
       // Add level up to notifications if applicable
       if (response.levelUp) {
@@ -782,13 +836,13 @@ export default function Index({ initialProfile }: IndexProps) {
         {backgroundAnimationsEnabled && (
           <>
             <div className="hidden md:block absolute top-10 left-10 text-3xl animate-bounce">
-              ���
+              🌟
             </div>
             <div className="hidden md:block absolute top-20 right-20 text-2xl animate-pulse">
               📚
             </div>
             <div className="hidden md:block absolute bottom-10 left-20 text-4xl animate-bounce delay-1000">
-              ��������
+              🎉📚✨
             </div>
             <div className="hidden md:block absolute bottom-20 right-10 text-3xl animate-pulse delay-500">
               🚀
@@ -833,7 +887,7 @@ export default function Index({ initialProfile }: IndexProps) {
                 {
                   id: "progress",
                   icon: Trophy,
-                  label: "���� My Journey",
+                  label: "🌟 My Journey",
                   color: "yellow",
                 },
               ].map(({ id, icon: Icon, label, color }) => (
@@ -1374,7 +1428,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                                     type: "celebration",
                                                     title:
                                                       "Category Review Complete! 📚",
-                                                    message: `You've reviewed all ${completionResult.totalWords} words in ${selectedCategory === "all" ? "this word set" : selectedCategory}!\\n\\n✅ Remembered: ${completionResult.totalRemembered} words\\n❌ Need practice: ${completionResult.totalWords - completionResult.totalRemembered} words\\n\\n${completionResult.totalWords - completionResult.totalRemembered > 0 ? "Don't worry! Let's practice the tricky ones again! ������" : "Amazing work! 🎉"}`,
+                                                    message: `You've reviewed all ${completionResult.totalWords} words in ${selectedCategory === "all" ? "this word set" : selectedCategory}!\\n\\n✅ Remembered: ${completionResult.totalRemembered} words\\n❌ Need practice: ${completionResult.totalWords - completionResult.totalRemembered} words\\n\\n${completionResult.totalWords - completionResult.totalRemembered > 0 ? "Don't worry! Let's practice the tricky ones again! 💪📚" : "Amazing work! 🎉"}`,
                                                     points:
                                                       completionResult.totalRemembered *
                                                       10, // Fewer points since words were forgotten
@@ -1544,7 +1598,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                             </div>
                                             <div className="flex items-center gap-1 text-red-600">
                                               <span className="text-base">
-                                                ❌
+                                                💪
                                               </span>
                                               <span className="font-medium">
                                                 {forgottenWords.size}
@@ -1689,7 +1743,7 @@ export default function Index({ initialProfile }: IndexProps) {
                         {/* Easy Quiz */}
                         <Card className="hidden cursor-pointer hover:shadow-lg transition-all duration-300 hover:scale-105 border-2 border-educational-green/30 animate-kid-float-delayed">
                           <CardContent className="p-6 text-center">
-                            <div className="text-6xl mb-4">���</div>
+                            <div className="text-6xl mb-4">🌱</div>
                             <h3 className="text-xl font-bold text-educational-green mb-2">
                               Easy Quiz
                             </h3>
@@ -1790,7 +1844,7 @@ export default function Index({ initialProfile }: IndexProps) {
                               Picture Fun!
                             </h3>
                             <p className="text-xs md:text-sm text-gray-600 mb-2 md:mb-3 hidden md:block">
-                              Look at pictures and guess the words! 🌟
+                              Look at pictures and guess the words! ��
                             </p>
                             <div className="flex justify-center gap-1 mb-2 md:mb-3">
                               <span className="bg-educational-orange/20 text-educational-orange px-1.5 py-0.5 rounded-full text-xs">
@@ -1872,6 +1926,99 @@ export default function Index({ initialProfile }: IndexProps) {
                             </Button>
                           </CardContent>
                         </Card>
+
+                        {/* Vowel Rescue - Easy */}
+                        <Card className="cursor-pointer hover:shadow-lg transition-all duration-300 hover:scale-105 border-2 border-educational-green/30 animate-kid-float">
+                          <CardContent className="p-3 md:p-4 text-center">
+                            <div className="text-3xl md:text-5xl mb-2 md:mb-3 animate-bounce">
+                              🎯
+                            </div>
+                            <h3 className="text-sm md:text-lg font-bold text-educational-green mb-1 md:mb-2">
+                              Vowel Rescue!
+                            </h3>
+                            <p className="text-xs md:text-sm text-gray-600 mb-2 md:mb-3 hidden md:block">
+                              Help rescue missing vowels! 🌟
+                            </p>
+                            <div className="flex justify-center gap-1 mb-2 md:mb-3">
+                              <span className="bg-educational-green/20 text-educational-green px-1.5 py-0.5 rounded-full text-xs">
+                                🎯 Easy!
+                              </span>
+                            </div>
+                            <Button
+                              onClick={() => {
+                                setSelectedQuizType("vowel-easy");
+                                setShowQuiz(true);
+                              }}
+                              className="w-full bg-educational-green text-white hover:bg-educational-green/90 py-1.5 md:py-2 text-xs md:text-sm rounded-xl animate-wiggle"
+                              size="sm"
+                            >
+                              <Play className="w-3 h-3 md:w-4 md:h-4 mr-1" />
+                              Rescue Vowels! 🚀
+                            </Button>
+                          </CardContent>
+                        </Card>
+
+                        {/* Vowel Challenge - Medium */}
+                        <Card className="cursor-pointer hover:shadow-lg transition-all duration-300 hover:scale-105 border-2 border-educational-purple/30 animate-kid-float-delayed">
+                          <CardContent className="p-3 md:p-4 text-center">
+                            <div className="text-3xl md:text-5xl mb-2 md:mb-3 animate-sparkle">
+                              🎯
+                            </div>
+                            <h3 className="text-sm md:text-lg font-bold text-educational-purple mb-1 md:mb-2">
+                              Vowel Challenge!
+                            </h3>
+                            <p className="text-xs md:text-sm text-gray-600 mb-2 md:mb-3 hidden md:block">
+                              Multiple missing vowels! 💪
+                            </p>
+                            <div className="flex justify-center gap-1 mb-2 md:mb-3">
+                              <span className="bg-educational-purple/20 text-educational-purple px-1.5 py-0.5 rounded-full text-xs">
+                                🎯 Medium!
+                              </span>
+                            </div>
+                            <Button
+                              onClick={() => {
+                                setSelectedQuizType("vowel-challenge");
+                                setShowQuiz(true);
+                              }}
+                              className="w-full bg-educational-purple text-white hover:bg-educational-purple/90 py-1.5 md:py-2 text-xs md:text-sm rounded-xl"
+                              size="sm"
+                            >
+                              <Play className="w-3 h-3 md:w-4 md:h-4 mr-1" />
+                              Take Challenge! ⚡
+                            </Button>
+                          </CardContent>
+                        </Card>
+
+                        {/* Vowel Rush - Timed */}
+                        <Card className="cursor-pointer hover:shadow-lg transition-all duration-300 hover:scale-105 border-2 border-educational-orange/30 animate-gentle-bounce">
+                          <CardContent className="p-3 md:p-4 text-center">
+                            <div className="text-3xl md:text-5xl mb-2 md:mb-3 animate-pulse">
+                              🎯
+                            </div>
+                            <h3 className="text-sm md:text-lg font-bold text-educational-orange mb-1 md:mb-2">
+                              Vowel Rush!
+                            </h3>
+                            <p className="text-xs md:text-sm text-gray-600 mb-2 md:mb-3 hidden md:block">
+                              60 seconds speed challenge! ⏰
+                            </p>
+                            <div className="flex justify-center gap-1 mb-2 md:mb-3">
+                              <span className="bg-educational-orange/20 text-educational-orange px-1.5 py-0.5 rounded-full text-xs">
+                                🎯 Timed!
+                              </span>
+                            </div>
+                            <Button
+                              onClick={() => {
+                                setSelectedQuizType("vowel-timed");
+                                setShowQuiz(true);
+                              }}
+                              className="w-full bg-educational-orange text-white hover:bg-educational-orange/90 py-1.5 md:py-2 text-xs md:text-sm rounded-xl animate-bounce"
+                              size="sm"
+                            >
+                              <Play className="w-3 h-3 md:w-4 md:h-4 mr-1" />
+                              Rush Mode! 🔥
+                            </Button>
+                          </CardContent>
+                        </Card>
                       </div>
 
                       {/* Recent Scores */}
@@ -1929,7 +2076,7 @@ export default function Index({ initialProfile }: IndexProps) {
                               </div>
                               <div className="flex justify-between items-center p-3 bg-white rounded-lg">
                                 <div className="flex items-center gap-3">
-                                  <span className="text-2xl">����</span>
+                                  <span className="text-2xl">🏆</span>
                                   <div>
                                     <div className="font-semibold">
                                       Challenge Quiz
@@ -1983,7 +2130,7 @@ export default function Index({ initialProfile }: IndexProps) {
                           setShowMatchingGame(false);
                           setFeedback({
                             type: "celebration",
-                            title: "Matching Game Complete! �����",
+                            title: "Matching Game Complete! 🎯✨",
                             message: `You matched ${score} pairs in ${timeSpent} seconds!`,
                             points: score * 15,
                             onContinue: () => setFeedback(null),
@@ -1991,6 +2138,47 @@ export default function Index({ initialProfile }: IndexProps) {
                         }}
                       />
                     </div>
+                  ) : selectedQuizType?.startsWith("vowel-") ? (
+                    <VowelRescue
+                      questions={(() => {
+                        switch (selectedQuizType) {
+                          case "vowel-easy":
+                            return getSystematicEasyVowelQuestions(
+                              10,
+                              selectedCategory,
+                              currentProfile,
+                            );
+                          case "vowel-challenge":
+                            return getSystematicMediumVowelQuestions(
+                              8,
+                              selectedCategory,
+                              currentProfile,
+                            );
+                          case "vowel-timed":
+                            return getSystematicTimedVowelQuestions(
+                              selectedCategory,
+                              currentProfile,
+                            );
+                          default:
+                            return getSystematicEasyVowelQuestions(
+                              10,
+                              selectedCategory,
+                              currentProfile,
+                            );
+                        }
+                      })()}
+                      onComplete={handleQuizComplete}
+                      onExit={handleQuizExit}
+                      gameMode={
+                        selectedQuizType === "vowel-easy"
+                          ? "easy"
+                          : selectedQuizType === "vowel-challenge"
+                            ? "challenge"
+                            : selectedQuizType === "vowel-timed"
+                              ? "timed"
+                              : "easy"
+                      }
+                    />
                   ) : (
                     <QuizGame
                       questions={(() => {
@@ -2172,6 +2360,18 @@ export default function Index({ initialProfile }: IndexProps) {
           <Heart className="w-5 md:w-6 h-5 md:h-6 text-white fill-current animate-pulse" />
         </div>
       </div>
+
+      {/* Enhanced Achievement Popup */}
+      {achievementPopup.length > 0 && (
+        <EnhancedAchievementPopup
+          achievements={achievementPopup}
+          onClose={() => setAchievementPopup([])}
+          onAchievementClaim={(achievement) => {
+            console.log("Achievement claimed:", achievement);
+            // Could add additional reward logic here like updating user points
+          }}
+        />
+      )}
     </div>
   );
 }

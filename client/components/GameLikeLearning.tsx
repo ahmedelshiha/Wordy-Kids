@@ -158,7 +158,7 @@ const powerUps = [
   {
     id: "shield",
     name: "Shield",
-    icon: "🛡���",
+    icon: "🛡️✨",
     description: "Protect from mistakes",
     cost: 125,
     effect: "Next wrong answer won't count against you",

@@ -1678,7 +1678,7 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
         }
 
         .header::before {
-            content: '✨📚����';
+            content: '✨📚📖🌟';
             position: absolute;
             top: 15px;
             left: 40px;

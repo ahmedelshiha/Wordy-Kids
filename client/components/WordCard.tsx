@@ -24,6 +24,8 @@ import { playSoundIfEnabled } from "@/lib/soundEffects";
 import { audioService } from "@/lib/audioService";
 import { adventureService } from "@/lib/adventureService";
 import { WordAdventureStatus } from "@shared/adventure";
+import { AchievementTracker } from "@/lib/achievementTracker";
+import { EnhancedAchievementPopup } from "@/components/EnhancedAchievementPopup";
 
 interface Word {
   id: number;
@@ -66,6 +68,7 @@ export const WordCard: React.FC<WordCardProps> = ({
   const [showSparkles, setShowSparkles] = useState(false);
   const [adventureStatus, setAdventureStatus] =
     useState<WordAdventureStatus | null>(null);
+  const [wordAchievements, setWordAchievements] = useState<any[]>([]);
 
   // Initialize adventure status for this word
   React.useEffect(() => {
@@ -91,6 +94,20 @@ export const WordCard: React.FC<WordCardProps> = ({
         setIsPlaying(false);
         setShowSparkles(false);
         onPronounce?.(word);
+
+        // Track pronunciation activity for journey achievements
+        const pronunciationAchievements = AchievementTracker.trackActivity({
+          type: "wordLearning",
+          wordsLearned: 0, // Just listening, not learning
+          category: word.category,
+          timeSpent: 0.1, // Just a few seconds
+        });
+
+        if (pronunciationAchievements.length > 0) {
+          setTimeout(() => {
+            setWordAchievements(pronunciationAchievements);
+          }, 1000);
+        }
       },
       onError: () => {
         setIsPlaying(false);
@@ -488,6 +505,23 @@ export const WordCard: React.FC<WordCardProps> = ({
                           false,
                         );
                       setAdventureStatus(updatedStatus);
+
+                      // Track word mastery for journey achievements (hard/needs practice)
+                      const masteryAchievements =
+                        AchievementTracker.trackActivity({
+                          type: "wordLearning",
+                          wordsLearned: 0, // Not considered learned if marked as hard
+                          accuracy: 0,
+                          category: word.category,
+                          timeSpent: 1,
+                        });
+
+                      if (masteryAchievements.length > 0) {
+                        setTimeout(() => {
+                          setWordAchievements(masteryAchievements);
+                        }, 1000);
+                      }
+
                       // Also call the original handler
                       onWordMastered?.(word.id, "hard");
                     }}
@@ -509,6 +543,23 @@ export const WordCard: React.FC<WordCardProps> = ({
                           true,
                         );
                       setAdventureStatus(updatedStatus);
+
+                      // Track word mastery for journey achievements (medium/kinda)
+                      const masteryAchievements =
+                        AchievementTracker.trackActivity({
+                          type: "wordLearning",
+                          wordsLearned: 0.5, // Partial learning
+                          accuracy: 50,
+                          category: word.category,
+                          timeSpent: 1,
+                        });
+
+                      if (masteryAchievements.length > 0) {
+                        setTimeout(() => {
+                          setWordAchievements(masteryAchievements);
+                        }, 1000);
+                      }
+
                       // Also call the original handler
                       onWordMastered?.(word.id, "medium");
                     }}
@@ -530,6 +581,23 @@ export const WordCard: React.FC<WordCardProps> = ({
                           false,
                         );
                       setAdventureStatus(updatedStatus);
+
+                      // Track word mastery for journey achievements (easy/learned!)
+                      const masteryAchievements =
+                        AchievementTracker.trackActivity({
+                          type: "wordLearning",
+                          wordsLearned: 1, // Fully learned
+                          accuracy: 100,
+                          category: word.category,
+                          timeSpent: 1,
+                        });
+
+                      if (masteryAchievements.length > 0) {
+                        setTimeout(() => {
+                          setWordAchievements(masteryAchievements);
+                        }, 1000);
+                      }
+
                       // Also call the original handler
                       onWordMastered?.(word.id, "easy");
                     }}
@@ -572,6 +640,18 @@ export const WordCard: React.FC<WordCardProps> = ({
           )}
         </CardContent>
       </Card>
+
+      {/* Enhanced Achievement Popup for Word Mastery */}
+      {wordAchievements.length > 0 && (
+        <EnhancedAchievementPopup
+          achievements={wordAchievements}
+          onClose={() => setWordAchievements([])}
+          onAchievementClaim={(achievement) => {
+            console.log("Word mastery achievement claimed:", achievement);
+            // Could add additional reward logic here
+          }}
+        />
+      )}
     </div>
   );
 };
