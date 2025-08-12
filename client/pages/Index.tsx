@@ -1560,22 +1560,6 @@ export default function Index({ initialProfile }: IndexProps) {
                                             <Button
                                               onClick={() =>
                                                 setCurrentWordIndex(
-                                                  Math.max(
-                                                    0,
-                                                    currentWordIndex - 1,
-                                                  ),
-                                                )
-                                              }
-                                              disabled={currentWordIndex === 0}
-                                              variant="ghost"
-                                              size="sm"
-                                              className="text-xs text-slate-500 hover:text-slate-700"
-                                            >
-                                              �� Back
-                                            </Button>
-                                            <Button
-                                              onClick={() =>
-                                                setCurrentWordIndex(
                                                   Math.min(
                                                     displayWords.length - 1,
                                                     currentWordIndex + 1,
