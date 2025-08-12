@@ -320,7 +320,7 @@ export const WordCard: React.FC<WordCardProps> = ({
                 {new Date(adventureStatus.last_seen).toLocaleDateString()}
               </p>
             )}
-            <p className="text-xs md:text-sm opacity-75 mb-2">
+            <p className="text-xs md:text-sm opacity-75 mb-1">
               <RotateCcw className="w-3 h-3 md:w-4 md:h-4 inline mr-1" />
               Tap to see definition
             </p>
