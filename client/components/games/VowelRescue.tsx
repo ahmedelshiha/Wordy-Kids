@@ -56,11 +56,16 @@ export function VowelRescue({
   }, [timeLeft, isTimedMode, gameStarted, gameComplete]);
 
   const playAudio = () => {
-    // For demo purposes, we'll use speech synthesis API
+    // Use speech synthesis API with word pronunciation if available
     if ('speechSynthesis' in window) {
-      const utterance = new SpeechSynthesisUtterance(currentQuestion.word);
+      const wordToSpeak = currentQuestion.originalWord?.pronunciation
+        ? currentQuestion.originalWord.word
+        : currentQuestion.word;
+
+      const utterance = new SpeechSynthesisUtterance(wordToSpeak);
       utterance.rate = 0.7;
       utterance.pitch = 1.2;
+      utterance.volume = 0.8;
       speechSynthesis.speak(utterance);
     }
   };
