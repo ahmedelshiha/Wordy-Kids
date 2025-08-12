@@ -130,7 +130,7 @@ export default function Login() {
 
               {/* Title */}
               <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-4">
-                I'm New at Word Adventure
+                I'm New at Wordy's Adventure!
               </h2>
 
               {/* Description */}
