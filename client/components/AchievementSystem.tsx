@@ -702,7 +702,7 @@ export function AchievementSystem({
                         achievement.unlocked
                           ? `bg-gradient-to-br ${getDifficultyColor(achievement.difficulty)} text-white shadow-lg`
                           : "bg-white border-2 border-dashed border-gray-300 hover:border-educational-blue"
-                      } ${celebratingAchievement?.id === achievement.id ? "animate-bounce" : ""}`}
+                      }`}
                       onClick={() => handleAchievementClick(achievement)}
                     >
                       <CardHeader className="pb-2">
