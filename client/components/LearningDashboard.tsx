@@ -131,14 +131,14 @@ export const LearningDashboard: React.FC<LearningDashboardProps> = ({
             <div className="flex items-center gap-3">
               <div className="flex items-center gap-2">
                 <span className="text-2xl">
-                  {getProgressEmoji(actualPercentage)}
+                  {getProgressEmoji(actualPercentage, actualWordsLearned, actualGoal)}
                 </span>
                 <div>
                   <span className="text-sm font-bold text-slate-800">
                     Today's Word Quest
                   </span>
                   <div className="text-xs text-slate-600 mt-0.5">
-                    {getProgressMessage(actualPercentage)}
+                    {getProgressMessage(actualPercentage, actualWordsLearned, actualGoal)}
                   </div>
                 </div>
               </div>
@@ -152,8 +152,10 @@ export const LearningDashboard: React.FC<LearningDashboardProps> = ({
                   {actualWordsLearned}/{actualGoal} words
                 </Badge>
                 <div className="text-xs font-semibold text-educational-blue mt-1">
-                  {actualPercentage >= 100
-                    ? "Quest Complete!"
+                  {actualWordsLearned >= actualGoal
+                    ? actualWordsLearned > actualGoal
+                      ? `${Math.round((actualWordsLearned - actualGoal) / actualGoal * 100)}% beyond goal!`
+                      : "Quest Complete!"
                     : `${actualPercentage}% done`}
                 </div>
               </div>
