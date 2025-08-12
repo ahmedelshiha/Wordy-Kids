@@ -4,11 +4,25 @@ import { cn } from '@/lib/utils';
 const WordyOwlMascot: React.FC = () => {
   const [currentMessage, setCurrentMessage] = useState(0);
   const [isBlinking, setIsBlinking] = useState(false);
+  const [isClicked, setIsClicked] = useState(false);
 
   const messages = [
     "Hi there! I'm Wordy, and I'm here to make learning words super fun! Ready for an amazing adventure? 🚀",
-    "Let's learn 5 new words today! 🏆"
+    "Let's learn 5 new words today! 🏆",
+    "Hoot hoot! Click me anytime for encouragement! 🦉✨",
+    "You're doing amazing! Keep up the great work! 🌟",
+    "Every word you learn makes you smarter! 💪"
   ];
+
+  const handleClick = () => {
+    setIsClicked(true);
+    const randomMessage = Math.floor(Math.random() * 3) + 2; // Messages 2, 3, or 4
+    setCurrentMessage(randomMessage);
+
+    setTimeout(() => {
+      setIsClicked(false);
+    }, 300);
+  };
 
   // Change message after 5 seconds
   useEffect(() => {
