@@ -1878,7 +1878,7 @@ export default function Index({ initialProfile }: IndexProps) {
 
                       {/* Recent Scores */}
                       <div className="max-w-2xl mx-auto">
-                        <Card className="bg-gradient-to-r from-educational-blue/10 to-educational-purple/10">
+                        <Card className="bg-gradient-to-r from-educational-blue/10 to-educational-purple/10 hidden">
                           <CardHeader>
                             <CardTitle className="flex items-center gap-2">
                               <Trophy className="w-5 h-5 text-educational-orange" />
