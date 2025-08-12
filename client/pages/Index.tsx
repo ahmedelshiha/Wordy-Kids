@@ -339,6 +339,18 @@ export default function Index({ initialProfile }: IndexProps) {
   };
 
   const generateFreshWords = () => {
+    // Get total available words for the category
+    const totalAvailableWords = selectedCategory === "all"
+      ? wordsDatabase.length
+      : getWordsByCategory(selectedCategory).length;
+
+    // Reset excluded words if we've seen too many (more than 80% of available words)
+    const currentExcludedWords = excludedWordIds.size;
+    if (currentExcludedWords > totalAvailableWords * 0.8) {
+      console.log("Resetting excluded words to ensure fresh content");
+      setExcludedWordIds(new Set());
+    }
+
     const allReviewedWords = new Set([
       ...rememberedWords,
       ...forgottenWords,
@@ -348,7 +360,7 @@ export default function Index({ initialProfile }: IndexProps) {
     try {
       const smartSelection = SmartWordSelector.selectWords({
         category: selectedCategory,
-        count: 10,
+        count: 15, // Request more words to have better selection
         rememberedWords,
         forgottenWords,
         childStats,
@@ -357,7 +369,7 @@ export default function Index({ initialProfile }: IndexProps) {
       });
 
       // Filter out already seen words
-      const freshWords = smartSelection.words.filter(
+      let freshWords = smartSelection.words.filter(
         (word) => !allReviewedWords.has(word.id),
       );
 
@@ -365,23 +377,41 @@ export default function Index({ initialProfile }: IndexProps) {
       if (freshWords.length < 5) {
         const fallbackWords =
           selectedCategory === "all"
-            ? getRandomWords(10)
+            ? getRandomWords(20) // Get more fallback words
             : getWordsByCategory(selectedCategory);
 
         const additionalFreshWords = fallbackWords
           .filter((word) => !allReviewedWords.has(word.id))
-          .slice(0, 10 - freshWords.length);
+          .slice(0, 15 - freshWords.length);
 
         freshWords.push(...additionalFreshWords);
       }
 
+      // If still not enough words, include some reviewed words (but not recently remembered ones)
+      if (freshWords.length < 5) {
+        const reviewWords =
+          selectedCategory === "all"
+            ? getRandomWords(20)
+            : getWordsByCategory(selectedCategory);
+
+        const additionalWords = reviewWords
+          .filter((word) => !rememberedWords.has(word.id)) // Avoid recently remembered words
+          .slice(0, 10 - freshWords.length);
+
+        freshWords.push(...additionalWords);
+      }
+
+      // Take only the first 10 words for the game
+      const selectedWords = freshWords.slice(0, 10);
+
       // Update excluded words to include the new words we're about to show
       setExcludedWordIds(
-        (prev) => new Set([...prev, ...freshWords.map((w) => w.id)]),
+        (prev) => new Set([...prev, ...selectedWords.map((w) => w.id)]),
       );
-      setCurrentDashboardWords(freshWords.slice(0, 10));
+      setCurrentDashboardWords(selectedWords);
 
-      return freshWords.slice(0, 10);
+      console.log(`Generated ${selectedWords.length} fresh words. Excluded: ${excludedWordIds.size + selectedWords.length}`);
+      return selectedWords;
     } catch (error) {
       console.error("Error generating fresh words:", error);
       // Fallback to simple random selection
