@@ -68,6 +68,7 @@ export function InteractiveDashboardWordCard({
   forgottenWordsCount = 0,
   rememberedWordsCount = 0,
   className,
+  onRequestNewWords,
 }: InteractiveDashboardWordCardProps) {
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
   const [showWordName, setShowWordName] = useState(false);
