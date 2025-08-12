@@ -239,11 +239,11 @@ export function QuizGames({
         </CardHeader>
         <CardContent>
           <div className="space-y-3">
-            {quizzes.slice(0, 3).map((quiz, index) => {
+            {quizzes.filter(quiz => quiz.id !== 'standard').slice(0, 3).map((quiz, index) => {
               const mockScores = [
-                { score: "8/10", percentage: "80%", timeAgo: "Yesterday", color: "text-educational-blue" },
-                { score: "5/5", percentage: "100%", timeAgo: "2 days ago", color: "text-educational-green" },
-                { score: "12/15", percentage: "80%", timeAgo: "3 days ago", color: "text-educational-purple" }
+                { score: "5/5", percentage: "100%", timeAgo: "Yesterday", color: "text-educational-green" },
+                { score: "12/15", percentage: "80%", timeAgo: "2 days ago", color: "text-educational-purple" },
+                { score: "6/8", percentage: "75%", timeAgo: "3 days ago", color: "text-educational-orange" }
               ];
               const scoreData = mockScores[index];
 
