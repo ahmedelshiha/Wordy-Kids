@@ -5,7 +5,9 @@ interface WordyOwlMascotProps {
   isDraggable?: boolean;
 }
 
-const WordyOwlMascot: React.FC<WordyOwlMascotProps> = ({ isDraggable = false }) => {
+const WordyOwlMascot: React.FC<WordyOwlMascotProps> = ({
+  isDraggable = false,
+}) => {
   const [currentMessage, setCurrentMessage] = useState(0);
   const [isBlinking, setIsBlinking] = useState(false);
   const [isClicked, setIsClicked] = useState(false);
@@ -18,7 +20,9 @@ const WordyOwlMascot: React.FC<WordyOwlMascotProps> = ({ isDraggable = false }) 
 
   const messages = [
     "Hi there! I'm Wordy, and I'm here to make learning words super fun! Ready for an amazing adventure? 🚀",
-    isDraggable ? "Drag me around the screen! I can float anywhere! 🦉✨" : "Let's learn 5 new words today! 🏆",
+    isDraggable
+      ? "Drag me around the screen! I can float anywhere! 🦉✨"
+      : "Let's learn 5 new words today! 🏆",
     "Hoot hoot! Click me anytime for encouragement! 🦉✨",
     "You're doing amazing! Keep up the great work! 🌟",
     "Every word you learn makes you smarter! 💪",
@@ -48,7 +52,7 @@ const WordyOwlMascot: React.FC<WordyOwlMascotProps> = ({ isDraggable = false }) 
     if (rect) {
       offsetRef.current = {
         x: e.clientX - rect.left,
-        y: e.clientY - rect.top
+        y: e.clientY - rect.top,
       };
       startPosRef.current = { x: e.clientX, y: e.clientY };
     }
@@ -66,7 +70,7 @@ const WordyOwlMascot: React.FC<WordyOwlMascotProps> = ({ isDraggable = false }) 
     if (rect) {
       offsetRef.current = {
         x: touch.clientX - rect.left,
-        y: touch.clientY - rect.top
+        y: touch.clientY - rect.top,
       };
       startPosRef.current = { x: touch.clientX, y: touch.clientY };
     }
@@ -84,7 +88,7 @@ const WordyOwlMascot: React.FC<WordyOwlMascotProps> = ({ isDraggable = false }) 
 
     setPosition({
       x: Math.max(0, Math.min(maxX, newX)),
-      y: Math.max(0, Math.min(maxY, newY))
+      y: Math.max(0, Math.min(maxY, newY)),
     });
   };
 
@@ -102,7 +106,7 @@ const WordyOwlMascot: React.FC<WordyOwlMascotProps> = ({ isDraggable = false }) 
 
     setPosition({
       x: Math.max(0, Math.min(maxX, newX)),
-      y: Math.max(0, Math.min(maxY, newY))
+      y: Math.max(0, Math.min(maxY, newY)),
     });
   };
 
@@ -113,7 +117,7 @@ const WordyOwlMascot: React.FC<WordyOwlMascotProps> = ({ isDraggable = false }) 
       // Check if it was just a click (not a drag)
       const distance = Math.sqrt(
         Math.pow(e.clientX - startPosRef.current.x, 2) +
-        Math.pow(e.clientY - startPosRef.current.y, 2)
+          Math.pow(e.clientY - startPosRef.current.y, 2),
       );
 
       if (distance < 5) {
@@ -133,7 +137,7 @@ const WordyOwlMascot: React.FC<WordyOwlMascotProps> = ({ isDraggable = false }) 
       const touch = e.changedTouches[0];
       const distance = Math.sqrt(
         Math.pow(touch.clientX - startPosRef.current.x, 2) +
-        Math.pow(touch.clientY - startPosRef.current.y, 2)
+          Math.pow(touch.clientY - startPosRef.current.y, 2),
       );
 
       if (distance < 5) {
@@ -148,16 +152,18 @@ const WordyOwlMascot: React.FC<WordyOwlMascotProps> = ({ isDraggable = false }) 
   // Add global event listeners for dragging
   useEffect(() => {
     if (isDragging) {
-      document.addEventListener('mousemove', handleMouseMove);
-      document.addEventListener('mouseup', handleMouseUp);
-      document.addEventListener('touchmove', handleTouchMove, { passive: false });
-      document.addEventListener('touchend', handleTouchEnd);
+      document.addEventListener("mousemove", handleMouseMove);
+      document.addEventListener("mouseup", handleMouseUp);
+      document.addEventListener("touchmove", handleTouchMove, {
+        passive: false,
+      });
+      document.addEventListener("touchend", handleTouchEnd);
 
       return () => {
-        document.removeEventListener('mousemove', handleMouseMove);
-        document.removeEventListener('mouseup', handleMouseUp);
-        document.removeEventListener('touchmove', handleTouchMove);
-        document.removeEventListener('touchend', handleTouchEnd);
+        document.removeEventListener("mousemove", handleMouseMove);
+        document.removeEventListener("mouseup", handleMouseUp);
+        document.removeEventListener("touchmove", handleTouchMove);
+        document.removeEventListener("touchend", handleTouchEnd);
       };
     }
   }, [isDragging]);
@@ -188,15 +194,18 @@ const WordyOwlMascot: React.FC<WordyOwlMascotProps> = ({ isDraggable = false }) 
     "relative select-none",
     isDraggable && "cursor-move touch-none",
     isFloating && "z-50",
-    isDragging && "pointer-events-none"
+    isDragging && "pointer-events-none",
   );
 
-  const containerStyle = isDraggable && isFloating ? {
-    position: 'fixed' as const,
-    left: position.x,
-    top: position.y,
-    zIndex: 9999,
-  } : {};
+  const containerStyle =
+    isDraggable && isFloating
+      ? {
+          position: "fixed" as const,
+          left: position.x,
+          top: position.y,
+          zIndex: 9999,
+        }
+      : {};
 
   return (
     <div
@@ -223,13 +232,17 @@ const WordyOwlMascot: React.FC<WordyOwlMascotProps> = ({ isDraggable = false }) 
 
       {/* Speech Bubble */}
       <div className="absolute -top-16 md:-top-20 left-1/2 transform -translate-x-1/2 z-10 animate-fade-in">
-        <div className={cn(
-          "bg-white rounded-xl px-3 py-2 md:px-4 md:py-3 shadow-lg border-2 md:border-3 border-educational-yellow max-w-[280px] md:max-w-xs relative",
-          isDraggable && "border-dashed border-educational-purple",
-          isDragging && "border-educational-pink border-3"
-        )}>
+        <div
+          className={cn(
+            "bg-white rounded-xl px-3 py-2 md:px-4 md:py-3 shadow-lg border-2 md:border-3 border-educational-yellow max-w-[280px] md:max-w-xs relative",
+            isDraggable && "border-dashed border-educational-purple",
+            isDragging && "border-educational-pink border-3",
+          )}
+        >
           <p className="text-xs md:text-sm text-gray-800 font-medium text-center leading-tight">
-            {isDragging ? "🎯 Drag me around! I'm floating!" : messages[currentMessage]}
+            {isDragging
+              ? "🎯 Drag me around! I'm floating!"
+              : messages[currentMessage]}
           </p>
           {/* Speech bubble arrow */}
           <div className="absolute -bottom-1.5 md:-bottom-2 left-1/2 transform -translate-x-1/2">
@@ -247,7 +260,7 @@ const WordyOwlMascot: React.FC<WordyOwlMascotProps> = ({ isDraggable = false }) 
           isDraggable && "cursor-move",
           isClicked && "scale-95",
           isDragging && "scale-110 rotate-12",
-          isFloating && "drop-shadow-2xl"
+          isFloating && "drop-shadow-2xl",
         )}
         onClick={!isDraggable ? handleClick : undefined}
       >

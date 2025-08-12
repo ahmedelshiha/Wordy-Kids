@@ -666,8 +666,12 @@ export default function Index({ initialProfile }: IndexProps) {
                 <BookOpen className="w-4 h-4 text-white" />
               </div>
               <div>
-                <h1 className="text-sm font-bold leading-tight">Wordy's Adventure!</h1>
-                <p className="text-xs text-educational-yellow-light">WordWise 🦉</p>
+                <h1 className="text-sm font-bold leading-tight">
+                  Wordy's Adventure!
+                </h1>
+                <p className="text-xs text-educational-yellow-light">
+                  WordWise 🦉
+                </p>
               </div>
             </div>
             <WordyOwlMascot isDraggable={true} />
