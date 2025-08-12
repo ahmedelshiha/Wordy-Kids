@@ -68,6 +68,7 @@ export const WordCard: React.FC<WordCardProps> = ({
   const [showSparkles, setShowSparkles] = useState(false);
   const [adventureStatus, setAdventureStatus] =
     useState<WordAdventureStatus | null>(null);
+  const [wordAchievements, setWordAchievements] = useState<any[]>([]);
 
   // Initialize adventure status for this word
   React.useEffect(() => {
