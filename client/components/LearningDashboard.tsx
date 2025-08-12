@@ -162,12 +162,28 @@ export const LearningDashboard: React.FC<LearningDashboardProps> = ({
               <div className="flex flex-col items-center gap-1">
                 <div className="w-24 h-3 bg-slate-200 rounded-full overflow-hidden shadow-inner">
                   <div
-                    className="h-full bg-gradient-to-r from-educational-blue to-educational-purple rounded-full transition-all duration-500 ease-out"
+                    className={`h-full rounded-full transition-all duration-500 ease-out ${
+                      actualWordsLearned >= actualGoal
+                        ? actualWordsLearned >= actualGoal * 1.5
+                          ? "bg-gradient-to-r from-yellow-400 to-orange-500"
+                          : "bg-gradient-to-r from-green-400 to-emerald-500"
+                        : "bg-gradient-to-r from-educational-blue to-educational-purple"
+                    }`}
                     style={{ width: `${Math.min(actualPercentage, 100)}%` }}
                   ></div>
                 </div>
-                {actualPercentage >= 100 ? (
-                  <Trophy className="w-5 h-5 text-educational-yellow animate-bounce" />
+                {actualWordsLearned >= actualGoal ? (
+                  actualWordsLearned >= actualGoal * 1.5 ? (
+                    <div className="text-center">
+                      <Trophy className="w-5 h-5 text-yellow-500 animate-bounce" />
+                      <div className="text-xs text-yellow-600 font-bold">SUPERSTAR!</div>
+                    </div>
+                  ) : (
+                    <div className="text-center">
+                      <Trophy className="w-5 h-5 text-green-500 animate-bounce" />
+                      <div className="text-xs text-green-600 font-bold">GOAL!</div>
+                    </div>
+                  )
                 ) : (
                   <Target className="w-4 h-4 text-educational-blue/60" />
                 )}
