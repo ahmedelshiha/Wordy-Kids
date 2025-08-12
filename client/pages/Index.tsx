@@ -23,6 +23,7 @@ import { ParentDashboard } from "@/components/ParentDashboard";
 import { WordCreator } from "@/components/WordCreator";
 import { AdventureDashboard } from "@/components/AdventureDashboard";
 import { MobileBottomNav } from "@/components/MobileBottomNav";
+import WordyOwlMascot from "@/components/WordyOwlMascot";
 import { adventureService } from "@/lib/adventureService";
 import {
   wordsDatabase,
