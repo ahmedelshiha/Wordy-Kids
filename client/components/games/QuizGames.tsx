@@ -239,13 +239,8 @@ export function QuizGames({
         </CardHeader>
         <CardContent>
           <div className="space-y-3">
-            {quizzes.filter(quiz => quiz.id !== 'standard').slice(0, 3).map((quiz, index) => {
-              const mockScores = [
-                { score: "5/5", percentage: "100%", timeAgo: "Yesterday", color: "text-educational-green" },
-                { score: "12/15", percentage: "80%", timeAgo: "2 days ago", color: "text-educational-purple" },
-                { score: "6/8", percentage: "75%", timeAgo: "3 days ago", color: "text-educational-orange" }
-              ];
-              const scoreData = mockScores[index];
+            {quizTypes.filter(quiz => quiz.id === 'picture').map((quiz, index) => {
+              const scoreData = { score: "6/8", percentage: "75%", timeAgo: "Yesterday", color: "text-educational-orange" };
 
               return (
                 <div key={quiz.id} className="flex justify-between items-center p-3 bg-white rounded-lg">
