@@ -123,7 +123,7 @@ export default function LoginForm() {
   const handleForgotPassword = () => {
     setMessage({
       type: "success",
-      text: "Password reset instructions sent! Check your email.",
+      text: "🦉 Wordy sent magic instructions to your email! Check it out! 📧✨",
     });
   };
 
