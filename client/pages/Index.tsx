@@ -516,11 +516,6 @@ export default function Index({ initialProfile }: IndexProps) {
     );
   };
 
-  const startPracticeGame = () => {
-    const words = getPracticeWords();
-    setPracticeWords(words);
-    setShowPracticeGame(true);
-  };
 
   const handlePracticeComplete = (results: {
     correctWords: string[];
