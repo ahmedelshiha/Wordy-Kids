@@ -1793,7 +1793,7 @@ export default function Index({ initialProfile }: IndexProps) {
                             </p>
                             <div className="flex justify-center gap-2 mb-4">
                               <span className="bg-educational-orange/20 text-educational-orange px-2 py-1 rounded-full text-xs">
-                                8 Questions
+                                10 Questions
                               </span>
                               <span className="bg-educational-orange/20 text-educational-orange px-2 py-1 rounded-full text-xs">
                                 35s Each
