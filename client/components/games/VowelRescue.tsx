@@ -119,9 +119,20 @@ export function VowelRescue({
   };
 
   const handleTryAgain = () => {
-    setSelectedVowels({});
+    // Clear wrong selections but keep any correct ones
+    const clearedVowels: { [key: number]: string } = {};
+    currentQuestion.missingIndex.forEach(idx => {
+      const selectedVowel = selectedVowels[idx];
+      const correctVowel = currentQuestion.word[idx];
+
+      // Keep correct vowels, clear wrong ones
+      if (selectedVowel && selectedVowel.toLowerCase() === correctVowel.toLowerCase()) {
+        clearedVowels[idx] = selectedVowel;
+      }
+    });
+
+    setSelectedVowels(clearedVowels);
     setShowFeedback(false);
-    setAttempts(attempts + 1);
   };
 
   const handleShowHint = () => {
