@@ -251,7 +251,7 @@ export const WordCard: React.FC<WordCardProps> = ({
           <div className="mt-4 md:mt-6"></div>
 
           {word.imageUrl ? (
-            <div className="relative mx-auto mt-2 mb-3">
+            <div className="relative mx-auto mt-1 mb-2">
               <div className="w-40 h-40 md:w-48 md:h-48 rounded-full bg-white/20 backdrop-blur-sm shadow-2xl ring-4 ring-white/30 flex items-center justify-center overflow-hidden">
                 <img
                   src={word.imageUrl}
@@ -261,7 +261,7 @@ export const WordCard: React.FC<WordCardProps> = ({
               </div>
             </div>
           ) : (
-            <div className="relative mx-auto mt-2 mb-3">
+            <div className="relative mx-auto mt-1 mb-2">
               <div className="w-40 h-40 md:w-48 md:h-48 rounded-full bg-gradient-to-br from-white/30 via-white/20 to-white/10 backdrop-blur-md shadow-2xl ring-4 ring-white/30 flex items-center justify-center relative overflow-hidden">
                 {/* Decorative background elements */}
                 <div className="absolute top-1 left-1 w-4 h-4 bg-white/20 rounded-full animate-pulse"></div>
