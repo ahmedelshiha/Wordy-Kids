@@ -1641,18 +1641,18 @@ export default function Index({ initialProfile }: IndexProps) {
                 <TabsContent value="quiz">
                   {!showQuiz && !gameMode && !showMatchingGame ? (
                     <div className="space-y-8">
-                      {/* Quiz Header */}
+                      {/* Quiz Header - Kid-Friendly & Mobile Optimized */}
                       <div className="text-center">
-                        <div className="flex justify-center mb-6">
-                          <div className="bg-gradient-to-r from-educational-blue via-educational-purple to-educational-pink p-6 rounded-full shadow-2xl">
-                            <Brain className="w-16 h-16 text-white" />
+                        <div className="flex justify-center mb-4">
+                          <div className="bg-gradient-to-r from-educational-blue via-educational-purple to-educational-pink p-3 md:p-4 rounded-full shadow-lg animate-gentle-bounce">
+                            <Brain className="w-8 h-8 md:w-12 md:h-12 text-white" />
                           </div>
                         </div>
-                        <h2 className="text-2xl md:text-4xl font-bold text-gray-800 mb-4">
+                        <h2 className="text-xl md:text-3xl font-bold text-gray-800 mb-2 md:mb-4">
                           🎮 Quiz Time!
                         </h2>
-                        <p className="text-base md:text-xl text-gray-600 mb-6 md:mb-8">
-                          Test your vocabulary knowledge with fun quizzes!
+                        <p className="text-sm md:text-lg text-gray-600 mb-4 md:mb-6 px-4">
+                          Test your vocabulary with super fun quizzes! 🌟
                         </p>
                       </div>
 
