@@ -41,11 +41,9 @@ import {
   shuffleArray,
 } from "@/lib/gameGeneration";
 import {
-  BookOpen,
   Play,
   Trophy,
   Users,
-  Sparkles,
   ArrowRight,
   Star,
   Target,
