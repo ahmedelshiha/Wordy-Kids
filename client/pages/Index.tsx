@@ -2086,6 +2086,28 @@ export default function Index({ initialProfile }: IndexProps) {
                         }}
                       />
                     </div>
+                  ) : selectedQuizType?.startsWith("vowel-") ? (
+                    <VowelRescue
+                      questions={(() => {
+                        switch (selectedQuizType) {
+                          case "vowel-easy":
+                            return getEasyVowelQuestions(10);
+                          case "vowel-challenge":
+                            return getMediumVowelQuestions(8);
+                          case "vowel-timed":
+                            return getTimedVowelQuestions();
+                          default:
+                            return getEasyVowelQuestions(10);
+                        }
+                      })()}
+                      onComplete={handleQuizComplete}
+                      onExit={handleQuizExit}
+                      gameMode={
+                        selectedQuizType === "vowel-easy" ? "easy" :
+                        selectedQuizType === "vowel-challenge" ? "challenge" :
+                        selectedQuizType === "vowel-timed" ? "timed" : "easy"
+                      }
+                    />
                   ) : (
                     <QuizGame
                       questions={(() => {
