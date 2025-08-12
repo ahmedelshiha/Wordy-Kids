@@ -284,7 +284,7 @@ export default function IndexEnhanced() {
     setFeedback({
       type: "celebration",
       title: "Profile Created! 🎉",
-      message: `Welcome to Word Adventure, ${newProfile.name}! Your learning journey begins now!`,
+      message: `Welcome to Wordy's Adventure, ${newProfile.name}! Your learning journey begins now!`,
       onContinue: () => setFeedback(null),
     });
   };
