@@ -139,8 +139,8 @@ export const QuizGame: React.FC<QuizGameProps> = ({
       audioService.playSuccessSound();
       setTimeout(() => setShowCelebration(false), 2000);
     } else {
-      // Play error sound for wrong answers
-      playSoundIfEnabled.error();
+      // Play encouraging speech for wrong answers
+      audioService.playEncouragementSound();
     }
 
     setTimeout(() => {
