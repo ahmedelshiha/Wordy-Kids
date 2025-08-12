@@ -295,7 +295,7 @@ export default function LoginForm() {
               )}
 
               {/* Super Fun Login Button */}
-              <div className="pt-4">
+              <div className="pt-2">
                 <Button
                   type="submit"
                   disabled={isLoading || !formData.email || !formData.password}
