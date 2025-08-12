@@ -171,6 +171,8 @@ export function InteractiveDashboardWordCard({
   };
 
   const advanceToNextWord = () => {
+    console.log(`Advancing from word ${currentWordIndex + 1}/${words.length}`);
+
     // Reset states for next word
     setIsAnswered(false);
     setFeedbackType(null);
@@ -178,7 +180,29 @@ export function InteractiveDashboardWordCard({
 
     // Mark current word as shown
     if (currentWord) {
-      setShownWordIds((prev) => new Set([...prev, currentWord.id]));
+      setShownWordIds((prev) => {
+        const newSet = new Set([...prev, currentWord.id]);
+        console.log(`Marked word ${currentWord.id} as shown. Total shown: ${newSet.size}`);
+        return newSet;
+      });
+    }
+
+    // Calculate how many words we've shown vs available
+    const totalShown = shownWordIds.size + (currentWord ? 1 : 0);
+    const wordsRemaining = words.length - totalShown;
+
+    console.log(`Words status: ${totalShown} shown, ${wordsRemaining} remaining, ${words.length} total`);
+
+    // If we've shown most words in current set (80% or more), request new words
+    if (wordsRemaining <= Math.max(1, Math.floor(words.length * 0.2))) {
+      console.log('Requesting new words - running low on current set');
+      if (onRequestNewWords) {
+        onRequestNewWords();
+        // Reset tracking and start fresh
+        setShownWordIds(new Set());
+        setCurrentWordIndex(0);
+        return;
+      }
     }
 
     // Find next unseen word
@@ -188,6 +212,7 @@ export function InteractiveDashboardWordCard({
     // Search for next unseen word in current set
     for (let i = nextIndex; i < words.length; i++) {
       if (!shownWordIds.has(words[i].id) && words[i].id !== currentWord?.id) {
+        console.log(`Found next unseen word at index ${i}: ${words[i].word}`);
         setCurrentWordIndex(i);
         foundUnseen = true;
         break;
@@ -198,6 +223,7 @@ export function InteractiveDashboardWordCard({
     if (!foundUnseen) {
       for (let i = 0; i < currentWordIndex; i++) {
         if (!shownWordIds.has(words[i].id)) {
+          console.log(`Found unseen word at beginning, index ${i}: ${words[i].word}`);
           setCurrentWordIndex(i);
           foundUnseen = true;
           break;
@@ -207,13 +233,16 @@ export function InteractiveDashboardWordCard({
 
     // If all words in current set have been shown, request new words
     if (!foundUnseen) {
+      console.log('All words shown, requesting new set');
       if (onRequestNewWords) {
         onRequestNewWords();
         // Reset tracking and start fresh
         setShownWordIds(new Set());
         setCurrentWordIndex(0);
       } else {
-        // Fallback: loop back to start
+        // Fallback: restart current set
+        console.log('No new words available, restarting current set');
+        setShownWordIds(new Set());
         setCurrentWordIndex(0);
       }
     }
