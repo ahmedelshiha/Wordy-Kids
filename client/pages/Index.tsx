@@ -1784,12 +1784,12 @@ export default function Index({ initialProfile }: IndexProps) {
                         {/* Picture Quiz */}
                         <Card className="cursor-pointer hover:shadow-xl transition-all duration-300 hover:scale-105 border-2 border-educational-orange/30">
                           <CardContent className="p-6 text-center">
-                            <div className="text-6xl mb-4">���️</div>
+                            <div className="text-6xl mb-4">🖼️</div>
                             <h3 className="text-xl font-bold text-educational-orange mb-2">
-                              Picture Quiz
+                              Picture Fun!
                             </h3>
                             <p className="text-gray-600 mb-4">
-                              Visual learning! Match pictures with words.
+                              Look at fun pictures and find the matching words! Can you spot them all?
                             </p>
                             <div className="flex justify-center gap-2 mb-4">
                               <span className="bg-educational-orange/20 text-educational-orange px-2 py-1 rounded-full text-xs">
