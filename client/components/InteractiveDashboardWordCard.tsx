@@ -56,6 +56,22 @@ interface InteractiveDashboardWordCardProps {
   onRequestNewWords?: () => void; // New prop to request fresh words
 }
 
+interface SessionStats {
+  wordsCompleted: number;
+  wordsRemembered: number;
+  wordsForgotten: number;
+  accuracy: number;
+  sessionStartTime: number;
+}
+
+interface Achievement {
+  id: string;
+  title: string;
+  description: string;
+  emoji: string;
+  unlocked: boolean;
+}
+
 export function InteractiveDashboardWordCard({
   words,
   onWordProgress,
@@ -70,7 +86,21 @@ export function InteractiveDashboardWordCard({
   className,
   onRequestNewWords,
 }: InteractiveDashboardWordCardProps) {
+  // Session Management
+  const SESSION_SIZE = 20;
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
+  const [sessionStats, setSessionStats] = useState<SessionStats>({
+    wordsCompleted: 0,
+    wordsRemembered: 0,
+    wordsForgotten: 0,
+    accuracy: 0,
+    sessionStartTime: Date.now()
+  });
+  const [sessionWords, setSessionWords] = useState<any[]>([]);
+  const [showSessionComplete, setShowSessionComplete] = useState(false);
+  const [sessionAchievements, setSessionAchievements] = useState<Achievement[]>([]);
+
+  // UI States
   const [showWordName, setShowWordName] = useState(false);
   const [isAnswered, setIsAnswered] = useState(false);
   const [celebrationEffect, setCelebrationEffect] = useState(false);
@@ -80,10 +110,6 @@ export function InteractiveDashboardWordCard({
   >(null);
   const [guess, setGuess] = useState("");
   const [showHint, setShowHint] = useState(false);
-  const [shownWordIds, setShownWordIds] = useState<Set<number>>(new Set());
-  const [localRememberedCount, setLocalRememberedCount] = useState(0);
-  const [localForgottenCount, setLocalForgottenCount] = useState(0);
-  const [achievementMessage, setAchievementMessage] = useState<string | null>(null);
 
   const currentWord = words[currentWordIndex] || null;
   const dailyProgress = Math.round(
