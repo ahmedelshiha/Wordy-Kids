@@ -122,8 +122,12 @@ export default function LoginForm() {
         {/* Header */}
         <div className="text-center mb-8">
           <div className="flex justify-center mb-6">
-            <div className="bg-gradient-to-r from-blue-500 to-purple-600 p-6 rounded-full shadow-lg">
-              <BookOpen className="w-12 h-12 text-white" />
+            <div className="bg-gradient-to-r from-blue-500 to-purple-600 p-2 rounded-full shadow-lg">
+              <img
+                src="https://cdn.builder.io/api/v1/image/assets%2F626e97dfba5d44b5b893aa10ced647c7%2F78d82c1a7dfe42c5a8f230b46991bcb4?format=webp&width=800"
+                alt="Wordy the Owl - Educational Mascot"
+                className="w-20 h-20 rounded-full bg-white p-1"
+              />
             </div>
           </div>
           <h1 className="text-3xl md:text-4xl font-bold text-gray-800 mb-4">
