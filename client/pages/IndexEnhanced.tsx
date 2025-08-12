@@ -333,7 +333,11 @@ export default function IndexEnhanced() {
           <div className="text-center max-w-4xl mx-auto">
             <div className="flex justify-center mb-4">
               <div className="bg-white/20 backdrop-blur-sm rounded-full p-4">
-                <BookOpen className="w-12 h-12 text-white" />
+                <img
+                  src="https://cdn.builder.io/api/v1/image/assets%2F122959266afa4d539a05a574b1531c32%2Fa3e1599156fb43479f1df1383fc15be2?format=webp&width=800"
+                  alt="Wordy the Owl"
+                  className="icon-xl"
+                />
               </div>
             </div>
             <h1 className="text-4xl md:text-5xl font-bold mb-3">
@@ -806,7 +810,7 @@ export default function IndexEnhanced() {
                     onUnlock={(achievement) => {
                       setFeedback({
                         type: "celebration",
-                        title: "Achievement Unlocked! ��",
+                        title: "Achievement Unlocked! ���",
                         message: `You earned: ${achievement.name}`,
                         onContinue: () => setFeedback(null),
                       });
