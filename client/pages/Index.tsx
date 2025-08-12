@@ -350,14 +350,18 @@ export default function Index({ initialProfile }: IndexProps) {
   };
 
   const generateFreshWords = () => {
+    console.log(`Generating fresh words for category: ${selectedCategory}`);
+
     // Get total available words for the category
     const totalAvailableWords = selectedCategory === "all"
       ? wordsDatabase.length
       : getWordsByCategory(selectedCategory).length;
 
-    // Reset excluded words if we've seen too many (more than 80% of available words)
+    console.log(`Total available words: ${totalAvailableWords}, Currently excluded: ${excludedWordIds.size}`);
+
+    // Reset excluded words if we've seen too many (more than 70% of available words)
     const currentExcludedWords = excludedWordIds.size;
-    if (currentExcludedWords > totalAvailableWords * 0.8) {
+    if (currentExcludedWords > totalAvailableWords * 0.7) {
       console.log("Resetting excluded words to ensure fresh content");
       setExcludedWordIds(new Set());
     }
@@ -369,40 +373,58 @@ export default function Index({ initialProfile }: IndexProps) {
     ]);
 
     try {
-      const smartSelection = SmartWordSelector.selectWords({
-        category: selectedCategory,
-        count: 15, // Request more words to have better selection
-        rememberedWords,
-        forgottenWords,
-        childStats,
-        prioritizeWeakCategories: true,
-        includeReviewWords: false, // Focus on new words to avoid repetition
-      });
+      let freshWords = [];
 
-      // Filter out already seen words
-      let freshWords = smartSelection.words.filter(
-        (word) => !allReviewedWords.has(word.id),
-      );
+      // If "all" categories, get a mix from different categories
+      if (selectedCategory === "all") {
+        const categories = ["food", "animals", "colors", "body", "nature", "objects", "transportation", "feelings"];
+        const wordsPerCategory = Math.ceil(12 / categories.length);
 
-      // If we don't have enough fresh words from smart selection, get random words
-      if (freshWords.length < 5) {
+        for (const cat of categories) {
+          const categoryWords = getWordsByCategory(cat)
+            .filter((word) => !allReviewedWords.has(word.id))
+            .slice(0, wordsPerCategory);
+          freshWords.push(...categoryWords);
+        }
+
+        // Shuffle for variety
+        freshWords = shuffleArray(freshWords);
+      } else {
+        // For specific categories, use smart selection
+        const smartSelection = SmartWordSelector.selectWords({
+          category: selectedCategory,
+          count: 15, // Request more words to have better selection
+          rememberedWords,
+          forgottenWords,
+          childStats,
+          prioritizeWeakCategories: true,
+          includeReviewWords: false, // Focus on new words to avoid repetition
+        });
+
+        freshWords = smartSelection.words.filter(
+          (word) => !allReviewedWords.has(word.id),
+        );
+      }
+
+      // If we don't have enough fresh words, get more from the category
+      if (freshWords.length < 8) {
         const fallbackWords =
           selectedCategory === "all"
-            ? getRandomWords(20) // Get more fallback words
+            ? getRandomWords(25) // Get more fallback words
             : getWordsByCategory(selectedCategory);
 
         const additionalFreshWords = fallbackWords
           .filter((word) => !allReviewedWords.has(word.id))
-          .slice(0, 15 - freshWords.length);
+          .slice(0, 12 - freshWords.length);
 
         freshWords.push(...additionalFreshWords);
       }
 
       // If still not enough words, include some reviewed words (but not recently remembered ones)
-      if (freshWords.length < 5) {
+      if (freshWords.length < 6) {
         const reviewWords =
           selectedCategory === "all"
-            ? getRandomWords(20)
+            ? getRandomWords(30)
             : getWordsByCategory(selectedCategory);
 
         const additionalWords = reviewWords
@@ -412,7 +434,10 @@ export default function Index({ initialProfile }: IndexProps) {
         freshWords.push(...additionalWords);
       }
 
-      // Take only the first 10 words for the game
+      // Ensure variety by shuffling
+      freshWords = shuffleArray(freshWords);
+
+      // Take the first 10 words for the game
       const selectedWords = freshWords.slice(0, 10);
 
       // Update excluded words to include the new words we're about to show
@@ -421,7 +446,8 @@ export default function Index({ initialProfile }: IndexProps) {
       );
       setCurrentDashboardWords(selectedWords);
 
-      console.log(`Generated ${selectedWords.length} fresh words. Excluded: ${excludedWordIds.size + selectedWords.length}`);
+      console.log(`Generated ${selectedWords.length} fresh words:`, selectedWords.map(w => `${w.word} (${w.category})`));
+      console.log(`Total excluded after generation: ${excludedWordIds.size + selectedWords.length}`);
       return selectedWords;
     } catch (error) {
       console.error("Error generating fresh words:", error);
