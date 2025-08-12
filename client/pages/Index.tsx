@@ -1656,8 +1656,8 @@ export default function Index({ initialProfile }: IndexProps) {
                         </p>
                       </div>
 
-                      {/* All Unique Games and Quizzes - NO DUPLICATES, NO FOLDERS */}
-                      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 max-w-7xl mx-auto">
+                      {/* Kid-Friendly Quiz Cards - Mobile Optimized */}
+                      <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 md:gap-4 max-w-6xl mx-auto px-2">
                         {/* Matching Game */}
                         <Card className="hidden cursor-pointer hover:shadow-xl transition-all duration-300 hover:scale-105 border-2 border-educational-purple/30">
                           <CardContent className="p-6 text-center">
