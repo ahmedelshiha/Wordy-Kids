@@ -296,36 +296,36 @@ export function VowelRescue({
   if (gameComplete) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-educational-green/20 to-educational-blue/20 flex items-center justify-center p-4">
-        <Card className="w-full max-w-md">
-          <CardContent className="p-8 text-center">
+        <Card className="w-full max-w-md mx-4">
+          <CardContent className="p-6 sm:p-8 text-center">
             <motion.div
               initial={{ scale: 0, rotate: -180 }}
               animate={{ scale: 1, rotate: 0 }}
-              className="text-6xl mb-4"
+              className="text-5xl sm:text-6xl mb-4"
             >
               🏆
             </motion.div>
-            <h1 className="text-3xl font-bold text-educational-green mb-4">
+            <h1 className="text-2xl sm:text-3xl font-bold text-educational-green mb-4">
               Adventure Complete!
             </h1>
-            <div className="text-4xl font-bold text-educational-blue mb-4">
+            <div className="text-3xl sm:text-4xl font-bold text-educational-blue mb-4">
               {score} points!
             </div>
-            <p className="text-gray-600 mb-6">
+            <p className="text-sm sm:text-base text-gray-600 mb-6 px-2">
               You rescued {Math.floor(score / 5)} vowels! Great job! 🌟
             </p>
-            <div className="flex gap-2">
+            <div className="flex flex-col sm:flex-row gap-2">
               <Button
                 onClick={onExit}
                 variant="outline"
-                className="flex-1"
+                className="flex-1 min-h-[44px]"
               >
                 <ArrowLeft className="w-4 h-4 mr-2" />
                 Back to Games
               </Button>
               <Button
                 onClick={() => window.location.reload()}
-                className="flex-1 bg-educational-blue hover:bg-educational-blue/90"
+                className="flex-1 bg-educational-blue hover:bg-educational-blue/90 min-h-[44px]"
               >
                 Play Again
               </Button>
