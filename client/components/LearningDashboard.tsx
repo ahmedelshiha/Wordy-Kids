@@ -101,7 +101,7 @@ export const LearningDashboard: React.FC<LearningDashboardProps> = ({
     if (percentage >= 100) return "🏆";
     if (percentage >= 90) return "⭐";
     if (percentage >= 75) return "🎯";
-    if (percentage >= 50) return "����";
+    if (percentage >= 50) return "💪";
     return "🌟";
   };
 
