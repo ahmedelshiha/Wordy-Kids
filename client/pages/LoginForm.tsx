@@ -123,7 +123,11 @@ export default function LoginForm() {
         <div className="text-center mb-8">
           <div className="flex justify-center mb-6">
             <div className="bg-gradient-to-r from-blue-500 to-purple-600 p-6 rounded-full shadow-lg">
-              <BookOpen className="w-12 h-12 text-white" />
+              <img
+                src="https://cdn.builder.io/api/v1/image/assets%2F122959266afa4d539a05a574b1531c32%2Fa3e1599156fb43479f1df1383fc15be2?format=webp&width=800"
+                alt="Wordy the Owl"
+                className="icon-md"
+              />
             </div>
           </div>
           <h1 className="text-3xl md:text-4xl font-bold text-gray-800 mb-4">
