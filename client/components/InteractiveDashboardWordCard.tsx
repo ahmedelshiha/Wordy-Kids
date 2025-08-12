@@ -292,6 +292,7 @@ export function InteractiveDashboardWordCard({
       // Call the progress callback for overall tracking
       await onWordProgress(currentWord, status);
       console.log(`Word progress callback completed for: ${currentWord.word}`);
+      console.log(`Session progress: ${newStats.wordsCompleted}/${SESSION_SIZE}, Accuracy: ${newStats.accuracy}%`);
     } catch (error) {
       console.error('Error in word progress callback:', error);
     }
