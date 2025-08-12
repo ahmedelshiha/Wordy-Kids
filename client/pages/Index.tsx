@@ -592,7 +592,7 @@ export default function Index({ initialProfile }: IndexProps) {
         <div className="absolute inset-0 bg-black/10"></div>
         <div className="relative container mx-auto px-4 py-2 md:py-4">
           {/* Mobile header - simplified */}
-          <div className="hidden flex items-center justify-center mb-2 md:hidden">
+          <div className="flex items-center justify-center mb-2 md:hidden">
             <div className="flex items-center gap-2">
               <div className="bg-white/20 backdrop-blur-sm rounded-full p-1.5">
                 <img
@@ -601,7 +601,7 @@ export default function Index({ initialProfile }: IndexProps) {
                   className="icon-sm"
                 />
               </div>
-              <h1 className="text-lg font-bold">Word Adventure</h1>
+              <h1 className="text-lg font-bold">Wordy's Adventure!</h1>
             </div>
           </div>
 
@@ -617,17 +617,17 @@ export default function Index({ initialProfile }: IndexProps) {
               </div>
             </div>
             <h1 className="text-2xl md:text-3xl font-bold mb-1">
-              ⭐ Word Adventure
+              🌟 Wordy's Adventure!
             </h1>
             <p className="text-sm md:text-base mb-3 opacity-90">
-              Welcome to your vocabulary adventure! Ready for some learning fun?
+              Fun vocabulary learning for kids! 📚
             </p>
           </div>
 
           {/* Mobile simplified header */}
-          <div className="hidden text-center md:hidden">
+          <div className="text-center md:hidden">
             <p className="text-xs opacity-90">
-              Ready for your vocabulary adventure?
+              Fun vocabulary learning for kids! 📚
             </p>
           </div>
         </div>
