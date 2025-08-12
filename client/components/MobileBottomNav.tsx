@@ -47,6 +47,7 @@ export function MobileBottomNav({
       color: "from-purple-500 to-pink-500",
       bgColor: "bg-purple-100",
       textColor: "text-purple-600",
+      badge: undefined,
     },
     {
       id: "learn",
@@ -56,6 +57,7 @@ export function MobileBottomNav({
       color: "from-green-500 to-emerald-500",
       bgColor: "bg-green-100",
       textColor: "text-green-600",
+      badge: undefined,
     },
     {
       id: "quiz",
@@ -65,6 +67,7 @@ export function MobileBottomNav({
       color: "from-pink-500 to-rose-500",
       bgColor: "bg-pink-100",
       textColor: "text-pink-600",
+      badge: undefined,
     },
     {
       id: "adventure",
@@ -74,6 +77,7 @@ export function MobileBottomNav({
       color: "from-green-500 to-emerald-500",
       bgColor: "bg-green-100",
       textColor: "text-green-600",
+      badge: undefined,
     },
   ];
 
