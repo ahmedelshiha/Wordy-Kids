@@ -609,7 +609,11 @@ export default function Index({ initialProfile }: IndexProps) {
           <div className="text-center max-w-4xl mx-auto hidden md:block">
             <div className="flex justify-center mb-2">
               <div className="bg-white/20 backdrop-blur-sm rounded-full p-3">
-                <BookOpen className="w-8 h-8 text-white" />
+                <img
+                  src="https://cdn.builder.io/api/v1/image/assets%2F122959266afa4d539a05a574b1531c32%2Fa3e1599156fb43479f1df1383fc15be2?format=webp&width=800"
+                  alt="Wordy the Owl"
+                  className="icon-xl"
+                />
               </div>
             </div>
             <h1 className="text-2xl md:text-3xl font-bold mb-1">
@@ -1360,7 +1364,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                             </div>
                                             <div className="flex items-center gap-1 text-red-600">
                                               <span className="text-base">
-                                                ��
+                                                ❌
                                               </span>
                                               <span className="font-medium">
                                                 {forgottenWords.size}
