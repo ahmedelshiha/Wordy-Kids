@@ -341,7 +341,7 @@ export default function IndexEnhanced() {
               </div>
             </div>
             <h1 className="text-4xl md:text-5xl font-bold mb-3">
-              ⭐ Word Adventure
+              🌟 Wordy's Adventure!
             </h1>
             <p className="text-lg md:text-xl mb-6 opacity-90">
               Welcome back, {currentProfile?.name}! Ready for more vocabulary
