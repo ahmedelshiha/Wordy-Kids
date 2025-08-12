@@ -144,19 +144,19 @@ export function QuizGames({
 
       switch (activeQuiz) {
         case "vowel-easy":
-          vowelQuestions = getEasyVowelQuestions(10);
+          vowelQuestions = getSystematicEasyVowelQuestions(10, selectedCategory);
           gameMode = "easy";
           break;
         case "vowel-challenge":
-          vowelQuestions = getMediumVowelQuestions(8);
+          vowelQuestions = getSystematicMediumVowelQuestions(8, selectedCategory);
           gameMode = "challenge";
           break;
         case "vowel-timed":
-          vowelQuestions = getTimedVowelQuestions();
+          vowelQuestions = getSystematicTimedVowelQuestions(selectedCategory);
           gameMode = "timed";
           break;
         default:
-          vowelQuestions = getEasyVowelQuestions(10);
+          vowelQuestions = getSystematicEasyVowelQuestions(10, selectedCategory);
           gameMode = "easy";
       }
 
