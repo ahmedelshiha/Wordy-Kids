@@ -69,16 +69,6 @@ export function MobileBottomNav({
       textColor: "text-pink-600",
       badge: undefined,
     },
-    {
-      id: "adventure",
-      emoji: "🎯",
-      label: "Practice",
-      icon: Sword,
-      color: "from-green-500 to-emerald-500",
-      bgColor: "bg-green-100",
-      textColor: "text-green-600",
-      badge: undefined,
-    },
   ];
 
   const secondaryMenuItems = [
