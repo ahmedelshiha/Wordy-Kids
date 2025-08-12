@@ -1900,24 +1900,6 @@ export default function Index({ initialProfile }: IndexProps) {
                   )}
                 </TabsContent>
 
-                <TabsContent value="adventure">
-                  <AdventureDashboard
-                    words={wordsDatabase.map((word) => ({
-                      id: word.id,
-                      word: word.word,
-                      definition: word.definition,
-                      emoji: word.emoji,
-                      imageUrl: word.imageUrl,
-                      wrongDefinitions: [
-                        "A type of ancient tool used by early humans",
-                        "A scientific term for weather patterns",
-                        "A mathematical concept related to geometry",
-                        "A historical event from the medieval period",
-                      ],
-                      hint: `This word starts with "${word.word.charAt(0)}" and relates to ${word.category}`,
-                    }))}
-                  />
-                </TabsContent>
 
                 <TabsContent value="progress">
                   <AchievementSystem
