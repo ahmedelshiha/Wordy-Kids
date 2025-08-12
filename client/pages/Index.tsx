@@ -575,7 +575,23 @@ export default function Index({ initialProfile }: IndexProps) {
       });
 
       // Update child stats immediately for real-time feedback
-      setChildStats(response.updatedStats);
+      // But ensure we don't regress if local state is higher
+      setChildStats((prevStats) => {
+        const currentLocalProgress = rememberedWords.size;
+        const apiProgress = response.updatedStats?.wordsRemembered || 0;
+
+        console.log('Updating childStats:', {
+          prevWordsRemembered: prevStats?.wordsRemembered,
+          apiProgress,
+          currentLocalProgress,
+          willUse: Math.max(apiProgress, currentLocalProgress)
+        });
+
+        return {
+          ...response.updatedStats,
+          wordsRemembered: Math.max(apiProgress, currentLocalProgress)
+        };
+      });
 
       // Learning stats are computed dynamically from current state
 
@@ -796,7 +812,7 @@ export default function Index({ initialProfile }: IndexProps) {
               📚
             </div>
             <div className="hidden md:block absolute bottom-10 left-20 text-4xl animate-bounce delay-1000">
-              ������
+              ��������
             </div>
             <div className="hidden md:block absolute bottom-20 right-10 text-3xl animate-pulse delay-500">
               🚀
