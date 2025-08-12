@@ -294,8 +294,9 @@ export function AchievementSystem({
 }: AchievementSystemProps) {
   const [selectedCategory, setSelectedCategory] = useState<string>("all");
   const [showUnlockables, setShowUnlockables] = useState(false);
-  const [celebratingAchievement, setCelebratingAchievement] =
-    useState<Achievement | null>(null);
+  // OLD ACHIEVEMENT CELEBRATION SYSTEM REMOVED
+  // const [celebratingAchievement, setCelebratingAchievement] =
+  //   useState<Achievement | null>(null);
   const [activeTab, setActiveTab] = useState("achievements");
 
   const categories = [
