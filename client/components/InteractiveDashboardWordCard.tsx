@@ -1018,6 +1018,18 @@ export function InteractiveDashboardWordCard({
           </div>
         </div>
       </div> */}
+
+      {/* Enhanced Achievement Popup for Journey Achievements */}
+      {journeyAchievements.length > 0 && (
+        <EnhancedAchievementPopup
+          achievements={journeyAchievements}
+          onClose={() => setJourneyAchievements([])}
+          onAchievementClaim={(achievement) => {
+            console.log('Journey achievement claimed in dashboard:', achievement);
+            // Could add additional reward logic here
+          }}
+        />
+      )}
     </div>
   );
 }
