@@ -830,7 +830,7 @@ export function InteractiveDashboardWordCard({
               </div>
 
               {/* Skip button (smaller, less prominent) */}
-              <div className="text-center mt-2 mb-1">
+              <div className="text-center mt-1 mb-0">
                 <Button
                   onClick={() => handleWordAction("skipped")}
                   variant="ghost"
