@@ -995,7 +995,7 @@ export default function Index({ initialProfile }: IndexProps) {
 
                   <button
                     onClick={() => setActiveTab("adventure")}
-                    className={`w-full flex items-center gap-3 p-3 lg:p-4 rounded-xl lg:rounded-2xl transition-all ${
+                    className={`hidden w-full flex items-center gap-3 p-3 lg:p-4 rounded-xl lg:rounded-2xl transition-all ${
                       activeTab === "adventure"
                         ? "bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-lg"
                         : "bg-white text-gray-700 hover:bg-purple-50 border border-purple-100"
