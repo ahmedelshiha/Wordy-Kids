@@ -180,13 +180,13 @@ export function VowelRescue({
     return currentQuestion.word.split("").map((letter, index) => {
       const isMissing = currentQuestion.missingIndex.includes(index);
       const selectedVowel = selectedVowels[index];
-      
+
       return (
         <motion.span
           key={index}
-          className={`inline-block text-2xl md:text-4xl font-bold mx-1 ${
-            isMissing 
-              ? "w-8 md:w-12 h-10 md:h-14 border-b-4 border-educational-blue text-center" 
+          className={`inline-block text-xl sm:text-2xl md:text-4xl font-bold mx-0.5 sm:mx-1 ${
+            isMissing
+              ? "w-6 sm:w-8 md:w-12 h-8 sm:h-10 md:h-14 border-b-2 sm:border-b-4 border-educational-blue text-center"
               : ""
           }`}
           initial={{ scale: 0.8 }}
@@ -195,7 +195,7 @@ export function VowelRescue({
         >
           {isMissing ? (
             <span className={`
-              ${showFeedback 
+              ${showFeedback
                 ? selectedVowel?.toLowerCase() === letter.toLowerCase()
                   ? "text-green-500 animate-bounce"
                   : "text-red-500 animate-pulse"
