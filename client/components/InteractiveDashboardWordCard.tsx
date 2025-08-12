@@ -96,11 +96,13 @@ export function InteractiveDashboardWordCard({
     wordsRemembered: 0,
     wordsForgotten: 0,
     accuracy: 0,
-    sessionStartTime: Date.now()
+    sessionStartTime: Date.now(),
   });
   const [sessionWords, setSessionWords] = useState<any[]>([]);
   const [showSessionComplete, setShowSessionComplete] = useState(false);
-  const [sessionAchievements, setSessionAchievements] = useState<Achievement[]>([]);
+  const [sessionAchievements, setSessionAchievements] = useState<Achievement[]>(
+    [],
+  );
 
   // UI States
   const [showWordName, setShowWordName] = useState(false);
@@ -124,25 +126,27 @@ export function InteractiveDashboardWordCard({
         wordsRemembered: 0,
         wordsForgotten: 0,
         accuracy: 0,
-        sessionStartTime: Date.now()
+        sessionStartTime: Date.now(),
       });
       console.log(`New session started with ${sessionWordSet.length} words`);
     }
   }, [words]);
 
   const currentWord = sessionWords[currentWordIndex] || null;
-  const sessionProgress = Math.round((sessionStats.wordsCompleted / SESSION_SIZE) * 100);
+  const sessionProgress = Math.round(
+    (sessionStats.wordsCompleted / SESSION_SIZE) * 100,
+  );
 
   // Debug logging for session tracking
   useEffect(() => {
-    console.log('Session Debug:', {
+    console.log("Session Debug:", {
       currentWordIndex: currentWordIndex + 1,
       sessionSize: SESSION_SIZE,
       wordsCompleted: sessionStats.wordsCompleted,
       wordsRemembered: sessionStats.wordsRemembered,
       wordsForgotten: sessionStats.wordsForgotten,
       accuracy: sessionStats.accuracy,
-      sessionProgress
+      sessionProgress,
     });
   }, [sessionStats, currentWordIndex, sessionProgress]);
 
@@ -180,43 +184,43 @@ export function InteractiveDashboardWordCard({
     if (wordsCompleted === SESSION_SIZE) {
       if (accuracy === 100) {
         achievements.push({
-          id: 'perfect_session',
-          title: 'PERFECT SESSION!',
+          id: "perfect_session",
+          title: "PERFECT SESSION!",
           description: `Amazing! You got all ${SESSION_SIZE} words correct!`,
-          emoji: '🏆',
-          unlocked: true
+          emoji: "🏆",
+          unlocked: true,
         });
       } else if (accuracy >= 90) {
         achievements.push({
-          id: 'excellent_session',
-          title: 'EXCELLENT SESSION!',
+          id: "excellent_session",
+          title: "EXCELLENT SESSION!",
           description: `Outstanding! ${accuracy}% accuracy on ${SESSION_SIZE} words!`,
-          emoji: '⭐',
-          unlocked: true
+          emoji: "⭐",
+          unlocked: true,
         });
       } else if (accuracy >= 75) {
         achievements.push({
-          id: 'great_session',
-          title: 'GREAT SESSION!',
+          id: "great_session",
+          title: "GREAT SESSION!",
           description: `Well done! ${accuracy}% accuracy. Keep it up!`,
-          emoji: '🎯',
-          unlocked: true
+          emoji: "🎯",
+          unlocked: true,
         });
       } else if (accuracy >= 50) {
         achievements.push({
-          id: 'good_effort',
-          title: 'GOOD EFFORT!',
+          id: "good_effort",
+          title: "GOOD EFFORT!",
           description: `Nice try! ${accuracy}% accuracy. Practice makes perfect!`,
-          emoji: '💪',
-          unlocked: true
+          emoji: "💪",
+          unlocked: true,
         });
       } else {
         achievements.push({
-          id: 'session_complete',
-          title: 'SESSION COMPLETE!',
+          id: "session_complete",
+          title: "SESSION COMPLETE!",
           description: `You finished all ${SESSION_SIZE} words! Every attempt helps you learn!`,
-          emoji: '🌟',
-          unlocked: true
+          emoji: "🌟",
+          unlocked: true,
         });
       }
 
@@ -225,22 +229,22 @@ export function InteractiveDashboardWordCard({
       const minutes = Math.round(sessionTime / 60000);
       if (minutes <= 5 && accuracy >= 80) {
         achievements.push({
-          id: 'speed_demon',
-          title: 'SPEED DEMON!',
+          id: "speed_demon",
+          title: "SPEED DEMON!",
           description: `Lightning fast! Completed in ${minutes} minutes with ${accuracy}% accuracy!`,
-          emoji: '⚡',
-          unlocked: true
+          emoji: "⚡",
+          unlocked: true,
         });
       }
 
       // Streak achievements
       if (wordsRemembered >= 15) {
         achievements.push({
-          id: 'word_master',
-          title: 'WORD MASTER!',
+          id: "word_master",
+          title: "WORD MASTER!",
           description: `Incredible! You remembered ${wordsRemembered} out of ${SESSION_SIZE} words!`,
-          emoji: '🧠',
-          unlocked: true
+          emoji: "🧠",
+          unlocked: true,
         });
       }
     }
@@ -256,7 +260,7 @@ export function InteractiveDashboardWordCard({
     console.log(`Word Action: ${currentWord.word} - ${status}`, {
       wordId: currentWord.id,
       sessionProgress: `${currentWordIndex + 1}/${SESSION_SIZE}`,
-      sessionStats
+      sessionStats,
     });
 
     // Mark as answered immediately to prevent double-clicks
@@ -266,13 +270,22 @@ export function InteractiveDashboardWordCard({
     const newStats = {
       ...sessionStats,
       wordsCompleted: sessionStats.wordsCompleted + 1,
-      wordsRemembered: status === "remembered" ? sessionStats.wordsRemembered + 1 : sessionStats.wordsRemembered,
-      wordsForgotten: status === "needs_practice" ? sessionStats.wordsForgotten + 1 : sessionStats.wordsForgotten,
+      wordsRemembered:
+        status === "remembered"
+          ? sessionStats.wordsRemembered + 1
+          : sessionStats.wordsRemembered,
+      wordsForgotten:
+        status === "needs_practice"
+          ? sessionStats.wordsForgotten + 1
+          : sessionStats.wordsForgotten,
     };
 
     // Calculate accuracy
     const totalAnswered = newStats.wordsRemembered + newStats.wordsForgotten;
-    newStats.accuracy = totalAnswered > 0 ? Math.round((newStats.wordsRemembered / totalAnswered) * 100) : 0;
+    newStats.accuracy =
+      totalAnswered > 0
+        ? Math.round((newStats.wordsRemembered / totalAnswered) * 100)
+        : 0;
 
     setSessionStats(newStats);
 
@@ -299,9 +312,11 @@ export function InteractiveDashboardWordCard({
       // Call the progress callback for overall tracking
       await onWordProgress(currentWord, status);
       console.log(`Word progress callback completed for: ${currentWord.word}`);
-      console.log(`Session progress: ${newStats.wordsCompleted}/${SESSION_SIZE}, Accuracy: ${newStats.accuracy}%`);
+      console.log(
+        `Session progress: ${newStats.wordsCompleted}/${SESSION_SIZE}, Accuracy: ${newStats.accuracy}%`,
+      );
     } catch (error) {
-      console.error('Error in word progress callback:', error);
+      console.error("Error in word progress callback:", error);
     }
 
     // Check if session is complete
@@ -310,9 +325,9 @@ export function InteractiveDashboardWordCard({
       setSessionAchievements(achievements);
       setShowSessionComplete(true);
 
-      console.log('Session completed!', {
+      console.log("Session completed!", {
         stats: newStats,
-        achievements: achievements.map(a => a.title)
+        achievements: achievements.map((a) => a.title),
       });
       return;
     }
@@ -339,15 +354,17 @@ export function InteractiveDashboardWordCard({
 
     if (nextIndex < SESSION_SIZE && nextIndex < sessionWords.length) {
       setCurrentWordIndex(nextIndex);
-      console.log(`Advanced to word ${nextIndex + 1}/${SESSION_SIZE}: ${sessionWords[nextIndex]?.word}`);
+      console.log(
+        `Advanced to word ${nextIndex + 1}/${SESSION_SIZE}: ${sessionWords[nextIndex]?.word}`,
+      );
     } else {
-      console.log('Reached end of session words');
+      console.log("Reached end of session words");
       // This shouldn't happen as session completion is handled in handleWordAction
     }
   };
 
   const startNewSession = () => {
-    console.log('Starting new session...');
+    console.log("Starting new session...");
 
     // Reset all session state
     setShowSessionComplete(false);
@@ -363,7 +380,7 @@ export function InteractiveDashboardWordCard({
       wordsRemembered: 0,
       wordsForgotten: 0,
       accuracy: 0,
-      sessionStartTime: Date.now()
+      sessionStartTime: Date.now(),
     });
 
     // Request new words for next session
@@ -474,15 +491,21 @@ export function InteractiveDashboardWordCard({
             <div className="bg-gradient-to-r from-blue-50 to-purple-50 rounded-2xl p-4 mb-6">
               <div className="grid grid-cols-3 gap-4 text-center">
                 <div>
-                  <div className="text-2xl font-bold text-green-600">{sessionStats.wordsRemembered}</div>
+                  <div className="text-2xl font-bold text-green-600">
+                    {sessionStats.wordsRemembered}
+                  </div>
                   <div className="text-sm text-gray-600">Remembered</div>
                 </div>
                 <div>
-                  <div className="text-2xl font-bold text-orange-600">{sessionStats.wordsForgotten}</div>
+                  <div className="text-2xl font-bold text-orange-600">
+                    {sessionStats.wordsForgotten}
+                  </div>
                   <div className="text-sm text-gray-600">To Practice</div>
                 </div>
                 <div>
-                  <div className="text-2xl font-bold text-purple-600">{sessionStats.accuracy}%</div>
+                  <div className="text-2xl font-bold text-purple-600">
+                    {sessionStats.accuracy}%
+                  </div>
                   <div className="text-sm text-gray-600">Accuracy</div>
                 </div>
               </div>
@@ -490,10 +513,17 @@ export function InteractiveDashboardWordCard({
 
             {/* Achievements */}
             {sessionAchievements.map((achievement, index) => (
-              <div key={achievement.id} className="mb-4 p-4 bg-gradient-to-r from-yellow-100 to-orange-100 rounded-2xl border border-yellow-300">
+              <div
+                key={achievement.id}
+                className="mb-4 p-4 bg-gradient-to-r from-yellow-100 to-orange-100 rounded-2xl border border-yellow-300"
+              >
                 <div className="text-3xl mb-2">{achievement.emoji}</div>
-                <div className="font-bold text-lg text-gray-800">{achievement.title}</div>
-                <div className="text-sm text-gray-600">{achievement.description}</div>
+                <div className="font-bold text-lg text-gray-800">
+                  {achievement.title}
+                </div>
+                <div className="text-sm text-gray-600">
+                  {achievement.description}
+                </div>
               </div>
             ))}
 
@@ -507,7 +537,6 @@ export function InteractiveDashboardWordCard({
           </div>
         </div>
       )}
-
 
       {/* Daily Goal Header - Hidden */}
       {/* <div className="text-center bg-gradient-to-r from-educational-blue to-educational-purple text-white p-4 rounded-2xl shadow-lg">
@@ -564,13 +593,22 @@ export function InteractiveDashboardWordCard({
               >
                 {currentWord.category}
               </Badge>
-              <Badge variant="outline" className="text-sm px-3 py-1 bg-blue-50 text-blue-700 border-blue-300">
+              <Badge
+                variant="outline"
+                className="text-sm px-3 py-1 bg-blue-50 text-blue-700 border-blue-300"
+              >
                 Word {currentWordIndex + 1} / {SESSION_SIZE}
               </Badge>
-              <Badge variant="outline" className="text-sm px-3 py-1 bg-green-50 text-green-700 border-green-300">
+              <Badge
+                variant="outline"
+                className="text-sm px-3 py-1 bg-green-50 text-green-700 border-green-300"
+              >
                 Session: {sessionStats.wordsCompleted} / {SESSION_SIZE}
               </Badge>
-              <Badge variant="outline" className="text-sm px-3 py-1 bg-purple-50 text-purple-700 border-purple-300">
+              <Badge
+                variant="outline"
+                className="text-sm px-3 py-1 bg-purple-50 text-purple-700 border-purple-300"
+              >
                 {sessionStats.accuracy}% Accuracy
               </Badge>
             </div>
@@ -733,12 +771,19 @@ export function InteractiveDashboardWordCard({
               <div className="mt-4 bg-gradient-to-r from-blue-50 to-purple-50 rounded-xl p-3 border border-blue-200">
                 {/* Session Progress Header */}
                 <div className="text-center mb-3">
-                  <div className="text-sm text-gray-700 font-bold">Session Progress</div>
-                  <div className="text-xs text-gray-600">{sessionStats.wordsCompleted} / {SESSION_SIZE} words completed</div>
+                  <div className="text-sm text-gray-700 font-bold">
+                    Session Progress
+                  </div>
+                  <div className="text-xs text-gray-600">
+                    {sessionStats.wordsCompleted} / {SESSION_SIZE} words
+                    completed
+                  </div>
                   <div className="w-full bg-gray-200 rounded-full h-2 mt-2">
                     <div
                       className="bg-gradient-to-r from-blue-500 to-purple-500 h-2 rounded-full transition-all duration-300"
-                      style={{ width: `${(sessionStats.wordsCompleted / SESSION_SIZE) * 100}%` }}
+                      style={{
+                        width: `${(sessionStats.wordsCompleted / SESSION_SIZE) * 100}%`,
+                      }}
                     ></div>
                   </div>
                 </div>
@@ -771,7 +816,8 @@ export function InteractiveDashboardWordCard({
                 <div className="mt-3 text-center">
                   {sessionStats.wordsRemembered >= 15 ? (
                     <div className="text-green-600 font-medium text-xs">
-                      🌟 Outstanding! {sessionStats.wordsRemembered} words mastered!
+                      🌟 Outstanding! {sessionStats.wordsRemembered} words
+                      mastered!
                     </div>
                   ) : sessionStats.wordsRemembered >= 10 ? (
                     <div className="text-green-600 font-medium text-xs">

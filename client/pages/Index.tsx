@@ -139,14 +139,19 @@ export default function Index({ initialProfile }: IndexProps) {
 
   // Debug logging for state changes
   useEffect(() => {
-    console.log('State Update:', {
+    console.log("State Update:", {
       rememberedWordsCount: rememberedWords.size,
       forgottenWordsCount: forgottenWords.size,
       currentDashboardWordsLength: currentDashboardWords.length,
       learningStatsWeeklyProgress: rememberedWords.size,
-      childStatsWordsRemembered: childStats?.wordsRemembered
+      childStatsWordsRemembered: childStats?.wordsRemembered,
     });
-  }, [rememberedWords.size, forgottenWords.size, currentDashboardWords.length, childStats?.wordsRemembered]);
+  }, [
+    rememberedWords.size,
+    forgottenWords.size,
+    currentDashboardWords.length,
+    childStats?.wordsRemembered,
+  ]);
 
   // Dynamic learning stats that reflect actual progress
   const learningStats = {
@@ -353,11 +358,14 @@ export default function Index({ initialProfile }: IndexProps) {
     console.log(`Generating fresh words for category: ${selectedCategory}`);
 
     // Get total available words for the category
-    const totalAvailableWords = selectedCategory === "all"
-      ? wordsDatabase.length
-      : getWordsByCategory(selectedCategory).length;
+    const totalAvailableWords =
+      selectedCategory === "all"
+        ? wordsDatabase.length
+        : getWordsByCategory(selectedCategory).length;
 
-    console.log(`Total available words: ${totalAvailableWords}, Currently excluded: ${excludedWordIds.size}`);
+    console.log(
+      `Total available words: ${totalAvailableWords}, Currently excluded: ${excludedWordIds.size}`,
+    );
 
     // Reset excluded words if we've seen too many (more than 70% of available words)
     const currentExcludedWords = excludedWordIds.size;
@@ -377,7 +385,16 @@ export default function Index({ initialProfile }: IndexProps) {
 
       // If "all" categories, get a mix from different categories
       if (selectedCategory === "all") {
-        const categories = ["food", "animals", "colors", "body", "nature", "objects", "transportation", "feelings"];
+        const categories = [
+          "food",
+          "animals",
+          "colors",
+          "body",
+          "nature",
+          "objects",
+          "transportation",
+          "feelings",
+        ];
         const wordsPerCategory = Math.ceil(12 / categories.length);
 
         for (const cat of categories) {
@@ -446,8 +463,13 @@ export default function Index({ initialProfile }: IndexProps) {
       );
       setCurrentDashboardWords(selectedWords);
 
-      console.log(`Generated ${selectedWords.length} fresh words:`, selectedWords.map(w => `${w.word} (${w.category})`));
-      console.log(`Total excluded after generation: ${excludedWordIds.size + selectedWords.length}`);
+      console.log(
+        `Generated ${selectedWords.length} fresh words:`,
+        selectedWords.map((w) => `${w.word} (${w.category})`),
+      );
+      console.log(
+        `Total excluded after generation: ${excludedWordIds.size + selectedWords.length}`,
+      );
       return selectedWords;
     } catch (error) {
       console.error("Error generating fresh words:", error);
@@ -580,16 +602,16 @@ export default function Index({ initialProfile }: IndexProps) {
         const currentLocalProgress = rememberedWords.size;
         const apiProgress = response.updatedStats?.wordsRemembered || 0;
 
-        console.log('Updating childStats:', {
+        console.log("Updating childStats:", {
           prevWordsRemembered: prevStats?.wordsRemembered,
           apiProgress,
           currentLocalProgress,
-          willUse: Math.max(apiProgress, currentLocalProgress)
+          willUse: Math.max(apiProgress, currentLocalProgress),
         });
 
         return {
           ...response.updatedStats,
-          wordsRemembered: Math.max(apiProgress, currentLocalProgress)
+          wordsRemembered: Math.max(apiProgress, currentLocalProgress),
         };
       });
 
@@ -1121,31 +1143,33 @@ export default function Index({ initialProfile }: IndexProps) {
                       console.log(`Word Progress: ${word.word} - ${status}`, {
                         wordId: word.id,
                         currentRemembered: rememberedWords.size,
-                        currentForgotten: forgottenWords.size
+                        currentForgotten: forgottenWords.size,
                       });
 
                       // Handle word progress in dashboard
                       if (status === "remembered") {
-                        setRememberedWords(
-                          (prev) => {
-                            const newSet = new Set([...prev, word.id]);
-                            console.log(`Updated remembered words: ${newSet.size}`, Array.from(newSet));
-                            return newSet;
-                          }
-                        );
+                        setRememberedWords((prev) => {
+                          const newSet = new Set([...prev, word.id]);
+                          console.log(
+                            `Updated remembered words: ${newSet.size}`,
+                            Array.from(newSet),
+                          );
+                          return newSet;
+                        });
                         setForgottenWords((prev) => {
                           const newSet = new Set(prev);
                           newSet.delete(word.id);
                           return newSet;
                         });
                       } else if (status === "needs_practice") {
-                        setForgottenWords(
-                          (prev) => {
-                            const newSet = new Set([...prev, word.id]);
-                            console.log(`Updated forgotten words: ${newSet.size}`, Array.from(newSet));
-                            return newSet;
-                          }
-                        );
+                        setForgottenWords((prev) => {
+                          const newSet = new Set([...prev, word.id]);
+                          console.log(
+                            `Updated forgotten words: ${newSet.size}`,
+                            Array.from(newSet),
+                          );
+                          return newSet;
+                        });
                         setRememberedWords((prev) => {
                           const newSet = new Set(prev);
                           newSet.delete(word.id);
