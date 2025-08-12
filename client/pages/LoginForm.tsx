@@ -194,7 +194,7 @@ export default function LoginForm() {
             </CardTitle>
           </CardHeader>
           <CardContent className="p-4 md:p-8">
-            <form onSubmit={handleLogin} className="space-y-8">
+            <form onSubmit={handleLogin} className="space-y-4">
               {/* Email Field */}
               <div className="relative">
                 <Label
@@ -288,7 +288,7 @@ export default function LoginForm() {
                     )}
                     <span>{message.text}</span>
                     {message.type === "success" && (
-                      <span className="text-2xl animate-sparkle">✨</span>
+                      <span className="text-2xl animate-sparkle">���</span>
                     )}
                   </div>
                 </div>
