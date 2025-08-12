@@ -136,7 +136,6 @@ export function VowelRescue({
 
       // Play celebration effects like main dashboard
       setShowMainCelebration(true);
-      playSoundIfEnabled.success();
       audioService.playSuccessSound();
 
       setTimeout(() => {
