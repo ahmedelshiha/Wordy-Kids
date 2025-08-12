@@ -258,25 +258,26 @@ export function InteractiveDashboardWordCard({
 
     console.log(`Word Action: ${currentWord.word} - ${status}`, {
       wordId: currentWord.id,
-      currentIndex: currentWordIndex,
-      totalWords: words.length,
-      localRemembered: localRememberedCount,
-      localForgotten: localForgottenCount
+      sessionProgress: `${currentWordIndex + 1}/${SESSION_SIZE}`,
+      sessionStats
     });
 
     // Mark as answered immediately to prevent double-clicks
     setIsAnswered(true);
 
-    // Update local counters
-    if (status === "remembered") {
-      setLocalRememberedCount(prev => {
-        const newCount = prev + 1;
-        checkForAchievements(newCount, localForgottenCount);
-        return newCount;
-      });
-    } else if (status === "needs_practice") {
-      setLocalForgottenCount(prev => prev + 1);
-    }
+    // Update session stats
+    const newStats = {
+      ...sessionStats,
+      wordsCompleted: sessionStats.wordsCompleted + 1,
+      wordsRemembered: status === "remembered" ? sessionStats.wordsRemembered + 1 : sessionStats.wordsRemembered,
+      wordsForgotten: status === "needs_practice" ? sessionStats.wordsForgotten + 1 : sessionStats.wordsForgotten,
+    };
+
+    // Calculate accuracy
+    const totalAnswered = newStats.wordsRemembered + newStats.wordsForgotten;
+    newStats.accuracy = totalAnswered > 0 ? Math.round((newStats.wordsRemembered / totalAnswered) * 100) : 0;
+
+    setSessionStats(newStats);
 
     // Set visual feedback type
     if (status !== "skipped") {
@@ -293,12 +294,24 @@ export function InteractiveDashboardWordCard({
     }
 
     try {
-      // Call the progress callback and wait for it to complete
+      // Call the progress callback for overall tracking
       await onWordProgress(currentWord, status);
       console.log(`Word progress callback completed for: ${currentWord.word}`);
-      console.log(`Local progress: ${localRememberedCount + (status === "remembered" ? 1 : 0)} remembered, ${localForgottenCount + (status === "needs_practice" ? 1 : 0)} forgotten`);
     } catch (error) {
       console.error('Error in word progress callback:', error);
+    }
+
+    // Check if session is complete
+    if (newStats.wordsCompleted >= SESSION_SIZE) {
+      const achievements = checkSessionAchievements(newStats);
+      setSessionAchievements(achievements);
+      setShowSessionComplete(true);
+
+      console.log('Session completed!', {
+        stats: newStats,
+        achievements: achievements.map(a => a.title)
+      });
+      return;
     }
 
     // Auto-advance to next word after progress is recorded
