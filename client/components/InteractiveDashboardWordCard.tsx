@@ -80,6 +80,7 @@ export function InteractiveDashboardWordCard({
   >(null);
   const [guess, setGuess] = useState("");
   const [showHint, setShowHint] = useState(false);
+  const [shownWordIds, setShownWordIds] = useState<Set<number>>(new Set());
 
   const currentWord = words[currentWordIndex] || null;
   const dailyProgress = Math.round(
