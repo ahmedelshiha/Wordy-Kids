@@ -608,6 +608,18 @@ export function VowelRescue({
             </motion.div>
           )}
         </AnimatePresence>
+
+        {/* Enhanced Achievement Popup */}
+        {newAchievements.length > 0 && (
+          <EnhancedAchievementPopup
+            achievements={newAchievements}
+            onClose={() => setNewAchievements([])}
+            onAchievementClaim={(achievement) => {
+              console.log('Achievement claimed:', achievement);
+              // Could add additional reward logic here
+            }}
+          />
+        )}
       </div>
     </div>
   );
