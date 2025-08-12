@@ -125,6 +125,17 @@ export default function Index({ initialProfile }: IndexProps) {
   const [excludedWordIds, setExcludedWordIds] = useState<Set<number>>(new Set());
   const [currentDashboardWords, setCurrentDashboardWords] = useState<any[]>([]);
 
+  // Initialize dashboard words when category changes or component mounts
+  useEffect(() => {
+    const initializeWords = () => {
+      if (currentDashboardWords.length === 0) {
+        generateFreshWords();
+      }
+    };
+
+    initializeWords();
+  }, [selectedCategory]); // Re-initialize when category changes
+
   // Dynamic learning stats that reflect actual progress
   const learningStats = {
     wordsLearned: rememberedWords.size,
