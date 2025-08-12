@@ -1596,7 +1596,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                             </div>
                                             <div className="flex items-center gap-1 text-red-600">
                                               <span className="text-base">
-                                                ���
+                                                💪
                                               </span>
                                               <span className="font-medium">
                                                 {forgottenWords.size}
