@@ -133,7 +133,7 @@ const generatePictureQuestion = (word: Word) => {
   return {
     id: word.id,
     word: word.word,
-    question: `Which word matches this emoji? ${word.emoji}`,
+    question: `Which word matches this picture?`,
     options: shuffleArray([word.word, ...wrongWords.map((w) => w.word)]),
     correctAnswer: word.word,
     explanation: word.definition,

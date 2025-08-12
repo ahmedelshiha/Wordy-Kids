@@ -1649,11 +1649,10 @@ export default function Index({ initialProfile }: IndexProps) {
                           </div>
                         </div>
                         <h2 className="text-2xl md:text-4xl font-bold text-gray-800 mb-4">
-                          🎮 Quiz & Game Time!
+                          🎮 Quiz Time!
                         </h2>
                         <p className="text-base md:text-xl text-gray-600 mb-6 md:mb-8">
-                          Test your vocabulary knowledge with fun quizzes and
-                          interactive games! Choose your challenge below.
+                          Test your vocabulary knowledge with fun quizzes!
                         </p>
                       </div>
 
@@ -1787,14 +1786,15 @@ export default function Index({ initialProfile }: IndexProps) {
                           <CardContent className="p-6 text-center">
                             <div className="text-6xl mb-4">🖼️</div>
                             <h3 className="text-xl font-bold text-educational-orange mb-2">
-                              Picture Quiz
+                              Picture Fun!
                             </h3>
                             <p className="text-gray-600 mb-4">
-                              Visual learning! Match pictures with words.
+                              Look at fun pictures and find the matching words!
+                              Can you spot them all?
                             </p>
                             <div className="flex justify-center gap-2 mb-4">
                               <span className="bg-educational-orange/20 text-educational-orange px-2 py-1 rounded-full text-xs">
-                                8 Questions
+                                10 Questions
                               </span>
                               <span className="bg-educational-orange/20 text-educational-orange px-2 py-1 rounded-full text-xs">
                                 35s Each
@@ -2024,7 +2024,7 @@ export default function Index({ initialProfile }: IndexProps) {
 
                             case "picture":
                               return generateQuizQuestions(
-                                8,
+                                10,
                                 undefined,
                                 selectedCategory,
                                 "picture",

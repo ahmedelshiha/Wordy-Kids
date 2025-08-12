@@ -249,18 +249,17 @@ export const QuizGame: React.FC<QuizGameProps> = ({
 
         <CardContent className="pt-8 pb-6">
           <div className="text-center mb-8">
-            <div className="text-6xl mb-4">{currentQuestion.emoji || "📚"}</div>
+            {/* Animated Picture Container */}
+            <div className="inline-block mb-6">
+              <div className="bg-gradient-to-br from-educational-blue-light to-educational-purple-light p-8 rounded-3xl shadow-lg border-3 border-rainbow animate-gentle-float">
+                <div className="text-8xl animate-sparkle">
+                  {currentQuestion.emoji || "📚"}
+                </div>
+              </div>
+            </div>
             <h2 className="text-2xl font-bold text-slate-800 mb-4">
               {currentQuestion.question}
             </h2>
-
-            {currentQuestion.word && (
-              <div className="inline-block">
-                <Badge className="text-lg px-4 py-2 bg-educational-blue text-white">
-                  {currentQuestion.word}
-                </Badge>
-              </div>
-            )}
           </div>
 
           {/* Answer Options */}

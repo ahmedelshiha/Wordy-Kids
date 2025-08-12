@@ -509,7 +509,7 @@ export const wordsDatabase: Word[] = [
     definition: "Flat furniture you put things on",
     example: "We eat dinner at the table",
     funFact: "Tables were first used by ancient Egyptians!",
-    emoji: "🪑",
+    emoji: "🍽️",
     category: "objects",
     difficulty: "easy",
   },
