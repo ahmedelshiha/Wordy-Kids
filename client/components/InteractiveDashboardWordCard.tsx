@@ -160,7 +160,7 @@ export function InteractiveDashboardWordCard({
 
     // Mark current word as shown
     if (currentWord) {
-      setShownWordIds(prev => new Set([...prev, currentWord.id]));
+      setShownWordIds((prev) => new Set([...prev, currentWord.id]));
     }
 
     // Find next unseen word

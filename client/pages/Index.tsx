@@ -122,7 +122,9 @@ export default function Index({ initialProfile }: IndexProps) {
   const [showPracticeGame, setShowPracticeGame] = useState(false);
   const [practiceWords, setPracticeWords] = useState<any[]>([]);
   const [showMobileMoreMenu, setShowMobileMoreMenu] = useState(false);
-  const [excludedWordIds, setExcludedWordIds] = useState<Set<number>>(new Set());
+  const [excludedWordIds, setExcludedWordIds] = useState<Set<number>>(
+    new Set(),
+  );
   const [currentDashboardWords, setCurrentDashboardWords] = useState<any[]>([]);
 
   // Initialize dashboard words when category changes or component mounts
@@ -338,7 +340,11 @@ export default function Index({ initialProfile }: IndexProps) {
   };
 
   const generateFreshWords = () => {
-    const allReviewedWords = new Set([...rememberedWords, ...forgottenWords, ...excludedWordIds]);
+    const allReviewedWords = new Set([
+      ...rememberedWords,
+      ...forgottenWords,
+      ...excludedWordIds,
+    ]);
 
     try {
       const smartSelection = SmartWordSelector.selectWords({
@@ -352,32 +358,38 @@ export default function Index({ initialProfile }: IndexProps) {
       });
 
       // Filter out already seen words
-      const freshWords = smartSelection.words.filter(word => !allReviewedWords.has(word.id));
+      const freshWords = smartSelection.words.filter(
+        (word) => !allReviewedWords.has(word.id),
+      );
 
       // If we don't have enough fresh words from smart selection, get random words
       if (freshWords.length < 5) {
-        const fallbackWords = selectedCategory === "all"
-          ? getRandomWords(10)
-          : getWordsByCategory(selectedCategory);
+        const fallbackWords =
+          selectedCategory === "all"
+            ? getRandomWords(10)
+            : getWordsByCategory(selectedCategory);
 
         const additionalFreshWords = fallbackWords
-          .filter(word => !allReviewedWords.has(word.id))
+          .filter((word) => !allReviewedWords.has(word.id))
           .slice(0, 10 - freshWords.length);
 
         freshWords.push(...additionalFreshWords);
       }
 
       // Update excluded words to include the new words we're about to show
-      setExcludedWordIds(prev => new Set([...prev, ...freshWords.map(w => w.id)]));
+      setExcludedWordIds(
+        (prev) => new Set([...prev, ...freshWords.map((w) => w.id)]),
+      );
       setCurrentDashboardWords(freshWords.slice(0, 10));
 
       return freshWords.slice(0, 10);
     } catch (error) {
       console.error("Error generating fresh words:", error);
       // Fallback to simple random selection
-      const fallbackWords = selectedCategory === "all"
-        ? getRandomWords(10)
-        : getWordsByCategory(selectedCategory).slice(0, 10);
+      const fallbackWords =
+        selectedCategory === "all"
+          ? getRandomWords(10)
+          : getWordsByCategory(selectedCategory).slice(0, 10);
 
       setCurrentDashboardWords(fallbackWords);
       return fallbackWords;
