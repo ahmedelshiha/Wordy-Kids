@@ -745,7 +745,9 @@ export function InteractiveDashboardWordCard({
             <div className="bg-yellow-50 border-2 border-yellow-200 rounded-xl p-3 mb-3 text-center">
               <div className="flex items-center justify-center gap-2 mb-1">
                 <Lightbulb className="w-4 h-4 text-yellow-600" />
-                <h3 className="text-sm font-semibold text-yellow-800">💡 Hint:</h3>
+                <h3 className="text-sm font-semibold text-yellow-800">
+                  💡 Hint:
+                </h3>
               </div>
               <p className="text-yellow-700 text-sm">
                 "{currentWord.definition}"
@@ -759,11 +761,15 @@ export function InteractiveDashboardWordCard({
               {/* Word Name */}
               <div className="text-center bg-gradient-to-r from-green-50 to-blue-50 p-3 md:p-4 rounded-2xl border-2 border-green-200">
                 <div className="flex items-center justify-center gap-2 md:gap-3 mb-2 md:mb-3">
-                  <div className="text-2xl md:text-3xl">{currentWord.emoji}</div>
+                  <div className="text-2xl md:text-3xl">
+                    {currentWord.emoji}
+                  </div>
                   <h1 className="text-base md:text-lg lg:text-xl font-bold text-gray-800 tracking-wide">
                     {currentWord.word.toUpperCase()}
                   </h1>
-                  <div className="text-2xl md:text-3xl">{currentWord.emoji}</div>
+                  <div className="text-2xl md:text-3xl">
+                    {currentWord.emoji}
+                  </div>
                 </div>
 
                 {/* Pronunciation */}
