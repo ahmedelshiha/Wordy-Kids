@@ -193,7 +193,7 @@ export default function LoginForm() {
               🌟 Let's Get Started! 🌟
             </CardTitle>
           </CardHeader>
-          <CardContent className="p-4 md:p-8">
+          <CardContent className="p-4 md:p-6">
             <form onSubmit={handleLogin} className="space-y-4">
               {/* Email Field */}
               <div className="relative">
