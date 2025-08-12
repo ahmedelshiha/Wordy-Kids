@@ -128,13 +128,25 @@ export default function LoginForm() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-purple-100 flex items-center justify-center p-4">
-      {/* Simple Background Pattern */}
-      <div className="absolute inset-0 opacity-10">
-        <div className="absolute top-20 left-20 text-3xl">📚</div>
-        <div className="absolute top-32 right-20 text-3xl">✨</div>
-        <div className="absolute bottom-20 left-20 text-3xl">🎯</div>
-        <div className="absolute bottom-32 right-20 text-3xl">🌟</div>
+    <div className="min-h-screen bg-gradient-to-br from-pink-100 via-purple-100 to-blue-100 flex items-center justify-center p-4 overflow-hidden">
+      {/* Fun Floating Background Elements */}
+      <div className="absolute inset-0 opacity-30">
+        <div className="absolute top-10 left-10 text-4xl animate-kid-float">🎨</div>
+        <div className="absolute top-20 right-16 text-3xl animate-kid-float-delayed animation-delay-100">🌈</div>
+        <div className="absolute top-40 left-1/4 text-5xl animate-gentle-bounce">⭐</div>
+        <div className="absolute top-60 right-1/3 text-4xl animate-sparkle">✨</div>
+        <div className="absolute bottom-40 left-16 text-6xl animate-kid-float">🎪</div>
+        <div className="absolute bottom-20 right-20 text-5xl animate-gentle-float">🎁</div>
+        <div className="absolute bottom-60 left-1/3 text-4xl animate-kid-float-delayed">🦋</div>
+        <div className="absolute top-1/3 left-8 text-3xl animate-wiggle">🎭</div>
+        <div className="absolute top-1/2 right-8 text-4xl animate-sparkle animation-delay-200">🎪</div>
+        <div className="absolute bottom-1/3 right-1/4 text-5xl animate-gentle-bounce">🎠</div>
+
+        {/* Floating bubbles */}
+        <div className="absolute top-20 left-1/2 w-8 h-8 bg-blue-300 rounded-full opacity-40 animate-kid-float"></div>
+        <div className="absolute top-1/3 left-20 w-6 h-6 bg-pink-300 rounded-full opacity-40 animate-gentle-bounce"></div>
+        <div className="absolute bottom-1/4 right-16 w-10 h-10 bg-yellow-300 rounded-full opacity-40 animate-sparkle"></div>
+        <div className="absolute top-2/3 left-1/4 w-4 h-4 bg-purple-300 rounded-full opacity-40 animate-kid-float-delayed"></div>
       </div>
 
       {/* Main Content */}
