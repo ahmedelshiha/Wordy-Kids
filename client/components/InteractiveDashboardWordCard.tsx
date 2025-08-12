@@ -444,9 +444,14 @@ export function InteractiveDashboardWordCard({
               >
                 {currentWord.category}
               </Badge>
-              <Badge variant="outline" className="text-sm px-3 py-1">
-                {currentWordIndex + 1} / {words.length}
+              <Badge variant="outline" className="text-sm px-3 py-1 bg-blue-50 text-blue-700 border-blue-300">
+                Word {currentWordIndex + 1} / {words.length}
               </Badge>
+              {(localRememberedCount + localForgottenCount) > 0 && (
+                <Badge variant="outline" className="text-sm px-3 py-1 bg-green-50 text-green-700 border-green-300">
+                  Session: {localRememberedCount + localForgottenCount} done
+                </Badge>
+              )}
             </div>
           </div>
 
@@ -583,7 +588,7 @@ export function InteractiveDashboardWordCard({
                 >
                   <CheckCircle className="w-4 h-4 mr-1 md:w-6 md:h-6 md:mr-2" />
                   <div className="text-center">
-                    <div className="font-bold text-xs">😊 I Remember</div>
+                    <div className="font-bold text-xs">�� I Remember</div>
                     <div className="text-xs opacity-75 mt-0.5">Awesome!</div>
                   </div>
                 </Button>
