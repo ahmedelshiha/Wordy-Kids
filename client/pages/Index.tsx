@@ -473,7 +473,7 @@ export default function Index({ initialProfile }: IndexProps) {
         achievementIcon = "📚";
         achievementMessage = `Great job! You completed ${categoryDisplayName} with ${accuracy}% accuracy! Keep up the good work!\n\n🎁 Scholar Bonus: 100 points!\n📚 Scholar badge earned!`;
       } else if (accuracy >= 50) {
-        achievementTitle = "Category Explorer! 🎯";
+        achievementTitle = "Category Explorer! ����";
         achievementIcon = "🎯";
         achievementMessage = `Good effort! You finished ${categoryDisplayName} with ${accuracy}% accuracy! Practice makes perfect!\n\n🎁 Explorer Bonus: 75 points!\n🎯 Explorer badge earned!`;
       } else {
@@ -995,7 +995,7 @@ export default function Index({ initialProfile }: IndexProps) {
 
                   <button
                     onClick={() => setActiveTab("adventure")}
-                    className={`w-full flex items-center gap-3 p-3 lg:p-4 rounded-xl lg:rounded-2xl transition-all ${
+                    className={`hidden w-full flex items-center gap-3 p-3 lg:p-4 rounded-xl lg:rounded-2xl transition-all ${
                       activeTab === "adventure"
                         ? "bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-lg"
                         : "bg-white text-gray-700 hover:bg-purple-50 border border-purple-100"
@@ -1641,23 +1641,23 @@ export default function Index({ initialProfile }: IndexProps) {
                 <TabsContent value="quiz">
                   {!showQuiz && !gameMode && !showMatchingGame ? (
                     <div className="space-y-8">
-                      {/* Quiz Header */}
+                      {/* Quiz Header - Kid-Friendly & Mobile Optimized */}
                       <div className="text-center">
-                        <div className="flex justify-center mb-6">
-                          <div className="bg-gradient-to-r from-educational-blue via-educational-purple to-educational-pink p-6 rounded-full shadow-2xl">
-                            <Brain className="w-16 h-16 text-white" />
+                        <div className="flex justify-center mb-4">
+                          <div className="bg-gradient-to-r from-educational-blue via-educational-purple to-educational-pink p-3 md:p-4 rounded-full shadow-lg animate-gentle-bounce">
+                            <Brain className="w-8 h-8 md:w-12 md:h-12 text-white" />
                           </div>
                         </div>
-                        <h2 className="text-2xl md:text-4xl font-bold text-gray-800 mb-4">
+                        <h2 className="text-xl md:text-3xl font-bold text-gray-800 mb-2 md:mb-4">
                           🎮 Quiz Time!
                         </h2>
-                        <p className="text-base md:text-xl text-gray-600 mb-6 md:mb-8">
-                          Test your vocabulary knowledge with fun quizzes!
+                        <p className="text-sm md:text-lg text-gray-600 mb-4 md:mb-6 px-4">
+                          Test your vocabulary with super fun quizzes! 🌟
                         </p>
                       </div>
 
-                      {/* All Unique Games and Quizzes - NO DUPLICATES, NO FOLDERS */}
-                      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 max-w-7xl mx-auto">
+                      {/* Kid-Friendly Quiz Cards - Mobile Optimized */}
+                      <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 md:gap-4 max-w-6xl mx-auto px-2">
                         {/* Matching Game */}
                         <Card className="hidden cursor-pointer hover:shadow-xl transition-all duration-300 hover:scale-105 border-2 border-educational-purple/30">
                           <CardContent className="p-6 text-center">
@@ -1687,7 +1687,7 @@ export default function Index({ initialProfile }: IndexProps) {
                           </CardContent>
                         </Card>
                         {/* Easy Quiz */}
-                        <Card className="hidden cursor-pointer hover:shadow-xl transition-all duration-300 md:hover:scale-105 border-2 border-educational-green/30">
+                        <Card className="hidden cursor-pointer hover:shadow-lg transition-all duration-300 hover:scale-105 border-2 border-educational-green/30 animate-kid-float-delayed">
                           <CardContent className="p-6 text-center">
                             <div className="text-6xl mb-4">���</div>
                             <h3 className="text-xl font-bold text-educational-green mb-2">
@@ -1719,22 +1719,20 @@ export default function Index({ initialProfile }: IndexProps) {
                         </Card>
 
                         {/* Standard Quiz */}
-                        <Card className="hidden cursor-pointer hover:shadow-xl transition-all duration-300 hover:scale-105 border-2 border-educational-blue/30">
-                          <CardContent className="p-6 text-center">
-                            <div className="text-6xl mb-4">🎯</div>
-                            <h3 className="text-xl font-bold text-educational-blue mb-2">
-                              Standard Quiz
+                        <Card className="hidden cursor-pointer hover:shadow-lg transition-all duration-300 hover:scale-105 border-2 border-educational-blue/30 animate-kid-float">
+                          <CardContent className="p-3 md:p-4 text-center">
+                            <div className="text-3xl md:text-5xl mb-2 md:mb-3 animate-gentle-bounce">
+                              🎯
+                            </div>
+                            <h3 className="text-sm md:text-lg font-bold text-educational-blue mb-1 md:mb-2">
+                              Challenge Me!
                             </h3>
-                            <p className="text-gray-600 mb-4">
-                              Medium difficulty with mixed vocabulary
-                              challenges.
+                            <p className="text-xs md:text-sm text-gray-600 mb-2 md:mb-3 hidden md:block">
+                              Ready for more? Let's go! 💪
                             </p>
-                            <div className="flex justify-center gap-2 mb-4">
-                              <span className="bg-educational-blue/20 text-educational-blue px-2 py-1 rounded-full text-xs">
-                                10 Questions
-                              </span>
-                              <span className="bg-educational-blue/20 text-educational-blue px-2 py-1 rounded-full text-xs">
-                                30s Each
+                            <div className="flex justify-center gap-1 mb-2 md:mb-3">
+                              <span className="bg-educational-blue/20 text-educational-blue px-1.5 py-0.5 rounded-full text-xs">
+                                🎯 Cool!
                               </span>
                             </div>
                             <Button
@@ -1742,16 +1740,17 @@ export default function Index({ initialProfile }: IndexProps) {
                                 setSelectedQuizType("standard");
                                 setShowQuiz(true);
                               }}
-                              className="w-full bg-educational-blue text-white hover:bg-educational-blue/90"
+                              className="w-full bg-educational-blue text-white hover:bg-educational-blue/90 py-1.5 md:py-2 text-xs md:text-sm rounded-xl animate-wiggle"
+                              size="sm"
                             >
-                              <Play className="w-4 h-4 mr-2" />
-                              Start Standard Quiz
+                              <Play className="w-3 h-3 md:w-4 md:h-4 mr-1" />
+                              Bring It On! ⚡
                             </Button>
                           </CardContent>
                         </Card>
 
                         {/* Challenge Quiz */}
-                        <Card className="hidden cursor-pointer hover:shadow-xl transition-all duration-300 hover:scale-105 border-2 border-educational-purple/30">
+                        <Card className="hidden cursor-pointer hover:shadow-lg transition-all duration-300 hover:scale-105 border-2 border-educational-purple/30 animate-kid-float-delayed">
                           <CardContent className="p-6 text-center">
                             <div className="text-6xl mb-4">🏆</div>
                             <h3 className="text-xl font-bold text-educational-purple mb-2">
@@ -1781,23 +1780,21 @@ export default function Index({ initialProfile }: IndexProps) {
                           </CardContent>
                         </Card>
 
-                        {/* Picture Quiz */}
-                        <Card className="cursor-pointer hover:shadow-xl transition-all duration-300 hover:scale-105 border-2 border-educational-orange/30">
-                          <CardContent className="p-6 text-center">
-                            <div className="text-6xl mb-4">🖼️</div>
-                            <h3 className="text-xl font-bold text-educational-orange mb-2">
+                        {/* Picture Quiz - Kid-Friendly */}
+                        <Card className="cursor-pointer hover:shadow-lg transition-all duration-300 hover:scale-105 border-2 border-educational-orange/30 animate-kid-float">
+                          <CardContent className="p-3 md:p-4 text-center">
+                            <div className="text-3xl md:text-5xl mb-2 md:mb-3 animate-bounce">
+                              🖼️
+                            </div>
+                            <h3 className="text-sm md:text-lg font-bold text-educational-orange mb-1 md:mb-2">
                               Picture Fun!
                             </h3>
-                            <p className="text-gray-600 mb-4">
-                              Look at fun pictures and find the matching words!
-                              Can you spot them all?
+                            <p className="text-xs md:text-sm text-gray-600 mb-2 md:mb-3 hidden md:block">
+                              Look at pictures and guess the words! 🌟
                             </p>
-                            <div className="flex justify-center gap-2 mb-4">
-                              <span className="bg-educational-orange/20 text-educational-orange px-2 py-1 rounded-full text-xs">
-                                10 Questions
-                              </span>
-                              <span className="bg-educational-orange/20 text-educational-orange px-2 py-1 rounded-full text-xs">
-                                35s Each
+                            <div className="flex justify-center gap-1 mb-2 md:mb-3">
+                              <span className="bg-educational-orange/20 text-educational-orange px-1.5 py-0.5 rounded-full text-xs">
+                                🎯 Fun!
                               </span>
                             </div>
                             <Button
@@ -1805,10 +1802,11 @@ export default function Index({ initialProfile }: IndexProps) {
                                 setSelectedQuizType("picture");
                                 setShowQuiz(true);
                               }}
-                              className="w-full bg-educational-orange text-white hover:bg-educational-orange/90"
+                              className="w-full bg-educational-orange text-white hover:bg-educational-orange/90 py-1.5 md:py-2 text-xs md:text-sm rounded-xl animate-wiggle"
+                              size="sm"
                             >
-                              <Play className="w-4 h-4 mr-2" />
-                              Start Picture Quiz
+                              <Play className="w-3 h-3 md:w-4 md:h-4 mr-1" />
+                              Let's Play! 🚀
                             </Button>
                           </CardContent>
                         </Card>
@@ -2064,7 +2062,7 @@ export default function Index({ initialProfile }: IndexProps) {
                   )}
                 </TabsContent>
 
-                <TabsContent value="adventure">
+                <TabsContent value="adventure" className="hidden">
                   <AdventureDashboard
                     words={wordsDatabase.map((word) => ({
                       id: word.id,

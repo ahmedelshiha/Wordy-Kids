@@ -70,25 +70,18 @@ export function MobileBottomNav({
       badge: undefined,
     },
     {
-      id: "adventure",
-      emoji: "🎯",
-      label: "Practice",
-      icon: Sword,
-      color: "from-green-500 to-emerald-500",
-      bgColor: "bg-green-100",
-      textColor: "text-green-600",
+      id: "progress",
+      emoji: "🌟",
+      label: "My Journey",
+      icon: Trophy,
+      color: "from-yellow-500 to-orange-500",
+      bgColor: "bg-yellow-100",
+      textColor: "text-yellow-600",
       badge: undefined,
     },
   ];
 
   const secondaryMenuItems = [
-    {
-      id: "progress",
-      emoji: "🌟",
-      label: "My Journey",
-      icon: Trophy,
-      onClick: () => onTabChange("progress"),
-    },
     {
       id: "parent",
       emoji: "👨‍👩‍👧‍👦",

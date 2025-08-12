@@ -251,8 +251,8 @@ export const QuizGame: React.FC<QuizGameProps> = ({
           <div className="text-center mb-8">
             {/* Animated Picture Container */}
             <div className="inline-block mb-6">
-              <div className="bg-gradient-to-br from-educational-blue-light to-educational-purple-light p-8 rounded-3xl shadow-lg border-3 border-rainbow animate-gentle-float">
-                <div className="text-8xl animate-sparkle">
+              <div className="bg-gradient-to-br from-educational-blue-light to-educational-purple-light p-8 rounded-3xl shadow-lg border-3 border-rainbow">
+                <div className="text-8xl animate-gentle-float">
                   {currentQuestion.emoji || "📚"}
                 </div>
               </div>
@@ -263,16 +263,19 @@ export const QuizGame: React.FC<QuizGameProps> = ({
           </div>
 
           {/* Answer Options */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-2xl mx-auto">
+          <div className="grid grid-cols-2 gap-2 md:gap-4 max-w-2xl mx-auto">
             {currentQuestion.options?.map((option, index) => (
               <Button
                 key={index}
                 onClick={() => handleAnswerSelect(option)}
                 disabled={showFeedback}
                 variant={getButtonVariant(option)}
-                className="h-auto p-4 text-left justify-between hover:scale-105 transition-all"
+                className="h-auto p-2 md:p-4 text-center text-xs md:text-sm font-medium hover:scale-105 transition-all rounded-xl animate-kid-float"
+                style={{
+                  animationDelay: `${index * 100}ms`,
+                }}
               >
-                <span className="font-medium">{option}</span>
+                <span className="block">{option}</span>
                 {getButtonIcon(option)}
               </Button>
             ))}
