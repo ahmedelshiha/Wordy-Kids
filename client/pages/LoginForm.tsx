@@ -187,13 +187,13 @@ export default function LoginForm() {
         </div>
 
         {/* Login Form */}
-        <Card className="bg-white/95 backdrop-blur-sm shadow-xl border border-gray-200 rounded-lg">
-          <CardHeader>
-            <CardTitle className="text-center text-xl text-gray-800">
-              Sign In
+        <Card className="bg-white/95 backdrop-blur-sm shadow-2xl border-4 border-rainbow rounded-3xl transform hover:scale-105 transition-transform duration-300">
+          <CardHeader className="bg-gradient-to-r from-yellow-200 to-pink-200 rounded-t-3xl">
+            <CardTitle className="text-center text-2xl font-bold bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent">
+              🌟 Let's Get Started! 🌟
             </CardTitle>
           </CardHeader>
-          <CardContent>
+          <CardContent className="p-8">
             <form onSubmit={handleLogin} className="space-y-6">
               {/* Email Field */}
               <div>
