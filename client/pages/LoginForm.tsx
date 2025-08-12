@@ -29,6 +29,15 @@ export default function LoginForm() {
     type: "success" | "error";
     text: string;
   } | null>(null);
+  const [owlAnimation, setOwlAnimation] = useState("animate-gentle-float");
+  const [funnyMessages] = useState([
+    "Hoot hoot! Let's learn together! 🦉",
+    "Ready for an amazing word adventure? 🚀",
+    "Wordy is excited to see you! 🎉",
+    "Time to become a word wizard! ���",
+    "Let's make learning super fun! 🌟"
+  ]);
+  const [currentFunnyMessage, setCurrentFunnyMessage] = useState(0);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({
