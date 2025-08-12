@@ -508,14 +508,6 @@ export function InteractiveDashboardWordCard({
         </div>
       )}
 
-      {/* Achievement Message */}
-      {achievementMessage && (
-        <div className="fixed top-20 left-1/2 transform -translate-x-1/2 z-50 bg-gradient-to-r from-yellow-400 to-orange-500 text-white px-6 py-3 rounded-full shadow-lg animate-bounce">
-          <div className="text-center font-bold text-lg">
-            {achievementMessage}
-          </div>
-        </div>
-      )}
 
       {/* Daily Goal Header - Hidden */}
       {/* <div className="text-center bg-gradient-to-r from-educational-blue to-educational-purple text-white p-4 rounded-2xl shadow-lg">
