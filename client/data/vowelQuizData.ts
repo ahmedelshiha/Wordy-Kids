@@ -11,101 +11,121 @@ export const vowelQuizData: VowelQuestion[] = [
   {
     word: "bag",
     missingIndex: [1],
+    image: "👜",
     difficulty: "easy"
   },
   {
     word: "hen",
     missingIndex: [1],
+    image: "🐔",
     difficulty: "easy"
   },
   {
     word: "dog",
     missingIndex: [1],
+    image: "🐕",
     difficulty: "easy"
   },
   {
     word: "pin",
     missingIndex: [1],
+    image: "📌",
     difficulty: "easy"
   },
   {
     word: "leg",
     missingIndex: [1],
+    image: "🦵",
     difficulty: "easy"
   },
   {
     word: "rat",
     missingIndex: [1],
+    image: "🐀",
     difficulty: "easy"
   },
   {
     word: "fox",
     missingIndex: [1],
+    image: "🦊",
     difficulty: "easy"
   },
   {
     word: "van",
     missingIndex: [1],
+    image: "🚐",
     difficulty: "easy"
   },
   {
     word: "fig",
     missingIndex: [1],
+    image: "🟣",
     difficulty: "easy"
   },
   {
     word: "sun",
     missingIndex: [1],
+    image: "☀️",
     difficulty: "easy"
   },
   {
     word: "vet",
     missingIndex: [1],
+    image: "🩺",
     difficulty: "easy"
   },
   {
     word: "fan",
     missingIndex: [1],
+    image: "🪭",
     difficulty: "easy"
   },
   {
     word: "cat",
     missingIndex: [1],
+    image: "🐱",
     difficulty: "easy"
   },
   {
     word: "bed",
     missingIndex: [1],
+    image: "🛏️",
     difficulty: "easy"
   },
   {
     word: "big",
     missingIndex: [1],
+    image: "🐘",
     difficulty: "easy"
   },
   {
     word: "cup",
     missingIndex: [1],
+    image: "☕",
     difficulty: "easy"
   },
   {
     word: "hat",
     missingIndex: [1],
+    image: "👒",
     difficulty: "easy"
   },
   {
     word: "pen",
     missingIndex: [1],
+    image: "🖊️",
     difficulty: "easy"
   },
   {
     word: "sit",
     missingIndex: [1],
+    image: "🪑",
     difficulty: "easy"
   },
   {
     word: "top",
     missingIndex: [1],
+    image: "🔝",
     difficulty: "easy"
   },
   
