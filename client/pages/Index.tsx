@@ -322,6 +322,55 @@ export default function Index({ initialProfile }: IndexProps) {
   const handleCategoryChange = (categoryId: string) => {
     setSelectedCategory(categoryId);
     setCurrentWordIndex(0);
+    // Reset excluded words when changing category
+    setExcludedWordIds(new Set());
+  };
+
+  const generateFreshWords = () => {
+    const allReviewedWords = new Set([...rememberedWords, ...forgottenWords, ...excludedWordIds]);
+
+    try {
+      const smartSelection = SmartWordSelector.selectWords({
+        category: selectedCategory,
+        count: 10,
+        rememberedWords,
+        forgottenWords,
+        childStats,
+        prioritizeWeakCategories: true,
+        includeReviewWords: false, // Focus on new words to avoid repetition
+      });
+
+      // Filter out already seen words
+      const freshWords = smartSelection.words.filter(word => !allReviewedWords.has(word.id));
+
+      // If we don't have enough fresh words from smart selection, get random words
+      if (freshWords.length < 5) {
+        const fallbackWords = selectedCategory === "all"
+          ? getRandomWords(10)
+          : getWordsByCategory(selectedCategory);
+
+        const additionalFreshWords = fallbackWords
+          .filter(word => !allReviewedWords.has(word.id))
+          .slice(0, 10 - freshWords.length);
+
+        freshWords.push(...additionalFreshWords);
+      }
+
+      // Update excluded words to include the new words we're about to show
+      setExcludedWordIds(prev => new Set([...prev, ...freshWords.map(w => w.id)]));
+      setCurrentDashboardWords(freshWords.slice(0, 10));
+
+      return freshWords.slice(0, 10);
+    } catch (error) {
+      console.error("Error generating fresh words:", error);
+      // Fallback to simple random selection
+      const fallbackWords = selectedCategory === "all"
+        ? getRandomWords(10)
+        : getWordsByCategory(selectedCategory).slice(0, 10);
+
+      setCurrentDashboardWords(fallbackWords);
+      return fallbackWords;
+    }
   };
 
   const checkCategoryCompletion = (
