@@ -485,6 +485,21 @@ export function VowelRescue({
                     <div className="text-sm text-gray-600">
                       +{attempts === 0 ? 10 : attempts <= 2 ? 8 : attempts <= 4 ? 5 : 2} points!
                     </div>
+                    {currentQuestion.originalWord?.definition && (
+                      <div className="bg-educational-blue/10 p-3 rounded-lg mt-3">
+                        <div className="text-sm font-semibold text-educational-blue mb-1">
+                          "{currentQuestion.word.toUpperCase()}" means:
+                        </div>
+                        <div className="text-sm text-gray-700">
+                          {currentQuestion.originalWord.definition}
+                        </div>
+                        {currentQuestion.originalWord.example && (
+                          <div className="text-xs text-gray-600 mt-2 italic">
+                            Example: "{currentQuestion.originalWord.example}"
+                          </div>
+                        )}
+                      </div>
+                    )}
                   </div>
                 ) : (
                   <div className="space-y-4">
