@@ -251,18 +251,18 @@ export const WordCard: React.FC<WordCardProps> = ({
           <div className="mt-6 md:mt-8"></div>
 
           {word.imageUrl ? (
-            <div className="relative mx-auto mt-4 mb-4">
-              <div className="w-32 h-32 md:w-40 md:h-40 rounded-full bg-white/20 backdrop-blur-sm shadow-2xl ring-4 ring-white/30 flex items-center justify-center">
+            <div className="relative mx-auto mt-2 mb-3">
+              <div className="w-40 h-40 md:w-48 md:h-48 rounded-full bg-white/20 backdrop-blur-sm shadow-2xl ring-4 ring-white/30 flex items-center justify-center overflow-hidden">
                 <img
                   src={word.imageUrl}
                   alt={word.word}
-                  className="w-40 h-40 md:w-48 md:h-48 lg:w-56 lg:h-56 object-cover rounded-full shadow-lg"
+                  className="w-full h-full object-cover rounded-full shadow-lg"
                 />
               </div>
             </div>
           ) : (
-            <div className="relative mx-auto mt-4 mb-4">
-              <div className="w-32 h-32 md:w-40 md:h-40 rounded-full bg-gradient-to-br from-white/30 via-white/20 to-white/10 backdrop-blur-md shadow-2xl ring-4 ring-white/30 flex items-center justify-center relative overflow-hidden">
+            <div className="relative mx-auto mt-2 mb-3">
+              <div className="w-40 h-40 md:w-48 md:h-48 rounded-full bg-gradient-to-br from-white/30 via-white/20 to-white/10 backdrop-blur-md shadow-2xl ring-4 ring-white/30 flex items-center justify-center relative overflow-hidden">
                 {/* Decorative background elements */}
                 <div className="absolute top-1 left-1 w-4 h-4 bg-white/20 rounded-full animate-pulse"></div>
                 <div className="absolute bottom-2 right-2 w-3 h-3 bg-white/15 rounded-full animate-bounce delay-300"></div>
