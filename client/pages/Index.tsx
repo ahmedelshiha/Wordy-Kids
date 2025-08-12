@@ -67,6 +67,7 @@ import {
   X,
   LogOut,
   Sword,
+  BookOpen,
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { WordProgressAPI } from "@/lib/wordProgressApi";
@@ -173,7 +174,7 @@ export default function Index({ initialProfile }: IndexProps) {
       {
         id: "category-explorer",
         name: "Category Explorer",
-        icon: "🗂️",
+        icon: "��️",
         earned: rememberedWords.size >= 10,
         description: "Explored 5+ categories",
       },
