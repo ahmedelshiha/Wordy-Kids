@@ -362,6 +362,9 @@ export default function Index({ initialProfile }: IndexProps) {
     setCurrentWordIndex(0);
     // Reset excluded words when changing category
     setExcludedWordIds(new Set());
+
+    // Reset session number for new category
+    setSessionNumber(1);
   };
 
   const generateFreshWords = () => {
