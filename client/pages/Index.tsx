@@ -1278,31 +1278,19 @@ export default function Index({ initialProfile }: IndexProps) {
                     ) : (
                       <>
                         <div className="text-center">
-                          {/* Back to Categories Button */}
+                          {/* Kid-Friendly Back to Categories Button */}
                           {selectedCategory !== "all" && (
-                            <div className="flex justify-center mb-4">
+                            <div className="flex justify-center mb-6">
                               <Button
                                 onClick={() => {
                                   setSelectedCategory("all");
                                   setLearningMode("selector");
                                 }}
-                                variant="outline"
-                                className="flex items-center gap-2 text-sm"
+                                className="flex items-center gap-2 bg-gradient-to-r from-educational-orange to-educational-yellow text-white font-bold text-base md:text-lg px-6 py-3 md:px-8 md:py-4 rounded-full shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 animate-gentle-bounce min-h-[48px] min-w-[200px]"
                               >
-                                <svg
-                                  className="w-4 h-4"
-                                  fill="none"
-                                  stroke="currentColor"
-                                  viewBox="0 0 24 24"
-                                >
-                                  <path
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    strokeWidth={2}
-                                    d="M15 19l-7-7 7-7"
-                                  />
-                                </svg>
-                                Back to Categories
+                                <span className="text-xl md:text-2xl animate-wiggle">🏠</span>
+                                <span className="hidden sm:inline">🌟 Back to All Categories! 🌟</span>
+                                <span className="sm:hidden">🌟 Home 🌟</span>
                               </Button>
                             </div>
                           )}
