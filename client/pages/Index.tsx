@@ -744,13 +744,7 @@ export default function Index({ initialProfile }: IndexProps) {
                 },
                 {
                   id: "learn",
-                  icon: () => (
-                    <img
-                      src="https://cdn.builder.io/api/v1/image/assets%2Fa33f74a2f97141a4a1ef43d9448f9bda%2F2a4b7e4c3c38485b966cfd2cff50da9e?format=webp&width=800"
-                      alt="Wordy"
-                      className="w-4 h-4 lg:w-5 lg:h-5 rounded"
-                    />
-                  ),
+                  icon: BookOpen,
                   label: "Word Library",
                   color: "green",
                 },
@@ -889,10 +883,8 @@ export default function Index({ initialProfile }: IndexProps) {
                     <div
                       className={`p-2 rounded-lg lg:rounded-xl ${activeTab === "learn" ? "bg-white/20" : "bg-green-100"}`}
                     >
-                      <img
-                        src="https://cdn.builder.io/api/v1/image/assets%2Fa33f74a2f97141a4a1ef43d9448f9bda%2F2a4b7e4c3c38485b966cfd2cff50da9e?format=webp&width=800"
-                        alt="Wordy"
-                        className={`w-4 h-4 lg:w-5 lg:h-5 rounded ${activeTab === "learn" ? "" : ""}`}
+                      <BookOpen
+                        className={`w-4 h-4 lg:w-5 lg:h-5 ${activeTab === "learn" ? "text-white" : "text-green-600"}`}
                       />
                     </div>
                     <span className="font-medium lg:font-semibold text-sm lg:text-base">
