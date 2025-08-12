@@ -248,7 +248,7 @@ export const WordCard: React.FC<WordCardProps> = ({
           </div>
 
           {/* Reduced spacing for mobile */}
-          <div className="mt-6 md:mt-8"></div>
+          <div className="mt-4 md:mt-6"></div>
 
           {word.imageUrl ? (
             <div className="relative mx-auto mt-2 mb-3">
