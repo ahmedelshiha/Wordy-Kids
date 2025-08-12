@@ -1990,13 +1990,6 @@ export default function Index({ initialProfile }: IndexProps) {
                         <h2 className="text-2xl font-bold text-gray-800">
                           🧩 Word Matching Game
                         </h2>
-                        <Button
-                          onClick={() => setShowMatchingGame(false)}
-                          variant="outline"
-                          size="sm"
-                        >
-                          ← Back to Games
-                        </Button>
                       </div>
                       <WordMatchingGame
                         pairs={generateMatchingPairs(
