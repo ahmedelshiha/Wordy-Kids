@@ -729,35 +729,37 @@ export function InteractiveDashboardWordCard({
                 </Button>
               </div>
 
-              {/* Kid-friendly Learning Stats - Enhanced Version */}
+              {/* Session Progress Display */}
               <div className="mt-4 bg-gradient-to-r from-blue-50 to-purple-50 rounded-xl p-3 border border-blue-200">
-                {/* Session Progress */}
+                {/* Session Progress Header */}
                 <div className="text-center mb-3">
-                  <div className="text-xs text-gray-600 font-medium">This Session</div>
-                  <div className="flex items-center justify-center gap-2 mt-1">
-                    <div className="text-green-600 font-bold">{localRememberedCount} ✅</div>
-                    <div className="text-gray-400">•</div>
-                    <div className="text-orange-600 font-bold">{localForgottenCount} 💪</div>
+                  <div className="text-sm text-gray-700 font-bold">Session Progress</div>
+                  <div className="text-xs text-gray-600">{sessionStats.wordsCompleted} / {SESSION_SIZE} words completed</div>
+                  <div className="w-full bg-gray-200 rounded-full h-2 mt-2">
+                    <div
+                      className="bg-gradient-to-r from-blue-500 to-purple-500 h-2 rounded-full transition-all duration-300"
+                      style={{ width: `${(sessionStats.wordsCompleted / SESSION_SIZE) * 100}%` }}
+                    ></div>
                   </div>
                 </div>
 
-                <div className="flex items-center justify-center gap-4">
-                  {/* Total Remembered Words */}
+                <div className="flex items-center justify-center gap-3">
+                  {/* Session Remembered */}
                   <div className="bg-green-100 rounded-lg p-2 border border-green-300 text-center flex-1">
-                    <div className="text-lg">🎉</div>
+                    <div className="text-lg">✅</div>
                     <div className="text-lg font-bold text-green-700">
-                      {rememberedWordsCount}
+                      {sessionStats.wordsRemembered}
                     </div>
                     <div className="text-xs text-green-600 font-medium">
-                      Total Known
+                      This Session
                     </div>
                   </div>
 
-                  {/* Total Practice Words */}
+                  {/* Session Practice */}
                   <div className="bg-orange-100 rounded-lg p-2 border border-orange-300 text-center flex-1">
                     <div className="text-lg">💪</div>
                     <div className="text-lg font-bold text-orange-700">
-                      {forgottenWordsCount}
+                      {sessionStats.wordsForgotten}
                     </div>
                     <div className="text-xs text-orange-600 font-medium">
                       To Practice
