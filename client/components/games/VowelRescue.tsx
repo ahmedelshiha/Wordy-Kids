@@ -392,11 +392,11 @@ export function VowelRescue({
           />
         </div>
 
-        {/* Game Card */}
+        {/* Game Card - Mobile Optimized */}
         <Card className="overflow-hidden">
-          <CardContent className="p-8">
-            {/* Image and Audio */}
-            <div className="text-center mb-8">
+          <CardContent className="p-4 sm:p-6 md:p-8">
+            {/* Image and Audio - Mobile Optimized */}
+            <div className="text-center mb-6 sm:mb-8">
               <motion.div
                 key={currentQuestion.word}
                 initial={{ scale: 0.8, opacity: 0 }}
@@ -404,11 +404,11 @@ export function VowelRescue({
                 className="relative inline-block"
               >
                 <div className="relative">
-                  <div className="w-32 h-32 md:w-48 md:h-48 bg-gradient-to-br from-educational-blue/20 to-educational-purple/20 rounded-2xl flex items-center justify-center text-6xl md:text-8xl cursor-pointer hover:scale-105 transition-transform"
+                  <div className="w-24 h-24 sm:w-32 sm:h-32 md:w-48 md:h-48 bg-gradient-to-br from-educational-blue/20 to-educational-purple/20 rounded-2xl flex items-center justify-center text-4xl sm:text-6xl md:text-8xl cursor-pointer hover:scale-105 transition-transform active:scale-95"
                        onClick={playAudio}>
                     {currentQuestion.originalWord?.emoji || currentQuestion.image ? (
                       // Display emoji from word database or fallback
-                      <span className="text-6xl md:text-8xl animate-gentle-bounce">
+                      <span className="text-4xl sm:text-6xl md:text-8xl animate-gentle-bounce">
                         {currentQuestion.originalWord?.emoji || currentQuestion.image}
                       </span>
                     ) : currentQuestion.image?.startsWith('http') || currentQuestion.image?.startsWith('/') ? (
@@ -422,9 +422,9 @@ export function VowelRescue({
                     )}
                   </div>
 
-                  {/* Category Badge */}
+                  {/* Category Badge - Mobile Optimized */}
                   {currentQuestion.originalWord?.category && (
-                    <div className="absolute -top-2 -right-2 bg-educational-blue text-white px-2 py-1 rounded-full text-xs font-bold capitalize">
+                    <div className="absolute -top-1 -right-1 sm:-top-2 sm:-right-2 bg-educational-blue text-white px-1.5 py-0.5 sm:px-2 sm:py-1 rounded-full text-xs font-bold capitalize">
                       {currentQuestion.originalWord.category}
                     </div>
                   )}
@@ -432,9 +432,9 @@ export function VowelRescue({
                 <Button
                   onClick={playAudio}
                   size="sm"
-                  className="absolute -bottom-2 -right-2 rounded-full w-12 h-12 bg-educational-green hover:bg-educational-green/90"
+                  className="absolute -bottom-1 -right-1 sm:-bottom-2 sm:-right-2 rounded-full w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 bg-educational-green hover:bg-educational-green/90"
                 >
-                  <Volume2 className="w-4 h-4" />
+                  <Volume2 className="w-3 h-3 sm:w-4 sm:h-4" />
                 </Button>
               </motion.div>
             </div>
