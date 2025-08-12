@@ -14,6 +14,7 @@ import {
   ArrowRight
 } from 'lucide-react';
 import { playSoundIfEnabled } from '@/lib/soundEffects';
+import { audioService } from '@/lib/audioService';
 
 interface ReadingPassage {
   id: string;
@@ -168,7 +169,7 @@ export const ReadingComprehension: React.FC<ReadingComprehensionProps> = ({
       setScore(score + 1);
       playSoundIfEnabled.success();
     } else {
-      playSoundIfEnabled.error();
+      audioService.playEncouragementSound();
     }
 
     setTimeout(() => {
