@@ -18,10 +18,11 @@ const WordyOwlMascot: React.FC<WordyOwlMascotProps> = ({ isDraggable = false }) 
 
   const messages = [
     "Hi there! I'm Wordy, and I'm here to make learning words super fun! Ready for an amazing adventure? 🚀",
-    "Let's learn 5 new words today! 🏆",
+    isDraggable ? "Drag me around the screen! I can float anywhere! 🦉✨" : "Let's learn 5 new words today! 🏆",
     "Hoot hoot! Click me anytime for encouragement! 🦉✨",
     "You're doing amazing! Keep up the great work! 🌟",
     "Every word you learn makes you smarter! 💪",
+    "I can move around to help you anywhere on the screen! 🎯",
   ];
 
   const handleClick = () => {
