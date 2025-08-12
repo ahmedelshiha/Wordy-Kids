@@ -34,7 +34,7 @@ export default function LoginForm() {
     "Hoot hoot! Let's learn together! 🦉",
     "Ready for an amazing word adventure? 🚀",
     "Wordy is excited to see you! 🎉",
-    "Time to become a word wizard! ���",
+    "Time to become a word wizard! ✨",
     "Let's make learning super fun! 🌟"
   ]);
   const [currentFunnyMessage, setCurrentFunnyMessage] = useState(0);
@@ -48,7 +48,18 @@ export default function LoginForm() {
     if (message) {
       setMessage(null);
     }
+    // Add fun owl wiggle when typing
+    setOwlAnimation("animate-wiggle");
+    setTimeout(() => setOwlAnimation("animate-gentle-float"), 2000);
   };
+
+  // Rotate funny messages every 3 seconds
+  React.useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentFunnyMessage((prev) => (prev + 1) % funnyMessages.length);
+    }, 3000);
+    return () => clearInterval(interval);
+  }, [funnyMessages.length]);
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
