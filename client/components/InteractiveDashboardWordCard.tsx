@@ -779,11 +779,11 @@ export function InteractiveDashboardWordCard({
                     </div>
                   ) : sessionStats.wordsCompleted >= 10 ? (
                     <div className="text-blue-600 font-medium text-xs">
-                      🔥 Keep practicing! You're getting stronger!
+                      🔥 Halfway there! Keep going strong!
                     </div>
                   ) : (
                     <div className="text-purple-600 font-medium text-xs">
-                      🎯 You're doing great!
+                      🎯 Great start! Every word counts!
                     </div>
                   )}
                 </div>
