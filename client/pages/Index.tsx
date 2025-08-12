@@ -500,7 +500,6 @@ export default function Index({ initialProfile }: IndexProps) {
     navigate("/");
   };
 
-
   // Helper function to get all words from the database
   const getAllWords = () => {
     return wordsDatabase || [];
@@ -514,8 +513,6 @@ export default function Index({ initialProfile }: IndexProps) {
         categoryName.toLowerCase().replace(/[^a-z]/g, ""),
     );
   };
-
-
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 relative">
@@ -782,7 +779,6 @@ export default function Index({ initialProfile }: IndexProps) {
                       Quiz Time
                     </span>
                   </button>
-
 
                   <button
                     onClick={() => setActiveTab("progress")}
@@ -1825,7 +1821,6 @@ export default function Index({ initialProfile }: IndexProps) {
                   )}
                 </TabsContent>
 
-
                 <TabsContent value="progress">
                   <AchievementSystem
                     onUnlock={(achievement) => {
@@ -1843,7 +1838,6 @@ export default function Index({ initialProfile }: IndexProps) {
           </div>
         )}
       </main>
-
 
       {/* Enhanced Components */}
       {showCelebration && <CelebrationEffect trigger={showCelebration} />}
