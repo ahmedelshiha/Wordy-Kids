@@ -404,8 +404,12 @@ export function VowelRescue({
                 className="relative inline-block"
               >
                 <div className="relative">
-                  <div className="w-24 h-24 sm:w-32 sm:h-32 md:w-48 md:h-48 bg-gradient-to-br from-educational-blue/20 to-educational-purple/20 rounded-2xl flex items-center justify-center text-4xl sm:text-6xl md:text-8xl cursor-pointer hover:scale-105 transition-transform active:scale-95"
-                       onClick={playAudio}>
+                  <div className="w-24 h-24 sm:w-32 sm:h-32 md:w-48 md:h-48 bg-gradient-to-br from-educational-blue/20 to-educational-purple/20 rounded-2xl flex items-center justify-center text-4xl sm:text-6xl md:text-8xl cursor-pointer hover:scale-105 transition-transform active:scale-95 touch-manipulation select-none"
+                       onClick={playAudio}
+                       style={{
+                         WebkitTapHighlightColor: 'transparent',
+                         WebkitTouchCallout: 'none'
+                       }}>
                     {currentQuestion.originalWord?.emoji || currentQuestion.image ? (
                       // Display emoji from word database or fallback
                       <span className="text-4xl sm:text-6xl md:text-8xl animate-gentle-bounce">
@@ -580,7 +584,7 @@ export function VowelRescue({
                 exit={{ scale: 0.8, y: -100, opacity: 0 }}
                 className="text-6xl"
               >
-                ���🎉⭐
+                ⭐🎉⭐
               </motion.div>
             </motion.div>
           )}
