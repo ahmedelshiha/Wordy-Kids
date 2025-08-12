@@ -453,6 +453,53 @@ export function InteractiveDashboardWordCard({
 
   return (
     <div className={cn("space-y-6", className)}>
+      {/* Session Completion Modal */}
+      {showSessionComplete && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-3xl p-8 max-w-md w-full text-center shadow-2xl animate-in zoom-in-95 duration-300">
+            <div className="text-6xl mb-4">🎉</div>
+            <h2 className="text-3xl font-bold text-gray-800 mb-4">
+              Session Complete!
+            </h2>
+
+            {/* Session Stats */}
+            <div className="bg-gradient-to-r from-blue-50 to-purple-50 rounded-2xl p-4 mb-6">
+              <div className="grid grid-cols-3 gap-4 text-center">
+                <div>
+                  <div className="text-2xl font-bold text-green-600">{sessionStats.wordsRemembered}</div>
+                  <div className="text-sm text-gray-600">Remembered</div>
+                </div>
+                <div>
+                  <div className="text-2xl font-bold text-orange-600">{sessionStats.wordsForgotten}</div>
+                  <div className="text-sm text-gray-600">To Practice</div>
+                </div>
+                <div>
+                  <div className="text-2xl font-bold text-purple-600">{sessionStats.accuracy}%</div>
+                  <div className="text-sm text-gray-600">Accuracy</div>
+                </div>
+              </div>
+            </div>
+
+            {/* Achievements */}
+            {sessionAchievements.map((achievement, index) => (
+              <div key={achievement.id} className="mb-4 p-4 bg-gradient-to-r from-yellow-100 to-orange-100 rounded-2xl border border-yellow-300">
+                <div className="text-3xl mb-2">{achievement.emoji}</div>
+                <div className="font-bold text-lg text-gray-800">{achievement.title}</div>
+                <div className="text-sm text-gray-600">{achievement.description}</div>
+              </div>
+            ))}
+
+            {/* Continue Button */}
+            <button
+              onClick={startNewSession}
+              className="w-full bg-gradient-to-r from-green-500 to-blue-500 text-white font-bold py-4 px-6 rounded-2xl hover:from-green-600 hover:to-blue-600 transition-all duration-300 transform hover:scale-105 shadow-lg"
+            >
+              🚀 Start New Session
+            </button>
+          </div>
+        </div>
+      )}
+
       {/* Achievement Message */}
       {achievementMessage && (
         <div className="fixed top-20 left-1/2 transform -translate-x-1/2 z-50 bg-gradient-to-r from-yellow-400 to-orange-500 text-white px-6 py-3 rounded-full shadow-lg animate-bounce">
