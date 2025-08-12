@@ -47,7 +47,7 @@ const AdminLogin: React.FC<AdminLoginProps> = ({ onLogin }) => {
               🛡️ Administrator Access
             </CardTitle>
             <p className="text-slate-600 mt-2">
-              Secure access to Word Adventure management dashboard
+              Secure access to Wordy's Adventure management dashboard
             </p>
           </CardHeader>
           <CardContent>
