@@ -446,8 +446,8 @@ export function VowelRescue({
               </div>
             </div>
 
-            {/* Vowel Buttons */}
-            <div className="flex justify-center gap-2 md:gap-4 mb-6">
+            {/* Vowel Buttons - Mobile Optimized */}
+            <div className="flex justify-center gap-2 sm:gap-3 md:gap-4 mb-6 px-2">
               {vowelOptions.map((vowel) => {
                 const nextPosition = getNextMissingPosition();
                 const allCompleted = getMissingVowelPositions().length === 0;
@@ -459,10 +459,10 @@ export function VowelRescue({
                 return (
                   <motion.button
                     key={vowel}
-                    className={`w-12 h-12 md:w-16 md:h-16 rounded-full font-bold text-lg md:text-xl text-white transition-all
+                    className={`w-11 h-11 sm:w-12 sm:h-12 md:w-16 md:h-16 rounded-full font-bold text-lg sm:text-lg md:text-xl text-white transition-all min-h-[44px] min-w-[44px]
                       ${isDisabled
                         ? "bg-gray-400 cursor-not-allowed"
-                        : "bg-educational-blue hover:bg-educational-blue/90 hover:scale-110 active:scale-95"
+                        : "bg-educational-blue hover:bg-educational-blue/90 hover:scale-110 active:scale-95 shadow-lg"
                       }
                     `}
                     whileTap={{ scale: 0.9 }}
