@@ -119,8 +119,6 @@ export default function Index({ initialProfile }: IndexProps) {
   const [currentSessionId, setCurrentSessionId] = useState<string | null>(null);
   const [childStats, setChildStats] = useState<ChildWordStats | null>(null);
   const [isLoadingProgress, setIsLoadingProgress] = useState(false);
-  const [showPracticeGame, setShowPracticeGame] = useState(false);
-  const [practiceWords, setPracticeWords] = useState<any[]>([]);
   const [showMobileMoreMenu, setShowMobileMoreMenu] = useState(false);
 
   // Dynamic learning stats that reflect actual progress
