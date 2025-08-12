@@ -4,6 +4,8 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { Volume2, Star, Trophy, ArrowLeft, Play, Clock } from "lucide-react";
+import { AchievementTracker } from "@/lib/achievementTracker";
+import { EnhancedAchievementPopup } from "@/components/EnhancedAchievementPopup";
 
 const vowelOptions = ["A", "E", "I", "O", "U"];
 
