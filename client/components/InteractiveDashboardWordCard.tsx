@@ -86,6 +86,7 @@ export function InteractiveDashboardWordCard({
   rememberedWordsCount = 0,
   className,
   onRequestNewWords,
+  onSessionProgress,
 }: InteractiveDashboardWordCardProps) {
   // Session Management
   const SESSION_SIZE = 20;
