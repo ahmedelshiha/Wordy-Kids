@@ -204,7 +204,7 @@ export default function LoginForm() {
                   <Mail className="w-4 h-4 md:w-6 md:h-6 text-pink-500" />
                   📧 Parent's Magic Email
                 </Label>
-                <div className="relative mt-3">
+                <div className="relative mt-2">
                   <Input
                     id="email"
                     name="email"
@@ -288,7 +288,7 @@ export default function LoginForm() {
                     )}
                     <span>{message.text}</span>
                     {message.type === "success" && (
-                      <span className="text-2xl animate-sparkle">���</span>
+                      <span className="text-2xl animate-sparkle">✨</span>
                     )}
                   </div>
                 </div>
