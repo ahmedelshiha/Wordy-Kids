@@ -60,7 +60,13 @@ const WordyOwlMascot: React.FC = () => {
       </div>
 
       {/* Wordy the Owl SVG */}
-      <div className="animate-gentle-bounce hover:scale-110 transition-transform duration-300 cursor-pointer">
+      <div
+        className={cn(
+          "animate-gentle-bounce hover:scale-110 transition-transform duration-300 cursor-pointer",
+          isClicked && "scale-95"
+        )}
+        onClick={handleClick}
+      >
         <svg
           width="60"
           height="60"
