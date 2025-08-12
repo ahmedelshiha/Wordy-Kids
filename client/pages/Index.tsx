@@ -1147,6 +1147,24 @@ export default function Index({ initialProfile }: IndexProps) {
                     }}
                     onRequestNewWords={generateFreshWords}
                   />
+
+                  {/* Enhanced Word Selection Debug Panel */}
+                  {process.env.NODE_ENV === 'development' && lastSystematicSelection && (
+                    <div className="mt-4 p-3 bg-gray-100 rounded-lg text-xs">
+                      <h4 className="font-bold mb-2">🔧 Enhanced Word Selection Debug</h4>
+                      <div className="grid grid-cols-2 gap-2">
+                        <div><strong>Strategy:</strong> {lastSystematicSelection.sessionInfo.sessionStrategy}</div>
+                        <div><strong>Difficulty:</strong> {lastSystematicSelection.sessionInfo.difficulty}</div>
+                        <div><strong>New Words:</strong> {lastSystematicSelection.sessionInfo.totalNewWords}</div>
+                        <div><strong>Review Words:</strong> {lastSystematicSelection.sessionInfo.reviewWords}</div>
+                        <div><strong>Exhaustion:</strong> {(lastSystematicSelection.sessionInfo.exhaustionLevel * 100).toFixed(1)}%</div>
+                        <div><strong>Categories:</strong> {lastSystematicSelection.sessionInfo.categories.join(', ')}</div>
+                      </div>
+                      <div className="mt-2">
+                        <strong>Session #{sessionNumber - 1}</strong> | <strong>Word History:</strong> {userWordHistory.size} words tracked
+                      </div>
+                    </div>
+                  )}
                 </TabsContent>
 
                 <TabsContent value="learn">
