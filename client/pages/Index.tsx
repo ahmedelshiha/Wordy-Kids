@@ -519,32 +519,53 @@ export default function Index({ initialProfile }: IndexProps) {
         responseTime ? responseTime > 2000 : false,
       );
 
-      // Show level up celebration if applicable
+      // Show achievement notifications in sequence
+      const notifications = [];
+
+      // Add level up to notifications if applicable
       if (response.levelUp) {
-        setFeedback({
+        notifications.push({
           type: "celebration",
           title: "🎉 Level Up! 🎉",
           message: `Congratulations! You've reached a new level!\n\n🌟 Keep up the amazing work!`,
           points: 50,
-          onContinue: () => setFeedback(null),
         });
       }
 
-      // Show achievement notifications
+      // Add achievements to notifications
       if (response.achievements && response.achievements.length > 0) {
-        setTimeout(() => {
-          response.achievements?.forEach((achievement, index) => {
-            setTimeout(() => {
-              setFeedback({
-                type: "achievement",
-                title: `🏆 Achievement Unlocked!`,
-                message: achievement,
-                points: 25,
-                onContinue: () => setFeedback(null),
-              });
-            }, index * 2000);
+        response.achievements.forEach((achievement) => {
+          notifications.push({
+            type: "achievement",
+            title: `🏆 Achievement Unlocked!`,
+            message: achievement,
+            points: 25,
           });
-        }, 1000);
+        });
+      }
+
+      // Show notifications in sequence
+      if (notifications.length > 0) {
+        let currentIndex = 0;
+        const showNext = () => {
+          if (currentIndex < notifications.length) {
+            const notification = notifications[currentIndex];
+            setFeedback({
+              ...notification,
+              onContinue: () => {
+                setFeedback(null);
+                currentIndex++;
+                // Show next notification after a brief delay
+                if (currentIndex < notifications.length) {
+                  setTimeout(showNext, 500);
+                }
+              },
+            });
+          }
+        };
+
+        // Start showing notifications after a brief delay
+        setTimeout(showNext, 500);
       }
 
       console.log("Word progress recorded:", response);
