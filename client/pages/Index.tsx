@@ -122,6 +122,21 @@ export default function Index({ initialProfile }: IndexProps) {
   const [showPracticeGame, setShowPracticeGame] = useState(false);
   const [practiceWords, setPracticeWords] = useState<any[]>([]);
   const [showMobileMoreMenu, setShowMobileMoreMenu] = useState(false);
+  const [excludedWordIds, setExcludedWordIds] = useState<Set<number>>(
+    new Set(),
+  );
+  const [currentDashboardWords, setCurrentDashboardWords] = useState<any[]>([]);
+
+  // Initialize dashboard words when category changes or component mounts
+  useEffect(() => {
+    const initializeWords = () => {
+      if (currentDashboardWords.length === 0) {
+        generateFreshWords();
+      }
+    };
+
+    initializeWords();
+  }, [selectedCategory, rememberedWords.size, forgottenWords.size]); // Re-initialize when category changes or progress updates
 
   // Dynamic learning stats that reflect actual progress
   const learningStats = {
@@ -320,6 +335,65 @@ export default function Index({ initialProfile }: IndexProps) {
   const handleCategoryChange = (categoryId: string) => {
     setSelectedCategory(categoryId);
     setCurrentWordIndex(0);
+    // Reset excluded words when changing category
+    setExcludedWordIds(new Set());
+  };
+
+  const generateFreshWords = () => {
+    const allReviewedWords = new Set([
+      ...rememberedWords,
+      ...forgottenWords,
+      ...excludedWordIds,
+    ]);
+
+    try {
+      const smartSelection = SmartWordSelector.selectWords({
+        category: selectedCategory,
+        count: 10,
+        rememberedWords,
+        forgottenWords,
+        childStats,
+        prioritizeWeakCategories: true,
+        includeReviewWords: false, // Focus on new words to avoid repetition
+      });
+
+      // Filter out already seen words
+      const freshWords = smartSelection.words.filter(
+        (word) => !allReviewedWords.has(word.id),
+      );
+
+      // If we don't have enough fresh words from smart selection, get random words
+      if (freshWords.length < 5) {
+        const fallbackWords =
+          selectedCategory === "all"
+            ? getRandomWords(10)
+            : getWordsByCategory(selectedCategory);
+
+        const additionalFreshWords = fallbackWords
+          .filter((word) => !allReviewedWords.has(word.id))
+          .slice(0, 10 - freshWords.length);
+
+        freshWords.push(...additionalFreshWords);
+      }
+
+      // Update excluded words to include the new words we're about to show
+      setExcludedWordIds(
+        (prev) => new Set([...prev, ...freshWords.map((w) => w.id)]),
+      );
+      setCurrentDashboardWords(freshWords.slice(0, 10));
+
+      return freshWords.slice(0, 10);
+    } catch (error) {
+      console.error("Error generating fresh words:", error);
+      // Fallback to simple random selection
+      const fallbackWords =
+        selectedCategory === "all"
+          ? getRandomWords(10)
+          : getWordsByCategory(selectedCategory).slice(0, 10);
+
+      setCurrentDashboardWords(fallbackWords);
+      return fallbackWords;
+    }
   };
 
   const checkCategoryCompletion = (
@@ -437,14 +511,7 @@ export default function Index({ initialProfile }: IndexProps) {
       // Update child stats immediately for real-time feedback
       setChildStats(response.updatedStats);
 
-      // Update learning stats with new data
-      setLearningStats((prevStats) => ({
-        ...prevStats,
-        wordsLearned: response.updatedStats.totalWordsLearned,
-        weeklyProgress: response.updatedStats.wordsRemembered,
-        accuracyRate: response.updatedStats.averageAccuracy,
-        totalPoints: prevStats.totalPoints + (status === "remembered" ? 10 : 5),
-      }));
+      // Learning stats are computed dynamically from current state
 
       // Update adventure system with word interaction
       adventureService.trackWordInteraction(
@@ -597,7 +664,7 @@ export default function Index({ initialProfile }: IndexProps) {
               <div className="bg-white/20 backdrop-blur-sm rounded-full p-1.5">
                 <BookOpen className="w-6 h-6 text-white" />
               </div>
-              <h1 className="text-lg font-bold">Word Adventure</h1>
+              <h1 className="text-lg font-bold">Wordy's Adventure!</h1>
             </div>
           </div>
 
@@ -609,7 +676,7 @@ export default function Index({ initialProfile }: IndexProps) {
               </div>
             </div>
             <h1 className="text-2xl md:text-3xl font-bold mb-1">
-              ⭐ Word Adventure
+              🌟 Wordy's Adventure!
             </h1>
             <p className="text-sm md:text-base mb-3 opacity-90">
               Welcome to your vocabulary adventure! Ready for some learning fun?
@@ -765,10 +832,10 @@ export default function Index({ initialProfile }: IndexProps) {
                   </div>
                   <div>
                     <h1 className="text-lg lg:text-xl font-bold text-gray-800">
-                      WordWise
+                      Wordy's Adventure!
                     </h1>
                     <p className="text-xs lg:text-sm text-gray-600">
-                      Learning Adventure
+                      Fun Learning Games
                     </p>
                   </div>
                 </div>
@@ -934,27 +1001,7 @@ export default function Index({ initialProfile }: IndexProps) {
                     childStats={childStats}
                     forgottenWordsCount={forgottenWords.size}
                     rememberedWordsCount={rememberedWords.size}
-                    availableWords={(() => {
-                      // Enhanced smart word selection using machine learning principles
-                      const smartSelection = SmartWordSelector.selectWords({
-                        category: selectedCategory,
-                        count: 10,
-                        rememberedWords,
-                        forgottenWords,
-                        childStats,
-                        prioritizeWeakCategories: true,
-                        includeReviewWords: true,
-                      });
-
-                      // Fallback to simple random selection if smart selection fails
-                      if (smartSelection.words.length === 0) {
-                        return selectedCategory === "all"
-                          ? getRandomWords(10)
-                          : getWordsByCategory(selectedCategory).slice(0, 10);
-                      }
-
-                      return smartSelection.words;
-                    })()}
+                    availableWords={currentDashboardWords}
                     onWordProgress={async (word, status) => {
                       // Handle word progress in dashboard
                       if (status === "remembered") {
@@ -999,6 +1046,7 @@ export default function Index({ initialProfile }: IndexProps) {
                       startPracticeGame();
                       // Stay in current tab - practice component will show as overlay
                     }}
+                    onRequestNewWords={generateFreshWords}
                   />
                 </TabsContent>
 
@@ -1050,7 +1098,7 @@ export default function Index({ initialProfile }: IndexProps) {
                               }}
                               variant="ghost"
                             >
-                              ← Back to Categories
+                              ��� Back to Categories
                             </Button>
                           </div>
                         </div>
@@ -1181,7 +1229,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                                     type: "celebration",
                                                     title:
                                                       "Category Review Complete! 📚",
-                                                    message: `You've reviewed all ${completionResult.totalWords} words in ${selectedCategory === "all" ? "this word set" : selectedCategory}!\\n\\n✅ Remembered: ${completionResult.totalRemembered} words\\n❌ Need practice: ${completionResult.totalWords - completionResult.totalRemembered} words\\n\\n${completionResult.totalWords - completionResult.totalRemembered > 0 ? "Don't worry! Let's practice the tricky ones again! ����" : "Amazing work! 🎉"}`,
+                                                    message: `You've reviewed all ${completionResult.totalWords} words in ${selectedCategory === "all" ? "this word set" : selectedCategory}!\\n\\n✅ Remembered: ${completionResult.totalRemembered} words\\n❌ Need practice: ${completionResult.totalWords - completionResult.totalRemembered} words\\n\\n${completionResult.totalWords - completionResult.totalRemembered > 0 ? "Don't worry! Let's practice the tricky ones again! ������" : "Amazing work! 🎉"}`,
                                                     points:
                                                       completionResult.totalRemembered *
                                                       10, // Fewer points since words were forgotten
@@ -1613,7 +1661,7 @@ export default function Index({ initialProfile }: IndexProps) {
                         {/* Picture Quiz */}
                         <Card className="cursor-pointer hover:shadow-xl transition-all duration-300 hover:scale-105 border-2 border-educational-orange/30">
                           <CardContent className="p-6 text-center">
-                            <div className="text-6xl mb-4">��</div>
+                            <div className="text-6xl mb-4">����</div>
                             <h3 className="text-xl font-bold text-educational-orange mb-2">
                               Picture Quiz
                             </h3>

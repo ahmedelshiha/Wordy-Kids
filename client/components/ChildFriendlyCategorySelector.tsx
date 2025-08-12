@@ -663,7 +663,7 @@ export function ChildFriendlyCategorySelector({
             <div className="flex items-center gap-2 text-educational-blue">
               <Heart className="w-5 h-5 fill-current" />
               <span className="font-semibold">
-                Ready for your word adventure?
+                Ready for your Wordy's Adventure?
               </span>
               <Heart className="w-5 h-5 fill-current" />
             </div>

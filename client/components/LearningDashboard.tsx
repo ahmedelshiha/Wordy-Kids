@@ -56,6 +56,7 @@ interface LearningDashboardProps {
   onPracticeForgotten?: () => void;
   forgottenWordsCount?: number;
   rememberedWordsCount?: number;
+  onRequestNewWords?: () => void;
 }
 
 export const LearningDashboard: React.FC<LearningDashboardProps> = ({
@@ -71,6 +72,7 @@ export const LearningDashboard: React.FC<LearningDashboardProps> = ({
   onPracticeForgotten,
   forgottenWordsCount = 0,
   rememberedWordsCount = 0,
+  onRequestNewWords,
 }) => {
   const completionPercentage = Math.round(
     (stats.wordsLearned / stats.totalWords) * 100,
@@ -92,14 +94,14 @@ export const LearningDashboard: React.FC<LearningDashboardProps> = ({
     if (percentage >= 75) return "🚀 You're doing great!";
     if (percentage >= 50) return "💪 Keep going, champion!";
     if (percentage >= 25) return "🌱 Nice start!";
-    return "��� Ready for an adventure?";
+    return "🌟 Ready for an adventure?";
   };
 
   const getProgressEmoji = (percentage: number) => {
     if (percentage >= 100) return "🏆";
     if (percentage >= 90) return "⭐";
     if (percentage >= 75) return "🎯";
-    if (percentage >= 50) return "💫";
+    if (percentage >= 50) return "����";
     return "🌟";
   };
 
@@ -175,6 +177,7 @@ export const LearningDashboard: React.FC<LearningDashboardProps> = ({
           totalPoints={stats.totalPoints}
           forgottenWordsCount={forgottenWordsCount}
           rememberedWordsCount={rememberedWordsCount}
+          onRequestNewWords={onRequestNewWords}
         />
       ) : (
         // Fallback welcome section if no words available
@@ -184,7 +187,7 @@ export const LearningDashboard: React.FC<LearningDashboardProps> = ({
             Welcome back, {userName}!
           </h1>
           <p className="text-slate-600 mb-6">
-            Ready to continue your word adventure?
+            Ready to continue your Wordy's Adventure?
           </p>
 
           {/* Practice Words Card - Fallback */}

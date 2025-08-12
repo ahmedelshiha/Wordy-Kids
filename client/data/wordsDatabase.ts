@@ -1,4 +1,4 @@
-// Comprehensive vocabulary database for Word Adventure
+// Comprehensive vocabulary database for Wordy's Adventure
 export interface Word {
   id: number;
   word: string;
@@ -527,7 +527,7 @@ export const wordsDatabase: Word[] = [
   {
     id: 43,
     word: "Clock",
-    pronunciation: "/klɑːk/",
+    pronunciation: "/kl��ːk/",
     definition: "A device that shows the time",
     example: "The clock shows it's time for lunch",
     funFact: "The first clocks didn't have hands!",
@@ -720,7 +720,7 @@ export const wordsDatabase: Word[] = [
     definition: "Moving air you can feel",
     example: "Wind makes the leaves dance",
     funFact: "Wind can travel over 200 miles per hour!",
-    emoji: "💨",
+    emoji: "��",
     category: "nature",
     difficulty: "easy",
   },
@@ -2085,7 +2085,7 @@ export const wordsDatabase: Word[] = [
     definition: "A big vehicle that carries many people",
     example: "I ride the school bus every day",
     funFact: "The first bus was pulled by horses!",
-    emoji: "🚌",
+    emoji: "��",
     category: "transportation",
     difficulty: "easy",
   },

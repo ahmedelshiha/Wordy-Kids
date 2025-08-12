@@ -3,12 +3,106 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Hello world project</title>
+
+    <!-- SEO Basics -->
+    <title>Wordy's Adventure! | Fun English Learning for Kids</title>
+    <meta
+      name="description"
+      content="Wordy's Adventure is a fun, game-based platform that helps kids learn new English words through interactive activities and adventures."
+    />
+
+    <!-- Keywords (not a major ranking factor, but helps some engines) -->
+    <meta
+      name="keywords"
+      content="English learning for kids, vocabulary games, educational app, Wordy's Adventure, fun English learning, kids English words"
+    />
+
+    <!-- Open Graph for Social Sharing -->
+    <meta
+      property="og:title"
+      content="Wordy's Adventure - Learn English Words with Fun"
+    />
+    <meta
+      property="og:description"
+      content="Interactive word games to help children learn English faster and have fun."
+    />
+    <meta
+      property="og:image"
+      content="https://yourwebsite.com/images/preview.jpg"
+    />
+    <meta property="og:url" content="https://yourwebsite.com" />
+    <meta property="og:type" content="website" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta
+      name="twitter:title"
+      content="Wordy's Adventure - Fun English Learning for Kids"
+    />
+    <meta
+      name="twitter:description"
+      content="Interactive word games to help children learn English faster and have fun."
+    />
+    <meta
+      name="twitter:image"
+      content="https://yourwebsite.com/images/preview.jpg"
+    />
+
+    <!-- Schema.org for Educational Game -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "EducationalGame",
+        "name": "Wordy's Adventure",
+        "description": "An interactive game that helps kids learn English vocabulary through fun challenges.",
+        "url": "https://yourwebsite.com",
+        "educationalLevel": "Primary",
+        "genre": "Educational",
+        "targetAudience": {
+          "@type": "EducationalAudience",
+          "educationalRole": "student",
+          "audienceType": "children"
+        },
+        "teaches": "English vocabulary",
+        "educationalUse": "vocabulary learning",
+        "typicalAgeRange": "5-12",
+        "inLanguage": "en",
+        "publisher": {
+          "@type": "Organization",
+          "name": "Wordy's Adventure"
+        },
+        "applicationCategory": "Educational",
+        "operatingSystem": "Web Browser",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD"
+        }
+      }
+    </script>
+
+    <!-- Performance Optimizations -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/png" href="/favicon.png" />
+
+    <!-- Theme Color -->
+    <meta name="theme-color" content="#8B5CF6" />
+
+    <!-- Apple Web App -->
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="Wordy's Adventure" />
+
+    <!-- Web App Manifest -->
+    <link rel="manifest" href="/manifest.json" />
   </head>
 
   <body>
     <div id="root"></div>
-
     <script type="module" src="/client/App.tsx"></script>
   </body>
 </html>
