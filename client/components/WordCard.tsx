@@ -263,15 +263,15 @@ export const WordCard: React.FC<WordCardProps> = ({
               </div>
             </div>
           ) : (
-            <div className="relative mx-auto mt-8 mb-6">
-              <div className="w-48 h-48 md:w-56 md:h-56 lg:w-64 lg:h-64 rounded-full bg-gradient-to-br from-white/30 via-white/20 to-white/10 backdrop-blur-md shadow-2xl ring-4 ring-white/30 flex items-center justify-center relative overflow-hidden">
+            <div className="relative mx-auto mt-4 mb-4">
+              <div className="w-32 h-32 md:w-40 md:h-40 rounded-full bg-gradient-to-br from-white/30 via-white/20 to-white/10 backdrop-blur-md shadow-2xl ring-4 ring-white/30 flex items-center justify-center relative overflow-hidden">
                 {/* Decorative background elements */}
-                <div className="absolute top-2 left-2 w-6 h-6 bg-white/20 rounded-full animate-pulse"></div>
-                <div className="absolute bottom-4 right-4 w-4 h-4 bg-white/15 rounded-full animate-bounce delay-300"></div>
-                <div className="absolute top-1/2 right-2 w-3 h-3 bg-white/25 rounded-full animate-ping delay-700"></div>
+                <div className="absolute top-1 left-1 w-4 h-4 bg-white/20 rounded-full animate-pulse"></div>
+                <div className="absolute bottom-2 right-2 w-3 h-3 bg-white/15 rounded-full animate-bounce delay-300"></div>
+                <div className="absolute top-1/2 right-1 w-2 h-2 bg-white/25 rounded-full animate-ping delay-700"></div>
 
                 {/* Main emoji */}
-                <span className="text-5xl md:text-6xl lg:text-7xl relative z-10 drop-shadow-lg animate-gentle-float">
+                <span className="text-3xl md:text-4xl relative z-10 drop-shadow-lg animate-gentle-float">
                   {word.emoji || "📚"}
                 </span>
 
@@ -281,14 +281,14 @@ export const WordCard: React.FC<WordCardProps> = ({
             </div>
           )}
 
-          <div className="flex-1 flex flex-col justify-center items-center text-center space-y-3">
-            <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold tracking-wide drop-shadow-md">
+          <div className="flex-1 flex flex-col justify-center items-center text-center space-y-2">
+            <h2 className="text-xl md:text-2xl font-bold tracking-wide drop-shadow-md">
               {word.word}
             </h2>
 
             {word.pronunciation && (
               <div className="flex items-center gap-2">
-                <span className="text-sm md:text-base lg:text-lg opacity-90 font-medium">
+                <span className="text-sm md:text-base opacity-90 font-medium">
                   {word.pronunciation}
                 </span>
                 <Button
