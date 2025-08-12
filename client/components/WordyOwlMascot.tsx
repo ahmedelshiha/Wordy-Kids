@@ -45,6 +45,15 @@ const WordyOwlMascot: React.FC = () => {
 
   return (
     <div className="relative">
+      {/* Sparkle Effects */}
+      {isClicked && (
+        <>
+          <div className="absolute -top-2 -left-2 text-yellow-400 animate-ping">✨</div>
+          <div className="absolute -top-1 -right-2 text-blue-400 animate-ping animation-delay-100">⭐</div>
+          <div className="absolute -bottom-1 -left-1 text-pink-400 animate-ping animation-delay-200">💫</div>
+        </>
+      )}
+
       {/* Speech Bubble */}
       <div className="absolute -top-16 md:-top-20 left-1/2 transform -translate-x-1/2 z-10 animate-fade-in">
         <div className="bg-white rounded-xl px-3 py-2 md:px-4 md:py-3 shadow-lg border-2 md:border-3 border-educational-yellow max-w-[280px] md:max-w-xs relative">
