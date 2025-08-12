@@ -69,6 +69,16 @@ export function MobileBottomNav({
       textColor: "text-pink-600",
       badge: undefined,
     },
+    {
+      id: "progress",
+      emoji: "🌟",
+      label: "My Journey",
+      icon: Trophy,
+      color: "from-yellow-500 to-orange-500",
+      bgColor: "bg-yellow-100",
+      textColor: "text-yellow-600",
+      badge: undefined,
+    },
   ];
 
   const secondaryMenuItems = [
