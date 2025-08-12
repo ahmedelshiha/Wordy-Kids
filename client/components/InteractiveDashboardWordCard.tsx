@@ -128,6 +128,35 @@ export function InteractiveDashboardWordCard({
     }
   };
 
+  const checkForAchievements = (remembered: number, forgotten: number) => {
+    const total = remembered + forgotten;
+    const accuracy = total > 0 ? Math.round((remembered / total) * 100) : 0;
+
+    // Milestone achievements
+    if (remembered === 5) {
+      setAchievementMessage("🌟 First 5 words! You're on fire!");
+      setTimeout(() => setAchievementMessage(null), 3000);
+    } else if (remembered === 10) {
+      setAchievementMessage("🎯 10 words mastered! Amazing!");
+      setTimeout(() => setAchievementMessage(null), 3000);
+    } else if (remembered === 20) {
+      setAchievementMessage("🏆 20 words! You're a vocabulary champion!");
+      setTimeout(() => setAchievementMessage(null), 3000);
+    } else if (remembered === 50) {
+      setAchievementMessage("⭐ 50 words! Absolutely incredible!");
+      setTimeout(() => setAchievementMessage(null), 3000);
+    }
+
+    // Accuracy achievements
+    if (total >= 10 && accuracy === 100) {
+      setAchievementMessage("💯 Perfect score! No mistakes!");
+      setTimeout(() => setAchievementMessage(null), 3000);
+    } else if (total >= 10 && accuracy >= 90) {
+      setAchievementMessage("🎉 90%+ accuracy! Excellent work!");
+      setTimeout(() => setAchievementMessage(null), 3000);
+    }
+  };
+
   const handleWordAction = async (
     status: "remembered" | "needs_practice" | "skipped",
   ) => {
@@ -136,11 +165,24 @@ export function InteractiveDashboardWordCard({
     console.log(`Word Action: ${currentWord.word} - ${status}`, {
       wordId: currentWord.id,
       currentIndex: currentWordIndex,
-      totalWords: words.length
+      totalWords: words.length,
+      localRemembered: localRememberedCount,
+      localForgotten: localForgottenCount
     });
 
     // Mark as answered immediately to prevent double-clicks
     setIsAnswered(true);
+
+    // Update local counters
+    if (status === "remembered") {
+      setLocalRememberedCount(prev => {
+        const newCount = prev + 1;
+        checkForAchievements(newCount, localForgottenCount);
+        return newCount;
+      });
+    } else if (status === "needs_practice") {
+      setLocalForgottenCount(prev => prev + 1);
+    }
 
     // Set visual feedback type
     if (status !== "skipped") {
@@ -160,6 +202,7 @@ export function InteractiveDashboardWordCard({
       // Call the progress callback and wait for it to complete
       await onWordProgress(currentWord, status);
       console.log(`Word progress callback completed for: ${currentWord.word}`);
+      console.log(`Local progress: ${localRememberedCount + (status === "remembered" ? 1 : 0)} remembered, ${localForgottenCount + (status === "needs_practice" ? 1 : 0)} forgotten`);
     } catch (error) {
       console.error('Error in word progress callback:', error);
     }
