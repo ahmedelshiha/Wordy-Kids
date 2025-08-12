@@ -19,6 +19,8 @@ import {
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { audioService } from "@/lib/audioService";
+import { AchievementTracker } from "@/lib/achievementTracker";
+import { EnhancedAchievementPopup } from "@/components/EnhancedAchievementPopup";
 
 interface Word {
   id: number;
