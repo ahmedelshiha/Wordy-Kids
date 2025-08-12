@@ -285,24 +285,26 @@ export default function LoginForm() {
                 </div>
               )}
 
-              {/* Login Button */}
-              <Button
-                type="submit"
-                disabled={isLoading || !formData.email || !formData.password}
-                className="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white hover:from-blue-700 hover:to-purple-700"
-              >
-                {isLoading ? (
-                  <div className="flex items-center gap-2">
-                    <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-                    Signing In...
-                  </div>
-                ) : (
-                  <>
-                    <LogIn className="w-4 h-4 mr-2" />
-                    Sign In
-                  </>
-                )}
-              </Button>
+              {/* Super Fun Login Button */}
+              <div className="pt-4">
+                <Button
+                  type="submit"
+                  disabled={isLoading || !formData.email || !formData.password}
+                  className="w-full h-16 text-xl font-bold bg-gradient-to-r from-yellow-400 via-pink-500 to-purple-600 text-white hover:from-yellow-500 hover:via-pink-600 hover:to-purple-700 rounded-2xl shadow-xl hover:shadow-2xl transform hover:scale-105 active:scale-95 transition-all duration-300 border-4 border-white"
+                >
+                  {isLoading ? (
+                    <div className="flex items-center gap-3">
+                      <div className="w-6 h-6 border-4 border-white border-t-transparent rounded-full animate-spin"></div>
+                      <span className="animate-pulse">🎪 Getting Ready... 🎪</span>
+                    </div>
+                  ) : (
+                    <div className="flex items-center gap-3">
+                      <LogIn className="w-6 h-6" />
+                      <span>🚀 Blast Off to Fun! 🚀</span>
+                    </div>
+                  )}
+                </Button>
+              </div>
 
               {/* Forgot Password */}
               <Button
