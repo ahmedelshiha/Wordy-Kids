@@ -20,6 +20,8 @@ import {
   getSystematicMediumVowelQuestions,
   getSystematicTimedVowelQuestions
 } from "@/lib/vowelQuizGeneration";
+import { AchievementTracker } from "@/lib/achievementTracker";
+import { EnhancedAchievementPopup } from "@/components/EnhancedAchievementPopup";
 import { SettingsPanel } from "@/components/SettingsPanel";
 import { FloatingBubbles } from "@/components/FloatingBubbles";
 import { CelebrationEffect } from "@/components/CelebrationEffect";
