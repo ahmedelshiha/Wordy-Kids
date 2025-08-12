@@ -342,11 +342,28 @@ export function InteractiveDashboardWordCard({
     if (newStats.wordsCompleted >= SESSION_SIZE) {
       const achievements = checkSessionAchievements(newStats);
       setSessionAchievements(achievements);
+
+      // Track session completion for journey achievements
+      const sessionJourneyAchievements = AchievementTracker.trackActivity({
+        type: "sessionComplete",
+        accuracy: newStats.accuracy,
+        timeSpent: Math.round((Date.now() - newStats.sessionStartTime) / 1000 / 60), // Convert to minutes
+        wordsLearned: newStats.wordsRemembered
+      });
+
+      // Add session journey achievements to the display queue
+      if (sessionJourneyAchievements.length > 0) {
+        setTimeout(() => {
+          setJourneyAchievements(prev => [...prev, ...sessionJourneyAchievements]);
+        }, 3000); // Show after session completion celebration
+      }
+
       setShowSessionComplete(true);
 
       console.log("Session completed!", {
         stats: newStats,
         achievements: achievements.map((a) => a.title),
+        journeyAchievements: sessionJourneyAchievements.length
       });
       return;
     }
