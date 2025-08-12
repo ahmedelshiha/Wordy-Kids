@@ -512,6 +512,17 @@ export default function Index({ initialProfile }: IndexProps) {
     status: "remembered" | "needs_practice",
     responseTime?: number,
   ) => {
+    // Update enhanced word history first
+    const wasCorrect = status === "remembered";
+    EnhancedWordSelector.updateWordHistory(
+      word.id,
+      wasCorrect,
+      userWordHistory
+    );
+
+    // Trigger re-render by updating the state
+    setUserWordHistory(new Map(userWordHistory));
+
     if (!currentProfile?.id || !currentSessionId) {
       console.warn("Missing profile or session ID");
       return;
