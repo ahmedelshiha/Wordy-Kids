@@ -851,25 +851,6 @@ export default function Index({ initialProfile }: IndexProps) {
                     </span>
                   </button>
 
-                  <button
-                    onClick={() => setActiveTab("adventure")}
-                    className={`w-full flex items-center gap-3 p-3 lg:p-4 rounded-xl lg:rounded-2xl transition-all ${
-                      activeTab === "adventure"
-                        ? "bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-lg"
-                        : "bg-white text-gray-700 hover:bg-purple-50 border border-purple-100"
-                    }`}
-                  >
-                    <div
-                      className={`p-2 rounded-lg lg:rounded-xl ${activeTab === "adventure" ? "bg-white/20" : "bg-green-100"}`}
-                    >
-                      <Sword
-                        className={`w-4 h-4 lg:w-5 lg:h-5 ${activeTab === "adventure" ? "text-white" : "text-green-600"}`}
-                      />
-                    </div>
-                    <span className="font-medium lg:font-semibold text-sm lg:text-base">
-                      🎯 Word Practice
-                    </span>
-                  </button>
 
                   <button
                     onClick={() => setActiveTab("progress")}
