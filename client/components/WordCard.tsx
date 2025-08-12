@@ -466,7 +466,7 @@ export const WordCard: React.FC<WordCardProps> = ({
               </div>
 
               {/* Adventure Rating Buttons */}
-              <div className="space-y-2">
+              <div className="space-y-1">
                 <h4 className="text-xs md:text-sm font-medium text-purple-300 mb-2 flex items-center gap-1">
                   <Sword className="w-3 h-3" />
                   Rate Your Knowledge
