@@ -1,28 +1,172 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { cn } from "@/lib/utils";
 
-const WordyOwlMascot: React.FC = () => {
+interface WordyOwlMascotProps {
+  isDraggable?: boolean;
+}
+
+const WordyOwlMascot: React.FC<WordyOwlMascotProps> = ({
+  isDraggable = false,
+}) => {
   const [currentMessage, setCurrentMessage] = useState(0);
   const [isBlinking, setIsBlinking] = useState(false);
   const [isClicked, setIsClicked] = useState(false);
+  const [isDragging, setIsDragging] = useState(false);
+  const [position, setPosition] = useState({ x: 0, y: 0 });
+  const [isFloating, setIsFloating] = useState(false);
+  const dragRef = useRef<HTMLDivElement>(null);
+  const startPosRef = useRef({ x: 0, y: 0 });
+  const offsetRef = useRef({ x: 0, y: 0 });
 
   const messages = [
     "Hi there! I'm Wordy, and I'm here to make learning words super fun! Ready for an amazing adventure? 🚀",
-    "Let's learn 5 new words today! 🏆",
+    isDraggable
+      ? "Drag me around the screen! I can float anywhere! 🦉✨"
+      : "Let's learn 5 new words today! 🏆",
     "Hoot hoot! Click me anytime for encouragement! 🦉✨",
     "You're doing amazing! Keep up the great work! 🌟",
     "Every word you learn makes you smarter! 💪",
+    "I can move around to help you anywhere on the screen! 🎯",
   ];
 
   const handleClick = () => {
-    setIsClicked(true);
-    const randomMessage = Math.floor(Math.random() * 3) + 2; // Messages 2, 3, or 4
-    setCurrentMessage(randomMessage);
+    if (!isDragging) {
+      setIsClicked(true);
+      const randomMessage = Math.floor(Math.random() * 3) + 2; // Messages 2, 3, or 4
+      setCurrentMessage(randomMessage);
 
-    setTimeout(() => {
-      setIsClicked(false);
-    }, 300);
+      setTimeout(() => {
+        setIsClicked(false);
+      }, 300);
+    }
   };
+
+  const handleMouseDown = (e: React.MouseEvent) => {
+    if (!isDraggable) return;
+
+    e.preventDefault();
+    setIsDragging(true);
+    setIsFloating(true);
+
+    const rect = dragRef.current?.getBoundingClientRect();
+    if (rect) {
+      offsetRef.current = {
+        x: e.clientX - rect.left,
+        y: e.clientY - rect.top,
+      };
+      startPosRef.current = { x: e.clientX, y: e.clientY };
+    }
+  };
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    if (!isDraggable) return;
+
+    e.preventDefault();
+    setIsDragging(true);
+    setIsFloating(true);
+
+    const touch = e.touches[0];
+    const rect = dragRef.current?.getBoundingClientRect();
+    if (rect) {
+      offsetRef.current = {
+        x: touch.clientX - rect.left,
+        y: touch.clientY - rect.top,
+      };
+      startPosRef.current = { x: touch.clientX, y: touch.clientY };
+    }
+  };
+
+  const handleMouseMove = (e: MouseEvent) => {
+    if (!isDragging || !isDraggable) return;
+
+    const newX = e.clientX - offsetRef.current.x;
+    const newY = e.clientY - offsetRef.current.y;
+
+    // Constrain to viewport
+    const maxX = window.innerWidth - 80;
+    const maxY = window.innerHeight - 80;
+
+    setPosition({
+      x: Math.max(0, Math.min(maxX, newX)),
+      y: Math.max(0, Math.min(maxY, newY)),
+    });
+  };
+
+  const handleTouchMove = (e: TouchEvent) => {
+    if (!isDragging || !isDraggable) return;
+
+    e.preventDefault();
+    const touch = e.touches[0];
+    const newX = touch.clientX - offsetRef.current.x;
+    const newY = touch.clientY - offsetRef.current.y;
+
+    // Constrain to viewport
+    const maxX = window.innerWidth - 80;
+    const maxY = window.innerHeight - 80;
+
+    setPosition({
+      x: Math.max(0, Math.min(maxX, newX)),
+      y: Math.max(0, Math.min(maxY, newY)),
+    });
+  };
+
+  const handleMouseUp = (e: MouseEvent) => {
+    if (isDragging) {
+      setIsDragging(false);
+
+      // Check if it was just a click (not a drag)
+      const distance = Math.sqrt(
+        Math.pow(e.clientX - startPosRef.current.x, 2) +
+          Math.pow(e.clientY - startPosRef.current.y, 2),
+      );
+
+      if (distance < 5) {
+        handleClick();
+      }
+
+      // Reset floating state after a delay
+      setTimeout(() => setIsFloating(false), 1000);
+    }
+  };
+
+  const handleTouchEnd = (e: TouchEvent) => {
+    if (isDragging) {
+      setIsDragging(false);
+
+      // Check if it was just a tap (not a drag)
+      const touch = e.changedTouches[0];
+      const distance = Math.sqrt(
+        Math.pow(touch.clientX - startPosRef.current.x, 2) +
+          Math.pow(touch.clientY - startPosRef.current.y, 2),
+      );
+
+      if (distance < 5) {
+        handleClick();
+      }
+
+      // Reset floating state after a delay
+      setTimeout(() => setIsFloating(false), 1000);
+    }
+  };
+
+  // Add global event listeners for dragging
+  useEffect(() => {
+    if (isDragging) {
+      document.addEventListener("mousemove", handleMouseMove);
+      document.addEventListener("mouseup", handleMouseUp);
+      document.addEventListener("touchmove", handleTouchMove, {
+        passive: false,
+      });
+      document.addEventListener("touchend", handleTouchEnd);
+
+      return () => {
+        document.removeEventListener("mousemove", handleMouseMove);
+        document.removeEventListener("mouseup", handleMouseUp);
+        document.removeEventListener("touchmove", handleTouchMove);
+        document.removeEventListener("touchend", handleTouchEnd);
+      };
+    }
+  }, [isDragging]);
 
   // Change message after 5 seconds
   useEffect(() => {
@@ -46,8 +190,31 @@ const WordyOwlMascot: React.FC = () => {
     return () => clearInterval(blinkInterval);
   }, []);
 
+  const containerClasses = cn(
+    "relative select-none",
+    isDraggable && "cursor-move touch-none",
+    isFloating && "z-50",
+    isDragging && "pointer-events-none",
+  );
+
+  const containerStyle =
+    isDraggable && isFloating
+      ? {
+          position: "fixed" as const,
+          left: position.x,
+          top: position.y,
+          zIndex: 9999,
+        }
+      : {};
+
   return (
-    <div className="relative">
+    <div
+      ref={dragRef}
+      className={containerClasses}
+      style={containerStyle}
+      onMouseDown={handleMouseDown}
+      onTouchStart={handleTouchStart}
+    >
       {/* Sparkle Effects */}
       {isClicked && (
         <>
@@ -65,9 +232,17 @@ const WordyOwlMascot: React.FC = () => {
 
       {/* Speech Bubble */}
       <div className="absolute -top-16 md:-top-20 left-1/2 transform -translate-x-1/2 z-10 animate-fade-in">
-        <div className="bg-white rounded-xl px-3 py-2 md:px-4 md:py-3 shadow-lg border-2 md:border-3 border-educational-yellow max-w-[280px] md:max-w-xs relative">
+        <div
+          className={cn(
+            "bg-white rounded-xl px-3 py-2 md:px-4 md:py-3 shadow-lg border-2 md:border-3 border-educational-yellow max-w-[280px] md:max-w-xs relative",
+            isDraggable && "border-dashed border-educational-purple",
+            isDragging && "border-educational-pink border-3",
+          )}
+        >
           <p className="text-xs md:text-sm text-gray-800 font-medium text-center leading-tight">
-            {messages[currentMessage]}
+            {isDragging
+              ? "🎯 Drag me around! I'm floating!"
+              : messages[currentMessage]}
           </p>
           {/* Speech bubble arrow */}
           <div className="absolute -bottom-1.5 md:-bottom-2 left-1/2 transform -translate-x-1/2">
@@ -80,10 +255,14 @@ const WordyOwlMascot: React.FC = () => {
       {/* Wordy the Owl SVG */}
       <div
         className={cn(
-          "animate-gentle-bounce hover:scale-110 transition-transform duration-300 cursor-pointer",
+          "animate-gentle-bounce hover:scale-110 transition-transform duration-300",
+          !isDraggable && "cursor-pointer",
+          isDraggable && "cursor-move",
           isClicked && "scale-95",
+          isDragging && "scale-110 rotate-12",
+          isFloating && "drop-shadow-2xl",
         )}
-        onClick={handleClick}
+        onClick={!isDraggable ? handleClick : undefined}
       >
         <svg
           width="60"
