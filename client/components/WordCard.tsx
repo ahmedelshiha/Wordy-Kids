@@ -361,22 +361,22 @@ export const WordCard: React.FC<WordCardProps> = ({
             {word.word} {word.emoji}
           </h3>
 
-          <div className="space-y-2 md:space-y-3 flex-1">
+          <div className="space-y-1 md:space-y-2 flex-1">
             <div>
-              <h4 className="text-xs md:text-sm font-medium mb-2 text-yellow-300">
+              <h4 className="text-xs font-medium mb-1 text-yellow-300">
                 Definition:
               </h4>
-              <p className="text-base md:text-lg leading-relaxed">
+              <p className="text-sm md:text-base leading-snug">
                 {word.definition}
               </p>
             </div>
 
             {word.example && (
               <div>
-                <h4 className="text-xs md:text-sm font-medium mb-2 text-green-300">
+                <h4 className="text-xs font-medium mb-1 text-green-300">
                   Example:
                 </h4>
-                <p className="text-sm md:text-base italic opacity-90">
+                <p className="text-xs md:text-sm italic opacity-90">
                   "{word.example}"
                 </p>
               </div>
@@ -384,10 +384,10 @@ export const WordCard: React.FC<WordCardProps> = ({
 
             {word.funFact && (
               <div>
-                <h4 className="text-xs md:text-sm font-medium mb-2 text-pink-300">
+                <h4 className="text-xs font-medium mb-1 text-pink-300">
                   Fun Fact:
                 </h4>
-                <p className="text-xs md:text-sm opacity-90">{word.funFact}</p>
+                <p className="text-xs opacity-90">{word.funFact}</p>
               </div>
             )}
           </div>
