@@ -53,6 +53,7 @@ interface InteractiveDashboardWordCardProps {
   forgottenWordsCount?: number;
   rememberedWordsCount?: number;
   className?: string;
+  onRequestNewWords?: () => void; // New prop to request fresh words
 }
 
 export function InteractiveDashboardWordCard({
