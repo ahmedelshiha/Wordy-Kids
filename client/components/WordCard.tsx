@@ -94,6 +94,20 @@ export const WordCard: React.FC<WordCardProps> = ({
         setIsPlaying(false);
         setShowSparkles(false);
         onPronounce?.(word);
+
+        // Track pronunciation activity for journey achievements
+        const pronunciationAchievements = AchievementTracker.trackActivity({
+          type: "wordLearning",
+          wordsLearned: 0, // Just listening, not learning
+          category: word.category,
+          timeSpent: 0.1 // Just a few seconds
+        });
+
+        if (pronunciationAchievements.length > 0) {
+          setTimeout(() => {
+            setWordAchievements(pronunciationAchievements);
+          }, 1000);
+        }
       },
       onError: () => {
         setIsPlaying(false);
