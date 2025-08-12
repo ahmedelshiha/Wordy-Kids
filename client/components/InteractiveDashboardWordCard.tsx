@@ -92,6 +92,11 @@ export function InteractiveDashboardWordCard({
     if (words.length > 0 && currentWordIndex >= words.length) {
       setCurrentWordIndex(0);
     }
+
+    // Reset shown words tracking when word array changes (new set of words)
+    if (words.length > 0) {
+      setShownWordIds(new Set());
+    }
   }, [words, currentWordIndex]);
 
   // Reset card state when word changes
