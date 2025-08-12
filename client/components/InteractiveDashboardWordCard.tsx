@@ -668,9 +668,9 @@ export function InteractiveDashboardWordCard({
           </div>
         )}
 
-        <CardContent className="p-8 relative z-10">
+        <CardContent className="p-4 md:p-8 relative z-10">
           {/* Category and Progress Header */}
-          <div className="text-center mb-6">
+          <div className="text-center mb-4 md:mb-6">
             <div className="flex items-center justify-center gap-4 mb-4">
               <Badge
                 className={cn(
@@ -691,27 +691,28 @@ export function InteractiveDashboardWordCard({
           </div>
 
           {/* Picture Display */}
-          <div className="mb-6">{renderWordImage()}</div>
+          <div className="mb-4 md:mb-6">{renderWordImage()}</div>
 
           {/* Game Instructions */}
-          <div className="text-center mb-4">
-            <h2 className="text-2xl font-bold text-gray-800 mb-2">
+          <div className="text-center mb-3 md:mb-4">
+            <h2 className="text-lg md:text-2xl font-bold text-gray-800 mb-1 md:mb-2">
               🎯 What is this?
             </h2>
-            <p className="text-gray-600">
+            <p className="text-sm md:text-base text-gray-600">
               Look at the picture and guess the word!
             </p>
           </div>
 
-          {/* Pronunciation Button */}
-          <div className="flex justify-center gap-4 mb-6">
+          {/* Action Buttons Row - Compact and Kid-Friendly */}
+          <div className="flex justify-center items-center gap-2 mb-3 md:mb-4">
             <Button
               onClick={playPronunciation}
               disabled={isPlaying}
-              className="bg-educational-blue hover:bg-educational-blue/90 text-white p-3 rounded-full transition-all duration-300 transform hover:scale-105"
+              size="sm"
+              className="bg-educational-blue hover:bg-educational-blue/90 text-white p-2 rounded-full transition-all duration-300 transform hover:scale-105"
             >
               <Volume2
-                className={cn("w-6 h-6", isPlaying && "animate-pulse")}
+                className={cn("w-4 h-4", isPlaying && "animate-pulse")}
               />
             </Button>
 
@@ -719,51 +720,56 @@ export function InteractiveDashboardWordCard({
               <Button
                 onClick={() => setShowHint(true)}
                 variant="outline"
-                className="px-6 py-3 text-lg rounded-2xl transition-all duration-300 transform hover:scale-105"
+                size="sm"
+                className="px-3 py-2 text-sm rounded-xl transition-all duration-300 transform hover:scale-105"
               >
-                <Lightbulb className="w-5 h-5 mr-2" />
-                Hint
+                <Lightbulb className="w-4 h-4 mr-1" />
+                💡 Hint
+              </Button>
+            )}
+
+            {!showWordName && (
+              <Button
+                onClick={() => setShowWordName(true)}
+                size="sm"
+                className="bg-educational-purple hover:bg-educational-purple/90 text-white px-3 py-2 text-sm rounded-xl transition-all duration-300 transform hover:scale-105"
+              >
+                <Eye className="w-4 h-4 mr-1" />
+                👁️ Show
               </Button>
             )}
           </div>
 
           {/* Hint Display */}
           {showHint && !showWordName && (
-            <div className="bg-yellow-50 border-2 border-yellow-200 rounded-2xl p-4 mb-6 text-center">
-              <div className="flex items-center justify-center gap-2 mb-2">
-                <Lightbulb className="w-5 h-5 text-yellow-600" />
-                <h3 className="text-lg font-semibold text-yellow-800">Hint:</h3>
+            <div className="bg-yellow-50 border-2 border-yellow-200 rounded-xl p-3 mb-3 text-center">
+              <div className="flex items-center justify-center gap-2 mb-1">
+                <Lightbulb className="w-4 h-4 text-yellow-600" />
+                <h3 className="text-sm font-semibold text-yellow-800">
+                  💡 Hint:
+                </h3>
               </div>
-              <p className="text-yellow-700 text-lg">
+              <p className="text-yellow-700 text-sm">
                 "{currentWord.definition}"
               </p>
             </div>
           )}
 
-          {/* Show Word Name Button */}
-          {!showWordName && (
-            <div className="text-center mb-6">
-              <Button
-                onClick={() => setShowWordName(true)}
-                className="bg-educational-purple hover:bg-educational-purple/90 text-white px-8 py-3 text-lg rounded-2xl transition-all duration-300 transform hover:scale-105"
-              >
-                <Eye className="w-5 h-5 mr-2" />
-                👁️ Show Word Name
-              </Button>
-            </div>
-          )}
-
           {/* Word Name and Details */}
           {showWordName && (
-            <div className="space-y-4 mb-8">
+            <div className="space-y-3 md:space-y-4 mb-6 md:mb-8">
               {/* Word Name */}
-              <div className="text-center bg-gradient-to-r from-green-50 to-blue-50 p-4 rounded-2xl border-2 border-green-200">
-                <div className="flex items-center justify-center gap-3 mb-3">
-                  <div className="text-3xl">{currentWord.emoji}</div>
-                  <h1 className="text-lg md:text-xl font-bold text-gray-800 tracking-wide">
+              <div className="text-center bg-gradient-to-r from-green-50 to-blue-50 p-3 md:p-4 rounded-2xl border-2 border-green-200">
+                <div className="flex items-center justify-center gap-2 md:gap-3 mb-2 md:mb-3">
+                  <div className="text-2xl md:text-3xl">
+                    {currentWord.emoji}
+                  </div>
+                  <h1 className="text-base md:text-lg lg:text-xl font-bold text-gray-800 tracking-wide">
                     {currentWord.word.toUpperCase()}
                   </h1>
-                  <div className="text-3xl">{currentWord.emoji}</div>
+                  <div className="text-2xl md:text-3xl">
+                    {currentWord.emoji}
+                  </div>
                 </div>
 
                 {/* Pronunciation */}
@@ -830,16 +836,16 @@ export function InteractiveDashboardWordCard({
               </div>
 
               {/* Skip button (smaller, less prominent) */}
-              <div className="text-center">
+              <div className="text-center mt-1 mb-0">
                 <Button
                   onClick={() => handleWordAction("skipped")}
                   variant="ghost"
                   size="sm"
                   disabled={isAnswered}
-                  className="text-gray-500 hover:text-gray-700 hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="text-gray-500 hover:text-gray-700 hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed py-1 px-3"
                 >
-                  <SkipForward className="w-4 h-4 mr-2" />
-                  Skip this word
+                  <SkipForward className="w-4 h-4 mr-1" />
+                  🤔 Try another word
                 </Button>
               </div>
 
