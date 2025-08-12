@@ -57,6 +57,7 @@ interface LearningDashboardProps {
   forgottenWordsCount?: number;
   rememberedWordsCount?: number;
   onRequestNewWords?: () => void;
+  onSessionProgress?: (stats: SessionStats) => void;
 }
 
 export const LearningDashboard: React.FC<LearningDashboardProps> = ({
