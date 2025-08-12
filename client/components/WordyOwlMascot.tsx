@@ -222,9 +222,13 @@ const WordyOwlMascot: React.FC<WordyOwlMascotProps> = ({ isDraggable = false }) 
 
       {/* Speech Bubble */}
       <div className="absolute -top-16 md:-top-20 left-1/2 transform -translate-x-1/2 z-10 animate-fade-in">
-        <div className="bg-white rounded-xl px-3 py-2 md:px-4 md:py-3 shadow-lg border-2 md:border-3 border-educational-yellow max-w-[280px] md:max-w-xs relative">
+        <div className={cn(
+          "bg-white rounded-xl px-3 py-2 md:px-4 md:py-3 shadow-lg border-2 md:border-3 border-educational-yellow max-w-[280px] md:max-w-xs relative",
+          isDraggable && "border-dashed border-educational-purple",
+          isDragging && "border-educational-pink border-3"
+        )}>
           <p className="text-xs md:text-sm text-gray-800 font-medium text-center leading-tight">
-            {messages[currentMessage]}
+            {isDragging ? "🎯 Drag me around! I'm floating!" : messages[currentMessage]}
           </p>
           {/* Speech bubble arrow */}
           <div className="absolute -bottom-1.5 md:-bottom-2 left-1/2 transform -translate-x-1/2">
