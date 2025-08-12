@@ -144,17 +144,12 @@ export function InteractiveDashboardWordCard({
     });
   }, [sessionStats, currentWordIndex, sessionProgress]);
 
-  // Auto-advance to next word when words array changes
+  // Reset card state when starting new session
   useEffect(() => {
-    if (words.length > 0 && currentWordIndex >= words.length) {
+    if (sessionWords.length > 0 && currentWordIndex >= sessionWords.length) {
       setCurrentWordIndex(0);
     }
-
-    // Reset shown words tracking when word array changes (new set of words)
-    if (words.length > 0) {
-      setShownWordIds(new Set());
-    }
-  }, [words, currentWordIndex]);
+  }, [sessionWords, currentWordIndex]);
 
   // Reset card state when word changes
   useEffect(() => {
