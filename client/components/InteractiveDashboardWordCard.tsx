@@ -489,10 +489,12 @@ export function InteractiveDashboardWordCard({
                     {(() => {
                       const wordsLearned = Math.max(
                         sessionStats.wordsRemembered,
-                        rememberedWordsCount || 0
+                        rememberedWordsCount || 0,
                       );
                       const goal = dailyGoal.target;
-                      const percentage = Math.round((wordsLearned / goal) * 100);
+                      const percentage = Math.round(
+                        (wordsLearned / goal) * 100,
+                      );
 
                       if (wordsLearned >= goal) {
                         if (wordsLearned >= goal * 2) return "⭐";
@@ -513,17 +515,22 @@ export function InteractiveDashboardWordCard({
                       {(() => {
                         const wordsLearned = Math.max(
                           sessionStats.wordsRemembered,
-                          rememberedWordsCount || 0
+                          rememberedWordsCount || 0,
                         );
                         const goal = dailyGoal.target;
-                        const percentage = Math.round((wordsLearned / goal) * 100);
+                        const percentage = Math.round(
+                          (wordsLearned / goal) * 100,
+                        );
 
                         if (wordsLearned >= goal) {
-                          if (wordsLearned >= goal * 2) return "🌟 SUPERSTAR! Amazing effort!";
-                          if (wordsLearned >= goal * 1.5) return "🚀 Beyond awesome! Keep going!";
+                          if (wordsLearned >= goal * 2)
+                            return "🌟 SUPERSTAR! Amazing effort!";
+                          if (wordsLearned >= goal * 1.5)
+                            return "🚀 Beyond awesome! Keep going!";
                           return "🎉 Goal achieved! You're incredible!";
                         }
-                        if (percentage >= 90) return "🌟 Almost there, superstar!";
+                        if (percentage >= 90)
+                          return "🌟 Almost there, superstar!";
                         if (percentage >= 75) return "🚀 You're doing great!";
                         if (percentage >= 50) return "💪 Keep going, champion!";
                         if (percentage >= 25) return "🌱 Nice start!";
@@ -536,7 +543,11 @@ export function InteractiveDashboardWordCard({
               <div className="flex items-center gap-1 md:gap-2">
                 <div className="text-right">
                   <div className="text-xs md:text-sm font-bold text-slate-800">
-                    {Math.max(sessionStats.wordsRemembered, rememberedWordsCount || 0)}/{dailyGoal.target}
+                    {Math.max(
+                      sessionStats.wordsRemembered,
+                      rememberedWordsCount || 0,
+                    )}
+                    /{dailyGoal.target}
                   </div>
                   <div className="text-xs text-slate-600">words</div>
                 </div>
@@ -850,17 +861,24 @@ export function InteractiveDashboardWordCard({
                     </div>
                   </div>
                   <div className="text-xs text-gray-600">
-                    {Math.round((sessionStats.wordsCompleted / SESSION_SIZE) * 100)}%
+                    {Math.round(
+                      (sessionStats.wordsCompleted / SESSION_SIZE) * 100,
+                    )}
+                    %
                   </div>
                 </div>
 
                 <div className="flex items-center justify-center gap-2">
                   {/* Compact Stats */}
                   <div className="bg-green-100 rounded-md px-2 py-1 text-center">
-                    <div className="text-xs">😊 {sessionStats.wordsRemembered}</div>
+                    <div className="text-xs">
+                      😊 {sessionStats.wordsRemembered}
+                    </div>
                   </div>
                   <div className="bg-orange-100 rounded-md px-2 py-1 text-center">
-                    <div className="text-xs">💪 {sessionStats.wordsForgotten}</div>
+                    <div className="text-xs">
+                      💪 {sessionStats.wordsForgotten}
+                    </div>
                   </div>
                 </div>
 
