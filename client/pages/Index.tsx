@@ -2311,6 +2311,18 @@ export default function Index({ initialProfile }: IndexProps) {
           <Heart className="w-5 md:w-6 h-5 md:h-6 text-white fill-current animate-pulse" />
         </div>
       </div>
+
+      {/* Enhanced Achievement Popup */}
+      {achievementPopup.length > 0 && (
+        <EnhancedAchievementPopup
+          achievements={achievementPopup}
+          onClose={() => setAchievementPopup([])}
+          onAchievementClaim={(achievement) => {
+            console.log('Achievement claimed:', achievement);
+            // Could add additional reward logic here like updating user points
+          }}
+        />
+      )}
     </div>
   );
 }
