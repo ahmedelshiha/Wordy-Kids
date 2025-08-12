@@ -54,6 +54,7 @@ interface InteractiveDashboardWordCardProps {
   rememberedWordsCount?: number;
   className?: string;
   onRequestNewWords?: () => void; // New prop to request fresh words
+  onSessionProgress?: (stats: SessionStats) => void; // New prop to report session progress
 }
 
 interface SessionStats {
