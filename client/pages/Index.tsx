@@ -1053,7 +1053,11 @@ export default function Index({ initialProfile }: IndexProps) {
                               }
                               className="flex items-center gap-1 md:gap-2 text-sm md:text-base px-3 md:px-4"
                             >
-                              <BookOpen className="w-4 h-4" />
+                              <img
+                                src="https://cdn.builder.io/api/v1/image/assets%2F122959266afa4d539a05a574b1531c32%2Fa3e1599156fb43479f1df1383fc15be2?format=webp&width=800"
+                                alt="Wordy the Owl"
+                                className="icon-sm"
+                              />
                               <span className="hidden sm:inline">
                                 Word Cards
                               </span>
