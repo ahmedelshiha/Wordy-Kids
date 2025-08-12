@@ -215,7 +215,7 @@ export function AvatarCustomization({
                     Choose your learning buddy!
                   </h2>
                   <p className="text-gray-600">
-                    Pick an animal friend to join you on your word adventure!
+                    Pick an animal friend to join you on your Wordy's Adventure!
                   </p>
                 </div>
 
