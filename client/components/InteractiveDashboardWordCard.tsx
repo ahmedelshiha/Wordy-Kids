@@ -733,7 +733,7 @@ export function InteractiveDashboardWordCard({
           {/* Game Instructions */}
           <div className="text-center mb-3 md:mb-4">
             <h2 className="text-lg md:text-2xl font-bold text-gray-800 mb-1 md:mb-2">
-              ��� What is this?
+              🤔 What is this?
             </h2>
             <p className="text-sm md:text-base text-gray-600">
               Look at the picture and guess the word!
