@@ -29,6 +29,15 @@ export default function LoginForm() {
     type: "success" | "error";
     text: string;
   } | null>(null);
+  const [owlAnimation, setOwlAnimation] = useState("animate-gentle-float");
+  const [funnyMessages] = useState([
+    "Hoot hoot! Let's learn together! 🦉",
+    "Ready for an amazing word adventure? 🚀",
+    "Wordy is excited to see you! 🎉",
+    "Time to become a word wizard! ✨",
+    "Let's make learning super fun! 🌟",
+  ]);
+  const [currentFunnyMessage, setCurrentFunnyMessage] = useState(0);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({
@@ -39,7 +48,18 @@ export default function LoginForm() {
     if (message) {
       setMessage(null);
     }
+    // Add fun owl wiggle when typing
+    setOwlAnimation("animate-wiggle");
+    setTimeout(() => setOwlAnimation("animate-gentle-float"), 2000);
   };
+
+  // Rotate funny messages every 3 seconds
+  React.useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentFunnyMessage((prev) => (prev + 1) % funnyMessages.length);
+    }, 3000);
+    return () => clearInterval(interval);
+  }, [funnyMessages.length]);
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -79,7 +99,7 @@ export default function LoginForm() {
       if (user || isDemoUser) {
         setMessage({
           type: "success",
-          text: "Login successful! Welcome back!",
+          text: "🎉 Hooray! Welcome back to the adventure! 🚀",
         });
 
         // Navigate to main app after successful login
@@ -89,7 +109,7 @@ export default function LoginForm() {
       } else {
         setMessage({
           type: "error",
-          text: "Invalid username or password. Please try again.",
+          text: "🤔 Hmm... those magic words don't match! Try again! ✨",
         });
       }
       setIsLoading(false);
@@ -103,179 +123,276 @@ export default function LoginForm() {
   const handleForgotPassword = () => {
     setMessage({
       type: "success",
-      text: "Password reset instructions sent! Check your email.",
+      text: "🦉 Wordy sent magic instructions to your email! Check it out! 📧✨",
     });
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-purple-100 flex items-center justify-center p-4">
-      {/* Simple Background Pattern */}
-      <div className="absolute inset-0 opacity-10">
-        <div className="absolute top-20 left-20 text-3xl">📚</div>
-        <div className="absolute top-32 right-20 text-3xl">✨</div>
-        <div className="absolute bottom-20 left-20 text-3xl">🎯</div>
-        <div className="absolute bottom-32 right-20 text-3xl">🌟</div>
+    <div className="min-h-screen bg-gradient-to-br from-pink-100 via-purple-100 to-blue-100 flex items-center justify-center p-4 overflow-hidden">
+      {/* Fun Floating Background Elements */}
+      <div className="absolute inset-0 opacity-30">
+        <div className="absolute top-10 left-10 text-2xl md:text-4xl animate-kid-float">
+          🎨
+        </div>
+        <div className="absolute top-20 right-16 text-xl md:text-3xl animate-kid-float-delayed animation-delay-100">
+          🌈
+        </div>
+        <div className="absolute top-40 left-1/4 text-2xl md:text-5xl animate-gentle-bounce">
+          ⭐
+        </div>
+        <div className="absolute top-60 right-1/3 text-2xl md:text-4xl animate-sparkle">
+          ✨
+        </div>
+        <div className="absolute bottom-40 left-16 text-3xl md:text-6xl animate-kid-float">
+          🎪
+        </div>
+        <div className="absolute bottom-20 right-20 text-2xl md:text-5xl animate-gentle-float">
+          🎁
+        </div>
+        <div className="absolute bottom-60 left-1/3 text-2xl md:text-4xl animate-kid-float-delayed">
+          🦋
+        </div>
+        <div className="absolute top-1/3 left-8 text-xl md:text-3xl animate-wiggle">
+          🎭
+        </div>
+        <div className="absolute top-1/2 right-8 text-2xl md:text-4xl animate-sparkle animation-delay-200">
+          🎪
+        </div>
+        <div className="absolute bottom-1/3 right-1/4 text-2xl md:text-5xl animate-gentle-bounce">
+          🎠
+        </div>
+
+        {/* Floating bubbles */}
+        <div className="absolute top-20 left-1/2 w-8 h-8 bg-blue-300 rounded-full opacity-40 animate-kid-float"></div>
+        <div className="absolute top-1/3 left-20 w-6 h-6 bg-pink-300 rounded-full opacity-40 animate-gentle-bounce"></div>
+        <div className="absolute bottom-1/4 right-16 w-10 h-10 bg-yellow-300 rounded-full opacity-40 animate-sparkle"></div>
+        <div className="absolute top-2/3 left-1/4 w-4 h-4 bg-purple-300 rounded-full opacity-40 animate-kid-float-delayed"></div>
       </div>
 
       {/* Main Content */}
       <div className="relative z-10 w-full max-w-md mx-auto">
         {/* Header */}
         <div className="text-center mb-8">
+          {/* Animated Owl with Fun Border */}
           <div className="flex justify-center mb-6">
-            <div className="bg-gradient-to-r from-blue-500 to-purple-600 p-6 rounded-full shadow-lg">
-              <BookOpen className="w-12 h-12 text-white" />
+            <div className="relative">
+              <div className="bg-gradient-to-r from-yellow-400 via-pink-500 to-purple-600 p-1 rounded-full shadow-xl border-3 border-rainbow animate-pulse">
+                <img
+                  src="https://cdn.builder.io/api/v1/image/assets%2F626e97dfba5d44b5b893aa10ced647c7%2F78d82c1a7dfe42c5a8f230b46991bcb4?format=webp&width=800"
+                  alt="Wordy the Owl - Educational Mascot"
+                  className={`w-16 h-16 md:w-24 md:h-24 rounded-full bg-white p-1 ${owlAnimation} cursor-pointer transform hover:scale-110 transition-transform duration-300`}
+                  onClick={() => {
+                    setOwlAnimation("animate-wiggle");
+                    setTimeout(
+                      () => setOwlAnimation("animate-gentle-float"),
+                      2000,
+                    );
+                  }}
+                />
+              </div>
+              {/* Fun sparkles around owl */}
+              <div className="absolute -top-2 -right-2 text-lg md:text-2xl animate-sparkle">
+                ✨
+              </div>
+              <div className="absolute -bottom-2 -left-2 text-lg md:text-2xl animate-sparkle animation-delay-100">
+                ⭐
+              </div>
             </div>
           </div>
-          <h1 className="text-3xl md:text-4xl font-bold text-gray-800 mb-4">
-            Welcome to Wordy's Adventure!
+
+          {/* Fun Title with Rainbow Effect */}
+          <h1 className="text-lg md:text-2xl lg:text-3xl font-bold bg-gradient-to-r from-purple-600 via-pink-600 to-blue-600 bg-clip-text text-transparent mb-4 animate-fade-in">
+            🎉 Wordy's Super Fun Login! 🎉
           </h1>
-          <p className="text-lg text-gray-600">
-            Sign in to continue your learning journey
-          </p>
+
+          {/* Rotating Funny Messages */}
+          <div className="h-12 md:h-16 flex items-center justify-center">
+            <p className="text-sm md:text-xl font-semibold text-gray-700 animate-fade-in text-shadow px-4">
+              {funnyMessages[currentFunnyMessage]}
+            </p>
+          </div>
         </div>
 
         {/* Login Form */}
-        <Card className="bg-white/95 backdrop-blur-sm shadow-xl border border-gray-200 rounded-lg">
-          <CardHeader>
-            <CardTitle className="text-center text-xl text-gray-800">
-              Sign In
+        <Card className="bg-white/95 backdrop-blur-sm shadow-2xl border-4 border-rainbow rounded-3xl transform hover:scale-105 transition-transform duration-300">
+          <CardHeader className="bg-gradient-to-r from-yellow-200 to-pink-200 rounded-t-3xl">
+            <CardTitle className="text-center text-lg md:text-2xl font-bold bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent">
+              🌟 Let's Get Started! 🌟
             </CardTitle>
           </CardHeader>
-          <CardContent>
-            <form onSubmit={handleLogin} className="space-y-6">
+          <CardContent className="p-4 md:p-6">
+            <form onSubmit={handleLogin} className="space-y-4">
               {/* Email Field */}
-              <div>
+              <div className="relative">
                 <Label
                   htmlFor="email"
-                  className="text-sm font-medium text-gray-700 flex items-center gap-2"
+                  className="text-sm md:text-lg font-bold text-purple-700 flex items-center gap-2 md:gap-3 justify-center"
                 >
-                  <Mail className="w-4 h-4" />
-                  Email
+                  <Mail className="w-4 h-4 md:w-6 md:h-6 text-pink-500" />
+                  📧 Parent's Magic Email
                 </Label>
-                <Input
-                  id="email"
-                  name="email"
-                  type="email"
-                  placeholder="Enter parent email here"
-                  value={formData.email}
-                  onChange={handleInputChange}
-                  className="mt-2 text-center border-gray-300 focus:border-blue-500"
-                  disabled={isLoading}
-                />
+                <div className="relative mt-2">
+                  <Input
+                    id="email"
+                    name="email"
+                    type="email"
+                    placeholder="Type your super secret email here! ✨"
+                    value={formData.email}
+                    onChange={handleInputChange}
+                    className="h-10 md:h-14 text-center text-sm md:text-lg border-3 md:border-4 border-purple-300 focus:border-pink-500 rounded-xl md:rounded-2xl bg-gradient-to-r from-purple-50 to-pink-50 font-medium placeholder:text-purple-400 focus:shadow-lg transform focus:scale-105 transition-all duration-300"
+                    disabled={isLoading}
+                  />
+                  {formData.email && (
+                    <div className="absolute -top-2 -right-2 text-2xl animate-bounce">
+                      ⭐
+                    </div>
+                  )}
+                </div>
               </div>
 
               {/* Password Field */}
-              <div>
+              <div className="relative">
                 <Label
                   htmlFor="password"
-                  className="text-sm font-medium text-gray-700 flex items-center gap-2"
+                  className="text-sm md:text-lg font-bold text-purple-700 flex items-center gap-2 md:gap-3 justify-center"
                 >
-                  <Lock className="w-4 h-4" />
-                  Password
+                  <Lock className="w-4 h-4 md:w-6 md:h-6 text-pink-500" />
+                  🔐 Secret Password
                 </Label>
                 <div className="relative mt-2">
                   <Input
                     id="password"
                     name="password"
                     type={showPassword ? "text" : "password"}
-                    placeholder="Enter your password"
+                    placeholder="Shh... enter your secret code! 🤫"
                     value={formData.password}
                     onChange={handleInputChange}
-                    className="text-center border-gray-300 focus:border-blue-500 pr-10"
+                    className="h-10 md:h-14 text-center text-sm md:text-lg border-3 md:border-4 border-purple-300 focus:border-pink-500 rounded-xl md:rounded-2xl bg-gradient-to-r from-purple-50 to-pink-50 font-medium placeholder:text-purple-400 pr-12 md:pr-16 focus:shadow-lg transform focus:scale-105 transition-all duration-300"
                     disabled={isLoading}
                   />
                   <button
                     type="button"
                     onClick={() => setShowPassword(!showPassword)}
-                    className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700"
+                    className="absolute right-3 md:right-4 top-1/2 transform -translate-y-1/2 text-pink-500 hover:text-purple-600 hover:scale-125 transition-all duration-200"
                     disabled={isLoading}
                   >
                     {showPassword ? (
-                      <EyeOff className="w-4 h-4" />
+                      <div className="flex items-center gap-1">
+                        <EyeOff className="w-4 h-4 md:w-6 md:h-6" />
+                        <span className="text-xs md:text-sm">🙈</span>
+                      </div>
                     ) : (
-                      <Eye className="w-4 h-4" />
+                      <div className="flex items-center gap-1">
+                        <Eye className="w-4 h-4 md:w-6 md:h-6" />
+                        <span className="text-xs md:text-sm">👁️</span>
+                      </div>
                     )}
+                    )
                   </button>
+                  {formData.password && (
+                    <div className="absolute -top-2 -right-2 text-2xl animate-bounce animation-delay-100">
+                      🎉
+                    </div>
+                  )}
                 </div>
               </div>
 
-              {/* Message Display */}
+              {/* Fun Message Display */}
               {message && (
                 <div
-                  className={`text-center p-4 rounded-lg ${
+                  className={`text-center p-6 rounded-2xl border-4 text-lg font-bold shadow-lg animate-fade-in ${
                     message.type === "success"
-                      ? "bg-green-50 text-green-700 border border-green-200"
-                      : "bg-red-50 text-red-700 border border-red-200"
+                      ? "bg-gradient-to-r from-green-200 to-emerald-200 text-green-800 border-green-400"
+                      : "bg-gradient-to-r from-orange-200 to-yellow-200 text-orange-800 border-orange-400"
                   }`}
                 >
-                  <div className="flex items-center justify-center gap-2">
+                  <div className="flex items-center justify-center gap-3">
                     {message.type === "success" ? (
-                      <CheckCircle className="w-5 h-5" />
+                      <div className="flex items-center gap-2">
+                        <CheckCircle className="w-6 h-6" />
+                        <span className="text-2xl animate-bounce">🎉</span>
+                      </div>
                     ) : (
-                      <AlertCircle className="w-5 h-5" />
+                      <div className="flex items-center gap-2">
+                        <AlertCircle className="w-6 h-6" />
+                        <span className="text-2xl animate-wiggle">🤔</span>
+                      </div>
                     )}
-                    {message.text}
+                    <span>{message.text}</span>
+                    {message.type === "success" && (
+                      <span className="text-2xl animate-sparkle">✨</span>
+                    )}
                   </div>
                 </div>
               )}
 
-              {/* Login Button */}
-              <Button
-                type="submit"
-                disabled={isLoading || !formData.email || !formData.password}
-                className="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white hover:from-blue-700 hover:to-purple-700"
-              >
-                {isLoading ? (
-                  <div className="flex items-center gap-2">
-                    <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-                    Signing In...
-                  </div>
-                ) : (
-                  <>
-                    <LogIn className="w-4 h-4 mr-2" />
-                    Sign In
-                  </>
-                )}
-              </Button>
+              {/* Super Fun Login Button */}
+              <div className="pt-2">
+                <Button
+                  type="submit"
+                  disabled={isLoading || !formData.email || !formData.password}
+                  className="w-full h-12 md:h-16 text-base md:text-xl font-bold bg-gradient-to-r from-yellow-400 via-pink-500 to-purple-600 text-white hover:from-yellow-500 hover:via-pink-600 hover:to-purple-700 rounded-xl md:rounded-2xl shadow-xl hover:shadow-2xl transform hover:scale-105 active:scale-95 transition-all duration-300 border-3 md:border-4 border-white"
+                >
+                  {isLoading ? (
+                    <div className="flex items-center gap-2 md:gap-3">
+                      <div className="w-4 h-4 md:w-6 md:h-6 border-3 md:border-4 border-white border-t-transparent rounded-full animate-spin"></div>
+                      <span className="animate-pulse text-sm md:text-base">
+                        🎪 Getting Ready... 🎪
+                      </span>
+                    </div>
+                  ) : (
+                    <div className="flex items-center gap-2 md:gap-3">
+                      <LogIn className="w-4 h-4 md:w-6 md:h-6" />
+                      <span className="text-sm md:text-base">
+                        🚀 Blast Off to Fun! 🚀
+                      </span>
+                    </div>
+                  )}
+                </Button>
+              </div>
 
               {/* Forgot Password */}
               <Button
                 type="button"
                 variant="ghost"
                 onClick={handleForgotPassword}
-                className="w-full text-gray-600 hover:text-blue-600"
+                className="w-full text-purple-600 hover:text-pink-600 font-semibold text-sm md:text-lg hover:bg-purple-50 rounded-xl"
                 disabled={isLoading}
               >
-                Forgot your password?
+                🤔 Oops! Forgot your magic words?
               </Button>
             </form>
           </CardContent>
         </Card>
 
-        {/* Back Button */}
-        <div className="text-center mt-6">
+        {/* Super Fun Back Button */}
+        <div className="text-center mt-4">
           <Button
             onClick={handleBackToMain}
             variant="outline"
-            className="text-gray-600 hover:text-gray-800"
+            className="bg-gradient-to-r from-green-200 to-blue-200 text-purple-800 hover:text-purple-900 border-3 border-green-400 hover:border-blue-500 rounded-2xl px-6 py-3 text-sm md:text-lg font-bold shadow-lg hover:shadow-xl transform hover:scale-105 hover:rotate-1 transition-all duration-300"
             disabled={isLoading}
           >
-            <ArrowLeft className="w-4 h-4 mr-2" />
-            Continue as Guest
+            <ArrowLeft className="w-4 h-4 md:w-5 md:h-5 mr-2" />
+            🎮 Let's Play Together! 🎮
           </Button>
         </div>
 
-        {/* Footer */}
-        <div className="text-center mt-6">
-          <div className="flex justify-center items-center gap-2 text-gray-600">
-            <span className="text-sm">Don't have an account?</span>
+        {/* Magical Footer */}
+        <div className="text-center mt-4">
+          <div className="bg-gradient-to-r from-yellow-100 via-pink-100 to-purple-100 rounded-3xl p-4 shadow-xl border-3 border-rainbow">
+            <div className="flex justify-center items-center gap-2 text-purple-800 mb-2">
+              <span className="text-sm md:text-lg font-bold animate-gentle-bounce">
+                🆕 New Little Explorer? 🌟
+              </span>
+            </div>
             <Button
               variant="link"
               onClick={() => navigate("/signup")}
-              className="text-blue-600 p-0 h-auto font-semibold hover:text-blue-700"
+              className="text-pink-700 font-bold text-base md:text-xl hover:text-pink-900 underline decoration-wavy decoration-pink-500 decoration-2 hover:decoration-4 transform hover:scale-110 hover:rotate-1 transition-all duration-300 animate-gentle-float"
               disabled={isLoading}
             >
-              Sign up
+              ✨ Come Join Our Fun Club! ✨
             </Button>
           </div>
         </div>
