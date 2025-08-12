@@ -254,13 +254,6 @@ export const QuizGame: React.FC<QuizGameProps> = ({
               {currentQuestion.question}
             </h2>
 
-            {currentQuestion.word && (
-              <div className="inline-block">
-                <Badge className="text-lg px-4 py-2 bg-educational-blue text-white">
-                  {currentQuestion.word}
-                </Badge>
-              </div>
-            )}
           </div>
 
           {/* Answer Options */}
