@@ -229,8 +229,8 @@ export function QuizGames({
         ))}
       </div>
 
-      {/* Recent Scores Section */}
-      <Card className="bg-gradient-to-r from-educational-blue/10 to-educational-purple/10">
+      {/* Recent Scores Section - Hidden */}
+      <Card className="bg-gradient-to-r from-educational-blue/10 to-educational-purple/10 hidden">
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <Trophy className="w-5 h-5 text-educational-orange" />
@@ -239,45 +239,41 @@ export function QuizGames({
         </CardHeader>
         <CardContent>
           <div className="space-y-3">
-            <div className="flex justify-between items-center p-3 bg-white rounded-lg">
-              <div className="flex items-center gap-3">
-                <span className="text-2xl">🎯</span>
-                <div>
-                  <div className="font-semibold">Standard Quiz</div>
-                  <div className="text-sm text-gray-600">Yesterday</div>
-                </div>
-              </div>
-              <div className="text-right">
-                <div className="font-bold text-educational-blue">8/10</div>
-                <div className="text-sm text-gray-600">80%</div>
-              </div>
-            </div>
-            <div className="flex justify-between items-center p-3 bg-white rounded-lg">
-              <div className="flex items-center gap-3">
-                <span className="text-2xl">🌱</span>
-                <div>
-                  <div className="font-semibold">Quick Quiz</div>
-                  <div className="text-sm text-gray-600">2 days ago</div>
-                </div>
-              </div>
-              <div className="text-right">
-                <div className="font-bold text-educational-green">5/5</div>
-                <div className="text-sm text-gray-600">100%</div>
-              </div>
-            </div>
-            <div className="flex justify-between items-center p-3 bg-white rounded-lg">
-              <div className="flex items-center gap-3">
-                <span className="text-2xl">🏆</span>
-                <div>
-                  <div className="font-semibold">Challenge Quiz</div>
-                  <div className="text-sm text-gray-600">3 days ago</div>
-                </div>
-              </div>
-              <div className="text-right">
-                <div className="font-bold text-educational-purple">12/15</div>
-                <div className="text-sm text-gray-600">80%</div>
-              </div>
-            </div>
+            {quizTypes
+              .filter((quiz) => quiz.id === "picture")
+              .map((quiz, index) => {
+                const scoreData = {
+                  score: "6/8",
+                  percentage: "75%",
+                  timeAgo: "Yesterday",
+                  color: "text-educational-orange",
+                };
+
+                return (
+                  <div
+                    key={quiz.id}
+                    className="flex justify-between items-center p-3 bg-white rounded-lg"
+                  >
+                    <div className="flex items-center gap-3">
+                      <span className="text-2xl">{quiz.icon}</span>
+                      <div>
+                        <div className="font-semibold">{quiz.title}</div>
+                        <div className="text-sm text-gray-600">
+                          {scoreData.timeAgo}
+                        </div>
+                      </div>
+                    </div>
+                    <div className="text-right">
+                      <div className={`font-bold ${scoreData.color}`}>
+                        {scoreData.score}
+                      </div>
+                      <div className="text-sm text-gray-600">
+                        {scoreData.percentage}
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
           </div>
         </CardContent>
       </Card>
