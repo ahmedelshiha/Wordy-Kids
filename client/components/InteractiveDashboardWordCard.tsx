@@ -494,19 +494,25 @@ export function InteractiveDashboardWordCard({
                   <div className="text-sm sm:text-2xl font-bold text-green-600">
                     {sessionStats.wordsRemembered}
                   </div>
-                  <div className="text-xs sm:text-sm text-gray-600">Remembered</div>
+                  <div className="text-xs sm:text-sm text-gray-600">
+                    Remembered
+                  </div>
                 </div>
                 <div>
                   <div className="text-sm sm:text-2xl font-bold text-orange-600">
                     {sessionStats.wordsForgotten}
                   </div>
-                  <div className="text-xs sm:text-sm text-gray-600">To Practice</div>
+                  <div className="text-xs sm:text-sm text-gray-600">
+                    To Practice
+                  </div>
                 </div>
                 <div>
                   <div className="text-sm sm:text-2xl font-bold text-purple-600">
                     {sessionStats.accuracy}%
                   </div>
-                  <div className="text-xs sm:text-sm text-gray-600">Accuracy</div>
+                  <div className="text-xs sm:text-sm text-gray-600">
+                    Accuracy
+                  </div>
                 </div>
               </div>
             </div>
@@ -517,7 +523,9 @@ export function InteractiveDashboardWordCard({
                 key={achievement.id}
                 className="mb-2 sm:mb-4 p-2 sm:p-4 bg-gradient-to-r from-yellow-100 to-orange-100 rounded-lg sm:rounded-2xl border border-yellow-300"
               >
-                <div className="text-xl sm:text-3xl mb-0.5 sm:mb-2">{achievement.emoji}</div>
+                <div className="text-xl sm:text-3xl mb-0.5 sm:mb-2">
+                  {achievement.emoji}
+                </div>
                 <div className="font-bold text-xs sm:text-lg text-gray-800">
                   {achievement.title}
                 </div>

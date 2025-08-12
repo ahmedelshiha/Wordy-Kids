@@ -132,9 +132,12 @@ export default function Index({ initialProfile }: IndexProps) {
   const [currentDashboardWords, setCurrentDashboardWords] = useState<any[]>([]);
 
   // Enhanced word selection states
-  const [userWordHistory, setUserWordHistory] = useState<Map<number, WordHistory>>(new Map());
+  const [userWordHistory, setUserWordHistory] = useState<
+    Map<number, WordHistory>
+  >(new Map());
   const [sessionNumber, setSessionNumber] = useState(1);
-  const [lastSystematicSelection, setLastSystematicSelection] = useState<SystematicWordSelection | null>(null);
+  const [lastSystematicSelection, setLastSystematicSelection] =
+    useState<SystematicWordSelection | null>(null);
 
   // Initialize dashboard words when category changes or component mounts
   useEffect(() => {
@@ -368,21 +371,24 @@ export default function Index({ initialProfile }: IndexProps) {
   };
 
   const generateFreshWords = () => {
-    console.log(`Generating fresh words with enhanced system for category: ${selectedCategory}`);
+    console.log(
+      `Generating fresh words with enhanced system for category: ${selectedCategory}`,
+    );
 
     try {
       // Use the enhanced word selection system
-      const systematicSelection = EnhancedWordSelector.generateSystematicSession(
-        selectedCategory,
-        userWordHistory,
-        {
-          rememberedWords,
-          forgottenWords,
-          excludedWordIds,
-        },
-        childStats,
-        sessionNumber
-      );
+      const systematicSelection =
+        EnhancedWordSelector.generateSystematicSession(
+          selectedCategory,
+          userWordHistory,
+          {
+            rememberedWords,
+            forgottenWords,
+            excludedWordIds,
+          },
+          childStats,
+          sessionNumber,
+        );
 
       const selectedWords = systematicSelection.words;
 
@@ -391,20 +397,20 @@ export default function Index({ initialProfile }: IndexProps) {
 
       // Update states
       setCurrentDashboardWords(selectedWords);
-      setSessionNumber(prev => prev + 1);
+      setSessionNumber((prev) => prev + 1);
 
-      console.log(
-        `Enhanced Selection Results:`,
-        {
-          strategy: systematicSelection.sessionInfo.sessionStrategy,
-          difficulty: systematicSelection.sessionInfo.difficulty,
-          newWords: systematicSelection.sessionInfo.totalNewWords,
-          reviewWords: systematicSelection.sessionInfo.reviewWords,
-          exhaustionLevel: systematicSelection.sessionInfo.exhaustionLevel.toFixed(2),
-          categories: systematicSelection.sessionInfo.categories,
-          words: selectedWords.map((w) => `${w.word} (${w.category}, ${w.difficulty})`)
-        }
-      );
+      console.log(`Enhanced Selection Results:`, {
+        strategy: systematicSelection.sessionInfo.sessionStrategy,
+        difficulty: systematicSelection.sessionInfo.difficulty,
+        newWords: systematicSelection.sessionInfo.totalNewWords,
+        reviewWords: systematicSelection.sessionInfo.reviewWords,
+        exhaustionLevel:
+          systematicSelection.sessionInfo.exhaustionLevel.toFixed(2),
+        categories: systematicSelection.sessionInfo.categories,
+        words: selectedWords.map(
+          (w) => `${w.word} (${w.category}, ${w.difficulty})`,
+        ),
+      });
 
       return selectedWords;
     } catch (error) {
@@ -520,7 +526,7 @@ export default function Index({ initialProfile }: IndexProps) {
     EnhancedWordSelector.updateWordHistory(
       word.id,
       wasCorrect,
-      userWordHistory
+      userWordHistory,
     );
 
     // Trigger re-render by updating the state
@@ -1149,22 +1155,54 @@ export default function Index({ initialProfile }: IndexProps) {
                   />
 
                   {/* Enhanced Word Selection Debug Panel */}
-                  {process.env.NODE_ENV === 'development' && lastSystematicSelection && (
-                    <div className="mt-4 p-3 bg-gray-100 rounded-lg text-xs">
-                      <h4 className="font-bold mb-2">🔧 Enhanced Word Selection Debug</h4>
-                      <div className="grid grid-cols-2 gap-2">
-                        <div><strong>Strategy:</strong> {lastSystematicSelection.sessionInfo.sessionStrategy}</div>
-                        <div><strong>Difficulty:</strong> {lastSystematicSelection.sessionInfo.difficulty}</div>
-                        <div><strong>New Words:</strong> {lastSystematicSelection.sessionInfo.totalNewWords}</div>
-                        <div><strong>Review Words:</strong> {lastSystematicSelection.sessionInfo.reviewWords}</div>
-                        <div><strong>Exhaustion:</strong> {(lastSystematicSelection.sessionInfo.exhaustionLevel * 100).toFixed(1)}%</div>
-                        <div><strong>Categories:</strong> {lastSystematicSelection.sessionInfo.categories.join(', ')}</div>
+                  {process.env.NODE_ENV === "development" &&
+                    lastSystematicSelection && (
+                      <div className="mt-4 p-3 bg-gray-100 rounded-lg text-xs">
+                        <h4 className="font-bold mb-2">
+                          🔧 Enhanced Word Selection Debug
+                        </h4>
+                        <div className="grid grid-cols-2 gap-2">
+                          <div>
+                            <strong>Strategy:</strong>{" "}
+                            {
+                              lastSystematicSelection.sessionInfo
+                                .sessionStrategy
+                            }
+                          </div>
+                          <div>
+                            <strong>Difficulty:</strong>{" "}
+                            {lastSystematicSelection.sessionInfo.difficulty}
+                          </div>
+                          <div>
+                            <strong>New Words:</strong>{" "}
+                            {lastSystematicSelection.sessionInfo.totalNewWords}
+                          </div>
+                          <div>
+                            <strong>Review Words:</strong>{" "}
+                            {lastSystematicSelection.sessionInfo.reviewWords}
+                          </div>
+                          <div>
+                            <strong>Exhaustion:</strong>{" "}
+                            {(
+                              lastSystematicSelection.sessionInfo
+                                .exhaustionLevel * 100
+                            ).toFixed(1)}
+                            %
+                          </div>
+                          <div>
+                            <strong>Categories:</strong>{" "}
+                            {lastSystematicSelection.sessionInfo.categories.join(
+                              ", ",
+                            )}
+                          </div>
+                        </div>
+                        <div className="mt-2">
+                          <strong>Session #{sessionNumber - 1}</strong> |{" "}
+                          <strong>Word History:</strong> {userWordHistory.size}{" "}
+                          words tracked
+                        </div>
                       </div>
-                      <div className="mt-2">
-                        <strong>Session #{sessionNumber - 1}</strong> | <strong>Word History:</strong> {userWordHistory.size} words tracked
-                      </div>
-                    </div>
-                  )}
+                    )}
                 </TabsContent>
 
                 <TabsContent value="learn">
