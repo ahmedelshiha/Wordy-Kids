@@ -145,7 +145,7 @@ export const WordCard: React.FC<WordCardProps> = ({
   };
 
   return (
-    <div className={`relative w-full max-w-xs mx-auto ${className}`}>
+    <div className={`relative w-full max-w-sm mx-auto ${className}`}>
       <Card
         className={`h-[320px] md:h-[360px] cursor-pointer transition-all duration-700 transform-gpu md:hover:scale-105 ${
           isFlipped ? "[transform:rotateY(180deg)]" : ""
