@@ -177,6 +177,7 @@ export const LearningDashboard: React.FC<LearningDashboardProps> = ({
           totalPoints={stats.totalPoints}
           forgottenWordsCount={forgottenWordsCount}
           rememberedWordsCount={rememberedWordsCount}
+          onRequestNewWords={onRequestNewWords}
         />
       ) : (
         // Fallback welcome section if no words available
