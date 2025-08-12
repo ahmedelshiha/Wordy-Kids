@@ -464,7 +464,8 @@ export function InteractiveDashboardWordCard({
                 <Button
                   onClick={() => handleWordAction("needs_practice")}
                   variant="outline"
-                  className="flex-1 bg-gradient-to-br from-red-100 to-pink-100 hover:from-red-200 hover:to-pink-200 border-2 border-red-300 hover:border-red-400 text-red-700 hover:text-red-800 transition-all duration-300 transform hover:scale-110 hover:rotate-1 py-4 px-3 rounded-3xl shadow-lg hover:shadow-xl animate-kid-float"
+                  disabled={isAnswered}
+                  className="flex-1 bg-gradient-to-br from-red-100 to-pink-100 hover:from-red-200 hover:to-pink-200 border-2 border-red-300 hover:border-red-400 text-red-700 hover:text-red-800 transition-all duration-300 transform hover:scale-110 hover:rotate-1 py-4 px-3 rounded-3xl shadow-lg hover:shadow-xl animate-kid-float disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
                 >
                   <XCircle className="w-4 h-4 mr-1 md:w-6 md:h-6 md:mr-2" />
                   <div className="text-center">
@@ -475,7 +476,8 @@ export function InteractiveDashboardWordCard({
 
                 <Button
                   onClick={() => handleWordAction("remembered")}
-                  className="flex-1 bg-gradient-to-br from-green-100 to-emerald-100 hover:from-green-200 hover:to-emerald-200 border-2 border-green-300 hover:border-green-400 text-green-700 hover:text-green-800 transition-all duration-300 transform hover:scale-110 hover:-rotate-1 py-4 px-3 rounded-3xl shadow-lg hover:shadow-xl animate-kid-float-delayed"
+                  disabled={isAnswered}
+                  className="flex-1 bg-gradient-to-br from-green-100 to-emerald-100 hover:from-green-200 hover:to-emerald-200 border-2 border-green-300 hover:border-green-400 text-green-700 hover:text-green-800 transition-all duration-300 transform hover:scale-110 hover:-rotate-1 py-4 px-3 rounded-3xl shadow-lg hover:shadow-xl animate-kid-float-delayed disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
                 >
                   <CheckCircle className="w-4 h-4 mr-1 md:w-6 md:h-6 md:mr-2" />
                   <div className="text-center">
