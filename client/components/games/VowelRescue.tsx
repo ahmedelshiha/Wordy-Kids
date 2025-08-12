@@ -445,22 +445,69 @@ export function VowelRescue({
               })}
             </div>
 
-            {/* Feedback */}
+            {/* Enhanced Feedback with Try Again Options */}
             {showFeedback && (
               <motion.div
                 initial={{ scale: 0.8, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
-                className="text-center"
+                className="text-center mt-6"
               >
-                {currentQuestion.missingIndex.every(idx => 
+                {currentQuestion.missingIndex.every(idx =>
                   selectedVowels[idx]?.toLowerCase() === currentQuestion.word[idx].toLowerCase()
                 ) ? (
-                  <div className="text-green-500 text-xl font-bold">
-                    🎉 Excellent! 🎉
+                  <div className="space-y-3">
+                    <div className="text-green-500 text-xl font-bold">
+                      🎉 Excellent! 🎉
+                    </div>
+                    <div className="text-sm text-gray-600">
+                      +{attempts === 0 ? 10 : attempts <= 2 ? 8 : attempts <= 4 ? 5 : 2} points!
+                    </div>
                   </div>
                 ) : (
-                  <div className="text-orange-500 text-lg">
-                    {attempts < 2 ? "Try again! 🤔" : "Good try! Let's move on! 👍"}
+                  <div className="space-y-4">
+                    <div className="text-orange-500 text-lg font-bold">
+                      {attempts === 1 ? "Oops! Try a different vowel! 🤔" :
+                       attempts === 2 ? "Almost there! Think carefully! 🤗" :
+                       attempts === 3 ? "One more try! You can do it! 💪" :
+                       "Let's try again together! 😊"}
+                    </div>
+
+                    {attempts < 5 && !currentQuestion.missingIndex.every(idx => selectedVowels[idx]) && (
+                      <div className="flex gap-2 justify-center">
+                        <Button
+                          onClick={handleTryAgain}
+                          className="bg-educational-blue hover:bg-educational-blue/90 text-white px-6 py-2 rounded-full"
+                          size="sm"
+                        >
+                          🔄 Try Again!
+                        </Button>
+
+                        {attempts >= 3 && (
+                          <Button
+                            onClick={handleShowHint}
+                            className="bg-educational-green hover:bg-educational-green/90 text-white px-6 py-2 rounded-full"
+                            size="sm"
+                          >
+                            💡 Show Me!
+                          </Button>
+                        )}
+                      </div>
+                    )}
+
+                    {attempts >= 5 && (
+                      <div className="space-y-2">
+                        <div className="text-educational-purple text-base">
+                          Let's see the answer together! 📖
+                        </div>
+                        <Button
+                          onClick={handleShowHint}
+                          className="bg-educational-purple hover:bg-educational-purple/90 text-white px-6 py-2 rounded-full"
+                          size="sm"
+                        >
+                          Show Answer ✨
+                        </Button>
+                      </div>
+                    )}
                   </div>
                 )}
               </motion.div>
