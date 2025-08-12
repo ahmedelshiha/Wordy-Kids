@@ -1041,6 +1041,7 @@ export default function Index({ initialProfile }: IndexProps) {
                       startPracticeGame();
                       // Stay in current tab - practice component will show as overlay
                     }}
+                    onRequestNewWords={generateFreshWords}
                   />
                 </TabsContent>
 
