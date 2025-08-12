@@ -668,9 +668,9 @@ export function InteractiveDashboardWordCard({
           </div>
         )}
 
-        <CardContent className="p-8 relative z-10">
+        <CardContent className="p-4 md:p-8 relative z-10">
           {/* Category and Progress Header */}
-          <div className="text-center mb-6">
+          <div className="text-center mb-4 md:mb-6">
             <div className="flex items-center justify-center gap-4 mb-4">
               <Badge
                 className={cn(
@@ -691,20 +691,20 @@ export function InteractiveDashboardWordCard({
           </div>
 
           {/* Picture Display */}
-          <div className="mb-6">{renderWordImage()}</div>
+          <div className="mb-4 md:mb-6">{renderWordImage()}</div>
 
           {/* Game Instructions */}
-          <div className="text-center mb-4">
-            <h2 className="text-2xl font-bold text-gray-800 mb-2">
+          <div className="text-center mb-3 md:mb-4">
+            <h2 className="text-lg md:text-2xl font-bold text-gray-800 mb-1 md:mb-2">
               🎯 What is this?
             </h2>
-            <p className="text-gray-600">
+            <p className="text-sm md:text-base text-gray-600">
               Look at the picture and guess the word!
             </p>
           </div>
 
           {/* Pronunciation Button */}
-          <div className="flex justify-center gap-4 mb-6">
+          <div className="flex justify-center gap-3 md:gap-4 mb-4 md:mb-6">
             <Button
               onClick={playPronunciation}
               disabled={isPlaying}
@@ -729,7 +729,7 @@ export function InteractiveDashboardWordCard({
 
           {/* Hint Display */}
           {showHint && !showWordName && (
-            <div className="bg-yellow-50 border-2 border-yellow-200 rounded-2xl p-4 mb-6 text-center">
+            <div className="bg-yellow-50 border-2 border-yellow-200 rounded-2xl p-3 md:p-4 mb-4 md:mb-6 text-center">
               <div className="flex items-center justify-center gap-2 mb-2">
                 <Lightbulb className="w-5 h-5 text-yellow-600" />
                 <h3 className="text-lg font-semibold text-yellow-800">Hint:</h3>
@@ -742,7 +742,7 @@ export function InteractiveDashboardWordCard({
 
           {/* Show Word Name Button */}
           {!showWordName && (
-            <div className="text-center mb-6">
+            <div className="text-center mb-4 md:mb-6">
               <Button
                 onClick={() => setShowWordName(true)}
                 className="bg-educational-purple hover:bg-educational-purple/90 text-white px-8 py-3 text-lg rounded-2xl transition-all duration-300 transform hover:scale-105"
@@ -755,15 +755,15 @@ export function InteractiveDashboardWordCard({
 
           {/* Word Name and Details */}
           {showWordName && (
-            <div className="space-y-4 mb-8">
+            <div className="space-y-3 md:space-y-4 mb-6 md:mb-8">
               {/* Word Name */}
-              <div className="text-center bg-gradient-to-r from-green-50 to-blue-50 p-4 rounded-2xl border-2 border-green-200">
-                <div className="flex items-center justify-center gap-3 mb-3">
-                  <div className="text-3xl">{currentWord.emoji}</div>
-                  <h1 className="text-lg md:text-xl font-bold text-gray-800 tracking-wide">
+              <div className="text-center bg-gradient-to-r from-green-50 to-blue-50 p-3 md:p-4 rounded-2xl border-2 border-green-200">
+                <div className="flex items-center justify-center gap-2 md:gap-3 mb-2 md:mb-3">
+                  <div className="text-2xl md:text-3xl">{currentWord.emoji}</div>
+                  <h1 className="text-base md:text-lg lg:text-xl font-bold text-gray-800 tracking-wide">
                     {currentWord.word.toUpperCase()}
                   </h1>
-                  <div className="text-3xl">{currentWord.emoji}</div>
+                  <div className="text-2xl md:text-3xl">{currentWord.emoji}</div>
                 </div>
 
                 {/* Pronunciation */}
