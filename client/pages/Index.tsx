@@ -501,12 +501,12 @@ export default function Index({ initialProfile }: IndexProps) {
         achievementMessage = `Outstanding! You remembered ALL ${totalWords} words in ${categoryDisplayName}! You're a true champion!\n\n🎁 Perfect Mastery Bonus: 200 points!\n✨ New adventure zone unlocked!\n🏆 Master badge earned!`;
       } else if (accuracy >= 90) {
         achievementTitle = "Category Expert! ��";
-        achievementIcon = "���";
+        achievementIcon = "🎓⭐";
         achievementMessage = `Excellent work! You mastered ${categoryDisplayName} with ${accuracy}% accuracy! Almost perfect!\n\n🎁 Expert Bonus: 150 points!\n⭐ Expert badge earned!`;
       } else if (accuracy >= 75) {
         achievementTitle = "Category Scholar! 📚";
         achievementIcon = "📚";
-        achievementMessage = `Great job! You completed ${categoryDisplayName} with ${accuracy}% accuracy! Keep up the good work!\n\n🎁 Scholar Bonus: 100 points!\n📚 Scholar badge earned!`;
+        achievementMessage = `Great job! You completed ${categoryDisplayName} with ${accuracy}% accuracy! Keep up the good work!\n\n�� Scholar Bonus: 100 points!\n📚 Scholar badge earned!`;
       } else if (accuracy >= 50) {
         achievementTitle = "Category Explorer! ����";
         achievementIcon = "🎯";
@@ -1596,7 +1596,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                             </div>
                                             <div className="flex items-center gap-1 text-red-600">
                                               <span className="text-base">
-                                                ❌
+                                                ���
                                               </span>
                                               <span className="font-medium">
                                                 {forgottenWords.size}
@@ -1842,7 +1842,7 @@ export default function Index({ initialProfile }: IndexProps) {
                               Picture Fun!
                             </h3>
                             <p className="text-xs md:text-sm text-gray-600 mb-2 md:mb-3 hidden md:block">
-                              Look at pictures and guess the words! 🌟
+                              Look at pictures and guess the words! ��
                             </p>
                             <div className="flex justify-center gap-1 mb-2 md:mb-3">
                               <span className="bg-educational-orange/20 text-educational-orange px-1.5 py-0.5 rounded-full text-xs">
