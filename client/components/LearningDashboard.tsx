@@ -157,10 +157,10 @@ export const LearningDashboard: React.FC<LearningDashboardProps> = ({
                   )}
                 </span>
                 <div>
-                  <span className="text-sm font-bold text-slate-800">
+                  <span className="text-xs sm:text-sm font-bold text-slate-800">
                     Today's Word Quest
                   </span>
-                  <div className="text-xs text-slate-600 mt-0.5">
+                  <div className="text-xs sm:text-xs text-slate-600 mt-0.5">
                     {getProgressMessage(
                       actualPercentage,
                       actualWordsLearned,
