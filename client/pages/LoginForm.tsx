@@ -131,16 +131,16 @@ export default function LoginForm() {
     <div className="min-h-screen bg-gradient-to-br from-pink-100 via-purple-100 to-blue-100 flex items-center justify-center p-4 overflow-hidden">
       {/* Fun Floating Background Elements */}
       <div className="absolute inset-0 opacity-30">
-        <div className="absolute top-10 left-10 text-4xl animate-kid-float">🎨</div>
-        <div className="absolute top-20 right-16 text-3xl animate-kid-float-delayed animation-delay-100">🌈</div>
-        <div className="absolute top-40 left-1/4 text-5xl animate-gentle-bounce">⭐</div>
-        <div className="absolute top-60 right-1/3 text-4xl animate-sparkle">✨</div>
-        <div className="absolute bottom-40 left-16 text-6xl animate-kid-float">🎪</div>
-        <div className="absolute bottom-20 right-20 text-5xl animate-gentle-float">🎁</div>
-        <div className="absolute bottom-60 left-1/3 text-4xl animate-kid-float-delayed">🦋</div>
-        <div className="absolute top-1/3 left-8 text-3xl animate-wiggle">🎭</div>
-        <div className="absolute top-1/2 right-8 text-4xl animate-sparkle animation-delay-200">🎪</div>
-        <div className="absolute bottom-1/3 right-1/4 text-5xl animate-gentle-bounce">🎠</div>
+        <div className="absolute top-10 left-10 text-2xl md:text-4xl animate-kid-float">🎨</div>
+        <div className="absolute top-20 right-16 text-xl md:text-3xl animate-kid-float-delayed animation-delay-100">🌈</div>
+        <div className="absolute top-40 left-1/4 text-2xl md:text-5xl animate-gentle-bounce">⭐</div>
+        <div className="absolute top-60 right-1/3 text-2xl md:text-4xl animate-sparkle">✨</div>
+        <div className="absolute bottom-40 left-16 text-3xl md:text-6xl animate-kid-float">🎪</div>
+        <div className="absolute bottom-20 right-20 text-2xl md:text-5xl animate-gentle-float">🎁</div>
+        <div className="absolute bottom-60 left-1/3 text-2xl md:text-4xl animate-kid-float-delayed">🦋</div>
+        <div className="absolute top-1/3 left-8 text-xl md:text-3xl animate-wiggle">🎭</div>
+        <div className="absolute top-1/2 right-8 text-2xl md:text-4xl animate-sparkle animation-delay-200">🎪</div>
+        <div className="absolute bottom-1/3 right-1/4 text-2xl md:text-5xl animate-gentle-bounce">🎠</div>
 
         {/* Floating bubbles */}
         <div className="absolute top-20 left-1/2 w-8 h-8 bg-blue-300 rounded-full opacity-40 animate-kid-float"></div>
@@ -160,7 +160,7 @@ export default function LoginForm() {
                 <img
                   src="https://cdn.builder.io/api/v1/image/assets%2F626e97dfba5d44b5b893aa10ced647c7%2F78d82c1a7dfe42c5a8f230b46991bcb4?format=webp&width=800"
                   alt="Wordy the Owl - Educational Mascot"
-                  className={`w-24 h-24 rounded-full bg-white p-1 ${owlAnimation} cursor-pointer transform hover:scale-110 transition-transform duration-300`}
+                  className={`w-16 h-16 md:w-24 md:h-24 rounded-full bg-white p-1 ${owlAnimation} cursor-pointer transform hover:scale-110 transition-transform duration-300`}
                   onClick={() => {
                     setOwlAnimation("animate-wiggle");
                     setTimeout(() => setOwlAnimation("animate-gentle-float"), 2000);
@@ -168,19 +168,19 @@ export default function LoginForm() {
                 />
               </div>
               {/* Fun sparkles around owl */}
-              <div className="absolute -top-2 -right-2 text-2xl animate-sparkle">✨</div>
-              <div className="absolute -bottom-2 -left-2 text-2xl animate-sparkle animation-delay-100">⭐</div>
+              <div className="absolute -top-2 -right-2 text-lg md:text-2xl animate-sparkle">✨</div>
+              <div className="absolute -bottom-2 -left-2 text-lg md:text-2xl animate-sparkle animation-delay-100">⭐</div>
             </div>
           </div>
 
           {/* Fun Title with Rainbow Effect */}
-          <h1 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-purple-600 via-pink-600 to-blue-600 bg-clip-text text-transparent mb-4 animate-fade-in">
+          <h1 className="text-2xl md:text-4xl lg:text-5xl font-bold bg-gradient-to-r from-purple-600 via-pink-600 to-blue-600 bg-clip-text text-transparent mb-4 animate-fade-in">
             🎉 Wordy's Super Fun Login! 🎉
           </h1>
 
           {/* Rotating Funny Messages */}
-          <div className="h-16 flex items-center justify-center">
-            <p className="text-xl font-semibold text-gray-700 animate-fade-in text-shadow">
+          <div className="h-12 md:h-16 flex items-center justify-center">
+            <p className="text-sm md:text-xl font-semibold text-gray-700 animate-fade-in text-shadow px-4">
               {funnyMessages[currentFunnyMessage]}
             </p>
           </div>
@@ -189,19 +189,19 @@ export default function LoginForm() {
         {/* Login Form */}
         <Card className="bg-white/95 backdrop-blur-sm shadow-2xl border-4 border-rainbow rounded-3xl transform hover:scale-105 transition-transform duration-300">
           <CardHeader className="bg-gradient-to-r from-yellow-200 to-pink-200 rounded-t-3xl">
-            <CardTitle className="text-center text-2xl font-bold bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent">
+            <CardTitle className="text-center text-lg md:text-2xl font-bold bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent">
               🌟 Let's Get Started! 🌟
             </CardTitle>
           </CardHeader>
-          <CardContent className="p-8">
+          <CardContent className="p-4 md:p-8">
             <form onSubmit={handleLogin} className="space-y-8">
               {/* Email Field */}
               <div className="relative">
                 <Label
                   htmlFor="email"
-                  className="text-lg font-bold text-purple-700 flex items-center gap-3 justify-center"
+                  className="text-sm md:text-lg font-bold text-purple-700 flex items-center gap-2 md:gap-3 justify-center"
                 >
-                  <Mail className="w-6 h-6 text-pink-500" />
+                  <Mail className="w-4 h-4 md:w-6 md:h-6 text-pink-500" />
                   📧 Parent's Magic Email
                 </Label>
                 <div className="relative mt-3">
@@ -212,7 +212,7 @@ export default function LoginForm() {
                     placeholder="Type your super secret email here! ✨"
                     value={formData.email}
                     onChange={handleInputChange}
-                    className="h-14 text-center text-lg border-4 border-purple-300 focus:border-pink-500 rounded-2xl bg-gradient-to-r from-purple-50 to-pink-50 font-medium placeholder:text-purple-400 focus:shadow-lg transform focus:scale-105 transition-all duration-300"
+                    className="h-10 md:h-14 text-center text-sm md:text-lg border-3 md:border-4 border-purple-300 focus:border-pink-500 rounded-xl md:rounded-2xl bg-gradient-to-r from-purple-50 to-pink-50 font-medium placeholder:text-purple-400 focus:shadow-lg transform focus:scale-105 transition-all duration-300"
                     disabled={isLoading}
                   />
                   {formData.email && (
@@ -225,9 +225,9 @@ export default function LoginForm() {
               <div className="relative">
                 <Label
                   htmlFor="password"
-                  className="text-lg font-bold text-purple-700 flex items-center gap-3 justify-center"
+                  className="text-sm md:text-lg font-bold text-purple-700 flex items-center gap-2 md:gap-3 justify-center"
                 >
-                  <Lock className="w-6 h-6 text-pink-500" />
+                  <Lock className="w-4 h-4 md:w-6 md:h-6 text-pink-500" />
                   🔐 Secret Password
                 </Label>
                 <div className="relative mt-3">
@@ -238,26 +238,26 @@ export default function LoginForm() {
                     placeholder="Shh... enter your secret code! 🤫"
                     value={formData.password}
                     onChange={handleInputChange}
-                    className="h-14 text-center text-lg border-4 border-purple-300 focus:border-pink-500 rounded-2xl bg-gradient-to-r from-purple-50 to-pink-50 font-medium placeholder:text-purple-400 pr-16 focus:shadow-lg transform focus:scale-105 transition-all duration-300"
+                    className="h-10 md:h-14 text-center text-sm md:text-lg border-3 md:border-4 border-purple-300 focus:border-pink-500 rounded-xl md:rounded-2xl bg-gradient-to-r from-purple-50 to-pink-50 font-medium placeholder:text-purple-400 pr-12 md:pr-16 focus:shadow-lg transform focus:scale-105 transition-all duration-300"
                     disabled={isLoading}
                   />
                   <button
                     type="button"
                     onClick={() => setShowPassword(!showPassword)}
-                    className="absolute right-4 top-1/2 transform -translate-y-1/2 text-pink-500 hover:text-purple-600 hover:scale-125 transition-all duration-200"
+                    className="absolute right-3 md:right-4 top-1/2 transform -translate-y-1/2 text-pink-500 hover:text-purple-600 hover:scale-125 transition-all duration-200"
                     disabled={isLoading}
                   >
                     {showPassword ? (
                       <div className="flex items-center gap-1">
-                        <EyeOff className="w-6 h-6" />
-                        <span className="text-sm">🙈</span>
+                        <EyeOff className="w-4 h-4 md:w-6 md:h-6" />
+                        <span className="text-xs md:text-sm">🙈</span>
                       </div>
                     ) : (
                       <div className="flex items-center gap-1">
-                        <Eye className="w-6 h-6" />
-                        <span className="text-sm">👁️</span>
+                        <Eye className="w-4 h-4 md:w-6 md:h-6" />
+                        <span className="text-xs md:text-sm">👁️</span>
                       </div>
-                    )}
+                    )})
                   </button>
                   {formData.password && (
                     <div className="absolute -top-2 -right-2 text-2xl animate-bounce animation-delay-100">🎉</div>
@@ -299,17 +299,17 @@ export default function LoginForm() {
                 <Button
                   type="submit"
                   disabled={isLoading || !formData.email || !formData.password}
-                  className="w-full h-16 text-xl font-bold bg-gradient-to-r from-yellow-400 via-pink-500 to-purple-600 text-white hover:from-yellow-500 hover:via-pink-600 hover:to-purple-700 rounded-2xl shadow-xl hover:shadow-2xl transform hover:scale-105 active:scale-95 transition-all duration-300 border-4 border-white"
+                  className="w-full h-12 md:h-16 text-base md:text-xl font-bold bg-gradient-to-r from-yellow-400 via-pink-500 to-purple-600 text-white hover:from-yellow-500 hover:via-pink-600 hover:to-purple-700 rounded-xl md:rounded-2xl shadow-xl hover:shadow-2xl transform hover:scale-105 active:scale-95 transition-all duration-300 border-3 md:border-4 border-white"
                 >
                   {isLoading ? (
-                    <div className="flex items-center gap-3">
-                      <div className="w-6 h-6 border-4 border-white border-t-transparent rounded-full animate-spin"></div>
-                      <span className="animate-pulse">🎪 Getting Ready... 🎪</span>
+                    <div className="flex items-center gap-2 md:gap-3">
+                      <div className="w-4 h-4 md:w-6 md:h-6 border-3 md:border-4 border-white border-t-transparent rounded-full animate-spin"></div>
+                      <span className="animate-pulse text-sm md:text-base">🎪 Getting Ready... 🎪</span>
                     </div>
                   ) : (
-                    <div className="flex items-center gap-3">
-                      <LogIn className="w-6 h-6" />
-                      <span>🚀 Blast Off to Fun! 🚀</span>
+                    <div className="flex items-center gap-2 md:gap-3">
+                      <LogIn className="w-4 h-4 md:w-6 md:h-6" />
+                      <span className="text-sm md:text-base">🚀 Blast Off to Fun! 🚀</span>
                     </div>
                   )}
                 </Button>
@@ -320,7 +320,7 @@ export default function LoginForm() {
                 type="button"
                 variant="ghost"
                 onClick={handleForgotPassword}
-                className="w-full text-purple-600 hover:text-pink-600 font-semibold text-lg hover:bg-purple-50 rounded-xl"
+                className="w-full text-purple-600 hover:text-pink-600 font-semibold text-sm md:text-lg hover:bg-purple-50 rounded-xl"
                 disabled={isLoading}
               >
                 🤔 Oops! Forgot your magic words?
