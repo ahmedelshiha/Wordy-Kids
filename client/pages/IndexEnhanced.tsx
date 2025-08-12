@@ -638,12 +638,6 @@ export default function IndexEnhanced() {
                               <Gamepad2 className="w-4 h-4" />
                               Game Mode! 🎮
                             </Button>
-                            <Button
-                              onClick={() => setSelectedCategory("all")}
-                              variant="ghost"
-                            >
-                              ← Back to Categories
-                            </Button>
                           </div>
                         </div>
 
