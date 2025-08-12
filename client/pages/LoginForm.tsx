@@ -153,21 +153,37 @@ export default function LoginForm() {
       <div className="relative z-10 w-full max-w-md mx-auto">
         {/* Header */}
         <div className="text-center mb-8">
+          {/* Animated Owl with Fun Border */}
           <div className="flex justify-center mb-6">
-            <div className="bg-gradient-to-r from-blue-500 to-purple-600 rounded-full shadow-lg">
-              <img
-                src="https://cdn.builder.io/api/v1/image/assets%2F626e97dfba5d44b5b893aa10ced647c7%2F78d82c1a7dfe42c5a8f230b46991bcb4?format=webp&width=800"
-                alt="Wordy the Owl - Educational Mascot"
-                className="w-20 h-20 rounded-full"
-              />
+            <div className="relative">
+              <div className="bg-gradient-to-r from-yellow-400 via-pink-500 to-purple-600 p-1 rounded-full shadow-xl border-3 border-rainbow animate-pulse">
+                <img
+                  src="https://cdn.builder.io/api/v1/image/assets%2F626e97dfba5d44b5b893aa10ced647c7%2F78d82c1a7dfe42c5a8f230b46991bcb4?format=webp&width=800"
+                  alt="Wordy the Owl - Educational Mascot"
+                  className={`w-24 h-24 rounded-full bg-white p-1 ${owlAnimation} cursor-pointer transform hover:scale-110 transition-transform duration-300`}
+                  onClick={() => {
+                    setOwlAnimation("animate-wiggle");
+                    setTimeout(() => setOwlAnimation("animate-gentle-float"), 2000);
+                  }}
+                />
+              </div>
+              {/* Fun sparkles around owl */}
+              <div className="absolute -top-2 -right-2 text-2xl animate-sparkle">✨</div>
+              <div className="absolute -bottom-2 -left-2 text-2xl animate-sparkle animation-delay-100">⭐</div>
             </div>
           </div>
-          <h1 className="text-3xl md:text-4xl font-bold text-gray-800 mb-4">
-            Welcome to Wordy's Adventure!
+
+          {/* Fun Title with Rainbow Effect */}
+          <h1 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-purple-600 via-pink-600 to-blue-600 bg-clip-text text-transparent mb-4 animate-fade-in">
+            🎉 Wordy's Super Fun Login! 🎉
           </h1>
-          <p className="text-lg text-gray-600">
-            Sign in to continue your learning journey
-          </p>
+
+          {/* Rotating Funny Messages */}
+          <div className="h-16 flex items-center justify-center">
+            <p className="text-xl font-semibold text-gray-700 animate-fade-in text-shadow">
+              {funnyMessages[currentFunnyMessage]}
+            </p>
+          </div>
         </div>
 
         {/* Login Form */}
