@@ -599,11 +599,28 @@ export default function Index({ initialProfile }: IndexProps) {
       adventureService.trackWordInteraction(
         word.id.toString(),
         status === "remembered",
+        status === "remembered",
         responseTime ? responseTime > 2000 : false,
       );
 
+      // Track journey achievements for word learning
+      const newAchievements = AchievementTracker.trackActivity({
+        type: "wordLearning",
+        wordsLearned: status === "remembered" ? 1 : 0,
+        accuracy: status === "remembered" ? 100 : 0,
+        category: word.category,
+        timeSpent: responseTime ? Math.round(responseTime / 1000 / 60) : 1 // Convert to minutes
+      });
+
       // Show achievement notifications in sequence
       const notifications = [];
+
+      // Add journey achievements to notifications
+      if (newAchievements.length > 0) {
+        setTimeout(() => {
+          setAchievementPopup(newAchievements);
+        }, 1000); // Show after a short delay
+      }
 
       // Add level up to notifications if applicable
       if (response.levelUp) {
