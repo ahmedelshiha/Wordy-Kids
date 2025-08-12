@@ -539,7 +539,7 @@ export const WordCard: React.FC<WordCardProps> = ({
 
                 {/* Adventure Quick Actions */}
                 {(adventureStatus?.health || 100) < 50 && (
-                  <div className="mt-3 p-2 bg-orange-500/10 rounded-lg border border-orange-500/20">
+                  <div className="mt-2 p-1.5 bg-orange-500/10 rounded-lg border border-orange-500/20">
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-2">
                         <AlertTriangle className="w-4 h-4 text-orange-400" />
