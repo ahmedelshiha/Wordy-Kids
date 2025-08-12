@@ -35,7 +35,7 @@ export default function LoginForm() {
     "Ready for an amazing word adventure? 🚀",
     "Wordy is excited to see you! 🎉",
     "Time to become a word wizard! ✨",
-    "Let's make learning super fun! 🌟"
+    "Let's make learning super fun! 🌟",
   ]);
   const [currentFunnyMessage, setCurrentFunnyMessage] = useState(0);
 
@@ -131,16 +131,36 @@ export default function LoginForm() {
     <div className="min-h-screen bg-gradient-to-br from-pink-100 via-purple-100 to-blue-100 flex items-center justify-center p-4 overflow-hidden">
       {/* Fun Floating Background Elements */}
       <div className="absolute inset-0 opacity-30">
-        <div className="absolute top-10 left-10 text-2xl md:text-4xl animate-kid-float">🎨</div>
-        <div className="absolute top-20 right-16 text-xl md:text-3xl animate-kid-float-delayed animation-delay-100">🌈</div>
-        <div className="absolute top-40 left-1/4 text-2xl md:text-5xl animate-gentle-bounce">⭐</div>
-        <div className="absolute top-60 right-1/3 text-2xl md:text-4xl animate-sparkle">✨</div>
-        <div className="absolute bottom-40 left-16 text-3xl md:text-6xl animate-kid-float">🎪</div>
-        <div className="absolute bottom-20 right-20 text-2xl md:text-5xl animate-gentle-float">🎁</div>
-        <div className="absolute bottom-60 left-1/3 text-2xl md:text-4xl animate-kid-float-delayed">🦋</div>
-        <div className="absolute top-1/3 left-8 text-xl md:text-3xl animate-wiggle">🎭</div>
-        <div className="absolute top-1/2 right-8 text-2xl md:text-4xl animate-sparkle animation-delay-200">🎪</div>
-        <div className="absolute bottom-1/3 right-1/4 text-2xl md:text-5xl animate-gentle-bounce">🎠</div>
+        <div className="absolute top-10 left-10 text-2xl md:text-4xl animate-kid-float">
+          🎨
+        </div>
+        <div className="absolute top-20 right-16 text-xl md:text-3xl animate-kid-float-delayed animation-delay-100">
+          🌈
+        </div>
+        <div className="absolute top-40 left-1/4 text-2xl md:text-5xl animate-gentle-bounce">
+          ⭐
+        </div>
+        <div className="absolute top-60 right-1/3 text-2xl md:text-4xl animate-sparkle">
+          ✨
+        </div>
+        <div className="absolute bottom-40 left-16 text-3xl md:text-6xl animate-kid-float">
+          🎪
+        </div>
+        <div className="absolute bottom-20 right-20 text-2xl md:text-5xl animate-gentle-float">
+          🎁
+        </div>
+        <div className="absolute bottom-60 left-1/3 text-2xl md:text-4xl animate-kid-float-delayed">
+          🦋
+        </div>
+        <div className="absolute top-1/3 left-8 text-xl md:text-3xl animate-wiggle">
+          🎭
+        </div>
+        <div className="absolute top-1/2 right-8 text-2xl md:text-4xl animate-sparkle animation-delay-200">
+          🎪
+        </div>
+        <div className="absolute bottom-1/3 right-1/4 text-2xl md:text-5xl animate-gentle-bounce">
+          🎠
+        </div>
 
         {/* Floating bubbles */}
         <div className="absolute top-20 left-1/2 w-8 h-8 bg-blue-300 rounded-full opacity-40 animate-kid-float"></div>
@@ -163,13 +183,20 @@ export default function LoginForm() {
                   className={`w-16 h-16 md:w-24 md:h-24 rounded-full bg-white p-1 ${owlAnimation} cursor-pointer transform hover:scale-110 transition-transform duration-300`}
                   onClick={() => {
                     setOwlAnimation("animate-wiggle");
-                    setTimeout(() => setOwlAnimation("animate-gentle-float"), 2000);
+                    setTimeout(
+                      () => setOwlAnimation("animate-gentle-float"),
+                      2000,
+                    );
                   }}
                 />
               </div>
               {/* Fun sparkles around owl */}
-              <div className="absolute -top-2 -right-2 text-lg md:text-2xl animate-sparkle">✨</div>
-              <div className="absolute -bottom-2 -left-2 text-lg md:text-2xl animate-sparkle animation-delay-100">⭐</div>
+              <div className="absolute -top-2 -right-2 text-lg md:text-2xl animate-sparkle">
+                ✨
+              </div>
+              <div className="absolute -bottom-2 -left-2 text-lg md:text-2xl animate-sparkle animation-delay-100">
+                ⭐
+              </div>
             </div>
           </div>
 
@@ -216,7 +243,9 @@ export default function LoginForm() {
                     disabled={isLoading}
                   />
                   {formData.email && (
-                    <div className="absolute -top-2 -right-2 text-2xl animate-bounce">⭐</div>
+                    <div className="absolute -top-2 -right-2 text-2xl animate-bounce">
+                      ⭐
+                    </div>
                   )}
                 </div>
               </div>
@@ -257,10 +286,13 @@ export default function LoginForm() {
                         <Eye className="w-4 h-4 md:w-6 md:h-6" />
                         <span className="text-xs md:text-sm">👁️</span>
                       </div>
-                    )})
+                    )}
+                    )
                   </button>
                   {formData.password && (
-                    <div className="absolute -top-2 -right-2 text-2xl animate-bounce animation-delay-100">🎉</div>
+                    <div className="absolute -top-2 -right-2 text-2xl animate-bounce animation-delay-100">
+                      🎉
+                    </div>
                   )}
                 </div>
               </div>
@@ -304,12 +336,16 @@ export default function LoginForm() {
                   {isLoading ? (
                     <div className="flex items-center gap-2 md:gap-3">
                       <div className="w-4 h-4 md:w-6 md:h-6 border-3 md:border-4 border-white border-t-transparent rounded-full animate-spin"></div>
-                      <span className="animate-pulse text-sm md:text-base">🎪 Getting Ready... 🎪</span>
+                      <span className="animate-pulse text-sm md:text-base">
+                        🎪 Getting Ready... 🎪
+                      </span>
                     </div>
                   ) : (
                     <div className="flex items-center gap-2 md:gap-3">
                       <LogIn className="w-4 h-4 md:w-6 md:h-6" />
-                      <span className="text-sm md:text-base">🚀 Blast Off to Fun! 🚀</span>
+                      <span className="text-sm md:text-base">
+                        🚀 Blast Off to Fun! 🚀
+                      </span>
                     </div>
                   )}
                 </Button>
@@ -346,7 +382,9 @@ export default function LoginForm() {
         <div className="text-center mt-4">
           <div className="bg-gradient-to-r from-yellow-100 via-pink-100 to-purple-100 rounded-3xl p-4 shadow-xl border-3 border-rainbow">
             <div className="flex justify-center items-center gap-2 text-purple-800 mb-2">
-              <span className="text-sm md:text-lg font-bold animate-gentle-bounce">🆕 New Little Explorer? 🌟</span>
+              <span className="text-sm md:text-lg font-bold animate-gentle-bounce">
+                🆕 New Little Explorer? 🌟
+              </span>
             </div>
             <Button
               variant="link"
