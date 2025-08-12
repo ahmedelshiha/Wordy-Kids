@@ -72,6 +72,7 @@ export const LearningDashboard: React.FC<LearningDashboardProps> = ({
   onPracticeForgotten,
   forgottenWordsCount = 0,
   rememberedWordsCount = 0,
+  onRequestNewWords,
 }) => {
   const completionPercentage = Math.round(
     (stats.wordsLearned / stats.totalWords) * 100,
