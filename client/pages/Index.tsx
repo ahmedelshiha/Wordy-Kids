@@ -473,7 +473,7 @@ export default function Index({ initialProfile }: IndexProps) {
         achievementIcon = "📚";
         achievementMessage = `Great job! You completed ${categoryDisplayName} with ${accuracy}% accuracy! Keep up the good work!\n\n🎁 Scholar Bonus: 100 points!\n📚 Scholar badge earned!`;
       } else if (accuracy >= 50) {
-        achievementTitle = "Category Explorer! 🎯";
+        achievementTitle = "Category Explorer! ����";
         achievementIcon = "🎯";
         achievementMessage = `Good effort! You finished ${categoryDisplayName} with ${accuracy}% accuracy! Practice makes perfect!\n\n🎁 Explorer Bonus: 75 points!\n🎯 Explorer badge earned!`;
       } else {
@@ -1781,7 +1781,7 @@ export default function Index({ initialProfile }: IndexProps) {
                         {/* Picture Quiz - Kid-Friendly */}
                         <Card className="cursor-pointer hover:shadow-lg transition-all duration-300 hover:scale-105 border-2 border-educational-orange/30 animate-kid-float">
                           <CardContent className="p-3 md:p-4 text-center">
-                            <div className="text-3xl md:text-5xl mb-2 md:mb-3 animate-bounce">🖼️</div>
+                            <div className="text-3xl md:text-5xl mb-2 md:mb-3 animate-bounce">🖼��</div>
                             <h3 className="text-sm md:text-lg font-bold text-educational-orange mb-1 md:mb-2">
                               Picture Fun!
                             </h3>
@@ -2058,7 +2058,7 @@ export default function Index({ initialProfile }: IndexProps) {
                   )}
                 </TabsContent>
 
-                <TabsContent value="adventure">
+                <TabsContent value="adventure" className="hidden">
                   <AdventureDashboard
                     words={wordsDatabase.map((word) => ({
                       id: word.id,
