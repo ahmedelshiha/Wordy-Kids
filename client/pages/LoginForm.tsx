@@ -174,7 +174,7 @@ export default function LoginForm() {
           </div>
 
           {/* Fun Title with Rainbow Effect */}
-          <h1 className="text-2xl md:text-4xl lg:text-5xl font-bold bg-gradient-to-r from-purple-600 via-pink-600 to-blue-600 bg-clip-text text-transparent mb-4 animate-fade-in">
+          <h1 className="text-lg md:text-2xl lg:text-3xl font-bold bg-gradient-to-r from-purple-600 via-pink-600 to-blue-600 bg-clip-text text-transparent mb-4 animate-fade-in">
             🎉 Wordy's Super Fun Login! 🎉
           </h1>
 
