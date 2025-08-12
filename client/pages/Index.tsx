@@ -135,7 +135,18 @@ export default function Index({ initialProfile }: IndexProps) {
     };
 
     initializeWords();
-  }, [selectedCategory, rememberedWords.size, forgottenWords.size]); // Re-initialize when category changes or progress updates
+  }, [selectedCategory]); // Only re-initialize when category changes to prevent constant regeneration
+
+  // Debug logging for state changes
+  useEffect(() => {
+    console.log('State Update:', {
+      rememberedWordsCount: rememberedWords.size,
+      forgottenWordsCount: forgottenWords.size,
+      currentDashboardWordsLength: currentDashboardWords.length,
+      learningStatsWeeklyProgress: rememberedWords.size,
+      childStatsWordsRemembered: childStats?.wordsRemembered
+    });
+  }, [rememberedWords.size, forgottenWords.size, currentDashboardWords.length, childStats?.wordsRemembered]);
 
   // Dynamic learning stats that reflect actual progress
   const learningStats = {
