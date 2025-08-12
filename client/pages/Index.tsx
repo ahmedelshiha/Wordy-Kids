@@ -2023,7 +2023,7 @@ export default function Index({ initialProfile }: IndexProps) {
 
                             case "picture":
                               return generateQuizQuestions(
-                                8,
+                                10,
                                 undefined,
                                 selectedCategory,
                                 "picture",
