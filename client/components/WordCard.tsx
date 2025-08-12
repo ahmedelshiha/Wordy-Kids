@@ -394,7 +394,7 @@ export const WordCard: React.FC<WordCardProps> = ({
 
           {/* Vocabulary Builder Features */}
           {showVocabularyBuilder && (
-            <div className="border-t border-white/20 pt-4 mt-4">
+            <div className="border-t border-white/20 pt-2 mt-2">
               {/* Adventure Word Health */}
               <div className="mb-4">
                 <div className="flex items-center justify-between mb-2">
