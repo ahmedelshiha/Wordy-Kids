@@ -223,14 +223,14 @@ export function VowelRescue({
   if (!gameStarted) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-educational-blue/20 to-educational-purple/20 flex items-center justify-center p-4">
-        <Card className="w-full max-w-md">
-          <CardContent className="p-8 text-center relative">
-            {/* Close button */}
+        <Card className="w-full max-w-md mx-4">
+          <CardContent className="p-6 sm:p-8 text-center relative">
+            {/* Close button - Mobile Optimized */}
             <Button
               onClick={onExit}
               variant="outline"
               size="sm"
-              className="absolute top-4 right-4 rounded-full hover:bg-red-50 hover:text-red-600 border-red-200"
+              className="absolute top-3 right-3 sm:top-4 sm:right-4 rounded-full hover:bg-red-50 hover:text-red-600 border-red-200 min-h-[40px] min-w-[40px]"
             >
               <ArrowLeft className="w-4 h-4" />
             </Button>
@@ -238,14 +238,14 @@ export function VowelRescue({
             <motion.div
               initial={{ scale: 0.5, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
-              className="text-6xl mb-4 animate-bounce"
+              className="text-5xl sm:text-6xl mb-4 animate-bounce"
             >
               🎯
             </motion.div>
-            <h1 className="text-3xl font-bold text-educational-blue mb-4">
+            <h1 className="text-2xl sm:text-3xl font-bold text-educational-blue mb-4">
               Vowel Rescue!
             </h1>
-            <p className="text-gray-600 mb-6">
+            <p className="text-sm sm:text-base text-gray-600 mb-6 px-2">
               Help rescue the missing vowels! Look at the picture and complete the word by choosing the correct vowel letters.
             </p>
             <div className="mb-6">
@@ -253,7 +253,7 @@ export function VowelRescue({
                 {vowelOptions.map((vowel, idx) => (
                   <motion.div
                     key={vowel}
-                    className="w-10 h-10 bg-educational-blue rounded-full flex items-center justify-center text-white font-bold"
+                    className="w-8 h-8 sm:w-10 sm:h-10 bg-educational-blue rounded-full flex items-center justify-center text-white font-bold text-sm sm:text-base"
                     initial={{ scale: 0 }}
                     animate={{ scale: 1 }}
                     transition={{ delay: idx * 0.1 }}
@@ -262,7 +262,7 @@ export function VowelRescue({
                   </motion.div>
                 ))}
               </div>
-              <p className="text-sm text-gray-500">
+              <p className="text-xs sm:text-sm text-gray-500 px-2">
                 {isTimedMode
                   ? `You have 60 seconds to complete as many words as possible!`
                   : `${questions.length} words to complete`
@@ -272,16 +272,16 @@ export function VowelRescue({
             <div className="space-y-3">
               <Button
                 onClick={() => setGameStarted(true)}
-                className="w-full bg-educational-blue hover:bg-educational-blue/90 text-white py-6 text-lg rounded-xl"
+                className="w-full bg-educational-blue hover:bg-educational-blue/90 text-white py-4 sm:py-6 text-base sm:text-lg rounded-xl min-h-[52px]"
                 size="lg"
               >
-                <Play className="w-5 h-5 mr-2" />
+                <Play className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
                 Start Adventure!
               </Button>
               <Button
                 onClick={onExit}
                 variant="outline"
-                className="w-full py-3 rounded-xl"
+                className="w-full py-3 rounded-xl min-h-[44px]"
                 size="lg"
               >
                 Back to Quiz Menu
