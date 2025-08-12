@@ -63,7 +63,11 @@ export default function Login() {
           <div className="flex justify-center mb-8">
             <div className="relative">
               <div className="bg-gradient-to-r from-educational-blue via-educational-purple to-educational-pink p-8 rounded-full shadow-2xl animate-pulse">
-                <BookOpen className="w-20 h-20 text-white" />
+                <img
+                  src="https://cdn.builder.io/api/v1/image/assets%2F122959266afa4d539a05a574b1531c32%2Fa3e1599156fb43479f1df1383fc15be2?format=webp&width=800"
+                  alt="Wordy the Owl"
+                  className="icon-xl"
+                />
               </div>
               <div className="absolute -top-2 -right-2">
                 <div className="bg-educational-yellow p-2 rounded-full animate-bounce">
