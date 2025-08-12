@@ -1719,7 +1719,7 @@ export default function Index({ initialProfile }: IndexProps) {
                         </Card>
 
                         {/* Standard Quiz */}
-                        <Card className="cursor-pointer hover:shadow-lg transition-all duration-300 hover:scale-105 border-2 border-educational-blue/30 animate-kid-float">
+                        <Card className="hidden cursor-pointer hover:shadow-lg transition-all duration-300 hover:scale-105 border-2 border-educational-blue/30 animate-kid-float">
                           <CardContent className="p-3 md:p-4 text-center">
                             <div className="text-3xl md:text-5xl mb-2 md:mb-3 animate-gentle-bounce">🎯</div>
                             <h3 className="text-sm md:text-lg font-bold text-educational-blue mb-1 md:mb-2">
@@ -1979,7 +1979,7 @@ export default function Index({ initialProfile }: IndexProps) {
                           setShowMatchingGame(false);
                           setFeedback({
                             type: "celebration",
-                            title: "Matching Game Complete! �������",
+                            title: "Matching Game Complete! �����",
                             message: `You matched ${score} pairs in ${timeSpent} seconds!`,
                             points: score * 15,
                             onContinue: () => setFeedback(null),
