@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
-import { Volume2, Star, Trophy, ArrowLeft } from "lucide-react";
+import { Volume2, Star, Trophy, ArrowLeft, Play, Clock } from "lucide-react";
 
 const vowelOptions = ["A", "E", "I", "O", "U"];
 
