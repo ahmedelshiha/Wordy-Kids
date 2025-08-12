@@ -1720,21 +1720,17 @@ export default function Index({ initialProfile }: IndexProps) {
 
                         {/* Standard Quiz */}
                         <Card className="cursor-pointer hover:shadow-lg transition-all duration-300 hover:scale-105 border-2 border-educational-blue/30 animate-kid-float">
-                          <CardContent className="p-6 text-center">
-                            <div className="text-6xl mb-4">🎯</div>
-                            <h3 className="text-xl font-bold text-educational-blue mb-2">
-                              Standard Quiz
+                          <CardContent className="p-3 md:p-4 text-center">
+                            <div className="text-3xl md:text-5xl mb-2 md:mb-3 animate-gentle-bounce">🎯</div>
+                            <h3 className="text-sm md:text-lg font-bold text-educational-blue mb-1 md:mb-2">
+                              Challenge Me!
                             </h3>
-                            <p className="text-gray-600 mb-4">
-                              Medium difficulty with mixed vocabulary
-                              challenges.
+                            <p className="text-xs md:text-sm text-gray-600 mb-2 md:mb-3 hidden md:block">
+                              Ready for more? Let's go! 💪
                             </p>
-                            <div className="flex justify-center gap-2 mb-4">
-                              <span className="bg-educational-blue/20 text-educational-blue px-2 py-1 rounded-full text-xs">
-                                10 Questions
-                              </span>
-                              <span className="bg-educational-blue/20 text-educational-blue px-2 py-1 rounded-full text-xs">
-                                30s Each
+                            <div className="flex justify-center gap-1 mb-2 md:mb-3">
+                              <span className="bg-educational-blue/20 text-educational-blue px-1.5 py-0.5 rounded-full text-xs">
+                                🎯 Cool!
                               </span>
                             </div>
                             <Button
@@ -1742,10 +1738,11 @@ export default function Index({ initialProfile }: IndexProps) {
                                 setSelectedQuizType("standard");
                                 setShowQuiz(true);
                               }}
-                              className="w-full bg-educational-blue text-white hover:bg-educational-blue/90"
+                              className="w-full bg-educational-blue text-white hover:bg-educational-blue/90 py-1.5 md:py-2 text-xs md:text-sm rounded-xl animate-wiggle"
+                              size="sm"
                             >
-                              <Play className="w-4 h-4 mr-2" />
-                              Start Standard Quiz
+                              <Play className="w-3 h-3 md:w-4 md:h-4 mr-1" />
+                              Bring It On! ⚡
                             </Button>
                           </CardContent>
                         </Card>
