@@ -326,9 +326,10 @@ export function AchievementSystem({
 
   const handleAchievementClick = (achievement: Achievement) => {
     if (achievement.unlocked) {
-      setCelebratingAchievement(achievement);
+      // Old celebration modal disabled - keeping only the enhanced achievement system
+      // setCelebratingAchievement(achievement);
       audioService.playCheerSound();
-      setTimeout(() => setCelebratingAchievement(null), 3000);
+      // setTimeout(() => setCelebratingAchievement(null), 3000);
     }
   };
 
