@@ -658,19 +658,19 @@ export default function Index({ initialProfile }: IndexProps) {
       {/* Hero Header */}
       <header className="relative overflow-hidden bg-gradient-to-r from-educational-blue via-educational-purple to-educational-pink text-white">
         <div className="absolute inset-0 bg-black/10"></div>
-        <div className="relative container mx-auto px-4 py-2 md:py-4">
-          {/* Mobile header - simplified */}
-          <div className="flex flex-col items-center justify-center mb-2 md:hidden">
-            <div className="flex items-center gap-3 mb-2">
-              <div className="bg-white/20 backdrop-blur-sm rounded-full p-1.5">
-                <BookOpen className="w-6 h-6 text-white" />
+        <div className="relative container mx-auto px-4 py-1 md:py-4">
+          {/* Mobile header - compact */}
+          <div className="flex items-center justify-between py-1 md:hidden">
+            <div className="flex items-center gap-2">
+              <div className="bg-white/20 backdrop-blur-sm rounded-full p-1">
+                <BookOpen className="w-4 h-4 text-white" />
               </div>
-              <WordyOwlMascot />
+              <div>
+                <h1 className="text-sm font-bold leading-tight">Wordy's Adventure!</h1>
+                <p className="text-xs text-educational-yellow-light">WordWise 🦉</p>
+              </div>
             </div>
-            <h1 className="text-lg font-bold">Wordy's Adventure!</h1>
-            <p className="text-sm font-semibold text-educational-yellow-light">
-              WordWise with Wordy! 🦉
-            </p>
+            <WordyOwlMascot />
           </div>
 
           {/* Desktop header */}
