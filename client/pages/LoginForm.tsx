@@ -230,7 +230,7 @@ export default function LoginForm() {
                   <Lock className="w-4 h-4 md:w-6 md:h-6 text-pink-500" />
                   🔐 Secret Password
                 </Label>
-                <div className="relative mt-3">
+                <div className="relative mt-2">
                   <Input
                     id="password"
                     name="password"
