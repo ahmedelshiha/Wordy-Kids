@@ -565,13 +565,14 @@ export function InteractiveDashboardWordCard({
                 {currentWord.category}
               </Badge>
               <Badge variant="outline" className="text-sm px-3 py-1 bg-blue-50 text-blue-700 border-blue-300">
-                Word {currentWordIndex + 1} / {words.length}
+                Word {currentWordIndex + 1} / {SESSION_SIZE}
               </Badge>
-              {(localRememberedCount + localForgottenCount) > 0 && (
-                <Badge variant="outline" className="text-sm px-3 py-1 bg-green-50 text-green-700 border-green-300">
-                  Session: {localRememberedCount + localForgottenCount} done
-                </Badge>
-              )}
+              <Badge variant="outline" className="text-sm px-3 py-1 bg-green-50 text-green-700 border-green-300">
+                Session: {sessionStats.wordsCompleted} / {SESSION_SIZE}
+              </Badge>
+              <Badge variant="outline" className="text-sm px-3 py-1 bg-purple-50 text-purple-700 border-purple-300">
+                {sessionStats.accuracy}% Accuracy
+              </Badge>
             </div>
           </div>
 
