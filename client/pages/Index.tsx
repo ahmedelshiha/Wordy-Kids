@@ -688,9 +688,6 @@ export default function Index({ initialProfile }: IndexProps) {
             <p className="text-lg font-semibold text-educational-yellow-light mb-2">
 Fun vocabulary learning for kids! 📚
             </p>
-            <p className="text-sm md:text-base mb-3 opacity-90">
-              Welcome to your vocabulary adventure! Ready for some learning fun?
-            </p>
           </div>
         </div>
 
