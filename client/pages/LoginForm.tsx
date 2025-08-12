@@ -101,7 +101,7 @@ export default function LoginForm() {
             />
           </div>
           <h1 className="text-2xl font-bold text-gray-900 mb-2">
-            Welcome Back
+            Wordy's Adventure!
           </h1>
           <p className="text-gray-600">Sign in to your account</p>
         </div>
@@ -201,11 +201,11 @@ export default function LoginForm() {
           <Button
             onClick={handleBackToMain}
             variant="outline"
-            className="flex items-center gap-2"
+            className="flex items-center gap-2 bg-blue-50 hover:bg-blue-100 text-blue-700 border-blue-300 hover:border-blue-400 font-semibold"
             disabled={isLoading}
           >
             <ArrowLeft className="w-4 h-4" />
-            Back to App
+            Login as Guest
           </Button>
 
           <div className="text-sm text-gray-600">
