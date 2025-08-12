@@ -439,9 +439,9 @@ export function VowelRescue({
               </motion.div>
             </div>
 
-            {/* Word Display */}
-            <div className="text-center mb-8">
-              <div className="inline-flex items-center justify-center gap-1 p-4 bg-gray-50 rounded-2xl">
+            {/* Word Display - Mobile Optimized */}
+            <div className="text-center mb-6 sm:mb-8">
+              <div className="inline-flex items-center justify-center gap-0.5 sm:gap-1 p-3 sm:p-4 bg-gray-50 rounded-xl sm:rounded-2xl min-h-[60px] sm:min-h-[80px]">
                 {renderWord()}
               </div>
             </div>
