@@ -434,7 +434,7 @@ export default function Index({ initialProfile }: IndexProps) {
       } else if (accuracy >= 90) {
         achievementTitle = "Category Expert! ��";
         achievementIcon = "���";
-        achievementMessage = `Excellent work! You mastered ${categoryDisplayName} with ${accuracy}% accuracy! Almost perfect!\n\n🎁 Expert Bonus: 150 points!\n�� Expert badge earned!`;
+        achievementMessage = `Excellent work! You mastered ${categoryDisplayName} with ${accuracy}% accuracy! Almost perfect!\n\n🎁 Expert Bonus: 150 points!\n⭐ Expert badge earned!`;
       } else if (accuracy >= 75) {
         achievementTitle = "Category Scholar! 📚";
         achievementIcon = "📚";
@@ -1095,7 +1095,7 @@ Fun vocabulary learning for kids! 📚
                               }}
                               variant="ghost"
                             >
-                              ��� Back to Categories
+                              ← Back to Categories
                             </Button>
                           </div>
                         </div>
