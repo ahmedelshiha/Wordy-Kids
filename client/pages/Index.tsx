@@ -788,7 +788,7 @@ export default function Index({ initialProfile }: IndexProps) {
               📚
             </div>
             <div className="hidden md:block absolute bottom-10 left-20 text-4xl animate-bounce delay-1000">
-              ����������
+              ��������
             </div>
             <div className="hidden md:block absolute bottom-20 right-10 text-3xl animate-pulse delay-500">
               🚀
@@ -1719,7 +1719,7 @@ export default function Index({ initialProfile }: IndexProps) {
                         </Card>
 
                         {/* Standard Quiz */}
-                        <Card className="hidden cursor-pointer hover:shadow-xl transition-all duration-300 hover:scale-105 border-2 border-educational-blue/30">
+                        <Card className="cursor-pointer hover:shadow-lg transition-all duration-300 hover:scale-105 border-2 border-educational-blue/30 animate-kid-float">
                           <CardContent className="p-6 text-center">
                             <div className="text-6xl mb-4">🎯</div>
                             <h3 className="text-xl font-bold text-educational-blue mb-2">
