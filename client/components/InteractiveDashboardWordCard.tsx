@@ -830,16 +830,16 @@ export function InteractiveDashboardWordCard({
               </div>
 
               {/* Skip button (smaller, less prominent) */}
-              <div className="text-center">
+              <div className="text-center mt-2 mb-1">
                 <Button
                   onClick={() => handleWordAction("skipped")}
                   variant="ghost"
                   size="sm"
                   disabled={isAnswered}
-                  className="text-gray-500 hover:text-gray-700 hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="text-gray-500 hover:text-gray-700 hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed py-1 px-3"
                 >
-                  <SkipForward className="w-4 h-4 mr-2" />
-                  Skip this word
+                  <SkipForward className="w-4 h-4 mr-1" />
+                  🤔 Try another word
                 </Button>
               </div>
 
