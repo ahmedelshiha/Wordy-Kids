@@ -57,7 +57,7 @@ interface InteractiveDashboardWordCardProps {
   onSessionProgress?: (stats: SessionStats) => void; // New prop to report session progress
 }
 
-interface SessionStats {
+export interface SessionStats {
   wordsCompleted: number;
   wordsRemembered: number;
   wordsForgotten: number;
