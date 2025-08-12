@@ -33,6 +33,11 @@ import {
   SmartWordSelector,
   getSmartWordSelection,
 } from "@/lib/smartWordSelection";
+import {
+  EnhancedWordSelector,
+  WordHistory,
+  SystematicWordSelection,
+} from "@/lib/enhancedWordSelection";
 import { isBackgroundAnimationsEnabled } from "@/lib/backgroundAnimations";
 import {
   generateQuizQuestions,
@@ -125,6 +130,11 @@ export default function Index({ initialProfile }: IndexProps) {
     new Set(),
   );
   const [currentDashboardWords, setCurrentDashboardWords] = useState<any[]>([]);
+
+  // Enhanced word selection states
+  const [userWordHistory, setUserWordHistory] = useState<Map<number, WordHistory>>(new Map());
+  const [sessionNumber, setSessionNumber] = useState(1);
+  const [lastSystematicSelection, setLastSystematicSelection] = useState<SystematicWordSelection | null>(null);
 
   // Initialize dashboard words when category changes or component mounts
   useEffect(() => {
