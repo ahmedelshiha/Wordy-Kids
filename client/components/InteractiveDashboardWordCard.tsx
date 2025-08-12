@@ -87,6 +87,13 @@ export function InteractiveDashboardWordCard({
     (dailyGoal.completed / dailyGoal.target) * 100,
   );
 
+  // Debug logging for progress tracking
+  useEffect(() => {
+    console.log(`Daily Goal Progress: ${dailyGoal.completed}/${dailyGoal.target} (${dailyProgress}%)`);
+    console.log(`Current word index: ${currentWordIndex}/${words.length}`);
+    console.log(`Shown words: ${shownWordIds.size}`);
+  }, [dailyGoal.completed, dailyGoal.target, currentWordIndex, words.length, shownWordIds.size]);
+
   // Auto-advance to next word when words array changes
   useEffect(() => {
     if (words.length > 0 && currentWordIndex >= words.length) {
