@@ -647,7 +647,7 @@ export default function Index({ initialProfile }: IndexProps) {
     setFeedback({
       type: "celebration",
       title: "Practice Complete! 🏆",
-      message: `Great job practicing your tricky words!\n\n✅ Remembered: ${results.correctWords.length} words\n🎯 Accuracy: ${results.accuracy}%\n\nKeep practicing to master all your words!`,
+      message: `Great job practicing your tricky words!\n\n✅ Remembered: ${results.correctWords.length} words\n�� Accuracy: ${results.accuracy}%\n\nKeep practicing to master all your words!`,
       points: results.correctWords.length * 15,
       onContinue: () => setFeedback(null),
     });
@@ -670,7 +670,7 @@ export default function Index({ initialProfile }: IndexProps) {
                 <p className="text-xs text-educational-yellow-light">WordWise 🦉</p>
               </div>
             </div>
-            <WordyOwlMascot />
+            <WordyOwlMascot isDraggable={true} />
           </div>
 
           {/* Desktop header */}
@@ -1870,7 +1870,7 @@ export default function Index({ initialProfile }: IndexProps) {
                           setShowMatchingGame(false);
                           setFeedback({
                             type: "celebration",
-                            title: "Matching Game Complete! ����",
+                            title: "Matching Game Complete! �����",
                             message: `You matched ${score} pairs in ${timeSpent} seconds!`,
                             points: score * 15,
                             onContinue: () => setFeedback(null),
