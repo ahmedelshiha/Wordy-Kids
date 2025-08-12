@@ -19,6 +19,7 @@ import {
   Target
 } from 'lucide-react';
 import { playSoundIfEnabled } from '@/lib/soundEffects';
+import { audioService } from '@/lib/audioService';
 
 interface WordData {
   word: string;
@@ -157,7 +158,7 @@ export const WordCreator: React.FC<WordCreatorProps> = ({
       playSoundIfEnabled.success();
       onClose();
     } else {
-      playSoundIfEnabled.error();
+      audioService.playEncouragementSound();
     }
   };
 
