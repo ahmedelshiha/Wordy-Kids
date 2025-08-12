@@ -652,7 +652,7 @@ export default function Index({ initialProfile }: IndexProps) {
               <div className="bg-white/20 backdrop-blur-sm rounded-full p-1.5">
                 <BookOpen className="w-6 h-6 text-white" />
               </div>
-              <h1 className="text-lg font-bold">Word Adventure</h1>
+              <h1 className="text-lg font-bold">Wordy's Adventure!</h1>
             </div>
           </div>
 
@@ -664,7 +664,7 @@ export default function Index({ initialProfile }: IndexProps) {
               </div>
             </div>
             <h1 className="text-2xl md:text-3xl font-bold mb-1">
-              ⭐ Word Adventure
+              🌟 Wordy's Adventure!
             </h1>
             <p className="text-sm md:text-base mb-3 opacity-90">
               Welcome to your vocabulary adventure! Ready for some learning fun?
@@ -820,10 +820,10 @@ export default function Index({ initialProfile }: IndexProps) {
                   </div>
                   <div>
                     <h1 className="text-lg lg:text-xl font-bold text-gray-800">
-                      WordWise
+                      Wordy's Adventure!
                     </h1>
                     <p className="text-xs lg:text-sm text-gray-600">
-                      Learning Adventure
+                      Fun Learning Games
                     </p>
                   </div>
                 </div>
