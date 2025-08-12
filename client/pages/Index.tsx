@@ -671,14 +671,18 @@ export default function Index({ initialProfile }: IndexProps) {
 
           {/* Desktop header */}
           <div className="text-center max-w-4xl mx-auto hidden md:block">
-            <div className="flex justify-center mb-2">
+            <div className="flex justify-center items-center gap-6 mb-4">
               <div className="bg-white/20 backdrop-blur-sm rounded-full p-3">
                 <BookOpen className="w-8 h-8 text-white" />
               </div>
+              <WordyOwlMascot />
             </div>
             <h1 className="text-2xl md:text-3xl font-bold mb-1">
               🌟 Wordy's Adventure!
             </h1>
+            <p className="text-lg font-semibold text-educational-yellow-light mb-2">
+              WordWise with Wordy! 🦉
+            </p>
             <p className="text-sm md:text-base mb-3 opacity-90">
               Welcome to your vocabulary adventure! Ready for some learning fun?
             </p>
