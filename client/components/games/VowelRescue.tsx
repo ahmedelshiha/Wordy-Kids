@@ -171,7 +171,17 @@ export function VowelRescue({
     return (
       <div className="min-h-screen bg-gradient-to-br from-educational-blue/20 to-educational-purple/20 flex items-center justify-center p-4">
         <Card className="w-full max-w-md">
-          <CardContent className="p-8 text-center">
+          <CardContent className="p-8 text-center relative">
+            {/* Close button */}
+            <Button
+              onClick={onExit}
+              variant="outline"
+              size="sm"
+              className="absolute top-4 right-4 rounded-full hover:bg-red-50 hover:text-red-600 border-red-200"
+            >
+              <ArrowLeft className="w-4 h-4" />
+            </Button>
+
             <motion.div
               initial={{ scale: 0.5, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
@@ -200,20 +210,30 @@ export function VowelRescue({
                 ))}
               </div>
               <p className="text-sm text-gray-500">
-                {isTimedMode 
+                {isTimedMode
                   ? `You have 60 seconds to complete as many words as possible!`
                   : `${questions.length} words to complete`
                 }
               </p>
             </div>
-            <Button
-              onClick={() => setGameStarted(true)}
-              className="w-full bg-educational-blue hover:bg-educational-blue/90 text-white py-6 text-lg rounded-xl"
-              size="lg"
-            >
-              <Play className="w-5 h-5 mr-2" />
-              Start Adventure!
-            </Button>
+            <div className="space-y-3">
+              <Button
+                onClick={() => setGameStarted(true)}
+                className="w-full bg-educational-blue hover:bg-educational-blue/90 text-white py-6 text-lg rounded-xl"
+                size="lg"
+              >
+                <Play className="w-5 h-5 mr-2" />
+                Start Adventure!
+              </Button>
+              <Button
+                onClick={onExit}
+                variant="outline"
+                className="w-full py-3 rounded-xl"
+                size="lg"
+              >
+                Back to Quiz Menu
+              </Button>
+            </div>
           </CardContent>
         </Card>
       </div>
