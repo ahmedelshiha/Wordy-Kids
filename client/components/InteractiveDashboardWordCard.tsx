@@ -81,6 +81,9 @@ export function InteractiveDashboardWordCard({
   const [guess, setGuess] = useState("");
   const [showHint, setShowHint] = useState(false);
   const [shownWordIds, setShownWordIds] = useState<Set<number>>(new Set());
+  const [localRememberedCount, setLocalRememberedCount] = useState(0);
+  const [localForgottenCount, setLocalForgottenCount] = useState(0);
+  const [achievementMessage, setAchievementMessage] = useState<string | null>(null);
 
   const currentWord = words[currentWordIndex] || null;
   const dailyProgress = Math.round(
