@@ -325,62 +325,74 @@
 
 /* Responsive Icon Size System */
 @layer components {
-  /* Base icon classes with responsive sizing */
+  /* Desktop sizes: sm=24px, md=48px, lg=96px, xl=120px */
   .icon-sm {
-    @apply w-6 h-6; /* 24px on desktop */
+    width: 24px;
+    height: 24px;
   }
 
   .icon-md {
-    @apply w-12 h-12; /* 48px on desktop */
+    width: 48px;
+    height: 48px;
   }
 
   .icon-lg {
-    @apply w-24 h-24; /* 96px on desktop */
+    width: 96px;
+    height: 96px;
   }
 
   .icon-xl {
-    @apply w-30 h-30; /* 120px on desktop */
+    width: 120px;
+    height: 120px;
   }
 
-  /* Tablet responsive sizes */
+  /* Tablet sizes: sm=28px, md=56px, lg=96px, xl=110px */
   @media (max-width: 1024px) and (min-width: 768px) {
     .icon-sm {
-      @apply w-7 h-7; /* 28px on tablet */
+      width: 28px;
+      height: 28px;
     }
 
     .icon-md {
-      @apply w-14 h-14; /* 56px on tablet */
+      width: 56px;
+      height: 56px;
     }
 
     .icon-lg {
-      @apply w-24 h-24; /* 96px on tablet (same as desktop) */
+      width: 96px;
+      height: 96px;
     }
 
     .icon-xl {
-      @apply w-28 h-28; /* 110px on tablet */
+      width: 110px;
+      height: 110px;
     }
   }
 
-  /* Mobile responsive sizes */
+  /* Mobile sizes: sm=32px, md=60px, lg=112px, xl=90px */
   @media (max-width: 767px) {
     .icon-sm {
-      @apply w-8 h-8; /* 32px on mobile */
+      width: 32px;
+      height: 32px;
     }
 
     .icon-md {
-      @apply w-15 h-15; /* 60px on mobile */
+      width: 60px;
+      height: 60px;
     }
 
     .icon-lg {
-      @apply w-28 h-28; /* 112px on mobile */
+      width: 112px;
+      height: 112px;
     }
 
     .icon-xl {
-      @apply w-22 h-22; /* 90px on mobile */
+      width: 90px;
+      height: 90px;
     }
   }
 
-  /* Ensure touchable icons maintain minimum 48x48px clickable area */
+  /* Ensure touchable icons maintain minimum 48×48px clickable area */
   .icon-touchable {
     @apply min-w-12 min-h-12 p-2 cursor-pointer;
   }
