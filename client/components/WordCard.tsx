@@ -298,7 +298,9 @@ export const WordCard: React.FC<WordCardProps> = ({
                   }}
                   disabled={isPlaying}
                   className={`text-white hover:bg-white/30 hover:scale-110 p-3 h-auto rounded-full transition-all duration-300 border-2 border-white/40 bg-white/10 backdrop-blur-sm shadow-lg ${
-                    isPlaying ? "scale-125 bg-yellow-400/30 border-yellow-300/60 shadow-yellow-300/30 animate-bounce" : "hover:border-white/60"
+                    isPlaying
+                      ? "scale-125 bg-yellow-400/30 border-yellow-300/60 shadow-yellow-300/30 animate-bounce"
+                      : "hover:border-white/60"
                   }`}
                 >
                   <Volume2
