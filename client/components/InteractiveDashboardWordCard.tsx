@@ -405,6 +405,7 @@ export function InteractiveDashboardWordCard({
     // Reset all session state
     setShowSessionComplete(false);
     setSessionAchievements([]);
+    setJourneyAchievements([]);
     setCurrentWordIndex(0);
     setIsAnswered(false);
     setFeedbackType(null);
