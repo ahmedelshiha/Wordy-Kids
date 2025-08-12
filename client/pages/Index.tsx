@@ -15,7 +15,11 @@ import { GameLikeLearning } from "@/components/GameLikeLearning";
 import { WordMatchingGame } from "@/components/WordMatchingGame";
 import { GameHub } from "@/components/games/GameHub";
 import { VowelRescue } from "@/components/games/VowelRescue";
-import { getEasyVowelQuestions, getMediumVowelQuestions, getTimedVowelQuestions } from "@/data/vowelQuizData";
+import {
+  getSystematicEasyVowelQuestions,
+  getSystematicMediumVowelQuestions,
+  getSystematicTimedVowelQuestions
+} from "@/lib/vowelQuizGeneration";
 import { SettingsPanel } from "@/components/SettingsPanel";
 import { FloatingBubbles } from "@/components/FloatingBubbles";
 import { CelebrationEffect } from "@/components/CelebrationEffect";
@@ -835,7 +839,7 @@ export default function Index({ initialProfile }: IndexProps) {
                 {
                   id: "progress",
                   icon: Trophy,
-                  label: "���� My Journey",
+                  label: "����� My Journey",
                   color: "yellow",
                 },
               ].map(({ id, icon: Icon, label, color }) => (
