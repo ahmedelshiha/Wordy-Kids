@@ -322,3 +322,83 @@
 .text-shadow {
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
 }
+
+/* Responsive Icon Size System */
+@layer components {
+  /* Base icon classes with responsive sizing */
+  .icon-sm {
+    @apply w-6 h-6; /* 24px on desktop */
+  }
+
+  .icon-md {
+    @apply w-12 h-12; /* 48px on desktop */
+  }
+
+  .icon-lg {
+    @apply w-24 h-24; /* 96px on desktop */
+  }
+
+  .icon-xl {
+    @apply w-30 h-30; /* 120px on desktop */
+  }
+
+  /* Tablet responsive sizes */
+  @media (max-width: 1024px) and (min-width: 768px) {
+    .icon-sm {
+      @apply w-7 h-7; /* 28px on tablet */
+    }
+
+    .icon-md {
+      @apply w-14 h-14; /* 56px on tablet */
+    }
+
+    .icon-lg {
+      @apply w-24 h-24; /* 96px on tablet (same as desktop) */
+    }
+
+    .icon-xl {
+      @apply w-28 h-28; /* 110px on tablet */
+    }
+  }
+
+  /* Mobile responsive sizes */
+  @media (max-width: 767px) {
+    .icon-sm {
+      @apply w-8 h-8; /* 32px on mobile */
+    }
+
+    .icon-md {
+      @apply w-15 h-15; /* 60px on mobile */
+    }
+
+    .icon-lg {
+      @apply w-28 h-28; /* 112px on mobile */
+    }
+
+    .icon-xl {
+      @apply w-22 h-22; /* 90px on mobile */
+    }
+  }
+
+  /* Ensure touchable icons maintain minimum 48x48px clickable area */
+  .icon-touchable {
+    @apply min-w-12 min-h-12 p-2 cursor-pointer;
+  }
+
+  /* Combined classes for easy use */
+  .icon-sm-touchable {
+    @apply icon-sm icon-touchable;
+  }
+
+  .icon-md-touchable {
+    @apply icon-md icon-touchable;
+  }
+
+  .icon-lg-touchable {
+    @apply icon-lg icon-touchable;
+  }
+
+  .icon-xl-touchable {
+    @apply icon-xl icon-touchable;
+  }
+}
