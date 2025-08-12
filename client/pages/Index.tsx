@@ -788,7 +788,7 @@ export default function Index({ initialProfile }: IndexProps) {
               📚
             </div>
             <div className="hidden md:block absolute bottom-10 left-20 text-4xl animate-bounce delay-1000">
-              ��������
+              ����������
             </div>
             <div className="hidden md:block absolute bottom-20 right-10 text-3xl animate-pulse delay-500">
               🚀
@@ -1781,23 +1781,19 @@ export default function Index({ initialProfile }: IndexProps) {
                           </CardContent>
                         </Card>
 
-                        {/* Picture Quiz */}
-                        <Card className="cursor-pointer hover:shadow-xl transition-all duration-300 hover:scale-105 border-2 border-educational-orange/30">
-                          <CardContent className="p-6 text-center">
-                            <div className="text-6xl mb-4">🖼️</div>
-                            <h3 className="text-xl font-bold text-educational-orange mb-2">
+                        {/* Picture Quiz - Kid-Friendly */}
+                        <Card className="cursor-pointer hover:shadow-lg transition-all duration-300 hover:scale-105 border-2 border-educational-orange/30 animate-kid-float">
+                          <CardContent className="p-3 md:p-4 text-center">
+                            <div className="text-3xl md:text-5xl mb-2 md:mb-3 animate-bounce">🖼️</div>
+                            <h3 className="text-sm md:text-lg font-bold text-educational-orange mb-1 md:mb-2">
                               Picture Fun!
                             </h3>
-                            <p className="text-gray-600 mb-4">
-                              Look at fun pictures and find the matching words!
-                              Can you spot them all?
+                            <p className="text-xs md:text-sm text-gray-600 mb-2 md:mb-3 hidden md:block">
+                              Look at pictures and guess the words! 🌟
                             </p>
-                            <div className="flex justify-center gap-2 mb-4">
-                              <span className="bg-educational-orange/20 text-educational-orange px-2 py-1 rounded-full text-xs">
-                                10 Questions
-                              </span>
-                              <span className="bg-educational-orange/20 text-educational-orange px-2 py-1 rounded-full text-xs">
-                                35s Each
+                            <div className="flex justify-center gap-1 mb-2 md:mb-3">
+                              <span className="bg-educational-orange/20 text-educational-orange px-1.5 py-0.5 rounded-full text-xs">
+                                🎯 Fun!
                               </span>
                             </div>
                             <Button
@@ -1805,10 +1801,11 @@ export default function Index({ initialProfile }: IndexProps) {
                                 setSelectedQuizType("picture");
                                 setShowQuiz(true);
                               }}
-                              className="w-full bg-educational-orange text-white hover:bg-educational-orange/90"
+                              className="w-full bg-educational-orange text-white hover:bg-educational-orange/90 py-1.5 md:py-2 text-xs md:text-sm rounded-xl animate-wiggle"
+                              size="sm"
                             >
-                              <Play className="w-4 h-4 mr-2" />
-                              Start Picture Quiz
+                              <Play className="w-3 h-3 md:w-4 md:h-4 mr-1" />
+                              Let's Play! 🚀
                             </Button>
                           </CardContent>
                         </Card>
