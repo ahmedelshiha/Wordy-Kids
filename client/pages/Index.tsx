@@ -1250,15 +1250,6 @@ export default function Index({ initialProfile }: IndexProps) {
                               </span>
                               <span className="sm:hidden">Cards</span>
                             </Button>
-                            <Button
-                              onClick={() => {
-                                setSelectedCategory("all");
-                                setLearningMode("selector");
-                              }}
-                              variant="ghost"
-                            >
-                              ← Back to Categories
-                            </Button>
                           </div>
                         </div>
 
@@ -1597,9 +1588,9 @@ export default function Index({ initialProfile }: IndexProps) {
                                               }
                                               variant="ghost"
                                               size="sm"
-                                              className="text-xs text-slate-500 hover:text-slate-700"
+                                              className="text-gray-500 hover:text-gray-700 hover:bg-gray-100 py-1 px-3"
                                             >
-                                              Skip →
+                                              🤔 Skip →
                                             </Button>
                                           </div>
                                         </div>
