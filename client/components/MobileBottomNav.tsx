@@ -72,6 +72,15 @@ export function MobileBottomNav({
       bgColor: "bg-pink-100",
       textColor: "text-pink-600",
     },
+    {
+      id: "progress",
+      emoji: "🌟",
+      label: "My Journey",
+      icon: Trophy,
+      color: "from-yellow-500 to-orange-500",
+      bgColor: "bg-yellow-100",
+      textColor: "text-yellow-600",
+    },
   ];
 
   const secondaryMenuItems = [
@@ -84,7 +93,7 @@ export function MobileBottomNav({
     },
     {
       id: "parent",
-      emoji: "👨‍👩‍👧‍👦",
+      emoji: "👨‍👩‍👧‍���",
       label: "Parent Zone",
       icon: Users,
       onClick: onParentClick,
