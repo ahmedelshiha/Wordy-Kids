@@ -500,7 +500,7 @@ export default function Index({ initialProfile }: IndexProps) {
         achievementIcon = "🏆";
         achievementMessage = `Outstanding! You remembered ALL ${totalWords} words in ${categoryDisplayName}! You're a true champion!\n\n🎁 Perfect Mastery Bonus: 200 points!\n✨ New adventure zone unlocked!\n🏆 Master badge earned!`;
       } else if (accuracy >= 90) {
-        achievementTitle = "Category Expert! ��";
+        achievementTitle = "Category Expert! 🎓";
         achievementIcon = "🎓⭐";
         achievementMessage = `Excellent work! You mastered ${categoryDisplayName} with ${accuracy}% accuracy! Almost perfect!\n\n🎁 Expert Bonus: 150 points!\n⭐ Expert badge earned!`;
       } else if (accuracy >= 75) {
