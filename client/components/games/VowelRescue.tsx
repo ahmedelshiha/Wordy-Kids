@@ -424,14 +424,18 @@ export function VowelRescue({
             <div className="flex justify-center gap-2 md:gap-4 mb-6">
               {vowelOptions.map((vowel) => {
                 const nextPosition = getNextMissingPosition();
-                const isDisabled = showFeedback || getMissingVowelPositions().length === 0;
-                
+                const allCompleted = getMissingVowelPositions().length === 0;
+                const isCorrectlyCompleted = allCompleted && currentQuestion.missingIndex.every(idx =>
+                  selectedVowels[idx]?.toLowerCase() === currentQuestion.word[idx].toLowerCase()
+                );
+                const isDisabled = (showFeedback && isCorrectlyCompleted) || allCompleted;
+
                 return (
                   <motion.button
                     key={vowel}
                     className={`w-12 h-12 md:w-16 md:h-16 rounded-full font-bold text-lg md:text-xl text-white transition-all
-                      ${isDisabled 
-                        ? "bg-gray-400 cursor-not-allowed" 
+                      ${isDisabled
+                        ? "bg-gray-400 cursor-not-allowed"
                         : "bg-educational-blue hover:bg-educational-blue/90 hover:scale-110 active:scale-95"
                       }
                     `}
