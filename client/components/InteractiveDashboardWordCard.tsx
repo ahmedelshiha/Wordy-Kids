@@ -478,6 +478,74 @@ export function InteractiveDashboardWordCard({
 
   return (
     <div className={cn("space-y-6", className)}>
+      {/* Today's Word Quest - Mobile Optimized Top Left */}
+      <div className="mb-4">
+        <Card className="bg-gradient-to-r from-educational-blue/10 to-educational-purple/10 border-educational-blue/20 hover:shadow-lg transition-all duration-300">
+          <CardContent className="p-3 md:p-4">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2 md:gap-3">
+                <div className="flex items-center gap-1 md:gap-2">
+                  <span className="text-lg md:text-2xl">
+                    {(() => {
+                      const wordsLearned = Math.max(
+                        sessionStats.wordsRemembered,
+                        rememberedWordsCount || 0
+                      );
+                      const goal = dailyGoal.target;
+                      const percentage = Math.round((wordsLearned / goal) * 100);
+
+                      if (wordsLearned >= goal) {
+                        if (wordsLearned >= goal * 2) return "⭐";
+                        if (wordsLearned >= goal * 1.5) return "🚀";
+                        return "🏆";
+                      }
+                      if (percentage >= 90) return "⭐";
+                      if (percentage >= 75) return "🎯";
+                      if (percentage >= 50) return "💪";
+                      return "🌟";
+                    })()}
+                  </span>
+                  <div>
+                    <span className="text-xs md:text-sm font-bold text-slate-800">
+                      Today's Word Quest
+                    </span>
+                    <div className="text-xs text-slate-600 mt-0.5">
+                      {(() => {
+                        const wordsLearned = Math.max(
+                          sessionStats.wordsRemembered,
+                          rememberedWordsCount || 0
+                        );
+                        const goal = dailyGoal.target;
+                        const percentage = Math.round((wordsLearned / goal) * 100);
+
+                        if (wordsLearned >= goal) {
+                          if (wordsLearned >= goal * 2) return "🌟 SUPERSTAR! Amazing effort!";
+                          if (wordsLearned >= goal * 1.5) return "🚀 Beyond awesome! Keep going!";
+                          return "🎉 Goal achieved! You're incredible!";
+                        }
+                        if (percentage >= 90) return "🌟 Almost there, superstar!";
+                        if (percentage >= 75) return "🚀 You're doing great!";
+                        if (percentage >= 50) return "💪 Keep going, champion!";
+                        if (percentage >= 25) return "🌱 Nice start!";
+                        return "🌟 Ready for an adventure?";
+                      })()}
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="flex items-center gap-1 md:gap-2">
+                <div className="text-right">
+                  <div className="text-xs md:text-sm font-bold text-slate-800">
+                    {Math.max(sessionStats.wordsRemembered, rememberedWordsCount || 0)}/{dailyGoal.target}
+                  </div>
+                  <div className="text-xs text-slate-600">words</div>
+                </div>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+
       {/* Session Completion Modal */}
       {showSessionComplete && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-1 sm:p-4">
