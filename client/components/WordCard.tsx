@@ -145,11 +145,9 @@ export const WordCard: React.FC<WordCardProps> = ({
   };
 
   return (
-    <div
-      className={`relative w-full max-w-xs md:max-w-sm lg:max-w-md mx-auto ${className}`}
-    >
+    <div className={`relative w-full max-w-xs mx-auto ${className}`}>
       <Card
-        className={`h-[480px] md:h-[520px] lg:h-[560px] cursor-pointer transition-all duration-700 transform-gpu md:hover:scale-105 ${
+        className={`h-[360px] md:h-[400px] cursor-pointer transition-all duration-700 transform-gpu md:hover:scale-105 ${
           isFlipped ? "[transform:rotateY(180deg)]" : ""
         } ${
           adventureStatus && adventureStatus.health < 30
@@ -166,10 +164,10 @@ export const WordCard: React.FC<WordCardProps> = ({
       >
         {/* Front of card */}
         <CardContent
-          className={`absolute inset-0 w-full h-full ${getCategoryColor(word.category)} rounded-xl p-4 md:p-6 flex flex-col text-white`}
+          className={`absolute inset-0 w-full h-full ${getCategoryColor(word.category)} rounded-xl p-3 md:p-4 flex flex-col text-white`}
           style={{ backfaceVisibility: "hidden" }}
         >
-          <div className="absolute top-3 left-3 md:top-4 md:left-4 flex flex-col gap-1 md:flex-row md:gap-2">
+          <div className="absolute top-2 left-2 md:top-3 md:left-3 flex flex-col gap-1 md:flex-row md:gap-2">
             <Badge
               className={`${getDifficultyColor(word.difficulty)} text-xs md:text-sm`}
             >
@@ -226,7 +224,7 @@ export const WordCard: React.FC<WordCardProps> = ({
             )}
           </div>
 
-          <div className="absolute top-3 right-3 md:top-4 md:right-4">
+          <div className="absolute top-2 right-2 md:top-3 md:right-3">
             <Button
               size="sm"
               variant="ghost"
@@ -249,12 +247,12 @@ export const WordCard: React.FC<WordCardProps> = ({
             </Button>
           </div>
 
-          {/* Add even more spacing to push image down further */}
-          <div className="mt-12"></div>
+          {/* Reduced spacing for mobile */}
+          <div className="mt-8 md:mt-10"></div>
 
           {word.imageUrl ? (
-            <div className="relative mx-auto mt-8 mb-6">
-              <div className="w-48 h-48 md:w-56 md:h-56 lg:w-64 lg:h-64 rounded-full bg-white/20 backdrop-blur-sm shadow-2xl ring-4 ring-white/30 flex items-center justify-center">
+            <div className="relative mx-auto mt-4 mb-4">
+              <div className="w-32 h-32 md:w-40 md:h-40 rounded-full bg-white/20 backdrop-blur-sm shadow-2xl ring-4 ring-white/30 flex items-center justify-center">
                 <img
                   src={word.imageUrl}
                   alt={word.word}
@@ -263,15 +261,15 @@ export const WordCard: React.FC<WordCardProps> = ({
               </div>
             </div>
           ) : (
-            <div className="relative mx-auto mt-8 mb-6">
-              <div className="w-48 h-48 md:w-56 md:h-56 lg:w-64 lg:h-64 rounded-full bg-gradient-to-br from-white/30 via-white/20 to-white/10 backdrop-blur-md shadow-2xl ring-4 ring-white/30 flex items-center justify-center relative overflow-hidden">
+            <div className="relative mx-auto mt-4 mb-4">
+              <div className="w-32 h-32 md:w-40 md:h-40 rounded-full bg-gradient-to-br from-white/30 via-white/20 to-white/10 backdrop-blur-md shadow-2xl ring-4 ring-white/30 flex items-center justify-center relative overflow-hidden">
                 {/* Decorative background elements */}
-                <div className="absolute top-2 left-2 w-6 h-6 bg-white/20 rounded-full animate-pulse"></div>
-                <div className="absolute bottom-4 right-4 w-4 h-4 bg-white/15 rounded-full animate-bounce delay-300"></div>
-                <div className="absolute top-1/2 right-2 w-3 h-3 bg-white/25 rounded-full animate-ping delay-700"></div>
+                <div className="absolute top-1 left-1 w-4 h-4 bg-white/20 rounded-full animate-pulse"></div>
+                <div className="absolute bottom-2 right-2 w-3 h-3 bg-white/15 rounded-full animate-bounce delay-300"></div>
+                <div className="absolute top-1/2 right-1 w-2 h-2 bg-white/25 rounded-full animate-ping delay-700"></div>
 
                 {/* Main emoji */}
-                <span className="text-5xl md:text-6xl lg:text-7xl relative z-10 drop-shadow-lg animate-gentle-float">
+                <span className="text-3xl md:text-4xl relative z-10 drop-shadow-lg animate-gentle-float">
                   {word.emoji || "📚"}
                 </span>
 
@@ -281,14 +279,14 @@ export const WordCard: React.FC<WordCardProps> = ({
             </div>
           )}
 
-          <div className="flex-1 flex flex-col justify-center items-center text-center space-y-3">
-            <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold tracking-wide drop-shadow-md">
+          <div className="flex-1 flex flex-col justify-center items-center text-center space-y-2">
+            <h2 className="text-xl md:text-2xl font-bold tracking-wide drop-shadow-md">
               {word.word}
             </h2>
 
             {word.pronunciation && (
               <div className="flex items-center gap-2">
-                <span className="text-sm md:text-base lg:text-lg opacity-90 font-medium">
+                <span className="text-sm md:text-base opacity-90 font-medium">
                   {word.pronunciation}
                 </span>
                 <Button

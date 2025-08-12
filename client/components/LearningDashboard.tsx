@@ -143,40 +143,6 @@ export const LearningDashboard: React.FC<LearningDashboardProps> = ({
 
   return (
     <div className="space-y-4">
-      {/* Today's Goal Progress - Kid-friendly with real data */}
-      <Card className="bg-gradient-to-r from-educational-blue/10 to-educational-purple/10 border-educational-blue/20 hover:shadow-lg transition-all duration-300">
-        <CardContent className="p-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <div className="flex items-center gap-2">
-                <span className="text-2xl">
-                  {getProgressEmoji(
-                    actualPercentage,
-                    actualWordsLearned,
-                    actualGoal,
-                  )}
-                </span>
-                <div>
-                  <span className="text-xs sm:text-sm font-bold text-slate-800">
-                    Today's Word Quest
-                  </span>
-                  <div className="text-xs sm:text-xs text-slate-600 mt-0.5">
-                    {getProgressMessage(
-                      actualPercentage,
-                      actualWordsLearned,
-                      actualGoal,
-                    )}
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="hidden">
-              {/* Hidden: Badge, progress percentage, debug info, and progress bar */}
-            </div>
-          </div>
-        </CardContent>
-      </Card>
-
       {/* Interactive Word Learning Hub - PRIMARY FEATURE */}
       {availableWords.length > 0 && onWordProgress ? (
         <InteractiveDashboardWordCard
