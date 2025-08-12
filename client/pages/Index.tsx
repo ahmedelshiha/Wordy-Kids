@@ -1278,12 +1278,44 @@ export default function Index({ initialProfile }: IndexProps) {
                     ) : (
                       <>
                         <div className="text-center">
+                          {/* Back to Categories Button */}
+                          {selectedCategory !== "all" && (
+                            <div className="flex justify-center mb-4">
+                              <Button
+                                onClick={() => {
+                                  setSelectedCategory("all");
+                                  setLearningMode("selector");
+                                }}
+                                variant="outline"
+                                className="flex items-center gap-2 text-sm"
+                              >
+                                <svg
+                                  className="w-4 h-4"
+                                  fill="none"
+                                  stroke="currentColor"
+                                  viewBox="0 0 24 24"
+                                >
+                                  <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    strokeWidth={2}
+                                    d="M15 19l-7-7 7-7"
+                                  />
+                                </svg>
+                                Back to Categories
+                              </Button>
+                            </div>
+                          )}
+
                           <h2 className="text-3xl font-bold text-slate-800 mb-4">
-                            Word Library
+                            {selectedCategory === "all"
+                              ? "Word Library"
+                              : `${selectedCategory.charAt(0).toUpperCase() + selectedCategory.slice(1)} Words`}
                           </h2>
                           <p className="text-slate-600 mb-8">
-                            Choose how you'd like to explore and learn
-                            vocabulary!
+                            {selectedCategory === "all"
+                              ? "Choose how you'd like to explore and learn vocabulary!"
+                              : `Learn ${selectedCategory} vocabulary with word cards!`}
                           </p>
 
                           <div className="flex justify-center gap-2 md:gap-4 mb-6 md:mb-8 flex-wrap px-4 md:px-0">
