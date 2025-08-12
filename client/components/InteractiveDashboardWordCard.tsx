@@ -105,6 +105,7 @@ export function InteractiveDashboardWordCard({
   const [sessionAchievements, setSessionAchievements] = useState<Achievement[]>(
     [],
   );
+  const [journeyAchievements, setJourneyAchievements] = useState<any[]>([]);
 
   // UI States
   const [showWordName, setShowWordName] = useState(false);
