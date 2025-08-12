@@ -111,17 +111,38 @@ export function InteractiveDashboardWordCard({
   const [guess, setGuess] = useState("");
   const [showHint, setShowHint] = useState(false);
 
-  const currentWord = words[currentWordIndex] || null;
-  const dailyProgress = Math.round(
-    (dailyGoal.completed / dailyGoal.target) * 100,
-  );
-
-  // Debug logging for progress tracking
+  // Initialize session with 20 words from available words
   useEffect(() => {
-    console.log(`Daily Goal Progress: ${dailyGoal.completed}/${dailyGoal.target} (${dailyProgress}%)`);
-    console.log(`Current word index: ${currentWordIndex}/${words.length}`);
-    console.log(`Shown words: ${shownWordIds.size}`);
-  }, [dailyGoal.completed, dailyGoal.target, currentWordIndex, words.length, shownWordIds.size]);
+    if (words.length > 0 && sessionWords.length === 0) {
+      const sessionWordSet = words.slice(0, SESSION_SIZE);
+      setSessionWords(sessionWordSet);
+      setCurrentWordIndex(0);
+      setSessionStats({
+        wordsCompleted: 0,
+        wordsRemembered: 0,
+        wordsForgotten: 0,
+        accuracy: 0,
+        sessionStartTime: Date.now()
+      });
+      console.log(`New session started with ${sessionWordSet.length} words`);
+    }
+  }, [words]);
+
+  const currentWord = sessionWords[currentWordIndex] || null;
+  const sessionProgress = Math.round((sessionStats.wordsCompleted / SESSION_SIZE) * 100);
+
+  // Debug logging for session tracking
+  useEffect(() => {
+    console.log('Session Debug:', {
+      currentWordIndex: currentWordIndex + 1,
+      sessionSize: SESSION_SIZE,
+      wordsCompleted: sessionStats.wordsCompleted,
+      wordsRemembered: sessionStats.wordsRemembered,
+      wordsForgotten: sessionStats.wordsForgotten,
+      accuracy: sessionStats.accuracy,
+      sessionProgress
+    });
+  }, [sessionStats, currentWordIndex, sessionProgress]);
 
   // Auto-advance to next word when words array changes
   useEffect(() => {
