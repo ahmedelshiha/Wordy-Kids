@@ -922,13 +922,6 @@ export default function Index({ initialProfile }: IndexProps) {
                       setShowQuiz(true);
                       setActiveTab("quiz"); // Navigate to quiz tab
                     }}
-                    onAdventure={() => {
-                      setActiveTab("adventure");
-                    }}
-                    onPracticeForgotten={() => {
-                      startPracticeGame();
-                      // Stay in current tab - practice component will show as overlay
-                    }}
                   />
                 </TabsContent>
 
