@@ -164,7 +164,7 @@ export const WordCard: React.FC<WordCardProps> = ({
       >
         {/* Front of card */}
         <CardContent
-          className={`absolute inset-0 w-full h-full ${getCategoryColor(word.category)} rounded-xl p-3 md:p-4 flex flex-col text-white`}
+          className={`absolute inset-0 w-full h-full ${getCategoryColor(word.category)} rounded-xl p-2 md:p-3 flex flex-col text-white`}
           style={{ backfaceVisibility: "hidden" }}
         >
           <div className="absolute top-2 left-2 md:top-3 md:left-3 flex flex-col gap-1 md:flex-row md:gap-2">
