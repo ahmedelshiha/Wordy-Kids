@@ -225,6 +225,7 @@ export const LearningDashboard: React.FC<LearningDashboardProps> = ({
           forgottenWordsCount={forgottenWordsCount}
           rememberedWordsCount={rememberedWordsCount}
           onRequestNewWords={onRequestNewWords}
+          onSessionProgress={onSessionProgress}
         />
       ) : (
         // Fallback welcome section if no words available
