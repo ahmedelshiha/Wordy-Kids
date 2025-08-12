@@ -855,8 +855,9 @@ export function AchievementSystem({
         </TabsContent>
       </Tabs>
 
-      {/* Achievement Celebration Modal */}
-      {celebratingAchievement && (
+      {/* Old Achievement Celebration Modal - DISABLED */}
+      {/* Keeping only the new enhanced orange achievement popup system */}
+      {false && celebratingAchievement && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
           <Card className="bg-gradient-to-br from-educational-purple to-educational-pink text-white max-w-md mx-4 animate-bounce">
             <CardContent className="p-8 text-center">
