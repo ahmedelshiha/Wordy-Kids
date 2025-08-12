@@ -1024,7 +1024,6 @@ export default function Index({ initialProfile }: IndexProps) {
                           newSet.delete(word.id);
                           return newSet;
                         });
-                        handleWordMastered(word.id, "easy");
                       } else if (status === "needs_practice") {
                         setForgottenWords(
                           (prev) => new Set([...prev, word.id]),
@@ -1034,10 +1033,9 @@ export default function Index({ initialProfile }: IndexProps) {
                           newSet.delete(word.id);
                           return newSet;
                         });
-                        handleWordMastered(word.id, "hard");
                       }
 
-                      // Record progress in database
+                      // Record progress in database (this handles all achievements)
                       await handleWordProgress(
                         word,
                         status === "remembered"
@@ -1181,12 +1179,6 @@ export default function Index({ initialProfile }: IndexProps) {
                                               const currentWord =
                                                 displayWords[currentWordIndex];
                                               if (currentWord) {
-                                                // Record progress in database
-                                                await handleWordProgress(
-                                                  currentWord,
-                                                  "needs_practice",
-                                                );
-
                                                 // Mark as forgotten for extra practice
                                                 setForgottenWords(
                                                   (prev) =>
@@ -1200,10 +1192,11 @@ export default function Index({ initialProfile }: IndexProps) {
                                                   newSet.delete(currentWord.id);
                                                   return newSet;
                                                 });
-                                                // Track as hard for spaced repetition
-                                                handleWordMastered(
-                                                  currentWord.id,
-                                                  "hard",
+
+                                                // Record progress in database (this handles all achievements)
+                                                await handleWordProgress(
+                                                  currentWord,
+                                                  "needs_practice",
                                                 );
                                                 // Show celebration effect briefly
                                                 setShowCelebration(true);
@@ -1281,12 +1274,6 @@ export default function Index({ initialProfile }: IndexProps) {
                                               const currentWord =
                                                 displayWords[currentWordIndex];
                                               if (currentWord) {
-                                                // Record progress in database
-                                                await handleWordProgress(
-                                                  currentWord,
-                                                  "remembered",
-                                                );
-
                                                 // Mark as remembered
                                                 setRememberedWords(
                                                   (prev) =>
@@ -1300,10 +1287,11 @@ export default function Index({ initialProfile }: IndexProps) {
                                                   newSet.delete(currentWord.id);
                                                   return newSet;
                                                 });
-                                                // Track as easy for spaced repetition
-                                                handleWordMastered(
-                                                  currentWord.id,
-                                                  "easy",
+
+                                                // Record progress in database (this handles all achievements)
+                                                await handleWordProgress(
+                                                  currentWord,
+                                                  "remembered",
                                                 );
                                                 // Show celebration effect
                                                 setShowCelebration(true);
