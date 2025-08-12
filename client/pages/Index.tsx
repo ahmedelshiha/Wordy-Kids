@@ -67,6 +67,7 @@ import {
   X,
   LogOut,
   Sword,
+  BookOpen,
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { WordProgressAPI } from "@/lib/wordProgressApi";
@@ -134,7 +135,23 @@ export default function Index({ initialProfile }: IndexProps) {
     };
 
     initializeWords();
-  }, [selectedCategory, rememberedWords.size, forgottenWords.size]); // Re-initialize when category changes or progress updates
+  }, [selectedCategory]); // Only re-initialize when category changes to prevent constant regeneration
+
+  // Debug logging for state changes
+  useEffect(() => {
+    console.log("State Update:", {
+      rememberedWordsCount: rememberedWords.size,
+      forgottenWordsCount: forgottenWords.size,
+      currentDashboardWordsLength: currentDashboardWords.length,
+      learningStatsWeeklyProgress: rememberedWords.size,
+      childStatsWordsRemembered: childStats?.wordsRemembered,
+    });
+  }, [
+    rememberedWords.size,
+    forgottenWords.size,
+    currentDashboardWords.length,
+    childStats?.wordsRemembered,
+  ]);
 
   // Dynamic learning stats that reflect actual progress
   const learningStats = {
@@ -142,7 +159,7 @@ export default function Index({ initialProfile }: IndexProps) {
     totalWords: wordsDatabase.length,
     currentStreak: 7,
     weeklyGoal: 20,
-    weeklyProgress: rememberedWords.size, // Use actual remembered words for today's goal
+    weeklyProgress: rememberedWords.size, // Allow progress beyond daily goal
     accuracyRate:
       rememberedWords.size > 0
         ? Math.round(
@@ -173,7 +190,7 @@ export default function Index({ initialProfile }: IndexProps) {
       {
         id: "category-explorer",
         name: "Category Explorer",
-        icon: "🗂️",
+        icon: "��️",
         earned: rememberedWords.size >= 10,
         description: "Explored 5+ categories",
       },
@@ -338,6 +355,25 @@ export default function Index({ initialProfile }: IndexProps) {
   };
 
   const generateFreshWords = () => {
+    console.log(`Generating fresh words for category: ${selectedCategory}`);
+
+    // Get total available words for the category
+    const totalAvailableWords =
+      selectedCategory === "all"
+        ? wordsDatabase.length
+        : getWordsByCategory(selectedCategory).length;
+
+    console.log(
+      `Total available words: ${totalAvailableWords}, Currently excluded: ${excludedWordIds.size}`,
+    );
+
+    // Reset excluded words if we've seen too many (more than 70% of available words)
+    const currentExcludedWords = excludedWordIds.size;
+    if (currentExcludedWords > totalAvailableWords * 0.7) {
+      console.log("Resetting excluded words to ensure fresh content");
+      setExcludedWordIds(new Set());
+    }
+
     const allReviewedWords = new Set([
       ...rememberedWords,
       ...forgottenWords,
@@ -345,42 +381,96 @@ export default function Index({ initialProfile }: IndexProps) {
     ]);
 
     try {
-      const smartSelection = SmartWordSelector.selectWords({
-        category: selectedCategory,
-        count: 10,
-        rememberedWords,
-        forgottenWords,
-        childStats,
-        prioritizeWeakCategories: true,
-        includeReviewWords: false, // Focus on new words to avoid repetition
-      });
+      let freshWords = [];
 
-      // Filter out already seen words
-      const freshWords = smartSelection.words.filter(
-        (word) => !allReviewedWords.has(word.id),
-      );
+      // If "all" categories, get a mix from different categories
+      if (selectedCategory === "all") {
+        const categories = [
+          "food",
+          "animals",
+          "colors",
+          "body",
+          "nature",
+          "objects",
+          "transportation",
+          "feelings",
+        ];
+        const wordsPerCategory = Math.ceil(12 / categories.length);
 
-      // If we don't have enough fresh words from smart selection, get random words
-      if (freshWords.length < 5) {
+        for (const cat of categories) {
+          const categoryWords = getWordsByCategory(cat)
+            .filter((word) => !allReviewedWords.has(word.id))
+            .slice(0, wordsPerCategory);
+          freshWords.push(...categoryWords);
+        }
+
+        // Shuffle for variety
+        freshWords = shuffleArray(freshWords);
+      } else {
+        // For specific categories, use smart selection
+        const smartSelection = SmartWordSelector.selectWords({
+          category: selectedCategory,
+          count: 15, // Request more words to have better selection
+          rememberedWords,
+          forgottenWords,
+          childStats,
+          prioritizeWeakCategories: true,
+          includeReviewWords: false, // Focus on new words to avoid repetition
+        });
+
+        freshWords = smartSelection.words.filter(
+          (word) => !allReviewedWords.has(word.id),
+        );
+      }
+
+      // If we don't have enough fresh words, get more from the category
+      if (freshWords.length < 8) {
         const fallbackWords =
           selectedCategory === "all"
-            ? getRandomWords(10)
+            ? getRandomWords(25) // Get more fallback words
             : getWordsByCategory(selectedCategory);
 
         const additionalFreshWords = fallbackWords
           .filter((word) => !allReviewedWords.has(word.id))
-          .slice(0, 10 - freshWords.length);
+          .slice(0, 12 - freshWords.length);
 
         freshWords.push(...additionalFreshWords);
       }
 
+      // If still not enough words, include some reviewed words (but not recently remembered ones)
+      if (freshWords.length < 6) {
+        const reviewWords =
+          selectedCategory === "all"
+            ? getRandomWords(30)
+            : getWordsByCategory(selectedCategory);
+
+        const additionalWords = reviewWords
+          .filter((word) => !rememberedWords.has(word.id)) // Avoid recently remembered words
+          .slice(0, 10 - freshWords.length);
+
+        freshWords.push(...additionalWords);
+      }
+
+      // Ensure variety by shuffling
+      freshWords = shuffleArray(freshWords);
+
+      // Take the first 10 words for the game
+      const selectedWords = freshWords.slice(0, 10);
+
       // Update excluded words to include the new words we're about to show
       setExcludedWordIds(
-        (prev) => new Set([...prev, ...freshWords.map((w) => w.id)]),
+        (prev) => new Set([...prev, ...selectedWords.map((w) => w.id)]),
       );
-      setCurrentDashboardWords(freshWords.slice(0, 10));
+      setCurrentDashboardWords(selectedWords);
 
-      return freshWords.slice(0, 10);
+      console.log(
+        `Generated ${selectedWords.length} fresh words:`,
+        selectedWords.map((w) => `${w.word} (${w.category})`),
+      );
+      console.log(
+        `Total excluded after generation: ${excludedWordIds.size + selectedWords.length}`,
+      );
+      return selectedWords;
     } catch (error) {
       console.error("Error generating fresh words:", error);
       // Fallback to simple random selection
@@ -507,7 +597,23 @@ export default function Index({ initialProfile }: IndexProps) {
       });
 
       // Update child stats immediately for real-time feedback
-      setChildStats(response.updatedStats);
+      // But ensure we don't regress if local state is higher
+      setChildStats((prevStats) => {
+        const currentLocalProgress = rememberedWords.size;
+        const apiProgress = response.updatedStats?.wordsRemembered || 0;
+
+        console.log("Updating childStats:", {
+          prevWordsRemembered: prevStats?.wordsRemembered,
+          apiProgress,
+          currentLocalProgress,
+          willUse: Math.max(apiProgress, currentLocalProgress),
+        });
+
+        return {
+          ...response.updatedStats,
+          wordsRemembered: Math.max(apiProgress, currentLocalProgress),
+        };
+      });
 
       // Learning stats are computed dynamically from current state
 
@@ -518,32 +624,53 @@ export default function Index({ initialProfile }: IndexProps) {
         responseTime ? responseTime > 2000 : false,
       );
 
-      // Show level up celebration if applicable
+      // Show achievement notifications in sequence
+      const notifications = [];
+
+      // Add level up to notifications if applicable
       if (response.levelUp) {
-        setFeedback({
+        notifications.push({
           type: "celebration",
           title: "🎉 Level Up! 🎉",
           message: `Congratulations! You've reached a new level!\n\n🌟 Keep up the amazing work!`,
           points: 50,
-          onContinue: () => setFeedback(null),
         });
       }
 
-      // Show achievement notifications
+      // Add achievements to notifications
       if (response.achievements && response.achievements.length > 0) {
-        setTimeout(() => {
-          response.achievements?.forEach((achievement, index) => {
-            setTimeout(() => {
-              setFeedback({
-                type: "achievement",
-                title: `🏆 Achievement Unlocked!`,
-                message: achievement,
-                points: 25,
-                onContinue: () => setFeedback(null),
-              });
-            }, index * 2000);
+        response.achievements.forEach((achievement) => {
+          notifications.push({
+            type: "achievement",
+            title: `🏆 Achievement Unlocked!`,
+            message: achievement,
+            points: 25,
           });
-        }, 1000);
+        });
+      }
+
+      // Show notifications in sequence
+      if (notifications.length > 0) {
+        let currentIndex = 0;
+        const showNext = () => {
+          if (currentIndex < notifications.length) {
+            const notification = notifications[currentIndex];
+            setFeedback({
+              ...notification,
+              onContinue: () => {
+                setFeedback(null);
+                currentIndex++;
+                // Show next notification after a brief delay
+                if (currentIndex < notifications.length) {
+                  setTimeout(showNext, 500);
+                }
+              },
+            });
+          }
+        };
+
+        // Start showing notifications after a brief delay
+        setTimeout(showNext, 500);
       }
 
       console.log("Word progress recorded:", response);
@@ -707,7 +834,7 @@ export default function Index({ initialProfile }: IndexProps) {
               📚
             </div>
             <div className="hidden md:block absolute bottom-10 left-20 text-4xl animate-bounce delay-1000">
-              ������
+              ��������
             </div>
             <div className="hidden md:block absolute bottom-20 right-10 text-3xl animate-pulse delay-500">
               🚀
@@ -744,13 +871,7 @@ export default function Index({ initialProfile }: IndexProps) {
                 },
                 {
                   id: "learn",
-                  icon: () => (
-                    <img
-                      src="https://cdn.builder.io/api/v1/image/assets%2Fa33f74a2f97141a4a1ef43d9448f9bda%2F2a4b7e4c3c38485b966cfd2cff50da9e?format=webp&width=800"
-                      alt="Wordy"
-                      className="w-4 h-4 lg:w-5 lg:h-5 rounded"
-                    />
-                  ),
+                  icon: BookOpen,
                   label: "Word Library",
                   color: "green",
                 },
@@ -889,10 +1010,8 @@ export default function Index({ initialProfile }: IndexProps) {
                     <div
                       className={`p-2 rounded-lg lg:rounded-xl ${activeTab === "learn" ? "bg-white/20" : "bg-green-100"}`}
                     >
-                      <img
-                        src="https://cdn.builder.io/api/v1/image/assets%2Fa33f74a2f97141a4a1ef43d9448f9bda%2F2a4b7e4c3c38485b966cfd2cff50da9e?format=webp&width=800"
-                        alt="Wordy"
-                        className={`w-4 h-4 lg:w-5 lg:h-5 rounded ${activeTab === "learn" ? "" : ""}`}
+                      <BookOpen
+                        className={`w-4 h-4 lg:w-5 lg:h-5 ${activeTab === "learn" ? "text-white" : "text-green-600"}`}
                       />
                     </div>
                     <span className="font-medium lg:font-semibold text-sm lg:text-base">
@@ -1021,30 +1140,44 @@ export default function Index({ initialProfile }: IndexProps) {
                     rememberedWordsCount={rememberedWords.size}
                     availableWords={currentDashboardWords}
                     onWordProgress={async (word, status) => {
+                      console.log(`Word Progress: ${word.word} - ${status}`, {
+                        wordId: word.id,
+                        currentRemembered: rememberedWords.size,
+                        currentForgotten: forgottenWords.size,
+                      });
+
                       // Handle word progress in dashboard
                       if (status === "remembered") {
-                        setRememberedWords(
-                          (prev) => new Set([...prev, word.id]),
-                        );
+                        setRememberedWords((prev) => {
+                          const newSet = new Set([...prev, word.id]);
+                          console.log(
+                            `Updated remembered words: ${newSet.size}`,
+                            Array.from(newSet),
+                          );
+                          return newSet;
+                        });
                         setForgottenWords((prev) => {
                           const newSet = new Set(prev);
                           newSet.delete(word.id);
                           return newSet;
                         });
-                        handleWordMastered(word.id, "easy");
                       } else if (status === "needs_practice") {
-                        setForgottenWords(
-                          (prev) => new Set([...prev, word.id]),
-                        );
+                        setForgottenWords((prev) => {
+                          const newSet = new Set([...prev, word.id]);
+                          console.log(
+                            `Updated forgotten words: ${newSet.size}`,
+                            Array.from(newSet),
+                          );
+                          return newSet;
+                        });
                         setRememberedWords((prev) => {
                           const newSet = new Set(prev);
                           newSet.delete(word.id);
                           return newSet;
                         });
-                        handleWordMastered(word.id, "hard");
                       }
 
-                      // Record progress in database
+                      // Record progress in database (this handles all achievements)
                       await handleWordProgress(
                         word,
                         status === "remembered"
@@ -1188,12 +1321,6 @@ export default function Index({ initialProfile }: IndexProps) {
                                               const currentWord =
                                                 displayWords[currentWordIndex];
                                               if (currentWord) {
-                                                // Record progress in database
-                                                await handleWordProgress(
-                                                  currentWord,
-                                                  "needs_practice",
-                                                );
-
                                                 // Mark as forgotten for extra practice
                                                 setForgottenWords(
                                                   (prev) =>
@@ -1207,10 +1334,11 @@ export default function Index({ initialProfile }: IndexProps) {
                                                   newSet.delete(currentWord.id);
                                                   return newSet;
                                                 });
-                                                // Track as hard for spaced repetition
-                                                handleWordMastered(
-                                                  currentWord.id,
-                                                  "hard",
+
+                                                // Record progress in database (this handles all achievements)
+                                                await handleWordProgress(
+                                                  currentWord,
+                                                  "needs_practice",
                                                 );
                                                 // Show celebration effect briefly
                                                 setShowCelebration(true);
@@ -1288,12 +1416,6 @@ export default function Index({ initialProfile }: IndexProps) {
                                               const currentWord =
                                                 displayWords[currentWordIndex];
                                               if (currentWord) {
-                                                // Record progress in database
-                                                await handleWordProgress(
-                                                  currentWord,
-                                                  "remembered",
-                                                );
-
                                                 // Mark as remembered
                                                 setRememberedWords(
                                                   (prev) =>
@@ -1307,10 +1429,11 @@ export default function Index({ initialProfile }: IndexProps) {
                                                   newSet.delete(currentWord.id);
                                                   return newSet;
                                                 });
-                                                // Track as easy for spaced repetition
-                                                handleWordMastered(
-                                                  currentWord.id,
-                                                  "easy",
+
+                                                // Record progress in database (this handles all achievements)
+                                                await handleWordProgress(
+                                                  currentWord,
+                                                  "remembered",
                                                 );
                                                 // Show celebration effect
                                                 setShowCelebration(true);

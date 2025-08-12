@@ -54,6 +54,23 @@ interface InteractiveDashboardWordCardProps {
   rememberedWordsCount?: number;
   className?: string;
   onRequestNewWords?: () => void; // New prop to request fresh words
+  onSessionProgress?: (stats: SessionStats) => void; // New prop to report session progress
+}
+
+export interface SessionStats {
+  wordsCompleted: number;
+  wordsRemembered: number;
+  wordsForgotten: number;
+  accuracy: number;
+  sessionStartTime: number;
+}
+
+interface Achievement {
+  id: string;
+  title: string;
+  description: string;
+  emoji: string;
+  unlocked: boolean;
 }
 
 export function InteractiveDashboardWordCard({
@@ -69,8 +86,25 @@ export function InteractiveDashboardWordCard({
   rememberedWordsCount = 0,
   className,
   onRequestNewWords,
+  onSessionProgress,
 }: InteractiveDashboardWordCardProps) {
+  // Session Management
+  const SESSION_SIZE = 20;
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
+  const [sessionStats, setSessionStats] = useState<SessionStats>({
+    wordsCompleted: 0,
+    wordsRemembered: 0,
+    wordsForgotten: 0,
+    accuracy: 0,
+    sessionStartTime: Date.now(),
+  });
+  const [sessionWords, setSessionWords] = useState<any[]>([]);
+  const [showSessionComplete, setShowSessionComplete] = useState(false);
+  const [sessionAchievements, setSessionAchievements] = useState<Achievement[]>(
+    [],
+  );
+
+  // UI States
   const [showWordName, setShowWordName] = useState(false);
   const [isAnswered, setIsAnswered] = useState(false);
   const [celebrationEffect, setCelebrationEffect] = useState(false);
@@ -80,24 +114,48 @@ export function InteractiveDashboardWordCard({
   >(null);
   const [guess, setGuess] = useState("");
   const [showHint, setShowHint] = useState(false);
-  const [shownWordIds, setShownWordIds] = useState<Set<number>>(new Set());
 
-  const currentWord = words[currentWordIndex] || null;
-  const dailyProgress = Math.round(
-    (dailyGoal.completed / dailyGoal.target) * 100,
+  // Initialize session with 20 words from available words
+  useEffect(() => {
+    if (words.length > 0 && sessionWords.length === 0) {
+      const sessionWordSet = words.slice(0, SESSION_SIZE);
+      setSessionWords(sessionWordSet);
+      setCurrentWordIndex(0);
+      setSessionStats({
+        wordsCompleted: 0,
+        wordsRemembered: 0,
+        wordsForgotten: 0,
+        accuracy: 0,
+        sessionStartTime: Date.now(),
+      });
+      console.log(`New session started with ${sessionWordSet.length} words`);
+    }
+  }, [words]);
+
+  const currentWord = sessionWords[currentWordIndex] || null;
+  const sessionProgress = Math.round(
+    (sessionStats.wordsCompleted / SESSION_SIZE) * 100,
   );
 
-  // Auto-advance to next word when words array changes
+  // Debug logging for session tracking
   useEffect(() => {
-    if (words.length > 0 && currentWordIndex >= words.length) {
+    console.log("Session Debug:", {
+      currentWordIndex: currentWordIndex + 1,
+      sessionSize: SESSION_SIZE,
+      wordsCompleted: sessionStats.wordsCompleted,
+      wordsRemembered: sessionStats.wordsRemembered,
+      wordsForgotten: sessionStats.wordsForgotten,
+      accuracy: sessionStats.accuracy,
+      sessionProgress,
+    });
+  }, [sessionStats, currentWordIndex, sessionProgress]);
+
+  // Reset card state when starting new session
+  useEffect(() => {
+    if (sessionWords.length > 0 && currentWordIndex >= sessionWords.length) {
       setCurrentWordIndex(0);
     }
-
-    // Reset shown words tracking when word array changes (new set of words)
-    if (words.length > 0) {
-      setShownWordIds(new Set());
-    }
-  }, [words, currentWordIndex]);
+  }, [sessionWords, currentWordIndex]);
 
   // Reset card state when word changes
   useEffect(() => {
@@ -118,10 +176,123 @@ export function InteractiveDashboardWordCard({
     }
   };
 
-  const handleWordAction = (
+  const checkSessionAchievements = (stats: SessionStats): Achievement[] => {
+    const achievements: Achievement[] = [];
+    const { wordsCompleted, wordsRemembered, accuracy } = stats;
+
+    // Session completion achievements based on performance
+    if (wordsCompleted === SESSION_SIZE) {
+      if (accuracy === 100) {
+        achievements.push({
+          id: "perfect_session",
+          title: "PERFECT SESSION!",
+          description: `Amazing! You got all ${SESSION_SIZE} words correct!`,
+          emoji: "🏆",
+          unlocked: true,
+        });
+      } else if (accuracy >= 90) {
+        achievements.push({
+          id: "excellent_session",
+          title: "EXCELLENT SESSION!",
+          description: `Outstanding! ${accuracy}% accuracy on ${SESSION_SIZE} words!`,
+          emoji: "⭐",
+          unlocked: true,
+        });
+      } else if (accuracy >= 75) {
+        achievements.push({
+          id: "great_session",
+          title: "GREAT SESSION!",
+          description: `Well done! ${accuracy}% accuracy. Keep it up!`,
+          emoji: "🎯",
+          unlocked: true,
+        });
+      } else if (accuracy >= 50) {
+        achievements.push({
+          id: "good_effort",
+          title: "GOOD EFFORT!",
+          description: `Nice try! ${accuracy}% accuracy. Practice makes perfect!`,
+          emoji: "💪",
+          unlocked: true,
+        });
+      } else {
+        achievements.push({
+          id: "session_complete",
+          title: "SESSION COMPLETE!",
+          description: `You finished all ${SESSION_SIZE} words! Every attempt helps you learn!`,
+          emoji: "🌟",
+          unlocked: true,
+        });
+      }
+
+      // Speed bonus
+      const sessionTime = Date.now() - stats.sessionStartTime;
+      const minutes = Math.round(sessionTime / 60000);
+      if (minutes <= 5 && accuracy >= 80) {
+        achievements.push({
+          id: "speed_demon",
+          title: "SPEED DEMON!",
+          description: `Lightning fast! Completed in ${minutes} minutes with ${accuracy}% accuracy!`,
+          emoji: "⚡",
+          unlocked: true,
+        });
+      }
+
+      // Streak achievements
+      if (wordsRemembered >= 15) {
+        achievements.push({
+          id: "word_master",
+          title: "WORD MASTER!",
+          description: `Incredible! You remembered ${wordsRemembered} out of ${SESSION_SIZE} words!`,
+          emoji: "🧠",
+          unlocked: true,
+        });
+      }
+    }
+
+    return achievements;
+  };
+
+  const handleWordAction = async (
     status: "remembered" | "needs_practice" | "skipped",
   ) => {
-    if (!currentWord) return;
+    if (!currentWord || isAnswered) return;
+
+    console.log(`Word Action: ${currentWord.word} - ${status}`, {
+      wordId: currentWord.id,
+      sessionProgress: `${currentWordIndex + 1}/${SESSION_SIZE}`,
+      sessionStats,
+    });
+
+    // Mark as answered immediately to prevent double-clicks
+    setIsAnswered(true);
+
+    // Update session stats
+    const newStats = {
+      ...sessionStats,
+      wordsCompleted: sessionStats.wordsCompleted + 1,
+      wordsRemembered:
+        status === "remembered"
+          ? sessionStats.wordsRemembered + 1
+          : sessionStats.wordsRemembered,
+      wordsForgotten:
+        status === "needs_practice"
+          ? sessionStats.wordsForgotten + 1
+          : sessionStats.wordsForgotten,
+    };
+
+    // Calculate accuracy
+    const totalAnswered = newStats.wordsRemembered + newStats.wordsForgotten;
+    newStats.accuracy =
+      totalAnswered > 0
+        ? Math.round((newStats.wordsRemembered / totalAnswered) * 100)
+        : 0;
+
+    setSessionStats(newStats);
+
+    // Report session progress to parent
+    if (onSessionProgress) {
+      onSessionProgress(newStats);
+    }
 
     // Set visual feedback type
     if (status !== "skipped") {
@@ -137,13 +308,31 @@ export function InteractiveDashboardWordCard({
       audioService.playEncouragementSound();
     }
 
-    // Mark as answered
-    setIsAnswered(true);
+    try {
+      // Call the progress callback for overall tracking
+      await onWordProgress(currentWord, status);
+      console.log(`Word progress callback completed for: ${currentWord.word}`);
+      console.log(
+        `Session progress: ${newStats.wordsCompleted}/${SESSION_SIZE}, Accuracy: ${newStats.accuracy}%`,
+      );
+    } catch (error) {
+      console.error("Error in word progress callback:", error);
+    }
 
-    // Call the callback
-    onWordProgress(currentWord, status);
+    // Check if session is complete
+    if (newStats.wordsCompleted >= SESSION_SIZE) {
+      const achievements = checkSessionAchievements(newStats);
+      setSessionAchievements(achievements);
+      setShowSessionComplete(true);
 
-    // Auto-advance to next word after a brief delay
+      console.log("Session completed!", {
+        stats: newStats,
+        achievements: achievements.map((a) => a.title),
+      });
+      return;
+    }
+
+    // Auto-advance to next word after progress is recorded
     setTimeout(
       () => {
         advanceToNextWord();
@@ -153,52 +342,54 @@ export function InteractiveDashboardWordCard({
   };
 
   const advanceToNextWord = () => {
+    console.log(`Advancing from word ${currentWordIndex + 1}/${SESSION_SIZE}`);
+
     // Reset states for next word
     setIsAnswered(false);
     setFeedbackType(null);
     setCelebrationEffect(false);
 
-    // Mark current word as shown
-    if (currentWord) {
-      setShownWordIds((prev) => new Set([...prev, currentWord.id]));
+    // Simply move to next word in session
+    const nextIndex = currentWordIndex + 1;
+
+    if (nextIndex < SESSION_SIZE && nextIndex < sessionWords.length) {
+      setCurrentWordIndex(nextIndex);
+      console.log(
+        `Advanced to word ${nextIndex + 1}/${SESSION_SIZE}: ${sessionWords[nextIndex]?.word}`,
+      );
+    } else {
+      console.log("Reached end of session words");
+      // This shouldn't happen as session completion is handled in handleWordAction
+    }
+  };
+
+  const startNewSession = () => {
+    console.log("Starting new session...");
+
+    // Reset all session state
+    setShowSessionComplete(false);
+    setSessionAchievements([]);
+    setCurrentWordIndex(0);
+    setIsAnswered(false);
+    setFeedbackType(null);
+    setCelebrationEffect(false);
+
+    // Reset session stats
+    setSessionStats({
+      wordsCompleted: 0,
+      wordsRemembered: 0,
+      wordsForgotten: 0,
+      accuracy: 0,
+      sessionStartTime: Date.now(),
+    });
+
+    // Request new words for next session
+    if (onRequestNewWords) {
+      onRequestNewWords();
     }
 
-    // Find next unseen word
-    let nextIndex = currentWordIndex + 1;
-    let foundUnseen = false;
-
-    // Search for next unseen word in current set
-    for (let i = nextIndex; i < words.length; i++) {
-      if (!shownWordIds.has(words[i].id) && words[i].id !== currentWord?.id) {
-        setCurrentWordIndex(i);
-        foundUnseen = true;
-        break;
-      }
-    }
-
-    // If no unseen words found in remaining set, check from beginning
-    if (!foundUnseen) {
-      for (let i = 0; i < currentWordIndex; i++) {
-        if (!shownWordIds.has(words[i].id)) {
-          setCurrentWordIndex(i);
-          foundUnseen = true;
-          break;
-        }
-      }
-    }
-
-    // If all words in current set have been shown, request new words
-    if (!foundUnseen) {
-      if (onRequestNewWords) {
-        onRequestNewWords();
-        // Reset tracking and start fresh
-        setShownWordIds(new Set());
-        setCurrentWordIndex(0);
-      } else {
-        // Fallback: loop back to start
-        setCurrentWordIndex(0);
-      }
-    }
+    // Clear current session words to trigger new session initialization
+    setSessionWords([]);
   };
 
   const getDifficultyColor = (difficulty?: string) => {
@@ -287,6 +478,66 @@ export function InteractiveDashboardWordCard({
 
   return (
     <div className={cn("space-y-6", className)}>
+      {/* Session Completion Modal */}
+      {showSessionComplete && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-3xl p-8 max-w-md w-full text-center shadow-2xl animate-in zoom-in-95 duration-300">
+            <div className="text-6xl mb-4">🎉</div>
+            <h2 className="text-3xl font-bold text-gray-800 mb-4">
+              Session Complete!
+            </h2>
+
+            {/* Session Stats */}
+            <div className="bg-gradient-to-r from-blue-50 to-purple-50 rounded-2xl p-4 mb-6">
+              <div className="grid grid-cols-3 gap-4 text-center">
+                <div>
+                  <div className="text-2xl font-bold text-green-600">
+                    {sessionStats.wordsRemembered}
+                  </div>
+                  <div className="text-sm text-gray-600">Remembered</div>
+                </div>
+                <div>
+                  <div className="text-2xl font-bold text-orange-600">
+                    {sessionStats.wordsForgotten}
+                  </div>
+                  <div className="text-sm text-gray-600">To Practice</div>
+                </div>
+                <div>
+                  <div className="text-2xl font-bold text-purple-600">
+                    {sessionStats.accuracy}%
+                  </div>
+                  <div className="text-sm text-gray-600">Accuracy</div>
+                </div>
+              </div>
+            </div>
+
+            {/* Achievements */}
+            {sessionAchievements.map((achievement, index) => (
+              <div
+                key={achievement.id}
+                className="mb-4 p-4 bg-gradient-to-r from-yellow-100 to-orange-100 rounded-2xl border border-yellow-300"
+              >
+                <div className="text-3xl mb-2">{achievement.emoji}</div>
+                <div className="font-bold text-lg text-gray-800">
+                  {achievement.title}
+                </div>
+                <div className="text-sm text-gray-600">
+                  {achievement.description}
+                </div>
+              </div>
+            ))}
+
+            {/* Continue Button */}
+            <button
+              onClick={startNewSession}
+              className="w-full bg-gradient-to-r from-green-500 to-blue-500 text-white font-bold py-4 px-6 rounded-2xl hover:from-green-600 hover:to-blue-600 transition-all duration-300 transform hover:scale-105 shadow-lg"
+            >
+              🚀 Start New Session
+            </button>
+          </div>
+        </div>
+      )}
+
       {/* Daily Goal Header - Hidden */}
       {/* <div className="text-center bg-gradient-to-r from-educational-blue to-educational-purple text-white p-4 rounded-2xl shadow-lg">
         <div className="flex items-center justify-center gap-4 mb-3">
@@ -322,7 +573,7 @@ export function InteractiveDashboardWordCard({
               🌟
             </div>
             <div className="absolute bottom-4 left-6 text-2xl animate-bounce delay-300">
-              🎉
+              ���
             </div>
             <div className="absolute bottom-6 right-4 text-2xl animate-pulse delay-500">
               💫
@@ -342,8 +593,23 @@ export function InteractiveDashboardWordCard({
               >
                 {currentWord.category}
               </Badge>
-              <Badge variant="outline" className="text-sm px-3 py-1">
-                {currentWordIndex + 1} / {words.length}
+              <Badge
+                variant="outline"
+                className="text-sm px-3 py-1 bg-blue-50 text-blue-700 border-blue-300"
+              >
+                Word {currentWordIndex + 1} / {SESSION_SIZE}
+              </Badge>
+              <Badge
+                variant="outline"
+                className="text-sm px-3 py-1 bg-green-50 text-green-700 border-green-300"
+              >
+                Session: {sessionStats.wordsCompleted} / {SESSION_SIZE}
+              </Badge>
+              <Badge
+                variant="outline"
+                className="text-sm px-3 py-1 bg-purple-50 text-purple-700 border-purple-300"
+              >
+                {sessionStats.accuracy}% Accuracy
               </Badge>
             </div>
           </div>
@@ -464,7 +730,8 @@ export function InteractiveDashboardWordCard({
                 <Button
                   onClick={() => handleWordAction("needs_practice")}
                   variant="outline"
-                  className="flex-1 bg-gradient-to-br from-red-100 to-pink-100 hover:from-red-200 hover:to-pink-200 border-2 border-red-300 hover:border-red-400 text-red-700 hover:text-red-800 transition-all duration-300 transform hover:scale-110 hover:rotate-1 py-4 px-3 rounded-3xl shadow-lg hover:shadow-xl animate-kid-float"
+                  disabled={isAnswered}
+                  className="flex-1 bg-gradient-to-br from-red-100 to-pink-100 hover:from-red-200 hover:to-pink-200 border-2 border-red-300 hover:border-red-400 text-red-700 hover:text-red-800 transition-all duration-300 transform hover:scale-110 hover:rotate-1 py-4 px-3 rounded-3xl shadow-lg hover:shadow-xl animate-kid-float disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
                 >
                   <XCircle className="w-4 h-4 mr-1 md:w-6 md:h-6 md:mr-2" />
                   <div className="text-center">
@@ -475,7 +742,8 @@ export function InteractiveDashboardWordCard({
 
                 <Button
                   onClick={() => handleWordAction("remembered")}
-                  className="flex-1 bg-gradient-to-br from-green-100 to-emerald-100 hover:from-green-200 hover:to-emerald-200 border-2 border-green-300 hover:border-green-400 text-green-700 hover:text-green-800 transition-all duration-300 transform hover:scale-110 hover:-rotate-1 py-4 px-3 rounded-3xl shadow-lg hover:shadow-xl animate-kid-float-delayed"
+                  disabled={isAnswered}
+                  className="flex-1 bg-gradient-to-br from-green-100 to-emerald-100 hover:from-green-200 hover:to-emerald-200 border-2 border-green-300 hover:border-green-400 text-green-700 hover:text-green-800 transition-all duration-300 transform hover:scale-110 hover:-rotate-1 py-4 px-3 rounded-3xl shadow-lg hover:shadow-xl animate-kid-float-delayed disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
                 >
                   <CheckCircle className="w-4 h-4 mr-1 md:w-6 md:h-6 md:mr-2" />
                   <div className="text-center">
@@ -491,52 +759,77 @@ export function InteractiveDashboardWordCard({
                   onClick={() => handleWordAction("skipped")}
                   variant="ghost"
                   size="sm"
-                  className="text-gray-500 hover:text-gray-700 hover:bg-gray-100"
+                  disabled={isAnswered}
+                  className="text-gray-500 hover:text-gray-700 hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   <SkipForward className="w-4 h-4 mr-2" />
                   Skip this word
                 </Button>
               </div>
 
-              {/* Kid-friendly Learning Stats - Compact Version */}
-              <div className="mt-4 bg-gradient-to-r from-blue-50 to-purple-50 rounded-xl p-2 border border-blue-200">
-                <div className="flex items-center justify-center gap-4">
-                  {/* Remembered Words */}
+              {/* Session Progress Display */}
+              <div className="mt-4 bg-gradient-to-r from-blue-50 to-purple-50 rounded-xl p-3 border border-blue-200">
+                {/* Session Progress Header */}
+                <div className="text-center mb-3">
+                  <div className="text-sm text-gray-700 font-bold">
+                    Session Progress
+                  </div>
+                  <div className="text-xs text-gray-600">
+                    {sessionStats.wordsCompleted} / {SESSION_SIZE} words
+                    completed
+                  </div>
+                  <div className="w-full bg-gray-200 rounded-full h-2 mt-2">
+                    <div
+                      className="bg-gradient-to-r from-blue-500 to-purple-500 h-2 rounded-full transition-all duration-300"
+                      style={{
+                        width: `${(sessionStats.wordsCompleted / SESSION_SIZE) * 100}%`,
+                      }}
+                    ></div>
+                  </div>
+                </div>
+
+                <div className="flex items-center justify-center gap-3">
+                  {/* Session Remembered */}
                   <div className="bg-green-100 rounded-lg p-2 border border-green-300 text-center flex-1">
-                    <div className="text-lg">🎉</div>
+                    <div className="text-lg">✅</div>
                     <div className="text-lg font-bold text-green-700">
-                      {rememberedWordsCount}
+                      {sessionStats.wordsRemembered}
                     </div>
                     <div className="text-xs text-green-600 font-medium">
-                      I Know!
+                      This Session
                     </div>
                   </div>
 
-                  {/* Forgotten Words */}
+                  {/* Session Practice */}
                   <div className="bg-orange-100 rounded-lg p-2 border border-orange-300 text-center flex-1">
                     <div className="text-lg">💪</div>
                     <div className="text-lg font-bold text-orange-700">
-                      {forgottenWordsCount}
+                      {sessionStats.wordsForgotten}
                     </div>
                     <div className="text-xs text-orange-600 font-medium">
-                      Practice
+                      To Practice
                     </div>
                   </div>
                 </div>
 
-                {/* Compact encouraging message */}
-                <div className="mt-2 text-center">
-                  {rememberedWordsCount > forgottenWordsCount ? (
+                {/* Session encouraging message */}
+                <div className="mt-3 text-center">
+                  {sessionStats.wordsRemembered >= 15 ? (
                     <div className="text-green-600 font-medium text-xs">
-                      🌟 Great job!
+                      🌟 Outstanding! {sessionStats.wordsRemembered} words
+                      mastered!
                     </div>
-                  ) : forgottenWordsCount > rememberedWordsCount ? (
+                  ) : sessionStats.wordsRemembered >= 10 ? (
+                    <div className="text-green-600 font-medium text-xs">
+                      🎯 Great progress! You're doing amazing!
+                    </div>
+                  ) : sessionStats.wordsCompleted >= 10 ? (
                     <div className="text-blue-600 font-medium text-xs">
-                      🔥 Keep practicing!
+                      🔥 Halfway there! Keep going strong!
                     </div>
                   ) : (
                     <div className="text-purple-600 font-medium text-xs">
-                      🎯 You're doing great!
+                      🎯 Great start! Every word counts!
                     </div>
                   )}
                 </div>

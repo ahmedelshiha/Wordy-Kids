@@ -4,7 +4,10 @@ import { Progress } from "@/components/ui/progress";
 import { Badge } from "@/components/ui/badge";
 import { AnimatedCounter } from "@/components/AnimatedCounter";
 import { PracticeWordsCard } from "@/components/PracticeWordsCard";
-import { InteractiveDashboardWordCard } from "@/components/InteractiveDashboardWordCard";
+import {
+  InteractiveDashboardWordCard,
+  SessionStats,
+} from "@/components/InteractiveDashboardWordCard";
 import { ChildWordStats } from "@shared/api";
 import {
   Trophy,
@@ -57,6 +60,7 @@ interface LearningDashboardProps {
   forgottenWordsCount?: number;
   rememberedWordsCount?: number;
   onRequestNewWords?: () => void;
+  onSessionProgress?: (stats: SessionStats) => void;
 }
 
 export const LearningDashboard: React.FC<LearningDashboardProps> = ({
@@ -73,6 +77,7 @@ export const LearningDashboard: React.FC<LearningDashboardProps> = ({
   forgottenWordsCount = 0,
   rememberedWordsCount = 0,
   onRequestNewWords,
+  onSessionProgress,
 }) => {
   const completionPercentage = Math.round(
     (stats.wordsLearned / stats.totalWords) * 100,
@@ -81,15 +86,38 @@ export const LearningDashboard: React.FC<LearningDashboardProps> = ({
     (stats.weeklyProgress / stats.weeklyGoal) * 100,
   );
 
-  // Use actual word progress if childStats is available
-  const actualWordsLearned =
-    childStats?.wordsRemembered || stats.weeklyProgress;
+  // Use the higher value between API stats and local progress to prevent regression
+  const actualWordsLearned = Math.max(
+    childStats?.wordsRemembered || 0,
+    stats.weeklyProgress || 0,
+  );
   const actualGoal = stats.weeklyGoal;
   const actualPercentage = Math.round((actualWordsLearned / actualGoal) * 100);
 
+  // Debug logging for progress tracking
+  console.log("Progress Debug:", {
+    childStatsWordsRemembered: childStats?.wordsRemembered,
+    statsWeeklyProgress: stats.weeklyProgress,
+    actualWordsLearned,
+    actualGoal,
+    actualPercentage,
+    // Additional debug info
+    rememberedWordsCount,
+    forgottenWordsCount,
+    calculation: `max(${childStats?.wordsRemembered || 0}, ${stats.weeklyProgress || 0}) = ${actualWordsLearned}`,
+  });
+
   // Kid-friendly messages based on progress
-  const getProgressMessage = (percentage: number) => {
-    if (percentage >= 100) return "🎉 Amazing! You did it!";
+  const getProgressMessage = (
+    percentage: number,
+    wordsLearned: number,
+    goal: number,
+  ) => {
+    if (wordsLearned >= goal) {
+      if (wordsLearned >= goal * 2) return "🌟 SUPERSTAR! Amazing effort!";
+      if (wordsLearned >= goal * 1.5) return "🚀 Beyond awesome! Keep going!";
+      return "🎉 Goal achieved! You're incredible!";
+    }
     if (percentage >= 90) return "🌟 Almost there, superstar!";
     if (percentage >= 75) return "🚀 You're doing great!";
     if (percentage >= 50) return "💪 Keep going, champion!";
@@ -97,11 +125,19 @@ export const LearningDashboard: React.FC<LearningDashboardProps> = ({
     return "🌟 Ready for an adventure?";
   };
 
-  const getProgressEmoji = (percentage: number) => {
-    if (percentage >= 100) return "🏆";
+  const getProgressEmoji = (
+    percentage: number,
+    wordsLearned: number,
+    goal: number,
+  ) => {
+    if (wordsLearned >= goal) {
+      if (wordsLearned >= goal * 2) return "⭐";
+      if (wordsLearned >= goal * 1.5) return "🚀";
+      return "🏆";
+    }
     if (percentage >= 90) return "⭐";
     if (percentage >= 75) return "🎯";
-    if (percentage >= 50) return "����";
+    if (percentage >= 50) return "💪";
     return "🌟";
   };
 
@@ -114,14 +150,22 @@ export const LearningDashboard: React.FC<LearningDashboardProps> = ({
             <div className="flex items-center gap-3">
               <div className="flex items-center gap-2">
                 <span className="text-2xl">
-                  {getProgressEmoji(actualPercentage)}
+                  {getProgressEmoji(
+                    actualPercentage,
+                    actualWordsLearned,
+                    actualGoal,
+                  )}
                 </span>
                 <div>
                   <span className="text-sm font-bold text-slate-800">
                     Today's Word Quest
                   </span>
                   <div className="text-xs text-slate-600 mt-0.5">
-                    {getProgressMessage(actualPercentage)}
+                    {getProgressMessage(
+                      actualPercentage,
+                      actualWordsLearned,
+                      actualGoal,
+                    )}
                   </div>
                 </div>
               </div>
@@ -135,20 +179,47 @@ export const LearningDashboard: React.FC<LearningDashboardProps> = ({
                   {actualWordsLearned}/{actualGoal} words
                 </Badge>
                 <div className="text-xs font-semibold text-educational-blue mt-1">
-                  {actualPercentage >= 100
-                    ? "Quest Complete!"
+                  {actualWordsLearned >= actualGoal
+                    ? actualWordsLearned > actualGoal
+                      ? `${Math.round(((actualWordsLearned - actualGoal) / actualGoal) * 100)}% beyond goal!`
+                      : "Quest Complete!"
                     : `${actualPercentage}% done`}
+                </div>
+                {/* Debug info - remove in production */}
+                <div className="text-xs text-gray-500 mt-1">
+                  API: {childStats?.wordsRemembered || 0} | Local:{" "}
+                  {stats.weeklyProgress || 0}
                 </div>
               </div>
               <div className="flex flex-col items-center gap-1">
                 <div className="w-24 h-3 bg-slate-200 rounded-full overflow-hidden shadow-inner">
                   <div
-                    className="h-full bg-gradient-to-r from-educational-blue to-educational-purple rounded-full transition-all duration-500 ease-out"
+                    className={`h-full rounded-full transition-all duration-500 ease-out ${
+                      actualWordsLearned >= actualGoal
+                        ? actualWordsLearned >= actualGoal * 1.5
+                          ? "bg-gradient-to-r from-yellow-400 to-orange-500"
+                          : "bg-gradient-to-r from-green-400 to-emerald-500"
+                        : "bg-gradient-to-r from-educational-blue to-educational-purple"
+                    }`}
                     style={{ width: `${Math.min(actualPercentage, 100)}%` }}
                   ></div>
                 </div>
-                {actualPercentage >= 100 ? (
-                  <Trophy className="w-5 h-5 text-educational-yellow animate-bounce" />
+                {actualWordsLearned >= actualGoal ? (
+                  actualWordsLearned >= actualGoal * 1.5 ? (
+                    <div className="text-center">
+                      <Trophy className="w-5 h-5 text-yellow-500 animate-bounce" />
+                      <div className="text-xs text-yellow-600 font-bold">
+                        SUPERSTAR!
+                      </div>
+                    </div>
+                  ) : (
+                    <div className="text-center">
+                      <Trophy className="w-5 h-5 text-green-500 animate-bounce" />
+                      <div className="text-xs text-green-600 font-bold">
+                        GOAL!
+                      </div>
+                    </div>
+                  )
                 ) : (
                   <Target className="w-4 h-4 text-educational-blue/60" />
                 )}
@@ -178,6 +249,7 @@ export const LearningDashboard: React.FC<LearningDashboardProps> = ({
           forgottenWordsCount={forgottenWordsCount}
           rememberedWordsCount={rememberedWordsCount}
           onRequestNewWords={onRequestNewWords}
+          onSessionProgress={onSessionProgress}
         />
       ) : (
         // Fallback welcome section if no words available
