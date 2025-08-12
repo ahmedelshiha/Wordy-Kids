@@ -736,7 +736,7 @@ Fun vocabulary learning for kids! 📚
                 },
                 {
                   id: "learn",
-                  icon: BookOpen,
+                  icon: () => <img src="https://cdn.builder.io/api/v1/image/assets%2Fa33f74a2f97141a4a1ef43d9448f9bda%2F34c65c36a6f4415a9a48120417a492e0?format=webp&width=800" alt="Wordy" className="w-4 h-4 lg:w-5 lg:h-5 rounded" />,
                   label: "Word Library",
                   color: "green",
                 },
@@ -871,8 +871,7 @@ Fun vocabulary learning for kids! 📚
                     <div
                       className={`p-2 rounded-lg lg:rounded-xl ${activeTab === "learn" ? "bg-white/20" : "bg-green-100"}`}
                     >
-                      <BookOpen
-                        className={`w-4 h-4 lg:w-5 lg:h-5 ${activeTab === "learn" ? "text-white" : "text-green-600"}`}
+                      <img src="https://cdn.builder.io/api/v1/image/assets%2Fa33f74a2f97141a4a1ef43d9448f9bda%2F34c65c36a6f4415a9a48120417a492e0?format=webp&width=800" alt="Wordy" className={`w-4 h-4 lg:w-5 lg:h-5 rounded ${activeTab === "learn" ? "" : ""}`}
                       />
                     </div>
                     <span className="font-medium lg:font-semibold text-sm lg:text-base">
@@ -1083,7 +1082,7 @@ Fun vocabulary learning for kids! 📚
                               }
                               className="flex items-center gap-1 md:gap-2 text-sm md:text-base px-3 md:px-4"
                             >
-                              <BookOpen className="w-4 h-4" />
+                              <img src="https://cdn.builder.io/api/v1/image/assets%2Fa33f74a2f97141a4a1ef43d9448f9bda%2F34c65c36a6f4415a9a48120417a492e0?format=webp&width=800" alt="Wordy" className="w-4 h-4 rounded" />
                               <span className="hidden sm:inline">
                                 Word Cards
                               </span>
