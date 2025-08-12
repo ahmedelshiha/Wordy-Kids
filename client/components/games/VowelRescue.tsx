@@ -459,15 +459,20 @@ export function VowelRescue({
                 return (
                   <motion.button
                     key={vowel}
-                    className={`w-11 h-11 sm:w-12 sm:h-12 md:w-16 md:h-16 rounded-full font-bold text-lg sm:text-lg md:text-xl text-white transition-all min-h-[44px] min-w-[44px]
+                    className={`w-11 h-11 sm:w-12 sm:h-12 md:w-16 md:h-16 rounded-full font-bold text-lg sm:text-lg md:text-xl text-white transition-all min-h-[44px] min-w-[44px] touch-manipulation select-none
                       ${isDisabled
                         ? "bg-gray-400 cursor-not-allowed"
-                        : "bg-educational-blue hover:bg-educational-blue/90 hover:scale-110 active:scale-95 shadow-lg"
+                        : "bg-educational-blue hover:bg-educational-blue/90 hover:scale-110 active:scale-95 shadow-lg active:shadow-md"
                       }
                     `}
                     whileTap={{ scale: 0.9 }}
                     onClick={() => !isDisabled && handleVowelSelect(vowel, nextPosition)}
                     disabled={isDisabled}
+                    style={{
+                      WebkitTapHighlightColor: 'transparent',
+                      WebkitTouchCallout: 'none',
+                      WebkitUserSelect: 'none'
+                    }}
                   >
                     {vowel}
                   </motion.button>
@@ -575,7 +580,7 @@ export function VowelRescue({
                 exit={{ scale: 0.8, y: -100, opacity: 0 }}
                 className="text-6xl"
               >
-                ⭐🎉⭐
+                ���🎉⭐
               </motion.div>
             </motion.div>
           )}
