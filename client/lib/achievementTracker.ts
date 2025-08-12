@@ -522,4 +522,34 @@ export class AchievementTracker {
       }
     };
   }
+
+  /**
+   * Debug helper to manually trigger achievement unlock (for testing)
+   */
+  static debugUnlockAchievement(achievementId: string): Achievement[] {
+    const achievement = this.achievements.find(a => a.id === achievementId);
+    if (achievement && !achievement.unlocked) {
+      achievement.unlocked = true;
+      achievement.dateUnlocked = new Date();
+      achievement.currentProgress = achievement.requirements;
+      return [achievement];
+    }
+    return [];
+  }
+
+  /**
+   * Debug helper to see current progress
+   */
+  static debugGetProgress(): any {
+    return {
+      journeyProgress: this.journeyProgress,
+      achievements: this.achievements.map(a => ({
+        id: a.id,
+        name: a.name,
+        unlocked: a.unlocked,
+        progress: a.currentProgress,
+        requirement: a.requirements
+      }))
+    };
+  }
 }
