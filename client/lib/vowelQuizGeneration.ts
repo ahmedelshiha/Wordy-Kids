@@ -269,6 +269,37 @@ export class VowelQuizGenerator {
       return this.generateVowelQuiz(options);
     }
   }
+
+  /**
+   * Track vowel quiz completion for learning progress
+   */
+  static trackVowelQuizCompletion(
+    questions: VowelQuestion[],
+    correctAnswers: number,
+    totalAttempts: number,
+    userProfile?: any
+  ): void {
+    try {
+      // Track word exposure and performance
+      const wordIds = questions
+        .map(q => q.originalWord?.id)
+        .filter(id => id !== undefined);
+
+      // This would integrate with the existing progress tracking system
+      console.log("Vowel Quiz Completion:", {
+        wordIds,
+        correctAnswers,
+        totalAttempts,
+        accuracy: correctAnswers / questions.length,
+        userId: userProfile?.id
+      });
+
+      // In a real implementation, this would update the user's learning progress
+      // similar to how other quiz completions are tracked
+    } catch (error) {
+      console.warn("Failed to track vowel quiz completion:", error);
+    }
+  }
 }
 
 // Export convenient functions for different game modes
