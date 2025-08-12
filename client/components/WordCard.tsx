@@ -269,7 +269,7 @@ export const WordCard: React.FC<WordCardProps> = ({
                 <div className="absolute top-1/2 right-1 w-2 h-2 bg-white/25 rounded-full animate-ping delay-700"></div>
 
                 {/* Main emoji */}
-                <span className="text-3xl md:text-4xl relative z-10 drop-shadow-lg animate-gentle-float">
+                <span className="text-5xl md:text-6xl relative z-10 drop-shadow-lg animate-gentle-float">
                   {word.emoji || "📚"}
                 </span>
 
