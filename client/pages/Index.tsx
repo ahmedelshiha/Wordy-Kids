@@ -434,7 +434,7 @@ export default function Index({ initialProfile }: IndexProps) {
       } else if (accuracy >= 90) {
         achievementTitle = "Category Expert! ��";
         achievementIcon = "���";
-        achievementMessage = `Excellent work! You mastered ${categoryDisplayName} with ${accuracy}% accuracy! Almost perfect!\n\n🎁 Expert Bonus: 150 points!\n⭐ Expert badge earned!`;
+        achievementMessage = `Excellent work! You mastered ${categoryDisplayName} with ${accuracy}% accuracy! Almost perfect!\n\n🎁 Expert Bonus: 150 points!\n�� Expert badge earned!`;
       } else if (accuracy >= 75) {
         achievementTitle = "Category Scholar! 📚";
         achievementIcon = "📚";
@@ -660,7 +660,7 @@ export default function Index({ initialProfile }: IndexProps) {
           <div className="flex items-center justify-between py-1 md:hidden">
             <div className="flex items-center gap-2">
               <div className="bg-white/20 backdrop-blur-sm rounded-full p-1">
-                <img src="https://cdn.builder.io/api/v1/image/assets%2Fa33f74a2f97141a4a1ef43d9448f9bda%2F34c65c36a6f4415a9a48120417a492e0?format=webp&width=800" alt="Wordy Logo" className="w-6 h-6 rounded-full" />
+                <img src="https://cdn.builder.io/api/v1/image/assets%2Fa33f74a2f97141a4a1ef43d9448f9bda%2F2a4b7e4c3c38485b966cfd2cff50da9e?format=webp&width=800" alt="Wordy Logo" className="w-6 h-6 rounded-full" />
               </div>
               <div>
                 <h1 className="text-sm font-bold leading-tight">
@@ -677,7 +677,7 @@ export default function Index({ initialProfile }: IndexProps) {
           <div className="text-center max-w-4xl mx-auto hidden md:block">
             <div className="flex justify-center items-center gap-6 mb-4">
               <div className="bg-white/20 backdrop-blur-sm rounded-full p-3">
-                <img src="https://cdn.builder.io/api/v1/image/assets%2Fa33f74a2f97141a4a1ef43d9448f9bda%2F34c65c36a6f4415a9a48120417a492e0?format=webp&width=800" alt="Wordy Logo" className="w-16 h-16 rounded-full" />
+                <img src="https://cdn.builder.io/api/v1/image/assets%2Fa33f74a2f97141a4a1ef43d9448f9bda%2F2a4b7e4c3c38485b966cfd2cff50da9e?format=webp&width=800" alt="Wordy Logo" className="w-16 h-16 rounded-full" />
               </div>
             </div>
             <h1 className="text-2xl md:text-3xl font-bold mb-1">
@@ -736,7 +736,7 @@ Fun vocabulary learning for kids! 📚
                 },
                 {
                   id: "learn",
-                  icon: () => <img src="https://cdn.builder.io/api/v1/image/assets%2Fa33f74a2f97141a4a1ef43d9448f9bda%2F34c65c36a6f4415a9a48120417a492e0?format=webp&width=800" alt="Wordy" className="w-4 h-4 lg:w-5 lg:h-5 rounded" />,
+                  icon: () => <img src="https://cdn.builder.io/api/v1/image/assets%2Fa33f74a2f97141a4a1ef43d9448f9bda%2F2a4b7e4c3c38485b966cfd2cff50da9e?format=webp&width=800" alt="Wordy" className="w-4 h-4 lg:w-5 lg:h-5 rounded" />,
                   label: "Word Library",
                   color: "green",
                 },
@@ -826,7 +826,7 @@ Fun vocabulary learning for kids! 📚
                 {/* Logo Section - Mobile & Desktop */}
                 <div className="flex items-center gap-3 mb-6 lg:mb-8">
                   <div className="w-8 h-8 lg:w-10 lg:h-10 bg-white rounded-xl flex items-center justify-center p-1">
-                    <img src="https://cdn.builder.io/api/v1/image/assets%2Fa33f74a2f97141a4a1ef43d9448f9bda%2F34c65c36a6f4415a9a48120417a492e0?format=webp&width=800" alt="Wordy Logo" className="w-full h-full rounded-lg" />
+                    <img src="https://cdn.builder.io/api/v1/image/assets%2Fa33f74a2f97141a4a1ef43d9448f9bda%2F2a4b7e4c3c38485b966cfd2cff50da9e?format=webp&width=800" alt="Wordy Logo" className="w-full h-full rounded-lg" />
                   </div>
                   <div>
                     <h1 className="text-lg lg:text-xl font-bold text-gray-800">
@@ -871,7 +871,7 @@ Fun vocabulary learning for kids! 📚
                     <div
                       className={`p-2 rounded-lg lg:rounded-xl ${activeTab === "learn" ? "bg-white/20" : "bg-green-100"}`}
                     >
-                      <img src="https://cdn.builder.io/api/v1/image/assets%2Fa33f74a2f97141a4a1ef43d9448f9bda%2F34c65c36a6f4415a9a48120417a492e0?format=webp&width=800" alt="Wordy" className={`w-4 h-4 lg:w-5 lg:h-5 rounded ${activeTab === "learn" ? "" : ""}`}
+                      <img src="https://cdn.builder.io/api/v1/image/assets%2Fa33f74a2f97141a4a1ef43d9448f9bda%2F2a4b7e4c3c38485b966cfd2cff50da9e?format=webp&width=800" alt="Wordy" className={`w-4 h-4 lg:w-5 lg:h-5 rounded ${activeTab === "learn" ? "" : ""}`}
                       />
                     </div>
                     <span className="font-medium lg:font-semibold text-sm lg:text-base">
@@ -1082,7 +1082,7 @@ Fun vocabulary learning for kids! 📚
                               }
                               className="flex items-center gap-1 md:gap-2 text-sm md:text-base px-3 md:px-4"
                             >
-                              <img src="https://cdn.builder.io/api/v1/image/assets%2Fa33f74a2f97141a4a1ef43d9448f9bda%2F34c65c36a6f4415a9a48120417a492e0?format=webp&width=800" alt="Wordy" className="w-4 h-4 rounded" />
+                              <img src="https://cdn.builder.io/api/v1/image/assets%2Fa33f74a2f97141a4a1ef43d9448f9bda%2F2a4b7e4c3c38485b966cfd2cff50da9e?format=webp&width=800" alt="Wordy" className="w-4 h-4 rounded" />
                               <span className="hidden sm:inline">
                                 Word Cards
                               </span>
