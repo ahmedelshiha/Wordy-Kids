@@ -23,7 +23,6 @@ import { ParentDashboard } from "@/components/ParentDashboard";
 import { WordCreator } from "@/components/WordCreator";
 import { AdventureDashboard } from "@/components/AdventureDashboard";
 import { MobileBottomNav } from "@/components/MobileBottomNav";
-import WordyOwlMascot from "@/components/WordyOwlMascot";
 import { adventureService } from "@/lib/adventureService";
 import {
   wordsDatabase,
@@ -169,7 +168,7 @@ export default function Index({ initialProfile }: IndexProps) {
       {
         id: "streak-starter",
         name: "Streak Master",
-        icon: "🔥",
+        icon: "��",
         earned: true,
         description: "7-day learning streak",
       },
@@ -674,7 +673,6 @@ export default function Index({ initialProfile }: IndexProps) {
                 </p>
               </div>
             </div>
-            <WordyOwlMascot isDraggable={true} />
           </div>
 
           {/* Desktop header */}
@@ -683,13 +681,12 @@ export default function Index({ initialProfile }: IndexProps) {
               <div className="bg-white/20 backdrop-blur-sm rounded-full p-3">
                 <BookOpen className="w-8 h-8 text-white" />
               </div>
-              <WordyOwlMascot />
             </div>
             <h1 className="text-2xl md:text-3xl font-bold mb-1">
               🌟 Wordy's Adventure!
             </h1>
             <p className="text-lg font-semibold text-educational-yellow-light mb-2">
-              WordWise with Wordy! 🦉
+Fun vocabulary learning for kids! 📚
             </p>
             <p className="text-sm md:text-base mb-3 opacity-90">
               Welcome to your vocabulary adventure! Ready for some learning fun?
