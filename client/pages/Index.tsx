@@ -834,7 +834,7 @@ export default function Index({ initialProfile }: IndexProps) {
         {backgroundAnimationsEnabled && (
           <>
             <div className="hidden md:block absolute top-10 left-10 text-3xl animate-bounce">
-              ���
+              🌟
             </div>
             <div className="hidden md:block absolute top-20 right-20 text-2xl animate-pulse">
               📚
