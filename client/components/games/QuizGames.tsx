@@ -229,8 +229,8 @@ export function QuizGames({
         ))}
       </div>
 
-      {/* Recent Scores Section */}
-      <Card className="bg-gradient-to-r from-educational-blue/10 to-educational-purple/10">
+      {/* Recent Scores Section - Hidden */}
+      <Card className="bg-gradient-to-r from-educational-blue/10 to-educational-purple/10 hidden">
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <Trophy className="w-5 h-5 text-educational-orange" />
