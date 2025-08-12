@@ -93,8 +93,8 @@ export function VowelRescue({
       // Show immediate feedback for wrong vowel
       setAttempts(attempts + 1);
       setShowFeedback(true);
-      // Play error sound for wrong vowel
-      playSoundIfEnabled.error();
+      // Play encouraging speech for wrong vowel
+      audioService.playEncouragementSound();
 
       setTimeout(() => {
         // Clear the wrong vowel and allow trying again
@@ -147,8 +147,8 @@ export function VowelRescue({
         nextQuestion();
       }, 2000);
     } else {
-      // Play error sound for wrong vowel
-      playSoundIfEnabled.error();
+      // Play encouraging speech for wrong vowel
+      audioService.playEncouragementSound();
     }
   };
 
