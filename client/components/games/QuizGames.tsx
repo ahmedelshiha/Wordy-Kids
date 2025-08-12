@@ -239,25 +239,41 @@ export function QuizGames({
         </CardHeader>
         <CardContent>
           <div className="space-y-3">
-            {quizTypes.filter(quiz => quiz.id === 'picture').map((quiz, index) => {
-              const scoreData = { score: "6/8", percentage: "75%", timeAgo: "Yesterday", color: "text-educational-orange" };
+            {quizTypes
+              .filter((quiz) => quiz.id === "picture")
+              .map((quiz, index) => {
+                const scoreData = {
+                  score: "6/8",
+                  percentage: "75%",
+                  timeAgo: "Yesterday",
+                  color: "text-educational-orange",
+                };
 
-              return (
-                <div key={quiz.id} className="flex justify-between items-center p-3 bg-white rounded-lg">
-                  <div className="flex items-center gap-3">
-                    <span className="text-2xl">{quiz.icon}</span>
-                    <div>
-                      <div className="font-semibold">{quiz.title}</div>
-                      <div className="text-sm text-gray-600">{scoreData.timeAgo}</div>
+                return (
+                  <div
+                    key={quiz.id}
+                    className="flex justify-between items-center p-3 bg-white rounded-lg"
+                  >
+                    <div className="flex items-center gap-3">
+                      <span className="text-2xl">{quiz.icon}</span>
+                      <div>
+                        <div className="font-semibold">{quiz.title}</div>
+                        <div className="text-sm text-gray-600">
+                          {scoreData.timeAgo}
+                        </div>
+                      </div>
+                    </div>
+                    <div className="text-right">
+                      <div className={`font-bold ${scoreData.color}`}>
+                        {scoreData.score}
+                      </div>
+                      <div className="text-sm text-gray-600">
+                        {scoreData.percentage}
+                      </div>
                     </div>
                   </div>
-                  <div className="text-right">
-                    <div className={`font-bold ${scoreData.color}`}>{scoreData.score}</div>
-                    <div className="text-sm text-gray-600">{scoreData.percentage}</div>
-                  </div>
-                </div>
-              );
-            })}
+                );
+              })}
           </div>
         </CardContent>
       </Card>
