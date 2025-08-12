@@ -637,6 +637,18 @@ export const WordCard: React.FC<WordCardProps> = ({
           )}
         </CardContent>
       </Card>
+
+      {/* Enhanced Achievement Popup for Word Mastery */}
+      {wordAchievements.length > 0 && (
+        <EnhancedAchievementPopup
+          achievements={wordAchievements}
+          onClose={() => setWordAchievements([])}
+          onAchievementClaim={(achievement) => {
+            console.log('Word mastery achievement claimed:', achievement);
+            // Could add additional reward logic here
+          }}
+        />
+      )}
     </div>
   );
 };
