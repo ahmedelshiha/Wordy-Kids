@@ -21,6 +21,7 @@ import {
   getSystematicTimedVowelQuestions,
 } from "@/lib/vowelQuizGeneration";
 import { AchievementTracker } from "@/lib/achievementTracker";
+import { audioService } from "@/lib/audioService";
 import { EnhancedAchievementPopup } from "@/components/EnhancedAchievementPopup";
 import { SettingsPanel } from "@/components/SettingsPanel";
 import { FloatingBubbles } from "@/components/FloatingBubbles";
