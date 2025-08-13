@@ -156,8 +156,7 @@ export function InteractiveDashboardWordCard({
           stage: dashboardSession.sessionInfo.progressionStage,
           difficulty: dashboardSession.sessionInfo.difficulty,
           categories: dashboardSession.sessionInfo.categoriesUsed,
-          words: sessionWordSet.length,
-          progression: progInfo
+          words: sessionWordSet.length
         });
       } else {
         console.log(`Standard session started with ${sessionWordSet.length} words`);
