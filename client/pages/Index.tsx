@@ -111,7 +111,7 @@ export default function Index({ initialProfile }: IndexProps) {
   const [showSettings, setShowSettings] = useState(false);
   const [showCelebration, setShowCelebration] = useState(false);
   const [celebrationEffect, setCelebrationEffect] = useState(false);
-  const [userRole, setUserRole] = useState<"child" | "parent">("parent");
+  const [userRole, setUserRole] = useState<"child" | "parent">("child");
   const [showWordCreator, setShowWordCreator] = useState(false);
   const [customWords, setCustomWords] = useState<any[]>([]);
   const [backgroundAnimationsEnabled, setBackgroundAnimationsEnabled] =
