@@ -239,6 +239,11 @@ export default function LoginForm() {
   };
 
   const handleBackToMain = () => {
+    // Clear any form errors and validation state
+    setErrors({});
+    setMessage(null);
+    setTouched({ email: false, password: false });
+    setValidationState({ email: "neutral", password: "neutral" });
     navigate("/app");
   };
 
