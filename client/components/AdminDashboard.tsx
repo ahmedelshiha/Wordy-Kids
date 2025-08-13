@@ -622,6 +622,25 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onNavigateBack }) => {
         </CardContent>
       </Card>
 
+      {/* Word Creation Hub */}
+      <CreateWordQuickActions
+        onCreateWithWizard={() => {
+          setCreateMethod("wizard");
+          setShowCreateWizard(true);
+        }}
+        onQuickCreate={() => {
+          setWordEditorMode("create");
+          setEditingWord(null);
+          setShowWordEditor(true);
+        }}
+        onBulkImport={() => setShowBulkImport(true)}
+        recentWordsCount={words.filter(w =>
+          (Date.now() - w.submittedAt.getTime()) < (7 * 24 * 60 * 60 * 1000)
+        ).length}
+        totalWords={words.length}
+        qualityScore={Math.round((words.filter(w => w.status === 'approved').length / Math.max(words.length, 1)) * 100)}
+      />
+
       {/* Recent Activity */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <Card>
