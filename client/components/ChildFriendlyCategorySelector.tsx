@@ -791,9 +791,49 @@ export function ChildFriendlyCategorySelector({
           <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full animate-shimmer"></div>
         </Button>
 
-        <p className="text-sm text-slate-500 mt-4 animate-pulse">
+        <p className="text-xs md:text-sm text-slate-500 mt-4 animate-pulse">
           ✨ Choose a category above to begin your vocabulary journey! ✨
         </p>
+      </div>
+
+      {/* Mobile Floating Action Button */}
+      <div className="md:hidden fixed bottom-20 right-4 z-50">
+        {selectedCategory !== "all" && (
+          <div className="flex flex-col gap-2">
+            <Button
+              onClick={() => {
+                const selectedCat = categories.find(c => c.id === selectedCategory);
+                if (selectedCat) {
+                  audioService.playCheerSound();
+                }
+              }}
+              className="w-14 h-14 rounded-full bg-gradient-to-r from-educational-green to-educational-blue hover:from-educational-green/90 hover:to-educational-blue/90 shadow-lg"
+            >
+              <span className="text-2xl">
+                {categories.find(c => c.id === selectedCategory)?.icon || "🚀"}
+              </span>
+            </Button>
+            <div className="text-xs text-center text-white bg-black/70 rounded px-2 py-1">
+              {categories.find(c => c.id === selectedCategory)?.name}
+            </div>
+          </div>
+        )}
+      </div>
+
+      {/* Mobile Category Filter Modal Trigger */}
+      <div className="md:hidden fixed bottom-32 left-4 z-50">
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={() => {
+            // Could trigger a modal with category filters
+            const allButton = document.querySelector('[data-category="all"]') as HTMLElement;
+            allButton?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }}
+          className="w-12 h-12 rounded-full bg-white/90 backdrop-blur-sm shadow-lg border-2 border-educational-blue/20 hover:bg-educational-blue/10"
+        >
+          <span className="text-lg">🎯</span>
+        </Button>
       </div>
     </div>
   );
