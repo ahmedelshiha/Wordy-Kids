@@ -1447,19 +1447,21 @@ export default function Index({ initialProfile }: IndexProps) {
                                                 }
                                               }
                                             }}
-                                            variant="outline"
-                                            className="flex-1 bg-red-50 hover:bg-red-100 border-red-200 hover:border-red-300 text-red-700 hover:text-red-800 transition-all duration-300 transform hover:scale-105 py-4 px-6"
+                                            className="flex-1 bg-gradient-to-r from-red-400 to-pink-500 hover:from-red-500 hover:to-pink-600 text-white font-bold border-0 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 active:scale-95 py-4 px-6 min-h-[60px] relative overflow-hidden"
                                             disabled={isLoadingProgress}
                                           >
-                                            <span className="text-xl mr-2">
-                                              ❌
-                                            </span>
-                                            <div className="text-center">
-                                              <div className="font-bold text-lg">
-                                                I Forgot
-                                              </div>
-                                              <div className="text-xs opacity-75">
-                                                Need practice
+                                            <div className="absolute inset-0 bg-white/20 rounded-xl opacity-0 hover:opacity-100 transition-opacity duration-300"></div>
+                                            <div className="relative z-10 flex items-center justify-center">
+                                              <span className="text-2xl mr-2 animate-wiggle">
+                                                😔
+                                              </span>
+                                              <div className="text-center">
+                                                <div className="font-bold text-lg">
+                                                  I Forgot
+                                                </div>
+                                                <div className="text-xs opacity-90">
+                                                  Need practice! 💪
+                                                </div>
                                               </div>
                                             </div>
                                           </Button>
