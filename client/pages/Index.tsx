@@ -1287,10 +1287,14 @@ export default function Index({ initialProfile }: IndexProps) {
                               {/* Title and Description */}
                               <div className="text-left flex-1 min-w-0">
                                 <h2 className="text-base sm:text-lg md:text-xl font-bold text-slate-800 truncate">
-                                  {selectedCategory === "all" ? "All Words" : `${selectedCategory.charAt(0).toUpperCase() + selectedCategory.slice(1)} Words`}
+                                  {selectedCategory === "all"
+                                    ? "All Words"
+                                    : `${selectedCategory.charAt(0).toUpperCase() + selectedCategory.slice(1)} Words`}
                                 </h2>
                                 <p className="text-xs md:text-sm text-slate-600">
-                                  {selectedCategory === "all" ? "Learn vocabulary from all categories!" : `Learn ${selectedCategory} vocabulary!`}
+                                  {selectedCategory === "all"
+                                    ? "Learn vocabulary from all categories!"
+                                    : `Learn ${selectedCategory} vocabulary!`}
                                 </p>
                               </div>
 
@@ -1305,8 +1309,12 @@ export default function Index({ initialProfile }: IndexProps) {
                                   className="flex items-center gap-1 text-xs px-2 py-1 h-7 rounded-md"
                                 >
                                   <span className="text-sm">←</span>
-                                  <span className="hidden sm:inline">Back to Library</span>
-                                  <span className="sm:hidden">Back to Library</span>
+                                  <span className="hidden sm:inline">
+                                    Back to Library
+                                  </span>
+                                  <span className="sm:hidden">
+                                    Back to Library
+                                  </span>
                                 </Button>
                               </div>
                             </div>
@@ -1326,9 +1334,12 @@ export default function Index({ initialProfile }: IndexProps) {
                                 <>
                                   {displayWords.length > 0 && (
                                     <>
-                                      <div className={`max-w-sm md:max-w-md mx-auto px-2 md:px-0 relative ${
-                                        celebrationEffect && "animate-pulse shadow-2xl"
-                                      }`}>
+                                      <div
+                                        className={`max-w-sm md:max-w-md mx-auto px-2 md:px-0 relative ${
+                                          celebrationEffect &&
+                                          "animate-pulse shadow-2xl"
+                                        }`}
+                                      >
                                         {/* Celebration Sparkles */}
                                         {celebrationEffect && (
                                           <div className="absolute inset-0 bg-gradient-to-r from-yellow-400/20 to-pink-400/20 animate-pulse z-20 rounded-xl">

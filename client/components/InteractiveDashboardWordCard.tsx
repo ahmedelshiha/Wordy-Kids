@@ -865,8 +865,12 @@ export function InteractiveDashboardWordCard({
                   <div className="relative z-10 flex items-center justify-center">
                     <span className="text-lg mr-1 animate-wiggle">😔</span>
                     <div className="text-center">
-                      <div className="font-bold text-xs md:text-sm">I Forgot</div>
-                      <div className="text-xs opacity-90 mt-0.5">Need practice! 💪</div>
+                      <div className="font-bold text-xs md:text-sm">
+                        I Forgot
+                      </div>
+                      <div className="text-xs opacity-90 mt-0.5">
+                        Need practice! 💪
+                      </div>
                     </div>
                   </div>
                 </Button>
@@ -880,8 +884,12 @@ export function InteractiveDashboardWordCard({
                   <div className="relative z-10 flex items-center justify-center">
                     <span className="text-lg mr-1 animate-bounce">😊</span>
                     <div className="text-center">
-                      <div className="font-bold text-xs md:text-sm">I Remember</div>
-                      <div className="text-xs opacity-90 mt-0.5">Awesome! ⭐</div>
+                      <div className="font-bold text-xs md:text-sm">
+                        I Remember
+                      </div>
+                      <div className="text-xs opacity-90 mt-0.5">
+                        Awesome! ⭐
+                      </div>
                     </div>
                   </div>
                 </Button>
