@@ -21,6 +21,7 @@ import { cn } from "@/lib/utils";
 import { audioService } from "@/lib/audioService";
 import { AchievementTracker } from "@/lib/achievementTracker";
 import { EnhancedAchievementPopup } from "@/components/EnhancedAchievementPopup";
+import { DashboardWordGenerator, DashboardWordSession, UserProgress } from "@/lib/dashboardWordGenerator";
 
 interface Word {
   id: number;
