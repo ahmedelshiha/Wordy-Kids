@@ -23,6 +23,7 @@ import {
   Globe,
   Heart,
   ThumbsUp,
+  Trophy,
 } from "lucide-react";
 
 interface AdminWord {
