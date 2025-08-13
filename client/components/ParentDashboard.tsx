@@ -732,29 +732,29 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
                       </div>
                     </div>
                     <div className="text-right">
-                      <Badge variant="outline" className="mb-1">
+                      <Badge variant="outline" className="mb-1 text-xs px-1">
                         {getTimeAgo(child.lastActive)}
                       </Badge>
-                      <p className="text-xs text-slate-500">Last active</p>
+                      <p className="text-xs text-slate-500 hidden md:block">Last active</p>
+                      <p className="text-xs text-slate-500 md:hidden">Last</p>
                       {activeGoals.length > 0 && (
-                        <Badge className="bg-educational-purple text-white text-xs mt-1">
-                          {activeGoals.length} active goal
-                          {activeGoals.length !== 1 ? "s" : ""}
+                        <Badge className="bg-educational-purple text-white text-xs mt-1 px-1">
+                          {activeGoals.length} goal{activeGoals.length !== 1 ? "s" : ""}
                         </Badge>
                       )}
                     </div>
                   </div>
                 </CardHeader>
-                <CardContent className="space-y-4">
-                  {/* Weekly Goal Progress */}
+                <CardContent className="space-y-3 md:space-y-4 px-3 md:px-6">
+                  {/* Weekly Goal Progress - Mobile Optimized */}
                   <div>
-                    <div className="flex justify-between text-sm mb-2">
+                    <div className="flex justify-between text-xs md:text-sm mb-2">
                       <span>Weekly Goal</span>
                       <span>
                         {child.weeklyProgress}/{child.weeklyGoal} words
                       </span>
                     </div>
-                    <Progress value={progressPercentage} className="h-2" />
+                    <Progress value={progressPercentage} className="h-1.5 md:h-2" />
                     <p className="text-xs text-slate-500 mt-1">
                       {Math.round(progressPercentage)}% complete
                     </p>
