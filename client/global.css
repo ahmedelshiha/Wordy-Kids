@@ -154,6 +154,20 @@
     body {
       overflow-x: hidden;
     }
+
+    /* Improved text rendering on mobile */
+    body {
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      text-rendering: optimizeLegibility;
+    }
+
+    /* Better focus states for mobile */
+    button:focus-visible,
+    [role="button"]:focus-visible {
+      outline: 2px solid #3b82f6;
+      outline-offset: 2px;
+    }
   }
 
   /* Touch-friendly scrollbars */
@@ -176,7 +190,7 @@
   }
 }
 
-/* Custom animations */
+/* Performance-optimized animations for mobile */
 @keyframes float {
   0% {
     transform: translateY(100vh) rotate(0deg);
@@ -380,4 +394,63 @@
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 3;
+}
+
+/* Mobile-specific utilities */
+.safe-area-padding-bottom {
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+.safe-area-padding-top {
+  padding-top: env(safe-area-inset-top);
+}
+
+.safe-area-margin-bottom {
+  margin-bottom: env(safe-area-inset-bottom);
+}
+
+/* Touch-optimized animations */
+@media (max-width: 768px) {
+  .animate-gentle-float,
+  .animate-kid-float,
+  .animate-kid-float-delayed {
+    animation-duration: 4s;
+  }
+
+  .animate-sparkle {
+    animation-duration: 3s;
+  }
+
+  .animate-wiggle {
+    animation-duration: 3s;
+  }
+}
+
+/* Reduce motion for better performance on mobile */
+@media (prefers-reduced-motion: reduce) {
+  .animate-gentle-float,
+  .animate-kid-float,
+  .animate-kid-float-delayed,
+  .animate-sparkle,
+  .animate-wiggle,
+  .animate-bounce,
+  .animate-pulse {
+    animation: none;
+  }
+}
+
+/* Mobile-optimized gradients */
+.mobile-gradient-optimized {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+/* Better scroll performance on mobile */
+@media (max-width: 768px) {
+  * {
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .scroll-smooth {
+    scroll-behavior: smooth;
+  }
 }
