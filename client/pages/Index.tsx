@@ -179,6 +179,29 @@ export default function Index({ initialProfile }: IndexProps) {
     initializeWords();
   }, [selectedCategory]); // Only re-initialize when category changes to prevent constant regeneration
 
+  // Initialize dashboard words for systematic learning (independent of category selection)
+  useEffect(() => {
+    const initializeDashboardWords = () => {
+      if (currentDashboardWords.length === 0) {
+        generateDashboardWords();
+      }
+    };
+
+    // Initialize dashboard words on component mount
+    initializeDashboardWords();
+  }, []); // Run only once on mount
+
+  // Regenerate dashboard words when user completes enough words to progress
+  useEffect(() => {
+    const wordsCompleted = rememberedWords.size;
+    const shouldRegenerate = wordsCompleted > 0 && wordsCompleted % 10 === 0; // Regenerate every 10 completed words
+
+    if (shouldRegenerate && dashboardSession) {
+      console.log(`Regenerating dashboard words after ${wordsCompleted} completed words`);
+      generateDashboardWords();
+    }
+  }, [rememberedWords.size]); // Trigger when remembered words count changes
+
   // Debug logging for state changes
   useEffect(() => {
     console.log("State Update:", {
