@@ -363,6 +363,48 @@ const EnhancedUserManagement: React.FC<EnhancedUserManagementProps> = ({
   const [editingUser, setEditingUser] = useState<AdminUser | null>(null);
   const [userDetailView, setUserDetailView] = useState<AdminUser | null>(null);
 
+  // Add User form states
+  const [addUserStep, setAddUserStep] = useState(1);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [formErrors, setFormErrors] = useState<Record<string, string>>({});
+
+  // Add User form data
+  const [newUserData, setNewUserData] = useState({
+    // Basic Information
+    name: "",
+    email: "",
+    role: "parent" as AdminUser["role"],
+    status: "active" as AdminUser["status"],
+
+    // Account Details
+    subscriptionType: "free" as AdminUser["subscriptionType"],
+    parentId: "",
+
+    // Contact & Location
+    location: {
+      country: "",
+      state: "",
+      city: "",
+    },
+
+    // Preferences
+    preferences: {
+      notifications: true,
+      emailUpdates: true,
+      language: "en",
+      timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+    },
+
+    // Additional Info
+    tags: [] as string[],
+    notes: "",
+
+    // Password (for initial setup)
+    password: "",
+    confirmPassword: "",
+    sendWelcomeEmail: true,
+  });
+
   const bulkActions: BulkAction[] = [
     { type: "activate", label: "Activate Users", icon: CheckCircle, variant: "default" },
     { type: "suspend", label: "Suspend Users", icon: Ban, variant: "destructive" },
