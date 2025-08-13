@@ -1463,30 +1463,59 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onNavigateBack }) => {
         </div>
       </div>
 
-      {/* Navigation Tabs */}
+      {/* Enhanced Mobile Navigation Tabs */}
       <Tabs value={activeTab} onValueChange={setActiveTab}>
-        <TabsList className="grid w-full grid-cols-5">
-          <TabsTrigger value="overview" className="flex items-center gap-2">
-            <BarChart3 className="w-4 h-4" />
-            Overview
-          </TabsTrigger>
-          <TabsTrigger value="content" className="flex items-center gap-2">
-            <BookOpen className="w-4 h-4" />
-            Content
-          </TabsTrigger>
-          <TabsTrigger value="users" className="flex items-center gap-2">
-            <Users className="w-4 h-4" />
-            Users
-          </TabsTrigger>
-          <TabsTrigger value="analytics" className="flex items-center gap-2">
-            <TrendingUp className="w-4 h-4" />
-            Analytics
-          </TabsTrigger>
-          <TabsTrigger value="tickets" className="flex items-center gap-2">
-            <MessageSquare className="w-4 h-4" />
-            Support
-          </TabsTrigger>
-        </TabsList>
+        {/* Mobile Tab Navigation */}
+        <div className="md:hidden mb-4">
+          <TabsList className="grid w-full grid-cols-5 h-12 bg-slate-100">
+            <TabsTrigger value="overview" className="flex flex-col items-center gap-0.5 px-1 py-2 data-[state=active]:bg-white">
+              <BarChart3 className="w-4 h-4" />
+              <span className="text-xs">Overview</span>
+            </TabsTrigger>
+            <TabsTrigger value="content" className="flex flex-col items-center gap-0.5 px-1 py-2 data-[state=active]:bg-white">
+              <BookOpen className="w-4 h-4" />
+              <span className="text-xs">Content</span>
+            </TabsTrigger>
+            <TabsTrigger value="users" className="flex flex-col items-center gap-0.5 px-1 py-2 data-[state=active]:bg-white">
+              <Users className="w-4 h-4" />
+              <span className="text-xs">Users</span>
+            </TabsTrigger>
+            <TabsTrigger value="analytics" className="flex flex-col items-center gap-0.5 px-1 py-2 data-[state=active]:bg-white">
+              <TrendingUp className="w-4 h-4" />
+              <span className="text-xs">Analytics</span>
+            </TabsTrigger>
+            <TabsTrigger value="tickets" className="flex flex-col items-center gap-0.5 px-1 py-2 data-[state=active]:bg-white">
+              <MessageSquare className="w-4 h-4" />
+              <span className="text-xs">Support</span>
+            </TabsTrigger>
+          </TabsList>
+        </div>
+
+        {/* Desktop Tab Navigation */}
+        <div className="hidden md:block">
+          <TabsList className="grid w-full grid-cols-5">
+            <TabsTrigger value="overview" className="flex items-center gap-2">
+              <BarChart3 className="w-4 h-4" />
+              Overview
+            </TabsTrigger>
+            <TabsTrigger value="content" className="flex items-center gap-2">
+              <BookOpen className="w-4 h-4" />
+              Content
+            </TabsTrigger>
+            <TabsTrigger value="users" className="flex items-center gap-2">
+              <Users className="w-4 h-4" />
+              Users
+            </TabsTrigger>
+            <TabsTrigger value="analytics" className="flex items-center gap-2">
+              <TrendingUp className="w-4 h-4" />
+              Analytics
+            </TabsTrigger>
+            <TabsTrigger value="tickets" className="flex items-center gap-2">
+              <MessageSquare className="w-4 h-4" />
+              Support
+            </TabsTrigger>
+          </TabsList>
+        </div>
 
         <TabsContent value="overview">{renderOverview()}</TabsContent>
         <TabsContent value="content">{renderContentManagement()}</TabsContent>
