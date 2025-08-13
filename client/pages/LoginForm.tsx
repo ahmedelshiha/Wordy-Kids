@@ -504,16 +504,18 @@ export default function LoginForm() {
                 )}
               </Button>
 
-              {/* Forgot Password Button */}
-              <Button
-                type="button"
-                variant="ghost"
-                onClick={handleForgotPassword}
-                className="w-full text-sm text-gray-600 hover:text-gray-800 hover:bg-gray-50 transition-colors"
-                disabled={isLoading}
-              >
-                Forgot your password?
-              </Button>
+              {/* Forgot Password Link */}
+              <div className="text-center">
+                <Button
+                  type="button"
+                  variant="link"
+                  onClick={handleForgotPassword}
+                  className="p-0 h-auto text-xs text-gray-500 hover:text-gray-700 underline-offset-2"
+                  disabled={isLoading}
+                >
+                  Forgot password?
+                </Button>
+              </div>
 
               {/* Sign Up Button */}
               <Button
