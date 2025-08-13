@@ -391,6 +391,8 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onNavigateBack }) => {
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc");
   const [selectedWords, setSelectedWords] = useState<string[]>([]);
   const [viewMode, setViewMode] = useState<"grid" | "list">("list");
+  const [editingCategory, setEditingCategory] = useState<any>(null);
+  const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
 
   // Sample analytics data
   // Enhanced analytics data with real word database integration
