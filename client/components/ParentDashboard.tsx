@@ -1021,17 +1021,18 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
   );
 
   const renderGoalsManagement = () => (
-    <div className="space-y-6">
-      <div className="flex items-center justify-between">
-        <div>
-          <h2 className="text-2xl font-bold">Goal Management</h2>
-          <p className="text-slate-600">
+    <div className="space-y-4 md:space-y-6 p-2 md:p-0">
+      {/* Mobile-optimized header */}
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-3">
+        <div className="text-center md:text-left">
+          <h2 className="text-xl md:text-2xl font-bold text-slate-800">Goal Management</h2>
+          <p className="text-sm md:text-base text-slate-600">
             Set and track learning objectives for your children
           </p>
         </div>
         <Button
           onClick={() => setShowAddGoalDialog(true)}
-          className="bg-educational-blue"
+          className="bg-educational-blue hover:bg-educational-blue/90 w-full md:w-auto text-sm md:text-base py-3 md:py-2"
           disabled={children.length === 0}
         >
           <Plus className="w-4 h-4 mr-2" />
@@ -1039,104 +1040,232 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
         </Button>
       </div>
 
-      {/* Goals by Child */}
+      {/* No goals state - enhanced for mobile */}
       {children.length === 0 ? (
-        <Card className="text-center py-8">
-          <CardContent>
-            <div className="text-4xl mb-4">🎯</div>
-            <h3 className="text-lg font-semibold mb-2">No Goals Yet</h3>
-            <p className="text-gray-600">
-              Add children first to create learning goals
+        <Card className="text-center py-12 mx-auto max-w-md">
+          <CardContent className="space-y-4">
+            <div className="text-6xl animate-gentle-bounce">🎯</div>
+            <h3 className="text-lg md:text-xl font-semibold text-slate-700">No Goals Yet</h3>
+            <p className="text-slate-600 text-sm md:text-base leading-relaxed">
+              Add children first to create personalized learning goals
             </p>
+            <div className="pt-4">
+              <div className="inline-flex items-center gap-2 px-4 py-2 bg-educational-blue/10 rounded-full text-educational-blue text-xs font-medium">
+                <div className="w-2 h-2 bg-educational-blue rounded-full animate-pulse"></div>
+                Get started by adding a child profile
+              </div>
+            </div>
           </CardContent>
         </Card>
       ) : (
-        children.map((child) => {
-          const childGoals = getChildGoals(child.id);
-          if (childGoals.length === 0) return null;
-
-          return (
-            <Card key={child.id}>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-3">
-                  <span className="text-2xl">{child.avatar}</span>
-                  {child.name}'s Goals
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="grid gap-4">
-                  {childGoals.map((goal) => {
-                    const progressPercentage = Math.min(
-                      (goal.currentValue / goal.targetValue) * 100,
-                      100,
-                    );
-                    const isCompleted = goal.status === "completed";
-                    const isOverdue =
-                      new Date() > goal.deadline && !isCompleted;
-
-                    return (
-                      <div
-                        key={goal.id}
-                        className={`p-4 rounded-lg border ${
-                          isCompleted
-                            ? "bg-green-50 border-green-200"
-                            : isOverdue
-                              ? "bg-red-50 border-red-200"
-                              : "bg-slate-50 border-slate-200"
-                        }`}
-                      >
-                        <div className="flex items-center justify-between mb-3">
-                          <div>
-                            <h4 className="font-semibold">{goal.title}</h4>
-                            <p className="text-sm text-slate-600">
-                              {goal.description}
-                            </p>
-                          </div>
-                          <div className="text-right">
-                            <Badge
-                              className={
-                                isCompleted
-                                  ? "bg-green-500"
-                                  : isOverdue
-                                    ? "bg-red-500"
-                                    : "bg-educational-blue"
-                              }
-                            >
-                              {goal.status}
-                            </Badge>
-                            <p className="text-xs text-slate-500 mt-1">
-                              Due: {goal.deadline.toLocaleDateString()}
-                            </p>
-                          </div>
-                        </div>
-
-                        <div className="mb-3">
-                          <div className="flex justify-between text-sm mb-1">
-                            <span>Progress</span>
-                            <span>
-                              {goal.currentValue}/{goal.targetValue}
-                            </span>
-                          </div>
-                          <Progress
-                            value={progressPercentage}
-                            className="h-2"
-                          />
-                        </div>
-
-                        {goal.reward && (
-                          <div className="flex items-center gap-2 text-sm text-slate-600">
-                            <Star className="w-4 h-4 text-yellow-500" />
-                            Reward: {goal.reward}
-                          </div>
-                        )}
-                      </div>
-                    );
-                  })}
+        <>
+          {/* Goals summary card for mobile */}
+          <div className="md:hidden">
+            <Card className="bg-gradient-to-r from-educational-blue/10 to-educational-purple/10 border-educational-blue/20">
+              <CardContent className="p-4">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <h3 className="font-semibold text-slate-800">Active Goals</h3>
+                    <p className="text-xs text-slate-600">Across all children</p>
+                  </div>
+                  <div className="text-right">
+                    <div className="text-2xl font-bold text-educational-blue">
+                      {children.reduce((total, child) => total + getChildGoals(child.id).length, 0)}
+                    </div>
+                    <p className="text-xs text-slate-600">Total goals</p>
+                  </div>
                 </div>
               </CardContent>
             </Card>
-          );
-        })
+          </div>
+
+          {/* Goals by Child - Mobile optimized */}
+          <div className="space-y-4">
+            {children.map((child) => {
+              const childGoals = getChildGoals(child.id);
+              const activeGoals = childGoals.filter(g => g.status === 'active').length;
+              const completedGoals = childGoals.filter(g => g.status === 'completed').length;
+
+              return (
+                <Card key={child.id} className="overflow-hidden">
+                  <CardHeader className="pb-3 bg-gradient-to-r from-slate-50 to-slate-100">
+                    <div className="flex items-center justify-between">
+                      <CardTitle className="flex items-center gap-3 text-base md:text-lg">
+                        <span className="text-2xl md:text-3xl">{child.avatar}</span>
+                        <div>
+                          <div>{child.name}'s Goals</div>
+                          <p className="text-xs md:text-sm font-normal text-slate-600">
+                            {activeGoals} active • {completedGoals} completed
+                          </p>
+                        </div>
+                      </CardTitle>
+                      {childGoals.length > 0 && (
+                        <div className="text-right">
+                          <div className="text-lg md:text-xl font-bold text-educational-blue">
+                            {Math.round((completedGoals / childGoals.length) * 100)}%
+                          </div>
+                          <p className="text-xs text-slate-500">Complete</p>
+                        </div>
+                      )}
+                    </div>
+                  </CardHeader>
+
+                  {childGoals.length === 0 ? (
+                    <CardContent className="py-8 text-center">
+                      <div className="text-3xl mb-2">📝</div>
+                      <p className="text-slate-600 text-sm">No goals set yet</p>
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        className="mt-3"
+                        onClick={() => setShowAddGoalDialog(true)}
+                      >
+                        Create First Goal
+                      </Button>
+                    </CardContent>
+                  ) : (
+                    <CardContent className="p-3 md:p-6">
+                      <div className="space-y-3 md:space-y-4">
+                        {childGoals.map((goal) => {
+                          const progressPercentage = Math.min(
+                            (goal.currentValue / goal.targetValue) * 100,
+                            100,
+                          );
+                          const isCompleted = goal.status === "completed";
+                          const isOverdue = new Date() > goal.deadline && !isCompleted;
+                          const isNearDeadline = !isCompleted && !isOverdue &&
+                            (goal.deadline.getTime() - new Date().getTime()) / (1000 * 60 * 60 * 24) <= 3;
+
+                          return (
+                            <div
+                              key={goal.id}
+                              className={`p-3 md:p-4 rounded-xl border-2 transition-all duration-200 ${
+                                isCompleted
+                                  ? "bg-gradient-to-r from-green-50 to-emerald-50 border-green-200 shadow-green-100/50"
+                                  : isOverdue
+                                    ? "bg-gradient-to-r from-red-50 to-pink-50 border-red-200 shadow-red-100/50"
+                                    : isNearDeadline
+                                      ? "bg-gradient-to-r from-orange-50 to-yellow-50 border-orange-200 shadow-orange-100/50"
+                                      : "bg-gradient-to-r from-slate-50 to-blue-50 border-slate-200 shadow-slate-100/50"
+                              } shadow-lg`}
+                            >
+                              {/* Mobile-first goal header */}
+                              <div className="flex flex-col md:flex-row md:items-start justify-between gap-2 mb-3">
+                                <div className="flex-1 min-w-0">
+                                  <div className="flex items-start gap-2">
+                                    <div className="flex-1">
+                                      <h4 className="font-semibold text-slate-800 text-sm md:text-base leading-snug">
+                                        {goal.title}
+                                      </h4>
+                                      {goal.description && (
+                                        <p className="text-xs md:text-sm text-slate-600 mt-1 line-clamp-2">
+                                          {goal.description}
+                                        </p>
+                                      )}
+                                    </div>
+                                    {isCompleted && (
+                                      <div className="text-green-500 animate-gentle-bounce">
+                                        <CheckCircle className="w-5 h-5" />
+                                      </div>
+                                    )}
+                                  </div>
+                                </div>
+
+                                <div className="flex items-center gap-2 md:flex-col md:items-end">
+                                  <Badge
+                                    className={`text-xs px-2 py-1 ${
+                                      isCompleted
+                                        ? "bg-green-500 hover:bg-green-600 text-white"
+                                        : isOverdue
+                                          ? "bg-red-500 hover:bg-red-600 text-white"
+                                          : isNearDeadline
+                                            ? "bg-orange-500 hover:bg-orange-600 text-white"
+                                            : "bg-educational-blue hover:bg-educational-blue/90 text-white"
+                                    }`}
+                                  >
+                                    {isCompleted ? "Completed" : isOverdue ? "Overdue" : isNearDeadline ? "Due Soon" : "Active"}
+                                  </Badge>
+                                  <p className="text-xs text-slate-500 whitespace-nowrap">
+                                    Due: {goal.deadline.toLocaleDateString()}
+                                  </p>
+                                </div>
+                              </div>
+
+                              {/* Enhanced progress section for mobile */}
+                              <div className="mb-3">
+                                <div className="flex justify-between items-center text-sm mb-2">
+                                  <span className="font-medium text-slate-700">Progress</span>
+                                  <div className="flex items-center gap-2">
+                                    <span className="text-slate-600">
+                                      {goal.currentValue}/{goal.targetValue}
+                                    </span>
+                                    <span className="font-semibold text-educational-blue">
+                                      {Math.round(progressPercentage)}%
+                                    </span>
+                                  </div>
+                                </div>
+                                <Progress
+                                  value={progressPercentage}
+                                  className="h-3 md:h-2 bg-slate-200"
+                                />
+                              </div>
+
+                              {/* Reward section with better mobile styling */}
+                              {goal.reward && (
+                                <div className="flex items-center gap-2 p-2 bg-yellow-50 rounded-lg border border-yellow-200">
+                                  <Star className="w-4 h-4 text-yellow-500 flex-shrink-0" />
+                                  <span className="text-sm text-slate-700 font-medium">
+                                    Reward: {goal.reward}
+                                  </span>
+                                </div>
+                              )}
+
+                              {/* Mobile action buttons */}
+                              <div className="md:hidden mt-3 flex gap-2">
+                                {!isCompleted && (
+                                  <Button
+                                    size="sm"
+                                    variant="outline"
+                                    className="flex-1 text-xs"
+                                    onClick={() => {
+                                      // Update progress logic
+                                    }}
+                                  >
+                                    Update Progress
+                                  </Button>
+                                )}
+                                <Button
+                                  size="sm"
+                                  variant="ghost"
+                                  className="px-3"
+                                >
+                                  <div className="w-4 h-4">⋯</div>
+                                </Button>
+                              </div>
+                            </div>
+                          );
+                        })}
+                      </div>
+                    </CardContent>
+                  )}
+                </Card>
+              );
+            })}
+          </div>
+
+          {/* Quick action buttons for mobile */}
+          <div className="md:hidden fixed bottom-20 right-4 z-40">
+            <div className="flex flex-col gap-2">
+              <Button
+                onClick={() => setShowAddGoalDialog(true)}
+                className="w-14 h-14 rounded-full bg-educational-blue hover:bg-educational-blue/90 shadow-lg"
+                disabled={children.length === 0}
+              >
+                <Plus className="w-6 h-6" />
+              </Button>
+            </div>
+          </div>
+        </>
       )}
     </div>
   );
