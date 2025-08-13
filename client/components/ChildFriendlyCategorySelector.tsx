@@ -445,26 +445,21 @@ export function ChildFriendlyCategorySelector({
       </div>
 
       {/* Header */}
-      <div className="text-center relative">
-        <div className="flex justify-center mb-4">
-          <div className="bg-gradient-to-r from-educational-blue via-educational-purple to-educational-pink p-4 rounded-full animate-pulse">
-            <Sparkles className="w-12 h-12 text-white" />
-          </div>
-        </div>
-        <h2 className="text-2xl md:text-4xl font-bold text-slate-800 mb-4 bg-gradient-to-r from-educational-blue to-educational-purple bg-clip-text text-transparent">
+      <div className="text-center relative mt-2 md:mt-4">
+        <h2 className="text-base md:text-2xl font-bold text-slate-800 mb-1 md:mb-2 bg-gradient-to-r from-educational-blue to-educational-purple bg-clip-text text-transparent">
           🌟 Choose Your Learning Adventure! 🌟
         </h2>
-        <p className="text-base md:text-lg text-slate-600 max-w-2xl mx-auto mb-4">
+        <p className="text-sm md:text-lg text-slate-600 max-w-2xl mx-auto mb-1 md:mb-2">
           {getPersonalizedMessage()}
         </p>
-        <div className="flex justify-center gap-2 mb-6 flex-wrap">
-          <Badge className="bg-educational-green text-white px-3 py-1 text-sm animate-pulse">
+        <div className="flex justify-center gap-1 md:gap-2 mb-2 md:mb-4 flex-wrap">
+          <Badge className="bg-educational-green text-white px-2 md:px-3 py-0.5 md:py-1 text-xs md:text-sm animate-pulse">
             📚 {wordsDatabase.length} Amazing Words
           </Badge>
-          <Badge className="bg-educational-blue text-white px-3 py-1 text-sm animate-pulse delay-100">
+          <Badge className="bg-educational-blue text-white px-2 md:px-3 py-0.5 md:py-1 text-xs md:text-sm animate-pulse delay-100">
             🎯 {categories.length - 1} Fun Categories
           </Badge>
-          <Badge className="bg-educational-purple text-white px-3 py-1 text-sm animate-pulse delay-200">
+          <Badge className="bg-educational-purple text-white px-2 md:px-3 py-0.5 md:py-1 text-xs md:text-sm animate-pulse delay-200">
             ⭐ 3 Difficulty Levels
           </Badge>
         </div>

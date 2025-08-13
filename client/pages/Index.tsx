@@ -111,7 +111,7 @@ export default function Index({ initialProfile }: IndexProps) {
   const [showSettings, setShowSettings] = useState(false);
   const [showCelebration, setShowCelebration] = useState(false);
   const [celebrationEffect, setCelebrationEffect] = useState(false);
-  const [userRole, setUserRole] = useState<"child" | "parent">("parent");
+  const [userRole, setUserRole] = useState<"child" | "parent">("child");
   const [showWordCreator, setShowWordCreator] = useState(false);
   const [customWords, setCustomWords] = useState<any[]>([]);
   const [backgroundAnimationsEnabled, setBackgroundAnimationsEnabled] =
@@ -826,7 +826,7 @@ export default function Index({ initialProfile }: IndexProps) {
               </div>
             </div>
             <h1 className="text-2xl md:text-3xl font-bold mb-1">
-              ��� Wordy's Adventure!
+              🦉 Wordy's Adventure!
             </h1>
             <p className="text-lg font-semibold text-educational-yellow-light mb-2">
               Fun vocabulary learning for kids! 📚
