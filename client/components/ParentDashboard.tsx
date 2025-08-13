@@ -397,6 +397,19 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
         if (response.success) {
           setChildrenWordStats(response.childrenStats);
         }
+
+        // Load detailed stats for selected child
+        if (selectedChild) {
+          try {
+            const childStatsResponse = await WordProgressAPI.getChildStats(selectedChild.id);
+            if (childStatsResponse.success) {
+              setPracticeWords(childStatsResponse.strugglingWords || []);
+              setTopWords(childStatsResponse.topWords || []);
+            }
+          } catch (error) {
+            console.error("Failed to load child detailed stats:", error);
+          }
+        }
       } catch (error) {
         console.error("Failed to load children word stats:", error);
       } finally {
