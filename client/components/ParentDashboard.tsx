@@ -1378,12 +1378,12 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
                   </div>
                   <div className="text-sm text-orange-600">Need Practice</div>
                 </div>
-                <div className="bg-purple-50 p-4 rounded-lg text-center">
-                  <Target className="w-8 h-8 text-purple-500 mx-auto mb-2" />
-                  <div className="text-2xl font-bold text-purple-700">
+                <div className="bg-purple-50 p-3 md:p-4 rounded-lg text-center">
+                  <Target className="w-6 h-6 md:w-8 md:h-8 text-purple-500 mx-auto mb-2" />
+                  <div className="text-xl md:text-2xl font-bold text-purple-700">
                     {childrenWordStats[selectedChild.id]?.averageAccuracy || 0}%
                   </div>
-                  <div className="text-sm text-purple-600">Accuracy</div>
+                  <div className="text-xs md:text-sm text-purple-600">Accuracy</div>
                 </div>
               </div>
             </CardContent>
