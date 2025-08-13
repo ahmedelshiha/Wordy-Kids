@@ -156,6 +156,9 @@ export default function Index({ initialProfile }: IndexProps) {
       return currentDashboardWords;
     }
     // Fallback calculation if currentDashboardWords is empty
+    if (!selectedCategory) {
+      return []; // Return empty array if no category selected
+    }
     const categoryWords = getWordsByCategory(selectedCategory);
     return categoryWords.slice(0, 20);
   }, [currentDashboardWords, selectedCategory]);
