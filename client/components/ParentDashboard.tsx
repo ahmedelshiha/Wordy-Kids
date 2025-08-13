@@ -362,18 +362,22 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
     Record<string, ChildWordStats>
   >({});
   const [loadingWordStats, setLoadingWordStats] = useState(false);
-  const [practiceWords, setPracticeWords] = useState<Array<{
-    word: string;
-    category: string;
-    accuracy: number;
-    timesReviewed: number;
-  }>>([]);
-  const [topWords, setTopWords] = useState<Array<{
-    word: string;
-    category: string;
-    accuracy: number;
-    timesReviewed: number;
-  }>>([]);
+  const [practiceWords, setPracticeWords] = useState<
+    Array<{
+      word: string;
+      category: string;
+      accuracy: number;
+      timesReviewed: number;
+    }>
+  >([]);
+  const [topWords, setTopWords] = useState<
+    Array<{
+      word: string;
+      category: string;
+      accuracy: number;
+      timesReviewed: number;
+    }>
+  >([]);
 
   // Save children to localStorage whenever children state changes
   useEffect(() => {
@@ -398,7 +402,9 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
         // Load detailed stats for selected child
         if (selectedChild) {
           try {
-            const childStatsResponse = await WordProgressAPI.getChildStats(selectedChild.id);
+            const childStatsResponse = await WordProgressAPI.getChildStats(
+              selectedChild.id,
+            );
             if (childStatsResponse.success) {
               setPracticeWords(childStatsResponse.strugglingWords || []);
               setTopWords(childStatsResponse.topWords || []);
@@ -439,14 +445,44 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
         console.error("Failed to load selected child stats:", error);
         // Set fallback data for demo
         setPracticeWords([
-          { word: "helicopter", category: "Transportation", accuracy: 45, timesReviewed: 3 },
-          { word: "encyclopedia", category: "Education", accuracy: 30, timesReviewed: 2 },
-          { word: "microscope", category: "Science", accuracy: 55, timesReviewed: 4 },
+          {
+            word: "helicopter",
+            category: "Transportation",
+            accuracy: 45,
+            timesReviewed: 3,
+          },
+          {
+            word: "encyclopedia",
+            category: "Education",
+            accuracy: 30,
+            timesReviewed: 2,
+          },
+          {
+            word: "microscope",
+            category: "Science",
+            accuracy: 55,
+            timesReviewed: 4,
+          },
         ]);
         setTopWords([
-          { word: "rainbow", category: "Nature", accuracy: 95, timesReviewed: 5 },
-          { word: "butterfly", category: "Animals", accuracy: 90, timesReviewed: 3 },
-          { word: "elephant", category: "Animals", accuracy: 85, timesReviewed: 4 },
+          {
+            word: "rainbow",
+            category: "Nature",
+            accuracy: 95,
+            timesReviewed: 5,
+          },
+          {
+            word: "butterfly",
+            category: "Animals",
+            accuracy: 90,
+            timesReviewed: 3,
+          },
+          {
+            word: "elephant",
+            category: "Animals",
+            accuracy: 85,
+            timesReviewed: 4,
+          },
         ]);
       }
     };
@@ -573,7 +609,9 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
           <Card className="bg-gradient-to-r from-educational-blue/10 to-educational-purple/10">
             <CardContent className="p-3 md:p-4">
               <div className="space-y-2">
-                <h3 className="font-semibold text-base md:text-lg">Good Morning! 👋</h3>
+                <h3 className="font-semibold text-base md:text-lg">
+                  Good Morning! 👋
+                </h3>
                 <p className="text-xs md:text-sm text-slate-600">
                   {children.length} active learner
                   {children.length !== 1 ? "s" : ""} •{unreadNotifications} new
@@ -615,7 +653,9 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
           <CardContent className="p-3 md:p-4">
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 md:gap-0">
               <div>
-                <h3 className="font-semibold text-base md:text-lg">Good Morning! 👋</h3>
+                <h3 className="font-semibold text-base md:text-lg">
+                  Good Morning! 👋
+                </h3>
                 <p className="text-xs md:text-sm text-slate-600">
                   {children.length} active learner
                   {children.length !== 1 ? "s" : ""} •{unreadNotifications} new
@@ -659,7 +699,9 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
               <div className="text-xl md:text-2xl font-bold text-educational-blue">
                 <AnimatedCounter value={children.length} />
               </div>
-              <p className="text-xs md:text-sm text-slate-600">Active Learners</p>
+              <p className="text-xs md:text-sm text-slate-600">
+                Active Learners
+              </p>
             </div>
             <div className="text-center p-2 md:p-4 bg-educational-green/5 rounded-lg">
               <div className="text-xl md:text-2xl font-bold text-educational-green">
@@ -670,7 +712,9 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
                   )}
                 />
               </div>
-              <p className="text-xs md:text-sm text-slate-600">Total Words Learned</p>
+              <p className="text-xs md:text-sm text-slate-600">
+                Total Words Learned
+              </p>
             </div>
             <div className="text-center p-2 md:p-4 bg-educational-orange/5 rounded-lg">
               <div className="text-xl md:text-2xl font-bold text-educational-orange">
@@ -681,7 +725,9 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
                   )}
                 />
               </div>
-              <p className="text-xs md:text-sm text-slate-600">Total Points Earned</p>
+              <p className="text-xs md:text-sm text-slate-600">
+                Total Points Earned
+              </p>
             </div>
             <div className="text-center p-2 md:p-4 bg-educational-purple/5 rounded-lg">
               <div className="text-xl md:text-2xl font-bold text-educational-purple">
@@ -691,7 +737,9 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
                   )}
                 />
               </div>
-              <p className="text-xs md:text-sm text-slate-600">Longest Streak</p>
+              <p className="text-xs md:text-sm text-slate-600">
+                Longest Streak
+              </p>
             </div>
           </div>
         </CardContent>
@@ -751,9 +799,7 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
                 <div className="text-xs text-green-600 hidden md:block">
                   See progress & achievements
                 </div>
-                <div className="text-xs text-green-600 md:hidden">
-                  Progress
-                </div>
+                <div className="text-xs text-green-600 md:hidden">Progress</div>
               </div>
             </Button>
 
@@ -799,7 +845,9 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
                     <div className="flex items-center gap-2 md:gap-3">
                       <div className="text-3xl md:text-4xl">{child.avatar}</div>
                       <div>
-                        <CardTitle className="text-lg md:text-xl">{child.name}</CardTitle>
+                        <CardTitle className="text-lg md:text-xl">
+                          {child.name}
+                        </CardTitle>
                         <p className="text-xs md:text-sm text-slate-600">
                           {child.age} years old • Level {child.level}
                         </p>
@@ -812,11 +860,14 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
                       <Badge variant="outline" className="mb-1 text-xs px-1">
                         {getTimeAgo(child.lastActive)}
                       </Badge>
-                      <p className="text-xs text-slate-500 hidden md:block">Last active</p>
+                      <p className="text-xs text-slate-500 hidden md:block">
+                        Last active
+                      </p>
                       <p className="text-xs text-slate-500 md:hidden">Last</p>
                       {activeGoals.length > 0 && (
                         <Badge className="bg-educational-purple text-white text-xs mt-1 px-1">
-                          {activeGoals.length} goal{activeGoals.length !== 1 ? "s" : ""}
+                          {activeGoals.length} goal
+                          {activeGoals.length !== 1 ? "s" : ""}
                         </Badge>
                       )}
                     </div>
@@ -831,7 +882,10 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
                         {child.weeklyProgress}/{child.weeklyGoal} words
                       </span>
                     </div>
-                    <Progress value={progressPercentage} className="h-1.5 md:h-2" />
+                    <Progress
+                      value={progressPercentage}
+                      className="h-1.5 md:h-2"
+                    />
                     <p className="text-xs text-slate-500 mt-1">
                       {Math.round(progressPercentage)}% complete
                     </p>
@@ -1159,8 +1213,8 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
   );
 
   const renderDetailedAnalytics = () => {
-    console.log('Rendering analytics - selectedChild:', selectedChild);
-    console.log('Children array length:', children.length);
+    console.log("Rendering analytics - selectedChild:", selectedChild);
+    console.log("Children array length:", children.length);
 
     if (!selectedChild) {
       return (
@@ -1174,8 +1228,7 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
               <p className="text-slate-500 mb-6">
                 {children.length === 0
                   ? "Add a child profile first to view learning analytics."
-                  : "Select a child to view their detailed analytics."
-                }
+                  : "Select a child to view their detailed analytics."}
               </p>
               {children.length > 0 && (
                 <div className="space-y-4">
@@ -1215,18 +1268,28 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
       <div className="space-y-4 md:space-y-6">
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 md:gap-0">
           <div>
-            <h2 className="text-xl md:text-2xl font-bold">Learning Analytics</h2>
+            <h2 className="text-xl md:text-2xl font-bold">
+              Learning Analytics
+            </h2>
             <p className="text-slate-600 text-sm md:text-base">
               In-depth insights for {selectedChild.name}
             </p>
           </div>
           <div className="flex gap-2">
-            <Button variant="outline" size="sm" className="text-xs md:text-sm px-2 md:px-3">
+            <Button
+              variant="outline"
+              size="sm"
+              className="text-xs md:text-sm px-2 md:px-3"
+            >
               <Download className="w-3 h-3 md:w-4 md:h-4 mr-1 md:mr-2" />
               <span className="hidden md:inline">Export Report</span>
               <span className="md:hidden">Export</span>
             </Button>
-            <Button variant="outline" size="sm" className="text-xs md:text-sm px-2 md:px-3">
+            <Button
+              variant="outline"
+              size="sm"
+              className="text-xs md:text-sm px-2 md:px-3"
+            >
               <Mail className="w-3 h-3 md:w-4 md:h-4 mr-1 md:mr-2" />
               <span className="hidden md:inline">Email Summary</span>
               <span className="md:hidden">Email</span>
@@ -1240,9 +1303,15 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
             <CardContent className="p-3 md:p-4 text-center">
               <CheckCircle className="w-6 h-6 md:w-8 md:h-8 mx-auto mb-2 text-green-600" />
               <div className="text-xl md:text-2xl font-bold text-green-700">
-                <AnimatedCounter value={childrenWordStats[selectedChild.id]?.wordsRemembered || 0} />
+                <AnimatedCounter
+                  value={
+                    childrenWordStats[selectedChild.id]?.wordsRemembered || 0
+                  }
+                />
               </div>
-              <p className="text-xs md:text-sm text-green-600 font-medium">Words Mastered</p>
+              <p className="text-xs md:text-sm text-green-600 font-medium">
+                Words Mastered
+              </p>
             </CardContent>
           </Card>
 
@@ -1250,9 +1319,16 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
             <CardContent className="p-3 md:p-4 text-center">
               <AlertCircle className="w-6 h-6 md:w-8 md:h-8 mx-auto mb-2 text-orange-600" />
               <div className="text-xl md:text-2xl font-bold text-orange-700">
-                <AnimatedCounter value={childrenWordStats[selectedChild.id]?.wordsNeedingPractice || 0} />
+                <AnimatedCounter
+                  value={
+                    childrenWordStats[selectedChild.id]?.wordsNeedingPractice ||
+                    0
+                  }
+                />
               </div>
-              <p className="text-xs md:text-sm text-orange-600 font-medium">Need Practice</p>
+              <p className="text-xs md:text-sm text-orange-600 font-medium">
+                Need Practice
+              </p>
             </CardContent>
           </Card>
 
@@ -1260,9 +1336,16 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
             <CardContent className="p-3 md:p-4 text-center">
               <Target className="w-6 h-6 md:w-8 md:h-8 mx-auto mb-2 text-blue-600" />
               <div className="text-xl md:text-2xl font-bold text-blue-700">
-                <AnimatedCounter value={childrenWordStats[selectedChild.id]?.averageAccuracy || 0} suffix="%" />
+                <AnimatedCounter
+                  value={
+                    childrenWordStats[selectedChild.id]?.averageAccuracy || 0
+                  }
+                  suffix="%"
+                />
               </div>
-              <p className="text-xs md:text-sm text-blue-600 font-medium">Accuracy Rate</p>
+              <p className="text-xs md:text-sm text-blue-600 font-medium">
+                Accuracy Rate
+              </p>
             </CardContent>
           </Card>
 
@@ -1270,9 +1353,15 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
             <CardContent className="p-3 md:p-4 text-center">
               <BookOpen className="w-6 h-6 md:w-8 md:h-8 mx-auto mb-2 text-purple-600" />
               <div className="text-xl md:text-2xl font-bold text-purple-700">
-                <AnimatedCounter value={childrenWordStats[selectedChild.id]?.totalWordsLearned || 0} />
+                <AnimatedCounter
+                  value={
+                    childrenWordStats[selectedChild.id]?.totalWordsLearned || 0
+                  }
+                />
               </div>
-              <p className="text-xs md:text-sm text-purple-600 font-medium">Total Learned</p>
+              <p className="text-xs md:text-sm text-purple-600 font-medium">
+                Total Learned
+              </p>
             </CardContent>
           </Card>
         </div>
@@ -1298,68 +1387,95 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
                       </h3>
                     </div>
                     <Badge className="bg-orange-100 text-orange-700 text-xs">
-                      {childrenWordStats[selectedChild.id]?.wordsNeedingPractice || 0} words
+                      {childrenWordStats[selectedChild.id]
+                        ?.wordsNeedingPractice || 0}{" "}
+                      words
                     </Badge>
                   </div>
                   <div className="bg-orange-50 p-3 md:p-4 rounded-lg">
                     <p className="text-xs md:text-sm text-gray-600 mb-3">
-                      Words marked as "I Forgot" or with low accuracy rates. Focus practice here:
+                      Words marked as "I Forgot" or with low accuracy rates.
+                      Focus practice here:
                     </p>
                     <div className="space-y-2 max-h-48 overflow-y-auto">
-                      {practiceWords.length > 0 ? practiceWords.slice(0, 5).map((wordData) => (
-                        <div
-                          key={wordData.word}
-                          className="flex items-center justify-between bg-white p-2 md:p-3 rounded border hover:border-orange-300 transition-colors cursor-pointer"
-                        >
-                          <div>
-                            <span className="font-medium text-sm md:text-base">{wordData.word}</span>
-                            <div className="text-xs text-gray-500">
-                              {wordData.category} • Reviewed {wordData.timesReviewed} times
+                      {practiceWords.length > 0 ? (
+                        practiceWords.slice(0, 5).map((wordData) => (
+                          <div
+                            key={wordData.word}
+                            className="flex items-center justify-between bg-white p-2 md:p-3 rounded border hover:border-orange-300 transition-colors cursor-pointer"
+                          >
+                            <div>
+                              <span className="font-medium text-sm md:text-base">
+                                {wordData.word}
+                              </span>
+                              <div className="text-xs text-gray-500">
+                                {wordData.category} • Reviewed{" "}
+                                {wordData.timesReviewed} times
+                              </div>
+                            </div>
+                            <div className="flex items-center gap-2">
+                              <Badge
+                                className={`text-xs ${
+                                  wordData.accuracy < 30
+                                    ? "bg-red-100 text-red-700"
+                                    : wordData.accuracy < 50
+                                      ? "bg-orange-100 text-orange-700"
+                                      : "bg-yellow-100 text-yellow-700"
+                                }`}
+                              >
+                                {wordData.accuracy}% accuracy
+                              </Badge>
+                              <Button
+                                size="sm"
+                                variant="outline"
+                                className="text-xs px-2 py-1 h-auto"
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  console.log(
+                                    "Starting practice for:",
+                                    wordData.word,
+                                  );
+                                }}
+                              >
+                                Practice
+                              </Button>
                             </div>
                           </div>
-                          <div className="flex items-center gap-2">
-                            <Badge className={`text-xs ${
-                              wordData.accuracy < 30 ? 'bg-red-100 text-red-700' :
-                              wordData.accuracy < 50 ? 'bg-orange-100 text-orange-700' :
-                              'bg-yellow-100 text-yellow-700'
-                            }`}>
-                              {wordData.accuracy}% accuracy
-                            </Badge>
-                            <Button
-                              size="sm"
-                              variant="outline"
-                              className="text-xs px-2 py-1 h-auto"
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                console.log('Starting practice for:', wordData.word);
-                              }}
-                            >
-                              Practice
-                            </Button>
-                          </div>
-                        </div>
-                      )) : (
+                        ))
+                      ) : (
                         <div className="text-center py-6 text-gray-500">
                           <CheckCircle className="w-8 h-8 mx-auto mb-2 text-green-500" />
-                          <p className="text-sm">No words need practice right now!</p>
-                          <p className="text-xs">Great job staying on top of learning!</p>
+                          <p className="text-sm">
+                            No words need practice right now!
+                          </p>
+                          <p className="text-xs">
+                            Great job staying on top of learning!
+                          </p>
                         </div>
                       )}
                     </div>
                     <div className="mt-3 pt-3 border-t flex flex-col md:flex-row justify-between items-center gap-2">
                       <span className="text-xs md:text-sm text-orange-600 font-medium">
-                        🎯 {childrenWordStats[selectedChild.id]?.wordsNeedingPractice || 0} words need focused practice
+                        🎯{" "}
+                        {childrenWordStats[selectedChild.id]
+                          ?.wordsNeedingPractice || 0}{" "}
+                        words need focused practice
                       </span>
                       {practiceWords.length > 0 && (
                         <Button
                           size="sm"
                           className="bg-orange-500 hover:bg-orange-600 text-white text-xs px-3 py-1"
                           onClick={() => {
-                            console.log('Starting focused practice session with words:', practiceWords.map(w => w.word));
+                            console.log(
+                              "Starting focused practice session with words:",
+                              practiceWords.map((w) => w.word),
+                            );
                           }}
                         >
                           <Target className="w-3 h-3 md:w-4 md:h-4 mr-1 md:mr-2" />
-                          <span className="hidden md:inline">Start Practice Session</span>
+                          <span className="hidden md:inline">
+                            Start Practice Session
+                          </span>
                           <span className="md:hidden">Practice</span>
                         </Button>
                       )}
@@ -1377,7 +1493,9 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
                       </h3>
                     </div>
                     <Badge className="bg-green-100 text-green-700 text-xs">
-                      {childrenWordStats[selectedChild.id]?.wordsRemembered || 0} words
+                      {childrenWordStats[selectedChild.id]?.wordsRemembered ||
+                        0}{" "}
+                      words
                     </Badge>
                   </div>
                   <div className="bg-green-50 p-3 md:p-4 rounded-lg">
@@ -1385,37 +1503,49 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
                       Words consistently remembered with high accuracy:
                     </p>
                     <div className="space-y-2 max-h-48 overflow-y-auto">
-                      {topWords.length > 0 ? topWords.slice(0, 5).map((wordData) => (
-                        <div
-                          key={wordData.word}
-                          className="flex items-center justify-between bg-white p-2 md:p-3 rounded border hover:border-green-300 transition-colors"
-                        >
-                          <div>
-                            <span className="font-medium text-sm md:text-base">{wordData.word}</span>
-                            <div className="text-xs text-gray-500">
-                              {wordData.category} • Reviewed {wordData.timesReviewed} times
+                      {topWords.length > 0 ? (
+                        topWords.slice(0, 5).map((wordData) => (
+                          <div
+                            key={wordData.word}
+                            className="flex items-center justify-between bg-white p-2 md:p-3 rounded border hover:border-green-300 transition-colors"
+                          >
+                            <div>
+                              <span className="font-medium text-sm md:text-base">
+                                {wordData.word}
+                              </span>
+                              <div className="text-xs text-gray-500">
+                                {wordData.category} • Reviewed{" "}
+                                {wordData.timesReviewed} times
+                              </div>
+                            </div>
+                            <div className="flex items-center gap-2">
+                              <Badge className="bg-green-100 text-green-700 text-xs">
+                                {wordData.accuracy}% accuracy
+                              </Badge>
+                              <div className="text-green-500">
+                                <Star className="w-3 h-3 md:w-4 md:h-4 fill-current" />
+                              </div>
                             </div>
                           </div>
-                          <div className="flex items-center gap-2">
-                            <Badge className="bg-green-100 text-green-700 text-xs">
-                              {wordData.accuracy}% accuracy
-                            </Badge>
-                            <div className="text-green-500">
-                              <Star className="w-3 h-3 md:w-4 md:h-4 fill-current" />
-                            </div>
-                          </div>
-                        </div>
-                      )) : (
+                        ))
+                      ) : (
                         <div className="text-center py-6 text-gray-500">
                           <BookOpen className="w-8 h-8 mx-auto mb-2 text-blue-500" />
-                          <p className="text-sm">Keep learning to see mastered words here!</p>
-                          <p className="text-xs">Words with 80%+ accuracy will appear here.</p>
+                          <p className="text-sm">
+                            Keep learning to see mastered words here!
+                          </p>
+                          <p className="text-xs">
+                            Words with 80%+ accuracy will appear here.
+                          </p>
                         </div>
                       )}
                     </div>
                     <div className="mt-3 pt-3 border-t text-center">
                       <span className="text-xs md:text-sm text-green-600 font-medium">
-                        🎉 {childrenWordStats[selectedChild.id]?.wordsRemembered || 0} words mastered total!
+                        🎉{" "}
+                        {childrenWordStats[selectedChild.id]?.wordsRemembered ||
+                          0}{" "}
+                        words mastered total!
                       </span>
                       {topWords.length > 5 && (
                         <p className="text-xs text-gray-500 mt-1">
@@ -1457,7 +1587,9 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
                   <div className="text-xl md:text-2xl font-bold text-purple-700">
                     {childrenWordStats[selectedChild.id]?.averageAccuracy || 0}%
                   </div>
-                  <div className="text-xs md:text-sm text-purple-600">Accuracy</div>
+                  <div className="text-xs md:text-sm text-purple-600">
+                    Accuracy
+                  </div>
                 </div>
               </div>
             </CardContent>
@@ -1478,40 +1610,47 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
                 <Button
                   className="bg-orange-500 hover:bg-orange-600 text-white h-auto py-3 flex flex-col items-center gap-2"
                   onClick={() => {
-                    console.log('Starting targeted practice:', practiceWords.slice(0, 5).map(w => w.word));
+                    console.log(
+                      "Starting targeted practice:",
+                      practiceWords.slice(0, 5).map((w) => w.word),
+                    );
                     // This would navigate to the main learning component with specific words
                   }}
                 >
                   <AlertCircle className="w-5 h-5" />
                   <div className="text-center">
                     <div className="font-semibold text-sm">Start Practice</div>
-                    <div className="text-xs opacity-90">{practiceWords.length} words need help</div>
+                    <div className="text-xs opacity-90">
+                      {practiceWords.length} words need help
+                    </div>
                   </div>
                 </Button>
               )}
 
               {childrenWordStats[selectedChild.id]?.averageAccuracy &&
-               childrenWordStats[selectedChild.id].averageAccuracy > 85 && (
-                <Button
-                  variant="outline"
-                  className="border-green-300 text-green-700 hover:bg-green-50 h-auto py-3 flex flex-col items-center gap-2"
-                  onClick={() => {
-                    console.log('Adding new words challenge');
-                  }}
-                >
-                  <BookOpen className="w-5 h-5" />
-                  <div className="text-center">
-                    <div className="font-semibold text-sm">Add New Words</div>
-                    <div className="text-xs opacity-90">High accuracy - ready for more!</div>
-                  </div>
-                </Button>
-              )}
+                childrenWordStats[selectedChild.id].averageAccuracy > 85 && (
+                  <Button
+                    variant="outline"
+                    className="border-green-300 text-green-700 hover:bg-green-50 h-auto py-3 flex flex-col items-center gap-2"
+                    onClick={() => {
+                      console.log("Adding new words challenge");
+                    }}
+                  >
+                    <BookOpen className="w-5 h-5" />
+                    <div className="text-center">
+                      <div className="font-semibold text-sm">Add New Words</div>
+                      <div className="text-xs opacity-90">
+                        High accuracy - ready for more!
+                      </div>
+                    </div>
+                  </Button>
+                )}
 
               <Button
                 variant="outline"
                 className="border-blue-300 text-blue-700 hover:bg-blue-50 h-auto py-3 flex flex-col items-center gap-2"
                 onClick={() => {
-                  console.log('Generating progress report');
+                  console.log("Generating progress report");
                 }}
               >
                 <FileText className="w-5 h-5" />
@@ -1677,11 +1816,11 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
                   <span className="font-medium text-slate-900 truncate">
                     {notification.message}
                   </span>
-                  <Badge variant="outline" className="text-xs px-1 py-0 h-4 shrink-0">
-                    {
-                      children.find((c) => c.id === notification.childId)
-                        ?.name
-                    }
+                  <Badge
+                    variant="outline"
+                    className="text-xs px-1 py-0 h-4 shrink-0"
+                  >
+                    {children.find((c) => c.id === notification.childId)?.name}
                   </Badge>
                 </div>
               </div>
@@ -2876,17 +3015,26 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
       {/* Enhanced Navigation */}
       <Tabs value={activeTab} onValueChange={setActiveTab}>
         <TabsList className="grid w-full grid-cols-3 md:grid-cols-6 gap-1 md:gap-0 h-auto p-1">
-          <TabsTrigger value="overview" className="flex flex-col md:flex-row items-center gap-1 md:gap-2 text-xs md:text-sm py-2 md:py-3 px-1 md:px-3">
+          <TabsTrigger
+            value="overview"
+            className="flex flex-col md:flex-row items-center gap-1 md:gap-2 text-xs md:text-sm py-2 md:py-3 px-1 md:px-3"
+          >
             <Users className="w-3 h-3 md:w-4 md:h-4" />
             <span className="hidden md:inline">Overview</span>
             <span className="md:hidden">Home</span>
           </TabsTrigger>
-          <TabsTrigger value="goals" className="flex flex-col md:flex-row items-center gap-1 md:gap-2 text-xs md:text-sm py-2 md:py-3 px-1 md:px-3">
+          <TabsTrigger
+            value="goals"
+            className="flex flex-col md:flex-row items-center gap-1 md:gap-2 text-xs md:text-sm py-2 md:py-3 px-1 md:px-3"
+          >
             <Target className="w-3 h-3 md:w-4 md:h-4" />
             <span className="hidden md:inline">Goals</span>
             <span className="md:hidden">Goals</span>
           </TabsTrigger>
-          <TabsTrigger value="custom-words" className="flex flex-col md:flex-row items-center gap-1 md:gap-2 text-xs md:text-sm py-2 md:py-3 px-1 md:px-3">
+          <TabsTrigger
+            value="custom-words"
+            className="flex flex-col md:flex-row items-center gap-1 md:gap-2 text-xs md:text-sm py-2 md:py-3 px-1 md:px-3"
+          >
             <BookMarked className="w-3 h-3 md:w-4 md:h-4" />
             <span className="hidden md:inline">Custom Words</span>
             <span className="md:hidden">Words</span>
@@ -2922,7 +3070,10 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
               </Badge>
             )}
           </TabsTrigger>
-          <TabsTrigger value="reports" className="flex flex-col md:flex-row items-center gap-1 md:gap-2 text-xs md:text-sm py-2 md:py-3 px-1 md:px-3">
+          <TabsTrigger
+            value="reports"
+            className="flex flex-col md:flex-row items-center gap-1 md:gap-2 text-xs md:text-sm py-2 md:py-3 px-1 md:px-3"
+          >
             <FileText className="w-3 h-3 md:w-4 md:h-4" />
             <span className="hidden md:inline">Reports</span>
             <span className="md:hidden">Reports</span>

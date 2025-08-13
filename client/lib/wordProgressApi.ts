@@ -99,19 +99,19 @@ export class WordProgressAPI {
         focusArea: string;
       };
       categoryFocus?: string;
-      difficultyAdjustment?: 'easier' | 'harder' | 'maintain';
+      difficultyAdjustment?: "easier" | "harder" | "maintain";
       nextMilestone?: {
         description: string;
         wordsNeeded: number;
       };
     };
   }> {
-    const response = await fetch(`${API_BASE}/child/${childId}/recommendations`);
+    const response = await fetch(
+      `${API_BASE}/child/${childId}/recommendations`,
+    );
 
     if (!response.ok) {
-      throw new Error(
-        `Failed to get recommendations: ${response.statusText}`,
-      );
+      throw new Error(`Failed to get recommendations: ${response.statusText}`);
     }
 
     return response.json();

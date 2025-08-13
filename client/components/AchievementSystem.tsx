@@ -604,7 +604,11 @@ export function AchievementSystem({
           >
             <Trophy className="w-4 h-4 md:w-4 md:h-4" />
             <span className="hidden md:inline">🏆 Trophies</span>
-            <span className="md:hidden text-center">🏆<br/>Trophies</span>
+            <span className="md:hidden text-center">
+              🏆
+              <br />
+              Trophies
+            </span>
           </TabsTrigger>
           <TabsTrigger
             value="progress"
@@ -612,7 +616,11 @@ export function AchievementSystem({
           >
             <TrendingUp className="w-4 h-4 md:w-4 md:h-4" />
             <span className="hidden md:inline">📈 My Stats</span>
-            <span className="md:hidden text-center">📈<br/>Stats</span>
+            <span className="md:hidden text-center">
+              📈
+              <br />
+              Stats
+            </span>
           </TabsTrigger>
           <TabsTrigger
             value="categories"
@@ -620,7 +628,11 @@ export function AchievementSystem({
           >
             <PieChart className="w-4 h-4 md:w-4 md:h-4" />
             <span className="hidden md:inline">🎨 Topics</span>
-            <span className="md:hidden text-center">🎨<br/>Topics</span>
+            <span className="md:hidden text-center">
+              🎨
+              <br />
+              Topics
+            </span>
           </TabsTrigger>
           <TabsTrigger
             value="streaks"
@@ -628,7 +640,11 @@ export function AchievementSystem({
           >
             <Activity className="w-4 h-4 md:w-4 md:h-4" />
             <span className="hidden md:inline">🔥 Adventure</span>
-            <span className="md:hidden text-center">🔥<br/>Adventure</span>
+            <span className="md:hidden text-center">
+              🔥
+              <br />
+              Adventure
+            </span>
           </TabsTrigger>
         </TabsList>
 
@@ -653,13 +669,19 @@ export function AchievementSystem({
                   <div className="text-xl md:text-2xl font-bold">
                     {unlockedAchievements.length}
                   </div>
-                  <div className="text-xs md:text-sm opacity-90">🏆 Trophies Won!</div>
+                  <div className="text-xs md:text-sm opacity-90">
+                    🏆 Trophies Won!
+                  </div>
                 </CardContent>
               </Card>
               <Card className="bg-gradient-to-r from-educational-orange to-educational-pink text-white hover:scale-105 transition-all flex-1 max-w-[150px]">
                 <CardContent className="p-3 md:p-4 text-center">
-                  <div className="text-xl md:text-2xl font-bold">{totalPoints}</div>
-                  <div className="text-xs md:text-sm opacity-90">⭐ Trophy Points!</div>
+                  <div className="text-xl md:text-2xl font-bold">
+                    {totalPoints}
+                  </div>
+                  <div className="text-xs md:text-sm opacity-90">
+                    ⭐ Trophy Points!
+                  </div>
                 </CardContent>
               </Card>
             </div>
@@ -711,12 +733,18 @@ export function AchievementSystem({
                       {/* Mobile Compact Layout */}
                       <div className="block md:hidden">
                         <div className="flex items-center gap-2 p-2">
-                          <div className="text-2xl flex-shrink-0">{achievement.icon}</div>
+                          <div className="text-2xl flex-shrink-0">
+                            {achievement.icon}
+                          </div>
                           <div className="flex-1 min-w-0">
                             <div className="flex items-center justify-between mb-1">
-                              <h3 className={`text-sm font-semibold truncate ${
-                                achievement.unlocked ? "text-white" : "text-gray-800"
-                              }`}>
+                              <h3
+                                className={`text-sm font-semibold truncate ${
+                                  achievement.unlocked
+                                    ? "text-white"
+                                    : "text-gray-800"
+                                }`}
+                              >
                                 {achievement.name}
                               </h3>
                               <div className="flex items-center gap-1 flex-shrink-0">
@@ -732,20 +760,30 @@ export function AchievementSystem({
                                 )}
                               </div>
                             </div>
-                            <p className={`text-xs leading-tight mb-2 ${
-                              achievement.unlocked ? "text-white/90" : "text-gray-600"
-                            }`}>
+                            <p
+                              className={`text-xs leading-tight mb-2 ${
+                                achievement.unlocked
+                                  ? "text-white/90"
+                                  : "text-gray-600"
+                              }`}
+                            >
                               {achievement.description}
                             </p>
                             {!achievement.unlocked && (
                               <div className="space-y-1">
                                 <div className="flex justify-between text-xs">
-                                  <span className="text-gray-600">Progress</span>
+                                  <span className="text-gray-600">
+                                    Progress
+                                  </span>
                                   <span className="font-semibold text-gray-800">
-                                    {achievement.currentProgress}/{achievement.requirements}
+                                    {achievement.currentProgress}/
+                                    {achievement.requirements}
                                   </span>
                                 </div>
-                                <Progress value={progressPercentage} className="h-1.5" />
+                                <Progress
+                                  value={progressPercentage}
+                                  className="h-1.5"
+                                />
                                 {isComplete && (
                                   <Badge className="bg-educational-green text-white text-xs px-1 py-0.5">
                                     Ready! 🎉
@@ -874,7 +912,9 @@ export function AchievementSystem({
                       }`}
                     >
                       <CardContent className="p-3 md:p-4">
-                        <div className="text-3xl md:text-4xl mb-2">{content.icon}</div>
+                        <div className="text-3xl md:text-4xl mb-2">
+                          {content.icon}
+                        </div>
                         <h4
                           className={`font-semibold mb-2 text-sm md:text-base ${
                             content.unlocked ? "text-white" : "text-gray-800"

@@ -1337,7 +1337,6 @@ export default function Index({ initialProfile }: IndexProps) {
                         {learningMode === "cards" && (
                           <>
                             {(() => {
-
                               return (
                                 <>
                                   {displayWords.length > 0 && (
