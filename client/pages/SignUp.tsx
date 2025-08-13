@@ -212,13 +212,13 @@ export default function SignUp() {
       {/* Main Content */}
       <div className="relative z-10 w-full max-w-md mx-auto">
         {/* Header */}
-        <div className="text-center mb-4 md:mb-8">
-          <div className="flex justify-center mb-3 md:mb-6">
+        <div className="text-center mb-2 md:mb-8">
+          <div className="flex justify-center mb-2 md:mb-6">
             <div className="bg-gradient-to-r from-blue-500 to-purple-600 p-4 md:p-6 rounded-full shadow-lg">
-              <BookOpen className="w-12 h-12 text-white" />
+              <BookOpen className="w-8 md:w-12 h-8 md:h-12 text-white" />
             </div>
           </div>
-          <h1 className="text-2xl md:text-4xl font-bold text-gray-800 mb-2 md:mb-4">
+          <h1 className="text-xl md:text-4xl font-bold text-gray-800 mb-1 md:mb-4">
             Create Child Profile
           </h1>
           <p className="text-sm md:text-lg text-gray-600">
@@ -228,13 +228,13 @@ export default function SignUp() {
 
         {/* Sign Up Form */}
         <Card className="bg-white/95 backdrop-blur-sm shadow-xl border border-gray-200 rounded-lg">
-          <CardHeader>
+          <CardHeader className="pb-2 md:pb-6">
             <CardTitle className="text-center text-xl text-gray-800">
               Create Child Profile
             </CardTitle>
           </CardHeader>
-          <CardContent>
-            <form onSubmit={handleSignUp} className="space-y-3 md:space-y-4">
+          <CardContent className="pt-2 md:pt-6">
+            <form onSubmit={handleSignUp} className="space-y-2 md:space-y-4">
               {/* Child Name Field */}
               <div>
                 <Label
@@ -410,7 +410,7 @@ export default function SignUp() {
         </Card>
 
         {/* Back to Login */}
-        <div className="text-center mt-4 md:mt-6">
+        <div className="text-center mt-3 md:mt-6">
           <Button
             onClick={handleBackToLogin}
             variant="link"
