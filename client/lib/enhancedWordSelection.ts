@@ -390,6 +390,7 @@ export class EnhancedWordSelector {
 
     // Prioritize forgotten words
     const forgottenWords = this.selectForgottenWordsForReview(
+      categoryWords,
       userHistory,
       userProgress,
     );
@@ -399,6 +400,7 @@ export class EnhancedWordSelector {
 
     // Add some remembered words for reinforcement
     const rememberedWords = this.selectRememberedWordsForReview(
+      categoryWords,
       userHistory,
       userProgress,
     );
