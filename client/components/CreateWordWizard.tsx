@@ -110,7 +110,7 @@ import {
   Moon,
   Cloud,
   Mountain,
-  Tree,
+  Leaf,
   Flower,
   Cat,
   Dog,
@@ -541,12 +541,12 @@ const CreateWordWizard: React.FC<CreateWordWizardProps> = ({
   const getWordSpecificEmojis = (word: string): string[] => {
     const emojiMap: Record<string, string[]> = {
       // Animals
-      cat: ["🐱", "🐈", "😺"], dog: ["🐶", "🐕", "🦮"], fish: ["🐟", "🐠", "🎣"],
+      cat: ["🐱", "🐈", "����"], dog: ["🐶", "🐕", "🦮"], fish: ["🐟", "🐠", "🎣"],
       bird: ["🐦", "🕊️", "🦅"], butterfly: ["🦋", "🌸"], bee: ["🐝", "🍯"],
       // Food
       apple: ["🍎", "🍏", "🌳"], pizza: ["🍕", "🇮🇹"], cake: ["🎂", "🧁", "🎉"],
       // Transport
-      car: ["🚗", "🚙", "🛣️"], plane: ["✈��", "🛩️", "🌍"], bike: ["🚲", "🚴"],
+      car: ["🚗", "🚙", "🛣️"], plane: ["✈️", "🛩️", "🌍"], bike: ["🚲", "🚴"],
       // Nature
       sun: ["☀️", "🌞", "🌅"], moon: ["🌙", "🌛", "⭐"], tree: ["🌳", "🌲", "🍃"],
       // Objects
