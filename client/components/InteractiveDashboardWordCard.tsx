@@ -124,13 +124,13 @@ export function InteractiveDashboardWordCard({
   const [guess, setGuess] = useState("");
   const [showHint, setShowHint] = useState(false);
 
-  // Systematic progression state
-  const [progressionInfo, setProgressionInfo] = useState({
-    stage: "Foundation Building",
-    description: "Mastering easy words from all categories",
-    nextMilestone: 50,
-    progress: 0
-  });
+  // Systematic progression state - DISABLED for clean UI
+  // const [progressionInfo, setProgressionInfo] = useState({
+  //   stage: "Foundation Building",
+  //   description: "Mastering easy words from all categories",
+  //   nextMilestone: 50,
+  //   progress: 0
+  // });
 
   // Initialize session with systematic word generation
   useEffect(() => {
