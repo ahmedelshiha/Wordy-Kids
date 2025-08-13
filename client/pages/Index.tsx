@@ -1928,7 +1928,7 @@ export default function Index({ initialProfile }: IndexProps) {
                         </Card>
 
                         {/* Picture Quiz - Kid-Friendly */}
-                        <Card className="cursor-pointer hover:shadow-lg transition-all duration-300 hover:scale-105 border-2 border-educational-orange/30 animate-kid-float">
+                        <Card className="cursor-pointer hover:shadow-lg active:shadow-xl transition-all duration-200 active:scale-95 border-2 border-educational-orange/30">
                           <CardContent className="p-3 md:p-4 text-center">
                             <div className="text-3xl md:text-5xl mb-2 md:mb-3 animate-bounce">
                               🖼️
