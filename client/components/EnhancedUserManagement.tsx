@@ -764,46 +764,47 @@ const EnhancedUserManagement: React.FC<EnhancedUserManagementProps> = ({
   const renderTableView = () => (
     <Card>
       <CardContent className="p-0">
-        <Table>
-          <TableHeader>
-            <TableRow>
-              <TableHead className="w-12">
-                <Checkbox
-                  checked={selectedUsers.length === filteredAndSortedUsers.length && filteredAndSortedUsers.length > 0}
-                  onCheckedChange={handleSelectAll}
-                />
-              </TableHead>
-              <TableHead className="w-12">Avatar</TableHead>
-              <TableHead 
-                className="cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800"
-                onClick={() => handleSort("name")}
-              >
-                <div className="flex items-center gap-1">
-                  Name
-                  {sortBy.field === "name" && (
-                    sortBy.direction === "asc" ? <ChevronUp className="w-3 h-3" /> : <ChevronDown className="w-3 h-3" />
-                  )}
-                </div>
-              </TableHead>
-              <TableHead>Role</TableHead>
-              <TableHead>Status</TableHead>
-              <TableHead>Subscription</TableHead>
-              <TableHead>Location</TableHead>
-              <TableHead 
-                className="cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800"
-                onClick={() => handleSort("lastActive")}
-              >
-                <div className="flex items-center gap-1">
-                  Last Active
-                  {sortBy.field === "lastActive" && (
-                    sortBy.direction === "asc" ? <ChevronUp className="w-3 h-3" /> : <ChevronDown className="w-3 h-3" />
-                  )}
-                </div>
-              </TableHead>
-              <TableHead>Progress</TableHead>
-              <TableHead>Actions</TableHead>
-            </TableRow>
-          </TableHeader>
+        <div className="overflow-x-auto">
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead className="w-12">
+                  <Checkbox
+                    checked={selectedUsers.length === filteredAndSortedUsers.length && filteredAndSortedUsers.length > 0}
+                    onCheckedChange={handleSelectAll}
+                  />
+                </TableHead>
+                <TableHead className="w-12 hidden sm:table-cell">Avatar</TableHead>
+                <TableHead
+                  className="cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800 min-w-[150px]"
+                  onClick={() => handleSort("name")}
+                >
+                  <div className="flex items-center gap-1">
+                    Name
+                    {sortBy.field === "name" && (
+                      sortBy.direction === "asc" ? <ChevronUp className="w-3 h-3" /> : <ChevronDown className="w-3 h-3" />
+                    )}
+                  </div>
+                </TableHead>
+                <TableHead className="hidden md:table-cell">Role</TableHead>
+                <TableHead>Status</TableHead>
+                <TableHead className="hidden lg:table-cell">Subscription</TableHead>
+                <TableHead className="hidden xl:table-cell">Location</TableHead>
+                <TableHead
+                  className="cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800 hidden lg:table-cell"
+                  onClick={() => handleSort("lastActive")}
+                >
+                  <div className="flex items-center gap-1">
+                    Last Active
+                    {sortBy.field === "lastActive" && (
+                      sortBy.direction === "asc" ? <ChevronUp className="w-3 h-3" /> : <ChevronDown className="w-3 h-3" />
+                    )}
+                  </div>
+                </TableHead>
+                <TableHead className="hidden xl:table-cell">Progress</TableHead>
+                <TableHead className="w-16">Actions</TableHead>
+              </TableRow>
+            </TableHeader>
           <TableBody>
             {filteredAndSortedUsers.map((user) => (
               <TableRow key={user.id} className="hover:bg-gray-50 dark:hover:bg-gray-800/50">
@@ -813,7 +814,7 @@ const EnhancedUserManagement: React.FC<EnhancedUserManagementProps> = ({
                     onCheckedChange={() => handleSelectUser(user.id)}
                   />
                 </TableCell>
-                <TableCell>
+                <TableCell className="hidden sm:table-cell">
                   <Avatar className="w-8 h-8">
                     <AvatarFallback className="text-xs">
                       {user.name.split(" ").map(n => n[0]).join("").toUpperCase()}
@@ -825,7 +826,7 @@ const EnhancedUserManagement: React.FC<EnhancedUserManagementProps> = ({
                     <div className="font-medium">{user.name}</div>
                     <div className="text-sm text-gray-500">{user.email}</div>
                     {user.tags && user.tags.length > 0 && (
-                      <div className="flex gap-1">
+                      <div className="flex gap-1 hidden sm:flex">
                         {user.tags.slice(0, 2).map((tag) => (
                           <Badge key={tag} variant="outline" className="text-xs">
                             {tag}
@@ -835,7 +836,7 @@ const EnhancedUserManagement: React.FC<EnhancedUserManagementProps> = ({
                     )}
                   </div>
                 </TableCell>
-                <TableCell>
+                <TableCell className="hidden md:table-cell">
                   <Badge className={getRoleColor(user.role)}>
                     {user.role}
                   </Badge>
@@ -845,12 +846,12 @@ const EnhancedUserManagement: React.FC<EnhancedUserManagementProps> = ({
                     {user.status}
                   </Badge>
                 </TableCell>
-                <TableCell>
+                <TableCell className="hidden lg:table-cell">
                   <Badge className={getSubscriptionColor(user.subscriptionType)}>
                     {user.subscriptionType}
                   </Badge>
                 </TableCell>
-                <TableCell>
+                <TableCell className="hidden xl:table-cell">
                   <div className="text-sm">
                     {user.location?.city && user.location?.country
                       ? `${user.location.city}, ${user.location.country}`
@@ -858,19 +859,19 @@ const EnhancedUserManagement: React.FC<EnhancedUserManagementProps> = ({
                     }
                   </div>
                 </TableCell>
-                <TableCell>
+                <TableCell className="hidden lg:table-cell">
                   <div className="text-sm text-gray-500">
                     {user.lastActive.toLocaleDateString()}
                   </div>
                 </TableCell>
-                <TableCell>
+                <TableCell className="hidden xl:table-cell">
                   {user.progress && (
                     <div className="space-y-1">
                       <div className="text-xs text-gray-500">
                         {user.progress.wordsLearned} words
                       </div>
-                      <Progress 
-                        value={user.progress.averageAccuracy} 
+                      <Progress
+                        value={user.progress.averageAccuracy}
                         className="h-1 w-16"
                       />
                       <div className="text-xs text-gray-500">
@@ -923,29 +924,30 @@ const EnhancedUserManagement: React.FC<EnhancedUserManagementProps> = ({
             ))}
           </TableBody>
         </Table>
+        </div>
       </CardContent>
     </Card>
   );
 
   const renderCardView = () => (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
       {filteredAndSortedUsers.map((user) => (
         <Card key={user.id} className="hover:shadow-md transition-shadow">
-          <CardContent className="p-4">
+          <CardContent className="p-3 sm:p-4">
             <div className="flex items-start justify-between mb-3">
-              <div className="flex items-center gap-3">
+              <div className="flex items-center gap-2 sm:gap-3 min-w-0 flex-1">
                 <Checkbox
                   checked={selectedUsers.includes(user.id)}
                   onCheckedChange={() => handleSelectUser(user.id)}
                 />
-                <Avatar className="w-12 h-12">
+                <Avatar className="w-10 h-10 sm:w-12 sm:h-12 flex-shrink-0">
                   <AvatarFallback>
                     {user.name.split(" ").map(n => n[0]).join("").toUpperCase()}
                   </AvatarFallback>
                 </Avatar>
-                <div>
-                  <h3 className="font-semibold">{user.name}</h3>
-                  <p className="text-sm text-gray-500">{user.email}</p>
+                <div className="min-w-0 flex-1">
+                  <h3 className="font-semibold text-sm sm:text-base truncate">{user.name}</h3>
+                  <p className="text-xs sm:text-sm text-gray-500 truncate">{user.email}</p>
                 </div>
               </div>
               <DropdownMenu>
@@ -968,17 +970,17 @@ const EnhancedUserManagement: React.FC<EnhancedUserManagementProps> = ({
             </div>
 
             <div className="space-y-2 mb-3">
-              <div className="flex gap-2">
-                <Badge className={getRoleColor(user.role)}>{user.role}</Badge>
-                <Badge className={getStatusColor(user.status)}>{user.status}</Badge>
-                <Badge className={getSubscriptionColor(user.subscriptionType)}>
+              <div className="flex gap-1 sm:gap-2 flex-wrap">
+                <Badge className={getRoleColor(user.role)} size="sm">{user.role}</Badge>
+                <Badge className={getStatusColor(user.status)} size="sm">{user.status}</Badge>
+                <Badge className={getSubscriptionColor(user.subscriptionType)} size="sm">
                   {user.subscriptionType}
                 </Badge>
               </div>
 
               {user.tags && user.tags.length > 0 && (
                 <div className="flex gap-1 flex-wrap">
-                  {user.tags.map((tag) => (
+                  {user.tags.slice(0, 3).map((tag) => (
                     <Badge key={tag} variant="outline" className="text-xs">
                       {tag}
                     </Badge>
@@ -987,32 +989,34 @@ const EnhancedUserManagement: React.FC<EnhancedUserManagementProps> = ({
               )}
             </div>
 
-            <div className="text-sm text-gray-500 space-y-1">
+            <div className="text-xs sm:text-sm text-gray-500 space-y-1">
               <div className="flex items-center gap-2">
-                <Calendar className="w-3 h-3" />
-                Joined {user.createdAt.toLocaleDateString()}
+                <Calendar className="w-3 h-3 flex-shrink-0" />
+                <span className="truncate">Joined {user.createdAt.toLocaleDateString()}</span>
               </div>
               <div className="flex items-center gap-2">
-                <Activity className="w-3 h-3" />
-                Last active {user.lastActive.toLocaleDateString()}
+                <Activity className="w-3 h-3 flex-shrink-0" />
+                <span className="truncate">Last active {user.lastActive.toLocaleDateString()}</span>
               </div>
               {user.location && (
                 <div className="flex items-center gap-2">
-                  <Globe className="w-3 h-3" />
-                  {user.location.city && user.location.country
-                    ? `${user.location.city}, ${user.location.country}`
-                    : user.location.country
-                  }
+                  <Globe className="w-3 h-3 flex-shrink-0" />
+                  <span className="truncate">
+                    {user.location.city && user.location.country
+                      ? `${user.location.city}, ${user.location.country}`
+                      : user.location.country
+                    }
+                  </span>
                 </div>
               )}
               <div className="flex items-center gap-2">
-                <BookOpen className="w-3 h-3" />
-                {user.totalSessions} sessions
+                <BookOpen className="w-3 h-3 flex-shrink-0" />
+                <span>{user.totalSessions} sessions</span>
               </div>
               {user.progress && (
                 <div className="flex items-center gap-2">
-                  <Award className="w-3 h-3" />
-                  {user.progress.wordsLearned} words learned
+                  <Award className="w-3 h-3 flex-shrink-0" />
+                  <span>{user.progress.wordsLearned} words learned</span>
                 </div>
               )}
             </div>
@@ -1021,7 +1025,7 @@ const EnhancedUserManagement: React.FC<EnhancedUserManagementProps> = ({
               <div className="mt-3 space-y-2">
                 <div className="flex justify-between text-xs">
                   <span>Accuracy</span>
-                  <span>{user.progress.averageAccuracy}%</span>
+                  <span className="font-medium">{user.progress.averageAccuracy}%</span>
                 </div>
                 <Progress value={user.progress.averageAccuracy} className="h-2" />
               </div>
