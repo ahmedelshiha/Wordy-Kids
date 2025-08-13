@@ -316,7 +316,7 @@ export default function LoginForm() {
                 <img
                   src="https://cdn.builder.io/api/v1/image/assets%2F783bb0e1cd3e4c73aa9ce79d668738ac%2Fee8d2c4de0ab40c1b0b38ee3c2ef1020?format=webp&width=800"
                   alt="Wordy Logo"
-                  className="w-12 h-12 object-contain"
+                  className="w-16 h-16 object-contain"
                 />
               </div>
               <div className="absolute -top-1 -right-1 bg-yellow-400 p-2 rounded-full animate-bounce">
