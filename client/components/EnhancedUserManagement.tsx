@@ -368,6 +368,26 @@ const EnhancedUserManagement: React.FC<EnhancedUserManagementProps> = ({
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [formErrors, setFormErrors] = useState<Record<string, string>>({});
 
+  // Import Users states
+  const [showImportDialog, setShowImportDialog] = useState(false);
+  const [importStep, setImportStep] = useState(1);
+  const [importFile, setImportFile] = useState<File | null>(null);
+  const [importData, setImportData] = useState<any[]>([]);
+  const [importHeaders, setImportHeaders] = useState<string[]>([]);
+  const [fieldMapping, setFieldMapping] = useState<Record<string, string>>({});
+  const [importValidation, setImportValidation] = useState<{
+    valid: any[];
+    invalid: any[];
+    warnings: any[];
+  }>({ valid: [], invalid: [], warnings: [] });
+  const [importProgress, setImportProgress] = useState(0);
+  const [isImporting, setIsImporting] = useState(false);
+  const [importResults, setImportResults] = useState<{
+    success: number;
+    failed: number;
+    errors: Array<{ row: number; error: string; data: any }>;
+  } | null>(null);
+
   // Add User form data
   const [newUserData, setNewUserData] = useState({
     // Basic Information
