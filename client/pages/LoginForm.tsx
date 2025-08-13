@@ -342,7 +342,7 @@ export default function LoginForm() {
                   className="text-sm font-medium text-gray-700 flex items-center gap-2"
                 >
                   <Mail className="w-4 h-4 text-gray-500" />
-                  Email Address
+                  Parent Email Address
                 </Label>
                 <div className="relative">
                   <Input
