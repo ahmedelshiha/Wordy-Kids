@@ -51,7 +51,12 @@ export default function SignUp() {
         } else if (digits.length <= 4) {
           value = digits.slice(0, 2) + "/" + digits.slice(2);
         } else {
-          value = digits.slice(0, 2) + "/" + digits.slice(2, 4) + "/" + digits.slice(4, 8);
+          value =
+            digits.slice(0, 2) +
+            "/" +
+            digits.slice(2, 4) +
+            "/" +
+            digits.slice(4, 8);
         }
       }
     } else {
@@ -152,7 +157,17 @@ export default function SignUp() {
     const month = parseInt(dateParts[1]) - 1; // Month is 0-indexed in Date
     const year = parseInt(dateParts[2]);
 
-    if (isNaN(day) || isNaN(month) || isNaN(year) || day < 1 || day > 31 || month < 0 || month > 11 || year < 1900 || year > new Date().getFullYear()) {
+    if (
+      isNaN(day) ||
+      isNaN(month) ||
+      isNaN(year) ||
+      day < 1 ||
+      day > 31 ||
+      month < 0 ||
+      month > 11 ||
+      year < 1900 ||
+      year > new Date().getFullYear()
+    ) {
       setMessage({
         type: "error",
         text: "Please enter a valid birth date in dd/mm/yyyy format",
@@ -189,7 +204,8 @@ export default function SignUp() {
     );
 
     // Enhanced email validation
-    const emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
+    const emailRegex =
+      /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
     if (!emailRegex.test(formData.email)) {
       setMessage({
         type: "error",
@@ -372,8 +388,10 @@ export default function SignUp() {
                     onChange={(e) => {
                       if (e.target.value) {
                         const date = new Date(e.target.value);
-                        const day = date.getDate().toString().padStart(2, '0');
-                        const month = (date.getMonth() + 1).toString().padStart(2, '0');
+                        const day = date.getDate().toString().padStart(2, "0");
+                        const month = (date.getMonth() + 1)
+                          .toString()
+                          .padStart(2, "0");
                         const year = date.getFullYear();
                         const formattedDate = `${day}/${month}/${year}`;
                         setFormData({

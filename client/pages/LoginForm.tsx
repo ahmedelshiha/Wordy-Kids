@@ -76,18 +76,22 @@ export default function LoginForm() {
 
   // Enhanced email validation with professional standards
   const validateEmail = (email: string) => {
-    const emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
+    const emailRegex =
+      /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
     if (!email) return "Parent email address is required";
     if (email.length > 254) return "Email address is too long";
-    if (!emailRegex.test(email)) return "Please enter a valid email address (e.g., parent@example.com)";
+    if (!emailRegex.test(email))
+      return "Please enter a valid email address (e.g., parent@example.com)";
     return null;
   };
 
   // Enhanced password validation with security standards
   const validatePassword = (password: string) => {
     if (!password) return "Password is required";
-    if (password.length < 8) return "Password must be at least 8 characters for security";
-    if (password.length > 128) return "Password is too long (max 128 characters)";
+    if (password.length < 8)
+      return "Password must be at least 8 characters for security";
+    if (password.length > 128)
+      return "Password is too long (max 128 characters)";
     if (!/(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/.test(password)) {
       return "Password should contain uppercase, lowercase, and numbers for better security";
     }
@@ -545,7 +549,6 @@ export default function LoginForm() {
                   <Sparkles className="w-4 h-4" />
                 </div>
               </Button>
-
             </form>
 
             {/* Guest Sign In Button - Outside form to prevent validation */}
@@ -563,7 +566,6 @@ export default function LoginForm() {
             </Button>
           </CardContent>
         </Card>
-
       </div>
     </div>
   );
