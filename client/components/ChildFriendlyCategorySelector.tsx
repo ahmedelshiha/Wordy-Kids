@@ -36,21 +36,6 @@ interface ChildFriendlyCategorySelectorProps {
 
 const enrichedCategories: Category[] = [
   {
-    id: "all",
-    name: "All Words",
-    icon: "📚",
-    color: "bg-slate-500",
-    gradient: "from-slate-400 to-slate-600",
-    wordCount: wordsDatabase.length,
-    description: "Explore our complete magical vocabulary collection!",
-    funFact: "Did you know we have over 100 amazing words to discover?",
-    difficultyBreakdown: {
-      easy: wordsDatabase.filter((w) => w.difficulty === "easy").length,
-      medium: wordsDatabase.filter((w) => w.difficulty === "medium").length,
-      hard: wordsDatabase.filter((w) => w.difficulty === "hard").length,
-    },
-  },
-  {
     id: "animals",
     name: "Animals",
     icon: "🦋",
