@@ -1,0 +1,86 @@
+{
+  "name": "Wordy's Adventure!",
+  "short_name": "Wordy's Adventure",
+  "description": "Fun English learning games for kids through interactive activities and adventures with Wordy the Owl",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#8B5CF6",
+  "orientation": "portrait-primary",
+  "categories": ["education", "games", "kids"],
+  "lang": "en",
+  "scope": "/",
+  "id": "wordy-adventure-app",
+  "icons": [
+    {
+      "src": "https://cdn.builder.io/api/v1/image/assets%2Fbebe97bf37d04293b70e6f9372d99db4%2F6a9f823070a947fe81ec12398fd564c5?format=webp&width=192",
+      "sizes": "192x192",
+      "type": "image/webp",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "https://cdn.builder.io/api/v1/image/assets%2Fbebe97bf37d04293b70e6f9372d99db4%2F895928ec13444b41a48325b8bfd8cec2?format=webp&width=512",
+      "sizes": "512x512",
+      "type": "image/webp",
+      "purpose": "any"
+    },
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/images/screenshot-wide.png",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "Wordy's Adventure Dashboard"
+    },
+    {
+      "src": "/images/screenshot-narrow.png",
+      "sizes": "375x812",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Mobile Learning Games"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Start Learning",
+      "short_name": "Learn",
+      "description": "Jump straight into learning activities",
+      "url": "/learn",
+      "icons": [
+        {
+          "src": "https://cdn.builder.io/api/v1/image/assets%2Fbebe97bf37d04293b70e6f9372d99db4%2F6a9f823070a947fe81ec12398fd564c5?format=webp&width=96",
+          "sizes": "96x96",
+          "type": "image/webp"
+        }
+      ]
+    },
+    {
+      "name": "Play Games",
+      "short_name": "Games",
+      "description": "Access fun learning games",
+      "url": "/games",
+      "icons": [
+        {
+          "src": "https://cdn.builder.io/api/v1/image/assets%2Fbebe97bf37d04293b70e6f9372d99db4%2F6a9f823070a947fe81ec12398fd564c5?format=webp&width=96",
+          "sizes": "96x96",
+          "type": "image/webp"
+        }
+      ]
+    }
+  ],
+  "related_applications": [],
+  "prefer_related_applications": false,
+  "edge_side_panel": {
+    "preferred_width": 400
+  },
+  "launch_handler": {
+    "client_mode": "navigate-existing"
+  }
+}
