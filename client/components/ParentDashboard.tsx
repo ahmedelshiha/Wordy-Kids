@@ -2675,19 +2675,21 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
           </TabsTrigger>
           <TabsTrigger
             value="notifications"
-            className="flex items-center gap-2"
+            className="flex flex-col md:flex-row items-center gap-1 md:gap-2 text-xs md:text-sm py-2 md:py-3 px-1 md:px-3"
           >
-            <Bell className="w-4 h-4" />
-            Alerts
+            <Bell className="w-3 h-3 md:w-4 md:h-4" />
+            <span className="hidden md:inline">Alerts</span>
+            <span className="md:hidden">Alerts</span>
             {unreadNotifications > 0 && (
-              <Badge className="bg-red-500 text-white text-xs px-1 ml-1">
+              <Badge className="bg-red-500 text-white text-xs px-1 ml-0 md:ml-1 absolute -top-1 -right-1 md:relative md:top-0 md:right-0">
                 {unreadNotifications}
               </Badge>
             )}
           </TabsTrigger>
-          <TabsTrigger value="reports" className="flex items-center gap-2">
-            <FileText className="w-4 h-4" />
-            Reports
+          <TabsTrigger value="reports" className="flex flex-col md:flex-row items-center gap-1 md:gap-2 text-xs md:text-sm py-2 md:py-3 px-1 md:px-3">
+            <FileText className="w-3 h-3 md:w-4 md:h-4" />
+            <span className="hidden md:inline">Reports</span>
+            <span className="md:hidden">Reports</span>
           </TabsTrigger>
         </TabsList>
 
