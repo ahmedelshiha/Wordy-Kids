@@ -309,17 +309,43 @@ export default function SignUp() {
                   <Calendar className="w-4 h-4" />
                   Birth Date
                 </Label>
-                <Input
-                  id="birthDate"
-                  name="birthDate"
-                  type="text"
-                  placeholder="dd/mm/yyyy"
-                  value={formData.birthDate}
-                  onChange={handleInputChange}
-                  className="mt-1 md:mt-2 border-gray-300 focus:border-blue-500 text-base"
-                  maxLength={10}
-                  disabled={isLoading}
-                />
+                <div className="relative">
+                  <Input
+                    id="birthDate"
+                    name="birthDate"
+                    type="text"
+                    placeholder="dd/mm/yyyy"
+                    value={formData.birthDate}
+                    onChange={handleInputChange}
+                    className="mt-1 md:mt-2 border-gray-300 focus:border-blue-500 text-base pr-12"
+                    maxLength={10}
+                    disabled={isLoading}
+                  />
+                  {/* Hidden date picker for calendar selection */}
+                  <input
+                    type="date"
+                    className="absolute inset-0 opacity-0 cursor-pointer"
+                    onChange={(e) => {
+                      if (e.target.value) {
+                        const date = new Date(e.target.value);
+                        const day = date.getDate().toString().padStart(2, '0');
+                        const month = (date.getMonth() + 1).toString().padStart(2, '0');
+                        const year = date.getFullYear();
+                        const formattedDate = `${day}/${month}/${year}`;
+                        setFormData({
+                          ...formData,
+                          birthDate: formattedDate,
+                        });
+                        if (message) {
+                          setMessage(null);
+                        }
+                      }
+                    }}
+                    disabled={isLoading}
+                  />
+                  {/* Calendar icon for visual indication */}
+                  <Calendar className="absolute right-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400 pointer-events-none" />
+                </div>
               </div>
 
               {/* Email Field */}
