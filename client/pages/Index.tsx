@@ -1686,7 +1686,10 @@ export default function Index({ initialProfile }: IndexProps) {
                                             <Button
                                               onClick={() =>
                                                 setCurrentWordIndex(
-                                                  Math.max(0, currentWordIndex - 1)
+                                                  Math.max(
+                                                    0,
+                                                    currentWordIndex - 1,
+                                                  ),
                                                 )
                                               }
                                               disabled={currentWordIndex === 0}
@@ -1699,7 +1702,8 @@ export default function Index({ initialProfile }: IndexProps) {
 
                                             <div className="bg-slate-100 px-3 py-1 rounded-lg flex items-center">
                                               <span className="text-xs sm:text-sm font-medium text-slate-600">
-                                                {currentWordIndex + 1} / {displayWords.length}
+                                                {currentWordIndex + 1} /{" "}
+                                                {displayWords.length}
                                               </span>
                                             </div>
 

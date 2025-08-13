@@ -83,8 +83,11 @@ const CelebrationParticles = React.memo(() => (
         key={i}
         className="absolute text-yellow-400 text-xl"
         initial={{
-          x: typeof window !== 'undefined' ? Math.random() * window.innerWidth : 400,
-          y: typeof window !== 'undefined' ? window.innerHeight + 50 : 600,
+          x:
+            typeof window !== "undefined"
+              ? Math.random() * window.innerWidth
+              : 400,
+          y: typeof window !== "undefined" ? window.innerHeight + 50 : 600,
           rotate: 0,
           opacity: 0,
         }}
@@ -154,18 +157,21 @@ export function EnhancedAchievementPopup({
 
   // Memoized computed values
   const difficultyColor = useMemo(
-    () => DIFFICULTY_COLORS[currentAchievement?.difficulty] || DIFFICULTY_COLORS.bronze,
-    [currentAchievement?.difficulty]
+    () =>
+      DIFFICULTY_COLORS[currentAchievement?.difficulty] ||
+      DIFFICULTY_COLORS.bronze,
+    [currentAchievement?.difficulty],
   );
 
   const DifficultyIcon = useMemo(
     () => DIFFICULTY_ICONS[currentAchievement?.difficulty] || Trophy,
-    [currentAchievement?.difficulty]
+    [currentAchievement?.difficulty],
   );
 
   const categoryColor = useMemo(
-    () => CATEGORY_COLORS[currentAchievement?.category] || CATEGORY_COLORS.social,
-    [currentAchievement?.category]
+    () =>
+      CATEGORY_COLORS[currentAchievement?.category] || CATEGORY_COLORS.social,
+    [currentAchievement?.category],
   );
 
   // Initialize sound and reward animation
@@ -197,7 +203,14 @@ export function EnhancedAchievementPopup({
         }, 1500);
       }
     }
-  }, [currentAchievement, claimed, currentIndex, achievements.length, onAchievementClaim, onClose]);
+  }, [
+    currentAchievement,
+    claimed,
+    currentIndex,
+    achievements.length,
+    onAchievementClaim,
+    onClose,
+  ]);
 
   const handleNext = useCallback(() => {
     if (currentIndex < achievements.length - 1) {
@@ -291,7 +304,9 @@ export function EnhancedAchievementPopup({
 
                   {/* Category and Difficulty Badges */}
                   <div className="flex items-center justify-center gap-2 mb-4">
-                    <Badge className={`${categoryColor} text-white border-0 text-xs`}>
+                    <Badge
+                      className={`${categoryColor} text-white border-0 text-xs`}
+                    >
                       {currentAchievement.category.toUpperCase()}
                     </Badge>
                     <Badge className="bg-white/20 text-white border-0 text-xs">
@@ -305,16 +320,21 @@ export function EnhancedAchievementPopup({
                       <div className="text-sm font-semibold mb-2 text-center">
                         🎯 Criteria Met:
                       </div>
-                      {currentAchievement.criteria.slice(0, 3).map((criterion, index) => (
-                        <div key={index} className="text-xs text-white/90 mb-1">
-                          ✅{" "}
-                          {criterion.type
-                            .replace(/([A-Z])/g, " $1")
-                            .replace(/^./, (str) => str.toUpperCase())}
-                          : {criterion.target}
-                          {criterion.timeFrame && ` (${criterion.timeFrame})`}
-                        </div>
-                      ))}
+                      {currentAchievement.criteria
+                        .slice(0, 3)
+                        .map((criterion, index) => (
+                          <div
+                            key={index}
+                            className="text-xs text-white/90 mb-1"
+                          >
+                            ✅{" "}
+                            {criterion.type
+                              .replace(/([A-Z])/g, " $1")
+                              .replace(/^./, (str) => str.toUpperCase())}
+                            : {criterion.target}
+                            {criterion.timeFrame && ` (${criterion.timeFrame})`}
+                          </div>
+                        ))}
                     </div>
                   )}
 
@@ -325,7 +345,11 @@ export function EnhancedAchievementPopup({
                         <motion.div
                           initial={{ scale: 0.9, opacity: 0 }}
                           animate={{ scale: 1, opacity: 1 }}
-                          transition={{ delay: 0.8, type: "spring", duration: 0.4 }}
+                          transition={{
+                            delay: 0.8,
+                            type: "spring",
+                            duration: 0.4,
+                          }}
                           className="bg-white/15 rounded-lg p-3 mb-4"
                         >
                           <div className="flex items-center justify-center gap-2 mb-1">
@@ -393,7 +417,9 @@ export function EnhancedAchievementPopup({
                       )}
 
                       <Button
-                        onClick={achievements.length > 1 ? handleNext : handleClose}
+                        onClick={
+                          achievements.length > 1 ? handleNext : handleClose
+                        }
                         variant="outline"
                         className="flex-1 bg-white/15 text-white border-white/25 hover:bg-white/25 transition-colors"
                       >

@@ -162,7 +162,9 @@ export const WordCard: React.FC<WordCardProps> = ({
   };
 
   return (
-    <div className={`relative w-full max-w-xs sm:max-w-sm mx-auto ${className}`}>
+    <div
+      className={`relative w-full max-w-xs sm:max-w-sm mx-auto ${className}`}
+    >
       <Card
         className={`h-[400px] sm:h-[380px] md:h-[360px] cursor-pointer transition-all duration-500 transform-gpu active:scale-95 ${
           isFlipped ? "[transform:rotateY(180deg)]" : ""
@@ -327,7 +329,8 @@ export const WordCard: React.FC<WordCardProps> = ({
           <div className="text-center">
             {adventureStatus && (
               <p className="text-xs opacity-60 mb-2">
-                Last seen: {new Date(adventureStatus.last_seen).toLocaleDateString()}
+                Last seen:{" "}
+                {new Date(adventureStatus.last_seen).toLocaleDateString()}
               </p>
             )}
             <p className="text-xs sm:text-sm opacity-75 mb-2">
@@ -448,7 +451,9 @@ export const WordCard: React.FC<WordCardProps> = ({
                     {(adventureStatus?.health || 100) < 30 ? (
                       <>
                         <Flame className="w-3 h-3 text-red-400 animate-pulse" />
-                        <span className="text-red-300 font-medium">Needs Rescue!</span>
+                        <span className="text-red-300 font-medium">
+                          Needs Rescue!
+                        </span>
                       </>
                     ) : (adventureStatus?.health || 100) < 50 ? (
                       <>
@@ -487,21 +492,23 @@ export const WordCard: React.FC<WordCardProps> = ({
                     onClick={(e) => {
                       e.stopPropagation();
                       // Track in adventure system
-                      const updatedStatus = adventureService.trackWordInteraction(
-                        word.id.toString(),
-                        false, // incorrect/hard
-                        false,
-                      );
+                      const updatedStatus =
+                        adventureService.trackWordInteraction(
+                          word.id.toString(),
+                          false, // incorrect/hard
+                          false,
+                        );
                       setAdventureStatus(updatedStatus);
 
                       // Track word mastery for journey achievements (hard/needs practice)
-                      const masteryAchievements = AchievementTracker.trackActivity({
-                        type: "wordLearning",
-                        wordsLearned: 0, // Not considered learned if marked as hard
-                        accuracy: 0,
-                        category: word.category,
-                        timeSpent: 1,
-                      });
+                      const masteryAchievements =
+                        AchievementTracker.trackActivity({
+                          type: "wordLearning",
+                          wordsLearned: 0, // Not considered learned if marked as hard
+                          accuracy: 0,
+                          category: word.category,
+                          timeSpent: 1,
+                        });
 
                       if (masteryAchievements.length > 0) {
                         setTimeout(() => {
@@ -523,21 +530,23 @@ export const WordCard: React.FC<WordCardProps> = ({
                     onClick={(e) => {
                       e.stopPropagation();
                       // Track in adventure system with hesitation
-                      const updatedStatus = adventureService.trackWordInteraction(
-                        word.id.toString(),
-                        true, // correct but with hesitation
-                        true,
-                      );
+                      const updatedStatus =
+                        adventureService.trackWordInteraction(
+                          word.id.toString(),
+                          true, // correct but with hesitation
+                          true,
+                        );
                       setAdventureStatus(updatedStatus);
 
                       // Track word mastery for journey achievements (medium/kinda)
-                      const masteryAchievements = AchievementTracker.trackActivity({
-                        type: "wordLearning",
-                        wordsLearned: 0.5, // Partial learning
-                        accuracy: 50,
-                        category: word.category,
-                        timeSpent: 1,
-                      });
+                      const masteryAchievements =
+                        AchievementTracker.trackActivity({
+                          type: "wordLearning",
+                          wordsLearned: 0.5, // Partial learning
+                          accuracy: 50,
+                          category: word.category,
+                          timeSpent: 1,
+                        });
 
                       if (masteryAchievements.length > 0) {
                         setTimeout(() => {
@@ -559,21 +568,23 @@ export const WordCard: React.FC<WordCardProps> = ({
                     onClick={(e) => {
                       e.stopPropagation();
                       // Track in adventure system as correct
-                      const updatedStatus = adventureService.trackWordInteraction(
-                        word.id.toString(),
-                        true, // correct
-                        false,
-                      );
+                      const updatedStatus =
+                        adventureService.trackWordInteraction(
+                          word.id.toString(),
+                          true, // correct
+                          false,
+                        );
                       setAdventureStatus(updatedStatus);
 
                       // Track word mastery for journey achievements (easy/learned!)
-                      const masteryAchievements = AchievementTracker.trackActivity({
-                        type: "wordLearning",
-                        wordsLearned: 1, // Fully learned
-                        accuracy: 100,
-                        category: word.category,
-                        timeSpent: 1,
-                      });
+                      const masteryAchievements =
+                        AchievementTracker.trackActivity({
+                          type: "wordLearning",
+                          wordsLearned: 1, // Fully learned
+                          accuracy: 100,
+                          category: word.category,
+                          timeSpent: 1,
+                        });
 
                       if (masteryAchievements.length > 0) {
                         setTimeout(() => {
@@ -606,7 +617,10 @@ export const WordCard: React.FC<WordCardProps> = ({
                         onClick={(e) => {
                           e.stopPropagation();
                           // Trigger adventure rescue - this could open adventure dashboard
-                          console.log("Opening rescue mission for word:", word.word);
+                          console.log(
+                            "Opening rescue mission for word:",
+                            word.word,
+                          );
                         }}
                       >
                         <Sword className="w-3 h-3 mr-1" />
