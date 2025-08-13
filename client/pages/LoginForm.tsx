@@ -273,7 +273,7 @@ export default function LoginForm() {
     !Object.keys(errors).length && formData.email && formData.password;
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 flex items-center justify-center p-4 relative overflow-hidden">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 flex items-center justify-center p-2 md:p-4 relative overflow-hidden">
       {/* Enhanced Background Pattern */}
       <div className="absolute inset-0 opacity-10">
         <div className="absolute top-10 left-10 text-4xl animate-gentle-float">
@@ -304,10 +304,10 @@ export default function LoginForm() {
 
       <div className="w-full max-w-md mx-auto relative z-10">
         {/* Header Section with Enhanced Design */}
-        <div className="text-center mb-8 animate-fade-in">
-          <div className="flex justify-center mb-6">
+        <div className="text-center mb-4 md:mb-8 animate-fade-in">
+          <div className="flex justify-center mb-3 md:mb-6">
             <div className="relative">
-              <div className="bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 p-6 rounded-full shadow-2xl animate-gentle-float">
+              <div className="bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 p-4 md:p-6 rounded-full shadow-2xl animate-gentle-float">
                 <img
                   src="https://cdn.builder.io/api/v1/image/assets%2F783bb0e1cd3e4c73aa9ce79d668738ac%2Fee8d2c4de0ab40c1b0b38ee3c2ef1020?format=webp&width=800"
                   alt="Wordy Logo"
@@ -327,14 +327,14 @@ export default function LoginForm() {
 
         {/* Enhanced Login Card */}
         <Card className="shadow-2xl border-0 bg-white/95 backdrop-blur-sm animate-fade-in animation-delay-100">
-          <CardHeader className="pb-4">
+          <CardHeader className="pb-2 md:pb-4">
             <CardTitle className="text-center text-xl text-gray-800 flex items-center justify-center gap-2">
               <UserCheck className="w-5 h-5 text-blue-500" />
               Sign In to Continue
             </CardTitle>
           </CardHeader>
-          <CardContent className="space-y-6">
-            <form onSubmit={handleLogin} className="space-y-5">
+          <CardContent className="space-y-3 md:space-y-6">
+            <form onSubmit={handleLogin} className="space-y-3 md:space-y-5">
               {/* Email Field with Enhanced Validation */}
               <div className="space-y-2">
                 <Label
