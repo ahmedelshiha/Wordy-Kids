@@ -336,7 +336,7 @@ export default function LoginForm() {
           <CardContent className="space-y-3 md:space-y-6">
             <form onSubmit={handleLogin} className="space-y-3 md:space-y-5">
               {/* Email Field with Enhanced Validation */}
-              <div className="space-y-2">
+              <div className="space-y-1 md:space-y-2">
                 <Label
                   htmlFor="email"
                   className="text-sm font-medium text-gray-700 flex items-center gap-2"
@@ -379,7 +379,7 @@ export default function LoginForm() {
               </div>
 
               {/* Password Field with Enhanced Validation */}
-              <div className="space-y-2">
+              <div className="space-y-1 md:space-y-2">
                 <Label
                   htmlFor="password"
                   className="text-sm font-medium text-gray-700 flex items-center gap-2"
