@@ -1386,7 +1386,7 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onNavigateBack }) => {
   );
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 md:space-y-6 pb-4 md:pb-6">
       {/* Enhanced Mobile Header */}
       <div className="mb-4 md:mb-6">
         {/* Mobile Header */}
