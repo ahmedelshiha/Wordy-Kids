@@ -1278,35 +1278,44 @@ export default function Index({ initialProfile }: IndexProps) {
                     ) : (
                       <>
                         <div className="text-center">
-                          {/* Kid-Friendly Back to Categories Button */}
-                          {selectedCategory !== "all" && (
-                            <div className="flex justify-center mb-6">
-                              <Button
-                                onClick={() => {
-                                  setSelectedCategory("all");
-                                  setLearningMode("selector");
-                                }}
-                                className="flex items-center gap-2 bg-gradient-to-r from-educational-orange to-educational-yellow text-white font-bold text-base md:text-lg px-6 py-3 md:px-8 md:py-4 rounded-full shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 animate-gentle-bounce min-h-[48px] min-w-[200px]"
-                              >
-                                <span className="text-xl md:text-2xl animate-wiggle">🏠</span>
-                                <span className="hidden sm:inline">🌟 Back to All Categories! 🌟</span>
-                                <span className="sm:hidden">🌟 Home 🌟</span>
-                              </Button>
+                          {/* Compact Header for Selected Categories */}
+                          {selectedCategory !== "all" ? (
+                            <div className="space-y-2 mb-4">
+                              {/* Compact Back Button */}
+                              <div className="flex justify-center">
+                                <Button
+                                  onClick={() => {
+                                    setSelectedCategory("all");
+                                    setLearningMode("selector");
+                                  }}
+                                  className="flex items-center gap-1 bg-gradient-to-r from-educational-orange to-educational-yellow text-white font-bold text-sm px-4 py-2 rounded-full shadow-md hover:shadow-lg transform hover:scale-105 transition-all duration-300 min-h-[44px] min-w-[120px]"
+                                >
+                                  <span className="text-lg animate-wiggle">🏠</span>
+                                  <span className="hidden sm:inline text-xs">Back</span>
+                                  <span className="sm:hidden text-xs">Home</span>
+                                </Button>
+                              </div>
+
+                              {/* Compact Title and Description */}
+                              <div className="space-y-1">
+                                <h2 className="text-xl md:text-2xl font-bold text-slate-800">
+                                  {`${selectedCategory.charAt(0).toUpperCase() + selectedCategory.slice(1)} Words`}
+                                </h2>
+                                <p className="text-xs md:text-sm text-slate-600">
+                                  Learn {selectedCategory} vocabulary!
+                                </p>
+                              </div>
                             </div>
+                          ) : (
+                            <>
+                              <h2 className="text-3xl font-bold text-slate-800 mb-4">Word Library</h2>
+                              <p className="text-slate-600 mb-8">
+                                Choose how you'd like to explore and learn vocabulary!
+                              </p>
+                            </>
                           )}
 
-                          <h2 className="text-3xl font-bold text-slate-800 mb-4">
-                            {selectedCategory === "all"
-                              ? "Word Library"
-                              : `${selectedCategory.charAt(0).toUpperCase() + selectedCategory.slice(1)} Words`}
-                          </h2>
-                          <p className="text-slate-600 mb-8">
-                            {selectedCategory === "all"
-                              ? "Choose how you'd like to explore and learn vocabulary!"
-                              : `Learn ${selectedCategory} vocabulary with word cards!`}
-                          </p>
-
-                          <div className="flex justify-center gap-2 md:gap-4 mb-6 md:mb-8 flex-wrap px-4 md:px-0">
+                          <div className="flex justify-center gap-2 md:gap-4 mb-4 md:mb-6 flex-wrap px-4 md:px-0">
                             <Button
                               onClick={() => setLearningMode("cards")}
                               variant={
