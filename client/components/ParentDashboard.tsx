@@ -3614,20 +3614,58 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
         </div>
       )}
 
-      {/* Empty State */}
+      {/* Enhanced Empty State for Mobile */}
       {!reportData && !generatingReport && (
-        <Card>
-          <CardContent className="p-12 text-center">
-            <FileText className="w-16 h-16 text-slate-300 mx-auto mb-4" />
-            <h3 className="text-xl font-semibold mb-2 text-slate-600">
-              No Report Generated
+        <Card className="mx-auto max-w-md">
+          <CardContent className="p-8 md:p-12 text-center">
+            <div className="text-6xl md:text-8xl mb-4 animate-gentle-bounce">📊</div>
+            <h3 className="text-lg md:text-xl font-semibold mb-3 text-slate-700">
+              No Report Generated Yet
             </h3>
-            <p className="text-slate-500 mb-4">
-              Select a child and click "Generate Report" to create a detailed
-              learning analysis.
+            <p className="text-slate-500 mb-6 text-sm md:text-base leading-relaxed">
+              {selectedChild
+                ? `Ready to generate ${selectedChild.name}'s learning report!`
+                : "Select a child and generate their learning report to see detailed analytics."
+              }
             </p>
+            {selectedChild && (
+              <div className="space-y-3">
+                <Button
+                  onClick={() => generateLearningReport(selectedChild, "week", "summary")}
+                  className="bg-educational-blue hover:bg-educational-blue/90 w-full md:w-auto"
+                >
+                  <FileText className="w-4 h-4 mr-2" />
+                  Generate Quick Report
+                </Button>
+                <div className="text-xs text-slate-500">
+                  Get a weekly summary in seconds
+                </div>
+              </div>
+            )}
           </CardContent>
         </Card>
+      )}
+
+      {/* Mobile Floating Action Button for Reports */}
+      {selectedChild && !generatingReport && (
+        <div className="md:hidden fixed bottom-20 right-4 z-40">
+          <div className="flex flex-col gap-2">
+            <Button
+              onClick={() => generateLearningReport(selectedChild, "week", "summary")}
+              className="w-14 h-14 rounded-full bg-educational-blue hover:bg-educational-blue/90 shadow-lg"
+              title="Quick Report"
+            >
+              <Clock className="w-6 h-6" />
+            </Button>
+            <Button
+              onClick={() => generateLearningReport(selectedChild, "month", "detailed")}
+              className="w-14 h-14 rounded-full bg-educational-green hover:bg-educational-green/90 shadow-lg"
+              title="Detailed Report"
+            >
+              <TrendingUp className="w-6 h-6" />
+            </Button>
+          </div>
+        </div>
       )}
     </div>
   );
