@@ -1136,8 +1136,41 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
     </div>
   );
 
-  const renderDetailedAnalytics = () =>
-    selectedChild && (
+  const renderDetailedAnalytics = () => {
+    console.log('Rendering analytics - selectedChild:', selectedChild);
+    console.log('Children array length:', children.length);
+
+    if (!selectedChild) {
+      return (
+        <div className="space-y-4 md:space-y-6">
+          <Card className="text-center py-12">
+            <CardContent>
+              <div className="text-6xl mb-4">📊</div>
+              <h3 className="text-xl font-semibold mb-2 text-slate-600">
+                No Child Selected
+              </h3>
+              <p className="text-slate-500 mb-6">
+                {children.length === 0
+                  ? "Add a child profile first to view learning analytics."
+                  : "Select a child from the overview to view their detailed analytics."
+                }
+              </p>
+              {children.length === 0 && (
+                <Button
+                  onClick={() => setShowAddChildDialog(true)}
+                  className="bg-educational-blue"
+                >
+                  <UserPlus className="w-4 h-4 mr-2" />
+                  Add Your First Child
+                </Button>
+              )}
+            </CardContent>
+          </Card>
+        </div>
+      );
+    }
+
+    return (
       <div className="space-y-4 md:space-y-6">
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 md:gap-0">
           <div>
@@ -1533,6 +1566,7 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
         </Card>
       </div>
     );
+  };
 
   const renderNotifications = () => (
     <div className="space-y-6">
