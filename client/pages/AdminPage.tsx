@@ -1,11 +1,27 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import AdminDashboard from "@/components/AdminDashboard";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import { Shield, Lock, User, ArrowLeft } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
+import {
+  Shield,
+  Lock,
+  User,
+  ArrowLeft,
+  Eye,
+  EyeOff,
+  ShieldCheck,
+  KeyRound,
+  Monitor,
+  Smartphone,
+  CheckCircle,
+  AlertTriangle,
+  Fingerprint,
+  Server
+} from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 interface AdminLoginProps {
