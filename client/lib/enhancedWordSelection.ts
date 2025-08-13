@@ -541,7 +541,7 @@ export class EnhancedWordSelector {
     const rememberedWords: Word[] = [];
 
     userProgress.rememberedWords.forEach((wordId) => {
-      const word = wordsDatabase.find((w) => w.id === wordId);
+      const word = categoryWords.find((w) => w.id === wordId);
       const history = userHistory.get(wordId);
 
       if (word && history && now >= history.nextEligibleTime) {
