@@ -701,14 +701,14 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onNavigateBack }) => {
   );
 
   const renderContentManagement = () => (
-    <div className="space-y-6">
-      {/* Enhanced Mobile Content Header */}
-      <div className="px-2 md:px-0 mb-4 md:mb-6">
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 md:gap-0">
+    <div className="space-y-4 md:space-y-6">
+      {/* Enhanced Content Header with Statistics */}
+      <div className="px-2 md:px-0">
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 md:gap-0 mb-4">
           <div className="text-center md:text-left">
             <h2 className="text-xl md:text-2xl font-bold">📚 Content Management</h2>
             <p className="text-sm md:text-base text-slate-600">
-              Manage words, categories, and content quality
+              Managing {analytics.totalWords} words across {availableCategories.length} categories
             </p>
           </div>
           <div className="flex gap-2 justify-center md:justify-start">
@@ -736,36 +736,160 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onNavigateBack }) => {
             </Button>
           </div>
         </div>
+
+        {/* Content Statistics Dashboard */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 mb-4">
+          <Card className="bg-gradient-to-br from-blue-50 to-blue-100 border-blue-200">
+            <CardContent className="p-3 md:p-4 text-center">
+              <BookOpen className="w-6 h-6 md:w-8 md:h-8 text-blue-500 mx-auto mb-1 md:mb-2" />
+              <div className="text-lg md:text-2xl font-bold text-blue-600">
+                {analytics.totalWords}
+              </div>
+              <p className="text-xs md:text-sm text-blue-600 font-medium">Total Words</p>
+            </CardContent>
+          </Card>
+          <Card className="bg-gradient-to-br from-green-50 to-green-100 border-green-200">
+            <CardContent className="p-3 md:p-4 text-center">
+              <CheckCircle className="w-6 h-6 md:w-8 md:h-8 text-green-500 mx-auto mb-1 md:mb-2" />
+              <div className="text-lg md:text-2xl font-bold text-green-600">
+                {words.filter(w => w.status === 'approved').length}
+              </div>
+              <p className="text-xs md:text-sm text-green-600 font-medium">Approved</p>
+            </CardContent>
+          </Card>
+          <Card className="bg-gradient-to-br from-yellow-50 to-yellow-100 border-yellow-200">
+            <CardContent className="p-3 md:p-4 text-center">
+              <Clock className="w-6 h-6 md:w-8 md:h-8 text-yellow-500 mx-auto mb-1 md:mb-2" />
+              <div className="text-lg md:text-2xl font-bold text-yellow-600">
+                {words.filter(w => w.status === 'pending').length}
+              </div>
+              <p className="text-xs md:text-sm text-yellow-600 font-medium">Pending</p>
+            </CardContent>
+          </Card>
+          <Card className="bg-gradient-to-br from-purple-50 to-purple-100 border-purple-200">
+            <CardContent className="p-3 md:p-4 text-center">
+              <Layers className="w-6 h-6 md:w-8 md:h-8 text-purple-500 mx-auto mb-1 md:mb-2" />
+              <div className="text-lg md:text-2xl font-bold text-purple-600">
+                {availableCategories.length}
+              </div>
+              <p className="text-xs md:text-sm text-purple-600 font-medium">Categories</p>
+            </CardContent>
+          </Card>
+        </div>
       </div>
 
-      {/* Enhanced Mobile Content Filters */}
+      {/* Enhanced Advanced Filters and Search */}
       <Card className="mx-2 md:mx-0">
-        <CardContent className="p-3 md:p-4">
-          <div className="flex flex-col md:flex-row gap-3 md:gap-4 md:items-center">
-            <div className="flex-1">
+        <CardContent className="p-3 md:p-4 space-y-3 md:space-y-4">
+          {/* Primary Search */}
+          <div className="flex flex-col md:flex-row gap-3 md:gap-4">
+            <div className="flex-1 relative">
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-slate-400" />
               <Input
-                placeholder="Search words..."
+                placeholder="Search words, definitions, examples..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full md:max-w-sm"
+                className="pl-10 w-full"
               />
             </div>
             <div className="flex gap-2">
-              <Select value={wordFilter} onValueChange={setWordFilter}>
-                <SelectTrigger className="w-32 md:w-40">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="all">All Status</SelectItem>
-                  <SelectItem value="approved">Approved</SelectItem>
-                  <SelectItem value="pending">Pending</SelectItem>
-                  <SelectItem value="rejected">Rejected</SelectItem>
-                </SelectContent>
-              </Select>
-              <Button variant="outline" size="sm" className="px-3">
-                <Filter className="w-4 h-4" />
+              <Button
+                variant={viewMode === "list" ? "default" : "outline"}
+                size="sm"
+                onClick={() => setViewMode("list")}
+                className="px-3"
+              >
+                <Eye className="w-4 h-4" />
+              </Button>
+              <Button
+                variant={viewMode === "grid" ? "default" : "outline"}
+                size="sm"
+                onClick={() => setViewMode("grid")}
+                className="px-3"
+              >
+                <PieChart className="w-4 h-4" />
               </Button>
             </div>
+          </div>
+
+          {/* Advanced Filters */}
+          <div className="flex flex-col md:flex-row gap-3 md:gap-4">
+            <Select value={wordFilter} onValueChange={setWordFilter}>
+              <SelectTrigger className="w-full md:w-40">
+                <SelectValue placeholder="Status" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">All Status</SelectItem>
+                <SelectItem value="approved">✅ Approved</SelectItem>
+                <SelectItem value="pending">⏳ Pending</SelectItem>
+                <SelectItem value="rejected">❌ Rejected</SelectItem>
+              </SelectContent>
+            </Select>
+
+            <Select value={categoryFilter} onValueChange={setCategoryFilter}>
+              <SelectTrigger className="w-full md:w-40">
+                <SelectValue placeholder="Category" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">All Categories</SelectItem>
+                {availableCategories.map(cat => (
+                  <SelectItem key={cat.id} value={cat.id}>
+                    {cat.name} ({cat.count})
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+
+            <Select value={difficultyFilter} onValueChange={setDifficultyFilter}>
+              <SelectTrigger className="w-full md:w-40">
+                <SelectValue placeholder="Difficulty" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">All Levels</SelectItem>
+                <SelectItem value="easy">🌟 Easy</SelectItem>
+                <SelectItem value="medium">⭐ Medium</SelectItem>
+                <SelectItem value="hard">🔥 Hard</SelectItem>
+              </SelectContent>
+            </Select>
+
+            <Select value={sortBy} onValueChange={(value: any) => setSortBy(value)}>
+              <SelectTrigger className="w-full md:w-40">
+                <SelectValue placeholder="Sort by" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="word">A-Z Word</SelectItem>
+                <SelectItem value="category">Category</SelectItem>
+                <SelectItem value="difficulty">Difficulty</SelectItem>
+                <SelectItem value="usageCount">Usage Count</SelectItem>
+                <SelectItem value="accuracy">Accuracy</SelectItem>
+                <SelectItem value="lastUsed">Last Used</SelectItem>
+              </SelectContent>
+            </Select>
+
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => setSortOrder(sortOrder === "asc" ? "desc" : "asc")}
+              className="px-3"
+            >
+              {sortOrder === "asc" ? "↑" : "↓"}
+            </Button>
+          </div>
+
+          {/* Results Summary */}
+          <div className="flex flex-col md:flex-row justify-between items-center gap-2 text-sm text-slate-600">
+            <span>
+              Showing {filteredAndSortedWords.length} of {words.length} words
+              {searchTerm && ` for "${searchTerm}"`}
+            </span>
+            {selectedWords.length > 0 && (
+              <div className="flex gap-2">
+                <span>{selectedWords.length} selected</span>
+                <Button variant="outline" size="sm" onClick={() => setSelectedWords([])}>
+                  Clear Selection
+                </Button>
+              </div>
+            )}
           </div>
         </CardContent>
       </Card>
