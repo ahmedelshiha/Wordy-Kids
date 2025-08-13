@@ -858,26 +858,39 @@ export function InteractiveDashboardWordCard({
               <div className="grid grid-cols-2 gap-3">
                 <Button
                   onClick={() => handleWordAction("needs_practice")}
-                  variant="outline"
                   disabled={isAnswered}
-                  className="flex-1 bg-gradient-to-br from-red-100 to-pink-100 hover:from-red-200 hover:to-pink-200 border-2 border-red-300 hover:border-red-400 text-red-700 hover:text-red-800 transition-all duration-300 transform hover:scale-110 hover:rotate-1 py-4 px-3 rounded-3xl shadow-lg hover:shadow-xl animate-kid-float disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
+                  className="flex-1 bg-gradient-to-r from-red-400 to-pink-500 hover:from-red-500 hover:to-pink-600 text-white font-bold border-0 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 active:scale-95 py-4 px-3 min-h-[60px] relative overflow-hidden disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
                 >
-                  <XCircle className="w-4 h-4 mr-1 md:w-6 md:h-6 md:mr-2" />
-                  <div className="text-center">
-                    <div className="font-bold text-xs">😔 I Forgot</div>
-                    <div className="text-xs opacity-75 mt-0.5">Try again!</div>
+                  <div className="absolute inset-0 bg-white/20 rounded-xl opacity-0 hover:opacity-100 transition-opacity duration-300"></div>
+                  <div className="relative z-10 flex items-center justify-center">
+                    <span className="text-lg mr-1 animate-wiggle">😔</span>
+                    <div className="text-center">
+                      <div className="font-bold text-xs md:text-sm">
+                        I Forgot
+                      </div>
+                      <div className="text-xs opacity-90 mt-0.5">
+                        Need practice! 💪
+                      </div>
+                    </div>
                   </div>
                 </Button>
 
                 <Button
                   onClick={() => handleWordAction("remembered")}
                   disabled={isAnswered}
-                  className="flex-1 bg-gradient-to-br from-green-100 to-emerald-100 hover:from-green-200 hover:to-emerald-200 border-2 border-green-300 hover:border-green-400 text-green-700 hover:text-green-800 transition-all duration-300 transform hover:scale-110 hover:-rotate-1 py-4 px-3 rounded-3xl shadow-lg hover:shadow-xl animate-kid-float-delayed disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
+                  className="flex-1 bg-gradient-to-r from-green-400 to-emerald-500 hover:from-green-500 hover:to-emerald-600 text-white font-bold border-0 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 active:scale-95 py-4 px-3 min-h-[60px] relative overflow-hidden disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
                 >
-                  <CheckCircle className="w-4 h-4 mr-1 md:w-6 md:h-6 md:mr-2" />
-                  <div className="text-center">
-                    <div className="font-bold text-xs">😊 I Remember</div>
-                    <div className="text-xs opacity-75 mt-0.5">Awesome!</div>
+                  <div className="absolute inset-0 bg-white/20 rounded-xl opacity-0 hover:opacity-100 transition-opacity duration-300"></div>
+                  <div className="relative z-10 flex items-center justify-center">
+                    <span className="text-lg mr-1 animate-bounce">😊</span>
+                    <div className="text-center">
+                      <div className="font-bold text-xs md:text-sm">
+                        I Remember
+                      </div>
+                      <div className="text-xs opacity-90 mt-0.5">
+                        Awesome! ⭐
+                      </div>
+                    </div>
                   </div>
                 </Button>
               </div>

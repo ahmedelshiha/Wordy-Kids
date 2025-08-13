@@ -21,6 +21,7 @@ import {
   getSystematicTimedVowelQuestions,
 } from "@/lib/vowelQuizGeneration";
 import { AchievementTracker } from "@/lib/achievementTracker";
+import { audioService } from "@/lib/audioService";
 import { EnhancedAchievementPopup } from "@/components/EnhancedAchievementPopup";
 import { SettingsPanel } from "@/components/SettingsPanel";
 import { FloatingBubbles } from "@/components/FloatingBubbles";
@@ -109,7 +110,8 @@ export default function Index({ initialProfile }: IndexProps) {
   const [showMatchingGame, setShowMatchingGame] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
   const [showCelebration, setShowCelebration] = useState(false);
-  const [userRole, setUserRole] = useState<"child" | "parent">("child");
+  const [celebrationEffect, setCelebrationEffect] = useState(false);
+  const [userRole, setUserRole] = useState<"child" | "parent">("parent");
   const [showWordCreator, setShowWordCreator] = useState(false);
   const [customWords, setCustomWords] = useState<any[]>([]);
   const [backgroundAnimationsEnabled, setBackgroundAnimationsEnabled] =
@@ -500,7 +502,7 @@ export default function Index({ initialProfile }: IndexProps) {
       if (accuracy === 100) {
         achievementTitle = "Perfect Category Mastery! 🏆";
         achievementIcon = "🏆";
-        achievementMessage = `Outstanding! You remembered ALL ${totalWords} words in ${categoryDisplayName}! You're a true champion!\n\n🎁 Perfect Mastery Bonus: 200 points!\n✨ New adventure zone unlocked!\n🏆 Master badge earned!`;
+        achievementMessage = `Outstanding! You remembered ALL ${totalWords} words in ${categoryDisplayName}! You're a true champion!\n\n🎁 Perfect Mastery Bonus: 200 points!\n✨ New adventure zone unlocked!\n��� Master badge earned!`;
       } else if (accuracy >= 90) {
         achievementTitle = "Category Expert! 🎓";
         achievementIcon = "🎓⭐";
@@ -511,7 +513,7 @@ export default function Index({ initialProfile }: IndexProps) {
         achievementMessage = `Great job! You completed ${categoryDisplayName} with ${accuracy}% accuracy! Keep up the good work!\n\n🎁 Scholar Bonus: 100 points!\n📚 Scholar badge earned!`;
       } else if (accuracy >= 50) {
         achievementTitle = "Category Explorer! 🗺️🌟";
-        achievementIcon = "🎯";
+        achievementIcon = "����";
         achievementMessage = `Good effort! You finished ${categoryDisplayName} with ${accuracy}% accuracy! Practice makes perfect!\n\n🎁 Explorer Bonus: 75 points!\n🎯 Explorer badge earned!`;
       } else {
         achievementTitle = "Category Challenger! 💪";
@@ -645,17 +647,17 @@ export default function Index({ initialProfile }: IndexProps) {
         });
       }
 
-      // Add achievements to notifications
-      if (response.achievements && response.achievements.length > 0) {
-        response.achievements.forEach((achievement) => {
-          notifications.push({
-            type: "achievement",
-            title: `🏆 Achievement Unlocked!`,
-            message: achievement,
-            points: 25,
-          });
-        });
-      }
+      // OLD ACHIEVEMENT NOTIFICATIONS DISABLED - Using only the new enhanced orange achievement system
+      // if (response.achievements && response.achievements.length > 0) {
+      //   response.achievements.forEach((achievement) => {
+      //     notifications.push({
+      //       type: "achievement",
+      //       title: `🏆 Achievement Unlocked!`,
+      //       message: achievement,
+      //       points: 25,
+      //     });
+      //   });
+      // }
 
       // Show notifications in sequence
       if (notifications.length > 0) {
@@ -824,7 +826,7 @@ export default function Index({ initialProfile }: IndexProps) {
               </div>
             </div>
             <h1 className="text-2xl md:text-3xl font-bold mb-1">
-              🌟 Wordy's Adventure!
+              ��� Wordy's Adventure!
             </h1>
             <p className="text-lg font-semibold text-educational-yellow-light mb-2">
               Fun vocabulary learning for kids! 📚
@@ -1278,32 +1280,44 @@ export default function Index({ initialProfile }: IndexProps) {
                     ) : (
                       <>
                         <div className="text-center">
-                          <h2 className="text-3xl font-bold text-slate-800 mb-4">
-                            Word Library
-                          </h2>
-                          <p className="text-slate-600 mb-8">
-                            Choose how you'd like to explore and learn
-                            vocabulary!
-                          </p>
+                          {/* Compact Layout for All Selected Categories (including All Words) */}
+                          <div className="mb-2">
+                            {/* Title/Description and Back Button Side by Side (Mobile & Desktop) */}
+                            <div className="flex items-center justify-between gap-2">
+                              {/* Title and Description */}
+                              <div className="text-left flex-1 min-w-0">
+                                <h2 className="text-base sm:text-lg md:text-xl font-bold text-slate-800 truncate">
+                                  {selectedCategory === "all"
+                                    ? "All Words"
+                                    : `${selectedCategory.charAt(0).toUpperCase() + selectedCategory.slice(1)} Words`}
+                                </h2>
+                                <p className="text-xs md:text-sm text-slate-600">
+                                  {selectedCategory === "all"
+                                    ? "Learn vocabulary from all categories!"
+                                    : `Learn ${selectedCategory} vocabulary!`}
+                                </p>
+                              </div>
 
-                          <div className="flex justify-center gap-2 md:gap-4 mb-6 md:mb-8 flex-wrap px-4 md:px-0">
-                            <Button
-                              onClick={() => setLearningMode("cards")}
-                              variant={
-                                learningMode === "cards" ? "default" : "outline"
-                              }
-                              className="flex items-center gap-1 md:gap-2 text-sm md:text-base px-3 md:px-4"
-                            >
-                              <img
-                                src="https://cdn.builder.io/api/v1/image/assets%2Fa33f74a2f97141a4a1ef43d9448f9bda%2F2a4b7e4c3c38485b966cfd2cff50da9e?format=webp&width=800"
-                                alt="Wordy"
-                                className="w-4 h-4 rounded"
-                              />
-                              <span className="hidden sm:inline">
-                                Word Cards
-                              </span>
-                              <span className="sm:hidden">Cards</span>
-                            </Button>
+                              {/* Simple Back Button */}
+                              <div className="flex-shrink-0">
+                                <Button
+                                  onClick={() => {
+                                    setSelectedCategory("all");
+                                    setLearningMode("selector");
+                                  }}
+                                  variant="outline"
+                                  className="flex items-center gap-1 text-xs px-2 py-1 h-7 rounded-md"
+                                >
+                                  <span className="text-sm">←</span>
+                                  <span className="hidden sm:inline">
+                                    Back to Library
+                                  </span>
+                                  <span className="sm:hidden">
+                                    Back to Library
+                                  </span>
+                                </Button>
+                              </div>
+                            </div>
                           </div>
                         </div>
 
@@ -1320,7 +1334,29 @@ export default function Index({ initialProfile }: IndexProps) {
                                 <>
                                   {displayWords.length > 0 && (
                                     <>
-                                      <div className="max-w-sm md:max-w-md mx-auto px-2 md:px-0">
+                                      <div
+                                        className={`max-w-sm md:max-w-md mx-auto px-2 md:px-0 relative ${
+                                          celebrationEffect &&
+                                          "animate-pulse shadow-2xl"
+                                        }`}
+                                      >
+                                        {/* Celebration Sparkles */}
+                                        {celebrationEffect && (
+                                          <div className="absolute inset-0 bg-gradient-to-r from-yellow-400/20 to-pink-400/20 animate-pulse z-20 rounded-xl">
+                                            <div className="absolute top-4 left-4 text-2xl animate-bounce">
+                                              ✨
+                                            </div>
+                                            <div className="absolute top-6 right-6 text-3xl animate-spin">
+                                              🌟
+                                            </div>
+                                            <div className="absolute bottom-4 left-6 text-2xl animate-bounce delay-300">
+                                              🎊
+                                            </div>
+                                            <div className="absolute bottom-6 right-4 text-2xl animate-pulse delay-500">
+                                              💫
+                                            </div>
+                                          </div>
+                                        )}
                                         <WordCard
                                           word={{
                                             ...(displayWords[
@@ -1389,7 +1425,8 @@ export default function Index({ initialProfile }: IndexProps) {
                                                   currentWord,
                                                   "needs_practice",
                                                 );
-                                                // Show celebration effect briefly
+                                                // Show encouragement effects and play sound
+                                                audioService.playEncouragementSound();
                                                 setShowCelebration(true);
                                                 setTimeout(
                                                   () =>
@@ -1443,19 +1480,21 @@ export default function Index({ initialProfile }: IndexProps) {
                                                 }
                                               }
                                             }}
-                                            variant="outline"
-                                            className="flex-1 bg-red-50 hover:bg-red-100 border-red-200 hover:border-red-300 text-red-700 hover:text-red-800 transition-all duration-300 transform hover:scale-105 py-4 px-6"
+                                            className="flex-1 bg-gradient-to-r from-red-400 to-pink-500 hover:from-red-500 hover:to-pink-600 text-white font-bold border-0 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 active:scale-95 py-4 px-6 min-h-[60px] relative overflow-hidden"
                                             disabled={isLoadingProgress}
                                           >
-                                            <span className="text-xl mr-2">
-                                              ❌
-                                            </span>
-                                            <div className="text-center">
-                                              <div className="font-bold text-lg">
-                                                I Forgot
-                                              </div>
-                                              <div className="text-xs opacity-75">
-                                                Need practice
+                                            <div className="absolute inset-0 bg-white/20 rounded-xl opacity-0 hover:opacity-100 transition-opacity duration-300"></div>
+                                            <div className="relative z-10 flex items-center justify-center">
+                                              <span className="text-2xl mr-2 animate-wiggle">
+                                                😔
+                                              </span>
+                                              <div className="text-center">
+                                                <div className="font-bold text-lg">
+                                                  I Forgot
+                                                </div>
+                                                <div className="text-xs opacity-90">
+                                                  Need practice! 💪
+                                                </div>
                                               </div>
                                             </div>
                                           </Button>
@@ -1484,13 +1523,14 @@ export default function Index({ initialProfile }: IndexProps) {
                                                   currentWord,
                                                   "remembered",
                                                 );
-                                                // Show celebration effect
+                                                // Show enhanced celebration effects and play success sound
+                                                setCelebrationEffect(true);
+                                                audioService.playSuccessSound();
                                                 setShowCelebration(true);
-                                                setTimeout(
-                                                  () =>
-                                                    setShowCelebration(false),
-                                                  1500,
-                                                );
+                                                setTimeout(() => {
+                                                  setCelebrationEffect(false);
+                                                  setShowCelebration(false);
+                                                }, 2000);
                                               }
                                               // Auto-advance to next word
                                               if (
@@ -1565,18 +1605,21 @@ export default function Index({ initialProfile }: IndexProps) {
                                                 }
                                               }
                                             }}
-                                            className="flex-1 bg-green-50 hover:bg-green-100 border-green-200 hover:border-green-300 text-green-700 hover:text-green-800 transition-all duration-300 transform hover:scale-105 py-4 px-6"
+                                            className="flex-1 bg-gradient-to-r from-green-400 to-emerald-500 hover:from-green-500 hover:to-emerald-600 text-white font-bold border-0 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 active:scale-95 py-4 px-6 min-h-[60px] relative overflow-hidden"
                                             disabled={isLoadingProgress}
                                           >
-                                            <span className="text-xl mr-2">
-                                              ✅
-                                            </span>
-                                            <div className="text-center">
-                                              <div className="font-bold text-lg">
-                                                I Remember!
-                                              </div>
-                                              <div className="text-xs opacity-75">
-                                                Got it!
+                                            <div className="absolute inset-0 bg-white/20 rounded-xl opacity-0 hover:opacity-100 transition-opacity duration-300"></div>
+                                            <div className="relative z-10 flex items-center justify-center">
+                                              <span className="text-2xl mr-2 animate-bounce">
+                                                😊
+                                              </span>
+                                              <div className="text-center">
+                                                <div className="font-bold text-lg">
+                                                  I Remember!
+                                                </div>
+                                                <div className="text-xs opacity-90">
+                                                  Awesome! ⭐
+                                                </div>
                                               </div>
                                             </div>
                                           </Button>

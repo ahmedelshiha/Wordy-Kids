@@ -294,8 +294,9 @@ export function AchievementSystem({
 }: AchievementSystemProps) {
   const [selectedCategory, setSelectedCategory] = useState<string>("all");
   const [showUnlockables, setShowUnlockables] = useState(false);
-  const [celebratingAchievement, setCelebratingAchievement] =
-    useState<Achievement | null>(null);
+  // OLD ACHIEVEMENT CELEBRATION SYSTEM REMOVED
+  // const [celebratingAchievement, setCelebratingAchievement] =
+  //   useState<Achievement | null>(null);
   const [activeTab, setActiveTab] = useState("achievements");
 
   const categories = [
@@ -326,9 +327,10 @@ export function AchievementSystem({
 
   const handleAchievementClick = (achievement: Achievement) => {
     if (achievement.unlocked) {
-      setCelebratingAchievement(achievement);
+      // Old celebration modal disabled - keeping only the enhanced achievement system
+      // setCelebratingAchievement(achievement);
       audioService.playCheerSound();
-      setTimeout(() => setCelebratingAchievement(null), 3000);
+      // setTimeout(() => setCelebratingAchievement(null), 3000);
     }
   };
 
@@ -700,7 +702,7 @@ export function AchievementSystem({
                         achievement.unlocked
                           ? `bg-gradient-to-br ${getDifficultyColor(achievement.difficulty)} text-white shadow-lg`
                           : "bg-white border-2 border-dashed border-gray-300 hover:border-educational-blue"
-                      } ${celebratingAchievement?.id === achievement.id ? "animate-bounce" : ""}`}
+                      }`}
                       onClick={() => handleAchievementClick(achievement)}
                     >
                       <CardHeader className="pb-2">
@@ -855,32 +857,8 @@ export function AchievementSystem({
         </TabsContent>
       </Tabs>
 
-      {/* Achievement Celebration Modal */}
-      {celebratingAchievement && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-          <Card className="bg-gradient-to-br from-educational-purple to-educational-pink text-white max-w-md mx-4 animate-bounce">
-            <CardContent className="p-8 text-center">
-              <div className="text-6xl mb-4">{celebratingAchievement.icon}</div>
-              <h3 className="text-2xl font-bold mb-2">Achievement Unlocked!</h3>
-              <h4 className="text-xl mb-4">{celebratingAchievement.name}</h4>
-              <p className="text-white/90 mb-4">
-                {celebratingAchievement.description}
-              </p>
-              {celebratingAchievement.reward && (
-                <div className="bg-white/20 rounded-lg p-3 mb-4">
-                  <div className="text-sm font-semibold mb-1">Reward:</div>
-                  <div className="text-lg">
-                    🎁 {celebratingAchievement.reward.item}
-                  </div>
-                </div>
-              )}
-              <div className="flex justify-center">
-                <Sparkles className="w-8 h-8 text-yellow-300 animate-spin" />
-              </div>
-            </CardContent>
-          </Card>
-        </div>
-      )}
+      {/* OLD ACHIEVEMENT CELEBRATION MODAL COMPLETELY REMOVED */}
+      {/* Only using the new enhanced orange achievement popup system */}
     </div>
   );
 }
