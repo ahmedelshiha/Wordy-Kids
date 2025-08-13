@@ -74,18 +74,23 @@ export default function LoginForm() {
     }
   }, []);
 
-  // Real-time email validation
+  // Enhanced email validation with professional standards
   const validateEmail = (email: string) => {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!email) return "Email is required";
-    if (!emailRegex.test(email)) return "Please enter a valid email address";
+    const emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
+    if (!email) return "Parent email address is required";
+    if (email.length > 254) return "Email address is too long";
+    if (!emailRegex.test(email)) return "Please enter a valid email address (e.g., parent@example.com)";
     return null;
   };
 
-  // Real-time password validation
+  // Enhanced password validation with security standards
   const validatePassword = (password: string) => {
     if (!password) return "Password is required";
-    if (password.length < 3) return "Password must be at least 3 characters";
+    if (password.length < 8) return "Password must be at least 8 characters for security";
+    if (password.length > 128) return "Password is too long (max 128 characters)";
+    if (!/(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/.test(password)) {
+      return "Password should contain uppercase, lowercase, and numbers for better security";
+    }
     return null;
   };
 
@@ -356,7 +361,10 @@ export default function LoginForm() {
                     id="email"
                     name="email"
                     type="email"
-                    placeholder="Enter your email"
+                    placeholder="Enter parent email address"
+                    autoComplete="email"
+                    inputMode="email"
+                    spellCheck={false}
                     value={formData.email}
                     onChange={handleInputChange}
                     onBlur={() => handleBlur("email")}
@@ -398,7 +406,8 @@ export default function LoginForm() {
                     id="password"
                     name="password"
                     type={showPassword ? "text" : "password"}
-                    placeholder="Enter your password"
+                    placeholder="Enter your password (min 8 characters)"
+                    autoComplete="current-password"
                     value={formData.password}
                     onChange={handleInputChange}
                     onBlur={() => handleBlur("password")}
@@ -460,7 +469,7 @@ export default function LoginForm() {
                   className="text-sm text-gray-600 cursor-pointer flex items-center gap-1"
                 >
                   <Shield className="w-3 h-3" />
-                  Remember me on this device
+                  Keep me signed in on this device (recommended for personal devices only)
                 </Label>
               </div>
 
