@@ -121,6 +121,7 @@ export class EnhancedWordSelector {
 
       case "targeted_review":
         selectedWords = this.selectReviewWords(
+          categoryWords,
           userHistory,
           userProgress,
           childStats,
