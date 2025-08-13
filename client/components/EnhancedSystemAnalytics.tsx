@@ -890,8 +890,151 @@ const EnhancedSystemAnalytics: React.FC<EnhancedSystemAnalyticsProps> = ({
                   </div>
                 </div>
               )}
-              
-              {/* Add similar detail views for other metrics */}
+
+              {showDetailDialog === 'engagement' && (
+                <div className="space-y-4">
+                  <div className="grid grid-cols-2 gap-4">
+                    <div className="p-4 bg-green-50 dark:bg-green-900/20 rounded-lg">
+                      <p className="text-sm text-green-600 dark:text-green-400">Engagement Rate</p>
+                      <p className="text-2xl font-bold">{Math.round(analyticsData.activeUsers / analyticsData.totalUsers * 100)}%</p>
+                    </div>
+                    <div className="p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
+                      <p className="text-sm text-blue-600 dark:text-blue-400">Avg Session</p>
+                      <p className="text-2xl font-bold">{analyticsData.avgSessionDuration}min</p>
+                    </div>
+                  </div>
+                  <div className="space-y-2">
+                    <h4 className="font-medium">Engagement Metrics</h4>
+                    <div className="space-y-2">
+                      <div className="flex justify-between">
+                        <span>Daily Active Users</span>
+                        <span>{analyticsData.dailyActiveUsers.toLocaleString()}</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span>Monthly Active Users</span>
+                        <span>{analyticsData.monthlyActiveUsers.toLocaleString()}</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span>Total Sessions</span>
+                        <span>{analyticsData.totalSessions.toLocaleString()}</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span>Bounce Rate</span>
+                        <span>{analyticsData.bounceRate}%</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {showDetailDialog === 'content' && (
+                <div className="space-y-4">
+                  <div className="grid grid-cols-2 gap-4">
+                    <div className="p-4 bg-purple-50 dark:bg-purple-900/20 rounded-lg">
+                      <p className="text-sm text-purple-600 dark:text-purple-400">Approval Rate</p>
+                      <p className="text-2xl font-bold">{analyticsData.contentApprovalRate}%</p>
+                    </div>
+                    <div className="p-4 bg-indigo-50 dark:bg-indigo-900/20 rounded-lg">
+                      <p className="text-sm text-indigo-600 dark:text-indigo-400">Total Words</p>
+                      <p className="text-2xl font-bold">{analyticsData.totalWords.toLocaleString()}</p>
+                    </div>
+                  </div>
+                  <div className="space-y-2">
+                    <h4 className="font-medium">Content Performance</h4>
+                    <div className="space-y-2">
+                      <div className="flex justify-between">
+                        <span>Words Added This Month</span>
+                        <span>{analyticsData.wordsAddedThisMonth}</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span>Average Words per Session</span>
+                        <span>{analyticsData.avgWordsPerSession}</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span>Top Category</span>
+                        <span>{analyticsData.popularCategories[0]?.name}</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span>Categories Available</span>
+                        <span>{analyticsData.popularCategories.length}</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="space-y-2">
+                    <h4 className="font-medium">Category Growth</h4>
+                    <div className="space-y-2">
+                      {analyticsData.popularCategories.slice(0, 3).map((category, index) => (
+                        <div key={index} className="flex justify-between items-center">
+                          <span>{category.name}</span>
+                          <div className="flex items-center gap-2">
+                            <span className="text-sm text-gray-500">{category.count} words</span>
+                            <span className={`text-sm font-medium ${getTrendColor(category.growth)}`}>
+                              {category.growth > 0 ? '+' : ''}{category.growth}%
+                            </span>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {showDetailDialog === 'performance' && (
+                <div className="space-y-4">
+                  <div className="grid grid-cols-2 gap-4">
+                    <div className="p-4 bg-orange-50 dark:bg-orange-900/20 rounded-lg">
+                      <p className="text-sm text-orange-600 dark:text-orange-400">System Uptime</p>
+                      <p className="text-2xl font-bold">{analyticsData.systemUptime}%</p>
+                    </div>
+                    <div className="p-4 bg-cyan-50 dark:bg-cyan-900/20 rounded-lg">
+                      <p className="text-sm text-cyan-600 dark:text-cyan-400">Load Time</p>
+                      <p className="text-2xl font-bold">{analyticsData.avgLoadTime}s</p>
+                    </div>
+                  </div>
+                  <div className="space-y-2">
+                    <h4 className="font-medium">System Performance</h4>
+                    <div className="space-y-2">
+                      <div className="flex justify-between">
+                        <span>API Success Rate</span>
+                        <span className="text-green-600">{analyticsData.apiSuccessRate}%</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span>Error Rate</span>
+                        <span className="text-red-600">{analyticsData.errorRate}%</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span>CPU Usage</span>
+                        <span>{analyticsData.cpuUsage}%</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span>Memory Usage</span>
+                        <span>{analyticsData.memoryUsage}%</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="space-y-2">
+                    <h4 className="font-medium">Support Performance</h4>
+                    <div className="space-y-2">
+                      <div className="flex justify-between">
+                        <span>Open Tickets</span>
+                        <span>{analyticsData.supportTickets}</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span>Average Response Time</span>
+                        <span>{analyticsData.avgResponseTime}h</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span>Resolution Rate</span>
+                        <span className="text-green-600">{analyticsData.resolutionRate}%</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span>Satisfaction Score</span>
+                        <span className="text-yellow-600">{analyticsData.satisfactionScore}/5</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
             </div>
           </DialogContent>
         </Dialog>
