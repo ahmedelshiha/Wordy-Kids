@@ -1136,7 +1136,7 @@ const EnhancedUserManagement: React.FC<EnhancedUserManagementProps> = ({
       {/* User Detail Dialog */}
       {userDetailView && (
         <Dialog open={!!userDetailView} onOpenChange={() => setUserDetailView(null)}>
-          <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
+          <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto w-[95vw] sm:w-full">
             <DialogHeader>
               <DialogTitle className="flex items-center gap-3">
                 <Avatar className="w-10 h-10">
