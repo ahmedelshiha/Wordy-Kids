@@ -90,6 +90,25 @@ export default function SignUp() {
       return;
     }
 
+    // Validate child name
+    if (formData.childName.trim().length < 2) {
+      setMessage({
+        type: "error",
+        text: "Child's name must be at least 2 characters long",
+      });
+      setIsLoading(false);
+      return;
+    }
+
+    if (!/^[a-zA-Z\s'-]+$/.test(formData.childName.trim())) {
+      setMessage({
+        type: "error",
+        text: "Child's name should only contain letters, spaces, hyphens, and apostrophes",
+      });
+      setIsLoading(false);
+      return;
+    }
+
     if (formData.password !== formData.confirmPassword) {
       setMessage({
         type: "error",
