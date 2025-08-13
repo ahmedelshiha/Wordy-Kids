@@ -342,15 +342,15 @@ export function AchievementSystem({
 
   const renderProgressOverview = () => (
     <div className="space-y-6">
-      {/* Fun Stats Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+      {/* Fun Stats Cards - Mobile Optimized */}
+      <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-2 md:gap-4 px-2 md:px-0">
         <Card className="bg-gradient-to-br from-educational-blue to-educational-purple text-white hover:scale-105 transition-all">
-          <CardContent className="p-6 text-center">
-            <Brain className="w-8 h-8 mx-auto mb-2 animate-pulse" />
-            <div className="text-3xl font-bold mb-1">
+          <CardContent className="p-3 md:p-6 text-center">
+            <Brain className="w-6 h-6 md:w-8 md:h-8 mx-auto mb-1 md:mb-2 animate-pulse" />
+            <div className="text-xl md:text-3xl font-bold mb-1">
               <AnimatedCounter value={stats.totalWordsLearned} />
             </div>
-            <p className="text-sm opacity-90">Words Learned! 🎯</p>
+            <p className="text-xs md:text-sm opacity-90">Words Learned! 🎯</p>
           </CardContent>
         </Card>
 
@@ -585,46 +585,50 @@ export function AchievementSystem({
 
   return (
     <div className="space-y-6">
-      {/* Kid-Friendly Header */}
-      <div className="text-center">
-        <h2 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-educational-blue via-educational-purple to-educational-pink bg-clip-text text-transparent mb-2">
+      {/* Kid-Friendly Header - Mobile Optimized */}
+      <div className="text-center px-4">
+        <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold bg-gradient-to-r from-educational-blue via-educational-purple to-educational-pink bg-clip-text text-transparent mb-2 leading-tight">
           🏆 Your Learning Journey! 🌟
         </h2>
-        <p className="text-gray-600 mb-4 text-lg">
+        <p className="text-gray-600 mb-4 text-sm md:text-lg px-2">
           See how amazing you are at learning new words! 🎉
         </p>
       </div>
 
       {/* Fun Tabs */}
       <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-        <TabsList className="grid w-full grid-cols-4 bg-gradient-to-r from-educational-blue/10 to-educational-purple/10">
+        <TabsList className="grid w-full grid-cols-2 md:grid-cols-4 gap-1 md:gap-0 bg-gradient-to-r from-educational-blue/10 to-educational-purple/10 h-auto p-1">
           <TabsTrigger
             value="achievements"
-            className="flex items-center gap-2 data-[state=active]:bg-educational-blue data-[state=active]:text-white"
+            className="flex flex-col md:flex-row items-center gap-1 md:gap-2 data-[state=active]:bg-educational-blue data-[state=active]:text-white text-xs md:text-sm py-2 md:py-3 px-1 md:px-3"
           >
-            <Trophy className="w-4 h-4" />
-            🏆 Trophies
+            <Trophy className="w-4 h-4 md:w-4 md:h-4" />
+            <span className="hidden md:inline">🏆 Trophies</span>
+            <span className="md:hidden text-center">🏆<br/>Trophies</span>
           </TabsTrigger>
           <TabsTrigger
             value="progress"
-            className="flex items-center gap-2 data-[state=active]:bg-educational-green data-[state=active]:text-white"
+            className="flex flex-col md:flex-row items-center gap-1 md:gap-2 data-[state=active]:bg-educational-green data-[state=active]:text-white text-xs md:text-sm py-2 md:py-3 px-1 md:px-3"
           >
-            <TrendingUp className="w-4 h-4" />
-            📈 My Stats
+            <TrendingUp className="w-4 h-4 md:w-4 md:h-4" />
+            <span className="hidden md:inline">📈 My Stats</span>
+            <span className="md:hidden text-center">📈<br/>Stats</span>
           </TabsTrigger>
           <TabsTrigger
             value="categories"
-            className="flex items-center gap-2 data-[state=active]:bg-educational-orange data-[state=active]:text-white"
+            className="flex flex-col md:flex-row items-center gap-1 md:gap-2 data-[state=active]:bg-educational-orange data-[state=active]:text-white text-xs md:text-sm py-2 md:py-3 px-1 md:px-3"
           >
-            <PieChart className="w-4 h-4" />
-            🎨 Topics
+            <PieChart className="w-4 h-4 md:w-4 md:h-4" />
+            <span className="hidden md:inline">🎨 Topics</span>
+            <span className="md:hidden text-center">🎨<br/>Topics</span>
           </TabsTrigger>
           <TabsTrigger
             value="streaks"
-            className="flex items-center gap-2 data-[state=active]:bg-educational-purple data-[state=active]:text-white"
+            className="flex flex-col md:flex-row items-center gap-1 md:gap-2 data-[state=active]:bg-educational-purple data-[state=active]:text-white text-xs md:text-sm py-2 md:py-3 px-1 md:px-3"
           >
-            <Activity className="w-4 h-4" />
-            🔥 Adventure
+            <Activity className="w-4 h-4 md:w-4 md:h-4" />
+            <span className="hidden md:inline">🔥 Adventure</span>
+            <span className="md:hidden text-center">🔥<br/>Adventure</span>
           </TabsTrigger>
         </TabsList>
 
