@@ -78,14 +78,24 @@ export class EnhancedWordSelector {
     );
 
     // Determine session strategy based on exhaustion and performance
-    const sessionStrategy = this.determineSessionStrategy(
+    let sessionStrategy = this.determineSessionStrategy(
       exhaustionLevel,
       childStats,
       categoryWords.length,
     );
 
+    // Override cross_category strategy if user selected a specific category
+    // Only use cross_category when user selected "all" or when no words available in selected category
+    if (sessionStrategy === "cross_category") {
+      if (category !== "all" && categoryWords.length > 0) {
+        // Force staying within the selected category by using targeted_review or mixed_reinforcement
+        sessionStrategy = exhaustionLevel >= 0.8 ? "targeted_review" : "mixed_reinforcement";
+        console.log(`Overriding cross_category strategy to ${sessionStrategy} to respect category selection: ${category}`);
+      }
+    }
+
     console.log(
-      `Session Strategy: ${sessionStrategy}, Exhaustion: ${exhaustionLevel.toFixed(2)}`,
+      `Session Strategy: ${sessionStrategy}, Exhaustion: ${exhaustionLevel.toFixed(2)}, Category: ${category}`,
     );
 
     // Generate words based on strategy
@@ -118,6 +128,7 @@ export class EnhancedWordSelector {
         break;
 
       case "cross_category":
+        // Only executed when user selected "all" or no words available in category
         selectedWords = this.selectCrossCategoryWords(
           userHistory,
           userProgress,
