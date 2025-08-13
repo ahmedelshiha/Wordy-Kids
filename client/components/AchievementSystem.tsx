@@ -747,7 +747,7 @@ export function AchievementSystem({
 
                         {!achievement.unlocked && (
                           <div className="space-y-2">
-                            <div className="flex justify-between text-sm">
+                            <div className="flex justify-between text-xs md:text-sm">
                               <span className="text-gray-600">Progress</span>
                               <span className="font-semibold text-gray-800">
                                 {achievement.currentProgress}/
@@ -773,7 +773,7 @@ export function AchievementSystem({
                             <div className="text-xs font-semibold text-white/90 mb-1">
                               Reward Unlocked:
                             </div>
-                            <div className="text-sm text-white">
+                            <div className="text-xs md:text-sm text-white">
                               🎁 {achievement.reward.item}
                             </div>
                           </div>
@@ -804,7 +804,7 @@ export function AchievementSystem({
                   </p>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4 px-2 md:px-0">
                   {unlockableContent.map((content) => (
                     <Card
                       key={content.id}
@@ -814,17 +814,17 @@ export function AchievementSystem({
                           : "bg-gray-100 border-2 border-dashed border-gray-300"
                       }`}
                     >
-                      <CardContent className="p-4">
-                        <div className="text-4xl mb-2">{content.icon}</div>
+                      <CardContent className="p-3 md:p-4">
+                        <div className="text-3xl md:text-4xl mb-2">{content.icon}</div>
                         <h4
-                          className={`font-semibold mb-2 ${
+                          className={`font-semibold mb-2 text-sm md:text-base ${
                             content.unlocked ? "text-white" : "text-gray-800"
                           }`}
                         >
                           {content.name}
                         </h4>
                         <p
-                          className={`text-sm mb-3 ${
+                          className={`text-xs md:text-sm mb-3 ${
                             content.unlocked ? "text-white/90" : "text-gray-600"
                           }`}
                         >
