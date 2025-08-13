@@ -101,6 +101,7 @@ import {
   Timer,
   History,
   ExternalLink,
+  Lock,
 } from "lucide-react";
 import { AnimatedCounter } from "@/components/AnimatedCounter";
 
