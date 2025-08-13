@@ -1293,64 +1293,61 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
                   </div>
                 </div>
 
-                {/* Words Well Remembered */}
+                {/* Words Well Remembered - Enhanced with Real Data */}
                 <div>
-                  <div className="flex items-center gap-2 mb-4">
-                    <CheckCircle className="w-5 h-5 text-green-500" />
-                    <h3 className="text-lg font-semibold text-green-700">
-                      Words Mastered
-                    </h3>
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="flex items-center gap-2">
+                      <CheckCircle className="w-4 h-4 md:w-5 md:h-5 text-green-500" />
+                      <h3 className="text-base md:text-lg font-semibold text-green-700">
+                        Words Mastered
+                      </h3>
+                    </div>
+                    <Badge className="bg-green-100 text-green-700 text-xs">
+                      {childrenWordStats[selectedChild.id]?.wordsRemembered || 0} words
+                    </Badge>
                   </div>
-                  <div className="bg-green-50 p-4 rounded-lg">
-                    <p className="text-sm text-gray-600 mb-3">
-                      These words have been consistently remembered with high
-                      accuracy:
+                  <div className="bg-green-50 p-3 md:p-4 rounded-lg">
+                    <p className="text-xs md:text-sm text-gray-600 mb-3">
+                      Words consistently remembered with high accuracy:
                     </p>
                     <div className="space-y-2 max-h-48 overflow-y-auto">
-                      {/* Simulated mastered words */}
-                      {[
-                        "elephant",
-                        "rainbow",
-                        "butterfly",
-                        "ocean",
-                        "mountain",
-                      ].map((word, index) => (
+                      {topWords.length > 0 ? topWords.slice(0, 5).map((wordData) => (
                         <div
-                          key={word}
-                          className="flex items-center justify-between bg-white p-3 rounded border"
+                          key={wordData.word}
+                          className="flex items-center justify-between bg-white p-2 md:p-3 rounded border hover:border-green-300 transition-colors"
                         >
                           <div>
-                            <span className="font-medium">{word}</span>
+                            <span className="font-medium text-sm md:text-base">{wordData.word}</span>
                             <div className="text-xs text-gray-500">
-                              {index === 0 && "Animals • Mastered 5 days ago"}
-                              {index === 1 && "Nature • Mastered 3 days ago"}
-                              {index === 2 && "Animals • Mastered 1 week ago"}
-                              {index === 3 && "Nature • Mastered 4 days ago"}
-                              {index === 4 && "Geography • Mastered 2 days ago"}
+                              {wordData.category} • Reviewed {wordData.timesReviewed} times
                             </div>
                           </div>
                           <div className="flex items-center gap-2">
                             <Badge className="bg-green-100 text-green-700 text-xs">
-                              {index === 0 && "100% accuracy"}
-                              {index === 1 && "95% accuracy"}
-                              {index === 2 && "90% accuracy"}
-                              {index === 3 && "100% accuracy"}
-                              {index === 4 && "85% accuracy"}
+                              {wordData.accuracy}% accuracy
                             </Badge>
                             <div className="text-green-500">
-                              <Star className="w-4 h-4 fill-current" />
+                              <Star className="w-3 h-3 md:w-4 md:h-4 fill-current" />
                             </div>
                           </div>
                         </div>
-                      ))}
+                      )) : (
+                        <div className="text-center py-6 text-gray-500">
+                          <BookOpen className="w-8 h-8 mx-auto mb-2 text-blue-500" />
+                          <p className="text-sm">Keep learning to see mastered words here!</p>
+                          <p className="text-xs">Words with 80%+ accuracy will appear here.</p>
+                        </div>
+                      )}
                     </div>
                     <div className="mt-3 pt-3 border-t text-center">
-                      <span className="text-sm text-green-600 font-medium">
-                        🎉{" "}
-                        {childrenWordStats[selectedChild.id]?.wordsRemembered ||
-                          0}{" "}
-                        words mastered total!
+                      <span className="text-xs md:text-sm text-green-600 font-medium">
+                        🎉 {childrenWordStats[selectedChild.id]?.wordsRemembered || 0} words mastered total!
                       </span>
+                      {topWords.length > 5 && (
+                        <p className="text-xs text-gray-500 mt-1">
+                          Showing top 5 out of {topWords.length} mastered words
+                        </p>
+                      )}
                     </div>
                   </div>
                 </div>
@@ -2183,7 +2180,7 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
                           .map(
                             (strength) => `
                             <li>
-                                <span style="color: #10b981; font-size: 16px;">✅</span>
+                                <span style="color: #10b981; font-size: 16px;">���</span>
                                 <span>${strength}</span>
                             </li>
                         `,
