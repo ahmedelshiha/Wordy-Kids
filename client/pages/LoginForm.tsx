@@ -546,22 +546,6 @@ export default function LoginForm() {
           </CardContent>
         </Card>
 
-        {/* Enhanced Guest Login Section */}
-        <div className="text-center mt-8 space-y-4 animate-fade-in animation-delay-200">
-          {/* Mobile-optimized Guest Sign In Button */}
-          <Button
-            onClick={handleBackToMain}
-            className="w-full py-3 bg-gradient-to-r from-orange-500 via-yellow-500 to-amber-500 hover:from-orange-600 hover:via-yellow-600 hover:to-amber-600 text-white font-semibold text-lg shadow-lg hover:shadow-xl transform hover:scale-[1.02] transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
-            disabled={isLoading}
-          >
-            <div className="flex items-center justify-center gap-3">
-              <span className="text-xl animate-gentle-bounce">🎮</span>
-              <span>Sign In as Guest</span>
-              <span className="text-xl animate-sparkle">✨</span>
-            </div>
-          </Button>
-
-        </div>
       </div>
     </div>
   );
