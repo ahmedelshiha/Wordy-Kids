@@ -495,6 +495,7 @@ export class EnhancedWordSelector {
    * Select forgotten words that are ready for review
    */
   private static selectForgottenWordsForReview(
+    categoryWords: Word[],
     userHistory: Map<number, WordHistory>,
     userProgress: {
       rememberedWords: Set<number>;
