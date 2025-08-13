@@ -454,7 +454,7 @@ export function ChildFriendlyCategorySelector({
                   📚 {wordsDatabase.length}
                 </Badge>
                 <Badge className="bg-educational-blue text-white px-2 py-0.5 text-xs">
-                  🎯 {categories.length - 1}
+                  🎯 {categories.length}
                 </Badge>
               </div>
             </div>
@@ -477,7 +477,7 @@ export function ChildFriendlyCategorySelector({
               📚 {wordsDatabase.length} Amazing Words
             </Badge>
             <Badge className="bg-educational-blue text-white px-3 py-1 text-sm animate-pulse delay-100">
-              🎯 {categories.length - 1} Fun Categories
+              🎯 {categories.length} Fun Categories
             </Badge>
             <Badge className="bg-educational-purple text-white px-3 py-1 text-sm animate-pulse delay-200">
               ⭐ 3 Difficulty Levels
@@ -785,7 +785,7 @@ export function ChildFriendlyCategorySelector({
               </div>
               <div>
                 <div className="text-2xl font-bold text-educational-green">
-                  {categories.length - 1}
+                  {categories.length}
                 </div>
                 <div className="text-xs text-slate-600">Categories</div>
               </div>
