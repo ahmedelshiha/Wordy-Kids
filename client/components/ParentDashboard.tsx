@@ -3188,71 +3188,124 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
 
       {/* Generated Report Display */}
       {reportData && (
-        <div className="space-y-6">
-          {/* Report Header */}
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center justify-between">
-                <div className="flex items-center gap-2">
-                  <div className="text-2xl">{reportData.child.avatar}</div>
+        <div className="space-y-4 md:space-y-6">
+          {/* Mobile Report Header with Success Animation */}
+          <Card className="overflow-hidden border-green-200 bg-gradient-to-r from-green-50 to-emerald-50">
+            <CardContent className="p-4 md:p-6">
+              <div className="flex items-center gap-3 mb-3">
+                <div className="text-green-500 animate-gentle-bounce">
+                  <CheckCircle className="w-6 h-6" />
+                </div>
+                <div className="font-semibold text-green-800">Report Generated Successfully!</div>
+              </div>
+
+              <div className="flex flex-col md:flex-row md:items-center justify-between gap-3">
+                <div className="flex items-center gap-3">
+                  <div className="text-3xl md:text-2xl">{reportData.child.avatar}</div>
                   <div>
-                    <h3>{reportData.child.name}'s Learning Report</h3>
-                    <p className="text-sm text-slate-600 font-normal">
-                      {reportData.period.range.toUpperCase()} Report •{" "}
-                      {reportData.period.start.toLocaleDateString()} -{" "}
-                      {reportData.period.end.toLocaleDateString()}
-                    </p>
+                    <h3 className="text-lg md:text-xl font-bold text-slate-800">
+                      {reportData.child.name}'s Learning Report
+                    </h3>
+                    <div className="flex flex-col md:flex-row md:items-center gap-1 md:gap-2 text-xs md:text-sm text-slate-600">
+                      <span className="font-medium uppercase text-educational-blue">
+                        {reportData.period.range} Report
+                      </span>
+                      <span className="hidden md:inline">•</span>
+                      <span>
+                        {reportData.period.start.toLocaleDateString()} - {reportData.period.end.toLocaleDateString()}
+                      </span>
+                    </div>
                   </div>
                 </div>
-                <Badge className="bg-green-100 text-green-800">
-                  Generated {reportData.generatedAt.toLocaleDateString()}
+                <Badge className="bg-green-100 text-green-800 w-fit">
+                  {reportData.generatedAt.toLocaleDateString()}
                 </Badge>
-              </CardTitle>
-            </CardHeader>
+              </div>
+            </CardContent>
           </Card>
 
-          {/* Summary Stats */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            <Card>
-              <CardContent className="p-4 text-center">
-                <Clock className="w-8 h-8 text-blue-500 mx-auto mb-2" />
-                <div className="text-2xl font-bold">
-                  {reportData.summary.totalLearningTime}m
+          {/* Enhanced Summary Stats for Mobile */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
+            <Card className="bg-gradient-to-br from-blue-50 to-blue-100 border-blue-200 hover:shadow-lg transition-all duration-200">
+              <CardContent className="p-3 md:p-4 text-center">
+                <Clock className="w-6 h-6 md:w-8 md:h-8 text-blue-500 mx-auto mb-2 animate-gentle-float" />
+                <div className="text-xl md:text-2xl font-bold text-blue-700">
+                  <AnimatedCounter value={reportData.summary.totalLearningTime} suffix="m" />
                 </div>
-                <div className="text-sm text-slate-600">Learning Time</div>
+                <div className="text-xs md:text-sm text-blue-600 font-medium">Learning Time</div>
               </CardContent>
             </Card>
 
-            <Card>
-              <CardContent className="p-4 text-center">
-                <BookOpen className="w-8 h-8 text-green-500 mx-auto mb-2" />
-                <div className="text-2xl font-bold">
-                  {reportData.summary.wordsLearned}
+            <Card className="bg-gradient-to-br from-green-50 to-green-100 border-green-200 hover:shadow-lg transition-all duration-200">
+              <CardContent className="p-3 md:p-4 text-center">
+                <BookOpen className="w-6 h-6 md:w-8 md:h-8 text-green-500 mx-auto mb-2 animate-gentle-float" />
+                <div className="text-xl md:text-2xl font-bold text-green-700">
+                  <AnimatedCounter value={reportData.summary.wordsLearned} />
                 </div>
-                <div className="text-sm text-slate-600">Words Learned</div>
+                <div className="text-xs md:text-sm text-green-600 font-medium">Words Learned</div>
               </CardContent>
             </Card>
 
-            <Card>
-              <CardContent className="p-4 text-center">
-                <Target className="w-8 h-8 text-purple-500 mx-auto mb-2" />
-                <div className="text-2xl font-bold">
-                  {reportData.summary.averageAccuracy}%
+            <Card className="bg-gradient-to-br from-purple-50 to-purple-100 border-purple-200 hover:shadow-lg transition-all duration-200">
+              <CardContent className="p-3 md:p-4 text-center">
+                <Target className="w-6 h-6 md:w-8 md:h-8 text-purple-500 mx-auto mb-2 animate-gentle-float" />
+                <div className="text-xl md:text-2xl font-bold text-purple-700">
+                  <AnimatedCounter value={reportData.summary.averageAccuracy} suffix="%" />
                 </div>
-                <div className="text-sm text-slate-600">Accuracy</div>
+                <div className="text-xs md:text-sm text-purple-600 font-medium">Accuracy</div>
               </CardContent>
             </Card>
 
-            <Card>
-              <CardContent className="p-4 text-center">
-                <Zap className="w-8 h-8 text-orange-500 mx-auto mb-2" />
-                <div className="text-2xl font-bold">
-                  {reportData.summary.streakDays}
+            <Card className="bg-gradient-to-br from-orange-50 to-orange-100 border-orange-200 hover:shadow-lg transition-all duration-200">
+              <CardContent className="p-3 md:p-4 text-center">
+                <Zap className="w-6 h-6 md:w-8 md:h-8 text-orange-500 mx-auto mb-2 animate-gentle-float" />
+                <div className="text-xl md:text-2xl font-bold text-orange-700">
+                  <AnimatedCounter value={reportData.summary.streakDays} />
                 </div>
-                <div className="text-sm text-slate-600">Day Streak</div>
+                <div className="text-xs md:text-sm text-orange-600 font-medium">Day Streak</div>
               </CardContent>
             </Card>
           </div>
+
+          {/* Mobile-first Progress Overview */}
+          <Card className="md:hidden bg-gradient-to-r from-educational-blue/5 to-educational-purple/5">
+            <CardContent className="p-4">
+              <h3 className="font-semibold text-slate-800 mb-3 flex items-center gap-2">
+                <TrendingUp className="w-5 h-5 text-educational-blue" />
+                Quick Overview
+              </h3>
+              <div className="space-y-3">
+                <div className="flex justify-between items-center">
+                  <span className="text-sm text-slate-600">Overall Performance</span>
+                  <div className="flex items-center gap-2">
+                    <div className="w-24 h-2 bg-slate-200 rounded-full overflow-hidden">
+                      <div
+                        className="h-full bg-educational-blue rounded-full transition-all duration-1000"
+                        style={{ width: `${reportData.summary.averageAccuracy}%` }}
+                      ></div>
+                    </div>
+                    <span className="text-sm font-medium text-educational-blue">
+                      {reportData.summary.averageAccuracy}%
+                    </span>
+                  </div>
+                </div>
+                <div className="flex justify-between items-center">
+                  <span className="text-sm text-slate-600">Learning Goal</span>
+                  <div className="flex items-center gap-2">
+                    <div className="w-24 h-2 bg-slate-200 rounded-full overflow-hidden">
+                      <div
+                        className="h-full bg-educational-green rounded-full transition-all duration-1000"
+                        style={{ width: `${Math.min((reportData.summary.wordsLearned / 20) * 100, 100)}%` }}
+                      ></div>
+                    </div>
+                    <span className="text-sm font-medium text-educational-green">
+                      {reportData.summary.wordsLearned}/20
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
 
           {/* Learning Path Analysis */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
