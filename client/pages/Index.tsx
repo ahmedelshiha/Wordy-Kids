@@ -103,7 +103,7 @@ export default function Index({ initialProfile }: IndexProps) {
   const [selectedQuizType, setSelectedQuizType] = useState<
     "quick" | "standard" | "challenge" | "picture" | "spelling" | "speed"
   >("standard");
-  const [selectedCategory, setSelectedCategory] = useState("animals");
+  const [selectedCategory, setSelectedCategory] = useState<string>("");
   const [learningMode, setLearningMode] = useState<
     "cards" | "matching" | "selector"
   >("selector");
@@ -1092,7 +1092,7 @@ export default function Index({ initialProfile }: IndexProps) {
                       />
                     </div>
                     <span className="font-medium lg:font-semibold text-sm lg:text-base">
-                      🌟 My Journey
+                      ���� My Journey
                     </span>
                   </button>
 
