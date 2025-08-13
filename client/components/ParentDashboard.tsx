@@ -1585,41 +1585,46 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
   };
 
   const renderNotifications = () => (
-    <div className="space-y-6">
-      <div className="flex items-center justify-between">
+    <div className="space-y-4 md:space-y-6">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 md:gap-0">
         <div>
-          <h2 className="text-2xl font-bold">Notifications & Alerts</h2>
-          <p className="text-slate-600">
+          <h2 className="text-xl md:text-2xl font-bold">Alerts</h2>
+          <p className="text-slate-600 text-sm md:text-base hidden md:block">
             Stay informed about your children's learning progress
+          </p>
+          <p className="text-slate-600 text-sm md:hidden">
+            Learning updates & alerts
           </p>
         </div>
         <div className="flex gap-2">
-          <Button variant="outline" size="sm">
-            <Settings className="w-4 h-4 mr-2" />
-            Notification Settings
+          <Button variant="outline" size="sm" className="text-xs md:text-sm px-2 md:px-3">
+            <Settings className="w-3 h-3 md:w-4 md:h-4 mr-1 md:mr-2" />
+            <span className="hidden md:inline">Notification Settings</span>
+            <span className="md:hidden">Settings</span>
           </Button>
-          <Button variant="outline" size="sm">
-            Mark All Read
+          <Button variant="outline" size="sm" className="text-xs md:text-sm px-2 md:px-3">
+            <span className="hidden md:inline">Mark All Read</span>
+            <span className="md:hidden">Mark Read</span>
           </Button>
         </div>
       </div>
 
-      <div className="space-y-3">
+      <div className="space-y-2 md:space-y-3">
         {notifications.map((notification) => (
           <Card
             key={notification.id}
-            className={`cursor-pointer transition-all ${
+            className={`cursor-pointer transition-all hover:shadow-md ${
               !notification.read
                 ? "border-l-4 border-l-educational-blue bg-blue-50/30"
                 : ""
             }`}
             onClick={() => markNotificationAsRead(notification.id)}
           >
-            <CardContent className="p-4">
+            <CardContent className="p-3 md:p-4">
               <div className="flex items-start justify-between">
-                <div className="flex items-start gap-3">
+                <div className="flex items-start gap-2 md:gap-3 flex-1 min-w-0">
                   <div
-                    className={`w-8 h-8 rounded-full flex items-center justify-center ${
+                    className={`w-6 h-6 md:w-8 md:h-8 rounded-full flex items-center justify-center flex-shrink-0 ${
                       notification.type === "achievement"
                         ? "bg-yellow-100 text-yellow-600"
                         : notification.type === "goal_progress"
@@ -1632,28 +1637,28 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
                     }`}
                   >
                     {notification.type === "achievement" && (
-                      <Award className="w-4 h-4" />
+                      <Award className="w-3 h-3 md:w-4 md:h-4" />
                     )}
                     {notification.type === "goal_progress" && (
-                      <Target className="w-4 h-4" />
+                      <Target className="w-3 h-3 md:w-4 md:h-4" />
                     )}
                     {notification.type === "concern" && (
-                      <BellRing className="w-4 h-4" />
+                      <BellRing className="w-3 h-3 md:w-4 md:h-4" />
                     )}
                     {notification.type === "milestone" && (
-                      <Star className="w-4 h-4" />
+                      <Star className="w-3 h-3 md:w-4 md:h-4" />
                     )}
                     {notification.type === "reminder" && (
-                      <Bell className="w-4 h-4" />
+                      <Bell className="w-3 h-3 md:w-4 md:h-4" />
                     )}
                   </div>
-                  <div>
-                    <h4 className="font-semibold">{notification.title}</h4>
-                    <p className="text-sm text-slate-600 mt-1">
+                  <div className="flex-1 min-w-0">
+                    <h4 className="font-semibold text-sm md:text-base truncate">{notification.title}</h4>
+                    <p className="text-xs md:text-sm text-slate-600 mt-1 leading-tight">
                       {notification.message}
                     </p>
-                    <div className="flex items-center gap-2 mt-2">
-                      <Badge variant="outline" className="text-xs">
+                    <div className="flex flex-col md:flex-row md:items-center gap-1 md:gap-2 mt-2">
+                      <Badge variant="outline" className="text-xs w-fit">
                         {
                           children.find((c) => c.id === notification.childId)
                             ?.name
@@ -1665,20 +1670,23 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
                     </div>
                   </div>
                 </div>
-                <div className="flex items-center gap-2">
+                <div className="flex flex-col md:flex-row items-end md:items-center gap-1 md:gap-2 flex-shrink-0">
                   <Badge
-                    className={
+                    className={`text-xs px-1 md:px-2 ${
                       notification.priority === "high"
                         ? "bg-red-500"
                         : notification.priority === "medium"
                           ? "bg-yellow-500"
                           : "bg-slate-500"
-                    }
+                    }`}
                   >
-                    {notification.priority}
+                    <span className="hidden md:inline">{notification.priority}</span>
+                    <span className="md:hidden">
+                      {notification.priority === "high" ? "!" : notification.priority === "medium" ? "⚠" : "ℹ"}
+                    </span>
                   </Badge>
                   {!notification.read && (
-                    <div className="w-2 h-2 bg-educational-blue rounded-full"></div>
+                    <div className="w-1.5 h-1.5 md:w-2 md:h-2 bg-educational-blue rounded-full"></div>
                   )}
                 </div>
               </div>
@@ -2222,7 +2230,7 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
                 <div class="category-grid">
                     <div class="category-section">
                         <div class="category-header">
-                            🌟 Strengths & Mastered Areas
+                            �� Strengths & Mastered Areas
                         </div>
                         <h4 style="margin: 15px 0 10px 0; color: #059669;">💪 Strong Categories</h4>
                         <div class="badge-container">
@@ -2972,7 +2980,7 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
             <div>
               <Label htmlFor="avatar">Avatar</Label>
               <div className="flex gap-2 mt-2">
-                {["👦", "����", "🧒", "👶", "🦸‍♂️", "🦸‍♀️", "🧑‍🎓", "👨‍🎓", "👩‍🎓"].map(
+                {["👦", "👧", "🧒", "👶", "🦸‍♂️", "🦸‍♀️", "🧑‍🎓", "👨‍🎓", "👩‍🎓"].map(
                   (emoji) => (
                     <Button
                       key={emoji}
