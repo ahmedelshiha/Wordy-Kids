@@ -1270,8 +1270,7 @@ export default function Index({ initialProfile }: IndexProps) {
 
                 <TabsContent value="learn">
                   <div className="space-y-8">
-                    {selectedCategory === "all" &&
-                    learningMode === "selector" ? (
+                    {learningMode === "selector" ? (
                       <ChildFriendlyCategorySelector
                         selectedCategory={selectedCategory}
                         onSelectCategory={(category) => {
@@ -2050,7 +2049,7 @@ export default function Index({ initialProfile }: IndexProps) {
                               Vowel Challenge!
                             </h3>
                             <p className="text-xs md:text-sm text-gray-600 mb-2 md:mb-3 hidden md:block">
-                              Multiple missing vowels! ����
+                              Multiple missing vowels! 💪
                             </p>
                             <div className="flex justify-center gap-1 mb-2 md:mb-3">
                               <span className="bg-educational-purple/20 text-educational-purple px-1.5 py-0.5 rounded-full text-xs">
