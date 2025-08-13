@@ -441,7 +441,11 @@ const EnhancedSystemAnalytics: React.FC<EnhancedSystemAnalyticsProps> = ({
                 <Zap className="w-5 h-5 text-orange-600 dark:text-orange-400" />
               </div>
               <div className="flex items-center gap-1">
-                {getHealthStatus(analyticsData.systemUptime, { good: 99.5, warning: 99.0 }).icon({ className: "w-4 h-4 " + getHealthStatus(analyticsData.systemUptime, { good: 99.5, warning: 99.0 }).color })}
+                {(() => {
+                  const healthStatus = getHealthStatus(analyticsData.systemUptime, { good: 99.5, warning: 99.0 });
+                  const IconComponent = healthStatus.icon;
+                  return <IconComponent className={`w-4 h-4 ${healthStatus.color}`} />;
+                })()}
                 <span className={`text-sm font-medium ${getHealthStatus(analyticsData.systemUptime, { good: 99.5, warning: 99.0 }).color}`}>
                   {getHealthStatus(analyticsData.systemUptime, { good: 99.5, warning: 99.0 }).status}
                 </span>
