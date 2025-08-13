@@ -47,7 +47,11 @@ import {
   WordHistory,
   SystematicWordSelection,
 } from "@/lib/enhancedWordSelection";
-import { DashboardWordGenerator, DashboardWordSession, UserProgress } from "@/lib/dashboardWordGenerator";
+import {
+  DashboardWordGenerator,
+  DashboardWordSession,
+  UserProgress,
+} from "@/lib/dashboardWordGenerator";
 import { isBackgroundAnimationsEnabled } from "@/lib/backgroundAnimations";
 import {
   generateQuizQuestions,
@@ -152,7 +156,8 @@ export default function Index({ initialProfile }: IndexProps) {
     useState<SystematicWordSelection | null>(null);
 
   // Dashboard word generation states
-  const [dashboardSession, setDashboardSession] = useState<DashboardWordSession | null>(null);
+  const [dashboardSession, setDashboardSession] =
+    useState<DashboardWordSession | null>(null);
   const [dashboardSessionNumber, setDashboardSessionNumber] = useState(1);
 
   // Memoize displayWords to prevent recalculation on every render
@@ -186,7 +191,10 @@ export default function Index({ initialProfile }: IndexProps) {
         try {
           generateDashboardWords();
         } catch (error) {
-          console.error("Error generating dashboard words, using fallback:", error);
+          console.error(
+            "Error generating dashboard words, using fallback:",
+            error,
+          );
           // Fallback to random words if systematic generation fails
           const fallbackWords = getRandomWords(20);
           setCurrentDashboardWords(fallbackWords);
@@ -204,7 +212,9 @@ export default function Index({ initialProfile }: IndexProps) {
     const shouldRegenerate = wordsCompleted > 0 && wordsCompleted % 10 === 0; // Regenerate every 10 completed words
 
     if (shouldRegenerate && dashboardSession) {
-      console.log(`Regenerating dashboard words after ${wordsCompleted} completed words`);
+      console.log(
+        `Regenerating dashboard words after ${wordsCompleted} completed words`,
+      );
       generateDashboardWords();
     }
   }, [rememberedWords.size]); // Trigger when remembered words count changes
@@ -335,9 +345,7 @@ export default function Index({ initialProfile }: IndexProps) {
             wordsLearned: statsResponse.stats?.wordsRemembered || 0,
             streakDays: Math.floor(Math.random() * 5), // Demo data
             totalAccuracy: statsResponse.stats?.averageAccuracy || 80,
-            categoriesExplored: new Set([
-              selectedCategory,
-            ]),
+            categoriesExplored: new Set([selectedCategory]),
             timeSpentLearning: Math.floor(Math.random() * 120), // Demo data
             vowelQuizzesCompleted: 0,
           };
@@ -533,29 +541,36 @@ export default function Index({ initialProfile }: IndexProps) {
       // Create user progress object
       const userProgress: UserProgress = {
         wordsCompleted,
-        currentDifficulty: wordsCompleted < 50 ? "easy" : wordsCompleted < 100 ? "medium" : "hard",
+        currentDifficulty:
+          wordsCompleted < 50
+            ? "easy"
+            : wordsCompleted < 100
+              ? "medium"
+              : "hard",
         rememberedWords,
         forgottenWords,
-        categoryProgress: new Map()
+        categoryProgress: new Map(),
       };
 
       // Generate systematic dashboard session
       const session = DashboardWordGenerator.generateDashboardSession(
         userProgress,
-        dashboardSessionNumber
+        dashboardSessionNumber,
       );
 
       // Update states
       setDashboardSession(session);
       setCurrentDashboardWords(session.words);
-      setDashboardSessionNumber(prev => prev + 1);
+      setDashboardSessionNumber((prev) => prev + 1);
 
       console.log("Dashboard session generated:", {
         difficulty: session.sessionInfo.difficulty,
         stage: session.sessionInfo.progressionStage,
         categories: session.sessionInfo.categoriesUsed,
         wordCount: session.words.length,
-        words: session.words.map(w => `${w.word} (${w.category}, ${w.difficulty})`)
+        words: session.words.map(
+          (w) => `${w.word} (${w.category}, ${w.difficulty})`,
+        ),
       });
 
       return session.words;
@@ -1386,10 +1401,14 @@ export default function Index({ initialProfile }: IndexProps) {
                             <div className="block sm:hidden">
                               <div className="text-center mb-2">
                                 <h2 className="text-lg font-bold text-slate-800">
-                                  {selectedCategory ? `${selectedCategory.charAt(0).toUpperCase() + selectedCategory.slice(1)} Words` : "Select a Category"}
+                                  {selectedCategory
+                                    ? `${selectedCategory.charAt(0).toUpperCase() + selectedCategory.slice(1)} Words`
+                                    : "Select a Category"}
                                 </h2>
                                 <p className="text-sm text-slate-600">
-                                  {selectedCategory ? `Learn ${selectedCategory} vocabulary!` : "Choose a category to start learning!"}
+                                  {selectedCategory
+                                    ? `Learn ${selectedCategory} vocabulary!`
+                                    : "Choose a category to start learning!"}
                                 </p>
                               </div>
                               <div className="flex justify-center">
@@ -1410,10 +1429,14 @@ export default function Index({ initialProfile }: IndexProps) {
                             <div className="hidden sm:flex items-center justify-between gap-2">
                               <div className="text-left flex-1 min-w-0">
                                 <h2 className="text-lg md:text-xl font-bold text-slate-800 truncate">
-                                  {selectedCategory ? `${selectedCategory.charAt(0).toUpperCase() + selectedCategory.slice(1)} Words` : "Select a Category"}
+                                  {selectedCategory
+                                    ? `${selectedCategory.charAt(0).toUpperCase() + selectedCategory.slice(1)} Words`
+                                    : "Select a Category"}
                                 </h2>
                                 <p className="text-sm md:text-base text-slate-600">
-                                  {selectedCategory ? `Learn ${selectedCategory} vocabulary!` : "Choose a category to start learning!"}
+                                  {selectedCategory
+                                    ? `Learn ${selectedCategory} vocabulary!`
+                                    : "Choose a category to start learning!"}
                                 </p>
                               </div>
                               <div className="flex-shrink-0">
@@ -1811,7 +1834,9 @@ export default function Index({ initialProfile }: IndexProps) {
                                           variant="outline"
                                           className="text-sm"
                                         >
-                                          {selectedCategory ? `${selectedCategory} Category` : "No Category"}{" "}
+                                          {selectedCategory
+                                            ? `${selectedCategory} Category`
+                                            : "No Category"}{" "}
                                           - Word {currentWordIndex + 1} of{" "}
                                           {displayWords.length}
                                         </Badge>
@@ -2273,7 +2298,8 @@ export default function Index({ initialProfile }: IndexProps) {
                   ) : gameMode ? (
                     <GameLikeLearning
                       words={(() => {
-                        const categoryWords = getWordsByCategory(selectedCategory);
+                        const categoryWords =
+                          getWordsByCategory(selectedCategory);
                         return categoryWords.slice(0, 10);
                       })()}
                       onComplete={handleGameComplete}

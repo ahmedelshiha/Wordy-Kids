@@ -849,7 +849,11 @@ export function ChildFriendlyCategorySelector({
         >
           <span className="relative z-10 flex items-center gap-2">
             <Sparkles className="w-6 h-6 animate-spin" />
-            🚀 {selectedCategory ? `Start Learning ${categories.find((c) => c.id === selectedCategory)?.name}!` : "Select a Category First!"} 🚀
+            🚀{" "}
+            {selectedCategory
+              ? `Start Learning ${categories.find((c) => c.id === selectedCategory)?.name}!`
+              : "Select a Category First!"}{" "}
+            🚀
             <Star className="w-6 h-6 animate-pulse" />
           </span>
 

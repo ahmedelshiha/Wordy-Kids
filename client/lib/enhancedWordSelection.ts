@@ -89,8 +89,11 @@ export class EnhancedWordSelector {
     if (sessionStrategy === "cross_category") {
       if (selectedCategory !== "all" && categoryWords.length > 0) {
         // Force staying within the selected category by using targeted_review or mixed_reinforcement
-        sessionStrategy = exhaustionLevel >= 0.8 ? "targeted_review" : "mixed_reinforcement";
-        console.log(`Overriding cross_category strategy to ${sessionStrategy} to respect category selection: ${selectedCategory}`);
+        sessionStrategy =
+          exhaustionLevel >= 0.8 ? "targeted_review" : "mixed_reinforcement";
+        console.log(
+          `Overriding cross_category strategy to ${sessionStrategy} to respect category selection: ${selectedCategory}`,
+        );
       }
     }
 

@@ -21,7 +21,11 @@ import { cn } from "@/lib/utils";
 import { audioService } from "@/lib/audioService";
 import { AchievementTracker } from "@/lib/achievementTracker";
 import { EnhancedAchievementPopup } from "@/components/EnhancedAchievementPopup";
-import { DashboardWordGenerator, DashboardWordSession, UserProgress } from "@/lib/dashboardWordGenerator";
+import {
+  DashboardWordGenerator,
+  DashboardWordSession,
+  UserProgress,
+} from "@/lib/dashboardWordGenerator";
 
 interface Word {
   id: number;
@@ -156,10 +160,12 @@ export function InteractiveDashboardWordCard({
           stage: dashboardSession.sessionInfo.progressionStage,
           difficulty: dashboardSession.sessionInfo.difficulty,
           categories: dashboardSession.sessionInfo.categoriesUsed,
-          words: sessionWordSet.length
+          words: sessionWordSet.length,
         });
       } else {
-        console.log(`Standard session started with ${sessionWordSet.length} words`);
+        console.log(
+          `Standard session started with ${sessionWordSet.length} words`,
+        );
       }
     }
   }, [words, dashboardSession]);
@@ -400,7 +406,8 @@ export function InteractiveDashboardWordCard({
       setShowSessionComplete(true);
 
       // Update progression info based on total words completed
-      const totalWordsCompleted = rememberedWordsCount + newStats.wordsRemembered;
+      const totalWordsCompleted =
+        rememberedWordsCount + newStats.wordsRemembered;
       // const updatedProgInfo = DashboardWordGenerator.getProgressionInfo(totalWordsCompleted);
       // setProgressionInfo(updatedProgInfo);
 
@@ -408,7 +415,7 @@ export function InteractiveDashboardWordCard({
         stats: newStats,
         achievements: achievements.map((a) => a.title),
         journeyAchievements: sessionJourneyAchievements.length,
-        totalWordsCompleted
+        totalWordsCompleted,
       });
       return;
     }
@@ -643,7 +650,6 @@ export function InteractiveDashboardWordCard({
         </Card>
       </div>
 
-
       {/* Session Completion Modal */}
       {showSessionComplete && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-1 sm:p-4">
@@ -728,7 +734,6 @@ export function InteractiveDashboardWordCard({
         <Progress value={dailyProgress} className="h-3 bg-white/20" />
         <p className="text-sm mt-2 opacity-90">{dailyProgress}% complete</p>
       </div> */}
-
 
       {/* Interactive Word Card */}
       <Card
