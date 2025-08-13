@@ -1390,6 +1390,66 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
           </Card>
         )}
 
+        {/* Quick Actions Based on Analytics */}
+        <Card className="bg-gradient-to-r from-indigo-50 to-purple-50 border-indigo-200">
+          <CardHeader className="pb-3 md:pb-6">
+            <CardTitle className="flex items-center gap-2 text-base md:text-lg text-indigo-700">
+              <Zap className="w-5 h-5 md:w-6 md:h-6" />
+              Recommended Actions
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="px-3 md:px-6">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-3 md:gap-4">
+              {practiceWords.length > 0 && (
+                <Button
+                  className="bg-orange-500 hover:bg-orange-600 text-white h-auto py-3 flex flex-col items-center gap-2"
+                  onClick={() => {
+                    console.log('Starting targeted practice:', practiceWords.slice(0, 5).map(w => w.word));
+                    // This would navigate to the main learning component with specific words
+                  }}
+                >
+                  <AlertCircle className="w-5 h-5" />
+                  <div className="text-center">
+                    <div className="font-semibold text-sm">Start Practice</div>
+                    <div className="text-xs opacity-90">{practiceWords.length} words need help</div>
+                  </div>
+                </Button>
+              )}
+
+              {childrenWordStats[selectedChild.id]?.averageAccuracy &&
+               childrenWordStats[selectedChild.id].averageAccuracy > 85 && (
+                <Button
+                  variant="outline"
+                  className="border-green-300 text-green-700 hover:bg-green-50 h-auto py-3 flex flex-col items-center gap-2"
+                  onClick={() => {
+                    console.log('Adding new words challenge');
+                  }}
+                >
+                  <BookOpen className="w-5 h-5" />
+                  <div className="text-center">
+                    <div className="font-semibold text-sm">Add New Words</div>
+                    <div className="text-xs opacity-90">High accuracy - ready for more!</div>
+                  </div>
+                </Button>
+              )}
+
+              <Button
+                variant="outline"
+                className="border-blue-300 text-blue-700 hover:bg-blue-50 h-auto py-3 flex flex-col items-center gap-2"
+                onClick={() => {
+                  console.log('Generating progress report');
+                }}
+              >
+                <FileText className="w-5 h-5" />
+                <div className="text-center">
+                  <div className="font-semibold text-sm">Generate Report</div>
+                  <div className="text-xs opacity-90">Share with teachers</div>
+                </div>
+              </Button>
+            </div>
+          </CardContent>
+        </Card>
+
         {/* Learning Strengths & Areas for Improvement */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <Card>
