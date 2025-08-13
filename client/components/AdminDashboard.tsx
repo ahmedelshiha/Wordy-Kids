@@ -380,25 +380,27 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onNavigateBack }) => {
 
   const renderOverview = () => (
     <div className="space-y-6">
-      {/* Welcome Header */}
-      <Card className="bg-gradient-to-r from-slate-900 via-purple-900 to-slate-900 text-white">
-        <CardContent className="p-8">
-          <div className="flex items-center justify-between">
-            <div>
-              <h2 className="text-2xl font-bold mb-2">
-                🛡️ Administrator Dashboard
+      {/* Enhanced Mobile Welcome Header */}
+      <Card className="bg-gradient-to-r from-slate-900 via-purple-900 to-slate-900 text-white mx-2 md:mx-0">
+        <CardContent className="p-4 md:p-8">
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 md:gap-0">
+            <div className="text-center md:text-left">
+              <h2 className="text-lg md:text-2xl font-bold mb-1 md:mb-2">
+                🛡️ Admin Dashboard
               </h2>
-              <p className="text-slate-300">
-                System Overview • {new Date().toLocaleDateString()} •
-                <span className="ml-2 text-green-400">●</span> All Systems
-                Operational
+              <p className="text-slate-300 text-xs md:text-base">
+                <span className="block md:inline">System Overview</span>
+                <span className="hidden md:inline"> • {new Date().toLocaleDateString()}</span>
+                <span className="block md:inline mt-1 md:mt-0">
+                  <span className="text-green-400">●</span> All Systems Operational
+                </span>
               </p>
             </div>
-            <div className="text-right">
-              <div className="text-3xl font-bold">
+            <div className="text-center md:text-right">
+              <div className="text-2xl md:text-3xl font-bold">
                 {analytics.systemUptime}%
               </div>
-              <p className="text-sm text-slate-300">System Uptime</p>
+              <p className="text-xs md:text-sm text-slate-300">System Uptime</p>
             </div>
           </div>
         </CardContent>
