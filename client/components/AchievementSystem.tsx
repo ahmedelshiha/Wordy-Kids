@@ -355,49 +355,49 @@ export function AchievementSystem({
         </Card>
 
         <Card className="bg-gradient-to-br from-educational-green to-educational-blue text-white hover:scale-105 transition-all">
-          <CardContent className="p-6 text-center">
-            <Zap className="w-8 h-8 mx-auto mb-2 animate-bounce" />
-            <div className="text-3xl font-bold mb-1">
+          <CardContent className="p-3 md:p-6 text-center">
+            <Zap className="w-6 h-6 md:w-8 md:h-8 mx-auto mb-1 md:mb-2 animate-bounce" />
+            <div className="text-xl md:text-3xl font-bold mb-1">
               <AnimatedCounter value={stats.learningSpeed} suffix="/hr" />
             </div>
-            <p className="text-sm opacity-90">Learning Speed! ⚡</p>
+            <p className="text-xs md:text-sm opacity-90">Learning Speed! ⚡</p>
           </CardContent>
         </Card>
 
         <Card className="bg-gradient-to-br from-educational-orange to-educational-pink text-white hover:scale-105 transition-all">
-          <CardContent className="p-6 text-center">
+          <CardContent className="p-3 md:p-6 text-center">
             <Target
-              className="w-8 h-8 mx-auto mb-2 animate-spin"
+              className="w-6 h-6 md:w-8 md:h-8 mx-auto mb-1 md:mb-2 animate-spin"
               style={{ animationDuration: "3s" }}
             />
-            <div className="text-3xl font-bold mb-1">
+            <div className="text-xl md:text-3xl font-bold mb-1">
               <AnimatedCounter value={stats.currentAccuracy} suffix="%" />
             </div>
-            <p className="text-sm opacity-90">Accuracy! 🎪</p>
+            <p className="text-xs md:text-sm opacity-90">Accuracy! 🎪</p>
           </CardContent>
         </Card>
 
         <Card className="bg-gradient-to-br from-educational-purple to-educational-pink text-white hover:scale-105 transition-all">
-          <CardContent className="p-6 text-center">
-            <Trophy className="w-8 h-8 mx-auto mb-2 animate-pulse" />
-            <div className="text-3xl font-bold mb-1">
+          <CardContent className="p-3 md:p-6 text-center">
+            <Trophy className="w-6 h-6 md:w-8 md:h-8 mx-auto mb-1 md:mb-2 animate-pulse" />
+            <div className="text-xl md:text-3xl font-bold mb-1">
               <AnimatedCounter value={unlockedAchievements.length} />
             </div>
-            <p className="text-sm opacity-90">Achievements! 🏆</p>
+            <p className="text-xs md:text-sm opacity-90">Achievements! 🏆</p>
           </CardContent>
         </Card>
       </div>
 
-      {/* Fun Weekly Progress */}
-      <Card className="bg-gradient-to-br from-blue-50 to-purple-50">
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2 text-educational-blue">
-            <BarChart3 className="w-6 h-6" />
+      {/* Fun Weekly Progress - Mobile Optimized */}
+      <Card className="bg-gradient-to-br from-blue-50 to-purple-50 mx-2 md:mx-0">
+        <CardHeader className="pb-3 md:pb-6">
+          <CardTitle className="flex items-center gap-2 text-educational-blue text-lg md:text-xl">
+            <BarChart3 className="w-5 h-5 md:w-6 md:h-6" />
             🌟 Your Amazing Week!
           </CardTitle>
         </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-7 gap-2 h-32 mb-4">
+        <CardContent className="px-3 md:px-6">
+          <div className="grid grid-cols-7 gap-1 md:gap-2 h-24 md:h-32 mb-4">
             {stats.weeklyProgress.map((value, index) => {
               const maxValue = Math.max(...stats.weeklyProgress);
               const height = (value / maxValue) * 100;
