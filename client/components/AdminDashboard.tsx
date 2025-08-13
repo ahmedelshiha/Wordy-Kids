@@ -112,6 +112,8 @@ import CreateWordQuickActions from "@/components/CreateWordQuickActions";
 import ContentModerationPanel from "@/components/ContentModerationPanel";
 import AdvancedAnalyticsDashboard from "@/components/AdvancedAnalyticsDashboard";
 import EnhancedUserManagement from "@/components/EnhancedUserManagement";
+import EnhancedSystemAnalytics from "@/components/EnhancedSystemAnalytics";
+import EnhancedSupportManagement from "@/components/EnhancedSupportManagement";
 import {
   wordsDatabase,
   Word,
@@ -2452,13 +2454,13 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onNavigateBack }) => {
           {renderContentManagement()}
         </TabsContent>
         <TabsContent value="users" className="mt-4 md:mt-6">
-          {renderUserManagement()}
+          <EnhancedUserManagement initialUsers={users} />
         </TabsContent>
         <TabsContent value="analytics" className="mt-4 md:mt-6">
-          {renderAnalytics()}
+          <EnhancedSystemAnalytics users={users} categories={categories} />
         </TabsContent>
         <TabsContent value="tickets" className="mt-4 md:mt-6">
-          {renderSupportTickets()}
+          <EnhancedSupportManagement initialTickets={tickets} />
         </TabsContent>
       </Tabs>
 
