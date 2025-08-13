@@ -603,34 +603,39 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onNavigateBack }) => {
 
   const renderContentManagement = () => (
     <div className="space-y-6">
-      {/* Content Header */}
-      <div className="flex items-center justify-between">
-        <div>
-          <h2 className="text-2xl font-bold">📚 Content Management</h2>
-          <p className="text-slate-600">
-            Manage words, categories, and content quality
-          </p>
-        </div>
-        <div className="flex gap-2">
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => setShowBulkImport(true)}
-          >
-            <Upload className="w-4 h-4 mr-2" />
-            Bulk Import
-          </Button>
-          <Button
-            size="sm"
-            onClick={() => {
-              setWordEditorMode("create");
-              setEditingWord(null);
-              setShowWordEditor(true);
-            }}
-          >
-            <Plus className="w-4 h-4 mr-2" />
-            Add Word
-          </Button>
+      {/* Enhanced Mobile Content Header */}
+      <div className="px-2 md:px-0 mb-4 md:mb-6">
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 md:gap-0">
+          <div className="text-center md:text-left">
+            <h2 className="text-xl md:text-2xl font-bold">📚 Content Management</h2>
+            <p className="text-sm md:text-base text-slate-600">
+              Manage words, categories, and content quality
+            </p>
+          </div>
+          <div className="flex gap-2 justify-center md:justify-start">
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => setShowBulkImport(true)}
+              className="flex-1 md:flex-none"
+            >
+              <Upload className="w-4 h-4 mr-1 md:mr-2" />
+              <span className="hidden md:inline">Bulk Import</span>
+              <span className="md:hidden">Import</span>
+            </Button>
+            <Button
+              size="sm"
+              onClick={() => {
+                setWordEditorMode("create");
+                setEditingWord(null);
+                setShowWordEditor(true);
+              }}
+              className="flex-1 md:flex-none"
+            >
+              <Plus className="w-4 h-4 mr-1 md:mr-2" />
+              Add Word
+            </Button>
+          </div>
         </div>
       </div>
 
