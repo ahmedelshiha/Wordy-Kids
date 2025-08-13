@@ -298,7 +298,7 @@ export default function Index({ initialProfile }: IndexProps) {
             streakDays: Math.floor(Math.random() * 5), // Demo data
             totalAccuracy: statsResponse.stats?.averageAccuracy || 80,
             categoriesExplored: new Set([
-              selectedCategory !== "all" ? selectedCategory : "general",
+              selectedCategory,
             ]),
             timeSpentLearning: Math.floor(Math.random() * 120), // Demo data
             vowelQuizzesCompleted: 0,
@@ -525,7 +525,7 @@ export default function Index({ initialProfile }: IndexProps) {
       } else {
         achievementTitle = "Category Challenger! 💪";
         achievementIcon = "💪";
-        achievementMessage = `Nice try! You completed ${categoryDisplayName} with ${accuracy}% accuracy! Every attempt makes you stronger!\n\n🎁 Challenger Bonus: 50 points!\n💪 Challenger badge earned!`;
+        achievementMessage = `Nice try! You completed ${categoryDisplayName} with ${accuracy}% accuracy! Every attempt makes you stronger!\n\n🎁 Challenger Bonus: 50 points!\n��� Challenger badge earned!`;
       }
 
       return {
