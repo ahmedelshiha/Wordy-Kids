@@ -328,7 +328,7 @@ const enrichedCategories: Category[] = [
         .length,
     },
   },
-].filter((category) => category.wordCount > 0 || category.id === "all");
+].filter((category) => category.wordCount > 0);
 
 export function ChildFriendlyCategorySelector({
   selectedCategory = "all",
