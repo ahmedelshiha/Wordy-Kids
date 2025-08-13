@@ -2846,18 +2846,6 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
             </p>
           </div>
         </div>
-        <div className="flex gap-2">
-          <Button variant="outline" size="sm" className="relative text-xs md:text-sm px-2 md:px-3">
-            <Bell className="w-3 h-3 md:w-4 md:h-4 mr-1 md:mr-2" />
-            <span className="hidden md:inline">Notifications</span>
-            <span className="md:hidden">Alerts</span>
-            {unreadNotifications > 0 && (
-              <Badge className="absolute -top-2 -right-2 bg-red-500 text-white text-xs px-1 min-w-[16px] md:min-w-[20px] h-4 md:h-5">
-                {unreadNotifications}
-              </Badge>
-            )}
-          </Button>
-        </div>
       </div>
 
       {/* Enhanced Navigation */}
