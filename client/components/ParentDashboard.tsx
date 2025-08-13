@@ -2595,36 +2595,41 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
   );
 
   return (
-    <div className="space-y-6">
-      {/* Header */}
-      <div className="flex items-center justify-between">
-        <div className="flex items-center gap-4">
+    <div className="space-y-4 md:space-y-6">
+      {/* Header - Mobile Optimized */}
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 md:gap-0">
+        <div className="flex items-center gap-2 md:gap-4">
           {onNavigateBack && (
             <Button
               variant="outline"
               size="sm"
               onClick={onNavigateBack}
-              className="flex items-center gap-2"
+              className="flex items-center gap-1 md:gap-2 text-xs md:text-sm px-2 md:px-3"
             >
-              <ArrowLeft className="w-4 h-4" />
-              Back to Main
+              <ArrowLeft className="w-3 h-3 md:w-4 md:h-4" />
+              <span className="hidden md:inline">Back to Main</span>
+              <span className="md:hidden">Back</span>
             </Button>
           )}
           <div>
-            <h1 className="text-3xl font-bold text-slate-800">
+            <h1 className="text-xl md:text-3xl font-bold text-slate-800">
               Parent Dashboard
             </h1>
-            <p className="text-slate-600">
+            <p className="text-xs md:text-base text-slate-600 hidden md:block">
               Comprehensive learning management for your family
+            </p>
+            <p className="text-xs text-slate-600 md:hidden">
+              Manage your family's learning
             </p>
           </div>
         </div>
         <div className="flex gap-2">
-          <Button variant="outline" size="sm" className="relative">
-            <Bell className="w-4 h-4 mr-2" />
-            Notifications
+          <Button variant="outline" size="sm" className="relative text-xs md:text-sm px-2 md:px-3">
+            <Bell className="w-3 h-3 md:w-4 md:h-4 mr-1 md:mr-2" />
+            <span className="hidden md:inline">Notifications</span>
+            <span className="md:hidden">Alerts</span>
             {unreadNotifications > 0 && (
-              <Badge className="absolute -top-2 -right-2 bg-red-500 text-white text-xs px-1 min-w-[20px] h-5">
+              <Badge className="absolute -top-2 -right-2 bg-red-500 text-white text-xs px-1 min-w-[16px] md:min-w-[20px] h-4 md:h-5">
                 {unreadNotifications}
               </Badge>
             )}
@@ -2634,10 +2639,11 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
 
       {/* Enhanced Navigation */}
       <Tabs value={activeTab} onValueChange={setActiveTab}>
-        <TabsList className="grid w-full grid-cols-6">
-          <TabsTrigger value="overview" className="flex items-center gap-2">
-            <Users className="w-4 h-4" />
-            Overview
+        <TabsList className="grid w-full grid-cols-3 md:grid-cols-6 gap-1 md:gap-0 h-auto p-1">
+          <TabsTrigger value="overview" className="flex flex-col md:flex-row items-center gap-1 md:gap-2 text-xs md:text-sm py-2 md:py-3 px-1 md:px-3">
+            <Users className="w-3 h-3 md:w-4 md:h-4" />
+            <span className="hidden md:inline">Overview</span>
+            <span className="md:hidden">Home</span>
           </TabsTrigger>
           <TabsTrigger value="goals" className="flex items-center gap-2">
             <Target className="w-4 h-4" />
@@ -2734,7 +2740,7 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
             <div>
               <Label htmlFor="avatar">Avatar</Label>
               <div className="flex gap-2 mt-2">
-                {["👦", "👧", "🧒", "👶", "🦸‍♂️", "🦸‍♀️", "🧑‍🎓", "👨‍🎓", "👩‍🎓"].map(
+                {["👦", "👧", "🧒", "👶", "���‍♂️", "🦸‍♀️", "🧑‍🎓", "👨‍🎓", "👩‍🎓"].map(
                   (emoji) => (
                     <Button
                       key={emoji}
