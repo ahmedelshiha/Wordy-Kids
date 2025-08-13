@@ -644,15 +644,18 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
             <Button
               onClick={() => setActiveTab("analytics")}
               variant="outline"
-              className="h-20 flex flex-col items-center gap-2 border-green-200 hover:border-green-300 hover:bg-green-50"
+              className="h-16 md:h-20 flex flex-col items-center gap-1 md:gap-2 border-green-200 hover:border-green-300 hover:bg-green-50 text-xs md:text-sm"
             >
-              <CheckCircle className="w-6 h-6 text-green-500" />
+              <CheckCircle className="w-5 h-5 md:w-6 md:h-6 text-green-500" />
               <div className="text-center">
                 <div className="font-semibold text-green-700">
                   Mastered Words
                 </div>
-                <div className="text-xs text-green-600">
+                <div className="text-xs text-green-600 hidden md:block">
                   See progress & achievements
+                </div>
+                <div className="text-xs text-green-600 md:hidden">
+                  Progress
                 </div>
               </div>
             </Button>
@@ -660,13 +663,16 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
             <Button
               onClick={() => setActiveTab("goals")}
               variant="outline"
-              className="h-20 flex flex-col items-center gap-2 border-blue-200 hover:border-blue-300 hover:bg-blue-50"
+              className="h-16 md:h-20 flex flex-col items-center gap-1 md:gap-2 border-blue-200 hover:border-blue-300 hover:bg-blue-50 text-xs md:text-sm"
             >
-              <Target className="w-6 h-6 text-blue-500" />
+              <Target className="w-5 h-5 md:w-6 md:h-6 text-blue-500" />
               <div className="text-center">
                 <div className="font-semibold text-blue-700">Set Goals</div>
-                <div className="text-xs text-blue-600">
+                <div className="text-xs text-blue-600 hidden md:block">
                   Create learning objectives
+                </div>
+                <div className="text-xs text-blue-600 md:hidden">
+                  Objectives
                 </div>
               </div>
             </Button>
