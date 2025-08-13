@@ -566,38 +566,83 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
 
   const renderOverview = () => (
     <div className="space-y-4 md:space-y-6">
-      {/* Quick Actions Bar - Mobile Optimized */}
-      <Card className="bg-gradient-to-r from-educational-blue/10 to-educational-purple/10">
-        <CardContent className="p-3 md:p-4">
-          <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 md:gap-0">
-            <div>
-              <h3 className="font-semibold text-base md:text-lg">Good Morning! 👋</h3>
-              <p className="text-xs md:text-sm text-slate-600">
-                {children.length} active learner
-                {children.length !== 1 ? "s" : ""} •{unreadNotifications} new
-                notification{unreadNotifications !== 1 ? "s" : ""}
-                {highPriorityNotifications > 0 && (
-                  <span className="ml-2 text-red-600 font-medium">
-                    {highPriorityNotifications} urgent
-                  </span>
-                )}
+      {/* Welcome Section - Combined Layout */}
+      {children.length === 0 ? (
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {/* Good Morning Section */}
+          <Card className="bg-gradient-to-r from-educational-blue/10 to-educational-purple/10">
+            <CardContent className="p-3 md:p-4">
+              <div className="space-y-2">
+                <h3 className="font-semibold text-base md:text-lg">Good Morning! 👋</h3>
+                <p className="text-xs md:text-sm text-slate-600">
+                  {children.length} active learner
+                  {children.length !== 1 ? "s" : ""} •{unreadNotifications} new
+                  notification{unreadNotifications !== 1 ? "s" : ""}
+                  {highPriorityNotifications > 0 && (
+                    <span className="ml-2 text-red-600 font-medium">
+                      {highPriorityNotifications} urgent
+                    </span>
+                  )}
+                </p>
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* No Children Section */}
+          <Card className="bg-gradient-to-r from-green-50 to-blue-50">
+            <CardContent className="p-3 md:p-4 text-center">
+              <div className="text-3xl md:text-4xl mb-2">👶</div>
+              <h3 className="text-sm md:text-base font-semibold mb-1">
+                No Children Added Yet
+              </h3>
+              <p className="text-gray-600 mb-3 text-xs md:text-sm">
+                Add your first child to start tracking their learning progress
               </p>
-            </div>
-            <div className="flex gap-2">
               <Button
-                size="sm"
-                variant="outline"
                 onClick={() => setShowAddChildDialog(true)}
-                className="text-xs md:text-sm px-2 md:px-3"
+                className="bg-educational-blue text-xs md:text-sm w-full"
+                size="sm"
               >
                 <UserPlus className="w-3 h-3 md:w-4 md:h-4 mr-1 md:mr-2" />
-                <span className="hidden md:inline">Add Child</span>
-                <span className="md:hidden">Add</span>
+                <span className="hidden md:inline">Add Your First Child</span>
+                <span className="md:hidden">Add Child</span>
               </Button>
+            </CardContent>
+          </Card>
+        </div>
+      ) : (
+        <Card className="bg-gradient-to-r from-educational-blue/10 to-educational-purple/10">
+          <CardContent className="p-3 md:p-4">
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 md:gap-0">
+              <div>
+                <h3 className="font-semibold text-base md:text-lg">Good Morning! 👋</h3>
+                <p className="text-xs md:text-sm text-slate-600">
+                  {children.length} active learner
+                  {children.length !== 1 ? "s" : ""} •{unreadNotifications} new
+                  notification{unreadNotifications !== 1 ? "s" : ""}
+                  {highPriorityNotifications > 0 && (
+                    <span className="ml-2 text-red-600 font-medium">
+                      {highPriorityNotifications} urgent
+                    </span>
+                  )}
+                </p>
+              </div>
+              <div className="flex gap-2">
+                <Button
+                  size="sm"
+                  variant="outline"
+                  onClick={() => setShowAddChildDialog(true)}
+                  className="text-xs md:text-sm px-2 md:px-3"
+                >
+                  <UserPlus className="w-3 h-3 md:w-4 md:h-4 mr-1 md:mr-2" />
+                  <span className="hidden md:inline">Add Child</span>
+                  <span className="md:hidden">Add</span>
+                </Button>
+              </div>
             </div>
-          </div>
-        </CardContent>
-      </Card>
+          </CardContent>
+        </Card>
+      )}
 
       {/* Family Summary - Mobile Optimized */}
       <Card>
@@ -733,29 +778,9 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
       </Card>
 
       {/* Children Cards with Enhanced Information - Mobile Optimized */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 md:gap-6">
-        {children.length === 0 ? (
-          <Card className="col-span-2 text-center py-8 md:py-12">
-            <CardContent className="px-3 md:px-6">
-              <div className="text-4xl md:text-6xl mb-3 md:mb-4">👶</div>
-              <h3 className="text-lg md:text-xl font-semibold mb-2">
-                No Children Added Yet
-              </h3>
-              <p className="text-gray-600 mb-4 md:mb-6 text-sm md:text-base">
-                Add your first child to start tracking their learning progress
-              </p>
-              <Button
-                onClick={() => setShowAddChildDialog(true)}
-                className="bg-educational-blue text-sm md:text-base"
-              >
-                <UserPlus className="w-3 h-3 md:w-4 md:h-4 mr-1 md:mr-2" />
-                <span className="hidden md:inline">Add Your First Child</span>
-                <span className="md:hidden">Add Child</span>
-              </Button>
-            </CardContent>
-          </Card>
-        ) : (
-          children.map((child) => {
+      {children.length > 0 && (
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 md:gap-6">
+          {children.map((child) => {
             const weeklyStats = calculateWeeklyStats(child.id);
             const progressPercentage =
               (child.weeklyProgress / child.weeklyGoal) * 100;
@@ -935,9 +960,9 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
                 </CardContent>
               </Card>
             );
-          })
-        )}
-      </div>
+          })}
+        </div>
+      )}
     </div>
   );
 
@@ -1822,7 +1847,7 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
       Animals: "���",
       Science: "🔬",
       Colors: "🌈",
-      Food: "🍎",
+      Food: "��",
       Transportation: "🚗",
       Nature: "🌲",
       Sports: "⚽",
