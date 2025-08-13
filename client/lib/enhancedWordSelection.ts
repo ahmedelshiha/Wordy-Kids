@@ -377,6 +377,7 @@ export class EnhancedWordSelector {
    * Select words specifically for review
    */
   private static selectReviewWords(
+    categoryWords: Word[],
     userHistory: Map<number, WordHistory>,
     userProgress: {
       rememberedWords: Set<number>;
