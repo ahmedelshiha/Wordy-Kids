@@ -365,6 +365,18 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
     Record<string, ChildWordStats>
   >({});
   const [loadingWordStats, setLoadingWordStats] = useState(false);
+  const [practiceWords, setPracticeWords] = useState<Array<{
+    word: string;
+    category: string;
+    accuracy: number;
+    timesReviewed: number;
+  }>>([]);
+  const [topWords, setTopWords] = useState<Array<{
+    word: string;
+    category: string;
+    accuracy: number;
+    timesReviewed: number;
+  }>>([]);
 
   // Save children to localStorage whenever children state changes
   useEffect(() => {
