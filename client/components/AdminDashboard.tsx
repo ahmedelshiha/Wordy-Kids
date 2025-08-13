@@ -1525,12 +1525,38 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onNavigateBack }) => {
           </TabsList>
         </div>
 
-        <TabsContent value="overview">{renderOverview()}</TabsContent>
-        <TabsContent value="content">{renderContentManagement()}</TabsContent>
-        <TabsContent value="users">{renderUserManagement()}</TabsContent>
-        <TabsContent value="analytics">{renderAnalytics()}</TabsContent>
-        <TabsContent value="tickets">{renderSupportTickets()}</TabsContent>
+        <TabsContent value="overview" className="mt-4 md:mt-6">{renderOverview()}</TabsContent>
+        <TabsContent value="content" className="mt-4 md:mt-6">{renderContentManagement()}</TabsContent>
+        <TabsContent value="users" className="mt-4 md:mt-6">{renderUserManagement()}</TabsContent>
+        <TabsContent value="analytics" className="mt-4 md:mt-6">{renderAnalytics()}</TabsContent>
+        <TabsContent value="tickets" className="mt-4 md:mt-6">{renderSupportTickets()}</TabsContent>
       </Tabs>
+
+      {/* Mobile Floating Action Button */}
+      <div className="md:hidden fixed bottom-6 right-4 z-50">
+        <div className="flex flex-col gap-2">
+          {activeTab === "content" && (
+            <Button
+              onClick={() => {
+                setWordEditorMode("create");
+                setEditingWord(null);
+                setShowWordEditor(true);
+              }}
+              className="w-14 h-14 rounded-full bg-educational-blue hover:bg-educational-blue/90 shadow-lg"
+            >
+              <Plus className="w-6 h-6" />
+            </Button>
+          )}
+          {activeTab === "tickets" && (
+            <Button
+              onClick={() => setActiveTab("tickets")}
+              className="w-14 h-14 rounded-full bg-educational-green hover:bg-educational-green/90 shadow-lg"
+            >
+              <MessageSquare className="w-6 h-6" />
+            </Button>
+          )}
+        </div>
+      </div>
 
       {/* Add Word Dialog */}
       <Dialog open={showWordDialog} onOpenChange={setShowWordDialog}>
