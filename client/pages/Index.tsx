@@ -1493,13 +1493,14 @@ export default function Index({ initialProfile }: IndexProps) {
                                                   currentWord,
                                                   "remembered",
                                                 );
-                                                // Show celebration effect
+                                                // Show enhanced celebration effects and play success sound
+                                                setCelebrationEffect(true);
+                                                audioService.playSuccessSound();
                                                 setShowCelebration(true);
-                                                setTimeout(
-                                                  () =>
-                                                    setShowCelebration(false),
-                                                  1500,
-                                                );
+                                                setTimeout(() => {
+                                                  setCelebrationEffect(false);
+                                                  setShowCelebration(false);
+                                                }, 2000);
                                               }
                                               // Auto-advance to next word
                                               if (
