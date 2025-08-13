@@ -424,7 +424,13 @@ export function ChildFriendlyCategorySelector({
     return [...recommended, ...others];
   };
 
-  const categories = getRecommendedCategories();
+  // Filter categories based on search
+  const filteredCategories = getRecommendedCategories().filter(category =>
+    category.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    category.description.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+  const categories = searchTerm ? filteredCategories : getRecommendedCategories();
 
   return (
     <div className="space-y-8 relative">
