@@ -801,30 +801,31 @@ export default function Index({ initialProfile }: IndexProps) {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 relative">
-      {/* Hero Header */}
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 relative overflow-x-hidden">
+      {/* Optimized Mobile-First Header */}
       <header className="relative overflow-hidden bg-gradient-to-r from-educational-blue via-educational-purple to-educational-pink text-white">
         <div className="absolute inset-0 bg-black/10"></div>
-        <div className="relative container mx-auto px-4 py-1 md:py-4">
-          {/* Mobile header - compact */}
-          <div className="flex items-center justify-between py-1 md:hidden">
+        <div className="relative container mx-auto px-4 py-2 md:py-4">
+          {/* Mobile header - ultra compact */}
+          <div className="flex items-center justify-between md:hidden">
             <div className="flex items-center gap-2">
               <div className="bg-white/20 backdrop-blur-sm rounded-full p-1">
                 <img
                   src="https://cdn.builder.io/api/v1/image/assets%2Fa33f74a2f97141a4a1ef43d9448f9bda%2F2a4b7e4c3c38485b966cfd2cff50da9e?format=webp&width=800"
                   alt="Wordy Logo"
-                  className="w-6 h-6 rounded-full"
+                  className="w-5 h-5 rounded-full"
                 />
               </div>
               <div>
                 <h1 className="text-sm font-bold leading-tight">
                   Wordy's Adventure!
                 </h1>
-                <p className="text-xs text-educational-yellow-light">
-                  WordWise 🦉
+                <p className="text-xs text-educational-yellow-light opacity-90">
+                  Let's Learn! 🦉
                 </p>
               </div>
             </div>
+            {/* Mobile menu trigger could go here if needed */}
           </div>
 
           {/* Desktop header */}
@@ -1147,8 +1148,8 @@ export default function Index({ initialProfile }: IndexProps) {
               </div>
             </aside>
 
-            {/* Main Content Area */}
-            <div className="flex-1 p-4 lg:p-8 pb-24 lg:pb-8 overflow-y-auto scroll-smooth">
+            {/* Main Content Area - Optimized Mobile Spacing */}
+            <div className="flex-1 p-3 sm:p-4 lg:p-8 pb-20 sm:pb-24 lg:pb-8 overflow-y-auto scroll-smooth">
               <Tabs
                 value={activeTab}
                 onValueChange={setActiveTab}
@@ -1293,25 +1294,51 @@ export default function Index({ initialProfile }: IndexProps) {
                     ) : (
                       <>
                         <div className="text-center">
-                          {/* Compact Layout for All Selected Categories (including All Words) */}
-                          <div className="mb-2">
-                            {/* Title/Description and Back Button Side by Side (Mobile & Desktop) */}
-                            <div className="flex items-center justify-between gap-2">
-                              {/* Title and Description */}
-                              <div className="text-left flex-1 min-w-0">
-                                <h2 className="text-base sm:text-lg md:text-xl font-bold text-slate-800 truncate">
+                          {/* Mobile-Optimized Category Header */}
+                          <div className="mb-3">
+                            {/* Mobile: Stack title and button vertically for better touch targets */}
+                            <div className="block sm:hidden">
+                              <div className="text-center mb-2">
+                                <h2 className="text-lg font-bold text-slate-800">
                                   {selectedCategory === "all"
                                     ? "All Words"
                                     : `${selectedCategory.charAt(0).toUpperCase() + selectedCategory.slice(1)} Words`}
                                 </h2>
-                                <p className="text-xs md:text-sm text-slate-600">
+                                <p className="text-sm text-slate-600">
                                   {selectedCategory === "all"
                                     ? "Learn vocabulary from all categories!"
                                     : `Learn ${selectedCategory} vocabulary!`}
                                 </p>
                               </div>
+                              <div className="flex justify-center">
+                                <Button
+                                  onClick={() => {
+                                    setSelectedCategory("all");
+                                    setLearningMode("selector");
+                                  }}
+                                  variant="outline"
+                                  className="flex items-center gap-2 px-4 py-2 h-10 rounded-xl text-sm font-medium"
+                                >
+                                  <span>←</span>
+                                  <span>Back to Library</span>
+                                </Button>
+                              </div>
+                            </div>
 
-                              {/* Simple Back Button */}
+                            {/* Tablet/Desktop: Side by side layout */}
+                            <div className="hidden sm:flex items-center justify-between gap-2">
+                              <div className="text-left flex-1 min-w-0">
+                                <h2 className="text-lg md:text-xl font-bold text-slate-800 truncate">
+                                  {selectedCategory === "all"
+                                    ? "All Words"
+                                    : `${selectedCategory.charAt(0).toUpperCase() + selectedCategory.slice(1)} Words`}
+                                </h2>
+                                <p className="text-sm md:text-base text-slate-600">
+                                  {selectedCategory === "all"
+                                    ? "Learn vocabulary from all categories!"
+                                    : `Learn ${selectedCategory} vocabulary!`}
+                                </p>
+                              </div>
                               <div className="flex-shrink-0">
                                 <Button
                                   onClick={() => {
@@ -1322,12 +1349,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                   className="flex items-center gap-1 text-xs px-2 py-1 h-7 rounded-md"
                                 >
                                   <span className="text-sm">←</span>
-                                  <span className="hidden sm:inline">
-                                    Back to Library
-                                  </span>
-                                  <span className="sm:hidden">
-                                    Back to Library
-                                  </span>
+                                  <span>Back to Library</span>
                                 </Button>
                               </div>
                             </div>
@@ -1342,7 +1364,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                   {displayWords.length > 0 && (
                                     <>
                                       <div
-                                        className={`max-w-sm md:max-w-md mx-auto px-2 md:px-0 relative ${
+                                        className={`max-w-xs sm:max-w-sm md:max-w-md mx-auto px-1 sm:px-2 md:px-0 relative ${
                                           celebrationEffect &&
                                           "animate-pulse shadow-2xl"
                                         }`}
@@ -1406,8 +1428,8 @@ export default function Index({ initialProfile }: IndexProps) {
                                       </div>
 
                                       <div className="space-y-4">
-                                        {/* Learning Progress Buttons */}
-                                        <div className="flex justify-center gap-3 md:gap-4 px-4 md:px-0">
+                                        {/* Mobile-Optimized Learning Progress Buttons */}
+                                        <div className="flex justify-center gap-2 sm:gap-3 md:gap-4 px-2 sm:px-4 md:px-0">
                                           <Button
                                             onClick={async () => {
                                               const currentWord =
@@ -1487,19 +1509,19 @@ export default function Index({ initialProfile }: IndexProps) {
                                                 }
                                               }
                                             }}
-                                            className="flex-1 bg-gradient-to-r from-red-400 to-pink-500 hover:from-red-500 hover:to-pink-600 text-white font-bold border-0 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 active:scale-95 py-4 px-6 min-h-[60px] relative overflow-hidden"
+                                            className="flex-1 bg-gradient-to-r from-red-400 to-pink-500 hover:from-red-500 hover:to-pink-600 text-white font-bold border-0 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform active:scale-95 py-3 sm:py-4 px-3 sm:px-6 min-h-[56px] sm:min-h-[60px] relative overflow-hidden text-sm sm:text-base"
                                             disabled={isLoadingProgress}
                                           >
                                             <div className="absolute inset-0 bg-white/20 rounded-xl opacity-0 hover:opacity-100 transition-opacity duration-300"></div>
                                             <div className="relative z-10 flex items-center justify-center">
-                                              <span className="text-2xl mr-2 animate-wiggle">
+                                              <span className="text-xl sm:text-2xl mr-1 sm:mr-2 animate-wiggle">
                                                 😔
                                               </span>
                                               <div className="text-center">
-                                                <div className="font-bold text-lg">
+                                                <div className="font-bold text-base sm:text-lg">
                                                   I Forgot
                                                 </div>
-                                                <div className="text-xs opacity-90">
+                                                <div className="text-xs opacity-90 hidden sm:block">
                                                   Need practice! 💪
                                                 </div>
                                               </div>
@@ -1612,19 +1634,19 @@ export default function Index({ initialProfile }: IndexProps) {
                                                 }
                                               }
                                             }}
-                                            className="flex-1 bg-gradient-to-r from-green-400 to-emerald-500 hover:from-green-500 hover:to-emerald-600 text-white font-bold border-0 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 active:scale-95 py-4 px-6 min-h-[60px] relative overflow-hidden"
+                                            className="flex-1 bg-gradient-to-r from-green-400 to-emerald-500 hover:from-green-500 hover:to-emerald-600 text-white font-bold border-0 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform active:scale-95 py-3 sm:py-4 px-3 sm:px-6 min-h-[56px] sm:min-h-[60px] relative overflow-hidden text-sm sm:text-base"
                                             disabled={isLoadingProgress}
                                           >
                                             <div className="absolute inset-0 bg-white/20 rounded-xl opacity-0 hover:opacity-100 transition-opacity duration-300"></div>
                                             <div className="relative z-10 flex items-center justify-center">
-                                              <span className="text-2xl mr-2 animate-bounce">
+                                              <span className="text-xl sm:text-2xl mr-1 sm:mr-2 animate-bounce">
                                                 😊
                                               </span>
                                               <div className="text-center">
-                                                <div className="font-bold text-lg">
+                                                <div className="font-bold text-base sm:text-lg">
                                                   I Remember!
                                                 </div>
-                                                <div className="text-xs opacity-90">
+                                                <div className="text-xs opacity-90 hidden sm:block">
                                                   Awesome! ⭐
                                                 </div>
                                               </div>
@@ -1632,35 +1654,59 @@ export default function Index({ initialProfile }: IndexProps) {
                                           </Button>
                                         </div>
 
-                                        {/* Learning Progress Indicator */}
+                                        {/* Mobile-Optimized Learning Progress Indicator */}
                                         <div className="text-center space-y-2">
-                                          <div className="flex justify-center gap-4 text-sm">
-                                            <div className="flex items-center gap-1 text-green-600">
-                                              <span className="text-base">
+                                          <div className="flex justify-center gap-3 sm:gap-4 text-sm">
+                                            <div className="flex items-center gap-1 text-green-600 bg-green-50 px-2 py-1 rounded-lg">
+                                              <span className="text-sm">
                                                 ✅
                                               </span>
-                                              <span className="font-medium">
+                                              <span className="font-bold text-sm">
                                                 {rememberedWords.size}
                                               </span>
-                                              <span className="text-xs opacity-75">
+                                              <span className="text-xs opacity-75 hidden sm:inline">
                                                 remembered
                                               </span>
                                             </div>
-                                            <div className="flex items-center gap-1 text-red-600">
-                                              <span className="text-base">
+                                            <div className="flex items-center gap-1 text-red-600 bg-red-50 px-2 py-1 rounded-lg">
+                                              <span className="text-sm">
                                                 💪
                                               </span>
-                                              <span className="font-medium">
+                                              <span className="font-bold text-sm">
                                                 {forgottenWords.size}
                                               </span>
-                                              <span className="text-xs opacity-75">
-                                                to practice
+                                              <span className="text-xs opacity-75 hidden sm:inline">
+                                                practice
                                               </span>
                                             </div>
                                           </div>
 
-                                          {/* Quick Navigation */}
-                                          <div className="flex justify-center gap-2 mt-3">
+                                          {/* Mobile-Optimized Quick Navigation */}
+                                          <div className="flex justify-center gap-1 sm:gap-2 mt-3">
+                                            <Button
+                                              onClick={() =>
+                                                setCurrentWordIndex(
+                                                  Math.max(
+                                                    0,
+                                                    currentWordIndex - 1,
+                                                  ),
+                                                )
+                                              }
+                                              disabled={currentWordIndex === 0}
+                                              variant="ghost"
+                                              size="sm"
+                                              className="px-2 sm:px-3 py-1 text-xs sm:text-sm h-8 sm:h-9"
+                                            >
+                                              ← Prev
+                                            </Button>
+
+                                            <div className="bg-slate-100 px-3 py-1 rounded-lg flex items-center">
+                                              <span className="text-xs sm:text-sm font-medium text-slate-600">
+                                                {currentWordIndex + 1} /{" "}
+                                                {displayWords.length}
+                                              </span>
+                                            </div>
+
                                             <Button
                                               onClick={() =>
                                                 setCurrentWordIndex(
@@ -1676,6 +1722,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                               }
                                               variant="ghost"
                                               size="sm"
+                                              className="px-2 sm:px-3 py-1 text-xs sm:text-sm h-8 sm:h-9"
                                               className="text-gray-500 hover:text-gray-700 hover:bg-gray-100 py-1 px-3"
                                             >
                                               🤔 Try another word
@@ -1885,7 +1932,7 @@ export default function Index({ initialProfile }: IndexProps) {
                         </Card>
 
                         {/* Picture Quiz - Kid-Friendly */}
-                        <Card className="cursor-pointer hover:shadow-lg transition-all duration-300 hover:scale-105 border-2 border-educational-orange/30 animate-kid-float">
+                        <Card className="cursor-pointer hover:shadow-lg active:shadow-xl transition-all duration-200 active:scale-95 border-2 border-educational-orange/30">
                           <CardContent className="p-3 md:p-4 text-center">
                             <div className="text-3xl md:text-5xl mb-2 md:mb-3 animate-bounce">
                               🖼️
@@ -1906,7 +1953,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                 setSelectedQuizType("picture");
                                 setShowQuiz(true);
                               }}
-                              className="w-full bg-educational-orange text-white hover:bg-educational-orange/90 py-1.5 md:py-2 text-xs md:text-sm rounded-xl animate-wiggle"
+                              className="w-full bg-educational-orange text-white hover:bg-educational-orange/90 active:bg-educational-orange/80 py-2 text-xs sm:text-sm rounded-xl min-h-[44px]"
                               size="sm"
                             >
                               <Play className="w-3 h-3 md:w-4 md:h-4 mr-1" />
@@ -2393,10 +2440,10 @@ export default function Index({ initialProfile }: IndexProps) {
         achievementCount={learningStats.badges.filter((b) => b.earned).length}
       />
 
-      {/* Floating Helper */}
-      <div className="fixed bottom-20 lg:bottom-4 md:bottom-6 right-4 md:right-6 z-40">
+      {/* Mobile-Optimized Floating Helper */}
+      <div className="fixed bottom-24 sm:bottom-20 lg:bottom-6 right-3 sm:right-4 md:right-6 z-40">
         <div
-          className="bg-gradient-to-r from-educational-purple to-educational-pink p-3 md:p-4 rounded-full shadow-2xl cursor-pointer md:hover:scale-110 transition-all duration-300 min-w-[48px] min-h-[48px] flex items-center justify-center"
+          className="bg-gradient-to-r from-educational-purple to-educational-pink p-3 md:p-4 rounded-full shadow-2xl cursor-pointer transition-all duration-300 min-w-[48px] min-h-[48px] flex items-center justify-center active:scale-95"
           onClick={() =>
             setFeedback({
               type: "encouragement",
