@@ -547,17 +547,6 @@ export default function LoginForm() {
             </div>
           </Button>
 
-          <div className="text-sm text-gray-600">
-            Don't have an account?{" "}
-            <Button
-              variant="link"
-              onClick={() => navigate("/signup")}
-              className="p-0 h-auto text-sm font-medium text-blue-600 hover:text-blue-800 underline-offset-2"
-              disabled={isLoading}
-            >
-              Create one for free
-            </Button>
-          </div>
         </div>
       </div>
     </div>
