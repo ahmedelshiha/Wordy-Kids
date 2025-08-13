@@ -1326,7 +1326,26 @@ export default function Index({ initialProfile }: IndexProps) {
                                 <>
                                   {displayWords.length > 0 && (
                                     <>
-                                      <div className="max-w-sm md:max-w-md mx-auto px-2 md:px-0">
+                                      <div className={`max-w-sm md:max-w-md mx-auto px-2 md:px-0 relative ${
+                                        celebrationEffect && "animate-pulse shadow-2xl"
+                                      }`}>
+                                        {/* Celebration Sparkles */}
+                                        {celebrationEffect && (
+                                          <div className="absolute inset-0 bg-gradient-to-r from-yellow-400/20 to-pink-400/20 animate-pulse z-20 rounded-xl">
+                                            <div className="absolute top-4 left-4 text-2xl animate-bounce">
+                                              ✨
+                                            </div>
+                                            <div className="absolute top-6 right-6 text-3xl animate-spin">
+                                              🌟
+                                            </div>
+                                            <div className="absolute bottom-4 left-6 text-2xl animate-bounce delay-300">
+                                              🎊
+                                            </div>
+                                            <div className="absolute bottom-6 right-4 text-2xl animate-pulse delay-500">
+                                              💫
+                                            </div>
+                                          </div>
+                                        )}
                                         <WordCard
                                           word={{
                                             ...(displayWords[
