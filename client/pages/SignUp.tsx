@@ -37,9 +37,30 @@ export default function SignUp() {
   } | null>(null);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    let value = e.target.value;
+
+    // Format birth date as dd/mm/yyyy
+    if (e.target.name === "birthDate") {
+      // Remove all non-digit characters
+      const digits = value.replace(/\D/g, "");
+
+      // Format as dd/mm/yyyy
+      if (digits.length >= 1) {
+        if (digits.length <= 2) {
+          value = digits;
+        } else if (digits.length <= 4) {
+          value = digits.slice(0, 2) + "/" + digits.slice(2);
+        } else {
+          value = digits.slice(0, 2) + "/" + digits.slice(2, 4) + "/" + digits.slice(4, 8);
+        }
+      }
+    } else {
+      value = value.trim();
+    }
+
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value.trim(),
+      [e.target.name]: value,
     });
     // Clear any existing messages when user starts typing
     if (message) {
