@@ -3307,26 +3307,37 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
             </CardContent>
           </Card>
 
-          {/* Learning Path Analysis */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
+          {/* Enhanced Learning Path Analysis for Mobile */}
+          <div className="space-y-4 md:space-y-6">
+            {/* Mobile-first Strengths Card */}
+            <Card className="overflow-hidden">
+              <CardHeader className="pb-3 bg-gradient-to-r from-green-50 to-emerald-50">
+                <CardTitle className="flex items-center gap-2 text-base md:text-lg">
                   <TrendingUp className="w-5 h-5 text-green-500" />
-                  Strengths & Progress
+                  <div>
+                    <div>Strengths & Progress</div>
+                    <p className="text-xs md:text-sm font-normal text-slate-600 mt-1">
+                      Areas where {reportData.child.name} excels
+                    </p>
+                  </div>
                 </CardTitle>
               </CardHeader>
-              <CardContent className="space-y-4">
+              <CardContent className="p-3 md:p-6 space-y-4">
                 <div>
-                  <h4 className="font-semibold mb-2">Strong Categories</h4>
-                  <div className="flex flex-wrap gap-2">
+                  <div className="flex items-center justify-between mb-3">
+                    <h4 className="font-semibold text-slate-800">Strong Categories</h4>
+                    <Badge variant="outline" className="text-green-600 border-green-300">
+                      {reportData.learningPath.strengthCategories.length} areas
+                    </Badge>
+                  </div>
+                  <div className="grid grid-cols-2 md:flex md:flex-wrap gap-2">
                     {reportData.learningPath.strengthCategories.map(
                       (category: string) => (
                         <Badge
                           key={category}
-                          className="bg-green-100 text-green-800"
+                          className="bg-green-100 text-green-800 hover:bg-green-200 transition-colors justify-center py-2 md:py-1"
                         >
-                          {category}
+                          ✨ {category}
                         </Badge>
                       ),
                     )}
@@ -3334,20 +3345,39 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
                 </div>
 
                 <div>
-                  <h4 className="font-semibold mb-2">Mastered Words</h4>
-                  <div className="flex flex-wrap gap-2">
-                    {reportData.learningPath.masteredWords.map(
-                      (word: string) => (
-                        <Badge
-                          key={word}
-                          variant="outline"
-                          className="text-green-600 border-green-300"
-                        >
-                          {word}
-                        </Badge>
-                      ),
-                    )}
+                  <div className="flex items-center justify-between mb-3">
+                    <h4 className="font-semibold text-slate-800">Mastered Words</h4>
+                    <Badge variant="outline" className="text-green-600 border-green-300">
+                      {reportData.learningPath.masteredWords.length} words
+                    </Badge>
                   </div>
+                  {reportData.learningPath.masteredWords.length > 0 ? (
+                    <div className="grid grid-cols-2 md:flex md:flex-wrap gap-2">
+                      {reportData.learningPath.masteredWords.slice(0, 8).map(
+                        (word: string) => (
+                          <Badge
+                            key={word}
+                            variant="outline"
+                            className="text-green-600 border-green-300 hover:bg-green-50 transition-colors justify-center py-2 md:py-1 capitalize"
+                          >
+                            📚 {word}
+                          </Badge>
+                        ),
+                      )}
+                      {reportData.learningPath.masteredWords.length > 8 && (
+                        <Badge
+                          variant="outline"
+                          className="text-slate-500 border-slate-300 justify-center py-2 md:py-1"
+                        >
+                          +{reportData.learningPath.masteredWords.length - 8} more
+                        </Badge>
+                      )}
+                    </div>
+                  ) : (
+                    <div className="text-center py-4 text-slate-500 text-sm">
+                      No words fully mastered yet - keep practicing!
+                    </div>
+                  )}
                 </div>
               </CardContent>
             </Card>
