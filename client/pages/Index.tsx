@@ -166,7 +166,7 @@ export default function Index({ initialProfile }: IndexProps) {
   // Initialize dashboard words when category changes or component mounts
   useEffect(() => {
     const initializeWords = () => {
-      if (currentDashboardWords.length === 0) {
+      if (selectedCategory && currentDashboardWords.length === 0) {
         generateFreshWords();
       }
     };
@@ -1578,7 +1578,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                                     type: "celebration",
                                                     title:
                                                       completionResult.title,
-                                                    message: `${completionResult.message}\n\n✅ Remembered: ${completionResult.totalRemembered} words\n❌ Need practice: ${completionResult.totalWords - completionResult.totalRemembered} words\n\n🎉 Category Achievement Unlocked! 🎉`,
+                                                    message: `${completionResult.message}\n\n✅ Remembered: ${completionResult.totalRemembered} words\n❌ Need practice: ${completionResult.totalWords - completionResult.totalRemembered} words\n\n��� Category Achievement Unlocked! 🎉`,
                                                     points:
                                                       completionResult.totalRemembered *
                                                         20 +
