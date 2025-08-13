@@ -826,7 +826,7 @@ export default function Index({ initialProfile }: IndexProps) {
               </div>
             </div>
             <h1 className="text-2xl md:text-3xl font-bold mb-1">
-              ��� Wordy's Adventure!
+              🦉 Wordy's Adventure!
             </h1>
             <p className="text-lg font-semibold text-educational-yellow-light mb-2">
               Fun vocabulary learning for kids! 📚
