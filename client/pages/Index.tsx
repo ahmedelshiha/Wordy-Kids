@@ -511,7 +511,7 @@ export default function Index({ initialProfile }: IndexProps) {
         achievementMessage = `Great job! You completed ${categoryDisplayName} with ${accuracy}% accuracy! Keep up the good work!\n\n🎁 Scholar Bonus: 100 points!\n📚 Scholar badge earned!`;
       } else if (accuracy >= 50) {
         achievementTitle = "Category Explorer! 🗺️🌟";
-        achievementIcon = "🎯";
+        achievementIcon = "����";
         achievementMessage = `Good effort! You finished ${categoryDisplayName} with ${accuracy}% accuracy! Practice makes perfect!\n\n🎁 Explorer Bonus: 75 points!\n🎯 Explorer badge earned!`;
       } else {
         achievementTitle = "Category Challenger! 💪";
@@ -824,7 +824,7 @@ export default function Index({ initialProfile }: IndexProps) {
               </div>
             </div>
             <h1 className="text-2xl md:text-3xl font-bold mb-1">
-              🌟 Wordy's Adventure!
+              ��� Wordy's Adventure!
             </h1>
             <p className="text-lg font-semibold text-educational-yellow-light mb-2">
               Fun vocabulary learning for kids! 📚
@@ -1278,67 +1278,37 @@ export default function Index({ initialProfile }: IndexProps) {
                     ) : (
                       <>
                         <div className="text-center">
-                          {/* Layout for Selected Categories */}
-                          {selectedCategory !== "all" ? (
-                            <div className="mb-2">
-                              {/* Title/Description and Back Button Side by Side (Mobile & Desktop) */}
-                              <div className="flex items-center justify-between gap-2">
-                                {/* Title and Description */}
-                                <div className="text-left flex-1 min-w-0">
-                                  <h2 className="text-base sm:text-lg md:text-xl font-bold text-slate-800 truncate">
-                                    {`${selectedCategory.charAt(0).toUpperCase() + selectedCategory.slice(1)} Words`}
-                                  </h2>
-                                  <p className="text-xs md:text-sm text-slate-600">
-                                    Learn {selectedCategory} vocabulary!
-                                  </p>
-                                </div>
-
-                                {/* Simple Back Button */}
-                                <div className="flex-shrink-0">
-                                  <Button
-                                    onClick={() => {
-                                      setSelectedCategory("all");
-                                      setLearningMode("selector");
-                                    }}
-                                    variant="outline"
-                                    className="flex items-center gap-1 text-xs px-2 py-1 h-7 rounded-md"
-                                  >
-                                    <span className="text-sm">←</span>
-                                    <span className="hidden sm:inline">Back to Library</span>
-                                    <span className="sm:hidden">Back to Library</span>
-                                  </Button>
-                                </div>
+                          {/* Compact Layout for All Selected Categories (including All Words) */}
+                          <div className="mb-2">
+                            {/* Title/Description and Back Button Side by Side (Mobile & Desktop) */}
+                            <div className="flex items-center justify-between gap-2">
+                              {/* Title and Description */}
+                              <div className="text-left flex-1 min-w-0">
+                                <h2 className="text-base sm:text-lg md:text-xl font-bold text-slate-800 truncate">
+                                  {selectedCategory === "all" ? "All Words" : `${selectedCategory.charAt(0).toUpperCase() + selectedCategory.slice(1)} Words`}
+                                </h2>
+                                <p className="text-xs md:text-sm text-slate-600">
+                                  {selectedCategory === "all" ? "Learn vocabulary from all categories!" : `Learn ${selectedCategory} vocabulary!`}
+                                </p>
                               </div>
-                            </div>
-                          ) : (
-                            <>
-                              <h2 className="text-3xl font-bold text-slate-800 mb-4">Word Library</h2>
-                              <p className="text-slate-600 mb-8">
-                                Choose how you'd like to explore and learn vocabulary!
-                              </p>
 
-                              {/* Show Word Cards button only when no category is selected */}
-                              <div className="flex justify-center gap-2 md:gap-4 mb-4 md:mb-6 flex-wrap px-4 md:px-0">
+                              {/* Simple Back Button */}
+                              <div className="flex-shrink-0">
                                 <Button
-                                  onClick={() => setLearningMode("cards")}
-                                  variant={
-                                    learningMode === "cards" ? "default" : "outline"
-                                  }
-                                  className="flex items-center gap-1 md:gap-2 text-sm md:text-base px-3 md:px-4"
+                                  onClick={() => {
+                                    setSelectedCategory("all");
+                                    setLearningMode("selector");
+                                  }}
+                                  variant="outline"
+                                  className="flex items-center gap-1 text-xs px-2 py-1 h-7 rounded-md"
                                 >
-                                  <img
-                                    src="https://cdn.builder.io/api/v1/image/assets%2Fa33f74a2f97141a4a1ef43d9448f9bda%2F2a4b7e4c3c38485b966cfd2cff50da9e?format=webp&width=800"
-                                    alt="Wordy"
-                                    className="w-4 h-4 rounded"
-                                  />
-                                  <span className="hidden sm:inline">
-                                    Word Cards
-                                  </span>
-                                  <span className="sm:hidden">Cards</span>
+                                  <span className="text-sm">←</span>
+                                  <span className="hidden sm:inline">Back to Library</span>
+                                  <span className="sm:hidden">Back to Library</span>
                                 </Button>
                               </div>
-                            </>
-                          )}
+                            </div>
+                          </div>
                         </div>
 
                         {learningMode === "cards" && (
