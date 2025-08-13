@@ -156,10 +156,7 @@ export default function Index({ initialProfile }: IndexProps) {
       return currentDashboardWords;
     }
     // Fallback calculation if currentDashboardWords is empty
-    const categoryWords =
-      selectedCategory === "all"
-        ? getRandomWords(20)
-        : getWordsByCategory(selectedCategory);
+    const categoryWords = getWordsByCategory(selectedCategory);
     return categoryWords.slice(0, 20);
   }, [currentDashboardWords, selectedCategory]);
 
@@ -213,7 +210,7 @@ export default function Index({ initialProfile }: IndexProps) {
       {
         id: "first-word",
         name: "First Word",
-        icon: "����",
+        icon: "🎯",
         earned: rememberedWords.size >= 1,
         description: "Learned your first word",
       },
