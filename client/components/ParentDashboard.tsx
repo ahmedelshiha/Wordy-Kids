@@ -1307,72 +1307,270 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
   );
 
   const renderCustomWords = () => (
-    <div className="space-y-6">
-      <div className="flex items-center justify-between">
-        <div>
-          <h2 className="text-2xl font-bold">Custom Vocabulary</h2>
-          <p className="text-slate-600">
+    <div className="space-y-4 md:space-y-6 p-2 md:p-0">
+      {/* Mobile-optimized header */}
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-3">
+        <div className="text-center md:text-left">
+          <h2 className="text-xl md:text-2xl font-bold text-slate-800">Custom Vocabulary</h2>
+          <p className="text-sm md:text-base text-slate-600">
             Add personalized words for your children's learning
           </p>
         </div>
         <Button
           onClick={() => setShowCustomWordDialog(true)}
-          className="bg-educational-green"
+          className="bg-educational-green hover:bg-educational-green/90 w-full md:w-auto text-sm md:text-base py-3 md:py-2"
+          disabled={!selectedChild}
         >
           <Plus className="w-4 h-4 mr-2" />
           Add Custom Word
         </Button>
       </div>
 
-      {selectedChild && (
-        <Card>
-          <CardHeader>
-            <CardTitle className="flex items-center gap-3">
-              <span className="text-2xl">{selectedChild.avatar}</span>
-              {selectedChild.name}'s Custom Words
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            {selectedChild.customWords.length === 0 ? (
-              <div className="text-center p-8">
-                <BookMarked className="w-16 h-16 text-slate-400 mx-auto mb-4" />
-                <h3 className="text-lg font-semibold mb-2">
-                  No Custom Words Yet
-                </h3>
-                <p className="text-slate-600 mb-4">
-                  Add words that are meaningful to your child's interests and
-                  experiences
-                </p>
-                <Button
-                  onClick={() => setShowCustomWordDialog(true)}
-                  className="bg-educational-green"
-                >
-                  <Plus className="w-4 h-4 mr-2" />
-                  Add First Word
-                </Button>
-              </div>
-            ) : (
-              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
-                {selectedChild.customWords.map((word, index) => (
-                  <div
-                    key={index}
-                    className="flex items-center justify-between p-3 bg-slate-50 rounded-lg"
+      {/* Child selector for mobile */}
+      {children.length > 1 && (
+        <div className="md:hidden">
+          <Card className="bg-gradient-to-r from-educational-green/10 to-educational-blue/10 border-educational-green/20">
+            <CardContent className="p-4">
+              <h3 className="font-semibold text-slate-800 mb-3">Select Child</h3>
+              <div className="flex gap-2 flex-wrap">
+                {children.map((child) => (
+                  <Button
+                    key={child.id}
+                    variant={selectedChild?.id === child.id ? "default" : "outline"}
+                    size="sm"
+                    onClick={() => setSelectedChild(child)}
+                    className={`${
+                      selectedChild?.id === child.id
+                        ? "bg-educational-green hover:bg-educational-green/90"
+                        : "hover:bg-educational-green/10 hover:text-educational-green hover:border-educational-green"
+                    }`}
                   >
-                    <span className="font-medium">{word}</span>
-                    <Button
-                      size="sm"
-                      variant="ghost"
-                      onClick={() => removeCustomWord(word)}
-                      className="text-red-500 hover:text-red-700 hover:bg-red-50"
-                    >
-                      <X className="w-4 h-4" />
-                    </Button>
-                  </div>
+                    <span className="mr-2">{child.avatar}</span>
+                    {child.name}
+                  </Button>
                 ))}
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+      )}
+
+      {/* No child selected state */}
+      {!selectedChild ? (
+        <Card className="text-center py-12 mx-auto max-w-md">
+          <CardContent className="space-y-4">
+            <div className="text-6xl animate-gentle-bounce">📚</div>
+            <h3 className="text-lg md:text-xl font-semibold text-slate-700">Select a Child</h3>
+            <p className="text-slate-600 text-sm md:text-base leading-relaxed">
+              Choose a child profile to manage their custom vocabulary
+            </p>
+            {children.length === 0 && (
+              <div className="pt-4">
+                <div className="inline-flex items-center gap-2 px-4 py-2 bg-educational-green/10 rounded-full text-educational-green text-xs font-medium">
+                  <div className="w-2 h-2 bg-educational-green rounded-full animate-pulse"></div>
+                  Add a child profile first
+                </div>
               </div>
             )}
           </CardContent>
         </Card>
+      ) : (
+        <div className="space-y-4">
+          {/* Stats overview for mobile */}
+          <div className="md:hidden">
+            <Card className="bg-gradient-to-r from-educational-green/10 to-educational-purple/10 border-educational-green/20">
+              <CardContent className="p-4">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <h3 className="font-semibold text-slate-800">
+                      {selectedChild.name}'s Words
+                    </h3>
+                    <p className="text-xs text-slate-600">Custom vocabulary collection</p>
+                  </div>
+                  <div className="text-right">
+                    <div className="text-2xl font-bold text-educational-green">
+                      {selectedChild.customWords.length}
+                    </div>
+                    <p className="text-xs text-slate-600">Total words</p>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+
+          {/* Custom words content */}
+          <Card className="overflow-hidden">
+            <CardHeader className="pb-3 bg-gradient-to-r from-educational-green/5 to-educational-blue/5">
+              <div className="flex items-center justify-between">
+                <CardTitle className="flex items-center gap-3 text-base md:text-lg">
+                  <span className="text-2xl md:text-3xl">{selectedChild.avatar}</span>
+                  <div>
+                    <div>{selectedChild.name}'s Custom Words</div>
+                    <p className="text-xs md:text-sm font-normal text-slate-600">
+                      {selectedChild.customWords.length} words in collection
+                    </p>
+                  </div>
+                </CardTitle>
+                <div className="hidden md:block">
+                  <Button
+                    size="sm"
+                    onClick={() => setShowCustomWordDialog(true)}
+                    className="bg-educational-green hover:bg-educational-green/90"
+                  >
+                    <Plus className="w-4 h-4 mr-1" />
+                    Add Word
+                  </Button>
+                </div>
+              </div>
+            </CardHeader>
+
+            <CardContent className="p-3 md:p-6">
+              {selectedChild.customWords.length === 0 ? (
+                <div className="text-center py-12">
+                  <div className="text-6xl mb-4 animate-gentle-bounce">📖</div>
+                  <h3 className="text-lg md:text-xl font-semibold mb-3 text-slate-700">
+                    No Custom Words Yet
+                  </h3>
+                  <p className="text-slate-600 text-sm md:text-base mb-6 leading-relaxed max-w-md mx-auto">
+                    Add words that are meaningful to {selectedChild.name}'s interests, family names,
+                    or everyday experiences to make learning more personal
+                  </p>
+                  <div className="space-y-3">
+                    <Button
+                      onClick={() => setShowCustomWordDialog(true)}
+                      className="bg-educational-green hover:bg-educational-green/90 w-full md:w-auto"
+                    >
+                      <Plus className="w-4 h-4 mr-2" />
+                      Add First Word
+                    </Button>
+                    <div className="text-xs text-slate-500">
+                      Suggestions: family names, pets, favorite foods, hobbies
+                    </div>
+                  </div>
+                </div>
+              ) : (
+                <div className="space-y-4">
+                  {/* Quick stats bar for desktop */}
+                  <div className="hidden md:flex items-center gap-4 p-3 bg-slate-50 rounded-lg">
+                    <div className="flex items-center gap-2">
+                      <BookMarked className="w-4 h-4 text-educational-green" />
+                      <span className="text-sm font-medium">{selectedChild.customWords.length} Total Words</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <Target className="w-4 h-4 text-educational-blue" />
+                      <span className="text-sm text-slate-600">Personalized Learning</span>
+                    </div>
+                  </div>
+
+                  {/* Enhanced word grid */}
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+                    {selectedChild.customWords.map((word, index) => (
+                      <div
+                        key={index}
+                        className="group relative p-4 bg-gradient-to-br from-white to-slate-50 rounded-xl border-2 border-slate-200 hover:border-educational-green/30 hover:shadow-lg transition-all duration-200"
+                      >
+                        <div className="flex items-center justify-between">
+                          <div className="flex-1 min-w-0">
+                            <div className="font-semibold text-slate-800 text-lg md:text-base capitalize">
+                              {word}
+                            </div>
+                            <div className="text-xs text-slate-500 mt-1">
+                              Custom word #{index + 1}
+                            </div>
+                          </div>
+                          <div className="flex items-center gap-1">
+                            <Button
+                              size="sm"
+                              variant="ghost"
+                              onClick={() => removeCustomWord(word)}
+                              className="text-red-500 hover:text-red-700 hover:bg-red-50 opacity-60 group-hover:opacity-100 transition-opacity"
+                            >
+                              <X className="w-4 h-4" />
+                            </Button>
+                          </div>
+                        </div>
+
+                        {/* Visual enhancement for mobile */}
+                        <div className="md:hidden mt-3 flex items-center gap-2">
+                          <div className="flex-1 h-1 bg-educational-green/20 rounded-full">
+                            <div className="h-1 bg-educational-green rounded-full w-full"></div>
+                          </div>
+                          <span className="text-xs text-educational-green font-medium">Added</span>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+
+                  {/* Bulk actions for mobile */}
+                  <div className="md:hidden mt-6 p-4 bg-slate-50 rounded-lg">
+                    <h4 className="font-semibold text-slate-800 mb-3">Quick Actions</h4>
+                    <div className="grid grid-cols-2 gap-3">
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => setShowCustomWordDialog(true)}
+                        className="flex-1"
+                      >
+                        <Plus className="w-4 h-4 mr-2" />
+                        Add More
+                      </Button>
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        className="flex-1 text-slate-600"
+                        onClick={() => {
+                          // Export functionality could be added here
+                        }}
+                      >
+                        <Download className="w-4 h-4 mr-2" />
+                        Export
+                      </Button>
+                    </div>
+                  </div>
+                </div>
+              )}
+            </CardContent>
+          </Card>
+
+          {/* Suggestions card for better UX */}
+          {selectedChild.customWords.length < 10 && (
+            <Card className="bg-gradient-to-r from-yellow-50 to-orange-50 border-yellow-200">
+              <CardContent className="p-4">
+                <div className="flex items-start gap-3">
+                  <Lightbulb className="w-5 h-5 text-yellow-600 flex-shrink-0 mt-0.5" />
+                  <div>
+                    <h4 className="font-semibold text-yellow-800 mb-1">Word Suggestions</h4>
+                    <p className="text-sm text-yellow-700 mb-3">
+                      Try adding these types of words that are meaningful to {selectedChild.name}:
+                    </p>
+                    <div className="flex flex-wrap gap-2">
+                      {["Family names", "Pet names", "Favorite foods", "Hobbies", "Places visited"].map((suggestion) => (
+                        <span
+                          key={suggestion}
+                          className="px-2 py-1 bg-yellow-100 text-yellow-800 rounded-full text-xs font-medium"
+                        >
+                          {suggestion}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          )}
+        </div>
+      )}
+
+      {/* Floating action button for mobile */}
+      {selectedChild && (
+        <div className="md:hidden fixed bottom-20 right-4 z-40">
+          <Button
+            onClick={() => setShowCustomWordDialog(true)}
+            className="w-14 h-14 rounded-full bg-educational-green hover:bg-educational-green/90 shadow-lg"
+          >
+            <Plus className="w-6 h-6" />
+          </Button>
+        </div>
       )}
     </div>
   );
