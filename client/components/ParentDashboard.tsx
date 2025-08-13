@@ -594,34 +594,37 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
                   )}
                 />
               </div>
-              <p className="text-sm text-slate-600">Longest Streak</p>
+              <p className="text-xs md:text-sm text-slate-600">Longest Streak</p>
             </div>
           </div>
         </CardContent>
       </Card>
 
-      {/* Quick Actions */}
+      {/* Quick Actions - Mobile Optimized */}
       <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <Zap className="w-6 h-6 text-purple-500" />
+        <CardHeader className="pb-3 md:pb-6">
+          <CardTitle className="flex items-center gap-2 text-base md:text-lg">
+            <Zap className="w-5 h-5 md:w-6 md:h-6 text-purple-500" />
             Quick Actions
           </CardTitle>
         </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <CardContent className="px-3 md:px-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-3 md:gap-4">
             <Button
               onClick={() => setActiveTab("analytics")}
               variant="outline"
-              className="h-20 flex flex-col items-center gap-2 border-orange-200 hover:border-orange-300 hover:bg-orange-50 relative"
+              className="h-16 md:h-20 flex flex-col items-center gap-1 md:gap-2 border-orange-200 hover:border-orange-300 hover:bg-orange-50 relative text-xs md:text-sm"
             >
-              <AlertCircle className="w-6 h-6 text-orange-500" />
+              <AlertCircle className="w-5 h-5 md:w-6 md:h-6 text-orange-500" />
               <div className="text-center">
                 <div className="font-semibold text-orange-700">
                   Practice Words
                 </div>
-                <div className="text-xs text-orange-600">
+                <div className="text-xs text-orange-600 hidden md:block">
                   View words that need help
+                </div>
+                <div className="text-xs text-orange-600 md:hidden">
+                  Need help
                 </div>
               </div>
               {children.length > 0 &&
@@ -1599,7 +1602,7 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
   // Helper functions for dynamic content
   const getCategoryEmoji = (category: string) => {
     const emojis: Record<string, string> = {
-      Animals: "🐘",
+      Animals: "���",
       Science: "🔬",
       Colors: "🌈",
       Food: "🍎",
