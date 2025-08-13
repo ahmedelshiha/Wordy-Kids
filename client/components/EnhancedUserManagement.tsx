@@ -1152,11 +1152,11 @@ const EnhancedUserManagement: React.FC<EnhancedUserManagementProps> = ({
             </DialogHeader>
             
             <Tabs defaultValue="overview" className="w-full">
-              <TabsList className="grid w-full grid-cols-4">
-                <TabsTrigger value="overview">Overview</TabsTrigger>
-                <TabsTrigger value="activity">Activity</TabsTrigger>
-                <TabsTrigger value="progress">Progress</TabsTrigger>
-                <TabsTrigger value="settings">Settings</TabsTrigger>
+              <TabsList className="grid w-full grid-cols-2 sm:grid-cols-4">
+                <TabsTrigger value="overview" className="text-xs sm:text-sm">Overview</TabsTrigger>
+                <TabsTrigger value="activity" className="text-xs sm:text-sm">Activity</TabsTrigger>
+                <TabsTrigger value="progress" className="text-xs sm:text-sm">Progress</TabsTrigger>
+                <TabsTrigger value="settings" className="text-xs sm:text-sm">Settings</TabsTrigger>
               </TabsList>
               
               <TabsContent value="overview" className="space-y-4">
