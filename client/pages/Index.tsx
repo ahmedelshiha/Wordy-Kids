@@ -1336,7 +1336,6 @@ export default function Index({ initialProfile }: IndexProps) {
                               <div className="flex-shrink-0">
                                 <Button
                                   onClick={() => {
-                                    setSelectedCategory("all");
                                     setLearningMode("selector");
                                   }}
                                   variant="outline"
