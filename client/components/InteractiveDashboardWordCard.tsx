@@ -646,8 +646,8 @@ export function InteractiveDashboardWordCard({
         </Card>
       </div>
 
-      {/* Systematic Learning Progression Info */}
-      {dashboardSession && (
+      {/* Systematic Learning Progression Info - HIDDEN */}
+      {/* {dashboardSession && (
         <div className="mb-4">
           <Card className="bg-gradient-to-r from-green-50 to-blue-50 border-green-200 hover:shadow-lg transition-all duration-300">
             <CardContent className="p-3 md:p-4">
@@ -677,7 +677,6 @@ export function InteractiveDashboardWordCard({
                 </div>
               </div>
 
-              {/* Progress Bar */}
               <div className="mt-2">
                 <div className="w-full bg-gray-200 rounded-full h-2">
                   <div
@@ -687,7 +686,6 @@ export function InteractiveDashboardWordCard({
                 </div>
               </div>
 
-              {/* Session Info */}
               {dashboardSession.sessionInfo && (
                 <div className="mt-2 flex flex-wrap gap-1">
                   <Badge
@@ -711,7 +709,7 @@ export function InteractiveDashboardWordCard({
             </CardContent>
           </Card>
         </div>
-      )}
+      )} */}
 
       {/* Session Completion Modal */}
       {showSessionComplete && (
