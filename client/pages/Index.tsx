@@ -321,7 +321,7 @@ export default function Index({ initialProfile }: IndexProps) {
       type: "quiz",
       score: percentage,
       accuracy: percentage,
-      category: selectedCategory !== "all" ? selectedCategory : undefined,
+      category: selectedCategory,
     });
 
     setFeedback({
@@ -525,7 +525,7 @@ export default function Index({ initialProfile }: IndexProps) {
       } else {
         achievementTitle = "Category Challenger! 💪";
         achievementIcon = "💪";
-        achievementMessage = `Nice try! You completed ${categoryDisplayName} with ${accuracy}% accuracy! Every attempt makes you stronger!\n\n🎁 Challenger Bonus: 50 points!\n��� Challenger badge earned!`;
+        achievementMessage = `Nice try! You completed ${categoryDisplayName} with ${accuracy}% accuracy! Every attempt makes you stronger!\n\n🎁 Challenger Bonus: 50 points!\n💪 Challenger badge earned!`;
       }
 
       return {
