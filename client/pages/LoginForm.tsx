@@ -74,18 +74,27 @@ export default function LoginForm() {
     }
   }, []);
 
-  // Real-time email validation
+  // Enhanced email validation with professional standards
   const validateEmail = (email: string) => {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!email) return "Email is required";
-    if (!emailRegex.test(email)) return "Please enter a valid email address";
+    const emailRegex =
+      /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
+    if (!email) return "Parent email address is required";
+    if (email.length > 254) return "Email address is too long";
+    if (!emailRegex.test(email))
+      return "Please enter a valid email address (e.g., parent@example.com)";
     return null;
   };
 
-  // Real-time password validation
+  // Enhanced password validation with security standards
   const validatePassword = (password: string) => {
     if (!password) return "Password is required";
-    if (password.length < 3) return "Password must be at least 3 characters";
+    if (password.length < 8)
+      return "Password must be at least 8 characters for security";
+    if (password.length > 128)
+      return "Password is too long (max 128 characters)";
+    if (!/(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/.test(password)) {
+      return "Password should contain uppercase, lowercase, and numbers for better security";
+    }
     return null;
   };
 
@@ -239,6 +248,12 @@ export default function LoginForm() {
   };
 
   const handleBackToMain = () => {
+    // Clear all form state and prevent any validation
+    setFormData({ email: "", password: "" });
+    setErrors({});
+    setMessage(null);
+    setTouched({ email: false, password: false });
+    setValidationState({ email: "neutral", password: "neutral" });
     navigate("/app");
   };
 
@@ -273,7 +288,7 @@ export default function LoginForm() {
     !Object.keys(errors).length && formData.email && formData.password;
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 flex items-center justify-center p-4 relative overflow-hidden">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 flex items-center justify-center p-2 md:p-4 relative overflow-hidden">
       {/* Enhanced Background Pattern */}
       <div className="absolute inset-0 opacity-10">
         <div className="absolute top-10 left-10 text-4xl animate-gentle-float">
@@ -304,14 +319,14 @@ export default function LoginForm() {
 
       <div className="w-full max-w-md mx-auto relative z-10">
         {/* Header Section with Enhanced Design */}
-        <div className="text-center mb-8 animate-fade-in">
-          <div className="flex justify-center mb-6">
+        <div className="text-center mb-4 md:mb-8 animate-fade-in">
+          <div className="flex justify-center mb-3 md:mb-6">
             <div className="relative">
-              <div className="bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 p-6 rounded-full shadow-2xl animate-gentle-float">
+              <div className="bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 p-4 md:p-6 rounded-full shadow-2xl animate-gentle-float">
                 <img
                   src="https://cdn.builder.io/api/v1/image/assets%2F783bb0e1cd3e4c73aa9ce79d668738ac%2Fee8d2c4de0ab40c1b0b38ee3c2ef1020?format=webp&width=800"
                   alt="Wordy Logo"
-                  className="w-12 h-12 object-contain"
+                  className="w-16 h-16 object-contain"
                 />
               </div>
               <div className="absolute -top-1 -right-1 bg-yellow-400 p-2 rounded-full animate-bounce">
@@ -320,29 +335,29 @@ export default function LoginForm() {
             </div>
           </div>
           <h1 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent mb-2">
-            Welcome Back!
+            Wordy Adventure !
           </h1>
           <p className="text-gray-600 text-lg">Continue your word adventure</p>
         </div>
 
         {/* Enhanced Login Card */}
         <Card className="shadow-2xl border-0 bg-white/95 backdrop-blur-sm animate-fade-in animation-delay-100">
-          <CardHeader className="pb-4">
+          <CardHeader className="pb-2 md:pb-4">
             <CardTitle className="text-center text-xl text-gray-800 flex items-center justify-center gap-2">
               <UserCheck className="w-5 h-5 text-blue-500" />
               Sign In to Continue
             </CardTitle>
           </CardHeader>
-          <CardContent className="space-y-6">
-            <form onSubmit={handleLogin} className="space-y-5">
+          <CardContent className="space-y-3 md:space-y-6">
+            <form onSubmit={handleLogin} className="space-y-3 md:space-y-5">
               {/* Email Field with Enhanced Validation */}
-              <div className="space-y-2">
+              <div className="space-y-1 md:space-y-2">
                 <Label
                   htmlFor="email"
                   className="text-sm font-medium text-gray-700 flex items-center gap-2"
                 >
                   <Mail className="w-4 h-4 text-gray-500" />
-                  Email Address
+                  Parent Email Address
                 </Label>
                 <div className="relative">
                   <Input
@@ -350,7 +365,10 @@ export default function LoginForm() {
                     id="email"
                     name="email"
                     type="email"
-                    placeholder="Enter your email"
+                    placeholder="Enter parent email address"
+                    autoComplete="email"
+                    inputMode="email"
+                    spellCheck={false}
                     value={formData.email}
                     onChange={handleInputChange}
                     onBlur={() => handleBlur("email")}
@@ -379,7 +397,7 @@ export default function LoginForm() {
               </div>
 
               {/* Password Field with Enhanced Validation */}
-              <div className="space-y-2">
+              <div className="space-y-1 md:space-y-2">
                 <Label
                   htmlFor="password"
                   className="text-sm font-medium text-gray-700 flex items-center gap-2"
@@ -392,7 +410,8 @@ export default function LoginForm() {
                     id="password"
                     name="password"
                     type={showPassword ? "text" : "password"}
-                    placeholder="Enter your password"
+                    placeholder="Enter your password (min 8 characters)"
+                    autoComplete="current-password"
                     value={formData.password}
                     onChange={handleInputChange}
                     onBlur={() => handleBlur("password")}
@@ -454,7 +473,7 @@ export default function LoginForm() {
                   className="text-sm text-gray-600 cursor-pointer flex items-center gap-1"
                 >
                   <Shield className="w-3 h-3" />
-                  Remember me on this device
+                  Keep me signed in (personal devices only)
                 </Label>
               </div>
 
@@ -487,7 +506,7 @@ export default function LoginForm() {
               {/* Enhanced Submit Button */}
               <Button
                 type="submit"
-                disabled={isLoading || !isFormValid}
+                disabled={isLoading}
                 className="w-full py-3 bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 hover:from-blue-700 hover:via-purple-700 hover:to-pink-700 text-white font-semibold text-lg shadow-lg hover:shadow-xl transform hover:scale-[1.02] transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
               >
                 {isLoading ? (
@@ -504,61 +523,49 @@ export default function LoginForm() {
                 )}
               </Button>
 
-              {/* Forgot Password Button */}
+              {/* Forgot Password Link */}
+              <div className="text-center">
+                <Button
+                  type="button"
+                  variant="link"
+                  onClick={handleForgotPassword}
+                  className="p-0 h-auto text-xs text-gray-500 hover:text-gray-700 underline-offset-2"
+                  disabled={isLoading}
+                >
+                  🤔 Forgot password?
+                </Button>
+              </div>
+
+              {/* Sign Up Button */}
               <Button
                 type="button"
-                variant="ghost"
-                onClick={handleForgotPassword}
-                className="w-full text-sm text-gray-600 hover:text-gray-800 hover:bg-gray-50 transition-colors"
+                onClick={() => navigate("/signup")}
+                className="w-full py-3 bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 hover:from-blue-700 hover:via-purple-700 hover:to-pink-700 text-white font-semibold text-lg shadow-lg hover:shadow-xl transform hover:scale-[1.02] transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
                 disabled={isLoading}
               >
-                Forgot your password?
+                <div className="flex items-center gap-3">
+                  <UserCheck className="w-5 h-5" />
+                  <span>Create New Account</span>
+                  <Sparkles className="w-4 h-4" />
+                </div>
               </Button>
             </form>
-          </CardContent>
-        </Card>
 
-        {/* Enhanced Guest Login Section */}
-        <div className="text-center mt-8 space-y-4 animate-fade-in animation-delay-200">
-          <div className="flex justify-center">
+            {/* Guest Sign In Button - Outside form to prevent validation */}
             <Button
+              type="button"
               onClick={handleBackToMain}
-              variant="outline"
-              className="px-8 py-4 bg-gradient-to-r from-orange-100 to-yellow-100 hover:from-orange-200 hover:to-yellow-200 text-orange-700 border-2 border-orange-300 hover:border-orange-400 font-bold text-lg rounded-xl shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300"
+              className="w-full py-3 bg-gradient-to-r from-orange-500 via-yellow-500 to-amber-500 hover:from-orange-600 hover:via-yellow-600 hover:to-amber-600 text-white font-semibold text-lg shadow-lg hover:shadow-xl transform hover:scale-[1.02] transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
               disabled={isLoading}
             >
-              <div className="flex items-center gap-3">
-                <span className="text-2xl animate-gentle-bounce">🎮</span>
-                <span>Continue as Guest</span>
-                <span className="text-2xl animate-sparkle">✨</span>
+              <div className="flex items-center justify-center gap-3">
+                <span className="text-xl animate-gentle-bounce">🎮</span>
+                <span>Sign In as Guest</span>
+                <span className="text-xl animate-sparkle">✨</span>
               </div>
             </Button>
-          </div>
-
-          <div className="text-sm text-gray-600">
-            Don't have an account?{" "}
-            <Button
-              variant="link"
-              onClick={() => navigate("/signup")}
-              className="p-0 h-auto text-sm font-medium text-blue-600 hover:text-blue-800 underline-offset-2"
-              disabled={isLoading}
-            >
-              Create one for free
-            </Button>
-          </div>
-        </div>
-
-        {/* Demo Credentials Hint */}
-        <div className="mt-6 p-4 bg-blue-50 border border-blue-200 rounded-lg text-center animate-fade-in animation-delay-300">
-          <p className="text-xs text-blue-700 font-medium mb-1">
-            🚀 Quick Demo Access
-          </p>
-          <p className="text-xs text-blue-600">
-            Try:{" "}
-            <code className="bg-blue-100 px-1 rounded">demo@example.com</code> /{" "}
-            <code className="bg-blue-100 px-1 rounded">demo123</code>
-          </p>
-        </div>
+          </CardContent>
+        </Card>
       </div>
     </div>
   );
