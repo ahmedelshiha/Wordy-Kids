@@ -834,7 +834,7 @@ export function InteractiveDashboardWordCard({
               <div className="flex items-center justify-center gap-2 mb-1">
                 <Lightbulb className="w-4 h-4 text-yellow-600" />
                 <h3 className="text-sm font-semibold text-yellow-800">
-                  ��� Hint:
+                  💡 Hint:
                 </h3>
               </div>
               <p className="text-yellow-700 text-sm">
