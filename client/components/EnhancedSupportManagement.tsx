@@ -1354,7 +1354,7 @@ const EnhancedSupportManagement: React.FC<EnhancedSupportManagementProps> = ({
               
               <TabsContent value="conversation" className="space-y-4">
                 <div className="space-y-4 max-h-96 overflow-y-auto">
-                  {showTicketDetail.responses.map((response, index) => (
+                  {(showTicketDetail.responses || []).map((response, index) => (
                     <div key={response.id} className={`flex gap-3 ${response.isAdmin ? 'flex-row-reverse' : ''}`}>
                       <Avatar className="flex-shrink-0">
                         <AvatarFallback>
@@ -1430,7 +1430,7 @@ const EnhancedSupportManagement: React.FC<EnhancedSupportManagementProps> = ({
                     </div>
                   )}
                   
-                  {showTicketDetail.responses.map((response, index) => (
+                  {(showTicketDetail.responses || []).map((response, index) => (
                     <div key={response.id} className="flex items-center gap-3 p-3 border rounded-lg">
                       <div className="w-2 h-2 bg-purple-500 rounded-full"></div>
                       <div className="flex-1">
