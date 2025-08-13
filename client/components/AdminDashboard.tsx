@@ -113,6 +113,7 @@ import ContentModerationPanel from "@/components/ContentModerationPanel";
 import AdvancedAnalyticsDashboard from "@/components/AdvancedAnalyticsDashboard";
 import EnhancedUserManagement from "@/components/EnhancedUserManagement";
 import EnhancedSystemAnalytics from "@/components/EnhancedSystemAnalytics";
+import EnhancedSupportManagement from "@/components/EnhancedSupportManagement";
 import {
   wordsDatabase,
   Word,
