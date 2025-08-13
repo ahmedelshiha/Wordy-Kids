@@ -1288,9 +1288,7 @@ export default function Index({ initialProfile }: IndexProps) {
                             <div className="block sm:hidden">
                               <div className="text-center mb-2">
                                 <h2 className="text-lg font-bold text-slate-800">
-                                  {selectedCategory === "all"
-                                    ? "All Words"
-                                    : `${selectedCategory.charAt(0).toUpperCase() + selectedCategory.slice(1)} Words`}
+                                  {`${selectedCategory.charAt(0).toUpperCase() + selectedCategory.slice(1)} Words`}
                                 </h2>
                                 <p className="text-sm text-slate-600">
                                   {`Learn ${selectedCategory} vocabulary!`}
