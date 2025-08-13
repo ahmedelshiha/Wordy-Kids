@@ -152,7 +152,7 @@ export default function SignUp() {
               ? "🧒"
               : actualAge <= 14
                 ? "👦"
-                : "👨‍🎓",
+                : "👨���🎓",
         level: 1,
         totalPoints: 0,
         wordsLearned: 0,
@@ -200,7 +200,7 @@ export default function SignUp() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-purple-100 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-purple-100 flex items-center justify-center p-2 md:p-4">
       {/* Simple Background Pattern */}
       <div className="absolute inset-0 opacity-10">
         <div className="absolute top-20 left-20 text-3xl">📚</div>
@@ -212,16 +212,16 @@ export default function SignUp() {
       {/* Main Content */}
       <div className="relative z-10 w-full max-w-md mx-auto">
         {/* Header */}
-        <div className="text-center mb-8">
-          <div className="flex justify-center mb-6">
-            <div className="bg-gradient-to-r from-blue-500 to-purple-600 p-6 rounded-full shadow-lg">
+        <div className="text-center mb-4 md:mb-8">
+          <div className="flex justify-center mb-3 md:mb-6">
+            <div className="bg-gradient-to-r from-blue-500 to-purple-600 p-4 md:p-6 rounded-full shadow-lg">
               <BookOpen className="w-12 h-12 text-white" />
             </div>
           </div>
-          <h1 className="text-3xl md:text-4xl font-bold text-gray-800 mb-4">
+          <h1 className="text-2xl md:text-4xl font-bold text-gray-800 mb-2 md:mb-4">
             Create Child Profile
           </h1>
-          <p className="text-lg text-gray-600">
+          <p className="text-sm md:text-lg text-gray-600">
             Set up a learning profile for your child
           </p>
         </div>
@@ -234,7 +234,7 @@ export default function SignUp() {
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <form onSubmit={handleSignUp} className="space-y-4">
+            <form onSubmit={handleSignUp} className="space-y-3 md:space-y-4">
               {/* Child Name Field */}
               <div>
                 <Label
@@ -251,7 +251,7 @@ export default function SignUp() {
                   placeholder="Enter your child's name"
                   value={formData.childName}
                   onChange={handleInputChange}
-                  className="mt-2 border-gray-300 focus:border-blue-500"
+                  className="mt-1 md:mt-2 border-gray-300 focus:border-blue-500 text-base"
                   disabled={isLoading}
                 />
               </div>
@@ -271,7 +271,7 @@ export default function SignUp() {
                   type="date"
                   value={formData.birthDate}
                   onChange={handleInputChange}
-                  className="mt-2 border-gray-300 focus:border-blue-500"
+                  className="mt-1 md:mt-2 border-gray-300 focus:border-blue-500 text-base"
                   disabled={isLoading}
                 />
               </div>
@@ -292,7 +292,7 @@ export default function SignUp() {
                   placeholder="Enter parent's email"
                   value={formData.email}
                   onChange={handleInputChange}
-                  className="mt-2 border-gray-300 focus:border-blue-500"
+                  className="mt-1 md:mt-2 border-gray-300 focus:border-blue-500 text-base"
                   disabled={isLoading}
                 />
               </div>
@@ -306,7 +306,7 @@ export default function SignUp() {
                   <Lock className="w-4 h-4" />
                   Parent Password
                 </Label>
-                <div className="relative mt-2">
+                <div className="relative mt-1 md:mt-2">
                   <Input
                     id="password"
                     name="password"
@@ -341,7 +341,7 @@ export default function SignUp() {
                   <Lock className="w-4 h-4" />
                   Confirm Password
                 </Label>
-                <div className="relative mt-2">
+                <div className="relative mt-1 md:mt-2">
                   <Input
                     id="confirmPassword"
                     name="confirmPassword"
@@ -417,7 +417,7 @@ export default function SignUp() {
         </Card>
 
         {/* Back to Login */}
-        <div className="text-center mt-6">
+        <div className="text-center mt-4 md:mt-6">
           <Button
             onClick={handleBackToLogin}
             variant="ghost"
