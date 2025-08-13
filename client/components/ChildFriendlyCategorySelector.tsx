@@ -445,8 +445,8 @@ export function ChildFriendlyCategorySelector({
       </div>
 
       {/* Header */}
-      <div className="text-center relative">
-        <h2 className="text-lg md:text-4xl font-bold text-slate-800 mb-1 md:mb-2 bg-gradient-to-r from-educational-blue to-educational-purple bg-clip-text text-transparent">
+      <div className="text-center relative mt-2 md:mt-4">
+        <h2 className="text-base md:text-2xl font-bold text-slate-800 mb-1 md:mb-2 bg-gradient-to-r from-educational-blue to-educational-purple bg-clip-text text-transparent">
           🌟 Choose Your Learning Adventure! 🌟
         </h2>
         <p className="text-sm md:text-lg text-slate-600 max-w-2xl mx-auto mb-1 md:mb-2">
