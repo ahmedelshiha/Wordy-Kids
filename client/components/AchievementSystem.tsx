@@ -684,16 +684,16 @@ export function AchievementSystem({
                 variant={showUnlockables ? "default" : "outline"}
                 size="sm"
                 onClick={() => setShowUnlockables(!showUnlockables)}
-                className="flex items-center gap-2 hover:scale-105 transition-all"
+                className="flex items-center gap-1 md:gap-2 hover:scale-105 transition-all text-xs md:text-sm px-2 md:px-3 py-1 md:py-2"
               >
                 <Gift className="w-4 h-4" />
                 🎁 Rewards
               </Button>
             </div>
 
-            {/* Achievements Grid */}
+            {/* Achievements Grid - Mobile Optimized */}
             {!showUnlockables && (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4 px-2 md:px-0">
                 {filteredAchievements.map((achievement) => {
                   const progressPercentage = getProgressPercentage(achievement);
                   const isComplete = progressPercentage >= 100;
@@ -708,9 +708,9 @@ export function AchievementSystem({
                       }`}
                       onClick={() => handleAchievementClick(achievement)}
                     >
-                      <CardHeader className="pb-2">
+                      <CardHeader className="pb-2 px-3 md:px-6 pt-3 md:pt-6">
                         <div className="flex items-center justify-between">
-                          <div className="text-4xl">{achievement.icon}</div>
+                          <div className="text-3xl md:text-4xl">{achievement.icon}</div>
                           <div className="flex items-center gap-1">
                             {getDifficultyIcon(achievement.difficulty)}
                             {achievement.unlocked && (
@@ -725,7 +725,7 @@ export function AchievementSystem({
                           </div>
                         </div>
                         <CardTitle
-                          className={`text-lg ${
+                          className={`text-base md:text-lg ${
                             achievement.unlocked
                               ? "text-white"
                               : "text-gray-800"
@@ -734,9 +734,9 @@ export function AchievementSystem({
                           {achievement.name}
                         </CardTitle>
                       </CardHeader>
-                      <CardContent className="space-y-3">
+                      <CardContent className="space-y-3 px-3 md:px-6 pb-3 md:pb-6">
                         <p
-                          className={`text-sm ${
+                          className={`text-xs md:text-sm ${
                             achievement.unlocked
                               ? "text-white/90"
                               : "text-gray-600"
