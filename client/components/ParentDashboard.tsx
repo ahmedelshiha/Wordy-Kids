@@ -170,7 +170,17 @@ const sampleChildren: ChildProfile[] = [
     difficultyPreference: "medium",
     parentNotes:
       "Loves animal facts. Struggles with spelling but excels at comprehension.",
-    customWords: ["dinosaur", "paleontologist", "prehistoric", "excavation", "tyrannosaurus", "archeologist", "fossil", "museum", "discovery"],
+    customWords: [
+      "dinosaur",
+      "paleontologist",
+      "prehistoric",
+      "excavation",
+      "tyrannosaurus",
+      "archeologist",
+      "fossil",
+      "museum",
+      "discovery",
+    ],
     weeklyTarget: 20,
     monthlyTarget: 80,
     learningStrengths: [
@@ -222,7 +232,19 @@ const sampleChildren: ChildProfile[] = [
     difficultyPreference: "easy",
     parentNotes:
       "Very enthusiastic learner. Loves nature and outdoor activities.",
-    customWords: ["butterfly", "flowers", "garden", "rainbow", "sunshine", "petals", "pollination", "caterpillar", "meadow", "blossom", "nature"],
+    customWords: [
+      "butterfly",
+      "flowers",
+      "garden",
+      "rainbow",
+      "sunshine",
+      "petals",
+      "pollination",
+      "caterpillar",
+      "meadow",
+      "blossom",
+      "nature",
+    ],
     weeklyTarget: 15,
     monthlyTarget: 60,
     learningStrengths: [
@@ -253,7 +275,8 @@ const sampleGoals: ParentGoal[] = [
     id: "goal-1",
     childId: "1",
     title: "Weekly Word Mastery",
-    description: "Learn 20 new words this week through various games and activities",
+    description:
+      "Learn 20 new words this week through various games and activities",
     targetValue: 20,
     currentValue: 12,
     deadline: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000),
@@ -1061,7 +1084,9 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
       {/* Mobile-optimized header */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-3">
         <div className="text-center md:text-left">
-          <h2 className="text-xl md:text-2xl font-bold text-slate-800">Goal Management</h2>
+          <h2 className="text-xl md:text-2xl font-bold text-slate-800">
+            Goal Management
+          </h2>
           <p className="text-sm md:text-base text-slate-600">
             Set and track learning objectives for your children
           </p>
@@ -1081,7 +1106,9 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
         <Card className="text-center py-12 mx-auto max-w-md">
           <CardContent className="space-y-4">
             <div className="text-6xl animate-gentle-bounce">🎯</div>
-            <h3 className="text-lg md:text-xl font-semibold text-slate-700">No Goals Yet</h3>
+            <h3 className="text-lg md:text-xl font-semibold text-slate-700">
+              No Goals Yet
+            </h3>
             <p className="text-slate-600 text-sm md:text-base leading-relaxed">
               Add children first to create personalized learning goals
             </p>
@@ -1101,12 +1128,20 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
               <CardContent className="p-4">
                 <div className="flex items-center justify-between">
                   <div>
-                    <h3 className="font-semibold text-slate-800">Active Goals</h3>
-                    <p className="text-xs text-slate-600">Across all children</p>
+                    <h3 className="font-semibold text-slate-800">
+                      Active Goals
+                    </h3>
+                    <p className="text-xs text-slate-600">
+                      Across all children
+                    </p>
                   </div>
                   <div className="text-right">
                     <div className="text-2xl font-bold text-educational-blue">
-                      {children.reduce((total, child) => total + getChildGoals(child.id).length, 0)}
+                      {children.reduce(
+                        (total, child) =>
+                          total + getChildGoals(child.id).length,
+                        0,
+                      )}
                     </div>
                     <p className="text-xs text-slate-600">Total goals</p>
                   </div>
@@ -1119,15 +1154,21 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
           <div className="space-y-4">
             {children.map((child) => {
               const childGoals = getChildGoals(child.id);
-              const activeGoals = childGoals.filter(g => g.status === 'active').length;
-              const completedGoals = childGoals.filter(g => g.status === 'completed').length;
+              const activeGoals = childGoals.filter(
+                (g) => g.status === "active",
+              ).length;
+              const completedGoals = childGoals.filter(
+                (g) => g.status === "completed",
+              ).length;
 
               return (
                 <Card key={child.id} className="overflow-hidden">
                   <CardHeader className="pb-3 bg-gradient-to-r from-slate-50 to-slate-100">
                     <div className="flex items-center justify-between">
                       <CardTitle className="flex items-center gap-3 text-base md:text-lg">
-                        <span className="text-2xl md:text-3xl">{child.avatar}</span>
+                        <span className="text-2xl md:text-3xl">
+                          {child.avatar}
+                        </span>
                         <div>
                           <div>{child.name}'s Goals</div>
                           <p className="text-xs md:text-sm font-normal text-slate-600">
@@ -1138,7 +1179,10 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
                       {childGoals.length > 0 && (
                         <div className="text-right">
                           <div className="text-lg md:text-xl font-bold text-educational-blue">
-                            {Math.round((completedGoals / childGoals.length) * 100)}%
+                            {Math.round(
+                              (completedGoals / childGoals.length) * 100,
+                            )}
+                            %
                           </div>
                           <p className="text-xs text-slate-500">Complete</p>
                         </div>
@@ -1168,9 +1212,14 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
                             100,
                           );
                           const isCompleted = goal.status === "completed";
-                          const isOverdue = new Date() > goal.deadline && !isCompleted;
-                          const isNearDeadline = !isCompleted && !isOverdue &&
-                            (goal.deadline.getTime() - new Date().getTime()) / (1000 * 60 * 60 * 24) <= 3;
+                          const isOverdue =
+                            new Date() > goal.deadline && !isCompleted;
+                          const isNearDeadline =
+                            !isCompleted &&
+                            !isOverdue &&
+                            (goal.deadline.getTime() - new Date().getTime()) /
+                              (1000 * 60 * 60 * 24) <=
+                              3;
 
                           return (
                             <div
@@ -1219,7 +1268,13 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
                                             : "bg-educational-blue hover:bg-educational-blue/90 text-white"
                                     }`}
                                   >
-                                    {isCompleted ? "Completed" : isOverdue ? "Overdue" : isNearDeadline ? "Due Soon" : "Active"}
+                                    {isCompleted
+                                      ? "Completed"
+                                      : isOverdue
+                                        ? "Overdue"
+                                        : isNearDeadline
+                                          ? "Due Soon"
+                                          : "Active"}
                                   </Badge>
                                   <p className="text-xs text-slate-500 whitespace-nowrap">
                                     Due: {goal.deadline.toLocaleDateString()}
@@ -1230,7 +1285,9 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
                               {/* Enhanced progress section for mobile */}
                               <div className="mb-3">
                                 <div className="flex justify-between items-center text-sm mb-2">
-                                  <span className="font-medium text-slate-700">Progress</span>
+                                  <span className="font-medium text-slate-700">
+                                    Progress
+                                  </span>
                                   <div className="flex items-center gap-2">
                                     <span className="text-slate-600">
                                       {goal.currentValue}/{goal.targetValue}
@@ -1311,7 +1368,9 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
       {/* Mobile-optimized header */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-3">
         <div className="text-center md:text-left">
-          <h2 className="text-xl md:text-2xl font-bold text-slate-800">Custom Vocabulary</h2>
+          <h2 className="text-xl md:text-2xl font-bold text-slate-800">
+            Custom Vocabulary
+          </h2>
           <p className="text-sm md:text-base text-slate-600">
             Add personalized words for your children's learning
           </p>
@@ -1331,12 +1390,16 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
         <div className="md:hidden">
           <Card className="bg-gradient-to-r from-educational-green/10 to-educational-blue/10 border-educational-green/20">
             <CardContent className="p-4">
-              <h3 className="font-semibold text-slate-800 mb-3">Select Child</h3>
+              <h3 className="font-semibold text-slate-800 mb-3">
+                Select Child
+              </h3>
               <div className="flex gap-2 flex-wrap">
                 {children.map((child) => (
                   <Button
                     key={child.id}
-                    variant={selectedChild?.id === child.id ? "default" : "outline"}
+                    variant={
+                      selectedChild?.id === child.id ? "default" : "outline"
+                    }
                     size="sm"
                     onClick={() => setSelectedChild(child)}
                     className={`${
@@ -1360,7 +1423,9 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
         <Card className="text-center py-12 mx-auto max-w-md">
           <CardContent className="space-y-4">
             <div className="text-6xl animate-gentle-bounce">📚</div>
-            <h3 className="text-lg md:text-xl font-semibold text-slate-700">Select a Child</h3>
+            <h3 className="text-lg md:text-xl font-semibold text-slate-700">
+              Select a Child
+            </h3>
             <p className="text-slate-600 text-sm md:text-base leading-relaxed">
               Choose a child profile to manage their custom vocabulary
             </p>
@@ -1385,7 +1450,9 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
                     <h3 className="font-semibold text-slate-800">
                       {selectedChild.name}'s Words
                     </h3>
-                    <p className="text-xs text-slate-600">Custom vocabulary collection</p>
+                    <p className="text-xs text-slate-600">
+                      Custom vocabulary collection
+                    </p>
                   </div>
                   <div className="text-right">
                     <div className="text-2xl font-bold text-educational-green">
@@ -1403,7 +1470,9 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
             <CardHeader className="pb-3 bg-gradient-to-r from-educational-green/5 to-educational-blue/5">
               <div className="flex items-center justify-between">
                 <CardTitle className="flex items-center gap-3 text-base md:text-lg">
-                  <span className="text-2xl md:text-3xl">{selectedChild.avatar}</span>
+                  <span className="text-2xl md:text-3xl">
+                    {selectedChild.avatar}
+                  </span>
                   <div>
                     <div>{selectedChild.name}'s Custom Words</div>
                     <p className="text-xs md:text-sm font-normal text-slate-600">
@@ -1432,8 +1501,9 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
                     No Custom Words Yet
                   </h3>
                   <p className="text-slate-600 text-sm md:text-base mb-6 leading-relaxed max-w-md mx-auto">
-                    Add words that are meaningful to {selectedChild.name}'s interests, family names,
-                    or everyday experiences to make learning more personal
+                    Add words that are meaningful to {selectedChild.name}'s
+                    interests, family names, or everyday experiences to make
+                    learning more personal
                   </p>
                   <div className="space-y-3">
                     <Button
@@ -1454,11 +1524,15 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
                   <div className="hidden md:flex items-center gap-4 p-3 bg-slate-50 rounded-lg">
                     <div className="flex items-center gap-2">
                       <BookMarked className="w-4 h-4 text-educational-green" />
-                      <span className="text-sm font-medium">{selectedChild.customWords.length} Total Words</span>
+                      <span className="text-sm font-medium">
+                        {selectedChild.customWords.length} Total Words
+                      </span>
                     </div>
                     <div className="flex items-center gap-2">
                       <Target className="w-4 h-4 text-educational-blue" />
-                      <span className="text-sm text-slate-600">Personalized Learning</span>
+                      <span className="text-sm text-slate-600">
+                        Personalized Learning
+                      </span>
                     </div>
                   </div>
 
@@ -1495,7 +1569,9 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
                           <div className="flex-1 h-1 bg-educational-green/20 rounded-full">
                             <div className="h-1 bg-educational-green rounded-full w-full"></div>
                           </div>
-                          <span className="text-xs text-educational-green font-medium">Added</span>
+                          <span className="text-xs text-educational-green font-medium">
+                            Added
+                          </span>
                         </div>
                       </div>
                     ))}
@@ -1503,7 +1579,9 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
 
                   {/* Bulk actions for mobile */}
                   <div className="md:hidden mt-6 p-4 bg-slate-50 rounded-lg">
-                    <h4 className="font-semibold text-slate-800 mb-3">Quick Actions</h4>
+                    <h4 className="font-semibold text-slate-800 mb-3">
+                      Quick Actions
+                    </h4>
                     <div className="grid grid-cols-2 gap-3">
                       <Button
                         variant="outline"
@@ -1539,12 +1617,21 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
                 <div className="flex items-start gap-3">
                   <Lightbulb className="w-5 h-5 text-yellow-600 flex-shrink-0 mt-0.5" />
                   <div>
-                    <h4 className="font-semibold text-yellow-800 mb-1">Word Suggestions</h4>
+                    <h4 className="font-semibold text-yellow-800 mb-1">
+                      Word Suggestions
+                    </h4>
                     <p className="text-sm text-yellow-700 mb-3">
-                      Try adding these types of words that are meaningful to {selectedChild.name}:
+                      Try adding these types of words that are meaningful to{" "}
+                      {selectedChild.name}:
                     </p>
                     <div className="flex flex-wrap gap-2">
-                      {["Family names", "Pet names", "Favorite foods", "Hobbies", "Places visited"].map((suggestion) => (
+                      {[
+                        "Family names",
+                        "Pet names",
+                        "Favorite foods",
+                        "Hobbies",
+                        "Places visited",
+                      ].map((suggestion) => (
                         <span
                           key={suggestion}
                           className="px-2 py-1 bg-yellow-100 text-yellow-800 rounded-full text-xs font-medium"
@@ -2993,7 +3080,9 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
                 {children.map((child) => (
                   <Button
                     key={child.id}
-                    variant={selectedChild?.id === child.id ? "default" : "outline"}
+                    variant={
+                      selectedChild?.id === child.id ? "default" : "outline"
+                    }
                     onClick={() => setSelectedChild(child)}
                     className={`justify-start h-12 ${
                       selectedChild?.id === child.id
@@ -3004,7 +3093,9 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
                     <span className="text-xl mr-3">{child.avatar}</span>
                     <div className="text-left">
                       <div className="font-medium">{child.name}</div>
-                      <div className="text-xs text-slate-500">Age {child.age} • Level {child.level}</div>
+                      <div className="text-xs text-slate-500">
+                        Age {child.age} • Level {child.level}
+                      </div>
                     </div>
                   </Button>
                 ))}
@@ -3078,8 +3169,12 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
                 <div className="flex items-center gap-3">
                   <span className="text-2xl">{selectedChild.avatar}</span>
                   <div>
-                    <div className="font-semibold text-educational-blue">{selectedChild.name}</div>
-                    <div className="text-xs text-slate-600">Selected for report generation</div>
+                    <div className="font-semibold text-educational-blue">
+                      {selectedChild.name}
+                    </div>
+                    <div className="text-xs text-slate-600">
+                      Selected for report generation
+                    </div>
                   </div>
                 </div>
               </div>
@@ -3097,8 +3192,12 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
                   </SelectTrigger>
                   <SelectContent>
                     <SelectItem value="summary">📊 Quick Summary</SelectItem>
-                    <SelectItem value="detailed">📈 Detailed Analysis</SelectItem>
-                    <SelectItem value="progress">🎯 Progress Tracking</SelectItem>
+                    <SelectItem value="detailed">
+                      📈 Detailed Analysis
+                    </SelectItem>
+                    <SelectItem value="progress">
+                      🎯 Progress Tracking
+                    </SelectItem>
                   </SelectContent>
                 </Select>
               </div>
@@ -3166,7 +3265,9 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
           {!selectedChild && children.length > 0 && (
             <div className="text-center py-8">
               <div className="text-4xl mb-3">👨‍👩‍👧‍👦</div>
-              <h3 className="font-semibold text-slate-700 mb-2">Select a Child</h3>
+              <h3 className="font-semibold text-slate-700 mb-2">
+                Select a Child
+              </h3>
               <p className="text-sm text-slate-600">
                 Choose a child profile to generate their learning report
               </p>
@@ -3177,7 +3278,9 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
           {children.length === 0 && (
             <div className="text-center py-8">
               <div className="text-4xl mb-3">📊</div>
-              <h3 className="font-semibold text-slate-700 mb-2">No Children Added</h3>
+              <h3 className="font-semibold text-slate-700 mb-2">
+                No Children Added
+              </h3>
               <p className="text-sm text-slate-600">
                 Add child profiles first to generate learning reports
               </p>
@@ -3196,12 +3299,16 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
                 <div className="text-green-500 animate-gentle-bounce">
                   <CheckCircle className="w-6 h-6" />
                 </div>
-                <div className="font-semibold text-green-800">Report Generated Successfully!</div>
+                <div className="font-semibold text-green-800">
+                  Report Generated Successfully!
+                </div>
               </div>
 
               <div className="flex flex-col md:flex-row md:items-center justify-between gap-3">
                 <div className="flex items-center gap-3">
-                  <div className="text-3xl md:text-2xl">{reportData.child.avatar}</div>
+                  <div className="text-3xl md:text-2xl">
+                    {reportData.child.avatar}
+                  </div>
                   <div>
                     <h3 className="text-lg md:text-xl font-bold text-slate-800">
                       {reportData.child.name}'s Learning Report
@@ -3212,7 +3319,8 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
                       </span>
                       <span className="hidden md:inline">•</span>
                       <span>
-                        {reportData.period.start.toLocaleDateString()} - {reportData.period.end.toLocaleDateString()}
+                        {reportData.period.start.toLocaleDateString()} -{" "}
+                        {reportData.period.end.toLocaleDateString()}
                       </span>
                     </div>
                   </div>
@@ -3230,9 +3338,14 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
               <CardContent className="p-3 md:p-4 text-center">
                 <Clock className="w-6 h-6 md:w-8 md:h-8 text-blue-500 mx-auto mb-2 animate-gentle-float" />
                 <div className="text-xl md:text-2xl font-bold text-blue-700">
-                  <AnimatedCounter value={reportData.summary.totalLearningTime} suffix="m" />
+                  <AnimatedCounter
+                    value={reportData.summary.totalLearningTime}
+                    suffix="m"
+                  />
                 </div>
-                <div className="text-xs md:text-sm text-blue-600 font-medium">Learning Time</div>
+                <div className="text-xs md:text-sm text-blue-600 font-medium">
+                  Learning Time
+                </div>
               </CardContent>
             </Card>
 
@@ -3242,7 +3355,9 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
                 <div className="text-xl md:text-2xl font-bold text-green-700">
                   <AnimatedCounter value={reportData.summary.wordsLearned} />
                 </div>
-                <div className="text-xs md:text-sm text-green-600 font-medium">Words Learned</div>
+                <div className="text-xs md:text-sm text-green-600 font-medium">
+                  Words Learned
+                </div>
               </CardContent>
             </Card>
 
@@ -3250,9 +3365,14 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
               <CardContent className="p-3 md:p-4 text-center">
                 <Target className="w-6 h-6 md:w-8 md:h-8 text-purple-500 mx-auto mb-2 animate-gentle-float" />
                 <div className="text-xl md:text-2xl font-bold text-purple-700">
-                  <AnimatedCounter value={reportData.summary.averageAccuracy} suffix="%" />
+                  <AnimatedCounter
+                    value={reportData.summary.averageAccuracy}
+                    suffix="%"
+                  />
                 </div>
-                <div className="text-xs md:text-sm text-purple-600 font-medium">Accuracy</div>
+                <div className="text-xs md:text-sm text-purple-600 font-medium">
+                  Accuracy
+                </div>
               </CardContent>
             </Card>
 
@@ -3262,7 +3382,9 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
                 <div className="text-xl md:text-2xl font-bold text-orange-700">
                   <AnimatedCounter value={reportData.summary.streakDays} />
                 </div>
-                <div className="text-xs md:text-sm text-orange-600 font-medium">Day Streak</div>
+                <div className="text-xs md:text-sm text-orange-600 font-medium">
+                  Day Streak
+                </div>
               </CardContent>
             </Card>
           </div>
@@ -3276,12 +3398,16 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
               </h3>
               <div className="space-y-3">
                 <div className="flex justify-between items-center">
-                  <span className="text-sm text-slate-600">Overall Performance</span>
+                  <span className="text-sm text-slate-600">
+                    Overall Performance
+                  </span>
                   <div className="flex items-center gap-2">
                     <div className="w-24 h-2 bg-slate-200 rounded-full overflow-hidden">
                       <div
                         className="h-full bg-educational-blue rounded-full transition-all duration-1000"
-                        style={{ width: `${reportData.summary.averageAccuracy}%` }}
+                        style={{
+                          width: `${reportData.summary.averageAccuracy}%`,
+                        }}
                       ></div>
                     </div>
                     <span className="text-sm font-medium text-educational-blue">
@@ -3295,7 +3421,9 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
                     <div className="w-24 h-2 bg-slate-200 rounded-full overflow-hidden">
                       <div
                         className="h-full bg-educational-green rounded-full transition-all duration-1000"
-                        style={{ width: `${Math.min((reportData.summary.wordsLearned / 20) * 100, 100)}%` }}
+                        style={{
+                          width: `${Math.min((reportData.summary.wordsLearned / 20) * 100, 100)}%`,
+                        }}
                       ></div>
                     </div>
                     <span className="text-sm font-medium text-educational-green">
@@ -3325,8 +3453,13 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
               <CardContent className="p-3 md:p-6 space-y-4">
                 <div>
                   <div className="flex items-center justify-between mb-3">
-                    <h4 className="font-semibold text-slate-800">Strong Categories</h4>
-                    <Badge variant="outline" className="text-green-600 border-green-300">
+                    <h4 className="font-semibold text-slate-800">
+                      Strong Categories
+                    </h4>
+                    <Badge
+                      variant="outline"
+                      className="text-green-600 border-green-300"
+                    >
                       {reportData.learningPath.strengthCategories.length} areas
                     </Badge>
                   </div>
@@ -3346,15 +3479,21 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
 
                 <div>
                   <div className="flex items-center justify-between mb-3">
-                    <h4 className="font-semibold text-slate-800">Mastered Words</h4>
-                    <Badge variant="outline" className="text-green-600 border-green-300">
+                    <h4 className="font-semibold text-slate-800">
+                      Mastered Words
+                    </h4>
+                    <Badge
+                      variant="outline"
+                      className="text-green-600 border-green-300"
+                    >
                       {reportData.learningPath.masteredWords.length} words
                     </Badge>
                   </div>
                   {reportData.learningPath.masteredWords.length > 0 ? (
                     <div className="grid grid-cols-2 md:flex md:flex-wrap gap-2">
-                      {reportData.learningPath.masteredWords.slice(0, 8).map(
-                        (word: string) => (
+                      {reportData.learningPath.masteredWords
+                        .slice(0, 8)
+                        .map((word: string) => (
                           <Badge
                             key={word}
                             variant="outline"
@@ -3362,14 +3501,14 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
                           >
                             📚 {word}
                           </Badge>
-                        ),
-                      )}
+                        ))}
                       {reportData.learningPath.masteredWords.length > 8 && (
                         <Badge
                           variant="outline"
                           className="text-slate-500 border-slate-300 justify-center py-2 md:py-1"
                         >
-                          +{reportData.learningPath.masteredWords.length - 8} more
+                          +{reportData.learningPath.masteredWords.length - 8}{" "}
+                          more
                         </Badge>
                       )}
                     </div>
@@ -3397,9 +3536,15 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
               <CardContent className="p-3 md:p-6 space-y-4">
                 <div>
                   <div className="flex items-center justify-between mb-3">
-                    <h4 className="font-semibold text-slate-800">Practice Categories</h4>
-                    <Badge variant="outline" className="text-orange-600 border-orange-300">
-                      {reportData.learningPath.strugglingCategories.length} areas
+                    <h4 className="font-semibold text-slate-800">
+                      Practice Categories
+                    </h4>
+                    <Badge
+                      variant="outline"
+                      className="text-orange-600 border-orange-300"
+                    >
+                      {reportData.learningPath.strugglingCategories.length}{" "}
+                      areas
                     </Badge>
                   </div>
                   <div className="grid grid-cols-2 md:flex md:flex-wrap gap-2">
@@ -3418,14 +3563,20 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
 
                 <div>
                   <div className="flex items-center justify-between mb-3">
-                    <h4 className="font-semibold text-slate-800">Words to Practice</h4>
-                    <Badge variant="outline" className="text-orange-600 border-orange-300">
+                    <h4 className="font-semibold text-slate-800">
+                      Words to Practice
+                    </h4>
+                    <Badge
+                      variant="outline"
+                      className="text-orange-600 border-orange-300"
+                    >
                       {reportData.learningPath.practiceNeeded.length} words
                     </Badge>
                   </div>
                   <div className="grid grid-cols-2 md:flex md:flex-wrap gap-2">
-                    {reportData.learningPath.practiceNeeded.slice(0, 8).map(
-                      (word: string) => (
+                    {reportData.learningPath.practiceNeeded
+                      .slice(0, 8)
+                      .map((word: string) => (
                         <Badge
                           key={word}
                           variant="outline"
@@ -3433,14 +3584,14 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
                         >
                           🔄 {word}
                         </Badge>
-                      ),
-                    )}
+                      ))}
                     {reportData.learningPath.practiceNeeded.length > 8 && (
                       <Badge
                         variant="outline"
                         className="text-slate-500 border-slate-300 justify-center py-2 md:py-1"
                       >
-                        +{reportData.learningPath.practiceNeeded.length - 8} more
+                        +{reportData.learningPath.practiceNeeded.length - 8}{" "}
+                        more
                       </Badge>
                     )}
                   </div>
@@ -3469,7 +3620,9 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
                     <div key={category.category} className="space-y-3">
                       <div className="flex flex-col md:flex-row md:justify-between md:items-center gap-2">
                         <div className="flex items-center gap-2">
-                          <span className="font-medium text-slate-800">{category.category}</span>
+                          <span className="font-medium text-slate-800">
+                            {category.category}
+                          </span>
                           <Badge
                             className={`text-xs ${
                               category.trend === "improving"
@@ -3481,10 +3634,13 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
                                     : "bg-orange-100 text-orange-800"
                             }`}
                           >
-                            {category.trend === "improving" ? "📈 Improving" :
-                             category.trend === "stable" ? "➡️ Stable" :
-                             category.trend === "mastered" ? "🏆 Mastered" :
-                             "🔄 Needs Practice"}
+                            {category.trend === "improving"
+                              ? "📈 Improving"
+                              : category.trend === "stable"
+                                ? "➡️ Stable"
+                                : category.trend === "mastered"
+                                  ? "🏆 Mastered"
+                                  : "🔄 Needs Practice"}
                           </Badge>
                         </div>
                         <div className="flex items-center gap-2">
@@ -3494,7 +3650,10 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
                         </div>
                       </div>
                       <div className="space-y-1">
-                        <Progress value={category.mastery} className="h-3 md:h-2" />
+                        <Progress
+                          value={category.mastery}
+                          className="h-3 md:h-2"
+                        />
                         <div className="text-xs text-slate-500 text-right">
                           Target: 80% mastery
                         </div>
@@ -3618,20 +3777,23 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
       {!reportData && !generatingReport && (
         <Card className="mx-auto max-w-md">
           <CardContent className="p-8 md:p-12 text-center">
-            <div className="text-6xl md:text-8xl mb-4 animate-gentle-bounce">📊</div>
+            <div className="text-6xl md:text-8xl mb-4 animate-gentle-bounce">
+              📊
+            </div>
             <h3 className="text-lg md:text-xl font-semibold mb-3 text-slate-700">
               No Report Generated Yet
             </h3>
             <p className="text-slate-500 mb-6 text-sm md:text-base leading-relaxed">
               {selectedChild
                 ? `Ready to generate ${selectedChild.name}'s learning report!`
-                : "Select a child and generate their learning report to see detailed analytics."
-              }
+                : "Select a child and generate their learning report to see detailed analytics."}
             </p>
             {selectedChild && (
               <div className="space-y-3">
                 <Button
-                  onClick={() => generateLearningReport(selectedChild, "week", "summary")}
+                  onClick={() =>
+                    generateLearningReport(selectedChild, "week", "summary")
+                  }
                   className="bg-educational-blue hover:bg-educational-blue/90 w-full md:w-auto"
                 >
                   <FileText className="w-4 h-4 mr-2" />
@@ -3651,14 +3813,18 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
         <div className="md:hidden fixed bottom-20 right-4 z-40">
           <div className="flex flex-col gap-2">
             <Button
-              onClick={() => generateLearningReport(selectedChild, "week", "summary")}
+              onClick={() =>
+                generateLearningReport(selectedChild, "week", "summary")
+              }
               className="w-14 h-14 rounded-full bg-educational-blue hover:bg-educational-blue/90 shadow-lg"
               title="Quick Report"
             >
               <Clock className="w-6 h-6" />
             </Button>
             <Button
-              onClick={() => generateLearningReport(selectedChild, "month", "detailed")}
+              onClick={() =>
+                generateLearningReport(selectedChild, "month", "detailed")
+              }
               className="w-14 h-14 rounded-full bg-educational-green hover:bg-educational-green/90 shadow-lg"
               title="Detailed Report"
             >

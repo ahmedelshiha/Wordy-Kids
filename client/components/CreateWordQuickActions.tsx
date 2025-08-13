@@ -47,7 +47,12 @@ const CreateWordQuickActions: React.FC<QuickActionsProps> = ({
       color: "from-blue-500 to-blue-600",
       hoverColor: "hover:from-blue-600 hover:to-blue-700",
       onClick: onCreateWithWizard,
-      features: ["Step-by-step guidance", "Smart suggestions", "Template library", "Auto-fill features"],
+      features: [
+        "Step-by-step guidance",
+        "Smart suggestions",
+        "Template library",
+        "Auto-fill features",
+      ],
       recommended: true,
     },
     {
@@ -58,7 +63,12 @@ const CreateWordQuickActions: React.FC<QuickActionsProps> = ({
       color: "from-green-500 to-green-600",
       hoverColor: "hover:from-green-600 hover:to-green-700",
       onClick: onQuickCreate,
-      features: ["Advanced editor", "All fields available", "Real-time validation", "Professional mode"],
+      features: [
+        "Advanced editor",
+        "All fields available",
+        "Real-time validation",
+        "Professional mode",
+      ],
       recommended: false,
     },
     {
@@ -69,7 +79,12 @@ const CreateWordQuickActions: React.FC<QuickActionsProps> = ({
       color: "from-purple-500 to-purple-600",
       hoverColor: "hover:from-purple-600 hover:to-purple-700",
       onClick: onBulkImport,
-      features: ["CSV import", "Batch processing", "Validation checks", "Progress tracking"],
+      features: [
+        "CSV import",
+        "Batch processing",
+        "Validation checks",
+        "Progress tracking",
+      ],
       recommended: false,
     },
   ];
@@ -111,7 +126,9 @@ const CreateWordQuickActions: React.FC<QuickActionsProps> = ({
         <div className="grid grid-cols-3 gap-4">
           {insights.map((insight, index) => (
             <div key={index} className="text-center">
-              <div className={`w-12 h-12 ${insight.bgColor} rounded-full flex items-center justify-center mx-auto mb-2`}>
+              <div
+                className={`w-12 h-12 ${insight.bgColor} rounded-full flex items-center justify-center mx-auto mb-2`}
+              >
                 <span className={insight.color}>{insight.icon}</span>
               </div>
               <div className={`text-lg font-bold ${insight.color}`}>
@@ -128,11 +145,11 @@ const CreateWordQuickActions: React.FC<QuickActionsProps> = ({
             <Target className="w-4 h-4" />
             Choose Your Creation Method
           </h4>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {creationMethods.map((method) => (
-              <Card 
-                key={method.id} 
+              <Card
+                key={method.id}
                 className={`cursor-pointer transition-all duration-200 hover:shadow-lg group relative overflow-hidden ${
                   method.recommended ? "ring-2 ring-blue-500/20" : ""
                 }`}
@@ -145,22 +162,27 @@ const CreateWordQuickActions: React.FC<QuickActionsProps> = ({
                     </Badge>
                   </div>
                 )}
-                
+
                 <CardContent className="p-4">
-                  <div className={`w-12 h-12 bg-gradient-to-r ${method.color} rounded-lg flex items-center justify-center text-white mb-3 group-hover:scale-110 transition-transform`}>
+                  <div
+                    className={`w-12 h-12 bg-gradient-to-r ${method.color} rounded-lg flex items-center justify-center text-white mb-3 group-hover:scale-110 transition-transform`}
+                  >
                     {method.icon}
                   </div>
-                  
+
                   <h5 className="font-semibold text-slate-800 mb-1">
                     {method.title}
                   </h5>
                   <p className="text-sm text-slate-600 mb-3">
                     {method.description}
                   </p>
-                  
+
                   <div className="space-y-1">
                     {method.features.slice(0, 2).map((feature, index) => (
-                      <div key={index} className="flex items-center gap-2 text-xs text-slate-500">
+                      <div
+                        key={index}
+                        className="flex items-center gap-2 text-xs text-slate-500"
+                      >
                         <div className="w-1 h-1 bg-slate-400 rounded-full" />
                         {feature}
                       </div>
@@ -180,26 +202,33 @@ const CreateWordQuickActions: React.FC<QuickActionsProps> = ({
               Recent Activity
             </h4>
             {recentWordsCount > 0 && (
-              <Badge variant="outline" className="text-green-600 border-green-300">
+              <Badge
+                variant="outline"
+                className="text-green-600 border-green-300"
+              >
                 +{recentWordsCount} this week
               </Badge>
             )}
           </div>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
             <div className="space-y-2">
               <div className="flex items-center justify-between">
                 <span className="text-slate-600">Words Created</span>
-                <span className="font-medium">{recentWordsCount}/10 weekly goal</span>
+                <span className="font-medium">
+                  {recentWordsCount}/10 weekly goal
+                </span>
               </div>
               <div className="w-full h-2 bg-slate-200 rounded-full overflow-hidden">
                 <div
                   className="h-full bg-gradient-to-r from-blue-400 to-blue-600 rounded-full transition-all duration-500"
-                  style={{ width: `${Math.min((recentWordsCount / 10) * 100, 100)}%` }}
+                  style={{
+                    width: `${Math.min((recentWordsCount / 10) * 100, 100)}%`,
+                  }}
                 />
               </div>
             </div>
-            
+
             <div className="space-y-2">
               <div className="flex items-center justify-between">
                 <span className="text-slate-600">Quality Maintained</span>

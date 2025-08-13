@@ -112,7 +112,12 @@ import CreateWordQuickActions from "@/components/CreateWordQuickActions";
 import ContentModerationPanel from "@/components/ContentModerationPanel";
 import AdvancedAnalyticsDashboard from "@/components/AdvancedAnalyticsDashboard";
 import EnhancedUserManagement from "@/components/EnhancedUserManagement";
-import { wordsDatabase, Word, getAllCategories, getWordsByCategory } from "@/data/wordsDatabase";
+import {
+  wordsDatabase,
+  Word,
+  getAllCategories,
+  getWordsByCategory,
+} from "@/data/wordsDatabase";
 
 interface AdminWord extends Word {
   status: "approved" | "pending" | "rejected";
@@ -328,30 +333,46 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onNavigateBack }) => {
   const [activeTab, setActiveTab] = useState("overview");
 
   // Convert real words database to admin format with enhanced metadata
-  const convertWordsToAdmin = React.useCallback((dbWords: Word[]): AdminWord[] => {
-    return dbWords.map(word => ({
-      ...word,
-      id: word.id.toString(),
-      status: "approved" as const,
-      submittedAt: new Date(Date.now() - Math.random() * 30 * 24 * 60 * 60 * 1000),
-      approvedAt: new Date(Date.now() - Math.random() * 25 * 24 * 60 * 60 * 1000),
-      usageCount: Math.floor(Math.random() * 2000) + 100,
-      accuracy: Math.floor(Math.random() * 30) + 70,
-      lastUsed: new Date(Date.now() - Math.random() * 7 * 24 * 60 * 60 * 1000),
-      isActive: true,
-      tags: [word.category, word.difficulty],
-      modificationHistory: [{
-        id: "1",
-        action: "created" as const,
-        timestamp: new Date(Date.now() - Math.random() * 30 * 24 * 60 * 60 * 1000),
-        author: "system",
-      }]
-    }));
-  }, []);
+  const convertWordsToAdmin = React.useCallback(
+    (dbWords: Word[]): AdminWord[] => {
+      return dbWords.map((word) => ({
+        ...word,
+        id: word.id.toString(),
+        status: "approved" as const,
+        submittedAt: new Date(
+          Date.now() - Math.random() * 30 * 24 * 60 * 60 * 1000,
+        ),
+        approvedAt: new Date(
+          Date.now() - Math.random() * 25 * 24 * 60 * 60 * 1000,
+        ),
+        usageCount: Math.floor(Math.random() * 2000) + 100,
+        accuracy: Math.floor(Math.random() * 30) + 70,
+        lastUsed: new Date(
+          Date.now() - Math.random() * 7 * 24 * 60 * 60 * 1000,
+        ),
+        isActive: true,
+        tags: [word.category, word.difficulty],
+        modificationHistory: [
+          {
+            id: "1",
+            action: "created" as const,
+            timestamp: new Date(
+              Date.now() - Math.random() * 30 * 24 * 60 * 60 * 1000,
+            ),
+            author: "system",
+          },
+        ],
+      }));
+    },
+    [],
+  );
 
-  const [words, setWords] = useState<AdminWord[]>(() => convertWordsToAdmin(wordsDatabase));
+  const [words, setWords] = useState<AdminWord[]>(() =>
+    convertWordsToAdmin(wordsDatabase),
+  );
   const [users, setUsers] = useState<AdminUser[]>(sampleUsers);
-  const [categories, setCategories] = useState<AdminCategory[]>(sampleCategories);
+  const [categories, setCategories] =
+    useState<AdminCategory[]>(sampleCategories);
   const [tickets, setTickets] = useState<SupportTicket[]>(sampleTickets);
 
   // Dialog states
@@ -363,8 +384,12 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onNavigateBack }) => {
   const [showWordEditor, setShowWordEditor] = useState(false);
   const [showCreateWizard, setShowCreateWizard] = useState(false);
   const [editingWord, setEditingWord] = useState<AdminWord | null>(null);
-  const [wordEditorMode, setWordEditorMode] = useState<"create" | "edit">("create");
-  const [createMethod, setCreateMethod] = useState<"wizard" | "editor">("wizard");
+  const [wordEditorMode, setWordEditorMode] = useState<"create" | "edit">(
+    "create",
+  );
+  const [createMethod, setCreateMethod] = useState<"wizard" | "editor">(
+    "wizard",
+  );
 
   // Enhanced Form states
   const [newWordData, setNewWordData] = useState({
@@ -392,7 +417,9 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onNavigateBack }) => {
   const [userFilter, setUserFilter] = useState("all");
   const [ticketFilter, setTicketFilter] = useState("all");
   const [searchTerm, setSearchTerm] = useState("");
-  const [sortBy, setSortBy] = useState<"word" | "category" | "difficulty" | "usageCount" | "accuracy" | "lastUsed">("word");
+  const [sortBy, setSortBy] = useState<
+    "word" | "category" | "difficulty" | "usageCount" | "accuracy" | "lastUsed"
+  >("word");
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc");
   const [selectedWords, setSelectedWords] = useState<string[]>([]);
   const [viewMode, setViewMode] = useState<"grid" | "list">("list");
@@ -417,27 +444,32 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onNavigateBack }) => {
   // Get unique categories from real database
   const availableCategories = React.useMemo(() => {
     const cats = getAllCategories();
-    return cats.map(cat => ({
+    return cats.map((cat) => ({
       id: cat,
       name: cat.charAt(0).toUpperCase() + cat.slice(1),
-      count: getWordsByCategory(cat).length
+      count: getWordsByCategory(cat).length,
     }));
   }, []);
 
   // Enhanced filtering and sorting logic
   const filteredAndSortedWords = React.useMemo(() => {
-    let filtered = words.filter(word => {
-      const matchesSearch = searchTerm === "" ||
+    let filtered = words.filter((word) => {
+      const matchesSearch =
+        searchTerm === "" ||
         word.word.toLowerCase().includes(searchTerm.toLowerCase()) ||
         word.definition.toLowerCase().includes(searchTerm.toLowerCase()) ||
         word.category.toLowerCase().includes(searchTerm.toLowerCase()) ||
         word.example.toLowerCase().includes(searchTerm.toLowerCase());
 
       const matchesStatus = wordFilter === "all" || word.status === wordFilter;
-      const matchesCategory = categoryFilter === "all" || word.category === categoryFilter;
-      const matchesDifficulty = difficultyFilter === "all" || word.difficulty === difficultyFilter;
+      const matchesCategory =
+        categoryFilter === "all" || word.category === categoryFilter;
+      const matchesDifficulty =
+        difficultyFilter === "all" || word.difficulty === difficultyFilter;
 
-      return matchesSearch && matchesStatus && matchesCategory && matchesDifficulty;
+      return (
+        matchesSearch && matchesStatus && matchesCategory && matchesDifficulty
+      );
     });
 
     // Sort the filtered results
@@ -482,7 +514,15 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onNavigateBack }) => {
     });
 
     return filtered;
-  }, [words, searchTerm, wordFilter, categoryFilter, difficultyFilter, sortBy, sortOrder]);
+  }, [
+    words,
+    searchTerm,
+    wordFilter,
+    categoryFilter,
+    difficultyFilter,
+    sortBy,
+    sortOrder,
+  ]);
 
   const renderOverview = () => (
     <div className="space-y-6">
@@ -496,9 +536,13 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onNavigateBack }) => {
               </h2>
               <p className="text-slate-300 text-xs md:text-base">
                 <span className="block md:inline">System Overview</span>
-                <span className="hidden md:inline"> • {new Date().toLocaleDateString()}</span>
+                <span className="hidden md:inline">
+                  {" "}
+                  • {new Date().toLocaleDateString()}
+                </span>
                 <span className="block md:inline mt-1 md:mt-0">
-                  <span className="text-green-400">●</span> All Systems Operational
+                  <span className="text-green-400">●</span> All Systems
+                  Operational
                 </span>
               </p>
             </div>
@@ -520,7 +564,9 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onNavigateBack }) => {
             <div className="text-xl md:text-3xl font-bold text-blue-600">
               <AnimatedCounter value={analytics.totalUsers} />
             </div>
-            <p className="text-xs md:text-sm text-slate-600 font-medium">Total Users</p>
+            <p className="text-xs md:text-sm text-slate-600 font-medium">
+              Total Users
+            </p>
             <div className="mt-1 md:mt-2 text-xs text-green-600">
               +{analytics.userGrowthRate}% growth
             </div>
@@ -533,9 +579,12 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onNavigateBack }) => {
             <div className="text-xl md:text-3xl font-bold text-green-600">
               <AnimatedCounter value={analytics.activeUsers} />
             </div>
-            <p className="text-xs md:text-sm text-slate-600 font-medium">Active Users</p>
+            <p className="text-xs md:text-sm text-slate-600 font-medium">
+              Active Users
+            </p>
             <div className="mt-1 md:mt-2 text-xs text-green-600">
-              {Math.round((analytics.activeUsers / analytics.totalUsers) * 100)}% engaged
+              {Math.round((analytics.activeUsers / analytics.totalUsers) * 100)}
+              % engaged
             </div>
           </CardContent>
         </Card>
@@ -546,7 +595,9 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onNavigateBack }) => {
             <div className="text-xl md:text-3xl font-bold text-purple-600">
               <AnimatedCounter value={analytics.totalWords} />
             </div>
-            <p className="text-xs md:text-sm text-slate-600 font-medium">Total Words</p>
+            <p className="text-xs md:text-sm text-slate-600 font-medium">
+              Total Words
+            </p>
             <div className="mt-1 md:mt-2 text-xs text-purple-600">
               {analytics.contentApprovalRate}% approved
             </div>
@@ -559,7 +610,9 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onNavigateBack }) => {
             <div className="text-xl md:text-3xl font-bold text-orange-600">
               <AnimatedCounter value={analytics.totalSessions} />
             </div>
-            <p className="text-xs md:text-sm text-slate-600 font-medium">Sessions</p>
+            <p className="text-xs md:text-sm text-slate-600 font-medium">
+              Sessions
+            </p>
             <div className="mt-1 md:mt-2 text-xs text-orange-600">
               {analytics.avgSessionDuration}min avg
             </div>
@@ -591,7 +644,9 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onNavigateBack }) => {
                   <div className="absolute -top-1 -right-1 w-2 h-2 bg-green-500 rounded-full opacity-0 group-hover:opacity-100 transition-opacity" />
                 </div>
                 <span className="font-medium">Create Word</span>
-                <span className="text-[10px] text-slate-500 hidden md:block">Smart Wizard</span>
+                <span className="text-[10px] text-slate-500 hidden md:block">
+                  Smart Wizard
+                </span>
               </Button>
             </div>
             <Button
@@ -634,11 +689,18 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onNavigateBack }) => {
           setShowWordEditor(true);
         }}
         onBulkImport={() => setShowBulkImport(true)}
-        recentWordsCount={words.filter(w =>
-          (Date.now() - w.submittedAt.getTime()) < (7 * 24 * 60 * 60 * 1000)
-        ).length}
+        recentWordsCount={
+          words.filter(
+            (w) =>
+              Date.now() - w.submittedAt.getTime() < 7 * 24 * 60 * 60 * 1000,
+          ).length
+        }
         totalWords={words.length}
-        qualityScore={Math.round((words.filter(w => w.status === 'approved').length / Math.max(words.length, 1)) * 100)}
+        qualityScore={Math.round(
+          (words.filter((w) => w.status === "approved").length /
+            Math.max(words.length, 1)) *
+            100,
+        )}
       />
 
       {/* Recent Activity */}
@@ -737,9 +799,12 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onNavigateBack }) => {
       <div className="px-2 md:px-0">
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 md:gap-0 mb-4">
           <div className="text-center md:text-left">
-            <h2 className="text-xl md:text-2xl font-bold">📚 Content Management</h2>
+            <h2 className="text-xl md:text-2xl font-bold">
+              📚 Content Management
+            </h2>
             <p className="text-sm md:text-base text-slate-600">
-              Managing {analytics.totalWords} words across {availableCategories.length} categories
+              Managing {analytics.totalWords} words across{" "}
+              {availableCategories.length} categories
             </p>
           </div>
           <div className="flex gap-2 justify-center md:justify-start">
@@ -791,25 +856,31 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onNavigateBack }) => {
               <div className="text-lg md:text-2xl font-bold text-blue-600">
                 {analytics.totalWords}
               </div>
-              <p className="text-xs md:text-sm text-blue-600 font-medium">Total Words</p>
+              <p className="text-xs md:text-sm text-blue-600 font-medium">
+                Total Words
+              </p>
             </CardContent>
           </Card>
           <Card className="bg-gradient-to-br from-green-50 to-green-100 border-green-200">
             <CardContent className="p-3 md:p-4 text-center">
               <CheckCircle className="w-6 h-6 md:w-8 md:h-8 text-green-500 mx-auto mb-1 md:mb-2" />
               <div className="text-lg md:text-2xl font-bold text-green-600">
-                {words.filter(w => w.status === 'approved').length}
+                {words.filter((w) => w.status === "approved").length}
               </div>
-              <p className="text-xs md:text-sm text-green-600 font-medium">Approved</p>
+              <p className="text-xs md:text-sm text-green-600 font-medium">
+                Approved
+              </p>
             </CardContent>
           </Card>
           <Card className="bg-gradient-to-br from-yellow-50 to-yellow-100 border-yellow-200">
             <CardContent className="p-3 md:p-4 text-center">
               <Clock className="w-6 h-6 md:w-8 md:h-8 text-yellow-500 mx-auto mb-1 md:mb-2" />
               <div className="text-lg md:text-2xl font-bold text-yellow-600">
-                {words.filter(w => w.status === 'pending').length}
+                {words.filter((w) => w.status === "pending").length}
               </div>
-              <p className="text-xs md:text-sm text-yellow-600 font-medium">Pending</p>
+              <p className="text-xs md:text-sm text-yellow-600 font-medium">
+                Pending
+              </p>
             </CardContent>
           </Card>
           <Card className="bg-gradient-to-br from-purple-50 to-purple-100 border-purple-200">
@@ -818,7 +889,9 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onNavigateBack }) => {
               <div className="text-lg md:text-2xl font-bold text-purple-600">
                 {availableCategories.length}
               </div>
-              <p className="text-xs md:text-sm text-purple-600 font-medium">Categories</p>
+              <p className="text-xs md:text-sm text-purple-600 font-medium">
+                Categories
+              </p>
             </CardContent>
           </Card>
         </div>
@@ -878,7 +951,7 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onNavigateBack }) => {
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="all">All Categories</SelectItem>
-                {availableCategories.map(cat => (
+                {availableCategories.map((cat) => (
                   <SelectItem key={cat.id} value={cat.id}>
                     {cat.name} ({cat.count})
                   </SelectItem>
@@ -886,7 +959,10 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onNavigateBack }) => {
               </SelectContent>
             </Select>
 
-            <Select value={difficultyFilter} onValueChange={setDifficultyFilter}>
+            <Select
+              value={difficultyFilter}
+              onValueChange={setDifficultyFilter}
+            >
               <SelectTrigger className="w-full md:w-40">
                 <SelectValue placeholder="Difficulty" />
               </SelectTrigger>
@@ -898,7 +974,10 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onNavigateBack }) => {
               </SelectContent>
             </Select>
 
-            <Select value={sortBy} onValueChange={(value: any) => setSortBy(value)}>
+            <Select
+              value={sortBy}
+              onValueChange={(value: any) => setSortBy(value)}
+            >
               <SelectTrigger className="w-full md:w-40">
                 <SelectValue placeholder="Sort by" />
               </SelectTrigger>
@@ -931,7 +1010,11 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onNavigateBack }) => {
             {selectedWords.length > 0 && (
               <div className="flex gap-2">
                 <span>{selectedWords.length} selected</span>
-                <Button variant="outline" size="sm" onClick={() => setSelectedWords([])}>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => setSelectedWords([])}
+                >
                   Clear Selection
                 </Button>
               </div>
@@ -950,18 +1033,20 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onNavigateBack }) => {
               <p className="text-slate-600 mb-4">
                 {searchTerm
                   ? `No words match "${searchTerm}". Try adjusting your search or filters.`
-                  : "No words match your current filters. Try adjusting your criteria."
-                }
+                  : "No words match your current filters. Try adjusting your criteria."}
               </p>
               <div className="flex gap-2 justify-center">
                 <Button variant="outline" onClick={() => setSearchTerm("")}>
                   Clear Search
                 </Button>
-                <Button variant="outline" onClick={() => {
-                  setWordFilter("all");
-                  setCategoryFilter("all");
-                  setDifficultyFilter("all");
-                }}>
+                <Button
+                  variant="outline"
+                  onClick={() => {
+                    setWordFilter("all");
+                    setCategoryFilter("all");
+                    setDifficultyFilter("all");
+                  }}
+                >
                   Clear Filters
                 </Button>
               </div>
@@ -969,18 +1054,25 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onNavigateBack }) => {
           </Card>
         ) : (
           filteredAndSortedWords.map((word) => (
-            <Card key={word.id} className="hover:shadow-lg transition-all duration-200 mx-2 md:mx-0">
+            <Card
+              key={word.id}
+              className="hover:shadow-lg transition-all duration-200 mx-2 md:mx-0"
+            >
               <CardContent className="p-3 md:p-6">
                 <div className="flex flex-col md:flex-row gap-3 md:gap-0 md:items-start md:justify-between">
                   <div className="flex-1 min-w-0">
                     {/* Mobile-optimized word header */}
                     <div className="flex items-center gap-2 mb-3">
-                      <span className="text-2xl flex-shrink-0">{word.emoji}</span>
+                      <span className="text-2xl flex-shrink-0">
+                        {word.emoji}
+                      </span>
                       <div className="flex-1 min-w-0">
                         <h3 className="text-lg md:text-xl font-bold text-slate-800 capitalize truncate">
                           {word.word}
                         </h3>
-                        <p className="text-xs md:text-sm text-slate-500">{word.pronunciation}</p>
+                        <p className="text-xs md:text-sm text-slate-500">
+                          {word.pronunciation}
+                        </p>
                       </div>
                     </div>
 
@@ -995,18 +1087,31 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onNavigateBack }) => {
                               : "bg-red-100 text-red-800 border-red-300"
                         }
                       >
-                        {word.status === "approved" ? "✅" : word.status === "pending" ? "⏳" : "❌"}
+                        {word.status === "approved"
+                          ? "✅"
+                          : word.status === "pending"
+                            ? "⏳"
+                            : "❌"}
                         {word.status}
                       </Badge>
                       <Badge variant="outline" className="capitalize">
                         📁 {word.category}
                       </Badge>
-                      <Badge variant="outline" className={
-                        word.difficulty === "easy" ? "text-green-600 border-green-300" :
-                        word.difficulty === "medium" ? "text-yellow-600 border-yellow-300" :
-                        "text-red-600 border-red-300"
-                      }>
-                        {word.difficulty === "easy" ? "🌟" : word.difficulty === "medium" ? "⭐" : "🔥"}
+                      <Badge
+                        variant="outline"
+                        className={
+                          word.difficulty === "easy"
+                            ? "text-green-600 border-green-300"
+                            : word.difficulty === "medium"
+                              ? "text-yellow-600 border-yellow-300"
+                              : "text-red-600 border-red-300"
+                        }
+                      >
+                        {word.difficulty === "easy"
+                          ? "🌟"
+                          : word.difficulty === "medium"
+                            ? "⭐"
+                            : "🔥"}
                         {word.difficulty}
                       </Badge>
                     </div>
@@ -1015,18 +1120,27 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onNavigateBack }) => {
                     <div className="space-y-2 mb-3">
                       <div>
                         <p className="text-sm md:text-base text-slate-700">
-                          <span className="font-medium text-slate-500">Definition:</span> {word.definition}
+                          <span className="font-medium text-slate-500">
+                            Definition:
+                          </span>{" "}
+                          {word.definition}
                         </p>
                       </div>
                       <div>
                         <p className="text-sm md:text-base text-slate-700 italic">
-                          <span className="font-medium text-slate-500">Example:</span> "{word.example}"
+                          <span className="font-medium text-slate-500">
+                            Example:
+                          </span>{" "}
+                          "{word.example}"
                         </p>
                       </div>
                       {word.funFact && (
                         <div>
                           <p className="text-sm md:text-base text-blue-600">
-                            <span className="font-medium text-slate-500">Fun Fact:</span> 💡 {word.funFact}
+                            <span className="font-medium text-slate-500">
+                              Fun Fact:
+                            </span>{" "}
+                            💡 {word.funFact}
                           </p>
                         </div>
                       )}
@@ -1048,7 +1162,12 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onNavigateBack }) => {
                       </div>
                       <div>
                         <div className="text-lg md:text-xl font-bold text-purple-600">
-                          {word.lastUsed ? Math.floor((Date.now() - word.lastUsed.getTime()) / (1000 * 60 * 60 * 24)) : 0}
+                          {word.lastUsed
+                            ? Math.floor(
+                                (Date.now() - word.lastUsed.getTime()) /
+                                  (1000 * 60 * 60 * 24),
+                              )
+                            : 0}
                         </div>
                         <p className="text-xs text-slate-500">Days Ago</p>
                       </div>
@@ -1059,11 +1178,18 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onNavigateBack }) => {
                   <div className="flex md:flex-col gap-2 md:gap-1 justify-center md:justify-start">
                     {word.status === "pending" && (
                       <>
-                        <Button size="sm" className="bg-green-600 hover:bg-green-700 text-white flex-1 md:flex-none">
+                        <Button
+                          size="sm"
+                          className="bg-green-600 hover:bg-green-700 text-white flex-1 md:flex-none"
+                        >
                           <CheckCircle className="w-4 h-4 mr-1" />
                           <span className="hidden md:inline">Approve</span>
                         </Button>
-                        <Button size="sm" variant="destructive" className="flex-1 md:flex-none">
+                        <Button
+                          size="sm"
+                          variant="destructive"
+                          className="flex-1 md:flex-none"
+                        >
                           <XCircle className="w-4 h-4 mr-1" />
                           <span className="hidden md:inline">Reject</span>
                         </Button>
@@ -1088,7 +1214,7 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onNavigateBack }) => {
                       className="flex-1 md:flex-none hover:bg-red-50 hover:text-red-600"
                       onClick={() => {
                         if (confirm(`Delete "${word.word}"?`)) {
-                          setWords(words.filter(w => w.id !== word.id));
+                          setWords(words.filter((w) => w.id !== word.id));
                         }
                       }}
                     >
@@ -1107,10 +1233,10 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onNavigateBack }) => {
       <div className="mb-8">
         <CreateWordInsights
           words={words}
-          categories={availableCategories.map(cat => ({
+          categories={availableCategories.map((cat) => ({
             id: cat.id,
             name: cat.name,
-            emoji: getWordsByCategory(cat.id)[0]?.emoji || "📁"
+            emoji: getWordsByCategory(cat.id)[0]?.emoji || "📁",
           }))}
           onCreateWord={() => {
             setCreateMethod("wizard");
@@ -1130,7 +1256,8 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onNavigateBack }) => {
                 Category Management
               </h3>
               <p className="text-sm md:text-base text-slate-600">
-                Manage {availableCategories.length} content categories and their organization
+                Manage {availableCategories.length} content categories and their
+                organization
               </p>
             </div>
             <div className="flex gap-2 justify-center md:justify-start">
@@ -1165,34 +1292,47 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onNavigateBack }) => {
                 <div className="text-lg md:text-2xl font-bold text-purple-600">
                   {availableCategories.length}
                 </div>
-                <p className="text-xs md:text-sm text-purple-600 font-medium">Total Categories</p>
+                <p className="text-xs md:text-sm text-purple-600 font-medium">
+                  Total Categories
+                </p>
               </CardContent>
             </Card>
             <Card className="bg-gradient-to-br from-green-50 to-green-100 border-green-200">
               <CardContent className="p-3 md:p-4 text-center">
                 <CheckCircle className="w-6 h-6 md:w-8 md:h-8 text-green-500 mx-auto mb-1 md:mb-2" />
                 <div className="text-lg md:text-2xl font-bold text-green-600">
-                  {availableCategories.filter(cat => cat.count > 0).length}
+                  {availableCategories.filter((cat) => cat.count > 0).length}
                 </div>
-                <p className="text-xs md:text-sm text-green-600 font-medium">Active</p>
+                <p className="text-xs md:text-sm text-green-600 font-medium">
+                  Active
+                </p>
               </CardContent>
             </Card>
             <Card className="bg-gradient-to-br from-yellow-50 to-yellow-100 border-yellow-200">
               <CardContent className="p-3 md:p-4 text-center">
                 <AlertTriangle className="w-6 h-6 md:w-8 md:h-8 text-yellow-500 mx-auto mb-1 md:mb-2" />
                 <div className="text-lg md:text-2xl font-bold text-yellow-600">
-                  {availableCategories.filter(cat => cat.count === 0).length}
+                  {availableCategories.filter((cat) => cat.count === 0).length}
                 </div>
-                <p className="text-xs md:text-sm text-yellow-600 font-medium">Empty</p>
+                <p className="text-xs md:text-sm text-yellow-600 font-medium">
+                  Empty
+                </p>
               </CardContent>
             </Card>
             <Card className="bg-gradient-to-br from-blue-50 to-blue-100 border-blue-200">
               <CardContent className="p-3 md:p-4 text-center">
                 <BarChart3 className="w-6 h-6 md:w-8 md:h-8 text-blue-500 mx-auto mb-1 md:mb-2" />
                 <div className="text-lg md:text-2xl font-bold text-blue-600">
-                  {Math.round(availableCategories.reduce((acc, cat) => acc + cat.count, 0) / availableCategories.length)}
+                  {Math.round(
+                    availableCategories.reduce(
+                      (acc, cat) => acc + cat.count,
+                      0,
+                    ) / availableCategories.length,
+                  )}
                 </div>
-                <p className="text-xs md:text-sm text-blue-600 font-medium">Avg Words</p>
+                <p className="text-xs md:text-sm text-blue-600 font-medium">
+                  Avg Words
+                </p>
               </CardContent>
             </Card>
           </div>
@@ -1212,7 +1352,10 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onNavigateBack }) => {
                 />
               </div>
               <div className="flex gap-2">
-                <Select value={categoryFilter} onValueChange={setCategoryFilter}>
+                <Select
+                  value={categoryFilter}
+                  onValueChange={setCategoryFilter}
+                >
                   <SelectTrigger className="w-32 md:w-40">
                     <SelectValue placeholder="Filter" />
                   </SelectTrigger>
@@ -1226,7 +1369,9 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onNavigateBack }) => {
                 <Button
                   variant="outline"
                   size="sm"
-                  onClick={() => setSortOrder(sortOrder === "asc" ? "desc" : "asc")}
+                  onClick={() =>
+                    setSortOrder(sortOrder === "asc" ? "desc" : "asc")
+                  }
                   className="px-3"
                 >
                   {sortOrder === "asc" ? "↑" : "↓"}
@@ -1240,10 +1385,14 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onNavigateBack }) => {
         <div className="px-2 md:px-0">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4">
             {availableCategories
-              .filter(category => {
-                const matchesSearch = searchTerm === "" ||
-                  category.name.toLowerCase().includes(searchTerm.toLowerCase());
-                const matchesFilter = categoryFilter === "all" ||
+              .filter((category) => {
+                const matchesSearch =
+                  searchTerm === "" ||
+                  category.name
+                    .toLowerCase()
+                    .includes(searchTerm.toLowerCase());
+                const matchesFilter =
+                  categoryFilter === "all" ||
                   (categoryFilter === "active" && category.count > 0) ||
                   (categoryFilter === "empty" && category.count === 0) ||
                   (categoryFilter === "popular" && category.count > 10);
@@ -1258,10 +1407,13 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onNavigateBack }) => {
               })
               .map((category) => {
                 const categoryWords = getWordsByCategory(category.id);
-                const difficulties = categoryWords.reduce((acc, word) => {
-                  acc[word.difficulty] = (acc[word.difficulty] || 0) + 1;
-                  return acc;
-                }, { easy: 0, medium: 0, hard: 0 });
+                const difficulties = categoryWords.reduce(
+                  (acc, word) => {
+                    acc[word.difficulty] = (acc[word.difficulty] || 0) + 1;
+                    return acc;
+                  },
+                  { easy: 0, medium: 0, hard: 0 },
+                );
 
                 return (
                   <Card
@@ -1300,9 +1452,13 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onNavigateBack }) => {
                       {/* Category Description */}
                       <p className="text-sm text-slate-600 mb-3 line-clamp-2">
                         {categoryWords.length > 0
-                          ? `Explore ${category.count} words about ${category.name}, including ${categoryWords.slice(0, 3).map(w => w.word).join(", ")}${categoryWords.length > 3 ? "..." : ""}`
-                          : `Empty category ready for ${category.name}-related words`
-                        }
+                          ? `Explore ${category.count} words about ${category.name}, including ${categoryWords
+                              .slice(0, 3)
+                              .map((w) => w.word)
+                              .join(
+                                ", ",
+                              )}${categoryWords.length > 3 ? "..." : ""}`
+                          : `Empty category ready for ${category.name}-related words`}
                       </p>
 
                       {/* Difficulty Breakdown */}
@@ -1316,26 +1472,38 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onNavigateBack }) => {
                             <div className="flex-1 h-2 bg-green-100 rounded-full overflow-hidden">
                               <div
                                 className="h-full bg-green-500 rounded-full transition-all duration-500"
-                                style={{ width: `${(difficulties.easy / category.count) * 100}%` }}
+                                style={{
+                                  width: `${(difficulties.easy / category.count) * 100}%`,
+                                }}
                               ></div>
                             </div>
                             <div className="flex-1 h-2 bg-yellow-100 rounded-full overflow-hidden">
                               <div
                                 className="h-full bg-yellow-500 rounded-full transition-all duration-500"
-                                style={{ width: `${(difficulties.medium / category.count) * 100}%` }}
+                                style={{
+                                  width: `${(difficulties.medium / category.count) * 100}%`,
+                                }}
                               ></div>
                             </div>
                             <div className="flex-1 h-2 bg-red-100 rounded-full overflow-hidden">
                               <div
                                 className="h-full bg-red-500 rounded-full transition-all duration-500"
-                                style={{ width: `${(difficulties.hard / category.count) * 100}%` }}
+                                style={{
+                                  width: `${(difficulties.hard / category.count) * 100}%`,
+                                }}
                               ></div>
                             </div>
                           </div>
                           <div className="flex justify-between text-xs text-slate-500 mt-1">
-                            <span className="text-green-600">🌟 {difficulties.easy}</span>
-                            <span className="text-yellow-600">⭐ {difficulties.medium}</span>
-                            <span className="text-red-600">🔥 {difficulties.hard}</span>
+                            <span className="text-green-600">
+                              🌟 {difficulties.easy}
+                            </span>
+                            <span className="text-yellow-600">
+                              ⭐ {difficulties.medium}
+                            </span>
+                            <span className="text-red-600">
+                              🔥 {difficulties.hard}
+                            </span>
                           </div>
                         </div>
                       )}
@@ -1343,15 +1511,24 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onNavigateBack }) => {
                       {/* Sample Words Preview */}
                       {categoryWords.length > 0 && (
                         <div className="mb-3">
-                          <p className="text-xs text-slate-500 mb-1">Sample Words:</p>
+                          <p className="text-xs text-slate-500 mb-1">
+                            Sample Words:
+                          </p>
                           <div className="flex flex-wrap gap-1">
                             {categoryWords.slice(0, 4).map((word, index) => (
-                              <Badge key={index} variant="outline" className="text-xs">
+                              <Badge
+                                key={index}
+                                variant="outline"
+                                className="text-xs"
+                              >
                                 {word.word}
                               </Badge>
                             ))}
                             {categoryWords.length > 4 && (
-                              <Badge variant="outline" className="text-xs text-slate-500">
+                              <Badge
+                                variant="outline"
+                                className="text-xs text-slate-500"
+                              >
                                 +{categoryWords.length - 4} more
                               </Badge>
                             )}
@@ -1389,7 +1566,11 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onNavigateBack }) => {
                             size="sm"
                             variant="outline"
                             onClick={() => {
-                              if (confirm(`Delete "${category.name}" category? This will affect ${category.count} words.`)) {
+                              if (
+                                confirm(
+                                  `Delete "${category.name}" category? This will affect ${category.count} words.`,
+                                )
+                              ) {
                                 // Handle category deletion
                               }
                             }}
@@ -1412,15 +1593,25 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onNavigateBack }) => {
                         <div className="grid grid-cols-2 gap-2 text-center">
                           <div>
                             <div className="text-sm font-bold text-purple-600">
-                              {Math.round(categoryWords.reduce((acc, w) => acc + (w.id * 10 % 100), 0) / Math.max(categoryWords.length, 1))}%
+                              {Math.round(
+                                categoryWords.reduce(
+                                  (acc, w) => acc + ((w.id * 10) % 100),
+                                  0,
+                                ) / Math.max(categoryWords.length, 1),
+                              )}
+                              %
                             </div>
-                            <p className="text-xs text-slate-500">Avg Accuracy</p>
+                            <p className="text-xs text-slate-500">
+                              Avg Accuracy
+                            </p>
                           </div>
                           <div>
                             <div className="text-sm font-bold text-blue-600">
                               {Math.floor(Math.random() * 30) + 1}d
                             </div>
-                            <p className="text-xs text-slate-500">Last Updated</p>
+                            <p className="text-xs text-slate-500">
+                              Last Updated
+                            </p>
                           </div>
                         </div>
                       </div>
@@ -1431,10 +1622,12 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onNavigateBack }) => {
           </div>
 
           {/* Empty State */}
-          {availableCategories.filter(category => {
-            const matchesSearch = searchTerm === "" ||
+          {availableCategories.filter((category) => {
+            const matchesSearch =
+              searchTerm === "" ||
               category.name.toLowerCase().includes(searchTerm.toLowerCase());
-            const matchesFilter = categoryFilter === "all" ||
+            const matchesFilter =
+              categoryFilter === "all" ||
               (categoryFilter === "active" && category.count > 0) ||
               (categoryFilter === "empty" && category.count === 0) ||
               (categoryFilter === "popular" && category.count > 10);
@@ -1443,18 +1636,22 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onNavigateBack }) => {
             <Card className="text-center py-12">
               <CardContent>
                 <div className="text-6xl mb-4">📁</div>
-                <h3 className="text-lg font-semibold mb-2">No categories found</h3>
+                <h3 className="text-lg font-semibold mb-2">
+                  No categories found
+                </h3>
                 <p className="text-slate-600 mb-4">
                   {searchTerm
                     ? `No categories match "${searchTerm}". Try adjusting your search.`
-                    : "No categories match your current filters."
-                  }
+                    : "No categories match your current filters."}
                 </p>
                 <div className="flex gap-2 justify-center">
                   <Button variant="outline" onClick={() => setSearchTerm("")}>
                     Clear Search
                   </Button>
-                  <Button variant="outline" onClick={() => setCategoryFilter("all")}>
+                  <Button
+                    variant="outline"
+                    onClick={() => setCategoryFilter("all")}
+                  >
                     Clear Filters
                   </Button>
                 </div>
@@ -1473,21 +1670,42 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onNavigateBack }) => {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div className="text-center">
                 <div className="text-2xl font-bold text-purple-600">
-                  {availableCategories.reduce((max, cat) => Math.max(max, cat.count), 0)}
+                  {availableCategories.reduce(
+                    (max, cat) => Math.max(max, cat.count),
+                    0,
+                  )}
                 </div>
                 <p className="text-sm text-purple-700">
-                  Most words in "{availableCategories.find(cat => cat.count === availableCategories.reduce((max, c) => Math.max(max, c.count), 0))?.name}"
+                  Most words in "
+                  {
+                    availableCategories.find(
+                      (cat) =>
+                        cat.count ===
+                        availableCategories.reduce(
+                          (max, c) => Math.max(max, c.count),
+                          0,
+                        ),
+                    )?.name
+                  }
+                  "
                 </p>
               </div>
               <div className="text-center">
                 <div className="text-2xl font-bold text-blue-600">
-                  {availableCategories.filter(cat => cat.count === 0).length}
+                  {availableCategories.filter((cat) => cat.count === 0).length}
                 </div>
-                <p className="text-sm text-blue-700">Empty categories need content</p>
+                <p className="text-sm text-blue-700">
+                  Empty categories need content
+                </p>
               </div>
               <div className="text-center">
                 <div className="text-2xl font-bold text-green-600">
-                  {Math.round((availableCategories.filter(cat => cat.count > 0).length / availableCategories.length) * 100)}%
+                  {Math.round(
+                    (availableCategories.filter((cat) => cat.count > 0).length /
+                      availableCategories.length) *
+                      100,
+                  )}
+                  %
                 </div>
                 <p className="text-sm text-green-700">Categories are active</p>
               </div>
@@ -2163,23 +2381,38 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onNavigateBack }) => {
         {/* Mobile Tab Navigation */}
         <div className="md:hidden mb-4">
           <TabsList className="grid w-full grid-cols-5 h-12 bg-slate-100">
-            <TabsTrigger value="overview" className="flex flex-col items-center gap-0.5 px-1 py-2 data-[state=active]:bg-white">
+            <TabsTrigger
+              value="overview"
+              className="flex flex-col items-center gap-0.5 px-1 py-2 data-[state=active]:bg-white"
+            >
               <BarChart3 className="w-4 h-4" />
               <span className="text-xs">Overview</span>
             </TabsTrigger>
-            <TabsTrigger value="content" className="flex flex-col items-center gap-0.5 px-1 py-2 data-[state=active]:bg-white">
+            <TabsTrigger
+              value="content"
+              className="flex flex-col items-center gap-0.5 px-1 py-2 data-[state=active]:bg-white"
+            >
               <BookOpen className="w-4 h-4" />
               <span className="text-xs">Content</span>
             </TabsTrigger>
-            <TabsTrigger value="users" className="flex flex-col items-center gap-0.5 px-1 py-2 data-[state=active]:bg-white">
+            <TabsTrigger
+              value="users"
+              className="flex flex-col items-center gap-0.5 px-1 py-2 data-[state=active]:bg-white"
+            >
               <Users className="w-4 h-4" />
               <span className="text-xs">Users</span>
             </TabsTrigger>
-            <TabsTrigger value="analytics" className="flex flex-col items-center gap-0.5 px-1 py-2 data-[state=active]:bg-white">
+            <TabsTrigger
+              value="analytics"
+              className="flex flex-col items-center gap-0.5 px-1 py-2 data-[state=active]:bg-white"
+            >
               <TrendingUp className="w-4 h-4" />
               <span className="text-xs">Analytics</span>
             </TabsTrigger>
-            <TabsTrigger value="tickets" className="flex flex-col items-center gap-0.5 px-1 py-2 data-[state=active]:bg-white">
+            <TabsTrigger
+              value="tickets"
+              className="flex flex-col items-center gap-0.5 px-1 py-2 data-[state=active]:bg-white"
+            >
               <MessageSquare className="w-4 h-4" />
               <span className="text-xs">Support</span>
             </TabsTrigger>
@@ -2212,11 +2445,21 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onNavigateBack }) => {
           </TabsList>
         </div>
 
-        <TabsContent value="overview" className="mt-4 md:mt-6">{renderOverview()}</TabsContent>
-        <TabsContent value="content" className="mt-4 md:mt-6">{renderContentManagement()}</TabsContent>
-        <TabsContent value="users" className="mt-4 md:mt-6">{renderUserManagement()}</TabsContent>
-        <TabsContent value="analytics" className="mt-4 md:mt-6">{renderAnalytics()}</TabsContent>
-        <TabsContent value="tickets" className="mt-4 md:mt-6">{renderSupportTickets()}</TabsContent>
+        <TabsContent value="overview" className="mt-4 md:mt-6">
+          {renderOverview()}
+        </TabsContent>
+        <TabsContent value="content" className="mt-4 md:mt-6">
+          {renderContentManagement()}
+        </TabsContent>
+        <TabsContent value="users" className="mt-4 md:mt-6">
+          {renderUserManagement()}
+        </TabsContent>
+        <TabsContent value="analytics" className="mt-4 md:mt-6">
+          {renderAnalytics()}
+        </TabsContent>
+        <TabsContent value="tickets" className="mt-4 md:mt-6">
+          {renderSupportTickets()}
+        </TabsContent>
       </Tabs>
 
       {/* Mobile Floating Action Button */}

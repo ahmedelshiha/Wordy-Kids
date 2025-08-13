@@ -51,48 +51,51 @@ const CreateWordInsights: React.FC<CreateWordInsightsProps> = ({
 }) => {
   // Calculate insights
   const totalWords = words.length;
-  const recentWords = words.filter(w => 
-    (Date.now() - w.submittedAt.getTime()) < (7 * 24 * 60 * 60 * 1000)
+  const recentWords = words.filter(
+    (w) => Date.now() - w.submittedAt.getTime() < 7 * 24 * 60 * 60 * 1000,
   ).length;
-  
-  const categoryStats = categories.map(cat => ({
-    ...cat,
-    count: words.filter(w => w.category === cat.name).length,
-    avgAccuracy: Math.round(
-      words
-        .filter(w => w.category === cat.name)
-        .reduce((acc, w) => acc + w.accuracy, 0) / 
-      Math.max(words.filter(w => w.category === cat.name).length, 1)
-    ),
-  })).sort((a, b) => b.count - a.count);
+
+  const categoryStats = categories
+    .map((cat) => ({
+      ...cat,
+      count: words.filter((w) => w.category === cat.name).length,
+      avgAccuracy: Math.round(
+        words
+          .filter((w) => w.category === cat.name)
+          .reduce((acc, w) => acc + w.accuracy, 0) /
+          Math.max(words.filter((w) => w.category === cat.name).length, 1),
+      ),
+    }))
+    .sort((a, b) => b.count - a.count);
 
   const difficultyStats = {
-    easy: words.filter(w => w.difficulty === "easy").length,
-    medium: words.filter(w => w.difficulty === "medium").length,
-    hard: words.filter(w => w.difficulty === "hard").length,
+    easy: words.filter((w) => w.difficulty === "easy").length,
+    medium: words.filter((w) => w.difficulty === "medium").length,
+    hard: words.filter((w) => w.difficulty === "hard").length,
   };
 
   const statusStats = {
-    approved: words.filter(w => w.status === "approved").length,
-    pending: words.filter(w => w.status === "pending").length,
-    rejected: words.filter(w => w.status === "rejected").length,
+    approved: words.filter((w) => w.status === "approved").length,
+    pending: words.filter((w) => w.status === "pending").length,
+    rejected: words.filter((w) => w.status === "rejected").length,
   };
 
   const topPerformingWords = words
-    .filter(w => w.usageCount > 0)
-    .sort((a, b) => (b.accuracy * b.usageCount) - (a.accuracy * a.usageCount))
+    .filter((w) => w.usageCount > 0)
+    .sort((a, b) => b.accuracy * b.usageCount - a.accuracy * a.usageCount)
     .slice(0, 5);
 
   const recommendedCategories = categoryStats
-    .filter(cat => cat.count < 10)
+    .filter((cat) => cat.count < 10)
     .slice(0, 3);
 
   const qualityScore = Math.round(
-    (statusStats.approved / Math.max(totalWords, 1)) * 100
+    (statusStats.approved / Math.max(totalWords, 1)) * 100,
   );
 
   const diversityScore = Math.round(
-    (categoryStats.filter(cat => cat.count > 0).length / categories.length) * 100
+    (categoryStats.filter((cat) => cat.count > 0).length / categories.length) *
+      100,
   );
 
   return (
@@ -119,7 +122,9 @@ const CreateWordInsights: React.FC<CreateWordInsightsProps> = ({
         <Card className="bg-gradient-to-br from-green-50 to-green-100 border-green-200">
           <CardContent className="p-4 text-center">
             <Clock className="w-8 h-8 text-green-500 mx-auto mb-2" />
-            <div className="text-2xl font-bold text-green-600">{recentWords}</div>
+            <div className="text-2xl font-bold text-green-600">
+              {recentWords}
+            </div>
             <p className="text-sm text-green-700">This Week</p>
           </CardContent>
         </Card>
@@ -127,7 +132,9 @@ const CreateWordInsights: React.FC<CreateWordInsightsProps> = ({
         <Card className="bg-gradient-to-br from-purple-50 to-purple-100 border-purple-200">
           <CardContent className="p-4 text-center">
             <Target className="w-8 h-8 text-purple-500 mx-auto mb-2" />
-            <div className="text-2xl font-bold text-purple-600">{qualityScore}%</div>
+            <div className="text-2xl font-bold text-purple-600">
+              {qualityScore}%
+            </div>
             <p className="text-sm text-purple-700">Quality Score</p>
           </CardContent>
         </Card>
@@ -135,7 +142,9 @@ const CreateWordInsights: React.FC<CreateWordInsightsProps> = ({
         <Card className="bg-gradient-to-br from-orange-50 to-orange-100 border-orange-200">
           <CardContent className="p-4 text-center">
             <Globe className="w-8 h-8 text-orange-500 mx-auto mb-2" />
-            <div className="text-2xl font-bold text-orange-600">{diversityScore}%</div>
+            <div className="text-2xl font-bold text-orange-600">
+              {diversityScore}%
+            </div>
             <p className="text-sm text-orange-700">Category Coverage</p>
           </CardContent>
         </Card>
@@ -152,7 +161,10 @@ const CreateWordInsights: React.FC<CreateWordInsightsProps> = ({
         <CardContent>
           <div className="space-y-3">
             {categoryStats.slice(0, 6).map((category, index) => (
-              <div key={category.id} className="flex items-center justify-between">
+              <div
+                key={category.id}
+                className="flex items-center justify-between"
+              >
                 <div className="flex items-center gap-3">
                   <span className="text-lg">{category.emoji}</span>
                   <div>
@@ -166,7 +178,9 @@ const CreateWordInsights: React.FC<CreateWordInsightsProps> = ({
                   <div className="w-16 h-2 bg-slate-200 rounded-full overflow-hidden">
                     <div
                       className="h-full bg-gradient-to-r from-blue-400 to-purple-500 rounded-full"
-                      style={{ width: `${(category.count / Math.max(...categoryStats.map(c => c.count), 1)) * 100}%` }}
+                      style={{
+                        width: `${(category.count / Math.max(...categoryStats.map((c) => c.count), 1)) * 100}%`,
+                      }}
                     />
                   </div>
                   <span className="text-sm font-medium text-slate-600">
@@ -199,13 +213,17 @@ const CreateWordInsights: React.FC<CreateWordInsightsProps> = ({
                   <div className="w-24 h-2 bg-slate-200 rounded-full overflow-hidden">
                     <div
                       className="h-full bg-green-500 rounded-full"
-                      style={{ width: `${(difficultyStats.easy / totalWords) * 100}%` }}
+                      style={{
+                        width: `${(difficultyStats.easy / totalWords) * 100}%`,
+                      }}
                     />
                   </div>
-                  <span className="text-sm font-medium">{difficultyStats.easy}</span>
+                  <span className="text-sm font-medium">
+                    {difficultyStats.easy}
+                  </span>
                 </div>
               </div>
-              
+
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
                   <div className="w-3 h-3 bg-yellow-500 rounded-full" />
@@ -215,13 +233,17 @@ const CreateWordInsights: React.FC<CreateWordInsightsProps> = ({
                   <div className="w-24 h-2 bg-slate-200 rounded-full overflow-hidden">
                     <div
                       className="h-full bg-yellow-500 rounded-full"
-                      style={{ width: `${(difficultyStats.medium / totalWords) * 100}%` }}
+                      style={{
+                        width: `${(difficultyStats.medium / totalWords) * 100}%`,
+                      }}
                     />
                   </div>
-                  <span className="text-sm font-medium">{difficultyStats.medium}</span>
+                  <span className="text-sm font-medium">
+                    {difficultyStats.medium}
+                  </span>
                 </div>
               </div>
-              
+
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
                   <div className="w-3 h-3 bg-red-500 rounded-full" />
@@ -231,10 +253,14 @@ const CreateWordInsights: React.FC<CreateWordInsightsProps> = ({
                   <div className="w-24 h-2 bg-slate-200 rounded-full overflow-hidden">
                     <div
                       className="h-full bg-red-500 rounded-full"
-                      style={{ width: `${(difficultyStats.hard / totalWords) * 100}%` }}
+                      style={{
+                        width: `${(difficultyStats.hard / totalWords) * 100}%`,
+                      }}
                     />
                   </div>
-                  <span className="text-sm font-medium">{difficultyStats.hard}</span>
+                  <span className="text-sm font-medium">
+                    {difficultyStats.hard}
+                  </span>
                 </div>
               </div>
             </div>
@@ -256,39 +282,45 @@ const CreateWordInsights: React.FC<CreateWordInsightsProps> = ({
                   <span className="text-sm">Approved</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <Progress 
-                    value={(statusStats.approved / totalWords) * 100} 
+                  <Progress
+                    value={(statusStats.approved / totalWords) * 100}
                     className="w-24 h-2"
                   />
-                  <span className="text-sm font-medium">{statusStats.approved}</span>
+                  <span className="text-sm font-medium">
+                    {statusStats.approved}
+                  </span>
                 </div>
               </div>
-              
+
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
                   <Clock className="w-4 h-4 text-yellow-500" />
                   <span className="text-sm">Pending</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <Progress 
-                    value={(statusStats.pending / totalWords) * 100} 
+                  <Progress
+                    value={(statusStats.pending / totalWords) * 100}
                     className="w-24 h-2"
                   />
-                  <span className="text-sm font-medium">{statusStats.pending}</span>
+                  <span className="text-sm font-medium">
+                    {statusStats.pending}
+                  </span>
                 </div>
               </div>
-              
+
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
                   <AlertTriangle className="w-4 h-4 text-red-500" />
                   <span className="text-sm">Rejected</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <Progress 
-                    value={(statusStats.rejected / totalWords) * 100} 
+                  <Progress
+                    value={(statusStats.rejected / totalWords) * 100}
                     className="w-24 h-2"
                   />
-                  <span className="text-sm font-medium">{statusStats.rejected}</span>
+                  <span className="text-sm font-medium">
+                    {statusStats.rejected}
+                  </span>
                 </div>
               </div>
             </div>
@@ -308,7 +340,10 @@ const CreateWordInsights: React.FC<CreateWordInsightsProps> = ({
           <CardContent>
             <div className="space-y-3">
               {topPerformingWords.map((word, index) => (
-                <div key={word.id} className="flex items-center justify-between p-3 bg-slate-50 rounded-lg">
+                <div
+                  key={word.id}
+                  className="flex items-center justify-between p-3 bg-slate-50 rounded-lg"
+                >
                   <div className="flex items-center gap-3">
                     <Badge className="bg-yellow-100 text-yellow-800">
                       #{index + 1}
@@ -352,7 +387,11 @@ const CreateWordInsights: React.FC<CreateWordInsightsProps> = ({
                 </h4>
                 <div className="flex flex-wrap gap-2">
                   {recommendedCategories.map((category) => (
-                    <Badge key={category.id} variant="outline" className="text-blue-700 border-blue-300">
+                    <Badge
+                      key={category.id}
+                      variant="outline"
+                      className="text-blue-700 border-blue-300"
+                    >
                       {category.emoji} {category.name} ({category.count} words)
                     </Badge>
                   ))}
@@ -368,20 +407,21 @@ const CreateWordInsights: React.FC<CreateWordInsightsProps> = ({
                   {qualityScore < 80 && " - Consider reviewing pending words"}
                 </span>
               </div>
-              
+
               <div className="flex items-center gap-2">
                 <Globe className="w-4 h-4" />
                 <span>
                   Category coverage: {diversityScore}%
-                  {diversityScore < 70 && " - Add words to underrepresented categories"}
+                  {diversityScore < 70 &&
+                    " - Add words to underrepresented categories"}
                 </span>
               </div>
-              
+
               <div className="flex items-center gap-2">
                 <TrendingUp className="w-4 h-4" />
                 <span>
-                  {recentWords > 5 
-                    ? `Great! ${recentWords} words added this week` 
+                  {recentWords > 5
+                    ? `Great! ${recentWords} words added this week`
                     : `Only ${recentWords} words added this week - consider increasing content creation`}
                 </span>
               </div>

@@ -20,7 +20,7 @@ import {
   CheckCircle,
   AlertTriangle,
   Fingerprint,
-  Server
+  Server,
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
@@ -37,17 +37,25 @@ const AdminLogin: React.FC<AdminLoginProps> = ({ onLogin }) => {
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [loginAttempts, setLoginAttempts] = useState(0);
-  const [securityStatus, setSecurityStatus] = useState<'secure' | 'warning' | 'locked'>('secure');
-  const [deviceInfo, setDeviceInfo] = useState({ type: 'desktop', secure: true });
+  const [securityStatus, setSecurityStatus] = useState<
+    "secure" | "warning" | "locked"
+  >("secure");
+  const [deviceInfo, setDeviceInfo] = useState({
+    type: "desktop",
+    secure: true,
+  });
   const navigate = useNavigate();
 
   useEffect(() => {
     // Detect device type and security
-    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-    const isSecure = window.location.protocol === 'https:';
+    const isMobile =
+      /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+        navigator.userAgent,
+      );
+    const isSecure = window.location.protocol === "https:";
     setDeviceInfo({
-      type: isMobile ? 'mobile' : 'desktop',
-      secure: isSecure || window.location.hostname === 'localhost'
+      type: isMobile ? "mobile" : "desktop",
+      secure: isSecure || window.location.hostname === "localhost",
     });
   }, []);
 
@@ -57,26 +65,33 @@ const AdminLogin: React.FC<AdminLoginProps> = ({ onLogin }) => {
     setError("");
 
     // Simulate authentication delay for better UX
-    await new Promise(resolve => setTimeout(resolve, 1500));
+    await new Promise((resolve) => setTimeout(resolve, 1500));
 
     // Enhanced security checks
     if (loginAttempts >= 3) {
-      setSecurityStatus('locked');
-      setError("Account temporarily locked due to multiple failed attempts. Please try again later.");
+      setSecurityStatus("locked");
+      setError(
+        "Account temporarily locked due to multiple failed attempts. Please try again later.",
+      );
       setLoading(false);
       return;
     }
 
-    if (credentials.username === "admin" && credentials.password === "admin123") {
+    if (
+      credentials.username === "admin" &&
+      credentials.password === "admin123"
+    ) {
       setError("");
-      setSecurityStatus('secure');
+      setSecurityStatus("secure");
       onLogin();
     } else {
-      setLoginAttempts(prev => prev + 1);
+      setLoginAttempts((prev) => prev + 1);
       if (loginAttempts >= 2) {
-        setSecurityStatus('warning');
+        setSecurityStatus("warning");
       }
-      setError(`Invalid credentials. ${3 - loginAttempts - 1} attempts remaining.`);
+      setError(
+        `Invalid credentials. ${3 - loginAttempts - 1} attempts remaining.`,
+      );
     }
     setLoading(false);
   };
@@ -95,16 +110,25 @@ const AdminLogin: React.FC<AdminLoginProps> = ({ onLogin }) => {
         <div className="flex items-center justify-center mb-4">
           <Badge
             className={`px-3 py-1 ${
-              securityStatus === 'secure' ? 'bg-green-500/20 text-green-300 border-green-500/30' :
-              securityStatus === 'warning' ? 'bg-yellow-500/20 text-yellow-300 border-yellow-500/30' :
-              'bg-red-500/20 text-red-300 border-red-500/30'
+              securityStatus === "secure"
+                ? "bg-green-500/20 text-green-300 border-green-500/30"
+                : securityStatus === "warning"
+                  ? "bg-yellow-500/20 text-yellow-300 border-yellow-500/30"
+                  : "bg-red-500/20 text-red-300 border-red-500/30"
             }`}
           >
-            {securityStatus === 'secure' && <CheckCircle className="w-3 h-3 mr-1" />}
-            {securityStatus === 'warning' && <AlertTriangle className="w-3 h-3 mr-1" />}
-            {securityStatus === 'locked' && <Lock className="w-3 h-3 mr-1" />}
-            {securityStatus === 'secure' ? 'Secure Connection' :
-             securityStatus === 'warning' ? 'Security Warning' : 'Account Locked'}
+            {securityStatus === "secure" && (
+              <CheckCircle className="w-3 h-3 mr-1" />
+            )}
+            {securityStatus === "warning" && (
+              <AlertTriangle className="w-3 h-3 mr-1" />
+            )}
+            {securityStatus === "locked" && <Lock className="w-3 h-3 mr-1" />}
+            {securityStatus === "secure"
+              ? "Secure Connection"
+              : securityStatus === "warning"
+                ? "Security Warning"
+                : "Account Locked"}
           </Badge>
         </div>
 
@@ -126,15 +150,16 @@ const AdminLogin: React.FC<AdminLoginProps> = ({ onLogin }) => {
             {/* Device & Security Info */}
             <div className="flex items-center justify-center gap-4 mt-4">
               <div className="flex items-center gap-1 text-xs text-slate-500">
-                {deviceInfo.type === 'mobile' ?
-                  <Smartphone className="w-3 h-3" /> :
+                {deviceInfo.type === "mobile" ? (
+                  <Smartphone className="w-3 h-3" />
+                ) : (
                   <Monitor className="w-3 h-3" />
-                }
+                )}
                 {deviceInfo.type}
               </div>
               <div className="flex items-center gap-1 text-xs text-slate-500">
                 <Server className="w-3 h-3" />
-                {deviceInfo.secure ? 'Secured' : 'Unsecured'}
+                {deviceInfo.secure ? "Secured" : "Unsecured"}
               </div>
             </div>
           </CardHeader>
@@ -143,7 +168,10 @@ const AdminLogin: React.FC<AdminLoginProps> = ({ onLogin }) => {
             <form onSubmit={handleLogin} className="space-y-4">
               {/* Enhanced Username Field */}
               <div className="space-y-2">
-                <Label htmlFor="username" className="flex items-center gap-2 text-slate-300">
+                <Label
+                  htmlFor="username"
+                  className="flex items-center gap-2 text-slate-300"
+                >
                   <User className="w-4 h-4" />
                   Administrator Username
                 </Label>
@@ -159,14 +187,17 @@ const AdminLogin: React.FC<AdminLoginProps> = ({ onLogin }) => {
                   }
                   placeholder="Enter your admin username"
                   className="bg-slate-700/50 border-slate-600 text-white placeholder:text-slate-400 focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500/50 h-12"
-                  disabled={loading || securityStatus === 'locked'}
+                  disabled={loading || securityStatus === "locked"}
                   required
                 />
               </div>
 
               {/* Enhanced Password Field with Toggle */}
               <div className="space-y-2">
-                <Label htmlFor="password" className="flex items-center gap-2 text-slate-300">
+                <Label
+                  htmlFor="password"
+                  className="flex items-center gap-2 text-slate-300"
+                >
                   <KeyRound className="w-4 h-4" />
                   Administrator Password
                 </Label>
@@ -183,7 +214,7 @@ const AdminLogin: React.FC<AdminLoginProps> = ({ onLogin }) => {
                     }
                     placeholder="Enter your admin password"
                     className="bg-slate-700/50 border-slate-600 text-white placeholder:text-slate-400 focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500/50 h-12 pr-12"
-                    disabled={loading || securityStatus === 'locked'}
+                    disabled={loading || securityStatus === "locked"}
                     required
                   />
                   <Button
@@ -194,20 +225,32 @@ const AdminLogin: React.FC<AdminLoginProps> = ({ onLogin }) => {
                     className="absolute right-2 top-1/2 transform -translate-y-1/2 h-8 w-8 p-0 text-slate-400 hover:text-white"
                     disabled={loading}
                   >
-                    {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                    {showPassword ? (
+                      <EyeOff className="w-4 h-4" />
+                    ) : (
+                      <Eye className="w-4 h-4" />
+                    )}
                   </Button>
                 </div>
               </div>
 
               {/* Enhanced Error Display */}
               {error && (
-                <Alert className={`border ${
-                  securityStatus === 'locked' ? 'border-red-500/50 bg-red-500/10' : 'border-orange-500/50 bg-orange-500/10'
-                }`}>
+                <Alert
+                  className={`border ${
+                    securityStatus === "locked"
+                      ? "border-red-500/50 bg-red-500/10"
+                      : "border-orange-500/50 bg-orange-500/10"
+                  }`}
+                >
                   <AlertTriangle className="w-4 h-4 text-orange-400" />
-                  <AlertDescription className={`${
-                    securityStatus === 'locked' ? 'text-red-400' : 'text-orange-400'
-                  } text-sm`}>
+                  <AlertDescription
+                    className={`${
+                      securityStatus === "locked"
+                        ? "text-red-400"
+                        : "text-orange-400"
+                    } text-sm`}
+                  >
                     {error}
                   </AlertDescription>
                 </Alert>
@@ -221,7 +264,7 @@ const AdminLogin: React.FC<AdminLoginProps> = ({ onLogin }) => {
                       <div
                         key={i}
                         className={`w-2 h-2 rounded-full ${
-                          i < loginAttempts ? 'bg-red-500' : 'bg-slate-600'
+                          i < loginAttempts ? "bg-red-500" : "bg-slate-600"
                         }`}
                       />
                     ))}
@@ -234,19 +277,19 @@ const AdminLogin: React.FC<AdminLoginProps> = ({ onLogin }) => {
                 type="submit"
                 className={`w-full h-12 text-base font-semibold transition-all duration-300 ${
                   loading
-                    ? 'bg-blue-600 cursor-not-allowed'
-                    : securityStatus === 'locked'
-                      ? 'bg-red-600 hover:bg-red-700'
-                      : 'bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 shadow-lg hover:shadow-xl'
+                    ? "bg-blue-600 cursor-not-allowed"
+                    : securityStatus === "locked"
+                      ? "bg-red-600 hover:bg-red-700"
+                      : "bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 shadow-lg hover:shadow-xl"
                 }`}
-                disabled={loading || securityStatus === 'locked'}
+                disabled={loading || securityStatus === "locked"}
               >
                 {loading ? (
                   <div className="flex items-center gap-2">
                     <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
                     Authenticating...
                   </div>
-                ) : securityStatus === 'locked' ? (
+                ) : securityStatus === "locked" ? (
                   <>
                     <Lock className="w-4 h-4 mr-2" />
                     Account Locked
@@ -294,16 +337,22 @@ const AdminLogin: React.FC<AdminLoginProps> = ({ onLogin }) => {
                 <Badge className="bg-blue-500/20 text-blue-300 border-blue-500/30 text-xs px-2 py-1">
                   DEMO
                 </Badge>
-                <span className="text-xs text-slate-400">Development Access</span>
+                <span className="text-xs text-slate-400">
+                  Development Access
+                </span>
               </div>
               <div className="space-y-1 text-xs">
                 <div className="flex justify-between">
                   <span className="text-slate-400">Username:</span>
-                  <code className="text-blue-300 bg-slate-700/50 px-2 py-0.5 rounded font-mono">admin</code>
+                  <code className="text-blue-300 bg-slate-700/50 px-2 py-0.5 rounded font-mono">
+                    admin
+                  </code>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-slate-400">Password:</span>
-                  <code className="text-blue-300 bg-slate-700/50 px-2 py-0.5 rounded font-mono">admin123</code>
+                  <code className="text-blue-300 bg-slate-700/50 px-2 py-0.5 rounded font-mono">
+                    admin123
+                  </code>
                 </div>
               </div>
             </div>

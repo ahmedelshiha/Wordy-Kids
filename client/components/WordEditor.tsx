@@ -179,7 +179,9 @@ const WordEditor: React.FC<WordEditorProps> = ({
     isActive: true,
   });
 
-  const [validationErrors, setValidationErrors] = useState<ValidationError[]>([]);
+  const [validationErrors, setValidationErrors] = useState<ValidationError[]>(
+    [],
+  );
   const [activeTab, setActiveTab] = useState("basic");
   const [isLoading, setIsLoading] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
@@ -250,17 +252,23 @@ const WordEditor: React.FC<WordEditorProps> = ({
 
   // Calculate completion score
   useEffect(() => {
-    const requiredFields = ['word', 'definition', 'example', 'category'];
-    const optionalFields = ['pronunciation', 'funFact', 'emoji', 'imageUrl', 'audioUrl'];
-    
+    const requiredFields = ["word", "definition", "example", "category"];
+    const optionalFields = [
+      "pronunciation",
+      "funFact",
+      "emoji",
+      "imageUrl",
+      "audioUrl",
+    ];
+
     let score = 0;
     let total = requiredFields.length + optionalFields.length;
-    
-    requiredFields.forEach(field => {
+
+    requiredFields.forEach((field) => {
       if (formData[field as keyof typeof formData]) score += 2;
     });
-    
-    optionalFields.forEach(field => {
+
+    optionalFields.forEach((field) => {
       if (formData[field as keyof typeof formData]) score += 1;
     });
 
@@ -276,7 +284,8 @@ const WordEditor: React.FC<WordEditorProps> = ({
 
   // Track unsaved changes
   useEffect(() => {
-    const hasChanges = JSON.stringify(formData) !== JSON.stringify(originalFormData.current);
+    const hasChanges =
+      JSON.stringify(formData) !== JSON.stringify(originalFormData.current);
     setHasUnsavedChanges(hasChanges);
   }, [formData]);
 
@@ -323,7 +332,7 @@ const WordEditor: React.FC<WordEditorProps> = ({
     try {
       setIsSaving(true);
       // Simulate auto-save API call
-      await new Promise(resolve => setTimeout(resolve, 500));
+      await new Promise((resolve) => setTimeout(resolve, 500));
       setLastSaved(new Date());
       setHasUnsavedChanges(false);
       originalFormData.current = { ...formData };
@@ -339,62 +348,134 @@ const WordEditor: React.FC<WordEditorProps> = ({
 
     // Required field validation
     if (!formData.word?.trim()) {
-      errors.push({ field: "word", message: "Word is required", severity: "error" });
+      errors.push({
+        field: "word",
+        message: "Word is required",
+        severity: "error",
+      });
     } else if (formData.word.length < 2) {
-      errors.push({ field: "word", message: "Word must be at least 2 characters long", severity: "error" });
+      errors.push({
+        field: "word",
+        message: "Word must be at least 2 characters long",
+        severity: "error",
+      });
     } else if (formData.word.length > 50) {
-      errors.push({ field: "word", message: "Word should be under 50 characters", severity: "warning" });
+      errors.push({
+        field: "word",
+        message: "Word should be under 50 characters",
+        severity: "warning",
+      });
     }
 
     if (!formData.definition?.trim()) {
-      errors.push({ field: "definition", message: "Definition is required", severity: "error" });
+      errors.push({
+        field: "definition",
+        message: "Definition is required",
+        severity: "error",
+      });
     } else if (formData.definition.length < 10) {
-      errors.push({ field: "definition", message: "Definition should be at least 10 characters", severity: "error" });
+      errors.push({
+        field: "definition",
+        message: "Definition should be at least 10 characters",
+        severity: "error",
+      });
     } else if (formData.definition.length > 500) {
-      errors.push({ field: "definition", message: "Definition is too long (max 500 characters)", severity: "warning" });
+      errors.push({
+        field: "definition",
+        message: "Definition is too long (max 500 characters)",
+        severity: "warning",
+      });
     }
 
     if (!formData.example?.trim()) {
-      errors.push({ field: "example", message: "Example sentence is required", severity: "error" });
+      errors.push({
+        field: "example",
+        message: "Example sentence is required",
+        severity: "error",
+      });
     } else if (formData.example.length < 10) {
-      errors.push({ field: "example", message: "Example should be at least 10 characters", severity: "error" });
-    } else if (!formData.example.toLowerCase().includes(formData.word?.toLowerCase() || "")) {
-      errors.push({ field: "example", message: "Example should include the word being defined", severity: "warning" });
+      errors.push({
+        field: "example",
+        message: "Example should be at least 10 characters",
+        severity: "error",
+      });
+    } else if (
+      !formData.example
+        .toLowerCase()
+        .includes(formData.word?.toLowerCase() || "")
+    ) {
+      errors.push({
+        field: "example",
+        message: "Example should include the word being defined",
+        severity: "warning",
+      });
     }
 
     if (!formData.category) {
-      errors.push({ field: "category", message: "Category is required", severity: "error" });
+      errors.push({
+        field: "category",
+        message: "Category is required",
+        severity: "error",
+      });
     }
 
     // URL validation
     if (formData.imageUrl && !isValidUrl(formData.imageUrl)) {
-      errors.push({ field: "imageUrl", message: "Invalid image URL format", severity: "error" });
+      errors.push({
+        field: "imageUrl",
+        message: "Invalid image URL format",
+        severity: "error",
+      });
     }
 
     if (formData.audioUrl && !isValidUrl(formData.audioUrl)) {
-      errors.push({ field: "audioUrl", message: "Invalid audio URL format", severity: "error" });
+      errors.push({
+        field: "audioUrl",
+        message: "Invalid audio URL format",
+        severity: "error",
+      });
     }
 
     // Pronunciation validation
     if (formData.pronunciation && formData.pronunciation.length > 100) {
-      errors.push({ field: "pronunciation", message: "Pronunciation should be under 100 characters", severity: "warning" });
+      errors.push({
+        field: "pronunciation",
+        message: "Pronunciation should be under 100 characters",
+        severity: "warning",
+      });
     }
 
     // Content quality suggestions
     if (!formData.pronunciation?.trim()) {
-      errors.push({ field: "pronunciation", message: "Consider adding pronunciation for better learning", severity: "info" });
+      errors.push({
+        field: "pronunciation",
+        message: "Consider adding pronunciation for better learning",
+        severity: "info",
+      });
     }
 
     if (!formData.funFact?.trim()) {
-      errors.push({ field: "funFact", message: "Fun facts make learning more engaging", severity: "info" });
+      errors.push({
+        field: "funFact",
+        message: "Fun facts make learning more engaging",
+        severity: "info",
+      });
     }
 
     if (!formData.emoji?.trim()) {
-      errors.push({ field: "emoji", message: "Adding an emoji improves visual appeal", severity: "info" });
+      errors.push({
+        field: "emoji",
+        message: "Adding an emoji improves visual appeal",
+        severity: "info",
+      });
     }
 
     if ((formData.tags?.length || 0) === 0) {
-      errors.push({ field: "tags", message: "Tags help with organization and discovery", severity: "info" });
+      errors.push({
+        field: "tags",
+        message: "Tags help with organization and discovery",
+        severity: "info",
+      });
     }
 
     return errors;
@@ -410,13 +491,13 @@ const WordEditor: React.FC<WordEditorProps> = ({
   };
 
   const handleSave = async () => {
-    const errors = validateForm().filter(e => e.severity === "error");
+    const errors = validateForm().filter((e) => e.severity === "error");
     setValidationErrors(validateForm());
 
     if (errors.length === 0) {
       try {
         setIsSaving(true);
-        
+
         const wordToSave: AdminWord = {
           id: word?.id || `word_${Date.now()}`,
           word: formData.word!.trim(),
@@ -450,13 +531,13 @@ const WordEditor: React.FC<WordEditorProps> = ({
               timestamp: new Date(),
               author: "admin", // This should come from auth context
               changes: mode === "edit" ? getChanges() : undefined,
-            }
-          ]
+            },
+          ],
         };
 
         // Simulate API call
-        await new Promise(resolve => setTimeout(resolve, 1000));
-        
+        await new Promise((resolve) => setTimeout(resolve, 1000));
+
         onSave(wordToSave);
         setHasUnsavedChanges(false);
         onOpenChange(false);
@@ -471,63 +552,71 @@ const WordEditor: React.FC<WordEditorProps> = ({
   const getChanges = (): Record<string, any> => {
     const changes: Record<string, any> = {};
     const original = originalFormData.current;
-    
-    Object.keys(formData).forEach(key => {
+
+    Object.keys(formData).forEach((key) => {
       const formKey = key as keyof typeof formData;
-      if (JSON.stringify(formData[formKey]) !== JSON.stringify(original[formKey])) {
+      if (
+        JSON.stringify(formData[formKey]) !== JSON.stringify(original[formKey])
+      ) {
         changes[key] = {
           from: original[formKey],
-          to: formData[formKey]
+          to: formData[formKey],
         };
       }
     });
-    
+
     return changes;
   };
 
-  const addTag = useCallback((
-    type: "tags" | "synonyms" | "antonyms" | "relatedWords",
-    value: string,
-  ) => {
-    if (!value.trim()) return;
+  const addTag = useCallback(
+    (
+      type: "tags" | "synonyms" | "antonyms" | "relatedWords",
+      value: string,
+    ) => {
+      if (!value.trim()) return;
 
-    const currentArray = formData[type] || [];
-    const trimmedValue = value.trim().toLowerCase();
-    
-    if (!currentArray.some(item => item.toLowerCase() === trimmedValue)) {
+      const currentArray = formData[type] || [];
+      const trimmedValue = value.trim().toLowerCase();
+
+      if (!currentArray.some((item) => item.toLowerCase() === trimmedValue)) {
+        setFormData((prev) => ({
+          ...prev,
+          [type]: [...currentArray, value.trim()],
+        }));
+      }
+
+      // Clear the input
+      switch (type) {
+        case "tags":
+          setNewTag("");
+          break;
+        case "synonyms":
+          setNewSynonym("");
+          break;
+        case "antonyms":
+          setNewAntonym("");
+          break;
+        case "relatedWords":
+          setNewRelatedWord("");
+          break;
+      }
+    },
+    [formData],
+  );
+
+  const removeTag = useCallback(
+    (
+      type: "tags" | "synonyms" | "antonyms" | "relatedWords",
+      value: string,
+    ) => {
+      const currentArray = formData[type] || [];
       setFormData((prev) => ({
         ...prev,
-        [type]: [...currentArray, value.trim()],
+        [type]: currentArray.filter((item) => item !== value),
       }));
-    }
-
-    // Clear the input
-    switch (type) {
-      case "tags":
-        setNewTag("");
-        break;
-      case "synonyms":
-        setNewSynonym("");
-        break;
-      case "antonyms":
-        setNewAntonym("");
-        break;
-      case "relatedWords":
-        setNewRelatedWord("");
-        break;
-    }
-  }, [formData]);
-
-  const removeTag = useCallback((
-    type: "tags" | "synonyms" | "antonyms" | "relatedWords",
-    value: string,
-  ) => {
-    const currentArray = formData[type] || [];
-    setFormData((prev) => ({
-      ...prev,
-      [type]: currentArray.filter((item) => item !== value),
-    }));
-  }, [formData]);
+    },
+    [formData],
+  );
 
   const duplicateWord = () => {
     const duplicatedData = {
@@ -540,7 +629,11 @@ const WordEditor: React.FC<WordEditorProps> = ({
   };
 
   const resetForm = () => {
-    if (confirm("Are you sure you want to reset all changes? This cannot be undone.")) {
+    if (
+      confirm(
+        "Are you sure you want to reset all changes? This cannot be undone.",
+      )
+    ) {
       setFormData(originalFormData.current);
       setHasUnsavedChanges(false);
     }
@@ -550,7 +643,8 @@ const WordEditor: React.FC<WordEditorProps> = ({
     const templates = {
       noun: {
         word: "example",
-        definition: "A thing representative of its kind or illustrating a general rule",
+        definition:
+          "A thing representative of its kind or illustrating a general rule",
         example: "This painting is a perfect example of the artist's style",
         category: "General",
         difficulty: "medium" as const,
@@ -571,12 +665,12 @@ const WordEditor: React.FC<WordEditorProps> = ({
         category: "Descriptive",
         difficulty: "hard" as const,
         tags: ["adjective", "descriptive"],
-      }
+      },
     };
 
     const templateData = templates[template as keyof typeof templates];
     if (templateData) {
-      setFormData(prev => ({ ...prev, ...templateData }));
+      setFormData((prev) => ({ ...prev, ...templateData }));
     }
   };
 
@@ -585,7 +679,9 @@ const WordEditor: React.FC<WordEditorProps> = ({
     const suggestions = {
       pronunciation: formData.word ? `/${formData.word.toUpperCase()}/` : "",
       funFact: "Did you know that this word has an interesting etymology?",
-      tags: formData.category ? [formData.category.toLowerCase(), formData.difficulty] : [],
+      tags: formData.category
+        ? [formData.category.toLowerCase(), formData.difficulty]
+        : [],
       emoji: "📚", // This would be generated based on the word/category
     };
 
@@ -593,18 +689,38 @@ const WordEditor: React.FC<WordEditorProps> = ({
   };
 
   const errorsByTab = {
-    basic: validationErrors.filter(e => ['word', 'pronunciation', 'definition', 'example', 'category', 'difficulty', 'funFact', 'emoji'].includes(e.field)),
-    media: validationErrors.filter(e => ['imageUrl', 'audioUrl'].includes(e.field)),
-    relationships: validationErrors.filter(e => ['tags', 'synonyms', 'antonyms', 'relatedWords'].includes(e.field)),
+    basic: validationErrors.filter((e) =>
+      [
+        "word",
+        "pronunciation",
+        "definition",
+        "example",
+        "category",
+        "difficulty",
+        "funFact",
+        "emoji",
+      ].includes(e.field),
+    ),
+    media: validationErrors.filter((e) =>
+      ["imageUrl", "audioUrl"].includes(e.field),
+    ),
+    relationships: validationErrors.filter((e) =>
+      ["tags", "synonyms", "antonyms", "relatedWords"].includes(e.field),
+    ),
     analytics: [],
   };
 
   const getTabIcon = (tabName: string) => {
-    const hasErrors = errorsByTab[tabName as keyof typeof errorsByTab].some(e => e.severity === "error");
-    const hasWarnings = errorsByTab[tabName as keyof typeof errorsByTab].some(e => e.severity === "warning");
-    
+    const hasErrors = errorsByTab[tabName as keyof typeof errorsByTab].some(
+      (e) => e.severity === "error",
+    );
+    const hasWarnings = errorsByTab[tabName as keyof typeof errorsByTab].some(
+      (e) => e.severity === "warning",
+    );
+
     if (hasErrors) return <XCircle className="w-4 h-4 text-red-500" />;
-    if (hasWarnings) return <AlertTriangle className="w-4 h-4 text-yellow-500" />;
+    if (hasWarnings)
+      return <AlertTriangle className="w-4 h-4 text-yellow-500" />;
     return <CheckCircle className="w-4 h-4 text-green-500" />;
   };
 
@@ -635,7 +751,9 @@ const WordEditor: React.FC<WordEditorProps> = ({
               </Button>
             </PopoverTrigger>
             <PopoverContent className="w-64 p-2">
-              <div className="text-xs font-medium mb-2">Suggested {label.toLowerCase()}:</div>
+              <div className="text-xs font-medium mb-2">
+                Suggested {label.toLowerCase()}:
+              </div>
               <div className="flex flex-wrap gap-1">
                 {suggestions.map((suggestion, index) => (
                   <Badge
@@ -652,7 +770,7 @@ const WordEditor: React.FC<WordEditorProps> = ({
           </Popover>
         )}
       </div>
-      
+
       <div className="flex gap-2">
         <div className="flex-1 relative">
           <Input
@@ -689,7 +807,7 @@ const WordEditor: React.FC<WordEditorProps> = ({
           <Plus className="w-4 h-4" />
         </Button>
       </div>
-      
+
       <div className="flex flex-wrap gap-2 min-h-[2rem]">
         {(formData[type] || []).map((item, index) => (
           <Badge
@@ -726,26 +844,40 @@ const WordEditor: React.FC<WordEditorProps> = ({
             {formData.word || "Sample Word"}
           </h3>
           {formData.pronunciation && (
-            <p className="text-slate-600 text-sm mb-2">/{formData.pronunciation}/</p>
+            <p className="text-slate-600 text-sm mb-2">
+              /{formData.pronunciation}/
+            </p>
           )}
-          <Badge className={
-            formData.difficulty === "easy" ? "bg-green-100 text-green-800" :
-            formData.difficulty === "medium" ? "bg-yellow-100 text-yellow-800" :
-            "bg-red-100 text-red-800"
-          }>
-            {formData.difficulty === "easy" ? "🌟" : formData.difficulty === "medium" ? "⭐" : "🔥"}
+          <Badge
+            className={
+              formData.difficulty === "easy"
+                ? "bg-green-100 text-green-800"
+                : formData.difficulty === "medium"
+                  ? "bg-yellow-100 text-yellow-800"
+                  : "bg-red-100 text-red-800"
+            }
+          >
+            {formData.difficulty === "easy"
+              ? "🌟"
+              : formData.difficulty === "medium"
+                ? "⭐"
+                : "🔥"}
             {formData.difficulty}
           </Badge>
         </div>
-        
+
         <div className="space-y-3">
           <div>
             <h4 className="font-medium text-slate-700">Definition:</h4>
-            <p className="text-slate-600">{formData.definition || "Add a clear definition..."}</p>
+            <p className="text-slate-600">
+              {formData.definition || "Add a clear definition..."}
+            </p>
           </div>
           <div>
             <h4 className="font-medium text-slate-700">Example:</h4>
-            <p className="text-slate-600 italic">"{formData.example || "Add an example sentence..."}"</p>
+            <p className="text-slate-600 italic">
+              "{formData.example || "Add an example sentence..."}"
+            </p>
           </div>
           {formData.funFact && (
             <div>
@@ -761,11 +893,13 @@ const WordEditor: React.FC<WordEditorProps> = ({
   return (
     <TooltipProvider>
       <Dialog open={open} onOpenChange={onOpenChange}>
-        <DialogContent className={`${
-          isFullscreen 
-            ? "max-w-[100vw] max-h-[100vh] w-full h-full m-0 rounded-none" 
-            : "max-w-6xl max-h-[95vh]"
-        } overflow-hidden flex flex-col`}>
+        <DialogContent
+          className={`${
+            isFullscreen
+              ? "max-w-[100vw] max-h-[100vh] w-full h-full m-0 rounded-none"
+              : "max-w-6xl max-h-[95vh]"
+          } overflow-hidden flex flex-col`}
+        >
           <DialogHeader className="pb-4 border-b border-slate-200">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-3">
@@ -776,31 +910,39 @@ const WordEditor: React.FC<WordEditorProps> = ({
                   </DialogTitle>
                 </div>
                 {hasUnsavedChanges && (
-                  <Badge variant="outline" className="text-orange-600 border-orange-300">
+                  <Badge
+                    variant="outline"
+                    className="text-orange-600 border-orange-300"
+                  >
                     <Clock className="w-3 h-3 mr-1" />
                     Unsaved Changes
                   </Badge>
                 )}
                 {isSaving && (
-                  <Badge variant="outline" className="text-blue-600 border-blue-300">
+                  <Badge
+                    variant="outline"
+                    className="text-blue-600 border-blue-300"
+                  >
                     <RefreshCw className="w-3 h-3 mr-1 animate-spin" />
                     Saving...
                   </Badge>
                 )}
               </div>
-              
+
               <div className="flex items-center gap-2">
                 {/* Completion Score */}
                 <Tooltip>
                   <TooltipTrigger asChild>
                     <div className="flex items-center gap-2">
                       <div className="w-16 h-2 bg-slate-200 rounded-full overflow-hidden">
-                        <div 
+                        <div
                           className="h-full bg-gradient-to-r from-red-400 via-yellow-400 to-green-400 transition-all duration-500"
                           style={{ width: `${completionScore}%` }}
                         />
                       </div>
-                      <span className="text-sm text-slate-600">{completionScore}%</span>
+                      <span className="text-sm text-slate-600">
+                        {completionScore}%
+                      </span>
                     </div>
                   </TooltipTrigger>
                   <TooltipContent>
@@ -832,7 +974,11 @@ const WordEditor: React.FC<WordEditorProps> = ({
                         onClick={() => setIsFullscreen(!isFullscreen)}
                         className="h-8 w-8 p-0"
                       >
-                        {isFullscreen ? <Minimize2 className="w-4 h-4" /> : <Maximize2 className="w-4 h-4" />}
+                        {isFullscreen ? (
+                          <Minimize2 className="w-4 h-4" />
+                        ) : (
+                          <Maximize2 className="w-4 h-4" />
+                        )}
                       </Button>
                     </TooltipTrigger>
                     <TooltipContent>
@@ -880,7 +1026,7 @@ const WordEditor: React.FC<WordEditorProps> = ({
                   ? "Edit the details of this word entry"
                   : "Add a new word to the vocabulary database"}
               </span>
-              
+
               {lastSaved && (
                 <span className="text-xs text-slate-500">
                   Last saved: {lastSaved.toLocaleTimeString()}
@@ -897,16 +1043,20 @@ const WordEditor: React.FC<WordEditorProps> = ({
                     onCheckedChange={setAutoSaveEnabled}
                     id="autosave"
                   />
-                  <Label htmlFor="autosave" className="text-sm">Auto-save</Label>
+                  <Label htmlFor="autosave" className="text-sm">
+                    Auto-save
+                  </Label>
                 </div>
-                
+
                 <div className="flex items-center gap-2">
                   <Switch
                     checked={showAdvancedOptions}
                     onCheckedChange={setShowAdvancedOptions}
                     id="advanced"
                   />
-                  <Label htmlFor="advanced" className="text-sm">Advanced</Label>
+                  <Label htmlFor="advanced" className="text-sm">
+                    Advanced
+                  </Label>
                 </div>
               </div>
 
@@ -921,7 +1071,7 @@ const WordEditor: React.FC<WordEditorProps> = ({
                     <FileText className="w-3 h-3 mr-1" />
                     Templates
                   </Button>
-                  
+
                   <Button
                     variant="outline"
                     size="sm"
@@ -938,39 +1088,71 @@ const WordEditor: React.FC<WordEditorProps> = ({
 
           {/* Validation Errors Summary */}
           {validationErrors.length > 0 && (
-            <Alert className={`mb-4 ${
-              validationErrors.some(e => e.severity === "error") 
-                ? "border-red-200 bg-red-50" 
-                : validationErrors.some(e => e.severity === "warning")
-                ? "border-yellow-200 bg-yellow-50"
-                : "border-blue-200 bg-blue-50"
-            }`}>
+            <Alert
+              className={`mb-4 ${
+                validationErrors.some((e) => e.severity === "error")
+                  ? "border-red-200 bg-red-50"
+                  : validationErrors.some((e) => e.severity === "warning")
+                    ? "border-yellow-200 bg-yellow-50"
+                    : "border-blue-200 bg-blue-50"
+              }`}
+            >
               <AlertTriangle className="w-4 h-4" />
               <AlertDescription>
                 <div className="flex flex-wrap gap-2 mb-2">
-                  {validationErrors.filter(e => e.severity === "error").length > 0 && (
+                  {validationErrors.filter((e) => e.severity === "error")
+                    .length > 0 && (
                     <Badge variant="destructive" className="text-xs">
-                      {validationErrors.filter(e => e.severity === "error").length} Errors
+                      {
+                        validationErrors.filter((e) => e.severity === "error")
+                          .length
+                      }{" "}
+                      Errors
                     </Badge>
                   )}
-                  {validationErrors.filter(e => e.severity === "warning").length > 0 && (
-                    <Badge variant="outline" className="text-xs border-yellow-400 text-yellow-700">
-                      {validationErrors.filter(e => e.severity === "warning").length} Warnings
+                  {validationErrors.filter((e) => e.severity === "warning")
+                    .length > 0 && (
+                    <Badge
+                      variant="outline"
+                      className="text-xs border-yellow-400 text-yellow-700"
+                    >
+                      {
+                        validationErrors.filter((e) => e.severity === "warning")
+                          .length
+                      }{" "}
+                      Warnings
                     </Badge>
                   )}
-                  {validationErrors.filter(e => e.severity === "info").length > 0 && (
-                    <Badge variant="outline" className="text-xs border-blue-400 text-blue-700">
-                      {validationErrors.filter(e => e.severity === "info").length} Suggestions
+                  {validationErrors.filter((e) => e.severity === "info")
+                    .length > 0 && (
+                    <Badge
+                      variant="outline"
+                      className="text-xs border-blue-400 text-blue-700"
+                    >
+                      {
+                        validationErrors.filter((e) => e.severity === "info")
+                          .length
+                      }{" "}
+                      Suggestions
                     </Badge>
                   )}
                 </div>
-                
+
                 <div className="space-y-1 max-h-20 overflow-y-auto">
                   {validationErrors.slice(0, 3).map((error, index) => (
-                    <div key={index} className="text-sm flex items-center gap-2">
-                      {error.severity === "error" && <XCircle className="w-3 h-3 text-red-500" />}
-                      {error.severity === "warning" && <AlertTriangle className="w-3 h-3 text-yellow-500" />}
-                      {error.severity === "info" && <Info className="w-3 h-3 text-blue-500" />}
+                    <div
+                      key={index}
+                      className="text-sm flex items-center gap-2"
+                    >
+                      {error.severity === "error" && (
+                        <XCircle className="w-3 h-3 text-red-500" />
+                      )}
+                      {error.severity === "warning" && (
+                        <AlertTriangle className="w-3 h-3 text-yellow-500" />
+                      )}
+                      {error.severity === "info" && (
+                        <Info className="w-3 h-3 text-blue-500" />
+                      )}
                       <span className="capitalize">{error.field}:</span>
                       <span>{error.message}</span>
                     </div>
@@ -990,7 +1172,9 @@ const WordEditor: React.FC<WordEditorProps> = ({
             <Card className="mb-4 bg-gradient-to-r from-purple-50 to-pink-50 border-purple-200">
               <CardContent className="p-4">
                 <div className="flex items-center justify-between mb-3">
-                  <h4 className="font-medium text-purple-800">Word Templates</h4>
+                  <h4 className="font-medium text-purple-800">
+                    Word Templates
+                  </h4>
                   <Button
                     variant="ghost"
                     size="sm"
@@ -1039,27 +1223,43 @@ const WordEditor: React.FC<WordEditorProps> = ({
                 {renderPreview()}
               </div>
             ) : (
-              <Tabs value={activeTab} onValueChange={setActiveTab} className="h-full flex flex-col">
+              <Tabs
+                value={activeTab}
+                onValueChange={setActiveTab}
+                className="h-full flex flex-col"
+              >
                 <TabsList className="grid w-full grid-cols-4 mb-4">
-                  <TabsTrigger value="basic" className="flex items-center gap-2">
+                  <TabsTrigger
+                    value="basic"
+                    className="flex items-center gap-2"
+                  >
                     <BookOpen className="w-4 h-4" />
                     <span className="hidden md:inline">Basic Info</span>
                     <span className="md:hidden">Basic</span>
                     {getTabIcon("basic")}
                   </TabsTrigger>
-                  <TabsTrigger value="media" className="flex items-center gap-2">
+                  <TabsTrigger
+                    value="media"
+                    className="flex items-center gap-2"
+                  >
                     <Camera className="w-4 h-4" />
                     <span className="hidden md:inline">Media</span>
                     <span className="md:hidden">Media</span>
                     {getTabIcon("media")}
                   </TabsTrigger>
-                  <TabsTrigger value="relationships" className="flex items-center gap-2">
+                  <TabsTrigger
+                    value="relationships"
+                    className="flex items-center gap-2"
+                  >
                     <Layers className="w-4 h-4" />
                     <span className="hidden md:inline">Relations</span>
                     <span className="md:hidden">Tags</span>
                     {getTabIcon("relationships")}
                   </TabsTrigger>
-                  <TabsTrigger value="analytics" className="flex items-center gap-2">
+                  <TabsTrigger
+                    value="analytics"
+                    className="flex items-center gap-2"
+                  >
                     <BarChart3 className="w-4 h-4" />
                     <span className="hidden md:inline">Analytics</span>
                     <span className="md:hidden">Stats</span>
@@ -1071,7 +1271,10 @@ const WordEditor: React.FC<WordEditorProps> = ({
                   <TabsContent value="basic" className="space-y-6 mt-0">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       <div className="space-y-2">
-                        <Label htmlFor="word" className="flex items-center gap-2">
+                        <Label
+                          htmlFor="word"
+                          className="flex items-center gap-2"
+                        >
                           <Type className="w-4 h-4" />
                           Word *
                         </Label>
@@ -1079,16 +1282,28 @@ const WordEditor: React.FC<WordEditorProps> = ({
                           id="word"
                           value={formData.word || ""}
                           onChange={(e) =>
-                            setFormData((prev) => ({ ...prev, word: e.target.value }))
+                            setFormData((prev) => ({
+                              ...prev,
+                              word: e.target.value,
+                            }))
                           }
                           placeholder="Enter the word"
-                          className={validationErrors.some(e => e.field === "word" && e.severity === "error") 
-                            ? "border-red-300 focus:border-red-500" : ""}
+                          className={
+                            validationErrors.some(
+                              (e) =>
+                                e.field === "word" && e.severity === "error",
+                            )
+                              ? "border-red-300 focus:border-red-500"
+                              : ""
+                          }
                         />
                       </div>
-                      
+
                       <div className="space-y-2">
-                        <Label htmlFor="emoji" className="flex items-center gap-2">
+                        <Label
+                          htmlFor="emoji"
+                          className="flex items-center gap-2"
+                        >
                           <Sparkles className="w-4 h-4" />
                           Emoji
                         </Label>
@@ -1096,7 +1311,10 @@ const WordEditor: React.FC<WordEditorProps> = ({
                           id="emoji"
                           value={formData.emoji || ""}
                           onChange={(e) =>
-                            setFormData((prev) => ({ ...prev, emoji: e.target.value }))
+                            setFormData((prev) => ({
+                              ...prev,
+                              emoji: e.target.value,
+                            }))
                           }
                           placeholder="📚"
                           maxLength={2}
@@ -1105,7 +1323,10 @@ const WordEditor: React.FC<WordEditorProps> = ({
                     </div>
 
                     <div className="space-y-2">
-                      <Label htmlFor="pronunciation" className="flex items-center gap-2">
+                      <Label
+                        htmlFor="pronunciation"
+                        className="flex items-center gap-2"
+                      >
                         <Volume2 className="w-4 h-4" />
                         Pronunciation
                       </Label>
@@ -1123,7 +1344,10 @@ const WordEditor: React.FC<WordEditorProps> = ({
                     </div>
 
                     <div className="space-y-2">
-                      <Label htmlFor="definition" className="flex items-center gap-2">
+                      <Label
+                        htmlFor="definition"
+                        className="flex items-center gap-2"
+                      >
                         <FileText className="w-4 h-4" />
                         Definition *
                       </Label>
@@ -1138,8 +1362,15 @@ const WordEditor: React.FC<WordEditorProps> = ({
                         }
                         placeholder="Clear and simple definition..."
                         rows={3}
-                        className={validationErrors.some(e => e.field === "definition" && e.severity === "error") 
-                          ? "border-red-300 focus:border-red-500" : ""}
+                        className={
+                          validationErrors.some(
+                            (e) =>
+                              e.field === "definition" &&
+                              e.severity === "error",
+                          )
+                            ? "border-red-300 focus:border-red-500"
+                            : ""
+                        }
                       />
                       <div className="text-xs text-slate-500 text-right">
                         {formData.definition?.length || 0}/500 characters
@@ -1147,7 +1378,10 @@ const WordEditor: React.FC<WordEditorProps> = ({
                     </div>
 
                     <div className="space-y-2">
-                      <Label htmlFor="example" className="flex items-center gap-2">
+                      <Label
+                        htmlFor="example"
+                        className="flex items-center gap-2"
+                      >
                         <PenTool className="w-4 h-4" />
                         Example Sentence *
                       </Label>
@@ -1155,29 +1389,53 @@ const WordEditor: React.FC<WordEditorProps> = ({
                         id="example"
                         value={formData.example || ""}
                         onChange={(e) =>
-                          setFormData((prev) => ({ ...prev, example: e.target.value }))
+                          setFormData((prev) => ({
+                            ...prev,
+                            example: e.target.value,
+                          }))
                         }
                         placeholder="Example sentence using the word..."
                         rows={2}
-                        className={validationErrors.some(e => e.field === "example" && e.severity === "error") 
-                          ? "border-red-300 focus:border-red-500" : ""}
+                        className={
+                          validationErrors.some(
+                            (e) =>
+                              e.field === "example" && e.severity === "error",
+                          )
+                            ? "border-red-300 focus:border-red-500"
+                            : ""
+                        }
                       />
                     </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       <div className="space-y-2">
-                        <Label htmlFor="category" className="flex items-center gap-2">
+                        <Label
+                          htmlFor="category"
+                          className="flex items-center gap-2"
+                        >
                           <Layers className="w-4 h-4" />
                           Category *
                         </Label>
                         <Select
                           value={formData.category || ""}
                           onValueChange={(value) =>
-                            setFormData((prev) => ({ ...prev, category: value }))
+                            setFormData((prev) => ({
+                              ...prev,
+                              category: value,
+                            }))
                           }
                         >
-                          <SelectTrigger className={validationErrors.some(e => e.field === "category" && e.severity === "error") 
-                            ? "border-red-300 focus:border-red-500" : ""}>
+                          <SelectTrigger
+                            className={
+                              validationErrors.some(
+                                (e) =>
+                                  e.field === "category" &&
+                                  e.severity === "error",
+                              )
+                                ? "border-red-300 focus:border-red-500"
+                                : ""
+                            }
+                          >
                             <SelectValue placeholder="Select category" />
                           </SelectTrigger>
                           <SelectContent>
@@ -1189,16 +1447,22 @@ const WordEditor: React.FC<WordEditorProps> = ({
                           </SelectContent>
                         </Select>
                       </div>
-                      
+
                       <div className="space-y-2">
-                        <Label htmlFor="difficulty" className="flex items-center gap-2">
+                        <Label
+                          htmlFor="difficulty"
+                          className="flex items-center gap-2"
+                        >
                           <Target className="w-4 h-4" />
                           Difficulty Level *
                         </Label>
                         <Select
                           value={formData.difficulty || "easy"}
                           onValueChange={(value: any) =>
-                            setFormData((prev) => ({ ...prev, difficulty: value }))
+                            setFormData((prev) => ({
+                              ...prev,
+                              difficulty: value,
+                            }))
                           }
                         >
                           <SelectTrigger>
@@ -1214,7 +1478,10 @@ const WordEditor: React.FC<WordEditorProps> = ({
                     </div>
 
                     <div className="space-y-2">
-                      <Label htmlFor="funFact" className="flex items-center gap-2">
+                      <Label
+                        htmlFor="funFact"
+                        className="flex items-center gap-2"
+                      >
                         <Lightbulb className="w-4 h-4" />
                         Fun Fact (Optional)
                       </Label>
@@ -1222,7 +1489,10 @@ const WordEditor: React.FC<WordEditorProps> = ({
                         id="funFact"
                         value={formData.funFact || ""}
                         onChange={(e) =>
-                          setFormData((prev) => ({ ...prev, funFact: e.target.value }))
+                          setFormData((prev) => ({
+                            ...prev,
+                            funFact: e.target.value,
+                          }))
                         }
                         placeholder="Interesting fact about this word..."
                         rows={2}
@@ -1235,7 +1505,7 @@ const WordEditor: React.FC<WordEditorProps> = ({
                           <Settings className="w-4 h-4" />
                           Advanced Options
                         </h4>
-                        
+
                         <div className="flex items-center justify-between">
                           <div className="space-y-1">
                             <Label className="text-sm">Word Status</Label>
@@ -1246,7 +1516,10 @@ const WordEditor: React.FC<WordEditorProps> = ({
                           <Switch
                             checked={formData.isActive ?? true}
                             onCheckedChange={(checked) =>
-                              setFormData((prev) => ({ ...prev, isActive: checked }))
+                              setFormData((prev) => ({
+                                ...prev,
+                                isActive: checked,
+                              }))
                             }
                           />
                         </div>
@@ -1257,7 +1530,10 @@ const WordEditor: React.FC<WordEditorProps> = ({
                   <TabsContent value="media" className="space-y-6 mt-0">
                     <div className="space-y-4">
                       <div className="space-y-2">
-                        <Label htmlFor="imageUrl" className="flex items-center gap-2">
+                        <Label
+                          htmlFor="imageUrl"
+                          className="flex items-center gap-2"
+                        >
                           <ImageIcon className="w-4 h-4" />
                           Image URL
                         </Label>
@@ -1266,14 +1542,28 @@ const WordEditor: React.FC<WordEditorProps> = ({
                             id="imageUrl"
                             value={formData.imageUrl || ""}
                             onChange={(e) =>
-                              setFormData((prev) => ({ ...prev, imageUrl: e.target.value }))
+                              setFormData((prev) => ({
+                                ...prev,
+                                imageUrl: e.target.value,
+                              }))
                             }
                             placeholder="https://example.com/image.jpg"
-                            className={validationErrors.some(e => e.field === "imageUrl" && e.severity === "error") 
-                              ? "border-red-300 focus:border-red-500" : ""}
+                            className={
+                              validationErrors.some(
+                                (e) =>
+                                  e.field === "imageUrl" &&
+                                  e.severity === "error",
+                              )
+                                ? "border-red-300 focus:border-red-500"
+                                : ""
+                            }
                           />
                           {showAdvancedOptions && (
-                            <Button variant="outline" size="sm" className="px-3">
+                            <Button
+                              variant="outline"
+                              size="sm"
+                              className="px-3"
+                            >
                               <Upload className="w-4 h-4" />
                             </Button>
                           )}
@@ -1285,7 +1575,8 @@ const WordEditor: React.FC<WordEditorProps> = ({
                               alt="Preview"
                               className="w-32 h-32 object-cover rounded-lg border shadow-sm"
                               onError={(e) => {
-                                (e.target as HTMLImageElement).style.display = "none";
+                                (e.target as HTMLImageElement).style.display =
+                                  "none";
                               }}
                             />
                           </div>
@@ -1293,7 +1584,10 @@ const WordEditor: React.FC<WordEditorProps> = ({
                       </div>
 
                       <div className="space-y-2">
-                        <Label htmlFor="audioUrl" className="flex items-center gap-2">
+                        <Label
+                          htmlFor="audioUrl"
+                          className="flex items-center gap-2"
+                        >
                           <Volume2 className="w-4 h-4" />
                           Audio URL
                         </Label>
@@ -1302,22 +1596,38 @@ const WordEditor: React.FC<WordEditorProps> = ({
                             id="audioUrl"
                             value={formData.audioUrl || ""}
                             onChange={(e) =>
-                              setFormData((prev) => ({ ...prev, audioUrl: e.target.value }))
+                              setFormData((prev) => ({
+                                ...prev,
+                                audioUrl: e.target.value,
+                              }))
                             }
                             placeholder="https://example.com/audio.mp3"
-                            className={validationErrors.some(e => e.field === "audioUrl" && e.severity === "error") 
-                              ? "border-red-300 focus:border-red-500" : ""}
+                            className={
+                              validationErrors.some(
+                                (e) =>
+                                  e.field === "audioUrl" &&
+                                  e.severity === "error",
+                              )
+                                ? "border-red-300 focus:border-red-500"
+                                : ""
+                            }
                           />
                           {showAdvancedOptions && (
                             <>
-                              <Button variant="outline" size="sm" className="px-3">
+                              <Button
+                                variant="outline"
+                                size="sm"
+                                className="px-3"
+                              >
                                 <Upload className="w-4 h-4" />
                               </Button>
                               <Button
                                 variant="outline"
                                 size="sm"
                                 className="px-3"
-                                onClick={() => setAudioRecording(!audioRecording)}
+                                onClick={() =>
+                                  setAudioRecording(!audioRecording)
+                                }
                               >
                                 <Mic className="w-4 h-4" />
                               </Button>
@@ -1327,12 +1637,15 @@ const WordEditor: React.FC<WordEditorProps> = ({
                         {formData.audioUrl && (
                           <div className="mt-3">
                             <audio controls className="w-full max-w-md">
-                              <source src={formData.audioUrl} type="audio/mpeg" />
+                              <source
+                                src={formData.audioUrl}
+                                type="audio/mpeg"
+                              />
                               Your browser does not support the audio element.
                             </audio>
                           </div>
                         )}
-                        
+
                         {audioRecording && (
                           <Alert className="bg-red-50 border-red-200">
                             <Mic className="w-4 h-4" />
@@ -1359,7 +1672,10 @@ const WordEditor: React.FC<WordEditorProps> = ({
                             <span>Uploading media...</span>
                             <span>{mediaUploadProgress}%</span>
                           </div>
-                          <Progress value={mediaUploadProgress} className="h-2" />
+                          <Progress
+                            value={mediaUploadProgress}
+                            className="h-2"
+                          />
                         </div>
                       )}
                     </div>
@@ -1369,15 +1685,20 @@ const WordEditor: React.FC<WordEditorProps> = ({
                       <AlertDescription>
                         <div className="space-y-2">
                           <p>
-                            Ensure media URLs are publicly accessible and appropriate for
-                            children. Images should be clear and relevant to the word
-                            meaning.
+                            Ensure media URLs are publicly accessible and
+                            appropriate for children. Images should be clear and
+                            relevant to the word meaning.
                           </p>
                           {showAdvancedOptions && (
                             <div className="text-xs text-slate-500">
-                              <p>• Supported image formats: JPG, PNG, WebP, SVG</p>
+                              <p>
+                                • Supported image formats: JPG, PNG, WebP, SVG
+                              </p>
                               <p>• Supported audio formats: MP3, OGG, WAV</p>
-                              <p>• Maximum file size: 10MB for images, 5MB for audio</p>
+                              <p>
+                                • Maximum file size: 10MB for images, 5MB for
+                                audio
+                              </p>
                             </div>
                           )}
                         </div>
@@ -1393,11 +1714,13 @@ const WordEditor: React.FC<WordEditorProps> = ({
                       setNewTag,
                       "Add descriptive tags...",
                       <Tags className="w-4 h-4" />,
-                      suggestionMode ? ["educational", "vocabulary", "learning"] : undefined,
+                      suggestionMode
+                        ? ["educational", "vocabulary", "learning"]
+                        : undefined,
                     )}
-                    
+
                     <Separator />
-                    
+
                     {renderTagInput(
                       "synonyms",
                       "Synonyms",
@@ -1405,11 +1728,13 @@ const WordEditor: React.FC<WordEditorProps> = ({
                       setNewSynonym,
                       "Add words with similar meaning...",
                       <ArrowRight className="w-4 h-4" />,
-                      suggestionMode && formData.word ? [formData.word + "-like", "similar"] : undefined,
+                      suggestionMode && formData.word
+                        ? [formData.word + "-like", "similar"]
+                        : undefined,
                     )}
-                    
+
                     <Separator />
-                    
+
                     {renderTagInput(
                       "antonyms",
                       "Antonyms",
@@ -1418,9 +1743,9 @@ const WordEditor: React.FC<WordEditorProps> = ({
                       "Add words with opposite meaning...",
                       <ArrowLeft className="w-4 h-4" />,
                     )}
-                    
+
                     <Separator />
-                    
+
                     {renderTagInput(
                       "relatedWords",
                       "Related Words",
@@ -1435,12 +1760,25 @@ const WordEditor: React.FC<WordEditorProps> = ({
                         <Brain className="w-4 h-4" />
                         <AlertDescription>
                           <div className="space-y-2">
-                            <p className="font-medium">AI Suggestions for "{formData.word}":</p>
+                            <p className="font-medium">
+                              AI Suggestions for "{formData.word}":
+                            </p>
                             <div className="space-y-1 text-sm">
-                              <p>• Consider adding tags: category-specific, difficulty-based</p>
-                              <p>• Synonyms might include: similar words in meaning</p>
-                              <p>• Look for antonyms: words with opposite meaning</p>
-                              <p>• Related words: words in the same semantic field</p>
+                              <p>
+                                • Consider adding tags: category-specific,
+                                difficulty-based
+                              </p>
+                              <p>
+                                • Synonyms might include: similar words in
+                                meaning
+                              </p>
+                              <p>
+                                • Look for antonyms: words with opposite meaning
+                              </p>
+                              <p>
+                                • Related words: words in the same semantic
+                                field
+                              </p>
                             </div>
                           </div>
                         </AlertDescription>
@@ -1458,7 +1796,9 @@ const WordEditor: React.FC<WordEditorProps> = ({
                               <div className="text-2xl font-bold text-blue-600">
                                 {word.usageCount.toLocaleString()}
                               </div>
-                              <p className="text-sm text-slate-600">Times Used</p>
+                              <p className="text-sm text-slate-600">
+                                Times Used
+                              </p>
                             </CardContent>
                           </Card>
                           <Card>
@@ -1467,18 +1807,25 @@ const WordEditor: React.FC<WordEditorProps> = ({
                               <div className="text-2xl font-bold text-green-600">
                                 {word.accuracy}%
                               </div>
-                              <p className="text-sm text-slate-600">Accuracy Rate</p>
+                              <p className="text-sm text-slate-600">
+                                Accuracy Rate
+                              </p>
                             </CardContent>
                           </Card>
                           <Card>
                             <CardContent className="p-4 text-center">
                               <Clock className="w-8 h-8 text-purple-500 mx-auto mb-2" />
                               <div className="text-2xl font-bold text-purple-600">
-                                {word.lastUsed 
-                                  ? Math.floor((Date.now() - word.lastUsed.getTime()) / (1000 * 60 * 60 * 24))
+                                {word.lastUsed
+                                  ? Math.floor(
+                                      (Date.now() - word.lastUsed.getTime()) /
+                                        (1000 * 60 * 60 * 24),
+                                    )
                                   : 0}
                               </div>
-                              <p className="text-sm text-slate-600">Days Since Last Used</p>
+                              <p className="text-sm text-slate-600">
+                                Days Since Last Used
+                              </p>
                             </CardContent>
                           </Card>
                         </div>
@@ -1495,17 +1842,23 @@ const WordEditor: React.FC<WordEditorProps> = ({
                               <CardContent className="space-y-3">
                                 <div className="flex justify-between items-center">
                                   <span className="text-sm">Games</span>
-                                  <span className="text-sm font-medium">65%</span>
+                                  <span className="text-sm font-medium">
+                                    65%
+                                  </span>
                                 </div>
                                 <Progress value={65} className="h-2" />
                                 <div className="flex justify-between items-center">
                                   <span className="text-sm">Quizzes</span>
-                                  <span className="text-sm font-medium">25%</span>
+                                  <span className="text-sm font-medium">
+                                    25%
+                                  </span>
                                 </div>
                                 <Progress value={25} className="h-2" />
                                 <div className="flex justify-between items-center">
                                   <span className="text-sm">Practice</span>
-                                  <span className="text-sm font-medium">10%</span>
+                                  <span className="text-sm font-medium">
+                                    10%
+                                  </span>
                                 </div>
                                 <Progress value={10} className="h-2" />
                               </CardContent>
@@ -1522,13 +1875,19 @@ const WordEditor: React.FC<WordEditorProps> = ({
                                 <div className="space-y-2 text-sm">
                                   <div className="flex justify-between">
                                     <span>This Week</span>
-                                    <Badge variant="outline" className="text-green-600">
+                                    <Badge
+                                      variant="outline"
+                                      className="text-green-600"
+                                    >
                                       +5%
                                     </Badge>
                                   </div>
                                   <div className="flex justify-between">
                                     <span>This Month</span>
-                                    <Badge variant="outline" className="text-green-600">
+                                    <Badge
+                                      variant="outline"
+                                      className="text-green-600"
+                                    >
                                       +12%
                                     </Badge>
                                   </div>
@@ -1557,20 +1916,35 @@ const WordEditor: React.FC<WordEditorProps> = ({
                         {mode === "edit" && word?.modificationHistory ? (
                           <div className="space-y-3 max-h-64 overflow-y-auto">
                             {word.modificationHistory.map((entry, index) => (
-                              <div key={entry.id} className="flex items-start gap-3 p-3 bg-slate-50 rounded-lg">
+                              <div
+                                key={entry.id}
+                                className="flex items-start gap-3 p-3 bg-slate-50 rounded-lg"
+                              >
                                 <div className="flex-shrink-0 mt-1">
-                                  {entry.action === "created" && <Plus className="w-4 h-4 text-blue-500" />}
-                                  {entry.action === "updated" && <Edit className="w-4 h-4 text-green-500" />}
-                                  {entry.action === "approved" && <CheckCircle className="w-4 h-4 text-green-500" />}
-                                  {entry.action === "rejected" && <XCircle className="w-4 h-4 text-red-500" />}
+                                  {entry.action === "created" && (
+                                    <Plus className="w-4 h-4 text-blue-500" />
+                                  )}
+                                  {entry.action === "updated" && (
+                                    <Edit className="w-4 h-4 text-green-500" />
+                                  )}
+                                  {entry.action === "approved" && (
+                                    <CheckCircle className="w-4 h-4 text-green-500" />
+                                  )}
+                                  {entry.action === "rejected" && (
+                                    <XCircle className="w-4 h-4 text-red-500" />
+                                  )}
                                 </div>
                                 <div className="flex-1 min-w-0">
                                   <div className="flex items-center justify-between">
                                     <p className="font-medium text-sm capitalize">
-                                      {entry.action === "created" && "Word Created"}
-                                      {entry.action === "updated" && "Word Updated"}
-                                      {entry.action === "approved" && "Word Approved"}
-                                      {entry.action === "rejected" && "Word Rejected"}
+                                      {entry.action === "created" &&
+                                        "Word Created"}
+                                      {entry.action === "updated" &&
+                                        "Word Updated"}
+                                      {entry.action === "approved" &&
+                                        "Word Approved"}
+                                      {entry.action === "rejected" &&
+                                        "Word Rejected"}
                                     </p>
                                     <span className="text-xs text-slate-500">
                                       {entry.timestamp.toLocaleDateString()}
@@ -1586,7 +1960,11 @@ const WordEditor: React.FC<WordEditorProps> = ({
                                       </summary>
                                       <div className="mt-1 p-2 bg-white rounded text-xs">
                                         <pre className="whitespace-pre-wrap">
-                                          {JSON.stringify(entry.changes, null, 2)}
+                                          {JSON.stringify(
+                                            entry.changes,
+                                            null,
+                                            2,
+                                          )}
                                         </pre>
                                       </div>
                                     </details>
@@ -1599,10 +1977,9 @@ const WordEditor: React.FC<WordEditorProps> = ({
                           <div className="text-center py-8 text-slate-500">
                             <History className="w-8 h-8 mx-auto mb-2 opacity-50" />
                             <p className="text-sm">
-                              {mode === "create" 
+                              {mode === "create"
                                 ? "Word history will be available after creation."
-                                : "No modification history available."
-                              }
+                                : "No modification history available."}
                             </p>
                           </div>
                         )}
@@ -1628,12 +2005,12 @@ const WordEditor: React.FC<WordEditorProps> = ({
                   </span>
                 )}
               </div>
-              
+
               <div className="flex items-center gap-2">
                 <Button variant="outline" onClick={() => onOpenChange(false)}>
                   Cancel
                 </Button>
-                
+
                 {mode === "edit" && showAdvancedOptions && (
                   <Button
                     variant="outline"
@@ -1644,10 +2021,13 @@ const WordEditor: React.FC<WordEditorProps> = ({
                     Duplicate
                   </Button>
                 )}
-                
+
                 <Button
                   onClick={handleSave}
-                  disabled={isSaving || validationErrors.some(e => e.severity === "error")}
+                  disabled={
+                    isSaving ||
+                    validationErrors.some((e) => e.severity === "error")
+                  }
                   className="bg-blue-600 hover:bg-blue-700 min-w-[120px]"
                 >
                   {isSaving ? (

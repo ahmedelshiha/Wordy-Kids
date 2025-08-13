@@ -268,7 +268,8 @@ const WORD_TEMPLATES: WordTemplate[] = [
       pronunciation: "RAIN-bow",
       definition: "A colorful arc in the sky after rain",
       example: "We saw a beautiful rainbow after the storm.",
-      funFact: "Rainbows have seven main colors: red, orange, yellow, green, blue, indigo, violet!",
+      funFact:
+        "Rainbows have seven main colors: red, orange, yellow, green, blue, indigo, violet!",
       emoji: "🌈",
       tags: ["weather", "colors", "sky", "beautiful"],
     },
@@ -350,7 +351,7 @@ const SMART_SUGGESTIONS = {
       { pattern: /ough/, replacement: "-uff" },
       { pattern: /ph/, replacement: "f" },
       { pattern: /gh/, replacement: "" },
-    ]
+    ],
   },
   funFacts: {
     templates: [
@@ -359,8 +360,8 @@ const SMART_SUGGESTIONS = {
       "The word [WORD] has been around for over [NUMBER] years!",
       "In some cultures, [WORD] is considered very important.",
       "Scientists have discovered amazing things about [WORD]!",
-    ]
-  }
+    ],
+  },
 };
 
 const CreateWordWizard: React.FC<CreateWordWizardProps> = ({
@@ -371,12 +372,14 @@ const CreateWordWizard: React.FC<CreateWordWizardProps> = ({
   existingWords = [],
 }) => {
   const [currentStep, setCurrentStep] = useState(1);
-  const [selectedTemplate, setSelectedTemplate] = useState<WordTemplate | null>(null);
+  const [selectedTemplate, setSelectedTemplate] = useState<WordTemplate | null>(
+    null,
+  );
   const [useTemplate, setUseTemplate] = useState(true);
   const [smartAssistEnabled, setSmartAssistEnabled] = useState(true);
   const [guidedMode, setGuidedMode] = useState(true);
   const [showAdvanced, setShowAdvanced] = useState(false);
-  
+
   const [formData, setFormData] = useState<Partial<AdminWord>>({
     word: "",
     pronunciation: "",
@@ -429,17 +432,23 @@ const CreateWordWizard: React.FC<CreateWordWizardProps> = ({
 
   // Calculate completion score
   useEffect(() => {
-    const requiredFields = ['word', 'definition', 'example', 'category'];
-    const optionalFields = ['pronunciation', 'funFact', 'emoji', 'imageUrl', 'audioUrl'];
-    
+    const requiredFields = ["word", "definition", "example", "category"];
+    const optionalFields = [
+      "pronunciation",
+      "funFact",
+      "emoji",
+      "imageUrl",
+      "audioUrl",
+    ];
+
     let score = 0;
     let total = requiredFields.length * 2 + optionalFields.length;
-    
-    requiredFields.forEach(field => {
+
+    requiredFields.forEach((field) => {
       if (formData[field as keyof typeof formData]) score += 2;
     });
-    
-    optionalFields.forEach(field => {
+
+    optionalFields.forEach((field) => {
       if (formData[field as keyof typeof formData]) score += 1;
     });
 
@@ -459,7 +468,7 @@ const CreateWordWizard: React.FC<CreateWordWizardProps> = ({
 
     const word = formData.word.toLowerCase();
     const category = formData.category?.toLowerCase() || "";
-    
+
     // Generate suggestions
     const newSuggestions = {
       emojis: generateEmojiSuggestions(word, category),
@@ -468,7 +477,7 @@ const CreateWordWizard: React.FC<CreateWordWizardProps> = ({
       tags: generateTagSuggestions(word, category),
       relatedWords: generateRelatedWordSuggestions(word, category),
     };
-    
+
     setSuggestions(newSuggestions);
   }, [formData.word, formData.category, smartAssistEnabled]);
 
@@ -480,9 +489,10 @@ const CreateWordWizard: React.FC<CreateWordWizardProps> = ({
     }
 
     const word = formData.word.toLowerCase();
-    const duplicates = existingWords.filter(w => 
-      w.word.toLowerCase().includes(word) || 
-      word.includes(w.word.toLowerCase())
+    const duplicates = existingWords.filter(
+      (w) =>
+        w.word.toLowerCase().includes(word) ||
+        word.includes(w.word.toLowerCase()),
     );
     setDuplicateCheck(duplicates);
   }, [formData.word, existingWords]);
@@ -497,27 +507,33 @@ const CreateWordWizard: React.FC<CreateWordWizardProps> = ({
 
     autoFillTimeout.current = setTimeout(() => {
       if (suggestions.pronunciation && !formData.pronunciation) {
-        setFormData(prev => ({ ...prev, pronunciation: suggestions.pronunciation }));
+        setFormData((prev) => ({
+          ...prev,
+          pronunciation: suggestions.pronunciation,
+        }));
         setAutoFillProgress(25);
       }
-      
+
       setTimeout(() => {
         if (suggestions.emojis.length > 0 && !formData.emoji) {
-          setFormData(prev => ({ ...prev, emoji: suggestions.emojis[0] }));
+          setFormData((prev) => ({ ...prev, emoji: suggestions.emojis[0] }));
           setAutoFillProgress(50);
         }
       }, 500);
 
       setTimeout(() => {
         if (suggestions.funFact && !formData.funFact) {
-          setFormData(prev => ({ ...prev, funFact: suggestions.funFact }));
+          setFormData((prev) => ({ ...prev, funFact: suggestions.funFact }));
           setAutoFillProgress(75);
         }
       }, 1000);
 
       setTimeout(() => {
         if (suggestions.tags.length > 0 && (formData.tags?.length || 0) === 0) {
-          setFormData(prev => ({ ...prev, tags: suggestions.tags.slice(0, 3) }));
+          setFormData((prev) => ({
+            ...prev,
+            tags: suggestions.tags.slice(0, 3),
+          }));
           setAutoFillProgress(100);
         }
       }, 1500);
@@ -532,8 +548,14 @@ const CreateWordWizard: React.FC<CreateWordWizardProps> = ({
     };
   }, [suggestions, formData.word, smartAssistEnabled, currentStep]);
 
-  const generateEmojiSuggestions = (word: string, category: string): string[] => {
-    const categoryEmojis = SMART_SUGGESTIONS.emojis[category as keyof typeof SMART_SUGGESTIONS.emojis] || [];
+  const generateEmojiSuggestions = (
+    word: string,
+    category: string,
+  ): string[] => {
+    const categoryEmojis =
+      SMART_SUGGESTIONS.emojis[
+        category as keyof typeof SMART_SUGGESTIONS.emojis
+      ] || [];
     const wordSpecific = getWordSpecificEmojis(word);
     return [...new Set([...wordSpecific, ...categoryEmojis])].slice(0, 5);
   };
@@ -541,47 +563,66 @@ const CreateWordWizard: React.FC<CreateWordWizardProps> = ({
   const getWordSpecificEmojis = (word: string): string[] => {
     const emojiMap: Record<string, string[]> = {
       // Animals
-      cat: ["🐱", "🐈", "😺"], dog: ["🐶", "🐕", "🦮"], fish: ["🐟", "🐠", "🎣"],
-      bird: ["🐦", "🕊️", "🦅"], butterfly: ["🦋", "🌸"], bee: ["🐝", "🍯"],
+      cat: ["🐱", "🐈", "😺"],
+      dog: ["🐶", "🐕", "🦮"],
+      fish: ["🐟", "🐠", "🎣"],
+      bird: ["🐦", "🕊️", "🦅"],
+      butterfly: ["🦋", "🌸"],
+      bee: ["🐝", "🍯"],
       // Food
-      apple: ["🍎", "🍏", "🌳"], pizza: ["🍕", "🇮🇹"], cake: ["🎂", "🧁", "🎉"],
+      apple: ["🍎", "🍏", "🌳"],
+      pizza: ["🍕", "🇮🇹"],
+      cake: ["🎂", "🧁", "🎉"],
       // Transport
-      car: ["🚗", "🚙", "🛣️"], plane: ["✈️", "🛩️", "🌍"], bike: ["🚲", "🚴"],
+      car: ["🚗", "🚙", "🛣️"],
+      plane: ["✈️", "🛩️", "🌍"],
+      bike: ["🚲", "🚴"],
       // Nature
-      sun: ["☀️", "🌞", "🌅"], moon: ["🌙", "🌛", "⭐"], tree: ["🌳", "🌲", "🍃"],
+      sun: ["☀️", "🌞", "🌅"],
+      moon: ["🌙", "🌛", "⭐"],
+      tree: ["🌳", "🌲", "🍃"],
       // Objects
-      book: ["📚", "📖", "📝"], phone: ["📱", "☎️", "📞"], home: ["🏠", "🏡", "🏘️"],
+      book: ["📚", "📖", "📝"],
+      phone: ["📱", "☎️", "📞"],
+      home: ["🏠", "🏡", "🏘️"],
     };
-    
+
     return emojiMap[word.toLowerCase()] || [];
   };
 
   const generatePronunciationSuggestion = (word: string): string => {
     let pronunciation = word.toUpperCase();
-    
-    SMART_SUGGESTIONS.pronunciations.patterns.forEach(({ pattern, replacement }) => {
-      pronunciation = pronunciation.replace(pattern, replacement);
-    });
-    
+
+    SMART_SUGGESTIONS.pronunciations.patterns.forEach(
+      ({ pattern, replacement }) => {
+        pronunciation = pronunciation.replace(pattern, replacement);
+      },
+    );
+
     // Add stress markers for longer words
     if (word.length > 6) {
       const syllableCount = word.match(/[aeiou]/gi)?.length || 1;
       if (syllableCount > 2) {
         const mid = Math.floor(pronunciation.length / 2);
-        pronunciation = pronunciation.slice(0, mid) + "-" + pronunciation.slice(mid);
+        pronunciation =
+          pronunciation.slice(0, mid) + "-" + pronunciation.slice(mid);
       }
     }
-    
+
     return pronunciation;
   };
 
   const generateFunFactSuggestion = (word: string): string => {
     const templates = SMART_SUGGESTIONS.funFacts.templates;
-    const randomTemplate = templates[Math.floor(Math.random() * templates.length)];
-    
+    const randomTemplate =
+      templates[Math.floor(Math.random() * templates.length)];
+
     return randomTemplate
       .replace(/\[WORD\]/g, word)
-      .replace(/\[LANGUAGE\]/g, ["Latin", "Greek", "French", "German"][Math.floor(Math.random() * 4)])
+      .replace(
+        /\[LANGUAGE\]/g,
+        ["Latin", "Greek", "French", "German"][Math.floor(Math.random() * 4)],
+      )
       .replace(/\[ORIGIN\]/g, word + "us")
       .replace(/\[NUMBER\]/g, String(Math.floor(Math.random() * 500) + 100));
   };
@@ -589,18 +630,21 @@ const CreateWordWizard: React.FC<CreateWordWizardProps> = ({
   const generateTagSuggestions = (word: string, category: string): string[] => {
     const baseTags = [category.toLowerCase(), formData.difficulty || "easy"];
     const wordLength = word.length;
-    
+
     if (wordLength <= 4) baseTags.push("short");
     else if (wordLength >= 8) baseTags.push("long");
-    
+
     if (word.includes("ing")) baseTags.push("verb", "action");
     if (word.includes("ed")) baseTags.push("past-tense");
     if (word.includes("ly")) baseTags.push("adverb");
-    
+
     return [...new Set(baseTags)];
   };
 
-  const generateRelatedWordSuggestions = (word: string, category: string): string[] => {
+  const generateRelatedWordSuggestions = (
+    word: string,
+    category: string,
+  ): string[] => {
     // This would ideally use a real word association API
     const categoryWords: Record<string, string[]> = {
       animals: ["habitat", "species", "wildlife", "nature", "forest"],
@@ -609,37 +653,48 @@ const CreateWordWizard: React.FC<CreateWordWizardProps> = ({
       actions: ["movement", "activity", "exercise", "motion", "energy"],
       feelings: ["emotion", "mood", "expression", "heart", "mind"],
     };
-    
-    return categoryWords[category.toLowerCase()] || ["learning", "education", "vocabulary"];
+
+    return (
+      categoryWords[category.toLowerCase()] || [
+        "learning",
+        "education",
+        "vocabulary",
+      ]
+    );
   };
 
   const validateForm = (): string[] => {
     const errors: string[] = [];
-    
+
     if (!formData.word?.trim()) errors.push("Word is required");
     if (!formData.definition?.trim()) errors.push("Definition is required");
     if (!formData.example?.trim()) errors.push("Example is required");
     if (!formData.category) errors.push("Category is required");
-    
+
     if (formData.word && formData.word.length < 2) {
       errors.push("Word must be at least 2 characters");
     }
-    
+
     if (formData.definition && formData.definition.length < 10) {
       errors.push("Definition should be more descriptive");
     }
-    
-    if (formData.example && !formData.example.toLowerCase().includes(formData.word?.toLowerCase() || "")) {
+
+    if (
+      formData.example &&
+      !formData.example
+        .toLowerCase()
+        .includes(formData.word?.toLowerCase() || "")
+    ) {
       errors.push("Example should include the word");
     }
-    
+
     return errors;
   };
 
   const handleTemplateSelect = (template: WordTemplate) => {
     setSelectedTemplate(template);
     if (useTemplate) {
-      setFormData(prev => ({
+      setFormData((prev) => ({
         ...prev,
         ...template.structure,
         category: template.category,
@@ -670,7 +725,7 @@ const CreateWordWizard: React.FC<CreateWordWizardProps> = ({
     if (errors.length === 0) {
       try {
         setIsSaving(true);
-        
+
         const newWord: AdminWord = {
           id: `word_${Date.now()}`,
           word: formData.word!.trim(),
@@ -695,11 +750,11 @@ const CreateWordWizard: React.FC<CreateWordWizardProps> = ({
         };
 
         // Simulate API call
-        await new Promise(resolve => setTimeout(resolve, 1500));
-        
+        await new Promise((resolve) => setTimeout(resolve, 1500));
+
         onSave(newWord);
         onOpenChange(false);
-        
+
         // Reset form
         setFormData({
           word: "",
@@ -728,17 +783,20 @@ const CreateWordWizard: React.FC<CreateWordWizardProps> = ({
     }
   };
 
-  const addTag = (type: "tags" | "synonyms" | "antonyms" | "relatedWords", value: string) => {
+  const addTag = (
+    type: "tags" | "synonyms" | "antonyms" | "relatedWords",
+    value: string,
+  ) => {
     if (!value.trim()) return;
-    
+
     const currentArray = formData[type] || [];
     if (!currentArray.includes(value.trim())) {
-      setFormData(prev => ({
+      setFormData((prev) => ({
         ...prev,
         [type]: [...currentArray, value.trim()],
       }));
     }
-    
+
     // Clear input
     if (type === "tags") setNewTag("");
     else if (type === "synonyms") setNewSynonym("");
@@ -746,16 +804,19 @@ const CreateWordWizard: React.FC<CreateWordWizardProps> = ({
     else if (type === "relatedWords") setNewRelatedWord("");
   };
 
-  const removeTag = (type: "tags" | "synonyms" | "antonyms" | "relatedWords", value: string) => {
+  const removeTag = (
+    type: "tags" | "synonyms" | "antonyms" | "relatedWords",
+    value: string,
+  ) => {
     const currentArray = formData[type] || [];
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      [type]: currentArray.filter(item => item !== value),
+      [type]: currentArray.filter((item) => item !== value),
     }));
   };
 
   const applySuggestion = (field: string, value: any) => {
-    setFormData(prev => ({ ...prev, [field]: value }));
+    setFormData((prev) => ({ ...prev, [field]: value }));
   };
 
   const renderStepIndicator = () => (
@@ -767,8 +828,8 @@ const CreateWordWizard: React.FC<CreateWordWizardProps> = ({
               currentStep === step.id
                 ? "bg-blue-600 text-white"
                 : currentStep > step.id
-                ? "bg-green-600 text-white"
-                : "bg-slate-200 text-slate-600"
+                  ? "bg-green-600 text-white"
+                  : "bg-slate-200 text-slate-600"
             }`}
           >
             {currentStep > step.id ? (
@@ -777,9 +838,11 @@ const CreateWordWizard: React.FC<CreateWordWizardProps> = ({
               step.icon
             )}
           </div>
-          <span className={`ml-2 text-sm font-medium hidden md:inline ${
-            currentStep === step.id ? "text-blue-600" : "text-slate-600"
-          }`}>
+          <span
+            className={`ml-2 text-sm font-medium hidden md:inline ${
+              currentStep === step.id ? "text-blue-600" : "text-slate-600"
+            }`}
+          >
             {step.title}
           </span>
           {index < steps.length - 1 && (
@@ -793,9 +856,12 @@ const CreateWordWizard: React.FC<CreateWordWizardProps> = ({
   const renderTemplateSelection = () => (
     <div className="space-y-6">
       <div className="text-center">
-        <h3 className="text-xl font-bold text-slate-800 mb-2">Choose a Starting Point</h3>
+        <h3 className="text-xl font-bold text-slate-800 mb-2">
+          Choose a Starting Point
+        </h3>
         <p className="text-slate-600">
-          Select a template to get started quickly, or skip to start from scratch
+          Select a template to get started quickly, or skip to start from
+          scratch
         </p>
       </div>
 
@@ -806,7 +872,9 @@ const CreateWordWizard: React.FC<CreateWordWizardProps> = ({
             onCheckedChange={setUseTemplate}
             id="use-template"
           />
-          <Label htmlFor="use-template" className="text-sm">Use Template</Label>
+          <Label htmlFor="use-template" className="text-sm">
+            Use Template
+          </Label>
         </div>
         <div className="flex items-center gap-2">
           <Switch
@@ -814,7 +882,9 @@ const CreateWordWizard: React.FC<CreateWordWizardProps> = ({
             onCheckedChange={setSmartAssistEnabled}
             id="smart-assist"
           />
-          <Label htmlFor="smart-assist" className="text-sm">Smart Assist</Label>
+          <Label htmlFor="smart-assist" className="text-sm">
+            Smart Assist
+          </Label>
         </div>
         <div className="flex items-center gap-2">
           <Switch
@@ -822,7 +892,9 @@ const CreateWordWizard: React.FC<CreateWordWizardProps> = ({
             onCheckedChange={setGuidedMode}
             id="guided-mode"
           />
-          <Label htmlFor="guided-mode" className="text-sm">Guided Mode</Label>
+          <Label htmlFor="guided-mode" className="text-sm">
+            Guided Mode
+          </Label>
         </div>
       </div>
 
@@ -838,20 +910,30 @@ const CreateWordWizard: React.FC<CreateWordWizardProps> = ({
             onClick={() => handleTemplateSelect(template)}
           >
             <CardContent className="p-4">
-              <div className={`w-full h-24 bg-gradient-to-br ${template.color} rounded-lg mb-3 flex items-center justify-center text-white`}>
+              <div
+                className={`w-full h-24 bg-gradient-to-br ${template.color} rounded-lg mb-3 flex items-center justify-center text-white`}
+              >
                 {template.icon}
               </div>
-              <h4 className="font-semibold text-slate-800 mb-1">{template.name}</h4>
-              <p className="text-xs text-slate-600 mb-2">{template.description}</p>
+              <h4 className="font-semibold text-slate-800 mb-1">
+                {template.name}
+              </h4>
+              <p className="text-xs text-slate-600 mb-2">
+                {template.description}
+              </p>
               <div className="flex items-center justify-between">
                 <Badge variant="outline" className="text-xs">
                   {template.category}
                 </Badge>
-                <Badge className={
-                  template.difficulty === "easy" ? "bg-green-100 text-green-800" :
-                  template.difficulty === "medium" ? "bg-yellow-100 text-yellow-800" :
-                  "bg-red-100 text-red-800"
-                }>
+                <Badge
+                  className={
+                    template.difficulty === "easy"
+                      ? "bg-green-100 text-green-800"
+                      : template.difficulty === "medium"
+                        ? "bg-yellow-100 text-yellow-800"
+                        : "bg-red-100 text-red-800"
+                  }
+                >
                   {template.difficulty}
                 </Badge>
               </div>
@@ -877,8 +959,12 @@ const CreateWordWizard: React.FC<CreateWordWizardProps> = ({
   const renderBasicInfo = () => (
     <div className="space-y-6">
       <div className="text-center mb-6">
-        <h3 className="text-xl font-bold text-slate-800 mb-2">Basic Information</h3>
-        <p className="text-slate-600">Enter the core details for your new word</p>
+        <h3 className="text-xl font-bold text-slate-800 mb-2">
+          Basic Information
+        </h3>
+        <p className="text-slate-600">
+          Enter the core details for your new word
+        </p>
       </div>
 
       {/* Duplicate Check Alert */}
@@ -913,13 +999,21 @@ const CreateWordWizard: React.FC<CreateWordWizardProps> = ({
           <Input
             id="word"
             value={formData.word || ""}
-            onChange={(e) => setFormData(prev => ({ ...prev, word: e.target.value }))}
+            onChange={(e) =>
+              setFormData((prev) => ({ ...prev, word: e.target.value }))
+            }
             placeholder="Enter the word"
             className="text-lg"
           />
           {smartAssistEnabled && formData.word && (
             <p className="text-xs text-slate-500">
-              💡 {formData.word.length} characters, {formData.word.split('').filter(c => 'aeiou'.includes(c.toLowerCase())).length} vowels
+              💡 {formData.word.length} characters,{" "}
+              {
+                formData.word
+                  .split("")
+                  .filter((c) => "aeiou".includes(c.toLowerCase())).length
+              }{" "}
+              vowels
             </p>
           )}
         </div>
@@ -932,7 +1026,9 @@ const CreateWordWizard: React.FC<CreateWordWizardProps> = ({
             <Input
               id="emoji"
               value={formData.emoji || ""}
-              onChange={(e) => setFormData(prev => ({ ...prev, emoji: e.target.value }))}
+              onChange={(e) =>
+                setFormData((prev) => ({ ...prev, emoji: e.target.value }))
+              }
               placeholder="📚"
               className="w-16 text-center text-lg"
               maxLength={2}
@@ -945,7 +1041,9 @@ const CreateWordWizard: React.FC<CreateWordWizardProps> = ({
                   </Button>
                 </PopoverTrigger>
                 <PopoverContent className="w-64 p-2">
-                  <div className="text-xs font-medium mb-2">Suggested emojis:</div>
+                  <div className="text-xs font-medium mb-2">
+                    Suggested emojis:
+                  </div>
                   <div className="flex flex-wrap gap-1">
                     {suggestions.emojis.map((emoji, index) => (
                       <Button
@@ -953,7 +1051,7 @@ const CreateWordWizard: React.FC<CreateWordWizardProps> = ({
                         variant="ghost"
                         size="sm"
                         className="h-8 w-8 p-0 text-lg"
-                        onClick={() => applySuggestion('emoji', emoji)}
+                        onClick={() => applySuggestion("emoji", emoji)}
                       >
                         {emoji}
                       </Button>
@@ -974,14 +1072,21 @@ const CreateWordWizard: React.FC<CreateWordWizardProps> = ({
           <Input
             id="pronunciation"
             value={formData.pronunciation || ""}
-            onChange={(e) => setFormData(prev => ({ ...prev, pronunciation: e.target.value }))}
+            onChange={(e) =>
+              setFormData((prev) => ({
+                ...prev,
+                pronunciation: e.target.value,
+              }))
+            }
             placeholder="/pronunciation/"
           />
           {smartAssistEnabled && suggestions.pronunciation && (
             <Button
               variant="outline"
               size="sm"
-              onClick={() => applySuggestion('pronunciation', suggestions.pronunciation)}
+              onClick={() =>
+                applySuggestion("pronunciation", suggestions.pronunciation)
+              }
             >
               <Wand2 className="w-4 h-4 mr-1" />
               Suggest
@@ -997,7 +1102,9 @@ const CreateWordWizard: React.FC<CreateWordWizardProps> = ({
           </Label>
           <Select
             value={formData.category || ""}
-            onValueChange={(value) => setFormData(prev => ({ ...prev, category: value }))}
+            onValueChange={(value) =>
+              setFormData((prev) => ({ ...prev, category: value }))
+            }
           >
             <SelectTrigger>
               <SelectValue placeholder="Select category" />
@@ -1018,7 +1125,9 @@ const CreateWordWizard: React.FC<CreateWordWizardProps> = ({
           </Label>
           <Select
             value={formData.difficulty || "easy"}
-            onValueChange={(value: any) => setFormData(prev => ({ ...prev, difficulty: value }))}
+            onValueChange={(value: any) =>
+              setFormData((prev) => ({ ...prev, difficulty: value }))
+            }
           >
             <SelectTrigger>
               <SelectValue />
@@ -1037,8 +1146,12 @@ const CreateWordWizard: React.FC<CreateWordWizardProps> = ({
   const renderDetails = () => (
     <div className="space-y-6">
       <div className="text-center mb-6">
-        <h3 className="text-xl font-bold text-slate-800 mb-2">Definition & Examples</h3>
-        <p className="text-slate-600">Provide clear explanations and usage examples</p>
+        <h3 className="text-xl font-bold text-slate-800 mb-2">
+          Definition & Examples
+        </h3>
+        <p className="text-slate-600">
+          Provide clear explanations and usage examples
+        </p>
       </div>
 
       {autoFillProgress > 0 && (
@@ -1047,7 +1160,9 @@ const CreateWordWizard: React.FC<CreateWordWizardProps> = ({
           <AlertDescription>
             <div className="space-y-2">
               <div className="flex items-center justify-between">
-                <span className="text-sm font-medium">Smart Assistant is filling details...</span>
+                <span className="text-sm font-medium">
+                  Smart Assistant is filling details...
+                </span>
                 <span className="text-sm">{autoFillProgress}%</span>
               </div>
               <Progress value={autoFillProgress} className="h-2" />
@@ -1063,7 +1178,9 @@ const CreateWordWizard: React.FC<CreateWordWizardProps> = ({
         <Textarea
           id="definition"
           value={formData.definition || ""}
-          onChange={(e) => setFormData(prev => ({ ...prev, definition: e.target.value }))}
+          onChange={(e) =>
+            setFormData((prev) => ({ ...prev, definition: e.target.value }))
+          }
           placeholder="Clear and simple definition..."
           rows={3}
         />
@@ -1079,15 +1196,21 @@ const CreateWordWizard: React.FC<CreateWordWizardProps> = ({
         <Textarea
           id="example"
           value={formData.example || ""}
-          onChange={(e) => setFormData(prev => ({ ...prev, example: e.target.value }))}
+          onChange={(e) =>
+            setFormData((prev) => ({ ...prev, example: e.target.value }))
+          }
           placeholder="Example sentence using the word..."
           rows={2}
         />
-        {formData.word && formData.example && !formData.example.toLowerCase().includes(formData.word.toLowerCase()) && (
-          <p className="text-xs text-orange-600">
-            💡 Consider including "{formData.word}" in your example
-          </p>
-        )}
+        {formData.word &&
+          formData.example &&
+          !formData.example
+            .toLowerCase()
+            .includes(formData.word.toLowerCase()) && (
+            <p className="text-xs text-orange-600">
+              💡 Consider including "{formData.word}" in your example
+            </p>
+          )}
       </div>
 
       <div className="space-y-2">
@@ -1098,7 +1221,9 @@ const CreateWordWizard: React.FC<CreateWordWizardProps> = ({
           <Textarea
             id="funFact"
             value={formData.funFact || ""}
-            onChange={(e) => setFormData(prev => ({ ...prev, funFact: e.target.value }))}
+            onChange={(e) =>
+              setFormData((prev) => ({ ...prev, funFact: e.target.value }))
+            }
             placeholder="Interesting fact about this word..."
             rows={2}
           />
@@ -1106,7 +1231,7 @@ const CreateWordWizard: React.FC<CreateWordWizardProps> = ({
             <Button
               variant="outline"
               size="sm"
-              onClick={() => applySuggestion('funFact', suggestions.funFact)}
+              onClick={() => applySuggestion("funFact", suggestions.funFact)}
               className="self-start mt-1"
             >
               <Lightbulb className="w-4 h-4" />
@@ -1120,8 +1245,12 @@ const CreateWordWizard: React.FC<CreateWordWizardProps> = ({
   const renderEnrichment = () => (
     <div className="space-y-6">
       <div className="text-center mb-6">
-        <h3 className="text-xl font-bold text-slate-800 mb-2">Enrich Your Word</h3>
-        <p className="text-slate-600">Add relationships and multimedia to enhance learning</p>
+        <h3 className="text-xl font-bold text-slate-800 mb-2">
+          Enrich Your Word
+        </h3>
+        <p className="text-slate-600">
+          Add relationships and multimedia to enhance learning
+        </p>
       </div>
 
       {/* Tags */}
@@ -1151,7 +1280,7 @@ const CreateWordWizard: React.FC<CreateWordWizardProps> = ({
             <Plus className="w-4 h-4" />
           </Button>
         </div>
-        
+
         {smartAssistEnabled && suggestions.tags.length > 0 && (
           <div className="space-y-2">
             <p className="text-xs text-slate-500">Suggested tags:</p>
@@ -1189,27 +1318,37 @@ const CreateWordWizard: React.FC<CreateWordWizardProps> = ({
       {/* Media */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div className="space-y-2">
-          <Label htmlFor="imageUrl" className="text-sm font-medium flex items-center gap-2">
+          <Label
+            htmlFor="imageUrl"
+            className="text-sm font-medium flex items-center gap-2"
+          >
             <ImageIcon className="w-4 h-4" />
             Image URL
           </Label>
           <Input
             id="imageUrl"
             value={formData.imageUrl || ""}
-            onChange={(e) => setFormData(prev => ({ ...prev, imageUrl: e.target.value }))}
+            onChange={(e) =>
+              setFormData((prev) => ({ ...prev, imageUrl: e.target.value }))
+            }
             placeholder="https://example.com/image.jpg"
           />
         </div>
 
         <div className="space-y-2">
-          <Label htmlFor="audioUrl" className="text-sm font-medium flex items-center gap-2">
+          <Label
+            htmlFor="audioUrl"
+            className="text-sm font-medium flex items-center gap-2"
+          >
             <Volume2 className="w-4 h-4" />
             Audio URL
           </Label>
           <Input
             id="audioUrl"
             value={formData.audioUrl || ""}
-            onChange={(e) => setFormData(prev => ({ ...prev, audioUrl: e.target.value }))}
+            onChange={(e) =>
+              setFormData((prev) => ({ ...prev, audioUrl: e.target.value }))
+            }
             placeholder="https://example.com/audio.mp3"
           />
         </div>
@@ -1337,7 +1476,9 @@ const CreateWordWizard: React.FC<CreateWordWizardProps> = ({
   const renderReview = () => (
     <div className="space-y-6">
       <div className="text-center mb-6">
-        <h3 className="text-xl font-bold text-slate-800 mb-2">Review Your Word</h3>
+        <h3 className="text-xl font-bold text-slate-800 mb-2">
+          Review Your Word
+        </h3>
         <p className="text-slate-600">Double-check everything before saving</p>
       </div>
 
@@ -1346,19 +1487,25 @@ const CreateWordWizard: React.FC<CreateWordWizardProps> = ({
         <CardContent className="p-4">
           <div className="flex items-center justify-between mb-3">
             <h4 className="font-medium text-blue-800">Completion Score</h4>
-            <Badge className={
-              completionScore >= 80 ? "bg-green-100 text-green-800" :
-              completionScore >= 60 ? "bg-yellow-100 text-yellow-800" :
-              "bg-red-100 text-red-800"
-            }>
+            <Badge
+              className={
+                completionScore >= 80
+                  ? "bg-green-100 text-green-800"
+                  : completionScore >= 60
+                    ? "bg-yellow-100 text-yellow-800"
+                    : "bg-red-100 text-red-800"
+              }
+            >
               {completionScore}%
             </Badge>
           </div>
           <Progress value={completionScore} className="h-3" />
           <p className="text-sm text-blue-600 mt-2">
-            {completionScore >= 80 ? "Excellent! Your word is comprehensive." :
-             completionScore >= 60 ? "Good! Consider adding more details." :
-             "Needs more information for a complete entry."}
+            {completionScore >= 80
+              ? "Excellent! Your word is comprehensive."
+              : completionScore >= 60
+                ? "Good! Consider adding more details."
+                : "Needs more information for a complete entry."}
           </p>
         </CardContent>
       </Card>
@@ -1369,7 +1516,9 @@ const CreateWordWizard: React.FC<CreateWordWizardProps> = ({
           <AlertTriangle className="w-4 h-4" />
           <AlertDescription>
             <div className="space-y-1">
-              <p className="font-medium text-red-800">Please fix these issues:</p>
+              <p className="font-medium text-red-800">
+                Please fix these issues:
+              </p>
               <ul className="list-disc list-inside text-sm text-red-700">
                 {validationErrors.map((error, index) => (
                   <li key={index}>{error}</li>
@@ -1393,12 +1542,20 @@ const CreateWordWizard: React.FC<CreateWordWizardProps> = ({
             )}
             <div className="flex items-center justify-center gap-2 mt-2">
               <Badge variant="outline">📁 {formData.category}</Badge>
-              <Badge className={
-                formData.difficulty === "easy" ? "bg-green-100 text-green-800" :
-                formData.difficulty === "medium" ? "bg-yellow-100 text-yellow-800" :
-                "bg-red-100 text-red-800"
-              }>
-                {formData.difficulty === "easy" ? "🌟" : formData.difficulty === "medium" ? "⭐" : "🔥"}
+              <Badge
+                className={
+                  formData.difficulty === "easy"
+                    ? "bg-green-100 text-green-800"
+                    : formData.difficulty === "medium"
+                      ? "bg-yellow-100 text-yellow-800"
+                      : "bg-red-100 text-red-800"
+                }
+              >
+                {formData.difficulty === "easy"
+                  ? "🌟"
+                  : formData.difficulty === "medium"
+                    ? "⭐"
+                    : "🔥"}
                 {formData.difficulty}
               </Badge>
             </div>
@@ -1407,11 +1564,15 @@ const CreateWordWizard: React.FC<CreateWordWizardProps> = ({
           <div className="space-y-3 text-left">
             <div>
               <h4 className="font-medium text-slate-700 mb-1">Definition:</h4>
-              <p className="text-slate-600">{formData.definition || "No definition provided"}</p>
+              <p className="text-slate-600">
+                {formData.definition || "No definition provided"}
+              </p>
             </div>
             <div>
               <h4 className="font-medium text-slate-700 mb-1">Example:</h4>
-              <p className="text-slate-600 italic">"{formData.example || "No example provided"}"</p>
+              <p className="text-slate-600 italic">
+                "{formData.example || "No example provided"}"
+              </p>
             </div>
             {formData.funFact && (
               <div>
@@ -1419,7 +1580,7 @@ const CreateWordWizard: React.FC<CreateWordWizardProps> = ({
                 <p className="text-blue-600">💡 {formData.funFact}</p>
               </div>
             )}
-            
+
             {(formData.tags?.length || 0) > 0 && (
               <div>
                 <h4 className="font-medium text-slate-700 mb-1">Tags:</h4>
@@ -1449,7 +1610,9 @@ const CreateWordWizard: React.FC<CreateWordWizardProps> = ({
         <Card>
           <CardContent className="p-3 text-center">
             <div className="text-lg font-bold text-green-600">
-              {(formData.tags?.length || 0) + (formData.synonyms?.length || 0) + (formData.antonyms?.length || 0)}
+              {(formData.tags?.length || 0) +
+                (formData.synonyms?.length || 0) +
+                (formData.antonyms?.length || 0)}
             </div>
             <p className="text-xs text-slate-600">Relationships</p>
           </CardContent>
@@ -1506,7 +1669,8 @@ const CreateWordWizard: React.FC<CreateWordWizardProps> = ({
               )}
             </DialogTitle>
             <DialogDescription>
-              Use our guided wizard to create comprehensive word entries with smart assistance
+              Use our guided wizard to create comprehensive word entries with
+              smart assistance
             </DialogDescription>
           </DialogHeader>
 
@@ -1521,7 +1685,7 @@ const CreateWordWizard: React.FC<CreateWordWizardProps> = ({
                 {completionScore > 0 && (
                   <div className="flex items-center gap-2 text-sm">
                     <div className="w-16 h-2 bg-slate-200 rounded-full overflow-hidden">
-                      <div 
+                      <div
                         className="h-full bg-gradient-to-r from-red-400 via-yellow-400 to-green-400 transition-all"
                         style={{ width: `${completionScore}%` }}
                       />
@@ -1532,18 +1696,12 @@ const CreateWordWizard: React.FC<CreateWordWizardProps> = ({
               </div>
 
               <div className="flex items-center gap-2">
-                <Button
-                  variant="outline"
-                  onClick={() => onOpenChange(false)}
-                >
+                <Button variant="outline" onClick={() => onOpenChange(false)}>
                   Cancel
                 </Button>
 
                 {currentStep > 1 && (
-                  <Button
-                    variant="outline"
-                    onClick={handlePrevious}
-                  >
+                  <Button variant="outline" onClick={handlePrevious}>
                     <ArrowLeft className="w-4 h-4 mr-2" />
                     Previous
                   </Button>
@@ -1552,7 +1710,10 @@ const CreateWordWizard: React.FC<CreateWordWizardProps> = ({
                 {currentStep < steps.length ? (
                   <Button
                     onClick={handleNext}
-                    disabled={currentStep === 2 && (!formData.word || !formData.category)}
+                    disabled={
+                      currentStep === 2 &&
+                      (!formData.word || !formData.category)
+                    }
                   >
                     Next
                     <ArrowRight className="w-4 h-4 ml-2" />

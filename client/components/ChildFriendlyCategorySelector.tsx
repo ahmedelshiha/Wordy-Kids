@@ -426,12 +426,15 @@ export function ChildFriendlyCategorySelector({
   };
 
   // Filter categories based on search
-  const filteredCategories = getRecommendedCategories().filter(category =>
-    category.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    category.description.toLowerCase().includes(searchTerm.toLowerCase())
+  const filteredCategories = getRecommendedCategories().filter(
+    (category) =>
+      category.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      category.description.toLowerCase().includes(searchTerm.toLowerCase()),
   );
 
-  const categories = searchTerm ? filteredCategories : getRecommendedCategories();
+  const categories = searchTerm
+    ? filteredCategories
+    : getRecommendedCategories();
 
   return (
     <div className="space-y-8 relative">
@@ -548,12 +551,16 @@ export function ChildFriendlyCategorySelector({
         {/* Quick Categories Bar */}
         {!searchTerm && (
           <div>
-            <h3 className="text-sm font-semibold text-slate-700 mb-3">🚀 Quick Select</h3>
+            <h3 className="text-sm font-semibold text-slate-700 mb-3">
+              🚀 Quick Select
+            </h3>
             <div className="flex gap-2 overflow-x-auto pb-2">
               {enrichedCategories.slice(0, 6).map((category) => (
                 <Button
                   key={category.id}
-                  variant={selectedCategory === category.id ? "default" : "outline"}
+                  variant={
+                    selectedCategory === category.id ? "default" : "outline"
+                  }
                   size="sm"
                   onClick={() => handleCategoryClick(category.id)}
                   className={`flex-shrink-0 h-16 w-16 flex-col gap-1 ${
@@ -563,7 +570,9 @@ export function ChildFriendlyCategorySelector({
                   }`}
                 >
                   <span className="text-lg">{category.icon}</span>
-                  <span className="text-xs font-medium text-center leading-tight">{category.name.split(' ')[0]}</span>
+                  <span className="text-xs font-medium text-center leading-tight">
+                    {category.name.split(" ")[0]}
+                  </span>
                 </Button>
               ))}
             </div>
@@ -611,7 +620,8 @@ export function ChildFriendlyCategorySelector({
                   )}
 
                   {/* Mobile touch effects */}
-                  {(hoveredCategory === category.id || selectedCategory === category.id) && (
+                  {(hoveredCategory === category.id ||
+                    selectedCategory === category.id) && (
                     <>
                       <Sparkles className="absolute top-1 right-1 md:top-2 md:right-2 w-4 h-4 md:w-6 md:h-6 text-yellow-300 animate-spin" />
                       <Star className="absolute bottom-1 left-1 md:bottom-2 md:left-2 w-3 h-3 md:w-5 md:h-5 text-yellow-300 animate-pulse" />
@@ -621,7 +631,8 @@ export function ChildFriendlyCategorySelector({
 
                   <div
                     className={`text-3xl md:text-6xl mb-2 md:mb-3 transition-transform duration-300 ${
-                      hoveredCategory === category.id || selectedCategory === category.id
+                      hoveredCategory === category.id ||
+                      selectedCategory === category.id
                         ? "animate-gentle-bounce scale-110"
                         : ""
                     }`}
@@ -659,7 +670,8 @@ export function ChildFriendlyCategorySelector({
                   </p>
 
                   {/* Mobile Fun Fact - Show for selected */}
-                  {(hoveredCategory === category.id || selectedCategory === category.id) && (
+                  {(hoveredCategory === category.id ||
+                    selectedCategory === category.id) && (
                     <div className="bg-gradient-to-r from-educational-blue/10 to-educational-purple/10 rounded-lg p-2 md:p-3 animate-fade-in">
                       <p className="text-xs md:text-sm text-educational-purple font-semibold">
                         💡 {category.funFact}
@@ -738,13 +750,14 @@ export function ChildFriendlyCategorySelector({
                   )}
 
                   {/* Mobile Touch Encouragement */}
-                  {hoveredCategory === category.id && selectedCategory !== category.id && (
-                    <div className="flex items-center justify-center">
-                      <Badge className="bg-educational-purple/20 text-educational-purple border border-educational-purple/30 animate-pulse text-xs px-2 py-1">
-                        🎯 Tap to explore!
-                      </Badge>
-                    </div>
-                  )}
+                  {hoveredCategory === category.id &&
+                    selectedCategory !== category.id && (
+                      <div className="flex items-center justify-center">
+                        <Badge className="bg-educational-purple/20 text-educational-purple border border-educational-purple/30 animate-pulse text-xs px-2 py-1">
+                          🎯 Tap to explore!
+                        </Badge>
+                      </div>
+                    )}
                 </div>
               </CardContent>
             </Card>
@@ -774,11 +787,14 @@ export function ChildFriendlyCategorySelector({
       <div className="md:hidden mt-6 px-2">
         <Card className="bg-gradient-to-r from-educational-blue/5 to-educational-purple/5 border-educational-blue/20">
           <CardContent className="p-4">
-            <h3 className="font-semibold text-slate-800 mb-3 text-center">📊 Your Learning Stats</h3>
+            <h3 className="font-semibold text-slate-800 mb-3 text-center">
+              📊 Your Learning Stats
+            </h3>
             <div className="grid grid-cols-3 gap-4 text-center">
               <div>
                 <div className="text-2xl font-bold text-educational-blue">
-                  {categories.find(c => c.id === selectedCategory)?.wordCount || 0}
+                  {categories.find((c) => c.id === selectedCategory)
+                    ?.wordCount || 0}
                 </div>
                 <div className="text-xs text-slate-600">Words Available</div>
               </div>
@@ -814,8 +830,9 @@ export function ChildFriendlyCategorySelector({
               </div>
               {selectedCategory !== "all" && (
                 <div className="text-xs text-slate-600 mb-3">
-                  You selected: <span className="font-semibold text-educational-blue">
-                    {categories.find(c => c.id === selectedCategory)?.name}
+                  You selected:{" "}
+                  <span className="font-semibold text-educational-blue">
+                    {categories.find((c) => c.id === selectedCategory)?.name}
                   </span>
                 </div>
               )}
@@ -867,7 +884,9 @@ export function ChildFriendlyCategorySelector({
           <div className="flex flex-col gap-2">
             <Button
               onClick={() => {
-                const selectedCat = categories.find(c => c.id === selectedCategory);
+                const selectedCat = categories.find(
+                  (c) => c.id === selectedCategory,
+                );
                 if (selectedCat) {
                   audioService.playCheerSound();
                 }
@@ -875,11 +894,12 @@ export function ChildFriendlyCategorySelector({
               className="w-14 h-14 rounded-full bg-gradient-to-r from-educational-green to-educational-blue hover:from-educational-green/90 hover:to-educational-blue/90 shadow-lg"
             >
               <span className="text-2xl">
-                {categories.find(c => c.id === selectedCategory)?.icon || "🚀"}
+                {categories.find((c) => c.id === selectedCategory)?.icon ||
+                  "🚀"}
               </span>
             </Button>
             <div className="text-xs text-center text-white bg-black/70 rounded px-2 py-1">
-              {categories.find(c => c.id === selectedCategory)?.name}
+              {categories.find((c) => c.id === selectedCategory)?.name}
             </div>
           </div>
         )}
@@ -892,8 +912,10 @@ export function ChildFriendlyCategorySelector({
           size="sm"
           onClick={() => {
             // Could trigger a modal with category filters
-            const allButton = document.querySelector('[data-category="all"]') as HTMLElement;
-            allButton?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            const allButton = document.querySelector(
+              '[data-category="all"]',
+            ) as HTMLElement;
+            allButton?.scrollIntoView({ behavior: "smooth", block: "center" });
           }}
           className="w-12 h-12 rounded-full bg-white/90 backdrop-blur-sm shadow-lg border-2 border-educational-blue/20 hover:bg-educational-blue/10"
         >
