@@ -1192,7 +1192,7 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onNavigateBack }) => {
                   onClick={() => setSortOrder(sortOrder === "asc" ? "desc" : "asc")}
                   className="px-3"
                 >
-                  {sortOrder === "asc" ? "↑" : "↓"}
+                  {sortOrder === "asc" ? "��" : "↓"}
                 </Button>
               </div>
             </div>
@@ -2443,6 +2443,18 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onNavigateBack }) => {
             setWords((prev) => prev.map((w) => (w.id === word.id ? word : w)));
           }
           setShowWordEditor(false);
+        }}
+      />
+
+      {/* Create Word Wizard */}
+      <CreateWordWizard
+        open={showCreateWizard}
+        onOpenChange={setShowCreateWizard}
+        categories={categories}
+        existingWords={words}
+        onSave={(word) => {
+          setWords((prev) => [...prev, word]);
+          setShowCreateWizard(false);
         }}
       />
     </div>
