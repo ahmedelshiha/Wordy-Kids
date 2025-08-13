@@ -279,9 +279,8 @@ const sampleNotifications: ParentNotification[] = [
   {
     id: "notif-1",
     type: "achievement",
-    title: "New Achievement Unlocked!",
-    message:
-      "Alex earned the 'Streak Master' badge for learning 5 days in a row!",
+    title: "Achievement Unlocked!",
+    message: "Alex earned 'Streak Master' badge! 5 days in a row.",
     childId: "1",
     timestamp: new Date(Date.now() - 30 * 60 * 1000),
     read: false,
@@ -290,9 +289,8 @@ const sampleNotifications: ParentNotification[] = [
   {
     id: "notif-2",
     type: "goal_progress",
-    title: "Goal Progress Update",
-    message:
-      "Emma is 80% complete with her weekly goal - only 2 more words to go!",
+    title: "Goal Update",
+    message: "Emma 80% complete! Only 2 words to go.",
     childId: "2",
     timestamp: new Date(Date.now() - 2 * 60 * 60 * 1000),
     read: false,
@@ -301,9 +299,8 @@ const sampleNotifications: ParentNotification[] = [
   {
     id: "notif-3",
     type: "concern",
-    title: "Learning Pattern Alert",
-    message:
-      "Alex has been struggling with spelling activities. Consider additional practice.",
+    title: "Practice Alert",
+    message: "Alex struggling with spelling. Needs practice.",
     childId: "1",
     timestamp: new Date(Date.now() - 6 * 60 * 60 * 1000),
     read: true,
@@ -2975,7 +2972,7 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
             <div>
               <Label htmlFor="avatar">Avatar</Label>
               <div className="flex gap-2 mt-2">
-                {["👦", "👧", "🧒", "👶", "🦸‍♂️", "🦸‍♀️", "🧑‍🎓", "👨‍🎓", "👩‍🎓"].map(
+                {["👦", "����", "🧒", "👶", "🦸‍♂️", "🦸‍♀️", "🧑‍🎓", "👨‍🎓", "👩‍🎓"].map(
                   (emoji) => (
                     <Button
                       key={emoji}
