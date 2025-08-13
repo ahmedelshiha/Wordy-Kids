@@ -639,32 +639,34 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onNavigateBack }) => {
         </div>
       </div>
 
-      {/* Content Filters */}
-      <Card>
-        <CardContent className="p-4">
-          <div className="flex gap-4 items-center">
+      {/* Enhanced Mobile Content Filters */}
+      <Card className="mx-2 md:mx-0">
+        <CardContent className="p-3 md:p-4">
+          <div className="flex flex-col md:flex-row gap-3 md:gap-4 md:items-center">
             <div className="flex-1">
               <Input
                 placeholder="Search words..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="max-w-sm"
+                className="w-full md:max-w-sm"
               />
             </div>
-            <Select value={wordFilter} onValueChange={setWordFilter}>
-              <SelectTrigger className="w-40">
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="all">All Status</SelectItem>
-                <SelectItem value="approved">Approved</SelectItem>
-                <SelectItem value="pending">Pending Review</SelectItem>
-                <SelectItem value="rejected">Rejected</SelectItem>
-              </SelectContent>
-            </Select>
-            <Button variant="outline" size="sm">
-              <Filter className="w-4 h-4" />
-            </Button>
+            <div className="flex gap-2">
+              <Select value={wordFilter} onValueChange={setWordFilter}>
+                <SelectTrigger className="w-32 md:w-40">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">All Status</SelectItem>
+                  <SelectItem value="approved">Approved</SelectItem>
+                  <SelectItem value="pending">Pending</SelectItem>
+                  <SelectItem value="rejected">Rejected</SelectItem>
+                </SelectContent>
+              </Select>
+              <Button variant="outline" size="sm" className="px-3">
+                <Filter className="w-4 h-4" />
+              </Button>
+            </div>
           </div>
         </CardContent>
       </Card>
