@@ -522,7 +522,7 @@ export function AchievementSystem({
                 return (
                   <div
                     key={index}
-                    className={`w-6 h-6 rounded-lg flex items-center justify-center text-xs font-bold transition-all hover:scale-125 cursor-pointer ${
+                    className={`w-5 h-5 md:w-6 md:h-6 rounded-lg flex items-center justify-center text-xs font-bold transition-all hover:scale-125 cursor-pointer ${
                       day.active
                         ? day.wordsLearned > 8
                           ? "bg-gradient-to-br from-educational-green to-green-400 text-white shadow-lg"
@@ -545,31 +545,31 @@ export function AchievementSystem({
               })}
             </div>
 
-            <div className="flex items-center justify-center gap-4 text-sm">
-              <div className="flex items-center gap-2">
-                <div className="w-4 h-4 bg-gray-100 rounded-sm flex items-center justify-center">
+            <div className="grid grid-cols-2 md:flex md:items-center md:justify-center gap-2 md:gap-4 text-xs md:text-sm">
+              <div className="flex items-center gap-1 md:gap-2">
+                <div className="w-3 h-3 md:w-4 md:h-4 bg-gray-100 rounded-sm flex items-center justify-center text-xs">
                   💤
                 </div>
                 <span className="text-gray-600">Rest day</span>
               </div>
-              <div className="flex items-center gap-2">
-                <div className="w-4 h-4 bg-educational-orange rounded-sm flex items-center justify-center text-white">
+              <div className="flex items-center gap-1 md:gap-2">
+                <div className="w-3 h-3 md:w-4 md:h-4 bg-educational-orange rounded-sm flex items-center justify-center text-white text-xs">
                   ✨
                 </div>
                 <span className="text-educational-orange font-semibold">
                   Learning day
                 </span>
               </div>
-              <div className="flex items-center gap-2">
-                <div className="w-4 h-4 bg-educational-blue rounded-sm flex items-center justify-center text-white">
+              <div className="flex items-center gap-1 md:gap-2">
+                <div className="w-3 h-3 md:w-4 md:h-4 bg-educational-blue rounded-sm flex items-center justify-center text-white text-xs">
                   ⭐
                 </div>
                 <span className="text-educational-blue font-semibold">
                   Great day
                 </span>
               </div>
-              <div className="flex items-center gap-2">
-                <div className="w-4 h-4 bg-educational-green rounded-sm flex items-center justify-center text-white">
+              <div className="flex items-center gap-1 md:gap-2">
+                <div className="w-3 h-3 md:w-4 md:h-4 bg-educational-green rounded-sm flex items-center justify-center text-white text-xs">
                   🏆
                 </div>
                 <span className="text-educational-green font-semibold">
