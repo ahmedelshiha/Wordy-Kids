@@ -1083,37 +1083,82 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
 
   const renderDetailedAnalytics = () =>
     selectedChild && (
-      <div className="space-y-6">
-        <div className="flex items-center justify-between">
+      <div className="space-y-4 md:space-y-6">
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 md:gap-0">
           <div>
-            <h2 className="text-2xl font-bold">Detailed Analytics</h2>
-            <p className="text-slate-600">
+            <h2 className="text-xl md:text-2xl font-bold">Learning Analytics</h2>
+            <p className="text-slate-600 text-sm md:text-base">
               In-depth insights for {selectedChild.name}
             </p>
           </div>
           <div className="flex gap-2">
-            <Button variant="outline" size="sm">
-              <Download className="w-4 h-4 mr-2" />
-              Export Report
+            <Button variant="outline" size="sm" className="text-xs md:text-sm px-2 md:px-3">
+              <Download className="w-3 h-3 md:w-4 md:h-4 mr-1 md:mr-2" />
+              <span className="hidden md:inline">Export Report</span>
+              <span className="md:hidden">Export</span>
             </Button>
-            <Button variant="outline" size="sm">
-              <Mail className="w-4 h-4 mr-2" />
-              Email Summary
+            <Button variant="outline" size="sm" className="text-xs md:text-sm px-2 md:px-3">
+              <Mail className="w-3 h-3 md:w-4 md:h-4 mr-1 md:mr-2" />
+              <span className="hidden md:inline">Email Summary</span>
+              <span className="md:hidden">Email</span>
             </Button>
           </div>
+        </div>
+
+        {/* Enhanced Learning Path Overview */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
+          <Card className="bg-gradient-to-br from-green-50 to-green-100">
+            <CardContent className="p-3 md:p-4 text-center">
+              <CheckCircle className="w-6 h-6 md:w-8 md:h-8 mx-auto mb-2 text-green-600" />
+              <div className="text-xl md:text-2xl font-bold text-green-700">
+                <AnimatedCounter value={childrenWordStats[selectedChild.id]?.wordsRemembered || 0} />
+              </div>
+              <p className="text-xs md:text-sm text-green-600 font-medium">Words Mastered</p>
+            </CardContent>
+          </Card>
+
+          <Card className="bg-gradient-to-br from-orange-50 to-orange-100">
+            <CardContent className="p-3 md:p-4 text-center">
+              <AlertCircle className="w-6 h-6 md:w-8 md:h-8 mx-auto mb-2 text-orange-600" />
+              <div className="text-xl md:text-2xl font-bold text-orange-700">
+                <AnimatedCounter value={childrenWordStats[selectedChild.id]?.wordsNeedingPractice || 0} />
+              </div>
+              <p className="text-xs md:text-sm text-orange-600 font-medium">Need Practice</p>
+            </CardContent>
+          </Card>
+
+          <Card className="bg-gradient-to-br from-blue-50 to-blue-100">
+            <CardContent className="p-3 md:p-4 text-center">
+              <Target className="w-6 h-6 md:w-8 md:h-8 mx-auto mb-2 text-blue-600" />
+              <div className="text-xl md:text-2xl font-bold text-blue-700">
+                <AnimatedCounter value={childrenWordStats[selectedChild.id]?.averageAccuracy || 0} suffix="%" />
+              </div>
+              <p className="text-xs md:text-sm text-blue-600 font-medium">Accuracy Rate</p>
+            </CardContent>
+          </Card>
+
+          <Card className="bg-gradient-to-br from-purple-50 to-purple-100">
+            <CardContent className="p-3 md:p-4 text-center">
+              <BookOpen className="w-6 h-6 md:w-8 md:h-8 mx-auto mb-2 text-purple-600" />
+              <div className="text-xl md:text-2xl font-bold text-purple-700">
+                <AnimatedCounter value={childrenWordStats[selectedChild.id]?.totalWordsLearned || 0} />
+              </div>
+              <p className="text-xs md:text-sm text-purple-600 font-medium">Total Learned</p>
+            </CardContent>
+          </Card>
         </div>
 
         {/* Word Progress Tracking Section */}
         {childrenWordStats[selectedChild.id] && (
           <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <BookOpen className="w-6 h-6 text-blue-500" />
-                Word Progress Tracking
+            <CardHeader className="pb-3 md:pb-6">
+              <CardTitle className="flex items-center gap-2 text-base md:text-lg">
+                <BookOpen className="w-5 h-5 md:w-6 md:h-6 text-blue-500" />
+                Learning Path Progress
               </CardTitle>
             </CardHeader>
-            <CardContent>
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <CardContent className="px-3 md:px-6">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-6">
                 {/* Words That Need Practice */}
                 <div>
                   <div className="flex items-center gap-2 mb-4">
