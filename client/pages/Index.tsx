@@ -1304,6 +1304,8 @@ export default function Index({ initialProfile }: IndexProps) {
                       // Stay in current tab - practice component will show as overlay
                     }}
                     onRequestNewWords={generateFreshWords}
+                    dashboardSession={dashboardSession}
+                    onGenerateNewSession={generateDashboardWords}
                   />
 
                   {/* Enhanced Word Selection Debug Panel */}
