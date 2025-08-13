@@ -393,10 +393,11 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onNavigateBack }) => {
   const [viewMode, setViewMode] = useState<"grid" | "list">("list");
 
   // Sample analytics data
+  // Enhanced analytics data with real word database integration
   const analytics: SystemAnalytics = {
     totalUsers: 2847,
     activeUsers: 1653,
-    totalWords: 1200,
+    totalWords: wordsDatabase.length, // Real word count: 259 words
     totalSessions: 15672,
     avgSessionDuration: 12.5,
     platformEngagement: 78,
@@ -405,6 +406,76 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onNavigateBack }) => {
     supportResponseTime: 4.2,
     systemUptime: 99.8,
   };
+
+  // Get unique categories from real database
+  const availableCategories = React.useMemo(() => {
+    const cats = getAllCategories();
+    return cats.map(cat => ({
+      id: cat,
+      name: cat.charAt(0).toUpperCase() + cat.slice(1),
+      count: getWordsByCategory(cat).length
+    }));
+  }, []);
+
+  // Enhanced filtering and sorting logic
+  const filteredAndSortedWords = React.useMemo(() => {
+    let filtered = words.filter(word => {
+      const matchesSearch = searchTerm === "" ||
+        word.word.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        word.definition.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        word.category.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        word.example.toLowerCase().includes(searchTerm.toLowerCase());
+
+      const matchesStatus = wordFilter === "all" || word.status === wordFilter;
+      const matchesCategory = categoryFilter === "all" || word.category === categoryFilter;
+      const matchesDifficulty = difficultyFilter === "all" || word.difficulty === difficultyFilter;
+
+      return matchesSearch && matchesStatus && matchesCategory && matchesDifficulty;
+    });
+
+    // Sort the filtered results
+    filtered.sort((a, b) => {
+      let aVal, bVal;
+      switch (sortBy) {
+        case "word":
+          aVal = a.word.toLowerCase();
+          bVal = b.word.toLowerCase();
+          break;
+        case "category":
+          aVal = a.category.toLowerCase();
+          bVal = b.category.toLowerCase();
+          break;
+        case "difficulty":
+          const diffOrder = { easy: 1, medium: 2, hard: 3 };
+          aVal = diffOrder[a.difficulty];
+          bVal = diffOrder[b.difficulty];
+          break;
+        case "usageCount":
+          aVal = a.usageCount;
+          bVal = b.usageCount;
+          break;
+        case "accuracy":
+          aVal = a.accuracy;
+          bVal = b.accuracy;
+          break;
+        case "lastUsed":
+          aVal = a.lastUsed?.getTime() || 0;
+          bVal = b.lastUsed?.getTime() || 0;
+          break;
+        default:
+          aVal = a.word.toLowerCase();
+          bVal = b.word.toLowerCase();
+      }
+
+      if (sortOrder === "asc") {
+        return aVal < bVal ? -1 : aVal > bVal ? 1 : 0;
+      } else {
+        return aVal > bVal ? -1 : aVal < bVal ? 1 : 0;
+      }
+    });
+
+    return filtered;
+  }, [words, searchTerm, wordFilter, categoryFilter, difficultyFilter, sortBy, sortOrder]);
 
   const renderOverview = () => (
     <div className="space-y-6">
