@@ -801,7 +801,7 @@ export default function Index({ initialProfile }: IndexProps) {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 relative">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 relative overflow-x-hidden">
       {/* Optimized Mobile-First Header */}
       <header className="relative overflow-hidden bg-gradient-to-r from-educational-blue via-educational-purple to-educational-pink text-white">
         <div className="absolute inset-0 bg-black/10"></div>
@@ -2436,10 +2436,10 @@ export default function Index({ initialProfile }: IndexProps) {
         achievementCount={learningStats.badges.filter((b) => b.earned).length}
       />
 
-      {/* Floating Helper */}
-      <div className="fixed bottom-20 lg:bottom-4 md:bottom-6 right-4 md:right-6 z-40">
+      {/* Mobile-Optimized Floating Helper */}
+      <div className="fixed bottom-24 sm:bottom-20 lg:bottom-6 right-3 sm:right-4 md:right-6 z-40">
         <div
-          className="bg-gradient-to-r from-educational-purple to-educational-pink p-3 md:p-4 rounded-full shadow-2xl cursor-pointer md:hover:scale-110 transition-all duration-300 min-w-[48px] min-h-[48px] flex items-center justify-center"
+          className="bg-gradient-to-r from-educational-purple to-educational-pink p-3 md:p-4 rounded-full shadow-2xl cursor-pointer transition-all duration-300 min-w-[48px] min-h-[48px] flex items-center justify-center active:scale-95"
           onClick={() =>
             setFeedback({
               type: "encouragement",
