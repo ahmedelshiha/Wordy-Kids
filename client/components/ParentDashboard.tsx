@@ -157,7 +157,7 @@ const sampleChildren: ChildProfile[] = [
     id: "1",
     name: "Alex",
     age: 8,
-    avatar: "👦",
+    avatar: "��",
     level: 3,
     totalPoints: 1250,
     wordsLearned: 47,
@@ -680,24 +680,25 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
         </CardContent>
       </Card>
 
-      {/* Children Cards with Enhanced Information */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      {/* Children Cards with Enhanced Information - Mobile Optimized */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 md:gap-6">
         {children.length === 0 ? (
-          <Card className="col-span-2 text-center py-12">
-            <CardContent>
-              <div className="text-6xl mb-4">👶</div>
-              <h3 className="text-xl font-semibold mb-2">
+          <Card className="col-span-2 text-center py-8 md:py-12">
+            <CardContent className="px-3 md:px-6">
+              <div className="text-4xl md:text-6xl mb-3 md:mb-4">👶</div>
+              <h3 className="text-lg md:text-xl font-semibold mb-2">
                 No Children Added Yet
               </h3>
-              <p className="text-gray-600 mb-6">
+              <p className="text-gray-600 mb-4 md:mb-6 text-sm md:text-base">
                 Add your first child to start tracking their learning progress
               </p>
               <Button
                 onClick={() => setShowAddChildDialog(true)}
-                className="bg-educational-blue"
+                className="bg-educational-blue text-sm md:text-base"
               >
-                <UserPlus className="w-4 h-4 mr-2" />
-                Add Your First Child
+                <UserPlus className="w-3 h-3 md:w-4 md:h-4 mr-1 md:mr-2" />
+                <span className="hidden md:inline">Add Your First Child</span>
+                <span className="md:hidden">Add Child</span>
               </Button>
             </CardContent>
           </Card>
@@ -713,16 +714,16 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
             return (
               <Card
                 key={child.id}
-                className="cursor-pointer hover:shadow-lg transition-all duration-300 hover:scale-[1.02] border-l-4 border-l-educational-blue"
+                className="cursor-pointer hover:shadow-lg transition-all duration-300 md:hover:scale-[1.02] border-l-4 border-l-educational-blue"
                 onClick={() => setSelectedChild(child)}
               >
-                <CardHeader>
+                <CardHeader className="pb-3 md:pb-6">
                   <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-3">
-                      <div className="text-4xl">{child.avatar}</div>
+                    <div className="flex items-center gap-2 md:gap-3">
+                      <div className="text-3xl md:text-4xl">{child.avatar}</div>
                       <div>
-                        <CardTitle className="text-xl">{child.name}</CardTitle>
-                        <p className="text-sm text-slate-600">
+                        <CardTitle className="text-lg md:text-xl">{child.name}</CardTitle>
+                        <p className="text-xs md:text-sm text-slate-600">
                           {child.age} years old • Level {child.level}
                         </p>
                         <Badge variant="outline" className="text-xs mt-1">
