@@ -929,7 +929,7 @@ export default function Index({ initialProfile }: IndexProps) {
               </div>
             </div>
             <h1 className="text-2xl md:text-3xl font-bold mb-1">
-              ��� Wordy's Adventure!
+              🌟 Wordy's Adventure!
             </h1>
             <p className="text-lg font-semibold text-educational-yellow-light mb-2">
               Fun vocabulary learning for kids! 📚
@@ -947,7 +947,7 @@ export default function Index({ initialProfile }: IndexProps) {
               📚
             </div>
             <div className="hidden md:block absolute bottom-10 left-20 text-4xl animate-bounce delay-1000">
-              ���📚✨
+              ������✨
             </div>
             <div className="hidden md:block absolute bottom-20 right-10 text-3xl animate-pulse delay-500">
               🚀
