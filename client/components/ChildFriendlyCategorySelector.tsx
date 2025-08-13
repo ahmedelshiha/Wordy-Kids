@@ -509,27 +509,63 @@ export function ChildFriendlyCategorySelector({
         </div>
       )}
 
-      {/* Mobile Quick Categories Bar */}
-      <div className="md:hidden mb-6">
-        <h3 className="text-sm font-semibold text-slate-700 mb-3 px-2">🚀 Quick Select</h3>
-        <div className="flex gap-2 overflow-x-auto pb-2 px-2">
-          {categories.slice(0, 6).map((category) => (
-            <Button
-              key={category.id}
-              variant={selectedCategory === category.id ? "default" : "outline"}
-              size="sm"
-              onClick={() => handleCategoryClick(category.id)}
-              className={`flex-shrink-0 h-16 w-16 flex-col gap-1 ${
-                selectedCategory === category.id
-                  ? "bg-educational-blue hover:bg-educational-blue/90 text-white border-2 border-educational-blue"
-                  : "hover:bg-educational-blue/10 hover:text-educational-blue hover:border-educational-blue"
-              }`}
-            >
-              <span className="text-lg">{category.icon}</span>
-              <span className="text-xs font-medium text-center leading-tight">{category.name.split(' ')[0]}</span>
-            </Button>
-          ))}
+      {/* Mobile Search and Quick Categories */}
+      <div className="md:hidden mb-6 px-2">
+        {/* Mobile Search Bar */}
+        <div className="mb-4">
+          <div className="relative">
+            <input
+              type="text"
+              placeholder="🔍 Search categories..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="w-full px-4 py-3 pl-10 pr-12 rounded-full border-2 border-educational-blue/20 focus:border-educational-blue focus:outline-none bg-white/80 backdrop-blur-sm text-sm"
+            />
+            <div className="absolute left-3 top-1/2 transform -translate-y-1/2 text-educational-blue">
+              🔍
+            </div>
+            {searchTerm && (
+              <Button
+                size="sm"
+                variant="ghost"
+                onClick={() => setSearchTerm("")}
+                className="absolute right-2 top-1/2 transform -translate-y-1/2 h-8 w-8 p-0 hover:bg-educational-blue/10"
+              >
+                ✕
+              </Button>
+            )}
+          </div>
+          {searchTerm && (
+            <div className="mt-2 text-xs text-slate-600 text-center">
+              Found {categories.length} categories matching "{searchTerm}"
+            </div>
+          )}
         </div>
+
+        {/* Quick Categories Bar */}
+        {!searchTerm && (
+          <div>
+            <h3 className="text-sm font-semibold text-slate-700 mb-3">🚀 Quick Select</h3>
+            <div className="flex gap-2 overflow-x-auto pb-2">
+              {enrichedCategories.slice(0, 6).map((category) => (
+                <Button
+                  key={category.id}
+                  variant={selectedCategory === category.id ? "default" : "outline"}
+                  size="sm"
+                  onClick={() => handleCategoryClick(category.id)}
+                  className={`flex-shrink-0 h-16 w-16 flex-col gap-1 ${
+                    selectedCategory === category.id
+                      ? "bg-educational-blue hover:bg-educational-blue/90 text-white border-2 border-educational-blue"
+                      : "hover:bg-educational-blue/10 hover:text-educational-blue hover:border-educational-blue"
+                  }`}
+                >
+                  <span className="text-lg">{category.icon}</span>
+                  <span className="text-xs font-medium text-center leading-tight">{category.name.split(' ')[0]}</span>
+                </Button>
+              ))}
+            </div>
+          </div>
+        )}
       </div>
 
       {/* Enhanced Categories Grid with Mobile Optimization */}
