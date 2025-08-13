@@ -520,20 +520,18 @@ export default function LoginForm() {
 
         {/* Enhanced Guest Login Section */}
         <div className="text-center mt-8 space-y-4 animate-fade-in animation-delay-200">
-          <div className="flex justify-center">
-            <Button
-              onClick={handleBackToMain}
-              variant="outline"
-              className="px-8 py-4 bg-gradient-to-r from-orange-100 to-yellow-100 hover:from-orange-200 hover:to-yellow-200 text-orange-700 border-2 border-orange-300 hover:border-orange-400 font-bold text-lg rounded-xl shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300"
-              disabled={isLoading}
-            >
-              <div className="flex items-center gap-3">
-                <span className="text-2xl animate-gentle-bounce">🎮</span>
-                <span>Continue as Guest</span>
-                <span className="text-2xl animate-sparkle">✨</span>
-              </div>
-            </Button>
-          </div>
+          {/* Mobile-optimized Guest Sign In Button */}
+          <Button
+            onClick={handleBackToMain}
+            className="w-full py-3 bg-gradient-to-r from-orange-500 via-yellow-500 to-amber-500 hover:from-orange-600 hover:via-yellow-600 hover:to-amber-600 text-white font-semibold text-lg shadow-lg hover:shadow-xl transform hover:scale-[1.02] transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
+            disabled={isLoading}
+          >
+            <div className="flex items-center justify-center gap-3">
+              <span className="text-xl animate-gentle-bounce">🎮</span>
+              <span>Sign In as Guest</span>
+              <span className="text-xl animate-sparkle">✨</span>
+            </div>
+          </Button>
 
           <div className="text-sm text-gray-600">
             Don't have an account?{" "}
@@ -546,18 +544,6 @@ export default function LoginForm() {
               Create one for free
             </Button>
           </div>
-        </div>
-
-        {/* Demo Credentials Hint */}
-        <div className="mt-6 p-4 bg-blue-50 border border-blue-200 rounded-lg text-center animate-fade-in animation-delay-300">
-          <p className="text-xs text-blue-700 font-medium mb-1">
-            🚀 Quick Demo Access
-          </p>
-          <p className="text-xs text-blue-600">
-            Try:{" "}
-            <code className="bg-blue-100 px-1 rounded">demo@example.com</code> /{" "}
-            <code className="bg-blue-100 px-1 rounded">demo123</code>
-          </p>
         </div>
       </div>
     </div>
