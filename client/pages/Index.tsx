@@ -103,7 +103,7 @@ export default function Index({ initialProfile }: IndexProps) {
   const [selectedQuizType, setSelectedQuizType] = useState<
     "quick" | "standard" | "challenge" | "picture" | "spelling" | "speed"
   >("standard");
-  const [selectedCategory, setSelectedCategory] = useState("all");
+  const [selectedCategory, setSelectedCategory] = useState("animals");
   const [learningMode, setLearningMode] = useState<
     "cards" | "matching" | "selector"
   >("selector");
@@ -213,7 +213,7 @@ export default function Index({ initialProfile }: IndexProps) {
       {
         id: "first-word",
         name: "First Word",
-        icon: "🎯",
+        icon: "����",
         earned: rememberedWords.size >= 1,
         description: "Learned your first word",
       },
