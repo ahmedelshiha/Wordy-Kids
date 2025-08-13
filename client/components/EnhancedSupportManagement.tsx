@@ -521,7 +521,7 @@ const EnhancedSupportManagement: React.FC<EnhancedSupportManagementProps> = ({
         ticket.subject.toLowerCase().includes(searchTerm.toLowerCase()) ||
         ticket.userName.toLowerCase().includes(searchTerm.toLowerCase()) ||
         ticket.userEmail.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        ticket.tags.some(tag => tag.toLowerCase().includes(searchTerm.toLowerCase()));
+        (ticket.tags || []).some(tag => tag.toLowerCase().includes(searchTerm.toLowerCase()));
 
       const matchesStatus = statusFilter === "all" || ticket.status === statusFilter;
       const matchesPriority = priorityFilter === "all" || ticket.priority === priorityFilter;
@@ -987,7 +987,7 @@ const EnhancedSupportManagement: React.FC<EnhancedSupportManagementProps> = ({
                           <span>•</span>
                           <span>{formatTimeAgo(ticket.createdAt)}</span>
                         </div>
-                        {ticket.tags.length > 0 && (
+                        {ticket.tags && ticket.tags.length > 0 && (
                           <div className="flex gap-1">
                             {ticket.tags.slice(0, 2).map(tag => (
                               <Badge key={tag} variant="outline" className="text-xs">
@@ -1162,7 +1162,7 @@ const EnhancedSupportManagement: React.FC<EnhancedSupportManagementProps> = ({
                             </div>
                           </div>
                           
-                          {ticket.tags.length > 0 && (
+                          {ticket.tags && ticket.tags.length > 0 && (
                             <div className="flex gap-1 flex-wrap">
                               {ticket.tags.slice(0, 2).map(tag => (
                                 <Badge key={tag} variant="outline" className="text-xs">
@@ -1302,7 +1302,7 @@ const EnhancedSupportManagement: React.FC<EnhancedSupportManagementProps> = ({
                     <div>
                       <Label className="font-medium">Tags</Label>
                       <div className="mt-2 flex flex-wrap gap-2">
-                        {showTicketDetail.tags.map(tag => (
+                        {(showTicketDetail.tags || []).map(tag => (
                           <Badge key={tag} variant="outline">{tag}</Badge>
                         ))}
                       </div>
