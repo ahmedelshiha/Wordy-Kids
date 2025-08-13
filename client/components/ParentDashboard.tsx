@@ -1152,9 +1152,28 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
               <p className="text-slate-500 mb-6">
                 {children.length === 0
                   ? "Add a child profile first to view learning analytics."
-                  : "Select a child from the overview to view their detailed analytics."
+                  : "Select a child to view their detailed analytics."
                 }
               </p>
+              {children.length > 0 && (
+                <div className="space-y-4">
+                  <p className="text-sm text-slate-600">Available children:</p>
+                  <div className="flex flex-wrap gap-2 justify-center">
+                    {children.map((child) => (
+                      <Button
+                        key={child.id}
+                        variant="outline"
+                        size="sm"
+                        onClick={() => setSelectedChild(child)}
+                        className="flex items-center gap-2"
+                      >
+                        <span className="text-lg">{child.avatar}</span>
+                        {child.name}
+                      </Button>
+                    ))}
+                  </div>
+                </div>
+              )}
               {children.length === 0 && (
                 <Button
                   onClick={() => setShowAddChildDialog(true)}
