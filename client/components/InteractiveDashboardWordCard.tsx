@@ -58,6 +58,9 @@ interface InteractiveDashboardWordCardProps {
   className?: string;
   onRequestNewWords?: () => void; // New prop to request fresh words
   onSessionProgress?: (stats: SessionStats) => void; // New prop to report session progress
+  // Systematic word generation props
+  dashboardSession?: DashboardWordSession | null;
+  onGenerateNewSession?: () => void; // Function to generate new systematic session
 }
 
 export interface SessionStats {
