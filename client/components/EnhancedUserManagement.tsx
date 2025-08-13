@@ -687,11 +687,50 @@ const EnhancedUserManagement: React.FC<EnhancedUserManagementProps> = ({
         {/* Bulk Actions */}
         {selectedUsers.length > 0 && (
           <div className="mt-4 p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg border border-blue-200 dark:border-blue-800">
-            <div className="flex items-center justify-between">
+            <div className="flex flex-col space-y-3 md:flex-row md:items-center md:justify-between md:space-y-0">
               <span className="text-sm font-medium text-blue-900 dark:text-blue-100">
                 {selectedUsers.length} user{selectedUsers.length > 1 ? 's' : ''} selected
               </span>
-              <div className="flex gap-2">
+
+              {/* Mobile Bulk Actions */}
+              <div className="md:hidden">
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button variant="default" size="sm" className="w-full">
+                      <Settings className="w-4 h-4 mr-2" />
+                      Bulk Actions
+                      <ChevronDown className="w-4 h-4 ml-2" />
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="end" className="w-48">
+                    {bulkActions.map((action) => (
+                      <DropdownMenuItem
+                        key={action.type}
+                        onClick={() => {
+                          setSelectedBulkAction(action);
+                          setShowBulkActionDialog(true);
+                        }}
+                        className={
+                          action.variant === "destructive"
+                            ? "text-red-600 focus:text-red-600"
+                            : ""
+                        }
+                      >
+                        <action.icon className="w-4 h-4 mr-2" />
+                        {action.label}
+                      </DropdownMenuItem>
+                    ))}
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem onClick={() => setSelectedUsers([])}>
+                      <X className="w-4 h-4 mr-2" />
+                      Clear Selection
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              </div>
+
+              {/* Desktop Bulk Actions */}
+              <div className="hidden md:flex gap-2 flex-wrap">
                 {bulkActions.map((action) => (
                   <Button
                     key={action.type}
