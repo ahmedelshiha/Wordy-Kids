@@ -323,10 +323,32 @@ const sampleTickets: SupportTicket[] = [
 
 const AdminDashboard: React.FC<AdminDashboardProps> = ({ onNavigateBack }) => {
   const [activeTab, setActiveTab] = useState("overview");
-  const [words, setWords] = useState<AdminWord[]>(sampleWords);
+
+  // Convert real words database to admin format with enhanced metadata
+  const convertWordsToAdmin = React.useCallback((dbWords: Word[]): AdminWord[] => {
+    return dbWords.map(word => ({
+      ...word,
+      id: word.id.toString(),
+      status: "approved" as const,
+      submittedAt: new Date(Date.now() - Math.random() * 30 * 24 * 60 * 60 * 1000),
+      approvedAt: new Date(Date.now() - Math.random() * 25 * 24 * 60 * 60 * 1000),
+      usageCount: Math.floor(Math.random() * 2000) + 100,
+      accuracy: Math.floor(Math.random() * 30) + 70,
+      lastUsed: new Date(Date.now() - Math.random() * 7 * 24 * 60 * 60 * 1000),
+      isActive: true,
+      tags: [word.category, word.difficulty],
+      modificationHistory: [{
+        id: "1",
+        action: "created" as const,
+        timestamp: new Date(Date.now() - Math.random() * 30 * 24 * 60 * 60 * 1000),
+        author: "system",
+      }]
+    }));
+  }, []);
+
+  const [words, setWords] = useState<AdminWord[]>(() => convertWordsToAdmin(wordsDatabase));
   const [users, setUsers] = useState<AdminUser[]>(sampleUsers);
-  const [categories, setCategories] =
-    useState<AdminCategory[]>(sampleCategories);
+  const [categories, setCategories] = useState<AdminCategory[]>(sampleCategories);
   const [tickets, setTickets] = useState<SupportTicket[]>(sampleTickets);
 
   // Dialog states
@@ -337,11 +359,9 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onNavigateBack }) => {
   const [showBulkImport, setShowBulkImport] = useState(false);
   const [showWordEditor, setShowWordEditor] = useState(false);
   const [editingWord, setEditingWord] = useState<AdminWord | null>(null);
-  const [wordEditorMode, setWordEditorMode] = useState<"create" | "edit">(
-    "create",
-  );
+  const [wordEditorMode, setWordEditorMode] = useState<"create" | "edit">("create");
 
-  // Form states
+  // Enhanced Form states
   const [newWordData, setNewWordData] = useState({
     word: "",
     pronunciation: "",
@@ -350,6 +370,7 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onNavigateBack }) => {
     category: "",
     difficulty: "easy" as const,
     funFact: "",
+    emoji: "",
   });
 
   const [newCategoryData, setNewCategoryData] = useState({
@@ -359,11 +380,17 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onNavigateBack }) => {
     difficulty: "easy" as const,
   });
 
-  // Filter states
+  // Enhanced Filter and Search states
   const [wordFilter, setWordFilter] = useState("all");
+  const [categoryFilter, setCategoryFilter] = useState("all");
+  const [difficultyFilter, setDifficultyFilter] = useState("all");
   const [userFilter, setUserFilter] = useState("all");
   const [ticketFilter, setTicketFilter] = useState("all");
   const [searchTerm, setSearchTerm] = useState("");
+  const [sortBy, setSortBy] = useState<"word" | "category" | "difficulty" | "usageCount" | "accuracy" | "lastUsed">("word");
+  const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc");
+  const [selectedWords, setSelectedWords] = useState<string[]>([]);
+  const [viewMode, setViewMode] = useState<"grid" | "list">("list");
 
   // Sample analytics data
   const analytics: SystemAnalytics = {
