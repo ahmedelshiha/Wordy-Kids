@@ -1276,11 +1276,7 @@ export default function Index({ initialProfile }: IndexProps) {
                         selectedCategory={selectedCategory}
                         onSelectCategory={(category) => {
                           handleCategoryChange(category);
-                          if (category === "all") {
-                            setLearningMode("cards");
-                          } else {
-                            setLearningMode("cards");
-                          }
+                          setLearningMode("cards");
                         }}
                         userInterests={currentProfile?.interests || []}
                       />
