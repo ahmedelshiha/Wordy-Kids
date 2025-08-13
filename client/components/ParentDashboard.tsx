@@ -157,7 +157,7 @@ const sampleChildren: ChildProfile[] = [
     id: "1",
     name: "Alex",
     age: 8,
-    avatar: "��",
+    avatar: "���",
     level: 3,
     totalPoints: 1250,
     wordsLearned: 47,
@@ -170,7 +170,17 @@ const sampleChildren: ChildProfile[] = [
     difficultyPreference: "medium",
     parentNotes:
       "Loves animal facts. Struggles with spelling but excels at comprehension.",
-    customWords: ["dinosaur", "paleontologist", "prehistoric", "excavation"],
+    customWords: [
+      "dinosaur",
+      "paleontologist",
+      "prehistoric",
+      "excavation",
+      "tyrannosaurus",
+      "archeologist",
+      "fossil",
+      "museum",
+      "discovery",
+    ],
     weeklyTarget: 20,
     monthlyTarget: 80,
     learningStrengths: [
@@ -222,7 +232,19 @@ const sampleChildren: ChildProfile[] = [
     difficultyPreference: "easy",
     parentNotes:
       "Very enthusiastic learner. Loves nature and outdoor activities.",
-    customWords: ["butterfly", "flowers", "garden", "rainbow"],
+    customWords: [
+      "butterfly",
+      "flowers",
+      "garden",
+      "rainbow",
+      "sunshine",
+      "petals",
+      "pollination",
+      "caterpillar",
+      "meadow",
+      "blossom",
+      "nature",
+    ],
     weeklyTarget: 15,
     monthlyTarget: 60,
     learningStrengths: [
@@ -253,7 +275,8 @@ const sampleGoals: ParentGoal[] = [
     id: "goal-1",
     childId: "1",
     title: "Weekly Word Mastery",
-    description: "Learn 20 new words this week",
+    description:
+      "Learn 20 new words this week through various games and activities",
     targetValue: 20,
     currentValue: 12,
     deadline: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000),
@@ -272,6 +295,42 @@ const sampleGoals: ParentGoal[] = [
     type: "weekly",
     status: "active",
     reward: "Choose family movie night film",
+  },
+  {
+    id: "goal-3",
+    childId: "1",
+    title: "Reading Champion",
+    description: "Achieve 95% accuracy in reading games",
+    targetValue: 95,
+    currentValue: 95,
+    deadline: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000),
+    type: "daily",
+    status: "completed",
+    reward: "Special sticker collection",
+  },
+  {
+    id: "goal-4",
+    childId: "2",
+    title: "Spelling Bee Prep",
+    description: "Master 50 spelling words for the school spelling bee",
+    targetValue: 50,
+    currentValue: 15,
+    deadline: new Date(Date.now() + 1 * 24 * 60 * 60 * 1000),
+    type: "monthly",
+    status: "active",
+    reward: "New book of choice",
+  },
+  {
+    id: "goal-5",
+    childId: "1",
+    title: "Adventure Completion",
+    description: "Complete the Ocean Adventure learning path",
+    targetValue: 10,
+    currentValue: 3,
+    deadline: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000),
+    type: "weekly",
+    status: "active",
+    reward: "Family trip to aquarium",
   },
 ];
 
@@ -1021,17 +1080,20 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
   );
 
   const renderGoalsManagement = () => (
-    <div className="space-y-6">
-      <div className="flex items-center justify-between">
-        <div>
-          <h2 className="text-2xl font-bold">Goal Management</h2>
-          <p className="text-slate-600">
+    <div className="space-y-4 md:space-y-6 p-2 md:p-0">
+      {/* Mobile-optimized header */}
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-3">
+        <div className="text-center md:text-left">
+          <h2 className="text-xl md:text-2xl font-bold text-slate-800">
+            Goal Management
+          </h2>
+          <p className="text-sm md:text-base text-slate-600">
             Set and track learning objectives for your children
           </p>
         </div>
         <Button
           onClick={() => setShowAddGoalDialog(true)}
-          className="bg-educational-blue"
+          className="bg-educational-blue hover:bg-educational-blue/90 w-full md:w-auto text-sm md:text-base py-3 md:py-2"
           disabled={children.length === 0}
         >
           <Plus className="w-4 h-4 mr-2" />
@@ -1039,175 +1101,563 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
         </Button>
       </div>
 
-      {/* Goals by Child */}
+      {/* No goals state - enhanced for mobile */}
       {children.length === 0 ? (
-        <Card className="text-center py-8">
-          <CardContent>
-            <div className="text-4xl mb-4">🎯</div>
-            <h3 className="text-lg font-semibold mb-2">No Goals Yet</h3>
-            <p className="text-gray-600">
-              Add children first to create learning goals
+        <Card className="text-center py-12 mx-auto max-w-md">
+          <CardContent className="space-y-4">
+            <div className="text-6xl animate-gentle-bounce">🎯</div>
+            <h3 className="text-lg md:text-xl font-semibold text-slate-700">
+              No Goals Yet
+            </h3>
+            <p className="text-slate-600 text-sm md:text-base leading-relaxed">
+              Add children first to create personalized learning goals
             </p>
+            <div className="pt-4">
+              <div className="inline-flex items-center gap-2 px-4 py-2 bg-educational-blue/10 rounded-full text-educational-blue text-xs font-medium">
+                <div className="w-2 h-2 bg-educational-blue rounded-full animate-pulse"></div>
+                Get started by adding a child profile
+              </div>
+            </div>
           </CardContent>
         </Card>
       ) : (
-        children.map((child) => {
-          const childGoals = getChildGoals(child.id);
-          if (childGoals.length === 0) return null;
-
-          return (
-            <Card key={child.id}>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-3">
-                  <span className="text-2xl">{child.avatar}</span>
-                  {child.name}'s Goals
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="grid gap-4">
-                  {childGoals.map((goal) => {
-                    const progressPercentage = Math.min(
-                      (goal.currentValue / goal.targetValue) * 100,
-                      100,
-                    );
-                    const isCompleted = goal.status === "completed";
-                    const isOverdue =
-                      new Date() > goal.deadline && !isCompleted;
-
-                    return (
-                      <div
-                        key={goal.id}
-                        className={`p-4 rounded-lg border ${
-                          isCompleted
-                            ? "bg-green-50 border-green-200"
-                            : isOverdue
-                              ? "bg-red-50 border-red-200"
-                              : "bg-slate-50 border-slate-200"
-                        }`}
-                      >
-                        <div className="flex items-center justify-between mb-3">
-                          <div>
-                            <h4 className="font-semibold">{goal.title}</h4>
-                            <p className="text-sm text-slate-600">
-                              {goal.description}
-                            </p>
-                          </div>
-                          <div className="text-right">
-                            <Badge
-                              className={
-                                isCompleted
-                                  ? "bg-green-500"
-                                  : isOverdue
-                                    ? "bg-red-500"
-                                    : "bg-educational-blue"
-                              }
-                            >
-                              {goal.status}
-                            </Badge>
-                            <p className="text-xs text-slate-500 mt-1">
-                              Due: {goal.deadline.toLocaleDateString()}
-                            </p>
-                          </div>
-                        </div>
-
-                        <div className="mb-3">
-                          <div className="flex justify-between text-sm mb-1">
-                            <span>Progress</span>
-                            <span>
-                              {goal.currentValue}/{goal.targetValue}
-                            </span>
-                          </div>
-                          <Progress
-                            value={progressPercentage}
-                            className="h-2"
-                          />
-                        </div>
-
-                        {goal.reward && (
-                          <div className="flex items-center gap-2 text-sm text-slate-600">
-                            <Star className="w-4 h-4 text-yellow-500" />
-                            Reward: {goal.reward}
-                          </div>
-                        )}
-                      </div>
-                    );
-                  })}
+        <>
+          {/* Goals summary card for mobile */}
+          <div className="md:hidden">
+            <Card className="bg-gradient-to-r from-educational-blue/10 to-educational-purple/10 border-educational-blue/20">
+              <CardContent className="p-4">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <h3 className="font-semibold text-slate-800">
+                      Active Goals
+                    </h3>
+                    <p className="text-xs text-slate-600">
+                      Across all children
+                    </p>
+                  </div>
+                  <div className="text-right">
+                    <div className="text-2xl font-bold text-educational-blue">
+                      {children.reduce(
+                        (total, child) =>
+                          total + getChildGoals(child.id).length,
+                        0,
+                      )}
+                    </div>
+                    <p className="text-xs text-slate-600">Total goals</p>
+                  </div>
                 </div>
               </CardContent>
             </Card>
-          );
-        })
+          </div>
+
+          {/* Goals by Child - Mobile optimized */}
+          <div className="space-y-4">
+            {children.map((child) => {
+              const childGoals = getChildGoals(child.id);
+              const activeGoals = childGoals.filter(
+                (g) => g.status === "active",
+              ).length;
+              const completedGoals = childGoals.filter(
+                (g) => g.status === "completed",
+              ).length;
+
+              return (
+                <Card key={child.id} className="overflow-hidden">
+                  <CardHeader className="pb-3 bg-gradient-to-r from-slate-50 to-slate-100">
+                    <div className="flex items-center justify-between">
+                      <CardTitle className="flex items-center gap-3 text-base md:text-lg">
+                        <span className="text-2xl md:text-3xl">
+                          {child.avatar}
+                        </span>
+                        <div>
+                          <div>{child.name}'s Goals</div>
+                          <p className="text-xs md:text-sm font-normal text-slate-600">
+                            {activeGoals} active • {completedGoals} completed
+                          </p>
+                        </div>
+                      </CardTitle>
+                      {childGoals.length > 0 && (
+                        <div className="text-right">
+                          <div className="text-lg md:text-xl font-bold text-educational-blue">
+                            {Math.round(
+                              (completedGoals / childGoals.length) * 100,
+                            )}
+                            %
+                          </div>
+                          <p className="text-xs text-slate-500">Complete</p>
+                        </div>
+                      )}
+                    </div>
+                  </CardHeader>
+
+                  {childGoals.length === 0 ? (
+                    <CardContent className="py-8 text-center">
+                      <div className="text-3xl mb-2">📝</div>
+                      <p className="text-slate-600 text-sm">No goals set yet</p>
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        className="mt-3"
+                        onClick={() => setShowAddGoalDialog(true)}
+                      >
+                        Create First Goal
+                      </Button>
+                    </CardContent>
+                  ) : (
+                    <CardContent className="p-3 md:p-6">
+                      <div className="space-y-3 md:space-y-4">
+                        {childGoals.map((goal) => {
+                          const progressPercentage = Math.min(
+                            (goal.currentValue / goal.targetValue) * 100,
+                            100,
+                          );
+                          const isCompleted = goal.status === "completed";
+                          const isOverdue =
+                            new Date() > goal.deadline && !isCompleted;
+                          const isNearDeadline =
+                            !isCompleted &&
+                            !isOverdue &&
+                            (goal.deadline.getTime() - new Date().getTime()) /
+                              (1000 * 60 * 60 * 24) <=
+                              3;
+
+                          return (
+                            <div
+                              key={goal.id}
+                              className={`p-3 md:p-4 rounded-xl border-2 transition-all duration-200 ${
+                                isCompleted
+                                  ? "bg-gradient-to-r from-green-50 to-emerald-50 border-green-200 shadow-green-100/50"
+                                  : isOverdue
+                                    ? "bg-gradient-to-r from-red-50 to-pink-50 border-red-200 shadow-red-100/50"
+                                    : isNearDeadline
+                                      ? "bg-gradient-to-r from-orange-50 to-yellow-50 border-orange-200 shadow-orange-100/50"
+                                      : "bg-gradient-to-r from-slate-50 to-blue-50 border-slate-200 shadow-slate-100/50"
+                              } shadow-lg`}
+                            >
+                              {/* Mobile-first goal header */}
+                              <div className="flex flex-col md:flex-row md:items-start justify-between gap-2 mb-3">
+                                <div className="flex-1 min-w-0">
+                                  <div className="flex items-start gap-2">
+                                    <div className="flex-1">
+                                      <h4 className="font-semibold text-slate-800 text-sm md:text-base leading-snug">
+                                        {goal.title}
+                                      </h4>
+                                      {goal.description && (
+                                        <p className="text-xs md:text-sm text-slate-600 mt-1 line-clamp-2">
+                                          {goal.description}
+                                        </p>
+                                      )}
+                                    </div>
+                                    {isCompleted && (
+                                      <div className="text-green-500 animate-gentle-bounce">
+                                        <CheckCircle className="w-5 h-5" />
+                                      </div>
+                                    )}
+                                  </div>
+                                </div>
+
+                                <div className="flex items-center gap-2 md:flex-col md:items-end">
+                                  <Badge
+                                    className={`text-xs px-2 py-1 ${
+                                      isCompleted
+                                        ? "bg-green-500 hover:bg-green-600 text-white"
+                                        : isOverdue
+                                          ? "bg-red-500 hover:bg-red-600 text-white"
+                                          : isNearDeadline
+                                            ? "bg-orange-500 hover:bg-orange-600 text-white"
+                                            : "bg-educational-blue hover:bg-educational-blue/90 text-white"
+                                    }`}
+                                  >
+                                    {isCompleted
+                                      ? "Completed"
+                                      : isOverdue
+                                        ? "Overdue"
+                                        : isNearDeadline
+                                          ? "Due Soon"
+                                          : "Active"}
+                                  </Badge>
+                                  <p className="text-xs text-slate-500 whitespace-nowrap">
+                                    Due: {goal.deadline.toLocaleDateString()}
+                                  </p>
+                                </div>
+                              </div>
+
+                              {/* Enhanced progress section for mobile */}
+                              <div className="mb-3">
+                                <div className="flex justify-between items-center text-sm mb-2">
+                                  <span className="font-medium text-slate-700">
+                                    Progress
+                                  </span>
+                                  <div className="flex items-center gap-2">
+                                    <span className="text-slate-600">
+                                      {goal.currentValue}/{goal.targetValue}
+                                    </span>
+                                    <span className="font-semibold text-educational-blue">
+                                      {Math.round(progressPercentage)}%
+                                    </span>
+                                  </div>
+                                </div>
+                                <Progress
+                                  value={progressPercentage}
+                                  className="h-3 md:h-2 bg-slate-200"
+                                />
+                              </div>
+
+                              {/* Reward section with better mobile styling */}
+                              {goal.reward && (
+                                <div className="flex items-center gap-2 p-2 bg-yellow-50 rounded-lg border border-yellow-200">
+                                  <Star className="w-4 h-4 text-yellow-500 flex-shrink-0" />
+                                  <span className="text-sm text-slate-700 font-medium">
+                                    Reward: {goal.reward}
+                                  </span>
+                                </div>
+                              )}
+
+                              {/* Mobile action buttons */}
+                              <div className="md:hidden mt-3 flex gap-2">
+                                {!isCompleted && (
+                                  <Button
+                                    size="sm"
+                                    variant="outline"
+                                    className="flex-1 text-xs"
+                                    onClick={() => {
+                                      // Update progress logic
+                                    }}
+                                  >
+                                    Update Progress
+                                  </Button>
+                                )}
+                                <Button
+                                  size="sm"
+                                  variant="ghost"
+                                  className="px-3"
+                                >
+                                  <div className="w-4 h-4">⋯</div>
+                                </Button>
+                              </div>
+                            </div>
+                          );
+                        })}
+                      </div>
+                    </CardContent>
+                  )}
+                </Card>
+              );
+            })}
+          </div>
+
+          {/* Quick action buttons for mobile */}
+          <div className="md:hidden fixed bottom-20 right-4 z-40">
+            <div className="flex flex-col gap-2">
+              <Button
+                onClick={() => setShowAddGoalDialog(true)}
+                className="w-14 h-14 rounded-full bg-educational-blue hover:bg-educational-blue/90 shadow-lg"
+                disabled={children.length === 0}
+              >
+                <Plus className="w-6 h-6" />
+              </Button>
+            </div>
+          </div>
+        </>
       )}
     </div>
   );
 
   const renderCustomWords = () => (
-    <div className="space-y-6">
-      <div className="flex items-center justify-between">
-        <div>
-          <h2 className="text-2xl font-bold">Custom Vocabulary</h2>
-          <p className="text-slate-600">
+    <div className="space-y-4 md:space-y-6 p-2 md:p-0">
+      {/* Mobile-optimized header */}
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-3">
+        <div className="text-center md:text-left">
+          <h2 className="text-xl md:text-2xl font-bold text-slate-800">
+            Custom Vocabulary
+          </h2>
+          <p className="text-sm md:text-base text-slate-600">
             Add personalized words for your children's learning
           </p>
         </div>
         <Button
           onClick={() => setShowCustomWordDialog(true)}
-          className="bg-educational-green"
+          className="bg-educational-green hover:bg-educational-green/90 w-full md:w-auto text-sm md:text-base py-3 md:py-2"
+          disabled={!selectedChild}
         >
           <Plus className="w-4 h-4 mr-2" />
           Add Custom Word
         </Button>
       </div>
 
-      {selectedChild && (
-        <Card>
-          <CardHeader>
-            <CardTitle className="flex items-center gap-3">
-              <span className="text-2xl">{selectedChild.avatar}</span>
-              {selectedChild.name}'s Custom Words
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            {selectedChild.customWords.length === 0 ? (
-              <div className="text-center p-8">
-                <BookMarked className="w-16 h-16 text-slate-400 mx-auto mb-4" />
-                <h3 className="text-lg font-semibold mb-2">
-                  No Custom Words Yet
-                </h3>
-                <p className="text-slate-600 mb-4">
-                  Add words that are meaningful to your child's interests and
-                  experiences
-                </p>
-                <Button
-                  onClick={() => setShowCustomWordDialog(true)}
-                  className="bg-educational-green"
-                >
-                  <Plus className="w-4 h-4 mr-2" />
-                  Add First Word
-                </Button>
-              </div>
-            ) : (
-              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
-                {selectedChild.customWords.map((word, index) => (
-                  <div
-                    key={index}
-                    className="flex items-center justify-between p-3 bg-slate-50 rounded-lg"
+      {/* Child selector for mobile */}
+      {children.length > 1 && (
+        <div className="md:hidden">
+          <Card className="bg-gradient-to-r from-educational-green/10 to-educational-blue/10 border-educational-green/20">
+            <CardContent className="p-4">
+              <h3 className="font-semibold text-slate-800 mb-3">
+                Select Child
+              </h3>
+              <div className="flex gap-2 flex-wrap">
+                {children.map((child) => (
+                  <Button
+                    key={child.id}
+                    variant={
+                      selectedChild?.id === child.id ? "default" : "outline"
+                    }
+                    size="sm"
+                    onClick={() => setSelectedChild(child)}
+                    className={`${
+                      selectedChild?.id === child.id
+                        ? "bg-educational-green hover:bg-educational-green/90"
+                        : "hover:bg-educational-green/10 hover:text-educational-green hover:border-educational-green"
+                    }`}
                   >
-                    <span className="font-medium">{word}</span>
-                    <Button
-                      size="sm"
-                      variant="ghost"
-                      onClick={() => removeCustomWord(word)}
-                      className="text-red-500 hover:text-red-700 hover:bg-red-50"
-                    >
-                      <X className="w-4 h-4" />
-                    </Button>
-                  </div>
+                    <span className="mr-2">{child.avatar}</span>
+                    {child.name}
+                  </Button>
                 ))}
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+      )}
+
+      {/* No child selected state */}
+      {!selectedChild ? (
+        <Card className="text-center py-12 mx-auto max-w-md">
+          <CardContent className="space-y-4">
+            <div className="text-6xl animate-gentle-bounce">📚</div>
+            <h3 className="text-lg md:text-xl font-semibold text-slate-700">
+              Select a Child
+            </h3>
+            <p className="text-slate-600 text-sm md:text-base leading-relaxed">
+              Choose a child profile to manage their custom vocabulary
+            </p>
+            {children.length === 0 && (
+              <div className="pt-4">
+                <div className="inline-flex items-center gap-2 px-4 py-2 bg-educational-green/10 rounded-full text-educational-green text-xs font-medium">
+                  <div className="w-2 h-2 bg-educational-green rounded-full animate-pulse"></div>
+                  Add a child profile first
+                </div>
               </div>
             )}
           </CardContent>
         </Card>
+      ) : (
+        <div className="space-y-4">
+          {/* Stats overview for mobile */}
+          <div className="md:hidden">
+            <Card className="bg-gradient-to-r from-educational-green/10 to-educational-purple/10 border-educational-green/20">
+              <CardContent className="p-4">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <h3 className="font-semibold text-slate-800">
+                      {selectedChild.name}'s Words
+                    </h3>
+                    <p className="text-xs text-slate-600">
+                      Custom vocabulary collection
+                    </p>
+                  </div>
+                  <div className="text-right">
+                    <div className="text-2xl font-bold text-educational-green">
+                      {selectedChild.customWords.length}
+                    </div>
+                    <p className="text-xs text-slate-600">Total words</p>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+
+          {/* Custom words content */}
+          <Card className="overflow-hidden">
+            <CardHeader className="pb-3 bg-gradient-to-r from-educational-green/5 to-educational-blue/5">
+              <div className="flex items-center justify-between">
+                <CardTitle className="flex items-center gap-3 text-base md:text-lg">
+                  <span className="text-2xl md:text-3xl">
+                    {selectedChild.avatar}
+                  </span>
+                  <div>
+                    <div>{selectedChild.name}'s Custom Words</div>
+                    <p className="text-xs md:text-sm font-normal text-slate-600">
+                      {selectedChild.customWords.length} words in collection
+                    </p>
+                  </div>
+                </CardTitle>
+                <div className="hidden md:block">
+                  <Button
+                    size="sm"
+                    onClick={() => setShowCustomWordDialog(true)}
+                    className="bg-educational-green hover:bg-educational-green/90"
+                  >
+                    <Plus className="w-4 h-4 mr-1" />
+                    Add Word
+                  </Button>
+                </div>
+              </div>
+            </CardHeader>
+
+            <CardContent className="p-3 md:p-6">
+              {selectedChild.customWords.length === 0 ? (
+                <div className="text-center py-12">
+                  <div className="text-6xl mb-4 animate-gentle-bounce">📖</div>
+                  <h3 className="text-lg md:text-xl font-semibold mb-3 text-slate-700">
+                    No Custom Words Yet
+                  </h3>
+                  <p className="text-slate-600 text-sm md:text-base mb-6 leading-relaxed max-w-md mx-auto">
+                    Add words that are meaningful to {selectedChild.name}'s
+                    interests, family names, or everyday experiences to make
+                    learning more personal
+                  </p>
+                  <div className="space-y-3">
+                    <Button
+                      onClick={() => setShowCustomWordDialog(true)}
+                      className="bg-educational-green hover:bg-educational-green/90 w-full md:w-auto"
+                    >
+                      <Plus className="w-4 h-4 mr-2" />
+                      Add First Word
+                    </Button>
+                    <div className="text-xs text-slate-500">
+                      Suggestions: family names, pets, favorite foods, hobbies
+                    </div>
+                  </div>
+                </div>
+              ) : (
+                <div className="space-y-4">
+                  {/* Quick stats bar for desktop */}
+                  <div className="hidden md:flex items-center gap-4 p-3 bg-slate-50 rounded-lg">
+                    <div className="flex items-center gap-2">
+                      <BookMarked className="w-4 h-4 text-educational-green" />
+                      <span className="text-sm font-medium">
+                        {selectedChild.customWords.length} Total Words
+                      </span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <Target className="w-4 h-4 text-educational-blue" />
+                      <span className="text-sm text-slate-600">
+                        Personalized Learning
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* Enhanced word grid */}
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+                    {selectedChild.customWords.map((word, index) => (
+                      <div
+                        key={index}
+                        className="group relative p-4 bg-gradient-to-br from-white to-slate-50 rounded-xl border-2 border-slate-200 hover:border-educational-green/30 hover:shadow-lg transition-all duration-200"
+                      >
+                        <div className="flex items-center justify-between">
+                          <div className="flex-1 min-w-0">
+                            <div className="font-semibold text-slate-800 text-lg md:text-base capitalize">
+                              {word}
+                            </div>
+                            <div className="text-xs text-slate-500 mt-1">
+                              Custom word #{index + 1}
+                            </div>
+                          </div>
+                          <div className="flex items-center gap-1">
+                            <Button
+                              size="sm"
+                              variant="ghost"
+                              onClick={() => removeCustomWord(word)}
+                              className="text-red-500 hover:text-red-700 hover:bg-red-50 opacity-60 group-hover:opacity-100 transition-opacity"
+                            >
+                              <X className="w-4 h-4" />
+                            </Button>
+                          </div>
+                        </div>
+
+                        {/* Visual enhancement for mobile */}
+                        <div className="md:hidden mt-3 flex items-center gap-2">
+                          <div className="flex-1 h-1 bg-educational-green/20 rounded-full">
+                            <div className="h-1 bg-educational-green rounded-full w-full"></div>
+                          </div>
+                          <span className="text-xs text-educational-green font-medium">
+                            Added
+                          </span>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+
+                  {/* Bulk actions for mobile */}
+                  <div className="md:hidden mt-6 p-4 bg-slate-50 rounded-lg">
+                    <h4 className="font-semibold text-slate-800 mb-3">
+                      Quick Actions
+                    </h4>
+                    <div className="grid grid-cols-2 gap-3">
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => setShowCustomWordDialog(true)}
+                        className="flex-1"
+                      >
+                        <Plus className="w-4 h-4 mr-2" />
+                        Add More
+                      </Button>
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        className="flex-1 text-slate-600"
+                        onClick={() => {
+                          // Export functionality could be added here
+                        }}
+                      >
+                        <Download className="w-4 h-4 mr-2" />
+                        Export
+                      </Button>
+                    </div>
+                  </div>
+                </div>
+              )}
+            </CardContent>
+          </Card>
+
+          {/* Suggestions card for better UX */}
+          {selectedChild.customWords.length < 10 && (
+            <Card className="bg-gradient-to-r from-yellow-50 to-orange-50 border-yellow-200">
+              <CardContent className="p-4">
+                <div className="flex items-start gap-3">
+                  <Lightbulb className="w-5 h-5 text-yellow-600 flex-shrink-0 mt-0.5" />
+                  <div>
+                    <h4 className="font-semibold text-yellow-800 mb-1">
+                      Word Suggestions
+                    </h4>
+                    <p className="text-sm text-yellow-700 mb-3">
+                      Try adding these types of words that are meaningful to{" "}
+                      {selectedChild.name}:
+                    </p>
+                    <div className="flex flex-wrap gap-2">
+                      {[
+                        "Family names",
+                        "Pet names",
+                        "Favorite foods",
+                        "Hobbies",
+                        "Places visited",
+                      ].map((suggestion) => (
+                        <span
+                          key={suggestion}
+                          className="px-2 py-1 bg-yellow-100 text-yellow-800 rounded-full text-xs font-medium"
+                        >
+                          {suggestion}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          )}
+        </div>
+      )}
+
+      {/* Floating action button for mobile */}
+      {selectedChild && (
+        <div className="md:hidden fixed bottom-20 right-4 z-40">
+          <Button
+            onClick={() => setShowCustomWordDialog(true)}
+            className="w-14 h-14 rounded-full bg-educational-green hover:bg-educational-green/90 shadow-lg"
+          >
+            <Plus className="w-6 h-6" />
+          </Button>
+        </div>
       )}
     </div>
   );
@@ -2562,17 +3012,99 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
   };
 
   const renderDetailedReports = () => (
-    <div className="space-y-6">
-      {/* Report Configuration */}
-      <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <FileText className="w-5 h-5" />
-            Generate Learning Progress Report
+    <div className="space-y-4 md:space-y-6 p-2 md:p-0">
+      {/* Mobile-optimized header */}
+      <div className="text-center md:text-left">
+        <h2 className="text-xl md:text-2xl font-bold text-slate-800 flex items-center justify-center md:justify-start gap-2">
+          <FileText className="w-5 h-5 md:w-6 md:h-6" />
+          Learning Reports
+        </h2>
+        <p className="text-sm md:text-base text-slate-600 mt-1">
+          Generate detailed progress reports for your children
+        </p>
+      </div>
+
+      {/* Quick Report Templates for Mobile */}
+      <div className="md:hidden grid grid-cols-2 gap-3">
+        <Button
+          onClick={() => {
+            if (selectedChild) {
+              setReportType("summary");
+              setReportDateRange("week");
+              generateLearningReport(selectedChild, "week", "summary");
+            }
+          }}
+          disabled={!selectedChild || generatingReport}
+          className="h-20 flex-col bg-educational-blue hover:bg-educational-blue/90 text-white"
+          variant="default"
+        >
+          <Clock className="w-5 h-5 mb-1" />
+          <span className="text-xs">Weekly Summary</span>
+        </Button>
+        <Button
+          onClick={() => {
+            if (selectedChild) {
+              setReportType("detailed");
+              setReportDateRange("month");
+              generateLearningReport(selectedChild, "month", "detailed");
+            }
+          }}
+          disabled={!selectedChild || generatingReport}
+          className="h-20 flex-col bg-educational-green hover:bg-educational-green/90 text-white"
+          variant="default"
+        >
+          <TrendingUp className="w-5 h-5 mb-1" />
+          <span className="text-xs">Monthly Report</span>
+        </Button>
+      </div>
+
+      {/* Report Configuration Card */}
+      <Card className="overflow-hidden">
+        <CardHeader className="pb-3 bg-gradient-to-r from-slate-50 to-blue-50">
+          <CardTitle className="flex items-center gap-2 text-base md:text-lg">
+            <FileText className="w-5 h-5 text-educational-blue" />
+            <div>
+              <div>Generate Custom Report</div>
+              <p className="text-xs md:text-sm font-normal text-slate-600 mt-1">
+                Create detailed learning analytics
+              </p>
+            </div>
           </CardTitle>
         </CardHeader>
-        <CardContent className="space-y-4">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <CardContent className="p-3 md:p-6 space-y-4">
+          {/* Child selector for mobile */}
+          {children.length > 1 && (
+            <div className="md:hidden">
+              <Label className="text-sm font-semibold">Select Child</Label>
+              <div className="grid grid-cols-1 gap-2 mt-2">
+                {children.map((child) => (
+                  <Button
+                    key={child.id}
+                    variant={
+                      selectedChild?.id === child.id ? "default" : "outline"
+                    }
+                    onClick={() => setSelectedChild(child)}
+                    className={`justify-start h-12 ${
+                      selectedChild?.id === child.id
+                        ? "bg-educational-blue hover:bg-educational-blue/90"
+                        : "hover:bg-educational-blue/10 hover:text-educational-blue hover:border-educational-blue"
+                    }`}
+                  >
+                    <span className="text-xl mr-3">{child.avatar}</span>
+                    <div className="text-left">
+                      <div className="font-medium">{child.name}</div>
+                      <div className="text-xs text-slate-500">
+                        Age {child.age} • Level {child.level}
+                      </div>
+                    </div>
+                  </Button>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Desktop configuration */}
+          <div className="hidden md:grid grid-cols-1 md:grid-cols-3 gap-4">
             <div>
               <Label htmlFor="report-child">Select Child</Label>
               <Select
@@ -2630,7 +3162,68 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
             </div>
           </div>
 
-          <div className="flex gap-2">
+          {/* Mobile configuration */}
+          <div className="md:hidden space-y-4">
+            {selectedChild && (
+              <div className="p-3 bg-educational-blue/5 rounded-lg border border-educational-blue/20">
+                <div className="flex items-center gap-3">
+                  <span className="text-2xl">{selectedChild.avatar}</span>
+                  <div>
+                    <div className="font-semibold text-educational-blue">
+                      {selectedChild.name}
+                    </div>
+                    <div className="text-xs text-slate-600">
+                      Selected for report generation
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            <div className="grid grid-cols-2 gap-3">
+              <div>
+                <Label className="text-sm">Report Type</Label>
+                <Select
+                  value={reportType}
+                  onValueChange={(value: any) => setReportType(value)}
+                >
+                  <SelectTrigger className="mt-1">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="summary">📊 Quick Summary</SelectItem>
+                    <SelectItem value="detailed">
+                      📈 Detailed Analysis
+                    </SelectItem>
+                    <SelectItem value="progress">
+                      🎯 Progress Tracking
+                    </SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+
+              <div>
+                <Label className="text-sm">Time Period</Label>
+                <Select
+                  value={reportDateRange}
+                  onValueChange={(value: any) => setReportDateRange(value)}
+                >
+                  <SelectTrigger className="mt-1">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="week">📅 Last Week</SelectItem>
+                    <SelectItem value="month">📆 Last Month</SelectItem>
+                    <SelectItem value="quarter">🗓️ Last 3 Months</SelectItem>
+                    <SelectItem value="year">📈 Last Year</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
+          </div>
+
+          {/* Action buttons */}
+          <div className="flex flex-col md:flex-row gap-3">
             <Button
               onClick={() =>
                 selectedChild &&
@@ -2641,109 +3234,243 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
                 )
               }
               disabled={!selectedChild || generatingReport}
-              className="bg-educational-blue text-white"
+              className="bg-educational-blue hover:bg-educational-blue/90 text-white w-full md:w-auto h-12 md:h-auto"
             >
-              {generatingReport ? "Generating..." : "Generate Report"}
+              {generatingReport ? (
+                <div className="flex items-center gap-2">
+                  <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                  Generating Report...
+                </div>
+              ) : (
+                <div className="flex items-center gap-2">
+                  <FileText className="w-4 h-4" />
+                  Generate Report
+                </div>
+              )}
             </Button>
 
             {reportData && (
-              <Button variant="outline" onClick={exportReport}>
+              <Button
+                variant="outline"
+                onClick={exportReport}
+                className="w-full md:w-auto h-12 md:h-auto hover:bg-educational-green/10 hover:text-educational-green hover:border-educational-green"
+              >
                 <Download className="w-4 h-4 mr-2" />
                 Export Report
               </Button>
             )}
           </div>
+
+          {/* No child selected state */}
+          {!selectedChild && children.length > 0 && (
+            <div className="text-center py-8">
+              <div className="text-4xl mb-3">👨‍👩‍👧‍👦</div>
+              <h3 className="font-semibold text-slate-700 mb-2">
+                Select a Child
+              </h3>
+              <p className="text-sm text-slate-600">
+                Choose a child profile to generate their learning report
+              </p>
+            </div>
+          )}
+
+          {/* No children state */}
+          {children.length === 0 && (
+            <div className="text-center py-8">
+              <div className="text-4xl mb-3">📊</div>
+              <h3 className="font-semibold text-slate-700 mb-2">
+                No Children Added
+              </h3>
+              <p className="text-sm text-slate-600">
+                Add child profiles first to generate learning reports
+              </p>
+            </div>
+          )}
         </CardContent>
       </Card>
 
       {/* Generated Report Display */}
       {reportData && (
-        <div className="space-y-6">
-          {/* Report Header */}
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center justify-between">
-                <div className="flex items-center gap-2">
-                  <div className="text-2xl">{reportData.child.avatar}</div>
+        <div className="space-y-4 md:space-y-6">
+          {/* Mobile Report Header with Success Animation */}
+          <Card className="overflow-hidden border-green-200 bg-gradient-to-r from-green-50 to-emerald-50">
+            <CardContent className="p-4 md:p-6">
+              <div className="flex items-center gap-3 mb-3">
+                <div className="text-green-500 animate-gentle-bounce">
+                  <CheckCircle className="w-6 h-6" />
+                </div>
+                <div className="font-semibold text-green-800">
+                  Report Generated Successfully!
+                </div>
+              </div>
+
+              <div className="flex flex-col md:flex-row md:items-center justify-between gap-3">
+                <div className="flex items-center gap-3">
+                  <div className="text-3xl md:text-2xl">
+                    {reportData.child.avatar}
+                  </div>
                   <div>
-                    <h3>{reportData.child.name}'s Learning Report</h3>
-                    <p className="text-sm text-slate-600 font-normal">
-                      {reportData.period.range.toUpperCase()} Report •{" "}
-                      {reportData.period.start.toLocaleDateString()} -{" "}
-                      {reportData.period.end.toLocaleDateString()}
-                    </p>
+                    <h3 className="text-lg md:text-xl font-bold text-slate-800">
+                      {reportData.child.name}'s Learning Report
+                    </h3>
+                    <div className="flex flex-col md:flex-row md:items-center gap-1 md:gap-2 text-xs md:text-sm text-slate-600">
+                      <span className="font-medium uppercase text-educational-blue">
+                        {reportData.period.range} Report
+                      </span>
+                      <span className="hidden md:inline">•</span>
+                      <span>
+                        {reportData.period.start.toLocaleDateString()} -{" "}
+                        {reportData.period.end.toLocaleDateString()}
+                      </span>
+                    </div>
                   </div>
                 </div>
-                <Badge className="bg-green-100 text-green-800">
-                  Generated {reportData.generatedAt.toLocaleDateString()}
+                <Badge className="bg-green-100 text-green-800 w-fit">
+                  {reportData.generatedAt.toLocaleDateString()}
                 </Badge>
-              </CardTitle>
-            </CardHeader>
+              </div>
+            </CardContent>
           </Card>
 
-          {/* Summary Stats */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            <Card>
-              <CardContent className="p-4 text-center">
-                <Clock className="w-8 h-8 text-blue-500 mx-auto mb-2" />
-                <div className="text-2xl font-bold">
-                  {reportData.summary.totalLearningTime}m
+          {/* Enhanced Summary Stats for Mobile */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
+            <Card className="bg-gradient-to-br from-blue-50 to-blue-100 border-blue-200 hover:shadow-lg transition-all duration-200">
+              <CardContent className="p-3 md:p-4 text-center">
+                <Clock className="w-6 h-6 md:w-8 md:h-8 text-blue-500 mx-auto mb-2 animate-gentle-float" />
+                <div className="text-xl md:text-2xl font-bold text-blue-700">
+                  <AnimatedCounter
+                    value={reportData.summary.totalLearningTime}
+                    suffix="m"
+                  />
                 </div>
-                <div className="text-sm text-slate-600">Learning Time</div>
+                <div className="text-xs md:text-sm text-blue-600 font-medium">
+                  Learning Time
+                </div>
               </CardContent>
             </Card>
 
-            <Card>
-              <CardContent className="p-4 text-center">
-                <BookOpen className="w-8 h-8 text-green-500 mx-auto mb-2" />
-                <div className="text-2xl font-bold">
-                  {reportData.summary.wordsLearned}
+            <Card className="bg-gradient-to-br from-green-50 to-green-100 border-green-200 hover:shadow-lg transition-all duration-200">
+              <CardContent className="p-3 md:p-4 text-center">
+                <BookOpen className="w-6 h-6 md:w-8 md:h-8 text-green-500 mx-auto mb-2 animate-gentle-float" />
+                <div className="text-xl md:text-2xl font-bold text-green-700">
+                  <AnimatedCounter value={reportData.summary.wordsLearned} />
                 </div>
-                <div className="text-sm text-slate-600">Words Learned</div>
+                <div className="text-xs md:text-sm text-green-600 font-medium">
+                  Words Learned
+                </div>
               </CardContent>
             </Card>
 
-            <Card>
-              <CardContent className="p-4 text-center">
-                <Target className="w-8 h-8 text-purple-500 mx-auto mb-2" />
-                <div className="text-2xl font-bold">
-                  {reportData.summary.averageAccuracy}%
+            <Card className="bg-gradient-to-br from-purple-50 to-purple-100 border-purple-200 hover:shadow-lg transition-all duration-200">
+              <CardContent className="p-3 md:p-4 text-center">
+                <Target className="w-6 h-6 md:w-8 md:h-8 text-purple-500 mx-auto mb-2 animate-gentle-float" />
+                <div className="text-xl md:text-2xl font-bold text-purple-700">
+                  <AnimatedCounter
+                    value={reportData.summary.averageAccuracy}
+                    suffix="%"
+                  />
                 </div>
-                <div className="text-sm text-slate-600">Accuracy</div>
+                <div className="text-xs md:text-sm text-purple-600 font-medium">
+                  Accuracy
+                </div>
               </CardContent>
             </Card>
 
-            <Card>
-              <CardContent className="p-4 text-center">
-                <Zap className="w-8 h-8 text-orange-500 mx-auto mb-2" />
-                <div className="text-2xl font-bold">
-                  {reportData.summary.streakDays}
+            <Card className="bg-gradient-to-br from-orange-50 to-orange-100 border-orange-200 hover:shadow-lg transition-all duration-200">
+              <CardContent className="p-3 md:p-4 text-center">
+                <Zap className="w-6 h-6 md:w-8 md:h-8 text-orange-500 mx-auto mb-2 animate-gentle-float" />
+                <div className="text-xl md:text-2xl font-bold text-orange-700">
+                  <AnimatedCounter value={reportData.summary.streakDays} />
                 </div>
-                <div className="text-sm text-slate-600">Day Streak</div>
+                <div className="text-xs md:text-sm text-orange-600 font-medium">
+                  Day Streak
+                </div>
               </CardContent>
             </Card>
           </div>
 
-          {/* Learning Path Analysis */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
+          {/* Mobile-first Progress Overview */}
+          <Card className="md:hidden bg-gradient-to-r from-educational-blue/5 to-educational-purple/5">
+            <CardContent className="p-4">
+              <h3 className="font-semibold text-slate-800 mb-3 flex items-center gap-2">
+                <TrendingUp className="w-5 h-5 text-educational-blue" />
+                Quick Overview
+              </h3>
+              <div className="space-y-3">
+                <div className="flex justify-between items-center">
+                  <span className="text-sm text-slate-600">
+                    Overall Performance
+                  </span>
+                  <div className="flex items-center gap-2">
+                    <div className="w-24 h-2 bg-slate-200 rounded-full overflow-hidden">
+                      <div
+                        className="h-full bg-educational-blue rounded-full transition-all duration-1000"
+                        style={{
+                          width: `${reportData.summary.averageAccuracy}%`,
+                        }}
+                      ></div>
+                    </div>
+                    <span className="text-sm font-medium text-educational-blue">
+                      {reportData.summary.averageAccuracy}%
+                    </span>
+                  </div>
+                </div>
+                <div className="flex justify-between items-center">
+                  <span className="text-sm text-slate-600">Learning Goal</span>
+                  <div className="flex items-center gap-2">
+                    <div className="w-24 h-2 bg-slate-200 rounded-full overflow-hidden">
+                      <div
+                        className="h-full bg-educational-green rounded-full transition-all duration-1000"
+                        style={{
+                          width: `${Math.min((reportData.summary.wordsLearned / 20) * 100, 100)}%`,
+                        }}
+                      ></div>
+                    </div>
+                    <span className="text-sm font-medium text-educational-green">
+                      {reportData.summary.wordsLearned}/20
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* Enhanced Learning Path Analysis for Mobile */}
+          <div className="space-y-4 md:space-y-6">
+            {/* Mobile-first Strengths Card */}
+            <Card className="overflow-hidden">
+              <CardHeader className="pb-3 bg-gradient-to-r from-green-50 to-emerald-50">
+                <CardTitle className="flex items-center gap-2 text-base md:text-lg">
                   <TrendingUp className="w-5 h-5 text-green-500" />
-                  Strengths & Progress
+                  <div>
+                    <div>Strengths & Progress</div>
+                    <p className="text-xs md:text-sm font-normal text-slate-600 mt-1">
+                      Areas where {reportData.child.name} excels
+                    </p>
+                  </div>
                 </CardTitle>
               </CardHeader>
-              <CardContent className="space-y-4">
+              <CardContent className="p-3 md:p-6 space-y-4">
                 <div>
-                  <h4 className="font-semibold mb-2">Strong Categories</h4>
-                  <div className="flex flex-wrap gap-2">
+                  <div className="flex items-center justify-between mb-3">
+                    <h4 className="font-semibold text-slate-800">
+                      Strong Categories
+                    </h4>
+                    <Badge
+                      variant="outline"
+                      className="text-green-600 border-green-300"
+                    >
+                      {reportData.learningPath.strengthCategories.length} areas
+                    </Badge>
+                  </div>
+                  <div className="grid grid-cols-2 md:flex md:flex-wrap gap-2">
                     {reportData.learningPath.strengthCategories.map(
                       (category: string) => (
                         <Badge
                           key={category}
-                          className="bg-green-100 text-green-800"
+                          className="bg-green-100 text-green-800 hover:bg-green-200 transition-colors justify-center py-2 md:py-1"
                         >
-                          {category}
+                          ✨ {category}
                         </Badge>
                       ),
                     )}
@@ -2751,42 +3478,83 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
                 </div>
 
                 <div>
-                  <h4 className="font-semibold mb-2">Mastered Words</h4>
-                  <div className="flex flex-wrap gap-2">
-                    {reportData.learningPath.masteredWords.map(
-                      (word: string) => (
-                        <Badge
-                          key={word}
-                          variant="outline"
-                          className="text-green-600 border-green-300"
-                        >
-                          {word}
-                        </Badge>
-                      ),
-                    )}
+                  <div className="flex items-center justify-between mb-3">
+                    <h4 className="font-semibold text-slate-800">
+                      Mastered Words
+                    </h4>
+                    <Badge
+                      variant="outline"
+                      className="text-green-600 border-green-300"
+                    >
+                      {reportData.learningPath.masteredWords.length} words
+                    </Badge>
                   </div>
+                  {reportData.learningPath.masteredWords.length > 0 ? (
+                    <div className="grid grid-cols-2 md:flex md:flex-wrap gap-2">
+                      {reportData.learningPath.masteredWords
+                        .slice(0, 8)
+                        .map((word: string) => (
+                          <Badge
+                            key={word}
+                            variant="outline"
+                            className="text-green-600 border-green-300 hover:bg-green-50 transition-colors justify-center py-2 md:py-1 capitalize"
+                          >
+                            📚 {word}
+                          </Badge>
+                        ))}
+                      {reportData.learningPath.masteredWords.length > 8 && (
+                        <Badge
+                          variant="outline"
+                          className="text-slate-500 border-slate-300 justify-center py-2 md:py-1"
+                        >
+                          +{reportData.learningPath.masteredWords.length - 8}{" "}
+                          more
+                        </Badge>
+                      )}
+                    </div>
+                  ) : (
+                    <div className="text-center py-4 text-slate-500 text-sm">
+                      No words fully mastered yet - keep practicing!
+                    </div>
+                  )}
                 </div>
               </CardContent>
             </Card>
 
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
+            <Card className="overflow-hidden">
+              <CardHeader className="pb-3 bg-gradient-to-r from-orange-50 to-yellow-50">
+                <CardTitle className="flex items-center gap-2 text-base md:text-lg">
                   <Target className="w-5 h-5 text-orange-500" />
-                  Areas for Growth
+                  <div>
+                    <div>Areas for Growth</div>
+                    <p className="text-xs md:text-sm font-normal text-slate-600 mt-1">
+                      Focus areas for improvement
+                    </p>
+                  </div>
                 </CardTitle>
               </CardHeader>
-              <CardContent className="space-y-4">
+              <CardContent className="p-3 md:p-6 space-y-4">
                 <div>
-                  <h4 className="font-semibold mb-2">Practice Categories</h4>
-                  <div className="flex flex-wrap gap-2">
+                  <div className="flex items-center justify-between mb-3">
+                    <h4 className="font-semibold text-slate-800">
+                      Practice Categories
+                    </h4>
+                    <Badge
+                      variant="outline"
+                      className="text-orange-600 border-orange-300"
+                    >
+                      {reportData.learningPath.strugglingCategories.length}{" "}
+                      areas
+                    </Badge>
+                  </div>
+                  <div className="grid grid-cols-2 md:flex md:flex-wrap gap-2">
                     {reportData.learningPath.strugglingCategories.map(
                       (category: string) => (
                         <Badge
                           key={category}
-                          className="bg-orange-100 text-orange-800"
+                          className="bg-orange-100 text-orange-800 hover:bg-orange-200 transition-colors justify-center py-2 md:py-1"
                         >
-                          {category}
+                          🎯 {category}
                         </Badge>
                       ),
                     )}
@@ -2794,18 +3562,37 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
                 </div>
 
                 <div>
-                  <h4 className="font-semibold mb-2">Words to Practice</h4>
-                  <div className="flex flex-wrap gap-2">
-                    {reportData.learningPath.practiceNeeded.map(
-                      (word: string) => (
+                  <div className="flex items-center justify-between mb-3">
+                    <h4 className="font-semibold text-slate-800">
+                      Words to Practice
+                    </h4>
+                    <Badge
+                      variant="outline"
+                      className="text-orange-600 border-orange-300"
+                    >
+                      {reportData.learningPath.practiceNeeded.length} words
+                    </Badge>
+                  </div>
+                  <div className="grid grid-cols-2 md:flex md:flex-wrap gap-2">
+                    {reportData.learningPath.practiceNeeded
+                      .slice(0, 8)
+                      .map((word: string) => (
                         <Badge
                           key={word}
                           variant="outline"
-                          className="text-orange-600 border-orange-300"
+                          className="text-orange-600 border-orange-300 hover:bg-orange-50 transition-colors justify-center py-2 md:py-1 capitalize"
                         >
-                          {word}
+                          🔄 {word}
                         </Badge>
-                      ),
+                      ))}
+                    {reportData.learningPath.practiceNeeded.length > 8 && (
+                      <Badge
+                        variant="outline"
+                        className="text-slate-500 border-slate-300 justify-center py-2 md:py-1"
+                      >
+                        +{reportData.learningPath.practiceNeeded.length - 8}{" "}
+                        more
+                      </Badge>
                     )}
                   </div>
                 </div>
@@ -2813,27 +3600,31 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
             </Card>
           </div>
 
-          {/* Category Progress */}
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <BarChart3 className="w-5 h-5" />
-                Category Mastery Progress
+          {/* Enhanced Category Progress for Mobile */}
+          <Card className="overflow-hidden">
+            <CardHeader className="pb-3 bg-gradient-to-r from-slate-50 to-blue-50">
+              <CardTitle className="flex items-center gap-2 text-base md:text-lg">
+                <BarChart3 className="w-5 h-5 text-educational-blue" />
+                <div>
+                  <div>Category Mastery Progress</div>
+                  <p className="text-xs md:text-sm font-normal text-slate-600 mt-1">
+                    Learning progress by subject area
+                  </p>
+                </div>
               </CardTitle>
             </CardHeader>
-            <CardContent>
+            <CardContent className="p-3 md:p-6">
               <div className="space-y-4">
                 {reportData.progressAnalytics.categoryProgress.map(
                   (category: any) => (
-                    <div key={category.category} className="space-y-2">
-                      <div className="flex justify-between items-center">
-                        <span className="font-medium">{category.category}</span>
+                    <div key={category.category} className="space-y-3">
+                      <div className="flex flex-col md:flex-row md:justify-between md:items-center gap-2">
                         <div className="flex items-center gap-2">
-                          <span className="text-sm text-slate-600">
-                            {category.mastery}%
+                          <span className="font-medium text-slate-800">
+                            {category.category}
                           </span>
                           <Badge
-                            className={
+                            className={`text-xs ${
                               category.trend === "improving"
                                 ? "bg-green-100 text-green-800"
                                 : category.trend === "stable"
@@ -2841,13 +3632,32 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
                                   : category.trend === "mastered"
                                     ? "bg-purple-100 text-purple-800"
                                     : "bg-orange-100 text-orange-800"
-                            }
+                            }`}
                           >
-                            {category.trend.replace("_", " ")}
+                            {category.trend === "improving"
+                              ? "📈 Improving"
+                              : category.trend === "stable"
+                                ? "➡️ Stable"
+                                : category.trend === "mastered"
+                                  ? "🏆 Mastered"
+                                  : "🔄 Needs Practice"}
                           </Badge>
                         </div>
+                        <div className="flex items-center gap-2">
+                          <span className="text-sm md:text-base font-semibold text-educational-blue">
+                            {category.mastery}%
+                          </span>
+                        </div>
                       </div>
-                      <Progress value={category.mastery} className="h-2" />
+                      <div className="space-y-1">
+                        <Progress
+                          value={category.mastery}
+                          className="h-3 md:h-2"
+                        />
+                        <div className="text-xs text-slate-500 text-right">
+                          Target: 80% mastery
+                        </div>
+                      </div>
                     </div>
                   ),
                 )}
@@ -2963,20 +3773,65 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
         </div>
       )}
 
-      {/* Empty State */}
+      {/* Enhanced Empty State for Mobile */}
       {!reportData && !generatingReport && (
-        <Card>
-          <CardContent className="p-12 text-center">
-            <FileText className="w-16 h-16 text-slate-300 mx-auto mb-4" />
-            <h3 className="text-xl font-semibold mb-2 text-slate-600">
-              No Report Generated
+        <Card className="mx-auto max-w-md">
+          <CardContent className="p-8 md:p-12 text-center">
+            <div className="text-6xl md:text-8xl mb-4 animate-gentle-bounce">
+              📊
+            </div>
+            <h3 className="text-lg md:text-xl font-semibold mb-3 text-slate-700">
+              No Report Generated Yet
             </h3>
-            <p className="text-slate-500 mb-4">
-              Select a child and click "Generate Report" to create a detailed
-              learning analysis.
+            <p className="text-slate-500 mb-6 text-sm md:text-base leading-relaxed">
+              {selectedChild
+                ? `Ready to generate ${selectedChild.name}'s learning report!`
+                : "Select a child and generate their learning report to see detailed analytics."}
             </p>
+            {selectedChild && (
+              <div className="space-y-3">
+                <Button
+                  onClick={() =>
+                    generateLearningReport(selectedChild, "week", "summary")
+                  }
+                  className="bg-educational-blue hover:bg-educational-blue/90 w-full md:w-auto"
+                >
+                  <FileText className="w-4 h-4 mr-2" />
+                  Generate Quick Report
+                </Button>
+                <div className="text-xs text-slate-500">
+                  Get a weekly summary in seconds
+                </div>
+              </div>
+            )}
           </CardContent>
         </Card>
+      )}
+
+      {/* Mobile Floating Action Button for Reports */}
+      {selectedChild && !generatingReport && (
+        <div className="md:hidden fixed bottom-20 right-4 z-40">
+          <div className="flex flex-col gap-2">
+            <Button
+              onClick={() =>
+                generateLearningReport(selectedChild, "week", "summary")
+              }
+              className="w-14 h-14 rounded-full bg-educational-blue hover:bg-educational-blue/90 shadow-lg"
+              title="Quick Report"
+            >
+              <Clock className="w-6 h-6" />
+            </Button>
+            <Button
+              onClick={() =>
+                generateLearningReport(selectedChild, "month", "detailed")
+              }
+              className="w-14 h-14 rounded-full bg-educational-green hover:bg-educational-green/90 shadow-lg"
+              title="Detailed Report"
+            >
+              <TrendingUp className="w-6 h-6" />
+            </Button>
+          </div>
+        </div>
       )}
     </div>
   );

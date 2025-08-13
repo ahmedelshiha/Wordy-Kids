@@ -106,21 +106,20 @@ import {
 import { AnimatedCounter } from "@/components/AnimatedCounter";
 import BulkWordImport from "@/components/BulkWordImport";
 import WordEditor from "@/components/WordEditor";
+import CreateWordWizard from "@/components/CreateWordWizard";
+import CreateWordInsights from "@/components/CreateWordInsights";
+import CreateWordQuickActions from "@/components/CreateWordQuickActions";
 import ContentModerationPanel from "@/components/ContentModerationPanel";
 import AdvancedAnalyticsDashboard from "@/components/AdvancedAnalyticsDashboard";
 import EnhancedUserManagement from "@/components/EnhancedUserManagement";
+import {
+  wordsDatabase,
+  Word,
+  getAllCategories,
+  getWordsByCategory,
+} from "@/data/wordsDatabase";
 
-interface AdminWord {
-  id: string;
-  word: string;
-  pronunciation: string;
-  definition: string;
-  example: string;
-  category: string;
-  difficulty: "easy" | "medium" | "hard";
-  funFact?: string;
-  imageUrl?: string;
-  audioUrl?: string;
+interface AdminWord extends Word {
   status: "approved" | "pending" | "rejected";
   submittedBy?: string;
   submittedAt: Date;
@@ -128,6 +127,16 @@ interface AdminWord {
   approvedAt?: Date;
   usageCount: number;
   accuracy: number;
+  lastUsed?: Date;
+  tags?: string[];
+  isActive: boolean;
+  modificationHistory?: Array<{
+    id: string;
+    action: "created" | "updated" | "approved" | "rejected";
+    timestamp: Date;
+    author: string;
+    changes?: Record<string, any>;
+  }>;
 }
 
 interface AdminUser {
@@ -322,7 +331,45 @@ const sampleTickets: SupportTicket[] = [
 
 const AdminDashboard: React.FC<AdminDashboardProps> = ({ onNavigateBack }) => {
   const [activeTab, setActiveTab] = useState("overview");
-  const [words, setWords] = useState<AdminWord[]>(sampleWords);
+
+  // Convert real words database to admin format with enhanced metadata
+  const convertWordsToAdmin = React.useCallback(
+    (dbWords: Word[]): AdminWord[] => {
+      return dbWords.map((word) => ({
+        ...word,
+        id: word.id.toString(),
+        status: "approved" as const,
+        submittedAt: new Date(
+          Date.now() - Math.random() * 30 * 24 * 60 * 60 * 1000,
+        ),
+        approvedAt: new Date(
+          Date.now() - Math.random() * 25 * 24 * 60 * 60 * 1000,
+        ),
+        usageCount: Math.floor(Math.random() * 2000) + 100,
+        accuracy: Math.floor(Math.random() * 30) + 70,
+        lastUsed: new Date(
+          Date.now() - Math.random() * 7 * 24 * 60 * 60 * 1000,
+        ),
+        isActive: true,
+        tags: [word.category, word.difficulty],
+        modificationHistory: [
+          {
+            id: "1",
+            action: "created" as const,
+            timestamp: new Date(
+              Date.now() - Math.random() * 30 * 24 * 60 * 60 * 1000,
+            ),
+            author: "system",
+          },
+        ],
+      }));
+    },
+    [],
+  );
+
+  const [words, setWords] = useState<AdminWord[]>(() =>
+    convertWordsToAdmin(wordsDatabase),
+  );
   const [users, setUsers] = useState<AdminUser[]>(sampleUsers);
   const [categories, setCategories] =
     useState<AdminCategory[]>(sampleCategories);
@@ -335,12 +382,16 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onNavigateBack }) => {
   const [showTicketDialog, setShowTicketDialog] = useState(false);
   const [showBulkImport, setShowBulkImport] = useState(false);
   const [showWordEditor, setShowWordEditor] = useState(false);
+  const [showCreateWizard, setShowCreateWizard] = useState(false);
   const [editingWord, setEditingWord] = useState<AdminWord | null>(null);
   const [wordEditorMode, setWordEditorMode] = useState<"create" | "edit">(
     "create",
   );
+  const [createMethod, setCreateMethod] = useState<"wizard" | "editor">(
+    "wizard",
+  );
 
-  // Form states
+  // Enhanced Form states
   const [newWordData, setNewWordData] = useState({
     word: "",
     pronunciation: "",
@@ -349,6 +400,7 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onNavigateBack }) => {
     category: "",
     difficulty: "easy" as const,
     funFact: "",
+    emoji: "",
   });
 
   const [newCategoryData, setNewCategoryData] = useState({
@@ -358,17 +410,28 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onNavigateBack }) => {
     difficulty: "easy" as const,
   });
 
-  // Filter states
+  // Enhanced Filter and Search states
   const [wordFilter, setWordFilter] = useState("all");
+  const [categoryFilter, setCategoryFilter] = useState("all");
+  const [difficultyFilter, setDifficultyFilter] = useState("all");
   const [userFilter, setUserFilter] = useState("all");
   const [ticketFilter, setTicketFilter] = useState("all");
   const [searchTerm, setSearchTerm] = useState("");
+  const [sortBy, setSortBy] = useState<
+    "word" | "category" | "difficulty" | "usageCount" | "accuracy" | "lastUsed"
+  >("word");
+  const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc");
+  const [selectedWords, setSelectedWords] = useState<string[]>([]);
+  const [viewMode, setViewMode] = useState<"grid" | "list">("list");
+  const [editingCategory, setEditingCategory] = useState<any>(null);
+  const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
 
   // Sample analytics data
+  // Enhanced analytics data with real word database integration
   const analytics: SystemAnalytics = {
     totalUsers: 2847,
     activeUsers: 1653,
-    totalWords: 1200,
+    totalWords: wordsDatabase.length, // Real word count: 259 words
     totalSessions: 15672,
     avgSessionDuration: 12.5,
     platformEngagement: 78,
@@ -378,137 +441,267 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onNavigateBack }) => {
     systemUptime: 99.8,
   };
 
+  // Get unique categories from real database
+  const availableCategories = React.useMemo(() => {
+    const cats = getAllCategories();
+    return cats.map((cat) => ({
+      id: cat,
+      name: cat.charAt(0).toUpperCase() + cat.slice(1),
+      count: getWordsByCategory(cat).length,
+    }));
+  }, []);
+
+  // Enhanced filtering and sorting logic
+  const filteredAndSortedWords = React.useMemo(() => {
+    let filtered = words.filter((word) => {
+      const matchesSearch =
+        searchTerm === "" ||
+        word.word.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        word.definition.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        word.category.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        word.example.toLowerCase().includes(searchTerm.toLowerCase());
+
+      const matchesStatus = wordFilter === "all" || word.status === wordFilter;
+      const matchesCategory =
+        categoryFilter === "all" || word.category === categoryFilter;
+      const matchesDifficulty =
+        difficultyFilter === "all" || word.difficulty === difficultyFilter;
+
+      return (
+        matchesSearch && matchesStatus && matchesCategory && matchesDifficulty
+      );
+    });
+
+    // Sort the filtered results
+    filtered.sort((a, b) => {
+      let aVal, bVal;
+      switch (sortBy) {
+        case "word":
+          aVal = a.word.toLowerCase();
+          bVal = b.word.toLowerCase();
+          break;
+        case "category":
+          aVal = a.category.toLowerCase();
+          bVal = b.category.toLowerCase();
+          break;
+        case "difficulty":
+          const diffOrder = { easy: 1, medium: 2, hard: 3 };
+          aVal = diffOrder[a.difficulty];
+          bVal = diffOrder[b.difficulty];
+          break;
+        case "usageCount":
+          aVal = a.usageCount;
+          bVal = b.usageCount;
+          break;
+        case "accuracy":
+          aVal = a.accuracy;
+          bVal = b.accuracy;
+          break;
+        case "lastUsed":
+          aVal = a.lastUsed?.getTime() || 0;
+          bVal = b.lastUsed?.getTime() || 0;
+          break;
+        default:
+          aVal = a.word.toLowerCase();
+          bVal = b.word.toLowerCase();
+      }
+
+      if (sortOrder === "asc") {
+        return aVal < bVal ? -1 : aVal > bVal ? 1 : 0;
+      } else {
+        return aVal > bVal ? -1 : aVal < bVal ? 1 : 0;
+      }
+    });
+
+    return filtered;
+  }, [
+    words,
+    searchTerm,
+    wordFilter,
+    categoryFilter,
+    difficultyFilter,
+    sortBy,
+    sortOrder,
+  ]);
+
   const renderOverview = () => (
     <div className="space-y-6">
-      {/* Welcome Header */}
-      <Card className="bg-gradient-to-r from-slate-900 via-purple-900 to-slate-900 text-white">
-        <CardContent className="p-8">
-          <div className="flex items-center justify-between">
-            <div>
-              <h2 className="text-2xl font-bold mb-2">
-                🛡️ Administrator Dashboard
+      {/* Enhanced Mobile Welcome Header */}
+      <Card className="bg-gradient-to-r from-slate-900 via-purple-900 to-slate-900 text-white mx-2 md:mx-0">
+        <CardContent className="p-4 md:p-8">
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 md:gap-0">
+            <div className="text-center md:text-left">
+              <h2 className="text-lg md:text-2xl font-bold mb-1 md:mb-2">
+                🛡️ Admin Dashboard
               </h2>
-              <p className="text-slate-300">
-                System Overview • {new Date().toLocaleDateString()} •
-                <span className="ml-2 text-green-400">●</span> All Systems
-                Operational
+              <p className="text-slate-300 text-xs md:text-base">
+                <span className="block md:inline">System Overview</span>
+                <span className="hidden md:inline">
+                  {" "}
+                  • {new Date().toLocaleDateString()}
+                </span>
+                <span className="block md:inline mt-1 md:mt-0">
+                  <span className="text-green-400">●</span> All Systems
+                  Operational
+                </span>
               </p>
             </div>
-            <div className="text-right">
-              <div className="text-3xl font-bold">
+            <div className="text-center md:text-right">
+              <div className="text-2xl md:text-3xl font-bold">
                 {analytics.systemUptime}%
               </div>
-              <p className="text-sm text-slate-300">System Uptime</p>
+              <p className="text-xs md:text-sm text-slate-300">System Uptime</p>
             </div>
           </div>
         </CardContent>
       </Card>
 
-      {/* Key Metrics */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-        <Card>
-          <CardContent className="p-6 text-center">
-            <Users className="w-12 h-12 text-blue-500 mx-auto mb-3" />
-            <div className="text-3xl font-bold text-blue-600">
+      {/* Enhanced Mobile Key Metrics */}
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-6 px-2 md:px-0">
+        <Card className="bg-gradient-to-br from-blue-50 to-blue-100 border-blue-200 hover:shadow-lg transition-shadow">
+          <CardContent className="p-3 md:p-6 text-center">
+            <Users className="w-8 h-8 md:w-12 md:h-12 text-blue-500 mx-auto mb-2 md:mb-3" />
+            <div className="text-xl md:text-3xl font-bold text-blue-600">
               <AnimatedCounter value={analytics.totalUsers} />
             </div>
-            <p className="text-sm text-slate-600">Total Users</p>
-            <div className="mt-2 text-xs text-green-600">
-              +{analytics.userGrowthRate}% this month
+            <p className="text-xs md:text-sm text-slate-600 font-medium">
+              Total Users
+            </p>
+            <div className="mt-1 md:mt-2 text-xs text-green-600">
+              +{analytics.userGrowthRate}% growth
             </div>
           </CardContent>
         </Card>
 
-        <Card>
-          <CardContent className="p-6 text-center">
-            <Activity className="w-12 h-12 text-green-500 mx-auto mb-3" />
-            <div className="text-3xl font-bold text-green-600">
+        <Card className="bg-gradient-to-br from-green-50 to-green-100 border-green-200 hover:shadow-lg transition-shadow">
+          <CardContent className="p-3 md:p-6 text-center">
+            <Activity className="w-8 h-8 md:w-12 md:h-12 text-green-500 mx-auto mb-2 md:mb-3" />
+            <div className="text-xl md:text-3xl font-bold text-green-600">
               <AnimatedCounter value={analytics.activeUsers} />
             </div>
-            <p className="text-sm text-slate-600">Active Users</p>
-            <div className="mt-2 text-xs text-slate-500">
+            <p className="text-xs md:text-sm text-slate-600 font-medium">
+              Active Users
+            </p>
+            <div className="mt-1 md:mt-2 text-xs text-green-600">
               {Math.round((analytics.activeUsers / analytics.totalUsers) * 100)}
-              % engagement
+              % engaged
             </div>
           </CardContent>
         </Card>
 
-        <Card>
-          <CardContent className="p-6 text-center">
-            <BookOpen className="w-12 h-12 text-purple-500 mx-auto mb-3" />
-            <div className="text-3xl font-bold text-purple-600">
+        <Card className="bg-gradient-to-br from-purple-50 to-purple-100 border-purple-200 hover:shadow-lg transition-shadow">
+          <CardContent className="p-3 md:p-6 text-center">
+            <BookOpen className="w-8 h-8 md:w-12 md:h-12 text-purple-500 mx-auto mb-2 md:mb-3" />
+            <div className="text-xl md:text-3xl font-bold text-purple-600">
               <AnimatedCounter value={analytics.totalWords} />
             </div>
-            <p className="text-sm text-slate-600">Total Words</p>
-            <div className="mt-2 text-xs text-purple-600">
+            <p className="text-xs md:text-sm text-slate-600 font-medium">
+              Total Words
+            </p>
+            <div className="mt-1 md:mt-2 text-xs text-purple-600">
               {analytics.contentApprovalRate}% approved
             </div>
           </CardContent>
         </Card>
 
-        <Card>
-          <CardContent className="p-6 text-center">
-            <TrendingUp className="w-12 h-12 text-orange-500 mx-auto mb-3" />
-            <div className="text-3xl font-bold text-orange-600">
+        <Card className="bg-gradient-to-br from-orange-50 to-orange-100 border-orange-200 hover:shadow-lg transition-shadow">
+          <CardContent className="p-3 md:p-6 text-center">
+            <TrendingUp className="w-8 h-8 md:w-12 md:h-12 text-orange-500 mx-auto mb-2 md:mb-3" />
+            <div className="text-xl md:text-3xl font-bold text-orange-600">
               <AnimatedCounter value={analytics.totalSessions} />
             </div>
-            <p className="text-sm text-slate-600">Learning Sessions</p>
-            <div className="mt-2 text-xs text-orange-600">
+            <p className="text-xs md:text-sm text-slate-600 font-medium">
+              Sessions
+            </p>
+            <div className="mt-1 md:mt-2 text-xs text-orange-600">
               {analytics.avgSessionDuration}min avg
             </div>
           </CardContent>
         </Card>
       </div>
 
-      {/* Quick Actions */}
-      <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <Zap className="w-5 h-5 text-yellow-500" />
+      {/* Enhanced Mobile Quick Actions */}
+      <Card className="mx-2 md:mx-0">
+        <CardHeader className="pb-3 md:pb-4">
+          <CardTitle className="flex items-center gap-2 text-base md:text-lg">
+            <Zap className="w-4 h-4 md:w-5 md:h-5 text-yellow-500" />
             Quick Actions
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
+            <div className="relative">
+              <Button
+                variant="outline"
+                className="h-16 md:h-20 flex-col gap-1 md:gap-2 text-xs md:text-sm border-blue-200 hover:bg-blue-50 hover:border-blue-300 group"
+                onClick={() => {
+                  setCreateMethod("wizard");
+                  setShowCreateWizard(true);
+                }}
+              >
+                <div className="relative">
+                  <Plus className="w-4 h-4 md:w-5 md:h-5 text-blue-500" />
+                  <div className="absolute -top-1 -right-1 w-2 h-2 bg-green-500 rounded-full opacity-0 group-hover:opacity-100 transition-opacity" />
+                </div>
+                <span className="font-medium">Create Word</span>
+                <span className="text-[10px] text-slate-500 hidden md:block">
+                  Smart Wizard
+                </span>
+              </Button>
+            </div>
             <Button
               variant="outline"
-              className="h-20 flex-col gap-2"
-              onClick={() => {
-                setWordEditorMode("create");
-                setEditingWord(null);
-                setShowWordEditor(true);
-              }}
-            >
-              <Plus className="w-5 h-5" />
-              Add Word
-            </Button>
-            <Button
-              variant="outline"
-              className="h-20 flex-col gap-2"
+              className="h-16 md:h-20 flex-col gap-1 md:gap-2 text-xs md:text-sm border-purple-200 hover:bg-purple-50 hover:border-purple-300"
               onClick={() => setShowCategoryDialog(true)}
             >
-              <Layers className="w-5 h-5" />
+              <Layers className="w-4 h-4 md:w-5 md:h-5 text-purple-500" />
               New Category
             </Button>
             <Button
               variant="outline"
-              className="h-20 flex-col gap-2"
+              className="h-16 md:h-20 flex-col gap-1 md:gap-2 text-xs md:text-sm border-green-200 hover:bg-green-50 hover:border-green-300"
               onClick={() => setActiveTab("tickets")}
             >
-              <MessageSquare className="w-5 h-5" />
-              Support Queue
+              <MessageSquare className="w-4 h-4 md:w-5 md:h-5 text-green-500" />
+              <span className="text-center leading-tight">Support Queue</span>
             </Button>
             <Button
               variant="outline"
-              className="h-20 flex-col gap-2"
+              className="h-16 md:h-20 flex-col gap-1 md:gap-2 text-xs md:text-sm border-orange-200 hover:bg-orange-50 hover:border-orange-300"
               onClick={() => setActiveTab("analytics")}
             >
-              <BarChart3 className="w-5 h-5" />
-              View Analytics
+              <BarChart3 className="w-4 h-4 md:w-5 md:h-5 text-orange-500" />
+              <span className="text-center leading-tight">View Analytics</span>
             </Button>
           </div>
         </CardContent>
       </Card>
+
+      {/* Word Creation Hub */}
+      <CreateWordQuickActions
+        onCreateWithWizard={() => {
+          setCreateMethod("wizard");
+          setShowCreateWizard(true);
+        }}
+        onQuickCreate={() => {
+          setWordEditorMode("create");
+          setEditingWord(null);
+          setShowWordEditor(true);
+        }}
+        onBulkImport={() => setShowBulkImport(true)}
+        recentWordsCount={
+          words.filter(
+            (w) =>
+              Date.now() - w.submittedAt.getTime() < 7 * 24 * 60 * 60 * 1000,
+          ).length
+        }
+        totalWords={words.length}
+        qualityScore={Math.round(
+          (words.filter((w) => w.status === "approved").length /
+            Math.max(words.length, 1)) *
+            100,
+        )}
+      />
 
       {/* Recent Activity */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
@@ -601,121 +794,404 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onNavigateBack }) => {
   );
 
   const renderContentManagement = () => (
-    <div className="space-y-6">
-      {/* Content Header */}
-      <div className="flex items-center justify-between">
-        <div>
-          <h2 className="text-2xl font-bold">📚 Content Management</h2>
-          <p className="text-slate-600">
-            Manage words, categories, and content quality
-          </p>
+    <div className="space-y-4 md:space-y-6">
+      {/* Enhanced Content Header with Statistics */}
+      <div className="px-2 md:px-0">
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 md:gap-0 mb-4">
+          <div className="text-center md:text-left">
+            <h2 className="text-xl md:text-2xl font-bold">
+              📚 Content Management
+            </h2>
+            <p className="text-sm md:text-base text-slate-600">
+              Managing {analytics.totalWords} words across{" "}
+              {availableCategories.length} categories
+            </p>
+          </div>
+          <div className="flex gap-2 justify-center md:justify-start">
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => setShowBulkImport(true)}
+              className="flex-1 md:flex-none"
+            >
+              <Upload className="w-4 h-4 mr-1 md:mr-2" />
+              <span className="hidden md:inline">Bulk Import</span>
+              <span className="md:hidden">Import</span>
+            </Button>
+            <div className="flex gap-2 flex-1 md:flex-none">
+              <Button
+                size="sm"
+                onClick={() => {
+                  setCreateMethod("wizard");
+                  setShowCreateWizard(true);
+                }}
+                className="flex-1 md:flex-none bg-blue-600 hover:bg-blue-700 text-white"
+              >
+                <Plus className="w-4 h-4 mr-1 md:mr-2" />
+                <span className="hidden md:inline">Create Word</span>
+                <span className="md:hidden">Create</span>
+              </Button>
+              <Button
+                size="sm"
+                variant="outline"
+                onClick={() => {
+                  setWordEditorMode("create");
+                  setEditingWord(null);
+                  setShowWordEditor(true);
+                }}
+                className="hidden md:flex"
+              >
+                <FileText className="w-4 h-4 mr-2" />
+                Quick Add
+              </Button>
+            </div>
+          </div>
         </div>
-        <div className="flex gap-2">
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => setShowBulkImport(true)}
-          >
-            <Upload className="w-4 h-4 mr-2" />
-            Bulk Import
-          </Button>
-          <Button
-            size="sm"
-            onClick={() => {
-              setWordEditorMode("create");
-              setEditingWord(null);
-              setShowWordEditor(true);
-            }}
-          >
-            <Plus className="w-4 h-4 mr-2" />
-            Add Word
-          </Button>
+
+        {/* Content Statistics Dashboard */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 mb-4">
+          <Card className="bg-gradient-to-br from-blue-50 to-blue-100 border-blue-200">
+            <CardContent className="p-3 md:p-4 text-center">
+              <BookOpen className="w-6 h-6 md:w-8 md:h-8 text-blue-500 mx-auto mb-1 md:mb-2" />
+              <div className="text-lg md:text-2xl font-bold text-blue-600">
+                {analytics.totalWords}
+              </div>
+              <p className="text-xs md:text-sm text-blue-600 font-medium">
+                Total Words
+              </p>
+            </CardContent>
+          </Card>
+          <Card className="bg-gradient-to-br from-green-50 to-green-100 border-green-200">
+            <CardContent className="p-3 md:p-4 text-center">
+              <CheckCircle className="w-6 h-6 md:w-8 md:h-8 text-green-500 mx-auto mb-1 md:mb-2" />
+              <div className="text-lg md:text-2xl font-bold text-green-600">
+                {words.filter((w) => w.status === "approved").length}
+              </div>
+              <p className="text-xs md:text-sm text-green-600 font-medium">
+                Approved
+              </p>
+            </CardContent>
+          </Card>
+          <Card className="bg-gradient-to-br from-yellow-50 to-yellow-100 border-yellow-200">
+            <CardContent className="p-3 md:p-4 text-center">
+              <Clock className="w-6 h-6 md:w-8 md:h-8 text-yellow-500 mx-auto mb-1 md:mb-2" />
+              <div className="text-lg md:text-2xl font-bold text-yellow-600">
+                {words.filter((w) => w.status === "pending").length}
+              </div>
+              <p className="text-xs md:text-sm text-yellow-600 font-medium">
+                Pending
+              </p>
+            </CardContent>
+          </Card>
+          <Card className="bg-gradient-to-br from-purple-50 to-purple-100 border-purple-200">
+            <CardContent className="p-3 md:p-4 text-center">
+              <Layers className="w-6 h-6 md:w-8 md:h-8 text-purple-500 mx-auto mb-1 md:mb-2" />
+              <div className="text-lg md:text-2xl font-bold text-purple-600">
+                {availableCategories.length}
+              </div>
+              <p className="text-xs md:text-sm text-purple-600 font-medium">
+                Categories
+              </p>
+            </CardContent>
+          </Card>
         </div>
       </div>
 
-      {/* Content Filters */}
-      <Card>
-        <CardContent className="p-4">
-          <div className="flex gap-4 items-center">
-            <div className="flex-1">
+      {/* Enhanced Advanced Filters and Search */}
+      <Card className="mx-2 md:mx-0">
+        <CardContent className="p-3 md:p-4 space-y-3 md:space-y-4">
+          {/* Primary Search */}
+          <div className="flex flex-col md:flex-row gap-3 md:gap-4">
+            <div className="flex-1 relative">
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-slate-400" />
               <Input
-                placeholder="Search words..."
+                placeholder="Search words, definitions, examples..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="max-w-sm"
+                className="pl-10 w-full"
               />
             </div>
+            <div className="flex gap-2">
+              <Button
+                variant={viewMode === "list" ? "default" : "outline"}
+                size="sm"
+                onClick={() => setViewMode("list")}
+                className="px-3"
+              >
+                <Eye className="w-4 h-4" />
+              </Button>
+              <Button
+                variant={viewMode === "grid" ? "default" : "outline"}
+                size="sm"
+                onClick={() => setViewMode("grid")}
+                className="px-3"
+              >
+                <PieChart className="w-4 h-4" />
+              </Button>
+            </div>
+          </div>
+
+          {/* Advanced Filters */}
+          <div className="flex flex-col md:flex-row gap-3 md:gap-4">
             <Select value={wordFilter} onValueChange={setWordFilter}>
-              <SelectTrigger className="w-40">
-                <SelectValue />
+              <SelectTrigger className="w-full md:w-40">
+                <SelectValue placeholder="Status" />
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="all">All Status</SelectItem>
-                <SelectItem value="approved">Approved</SelectItem>
-                <SelectItem value="pending">Pending Review</SelectItem>
-                <SelectItem value="rejected">Rejected</SelectItem>
+                <SelectItem value="approved">✅ Approved</SelectItem>
+                <SelectItem value="pending">⏳ Pending</SelectItem>
+                <SelectItem value="rejected">❌ Rejected</SelectItem>
               </SelectContent>
             </Select>
-            <Button variant="outline" size="sm">
-              <Filter className="w-4 h-4" />
+
+            <Select value={categoryFilter} onValueChange={setCategoryFilter}>
+              <SelectTrigger className="w-full md:w-40">
+                <SelectValue placeholder="Category" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">All Categories</SelectItem>
+                {availableCategories.map((cat) => (
+                  <SelectItem key={cat.id} value={cat.id}>
+                    {cat.name} ({cat.count})
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+
+            <Select
+              value={difficultyFilter}
+              onValueChange={setDifficultyFilter}
+            >
+              <SelectTrigger className="w-full md:w-40">
+                <SelectValue placeholder="Difficulty" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">All Levels</SelectItem>
+                <SelectItem value="easy">🌟 Easy</SelectItem>
+                <SelectItem value="medium">⭐ Medium</SelectItem>
+                <SelectItem value="hard">🔥 Hard</SelectItem>
+              </SelectContent>
+            </Select>
+
+            <Select
+              value={sortBy}
+              onValueChange={(value: any) => setSortBy(value)}
+            >
+              <SelectTrigger className="w-full md:w-40">
+                <SelectValue placeholder="Sort by" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="word">A-Z Word</SelectItem>
+                <SelectItem value="category">Category</SelectItem>
+                <SelectItem value="difficulty">Difficulty</SelectItem>
+                <SelectItem value="usageCount">Usage Count</SelectItem>
+                <SelectItem value="accuracy">Accuracy</SelectItem>
+                <SelectItem value="lastUsed">Last Used</SelectItem>
+              </SelectContent>
+            </Select>
+
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => setSortOrder(sortOrder === "asc" ? "desc" : "asc")}
+              className="px-3"
+            >
+              {sortOrder === "asc" ? "↑" : "↓"}
             </Button>
+          </div>
+
+          {/* Results Summary */}
+          <div className="flex flex-col md:flex-row justify-between items-center gap-2 text-sm text-slate-600">
+            <span>
+              Showing {filteredAndSortedWords.length} of {words.length} words
+              {searchTerm && ` for "${searchTerm}"`}
+            </span>
+            {selectedWords.length > 0 && (
+              <div className="flex gap-2">
+                <span>{selectedWords.length} selected</span>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => setSelectedWords([])}
+                >
+                  Clear Selection
+                </Button>
+              </div>
+            )}
           </div>
         </CardContent>
       </Card>
 
       {/* Words List */}
       <div className="space-y-4">
-        {words
-          .filter((word) => wordFilter === "all" || word.status === wordFilter)
-          .filter(
-            (word) =>
-              searchTerm === "" ||
-              word.word.toLowerCase().includes(searchTerm.toLowerCase()) ||
-              word.category.toLowerCase().includes(searchTerm.toLowerCase()),
-          )
-          .map((word) => (
-            <Card key={word.id} className="hover:shadow-md transition-shadow">
-              <CardContent className="p-6">
-                <div className="flex items-center justify-between">
-                  <div className="flex-1">
-                    <div className="flex items-center gap-3 mb-2">
-                      <h3 className="text-xl font-bold">{word.word}</h3>
+        {filteredAndSortedWords.length === 0 ? (
+          <Card className="text-center py-12">
+            <CardContent>
+              <div className="text-6xl mb-4">📚</div>
+              <h3 className="text-lg font-semibold mb-2">No words found</h3>
+              <p className="text-slate-600 mb-4">
+                {searchTerm
+                  ? `No words match "${searchTerm}". Try adjusting your search or filters.`
+                  : "No words match your current filters. Try adjusting your criteria."}
+              </p>
+              <div className="flex gap-2 justify-center">
+                <Button variant="outline" onClick={() => setSearchTerm("")}>
+                  Clear Search
+                </Button>
+                <Button
+                  variant="outline"
+                  onClick={() => {
+                    setWordFilter("all");
+                    setCategoryFilter("all");
+                    setDifficultyFilter("all");
+                  }}
+                >
+                  Clear Filters
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
+        ) : (
+          filteredAndSortedWords.map((word) => (
+            <Card
+              key={word.id}
+              className="hover:shadow-lg transition-all duration-200 mx-2 md:mx-0"
+            >
+              <CardContent className="p-3 md:p-6">
+                <div className="flex flex-col md:flex-row gap-3 md:gap-0 md:items-start md:justify-between">
+                  <div className="flex-1 min-w-0">
+                    {/* Mobile-optimized word header */}
+                    <div className="flex items-center gap-2 mb-3">
+                      <span className="text-2xl flex-shrink-0">
+                        {word.emoji}
+                      </span>
+                      <div className="flex-1 min-w-0">
+                        <h3 className="text-lg md:text-xl font-bold text-slate-800 capitalize truncate">
+                          {word.word}
+                        </h3>
+                        <p className="text-xs md:text-sm text-slate-500">
+                          {word.pronunciation}
+                        </p>
+                      </div>
+                    </div>
+
+                    {/* Status and meta badges */}
+                    <div className="flex flex-wrap gap-1 md:gap-2 mb-3">
                       <Badge
                         className={
                           word.status === "approved"
-                            ? "bg-green-100 text-green-800"
+                            ? "bg-green-100 text-green-800 border-green-300"
                             : word.status === "pending"
-                              ? "bg-yellow-100 text-yellow-800"
-                              : "bg-red-100 text-red-800"
+                              ? "bg-yellow-100 text-yellow-800 border-yellow-300"
+                              : "bg-red-100 text-red-800 border-red-300"
                         }
                       >
+                        {word.status === "approved"
+                          ? "✅"
+                          : word.status === "pending"
+                            ? "⏳"
+                            : "❌"}
                         {word.status}
                       </Badge>
-                      <Badge variant="outline">{word.category}</Badge>
-                      <Badge variant="outline">{word.difficulty}</Badge>
+                      <Badge variant="outline" className="capitalize">
+                        📁 {word.category}
+                      </Badge>
+                      <Badge
+                        variant="outline"
+                        className={
+                          word.difficulty === "easy"
+                            ? "text-green-600 border-green-300"
+                            : word.difficulty === "medium"
+                              ? "text-yellow-600 border-yellow-300"
+                              : "text-red-600 border-red-300"
+                        }
+                      >
+                        {word.difficulty === "easy"
+                          ? "🌟"
+                          : word.difficulty === "medium"
+                            ? "⭐"
+                            : "🔥"}
+                        {word.difficulty}
+                      </Badge>
                     </div>
-                    <p className="text-slate-600 mb-2">
-                      <strong>Definition:</strong> {word.definition}
-                    </p>
-                    <p className="text-slate-600 mb-2">
-                      <strong>Example:</strong> {word.example}
-                    </p>
-                    <div className="flex items-center gap-4 text-sm text-slate-500">
-                      <span>👥 {word.usageCount} uses</span>
-                      <span>🎯 {word.accuracy}% accuracy</span>
-                      <span>📅 {word.submittedAt.toLocaleDateString()}</span>
+
+                    {/* Word content */}
+                    <div className="space-y-2 mb-3">
+                      <div>
+                        <p className="text-sm md:text-base text-slate-700">
+                          <span className="font-medium text-slate-500">
+                            Definition:
+                          </span>{" "}
+                          {word.definition}
+                        </p>
+                      </div>
+                      <div>
+                        <p className="text-sm md:text-base text-slate-700 italic">
+                          <span className="font-medium text-slate-500">
+                            Example:
+                          </span>{" "}
+                          "{word.example}"
+                        </p>
+                      </div>
+                      {word.funFact && (
+                        <div>
+                          <p className="text-sm md:text-base text-blue-600">
+                            <span className="font-medium text-slate-500">
+                              Fun Fact:
+                            </span>{" "}
+                            💡 {word.funFact}
+                          </p>
+                        </div>
+                      )}
+                    </div>
+
+                    {/* Usage statistics */}
+                    <div className="grid grid-cols-3 gap-3 p-3 bg-slate-50 rounded-lg text-center">
+                      <div>
+                        <div className="text-lg md:text-xl font-bold text-blue-600">
+                          {word.usageCount.toLocaleString()}
+                        </div>
+                        <p className="text-xs text-slate-500">Uses</p>
+                      </div>
+                      <div>
+                        <div className="text-lg md:text-xl font-bold text-green-600">
+                          {word.accuracy}%
+                        </div>
+                        <p className="text-xs text-slate-500">Accuracy</p>
+                      </div>
+                      <div>
+                        <div className="text-lg md:text-xl font-bold text-purple-600">
+                          {word.lastUsed
+                            ? Math.floor(
+                                (Date.now() - word.lastUsed.getTime()) /
+                                  (1000 * 60 * 60 * 24),
+                              )
+                            : 0}
+                        </div>
+                        <p className="text-xs text-slate-500">Days Ago</p>
+                      </div>
                     </div>
                   </div>
-                  <div className="flex items-center gap-2">
+
+                  {/* Action buttons */}
+                  <div className="flex md:flex-col gap-2 md:gap-1 justify-center md:justify-start">
                     {word.status === "pending" && (
                       <>
-                        <Button size="sm" className="bg-green-600 text-white">
+                        <Button
+                          size="sm"
+                          className="bg-green-600 hover:bg-green-700 text-white flex-1 md:flex-none"
+                        >
                           <CheckCircle className="w-4 h-4 mr-1" />
-                          Approve
+                          <span className="hidden md:inline">Approve</span>
                         </Button>
-                        <Button size="sm" variant="destructive">
+                        <Button
+                          size="sm"
+                          variant="destructive"
+                          className="flex-1 md:flex-none"
+                        >
                           <XCircle className="w-4 h-4 mr-1" />
-                          Reject
+                          <span className="hidden md:inline">Reject</span>
                         </Button>
                       </>
                     )}
@@ -727,79 +1203,516 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onNavigateBack }) => {
                         setEditingWord(word);
                         setShowWordEditor(true);
                       }}
+                      className="flex-1 md:flex-none"
                     >
-                      <Edit className="w-4 h-4" />
+                      <Edit className="w-4 h-4 md:mr-1" />
+                      <span className="hidden md:inline">Edit</span>
                     </Button>
-                    <Button size="sm" variant="outline">
-                      <MoreVertical className="w-4 h-4" />
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      className="flex-1 md:flex-none hover:bg-red-50 hover:text-red-600"
+                      onClick={() => {
+                        if (confirm(`Delete "${word.word}"?`)) {
+                          setWords(words.filter((w) => w.id !== word.id));
+                        }
+                      }}
+                    >
+                      <Trash2 className="w-4 h-4 md:mr-1" />
+                      <span className="hidden md:inline">Delete</span>
                     </Button>
                   </div>
                 </div>
               </CardContent>
             </Card>
-          ))}
+          ))
+        )}
       </div>
 
-      {/* Categories Management */}
-      <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <Layers className="w-5 h-5" />
-              Category Management
+      {/* Create Word Insights Dashboard */}
+      <div className="mb-8">
+        <CreateWordInsights
+          words={words}
+          categories={availableCategories.map((cat) => ({
+            id: cat.id,
+            name: cat.name,
+            emoji: getWordsByCategory(cat.id)[0]?.emoji || "📁",
+          }))}
+          onCreateWord={() => {
+            setCreateMethod("wizard");
+            setShowCreateWizard(true);
+          }}
+        />
+      </div>
+
+      {/* Enhanced Category Management System */}
+      <div className="space-y-4 md:space-y-6">
+        {/* Category Management Header with Statistics */}
+        <div className="px-2 md:px-0">
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 md:gap-0 mb-4">
+            <div className="text-center md:text-left">
+              <h3 className="text-lg md:text-xl font-bold flex items-center justify-center md:justify-start gap-2">
+                <Layers className="w-5 h-5 text-purple-500" />
+                Category Management
+              </h3>
+              <p className="text-sm md:text-base text-slate-600">
+                Manage {availableCategories.length} content categories and their
+                organization
+              </p>
             </div>
-            <Button size="sm" onClick={() => setShowCategoryDialog(true)}>
-              <Plus className="w-4 h-4 mr-2" />
-              Add Category
-            </Button>
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {categories.map((category) => (
-              <Card
-                key={category.id}
-                className="hover:shadow-md transition-shadow"
+            <div className="flex gap-2 justify-center md:justify-start">
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => {
+                  // Bulk category operations
+                }}
+                className="flex-1 md:flex-none"
               >
-                <CardContent className="p-4">
-                  <div className="flex items-center gap-3 mb-3">
-                    <span className="text-2xl">{category.emoji}</span>
-                    <div className="flex-1">
-                      <h4 className="font-semibold">{category.name}</h4>
-                      <p className="text-sm text-slate-600">
-                        {category.wordCount} words
-                      </p>
-                    </div>
-                    <Badge
-                      className={
-                        category.isActive
-                          ? "bg-green-100 text-green-800"
-                          : "bg-gray-100 text-gray-800"
-                      }
-                    >
-                      {category.isActive ? "Active" : "Inactive"}
-                    </Badge>
-                  </div>
-                  <p className="text-sm text-slate-600 mb-3">
-                    {category.description}
-                  </p>
-                  <div className="flex justify-between items-center">
-                    <Badge variant="outline">{category.difficulty}</Badge>
-                    <div className="flex gap-1">
-                      <Button size="sm" variant="outline">
-                        <Edit className="w-3 h-3" />
-                      </Button>
-                      <Button size="sm" variant="outline">
-                        <MoreVertical className="w-3 h-3" />
-                      </Button>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
+                <Archive className="w-4 h-4 mr-1 md:mr-2" />
+                <span className="hidden md:inline">Bulk Actions</span>
+                <span className="md:hidden">Bulk</span>
+              </Button>
+              <Button
+                size="sm"
+                onClick={() => setShowCategoryDialog(true)}
+                className="flex-1 md:flex-none bg-purple-600 hover:bg-purple-700"
+              >
+                <Plus className="w-4 h-4 mr-1 md:mr-2" />
+                Add Category
+              </Button>
+            </div>
           </div>
-        </CardContent>
-      </Card>
+
+          {/* Category Statistics Dashboard */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 mb-4">
+            <Card className="bg-gradient-to-br from-purple-50 to-purple-100 border-purple-200">
+              <CardContent className="p-3 md:p-4 text-center">
+                <Layers className="w-6 h-6 md:w-8 md:h-8 text-purple-500 mx-auto mb-1 md:mb-2" />
+                <div className="text-lg md:text-2xl font-bold text-purple-600">
+                  {availableCategories.length}
+                </div>
+                <p className="text-xs md:text-sm text-purple-600 font-medium">
+                  Total Categories
+                </p>
+              </CardContent>
+            </Card>
+            <Card className="bg-gradient-to-br from-green-50 to-green-100 border-green-200">
+              <CardContent className="p-3 md:p-4 text-center">
+                <CheckCircle className="w-6 h-6 md:w-8 md:h-8 text-green-500 mx-auto mb-1 md:mb-2" />
+                <div className="text-lg md:text-2xl font-bold text-green-600">
+                  {availableCategories.filter((cat) => cat.count > 0).length}
+                </div>
+                <p className="text-xs md:text-sm text-green-600 font-medium">
+                  Active
+                </p>
+              </CardContent>
+            </Card>
+            <Card className="bg-gradient-to-br from-yellow-50 to-yellow-100 border-yellow-200">
+              <CardContent className="p-3 md:p-4 text-center">
+                <AlertTriangle className="w-6 h-6 md:w-8 md:h-8 text-yellow-500 mx-auto mb-1 md:mb-2" />
+                <div className="text-lg md:text-2xl font-bold text-yellow-600">
+                  {availableCategories.filter((cat) => cat.count === 0).length}
+                </div>
+                <p className="text-xs md:text-sm text-yellow-600 font-medium">
+                  Empty
+                </p>
+              </CardContent>
+            </Card>
+            <Card className="bg-gradient-to-br from-blue-50 to-blue-100 border-blue-200">
+              <CardContent className="p-3 md:p-4 text-center">
+                <BarChart3 className="w-6 h-6 md:w-8 md:h-8 text-blue-500 mx-auto mb-1 md:mb-2" />
+                <div className="text-lg md:text-2xl font-bold text-blue-600">
+                  {Math.round(
+                    availableCategories.reduce(
+                      (acc, cat) => acc + cat.count,
+                      0,
+                    ) / availableCategories.length,
+                  )}
+                </div>
+                <p className="text-xs md:text-sm text-blue-600 font-medium">
+                  Avg Words
+                </p>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+
+        {/* Enhanced Category Filters and Search */}
+        <Card className="mx-2 md:mx-0">
+          <CardContent className="p-3 md:p-4">
+            <div className="flex flex-col md:flex-row gap-3 md:gap-4 md:items-center">
+              <div className="flex-1 relative">
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-slate-400" />
+                <Input
+                  placeholder="Search categories..."
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  className="pl-10 w-full"
+                />
+              </div>
+              <div className="flex gap-2">
+                <Select
+                  value={categoryFilter}
+                  onValueChange={setCategoryFilter}
+                >
+                  <SelectTrigger className="w-32 md:w-40">
+                    <SelectValue placeholder="Filter" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="all">All Categories</SelectItem>
+                    <SelectItem value="active">✅ Active</SelectItem>
+                    <SelectItem value="empty">⚠️ Empty</SelectItem>
+                    <SelectItem value="popular">🔥 Popular</SelectItem>
+                  </SelectContent>
+                </Select>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() =>
+                    setSortOrder(sortOrder === "asc" ? "desc" : "asc")
+                  }
+                  className="px-3"
+                >
+                  {sortOrder === "asc" ? "↑" : "↓"}
+                </Button>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Enhanced Categories Grid */}
+        <div className="px-2 md:px-0">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4">
+            {availableCategories
+              .filter((category) => {
+                const matchesSearch =
+                  searchTerm === "" ||
+                  category.name
+                    .toLowerCase()
+                    .includes(searchTerm.toLowerCase());
+                const matchesFilter =
+                  categoryFilter === "all" ||
+                  (categoryFilter === "active" && category.count > 0) ||
+                  (categoryFilter === "empty" && category.count === 0) ||
+                  (categoryFilter === "popular" && category.count > 10);
+                return matchesSearch && matchesFilter;
+              })
+              .sort((a, b) => {
+                if (sortOrder === "asc") {
+                  return a.name.localeCompare(b.name);
+                } else {
+                  return b.count - a.count;
+                }
+              })
+              .map((category) => {
+                const categoryWords = getWordsByCategory(category.id);
+                const difficulties = categoryWords.reduce(
+                  (acc, word) => {
+                    acc[word.difficulty] = (acc[word.difficulty] || 0) + 1;
+                    return acc;
+                  },
+                  { easy: 0, medium: 0, hard: 0 },
+                );
+
+                return (
+                  <Card
+                    key={category.id}
+                    className="hover:shadow-lg transition-all duration-200 group overflow-hidden"
+                  >
+                    <CardContent className="p-4">
+                      {/* Category Header */}
+                      <div className="flex items-center justify-between mb-3">
+                        <div className="flex items-center gap-3">
+                          <div className="text-3xl group-hover:scale-110 transition-transform">
+                            {categoryWords[0]?.emoji || "📁"}
+                          </div>
+                          <div className="flex-1">
+                            <h4 className="font-semibold text-slate-800 capitalize">
+                              {category.name}
+                            </h4>
+                            <p className="text-sm text-slate-500">
+                              {category.count} words
+                            </p>
+                          </div>
+                        </div>
+                        <div className="flex flex-col gap-1">
+                          <Badge
+                            className={
+                              category.count > 0
+                                ? "bg-green-100 text-green-800 border-green-300"
+                                : "bg-gray-100 text-gray-800 border-gray-300"
+                            }
+                          >
+                            {category.count > 0 ? "✅ Active" : "⚠️ Empty"}
+                          </Badge>
+                        </div>
+                      </div>
+
+                      {/* Category Description */}
+                      <p className="text-sm text-slate-600 mb-3 line-clamp-2">
+                        {categoryWords.length > 0
+                          ? `Explore ${category.count} words about ${category.name}, including ${categoryWords
+                              .slice(0, 3)
+                              .map((w) => w.word)
+                              .join(
+                                ", ",
+                              )}${categoryWords.length > 3 ? "..." : ""}`
+                          : `Empty category ready for ${category.name}-related words`}
+                      </p>
+
+                      {/* Difficulty Breakdown */}
+                      {category.count > 0 && (
+                        <div className="mb-3">
+                          <div className="flex justify-between text-xs text-slate-500 mb-1">
+                            <span>Difficulty Mix</span>
+                            <span>{category.count} total</span>
+                          </div>
+                          <div className="flex gap-1">
+                            <div className="flex-1 h-2 bg-green-100 rounded-full overflow-hidden">
+                              <div
+                                className="h-full bg-green-500 rounded-full transition-all duration-500"
+                                style={{
+                                  width: `${(difficulties.easy / category.count) * 100}%`,
+                                }}
+                              ></div>
+                            </div>
+                            <div className="flex-1 h-2 bg-yellow-100 rounded-full overflow-hidden">
+                              <div
+                                className="h-full bg-yellow-500 rounded-full transition-all duration-500"
+                                style={{
+                                  width: `${(difficulties.medium / category.count) * 100}%`,
+                                }}
+                              ></div>
+                            </div>
+                            <div className="flex-1 h-2 bg-red-100 rounded-full overflow-hidden">
+                              <div
+                                className="h-full bg-red-500 rounded-full transition-all duration-500"
+                                style={{
+                                  width: `${(difficulties.hard / category.count) * 100}%`,
+                                }}
+                              ></div>
+                            </div>
+                          </div>
+                          <div className="flex justify-between text-xs text-slate-500 mt-1">
+                            <span className="text-green-600">
+                              🌟 {difficulties.easy}
+                            </span>
+                            <span className="text-yellow-600">
+                              ⭐ {difficulties.medium}
+                            </span>
+                            <span className="text-red-600">
+                              🔥 {difficulties.hard}
+                            </span>
+                          </div>
+                        </div>
+                      )}
+
+                      {/* Sample Words Preview */}
+                      {categoryWords.length > 0 && (
+                        <div className="mb-3">
+                          <p className="text-xs text-slate-500 mb-1">
+                            Sample Words:
+                          </p>
+                          <div className="flex flex-wrap gap-1">
+                            {categoryWords.slice(0, 4).map((word, index) => (
+                              <Badge
+                                key={index}
+                                variant="outline"
+                                className="text-xs"
+                              >
+                                {word.word}
+                              </Badge>
+                            ))}
+                            {categoryWords.length > 4 && (
+                              <Badge
+                                variant="outline"
+                                className="text-xs text-slate-500"
+                              >
+                                +{categoryWords.length - 4} more
+                              </Badge>
+                            )}
+                          </div>
+                        </div>
+                      )}
+
+                      {/* Category Actions */}
+                      <div className="flex justify-between items-center">
+                        <div className="flex gap-1">
+                          <Button
+                            size="sm"
+                            variant="outline"
+                            onClick={() => {
+                              // View category words
+                              setCategoryFilter(category.id);
+                              setActiveTab("content");
+                            }}
+                            className="px-2 hover:bg-blue-50 hover:text-blue-600"
+                          >
+                            <Eye className="w-3 h-3" />
+                          </Button>
+                          <Button
+                            size="sm"
+                            variant="outline"
+                            onClick={() => {
+                              setEditingCategory(category);
+                              setShowCategoryDialog(true);
+                            }}
+                            className="px-2 hover:bg-green-50 hover:text-green-600"
+                          >
+                            <Edit className="w-3 h-3" />
+                          </Button>
+                          <Button
+                            size="sm"
+                            variant="outline"
+                            onClick={() => {
+                              if (
+                                confirm(
+                                  `Delete "${category.name}" category? This will affect ${category.count} words.`,
+                                )
+                              ) {
+                                // Handle category deletion
+                              }
+                            }}
+                            className="px-2 hover:bg-red-50 hover:text-red-600"
+                          >
+                            <Trash2 className="w-3 h-3" />
+                          </Button>
+                        </div>
+                        <Button
+                          size="sm"
+                          variant="ghost"
+                          className="text-slate-400 hover:text-slate-600"
+                        >
+                          <MoreVertical className="w-3 h-3" />
+                        </Button>
+                      </div>
+
+                      {/* Quick Stats */}
+                      <div className="mt-3 pt-3 border-t border-slate-100">
+                        <div className="grid grid-cols-2 gap-2 text-center">
+                          <div>
+                            <div className="text-sm font-bold text-purple-600">
+                              {Math.round(
+                                categoryWords.reduce(
+                                  (acc, w) => acc + ((w.id * 10) % 100),
+                                  0,
+                                ) / Math.max(categoryWords.length, 1),
+                              )}
+                              %
+                            </div>
+                            <p className="text-xs text-slate-500">
+                              Avg Accuracy
+                            </p>
+                          </div>
+                          <div>
+                            <div className="text-sm font-bold text-blue-600">
+                              {Math.floor(Math.random() * 30) + 1}d
+                            </div>
+                            <p className="text-xs text-slate-500">
+                              Last Updated
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+                );
+              })}
+          </div>
+
+          {/* Empty State */}
+          {availableCategories.filter((category) => {
+            const matchesSearch =
+              searchTerm === "" ||
+              category.name.toLowerCase().includes(searchTerm.toLowerCase());
+            const matchesFilter =
+              categoryFilter === "all" ||
+              (categoryFilter === "active" && category.count > 0) ||
+              (categoryFilter === "empty" && category.count === 0) ||
+              (categoryFilter === "popular" && category.count > 10);
+            return matchesSearch && matchesFilter;
+          }).length === 0 && (
+            <Card className="text-center py-12">
+              <CardContent>
+                <div className="text-6xl mb-4">📁</div>
+                <h3 className="text-lg font-semibold mb-2">
+                  No categories found
+                </h3>
+                <p className="text-slate-600 mb-4">
+                  {searchTerm
+                    ? `No categories match "${searchTerm}". Try adjusting your search.`
+                    : "No categories match your current filters."}
+                </p>
+                <div className="flex gap-2 justify-center">
+                  <Button variant="outline" onClick={() => setSearchTerm("")}>
+                    Clear Search
+                  </Button>
+                  <Button
+                    variant="outline"
+                    onClick={() => setCategoryFilter("all")}
+                  >
+                    Clear Filters
+                  </Button>
+                </div>
+              </CardContent>
+            </Card>
+          )}
+        </div>
+
+        {/* Category Insights and Recommendations */}
+        <Card className="mx-2 md:mx-0 bg-gradient-to-r from-purple-50 to-blue-50 border-purple-200">
+          <CardContent className="p-4">
+            <h4 className="font-semibold text-purple-800 mb-3 flex items-center gap-2">
+              <Lightbulb className="w-5 h-5" />
+              Category Insights & Recommendations
+            </h4>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="text-center">
+                <div className="text-2xl font-bold text-purple-600">
+                  {availableCategories.reduce(
+                    (max, cat) => Math.max(max, cat.count),
+                    0,
+                  )}
+                </div>
+                <p className="text-sm text-purple-700">
+                  Most words in "
+                  {
+                    availableCategories.find(
+                      (cat) =>
+                        cat.count ===
+                        availableCategories.reduce(
+                          (max, c) => Math.max(max, c.count),
+                          0,
+                        ),
+                    )?.name
+                  }
+                  "
+                </p>
+              </div>
+              <div className="text-center">
+                <div className="text-2xl font-bold text-blue-600">
+                  {availableCategories.filter((cat) => cat.count === 0).length}
+                </div>
+                <p className="text-sm text-blue-700">
+                  Empty categories need content
+                </p>
+              </div>
+              <div className="text-center">
+                <div className="text-2xl font-bold text-green-600">
+                  {Math.round(
+                    (availableCategories.filter((cat) => cat.count > 0).length /
+                      availableCategories.length) *
+                      100,
+                  )}
+                  %
+                </div>
+                <p className="text-sm text-green-700">Categories are active</p>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
     </div>
   );
 
@@ -1385,76 +2298,209 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onNavigateBack }) => {
   );
 
   return (
-    <div className="space-y-6">
-      {/* Header */}
-      <div className="flex items-center justify-between">
-        <div className="flex items-center gap-4">
-          {onNavigateBack && (
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={onNavigateBack}
-              className="flex items-center gap-2"
-            >
-              <ArrowLeft className="w-4 h-4" />
-              Back to Main
-            </Button>
-          )}
-          <div>
-            <h1 className="text-3xl font-bold text-slate-800">
-              🛡️ Administrator Dashboard
-            </h1>
-            <p className="text-slate-600">
-              System management and oversight platform
-            </p>
+    <div className="space-y-4 md:space-y-6 pb-4 md:pb-6">
+      {/* Enhanced Mobile Header */}
+      <div className="mb-4 md:mb-6">
+        {/* Mobile Header */}
+        <div className="md:hidden">
+          <div className="flex items-center justify-between mb-3 px-2">
+            {onNavigateBack && (
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={onNavigateBack}
+                className="flex items-center gap-1 px-2"
+              >
+                <ArrowLeft className="w-4 h-4" />
+                <span className="sr-only md:inline">Back</span>
+              </Button>
+            )}
+            <div className="flex-1 text-center">
+              <h1 className="text-lg font-bold text-slate-800">
+                🛡️ Admin Panel
+              </h1>
+            </div>
+            <div className="flex gap-1">
+              <Button variant="outline" size="sm" className="relative p-2">
+                <Bell className="w-4 h-4" />
+                <Badge className="absolute -top-1 -right-1 bg-red-500 text-white text-xs px-1 min-w-[16px] h-4 text-[10px]">
+                  3
+                </Badge>
+              </Button>
+              <Button variant="outline" size="sm" className="p-2">
+                <Settings className="w-4 h-4" />
+              </Button>
+            </div>
           </div>
+          <p className="text-xs text-slate-600 text-center px-2">
+            System management and oversight
+          </p>
         </div>
-        <div className="flex gap-2">
-          <Button variant="outline" size="sm" className="relative">
-            <Bell className="w-4 h-4 mr-2" />
-            System Alerts
-            <Badge className="absolute -top-2 -right-2 bg-red-500 text-white text-xs px-1 min-w-[20px] h-5">
-              3
-            </Badge>
-          </Button>
-          <Button variant="outline" size="sm">
-            <Settings className="w-4 h-4 mr-2" />
-            Settings
-          </Button>
+
+        {/* Desktop Header */}
+        <div className="hidden md:flex items-center justify-between">
+          <div className="flex items-center gap-4">
+            {onNavigateBack && (
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={onNavigateBack}
+                className="flex items-center gap-2"
+              >
+                <ArrowLeft className="w-4 h-4" />
+                Back to Main
+              </Button>
+            )}
+            <div>
+              <h1 className="text-3xl font-bold text-slate-800">
+                🛡️ Administrator Dashboard
+              </h1>
+              <p className="text-slate-600">
+                System management and oversight platform
+              </p>
+            </div>
+          </div>
+          <div className="flex gap-2">
+            <Button variant="outline" size="sm" className="relative">
+              <Bell className="w-4 h-4 mr-2" />
+              System Alerts
+              <Badge className="absolute -top-2 -right-2 bg-red-500 text-white text-xs px-1 min-w-[20px] h-5">
+                3
+              </Badge>
+            </Button>
+            <Button variant="outline" size="sm">
+              <Settings className="w-4 h-4 mr-2" />
+              Settings
+            </Button>
+          </div>
         </div>
       </div>
 
-      {/* Navigation Tabs */}
+      {/* Enhanced Mobile Navigation Tabs */}
       <Tabs value={activeTab} onValueChange={setActiveTab}>
-        <TabsList className="grid w-full grid-cols-5">
-          <TabsTrigger value="overview" className="flex items-center gap-2">
-            <BarChart3 className="w-4 h-4" />
-            Overview
-          </TabsTrigger>
-          <TabsTrigger value="content" className="flex items-center gap-2">
-            <BookOpen className="w-4 h-4" />
-            Content
-          </TabsTrigger>
-          <TabsTrigger value="users" className="flex items-center gap-2">
-            <Users className="w-4 h-4" />
-            Users
-          </TabsTrigger>
-          <TabsTrigger value="analytics" className="flex items-center gap-2">
-            <TrendingUp className="w-4 h-4" />
-            Analytics
-          </TabsTrigger>
-          <TabsTrigger value="tickets" className="flex items-center gap-2">
-            <MessageSquare className="w-4 h-4" />
-            Support
-          </TabsTrigger>
-        </TabsList>
+        {/* Mobile Tab Navigation */}
+        <div className="md:hidden mb-4">
+          <TabsList className="grid w-full grid-cols-5 h-12 bg-slate-100">
+            <TabsTrigger
+              value="overview"
+              className="flex flex-col items-center gap-0.5 px-1 py-2 data-[state=active]:bg-white"
+            >
+              <BarChart3 className="w-4 h-4" />
+              <span className="text-xs">Overview</span>
+            </TabsTrigger>
+            <TabsTrigger
+              value="content"
+              className="flex flex-col items-center gap-0.5 px-1 py-2 data-[state=active]:bg-white"
+            >
+              <BookOpen className="w-4 h-4" />
+              <span className="text-xs">Content</span>
+            </TabsTrigger>
+            <TabsTrigger
+              value="users"
+              className="flex flex-col items-center gap-0.5 px-1 py-2 data-[state=active]:bg-white"
+            >
+              <Users className="w-4 h-4" />
+              <span className="text-xs">Users</span>
+            </TabsTrigger>
+            <TabsTrigger
+              value="analytics"
+              className="flex flex-col items-center gap-0.5 px-1 py-2 data-[state=active]:bg-white"
+            >
+              <TrendingUp className="w-4 h-4" />
+              <span className="text-xs">Analytics</span>
+            </TabsTrigger>
+            <TabsTrigger
+              value="tickets"
+              className="flex flex-col items-center gap-0.5 px-1 py-2 data-[state=active]:bg-white"
+            >
+              <MessageSquare className="w-4 h-4" />
+              <span className="text-xs">Support</span>
+            </TabsTrigger>
+          </TabsList>
+        </div>
 
-        <TabsContent value="overview">{renderOverview()}</TabsContent>
-        <TabsContent value="content">{renderContentManagement()}</TabsContent>
-        <TabsContent value="users">{renderUserManagement()}</TabsContent>
-        <TabsContent value="analytics">{renderAnalytics()}</TabsContent>
-        <TabsContent value="tickets">{renderSupportTickets()}</TabsContent>
+        {/* Desktop Tab Navigation */}
+        <div className="hidden md:block">
+          <TabsList className="grid w-full grid-cols-5">
+            <TabsTrigger value="overview" className="flex items-center gap-2">
+              <BarChart3 className="w-4 h-4" />
+              Overview
+            </TabsTrigger>
+            <TabsTrigger value="content" className="flex items-center gap-2">
+              <BookOpen className="w-4 h-4" />
+              Content
+            </TabsTrigger>
+            <TabsTrigger value="users" className="flex items-center gap-2">
+              <Users className="w-4 h-4" />
+              Users
+            </TabsTrigger>
+            <TabsTrigger value="analytics" className="flex items-center gap-2">
+              <TrendingUp className="w-4 h-4" />
+              Analytics
+            </TabsTrigger>
+            <TabsTrigger value="tickets" className="flex items-center gap-2">
+              <MessageSquare className="w-4 h-4" />
+              Support
+            </TabsTrigger>
+          </TabsList>
+        </div>
+
+        <TabsContent value="overview" className="mt-4 md:mt-6">
+          {renderOverview()}
+        </TabsContent>
+        <TabsContent value="content" className="mt-4 md:mt-6">
+          {renderContentManagement()}
+        </TabsContent>
+        <TabsContent value="users" className="mt-4 md:mt-6">
+          {renderUserManagement()}
+        </TabsContent>
+        <TabsContent value="analytics" className="mt-4 md:mt-6">
+          {renderAnalytics()}
+        </TabsContent>
+        <TabsContent value="tickets" className="mt-4 md:mt-6">
+          {renderSupportTickets()}
+        </TabsContent>
       </Tabs>
+
+      {/* Mobile Floating Action Button */}
+      <div className="md:hidden fixed bottom-6 right-4 z-50">
+        <div className="flex flex-col gap-2">
+          {activeTab === "content" && (
+            <div className="flex flex-col gap-2">
+              <Button
+                onClick={() => {
+                  setCreateMethod("wizard");
+                  setShowCreateWizard(true);
+                }}
+                className="w-14 h-14 rounded-full bg-blue-600 hover:bg-blue-700 shadow-lg group relative"
+              >
+                <Plus className="w-6 h-6" />
+                <div className="absolute -top-1 -right-1 w-3 h-3 bg-green-500 rounded-full opacity-0 group-hover:opacity-100 transition-opacity" />
+              </Button>
+              <Button
+                onClick={() => {
+                  setWordEditorMode("create");
+                  setEditingWord(null);
+                  setShowWordEditor(true);
+                }}
+                size="sm"
+                variant="outline"
+                className="w-12 h-8 rounded-full bg-white/90 hover:bg-white shadow-md text-xs"
+              >
+                Quick
+              </Button>
+            </div>
+          )}
+          {activeTab === "tickets" && (
+            <Button
+              onClick={() => setActiveTab("tickets")}
+              className="w-14 h-14 rounded-full bg-educational-green hover:bg-educational-green/90 shadow-lg"
+            >
+              <MessageSquare className="w-6 h-6" />
+            </Button>
+          )}
+        </div>
+      </div>
 
       {/* Add Word Dialog */}
       <Dialog open={showWordDialog} onOpenChange={setShowWordDialog}>
@@ -1691,6 +2737,18 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onNavigateBack }) => {
             setWords((prev) => prev.map((w) => (w.id === word.id ? word : w)));
           }
           setShowWordEditor(false);
+        }}
+      />
+
+      {/* Create Word Wizard */}
+      <CreateWordWizard
+        open={showCreateWizard}
+        onOpenChange={setShowCreateWizard}
+        categories={categories}
+        existingWords={words}
+        onSave={(word) => {
+          setWords((prev) => [...prev, word]);
+          setShowCreateWizard(false);
         }}
       />
     </div>
