@@ -1232,51 +1232,45 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
                       Words marked as "I Forgot" or with low accuracy rates. Focus practice here:
                     </p>
                     <div className="space-y-2 max-h-48 overflow-y-auto">
-                      {/* Simulated struggling words - in real app this would come from API */}
-                      {[
-                        "helicopter",
-                        "encyclopedia",
-                        "microscope",
-                        "constellation",
-                        "archaeology",
-                      ].map((word, index) => (
+                      {practiceWords.length > 0 ? practiceWords.slice(0, 5).map((wordData) => (
                         <div
-                          key={word}
-                          className="flex items-center justify-between bg-white p-3 rounded border"
+                          key={wordData.word}
+                          className="flex items-center justify-between bg-white p-2 md:p-3 rounded border hover:border-orange-300 transition-colors cursor-pointer"
                         >
                           <div>
-                            <span className="font-medium">{word}</span>
+                            <span className="font-medium text-sm md:text-base">{wordData.word}</span>
                             <div className="text-xs text-gray-500">
-                              {index === 0 &&
-                                "Science • Last reviewed: 2 days ago"}
-                              {index === 1 &&
-                                "Technology • Last reviewed: 1 day ago"}
-                              {index === 2 &&
-                                "Science • Last reviewed: 3 days ago"}
-                              {index === 3 &&
-                                "Space • Last reviewed: 1 day ago"}
-                              {index === 4 &&
-                                "History • Last reviewed: 4 days ago"}
+                              {wordData.category} • Reviewed {wordData.timesReviewed} times
                             </div>
                           </div>
                           <div className="flex items-center gap-2">
-                            <Badge className="bg-red-100 text-red-700 text-xs">
-                              {index === 0 && "25% accuracy"}
-                              {index === 1 && "40% accuracy"}
-                              {index === 2 && "30% accuracy"}
-                              {index === 3 && "45% accuracy"}
-                              {index === 4 && "20% accuracy"}
+                            <Badge className={`text-xs ${
+                              wordData.accuracy < 30 ? 'bg-red-100 text-red-700' :
+                              wordData.accuracy < 50 ? 'bg-orange-100 text-orange-700' :
+                              'bg-yellow-100 text-yellow-700'
+                            }`}>
+                              {wordData.accuracy}% accuracy
                             </Badge>
                             <Button
                               size="sm"
                               variant="outline"
-                              className="text-xs"
+                              className="text-xs px-2 py-1 h-auto"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                console.log('Starting practice for:', wordData.word);
+                              }}
                             >
                               Practice
                             </Button>
                           </div>
                         </div>
-                      ))}
+                      )) : (
+                        <div className="text-center py-6 text-gray-500">
+                          <CheckCircle className="w-8 h-8 mx-auto mb-2 text-green-500" />
+                          <p className="text-sm">No words need practice right now!</p>
+                          <p className="text-xs">Great job staying on top of learning!</p>
+                        </div>
+                      )}
                     </div>
                     <div className="mt-3 pt-3 border-t">
                       <Button
