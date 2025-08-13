@@ -750,6 +750,24 @@ export function ChildFriendlyCategorySelector({
         })}
       </div>
 
+      {/* Search Results Empty State */}
+      {searchTerm && categories.length === 0 && (
+        <div className="text-center py-12">
+          <div className="text-6xl mb-4">🔍</div>
+          <h3 className="text-lg font-semibold mb-2">No categories found</h3>
+          <p className="text-slate-600 mb-4 px-4">
+            Try searching for something like "animals", "space", or "food"
+          </p>
+          <Button
+            variant="outline"
+            onClick={() => setSearchTerm("")}
+            className="text-educational-blue border-educational-blue hover:bg-educational-blue/10"
+          >
+            Clear search
+          </Button>
+        </div>
+      )}
+
       {/* Mobile Category Stats */}
       <div className="md:hidden mt-6 px-2">
         <Card className="bg-gradient-to-r from-educational-blue/5 to-educational-purple/5 border-educational-blue/20">
