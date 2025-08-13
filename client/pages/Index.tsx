@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -149,6 +149,19 @@ export default function Index({ initialProfile }: IndexProps) {
   const [sessionNumber, setSessionNumber] = useState(1);
   const [lastSystematicSelection, setLastSystematicSelection] =
     useState<SystematicWordSelection | null>(null);
+
+  // Memoize displayWords to prevent recalculation on every render
+  const displayWords = useMemo(() => {
+    if (currentDashboardWords.length > 0) {
+      return currentDashboardWords;
+    }
+    // Fallback calculation if currentDashboardWords is empty
+    const categoryWords =
+      selectedCategory === "all"
+        ? getRandomWords(20)
+        : getWordsByCategory(selectedCategory);
+    return categoryWords.slice(0, 20);
+  }, [currentDashboardWords, selectedCategory]);
 
   // Initialize dashboard words when category changes or component mounts
   useEffect(() => {
@@ -1324,12 +1337,6 @@ export default function Index({ initialProfile }: IndexProps) {
                         {learningMode === "cards" && (
                           <>
                             {(() => {
-                              const categoryWords =
-                                selectedCategory === "all"
-                                  ? getRandomWords(20)
-                                  : getWordsByCategory(selectedCategory);
-                              const displayWords = categoryWords.slice(0, 20);
-
                               return (
                                 <>
                                   {displayWords.length > 0 && (

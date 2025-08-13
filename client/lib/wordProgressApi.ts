@@ -89,4 +89,31 @@ export class WordProgressAPI {
 
     return response.json();
   }
+
+  static async getPersonalizedRecommendations(childId: string): Promise<{
+    success: boolean;
+    recommendations: {
+      practiceSession?: {
+        words: string[];
+        estimatedTime: number;
+        focusArea: string;
+      };
+      categoryFocus?: string;
+      difficultyAdjustment?: "easier" | "harder" | "maintain";
+      nextMilestone?: {
+        description: string;
+        wordsNeeded: number;
+      };
+    };
+  }> {
+    const response = await fetch(
+      `${API_BASE}/child/${childId}/recommendations`,
+    );
+
+    if (!response.ok) {
+      throw new Error(`Failed to get recommendations: ${response.statusText}`);
+    }
+
+    return response.json();
+  }
 }

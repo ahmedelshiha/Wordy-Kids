@@ -64,23 +64,43 @@ export class AchievementTracker {
   private static achievements: Achievement[] = [
     // Basic Learning Achievements
     {
-      id: "first_word",
+      id: "first_steps",
       name: "First Steps",
-      description: "Learn your very first word!",
+      description: "Learn your first 10 words!",
       icon: "🎯",
       category: "learning",
       difficulty: "bronze",
-      requirements: 1,
+      requirements: 10,
       currentProgress: 0,
       unlocked: false,
       criteria: [
         {
           type: "wordsLearned",
-          target: 1,
+          target: 10,
           operator: ">=",
         },
       ],
       reward: { type: "avatar_accessory", item: "Beginner Badge" },
+    },
+
+    {
+      id: "word_collector",
+      name: "Word Collector",
+      description: "Learn 20 words and build your vocabulary!",
+      icon: "📚",
+      category: "learning",
+      difficulty: "silver",
+      requirements: 20,
+      currentProgress: 0,
+      unlocked: false,
+      criteria: [
+        {
+          type: "wordsLearned",
+          target: 20,
+          operator: ">=",
+        },
+      ],
+      reward: { type: "title", item: "Word Collector" },
     },
 
     // Journey-specific Achievements

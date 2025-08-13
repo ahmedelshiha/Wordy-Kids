@@ -116,29 +116,28 @@ const learningStats: LearningStats = {
 
 const achievements: Achievement[] = [
   {
-    id: "first_word",
-    name: "First Step",
-    description: "Learn your very first word!",
+    id: "first_steps",
+    name: "First Steps",
+    description: "Learn your first 10 words!",
     icon: "🎯",
-    category: "learning",
-    difficulty: "bronze",
-    requirements: 1,
-    currentProgress: 1,
-    unlocked: true,
-    dateUnlocked: new Date(),
-    reward: { type: "avatar_accessory", item: "Beginner Badge" },
-  },
-  {
-    id: "word_collector",
-    name: "Word Collector",
-    description: "Learn 10 words to start your collection!",
-    icon: "📚",
     category: "learning",
     difficulty: "bronze",
     requirements: 10,
     currentProgress: 7,
     unlocked: false,
-    reward: { type: "avatar_accessory", item: "Scholar Cap" },
+    reward: { type: "avatar_accessory", item: "Beginner Badge" },
+  },
+  {
+    id: "word_collector",
+    name: "Word Collector",
+    description: "Learn 20 words and build your vocabulary!",
+    icon: "📚",
+    category: "learning",
+    difficulty: "silver",
+    requirements: 20,
+    currentProgress: 7,
+    unlocked: false,
+    reward: { type: "title", item: "Word Collector" },
   },
   {
     id: "vocabulary_master",
@@ -343,62 +342,62 @@ export function AchievementSystem({
 
   const renderProgressOverview = () => (
     <div className="space-y-6">
-      {/* Fun Stats Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+      {/* Fun Stats Cards - Mobile Optimized */}
+      <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-2 md:gap-4 px-2 md:px-0">
         <Card className="bg-gradient-to-br from-educational-blue to-educational-purple text-white hover:scale-105 transition-all">
-          <CardContent className="p-6 text-center">
-            <Brain className="w-8 h-8 mx-auto mb-2 animate-pulse" />
-            <div className="text-3xl font-bold mb-1">
+          <CardContent className="p-3 md:p-6 text-center">
+            <Brain className="w-6 h-6 md:w-8 md:h-8 mx-auto mb-1 md:mb-2 animate-pulse" />
+            <div className="text-xl md:text-3xl font-bold mb-1">
               <AnimatedCounter value={stats.totalWordsLearned} />
             </div>
-            <p className="text-sm opacity-90">Words Learned! 🎯</p>
+            <p className="text-xs md:text-sm opacity-90">Words Learned! 🎯</p>
           </CardContent>
         </Card>
 
         <Card className="bg-gradient-to-br from-educational-green to-educational-blue text-white hover:scale-105 transition-all">
-          <CardContent className="p-6 text-center">
-            <Zap className="w-8 h-8 mx-auto mb-2 animate-bounce" />
-            <div className="text-3xl font-bold mb-1">
+          <CardContent className="p-3 md:p-6 text-center">
+            <Zap className="w-6 h-6 md:w-8 md:h-8 mx-auto mb-1 md:mb-2 animate-bounce" />
+            <div className="text-xl md:text-3xl font-bold mb-1">
               <AnimatedCounter value={stats.learningSpeed} suffix="/hr" />
             </div>
-            <p className="text-sm opacity-90">Learning Speed! ⚡</p>
+            <p className="text-xs md:text-sm opacity-90">Learning Speed! ⚡</p>
           </CardContent>
         </Card>
 
         <Card className="bg-gradient-to-br from-educational-orange to-educational-pink text-white hover:scale-105 transition-all">
-          <CardContent className="p-6 text-center">
+          <CardContent className="p-3 md:p-6 text-center">
             <Target
-              className="w-8 h-8 mx-auto mb-2 animate-spin"
+              className="w-6 h-6 md:w-8 md:h-8 mx-auto mb-1 md:mb-2 animate-spin"
               style={{ animationDuration: "3s" }}
             />
-            <div className="text-3xl font-bold mb-1">
+            <div className="text-xl md:text-3xl font-bold mb-1">
               <AnimatedCounter value={stats.currentAccuracy} suffix="%" />
             </div>
-            <p className="text-sm opacity-90">Accuracy! 🎪</p>
+            <p className="text-xs md:text-sm opacity-90">Accuracy! 🎪</p>
           </CardContent>
         </Card>
 
         <Card className="bg-gradient-to-br from-educational-purple to-educational-pink text-white hover:scale-105 transition-all">
-          <CardContent className="p-6 text-center">
-            <Trophy className="w-8 h-8 mx-auto mb-2 animate-pulse" />
-            <div className="text-3xl font-bold mb-1">
+          <CardContent className="p-3 md:p-6 text-center">
+            <Trophy className="w-6 h-6 md:w-8 md:h-8 mx-auto mb-1 md:mb-2 animate-pulse" />
+            <div className="text-xl md:text-3xl font-bold mb-1">
               <AnimatedCounter value={unlockedAchievements.length} />
             </div>
-            <p className="text-sm opacity-90">Achievements! 🏆</p>
+            <p className="text-xs md:text-sm opacity-90">Achievements! 🏆</p>
           </CardContent>
         </Card>
       </div>
 
-      {/* Fun Weekly Progress */}
-      <Card className="bg-gradient-to-br from-blue-50 to-purple-50">
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2 text-educational-blue">
-            <BarChart3 className="w-6 h-6" />
+      {/* Fun Weekly Progress - Mobile Optimized */}
+      <Card className="bg-gradient-to-br from-blue-50 to-purple-50 mx-2 md:mx-0">
+        <CardHeader className="pb-3 md:pb-6">
+          <CardTitle className="flex items-center gap-2 text-educational-blue text-lg md:text-xl">
+            <BarChart3 className="w-5 h-5 md:w-6 md:h-6" />
             🌟 Your Amazing Week!
           </CardTitle>
         </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-7 gap-2 h-32 mb-4">
+        <CardContent className="px-3 md:px-6">
+          <div className="grid grid-cols-7 gap-1 md:gap-2 h-24 md:h-32 mb-4">
             {stats.weeklyProgress.map((value, index) => {
               const maxValue = Math.max(...stats.weeklyProgress);
               const height = (value / maxValue) * 100;
@@ -413,16 +412,16 @@ export function AchievementSystem({
                       style={{ height: `${height}%` }}
                     />
                   </div>
-                  <p className="text-xs text-slate-600 mt-2">{days[index]}</p>
-                  <p className="text-lg">{emojis[index]}</p>
-                  <p className="text-sm font-bold text-educational-blue">
+                  <p className="text-xs text-slate-600 mt-1">{days[index]}</p>
+                  <p className="text-sm md:text-lg">{emojis[index]}</p>
+                  <p className="text-xs md:text-sm font-bold text-educational-blue">
                     {value}
                   </p>
                 </div>
               );
             })}
           </div>
-          <p className="text-center text-educational-purple font-semibold">
+          <p className="text-center text-educational-purple font-semibold text-sm md:text-base">
             Keep up the fantastic work! 🎊
           </p>
         </CardContent>
@@ -431,16 +430,16 @@ export function AchievementSystem({
   );
 
   const renderCategoryFun = () => (
-    <div className="space-y-6">
-      <Card className="bg-gradient-to-br from-yellow-50 to-orange-50">
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2 text-educational-orange">
-            <PieChart className="w-6 h-6" />
+    <div className="space-y-4 md:space-y-6">
+      <Card className="bg-gradient-to-br from-yellow-50 to-orange-50 mx-2 md:mx-0">
+        <CardHeader className="pb-3 md:pb-6">
+          <CardTitle className="flex items-center gap-2 text-educational-orange text-lg md:text-xl">
+            <PieChart className="w-5 h-5 md:w-6 md:h-6" />
             🎨 Your Learning Rainbow!
           </CardTitle>
         </CardHeader>
-        <CardContent>
-          <div className="space-y-4">
+        <CardContent className="px-3 md:px-6">
+          <div className="space-y-3 md:space-y-4">
             {stats.categoryBreakdown.map((category, index) => {
               const colors = [
                 "from-educational-blue to-blue-400",
@@ -455,24 +454,24 @@ export function AchievementSystem({
               const icon = icons[index % icons.length];
 
               return (
-                <div key={category.category} className="space-y-3">
+                <div key={category.category} className="space-y-2 md:space-y-3">
                   <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-3">
+                    <div className="flex items-center gap-2 md:gap-3">
                       <div
-                        className={`w-8 h-8 rounded-full bg-gradient-to-r ${color} flex items-center justify-center text-white shadow-lg`}
+                        className={`w-6 h-6 md:w-8 md:h-8 rounded-full bg-gradient-to-r ${color} flex items-center justify-center text-white shadow-lg text-sm md:text-base`}
                       >
                         {icon}
                       </div>
                       <div>
-                        <span className="font-bold text-gray-800">
+                        <span className="font-bold text-gray-800 text-sm md:text-base">
                           {category.category}
                         </span>
-                        <p className="text-xs text-gray-500">
+                        <p className="text-xs text-gray-500 hidden md:block">
                           You're doing amazing! 🌟
                         </p>
                       </div>
                     </div>
-                    <div className="flex gap-4 text-sm">
+                    <div className="flex flex-col md:flex-row gap-1 md:gap-4 text-xs md:text-sm">
                       <span className="bg-educational-blue/20 px-2 py-1 rounded-full text-educational-blue font-semibold">
                         {category.wordsLearned} words!
                       </span>
@@ -499,22 +498,22 @@ export function AchievementSystem({
   );
 
   const renderStreakFun = () => (
-    <div className="space-y-6">
-      <Card className="bg-gradient-to-br from-green-50 to-blue-50">
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2 text-educational-green">
-            <Activity className="w-6 h-6" />
+    <div className="space-y-4 md:space-y-6">
+      <Card className="bg-gradient-to-br from-green-50 to-blue-50 mx-2 md:mx-0">
+        <CardHeader className="pb-3 md:pb-6">
+          <CardTitle className="flex items-center gap-2 text-educational-green text-lg md:text-xl">
+            <Activity className="w-5 h-5 md:w-6 md:h-6" />
             🔥 Your Learning Adventure Map!
           </CardTitle>
         </CardHeader>
-        <CardContent>
-          <div className="space-y-4">
-            <p className="text-center text-educational-purple font-semibold">
+        <CardContent className="px-3 md:px-6">
+          <div className="space-y-3 md:space-y-4">
+            <p className="text-center text-educational-purple font-semibold text-sm md:text-base">
               Look at all the days you've been learning! Each square is a day of
               adventure! 🗺️
             </p>
 
-            <div className="grid grid-cols-10 gap-1 justify-center">
+            <div className="grid grid-cols-10 gap-0.5 md:gap-1 justify-center">
               {stats.streakData.map((day, index) => {
                 const emojis = ["💫", "⭐", "🌟", "✨", "🎊"];
                 const randomEmoji =
@@ -523,7 +522,7 @@ export function AchievementSystem({
                 return (
                   <div
                     key={index}
-                    className={`w-6 h-6 rounded-lg flex items-center justify-center text-xs font-bold transition-all hover:scale-125 cursor-pointer ${
+                    className={`w-5 h-5 md:w-6 md:h-6 rounded-lg flex items-center justify-center text-xs font-bold transition-all hover:scale-125 cursor-pointer ${
                       day.active
                         ? day.wordsLearned > 8
                           ? "bg-gradient-to-br from-educational-green to-green-400 text-white shadow-lg"
@@ -546,31 +545,31 @@ export function AchievementSystem({
               })}
             </div>
 
-            <div className="flex items-center justify-center gap-4 text-sm">
-              <div className="flex items-center gap-2">
-                <div className="w-4 h-4 bg-gray-100 rounded-sm flex items-center justify-center">
+            <div className="grid grid-cols-2 md:flex md:items-center md:justify-center gap-2 md:gap-4 text-xs md:text-sm">
+              <div className="flex items-center gap-1 md:gap-2">
+                <div className="w-3 h-3 md:w-4 md:h-4 bg-gray-100 rounded-sm flex items-center justify-center text-xs">
                   💤
                 </div>
                 <span className="text-gray-600">Rest day</span>
               </div>
-              <div className="flex items-center gap-2">
-                <div className="w-4 h-4 bg-educational-orange rounded-sm flex items-center justify-center text-white">
+              <div className="flex items-center gap-1 md:gap-2">
+                <div className="w-3 h-3 md:w-4 md:h-4 bg-educational-orange rounded-sm flex items-center justify-center text-white text-xs">
                   ✨
                 </div>
                 <span className="text-educational-orange font-semibold">
                   Learning day
                 </span>
               </div>
-              <div className="flex items-center gap-2">
-                <div className="w-4 h-4 bg-educational-blue rounded-sm flex items-center justify-center text-white">
+              <div className="flex items-center gap-1 md:gap-2">
+                <div className="w-3 h-3 md:w-4 md:h-4 bg-educational-blue rounded-sm flex items-center justify-center text-white text-xs">
                   ⭐
                 </div>
                 <span className="text-educational-blue font-semibold">
                   Great day
                 </span>
               </div>
-              <div className="flex items-center gap-2">
-                <div className="w-4 h-4 bg-educational-green rounded-sm flex items-center justify-center text-white">
+              <div className="flex items-center gap-1 md:gap-2">
+                <div className="w-3 h-3 md:w-4 md:h-4 bg-educational-green rounded-sm flex items-center justify-center text-white text-xs">
                   🏆
                 </div>
                 <span className="text-educational-green font-semibold">
@@ -586,46 +585,66 @@ export function AchievementSystem({
 
   return (
     <div className="space-y-6">
-      {/* Kid-Friendly Header */}
-      <div className="text-center">
-        <h2 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-educational-blue via-educational-purple to-educational-pink bg-clip-text text-transparent mb-2">
+      {/* Kid-Friendly Header - Mobile Optimized */}
+      <div className="text-center px-4">
+        <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold bg-gradient-to-r from-educational-blue via-educational-purple to-educational-pink bg-clip-text text-transparent mb-2 leading-tight">
           🏆 Your Learning Journey! 🌟
         </h2>
-        <p className="text-gray-600 mb-4 text-lg">
+        <p className="text-gray-600 mb-4 text-sm md:text-lg px-2">
           See how amazing you are at learning new words! 🎉
         </p>
       </div>
 
       {/* Fun Tabs */}
       <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-        <TabsList className="grid w-full grid-cols-4 bg-gradient-to-r from-educational-blue/10 to-educational-purple/10">
+        <TabsList className="grid w-full grid-cols-2 md:grid-cols-4 gap-1 md:gap-0 bg-gradient-to-r from-educational-blue/10 to-educational-purple/10 h-auto p-1">
           <TabsTrigger
             value="achievements"
-            className="flex items-center gap-2 data-[state=active]:bg-educational-blue data-[state=active]:text-white"
+            className="flex flex-col md:flex-row items-center gap-1 md:gap-2 data-[state=active]:bg-educational-blue data-[state=active]:text-white text-xs md:text-sm py-2 md:py-3 px-1 md:px-3"
           >
-            <Trophy className="w-4 h-4" />
-            🏆 Trophies
+            <Trophy className="w-4 h-4 md:w-4 md:h-4" />
+            <span className="hidden md:inline">🏆 Trophies</span>
+            <span className="md:hidden text-center">
+              🏆
+              <br />
+              Trophies
+            </span>
           </TabsTrigger>
           <TabsTrigger
             value="progress"
-            className="flex items-center gap-2 data-[state=active]:bg-educational-green data-[state=active]:text-white"
+            className="flex flex-col md:flex-row items-center gap-1 md:gap-2 data-[state=active]:bg-educational-green data-[state=active]:text-white text-xs md:text-sm py-2 md:py-3 px-1 md:px-3"
           >
-            <TrendingUp className="w-4 h-4" />
-            📈 My Stats
+            <TrendingUp className="w-4 h-4 md:w-4 md:h-4" />
+            <span className="hidden md:inline">📈 My Stats</span>
+            <span className="md:hidden text-center">
+              📈
+              <br />
+              Stats
+            </span>
           </TabsTrigger>
           <TabsTrigger
             value="categories"
-            className="flex items-center gap-2 data-[state=active]:bg-educational-orange data-[state=active]:text-white"
+            className="flex flex-col md:flex-row items-center gap-1 md:gap-2 data-[state=active]:bg-educational-orange data-[state=active]:text-white text-xs md:text-sm py-2 md:py-3 px-1 md:px-3"
           >
-            <PieChart className="w-4 h-4" />
-            🎨 Topics
+            <PieChart className="w-4 h-4 md:w-4 md:h-4" />
+            <span className="hidden md:inline">🎨 Topics</span>
+            <span className="md:hidden text-center">
+              🎨
+              <br />
+              Topics
+            </span>
           </TabsTrigger>
           <TabsTrigger
             value="streaks"
-            className="flex items-center gap-2 data-[state=active]:bg-educational-purple data-[state=active]:text-white"
+            className="flex flex-col md:flex-row items-center gap-1 md:gap-2 data-[state=active]:bg-educational-purple data-[state=active]:text-white text-xs md:text-sm py-2 md:py-3 px-1 md:px-3"
           >
-            <Activity className="w-4 h-4" />
-            🔥 Adventure
+            <Activity className="w-4 h-4 md:w-4 md:h-4" />
+            <span className="hidden md:inline">🔥 Adventure</span>
+            <span className="md:hidden text-center">
+              🔥
+              <br />
+              Adventure
+            </span>
           </TabsTrigger>
         </TabsList>
 
@@ -643,26 +662,32 @@ export function AchievementSystem({
 
         <TabsContent value="achievements" className="mt-6">
           <div className="space-y-6">
-            {/* Achievement Stats */}
-            <div className="flex justify-center gap-4 mb-6">
-              <Card className="bg-gradient-to-r from-educational-blue to-educational-purple text-white hover:scale-105 transition-all">
-                <CardContent className="p-4 text-center">
-                  <div className="text-2xl font-bold">
+            {/* Achievement Stats - Mobile Optimized */}
+            <div className="flex justify-center gap-2 md:gap-4 mb-4 md:mb-6 px-2">
+              <Card className="bg-gradient-to-r from-educational-blue to-educational-purple text-white hover:scale-105 transition-all flex-1 max-w-[150px]">
+                <CardContent className="p-3 md:p-4 text-center">
+                  <div className="text-xl md:text-2xl font-bold">
                     {unlockedAchievements.length}
                   </div>
-                  <div className="text-sm opacity-90">🏆 Trophies Won!</div>
+                  <div className="text-xs md:text-sm opacity-90">
+                    🏆 Trophies Won!
+                  </div>
                 </CardContent>
               </Card>
-              <Card className="bg-gradient-to-r from-educational-orange to-educational-pink text-white hover:scale-105 transition-all">
-                <CardContent className="p-4 text-center">
-                  <div className="text-2xl font-bold">{totalPoints}</div>
-                  <div className="text-sm opacity-90">⭐ Trophy Points!</div>
+              <Card className="bg-gradient-to-r from-educational-orange to-educational-pink text-white hover:scale-105 transition-all flex-1 max-w-[150px]">
+                <CardContent className="p-3 md:p-4 text-center">
+                  <div className="text-xl md:text-2xl font-bold">
+                    {totalPoints}
+                  </div>
+                  <div className="text-xs md:text-sm opacity-90">
+                    ⭐ Trophy Points!
+                  </div>
                 </CardContent>
               </Card>
             </div>
 
-            {/* Category Filters */}
-            <div className="flex justify-center gap-2 flex-wrap">
+            {/* Category Filters - Mobile Optimized */}
+            <div className="flex justify-center gap-1 md:gap-2 flex-wrap px-2 md:px-0">
               {categories.map((category) => (
                 <Button
                   key={category.id}
@@ -671,7 +696,7 @@ export function AchievementSystem({
                   }
                   size="sm"
                   onClick={() => setSelectedCategory(category.id)}
-                  className="flex items-center gap-2 hover:scale-105 transition-all"
+                  className="flex items-center gap-1 md:gap-2 hover:scale-105 transition-all text-xs md:text-sm px-2 md:px-3 py-1 md:py-2"
                 >
                   <span>{category.icon}</span>
                   {category.name}
@@ -681,16 +706,16 @@ export function AchievementSystem({
                 variant={showUnlockables ? "default" : "outline"}
                 size="sm"
                 onClick={() => setShowUnlockables(!showUnlockables)}
-                className="flex items-center gap-2 hover:scale-105 transition-all"
+                className="flex items-center gap-1 md:gap-2 hover:scale-105 transition-all text-xs md:text-sm px-2 md:px-3 py-1 md:py-2"
               >
                 <Gift className="w-4 h-4" />
                 🎁 Rewards
               </Button>
             </div>
 
-            {/* Achievements Grid */}
+            {/* Achievements Grid - Mobile Optimized */}
             {!showUnlockables && (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4 px-2 md:px-0">
                 {filteredAchievements.map((achievement) => {
                   const progressPercentage = getProgressPercentage(achievement);
                   const isComplete = progressPercentage >= 100;
@@ -698,91 +723,166 @@ export function AchievementSystem({
                   return (
                     <Card
                       key={achievement.id}
-                      className={`cursor-pointer transition-all duration-300 hover:scale-105 ${
+                      className={`cursor-pointer transition-all duration-300 md:hover:scale-105 ${
                         achievement.unlocked
                           ? `bg-gradient-to-br ${getDifficultyColor(achievement.difficulty)} text-white shadow-lg`
                           : "bg-white border-2 border-dashed border-gray-300 hover:border-educational-blue"
                       }`}
                       onClick={() => handleAchievementClick(achievement)}
                     >
-                      <CardHeader className="pb-2">
-                        <div className="flex items-center justify-between">
-                          <div className="text-4xl">{achievement.icon}</div>
-                          <div className="flex items-center gap-1">
-                            {getDifficultyIcon(achievement.difficulty)}
-                            {achievement.unlocked && (
-                              <Check className="w-4 h-4 text-green-300" />
-                            )}
-                            {!achievement.unlocked && isComplete && (
-                              <Sparkles className="w-4 h-4 text-yellow-500 animate-pulse" />
-                            )}
-                            {!achievement.unlocked && !isComplete && (
-                              <Lock className="w-4 h-4 text-gray-400" />
-                            )}
+                      {/* Mobile Compact Layout */}
+                      <div className="block md:hidden">
+                        <div className="flex items-center gap-2 p-2">
+                          <div className="text-2xl flex-shrink-0">
+                            {achievement.icon}
                           </div>
-                        </div>
-                        <CardTitle
-                          className={`text-lg ${
-                            achievement.unlocked
-                              ? "text-white"
-                              : "text-gray-800"
-                          }`}
-                        >
-                          {achievement.name}
-                        </CardTitle>
-                      </CardHeader>
-                      <CardContent className="space-y-3">
-                        <p
-                          className={`text-sm ${
-                            achievement.unlocked
-                              ? "text-white/90"
-                              : "text-gray-600"
-                          }`}
-                        >
-                          {achievement.description}
-                        </p>
-
-                        {!achievement.unlocked && (
-                          <div className="space-y-2">
-                            <div className="flex justify-between text-sm">
-                              <span className="text-gray-600">Progress</span>
-                              <span className="font-semibold text-gray-800">
-                                {achievement.currentProgress}/
-                                {achievement.requirements}
-                              </span>
+                          <div className="flex-1 min-w-0">
+                            <div className="flex items-center justify-between mb-1">
+                              <h3
+                                className={`text-sm font-semibold truncate ${
+                                  achievement.unlocked
+                                    ? "text-white"
+                                    : "text-gray-800"
+                                }`}
+                              >
+                                {achievement.name}
+                              </h3>
+                              <div className="flex items-center gap-1 flex-shrink-0">
+                                {getDifficultyIcon(achievement.difficulty)}
+                                {achievement.unlocked && (
+                                  <Check className="w-3 h-3 text-green-300" />
+                                )}
+                                {!achievement.unlocked && isComplete && (
+                                  <Sparkles className="w-3 h-3 text-yellow-500 animate-pulse" />
+                                )}
+                                {!achievement.unlocked && !isComplete && (
+                                  <Lock className="w-3 h-3 text-gray-400" />
+                                )}
+                              </div>
                             </div>
-                            <Progress
-                              value={progressPercentage}
-                              className="h-2"
-                            />
-                            {isComplete && (
-                              <div className="text-center">
-                                <Badge className="bg-educational-green text-white animate-pulse">
-                                  Ready to Unlock! 🎉
-                                </Badge>
+                            <p
+                              className={`text-xs leading-tight mb-2 ${
+                                achievement.unlocked
+                                  ? "text-white/90"
+                                  : "text-gray-600"
+                              }`}
+                            >
+                              {achievement.description}
+                            </p>
+                            {!achievement.unlocked && (
+                              <div className="space-y-1">
+                                <div className="flex justify-between text-xs">
+                                  <span className="text-gray-600">
+                                    Progress
+                                  </span>
+                                  <span className="font-semibold text-gray-800">
+                                    {achievement.currentProgress}/
+                                    {achievement.requirements}
+                                  </span>
+                                </div>
+                                <Progress
+                                  value={progressPercentage}
+                                  className="h-1.5"
+                                />
+                                {isComplete && (
+                                  <Badge className="bg-educational-green text-white text-xs px-1 py-0.5">
+                                    Ready! 🎉
+                                  </Badge>
+                                )}
+                              </div>
+                            )}
+                            {achievement.unlocked && achievement.reward && (
+                              <div className="bg-white/20 rounded px-2 py-1">
+                                <div className="text-xs text-white">
+                                  🎁 {achievement.reward.item}
+                                </div>
                               </div>
                             )}
                           </div>
-                        )}
+                        </div>
+                      </div>
 
-                        {achievement.unlocked && achievement.reward && (
-                          <div className="bg-white/20 rounded-lg p-2">
-                            <div className="text-xs font-semibold text-white/90 mb-1">
-                              Reward Unlocked:
-                            </div>
-                            <div className="text-sm text-white">
-                              🎁 {achievement.reward.item}
+                      {/* Desktop Layout */}
+                      <div className="hidden md:block">
+                        <CardHeader className="pb-2 px-6 pt-6">
+                          <div className="flex items-center justify-between">
+                            <div className="text-4xl">{achievement.icon}</div>
+                            <div className="flex items-center gap-1">
+                              {getDifficultyIcon(achievement.difficulty)}
+                              {achievement.unlocked && (
+                                <Check className="w-4 h-4 text-green-300" />
+                              )}
+                              {!achievement.unlocked && isComplete && (
+                                <Sparkles className="w-4 h-4 text-yellow-500 animate-pulse" />
+                              )}
+                              {!achievement.unlocked && !isComplete && (
+                                <Lock className="w-4 h-4 text-gray-400" />
+                              )}
                             </div>
                           </div>
-                        )}
+                          <CardTitle
+                            className={`text-lg ${
+                              achievement.unlocked
+                                ? "text-white"
+                                : "text-gray-800"
+                            }`}
+                          >
+                            {achievement.name}
+                          </CardTitle>
+                        </CardHeader>
+                        <CardContent className="space-y-3 px-6 pb-6">
+                          <p
+                            className={`text-sm ${
+                              achievement.unlocked
+                                ? "text-white/90"
+                                : "text-gray-600"
+                            }`}
+                          >
+                            {achievement.description}
+                          </p>
 
-                        {achievement.unlocked && achievement.dateUnlocked && (
-                          <div className="text-xs text-white/70">
-                            Unlocked:{" "}
-                            {achievement.dateUnlocked.toLocaleDateString()}
-                          </div>
-                        )}
-                      </CardContent>
+                          {!achievement.unlocked && (
+                            <div className="space-y-2">
+                              <div className="flex justify-between text-sm">
+                                <span className="text-gray-600">Progress</span>
+                                <span className="font-semibold text-gray-800">
+                                  {achievement.currentProgress}/
+                                  {achievement.requirements}
+                                </span>
+                              </div>
+                              <Progress
+                                value={progressPercentage}
+                                className="h-2"
+                              />
+                              {isComplete && (
+                                <div className="text-center">
+                                  <Badge className="bg-educational-green text-white animate-pulse">
+                                    Ready to Unlock! 🎉
+                                  </Badge>
+                                </div>
+                              )}
+                            </div>
+                          )}
+
+                          {achievement.unlocked && achievement.reward && (
+                            <div className="bg-white/20 rounded-lg p-2">
+                              <div className="text-xs font-semibold text-white/90 mb-1">
+                                Reward Unlocked:
+                              </div>
+                              <div className="text-sm text-white">
+                                🎁 {achievement.reward.item}
+                              </div>
+                            </div>
+                          )}
+
+                          {achievement.unlocked && achievement.dateUnlocked && (
+                            <div className="text-xs text-white/70">
+                              Unlocked:{" "}
+                              {achievement.dateUnlocked.toLocaleDateString()}
+                            </div>
+                          )}
+                        </CardContent>
+                      </div>
                     </Card>
                   );
                 })}
@@ -801,7 +901,7 @@ export function AchievementSystem({
                   </p>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4 px-2 md:px-0">
                   {unlockableContent.map((content) => (
                     <Card
                       key={content.id}
@@ -811,17 +911,19 @@ export function AchievementSystem({
                           : "bg-gray-100 border-2 border-dashed border-gray-300"
                       }`}
                     >
-                      <CardContent className="p-4">
-                        <div className="text-4xl mb-2">{content.icon}</div>
+                      <CardContent className="p-3 md:p-4">
+                        <div className="text-3xl md:text-4xl mb-2">
+                          {content.icon}
+                        </div>
                         <h4
-                          className={`font-semibold mb-2 ${
+                          className={`font-semibold mb-2 text-sm md:text-base ${
                             content.unlocked ? "text-white" : "text-gray-800"
                           }`}
                         >
                           {content.name}
                         </h4>
                         <p
-                          className={`text-sm mb-3 ${
+                          className={`text-xs md:text-sm mb-3 ${
                             content.unlocked ? "text-white/90" : "text-gray-600"
                           }`}
                         >
