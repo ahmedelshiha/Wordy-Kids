@@ -2456,7 +2456,7 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onNavigateBack }) => {
           <EnhancedUserManagement initialUsers={users} />
         </TabsContent>
         <TabsContent value="analytics" className="mt-4 md:mt-6">
-          {renderAnalytics()}
+          <EnhancedSystemAnalytics users={users} categories={categories} />
         </TabsContent>
         <TabsContent value="tickets" className="mt-4 md:mt-6">
           {renderSupportTickets()}
