@@ -412,16 +412,16 @@ export function AchievementSystem({
                       style={{ height: `${height}%` }}
                     />
                   </div>
-                  <p className="text-xs text-slate-600 mt-2">{days[index]}</p>
-                  <p className="text-lg">{emojis[index]}</p>
-                  <p className="text-sm font-bold text-educational-blue">
+                  <p className="text-xs text-slate-600 mt-1">{days[index]}</p>
+                  <p className="text-sm md:text-lg">{emojis[index]}</p>
+                  <p className="text-xs md:text-sm font-bold text-educational-blue">
                     {value}
                   </p>
                 </div>
               );
             })}
           </div>
-          <p className="text-center text-educational-purple font-semibold">
+          <p className="text-center text-educational-purple font-semibold text-sm md:text-base">
             Keep up the fantastic work! 🎊
           </p>
         </CardContent>
@@ -646,26 +646,26 @@ export function AchievementSystem({
 
         <TabsContent value="achievements" className="mt-6">
           <div className="space-y-6">
-            {/* Achievement Stats */}
-            <div className="flex justify-center gap-4 mb-6">
-              <Card className="bg-gradient-to-r from-educational-blue to-educational-purple text-white hover:scale-105 transition-all">
-                <CardContent className="p-4 text-center">
-                  <div className="text-2xl font-bold">
+            {/* Achievement Stats - Mobile Optimized */}
+            <div className="flex justify-center gap-2 md:gap-4 mb-4 md:mb-6 px-2">
+              <Card className="bg-gradient-to-r from-educational-blue to-educational-purple text-white hover:scale-105 transition-all flex-1 max-w-[150px]">
+                <CardContent className="p-3 md:p-4 text-center">
+                  <div className="text-xl md:text-2xl font-bold">
                     {unlockedAchievements.length}
                   </div>
-                  <div className="text-sm opacity-90">🏆 Trophies Won!</div>
+                  <div className="text-xs md:text-sm opacity-90">🏆 Trophies Won!</div>
                 </CardContent>
               </Card>
-              <Card className="bg-gradient-to-r from-educational-orange to-educational-pink text-white hover:scale-105 transition-all">
-                <CardContent className="p-4 text-center">
-                  <div className="text-2xl font-bold">{totalPoints}</div>
-                  <div className="text-sm opacity-90">⭐ Trophy Points!</div>
+              <Card className="bg-gradient-to-r from-educational-orange to-educational-pink text-white hover:scale-105 transition-all flex-1 max-w-[150px]">
+                <CardContent className="p-3 md:p-4 text-center">
+                  <div className="text-xl md:text-2xl font-bold">{totalPoints}</div>
+                  <div className="text-xs md:text-sm opacity-90">⭐ Trophy Points!</div>
                 </CardContent>
               </Card>
             </div>
 
-            {/* Category Filters */}
-            <div className="flex justify-center gap-2 flex-wrap">
+            {/* Category Filters - Mobile Optimized */}
+            <div className="flex justify-center gap-1 md:gap-2 flex-wrap px-2 md:px-0">
               {categories.map((category) => (
                 <Button
                   key={category.id}
@@ -674,7 +674,7 @@ export function AchievementSystem({
                   }
                   size="sm"
                   onClick={() => setSelectedCategory(category.id)}
-                  className="flex items-center gap-2 hover:scale-105 transition-all"
+                  className="flex items-center gap-1 md:gap-2 hover:scale-105 transition-all text-xs md:text-sm px-2 md:px-3 py-1 md:py-2"
                 >
                   <span>{category.icon}</span>
                   {category.name}
