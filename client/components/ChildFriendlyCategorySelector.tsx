@@ -456,21 +456,23 @@ export function ChildFriendlyCategorySelector({
       {/* Enhanced Mobile Header */}
       <div className="text-center relative mt-2 md:mt-4 px-2 md:px-0">
         <div className="md:hidden mb-4">
-          <div className="bg-gradient-to-r from-educational-blue/10 to-educational-purple/10 rounded-2xl p-4 border border-educational-blue/20">
-            <h2 className="text-lg font-bold text-slate-800 mb-2 bg-gradient-to-r from-educational-blue to-educational-purple bg-clip-text text-transparent">
-              🌟 Choose Your Adventure! 🌟
-            </h2>
-            <p className="text-sm text-slate-600 mb-3 leading-relaxed">
+          <div className="bg-gradient-to-r from-educational-blue/10 to-educational-purple/10 rounded-xl p-3 border border-educational-blue/20">
+            <div className="flex items-center justify-between mb-1">
+              <h2 className="text-base font-bold text-slate-800 bg-gradient-to-r from-educational-blue to-educational-purple bg-clip-text text-transparent">
+                🌟 Pick a Topic!
+              </h2>
+              <div className="flex gap-1">
+                <Badge className="bg-educational-green text-white px-2 py-0.5 text-xs">
+                  📚 {wordsDatabase.length}
+                </Badge>
+                <Badge className="bg-educational-blue text-white px-2 py-0.5 text-xs">
+                  🎯 {categories.length - 1}
+                </Badge>
+              </div>
+            </div>
+            <p className="text-xs text-slate-600 leading-tight">
               {getPersonalizedMessage()}
             </p>
-            <div className="flex justify-center gap-2 flex-wrap">
-              <Badge className="bg-educational-green text-white px-3 py-1 text-xs animate-pulse">
-                📚 {wordsDatabase.length} Words
-              </Badge>
-              <Badge className="bg-educational-blue text-white px-3 py-1 text-xs animate-pulse delay-100">
-                🎯 {categories.length - 1} Topics
-              </Badge>
-            </div>
           </div>
         </div>
 
