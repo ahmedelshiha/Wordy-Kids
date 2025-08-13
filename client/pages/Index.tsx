@@ -1949,7 +1949,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                 setSelectedQuizType("picture");
                                 setShowQuiz(true);
                               }}
-                              className="w-full bg-educational-orange text-white hover:bg-educational-orange/90 py-1.5 md:py-2 text-xs md:text-sm rounded-xl animate-wiggle"
+                              className="w-full bg-educational-orange text-white hover:bg-educational-orange/90 active:bg-educational-orange/80 py-2 text-xs sm:text-sm rounded-xl min-h-[44px]"
                               size="sm"
                             >
                               <Play className="w-3 h-3 md:w-4 md:h-4 mr-1" />
