@@ -613,7 +613,7 @@ export function InteractiveDashboardWordCard({
 
                         if (wordsLearned >= goal) {
                           if (wordsLearned >= goal * 2)
-                            return "🌟 SUPERSTAR! Amazing effort!";
+                            return "�� SUPERSTAR! Amazing effort!";
                           if (wordsLearned >= goal * 1.5)
                             return "🚀 Beyond awesome! Keep going!";
                           return "🎉 Goal achieved! You're incredible!";
@@ -797,6 +797,15 @@ export function InteractiveDashboardWordCard({
         <Progress value={dailyProgress} className="h-3 bg-white/20" />
         <p className="text-sm mt-2 opacity-90">{dailyProgress}% complete</p>
       </div> */}
+
+      {/* Systematic Learning Notification */}
+      {dashboardSession && (
+        <div className="text-center mb-4">
+          <Badge className="bg-gradient-to-r from-blue-500 to-purple-500 text-white px-4 py-2 text-sm">
+            🎯 Systematic Learning Active - {dashboardSession.sessionInfo.progressionStage.replace('_', ' ')}
+          </Badge>
+        </div>
+      )}
 
       {/* Interactive Word Card */}
       <Card
