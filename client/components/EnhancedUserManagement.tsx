@@ -1809,7 +1809,7 @@ const EnhancedUserManagement: React.FC<EnhancedUserManagementProps> = ({
             <Upload className="w-4 h-4 mr-2" />
             Import Users
           </Button>
-          <Button variant="outline" size="sm">
+          <Button variant="outline" size="sm" onClick={() => setShowExportDialog(true)}>
             <Download className="w-4 h-4 mr-2" />
             Export Users
           </Button>
