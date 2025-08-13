@@ -348,10 +348,12 @@ export class EnhancedWordSelector {
     // 40% review words (prioritize forgotten words)
     const reviewSlots = this.SESSION_SIZE - selected.length;
     const forgottenReviews = this.selectForgottenWordsForReview(
+      availableWords,
       userHistory,
       userProgress,
     );
     const rememberedReviews = this.selectRememberedWordsForReview(
+      availableWords,
       userHistory,
       userProgress,
     );
