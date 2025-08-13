@@ -222,7 +222,7 @@ const sampleChildren: ChildProfile[] = [
     difficultyPreference: "easy",
     parentNotes:
       "Very enthusiastic learner. Loves nature and outdoor activities.",
-    customWords: ["butterfly", "flowers", "garden", "rainbow"],
+    customWords: ["butterfly", "flowers", "garden", "rainbow", "sunshine", "petals", "pollination", "caterpillar", "meadow", "blossom", "nature"],
     weeklyTarget: 15,
     monthlyTarget: 60,
     learningStrengths: [
