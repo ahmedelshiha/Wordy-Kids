@@ -157,7 +157,7 @@ const sampleChildren: ChildProfile[] = [
     id: "1",
     name: "Alex",
     age: 8,
-    avatar: "���",
+    avatar: "👦",
     level: 3,
     totalPoints: 1250,
     wordsLearned: 47,
