@@ -1541,7 +1541,7 @@ const EnhancedUserManagement: React.FC<EnhancedUserManagementProps> = ({
 
         {/* Desktop Actions */}
         <div className="hidden md:flex gap-2">
-          <Button variant="outline" size="sm">
+          <Button variant="outline" size="sm" onClick={() => setShowImportDialog(true)}>
             <Upload className="w-4 h-4 mr-2" />
             Import Users
           </Button>
