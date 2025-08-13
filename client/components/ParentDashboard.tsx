@@ -170,7 +170,7 @@ const sampleChildren: ChildProfile[] = [
     difficultyPreference: "medium",
     parentNotes:
       "Loves animal facts. Struggles with spelling but excels at comprehension.",
-    customWords: ["dinosaur", "paleontologist", "prehistoric", "excavation"],
+    customWords: ["dinosaur", "paleontologist", "prehistoric", "excavation", "tyrannosaurus", "archeologist", "fossil", "museum", "discovery"],
     weeklyTarget: 20,
     monthlyTarget: 80,
     learningStrengths: [
