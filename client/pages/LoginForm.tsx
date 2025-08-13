@@ -487,7 +487,7 @@ export default function LoginForm() {
               {/* Enhanced Submit Button */}
               <Button
                 type="submit"
-                disabled={isLoading || !isFormValid}
+                disabled={isLoading}
                 className="w-full py-3 bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 hover:from-blue-700 hover:via-purple-700 hover:to-pink-700 text-white font-semibold text-lg shadow-lg hover:shadow-xl transform hover:scale-[1.02] transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
               >
                 {isLoading ? (
