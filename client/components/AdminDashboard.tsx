@@ -406,56 +406,55 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onNavigateBack }) => {
         </CardContent>
       </Card>
 
-      {/* Key Metrics */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-        <Card>
-          <CardContent className="p-6 text-center">
-            <Users className="w-12 h-12 text-blue-500 mx-auto mb-3" />
-            <div className="text-3xl font-bold text-blue-600">
+      {/* Enhanced Mobile Key Metrics */}
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-6 px-2 md:px-0">
+        <Card className="bg-gradient-to-br from-blue-50 to-blue-100 border-blue-200 hover:shadow-lg transition-shadow">
+          <CardContent className="p-3 md:p-6 text-center">
+            <Users className="w-8 h-8 md:w-12 md:h-12 text-blue-500 mx-auto mb-2 md:mb-3" />
+            <div className="text-xl md:text-3xl font-bold text-blue-600">
               <AnimatedCounter value={analytics.totalUsers} />
             </div>
-            <p className="text-sm text-slate-600">Total Users</p>
-            <div className="mt-2 text-xs text-green-600">
-              +{analytics.userGrowthRate}% this month
+            <p className="text-xs md:text-sm text-slate-600 font-medium">Total Users</p>
+            <div className="mt-1 md:mt-2 text-xs text-green-600">
+              +{analytics.userGrowthRate}% growth
             </div>
           </CardContent>
         </Card>
 
-        <Card>
-          <CardContent className="p-6 text-center">
-            <Activity className="w-12 h-12 text-green-500 mx-auto mb-3" />
-            <div className="text-3xl font-bold text-green-600">
+        <Card className="bg-gradient-to-br from-green-50 to-green-100 border-green-200 hover:shadow-lg transition-shadow">
+          <CardContent className="p-3 md:p-6 text-center">
+            <Activity className="w-8 h-8 md:w-12 md:h-12 text-green-500 mx-auto mb-2 md:mb-3" />
+            <div className="text-xl md:text-3xl font-bold text-green-600">
               <AnimatedCounter value={analytics.activeUsers} />
             </div>
-            <p className="text-sm text-slate-600">Active Users</p>
-            <div className="mt-2 text-xs text-slate-500">
-              {Math.round((analytics.activeUsers / analytics.totalUsers) * 100)}
-              % engagement
+            <p className="text-xs md:text-sm text-slate-600 font-medium">Active Users</p>
+            <div className="mt-1 md:mt-2 text-xs text-green-600">
+              {Math.round((analytics.activeUsers / analytics.totalUsers) * 100)}% engaged
             </div>
           </CardContent>
         </Card>
 
-        <Card>
-          <CardContent className="p-6 text-center">
-            <BookOpen className="w-12 h-12 text-purple-500 mx-auto mb-3" />
-            <div className="text-3xl font-bold text-purple-600">
+        <Card className="bg-gradient-to-br from-purple-50 to-purple-100 border-purple-200 hover:shadow-lg transition-shadow">
+          <CardContent className="p-3 md:p-6 text-center">
+            <BookOpen className="w-8 h-8 md:w-12 md:h-12 text-purple-500 mx-auto mb-2 md:mb-3" />
+            <div className="text-xl md:text-3xl font-bold text-purple-600">
               <AnimatedCounter value={analytics.totalWords} />
             </div>
-            <p className="text-sm text-slate-600">Total Words</p>
-            <div className="mt-2 text-xs text-purple-600">
+            <p className="text-xs md:text-sm text-slate-600 font-medium">Total Words</p>
+            <div className="mt-1 md:mt-2 text-xs text-purple-600">
               {analytics.contentApprovalRate}% approved
             </div>
           </CardContent>
         </Card>
 
-        <Card>
-          <CardContent className="p-6 text-center">
-            <TrendingUp className="w-12 h-12 text-orange-500 mx-auto mb-3" />
-            <div className="text-3xl font-bold text-orange-600">
+        <Card className="bg-gradient-to-br from-orange-50 to-orange-100 border-orange-200 hover:shadow-lg transition-shadow">
+          <CardContent className="p-3 md:p-6 text-center">
+            <TrendingUp className="w-8 h-8 md:w-12 md:h-12 text-orange-500 mx-auto mb-2 md:mb-3" />
+            <div className="text-xl md:text-3xl font-bold text-orange-600">
               <AnimatedCounter value={analytics.totalSessions} />
             </div>
-            <p className="text-sm text-slate-600">Learning Sessions</p>
-            <div className="mt-2 text-xs text-orange-600">
+            <p className="text-xs md:text-sm text-slate-600 font-medium">Sessions</p>
+            <div className="mt-1 md:mt-2 text-xs text-orange-600">
               {analytics.avgSessionDuration}min avg
             </div>
           </CardContent>
