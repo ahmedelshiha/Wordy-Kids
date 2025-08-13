@@ -1571,18 +1571,21 @@ export default function Index({ initialProfile }: IndexProps) {
                                                 }
                                               }
                                             }}
-                                            className="flex-1 bg-green-50 hover:bg-green-100 border-green-200 hover:border-green-300 text-green-700 hover:text-green-800 transition-all duration-300 transform hover:scale-105 py-4 px-6"
+                                            className="flex-1 bg-gradient-to-r from-green-400 to-emerald-500 hover:from-green-500 hover:to-emerald-600 text-white font-bold border-0 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 active:scale-95 py-4 px-6 min-h-[60px] relative overflow-hidden"
                                             disabled={isLoadingProgress}
                                           >
-                                            <span className="text-xl mr-2">
-                                              ✅
-                                            </span>
-                                            <div className="text-center">
-                                              <div className="font-bold text-lg">
-                                                I Remember!
-                                              </div>
-                                              <div className="text-xs opacity-75">
-                                                Got it!
+                                            <div className="absolute inset-0 bg-white/20 rounded-xl opacity-0 hover:opacity-100 transition-opacity duration-300"></div>
+                                            <div className="relative z-10 flex items-center justify-center">
+                                              <span className="text-2xl mr-2 animate-bounce">
+                                                😊
+                                              </span>
+                                              <div className="text-center">
+                                                <div className="font-bold text-lg">
+                                                  I Remember!
+                                                </div>
+                                                <div className="text-xs opacity-90">
+                                                  Awesome! ⭐
+                                                </div>
                                               </div>
                                             </div>
                                           </Button>
