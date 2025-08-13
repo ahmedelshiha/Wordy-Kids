@@ -896,57 +896,130 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onNavigateBack }) => {
 
       {/* Words List */}
       <div className="space-y-4">
-        {words
-          .filter((word) => wordFilter === "all" || word.status === wordFilter)
-          .filter(
-            (word) =>
-              searchTerm === "" ||
-              word.word.toLowerCase().includes(searchTerm.toLowerCase()) ||
-              word.category.toLowerCase().includes(searchTerm.toLowerCase()),
-          )
-          .map((word) => (
-            <Card key={word.id} className="hover:shadow-md transition-shadow">
-              <CardContent className="p-6">
-                <div className="flex items-center justify-between">
-                  <div className="flex-1">
-                    <div className="flex items-center gap-3 mb-2">
-                      <h3 className="text-xl font-bold">{word.word}</h3>
+        {filteredAndSortedWords.length === 0 ? (
+          <Card className="text-center py-12">
+            <CardContent>
+              <div className="text-6xl mb-4">📚</div>
+              <h3 className="text-lg font-semibold mb-2">No words found</h3>
+              <p className="text-slate-600 mb-4">
+                {searchTerm
+                  ? `No words match "${searchTerm}". Try adjusting your search or filters.`
+                  : "No words match your current filters. Try adjusting your criteria."
+                }
+              </p>
+              <div className="flex gap-2 justify-center">
+                <Button variant="outline" onClick={() => setSearchTerm("")}>
+                  Clear Search
+                </Button>
+                <Button variant="outline" onClick={() => {
+                  setWordFilter("all");
+                  setCategoryFilter("all");
+                  setDifficultyFilter("all");
+                }}>
+                  Clear Filters
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
+        ) : (
+          filteredAndSortedWords.map((word) => (
+            <Card key={word.id} className="hover:shadow-lg transition-all duration-200 mx-2 md:mx-0">
+              <CardContent className="p-3 md:p-6">
+                <div className="flex flex-col md:flex-row gap-3 md:gap-0 md:items-start md:justify-between">
+                  <div className="flex-1 min-w-0">
+                    {/* Mobile-optimized word header */}
+                    <div className="flex items-center gap-2 mb-3">
+                      <span className="text-2xl flex-shrink-0">{word.emoji}</span>
+                      <div className="flex-1 min-w-0">
+                        <h3 className="text-lg md:text-xl font-bold text-slate-800 capitalize truncate">
+                          {word.word}
+                        </h3>
+                        <p className="text-xs md:text-sm text-slate-500">{word.pronunciation}</p>
+                      </div>
+                    </div>
+
+                    {/* Status and meta badges */}
+                    <div className="flex flex-wrap gap-1 md:gap-2 mb-3">
                       <Badge
                         className={
                           word.status === "approved"
-                            ? "bg-green-100 text-green-800"
+                            ? "bg-green-100 text-green-800 border-green-300"
                             : word.status === "pending"
-                              ? "bg-yellow-100 text-yellow-800"
-                              : "bg-red-100 text-red-800"
+                              ? "bg-yellow-100 text-yellow-800 border-yellow-300"
+                              : "bg-red-100 text-red-800 border-red-300"
                         }
                       >
+                        {word.status === "approved" ? "✅" : word.status === "pending" ? "⏳" : "❌"}
                         {word.status}
                       </Badge>
-                      <Badge variant="outline">{word.category}</Badge>
-                      <Badge variant="outline">{word.difficulty}</Badge>
+                      <Badge variant="outline" className="capitalize">
+                        📁 {word.category}
+                      </Badge>
+                      <Badge variant="outline" className={
+                        word.difficulty === "easy" ? "text-green-600 border-green-300" :
+                        word.difficulty === "medium" ? "text-yellow-600 border-yellow-300" :
+                        "text-red-600 border-red-300"
+                      }>
+                        {word.difficulty === "easy" ? "🌟" : word.difficulty === "medium" ? "⭐" : "🔥"}
+                        {word.difficulty}
+                      </Badge>
                     </div>
-                    <p className="text-slate-600 mb-2">
-                      <strong>Definition:</strong> {word.definition}
-                    </p>
-                    <p className="text-slate-600 mb-2">
-                      <strong>Example:</strong> {word.example}
-                    </p>
-                    <div className="flex items-center gap-4 text-sm text-slate-500">
-                      <span>👥 {word.usageCount} uses</span>
-                      <span>🎯 {word.accuracy}% accuracy</span>
-                      <span>📅 {word.submittedAt.toLocaleDateString()}</span>
+
+                    {/* Word content */}
+                    <div className="space-y-2 mb-3">
+                      <div>
+                        <p className="text-sm md:text-base text-slate-700">
+                          <span className="font-medium text-slate-500">Definition:</span> {word.definition}
+                        </p>
+                      </div>
+                      <div>
+                        <p className="text-sm md:text-base text-slate-700 italic">
+                          <span className="font-medium text-slate-500">Example:</span> "{word.example}"
+                        </p>
+                      </div>
+                      {word.funFact && (
+                        <div>
+                          <p className="text-sm md:text-base text-blue-600">
+                            <span className="font-medium text-slate-500">Fun Fact:</span> 💡 {word.funFact}
+                          </p>
+                        </div>
+                      )}
+                    </div>
+
+                    {/* Usage statistics */}
+                    <div className="grid grid-cols-3 gap-3 p-3 bg-slate-50 rounded-lg text-center">
+                      <div>
+                        <div className="text-lg md:text-xl font-bold text-blue-600">
+                          {word.usageCount.toLocaleString()}
+                        </div>
+                        <p className="text-xs text-slate-500">Uses</p>
+                      </div>
+                      <div>
+                        <div className="text-lg md:text-xl font-bold text-green-600">
+                          {word.accuracy}%
+                        </div>
+                        <p className="text-xs text-slate-500">Accuracy</p>
+                      </div>
+                      <div>
+                        <div className="text-lg md:text-xl font-bold text-purple-600">
+                          {word.lastUsed ? Math.floor((Date.now() - word.lastUsed.getTime()) / (1000 * 60 * 60 * 24)) : 0}
+                        </div>
+                        <p className="text-xs text-slate-500">Days Ago</p>
+                      </div>
                     </div>
                   </div>
-                  <div className="flex items-center gap-2">
+
+                  {/* Action buttons */}
+                  <div className="flex md:flex-col gap-2 md:gap-1 justify-center md:justify-start">
                     {word.status === "pending" && (
                       <>
-                        <Button size="sm" className="bg-green-600 text-white">
+                        <Button size="sm" className="bg-green-600 hover:bg-green-700 text-white flex-1 md:flex-none">
                           <CheckCircle className="w-4 h-4 mr-1" />
-                          Approve
+                          <span className="hidden md:inline">Approve</span>
                         </Button>
-                        <Button size="sm" variant="destructive">
+                        <Button size="sm" variant="destructive" className="flex-1 md:flex-none">
                           <XCircle className="w-4 h-4 mr-1" />
-                          Reject
+                          <span className="hidden md:inline">Reject</span>
                         </Button>
                       </>
                     )}
@@ -958,17 +1031,30 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onNavigateBack }) => {
                         setEditingWord(word);
                         setShowWordEditor(true);
                       }}
+                      className="flex-1 md:flex-none"
                     >
-                      <Edit className="w-4 h-4" />
+                      <Edit className="w-4 h-4 md:mr-1" />
+                      <span className="hidden md:inline">Edit</span>
                     </Button>
-                    <Button size="sm" variant="outline">
-                      <MoreVertical className="w-4 h-4" />
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      className="flex-1 md:flex-none hover:bg-red-50 hover:text-red-600"
+                      onClick={() => {
+                        if (confirm(`Delete "${word.word}"?`)) {
+                          setWords(words.filter(w => w.id !== word.id));
+                        }
+                      }}
+                    >
+                      <Trash2 className="w-4 h-4 md:mr-1" />
+                      <span className="hidden md:inline">Delete</span>
                     </Button>
                   </div>
                 </div>
               </CardContent>
             </Card>
-          ))}
+          ))
+        )}
       </div>
 
       {/* Categories Management */}
