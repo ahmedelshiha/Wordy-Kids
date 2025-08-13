@@ -474,7 +474,11 @@ export default function Index({ initialProfile }: IndexProps) {
       console.error("Error in enhanced word generation:", error);
 
       // Fallback to original system
-    const fallbackWords = getWordsByCategory(selectedCategory).slice(0, 20);
+      if (!selectedCategory) {
+        setCurrentDashboardWords([]);
+        return [];
+      }
+      const fallbackWords = getWordsByCategory(selectedCategory).slice(0, 20);
 
       setCurrentDashboardWords(fallbackWords);
       return fallbackWords;
