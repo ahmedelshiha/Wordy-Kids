@@ -1303,9 +1303,9 @@ export default function Index({ initialProfile }: IndexProps) {
                                     variant="outline"
                                     className="flex items-center gap-1 text-xs px-2 py-1 h-7 rounded-md"
                                   >
-                                    <span className="text-sm">🏠</span>
-                                    <span className="hidden sm:inline">Back</span>
-                                    <span className="sm:hidden">Back</span>
+                                    <span className="text-sm">←</span>
+                                    <span className="hidden sm:inline">Back to Library</span>
+                                    <span className="sm:hidden">Back to Library</span>
                                   </Button>
                                 </div>
                               </div>
