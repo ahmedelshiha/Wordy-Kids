@@ -615,7 +615,7 @@ export default function Index({ initialProfile }: IndexProps) {
         achievementMessage = `Great job! You completed ${categoryDisplayName} with ${accuracy}% accuracy! Keep up the good work!\n\n🎓 Scholar Bonus: 100 points!\n📚 Scholar badge earned!`;
       } else if (accuracy >= 50) {
         achievementTitle = "Category Explorer! 🗺️🌟";
-        achievementIcon = "����";
+        achievementIcon = "🗺️";
         achievementMessage = `Good effort! You finished ${categoryDisplayName} with ${accuracy}% accuracy! Practice makes perfect!\n\n🎁 Explorer Bonus: 75 points!\n🎯 Explorer badge earned!`;
       } else {
         achievementTitle = "Category Challenger! 💪";
