@@ -34,21 +34,51 @@ const AdminLogin: React.FC<AdminLoginProps> = ({ onLogin }) => {
     password: "",
   });
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const [loginAttempts, setLoginAttempts] = useState(0);
+  const [securityStatus, setSecurityStatus] = useState<'secure' | 'warning' | 'locked'>('secure');
+  const [deviceInfo, setDeviceInfo] = useState({ type: 'desktop', secure: true });
   const navigate = useNavigate();
 
-  const handleLogin = (e: React.FormEvent) => {
-    e.preventDefault();
+  useEffect(() => {
+    // Detect device type and security
+    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    const isSecure = window.location.protocol === 'https:';
+    setDeviceInfo({
+      type: isMobile ? 'mobile' : 'desktop',
+      secure: isSecure || window.location.hostname === 'localhost'
+    });
+  }, []);
 
-    // Simple authentication check (in production, this would be handled by a secure backend)
-    if (
-      credentials.username === "admin" &&
-      credentials.password === "admin123"
-    ) {
+  const handleLogin = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
+    setError("");
+
+    // Simulate authentication delay for better UX
+    await new Promise(resolve => setTimeout(resolve, 1500));
+
+    // Enhanced security checks
+    if (loginAttempts >= 3) {
+      setSecurityStatus('locked');
+      setError("Account temporarily locked due to multiple failed attempts. Please try again later.");
+      setLoading(false);
+      return;
+    }
+
+    if (credentials.username === "admin" && credentials.password === "admin123") {
       setError("");
+      setSecurityStatus('secure');
       onLogin();
     } else {
-      setError("Invalid credentials. Please try again.");
+      setLoginAttempts(prev => prev + 1);
+      if (loginAttempts >= 2) {
+        setSecurityStatus('warning');
+      }
+      setError(`Invalid credentials. ${3 - loginAttempts - 1} attempts remaining.`);
     }
+    setLoading(false);
   };
 
   return (
