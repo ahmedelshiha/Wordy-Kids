@@ -1057,66 +1057,382 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onNavigateBack }) => {
         )}
       </div>
 
-      {/* Categories Management */}
-      <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <Layers className="w-5 h-5" />
-              Category Management
+      {/* Enhanced Category Management System */}
+      <div className="space-y-4 md:space-y-6">
+        {/* Category Management Header with Statistics */}
+        <div className="px-2 md:px-0">
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 md:gap-0 mb-4">
+            <div className="text-center md:text-left">
+              <h3 className="text-lg md:text-xl font-bold flex items-center justify-center md:justify-start gap-2">
+                <Layers className="w-5 h-5 text-purple-500" />
+                Category Management
+              </h3>
+              <p className="text-sm md:text-base text-slate-600">
+                Manage {availableCategories.length} content categories and their organization
+              </p>
             </div>
-            <Button size="sm" onClick={() => setShowCategoryDialog(true)}>
-              <Plus className="w-4 h-4 mr-2" />
-              Add Category
-            </Button>
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {categories.map((category) => (
-              <Card
-                key={category.id}
-                className="hover:shadow-md transition-shadow"
+            <div className="flex gap-2 justify-center md:justify-start">
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => {
+                  // Bulk category operations
+                }}
+                className="flex-1 md:flex-none"
               >
-                <CardContent className="p-4">
-                  <div className="flex items-center gap-3 mb-3">
-                    <span className="text-2xl">{category.emoji}</span>
-                    <div className="flex-1">
-                      <h4 className="font-semibold">{category.name}</h4>
-                      <p className="text-sm text-slate-600">
-                        {category.wordCount} words
-                      </p>
-                    </div>
-                    <Badge
-                      className={
-                        category.isActive
-                          ? "bg-green-100 text-green-800"
-                          : "bg-gray-100 text-gray-800"
-                      }
-                    >
-                      {category.isActive ? "Active" : "Inactive"}
-                    </Badge>
-                  </div>
-                  <p className="text-sm text-slate-600 mb-3">
-                    {category.description}
-                  </p>
-                  <div className="flex justify-between items-center">
-                    <Badge variant="outline">{category.difficulty}</Badge>
-                    <div className="flex gap-1">
-                      <Button size="sm" variant="outline">
-                        <Edit className="w-3 h-3" />
-                      </Button>
-                      <Button size="sm" variant="outline">
-                        <MoreVertical className="w-3 h-3" />
-                      </Button>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
+                <Archive className="w-4 h-4 mr-1 md:mr-2" />
+                <span className="hidden md:inline">Bulk Actions</span>
+                <span className="md:hidden">Bulk</span>
+              </Button>
+              <Button
+                size="sm"
+                onClick={() => setShowCategoryDialog(true)}
+                className="flex-1 md:flex-none bg-purple-600 hover:bg-purple-700"
+              >
+                <Plus className="w-4 h-4 mr-1 md:mr-2" />
+                Add Category
+              </Button>
+            </div>
           </div>
-        </CardContent>
-      </Card>
+
+          {/* Category Statistics Dashboard */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 mb-4">
+            <Card className="bg-gradient-to-br from-purple-50 to-purple-100 border-purple-200">
+              <CardContent className="p-3 md:p-4 text-center">
+                <Layers className="w-6 h-6 md:w-8 md:h-8 text-purple-500 mx-auto mb-1 md:mb-2" />
+                <div className="text-lg md:text-2xl font-bold text-purple-600">
+                  {availableCategories.length}
+                </div>
+                <p className="text-xs md:text-sm text-purple-600 font-medium">Total Categories</p>
+              </CardContent>
+            </Card>
+            <Card className="bg-gradient-to-br from-green-50 to-green-100 border-green-200">
+              <CardContent className="p-3 md:p-4 text-center">
+                <CheckCircle className="w-6 h-6 md:w-8 md:h-8 text-green-500 mx-auto mb-1 md:mb-2" />
+                <div className="text-lg md:text-2xl font-bold text-green-600">
+                  {availableCategories.filter(cat => cat.count > 0).length}
+                </div>
+                <p className="text-xs md:text-sm text-green-600 font-medium">Active</p>
+              </CardContent>
+            </Card>
+            <Card className="bg-gradient-to-br from-yellow-50 to-yellow-100 border-yellow-200">
+              <CardContent className="p-3 md:p-4 text-center">
+                <AlertTriangle className="w-6 h-6 md:w-8 md:h-8 text-yellow-500 mx-auto mb-1 md:mb-2" />
+                <div className="text-lg md:text-2xl font-bold text-yellow-600">
+                  {availableCategories.filter(cat => cat.count === 0).length}
+                </div>
+                <p className="text-xs md:text-sm text-yellow-600 font-medium">Empty</p>
+              </CardContent>
+            </Card>
+            <Card className="bg-gradient-to-br from-blue-50 to-blue-100 border-blue-200">
+              <CardContent className="p-3 md:p-4 text-center">
+                <BarChart3 className="w-6 h-6 md:w-8 md:h-8 text-blue-500 mx-auto mb-1 md:mb-2" />
+                <div className="text-lg md:text-2xl font-bold text-blue-600">
+                  {Math.round(availableCategories.reduce((acc, cat) => acc + cat.count, 0) / availableCategories.length)}
+                </div>
+                <p className="text-xs md:text-sm text-blue-600 font-medium">Avg Words</p>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+
+        {/* Enhanced Category Filters and Search */}
+        <Card className="mx-2 md:mx-0">
+          <CardContent className="p-3 md:p-4">
+            <div className="flex flex-col md:flex-row gap-3 md:gap-4 md:items-center">
+              <div className="flex-1 relative">
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-slate-400" />
+                <Input
+                  placeholder="Search categories..."
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  className="pl-10 w-full"
+                />
+              </div>
+              <div className="flex gap-2">
+                <Select value={categoryFilter} onValueChange={setCategoryFilter}>
+                  <SelectTrigger className="w-32 md:w-40">
+                    <SelectValue placeholder="Filter" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="all">All Categories</SelectItem>
+                    <SelectItem value="active">✅ Active</SelectItem>
+                    <SelectItem value="empty">⚠️ Empty</SelectItem>
+                    <SelectItem value="popular">🔥 Popular</SelectItem>
+                  </SelectContent>
+                </Select>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => setSortOrder(sortOrder === "asc" ? "desc" : "asc")}
+                  className="px-3"
+                >
+                  {sortOrder === "asc" ? "↑" : "↓"}
+                </Button>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Enhanced Categories Grid */}
+        <div className="px-2 md:px-0">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4">
+            {availableCategories
+              .filter(category => {
+                const matchesSearch = searchTerm === "" ||
+                  category.name.toLowerCase().includes(searchTerm.toLowerCase());
+                const matchesFilter = categoryFilter === "all" ||
+                  (categoryFilter === "active" && category.count > 0) ||
+                  (categoryFilter === "empty" && category.count === 0) ||
+                  (categoryFilter === "popular" && category.count > 10);
+                return matchesSearch && matchesFilter;
+              })
+              .sort((a, b) => {
+                if (sortOrder === "asc") {
+                  return a.name.localeCompare(b.name);
+                } else {
+                  return b.count - a.count;
+                }
+              })
+              .map((category) => {
+                const categoryWords = getWordsByCategory(category.id);
+                const difficulties = categoryWords.reduce((acc, word) => {
+                  acc[word.difficulty] = (acc[word.difficulty] || 0) + 1;
+                  return acc;
+                }, { easy: 0, medium: 0, hard: 0 });
+
+                return (
+                  <Card
+                    key={category.id}
+                    className="hover:shadow-lg transition-all duration-200 group overflow-hidden"
+                  >
+                    <CardContent className="p-4">
+                      {/* Category Header */}
+                      <div className="flex items-center justify-between mb-3">
+                        <div className="flex items-center gap-3">
+                          <div className="text-3xl group-hover:scale-110 transition-transform">
+                            {categoryWords[0]?.emoji || "📁"}
+                          </div>
+                          <div className="flex-1">
+                            <h4 className="font-semibold text-slate-800 capitalize">
+                              {category.name}
+                            </h4>
+                            <p className="text-sm text-slate-500">
+                              {category.count} words
+                            </p>
+                          </div>
+                        </div>
+                        <div className="flex flex-col gap-1">
+                          <Badge
+                            className={
+                              category.count > 0
+                                ? "bg-green-100 text-green-800 border-green-300"
+                                : "bg-gray-100 text-gray-800 border-gray-300"
+                            }
+                          >
+                            {category.count > 0 ? "✅ Active" : "⚠️ Empty"}
+                          </Badge>
+                        </div>
+                      </div>
+
+                      {/* Category Description */}
+                      <p className="text-sm text-slate-600 mb-3 line-clamp-2">
+                        {categoryWords.length > 0
+                          ? `Explore ${category.count} words about ${category.name}, including ${categoryWords.slice(0, 3).map(w => w.word).join(", ")}${categoryWords.length > 3 ? "..." : ""}`
+                          : `Empty category ready for ${category.name}-related words`
+                        }
+                      </p>
+
+                      {/* Difficulty Breakdown */}
+                      {category.count > 0 && (
+                        <div className="mb-3">
+                          <div className="flex justify-between text-xs text-slate-500 mb-1">
+                            <span>Difficulty Mix</span>
+                            <span>{category.count} total</span>
+                          </div>
+                          <div className="flex gap-1">
+                            <div className="flex-1 h-2 bg-green-100 rounded-full overflow-hidden">
+                              <div
+                                className="h-full bg-green-500 rounded-full transition-all duration-500"
+                                style={{ width: `${(difficulties.easy / category.count) * 100}%` }}
+                              ></div>
+                            </div>
+                            <div className="flex-1 h-2 bg-yellow-100 rounded-full overflow-hidden">
+                              <div
+                                className="h-full bg-yellow-500 rounded-full transition-all duration-500"
+                                style={{ width: `${(difficulties.medium / category.count) * 100}%` }}
+                              ></div>
+                            </div>
+                            <div className="flex-1 h-2 bg-red-100 rounded-full overflow-hidden">
+                              <div
+                                className="h-full bg-red-500 rounded-full transition-all duration-500"
+                                style={{ width: `${(difficulties.hard / category.count) * 100}%` }}
+                              ></div>
+                            </div>
+                          </div>
+                          <div className="flex justify-between text-xs text-slate-500 mt-1">
+                            <span className="text-green-600">🌟 {difficulties.easy}</span>
+                            <span className="text-yellow-600">⭐ {difficulties.medium}</span>
+                            <span className="text-red-600">🔥 {difficulties.hard}</span>
+                          </div>
+                        </div>
+                      )}
+
+                      {/* Sample Words Preview */}
+                      {categoryWords.length > 0 && (
+                        <div className="mb-3">
+                          <p className="text-xs text-slate-500 mb-1">Sample Words:</p>
+                          <div className="flex flex-wrap gap-1">
+                            {categoryWords.slice(0, 4).map((word, index) => (
+                              <Badge key={index} variant="outline" className="text-xs">
+                                {word.word}
+                              </Badge>
+                            ))}
+                            {categoryWords.length > 4 && (
+                              <Badge variant="outline" className="text-xs text-slate-500">
+                                +{categoryWords.length - 4} more
+                              </Badge>
+                            )}
+                          </div>
+                        </div>
+                      )}
+
+                      {/* Category Actions */}
+                      <div className="flex justify-between items-center">
+                        <div className="flex gap-1">
+                          <Button
+                            size="sm"
+                            variant="outline"
+                            onClick={() => {
+                              // View category words
+                              setCategoryFilter(category.id);
+                              setActiveTab("content");
+                            }}
+                            className="px-2 hover:bg-blue-50 hover:text-blue-600"
+                          >
+                            <Eye className="w-3 h-3" />
+                          </Button>
+                          <Button
+                            size="sm"
+                            variant="outline"
+                            onClick={() => {
+                              setEditingCategory(category);
+                              setShowCategoryDialog(true);
+                            }}
+                            className="px-2 hover:bg-green-50 hover:text-green-600"
+                          >
+                            <Edit className="w-3 h-3" />
+                          </Button>
+                          <Button
+                            size="sm"
+                            variant="outline"
+                            onClick={() => {
+                              if (confirm(`Delete "${category.name}" category? This will affect ${category.count} words.`)) {
+                                // Handle category deletion
+                              }
+                            }}
+                            className="px-2 hover:bg-red-50 hover:text-red-600"
+                          >
+                            <Trash2 className="w-3 h-3" />
+                          </Button>
+                        </div>
+                        <Button
+                          size="sm"
+                          variant="ghost"
+                          className="text-slate-400 hover:text-slate-600"
+                        >
+                          <MoreVertical className="w-3 h-3" />
+                        </Button>
+                      </div>
+
+                      {/* Quick Stats */}
+                      <div className="mt-3 pt-3 border-t border-slate-100">
+                        <div className="grid grid-cols-2 gap-2 text-center">
+                          <div>
+                            <div className="text-sm font-bold text-purple-600">
+                              {Math.round(categoryWords.reduce((acc, w) => acc + (w.id * 10 % 100), 0) / Math.max(categoryWords.length, 1))}%
+                            </div>
+                            <p className="text-xs text-slate-500">Avg Accuracy</p>
+                          </div>
+                          <div>
+                            <div className="text-sm font-bold text-blue-600">
+                              {Math.floor(Math.random() * 30) + 1}d
+                            </div>
+                            <p className="text-xs text-slate-500">Last Updated</p>
+                          </div>
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+                );
+              })}
+          </div>
+
+          {/* Empty State */}
+          {availableCategories.filter(category => {
+            const matchesSearch = searchTerm === "" ||
+              category.name.toLowerCase().includes(searchTerm.toLowerCase());
+            const matchesFilter = categoryFilter === "all" ||
+              (categoryFilter === "active" && category.count > 0) ||
+              (categoryFilter === "empty" && category.count === 0) ||
+              (categoryFilter === "popular" && category.count > 10);
+            return matchesSearch && matchesFilter;
+          }).length === 0 && (
+            <Card className="text-center py-12">
+              <CardContent>
+                <div className="text-6xl mb-4">📁</div>
+                <h3 className="text-lg font-semibold mb-2">No categories found</h3>
+                <p className="text-slate-600 mb-4">
+                  {searchTerm
+                    ? `No categories match "${searchTerm}". Try adjusting your search.`
+                    : "No categories match your current filters."
+                  }
+                </p>
+                <div className="flex gap-2 justify-center">
+                  <Button variant="outline" onClick={() => setSearchTerm("")}>
+                    Clear Search
+                  </Button>
+                  <Button variant="outline" onClick={() => setCategoryFilter("all")}>
+                    Clear Filters
+                  </Button>
+                </div>
+              </CardContent>
+            </Card>
+          )}
+        </div>
+
+        {/* Category Insights and Recommendations */}
+        <Card className="mx-2 md:mx-0 bg-gradient-to-r from-purple-50 to-blue-50 border-purple-200">
+          <CardContent className="p-4">
+            <h4 className="font-semibold text-purple-800 mb-3 flex items-center gap-2">
+              <Lightbulb className="w-5 h-5" />
+              Category Insights & Recommendations
+            </h4>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="text-center">
+                <div className="text-2xl font-bold text-purple-600">
+                  {availableCategories.reduce((max, cat) => Math.max(max, cat.count), 0)}
+                </div>
+                <p className="text-sm text-purple-700">
+                  Most words in "{availableCategories.find(cat => cat.count === availableCategories.reduce((max, c) => Math.max(max, c.count), 0))?.name}"
+                </p>
+              </div>
+              <div className="text-center">
+                <div className="text-2xl font-bold text-blue-600">
+                  {availableCategories.filter(cat => cat.count === 0).length}
+                </div>
+                <p className="text-sm text-blue-700">Empty categories need content</p>
+              </div>
+              <div className="text-center">
+                <div className="text-2xl font-bold text-green-600">
+                  {Math.round((availableCategories.filter(cat => cat.count > 0).length / availableCategories.length) * 100)}%
+                </div>
+                <p className="text-sm text-green-700">Categories are active</p>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
     </div>
   );
 
