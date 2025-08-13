@@ -573,10 +573,10 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
                   )}
                 />
               </div>
-              <p className="text-sm text-slate-600">Total Words Learned</p>
+              <p className="text-xs md:text-sm text-slate-600">Total Words Learned</p>
             </div>
-            <div className="text-center p-4 bg-educational-orange/5 rounded-lg">
-              <div className="text-2xl font-bold text-educational-orange">
+            <div className="text-center p-2 md:p-4 bg-educational-orange/5 rounded-lg">
+              <div className="text-xl md:text-2xl font-bold text-educational-orange">
                 <AnimatedCounter
                   value={children.reduce(
                     (sum, child) => sum + child.totalPoints,
@@ -584,10 +584,10 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
                   )}
                 />
               </div>
-              <p className="text-sm text-slate-600">Total Points Earned</p>
+              <p className="text-xs md:text-sm text-slate-600">Total Points Earned</p>
             </div>
-            <div className="text-center p-4 bg-educational-purple/5 rounded-lg">
-              <div className="text-2xl font-bold text-educational-purple">
+            <div className="text-center p-2 md:p-4 bg-educational-purple/5 rounded-lg">
+              <div className="text-xl md:text-2xl font-bold text-educational-purple">
                 <AnimatedCounter
                   value={Math.max(
                     ...children.map((child) => child.currentStreak),
