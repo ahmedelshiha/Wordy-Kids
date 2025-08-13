@@ -1008,7 +1008,7 @@ const EnhancedSupportManagement: React.FC<EnhancedSupportManagementProps> = ({
                     <div className="col-span-2">
                       <div className="flex items-center gap-2">
                         {getCategoryIcon(ticket.category)}
-                        <span className="text-sm capitalize">{ticket.category.replace('_', ' ')}</span>
+                        <span className="text-sm capitalize">{(ticket.category || '').replace('_', ' ')}</span>
                       </div>
                     </div>
 
@@ -1022,7 +1022,7 @@ const EnhancedSupportManagement: React.FC<EnhancedSupportManagementProps> = ({
                     {/* Status */}
                     <div className="col-span-2">
                       <Badge className={getStatusColor(ticket.status)}>
-                        {ticket.status.replace('_', ' ')}
+                        {(ticket.status || '').replace('_', ' ')}
                       </Badge>
                     </div>
 
@@ -1124,7 +1124,7 @@ const EnhancedSupportManagement: React.FC<EnhancedSupportManagementProps> = ({
           {["open", "in_progress", "waiting_user", "resolved", "closed"].map(status => (
             <div key={status} className="space-y-3">
               <div className="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-800 rounded-lg">
-                <h3 className="font-medium capitalize">{status.replace('_', ' ')}</h3>
+                <h3 className="font-medium capitalize">{(status || '').replace('_', ' ')}</h3>
                 <Badge variant="secondary">
                   {filteredTickets.filter(t => t.status === status).length}
                 </Badge>
@@ -1203,7 +1203,7 @@ const EnhancedSupportManagement: React.FC<EnhancedSupportManagementProps> = ({
                     {showTicketDetail.priority}
                   </Badge>
                   <Badge className={getStatusColor(showTicketDetail.status)}>
-                    {showTicketDetail.status.replace('_', ' ')}
+                    {(showTicketDetail.status || '').replace('_', ' ')}
                   </Badge>
                 </div>
               </DialogTitle>
