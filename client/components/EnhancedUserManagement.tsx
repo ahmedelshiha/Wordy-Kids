@@ -1520,7 +1520,7 @@ const EnhancedUserManagement: React.FC<EnhancedUserManagementProps> = ({
                 <Plus className="w-4 h-4 mr-2" />
                 Add User
               </DropdownMenuItem>
-              <DropdownMenuItem>
+              <DropdownMenuItem onClick={() => setShowImportDialog(true)}>
                 <Upload className="w-4 h-4 mr-2" />
                 Import Users
               </DropdownMenuItem>
