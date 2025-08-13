@@ -1083,6 +1083,22 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onNavigateBack }) => {
         )}
       </div>
 
+      {/* Create Word Insights Dashboard */}
+      <div className="mb-8">
+        <CreateWordInsights
+          words={words}
+          categories={availableCategories.map(cat => ({
+            id: cat.id,
+            name: cat.name,
+            emoji: getWordsByCategory(cat.id)[0]?.emoji || "📁"
+          }))}
+          onCreateWord={() => {
+            setCreateMethod("wizard");
+            setShowCreateWizard(true);
+          }}
+        />
+      </div>
+
       {/* Enhanced Category Management System */}
       <div className="space-y-4 md:space-y-6">
         {/* Category Management Header with Statistics */}
