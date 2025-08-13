@@ -150,6 +150,19 @@ export default function Index({ initialProfile }: IndexProps) {
   const [lastSystematicSelection, setLastSystematicSelection] =
     useState<SystematicWordSelection | null>(null);
 
+  // Memoize displayWords to prevent recalculation on every render
+  const displayWords = useMemo(() => {
+    if (currentDashboardWords.length > 0) {
+      return currentDashboardWords;
+    }
+    // Fallback calculation if currentDashboardWords is empty
+    const categoryWords =
+      selectedCategory === "all"
+        ? getRandomWords(20)
+        : getWordsByCategory(selectedCategory);
+    return categoryWords.slice(0, 20);
+  }, [currentDashboardWords, selectedCategory]);
+
   // Initialize dashboard words when category changes or component mounts
   useEffect(() => {
     const initializeWords = () => {
@@ -781,7 +794,7 @@ export default function Index({ initialProfile }: IndexProps) {
     setFeedback({
       type: "celebration",
       title: "Practice Complete! 🏆",
-      message: `Great job practicing your tricky words!\n\n✅ Remembered: ${results.correctWords.length} words\n�� Accuracy: ${results.accuracy}%\n\nKeep practicing to master all your words!`,
+      message: `Great job practicing your tricky words!\n\n✅ Remembered: ${results.correctWords.length} words\n��� Accuracy: ${results.accuracy}%\n\nKeep practicing to master all your words!`,
       points: results.correctWords.length * 15,
       onContinue: () => setFeedback(null),
     });
@@ -1887,7 +1900,7 @@ export default function Index({ initialProfile }: IndexProps) {
                               Picture Fun!
                             </h3>
                             <p className="text-xs md:text-sm text-gray-600 mb-2 md:mb-3 hidden md:block">
-                              Look at pictures and guess the words! ��
+                              Look at pictures and guess the words! ����
                             </p>
                             <div className="flex justify-center gap-1 mb-2 md:mb-3">
                               <span className="bg-educational-orange/20 text-educational-orange px-1.5 py-0.5 rounded-full text-xs">
