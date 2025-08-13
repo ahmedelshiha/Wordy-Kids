@@ -947,7 +947,7 @@ export default function Index({ initialProfile }: IndexProps) {
               📚
             </div>
             <div className="hidden md:block absolute bottom-10 left-20 text-4xl animate-bounce delay-1000">
-              ������✨
+              ���📚✨
             </div>
             <div className="hidden md:block absolute bottom-20 right-10 text-3xl animate-pulse delay-500">
               🚀
@@ -1188,7 +1188,7 @@ export default function Index({ initialProfile }: IndexProps) {
                       />
                     </div>
                     <span className="font-medium lg:font-semibold text-sm lg:text-base">
-                      ���� My Journey
+                      🎯 My Journey
                     </span>
                   </button>
 
