@@ -106,6 +106,7 @@ import {
 import { AnimatedCounter } from "@/components/AnimatedCounter";
 import BulkWordImport from "@/components/BulkWordImport";
 import WordEditor from "@/components/WordEditor";
+import CreateWordWizard from "@/components/CreateWordWizard";
 import ContentModerationPanel from "@/components/ContentModerationPanel";
 import AdvancedAnalyticsDashboard from "@/components/AdvancedAnalyticsDashboard";
 import EnhancedUserManagement from "@/components/EnhancedUserManagement";
@@ -358,8 +359,10 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onNavigateBack }) => {
   const [showTicketDialog, setShowTicketDialog] = useState(false);
   const [showBulkImport, setShowBulkImport] = useState(false);
   const [showWordEditor, setShowWordEditor] = useState(false);
+  const [showCreateWizard, setShowCreateWizard] = useState(false);
   const [editingWord, setEditingWord] = useState<AdminWord | null>(null);
   const [wordEditorMode, setWordEditorMode] = useState<"create" | "edit">("create");
+  const [createMethod, setCreateMethod] = useState<"wizard" | "editor">("wizard");
 
   // Enhanced Form states
   const [newWordData, setNewWordData] = useState({
@@ -572,18 +575,23 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onNavigateBack }) => {
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
-            <Button
-              variant="outline"
-              className="h-16 md:h-20 flex-col gap-1 md:gap-2 text-xs md:text-sm border-blue-200 hover:bg-blue-50 hover:border-blue-300"
-              onClick={() => {
-                setWordEditorMode("create");
-                setEditingWord(null);
-                setShowWordEditor(true);
-              }}
-            >
-              <Plus className="w-4 h-4 md:w-5 md:h-5 text-blue-500" />
-              Add Word
-            </Button>
+            <div className="relative">
+              <Button
+                variant="outline"
+                className="h-16 md:h-20 flex-col gap-1 md:gap-2 text-xs md:text-sm border-blue-200 hover:bg-blue-50 hover:border-blue-300 group"
+                onClick={() => {
+                  setCreateMethod("wizard");
+                  setShowCreateWizard(true);
+                }}
+              >
+                <div className="relative">
+                  <Plus className="w-4 h-4 md:w-5 md:h-5 text-blue-500" />
+                  <div className="absolute -top-1 -right-1 w-2 h-2 bg-green-500 rounded-full opacity-0 group-hover:opacity-100 transition-opacity" />
+                </div>
+                <span className="font-medium">Create Word</span>
+                <span className="text-[10px] text-slate-500 hidden md:block">Smart Wizard</span>
+              </Button>
+            </div>
             <Button
               variant="outline"
               className="h-16 md:h-20 flex-col gap-1 md:gap-2 text-xs md:text-sm border-purple-200 hover:bg-purple-50 hover:border-purple-300"
@@ -724,18 +732,33 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onNavigateBack }) => {
               <span className="hidden md:inline">Bulk Import</span>
               <span className="md:hidden">Import</span>
             </Button>
-            <Button
-              size="sm"
-              onClick={() => {
-                setWordEditorMode("create");
-                setEditingWord(null);
-                setShowWordEditor(true);
-              }}
-              className="flex-1 md:flex-none"
-            >
-              <Plus className="w-4 h-4 mr-1 md:mr-2" />
-              Add Word
-            </Button>
+            <div className="flex gap-2 flex-1 md:flex-none">
+              <Button
+                size="sm"
+                onClick={() => {
+                  setCreateMethod("wizard");
+                  setShowCreateWizard(true);
+                }}
+                className="flex-1 md:flex-none bg-blue-600 hover:bg-blue-700 text-white"
+              >
+                <Plus className="w-4 h-4 mr-1 md:mr-2" />
+                <span className="hidden md:inline">Create Word</span>
+                <span className="md:hidden">Create</span>
+              </Button>
+              <Button
+                size="sm"
+                variant="outline"
+                onClick={() => {
+                  setWordEditorMode("create");
+                  setEditingWord(null);
+                  setShowWordEditor(true);
+                }}
+                className="hidden md:flex"
+              >
+                <FileText className="w-4 h-4 mr-2" />
+                Quick Add
+              </Button>
+            </div>
           </div>
         </div>
 
