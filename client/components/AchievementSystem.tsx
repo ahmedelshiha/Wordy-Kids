@@ -701,91 +701,150 @@ export function AchievementSystem({
                   return (
                     <Card
                       key={achievement.id}
-                      className={`cursor-pointer transition-all duration-300 hover:scale-105 ${
+                      className={`cursor-pointer transition-all duration-300 md:hover:scale-105 ${
                         achievement.unlocked
                           ? `bg-gradient-to-br ${getDifficultyColor(achievement.difficulty)} text-white shadow-lg`
                           : "bg-white border-2 border-dashed border-gray-300 hover:border-educational-blue"
                       }`}
                       onClick={() => handleAchievementClick(achievement)}
                     >
-                      <CardHeader className="pb-2 px-3 md:px-6 pt-3 md:pt-6">
-                        <div className="flex items-center justify-between">
-                          <div className="text-3xl md:text-4xl">{achievement.icon}</div>
-                          <div className="flex items-center gap-1">
-                            {getDifficultyIcon(achievement.difficulty)}
-                            {achievement.unlocked && (
-                              <Check className="w-4 h-4 text-green-300" />
-                            )}
-                            {!achievement.unlocked && isComplete && (
-                              <Sparkles className="w-4 h-4 text-yellow-500 animate-pulse" />
-                            )}
-                            {!achievement.unlocked && !isComplete && (
-                              <Lock className="w-4 h-4 text-gray-400" />
-                            )}
-                          </div>
-                        </div>
-                        <CardTitle
-                          className={`text-base md:text-lg ${
-                            achievement.unlocked
-                              ? "text-white"
-                              : "text-gray-800"
-                          }`}
-                        >
-                          {achievement.name}
-                        </CardTitle>
-                      </CardHeader>
-                      <CardContent className="space-y-3 px-3 md:px-6 pb-3 md:pb-6">
-                        <p
-                          className={`text-xs md:text-sm ${
-                            achievement.unlocked
-                              ? "text-white/90"
-                              : "text-gray-600"
-                          }`}
-                        >
-                          {achievement.description}
-                        </p>
-
-                        {!achievement.unlocked && (
-                          <div className="space-y-2">
-                            <div className="flex justify-between text-xs md:text-sm">
-                              <span className="text-gray-600">Progress</span>
-                              <span className="font-semibold text-gray-800">
-                                {achievement.currentProgress}/
-                                {achievement.requirements}
-                              </span>
+                      {/* Mobile Compact Layout */}
+                      <div className="block md:hidden">
+                        <div className="flex items-center gap-2 p-2">
+                          <div className="text-2xl flex-shrink-0">{achievement.icon}</div>
+                          <div className="flex-1 min-w-0">
+                            <div className="flex items-center justify-between mb-1">
+                              <h3 className={`text-sm font-semibold truncate ${
+                                achievement.unlocked ? "text-white" : "text-gray-800"
+                              }`}>
+                                {achievement.name}
+                              </h3>
+                              <div className="flex items-center gap-1 flex-shrink-0">
+                                {getDifficultyIcon(achievement.difficulty)}
+                                {achievement.unlocked && (
+                                  <Check className="w-3 h-3 text-green-300" />
+                                )}
+                                {!achievement.unlocked && isComplete && (
+                                  <Sparkles className="w-3 h-3 text-yellow-500 animate-pulse" />
+                                )}
+                                {!achievement.unlocked && !isComplete && (
+                                  <Lock className="w-3 h-3 text-gray-400" />
+                                )}
+                              </div>
                             </div>
-                            <Progress
-                              value={progressPercentage}
-                              className="h-2"
-                            />
-                            {isComplete && (
-                              <div className="text-center">
-                                <Badge className="bg-educational-green text-white animate-pulse">
-                                  Ready to Unlock! 🎉
-                                </Badge>
+                            <p className={`text-xs leading-tight mb-2 ${
+                              achievement.unlocked ? "text-white/90" : "text-gray-600"
+                            }`}>
+                              {achievement.description}
+                            </p>
+                            {!achievement.unlocked && (
+                              <div className="space-y-1">
+                                <div className="flex justify-between text-xs">
+                                  <span className="text-gray-600">Progress</span>
+                                  <span className="font-semibold text-gray-800">
+                                    {achievement.currentProgress}/{achievement.requirements}
+                                  </span>
+                                </div>
+                                <Progress value={progressPercentage} className="h-1.5" />
+                                {isComplete && (
+                                  <Badge className="bg-educational-green text-white text-xs px-1 py-0.5">
+                                    Ready! 🎉
+                                  </Badge>
+                                )}
+                              </div>
+                            )}
+                            {achievement.unlocked && achievement.reward && (
+                              <div className="bg-white/20 rounded px-2 py-1">
+                                <div className="text-xs text-white">
+                                  🎁 {achievement.reward.item}
+                                </div>
                               </div>
                             )}
                           </div>
-                        )}
+                        </div>
+                      </div>
 
-                        {achievement.unlocked && achievement.reward && (
-                          <div className="bg-white/20 rounded-lg p-2">
-                            <div className="text-xs font-semibold text-white/90 mb-1">
-                              Reward Unlocked:
-                            </div>
-                            <div className="text-xs md:text-sm text-white">
-                              🎁 {achievement.reward.item}
+                      {/* Desktop Layout */}
+                      <div className="hidden md:block">
+                        <CardHeader className="pb-2 px-6 pt-6">
+                          <div className="flex items-center justify-between">
+                            <div className="text-4xl">{achievement.icon}</div>
+                            <div className="flex items-center gap-1">
+                              {getDifficultyIcon(achievement.difficulty)}
+                              {achievement.unlocked && (
+                                <Check className="w-4 h-4 text-green-300" />
+                              )}
+                              {!achievement.unlocked && isComplete && (
+                                <Sparkles className="w-4 h-4 text-yellow-500 animate-pulse" />
+                              )}
+                              {!achievement.unlocked && !isComplete && (
+                                <Lock className="w-4 h-4 text-gray-400" />
+                              )}
                             </div>
                           </div>
-                        )}
+                          <CardTitle
+                            className={`text-lg ${
+                              achievement.unlocked
+                                ? "text-white"
+                                : "text-gray-800"
+                            }`}
+                          >
+                            {achievement.name}
+                          </CardTitle>
+                        </CardHeader>
+                        <CardContent className="space-y-3 px-6 pb-6">
+                          <p
+                            className={`text-sm ${
+                              achievement.unlocked
+                                ? "text-white/90"
+                                : "text-gray-600"
+                            }`}
+                          >
+                            {achievement.description}
+                          </p>
 
-                        {achievement.unlocked && achievement.dateUnlocked && (
-                          <div className="text-xs text-white/70">
-                            Unlocked:{" "}
-                            {achievement.dateUnlocked.toLocaleDateString()}
-                          </div>
-                        )}
-                      </CardContent>
+                          {!achievement.unlocked && (
+                            <div className="space-y-2">
+                              <div className="flex justify-between text-sm">
+                                <span className="text-gray-600">Progress</span>
+                                <span className="font-semibold text-gray-800">
+                                  {achievement.currentProgress}/
+                                  {achievement.requirements}
+                                </span>
+                              </div>
+                              <Progress
+                                value={progressPercentage}
+                                className="h-2"
+                              />
+                              {isComplete && (
+                                <div className="text-center">
+                                  <Badge className="bg-educational-green text-white animate-pulse">
+                                    Ready to Unlock! 🎉
+                                  </Badge>
+                                </div>
+                              )}
+                            </div>
+                          )}
+
+                          {achievement.unlocked && achievement.reward && (
+                            <div className="bg-white/20 rounded-lg p-2">
+                              <div className="text-xs font-semibold text-white/90 mb-1">
+                                Reward Unlocked:
+                              </div>
+                              <div className="text-sm text-white">
+                                🎁 {achievement.reward.item}
+                              </div>
+                            </div>
+                          )}
+
+                          {achievement.unlocked && achievement.dateUnlocked && (
+                            <div className="text-xs text-white/70">
+                              Unlocked:{" "}
+                              {achievement.dateUnlocked.toLocaleDateString()}
+                            </div>
+                          )}
+                        </CardContent>
+                      </div>
                     </Card>
                   );
                 })}
