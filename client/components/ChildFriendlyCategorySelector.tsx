@@ -479,8 +479,31 @@ export function ChildFriendlyCategorySelector({
         </div>
       )}
 
-      {/* Categories Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6">
+      {/* Mobile Quick Categories Bar */}
+      <div className="md:hidden mb-6">
+        <h3 className="text-sm font-semibold text-slate-700 mb-3 px-2">🚀 Quick Select</h3>
+        <div className="flex gap-2 overflow-x-auto pb-2 px-2">
+          {categories.slice(0, 6).map((category) => (
+            <Button
+              key={category.id}
+              variant={selectedCategory === category.id ? "default" : "outline"}
+              size="sm"
+              onClick={() => handleCategoryClick(category.id)}
+              className={`flex-shrink-0 h-16 w-16 flex-col gap-1 ${
+                selectedCategory === category.id
+                  ? "bg-educational-blue hover:bg-educational-blue/90 text-white border-2 border-educational-blue"
+                  : "hover:bg-educational-blue/10 hover:text-educational-blue hover:border-educational-blue"
+              }`}
+            >
+              <span className="text-lg">{category.icon}</span>
+              <span className="text-xs font-medium text-center leading-tight">{category.name.split(' ')[0]}</span>
+            </Button>
+          ))}
+        </div>
+      </div>
+
+      {/* Enhanced Categories Grid with Mobile Optimization */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 md:gap-6">
         {categories.map((category, index) => {
           const isRecommended = userInterests.some(
             (interest) =>
@@ -491,70 +514,73 @@ export function ChildFriendlyCategorySelector({
           return (
             <Card
               key={category.id}
-              className={`cursor-pointer transition-all duration-500 md:hover:scale-110 hover:shadow-2xl md:transform md:hover:-translate-y-2 ${
+              className={`cursor-pointer transition-all duration-300 overflow-hidden ${
                 selectedCategory === category.id
-                  ? "ring-4 ring-educational-blue shadow-2xl md:scale-105 bg-gradient-to-br from-blue-50 to-purple-50"
-                  : hoveredCategory === category.id
-                    ? "ring-2 ring-educational-purple shadow-xl md:scale-105"
-                    : "hover:shadow-lg"
+                  ? "ring-3 ring-educational-blue shadow-xl bg-gradient-to-br from-blue-50 to-purple-50 scale-[1.02] md:scale-105"
+                  : "hover:shadow-lg hover:scale-[1.01] md:hover:scale-110 md:hover:-translate-y-1"
               }`}
               style={{
-                animationDelay: `${index * 100}ms`,
+                animationDelay: `${index * 50}ms`,
               }}
               onClick={() => handleCategoryClick(category.id)}
+              onTouchStart={() => handleCategoryHover(category.id)}
               onMouseEnter={() => handleCategoryHover(category.id)}
               onMouseLeave={() => setHoveredCategory(null)}
             >
-              <CardContent className="p-0 overflow-hidden">
-                {/* Header with gradient */}
+              <CardContent className="p-0">
+                {/* Mobile-optimized Header */}
                 <div
-                  className={`bg-gradient-to-r ${category.gradient} p-6 text-white text-center relative overflow-hidden`}
+                  className={`bg-gradient-to-r ${category.gradient} p-4 md:p-6 text-white text-center relative overflow-hidden`}
                 >
-                  {/* Recommended Badge */}
+                  {/* Mobile Recommended Badge */}
                   {isRecommended && (
-                    <div className="absolute top-2 left-2">
-                      <Badge className="bg-yellow-400 text-yellow-900 text-xs animate-pulse">
-                        ⭐ For You!
+                    <div className="absolute top-1 left-1 md:top-2 md:left-2">
+                      <Badge className="bg-yellow-400 text-yellow-900 text-xs px-1.5 py-0.5 md:px-2 md:py-1 animate-pulse">
+                        ⭐ For You
                       </Badge>
                     </div>
                   )}
 
-                  {/* Sparkle Effect on Hover */}
-                  {hoveredCategory === category.id && (
+                  {/* Mobile touch effects */}
+                  {(hoveredCategory === category.id || selectedCategory === category.id) && (
                     <>
-                      <Sparkles className="absolute top-2 right-2 w-6 h-6 text-yellow-300 animate-spin" />
-                      <Star className="absolute bottom-2 left-2 w-5 h-5 text-yellow-300 animate-pulse" />
-                      <Heart className="absolute bottom-2 right-2 w-5 h-5 text-pink-300 animate-bounce" />
+                      <Sparkles className="absolute top-1 right-1 md:top-2 md:right-2 w-4 h-4 md:w-6 md:h-6 text-yellow-300 animate-spin" />
+                      <Star className="absolute bottom-1 left-1 md:bottom-2 md:left-2 w-3 h-3 md:w-5 md:h-5 text-yellow-300 animate-pulse" />
+                      <Heart className="absolute bottom-1 right-1 md:bottom-2 md:right-2 w-3 h-3 md:w-5 md:h-5 text-pink-300 animate-bounce" />
                     </>
                   )}
 
                   <div
-                    className={`text-4xl md:text-6xl mb-3 transition-transform duration-300 ${
-                      hoveredCategory === category.id
-                        ? "animate-bounce md:scale-110"
+                    className={`text-3xl md:text-6xl mb-2 md:mb-3 transition-transform duration-300 ${
+                      hoveredCategory === category.id || selectedCategory === category.id
+                        ? "animate-gentle-bounce scale-110"
                         : ""
                     }`}
                   >
                     {category.icon}
                   </div>
-                  <h3 className="text-lg md:text-xl font-bold mb-1">
+                  <h3 className="text-base md:text-xl font-bold mb-1 md:mb-2">
                     {category.name}
                   </h3>
-                  <Badge className="bg-white/20 border-white/30 text-white">
+                  <Badge className="bg-white/20 border-white/30 text-white text-xs">
                     <Zap className="w-3 h-3 mr-1" />
                     {category.wordCount} words
                   </Badge>
 
-                  {/* Selection Animation */}
+                  {/* Enhanced Selection Animation */}
                   {selectedCategory === category.id && (
-                    <div className="absolute inset-0 bg-white/10 animate-pulse"></div>
+                    <div className="absolute inset-0 bg-white/10 animate-pulse">
+                      <div className="absolute inset-0 flex items-center justify-center">
+                        <Crown className="w-8 h-8 md:w-12 md:h-12 text-yellow-300 animate-bounce" />
+                      </div>
+                    </div>
                   )}
                 </div>
 
-                {/* Content */}
-                <div className="p-6 space-y-4">
+                {/* Mobile-optimized Content */}
+                <div className="p-3 md:p-6 space-y-3 md:space-y-4">
                   <p
-                    className={`text-sm leading-relaxed transition-colors duration-300 ${
+                    className={`text-xs md:text-sm leading-relaxed transition-colors duration-300 ${
                       selectedCategory === category.id
                         ? "text-educational-blue font-semibold"
                         : "text-slate-600"
@@ -563,25 +589,26 @@ export function ChildFriendlyCategorySelector({
                     {category.description}
                   </p>
 
-                  {/* Fun fact on hover */}
-                  {hoveredCategory === category.id && (
-                    <div className="bg-gradient-to-r from-educational-blue/10 to-educational-purple/10 rounded-lg p-3 animate-fade-in">
-                      <p className="text-xs text-educational-purple font-semibold">
+                  {/* Mobile Fun Fact - Show for selected */}
+                  {(hoveredCategory === category.id || selectedCategory === category.id) && (
+                    <div className="bg-gradient-to-r from-educational-blue/10 to-educational-purple/10 rounded-lg p-2 md:p-3 animate-fade-in">
+                      <p className="text-xs md:text-sm text-educational-purple font-semibold">
                         💡 {category.funFact}
                       </p>
                     </div>
                   )}
 
-                  {/* Difficulty breakdown */}
+                  {/* Simplified Mobile Difficulty Display */}
                   <div className="space-y-2">
-                    <div className="flex justify-between text-xs text-slate-500 mb-1">
-                      <span>Difficulty Levels</span>
+                    <div className="flex justify-between text-xs text-slate-500">
+                      <span>Difficulty Mix</span>
                       <span>{category.wordCount} total</span>
                     </div>
 
-                    <div className="grid grid-cols-3 gap-2 text-xs">
-                      <div className="text-center">
-                        <div className="w-full bg-green-100 rounded-full h-2 mb-1">
+                    {/* Mobile-first difficulty visualization */}
+                    <div className="flex gap-1 md:gap-2">
+                      <div className="flex-1 space-y-1">
+                        <div className="w-full bg-green-100 rounded-full h-2">
                           <div
                             className="bg-green-500 h-2 rounded-full transition-all duration-500"
                             style={{
@@ -589,13 +616,15 @@ export function ChildFriendlyCategorySelector({
                             }}
                           ></div>
                         </div>
-                        <span className="text-green-600 font-medium">
-                          🌟 {category.difficultyBreakdown.easy}
-                        </span>
+                        <div className="text-center">
+                          <span className="text-green-600 font-medium text-xs">
+                            🌟 {category.difficultyBreakdown.easy}
+                          </span>
+                        </div>
                       </div>
 
-                      <div className="text-center">
-                        <div className="w-full bg-orange-100 rounded-full h-2 mb-1">
+                      <div className="flex-1 space-y-1">
+                        <div className="w-full bg-orange-100 rounded-full h-2">
                           <div
                             className="bg-orange-500 h-2 rounded-full transition-all duration-500"
                             style={{
@@ -603,13 +632,15 @@ export function ChildFriendlyCategorySelector({
                             }}
                           ></div>
                         </div>
-                        <span className="text-orange-600 font-medium">
-                          ⭐ {category.difficultyBreakdown.medium}
-                        </span>
+                        <div className="text-center">
+                          <span className="text-orange-600 font-medium text-xs">
+                            ⭐ {category.difficultyBreakdown.medium}
+                          </span>
+                        </div>
                       </div>
 
-                      <div className="text-center">
-                        <div className="w-full bg-red-100 rounded-full h-2 mb-1">
+                      <div className="flex-1 space-y-1">
+                        <div className="w-full bg-red-100 rounded-full h-2">
                           <div
                             className="bg-red-500 h-2 rounded-full transition-all duration-500"
                             style={{
@@ -617,38 +648,68 @@ export function ChildFriendlyCategorySelector({
                             }}
                           ></div>
                         </div>
-                        <span className="text-red-600 font-medium">
-                          🔥 {category.difficultyBreakdown.hard}
-                        </span>
+                        <div className="text-center">
+                          <span className="text-red-600 font-medium text-xs">
+                            🔥 {category.difficultyBreakdown.hard}
+                          </span>
+                        </div>
                       </div>
                     </div>
                   </div>
 
-                  {/* Enhanced Selection indicator */}
+                  {/* Enhanced Mobile Selection Indicator */}
                   {selectedCategory === category.id && (
                     <div className="flex items-center justify-center">
-                      <Badge className="bg-gradient-to-r from-educational-green to-educational-blue text-white animate-pulse px-4 py-2">
-                        <Star className="w-4 h-4 mr-1 animate-spin" />
-                        ✓ Selected - Ready to Learn!
-                        <Sparkles className="w-4 h-4 ml-1 animate-bounce" />
+                      <Badge className="bg-gradient-to-r from-educational-green to-educational-blue text-white animate-pulse px-3 py-1.5 md:px-4 md:py-2">
+                        <Star className="w-3 h-3 md:w-4 md:h-4 mr-1 animate-spin" />
+                        <span className="text-xs md:text-sm">✓ Selected!</span>
+                        <Sparkles className="w-3 h-3 md:w-4 md:h-4 ml-1 animate-bounce" />
                       </Badge>
                     </div>
                   )}
 
-                  {/* Hover encouragement */}
-                  {hoveredCategory === category.id &&
-                    selectedCategory !== category.id && (
-                      <div className="flex items-center justify-center mt-2">
-                        <Badge className="bg-educational-purple/20 text-educational-purple border border-educational-purple/30 animate-pulse">
-                          🎯 Click to explore!
-                        </Badge>
-                      </div>
-                    )}
+                  {/* Mobile Touch Encouragement */}
+                  {hoveredCategory === category.id && selectedCategory !== category.id && (
+                    <div className="flex items-center justify-center">
+                      <Badge className="bg-educational-purple/20 text-educational-purple border border-educational-purple/30 animate-pulse text-xs px-2 py-1">
+                        🎯 Tap to explore!
+                      </Badge>
+                    </div>
+                  )}
                 </div>
               </CardContent>
             </Card>
           );
         })}
+      </div>
+
+      {/* Mobile Category Stats */}
+      <div className="md:hidden mt-6 px-2">
+        <Card className="bg-gradient-to-r from-educational-blue/5 to-educational-purple/5 border-educational-blue/20">
+          <CardContent className="p-4">
+            <h3 className="font-semibold text-slate-800 mb-3 text-center">📊 Your Learning Stats</h3>
+            <div className="grid grid-cols-3 gap-4 text-center">
+              <div>
+                <div className="text-2xl font-bold text-educational-blue">
+                  {categories.find(c => c.id === selectedCategory)?.wordCount || 0}
+                </div>
+                <div className="text-xs text-slate-600">Words Available</div>
+              </div>
+              <div>
+                <div className="text-2xl font-bold text-educational-green">
+                  {categories.length - 1}
+                </div>
+                <div className="text-xs text-slate-600">Categories</div>
+              </div>
+              <div>
+                <div className="text-2xl font-bold text-educational-purple">
+                  3
+                </div>
+                <div className="text-xs text-slate-600">Difficulty Levels</div>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
       </div>
 
       {/* Call to Action */}
