@@ -1281,11 +1281,11 @@ export default function Index({ initialProfile }: IndexProps) {
                           {/* Layout for Selected Categories */}
                           {selectedCategory !== "all" ? (
                             <div className="mb-2">
-                              {/* Title/Description and Back Button Side by Side */}
-                              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 sm:gap-4">
+                              {/* Title/Description and Back Button Side by Side (Mobile & Desktop) */}
+                              <div className="flex items-center justify-between gap-2">
                                 {/* Title and Description */}
-                                <div className="text-center sm:text-left">
-                                  <h2 className="text-lg sm:text-xl md:text-2xl font-bold text-slate-800">
+                                <div className="text-left flex-1 min-w-0">
+                                  <h2 className="text-base sm:text-lg md:text-xl font-bold text-slate-800 truncate">
                                     {`${selectedCategory.charAt(0).toUpperCase() + selectedCategory.slice(1)} Words`}
                                   </h2>
                                   <p className="text-xs md:text-sm text-slate-600">
@@ -1294,17 +1294,17 @@ export default function Index({ initialProfile }: IndexProps) {
                                 </div>
 
                                 {/* Simple Back Button */}
-                                <div className="flex justify-center sm:justify-end flex-shrink-0">
+                                <div className="flex-shrink-0">
                                   <Button
                                     onClick={() => {
                                       setSelectedCategory("all");
                                       setLearningMode("selector");
                                     }}
                                     variant="outline"
-                                    className="flex items-center gap-1 text-xs px-3 py-1 h-8 rounded-md"
+                                    className="flex items-center gap-1 text-xs px-2 py-1 h-7 rounded-md"
                                   >
                                     <span className="text-sm">🏠</span>
-                                    <span className="hidden sm:inline">Back to Categories</span>
+                                    <span className="hidden sm:inline">Back</span>
                                     <span className="sm:hidden">Back</span>
                                   </Button>
                                 </div>
