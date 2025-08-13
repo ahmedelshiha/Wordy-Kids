@@ -388,6 +388,35 @@ const EnhancedUserManagement: React.FC<EnhancedUserManagementProps> = ({
     errors: Array<{ row: number; error: string; data: any }>;
   } | null>(null);
 
+  // Export Users states
+  const [showExportDialog, setShowExportDialog] = useState(false);
+  const [exportFormat, setExportFormat] = useState<'csv' | 'json' | 'xlsx'>('csv');
+  const [exportFilters, setExportFilters] = useState({
+    role: 'all',
+    status: 'all',
+    subscription: 'all',
+    dateRange: 'all',
+    includeInactive: true,
+  });
+  const [exportFields, setExportFields] = useState<Record<string, boolean>>({
+    name: true,
+    email: true,
+    role: true,
+    status: true,
+    subscriptionType: true,
+    createdAt: true,
+    lastActive: true,
+    location: false,
+    totalSessions: false,
+    supportTickets: false,
+    progress: false,
+    preferences: false,
+    tags: false,
+    notes: false,
+  });
+  const [isExporting, setIsExporting] = useState(false);
+  const [exportProgress, setExportProgress] = useState(0);
+
   // Add User form data
   const [newUserData, setNewUserData] = useState({
     // Basic Information
