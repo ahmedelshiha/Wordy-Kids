@@ -1110,10 +1110,10 @@ const EnhancedUserManagement: React.FC<EnhancedUserManagementProps> = ({
       {/* Empty State */}
       {filteredAndSortedUsers.length === 0 && (
         <Card>
-          <CardContent className="p-12 text-center">
+          <CardContent className="p-6 sm:p-12 text-center">
             <Users className="w-12 h-12 text-gray-400 mx-auto mb-4" />
             <h3 className="text-lg font-semibold text-gray-900 mb-2">No users found</h3>
-            <p className="text-gray-500 mb-4">
+            <p className="text-gray-500 mb-4 text-sm sm:text-base">
               Try adjusting your search terms or filters to find users.
             </p>
             <Button variant="outline" onClick={() => {
