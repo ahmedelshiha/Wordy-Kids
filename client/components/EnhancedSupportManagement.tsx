@@ -443,6 +443,37 @@ const EnhancedSupportManagement: React.FC<EnhancedSupportManagementProps> = ({
   const [isAutoRefresh, setIsAutoRefresh] = useState(false);
   const [lastRefresh, setLastRefresh] = useState(new Date());
 
+  // Create Ticket form state
+  const [createTicketForm, setCreateTicketForm] = useState({
+    userId: "",
+    userName: "",
+    userEmail: "",
+    userRole: "parent" as "parent" | "child" | "teacher" | "admin",
+    subject: "",
+    description: "",
+    category: "general" as "technical" | "billing" | "content" | "account" | "feature_request" | "bug_report" | "general",
+    priority: "medium" as "low" | "medium" | "high" | "urgent",
+    assignedTo: "",
+    tags: [] as string[],
+    attachments: [] as Array<{
+      id: string;
+      name: string;
+      url: string;
+      size: number;
+      type: string;
+    }>,
+    deviceInfo: {
+      browser: "",
+      os: "",
+      device: "",
+      screenSize: ""
+    },
+    autoDetectDevice: true
+  });
+  const [newTag, setNewTag] = useState("");
+  const [isSubmittingTicket, setIsSubmittingTicket] = useState(false);
+  const [createTicketStep, setCreateTicketStep] = useState(1);
+
   // Auto-refresh functionality
   useEffect(() => {
     if (!isAutoRefresh) return;
@@ -645,15 +676,232 @@ const EnhancedSupportManagement: React.FC<EnhancedSupportManagementProps> = ({
   };
 
   const handleBulkAssign = (assignee: string) => {
-    setTickets(prev => 
-      prev.map(ticket => 
-        selectedTickets.includes(ticket.id) 
+    setTickets(prev =>
+      prev.map(ticket =>
+        selectedTickets.includes(ticket.id)
           ? { ...ticket, assignedTo: assignee, updatedAt: new Date() }
           : ticket
       )
     );
     setSelectedTickets([]);
     setShowBulkActions(false);
+  };
+
+  // Auto-detect device information
+  const detectDeviceInfo = () => {
+    const userAgent = navigator.userAgent;
+    const screen = window.screen;
+
+    let browser = "Unknown";
+    let os = "Unknown";
+    let device = "Desktop";
+
+    // Detect browser
+    if (userAgent.includes("Chrome")) browser = "Chrome";
+    else if (userAgent.includes("Firefox")) browser = "Firefox";
+    else if (userAgent.includes("Safari")) browser = "Safari";
+    else if (userAgent.includes("Edge")) browser = "Edge";
+
+    // Detect OS
+    if (userAgent.includes("Windows")) os = "Windows";
+    else if (userAgent.includes("Mac")) os = "macOS";
+    else if (userAgent.includes("Linux")) os = "Linux";
+    else if (userAgent.includes("Android")) os = "Android";
+    else if (userAgent.includes("iOS")) os = "iOS";
+
+    // Detect device type
+    if (/Mobile|Android|iPhone/.test(userAgent)) device = "Mobile";
+    else if (/iPad|Tablet/.test(userAgent)) device = "Tablet";
+
+    return {
+      browser,
+      os,
+      device,
+      screenSize: `${screen.width}x${screen.height}`
+    };
+  };
+
+  // Initialize device info when auto-detect is enabled
+  useEffect(() => {
+    if (createTicketForm.autoDetectDevice) {
+      const deviceInfo = detectDeviceInfo();
+      setCreateTicketForm(prev => ({
+        ...prev,
+        deviceInfo
+      }));
+    }
+  }, [createTicketForm.autoDetectDevice]);
+
+  const handleCreateTicketFormChange = (field: string, value: any) => {
+    setCreateTicketForm(prev => ({
+      ...prev,
+      [field]: value
+    }));
+  };
+
+  const handleAddTag = () => {
+    if (newTag.trim() && !createTicketForm.tags.includes(newTag.trim())) {
+      setCreateTicketForm(prev => ({
+        ...prev,
+        tags: [...prev.tags, newTag.trim()]
+      }));
+      setNewTag("");
+    }
+  };
+
+  const handleRemoveTag = (tagToRemove: string) => {
+    setCreateTicketForm(prev => ({
+      ...prev,
+      tags: prev.tags.filter(tag => tag !== tagToRemove)
+    }));
+  };
+
+  const calculateUrgencyScore = () => {
+    let score = 0;
+
+    // Priority weight
+    switch (createTicketForm.priority) {
+      case "urgent": score += 40; break;
+      case "high": score += 30; break;
+      case "medium": score += 20; break;
+      case "low": score += 10; break;
+    }
+
+    // Category weight
+    switch (createTicketForm.category) {
+      case "billing": score += 25; break;
+      case "technical": score += 20; break;
+      case "bug_report": score += 20; break;
+      case "account": score += 15; break;
+      case "content": score += 10; break;
+      case "feature_request": score += 5; break;
+      case "general": score += 5; break;
+    }
+
+    // User role weight
+    switch (createTicketForm.userRole) {
+      case "admin": score += 15; break;
+      case "teacher": score += 10; break;
+      case "parent": score += 8; break;
+      case "child": score += 5; break;
+    }
+
+    // Time-based urgency (business hours)
+    const now = new Date();
+    const hour = now.getHours();
+    const day = now.getDay();
+    const isBusinessHours = day >= 1 && day <= 5 && hour >= 9 && hour <= 17;
+
+    if (!isBusinessHours) score += 10;
+
+    return Math.min(score, 100);
+  };
+
+  const handleCreateTicket = async () => {
+    setIsSubmittingTicket(true);
+
+    try {
+      const newTicket: SupportTicket = {
+        id: `ticket-${Date.now()}`,
+        userId: createTicketForm.userId || `user-${Date.now()}`,
+        userName: createTicketForm.userName,
+        userEmail: createTicketForm.userEmail,
+        userRole: createTicketForm.userRole,
+        subject: createTicketForm.subject,
+        description: createTicketForm.description,
+        category: createTicketForm.category,
+        priority: createTicketForm.priority,
+        status: "open",
+        assignedTo: createTicketForm.assignedTo || undefined,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        tags: createTicketForm.tags,
+        attachments: createTicketForm.attachments,
+        responses: [],
+        deviceInfo: createTicketForm.autoDetectDevice ? createTicketForm.deviceInfo : undefined,
+        urgencyScore: calculateUrgencyScore(),
+        businessHours: (() => {
+          const now = new Date();
+          const hour = now.getHours();
+          const day = now.getDay();
+          return day >= 1 && day <= 5 && hour >= 9 && hour <= 17;
+        })()
+      };
+
+      // Add the new ticket to the list
+      setTickets(prev => [newTicket, ...prev]);
+
+      // Reset form and close dialog
+      setCreateTicketForm({
+        userId: "",
+        userName: "",
+        userEmail: "",
+        userRole: "parent",
+        subject: "",
+        description: "",
+        category: "general",
+        priority: "medium",
+        assignedTo: "",
+        tags: [],
+        attachments: [],
+        deviceInfo: {
+          browser: "",
+          os: "",
+          device: "",
+          screenSize: ""
+        },
+        autoDetectDevice: true
+      });
+      setCreateTicketStep(1);
+      setShowCreateTicket(false);
+
+      // Show success notification (in a real app, this would be a toast)
+      console.log("Ticket created successfully:", newTicket);
+
+    } catch (error) {
+      console.error("Error creating ticket:", error);
+    } finally {
+      setIsSubmittingTicket(false);
+    }
+  };
+
+  const validateTicketForm = () => {
+    const step1Valid = createTicketForm.userName.trim() !== "" &&
+                     createTicketForm.userEmail.trim() !== "" &&
+                     /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(createTicketForm.userEmail);
+
+    const step2Valid = createTicketForm.subject.trim() !== "" &&
+                      createTicketForm.description.trim() !== "";
+
+    return { step1Valid, step2Valid };
+  };
+
+  const getRecommendedAssignee = () => {
+    // Simple logic to recommend an agent based on category and workload
+    const availableAgents = (agents || []).filter(agent => agent.status === "online");
+
+    if (availableAgents.length === 0) return null;
+
+    // Find agents with matching specialties
+    const specializedAgents = availableAgents.filter(agent =>
+      agent.specialties.includes(createTicketForm.category)
+    );
+
+    if (specializedAgents.length > 0) {
+      // Return the agent with the lightest workload
+      return specializedAgents.reduce((prev, current) =>
+        prev.workload === "light" ? prev :
+        current.workload === "light" ? current :
+        prev.activeTickets < current.activeTickets ? prev : current
+      );
+    }
+
+    // If no specialized agents, return the one with lightest workload
+    return availableAgents.reduce((prev, current) =>
+      prev.workload === "light" ? prev :
+      current.workload === "light" ? current :
+      prev.activeTickets < current.activeTickets ? prev : current
+    );
   };
 
   return (
@@ -1464,6 +1712,534 @@ const EnhancedSupportManagement: React.FC<EnhancedSupportManagementProps> = ({
                 </div>
               </TabsContent>
             </Tabs>
+          </DialogContent>
+        </Dialog>
+      )}
+
+      {/* Enhanced Create Ticket Dialog */}
+      {showCreateTicket && (
+        <Dialog open={showCreateTicket} onOpenChange={setShowCreateTicket}>
+          <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
+            <DialogHeader>
+              <DialogTitle className="flex items-center gap-3">
+                <div className="p-2 bg-blue-100 dark:bg-blue-900 rounded-lg">
+                  <Plus className="w-5 h-5 text-blue-600 dark:text-blue-400" />
+                </div>
+                <span>Create New Support Ticket</span>
+                <Badge variant="outline">Step {createTicketStep} of 3</Badge>
+              </DialogTitle>
+              <DialogDescription>
+                Provide detailed information to help us assist you better
+              </DialogDescription>
+            </DialogHeader>
+
+            <div className="space-y-6">
+              {/* Progress Indicator */}
+              <div className="flex items-center justify-between">
+                <div className="flex items-center space-x-4">
+                  <div className={`flex items-center justify-center w-8 h-8 rounded-full ${
+                    createTicketStep >= 1 ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-600'
+                  }`}>
+                    {createTicketStep > 1 ? <CheckCircle className="w-4 h-4" /> : '1'}
+                  </div>
+                  <div className={`h-0.5 w-16 ${
+                    createTicketStep >= 2 ? 'bg-blue-500' : 'bg-gray-200'
+                  }`} />
+                  <div className={`flex items-center justify-center w-8 h-8 rounded-full ${
+                    createTicketStep >= 2 ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-600'
+                  }`}>
+                    {createTicketStep > 2 ? <CheckCircle className="w-4 h-4" /> : '2'}
+                  </div>
+                  <div className={`h-0.5 w-16 ${
+                    createTicketStep >= 3 ? 'bg-blue-500' : 'bg-gray-200'
+                  }`} />
+                  <div className={`flex items-center justify-center w-8 h-8 rounded-full ${
+                    createTicketStep >= 3 ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-600'
+                  }`}>
+                    3
+                  </div>
+                </div>
+
+                <div className="text-sm text-gray-500">
+                  {createTicketStep === 1 && "User Information"}
+                  {createTicketStep === 2 && "Ticket Details"}
+                  {createTicketStep === 3 && "Review & Submit"}
+                </div>
+              </div>
+
+              {/* Step 1: User Information */}
+              {createTicketStep === 1 && (
+                <div className="space-y-4">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className="space-y-2">
+                      <Label htmlFor="userName">Full Name *</Label>
+                      <Input
+                        id="userName"
+                        placeholder="Enter full name"
+                        value={createTicketForm.userName}
+                        onChange={(e) => handleCreateTicketFormChange("userName", e.target.value)}
+                      />
+                    </div>
+
+                    <div className="space-y-2">
+                      <Label htmlFor="userEmail">Email Address *</Label>
+                      <Input
+                        id="userEmail"
+                        type="email"
+                        placeholder="user@example.com"
+                        value={createTicketForm.userEmail}
+                        onChange={(e) => handleCreateTicketFormChange("userEmail", e.target.value)}
+                      />
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className="space-y-2">
+                      <Label htmlFor="userId">User ID (Optional)</Label>
+                      <Input
+                        id="userId"
+                        placeholder="Auto-generated if empty"
+                        value={createTicketForm.userId}
+                        onChange={(e) => handleCreateTicketFormChange("userId", e.target.value)}
+                      />
+                    </div>
+
+                    <div className="space-y-2">
+                      <Label htmlFor="userRole">User Role *</Label>
+                      <Select
+                        value={createTicketForm.userRole}
+                        onValueChange={(value) => handleCreateTicketFormChange("userRole", value)}
+                      >
+                        <SelectTrigger>
+                          <SelectValue />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="parent">Parent</SelectItem>
+                          <SelectItem value="child">Child</SelectItem>
+                          <SelectItem value="teacher">Teacher</SelectItem>
+                          <SelectItem value="admin">Administrator</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                  </div>
+
+                  <div className="bg-blue-50 dark:bg-blue-900/20 p-4 rounded-lg">
+                    <div className="flex items-center gap-2 mb-2">
+                      <Info className="w-4 h-4 text-blue-600" />
+                      <span className="font-medium text-blue-900 dark:text-blue-100">User Information</span>
+                    </div>
+                    <p className="text-sm text-blue-700 dark:text-blue-200">
+                      This information helps us route your ticket to the right team and provide personalized support.
+                    </p>
+                  </div>
+                </div>
+              )}
+
+              {/* Step 2: Ticket Details */}
+              {createTicketStep === 2 && (
+                <div className="space-y-4">
+                  <div className="space-y-2">
+                    <Label htmlFor="subject">Subject *</Label>
+                    <Input
+                      id="subject"
+                      placeholder="Brief description of your issue"
+                      value={createTicketForm.subject}
+                      onChange={(e) => handleCreateTicketFormChange("subject", e.target.value)}
+                    />
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label htmlFor="description">Description *</Label>
+                    <Textarea
+                      id="description"
+                      placeholder="Please provide detailed information about your issue, including any error messages or steps to reproduce the problem..."
+                      rows={6}
+                      value={createTicketForm.description}
+                      onChange={(e) => handleCreateTicketFormChange("description", e.target.value)}
+                    />
+                  </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div className="space-y-2">
+                      <Label htmlFor="category">Category *</Label>
+                      <Select
+                        value={createTicketForm.category}
+                        onValueChange={(value) => handleCreateTicketFormChange("category", value)}
+                      >
+                        <SelectTrigger>
+                          <SelectValue />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="technical">Technical Issue</SelectItem>
+                          <SelectItem value="billing">Billing & Payment</SelectItem>
+                          <SelectItem value="content">Content Related</SelectItem>
+                          <SelectItem value="account">Account Management</SelectItem>
+                          <SelectItem value="feature_request">Feature Request</SelectItem>
+                          <SelectItem value="bug_report">Bug Report</SelectItem>
+                          <SelectItem value="general">General Inquiry</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+
+                    <div className="space-y-2">
+                      <Label htmlFor="priority">Priority *</Label>
+                      <Select
+                        value={createTicketForm.priority}
+                        onValueChange={(value) => handleCreateTicketFormChange("priority", value)}
+                      >
+                        <SelectTrigger>
+                          <SelectValue />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="low">Low</SelectItem>
+                          <SelectItem value="medium">Medium</SelectItem>
+                          <SelectItem value="high">High</SelectItem>
+                          <SelectItem value="urgent">Urgent</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+
+                    <div className="space-y-2">
+                      <Label htmlFor="assignedTo">Assign to Agent</Label>
+                      <Select
+                        value={createTicketForm.assignedTo}
+                        onValueChange={(value) => handleCreateTicketFormChange("assignedTo", value)}
+                      >
+                        <SelectTrigger>
+                          <SelectValue placeholder="Auto-assign" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="">Auto-assign</SelectItem>
+                          {(agents || []).map(agent => (
+                            <SelectItem key={agent.id} value={agent.name}>
+                              <div className="flex items-center gap-2">
+                                <div className={`w-2 h-2 rounded-full ${
+                                  getAgentStatus(agent.status).color
+                                }`} />
+                                <span>{agent.name}</span>
+                                <span className="text-xs text-gray-500">({agent.activeTickets} active)</span>
+                              </div>
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                    </div>
+                  </div>
+
+                  {/* Recommended Agent */}
+                  {(() => {
+                    const recommended = getRecommendedAssignee();
+                    return recommended && createTicketForm.assignedTo === "" ? (
+                      <div className="bg-green-50 dark:bg-green-900/20 p-4 rounded-lg">
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center gap-2">
+                            <UserCheck className="w-4 h-4 text-green-600" />
+                            <span className="font-medium text-green-900 dark:text-green-100">
+                              Recommended: {recommended.name}
+                            </span>
+                            <Badge variant="outline" className="text-xs">
+                              {recommended.specialties.join(", ")}
+                            </Badge>
+                          </div>
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            onClick={() => handleCreateTicketFormChange("assignedTo", recommended.name)}
+                          >
+                            Assign
+                          </Button>
+                        </div>
+                        <p className="text-sm text-green-700 dark:text-green-200 mt-1">
+                          Based on category and agent availability
+                        </p>
+                      </div>
+                    ) : null;
+                  })()}
+
+                  {/* Tags */}
+                  <div className="space-y-2">
+                    <Label>Tags</Label>
+                    <div className="flex gap-2">
+                      <Input
+                        placeholder="Add a tag"
+                        value={newTag}
+                        onChange={(e) => setNewTag(e.target.value)}
+                        onKeyPress={(e) => e.key === "Enter" && handleAddTag()}
+                        className="flex-1"
+                      />
+                      <Button type="button" onClick={handleAddTag} size="sm">
+                        <Plus className="w-4 h-4" />
+                      </Button>
+                    </div>
+
+                    {createTicketForm.tags.length > 0 && (
+                      <div className="flex flex-wrap gap-2 mt-2">
+                        {createTicketForm.tags.map(tag => (
+                          <Badge key={tag} variant="secondary" className="flex items-center gap-1">
+                            <Tag className="w-3 h-3" />
+                            {tag}
+                            <button
+                              type="button"
+                              onClick={() => handleRemoveTag(tag)}
+                              className="ml-1 hover:text-red-600"
+                            >
+                              <X className="w-3 h-3" />
+                            </button>
+                          </Badge>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Device Information */}
+                  <div className="space-y-3">
+                    <div className="flex items-center justify-between">
+                      <Label>Device Information</Label>
+                      <div className="flex items-center gap-2">
+                        <Checkbox
+                          id="autoDetect"
+                          checked={createTicketForm.autoDetectDevice}
+                          onCheckedChange={(checked) =>
+                            handleCreateTicketFormChange("autoDetectDevice", checked)
+                          }
+                        />
+                        <Label htmlFor="autoDetect" className="text-sm">Auto-detect</Label>
+                      </div>
+                    </div>
+
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+                      <div className="space-y-1">
+                        <Label className="text-xs">Browser</Label>
+                        <Input
+                          placeholder="Browser"
+                          value={createTicketForm.deviceInfo.browser}
+                          onChange={(e) => handleCreateTicketFormChange("deviceInfo", {
+                            ...createTicketForm.deviceInfo,
+                            browser: e.target.value
+                          })}
+                          disabled={createTicketForm.autoDetectDevice}
+                          className="text-sm"
+                        />
+                      </div>
+
+                      <div className="space-y-1">
+                        <Label className="text-xs">Operating System</Label>
+                        <Input
+                          placeholder="OS"
+                          value={createTicketForm.deviceInfo.os}
+                          onChange={(e) => handleCreateTicketFormChange("deviceInfo", {
+                            ...createTicketForm.deviceInfo,
+                            os: e.target.value
+                          })}
+                          disabled={createTicketForm.autoDetectDevice}
+                          className="text-sm"
+                        />
+                      </div>
+
+                      <div className="space-y-1">
+                        <Label className="text-xs">Device Type</Label>
+                        <Input
+                          placeholder="Device"
+                          value={createTicketForm.deviceInfo.device}
+                          onChange={(e) => handleCreateTicketFormChange("deviceInfo", {
+                            ...createTicketForm.deviceInfo,
+                            device: e.target.value
+                          })}
+                          disabled={createTicketForm.autoDetectDevice}
+                          className="text-sm"
+                        />
+                      </div>
+
+                      <div className="space-y-1">
+                        <Label className="text-xs">Screen Size</Label>
+                        <Input
+                          placeholder="Resolution"
+                          value={createTicketForm.deviceInfo.screenSize}
+                          onChange={(e) => handleCreateTicketFormChange("deviceInfo", {
+                            ...createTicketForm.deviceInfo,
+                            screenSize: e.target.value
+                          })}
+                          disabled={createTicketForm.autoDetectDevice}
+                          className="text-sm"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* Step 3: Review & Submit */}
+              {createTicketStep === 3 && (
+                <div className="space-y-6">
+                  <div className="bg-gray-50 dark:bg-gray-800 p-6 rounded-lg space-y-4">
+                    <h3 className="font-semibold text-lg">Ticket Summary</h3>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                      <div className="space-y-3">
+                        <div>
+                          <Label className="text-sm font-medium text-gray-600">User Information</Label>
+                          <div className="mt-1">
+                            <p className="font-medium">{createTicketForm.userName}</p>
+                            <p className="text-sm text-gray-500">{createTicketForm.userEmail}</p>
+                            <Badge variant="outline" className="text-xs mt-1">
+                              {createTicketForm.userRole}
+                            </Badge>
+                          </div>
+                        </div>
+
+                        <div>
+                          <Label className="text-sm font-medium text-gray-600">Subject</Label>
+                          <p className="mt-1">{createTicketForm.subject}</p>
+                        </div>
+
+                        <div>
+                          <Label className="text-sm font-medium text-gray-600">Category & Priority</Label>
+                          <div className="mt-1 flex gap-2">
+                            <Badge variant="outline">
+                              {getCategoryIcon(createTicketForm.category)}
+                              <span className="ml-1 capitalize">{createTicketForm.category.replace('_', ' ')}</span>
+                            </Badge>
+                            <Badge className={getPriorityColor(createTicketForm.priority)}>
+                              {createTicketForm.priority}
+                            </Badge>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="space-y-3">
+                        <div>
+                          <Label className="text-sm font-medium text-gray-600">Assignment</Label>
+                          <p className="mt-1">
+                            {createTicketForm.assignedTo || "Auto-assign based on availability"}
+                          </p>
+                        </div>
+
+                        <div>
+                          <Label className="text-sm font-medium text-gray-600">Urgency Score</Label>
+                          <div className="mt-1 flex items-center gap-2">
+                            <Progress value={calculateUrgencyScore()} className="flex-1" />
+                            <span className="text-sm font-medium">{calculateUrgencyScore()}/100</span>
+                          </div>
+                        </div>
+
+                        {createTicketForm.tags.length > 0 && (
+                          <div>
+                            <Label className="text-sm font-medium text-gray-600">Tags</Label>
+                            <div className="mt-1 flex flex-wrap gap-1">
+                              {createTicketForm.tags.map(tag => (
+                                <Badge key={tag} variant="outline" className="text-xs">
+                                  {tag}
+                                </Badge>
+                              ))}
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+
+                    <div>
+                      <Label className="text-sm font-medium text-gray-600">Description</Label>
+                      <div className="mt-1 p-3 bg-white dark:bg-gray-900 rounded border text-sm">
+                        {createTicketForm.description}
+                      </div>
+                    </div>
+
+                    {createTicketForm.autoDetectDevice && (
+                      <div>
+                        <Label className="text-sm font-medium text-gray-600">Device Information</Label>
+                        <div className="mt-1 grid grid-cols-2 md:grid-cols-4 gap-2 text-sm">
+                          <div>
+                            <span className="text-gray-500">Browser:</span>
+                            <span className="ml-1">{createTicketForm.deviceInfo.browser}</span>
+                          </div>
+                          <div>
+                            <span className="text-gray-500">OS:</span>
+                            <span className="ml-1">{createTicketForm.deviceInfo.os}</span>
+                          </div>
+                          <div>
+                            <span className="text-gray-500">Device:</span>
+                            <span className="ml-1">{createTicketForm.deviceInfo.device}</span>
+                          </div>
+                          <div>
+                            <span className="text-gray-500">Screen:</span>
+                            <span className="ml-1">{createTicketForm.deviceInfo.screenSize}</span>
+                          </div>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+
+                  <div className="bg-blue-50 dark:bg-blue-900/20 p-4 rounded-lg">
+                    <div className="flex items-center gap-2 mb-2">
+                      <Clock className="w-4 h-4 text-blue-600" />
+                      <span className="font-medium text-blue-900 dark:text-blue-100">Expected Response Time</span>
+                    </div>
+                    <p className="text-sm text-blue-700 dark:text-blue-200">
+                      Based on priority and current workload: {createTicketForm.priority === "urgent" ? "Within 1 hour" :
+                      createTicketForm.priority === "high" ? "Within 4 hours" :
+                      createTicketForm.priority === "medium" ? "Within 24 hours" : "Within 48 hours"}
+                    </p>
+                  </div>
+                </div>
+              )}
+            </div>
+
+            <DialogFooter className="flex items-center justify-between">
+              <div className="flex gap-2">
+                {createTicketStep > 1 && (
+                  <Button
+                    variant="outline"
+                    onClick={() => setCreateTicketStep(prev => prev - 1)}
+                    disabled={isSubmittingTicket}
+                  >
+                    <ArrowDown className="w-4 h-4 mr-2 rotate-90" />
+                    Previous
+                  </Button>
+                )}
+              </div>
+
+              <div className="flex gap-2">
+                <Button
+                  variant="outline"
+                  onClick={() => setShowCreateTicket(false)}
+                  disabled={isSubmittingTicket}
+                >
+                  Cancel
+                </Button>
+
+                {createTicketStep < 3 ? (
+                  <Button
+                    onClick={() => setCreateTicketStep(prev => prev + 1)}
+                    disabled={(() => {
+                      const validation = validateTicketForm();
+                      return createTicketStep === 1 ? !validation.step1Valid :
+                             createTicketStep === 2 ? !validation.step2Valid : false;
+                    })()}
+                  >
+                    Next
+                    <ArrowUp className="w-4 h-4 ml-2 rotate-90" />
+                  </Button>
+                ) : (
+                  <Button
+                    onClick={handleCreateTicket}
+                    disabled={isSubmittingTicket || !validateTicketForm().step1Valid || !validateTicketForm().step2Valid}
+                    className="min-w-[120px]"
+                  >
+                    {isSubmittingTicket ? (
+                      <>
+                        <RefreshCw className="w-4 h-4 mr-2 animate-spin" />
+                        Creating...
+                      </>
+                    ) : (
+                      <>
+                        <Save className="w-4 h-4 mr-2" />
+                        Create Ticket
+                      </>
+                    )}
+                  </Button>
+                )}
+              </div>
+            </DialogFooter>
           </DialogContent>
         </Dialog>
       )}
