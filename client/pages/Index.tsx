@@ -423,6 +423,11 @@ export default function Index({ initialProfile }: IndexProps) {
   };
 
   const generateFreshWords = () => {
+    if (!selectedCategory) {
+      console.log("No category selected, skipping word generation");
+      return [];
+    }
+
     console.log(
       `Generating fresh words with enhanced system for category: ${selectedCategory}`,
     );
