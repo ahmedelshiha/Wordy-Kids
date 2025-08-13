@@ -264,7 +264,7 @@ export function InteractiveDashboardWordCard({
           id: "speed_demon",
           title: "SPEED DEMON!",
           description: `Lightning fast! Completed in ${minutes} minutes with ${accuracy}% accuracy!`,
-          emoji: "���",
+          emoji: "⚡",
           unlocked: true,
         });
       }
