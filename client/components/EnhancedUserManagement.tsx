@@ -859,6 +859,241 @@ const EnhancedUserManagement: React.FC<EnhancedUserManagementProps> = ({
     ];
   };
 
+  // Export Users utility functions
+  const getExportableFields = () => {
+    return [
+      { key: 'name', label: 'Full Name', required: true },
+      { key: 'email', label: 'Email Address', required: true },
+      { key: 'role', label: 'User Role', required: false },
+      { key: 'status', label: 'Account Status', required: false },
+      { key: 'subscriptionType', label: 'Subscription Type', required: false },
+      { key: 'createdAt', label: 'Created Date', required: false },
+      { key: 'lastActive', label: 'Last Active', required: false },
+      { key: 'totalSessions', label: 'Total Sessions', required: false },
+      { key: 'supportTickets', label: 'Support Tickets', required: false },
+      { key: 'location', label: 'Location (Country, State, City)', required: false },
+      { key: 'progress', label: 'Learning Progress', required: false },
+      { key: 'preferences', label: 'User Preferences', required: false },
+      { key: 'tags', label: 'Tags', required: false },
+      { key: 'notes', label: 'Admin Notes', required: false },
+    ];
+  };
+
+  const getFilteredExportUsers = () => {
+    return users.filter(user => {
+      const matchesRole = exportFilters.role === 'all' || user.role === exportFilters.role;
+      const matchesStatus = exportFilters.status === 'all' || user.status === exportFilters.status;
+      const matchesSubscription = exportFilters.subscription === 'all' || user.subscriptionType === exportFilters.subscription;
+
+      if (!exportFilters.includeInactive && user.status === 'inactive') {
+        return false;
+      }
+
+      const now = new Date();
+      let matchesDateRange = true;
+
+      if (exportFilters.dateRange !== 'all') {
+        const daysDiff = Math.floor((now.getTime() - user.createdAt.getTime()) / (1000 * 60 * 60 * 24));
+
+        switch (exportFilters.dateRange) {
+          case 'last7days':
+            matchesDateRange = daysDiff <= 7;
+            break;
+          case 'last30days':
+            matchesDateRange = daysDiff <= 30;
+            break;
+          case 'last90days':
+            matchesDateRange = daysDiff <= 90;
+            break;
+          case 'lastYear':
+            matchesDateRange = daysDiff <= 365;
+            break;
+        }
+      }
+
+      return matchesRole && matchesStatus && matchesSubscription && matchesDateRange;
+    });
+  };
+
+  const formatUserDataForExport = (user: AdminUser) => {
+    const data: any = {};
+
+    if (exportFields.name) data.name = user.name;
+    if (exportFields.email) data.email = user.email;
+    if (exportFields.role) data.role = user.role;
+    if (exportFields.status) data.status = user.status;
+    if (exportFields.subscriptionType) data.subscriptionType = user.subscriptionType;
+    if (exportFields.createdAt) data.createdAt = user.createdAt.toISOString().split('T')[0];
+    if (exportFields.lastActive) data.lastActive = user.lastActive.toISOString().split('T')[0];
+    if (exportFields.totalSessions) data.totalSessions = user.totalSessions;
+    if (exportFields.supportTickets) data.supportTickets = user.supportTickets;
+
+    if (exportFields.location && user.location) {
+      data.country = user.location.country || '';
+      data.state = user.location.state || '';
+      data.city = user.location.city || '';
+    }
+
+    if (exportFields.progress && user.progress) {
+      data.wordsLearned = user.progress.wordsLearned;
+      data.averageAccuracy = user.progress.averageAccuracy;
+      data.streakDays = user.progress.streakDays;
+      data.totalPlayTime = user.progress.totalPlayTime;
+    }
+
+    if (exportFields.preferences && user.preferences) {
+      data.notifications = user.preferences.notifications;
+      data.emailUpdates = user.preferences.emailUpdates;
+      data.language = user.preferences.language;
+      data.timezone = user.preferences.timezone;
+    }
+
+    if (exportFields.tags && user.tags) {
+      data.tags = user.tags.join(', ');
+    }
+
+    if (exportFields.notes && user.notes) {
+      data.notes = user.notes;
+    }
+
+    if (user.parentId) {
+      data.parentId = user.parentId;
+    }
+
+    if (user.childrenCount !== undefined) {
+      data.childrenCount = user.childrenCount;
+    }
+
+    return data;
+  };
+
+  const generateCSV = (data: any[]) => {
+    if (data.length === 0) return '';
+
+    const headers = Object.keys(data[0]);
+    const csvContent = [
+      headers.join(','),
+      ...data.map(row =>
+        headers.map(header => {
+          const value = row[header];
+          // Escape CSV values that contain commas or quotes
+          if (typeof value === 'string' && (value.includes(',') || value.includes('"'))) {
+            return `"${value.replace(/"/g, '""')}"`;
+          }
+          return value || '';
+        }).join(',')
+      )
+    ].join('\n');
+
+    return csvContent;
+  };
+
+  const generateJSON = (data: any[]) => {
+    return JSON.stringify(data, null, 2);
+  };
+
+  const downloadFile = (content: string, filename: string, mimeType: string) => {
+    const blob = new Blob([content], { type: mimeType });
+    const url = window.URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = filename;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    window.URL.revokeObjectURL(url);
+  };
+
+  const performExport = async () => {
+    setIsExporting(true);
+    setExportProgress(0);
+
+    try {
+      // Simulate processing delay
+      await new Promise(resolve => setTimeout(resolve, 500));
+      setExportProgress(25);
+
+      const filteredUsers = getFilteredExportUsers();
+      setExportProgress(50);
+
+      const exportData = filteredUsers.map(formatUserDataForExport);
+      setExportProgress(75);
+
+      const timestamp = new Date().toISOString().split('T')[0];
+      let content: string;
+      let filename: string;
+      let mimeType: string;
+
+      switch (exportFormat) {
+        case 'csv':
+          content = generateCSV(exportData);
+          filename = `users_export_${timestamp}.csv`;
+          mimeType = 'text/csv';
+          break;
+        case 'json':
+          content = generateJSON(exportData);
+          filename = `users_export_${timestamp}.json`;
+          mimeType = 'application/json';
+          break;
+        case 'xlsx':
+          // For XLSX, we'll generate CSV for now (would need additional library for true XLSX)
+          content = generateCSV(exportData);
+          filename = `users_export_${timestamp}.csv`;
+          mimeType = 'text/csv';
+          break;
+        default:
+          throw new Error('Unsupported export format');
+      }
+
+      setExportProgress(90);
+      downloadFile(content, filename, mimeType);
+      setExportProgress(100);
+
+      // Close dialog after successful export
+      setTimeout(() => {
+        setShowExportDialog(false);
+        resetExportForm();
+      }, 1000);
+
+    } catch (error) {
+      console.error('Export failed:', error);
+      setFormErrors({ export: 'Export failed. Please try again.' });
+    } finally {
+      setTimeout(() => {
+        setIsExporting(false);
+        setExportProgress(0);
+      }, 1000);
+    }
+  };
+
+  const resetExportForm = () => {
+    setExportFormat('csv');
+    setExportFilters({
+      role: 'all',
+      status: 'all',
+      subscription: 'all',
+      dateRange: 'all',
+      includeInactive: true,
+    });
+    setExportFields({
+      name: true,
+      email: true,
+      role: true,
+      status: true,
+      subscriptionType: true,
+      createdAt: true,
+      lastActive: true,
+      location: false,
+      totalSessions: false,
+      supportTickets: false,
+      progress: false,
+      preferences: false,
+      tags: false,
+      notes: false,
+    });
+    setFormErrors(prev => ({ ...prev, export: '' }));
+  };
+
   // Filtering and sorting logic
   const filteredAndSortedUsers = useMemo(() => {
     let filtered = users.filter((user) => {
