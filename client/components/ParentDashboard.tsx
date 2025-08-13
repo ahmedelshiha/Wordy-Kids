@@ -157,7 +157,7 @@ const sampleChildren: ChildProfile[] = [
     id: "1",
     name: "Alex",
     age: 8,
-    avatar: "��",
+    avatar: "���",
     level: 3,
     totalPoints: 1250,
     wordsLearned: 47,
@@ -3449,27 +3449,29 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
             </Card>
           </div>
 
-          {/* Category Progress */}
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <BarChart3 className="w-5 h-5" />
-                Category Mastery Progress
+          {/* Enhanced Category Progress for Mobile */}
+          <Card className="overflow-hidden">
+            <CardHeader className="pb-3 bg-gradient-to-r from-slate-50 to-blue-50">
+              <CardTitle className="flex items-center gap-2 text-base md:text-lg">
+                <BarChart3 className="w-5 h-5 text-educational-blue" />
+                <div>
+                  <div>Category Mastery Progress</div>
+                  <p className="text-xs md:text-sm font-normal text-slate-600 mt-1">
+                    Learning progress by subject area
+                  </p>
+                </div>
               </CardTitle>
             </CardHeader>
-            <CardContent>
+            <CardContent className="p-3 md:p-6">
               <div className="space-y-4">
                 {reportData.progressAnalytics.categoryProgress.map(
                   (category: any) => (
-                    <div key={category.category} className="space-y-2">
-                      <div className="flex justify-between items-center">
-                        <span className="font-medium">{category.category}</span>
+                    <div key={category.category} className="space-y-3">
+                      <div className="flex flex-col md:flex-row md:justify-between md:items-center gap-2">
                         <div className="flex items-center gap-2">
-                          <span className="text-sm text-slate-600">
-                            {category.mastery}%
-                          </span>
+                          <span className="font-medium text-slate-800">{category.category}</span>
                           <Badge
-                            className={
+                            className={`text-xs ${
                               category.trend === "improving"
                                 ? "bg-green-100 text-green-800"
                                 : category.trend === "stable"
@@ -3477,13 +3479,26 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
                                   : category.trend === "mastered"
                                     ? "bg-purple-100 text-purple-800"
                                     : "bg-orange-100 text-orange-800"
-                            }
+                            }`}
                           >
-                            {category.trend.replace("_", " ")}
+                            {category.trend === "improving" ? "📈 Improving" :
+                             category.trend === "stable" ? "➡️ Stable" :
+                             category.trend === "mastered" ? "🏆 Mastered" :
+                             "🔄 Needs Practice"}
                           </Badge>
                         </div>
+                        <div className="flex items-center gap-2">
+                          <span className="text-sm md:text-base font-semibold text-educational-blue">
+                            {category.mastery}%
+                          </span>
+                        </div>
                       </div>
-                      <Progress value={category.mastery} className="h-2" />
+                      <div className="space-y-1">
+                        <Progress value={category.mastery} className="h-3 md:h-2" />
+                        <div className="text-xs text-slate-500 text-right">
+                          Target: 80% mastery
+                        </div>
+                      </div>
                     </div>
                   ),
                 )}
