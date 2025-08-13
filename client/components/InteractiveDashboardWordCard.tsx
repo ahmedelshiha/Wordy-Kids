@@ -149,8 +149,8 @@ export function InteractiveDashboardWordCard({
       // Update progression info if dashboard session is available
       if (dashboardSession) {
         const wordsCompleted = rememberedWordsCount;
-        const progInfo = DashboardWordGenerator.getProgressionInfo(wordsCompleted);
-        setProgressionInfo(progInfo);
+        // const progInfo = DashboardWordGenerator.getProgressionInfo(wordsCompleted);
+        // setProgressionInfo(progInfo);
 
         console.log(`Systematic session started:`, {
           stage: dashboardSession.sessionInfo.progressionStage,
