@@ -151,6 +151,10 @@ export default function Index({ initialProfile }: IndexProps) {
   const [lastSystematicSelection, setLastSystematicSelection] =
     useState<SystematicWordSelection | null>(null);
 
+  // Dashboard word generation states
+  const [dashboardSession, setDashboardSession] = useState<DashboardWordSession | null>(null);
+  const [dashboardSessionNumber, setDashboardSessionNumber] = useState(1);
+
   // Memoize displayWords to prevent recalculation on every render
   const displayWords = useMemo(() => {
     if (currentDashboardWords.length > 0) {
@@ -867,7 +871,7 @@ export default function Index({ initialProfile }: IndexProps) {
               📚
             </div>
             <div className="hidden md:block absolute bottom-10 left-20 text-4xl animate-bounce delay-1000">
-              🎉📚✨
+              ���📚✨
             </div>
             <div className="hidden md:block absolute bottom-20 right-10 text-3xl animate-pulse delay-500">
               🚀
