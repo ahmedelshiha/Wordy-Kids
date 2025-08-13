@@ -642,6 +642,73 @@ export function InteractiveDashboardWordCard({
         </Card>
       </div>
 
+      {/* Systematic Learning Progression Info */}
+      {dashboardSession && (
+        <div className="mb-4">
+          <Card className="bg-gradient-to-r from-green-50 to-blue-50 border-green-200 hover:shadow-lg transition-all duration-300">
+            <CardContent className="p-3 md:p-4">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2 md:gap-3">
+                  <div className="flex items-center gap-1 md:gap-2">
+                    <span className="text-lg md:text-2xl">
+                      {progressionInfo.stage === "Foundation Building" ? "🌱" :
+                       progressionInfo.stage === "Skill Development" ? "📚" :
+                       progressionInfo.stage === "Challenge Mode" ? "🎯" : "🏆"}
+                    </span>
+                    <div>
+                      <span className="text-xs md:text-sm font-bold text-slate-800">
+                        {progressionInfo.stage}
+                      </span>
+                      <div className="text-xs text-slate-600 mt-0.5">
+                        {progressionInfo.description}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div className="text-right">
+                  <div className="text-sm md:text-lg font-bold text-slate-800">
+                    {Math.round(progressionInfo.progress)}%
+                  </div>
+                  <div className="text-xs text-slate-600">to next level</div>
+                </div>
+              </div>
+
+              {/* Progress Bar */}
+              <div className="mt-2">
+                <div className="w-full bg-gray-200 rounded-full h-2">
+                  <div
+                    className="bg-gradient-to-r from-green-400 to-blue-500 h-2 rounded-full transition-all duration-500"
+                    style={{ width: `${Math.min(progressionInfo.progress, 100)}%` }}
+                  ></div>
+                </div>
+              </div>
+
+              {/* Session Info */}
+              {dashboardSession.sessionInfo && (
+                <div className="mt-2 flex flex-wrap gap-1">
+                  <Badge
+                    variant="secondary"
+                    className={`text-xs ${
+                      dashboardSession.sessionInfo.difficulty === 'easy' ? 'bg-green-100 text-green-700' :
+                      dashboardSession.sessionInfo.difficulty === 'medium' ? 'bg-yellow-100 text-yellow-700' :
+                      'bg-red-100 text-red-700'
+                    }`}
+                  >
+                    {dashboardSession.sessionInfo.difficulty.toUpperCase()}
+                  </Badge>
+                  <Badge variant="outline" className="text-xs">
+                    {dashboardSession.sessionInfo.categoriesUsed.length} categories
+                  </Badge>
+                  <Badge variant="outline" className="text-xs">
+                    Session #{dashboardSession.sessionInfo.sessionNumber}
+                  </Badge>
+                </div>
+              )}
+            </CardContent>
+          </Card>
+        </div>
+      )}
+
       {/* Session Completion Modal */}
       {showSessionComplete && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-1 sm:p-4">
