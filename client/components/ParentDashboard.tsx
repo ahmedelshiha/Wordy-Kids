@@ -2645,24 +2645,27 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
             <span className="hidden md:inline">Overview</span>
             <span className="md:hidden">Home</span>
           </TabsTrigger>
-          <TabsTrigger value="goals" className="flex items-center gap-2">
-            <Target className="w-4 h-4" />
-            Goals
+          <TabsTrigger value="goals" className="flex flex-col md:flex-row items-center gap-1 md:gap-2 text-xs md:text-sm py-2 md:py-3 px-1 md:px-3">
+            <Target className="w-3 h-3 md:w-4 md:h-4" />
+            <span className="hidden md:inline">Goals</span>
+            <span className="md:hidden">Goals</span>
           </TabsTrigger>
-          <TabsTrigger value="custom-words" className="flex items-center gap-2">
-            <BookMarked className="w-4 h-4" />
-            Custom Words
+          <TabsTrigger value="custom-words" className="flex flex-col md:flex-row items-center gap-1 md:gap-2 text-xs md:text-sm py-2 md:py-3 px-1 md:px-3">
+            <BookMarked className="w-3 h-3 md:w-4 md:h-4" />
+            <span className="hidden md:inline">Custom Words</span>
+            <span className="md:hidden">Words</span>
           </TabsTrigger>
           <TabsTrigger
             value="analytics"
-            className="flex items-center gap-2 relative"
+            className="flex flex-col md:flex-row items-center gap-1 md:gap-2 relative text-xs md:text-sm py-2 md:py-3 px-1 md:px-3"
           >
-            <BarChart3 className="w-4 h-4" />
-            Analytics
+            <BarChart3 className="w-3 h-3 md:w-4 md:h-4" />
+            <span className="hidden md:inline">Analytics</span>
+            <span className="md:hidden">Stats</span>
             {Object.values(childrenWordStats).some(
               (stats) => stats.wordsNeedingPractice > 0,
             ) && (
-              <Badge className="bg-orange-500 text-white text-xs px-1 ml-1">
+              <Badge className="bg-orange-500 text-white text-xs px-1 ml-0 md:ml-1 absolute -top-1 -right-1 md:relative md:top-0 md:right-0">
                 {Object.values(childrenWordStats).reduce(
                   (total, stats) => total + (stats.wordsNeedingPractice || 0),
                   0,
@@ -2740,7 +2743,7 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
             <div>
               <Label htmlFor="avatar">Avatar</Label>
               <div className="flex gap-2 mt-2">
-                {["👦", "👧", "🧒", "👶", "���‍♂️", "🦸‍♀️", "🧑‍🎓", "👨‍🎓", "👩‍🎓"].map(
+                {["👦", "👧", "🧒", "👶", "🦸‍♂️", "🦸‍♀️", "🧑‍🎓", "👨‍🎓", "👩‍🎓"].map(
                   (emoji) => (
                     <Button
                       key={emoji}
