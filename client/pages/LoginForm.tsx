@@ -239,7 +239,8 @@ export default function LoginForm() {
   };
 
   const handleBackToMain = () => {
-    // Clear any form errors and validation state
+    // Clear all form state and prevent any validation
+    setFormData({ email: "", password: "" });
     setErrors({});
     setMessage(null);
     setTouched({ email: false, password: false });
