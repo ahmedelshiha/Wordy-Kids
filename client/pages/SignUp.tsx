@@ -268,11 +268,12 @@ export default function SignUp() {
                 <Input
                   id="birthDate"
                   name="birthDate"
-                  type="date"
+                  type="text"
                   placeholder="dd/mm/yyyy"
                   value={formData.birthDate}
                   onChange={handleInputChange}
                   className="mt-1 md:mt-2 border-gray-300 focus:border-blue-500 text-base"
+                  maxLength={10}
                   disabled={isLoading}
                 />
               </div>
