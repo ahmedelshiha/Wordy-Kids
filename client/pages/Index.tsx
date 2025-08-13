@@ -110,7 +110,8 @@ export default function Index({ initialProfile }: IndexProps) {
   const [showMatchingGame, setShowMatchingGame] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
   const [showCelebration, setShowCelebration] = useState(false);
-  const [userRole, setUserRole] = useState<"child" | "parent">("child");
+  const [celebrationEffect, setCelebrationEffect] = useState(false);
+  const [userRole, setUserRole] = useState<"child" | "parent">("parent");
   const [showWordCreator, setShowWordCreator] = useState(false);
   const [customWords, setCustomWords] = useState<any[]>([]);
   const [backgroundAnimationsEnabled, setBackgroundAnimationsEnabled] =
@@ -501,7 +502,7 @@ export default function Index({ initialProfile }: IndexProps) {
       if (accuracy === 100) {
         achievementTitle = "Perfect Category Mastery! 🏆";
         achievementIcon = "🏆";
-        achievementMessage = `Outstanding! You remembered ALL ${totalWords} words in ${categoryDisplayName}! You're a true champion!\n\n🎁 Perfect Mastery Bonus: 200 points!\n✨ New adventure zone unlocked!\n🏆 Master badge earned!`;
+        achievementMessage = `Outstanding! You remembered ALL ${totalWords} words in ${categoryDisplayName}! You're a true champion!\n\n🎁 Perfect Mastery Bonus: 200 points!\n✨ New adventure zone unlocked!\n��� Master badge earned!`;
       } else if (accuracy >= 90) {
         achievementTitle = "Category Expert! 🎓";
         achievementIcon = "🎓⭐";
