@@ -1714,9 +1714,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                           variant="outline"
                                           className="text-sm"
                                         >
-                                          {selectedCategory === "all"
-                                            ? "Random Selection"
-                                            : `${selectedCategory} Category`}{" "}
+                                          {`${selectedCategory} Category`}{" "}
                                           - Word {currentWordIndex + 1} of{" "}
                                           {displayWords.length}
                                         </Badge>
