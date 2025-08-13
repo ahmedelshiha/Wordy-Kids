@@ -1514,14 +1514,14 @@ export default function Index({ initialProfile }: IndexProps) {
                                           >
                                             <div className="absolute inset-0 bg-white/20 rounded-xl opacity-0 hover:opacity-100 transition-opacity duration-300"></div>
                                             <div className="relative z-10 flex items-center justify-center">
-                                              <span className="text-2xl mr-2 animate-wiggle">
+                                              <span className="text-xl sm:text-2xl mr-1 sm:mr-2 animate-wiggle">
                                                 😔
                                               </span>
                                               <div className="text-center">
-                                                <div className="font-bold text-lg">
+                                                <div className="font-bold text-base sm:text-lg">
                                                   I Forgot
                                                 </div>
-                                                <div className="text-xs opacity-90">
+                                                <div className="text-xs opacity-90 hidden sm:block">
                                                   Need practice! 💪
                                                 </div>
                                               </div>
@@ -1634,19 +1634,19 @@ export default function Index({ initialProfile }: IndexProps) {
                                                 }
                                               }
                                             }}
-                                            className="flex-1 bg-gradient-to-r from-green-400 to-emerald-500 hover:from-green-500 hover:to-emerald-600 text-white font-bold border-0 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 active:scale-95 py-4 px-6 min-h-[60px] relative overflow-hidden"
+                                            className="flex-1 bg-gradient-to-r from-green-400 to-emerald-500 hover:from-green-500 hover:to-emerald-600 text-white font-bold border-0 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform active:scale-95 py-3 sm:py-4 px-3 sm:px-6 min-h-[56px] sm:min-h-[60px] relative overflow-hidden text-sm sm:text-base"
                                             disabled={isLoadingProgress}
                                           >
                                             <div className="absolute inset-0 bg-white/20 rounded-xl opacity-0 hover:opacity-100 transition-opacity duration-300"></div>
                                             <div className="relative z-10 flex items-center justify-center">
-                                              <span className="text-2xl mr-2 animate-bounce">
+                                              <span className="text-xl sm:text-2xl mr-1 sm:mr-2 animate-bounce">
                                                 😊
                                               </span>
                                               <div className="text-center">
-                                                <div className="font-bold text-lg">
+                                                <div className="font-bold text-base sm:text-lg">
                                                   I Remember!
                                                 </div>
-                                                <div className="text-xs opacity-90">
+                                                <div className="text-xs opacity-90 hidden sm:block">
                                                   Awesome! ⭐
                                                 </div>
                                               </div>
@@ -1654,35 +1654,55 @@ export default function Index({ initialProfile }: IndexProps) {
                                           </Button>
                                         </div>
 
-                                        {/* Learning Progress Indicator */}
+                                        {/* Mobile-Optimized Learning Progress Indicator */}
                                         <div className="text-center space-y-2">
-                                          <div className="flex justify-center gap-4 text-sm">
-                                            <div className="flex items-center gap-1 text-green-600">
-                                              <span className="text-base">
+                                          <div className="flex justify-center gap-3 sm:gap-4 text-sm">
+                                            <div className="flex items-center gap-1 text-green-600 bg-green-50 px-2 py-1 rounded-lg">
+                                              <span className="text-sm">
                                                 ✅
                                               </span>
-                                              <span className="font-medium">
+                                              <span className="font-bold text-sm">
                                                 {rememberedWords.size}
                                               </span>
-                                              <span className="text-xs opacity-75">
+                                              <span className="text-xs opacity-75 hidden sm:inline">
                                                 remembered
                                               </span>
                                             </div>
-                                            <div className="flex items-center gap-1 text-red-600">
-                                              <span className="text-base">
+                                            <div className="flex items-center gap-1 text-red-600 bg-red-50 px-2 py-1 rounded-lg">
+                                              <span className="text-sm">
                                                 💪
                                               </span>
-                                              <span className="font-medium">
+                                              <span className="font-bold text-sm">
                                                 {forgottenWords.size}
                                               </span>
-                                              <span className="text-xs opacity-75">
-                                                to practice
+                                              <span className="text-xs opacity-75 hidden sm:inline">
+                                                practice
                                               </span>
                                             </div>
                                           </div>
 
-                                          {/* Quick Navigation */}
-                                          <div className="flex justify-center gap-2 mt-3">
+                                          {/* Mobile-Optimized Quick Navigation */}
+                                          <div className="flex justify-center gap-1 sm:gap-2 mt-3">
+                                            <Button
+                                              onClick={() =>
+                                                setCurrentWordIndex(
+                                                  Math.max(0, currentWordIndex - 1)
+                                                )
+                                              }
+                                              disabled={currentWordIndex === 0}
+                                              variant="ghost"
+                                              size="sm"
+                                              className="px-2 sm:px-3 py-1 text-xs sm:text-sm h-8 sm:h-9"
+                                            >
+                                              ← Prev
+                                            </Button>
+
+                                            <div className="bg-slate-100 px-3 py-1 rounded-lg flex items-center">
+                                              <span className="text-xs sm:text-sm font-medium text-slate-600">
+                                                {currentWordIndex + 1} / {displayWords.length}
+                                              </span>
+                                            </div>
+
                                             <Button
                                               onClick={() =>
                                                 setCurrentWordIndex(
@@ -1698,6 +1718,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                               }
                                               variant="ghost"
                                               size="sm"
+                                              className="px-2 sm:px-3 py-1 text-xs sm:text-sm h-8 sm:h-9"
                                               className="text-gray-500 hover:text-gray-700 hover:bg-gray-100 py-1 px-3"
                                             >
                                               🤔 Try another word
