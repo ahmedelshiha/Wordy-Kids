@@ -640,7 +640,7 @@ export default function Index({ initialProfile }: IndexProps) {
         notifications.push({
           type: "celebration",
           title: "🎉 Level Up! 🎉",
-          message: `Congratulations! You've reached a new level!\n\n���� Keep up the amazing work!`,
+          message: `Congratulations! You've reached a new level!\n\n🌟 Keep up the amazing work!`,
           points: 50,
         });
       }
@@ -778,7 +778,7 @@ export default function Index({ initialProfile }: IndexProps) {
     // Show completion feedback
     setFeedback({
       type: "celebration",
-      title: "Practice Complete! ���",
+      title: "Practice Complete! 🏆",
       message: `Great job practicing your tricky words!\n\n✅ Remembered: ${results.correctWords.length} words\n�� Accuracy: ${results.accuracy}%\n\nKeep practicing to master all your words!`,
       points: results.correctWords.length * 15,
       onContinue: () => setFeedback(null),
@@ -1281,29 +1281,33 @@ export default function Index({ initialProfile }: IndexProps) {
                           {/* Layout for Selected Categories */}
                           {selectedCategory !== "all" ? (
                             <div className="mb-2">
-                              {/* Title and Description */}
-                              <div>
-                                <h2 className="text-xl md:text-2xl font-bold text-slate-800 mb-1">
-                                  {`${selectedCategory.charAt(0).toUpperCase() + selectedCategory.slice(1)} Words`}
-                                </h2>
-                                <p className="text-xs md:text-sm text-slate-600 mb-2">
-                                  Learn {selectedCategory} vocabulary!
-                                </p>
-                              </div>
+                              {/* Title/Description and Back Button Side by Side */}
+                              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 sm:gap-4">
+                                {/* Title and Description */}
+                                <div className="text-center sm:text-left">
+                                  <h2 className="text-lg sm:text-xl md:text-2xl font-bold text-slate-800">
+                                    {`${selectedCategory.charAt(0).toUpperCase() + selectedCategory.slice(1)} Words`}
+                                  </h2>
+                                  <p className="text-xs md:text-sm text-slate-600">
+                                    Learn {selectedCategory} vocabulary!
+                                  </p>
+                                </div>
 
-                              {/* Simple Back Button */}
-                              <div className="flex justify-center">
-                                <Button
-                                  onClick={() => {
-                                    setSelectedCategory("all");
-                                    setLearningMode("selector");
-                                  }}
-                                  variant="outline"
-                                  className="flex items-center gap-1 text-xs px-3 py-1 h-8 rounded-md"
-                                >
-                                  <span className="text-sm">🏠</span>
-                                  <span>Back to Categories</span>
-                                </Button>
+                                {/* Simple Back Button */}
+                                <div className="flex justify-center sm:justify-end flex-shrink-0">
+                                  <Button
+                                    onClick={() => {
+                                      setSelectedCategory("all");
+                                      setLearningMode("selector");
+                                    }}
+                                    variant="outline"
+                                    className="flex items-center gap-1 text-xs px-3 py-1 h-8 rounded-md"
+                                  >
+                                    <span className="text-sm">🏠</span>
+                                    <span className="hidden sm:inline">Back to Categories</span>
+                                    <span className="sm:hidden">Back</span>
+                                  </Button>
+                                </div>
                               </div>
                             </div>
                           ) : (
