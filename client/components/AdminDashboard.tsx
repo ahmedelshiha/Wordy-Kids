@@ -108,6 +108,7 @@ import BulkWordImport from "@/components/BulkWordImport";
 import WordEditor from "@/components/WordEditor";
 import CreateWordWizard from "@/components/CreateWordWizard";
 import CreateWordInsights from "@/components/CreateWordInsights";
+import CreateWordQuickActions from "@/components/CreateWordQuickActions";
 import ContentModerationPanel from "@/components/ContentModerationPanel";
 import AdvancedAnalyticsDashboard from "@/components/AdvancedAnalyticsDashboard";
 import EnhancedUserManagement from "@/components/EnhancedUserManagement";
