@@ -107,8 +107,31 @@ export default function SignUp() {
       return;
     }
 
-    // Calculate age from birth date
-    const birthDate = new Date(formData.birthDate);
+    // Calculate age from birth date (dd/mm/yyyy format)
+    const dateParts = formData.birthDate.split("/");
+    if (dateParts.length !== 3) {
+      setMessage({
+        type: "error",
+        text: "Please enter birth date in dd/mm/yyyy format",
+      });
+      setIsLoading(false);
+      return;
+    }
+
+    const day = parseInt(dateParts[0]);
+    const month = parseInt(dateParts[1]) - 1; // Month is 0-indexed in Date
+    const year = parseInt(dateParts[2]);
+
+    if (isNaN(day) || isNaN(month) || isNaN(year) || day < 1 || day > 31 || month < 0 || month > 11 || year < 1900 || year > new Date().getFullYear()) {
+      setMessage({
+        type: "error",
+        text: "Please enter a valid birth date in dd/mm/yyyy format",
+      });
+      setIsLoading(false);
+      return;
+    }
+
+    const birthDate = new Date(year, month, day);
     const today = new Date();
     const age = today.getFullYear() - birthDate.getFullYear();
     const monthDiff = today.getMonth() - birthDate.getMonth();
