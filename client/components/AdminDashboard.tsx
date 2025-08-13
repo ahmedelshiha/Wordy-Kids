@@ -461,51 +461,51 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onNavigateBack }) => {
         </Card>
       </div>
 
-      {/* Quick Actions */}
-      <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <Zap className="w-5 h-5 text-yellow-500" />
+      {/* Enhanced Mobile Quick Actions */}
+      <Card className="mx-2 md:mx-0">
+        <CardHeader className="pb-3 md:pb-4">
+          <CardTitle className="flex items-center gap-2 text-base md:text-lg">
+            <Zap className="w-4 h-4 md:w-5 md:h-5 text-yellow-500" />
             Quick Actions
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
             <Button
               variant="outline"
-              className="h-20 flex-col gap-2"
+              className="h-16 md:h-20 flex-col gap-1 md:gap-2 text-xs md:text-sm border-blue-200 hover:bg-blue-50 hover:border-blue-300"
               onClick={() => {
                 setWordEditorMode("create");
                 setEditingWord(null);
                 setShowWordEditor(true);
               }}
             >
-              <Plus className="w-5 h-5" />
+              <Plus className="w-4 h-4 md:w-5 md:h-5 text-blue-500" />
               Add Word
             </Button>
             <Button
               variant="outline"
-              className="h-20 flex-col gap-2"
+              className="h-16 md:h-20 flex-col gap-1 md:gap-2 text-xs md:text-sm border-purple-200 hover:bg-purple-50 hover:border-purple-300"
               onClick={() => setShowCategoryDialog(true)}
             >
-              <Layers className="w-5 h-5" />
+              <Layers className="w-4 h-4 md:w-5 md:h-5 text-purple-500" />
               New Category
             </Button>
             <Button
               variant="outline"
-              className="h-20 flex-col gap-2"
+              className="h-16 md:h-20 flex-col gap-1 md:gap-2 text-xs md:text-sm border-green-200 hover:bg-green-50 hover:border-green-300"
               onClick={() => setActiveTab("tickets")}
             >
-              <MessageSquare className="w-5 h-5" />
-              Support Queue
+              <MessageSquare className="w-4 h-4 md:w-5 md:h-5 text-green-500" />
+              <span className="text-center leading-tight">Support Queue</span>
             </Button>
             <Button
               variant="outline"
-              className="h-20 flex-col gap-2"
+              className="h-16 md:h-20 flex-col gap-1 md:gap-2 text-xs md:text-sm border-orange-200 hover:bg-orange-50 hover:border-orange-300"
               onClick={() => setActiveTab("analytics")}
             >
-              <BarChart3 className="w-5 h-5" />
-              View Analytics
+              <BarChart3 className="w-4 h-4 md:w-5 md:h-5 text-orange-500" />
+              <span className="text-center leading-tight">View Analytics</span>
             </Button>
           </div>
         </CardContent>
