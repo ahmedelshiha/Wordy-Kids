@@ -2925,17 +2925,95 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
   };
 
   const renderDetailedReports = () => (
-    <div className="space-y-6">
-      {/* Report Configuration */}
-      <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <FileText className="w-5 h-5" />
-            Generate Learning Progress Report
+    <div className="space-y-4 md:space-y-6 p-2 md:p-0">
+      {/* Mobile-optimized header */}
+      <div className="text-center md:text-left">
+        <h2 className="text-xl md:text-2xl font-bold text-slate-800 flex items-center justify-center md:justify-start gap-2">
+          <FileText className="w-5 h-5 md:w-6 md:h-6" />
+          Learning Reports
+        </h2>
+        <p className="text-sm md:text-base text-slate-600 mt-1">
+          Generate detailed progress reports for your children
+        </p>
+      </div>
+
+      {/* Quick Report Templates for Mobile */}
+      <div className="md:hidden grid grid-cols-2 gap-3">
+        <Button
+          onClick={() => {
+            if (selectedChild) {
+              setReportType("summary");
+              setReportDateRange("week");
+              generateLearningReport(selectedChild, "week", "summary");
+            }
+          }}
+          disabled={!selectedChild || generatingReport}
+          className="h-20 flex-col bg-educational-blue hover:bg-educational-blue/90 text-white"
+          variant="default"
+        >
+          <Clock className="w-5 h-5 mb-1" />
+          <span className="text-xs">Weekly Summary</span>
+        </Button>
+        <Button
+          onClick={() => {
+            if (selectedChild) {
+              setReportType("detailed");
+              setReportDateRange("month");
+              generateLearningReport(selectedChild, "month", "detailed");
+            }
+          }}
+          disabled={!selectedChild || generatingReport}
+          className="h-20 flex-col bg-educational-green hover:bg-educational-green/90 text-white"
+          variant="default"
+        >
+          <TrendingUp className="w-5 h-5 mb-1" />
+          <span className="text-xs">Monthly Report</span>
+        </Button>
+      </div>
+
+      {/* Report Configuration Card */}
+      <Card className="overflow-hidden">
+        <CardHeader className="pb-3 bg-gradient-to-r from-slate-50 to-blue-50">
+          <CardTitle className="flex items-center gap-2 text-base md:text-lg">
+            <FileText className="w-5 h-5 text-educational-blue" />
+            <div>
+              <div>Generate Custom Report</div>
+              <p className="text-xs md:text-sm font-normal text-slate-600 mt-1">
+                Create detailed learning analytics
+              </p>
+            </div>
           </CardTitle>
         </CardHeader>
-        <CardContent className="space-y-4">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <CardContent className="p-3 md:p-6 space-y-4">
+          {/* Child selector for mobile */}
+          {children.length > 1 && (
+            <div className="md:hidden">
+              <Label className="text-sm font-semibold">Select Child</Label>
+              <div className="grid grid-cols-1 gap-2 mt-2">
+                {children.map((child) => (
+                  <Button
+                    key={child.id}
+                    variant={selectedChild?.id === child.id ? "default" : "outline"}
+                    onClick={() => setSelectedChild(child)}
+                    className={`justify-start h-12 ${
+                      selectedChild?.id === child.id
+                        ? "bg-educational-blue hover:bg-educational-blue/90"
+                        : "hover:bg-educational-blue/10 hover:text-educational-blue hover:border-educational-blue"
+                    }`}
+                  >
+                    <span className="text-xl mr-3">{child.avatar}</span>
+                    <div className="text-left">
+                      <div className="font-medium">{child.name}</div>
+                      <div className="text-xs text-slate-500">Age {child.age} • Level {child.level}</div>
+                    </div>
+                  </Button>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Desktop configuration */}
+          <div className="hidden md:grid grid-cols-1 md:grid-cols-3 gap-4">
             <div>
               <Label htmlFor="report-child">Select Child</Label>
               <Select
@@ -2993,7 +3071,60 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
             </div>
           </div>
 
-          <div className="flex gap-2">
+          {/* Mobile configuration */}
+          <div className="md:hidden space-y-4">
+            {selectedChild && (
+              <div className="p-3 bg-educational-blue/5 rounded-lg border border-educational-blue/20">
+                <div className="flex items-center gap-3">
+                  <span className="text-2xl">{selectedChild.avatar}</span>
+                  <div>
+                    <div className="font-semibold text-educational-blue">{selectedChild.name}</div>
+                    <div className="text-xs text-slate-600">Selected for report generation</div>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            <div className="grid grid-cols-2 gap-3">
+              <div>
+                <Label className="text-sm">Report Type</Label>
+                <Select
+                  value={reportType}
+                  onValueChange={(value: any) => setReportType(value)}
+                >
+                  <SelectTrigger className="mt-1">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="summary">📊 Quick Summary</SelectItem>
+                    <SelectItem value="detailed">📈 Detailed Analysis</SelectItem>
+                    <SelectItem value="progress">🎯 Progress Tracking</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+
+              <div>
+                <Label className="text-sm">Time Period</Label>
+                <Select
+                  value={reportDateRange}
+                  onValueChange={(value: any) => setReportDateRange(value)}
+                >
+                  <SelectTrigger className="mt-1">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="week">📅 Last Week</SelectItem>
+                    <SelectItem value="month">📆 Last Month</SelectItem>
+                    <SelectItem value="quarter">🗓️ Last 3 Months</SelectItem>
+                    <SelectItem value="year">📈 Last Year</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
+          </div>
+
+          {/* Action buttons */}
+          <div className="flex flex-col md:flex-row gap-3">
             <Button
               onClick={() =>
                 selectedChild &&
@@ -3004,18 +3135,54 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
                 )
               }
               disabled={!selectedChild || generatingReport}
-              className="bg-educational-blue text-white"
+              className="bg-educational-blue hover:bg-educational-blue/90 text-white w-full md:w-auto h-12 md:h-auto"
             >
-              {generatingReport ? "Generating..." : "Generate Report"}
+              {generatingReport ? (
+                <div className="flex items-center gap-2">
+                  <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                  Generating Report...
+                </div>
+              ) : (
+                <div className="flex items-center gap-2">
+                  <FileText className="w-4 h-4" />
+                  Generate Report
+                </div>
+              )}
             </Button>
 
             {reportData && (
-              <Button variant="outline" onClick={exportReport}>
+              <Button
+                variant="outline"
+                onClick={exportReport}
+                className="w-full md:w-auto h-12 md:h-auto hover:bg-educational-green/10 hover:text-educational-green hover:border-educational-green"
+              >
                 <Download className="w-4 h-4 mr-2" />
                 Export Report
               </Button>
             )}
           </div>
+
+          {/* No child selected state */}
+          {!selectedChild && children.length > 0 && (
+            <div className="text-center py-8">
+              <div className="text-4xl mb-3">👨‍👩‍👧‍👦</div>
+              <h3 className="font-semibold text-slate-700 mb-2">Select a Child</h3>
+              <p className="text-sm text-slate-600">
+                Choose a child profile to generate their learning report
+              </p>
+            </div>
+          )}
+
+          {/* No children state */}
+          {children.length === 0 && (
+            <div className="text-center py-8">
+              <div className="text-4xl mb-3">📊</div>
+              <h3 className="font-semibold text-slate-700 mb-2">No Children Added</h3>
+              <p className="text-sm text-slate-600">
+                Add child profiles first to generate learning reports
+              </p>
+            </div>
+          )}
         </CardContent>
       </Card>
 
