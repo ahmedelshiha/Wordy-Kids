@@ -1,14 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
-import { Separator } from "@/components/ui/separator";
-import { Alert, AlertDescription } from "@/components/ui/alert";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Checkbox } from "@/components/ui/checkbox";
+import { Textarea } from "@/components/ui/textarea";
 import {
   Select,
   SelectContent,
@@ -25,12 +21,15 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 import {
   Table,
   TableBody,
@@ -39,857 +38,1270 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Progress } from "@/components/ui/progress";
 import {
   Users,
   UserCheck,
   UserX,
-  Shield,
+  GraduationCap,
+  CreditCard,
+  Plus,
+  Download,
+  Upload,
+  Filter,
+  Search,
+  Eye,
+  Edit,
+  Ban,
+  Unlock,
+  MoreVertical,
   Mail,
   Phone,
   Calendar,
-  MapPin,
-  Edit,
-  Trash2,
-  Ban,
-  Unlock,
-  Eye,
-  MoreVertical,
-  Search,
-  Filter,
-  Download,
-  Plus,
-  AlertTriangle,
-  Clock,
-  Star,
   Activity,
-  GraduationCap,
-  Heart,
-  MessageSquare,
-  FileText,
-  Key,
+  Award,
+  Bell,
+  Shield,
+  Clock,
+  TrendingUp,
+  AlertTriangle,
+  CheckCircle,
+  XCircle,
   Settings,
-  Crown,
-  Zap,
+  Star,
+  Target,
+  Globe,
+  BookOpen,
+  MessageSquare,
+  ChevronDown,
+  ChevronUp,
+  Grid,
+  List,
+  RefreshCw,
+  Save,
+  X,
 } from "lucide-react";
-import type { AdminUser, SupportTicket } from "@shared/api";
 
-interface Permission {
+interface AdminUser {
   id: string;
   name: string;
-  description: string;
-  category: "content" | "users" | "analytics" | "system" | "moderation";
+  email: string;
+  role: "admin" | "parent" | "child" | "teacher";
+  status: "active" | "suspended" | "inactive" | "pending";
+  createdAt: Date;
+  lastActive: Date;
+  childrenCount?: number;
+  totalSessions: number;
+  supportTickets: number;
+  subscriptionType: "free" | "premium" | "family" | "school";
+  progress?: {
+    wordsLearned: number;
+    averageAccuracy: number;
+    streakDays: number;
+    totalPlayTime: number;
+  };
+  preferences?: {
+    notifications: boolean;
+    emailUpdates: boolean;
+    language: string;
+    timezone: string;
+  };
+  location?: {
+    country: string;
+    state?: string;
+    city?: string;
+  };
+  deviceInfo?: {
+    platform: string;
+    lastLoginDevice: string;
+  };
+  tags?: string[];
+  notes?: string;
+  parentId?: string;
+  subscription?: {
+    plan: string;
+    startDate: Date;
+    endDate?: Date;
+    isActive: boolean;
+    paymentStatus: "paid" | "pending" | "failed" | "cancelled";
+  };
 }
 
-interface UserRole {
-  id: string;
-  name: string;
-  description: string;
-  permissions: string[];
-  color: string;
-  icon: React.ReactNode;
+interface UserFilters {
+  role: string;
+  status: string;
+  subscription: string;
+  location: string;
+  dateRange: string;
 }
 
-interface EnhancedUserManagementProps {
-  users?: AdminUser[];
-  tickets?: SupportTicket[];
-  onUpdateUser?: (userId: string, updates: Partial<AdminUser>) => void;
-  onDeleteUser?: (userId: string) => void;
-  onCreateUser?: (user: Omit<AdminUser, "id">) => void;
+interface BulkAction {
+  type: "activate" | "suspend" | "delete" | "export" | "sendMessage" | "updateRole";
+  label: string;
+  icon: React.ComponentType<any>;
+  variant?: "default" | "destructive" | "secondary";
 }
 
-const permissions: Permission[] = [
-  {
-    id: "view_analytics",
-    name: "View Analytics",
-    description: "Access to analytics dashboard and reports",
-    category: "analytics",
-  },
-  {
-    id: "manage_content",
-    name: "Manage Content",
-    description: "Create, edit, and approve content",
-    category: "content",
-  },
-  {
-    id: "moderate_content",
-    name: "Moderate Content",
-    description: "Review reports and moderate user-generated content",
-    category: "moderation",
-  },
-  {
-    id: "manage_users",
-    name: "Manage Users",
-    description: "Create, edit, and delete user accounts",
-    category: "users",
-  },
-  {
-    id: "view_users",
-    name: "View Users",
-    description: "View user profiles and basic information",
-    category: "users",
-  },
-  {
-    id: "manage_support",
-    name: "Manage Support",
-    description: "Handle support tickets and user inquiries",
-    category: "users",
-  },
-  {
-    id: "system_admin",
-    name: "System Administration",
-    description: "Full system access and configuration",
-    category: "system",
-  },
-  {
-    id: "export_data",
-    name: "Export Data",
-    description: "Export user data and reports",
-    category: "analytics",
-  },
-];
-
-const userRoles: UserRole[] = [
-  {
-    id: "admin",
-    name: "Administrator",
-    description: "Full system access",
-    permissions: [
-      "system_admin",
-      "manage_users",
-      "manage_content",
-      "moderate_content",
-      "view_analytics",
-      "export_data",
-    ],
-    color: "bg-red-100 text-red-800",
-    icon: <Crown className="w-4 h-4" />,
-  },
-  {
-    id: "moderator",
-    name: "Content Moderator",
-    description: "Content moderation and support",
-    permissions: [
-      "moderate_content",
-      "manage_content",
-      "manage_support",
-      "view_users",
-      "view_analytics",
-    ],
-    color: "bg-blue-100 text-blue-800",
-    icon: <Shield className="w-4 h-4" />,
-  },
-  {
-    id: "teacher",
-    name: "Teacher",
-    description: "Educational content management",
-    permissions: ["manage_content", "view_users", "view_analytics"],
-    color: "bg-green-100 text-green-800",
-    icon: <GraduationCap className="w-4 h-4" />,
-  },
-  {
-    id: "parent",
-    name: "Parent",
-    description: "Child account management",
-    permissions: ["view_users"],
-    color: "bg-purple-100 text-purple-800",
-    icon: <Heart className="w-4 h-4" />,
-  },
-  {
-    id: "child",
-    name: "Child",
-    description: "Learning account",
-    permissions: [],
-    color: "bg-yellow-100 text-yellow-800",
-    icon: <Star className="w-4 h-4" />,
-  },
-];
-
+// Enhanced mock data with more realistic and diverse users
 const sampleUsers: AdminUser[] = [
   {
-    id: "user_1",
-    name: "John Administrator",
-    email: "admin@wordadventure.com",
-    role: "admin",
-    status: "active",
-    createdAt: new Date(Date.now() - 180 * 24 * 60 * 60 * 1000),
-    lastActive: new Date(Date.now() - 2 * 60 * 60 * 1000),
-    totalSessions: 450,
-    supportTickets: 0,
-    subscriptionType: "premium",
-    permissions: ["system_admin"],
-    profileData: {
-      avatar: "https://api.dicebear.com/7.x/initials/svg?seed=JA",
-      bio: "Platform administrator and lead developer",
-    },
-  },
-  {
-    id: "user_2",
-    name: "Sarah Teacher",
-    email: "sarah@school.edu",
-    role: "teacher",
-    status: "active",
-    createdAt: new Date(Date.now() - 90 * 24 * 60 * 60 * 1000),
-    lastActive: new Date(Date.now() - 30 * 60 * 1000),
-    totalSessions: 234,
-    supportTickets: 2,
-    subscriptionType: "school",
-    permissions: ["manage_content", "view_users", "view_analytics"],
-    profileData: {
-      avatar: "https://api.dicebear.com/7.x/initials/svg?seed=ST",
-      bio: "5th grade teacher passionate about vocabulary education",
-    },
-  },
-  {
-    id: "user_3",
-    name: "Mike Parent",
-    email: "mike@email.com",
+    id: "1",
+    name: "John Parent",
+    email: "john.parent@example.com",
     role: "parent",
     status: "active",
-    createdAt: new Date(Date.now() - 45 * 24 * 60 * 60 * 1000),
-    lastActive: new Date(Date.now() - 6 * 60 * 60 * 1000),
+    createdAt: new Date(Date.now() - 90 * 24 * 60 * 60 * 1000),
+    lastActive: new Date(Date.now() - 2 * 60 * 60 * 1000),
     childrenCount: 2,
-    totalSessions: 89,
+    totalSessions: 145,
     supportTickets: 1,
     subscriptionType: "family",
-    permissions: ["view_users"],
-    profileData: {
-      avatar: "https://api.dicebear.com/7.x/initials/svg?seed=MP",
+    progress: {
+      wordsLearned: 0,
+      averageAccuracy: 0,
+      streakDays: 0,
+      totalPlayTime: 0,
+    },
+    preferences: {
+      notifications: true,
+      emailUpdates: true,
+      language: "en",
+      timezone: "UTC-5",
+    },
+    location: {
+      country: "United States",
+      state: "California",
+      city: "San Francisco",
+    },
+    deviceInfo: {
+      platform: "iOS",
+      lastLoginDevice: "iPhone 15",
+    },
+    tags: ["premium-user", "engaged-parent"],
+    subscription: {
+      plan: "Family Plan",
+      startDate: new Date(Date.now() - 60 * 24 * 60 * 60 * 1000),
+      isActive: true,
+      paymentStatus: "paid",
+    },
+  },
+  {
+    id: "2",
+    name: "Emma Johnson",
+    email: "emma.j@kidschool.edu",
+    role: "child",
+    status: "active",
+    createdAt: new Date(Date.now() - 45 * 24 * 60 * 60 * 1000),
+    lastActive: new Date(Date.now() - 30 * 60 * 1000),
+    totalSessions: 234,
+    supportTickets: 0,
+    subscriptionType: "school",
+    parentId: "1",
+    progress: {
+      wordsLearned: 187,
+      averageAccuracy: 92,
+      streakDays: 12,
+      totalPlayTime: 1420,
+    },
+    preferences: {
+      notifications: true,
+      emailUpdates: false,
+      language: "en",
+      timezone: "UTC-5",
+    },
+    location: {
+      country: "United States",
+      state: "California",
+      city: "San Francisco",
+    },
+    deviceInfo: {
+      platform: "Web",
+      lastLoginDevice: "iPad",
+    },
+    tags: ["high-performer", "consistent-learner"],
+  },
+  {
+    id: "3",
+    name: "Dr. Sarah Williams",
+    email: "s.williams@brightschool.edu",
+    role: "teacher",
+    status: "active",
+    createdAt: new Date(Date.now() - 120 * 24 * 60 * 60 * 1000),
+    lastActive: new Date(Date.now() - 4 * 60 * 60 * 1000),
+    childrenCount: 25,
+    totalSessions: 89,
+    supportTickets: 2,
+    subscriptionType: "school",
+    preferences: {
+      notifications: true,
+      emailUpdates: true,
+      language: "en",
+      timezone: "UTC-8",
+    },
+    location: {
+      country: "United States",
+      state: "Oregon",
+      city: "Portland",
+    },
+    deviceInfo: {
+      platform: "Web",
+      lastLoginDevice: "Desktop",
+    },
+    tags: ["educator", "power-user", "content-creator"],
+    notes: "Highly engaged teacher, frequently submits word suggestions",
+  },
+  {
+    id: "4",
+    name: "Alex Chen",
+    email: "alex.chen88@gmail.com",
+    role: "child",
+    status: "suspended",
+    createdAt: new Date(Date.now() - 20 * 24 * 60 * 60 * 1000),
+    lastActive: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000),
+    totalSessions: 12,
+    supportTickets: 3,
+    subscriptionType: "free",
+    progress: {
+      wordsLearned: 23,
+      averageAccuracy: 68,
+      streakDays: 0,
+      totalPlayTime: 145,
+    },
+    preferences: {
+      notifications: false,
+      emailUpdates: false,
+      language: "en",
+      timezone: "UTC+8",
+    },
+    location: {
+      country: "Singapore",
+      city: "Singapore",
+    },
+    deviceInfo: {
+      platform: "Android",
+      lastLoginDevice: "Samsung Galaxy",
+    },
+    tags: ["support-needed", "behavioral-issues"],
+    notes: "Suspended due to inappropriate content reporting. Review scheduled for next week.",
+  },
+  {
+    id: "5",
+    name: "Maria Rodriguez",
+    email: "maria.r@example.com",
+    role: "parent",
+    status: "pending",
+    createdAt: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000),
+    lastActive: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000),
+    childrenCount: 1,
+    totalSessions: 3,
+    supportTickets: 0,
+    subscriptionType: "premium",
+    preferences: {
+      notifications: true,
+      emailUpdates: true,
+      language: "es",
+      timezone: "UTC-6",
+    },
+    location: {
+      country: "Mexico",
+      state: "Mexico City",
+      city: "Mexico City",
+    },
+    deviceInfo: {
+      platform: "iOS",
+      lastLoginDevice: "iPhone 14",
+    },
+    tags: ["new-user", "spanish-speaker"],
+    subscription: {
+      plan: "Premium Monthly",
+      startDate: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000),
+      isActive: false,
+      paymentStatus: "pending",
     },
   },
 ];
 
+interface EnhancedUserManagementProps {
+  initialUsers?: AdminUser[];
+}
+
 const EnhancedUserManagement: React.FC<EnhancedUserManagementProps> = ({
-  users = sampleUsers,
-  tickets = [],
-  onUpdateUser,
-  onDeleteUser,
-  onCreateUser,
+  initialUsers = sampleUsers,
 }) => {
-  const [selectedUser, setSelectedUser] = useState<AdminUser | null>(null);
-  const [showUserDialog, setShowUserDialog] = useState(false);
-  const [showPermissionDialog, setShowPermissionDialog] = useState(false);
-  const [editMode, setEditMode] = useState<"create" | "edit">("create");
+  const [users, setUsers] = useState<AdminUser[]>(initialUsers);
   const [searchTerm, setSearchTerm] = useState("");
-  const [filterRole, setFilterRole] = useState("all");
-  const [filterStatus, setFilterStatus] = useState("all");
   const [selectedUsers, setSelectedUsers] = useState<string[]>([]);
+  const [viewMode, setViewMode] = useState<"table" | "cards">("table");
+  const [sortBy, setSortBy] = useState<{
+    field: keyof AdminUser;
+    direction: "asc" | "desc";
+  }>({ field: "lastActive", direction: "desc" });
 
-  const [formData, setFormData] = useState<Partial<AdminUser>>({
-    name: "",
-    email: "",
-    role: "child",
-    status: "active",
-    subscriptionType: "free",
-    permissions: [],
+  const [filters, setFilters] = useState<UserFilters>({
+    role: "all",
+    status: "all",
+    subscription: "all",
+    location: "all",
+    dateRange: "all",
   });
 
-  const filteredUsers = users.filter((user) => {
-    const matchesSearch =
-      searchTerm === "" ||
-      user.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      user.email.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesRole = filterRole === "all" || user.role === filterRole;
-    const matchesStatus =
-      filterStatus === "all" || user.status === filterStatus;
-    return matchesSearch && matchesRole && matchesStatus;
-  });
+  // Dialog states
+  const [showUserDialog, setShowUserDialog] = useState(false);
+  const [showBulkActionDialog, setShowBulkActionDialog] = useState(false);
+  const [selectedBulkAction, setSelectedBulkAction] = useState<BulkAction | null>(null);
+  const [editingUser, setEditingUser] = useState<AdminUser | null>(null);
+  const [userDetailView, setUserDetailView] = useState<AdminUser | null>(null);
 
-  const handleEditUser = (user: AdminUser) => {
-    setSelectedUser(user);
-    setFormData(user);
-    setEditMode("edit");
-    setShowUserDialog(true);
-  };
+  const bulkActions: BulkAction[] = [
+    { type: "activate", label: "Activate Users", icon: CheckCircle, variant: "default" },
+    { type: "suspend", label: "Suspend Users", icon: Ban, variant: "destructive" },
+    { type: "updateRole", label: "Update Role", icon: Shield, variant: "secondary" },
+    { type: "sendMessage", label: "Send Message", icon: MessageSquare, variant: "default" },
+    { type: "export", label: "Export Data", icon: Download, variant: "secondary" },
+    { type: "delete", label: "Delete Users", icon: X, variant: "destructive" },
+  ];
 
-  const handleCreateUser = () => {
-    setSelectedUser(null);
-    setFormData({
-      name: "",
-      email: "",
-      role: "child",
-      status: "active",
-      subscriptionType: "free",
-      permissions: [],
+  // Filtering and sorting logic
+  const filteredAndSortedUsers = useMemo(() => {
+    let filtered = users.filter((user) => {
+      const matchesSearch =
+        searchTerm === "" ||
+        user.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        user.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        user.tags?.some(tag => tag.toLowerCase().includes(searchTerm.toLowerCase()));
+
+      const matchesRole = filters.role === "all" || user.role === filters.role;
+      const matchesStatus = filters.status === "all" || user.status === filters.status;
+      const matchesSubscription = filters.subscription === "all" || user.subscriptionType === filters.subscription;
+      const matchesLocation = filters.location === "all" || user.location?.country === filters.location;
+
+      return matchesSearch && matchesRole && matchesStatus && matchesSubscription && matchesLocation;
     });
-    setEditMode("create");
-    setShowUserDialog(true);
+
+    // Sort users
+    filtered.sort((a, b) => {
+      const aValue = a[sortBy.field];
+      const bValue = b[sortBy.field];
+      
+      if (aValue instanceof Date && bValue instanceof Date) {
+        return sortBy.direction === "asc" 
+          ? aValue.getTime() - bValue.getTime()
+          : bValue.getTime() - aValue.getTime();
+      }
+      
+      if (typeof aValue === "string" && typeof bValue === "string") {
+        return sortBy.direction === "asc"
+          ? aValue.localeCompare(bValue)
+          : bValue.localeCompare(aValue);
+      }
+      
+      if (typeof aValue === "number" && typeof bValue === "number") {
+        return sortBy.direction === "asc" ? aValue - bValue : bValue - aValue;
+      }
+      
+      return 0;
+    });
+
+    return filtered;
+  }, [users, searchTerm, filters, sortBy]);
+
+  // Statistics calculations
+  const userStats = useMemo(() => {
+    const total = users.length;
+    const active = users.filter(u => u.status === "active").length;
+    const parents = users.filter(u => u.role === "parent").length;
+    const children = users.filter(u => u.role === "child").length;
+    const teachers = users.filter(u => u.role === "teacher").length;
+    const premium = users.filter(u => ["premium", "family", "school"].includes(u.subscriptionType)).length;
+    const suspended = users.filter(u => u.status === "suspended").length;
+    const pending = users.filter(u => u.status === "pending").length;
+
+    return { total, active, parents, children, teachers, premium, suspended, pending };
+  }, [users]);
+
+  const handleSort = (field: keyof AdminUser) => {
+    setSortBy(prev => ({
+      field,
+      direction: prev.field === field && prev.direction === "asc" ? "desc" : "asc"
+    }));
   };
 
-  const handleSaveUser = () => {
-    if (editMode === "create") {
-      onCreateUser?.(formData as Omit<AdminUser, "id">);
-    } else if (selectedUser) {
-      onUpdateUser?.(selectedUser.id, formData);
-    }
-    setShowUserDialog(false);
+  const handleSelectUser = (userId: string) => {
+    setSelectedUsers(prev =>
+      prev.includes(userId)
+        ? prev.filter(id => id !== userId)
+        : [...prev, userId]
+    );
   };
 
-  const getRoleColor = (role: string) => {
-    const roleConfig = userRoles.find((r) => r.id === role);
-    return roleConfig?.color || "bg-gray-100 text-gray-800";
-  };
-
-  const getRoleIcon = (role: string) => {
-    const roleConfig = userRoles.find((r) => r.id === role);
-    return roleConfig?.icon || <Users className="w-4 h-4" />;
+  const handleSelectAll = () => {
+    setSelectedUsers(
+      selectedUsers.length === filteredAndSortedUsers.length
+        ? []
+        : filteredAndSortedUsers.map(user => user.id)
+    );
   };
 
   const getStatusColor = (status: string) => {
     switch (status) {
-      case "active":
-        return "bg-green-100 text-green-800";
-      case "suspended":
-        return "bg-red-100 text-red-800";
-      case "inactive":
-        return "bg-gray-100 text-gray-800";
-      case "pending":
-        return "bg-yellow-100 text-yellow-800";
-      default:
-        return "bg-gray-100 text-gray-800";
+      case "active": return "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200";
+      case "suspended": return "bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200";
+      case "pending": return "bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200";
+      case "inactive": return "bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-200";
+      default: return "bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-200";
     }
   };
 
-  const handleBulkAction = (action: string) => {
-    if (selectedUsers.length === 0) return;
-
-    switch (action) {
-      case "activate":
-        selectedUsers.forEach((userId) => {
-          onUpdateUser?.(userId, { status: "active" });
-        });
-        break;
-      case "suspend":
-        selectedUsers.forEach((userId) => {
-          onUpdateUser?.(userId, { status: "suspended" });
-        });
-        break;
-      case "delete":
-        selectedUsers.forEach((userId) => {
-          onDeleteUser?.(userId);
-        });
-        break;
+  const getRoleColor = (role: string) => {
+    switch (role) {
+      case "admin": return "bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-200";
+      case "teacher": return "bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200";
+      case "parent": return "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200";
+      case "child": return "bg-pink-100 text-pink-800 dark:bg-pink-900 dark:text-pink-200";
+      default: return "bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-200";
     }
-    setSelectedUsers([]);
   };
+
+  const getSubscriptionColor = (subscription: string) => {
+    switch (subscription) {
+      case "premium": return "bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-200";
+      case "family": return "bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200";
+      case "school": return "bg-orange-100 text-orange-800 dark:bg-orange-900 dark:text-orange-200";
+      case "free": return "bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-200";
+      default: return "bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-200";
+    }
+  };
+
+  const renderUserStats = () => (
+    <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-8 gap-4 mb-6">
+      <Card>
+        <CardContent className="p-4 text-center">
+          <Users className="w-6 h-6 text-blue-500 mx-auto mb-2" />
+          <div className="text-2xl font-bold text-blue-600">{userStats.total}</div>
+          <p className="text-xs text-slate-600">Total Users</p>
+        </CardContent>
+      </Card>
+      <Card>
+        <CardContent className="p-4 text-center">
+          <UserCheck className="w-6 h-6 text-green-500 mx-auto mb-2" />
+          <div className="text-2xl font-bold text-green-600">{userStats.active}</div>
+          <p className="text-xs text-slate-600">Active</p>
+        </CardContent>
+      </Card>
+      <Card>
+        <CardContent className="p-4 text-center">
+          <Users className="w-6 h-6 text-green-500 mx-auto mb-2" />
+          <div className="text-2xl font-bold text-green-600">{userStats.parents}</div>
+          <p className="text-xs text-slate-600">Parents</p>
+        </CardContent>
+      </Card>
+      <Card>
+        <CardContent className="p-4 text-center">
+          <GraduationCap className="w-6 h-6 text-pink-500 mx-auto mb-2" />
+          <div className="text-2xl font-bold text-pink-600">{userStats.children}</div>
+          <p className="text-xs text-slate-600">Children</p>
+        </CardContent>
+      </Card>
+      <Card>
+        <CardContent className="p-4 text-center">
+          <BookOpen className="w-6 h-6 text-blue-500 mx-auto mb-2" />
+          <div className="text-2xl font-bold text-blue-600">{userStats.teachers}</div>
+          <p className="text-xs text-slate-600">Teachers</p>
+        </CardContent>
+      </Card>
+      <Card>
+        <CardContent className="p-4 text-center">
+          <CreditCard className="w-6 h-6 text-purple-500 mx-auto mb-2" />
+          <div className="text-2xl font-bold text-purple-600">{userStats.premium}</div>
+          <p className="text-xs text-slate-600">Premium</p>
+        </CardContent>
+      </Card>
+      <Card>
+        <CardContent className="p-4 text-center">
+          <Ban className="w-6 h-6 text-red-500 mx-auto mb-2" />
+          <div className="text-2xl font-bold text-red-600">{userStats.suspended}</div>
+          <p className="text-xs text-slate-600">Suspended</p>
+        </CardContent>
+      </Card>
+      <Card>
+        <CardContent className="p-4 text-center">
+          <Clock className="w-6 h-6 text-yellow-500 mx-auto mb-2" />
+          <div className="text-2xl font-bold text-yellow-600">{userStats.pending}</div>
+          <p className="text-xs text-slate-600">Pending</p>
+        </CardContent>
+      </Card>
+    </div>
+  );
+
+  const renderFilters = () => (
+    <Card className="mb-6">
+      <CardContent className="p-4">
+        <div className="flex flex-col lg:flex-row gap-4 items-start lg:items-center">
+          <div className="flex-1 min-w-0">
+            <div className="relative">
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
+              <Input
+                placeholder="Search users by name, email, or tags..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="pl-10"
+              />
+            </div>
+          </div>
+          
+          <div className="flex flex-wrap gap-2">
+            <Select value={filters.role} onValueChange={(value) => setFilters(prev => ({ ...prev, role: value }))}>
+              <SelectTrigger className="w-32">
+                <SelectValue placeholder="Role" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">All Roles</SelectItem>
+                <SelectItem value="parent">Parents</SelectItem>
+                <SelectItem value="child">Children</SelectItem>
+                <SelectItem value="teacher">Teachers</SelectItem>
+                <SelectItem value="admin">Admins</SelectItem>
+              </SelectContent>
+            </Select>
+
+            <Select value={filters.status} onValueChange={(value) => setFilters(prev => ({ ...prev, status: value }))}>
+              <SelectTrigger className="w-32">
+                <SelectValue placeholder="Status" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">All Status</SelectItem>
+                <SelectItem value="active">Active</SelectItem>
+                <SelectItem value="suspended">Suspended</SelectItem>
+                <SelectItem value="pending">Pending</SelectItem>
+                <SelectItem value="inactive">Inactive</SelectItem>
+              </SelectContent>
+            </Select>
+
+            <Select value={filters.subscription} onValueChange={(value) => setFilters(prev => ({ ...prev, subscription: value }))}>
+              <SelectTrigger className="w-36">
+                <SelectValue placeholder="Subscription" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">All Plans</SelectItem>
+                <SelectItem value="free">Free</SelectItem>
+                <SelectItem value="premium">Premium</SelectItem>
+                <SelectItem value="family">Family</SelectItem>
+                <SelectItem value="school">School</SelectItem>
+              </SelectContent>
+            </Select>
+
+            <div className="flex gap-2">
+              <Button
+                variant={viewMode === "table" ? "default" : "outline"}
+                size="sm"
+                onClick={() => setViewMode("table")}
+              >
+                <List className="w-4 h-4" />
+              </Button>
+              <Button
+                variant={viewMode === "cards" ? "default" : "outline"}
+                size="sm"
+                onClick={() => setViewMode("cards")}
+              >
+                <Grid className="w-4 h-4" />
+              </Button>
+            </div>
+          </div>
+        </div>
+
+        {/* Bulk Actions */}
+        {selectedUsers.length > 0 && (
+          <div className="mt-4 p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg border border-blue-200 dark:border-blue-800">
+            <div className="flex items-center justify-between">
+              <span className="text-sm font-medium text-blue-900 dark:text-blue-100">
+                {selectedUsers.length} user{selectedUsers.length > 1 ? 's' : ''} selected
+              </span>
+              <div className="flex gap-2">
+                {bulkActions.map((action) => (
+                  <Button
+                    key={action.type}
+                    variant={action.variant}
+                    size="sm"
+                    onClick={() => {
+                      setSelectedBulkAction(action);
+                      setShowBulkActionDialog(true);
+                    }}
+                    className="text-xs"
+                  >
+                    <action.icon className="w-3 h-3 mr-1" />
+                    {action.label}
+                  </Button>
+                ))}
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => setSelectedUsers([])}
+                >
+                  Clear
+                </Button>
+              </div>
+            </div>
+          </div>
+        )}
+      </CardContent>
+    </Card>
+  );
+
+  const renderTableView = () => (
+    <Card>
+      <CardContent className="p-0">
+        <Table>
+          <TableHeader>
+            <TableRow>
+              <TableHead className="w-12">
+                <Checkbox
+                  checked={selectedUsers.length === filteredAndSortedUsers.length && filteredAndSortedUsers.length > 0}
+                  onCheckedChange={handleSelectAll}
+                />
+              </TableHead>
+              <TableHead className="w-12">Avatar</TableHead>
+              <TableHead 
+                className="cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800"
+                onClick={() => handleSort("name")}
+              >
+                <div className="flex items-center gap-1">
+                  Name
+                  {sortBy.field === "name" && (
+                    sortBy.direction === "asc" ? <ChevronUp className="w-3 h-3" /> : <ChevronDown className="w-3 h-3" />
+                  )}
+                </div>
+              </TableHead>
+              <TableHead>Role</TableHead>
+              <TableHead>Status</TableHead>
+              <TableHead>Subscription</TableHead>
+              <TableHead>Location</TableHead>
+              <TableHead 
+                className="cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800"
+                onClick={() => handleSort("lastActive")}
+              >
+                <div className="flex items-center gap-1">
+                  Last Active
+                  {sortBy.field === "lastActive" && (
+                    sortBy.direction === "asc" ? <ChevronUp className="w-3 h-3" /> : <ChevronDown className="w-3 h-3" />
+                  )}
+                </div>
+              </TableHead>
+              <TableHead>Progress</TableHead>
+              <TableHead>Actions</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {filteredAndSortedUsers.map((user) => (
+              <TableRow key={user.id} className="hover:bg-gray-50 dark:hover:bg-gray-800/50">
+                <TableCell>
+                  <Checkbox
+                    checked={selectedUsers.includes(user.id)}
+                    onCheckedChange={() => handleSelectUser(user.id)}
+                  />
+                </TableCell>
+                <TableCell>
+                  <Avatar className="w-8 h-8">
+                    <AvatarFallback className="text-xs">
+                      {user.name.split(" ").map(n => n[0]).join("").toUpperCase()}
+                    </AvatarFallback>
+                  </Avatar>
+                </TableCell>
+                <TableCell>
+                  <div className="space-y-1">
+                    <div className="font-medium">{user.name}</div>
+                    <div className="text-sm text-gray-500">{user.email}</div>
+                    {user.tags && user.tags.length > 0 && (
+                      <div className="flex gap-1">
+                        {user.tags.slice(0, 2).map((tag) => (
+                          <Badge key={tag} variant="outline" className="text-xs">
+                            {tag}
+                          </Badge>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                </TableCell>
+                <TableCell>
+                  <Badge className={getRoleColor(user.role)}>
+                    {user.role}
+                  </Badge>
+                </TableCell>
+                <TableCell>
+                  <Badge className={getStatusColor(user.status)}>
+                    {user.status}
+                  </Badge>
+                </TableCell>
+                <TableCell>
+                  <Badge className={getSubscriptionColor(user.subscriptionType)}>
+                    {user.subscriptionType}
+                  </Badge>
+                </TableCell>
+                <TableCell>
+                  <div className="text-sm">
+                    {user.location?.city && user.location?.country
+                      ? `${user.location.city}, ${user.location.country}`
+                      : user.location?.country || "Unknown"
+                    }
+                  </div>
+                </TableCell>
+                <TableCell>
+                  <div className="text-sm text-gray-500">
+                    {user.lastActive.toLocaleDateString()}
+                  </div>
+                </TableCell>
+                <TableCell>
+                  {user.progress && (
+                    <div className="space-y-1">
+                      <div className="text-xs text-gray-500">
+                        {user.progress.wordsLearned} words
+                      </div>
+                      <Progress 
+                        value={user.progress.averageAccuracy} 
+                        className="h-1 w-16"
+                      />
+                      <div className="text-xs text-gray-500">
+                        {user.progress.averageAccuracy}% accuracy
+                      </div>
+                    </div>
+                  )}
+                </TableCell>
+                <TableCell>
+                  <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                      <Button variant="ghost" size="sm">
+                        <MoreVertical className="w-4 h-4" />
+                      </Button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent align="end">
+                      <DropdownMenuItem onClick={() => setUserDetailView(user)}>
+                        <Eye className="w-4 h-4 mr-2" />
+                        View Details
+                      </DropdownMenuItem>
+                      <DropdownMenuItem onClick={() => setEditingUser(user)}>
+                        <Edit className="w-4 h-4 mr-2" />
+                        Edit User
+                      </DropdownMenuItem>
+                      <DropdownMenuSeparator />
+                      <DropdownMenuItem>
+                        <MessageSquare className="w-4 h-4 mr-2" />
+                        Send Message
+                      </DropdownMenuItem>
+                      <DropdownMenuItem>
+                        <Mail className="w-4 h-4 mr-2" />
+                        Email User
+                      </DropdownMenuItem>
+                      <DropdownMenuSeparator />
+                      {user.status === "active" ? (
+                        <DropdownMenuItem className="text-red-600">
+                          <Ban className="w-4 h-4 mr-2" />
+                          Suspend User
+                        </DropdownMenuItem>
+                      ) : (
+                        <DropdownMenuItem className="text-green-600">
+                          <CheckCircle className="w-4 h-4 mr-2" />
+                          Activate User
+                        </DropdownMenuItem>
+                      )}
+                    </DropdownMenuContent>
+                  </DropdownMenu>
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </CardContent>
+    </Card>
+  );
+
+  const renderCardView = () => (
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      {filteredAndSortedUsers.map((user) => (
+        <Card key={user.id} className="hover:shadow-md transition-shadow">
+          <CardContent className="p-4">
+            <div className="flex items-start justify-between mb-3">
+              <div className="flex items-center gap-3">
+                <Checkbox
+                  checked={selectedUsers.includes(user.id)}
+                  onCheckedChange={() => handleSelectUser(user.id)}
+                />
+                <Avatar className="w-12 h-12">
+                  <AvatarFallback>
+                    {user.name.split(" ").map(n => n[0]).join("").toUpperCase()}
+                  </AvatarFallback>
+                </Avatar>
+                <div>
+                  <h3 className="font-semibold">{user.name}</h3>
+                  <p className="text-sm text-gray-500">{user.email}</p>
+                </div>
+              </div>
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="ghost" size="sm">
+                    <MoreVertical className="w-4 h-4" />
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end">
+                  <DropdownMenuItem onClick={() => setUserDetailView(user)}>
+                    <Eye className="w-4 h-4 mr-2" />
+                    View Details
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => setEditingUser(user)}>
+                    <Edit className="w-4 h-4 mr-2" />
+                    Edit User
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            </div>
+
+            <div className="space-y-2 mb-3">
+              <div className="flex gap-2">
+                <Badge className={getRoleColor(user.role)}>{user.role}</Badge>
+                <Badge className={getStatusColor(user.status)}>{user.status}</Badge>
+                <Badge className={getSubscriptionColor(user.subscriptionType)}>
+                  {user.subscriptionType}
+                </Badge>
+              </div>
+
+              {user.tags && user.tags.length > 0 && (
+                <div className="flex gap-1 flex-wrap">
+                  {user.tags.map((tag) => (
+                    <Badge key={tag} variant="outline" className="text-xs">
+                      {tag}
+                    </Badge>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            <div className="text-sm text-gray-500 space-y-1">
+              <div className="flex items-center gap-2">
+                <Calendar className="w-3 h-3" />
+                Joined {user.createdAt.toLocaleDateString()}
+              </div>
+              <div className="flex items-center gap-2">
+                <Activity className="w-3 h-3" />
+                Last active {user.lastActive.toLocaleDateString()}
+              </div>
+              {user.location && (
+                <div className="flex items-center gap-2">
+                  <Globe className="w-3 h-3" />
+                  {user.location.city && user.location.country
+                    ? `${user.location.city}, ${user.location.country}`
+                    : user.location.country
+                  }
+                </div>
+              )}
+              <div className="flex items-center gap-2">
+                <BookOpen className="w-3 h-3" />
+                {user.totalSessions} sessions
+              </div>
+              {user.progress && (
+                <div className="flex items-center gap-2">
+                  <Award className="w-3 h-3" />
+                  {user.progress.wordsLearned} words learned
+                </div>
+              )}
+            </div>
+
+            {user.progress && (
+              <div className="mt-3 space-y-2">
+                <div className="flex justify-between text-xs">
+                  <span>Accuracy</span>
+                  <span>{user.progress.averageAccuracy}%</span>
+                </div>
+                <Progress value={user.progress.averageAccuracy} className="h-2" />
+              </div>
+            )}
+          </CardContent>
+        </Card>
+      ))}
+    </div>
+  );
 
   return (
     <div className="space-y-6">
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-2xl font-bold flex items-center gap-2">
-            <Users className="w-6 h-6 text-blue-500" />
-            Enhanced User Management
-          </h2>
-          <p className="text-slate-600">
-            Comprehensive user administration with advanced features
+          <h2 className="text-3xl font-bold">👥 Enhanced User Management</h2>
+          <p className="text-slate-600 mt-1">
+            Comprehensive user administration with advanced filtering and bulk operations
           </p>
         </div>
         <div className="flex gap-2">
           <Button variant="outline" size="sm">
+            <Upload className="w-4 h-4 mr-2" />
+            Import Users
+          </Button>
+          <Button variant="outline" size="sm">
             <Download className="w-4 h-4 mr-2" />
             Export Users
           </Button>
-          <Button size="sm" onClick={handleCreateUser}>
+          <Button size="sm" onClick={() => setShowUserDialog(true)}>
             <Plus className="w-4 h-4 mr-2" />
             Add User
           </Button>
         </div>
       </div>
 
-      {/* Quick Stats */}
-      <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
-        <Card>
-          <CardContent className="p-4 text-center">
-            <Users className="w-8 h-8 text-blue-500 mx-auto mb-2" />
-            <div className="text-2xl font-bold text-blue-600">
-              {users.length}
-            </div>
-            <p className="text-sm text-slate-600">Total Users</p>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardContent className="p-4 text-center">
-            <UserCheck className="w-8 h-8 text-green-500 mx-auto mb-2" />
-            <div className="text-2xl font-bold text-green-600">
-              {users.filter((u) => u.status === "active").length}
-            </div>
-            <p className="text-sm text-slate-600">Active Users</p>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardContent className="p-4 text-center">
-            <GraduationCap className="w-8 h-8 text-purple-500 mx-auto mb-2" />
-            <div className="text-2xl font-bold text-purple-600">
-              {users.filter((u) => u.role === "teacher").length}
-            </div>
-            <p className="text-sm text-slate-600">Teachers</p>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardContent className="p-4 text-center">
-            <Heart className="w-8 h-8 text-pink-500 mx-auto mb-2" />
-            <div className="text-2xl font-bold text-pink-600">
-              {users.filter((u) => u.role === "parent").length}
-            </div>
-            <p className="text-sm text-slate-600">Parents</p>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardContent className="p-4 text-center">
-            <Crown className="w-8 h-8 text-yellow-500 mx-auto mb-2" />
-            <div className="text-2xl font-bold text-yellow-600">
-              {users.filter((u) => u.subscriptionType === "premium").length}
-            </div>
-            <p className="text-sm text-slate-600">Premium</p>
-          </CardContent>
-        </Card>
-      </div>
+      {/* Statistics */}
+      {renderUserStats()}
 
-      {/* Filters and Search */}
-      <Card>
-        <CardContent className="p-4">
-          <div className="flex gap-4 items-center flex-wrap">
-            <div className="flex-1 min-w-64">
-              <Input
-                placeholder="Search users by name or email..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full"
-              />
-            </div>
-            <Select value={filterRole} onValueChange={setFilterRole}>
-              <SelectTrigger className="w-40">
-                <SelectValue placeholder="All Roles" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="all">All Roles</SelectItem>
-                {userRoles.map((role) => (
-                  <SelectItem key={role.id} value={role.id}>
-                    <div className="flex items-center gap-2">
-                      {role.icon}
-                      {role.name}
-                    </div>
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-            <Select value={filterStatus} onValueChange={setFilterStatus}>
-              <SelectTrigger className="w-40">
-                <SelectValue placeholder="All Status" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="all">All Status</SelectItem>
-                <SelectItem value="active">Active</SelectItem>
-                <SelectItem value="inactive">Inactive</SelectItem>
-                <SelectItem value="suspended">Suspended</SelectItem>
-                <SelectItem value="pending">Pending</SelectItem>
-              </SelectContent>
-            </Select>
-            {selectedUsers.length > 0 && (
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Button variant="outline">
-                    Bulk Actions ({selectedUsers.length})
-                  </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent>
-                  <DropdownMenuItem
-                    onClick={() => handleBulkAction("activate")}
-                  >
-                    <UserCheck className="w-4 h-4 mr-2" />
-                    Activate Selected
-                  </DropdownMenuItem>
-                  <DropdownMenuItem onClick={() => handleBulkAction("suspend")}>
-                    <Ban className="w-4 h-4 mr-2" />
-                    Suspend Selected
-                  </DropdownMenuItem>
-                  <DropdownMenuSeparator />
-                  <DropdownMenuItem
-                    onClick={() => handleBulkAction("delete")}
-                    className="text-red-600"
-                  >
-                    <Trash2 className="w-4 h-4 mr-2" />
-                    Delete Selected
-                  </DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
-            )}
-          </div>
-        </CardContent>
-      </Card>
+      {/* Filters */}
+      {renderFilters()}
 
-      {/* Users Table */}
-      <Card>
-        <CardHeader>
-          <CardTitle>User Directory</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead className="w-12">
-                  <Checkbox
-                    checked={selectedUsers.length === filteredUsers.length}
-                    onCheckedChange={(checked) => {
-                      if (checked) {
-                        setSelectedUsers(filteredUsers.map((u) => u.id));
-                      } else {
-                        setSelectedUsers([]);
-                      }
-                    }}
-                  />
-                </TableHead>
-                <TableHead>User</TableHead>
-                <TableHead>Role</TableHead>
-                <TableHead>Status</TableHead>
-                <TableHead>Subscription</TableHead>
-                <TableHead>Last Active</TableHead>
-                <TableHead>Sessions</TableHead>
-                <TableHead>Actions</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {filteredUsers.map((user) => (
-                <TableRow key={user.id}>
-                  <TableCell>
-                    <Checkbox
-                      checked={selectedUsers.includes(user.id)}
-                      onCheckedChange={(checked) => {
-                        if (checked) {
-                          setSelectedUsers((prev) => [...prev, user.id]);
-                        } else {
-                          setSelectedUsers((prev) =>
-                            prev.filter((id) => id !== user.id),
-                          );
-                        }
-                      }}
-                    />
-                  </TableCell>
-                  <TableCell>
-                    <div className="flex items-center gap-3">
-                      {user.profileData?.avatar ? (
-                        <img
-                          src={user.profileData.avatar}
-                          alt={user.name}
-                          className="w-10 h-10 rounded-full"
-                        />
-                      ) : (
-                        <div className="w-10 h-10 bg-gradient-to-br from-blue-400 to-purple-500 rounded-full flex items-center justify-center text-white font-bold">
-                          {user.name.charAt(0).toUpperCase()}
+      {/* User List */}
+      {viewMode === "table" ? renderTableView() : renderCardView()}
+
+      {/* Empty State */}
+      {filteredAndSortedUsers.length === 0 && (
+        <Card>
+          <CardContent className="p-12 text-center">
+            <Users className="w-12 h-12 text-gray-400 mx-auto mb-4" />
+            <h3 className="text-lg font-semibold text-gray-900 mb-2">No users found</h3>
+            <p className="text-gray-500 mb-4">
+              Try adjusting your search terms or filters to find users.
+            </p>
+            <Button variant="outline" onClick={() => {
+              setSearchTerm("");
+              setFilters({
+                role: "all",
+                status: "all",
+                subscription: "all",
+                location: "all",
+                dateRange: "all",
+              });
+            }}>
+              <RefreshCw className="w-4 h-4 mr-2" />
+              Clear Filters
+            </Button>
+          </CardContent>
+        </Card>
+      )}
+
+      {/* User Detail Dialog */}
+      {userDetailView && (
+        <Dialog open={!!userDetailView} onOpenChange={() => setUserDetailView(null)}>
+          <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
+            <DialogHeader>
+              <DialogTitle className="flex items-center gap-3">
+                <Avatar className="w-10 h-10">
+                  <AvatarFallback>
+                    {userDetailView.name.split(" ").map(n => n[0]).join("").toUpperCase()}
+                  </AvatarFallback>
+                </Avatar>
+                {userDetailView.name}
+              </DialogTitle>
+              <DialogDescription>
+                Detailed user information and activity overview
+              </DialogDescription>
+            </DialogHeader>
+            
+            <Tabs defaultValue="overview" className="w-full">
+              <TabsList className="grid w-full grid-cols-4">
+                <TabsTrigger value="overview">Overview</TabsTrigger>
+                <TabsTrigger value="activity">Activity</TabsTrigger>
+                <TabsTrigger value="progress">Progress</TabsTrigger>
+                <TabsTrigger value="settings">Settings</TabsTrigger>
+              </TabsList>
+              
+              <TabsContent value="overview" className="space-y-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <Card>
+                    <CardHeader>
+                      <CardTitle className="text-lg">Basic Information</CardTitle>
+                    </CardHeader>
+                    <CardContent className="space-y-3">
+                      <div>
+                        <Label className="text-sm font-medium">Email</Label>
+                        <p className="text-sm">{userDetailView.email}</p>
+                      </div>
+                      <div>
+                        <Label className="text-sm font-medium">Role</Label>
+                        <Badge className={getRoleColor(userDetailView.role)}>{userDetailView.role}</Badge>
+                      </div>
+                      <div>
+                        <Label className="text-sm font-medium">Status</Label>
+                        <Badge className={getStatusColor(userDetailView.status)}>{userDetailView.status}</Badge>
+                      </div>
+                      <div>
+                        <Label className="text-sm font-medium">Subscription</Label>
+                        <Badge className={getSubscriptionColor(userDetailView.subscriptionType)}>
+                          {userDetailView.subscriptionType}
+                        </Badge>
+                      </div>
+                    </CardContent>
+                  </Card>
+
+                  <Card>
+                    <CardHeader>
+                      <CardTitle className="text-lg">Location & Device</CardTitle>
+                    </CardHeader>
+                    <CardContent className="space-y-3">
+                      {userDetailView.location && (
+                        <div>
+                          <Label className="text-sm font-medium">Location</Label>
+                          <p className="text-sm">
+                            {[userDetailView.location.city, userDetailView.location.state, userDetailView.location.country]
+                              .filter(Boolean).join(", ")}
+                          </p>
                         </div>
                       )}
-                      <div>
-                        <p className="font-semibold">{user.name}</p>
-                        <p className="text-sm text-slate-600">{user.email}</p>
-                      </div>
-                    </div>
-                  </TableCell>
-                  <TableCell>
-                    <Badge className={getRoleColor(user.role)}>
-                      <div className="flex items-center gap-1">
-                        {getRoleIcon(user.role)}
-                        {user.role}
-                      </div>
-                    </Badge>
-                  </TableCell>
-                  <TableCell>
-                    <Badge className={getStatusColor(user.status)}>
-                      {user.status}
-                    </Badge>
-                  </TableCell>
-                  <TableCell>
-                    <Badge variant="outline">{user.subscriptionType}</Badge>
-                  </TableCell>
-                  <TableCell>
-                    <div className="text-sm">
-                      {user.lastActive.toLocaleDateString()}
-                      <br />
-                      <span className="text-slate-500">
-                        {user.lastActive.toLocaleTimeString()}
-                      </span>
-                    </div>
-                  </TableCell>
-                  <TableCell>{user.totalSessions}</TableCell>
-                  <TableCell>
-                    <DropdownMenu>
-                      <DropdownMenuTrigger asChild>
-                        <Button variant="ghost" size="sm">
-                          <MoreVertical className="w-4 h-4" />
-                        </Button>
-                      </DropdownMenuTrigger>
-                      <DropdownMenuContent>
-                        <DropdownMenuItem onClick={() => handleEditUser(user)}>
-                          <Edit className="w-4 h-4 mr-2" />
-                          Edit User
-                        </DropdownMenuItem>
-                        <DropdownMenuItem>
-                          <Eye className="w-4 h-4 mr-2" />
-                          View Profile
-                        </DropdownMenuItem>
-                        <DropdownMenuItem>
-                          <Key className="w-4 h-4 mr-2" />
-                          Manage Permissions
-                        </DropdownMenuItem>
-                        <DropdownMenuSeparator />
-                        <DropdownMenuItem>
-                          <MessageSquare className="w-4 h-4 mr-2" />
-                          Send Message
-                        </DropdownMenuItem>
-                        <DropdownMenuItem>
-                          <FileText className="w-4 h-4 mr-2" />
-                          View Activity Log
-                        </DropdownMenuItem>
-                        <DropdownMenuSeparator />
-                        <DropdownMenuItem className="text-red-600">
-                          <Trash2 className="w-4 h-4 mr-2" />
-                          Delete User
-                        </DropdownMenuItem>
-                      </DropdownMenuContent>
-                    </DropdownMenu>
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </CardContent>
-      </Card>
-
-      {/* User Dialog */}
-      <Dialog open={showUserDialog} onOpenChange={setShowUserDialog}>
-        <DialogContent className="max-w-2xl">
-          <DialogHeader>
-            <DialogTitle>
-              {editMode === "create" ? "Create New User" : "Edit User"}
-            </DialogTitle>
-            <DialogDescription>
-              {editMode === "create"
-                ? "Add a new user to the platform"
-                : "Modify user information and permissions"}
-            </DialogDescription>
-          </DialogHeader>
-
-          <Tabs defaultValue="basic" className="w-full">
-            <TabsList className="grid w-full grid-cols-3">
-              <TabsTrigger value="basic">Basic Info</TabsTrigger>
-              <TabsTrigger value="permissions">Permissions</TabsTrigger>
-              <TabsTrigger value="profile">Profile</TabsTrigger>
-            </TabsList>
-
-            <TabsContent value="basic" className="space-y-4">
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <Label htmlFor="name">Full Name *</Label>
-                  <Input
-                    id="name"
-                    value={formData.name || ""}
-                    onChange={(e) =>
-                      setFormData((prev) => ({ ...prev, name: e.target.value }))
-                    }
-                    placeholder="Enter full name"
-                  />
-                </div>
-                <div>
-                  <Label htmlFor="email">Email Address *</Label>
-                  <Input
-                    id="email"
-                    type="email"
-                    value={formData.email || ""}
-                    onChange={(e) =>
-                      setFormData((prev) => ({
-                        ...prev,
-                        email: e.target.value,
-                      }))
-                    }
-                    placeholder="Enter email address"
-                  />
-                </div>
-              </div>
-
-              <div className="grid grid-cols-3 gap-4">
-                <div>
-                  <Label htmlFor="role">Role *</Label>
-                  <Select
-                    value={formData.role || "child"}
-                    onValueChange={(value: any) =>
-                      setFormData((prev) => ({ ...prev, role: value }))
-                    }
-                  >
-                    <SelectTrigger>
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {userRoles.map((role) => (
-                        <SelectItem key={role.id} value={role.id}>
-                          <div className="flex items-center gap-2">
-                            {role.icon}
-                            {role.name}
+                      {userDetailView.deviceInfo && (
+                        <>
+                          <div>
+                            <Label className="text-sm font-medium">Platform</Label>
+                            <p className="text-sm">{userDetailView.deviceInfo.platform}</p>
                           </div>
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
+                          <div>
+                            <Label className="text-sm font-medium">Last Device</Label>
+                            <p className="text-sm">{userDetailView.deviceInfo.lastLoginDevice}</p>
+                          </div>
+                        </>
+                      )}
+                    </CardContent>
+                  </Card>
                 </div>
-                <div>
-                  <Label htmlFor="status">Status *</Label>
-                  <Select
-                    value={formData.status || "active"}
-                    onValueChange={(value: any) =>
-                      setFormData((prev) => ({ ...prev, status: value }))
-                    }
-                  >
-                    <SelectTrigger>
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="active">Active</SelectItem>
-                      <SelectItem value="inactive">Inactive</SelectItem>
-                      <SelectItem value="suspended">Suspended</SelectItem>
-                      <SelectItem value="pending">Pending</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-                <div>
-                  <Label htmlFor="subscription">Subscription</Label>
-                  <Select
-                    value={formData.subscriptionType || "free"}
-                    onValueChange={(value: any) =>
-                      setFormData((prev) => ({
-                        ...prev,
-                        subscriptionType: value,
-                      }))
-                    }
-                  >
-                    <SelectTrigger>
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="free">Free</SelectItem>
-                      <SelectItem value="premium">Premium</SelectItem>
-                      <SelectItem value="family">Family</SelectItem>
-                      <SelectItem value="school">School</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-              </div>
-            </TabsContent>
 
-            <TabsContent value="permissions" className="space-y-4">
-              <Alert>
-                <Shield className="w-4 h-4" />
-                <AlertDescription>
-                  Permissions control what actions this user can perform in the
-                  system. Role-based permissions are automatically applied.
-                </AlertDescription>
-              </Alert>
+                {userDetailView.tags && userDetailView.tags.length > 0 && (
+                  <Card>
+                    <CardHeader>
+                      <CardTitle className="text-lg">Tags</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="flex gap-2 flex-wrap">
+                        {userDetailView.tags.map((tag) => (
+                          <Badge key={tag} variant="outline">{tag}</Badge>
+                        ))}
+                      </div>
+                    </CardContent>
+                  </Card>
+                )}
 
-              <div className="space-y-4">
-                {Object.entries(
-                  permissions.reduce(
-                    (acc, perm) => {
-                      if (!acc[perm.category]) acc[perm.category] = [];
-                      acc[perm.category].push(perm);
-                      return acc;
-                    },
-                    {} as Record<string, Permission[]>,
-                  ),
-                ).map(([category, perms]) => (
-                  <div key={category}>
-                    <h4 className="font-semibold capitalize mb-2">
-                      {category}
-                    </h4>
-                    <div className="space-y-2">
-                      {perms.map((permission) => (
-                        <div
-                          key={permission.id}
-                          className="flex items-start gap-3 p-3 border rounded-lg"
-                        >
-                          <Checkbox
-                            checked={
-                              formData.permissions?.includes(permission.id) ||
-                              false
-                            }
-                            onCheckedChange={(checked) => {
-                              const currentPerms = formData.permissions || [];
-                              if (checked) {
-                                setFormData((prev) => ({
-                                  ...prev,
-                                  permissions: [...currentPerms, permission.id],
-                                }));
-                              } else {
-                                setFormData((prev) => ({
-                                  ...prev,
-                                  permissions: currentPerms.filter(
-                                    (p) => p !== permission.id,
-                                  ),
-                                }));
-                              }
-                            }}
-                          />
-                          <div className="flex-1">
-                            <p className="font-medium">{permission.name}</p>
-                            <p className="text-sm text-slate-600">
-                              {permission.description}
-                            </p>
+                {userDetailView.notes && (
+                  <Card>
+                    <CardHeader>
+                      <CardTitle className="text-lg">Notes</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <p className="text-sm">{userDetailView.notes}</p>
+                    </CardContent>
+                  </Card>
+                )}
+              </TabsContent>
+
+              <TabsContent value="activity" className="space-y-4">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  <Card>
+                    <CardContent className="p-4 text-center">
+                      <BookOpen className="w-8 h-8 text-blue-500 mx-auto mb-2" />
+                      <div className="text-2xl font-bold">{userDetailView.totalSessions}</div>
+                      <p className="text-sm text-gray-600">Total Sessions</p>
+                    </CardContent>
+                  </Card>
+                  <Card>
+                    <CardContent className="p-4 text-center">
+                      <MessageSquare className="w-8 h-8 text-orange-500 mx-auto mb-2" />
+                      <div className="text-2xl font-bold">{userDetailView.supportTickets}</div>
+                      <p className="text-sm text-gray-600">Support Tickets</p>
+                    </CardContent>
+                  </Card>
+                  <Card>
+                    <CardContent className="p-4 text-center">
+                      <Clock className="w-8 h-8 text-green-500 mx-auto mb-2" />
+                      <div className="text-2xl font-bold">
+                        {Math.floor((Date.now() - userDetailView.lastActive.getTime()) / (1000 * 60 * 60))}h
+                      </div>
+                      <p className="text-sm text-gray-600">Hours Since Last Active</p>
+                    </CardContent>
+                  </Card>
+                </div>
+              </TabsContent>
+
+              <TabsContent value="progress" className="space-y-4">
+                {userDetailView.progress ? (
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <Card>
+                      <CardHeader>
+                        <CardTitle className="text-lg">Learning Progress</CardTitle>
+                      </CardHeader>
+                      <CardContent className="space-y-4">
+                        <div>
+                          <div className="flex justify-between text-sm mb-1">
+                            <span>Words Learned</span>
+                            <span className="font-medium">{userDetailView.progress.wordsLearned}</span>
                           </div>
                         </div>
-                      ))}
-                    </div>
+                        <div>
+                          <div className="flex justify-between text-sm mb-1">
+                            <span>Average Accuracy</span>
+                            <span className="font-medium">{userDetailView.progress.averageAccuracy}%</span>
+                          </div>
+                          <Progress value={userDetailView.progress.averageAccuracy} className="h-2" />
+                        </div>
+                        <div>
+                          <div className="flex justify-between text-sm mb-1">
+                            <span>Current Streak</span>
+                            <span className="font-medium">{userDetailView.progress.streakDays} days</span>
+                          </div>
+                        </div>
+                        <div>
+                          <div className="flex justify-between text-sm mb-1">
+                            <span>Total Play Time</span>
+                            <span className="font-medium">{Math.floor(userDetailView.progress.totalPlayTime / 60)}h {userDetailView.progress.totalPlayTime % 60}m</span>
+                          </div>
+                        </div>
+                      </CardContent>
+                    </Card>
                   </div>
-                ))}
-              </div>
-            </TabsContent>
+                ) : (
+                  <Card>
+                    <CardContent className="p-12 text-center">
+                      <TrendingUp className="w-12 h-12 text-gray-400 mx-auto mb-4" />
+                      <h3 className="text-lg font-semibold text-gray-900 mb-2">No Progress Data</h3>
+                      <p className="text-gray-500">This user hasn't started learning yet.</p>
+                    </CardContent>
+                  </Card>
+                )}
+              </TabsContent>
 
-            <TabsContent value="profile" className="space-y-4">
-              <div>
-                <Label htmlFor="bio">Bio</Label>
-                <Textarea
-                  id="bio"
-                  value={formData.profileData?.bio || ""}
-                  onChange={(e) =>
-                    setFormData((prev) => ({
-                      ...prev,
-                      profileData: {
-                        ...prev.profileData,
-                        bio: e.target.value,
-                      },
-                    }))
-                  }
-                  placeholder="Brief description about the user..."
-                  rows={3}
-                />
-              </div>
+              <TabsContent value="settings" className="space-y-4">
+                {userDetailView.preferences && (
+                  <Card>
+                    <CardHeader>
+                      <CardTitle className="text-lg">User Preferences</CardTitle>
+                    </CardHeader>
+                    <CardContent className="space-y-3">
+                      <div className="flex items-center justify-between">
+                        <div>
+                          <Label className="text-sm font-medium">Notifications</Label>
+                          <p className="text-xs text-gray-500">Push notifications enabled</p>
+                        </div>
+                        <Badge variant={userDetailView.preferences.notifications ? "default" : "secondary"}>
+                          {userDetailView.preferences.notifications ? "Enabled" : "Disabled"}
+                        </Badge>
+                      </div>
+                      <div className="flex items-center justify-between">
+                        <div>
+                          <Label className="text-sm font-medium">Email Updates</Label>
+                          <p className="text-xs text-gray-500">Email notifications enabled</p>
+                        </div>
+                        <Badge variant={userDetailView.preferences.emailUpdates ? "default" : "secondary"}>
+                          {userDetailView.preferences.emailUpdates ? "Enabled" : "Disabled"}
+                        </Badge>
+                      </div>
+                      <div className="flex items-center justify-between">
+                        <div>
+                          <Label className="text-sm font-medium">Language</Label>
+                          <p className="text-xs text-gray-500">Interface language</p>
+                        </div>
+                        <Badge variant="outline">{userDetailView.preferences.language.toUpperCase()}</Badge>
+                      </div>
+                      <div className="flex items-center justify-between">
+                        <div>
+                          <Label className="text-sm font-medium">Timezone</Label>
+                          <p className="text-xs text-gray-500">User timezone</p>
+                        </div>
+                        <Badge variant="outline">{userDetailView.preferences.timezone}</Badge>
+                      </div>
+                    </CardContent>
+                  </Card>
+                )}
 
-              <div>
-                <Label htmlFor="avatar">Avatar URL</Label>
-                <Input
-                  id="avatar"
-                  value={formData.profileData?.avatar || ""}
-                  onChange={(e) =>
-                    setFormData((prev) => ({
-                      ...prev,
-                      profileData: {
-                        ...prev.profileData,
-                        avatar: e.target.value,
-                      },
-                    }))
-                  }
-                  placeholder="https://example.com/avatar.jpg"
-                />
-              </div>
-            </TabsContent>
-          </Tabs>
+                {userDetailView.subscription && (
+                  <Card>
+                    <CardHeader>
+                      <CardTitle className="text-lg">Subscription Details</CardTitle>
+                    </CardHeader>
+                    <CardContent className="space-y-3">
+                      <div>
+                        <Label className="text-sm font-medium">Plan</Label>
+                        <p className="text-sm">{userDetailView.subscription.plan}</p>
+                      </div>
+                      <div>
+                        <Label className="text-sm font-medium">Status</Label>
+                        <Badge 
+                          variant={userDetailView.subscription.isActive ? "default" : "secondary"}
+                        >
+                          {userDetailView.subscription.isActive ? "Active" : "Inactive"}
+                        </Badge>
+                      </div>
+                      <div>
+                        <Label className="text-sm font-medium">Payment Status</Label>
+                        <Badge 
+                          className={
+                            userDetailView.subscription.paymentStatus === "paid" 
+                              ? "bg-green-100 text-green-800"
+                              : userDetailView.subscription.paymentStatus === "pending"
+                              ? "bg-yellow-100 text-yellow-800"
+                              : "bg-red-100 text-red-800"
+                          }
+                        >
+                          {userDetailView.subscription.paymentStatus}
+                        </Badge>
+                      </div>
+                      <div>
+                        <Label className="text-sm font-medium">Start Date</Label>
+                        <p className="text-sm">{userDetailView.subscription.startDate.toLocaleDateString()}</p>
+                      </div>
+                      {userDetailView.subscription.endDate && (
+                        <div>
+                          <Label className="text-sm font-medium">End Date</Label>
+                          <p className="text-sm">{userDetailView.subscription.endDate.toLocaleDateString()}</p>
+                        </div>
+                      )}
+                    </CardContent>
+                  </Card>
+                )}
+              </TabsContent>
+            </Tabs>
+          </DialogContent>
+        </Dialog>
+      )}
 
-          <DialogFooter>
-            <Button variant="outline" onClick={() => setShowUserDialog(false)}>
-              Cancel
-            </Button>
-            <Button onClick={handleSaveUser}>
-              {editMode === "create" ? "Create User" : "Save Changes"}
-            </Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
+      {/* Bulk Action Dialog */}
+      {showBulkActionDialog && selectedBulkAction && (
+        <AlertDialog open={showBulkActionDialog} onOpenChange={setShowBulkActionDialog}>
+          <AlertDialogContent>
+            <AlertDialogHeader>
+              <AlertDialogTitle className="flex items-center gap-2">
+                <selectedBulkAction.icon className="w-5 h-5" />
+                {selectedBulkAction.label}
+              </AlertDialogTitle>
+              <AlertDialogDescription>
+                You are about to {selectedBulkAction.label.toLowerCase()} {selectedUsers.length} user{selectedUsers.length > 1 ? 's' : ''}. 
+                This action cannot be undone.
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+              <AlertDialogCancel onClick={() => setShowBulkActionDialog(false)}>
+                Cancel
+              </AlertDialogCancel>
+              <AlertDialogAction 
+                className={selectedBulkAction.variant === "destructive" ? "bg-red-600 hover:bg-red-700" : ""}
+                onClick={() => {
+                  // Handle bulk action here
+                  console.log(`Performing ${selectedBulkAction.type} on users:`, selectedUsers);
+                  setShowBulkActionDialog(false);
+                  setSelectedUsers([]);
+                }}
+              >
+                Confirm {selectedBulkAction.label}
+              </AlertDialogAction>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
+      )}
     </div>
   );
 };
