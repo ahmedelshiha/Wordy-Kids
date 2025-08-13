@@ -1395,7 +1395,8 @@ export default function Index({ initialProfile }: IndexProps) {
                                                   currentWord,
                                                   "needs_practice",
                                                 );
-                                                // Show celebration effect briefly
+                                                // Show encouragement effects and play sound
+                                                audioService.playEncouragementSound();
                                                 setShowCelebration(true);
                                                 setTimeout(
                                                   () =>
