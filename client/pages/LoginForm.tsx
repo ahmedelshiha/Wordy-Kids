@@ -537,20 +537,21 @@ export default function LoginForm() {
                 </div>
               </Button>
 
-              {/* Guest Sign In Button */}
-              <Button
-                type="button"
-                onClick={handleBackToMain}
-                className="w-full py-3 bg-gradient-to-r from-orange-500 via-yellow-500 to-amber-500 hover:from-orange-600 hover:via-yellow-600 hover:to-amber-600 text-white font-semibold text-lg shadow-lg hover:shadow-xl transform hover:scale-[1.02] transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
-                disabled={isLoading}
-              >
-                <div className="flex items-center justify-center gap-3">
-                  <span className="text-xl animate-gentle-bounce">🎮</span>
-                  <span>Sign In as Guest</span>
-                  <span className="text-xl animate-sparkle">✨</span>
-                </div>
-              </Button>
             </form>
+
+            {/* Guest Sign In Button - Outside form to prevent validation */}
+            <Button
+              type="button"
+              onClick={handleBackToMain}
+              className="w-full py-3 bg-gradient-to-r from-orange-500 via-yellow-500 to-amber-500 hover:from-orange-600 hover:via-yellow-600 hover:to-amber-600 text-white font-semibold text-lg shadow-lg hover:shadow-xl transform hover:scale-[1.02] transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
+              disabled={isLoading}
+            >
+              <div className="flex items-center justify-center gap-3">
+                <span className="text-xl animate-gentle-bounce">🎮</span>
+                <span>Sign In as Guest</span>
+                <span className="text-xl animate-sparkle">✨</span>
+              </div>
+            </Button>
           </CardContent>
         </Card>
 
