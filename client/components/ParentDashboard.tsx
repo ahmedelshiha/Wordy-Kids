@@ -2436,7 +2436,7 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
       Animals: "🦋",
       Science: "🔬",
       Colors: "🌈",
-      Food: "��",
+      Food: "🍎",
       Transportation: "🚗",
       Nature: "🌲",
       Sports: "⚽",
