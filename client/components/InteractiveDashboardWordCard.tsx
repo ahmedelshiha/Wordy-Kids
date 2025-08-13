@@ -468,8 +468,12 @@ export function InteractiveDashboardWordCard({
       sessionStartTime: Date.now(),
     });
 
-    // Request new words for next session
-    if (onRequestNewWords) {
+    // Request new systematic session if available
+    if (onGenerateNewSession) {
+      console.log("Generating new systematic session...");
+      onGenerateNewSession();
+    } else if (onRequestNewWords) {
+      // Fallback to regular word request
       onRequestNewWords();
     }
 
