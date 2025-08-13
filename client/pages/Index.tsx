@@ -1722,8 +1722,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                               }
                                               variant="ghost"
                                               size="sm"
-                                              className="px-2 sm:px-3 py-1 text-xs sm:text-sm h-8 sm:h-9"
-                                              className="text-gray-500 hover:text-gray-700 hover:bg-gray-100 py-1 px-3"
+                                              className="px-2 sm:px-3 py-1 text-xs sm:text-sm h-8 sm:h-9 text-gray-500 hover:text-gray-700 hover:bg-gray-100"
                                             >
                                               🤔 Try another word
                                             </Button>
