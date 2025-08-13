@@ -1303,7 +1303,7 @@ export default function Index({ initialProfile }: IndexProps) {
                             <div className="block sm:hidden">
                               <div className="text-center mb-2">
                                 <h2 className="text-lg font-bold text-slate-800">
-                                  {`${selectedCategory.charAt(0).toUpperCase() + selectedCategory.slice(1)} Words`}
+                                  {selectedCategory ? `${selectedCategory.charAt(0).toUpperCase() + selectedCategory.slice(1)} Words` : "Select a Category"}
                                 </h2>
                                 <p className="text-sm text-slate-600">
                                   {`Learn ${selectedCategory} vocabulary!`}
@@ -1590,7 +1590,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                                     type: "celebration",
                                                     title:
                                                       completionResult.title,
-                                                    message: `${completionResult.message}\n\n✅ Remembered: ${completionResult.totalRemembered} words\n��� Need practice: ${completionResult.totalWords - completionResult.totalRemembered} words\n\n��� Category Achievement Unlocked! 🎉`,
+                                                    message: `${completionResult.message}\n\n✅ Remembered: ${completionResult.totalRemembered} words\n❌ Need practice: ${completionResult.totalWords - completionResult.totalRemembered} words\n\n��� Category Achievement Unlocked! 🎉`,
                                                     points:
                                                       completionResult.totalRemembered *
                                                         20 +
