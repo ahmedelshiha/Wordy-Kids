@@ -114,7 +114,14 @@ interface SupportTicket {
   userAvatar?: string;
   subject: string;
   description: string;
-  category: "technical" | "billing" | "content" | "account" | "feature_request" | "bug_report" | "general";
+  category:
+    | "technical"
+    | "billing"
+    | "content"
+    | "account"
+    | "feature_request"
+    | "bug_report"
+    | "general";
   priority: "low" | "medium" | "high" | "urgent";
   status: "open" | "in_progress" | "waiting_user" | "resolved" | "closed";
   assignedTo?: string;
@@ -206,7 +213,8 @@ const sampleTickets: SupportTicket[] = [
     userEmail: "sarah.johnson@example.com",
     userRole: "parent",
     subject: "Unable to track child's progress",
-    description: "I can't see my child's learning progress in the dashboard. The stats show zero even though she has been using the app for weeks.",
+    description:
+      "I can't see my child's learning progress in the dashboard. The stats show zero even though she has been using the app for weeks.",
     category: "technical",
     priority: "medium",
     status: "open",
@@ -218,18 +226,19 @@ const sampleTickets: SupportTicket[] = [
     responses: [
       {
         id: "res-001",
-        message: "Hello Sarah, thank you for contacting us. I'll help you resolve this issue. Can you please tell me your child's username so I can check their account?",
+        message:
+          "Hello Sarah, thank you for contacting us. I'll help you resolve this issue. Can you please tell me your child's username so I can check their account?",
         isAdmin: true,
         author: "Agent Smith",
         timestamp: new Date(Date.now() - 4 * 60 * 60 * 1000),
-      }
+      },
     ],
     urgencyScore: 65,
     deviceInfo: {
       browser: "Chrome 120",
       os: "Windows 11",
       device: "Desktop",
-      screenSize: "1920x1080"
+      screenSize: "1920x1080",
     },
     businessHours: true,
   },
@@ -240,7 +249,8 @@ const sampleTickets: SupportTicket[] = [
     userEmail: "m.chen@brightschool.edu",
     userRole: "teacher",
     subject: "Bulk word upload feature request",
-    description: "As an educator, I need to upload 200+ vocabulary words for my advanced students. The current interface only allows one word at a time.",
+    description:
+      "As an educator, I need to upload 200+ vocabulary words for my advanced students. The current interface only allows one word at a time.",
     category: "feature_request",
     priority: "low",
     status: "in_progress",
@@ -255,31 +265,33 @@ const sampleTickets: SupportTicket[] = [
         name: "vocabulary_list.csv",
         url: "#",
         size: 15420,
-        type: "text/csv"
-      }
+        type: "text/csv",
+      },
     ],
     responses: [
       {
         id: "res-002",
-        message: "Thank you for this suggestion! I've forwarded this to our product team. This is indeed a valuable feature for educators.",
+        message:
+          "Thank you for this suggestion! I've forwarded this to our product team. This is indeed a valuable feature for educators.",
         isAdmin: true,
         author: "Jane Doe",
         timestamp: new Date(Date.now() - 1.5 * 24 * 60 * 60 * 1000),
       },
       {
         id: "res-003",
-        message: "I've attached a sample CSV file with the words I'd like to upload. Please let me know when this feature becomes available.",
+        message:
+          "I've attached a sample CSV file with the words I'd like to upload. Please let me know when this feature becomes available.",
         isAdmin: false,
         author: "Dr. Michael Chen",
         timestamp: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000),
-      }
+      },
     ],
     urgencyScore: 30,
     deviceInfo: {
       browser: "Safari 17",
       os: "macOS Sonoma",
       device: "MacBook",
-      screenSize: "2560x1600"
+      screenSize: "2560x1600",
     },
     businessHours: true,
   },
@@ -290,7 +302,8 @@ const sampleTickets: SupportTicket[] = [
     userEmail: "emma.r@gmail.com",
     userRole: "parent",
     subject: "Payment issue - Premium subscription",
-    description: "My credit card was charged but my account still shows as free tier. I upgraded yesterday but nothing has changed.",
+    description:
+      "My credit card was charged but my account still shows as free tier. I upgraded yesterday but nothing has changed.",
     category: "billing",
     priority: "high",
     status: "resolved",
@@ -304,18 +317,20 @@ const sampleTickets: SupportTicket[] = [
     responses: [
       {
         id: "res-004",
-        message: "I've checked your account and can see the payment went through. Your premium features have been activated. Please log out and log back in to see the changes.",
+        message:
+          "I've checked your account and can see the payment went through. Your premium features have been activated. Please log out and log back in to see the changes.",
         isAdmin: true,
         author: "Billing Team",
         timestamp: new Date(Date.now() - 23 * 60 * 60 * 1000),
       },
       {
         id: "res-005",
-        message: "Perfect! It's working now. Thank you for the quick resolution!",
+        message:
+          "Perfect! It's working now. Thank you for the quick resolution!",
         isAdmin: false,
         author: "Emma Rodriguez",
         timestamp: new Date(Date.now() - 22 * 60 * 60 * 1000),
-      }
+      },
     ],
     satisfaction: {
       rating: 5,
@@ -327,7 +342,7 @@ const sampleTickets: SupportTicket[] = [
       browser: "Chrome Mobile",
       os: "Android 14",
       device: "Samsung Galaxy S24",
-      screenSize: "1080x2340"
+      screenSize: "1080x2340",
     },
     businessHours: true,
   },
@@ -338,7 +353,8 @@ const sampleTickets: SupportTicket[] = [
     userEmail: "alex.t@example.com",
     userRole: "child",
     subject: "Game freezes during word challenges",
-    description: "The word matching game keeps freezing when I try to drag words. It happens every few games and I lose my progress.",
+    description:
+      "The word matching game keeps freezing when I try to drag words. It happens every few games and I lose my progress.",
     category: "bug_report",
     priority: "medium",
     status: "waiting_user",
@@ -350,29 +366,31 @@ const sampleTickets: SupportTicket[] = [
     responses: [
       {
         id: "res-006",
-        message: "Hi Alex! That sounds frustrating. Can you tell me what device you're using and what browser? Also, does this happen with other games too?",
+        message:
+          "Hi Alex! That sounds frustrating. Can you tell me what device you're using and what browser? Also, does this happen with other games too?",
         isAdmin: true,
         author: "Tech Support",
         timestamp: new Date(Date.now() - 2.5 * 24 * 60 * 60 * 1000),
       },
       {
         id: "res-007",
-        message: "Internal note: Similar reports from other users on older iPad models. Investigating performance optimization.",
+        message:
+          "Internal note: Similar reports from other users on older iPad models. Investigating performance optimization.",
         isAdmin: true,
         author: "Tech Support",
         timestamp: new Date(Date.now() - 12 * 60 * 60 * 1000),
         internal: true,
-      }
+      },
     ],
     urgencyScore: 70,
     deviceInfo: {
       browser: "Safari Mobile",
       os: "iOS 16",
       device: "iPad Air",
-      screenSize: "820x1180"
+      screenSize: "820x1180",
     },
     businessHours: false,
-  }
+  },
 ];
 
 const sampleAgents: SupportAgent[] = [
@@ -433,12 +451,16 @@ const EnhancedSupportManagement: React.FC<EnhancedSupportManagementProps> = ({
   const [categoryFilter, setCategoryFilter] = useState("all");
   const [assigneeFilter, setAssigneeFilter] = useState("all");
   const [selectedTickets, setSelectedTickets] = useState<string[]>([]);
-  const [sortBy, setSortBy] = useState<{ field: string; direction: "asc" | "desc" }>({
+  const [sortBy, setSortBy] = useState<{
+    field: string;
+    direction: "asc" | "desc";
+  }>({
     field: "createdAt",
     direction: "desc",
   });
   const [viewMode, setViewMode] = useState<"list" | "kanban">("list");
-  const [showTicketDetail, setShowTicketDetail] = useState<SupportTicket | null>(null);
+  const [showTicketDetail, setShowTicketDetail] =
+    useState<SupportTicket | null>(null);
   const [showCreateTicket, setShowCreateTicket] = useState(false);
   const [showBulkActions, setShowBulkActions] = useState(false);
   const [isAutoRefresh, setIsAutoRefresh] = useState(false);
@@ -452,7 +474,14 @@ const EnhancedSupportManagement: React.FC<EnhancedSupportManagementProps> = ({
     userRole: "parent" as "parent" | "child" | "teacher" | "admin",
     subject: "",
     description: "",
-    category: "general" as "technical" | "billing" | "content" | "account" | "feature_request" | "bug_report" | "general",
+    category: "general" as
+      | "technical"
+      | "billing"
+      | "content"
+      | "account"
+      | "feature_request"
+      | "bug_report"
+      | "general",
     priority: "medium" as "low" | "medium" | "high" | "urgent",
     assignedTo: "",
     tags: [] as string[],
@@ -467,9 +496,9 @@ const EnhancedSupportManagement: React.FC<EnhancedSupportManagementProps> = ({
       browser: "",
       os: "",
       device: "",
-      screenSize: ""
+      screenSize: "",
     },
-    autoDetectDevice: true
+    autoDetectDevice: true,
   });
   const [newTag, setNewTag] = useState("");
   const [isSubmittingTicket, setIsSubmittingTicket] = useState(false);
@@ -478,55 +507,62 @@ const EnhancedSupportManagement: React.FC<EnhancedSupportManagementProps> = ({
   // Auto-refresh functionality
   useEffect(() => {
     if (!isAutoRefresh) return;
-    
+
     const interval = setInterval(() => {
       setLastRefresh(new Date());
       // In a real app, this would fetch new tickets from the API
     }, 30000); // Refresh every 30 seconds
-    
+
     return () => clearInterval(interval);
   }, [isAutoRefresh]);
 
   // Calculate metrics
   const metrics: SupportMetrics = useMemo(() => {
     const total = tickets.length;
-    const open = tickets.filter(t => t.status === "open").length;
-    const resolved = tickets.filter(t => 
-      t.status === "resolved" && 
-      t.resolvedAt && 
-      t.resolvedAt.toDateString() === new Date().toDateString()
+    const open = tickets.filter((t) => t.status === "open").length;
+    const resolved = tickets.filter(
+      (t) =>
+        t.status === "resolved" &&
+        t.resolvedAt &&
+        t.resolvedAt.toDateString() === new Date().toDateString(),
     ).length;
 
     const responseTimes = tickets
-      .filter(t => t.firstResponseAt)
-      .map(t => {
+      .filter((t) => t.firstResponseAt)
+      .map((t) => {
         const created = t.createdAt.getTime();
         const firstResponse = t.firstResponseAt!.getTime();
         return (firstResponse - created) / (1000 * 60 * 60); // hours
       });
 
-    const avgResponseTime = responseTimes.length > 0 
-      ? responseTimes.reduce((sum, time) => sum + time, 0) / responseTimes.length 
-      : 0;
+    const avgResponseTime =
+      responseTimes.length > 0
+        ? responseTimes.reduce((sum, time) => sum + time, 0) /
+          responseTimes.length
+        : 0;
 
     const satisfactionRatings = tickets
-      .filter(t => t.satisfaction)
-      .map(t => t.satisfaction!.rating);
-    
-    const satisfactionScore = satisfactionRatings.length > 0
-      ? satisfactionRatings.reduce((sum, rating) => sum + rating, 0) / satisfactionRatings.length
-      : 0;
+      .filter((t) => t.satisfaction)
+      .map((t) => t.satisfaction!.rating);
+
+    const satisfactionScore =
+      satisfactionRatings.length > 0
+        ? satisfactionRatings.reduce((sum, rating) => sum + rating, 0) /
+          satisfactionRatings.length
+        : 0;
 
     // Category breakdown
     const categoryBreakdown: Record<string, number> = {};
-    tickets.forEach(ticket => {
-      categoryBreakdown[ticket.category] = (categoryBreakdown[ticket.category] || 0) + 1;
+    tickets.forEach((ticket) => {
+      categoryBreakdown[ticket.category] =
+        (categoryBreakdown[ticket.category] || 0) + 1;
     });
 
     // Priority breakdown
     const priorityBreakdown: Record<string, number> = {};
-    tickets.forEach(ticket => {
-      priorityBreakdown[ticket.priority] = (priorityBreakdown[ticket.priority] || 0) + 1;
+    tickets.forEach((ticket) => {
+      priorityBreakdown[ticket.priority] =
+        (priorityBreakdown[ticket.priority] || 0) + 1;
     });
 
     return {
@@ -548,141 +584,188 @@ const EnhancedSupportManagement: React.FC<EnhancedSupportManagementProps> = ({
 
   // Filter and sort tickets
   const filteredTickets = useMemo(() => {
-    let filtered = tickets.filter(ticket => {
-      const matchesSearch = searchTerm === "" || 
+    let filtered = tickets.filter((ticket) => {
+      const matchesSearch =
+        searchTerm === "" ||
         ticket.subject.toLowerCase().includes(searchTerm.toLowerCase()) ||
         ticket.userName.toLowerCase().includes(searchTerm.toLowerCase()) ||
         ticket.userEmail.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        (ticket.tags || []).some(tag => tag.toLowerCase().includes(searchTerm.toLowerCase()));
+        (ticket.tags || []).some((tag) =>
+          tag.toLowerCase().includes(searchTerm.toLowerCase()),
+        );
 
-      const matchesStatus = statusFilter === "all" || ticket.status === statusFilter;
-      const matchesPriority = priorityFilter === "all" || ticket.priority === priorityFilter;
-      const matchesCategory = categoryFilter === "all" || ticket.category === categoryFilter;
-      const matchesAssignee = assigneeFilter === "all" || ticket.assignedTo === assigneeFilter;
+      const matchesStatus =
+        statusFilter === "all" || ticket.status === statusFilter;
+      const matchesPriority =
+        priorityFilter === "all" || ticket.priority === priorityFilter;
+      const matchesCategory =
+        categoryFilter === "all" || ticket.category === categoryFilter;
+      const matchesAssignee =
+        assigneeFilter === "all" || ticket.assignedTo === assigneeFilter;
 
-      return matchesSearch && matchesStatus && matchesPriority && matchesCategory && matchesAssignee;
+      return (
+        matchesSearch &&
+        matchesStatus &&
+        matchesPriority &&
+        matchesCategory &&
+        matchesAssignee
+      );
     });
 
     // Sort tickets
     filtered.sort((a, b) => {
       const aValue = a[sortBy.field as keyof SupportTicket];
       const bValue = b[sortBy.field as keyof SupportTicket];
-      
+
       if (aValue instanceof Date && bValue instanceof Date) {
-        return sortBy.direction === "asc" 
+        return sortBy.direction === "asc"
           ? aValue.getTime() - bValue.getTime()
           : bValue.getTime() - aValue.getTime();
       }
-      
+
       if (typeof aValue === "string" && typeof bValue === "string") {
         return sortBy.direction === "asc"
           ? aValue.localeCompare(bValue)
           : bValue.localeCompare(aValue);
       }
-      
+
       if (typeof aValue === "number" && typeof bValue === "number") {
         return sortBy.direction === "asc" ? aValue - bValue : bValue - aValue;
       }
-      
+
       return 0;
     });
 
     return filtered;
-  }, [tickets, searchTerm, statusFilter, priorityFilter, categoryFilter, assigneeFilter, sortBy]);
+  }, [
+    tickets,
+    searchTerm,
+    statusFilter,
+    priorityFilter,
+    categoryFilter,
+    assigneeFilter,
+    sortBy,
+  ]);
 
   const getPriorityColor = (priority: string) => {
     switch (priority) {
-      case "urgent": return "bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200";
-      case "high": return "bg-orange-100 text-orange-800 dark:bg-orange-900 dark:text-orange-200";
-      case "medium": return "bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200";
-      case "low": return "bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-200";
-      default: return "bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-200";
+      case "urgent":
+        return "bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200";
+      case "high":
+        return "bg-orange-100 text-orange-800 dark:bg-orange-900 dark:text-orange-200";
+      case "medium":
+        return "bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200";
+      case "low":
+        return "bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-200";
+      default:
+        return "bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-200";
     }
   };
 
   const getStatusColor = (status: string) => {
     switch (status) {
-      case "open": return "bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200";
-      case "in_progress": return "bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200";
-      case "waiting_user": return "bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200";
-      case "resolved": return "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200";
-      case "closed": return "bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-200";
-      default: return "bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-200";
+      case "open":
+        return "bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200";
+      case "in_progress":
+        return "bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200";
+      case "waiting_user":
+        return "bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200";
+      case "resolved":
+        return "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200";
+      case "closed":
+        return "bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-200";
+      default:
+        return "bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-200";
     }
   };
 
   const getCategoryIcon = (category: string) => {
     switch (category) {
-      case "technical": return <Settings className="w-4 h-4" />;
-      case "billing": return <Target className="w-4 h-4" />;
-      case "content": return <FileText className="w-4 h-4" />;
-      case "account": return <User className="w-4 h-4" />;
-      case "feature_request": return <Zap className="w-4 h-4" />;
-      case "bug_report": return <AlertTriangle className="w-4 h-4" />;
-      case "general": return <MessageSquare className="w-4 h-4" />;
-      default: return <MessageSquare className="w-4 h-4" />;
+      case "technical":
+        return <Settings className="w-4 h-4" />;
+      case "billing":
+        return <Target className="w-4 h-4" />;
+      case "content":
+        return <FileText className="w-4 h-4" />;
+      case "account":
+        return <User className="w-4 h-4" />;
+      case "feature_request":
+        return <Zap className="w-4 h-4" />;
+      case "bug_report":
+        return <AlertTriangle className="w-4 h-4" />;
+      case "general":
+        return <MessageSquare className="w-4 h-4" />;
+      default:
+        return <MessageSquare className="w-4 h-4" />;
     }
   };
 
   const getAgentStatus = (status: string) => {
     switch (status) {
-      case "online": return { color: "bg-green-500", label: "Online" };
-      case "away": return { color: "bg-yellow-500", label: "Away" };
-      case "busy": return { color: "bg-red-500", label: "Busy" };
-      case "offline": return { color: "bg-gray-500", label: "Offline" };
-      default: return { color: "bg-gray-500", label: "Unknown" };
+      case "online":
+        return { color: "bg-green-500", label: "Online" };
+      case "away":
+        return { color: "bg-yellow-500", label: "Away" };
+      case "busy":
+        return { color: "bg-red-500", label: "Busy" };
+      case "offline":
+        return { color: "bg-gray-500", label: "Offline" };
+      default:
+        return { color: "bg-gray-500", label: "Unknown" };
     }
   };
 
   const formatTimeAgo = (date: Date) => {
     const now = new Date();
-    const diffInMinutes = Math.floor((now.getTime() - date.getTime()) / (1000 * 60));
-    
+    const diffInMinutes = Math.floor(
+      (now.getTime() - date.getTime()) / (1000 * 60),
+    );
+
     if (diffInMinutes < 1) return "Just now";
     if (diffInMinutes < 60) return `${diffInMinutes}m ago`;
-    
+
     const diffInHours = Math.floor(diffInMinutes / 60);
     if (diffInHours < 24) return `${diffInHours}h ago`;
-    
+
     const diffInDays = Math.floor(diffInHours / 24);
     return `${diffInDays}d ago`;
   };
 
   const handleTicketSelect = (ticketId: string) => {
-    setSelectedTickets(prev => 
-      prev.includes(ticketId) 
-        ? prev.filter(id => id !== ticketId)
-        : [...prev, ticketId]
+    setSelectedTickets((prev) =>
+      prev.includes(ticketId)
+        ? prev.filter((id) => id !== ticketId)
+        : [...prev, ticketId],
     );
   };
 
   const handleSelectAll = () => {
     setSelectedTickets(
-      selectedTickets.length === filteredTickets.length 
-        ? [] 
-        : filteredTickets.map(ticket => ticket.id)
+      selectedTickets.length === filteredTickets.length
+        ? []
+        : filteredTickets.map((ticket) => ticket.id),
     );
   };
 
   const handleBulkStatusUpdate = (newStatus: string) => {
-    setTickets(prev => 
-      prev.map(ticket => 
-        selectedTickets.includes(ticket.id) 
+    setTickets((prev) =>
+      prev.map((ticket) =>
+        selectedTickets.includes(ticket.id)
           ? { ...ticket, status: newStatus as any, updatedAt: new Date() }
-          : ticket
-      )
+          : ticket,
+      ),
     );
     setSelectedTickets([]);
     setShowBulkActions(false);
   };
 
   const handleBulkAssign = (assignee: string) => {
-    setTickets(prev =>
-      prev.map(ticket =>
+    setTickets((prev) =>
+      prev.map((ticket) =>
         selectedTickets.includes(ticket.id)
           ? { ...ticket, assignedTo: assignee, updatedAt: new Date() }
-          : ticket
-      )
+          : ticket,
+      ),
     );
     setSelectedTickets([]);
     setShowBulkActions(false);
@@ -718,7 +801,7 @@ const EnhancedSupportManagement: React.FC<EnhancedSupportManagementProps> = ({
       browser,
       os,
       device,
-      screenSize: `${screen.width}x${screen.height}`
+      screenSize: `${screen.width}x${screen.height}`,
     };
   };
 
@@ -726,34 +809,34 @@ const EnhancedSupportManagement: React.FC<EnhancedSupportManagementProps> = ({
   useEffect(() => {
     if (createTicketForm.autoDetectDevice) {
       const deviceInfo = detectDeviceInfo();
-      setCreateTicketForm(prev => ({
+      setCreateTicketForm((prev) => ({
         ...prev,
-        deviceInfo
+        deviceInfo,
       }));
     }
   }, [createTicketForm.autoDetectDevice]);
 
   const handleCreateTicketFormChange = (field: string, value: any) => {
-    setCreateTicketForm(prev => ({
+    setCreateTicketForm((prev) => ({
       ...prev,
-      [field]: value
+      [field]: value,
     }));
   };
 
   const handleAddTag = () => {
     if (newTag.trim() && !createTicketForm.tags.includes(newTag.trim())) {
-      setCreateTicketForm(prev => ({
+      setCreateTicketForm((prev) => ({
         ...prev,
-        tags: [...prev.tags, newTag.trim()]
+        tags: [...prev.tags, newTag.trim()],
       }));
       setNewTag("");
     }
   };
 
   const handleRemoveTag = (tagToRemove: string) => {
-    setCreateTicketForm(prev => ({
+    setCreateTicketForm((prev) => ({
       ...prev,
-      tags: prev.tags.filter(tag => tag !== tagToRemove)
+      tags: prev.tags.filter((tag) => tag !== tagToRemove),
     }));
   };
 
@@ -762,29 +845,59 @@ const EnhancedSupportManagement: React.FC<EnhancedSupportManagementProps> = ({
 
     // Priority weight
     switch (createTicketForm.priority) {
-      case "urgent": score += 40; break;
-      case "high": score += 30; break;
-      case "medium": score += 20; break;
-      case "low": score += 10; break;
+      case "urgent":
+        score += 40;
+        break;
+      case "high":
+        score += 30;
+        break;
+      case "medium":
+        score += 20;
+        break;
+      case "low":
+        score += 10;
+        break;
     }
 
     // Category weight
     switch (createTicketForm.category) {
-      case "billing": score += 25; break;
-      case "technical": score += 20; break;
-      case "bug_report": score += 20; break;
-      case "account": score += 15; break;
-      case "content": score += 10; break;
-      case "feature_request": score += 5; break;
-      case "general": score += 5; break;
+      case "billing":
+        score += 25;
+        break;
+      case "technical":
+        score += 20;
+        break;
+      case "bug_report":
+        score += 20;
+        break;
+      case "account":
+        score += 15;
+        break;
+      case "content":
+        score += 10;
+        break;
+      case "feature_request":
+        score += 5;
+        break;
+      case "general":
+        score += 5;
+        break;
     }
 
     // User role weight
     switch (createTicketForm.userRole) {
-      case "admin": score += 15; break;
-      case "teacher": score += 10; break;
-      case "parent": score += 8; break;
-      case "child": score += 5; break;
+      case "admin":
+        score += 15;
+        break;
+      case "teacher":
+        score += 10;
+        break;
+      case "parent":
+        score += 8;
+        break;
+      case "child":
+        score += 5;
+        break;
     }
 
     // Time-based urgency (business hours)
@@ -819,18 +932,20 @@ const EnhancedSupportManagement: React.FC<EnhancedSupportManagementProps> = ({
         tags: createTicketForm.tags,
         attachments: createTicketForm.attachments,
         responses: [],
-        deviceInfo: createTicketForm.autoDetectDevice ? createTicketForm.deviceInfo : undefined,
+        deviceInfo: createTicketForm.autoDetectDevice
+          ? createTicketForm.deviceInfo
+          : undefined,
         urgencyScore: calculateUrgencyScore(),
         businessHours: (() => {
           const now = new Date();
           const hour = now.getHours();
           const day = now.getDay();
           return day >= 1 && day <= 5 && hour >= 9 && hour <= 17;
-        })()
+        })(),
       };
 
       // Add the new ticket to the list
-      setTickets(prev => [newTicket, ...prev]);
+      setTickets((prev) => [newTicket, ...prev]);
 
       // Reset form and close dialog
       setCreateTicketForm({
@@ -849,16 +964,15 @@ const EnhancedSupportManagement: React.FC<EnhancedSupportManagementProps> = ({
           browser: "",
           os: "",
           device: "",
-          screenSize: ""
+          screenSize: "",
         },
-        autoDetectDevice: true
+        autoDetectDevice: true,
       });
       setCreateTicketStep(1);
       setShowCreateTicket(false);
 
       // Show success notification (in a real app, this would be a toast)
       console.log("Ticket created successfully:", newTicket);
-
     } catch (error) {
       console.error("Error creating ticket:", error);
     } finally {
@@ -867,41 +981,53 @@ const EnhancedSupportManagement: React.FC<EnhancedSupportManagementProps> = ({
   };
 
   const validateTicketForm = () => {
-    const step1Valid = createTicketForm.userName.trim() !== "" &&
-                     createTicketForm.userEmail.trim() !== "" &&
-                     /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(createTicketForm.userEmail);
+    const step1Valid =
+      createTicketForm.userName.trim() !== "" &&
+      createTicketForm.userEmail.trim() !== "" &&
+      /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(createTicketForm.userEmail);
 
-    const step2Valid = createTicketForm.subject.trim() !== "" &&
-                      createTicketForm.description.trim() !== "";
+    const step2Valid =
+      createTicketForm.subject.trim() !== "" &&
+      createTicketForm.description.trim() !== "";
 
     return { step1Valid, step2Valid };
   };
 
   const getRecommendedAssignee = () => {
     // Simple logic to recommend an agent based on category and workload
-    const availableAgents = (agents || []).filter(agent => agent.status === "online");
+    const availableAgents = (agents || []).filter(
+      (agent) => agent.status === "online",
+    );
 
     if (availableAgents.length === 0) return null;
 
     // Find agents with matching specialties
-    const specializedAgents = availableAgents.filter(agent =>
-      agent.specialties.includes(createTicketForm.category)
+    const specializedAgents = availableAgents.filter((agent) =>
+      agent.specialties.includes(createTicketForm.category),
     );
 
     if (specializedAgents.length > 0) {
       // Return the agent with the lightest workload
       return specializedAgents.reduce((prev, current) =>
-        prev.workload === "light" ? prev :
-        current.workload === "light" ? current :
-        prev.activeTickets < current.activeTickets ? prev : current
+        prev.workload === "light"
+          ? prev
+          : current.workload === "light"
+            ? current
+            : prev.activeTickets < current.activeTickets
+              ? prev
+              : current,
       );
     }
 
     // If no specialized agents, return the one with lightest workload
     return availableAgents.reduce((prev, current) =>
-      prev.workload === "light" ? prev :
-      current.workload === "light" ? current :
-      prev.activeTickets < current.activeTickets ? prev : current
+      prev.workload === "light"
+        ? prev
+        : current.workload === "light"
+          ? current
+          : prev.activeTickets < current.activeTickets
+            ? prev
+            : current,
     );
   };
 
@@ -915,31 +1041,39 @@ const EnhancedSupportManagement: React.FC<EnhancedSupportManagementProps> = ({
             Comprehensive ticket management and customer support system
           </p>
           <div className="flex items-center gap-4 mt-2 text-sm text-slate-500">
-            <div className={`flex items-center gap-2 ${isAutoRefresh ? 'text-green-600' : ''}`}>
-              <div className={`w-2 h-2 rounded-full ${isAutoRefresh ? 'bg-green-500 animate-pulse' : 'bg-gray-400'}`} />
-              {isAutoRefresh ? 'Auto-refresh ON' : 'Auto-refresh OFF'}
+            <div
+              className={`flex items-center gap-2 ${isAutoRefresh ? "text-green-600" : ""}`}
+            >
+              <div
+                className={`w-2 h-2 rounded-full ${isAutoRefresh ? "bg-green-500 animate-pulse" : "bg-gray-400"}`}
+              />
+              {isAutoRefresh ? "Auto-refresh ON" : "Auto-refresh OFF"}
             </div>
             <span>•</span>
             <span>Last updated: {lastRefresh.toLocaleTimeString()}</span>
           </div>
         </div>
-        
+
         <div className="flex flex-wrap gap-2">
           <Button
             variant="outline"
             size="sm"
             onClick={() => setIsAutoRefresh(!isAutoRefresh)}
-            className={isAutoRefresh ? "bg-green-50 border-green-200 text-green-700" : ""}
+            className={
+              isAutoRefresh ? "bg-green-50 border-green-200 text-green-700" : ""
+            }
           >
-            <RefreshCw className={`w-4 h-4 mr-2 ${isAutoRefresh ? 'animate-spin' : ''}`} />
+            <RefreshCw
+              className={`w-4 h-4 mr-2 ${isAutoRefresh ? "animate-spin" : ""}`}
+            />
             Auto-refresh
           </Button>
-          
+
           <Button variant="outline" size="sm">
             <Download className="w-4 h-4 mr-2" />
             Export Tickets
           </Button>
-          
+
           <Button size="sm" onClick={() => setShowCreateTicket(true)}>
             <Plus className="w-4 h-4 mr-2" />
             Create Ticket
@@ -991,7 +1125,12 @@ const EnhancedSupportManagement: React.FC<EnhancedSupportManagementProps> = ({
               <Timer className="w-5 h-5 text-yellow-600 dark:text-yellow-400" />
             </div>
             <div className="text-2xl font-bold text-yellow-600 mb-1">
-              <AnimatedCounter end={metrics.avgResponseTime} duration={1000} decimals={1} />h
+              <AnimatedCounter
+                end={metrics.avgResponseTime}
+                duration={1000}
+                decimals={1}
+              />
+              h
             </div>
             <p className="text-xs text-slate-600">Avg Response</p>
           </CardContent>
@@ -1003,7 +1142,11 @@ const EnhancedSupportManagement: React.FC<EnhancedSupportManagementProps> = ({
               <Star className="w-5 h-5 text-purple-600 dark:text-purple-400" />
             </div>
             <div className="text-2xl font-bold text-purple-600 mb-1">
-              <AnimatedCounter end={metrics.satisfactionScore} duration={1000} decimals={1} />
+              <AnimatedCounter
+                end={metrics.satisfactionScore}
+                duration={1000}
+                decimals={1}
+              />
             </div>
             <p className="text-xs text-slate-600">Satisfaction</p>
           </CardContent>
@@ -1015,7 +1158,12 @@ const EnhancedSupportManagement: React.FC<EnhancedSupportManagementProps> = ({
               <Target className="w-5 h-5 text-indigo-600 dark:text-indigo-400" />
             </div>
             <div className="text-2xl font-bold text-indigo-600 mb-1">
-              <AnimatedCounter end={metrics.slaCompliance} duration={1000} decimals={1} />%
+              <AnimatedCounter
+                end={metrics.slaCompliance}
+                duration={1000}
+                decimals={1}
+              />
+              %
             </div>
             <p className="text-xs text-slate-600">SLA Compliance</p>
           </CardContent>
@@ -1027,7 +1175,12 @@ const EnhancedSupportManagement: React.FC<EnhancedSupportManagementProps> = ({
               <Zap className="w-5 h-5 text-teal-600 dark:text-teal-400" />
             </div>
             <div className="text-2xl font-bold text-teal-600 mb-1">
-              <AnimatedCounter end={metrics.firstContactResolution} duration={1000} decimals={1} />%
+              <AnimatedCounter
+                end={metrics.firstContactResolution}
+                duration={1000}
+                decimals={1}
+              />
+              %
             </div>
             <p className="text-xs text-slate-600">First Contact</p>
           </CardContent>
@@ -1039,7 +1192,13 @@ const EnhancedSupportManagement: React.FC<EnhancedSupportManagementProps> = ({
               <TrendingUp className="w-5 h-5 text-orange-600 dark:text-orange-400" />
             </div>
             <div className="text-2xl font-bold text-orange-600 mb-1">
-              +<AnimatedCounter end={metrics.ticketVolumeChange} duration={1000} decimals={1} />%
+              +
+              <AnimatedCounter
+                end={metrics.ticketVolumeChange}
+                duration={1000}
+                decimals={1}
+              />
+              %
             </div>
             <p className="text-xs text-slate-600">Volume Change</p>
           </CardContent>
@@ -1063,7 +1222,7 @@ const EnhancedSupportManagement: React.FC<EnhancedSupportManagementProps> = ({
                   />
                 </div>
               </div>
-              
+
               <div className="flex flex-wrap gap-2">
                 <Select value={statusFilter} onValueChange={setStatusFilter}>
                   <SelectTrigger className="w-40">
@@ -1079,7 +1238,10 @@ const EnhancedSupportManagement: React.FC<EnhancedSupportManagementProps> = ({
                   </SelectContent>
                 </Select>
 
-                <Select value={priorityFilter} onValueChange={setPriorityFilter}>
+                <Select
+                  value={priorityFilter}
+                  onValueChange={setPriorityFilter}
+                >
                   <SelectTrigger className="w-36">
                     <SelectValue placeholder="Priority" />
                   </SelectTrigger>
@@ -1092,7 +1254,10 @@ const EnhancedSupportManagement: React.FC<EnhancedSupportManagementProps> = ({
                   </SelectContent>
                 </Select>
 
-                <Select value={categoryFilter} onValueChange={setCategoryFilter}>
+                <Select
+                  value={categoryFilter}
+                  onValueChange={setCategoryFilter}
+                >
                   <SelectTrigger className="w-40">
                     <SelectValue placeholder="Category" />
                   </SelectTrigger>
@@ -1102,7 +1267,9 @@ const EnhancedSupportManagement: React.FC<EnhancedSupportManagementProps> = ({
                     <SelectItem value="billing">Billing</SelectItem>
                     <SelectItem value="content">Content</SelectItem>
                     <SelectItem value="account">Account</SelectItem>
-                    <SelectItem value="feature_request">Feature Request</SelectItem>
+                    <SelectItem value="feature_request">
+                      Feature Request
+                    </SelectItem>
                     <SelectItem value="bug_report">Bug Report</SelectItem>
                     <SelectItem value="general">General</SelectItem>
                   </SelectContent>
@@ -1115,7 +1282,7 @@ const EnhancedSupportManagement: React.FC<EnhancedSupportManagementProps> = ({
                 >
                   <BarChart3 className="w-4 h-4" />
                 </Button>
-                
+
                 <Button
                   variant={viewMode === "kanban" ? "default" : "outline"}
                   size="sm"
@@ -1130,9 +1297,10 @@ const EnhancedSupportManagement: React.FC<EnhancedSupportManagementProps> = ({
             {selectedTickets.length > 0 && (
               <div className="flex items-center justify-between p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg border border-blue-200 dark:border-blue-800">
                 <span className="text-sm font-medium text-blue-900 dark:text-blue-100">
-                  {selectedTickets.length} ticket{selectedTickets.length > 1 ? 's' : ''} selected
+                  {selectedTickets.length} ticket
+                  {selectedTickets.length > 1 ? "s" : ""} selected
                 </span>
-                
+
                 <div className="flex gap-2">
                   <DropdownMenu>
                     <DropdownMenuTrigger asChild>
@@ -1144,25 +1312,33 @@ const EnhancedSupportManagement: React.FC<EnhancedSupportManagementProps> = ({
                     </DropdownMenuTrigger>
                     <DropdownMenuContent align="end">
                       <DropdownMenuLabel>Change Status</DropdownMenuLabel>
-                      <DropdownMenuItem onClick={() => handleBulkStatusUpdate("in_progress")}>
+                      <DropdownMenuItem
+                        onClick={() => handleBulkStatusUpdate("in_progress")}
+                      >
                         Mark as In Progress
                       </DropdownMenuItem>
-                      <DropdownMenuItem onClick={() => handleBulkStatusUpdate("resolved")}>
+                      <DropdownMenuItem
+                        onClick={() => handleBulkStatusUpdate("resolved")}
+                      >
                         Mark as Resolved
                       </DropdownMenuItem>
-                      <DropdownMenuItem onClick={() => handleBulkStatusUpdate("closed")}>
+                      <DropdownMenuItem
+                        onClick={() => handleBulkStatusUpdate("closed")}
+                      >
                         Mark as Closed
                       </DropdownMenuItem>
                       <DropdownMenuSeparator />
                       <DropdownMenuLabel>Assign To</DropdownMenuLabel>
-                      {agents && agents.length > 0 ? agents.map(agent => (
-                        <DropdownMenuItem
-                          key={agent.id}
-                          onClick={() => handleBulkAssign(agent.name)}
-                        >
-                          {agent.name}
-                        </DropdownMenuItem>
-                      )) : (
+                      {agents && agents.length > 0 ? (
+                        agents.map((agent) => (
+                          <DropdownMenuItem
+                            key={agent.id}
+                            onClick={() => handleBulkAssign(agent.name)}
+                          >
+                            {agent.name}
+                          </DropdownMenuItem>
+                        ))
+                      ) : (
                         <DropdownMenuItem disabled>
                           No agents available
                         </DropdownMenuItem>
@@ -1174,7 +1350,7 @@ const EnhancedSupportManagement: React.FC<EnhancedSupportManagementProps> = ({
                       </DropdownMenuItem>
                     </DropdownMenuContent>
                   </DropdownMenu>
-                  
+
                   <Button
                     variant="outline"
                     size="sm"
@@ -1195,7 +1371,10 @@ const EnhancedSupportManagement: React.FC<EnhancedSupportManagementProps> = ({
           {/* List Header */}
           <div className="flex items-center gap-4 px-4 py-2 bg-gray-50 dark:bg-gray-800 rounded-lg">
             <Checkbox
-              checked={selectedTickets.length === filteredTickets.length && filteredTickets.length > 0}
+              checked={
+                selectedTickets.length === filteredTickets.length &&
+                filteredTickets.length > 0
+              }
               onCheckedChange={handleSelectAll}
             />
             <div className="flex-1 grid grid-cols-12 gap-4 text-sm font-medium text-gray-600">
@@ -1217,19 +1396,25 @@ const EnhancedSupportManagement: React.FC<EnhancedSupportManagementProps> = ({
                     checked={selectedTickets.includes(ticket.id)}
                     onCheckedChange={() => handleTicketSelect(ticket.id)}
                   />
-                  
+
                   <div className="flex-1 grid grid-cols-12 gap-4 items-center">
                     {/* Subject & User */}
                     <div className="col-span-4">
                       <div className="space-y-1">
-                        <h3 className="font-semibold text-sm cursor-pointer hover:text-blue-600"
-                            onClick={() => setShowTicketDetail(ticket)}>
+                        <h3
+                          className="font-semibold text-sm cursor-pointer hover:text-blue-600"
+                          onClick={() => setShowTicketDetail(ticket)}
+                        >
                           {ticket.subject}
                         </h3>
                         <div className="flex items-center gap-2 text-xs text-gray-500">
                           <Avatar className="w-5 h-5">
                             <AvatarFallback className="text-xs">
-                              {ticket.userName.split(' ').map(n => n[0]).join('').toUpperCase()}
+                              {ticket.userName
+                                .split(" ")
+                                .map((n) => n[0])
+                                .join("")
+                                .toUpperCase()}
                             </AvatarFallback>
                           </Avatar>
                           <span>{ticket.userName}</span>
@@ -1238,8 +1423,12 @@ const EnhancedSupportManagement: React.FC<EnhancedSupportManagementProps> = ({
                         </div>
                         {ticket.tags && ticket.tags.length > 0 && (
                           <div className="flex gap-1">
-                            {ticket.tags.slice(0, 2).map(tag => (
-                              <Badge key={tag} variant="outline" className="text-xs">
+                            {ticket.tags.slice(0, 2).map((tag) => (
+                              <Badge
+                                key={tag}
+                                variant="outline"
+                                className="text-xs"
+                              >
                                 {tag}
                               </Badge>
                             ))}
@@ -1257,7 +1446,9 @@ const EnhancedSupportManagement: React.FC<EnhancedSupportManagementProps> = ({
                     <div className="col-span-2">
                       <div className="flex items-center gap-2">
                         {getCategoryIcon(ticket.category)}
-                        <span className="text-sm capitalize">{(ticket.category || '').replace('_', ' ')}</span>
+                        <span className="text-sm capitalize">
+                          {(ticket.category || "").replace("_", " ")}
+                        </span>
                       </div>
                     </div>
 
@@ -1271,7 +1462,7 @@ const EnhancedSupportManagement: React.FC<EnhancedSupportManagementProps> = ({
                     {/* Status */}
                     <div className="col-span-2">
                       <Badge className={getStatusColor(ticket.status)}>
-                        {(ticket.status || '').replace('_', ' ')}
+                        {(ticket.status || "").replace("_", " ")}
                       </Badge>
                     </div>
 
@@ -1281,13 +1472,19 @@ const EnhancedSupportManagement: React.FC<EnhancedSupportManagementProps> = ({
                         <div className="flex items-center gap-2">
                           <Avatar className="w-6 h-6">
                             <AvatarFallback className="text-xs">
-                              {ticket.assignedTo.split(' ').map(n => n[0]).join('').toUpperCase()}
+                              {ticket.assignedTo
+                                .split(" ")
+                                .map((n) => n[0])
+                                .join("")
+                                .toUpperCase()}
                             </AvatarFallback>
                           </Avatar>
                           <span className="text-sm">{ticket.assignedTo}</span>
                         </div>
                       ) : (
-                        <span className="text-sm text-gray-500">Unassigned</span>
+                        <span className="text-sm text-gray-500">
+                          Unassigned
+                        </span>
                       )}
                     </div>
 
@@ -1300,7 +1497,9 @@ const EnhancedSupportManagement: React.FC<EnhancedSupportManagementProps> = ({
                           </Button>
                         </DropdownMenuTrigger>
                         <DropdownMenuContent align="end">
-                          <DropdownMenuItem onClick={() => setShowTicketDetail(ticket)}>
+                          <DropdownMenuItem
+                            onClick={() => setShowTicketDetail(ticket)}
+                          >
                             <Eye className="w-4 h-4 mr-2" />
                             View Details
                           </DropdownMenuItem>
@@ -1337,7 +1536,9 @@ const EnhancedSupportManagement: React.FC<EnhancedSupportManagementProps> = ({
                   <div className="mt-3 p-2 bg-red-50 border border-red-200 rounded-lg">
                     <div className="flex items-center gap-2 text-red-700">
                       <AlertTriangle className="w-4 h-4" />
-                      <span className="text-sm font-medium">High Urgency Score: {ticket.urgencyScore}</span>
+                      <span className="text-sm font-medium">
+                        High Urgency Score: {ticket.urgencyScore}
+                      </span>
                     </div>
                   </div>
                 )}
@@ -1349,17 +1550,22 @@ const EnhancedSupportManagement: React.FC<EnhancedSupportManagementProps> = ({
             <Card>
               <CardContent className="p-12 text-center">
                 <MessageSquare className="w-12 h-12 text-gray-400 mx-auto mb-4" />
-                <h3 className="text-lg font-semibold text-gray-900 mb-2">No tickets found</h3>
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">
+                  No tickets found
+                </h3>
                 <p className="text-gray-500 mb-4">
                   Try adjusting your search terms or filters to find tickets.
                 </p>
-                <Button variant="outline" onClick={() => {
-                  setSearchTerm("");
-                  setStatusFilter("all");
-                  setPriorityFilter("all");
-                  setCategoryFilter("all");
-                  setAssigneeFilter("all");
-                }}>
+                <Button
+                  variant="outline"
+                  onClick={() => {
+                    setSearchTerm("");
+                    setStatusFilter("all");
+                    setPriorityFilter("all");
+                    setCategoryFilter("all");
+                    setAssigneeFilter("all");
+                  }}
+                >
                   <RefreshCw className="w-4 h-4 mr-2" />
                   Clear Filters
                 </Button>
@@ -1370,76 +1576,99 @@ const EnhancedSupportManagement: React.FC<EnhancedSupportManagementProps> = ({
       ) : (
         /* Kanban View */
         <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
-          {["open", "in_progress", "waiting_user", "resolved", "closed"].map(status => (
-            <div key={status} className="space-y-3">
-              <div className="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-800 rounded-lg">
-                <h3 className="font-medium capitalize">{(status || '').replace('_', ' ')}</h3>
-                <Badge variant="secondary">
-                  {filteredTickets.filter(t => t.status === status).length}
-                </Badge>
-              </div>
-              
-              <div className="space-y-3 min-h-[400px]">
-                {filteredTickets
-                  .filter(ticket => ticket.status === status)
-                  .map(ticket => (
-                    <Card key={ticket.id} className="cursor-pointer hover:shadow-md transition-shadow"
-                          onClick={() => setShowTicketDetail(ticket)}>
-                      <CardContent className="p-4">
-                        <div className="space-y-3">
-                          <div className="flex items-start justify-between">
-                            <h4 className="font-medium text-sm leading-tight">{ticket.subject}</h4>
-                            <Badge className={getPriorityColor(ticket.priority)} size="sm">
-                              {ticket.priority}
-                            </Badge>
-                          </div>
-                          
-                          <div className="flex items-center gap-2 text-xs text-gray-500">
-                            <Avatar className="w-4 h-4">
-                              <AvatarFallback className="text-xs">
-                                {ticket.userName.split(' ').map(n => n[0]).join('').toUpperCase()}
-                              </AvatarFallback>
-                            </Avatar>
-                            <span>{ticket.userName}</span>
-                          </div>
-                          
-                          <div className="flex items-center justify-between text-xs text-gray-500">
-                            <span>{formatTimeAgo(ticket.createdAt)}</span>
-                            <div className="flex items-center gap-1">
-                              {getCategoryIcon(ticket.category)}
-                              <span>{ticket.category}</span>
-                            </div>
-                          </div>
-                          
-                          {ticket.tags && ticket.tags.length > 0 && (
-                            <div className="flex gap-1 flex-wrap">
-                              {ticket.tags.slice(0, 2).map(tag => (
-                                <Badge key={tag} variant="outline" className="text-xs">
-                                  {tag}
-                                </Badge>
-                              ))}
-                            </div>
-                          )}
+          {["open", "in_progress", "waiting_user", "resolved", "closed"].map(
+            (status) => (
+              <div key={status} className="space-y-3">
+                <div className="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-800 rounded-lg">
+                  <h3 className="font-medium capitalize">
+                    {(status || "").replace("_", " ")}
+                  </h3>
+                  <Badge variant="secondary">
+                    {filteredTickets.filter((t) => t.status === status).length}
+                  </Badge>
+                </div>
 
-                          {ticket.assignedTo && (
-                            <div className="flex items-center gap-2 text-xs">
-                              <UserCheck className="w-3 h-3" />
-                              <span>{ticket.assignedTo}</span>
+                <div className="space-y-3 min-h-[400px]">
+                  {filteredTickets
+                    .filter((ticket) => ticket.status === status)
+                    .map((ticket) => (
+                      <Card
+                        key={ticket.id}
+                        className="cursor-pointer hover:shadow-md transition-shadow"
+                        onClick={() => setShowTicketDetail(ticket)}
+                      >
+                        <CardContent className="p-4">
+                          <div className="space-y-3">
+                            <div className="flex items-start justify-between">
+                              <h4 className="font-medium text-sm leading-tight">
+                                {ticket.subject}
+                              </h4>
+                              <Badge
+                                className={getPriorityColor(ticket.priority)}
+                                size="sm"
+                              >
+                                {ticket.priority}
+                              </Badge>
                             </div>
-                          )}
-                        </div>
-                      </CardContent>
-                    </Card>
-                  ))}
+
+                            <div className="flex items-center gap-2 text-xs text-gray-500">
+                              <Avatar className="w-4 h-4">
+                                <AvatarFallback className="text-xs">
+                                  {ticket.userName
+                                    .split(" ")
+                                    .map((n) => n[0])
+                                    .join("")
+                                    .toUpperCase()}
+                                </AvatarFallback>
+                              </Avatar>
+                              <span>{ticket.userName}</span>
+                            </div>
+
+                            <div className="flex items-center justify-between text-xs text-gray-500">
+                              <span>{formatTimeAgo(ticket.createdAt)}</span>
+                              <div className="flex items-center gap-1">
+                                {getCategoryIcon(ticket.category)}
+                                <span>{ticket.category}</span>
+                              </div>
+                            </div>
+
+                            {ticket.tags && ticket.tags.length > 0 && (
+                              <div className="flex gap-1 flex-wrap">
+                                {ticket.tags.slice(0, 2).map((tag) => (
+                                  <Badge
+                                    key={tag}
+                                    variant="outline"
+                                    className="text-xs"
+                                  >
+                                    {tag}
+                                  </Badge>
+                                ))}
+                              </div>
+                            )}
+
+                            {ticket.assignedTo && (
+                              <div className="flex items-center gap-2 text-xs">
+                                <UserCheck className="w-3 h-3" />
+                                <span>{ticket.assignedTo}</span>
+                              </div>
+                            )}
+                          </div>
+                        </CardContent>
+                      </Card>
+                    ))}
+                </div>
               </div>
-            </div>
-          ))}
+            ),
+          )}
         </div>
       )}
 
       {/* Ticket Detail Dialog */}
       {showTicketDetail && (
-        <Dialog open={!!showTicketDetail} onOpenChange={() => setShowTicketDetail(null)}>
+        <Dialog
+          open={!!showTicketDetail}
+          onOpenChange={() => setShowTicketDetail(null)}
+        >
           <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
             <DialogHeader>
               <DialogTitle className="flex items-center gap-3">
@@ -1448,19 +1677,22 @@ const EnhancedSupportManagement: React.FC<EnhancedSupportManagementProps> = ({
                   <span>{showTicketDetail.subject}</span>
                 </div>
                 <div className="flex gap-2">
-                  <Badge className={getPriorityColor(showTicketDetail.priority)}>
+                  <Badge
+                    className={getPriorityColor(showTicketDetail.priority)}
+                  >
                     {showTicketDetail.priority}
                   </Badge>
                   <Badge className={getStatusColor(showTicketDetail.status)}>
-                    {(showTicketDetail.status || '').replace('_', ' ')}
+                    {(showTicketDetail.status || "").replace("_", " ")}
                   </Badge>
                 </div>
               </DialogTitle>
               <DialogDescription>
-                Ticket #{showTicketDetail.id} • Created {showTicketDetail.createdAt.toLocaleString()}
+                Ticket #{showTicketDetail.id} • Created{" "}
+                {showTicketDetail.createdAt.toLocaleString()}
               </DialogDescription>
             </DialogHeader>
-            
+
             <Tabs defaultValue="details" className="w-full">
               <TabsList className="grid w-full grid-cols-4">
                 <TabsTrigger value="details">Details</TabsTrigger>
@@ -1468,7 +1700,7 @@ const EnhancedSupportManagement: React.FC<EnhancedSupportManagementProps> = ({
                 <TabsTrigger value="history">History</TabsTrigger>
                 <TabsTrigger value="related">Related</TabsTrigger>
               </TabsList>
-              
+
               <TabsContent value="details" className="space-y-4">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="space-y-4">
@@ -1478,19 +1710,27 @@ const EnhancedSupportManagement: React.FC<EnhancedSupportManagementProps> = ({
                         {showTicketDetail.description}
                       </p>
                     </div>
-                    
+
                     <div>
                       <Label className="font-medium">User Information</Label>
                       <div className="mt-2 space-y-2">
                         <div className="flex items-center gap-3">
                           <Avatar>
                             <AvatarFallback>
-                              {showTicketDetail.userName.split(' ').map(n => n[0]).join('').toUpperCase()}
+                              {showTicketDetail.userName
+                                .split(" ")
+                                .map((n) => n[0])
+                                .join("")
+                                .toUpperCase()}
                             </AvatarFallback>
                           </Avatar>
                           <div>
-                            <p className="font-medium">{showTicketDetail.userName}</p>
-                            <p className="text-sm text-gray-500">{showTicketDetail.userEmail}</p>
+                            <p className="font-medium">
+                              {showTicketDetail.userName}
+                            </p>
+                            <p className="text-sm text-gray-500">
+                              {showTicketDetail.userEmail}
+                            </p>
                             <Badge variant="outline" className="text-xs">
                               {showTicketDetail.userRole}
                             </Badge>
@@ -1501,29 +1741,39 @@ const EnhancedSupportManagement: React.FC<EnhancedSupportManagementProps> = ({
 
                     {showTicketDetail.deviceInfo && (
                       <div>
-                        <Label className="font-medium">Device Information</Label>
+                        <Label className="font-medium">
+                          Device Information
+                        </Label>
                         <div className="mt-2 grid grid-cols-2 gap-2 text-sm">
                           <div>
                             <span className="text-gray-500">Browser:</span>
-                            <span className="ml-2">{showTicketDetail.deviceInfo.browser}</span>
+                            <span className="ml-2">
+                              {showTicketDetail.deviceInfo.browser}
+                            </span>
                           </div>
                           <div>
                             <span className="text-gray-500">OS:</span>
-                            <span className="ml-2">{showTicketDetail.deviceInfo.os}</span>
+                            <span className="ml-2">
+                              {showTicketDetail.deviceInfo.os}
+                            </span>
                           </div>
                           <div>
                             <span className="text-gray-500">Device:</span>
-                            <span className="ml-2">{showTicketDetail.deviceInfo.device}</span>
+                            <span className="ml-2">
+                              {showTicketDetail.deviceInfo.device}
+                            </span>
                           </div>
                           <div>
                             <span className="text-gray-500">Screen:</span>
-                            <span className="ml-2">{showTicketDetail.deviceInfo.screenSize}</span>
+                            <span className="ml-2">
+                              {showTicketDetail.deviceInfo.screenSize}
+                            </span>
                           </div>
                         </div>
                       </div>
                     )}
                   </div>
-                  
+
                   <div className="space-y-4">
                     <div>
                       <Label className="font-medium">Assignment</Label>
@@ -1532,12 +1782,20 @@ const EnhancedSupportManagement: React.FC<EnhancedSupportManagementProps> = ({
                           <div className="flex items-center gap-3 p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
                             <Avatar>
                               <AvatarFallback>
-                                {showTicketDetail.assignedTo.split(' ').map(n => n[0]).join('').toUpperCase()}
+                                {showTicketDetail.assignedTo
+                                  .split(" ")
+                                  .map((n) => n[0])
+                                  .join("")
+                                  .toUpperCase()}
                               </AvatarFallback>
                             </Avatar>
                             <div>
-                              <p className="font-medium">{showTicketDetail.assignedTo}</p>
-                              <p className="text-sm text-gray-500">Support Agent</p>
+                              <p className="font-medium">
+                                {showTicketDetail.assignedTo}
+                              </p>
+                              <p className="text-sm text-gray-500">
+                                Support Agent
+                              </p>
                             </div>
                           </div>
                         ) : (
@@ -1547,37 +1805,47 @@ const EnhancedSupportManagement: React.FC<EnhancedSupportManagementProps> = ({
                         )}
                       </div>
                     </div>
-                    
+
                     <div>
                       <Label className="font-medium">Tags</Label>
                       <div className="mt-2 flex flex-wrap gap-2">
-                        {(showTicketDetail.tags || []).map(tag => (
-                          <Badge key={tag} variant="outline">{tag}</Badge>
+                        {(showTicketDetail.tags || []).map((tag) => (
+                          <Badge key={tag} variant="outline">
+                            {tag}
+                          </Badge>
                         ))}
                       </div>
                     </div>
-                    
+
                     <div>
                       <Label className="font-medium">Timeline</Label>
                       <div className="mt-2 space-y-2 text-sm">
                         <div className="flex justify-between">
                           <span>Created:</span>
-                          <span>{showTicketDetail.createdAt.toLocaleString()}</span>
+                          <span>
+                            {showTicketDetail.createdAt.toLocaleString()}
+                          </span>
                         </div>
                         <div className="flex justify-between">
                           <span>Updated:</span>
-                          <span>{showTicketDetail.updatedAt.toLocaleString()}</span>
+                          <span>
+                            {showTicketDetail.updatedAt.toLocaleString()}
+                          </span>
                         </div>
                         {showTicketDetail.firstResponseAt && (
                           <div className="flex justify-between">
                             <span>First Response:</span>
-                            <span>{showTicketDetail.firstResponseAt.toLocaleString()}</span>
+                            <span>
+                              {showTicketDetail.firstResponseAt.toLocaleString()}
+                            </span>
                           </div>
                         )}
                         {showTicketDetail.resolvedAt && (
                           <div className="flex justify-between">
                             <span>Resolved:</span>
-                            <span>{showTicketDetail.resolvedAt.toLocaleString()}</span>
+                            <span>
+                              {showTicketDetail.resolvedAt.toLocaleString()}
+                            </span>
                           </div>
                         )}
                       </div>
@@ -1585,14 +1853,20 @@ const EnhancedSupportManagement: React.FC<EnhancedSupportManagementProps> = ({
 
                     {showTicketDetail.satisfaction && (
                       <div>
-                        <Label className="font-medium">Customer Satisfaction</Label>
+                        <Label className="font-medium">
+                          Customer Satisfaction
+                        </Label>
                         <div className="mt-2 p-3 bg-green-50 dark:bg-green-900/20 rounded-lg">
                           <div className="flex items-center gap-2 mb-2">
                             <Star className="w-4 h-4 text-yellow-500" />
-                            <span className="font-medium">{showTicketDetail.satisfaction.rating}/5</span>
+                            <span className="font-medium">
+                              {showTicketDetail.satisfaction.rating}/5
+                            </span>
                           </div>
                           {showTicketDetail.satisfaction.feedback && (
-                            <p className="text-sm italic">"{showTicketDetail.satisfaction.feedback}"</p>
+                            <p className="text-sm italic">
+                              "{showTicketDetail.satisfaction.feedback}"
+                            </p>
                           )}
                         </div>
                       </div>
@@ -1600,24 +1874,37 @@ const EnhancedSupportManagement: React.FC<EnhancedSupportManagementProps> = ({
                   </div>
                 </div>
               </TabsContent>
-              
+
               <TabsContent value="conversation" className="space-y-4">
                 <div className="space-y-4 max-h-96 overflow-y-auto">
                   {(showTicketDetail.responses || []).map((response, index) => (
-                    <div key={response.id} className={`flex gap-3 ${response.isAdmin ? 'flex-row-reverse' : ''}`}>
+                    <div
+                      key={response.id}
+                      className={`flex gap-3 ${response.isAdmin ? "flex-row-reverse" : ""}`}
+                    >
                       <Avatar className="flex-shrink-0">
                         <AvatarFallback>
-                          {response.author.split(' ').map(n => n[0]).join('').toUpperCase()}
+                          {response.author
+                            .split(" ")
+                            .map((n) => n[0])
+                            .join("")
+                            .toUpperCase()}
                         </AvatarFallback>
                       </Avatar>
-                      <div className={`flex-1 ${response.isAdmin ? 'text-right' : ''}`}>
-                        <div className={`p-3 rounded-lg ${
-                          response.isAdmin 
-                            ? 'bg-blue-100 dark:bg-blue-900/20' 
-                            : 'bg-gray-100 dark:bg-gray-800'
-                        } ${response.internal ? 'border-2 border-yellow-200' : ''}`}>
+                      <div
+                        className={`flex-1 ${response.isAdmin ? "text-right" : ""}`}
+                      >
+                        <div
+                          className={`p-3 rounded-lg ${
+                            response.isAdmin
+                              ? "bg-blue-100 dark:bg-blue-900/20"
+                              : "bg-gray-100 dark:bg-gray-800"
+                          } ${response.internal ? "border-2 border-yellow-200" : ""}`}
+                        >
                           <div className="flex items-center justify-between mb-2">
-                            <span className="font-medium text-sm">{response.author}</span>
+                            <span className="font-medium text-sm">
+                              {response.author}
+                            </span>
                             <span className="text-xs text-gray-500">
                               {response.timestamp.toLocaleString()}
                             </span>
@@ -1634,13 +1921,10 @@ const EnhancedSupportManagement: React.FC<EnhancedSupportManagementProps> = ({
                     </div>
                   ))}
                 </div>
-                
+
                 <div className="border-t pt-4">
                   <div className="space-y-3">
-                    <Textarea
-                      placeholder="Type your response..."
-                      rows={3}
-                    />
+                    <Textarea placeholder="Type your response..." rows={3} />
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-2">
                         <Button variant="outline" size="sm">
@@ -1648,7 +1932,9 @@ const EnhancedSupportManagement: React.FC<EnhancedSupportManagementProps> = ({
                           Attach File
                         </Button>
                         <Checkbox id="internal" />
-                        <Label htmlFor="internal" className="text-sm">Internal note</Label>
+                        <Label htmlFor="internal" className="text-sm">
+                          Internal note
+                        </Label>
                       </div>
                       <Button>
                         <Send className="w-4 h-4 mr-2" />
@@ -1658,55 +1944,72 @@ const EnhancedSupportManagement: React.FC<EnhancedSupportManagementProps> = ({
                   </div>
                 </div>
               </TabsContent>
-              
+
               <TabsContent value="history" className="space-y-4">
                 <div className="space-y-3">
                   <div className="flex items-center gap-3 p-3 border rounded-lg">
                     <div className="w-2 h-2 bg-green-500 rounded-full"></div>
                     <div className="flex-1">
                       <p className="font-medium text-sm">Ticket created</p>
-                      <p className="text-xs text-gray-500">{showTicketDetail.createdAt.toLocaleString()}</p>
+                      <p className="text-xs text-gray-500">
+                        {showTicketDetail.createdAt.toLocaleString()}
+                      </p>
                     </div>
                   </div>
-                  
+
                   {showTicketDetail.assignedTo && (
                     <div className="flex items-center gap-3 p-3 border rounded-lg">
                       <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
                       <div className="flex-1">
-                        <p className="font-medium text-sm">Assigned to {showTicketDetail.assignedTo}</p>
-                        <p className="text-xs text-gray-500">{showTicketDetail.updatedAt.toLocaleString()}</p>
+                        <p className="font-medium text-sm">
+                          Assigned to {showTicketDetail.assignedTo}
+                        </p>
+                        <p className="text-xs text-gray-500">
+                          {showTicketDetail.updatedAt.toLocaleString()}
+                        </p>
                       </div>
                     </div>
                   )}
-                  
+
                   {(showTicketDetail.responses || []).map((response, index) => (
-                    <div key={response.id} className="flex items-center gap-3 p-3 border rounded-lg">
+                    <div
+                      key={response.id}
+                      className="flex items-center gap-3 p-3 border rounded-lg"
+                    >
                       <div className="w-2 h-2 bg-purple-500 rounded-full"></div>
                       <div className="flex-1">
                         <p className="font-medium text-sm">
-                          {response.isAdmin ? 'Agent responded' : 'Customer replied'}
+                          {response.isAdmin
+                            ? "Agent responded"
+                            : "Customer replied"}
                         </p>
-                        <p className="text-xs text-gray-500">{response.timestamp.toLocaleString()}</p>
+                        <p className="text-xs text-gray-500">
+                          {response.timestamp.toLocaleString()}
+                        </p>
                       </div>
                     </div>
                   ))}
-                  
+
                   {showTicketDetail.resolvedAt && (
                     <div className="flex items-center gap-3 p-3 border rounded-lg">
                       <div className="w-2 h-2 bg-green-500 rounded-full"></div>
                       <div className="flex-1">
                         <p className="font-medium text-sm">Ticket resolved</p>
-                        <p className="text-xs text-gray-500">{showTicketDetail.resolvedAt.toLocaleString()}</p>
+                        <p className="text-xs text-gray-500">
+                          {showTicketDetail.resolvedAt.toLocaleString()}
+                        </p>
                       </div>
                     </div>
                   )}
                 </div>
               </TabsContent>
-              
+
               <TabsContent value="related" className="space-y-4">
                 <div className="text-center py-8">
                   <MessageSquare className="w-12 h-12 text-gray-400 mx-auto mb-4" />
-                  <h3 className="text-lg font-semibold text-gray-900 mb-2">No related tickets</h3>
+                  <h3 className="text-lg font-semibold text-gray-900 mb-2">
+                    No related tickets
+                  </h3>
                   <p className="text-gray-500">
                     No other tickets found from this user or similar issues.
                   </p>
@@ -1738,25 +2041,49 @@ const EnhancedSupportManagement: React.FC<EnhancedSupportManagementProps> = ({
               {/* Progress Indicator */}
               <div className="flex items-center justify-between">
                 <div className="flex items-center space-x-4">
-                  <div className={`flex items-center justify-center w-8 h-8 rounded-full ${
-                    createTicketStep >= 1 ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-600'
-                  }`}>
-                    {createTicketStep > 1 ? <CheckCircle className="w-4 h-4" /> : '1'}
+                  <div
+                    className={`flex items-center justify-center w-8 h-8 rounded-full ${
+                      createTicketStep >= 1
+                        ? "bg-blue-500 text-white"
+                        : "bg-gray-200 text-gray-600"
+                    }`}
+                  >
+                    {createTicketStep > 1 ? (
+                      <CheckCircle className="w-4 h-4" />
+                    ) : (
+                      "1"
+                    )}
                   </div>
-                  <div className={`h-0.5 w-16 ${
-                    createTicketStep >= 2 ? 'bg-blue-500' : 'bg-gray-200'
-                  }`} />
-                  <div className={`flex items-center justify-center w-8 h-8 rounded-full ${
-                    createTicketStep >= 2 ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-600'
-                  }`}>
-                    {createTicketStep > 2 ? <CheckCircle className="w-4 h-4" /> : '2'}
+                  <div
+                    className={`h-0.5 w-16 ${
+                      createTicketStep >= 2 ? "bg-blue-500" : "bg-gray-200"
+                    }`}
+                  />
+                  <div
+                    className={`flex items-center justify-center w-8 h-8 rounded-full ${
+                      createTicketStep >= 2
+                        ? "bg-blue-500 text-white"
+                        : "bg-gray-200 text-gray-600"
+                    }`}
+                  >
+                    {createTicketStep > 2 ? (
+                      <CheckCircle className="w-4 h-4" />
+                    ) : (
+                      "2"
+                    )}
                   </div>
-                  <div className={`h-0.5 w-16 ${
-                    createTicketStep >= 3 ? 'bg-blue-500' : 'bg-gray-200'
-                  }`} />
-                  <div className={`flex items-center justify-center w-8 h-8 rounded-full ${
-                    createTicketStep >= 3 ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-600'
-                  }`}>
+                  <div
+                    className={`h-0.5 w-16 ${
+                      createTicketStep >= 3 ? "bg-blue-500" : "bg-gray-200"
+                    }`}
+                  />
+                  <div
+                    className={`flex items-center justify-center w-8 h-8 rounded-full ${
+                      createTicketStep >= 3
+                        ? "bg-blue-500 text-white"
+                        : "bg-gray-200 text-gray-600"
+                    }`}
+                  >
                     3
                   </div>
                 </div>
@@ -1778,7 +2105,12 @@ const EnhancedSupportManagement: React.FC<EnhancedSupportManagementProps> = ({
                         id="userName"
                         placeholder="Enter full name"
                         value={createTicketForm.userName}
-                        onChange={(e) => handleCreateTicketFormChange("userName", e.target.value)}
+                        onChange={(e) =>
+                          handleCreateTicketFormChange(
+                            "userName",
+                            e.target.value,
+                          )
+                        }
                       />
                     </div>
 
@@ -1789,7 +2121,12 @@ const EnhancedSupportManagement: React.FC<EnhancedSupportManagementProps> = ({
                         type="email"
                         placeholder="user@example.com"
                         value={createTicketForm.userEmail}
-                        onChange={(e) => handleCreateTicketFormChange("userEmail", e.target.value)}
+                        onChange={(e) =>
+                          handleCreateTicketFormChange(
+                            "userEmail",
+                            e.target.value,
+                          )
+                        }
                       />
                     </div>
                   </div>
@@ -1801,7 +2138,9 @@ const EnhancedSupportManagement: React.FC<EnhancedSupportManagementProps> = ({
                         id="userId"
                         placeholder="Auto-generated if empty"
                         value={createTicketForm.userId}
-                        onChange={(e) => handleCreateTicketFormChange("userId", e.target.value)}
+                        onChange={(e) =>
+                          handleCreateTicketFormChange("userId", e.target.value)
+                        }
                       />
                     </div>
 
@@ -1809,7 +2148,9 @@ const EnhancedSupportManagement: React.FC<EnhancedSupportManagementProps> = ({
                       <Label htmlFor="userRole">User Role *</Label>
                       <Select
                         value={createTicketForm.userRole}
-                        onValueChange={(value) => handleCreateTicketFormChange("userRole", value)}
+                        onValueChange={(value) =>
+                          handleCreateTicketFormChange("userRole", value)
+                        }
                       >
                         <SelectTrigger>
                           <SelectValue />
@@ -1827,10 +2168,13 @@ const EnhancedSupportManagement: React.FC<EnhancedSupportManagementProps> = ({
                   <div className="bg-blue-50 dark:bg-blue-900/20 p-4 rounded-lg">
                     <div className="flex items-center gap-2 mb-2">
                       <Info className="w-4 h-4 text-blue-600" />
-                      <span className="font-medium text-blue-900 dark:text-blue-100">User Information</span>
+                      <span className="font-medium text-blue-900 dark:text-blue-100">
+                        User Information
+                      </span>
                     </div>
                     <p className="text-sm text-blue-700 dark:text-blue-200">
-                      This information helps us route your ticket to the right team and provide personalized support.
+                      This information helps us route your ticket to the right
+                      team and provide personalized support.
                     </p>
                   </div>
                 </div>
@@ -1845,7 +2189,9 @@ const EnhancedSupportManagement: React.FC<EnhancedSupportManagementProps> = ({
                       id="subject"
                       placeholder="Brief description of your issue"
                       value={createTicketForm.subject}
-                      onChange={(e) => handleCreateTicketFormChange("subject", e.target.value)}
+                      onChange={(e) =>
+                        handleCreateTicketFormChange("subject", e.target.value)
+                      }
                     />
                   </div>
 
@@ -1856,7 +2202,12 @@ const EnhancedSupportManagement: React.FC<EnhancedSupportManagementProps> = ({
                       placeholder="Please provide detailed information about your issue, including any error messages or steps to reproduce the problem..."
                       rows={6}
                       value={createTicketForm.description}
-                      onChange={(e) => handleCreateTicketFormChange("description", e.target.value)}
+                      onChange={(e) =>
+                        handleCreateTicketFormChange(
+                          "description",
+                          e.target.value,
+                        )
+                      }
                     />
                   </div>
 
@@ -1865,19 +2216,33 @@ const EnhancedSupportManagement: React.FC<EnhancedSupportManagementProps> = ({
                       <Label htmlFor="category">Category *</Label>
                       <Select
                         value={createTicketForm.category}
-                        onValueChange={(value) => handleCreateTicketFormChange("category", value)}
+                        onValueChange={(value) =>
+                          handleCreateTicketFormChange("category", value)
+                        }
                       >
                         <SelectTrigger>
                           <SelectValue />
                         </SelectTrigger>
                         <SelectContent>
-                          <SelectItem value="technical">Technical Issue</SelectItem>
-                          <SelectItem value="billing">Billing & Payment</SelectItem>
-                          <SelectItem value="content">Content Related</SelectItem>
-                          <SelectItem value="account">Account Management</SelectItem>
-                          <SelectItem value="feature_request">Feature Request</SelectItem>
+                          <SelectItem value="technical">
+                            Technical Issue
+                          </SelectItem>
+                          <SelectItem value="billing">
+                            Billing & Payment
+                          </SelectItem>
+                          <SelectItem value="content">
+                            Content Related
+                          </SelectItem>
+                          <SelectItem value="account">
+                            Account Management
+                          </SelectItem>
+                          <SelectItem value="feature_request">
+                            Feature Request
+                          </SelectItem>
                           <SelectItem value="bug_report">Bug Report</SelectItem>
-                          <SelectItem value="general">General Inquiry</SelectItem>
+                          <SelectItem value="general">
+                            General Inquiry
+                          </SelectItem>
                         </SelectContent>
                       </Select>
                     </div>
@@ -1886,7 +2251,9 @@ const EnhancedSupportManagement: React.FC<EnhancedSupportManagementProps> = ({
                       <Label htmlFor="priority">Priority *</Label>
                       <Select
                         value={createTicketForm.priority}
-                        onValueChange={(value) => handleCreateTicketFormChange("priority", value)}
+                        onValueChange={(value) =>
+                          handleCreateTicketFormChange("priority", value)
+                        }
                       >
                         <SelectTrigger>
                           <SelectValue />
@@ -1904,21 +2271,27 @@ const EnhancedSupportManagement: React.FC<EnhancedSupportManagementProps> = ({
                       <Label htmlFor="assignedTo">Assign to Agent</Label>
                       <Select
                         value={createTicketForm.assignedTo}
-                        onValueChange={(value) => handleCreateTicketFormChange("assignedTo", value)}
+                        onValueChange={(value) =>
+                          handleCreateTicketFormChange("assignedTo", value)
+                        }
                       >
                         <SelectTrigger>
                           <SelectValue placeholder="Auto-assign" />
                         </SelectTrigger>
                         <SelectContent>
                           <SelectItem value="">Auto-assign</SelectItem>
-                          {(agents || []).map(agent => (
+                          {(agents || []).map((agent) => (
                             <SelectItem key={agent.id} value={agent.name}>
                               <div className="flex items-center gap-2">
-                                <div className={`w-2 h-2 rounded-full ${
-                                  getAgentStatus(agent.status).color
-                                }`} />
+                                <div
+                                  className={`w-2 h-2 rounded-full ${
+                                    getAgentStatus(agent.status).color
+                                  }`}
+                                />
                                 <span>{agent.name}</span>
-                                <span className="text-xs text-gray-500">({agent.activeTickets} active)</span>
+                                <span className="text-xs text-gray-500">
+                                  ({agent.activeTickets} active)
+                                </span>
                               </div>
                             </SelectItem>
                           ))}
@@ -1945,7 +2318,12 @@ const EnhancedSupportManagement: React.FC<EnhancedSupportManagementProps> = ({
                           <Button
                             variant="outline"
                             size="sm"
-                            onClick={() => handleCreateTicketFormChange("assignedTo", recommended.name)}
+                            onClick={() =>
+                              handleCreateTicketFormChange(
+                                "assignedTo",
+                                recommended.name,
+                              )
+                            }
                           >
                             Assign
                           </Button>
@@ -1975,8 +2353,12 @@ const EnhancedSupportManagement: React.FC<EnhancedSupportManagementProps> = ({
 
                     {createTicketForm.tags.length > 0 && (
                       <div className="flex flex-wrap gap-2 mt-2">
-                        {createTicketForm.tags.map(tag => (
-                          <Badge key={tag} variant="secondary" className="flex items-center gap-1">
+                        {createTicketForm.tags.map((tag) => (
+                          <Badge
+                            key={tag}
+                            variant="secondary"
+                            className="flex items-center gap-1"
+                          >
                             <Tag className="w-3 h-3" />
                             {tag}
                             <button
@@ -2001,10 +2383,15 @@ const EnhancedSupportManagement: React.FC<EnhancedSupportManagementProps> = ({
                           id="autoDetect"
                           checked={createTicketForm.autoDetectDevice}
                           onCheckedChange={(checked) =>
-                            handleCreateTicketFormChange("autoDetectDevice", checked)
+                            handleCreateTicketFormChange(
+                              "autoDetectDevice",
+                              checked,
+                            )
                           }
                         />
-                        <Label htmlFor="autoDetect" className="text-sm">Auto-detect</Label>
+                        <Label htmlFor="autoDetect" className="text-sm">
+                          Auto-detect
+                        </Label>
                       </div>
                     </div>
 
@@ -2014,10 +2401,12 @@ const EnhancedSupportManagement: React.FC<EnhancedSupportManagementProps> = ({
                         <Input
                           placeholder="Browser"
                           value={createTicketForm.deviceInfo.browser}
-                          onChange={(e) => handleCreateTicketFormChange("deviceInfo", {
-                            ...createTicketForm.deviceInfo,
-                            browser: e.target.value
-                          })}
+                          onChange={(e) =>
+                            handleCreateTicketFormChange("deviceInfo", {
+                              ...createTicketForm.deviceInfo,
+                              browser: e.target.value,
+                            })
+                          }
                           disabled={createTicketForm.autoDetectDevice}
                           className="text-sm"
                         />
@@ -2028,10 +2417,12 @@ const EnhancedSupportManagement: React.FC<EnhancedSupportManagementProps> = ({
                         <Input
                           placeholder="OS"
                           value={createTicketForm.deviceInfo.os}
-                          onChange={(e) => handleCreateTicketFormChange("deviceInfo", {
-                            ...createTicketForm.deviceInfo,
-                            os: e.target.value
-                          })}
+                          onChange={(e) =>
+                            handleCreateTicketFormChange("deviceInfo", {
+                              ...createTicketForm.deviceInfo,
+                              os: e.target.value,
+                            })
+                          }
                           disabled={createTicketForm.autoDetectDevice}
                           className="text-sm"
                         />
@@ -2042,10 +2433,12 @@ const EnhancedSupportManagement: React.FC<EnhancedSupportManagementProps> = ({
                         <Input
                           placeholder="Device"
                           value={createTicketForm.deviceInfo.device}
-                          onChange={(e) => handleCreateTicketFormChange("deviceInfo", {
-                            ...createTicketForm.deviceInfo,
-                            device: e.target.value
-                          })}
+                          onChange={(e) =>
+                            handleCreateTicketFormChange("deviceInfo", {
+                              ...createTicketForm.deviceInfo,
+                              device: e.target.value,
+                            })
+                          }
                           disabled={createTicketForm.autoDetectDevice}
                           className="text-sm"
                         />
@@ -2056,10 +2449,12 @@ const EnhancedSupportManagement: React.FC<EnhancedSupportManagementProps> = ({
                         <Input
                           placeholder="Resolution"
                           value={createTicketForm.deviceInfo.screenSize}
-                          onChange={(e) => handleCreateTicketFormChange("deviceInfo", {
-                            ...createTicketForm.deviceInfo,
-                            screenSize: e.target.value
-                          })}
+                          onChange={(e) =>
+                            handleCreateTicketFormChange("deviceInfo", {
+                              ...createTicketForm.deviceInfo,
+                              screenSize: e.target.value,
+                            })
+                          }
                           disabled={createTicketForm.autoDetectDevice}
                           className="text-sm"
                         />
@@ -2078,10 +2473,16 @@ const EnhancedSupportManagement: React.FC<EnhancedSupportManagementProps> = ({
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                       <div className="space-y-3">
                         <div>
-                          <Label className="text-sm font-medium text-gray-600">User Information</Label>
+                          <Label className="text-sm font-medium text-gray-600">
+                            User Information
+                          </Label>
                           <div className="mt-1">
-                            <p className="font-medium">{createTicketForm.userName}</p>
-                            <p className="text-sm text-gray-500">{createTicketForm.userEmail}</p>
+                            <p className="font-medium">
+                              {createTicketForm.userName}
+                            </p>
+                            <p className="text-sm text-gray-500">
+                              {createTicketForm.userEmail}
+                            </p>
                             <Badge variant="outline" className="text-xs mt-1">
                               {createTicketForm.userRole}
                             </Badge>
@@ -2089,18 +2490,28 @@ const EnhancedSupportManagement: React.FC<EnhancedSupportManagementProps> = ({
                         </div>
 
                         <div>
-                          <Label className="text-sm font-medium text-gray-600">Subject</Label>
+                          <Label className="text-sm font-medium text-gray-600">
+                            Subject
+                          </Label>
                           <p className="mt-1">{createTicketForm.subject}</p>
                         </div>
 
                         <div>
-                          <Label className="text-sm font-medium text-gray-600">Category & Priority</Label>
+                          <Label className="text-sm font-medium text-gray-600">
+                            Category & Priority
+                          </Label>
                           <div className="mt-1 flex gap-2">
                             <Badge variant="outline">
                               {getCategoryIcon(createTicketForm.category)}
-                              <span className="ml-1 capitalize">{createTicketForm.category.replace('_', ' ')}</span>
+                              <span className="ml-1 capitalize">
+                                {createTicketForm.category.replace("_", " ")}
+                              </span>
                             </Badge>
-                            <Badge className={getPriorityColor(createTicketForm.priority)}>
+                            <Badge
+                              className={getPriorityColor(
+                                createTicketForm.priority,
+                              )}
+                            >
                               {createTicketForm.priority}
                             </Badge>
                           </div>
@@ -2109,26 +2520,42 @@ const EnhancedSupportManagement: React.FC<EnhancedSupportManagementProps> = ({
 
                       <div className="space-y-3">
                         <div>
-                          <Label className="text-sm font-medium text-gray-600">Assignment</Label>
+                          <Label className="text-sm font-medium text-gray-600">
+                            Assignment
+                          </Label>
                           <p className="mt-1">
-                            {createTicketForm.assignedTo || "Auto-assign based on availability"}
+                            {createTicketForm.assignedTo ||
+                              "Auto-assign based on availability"}
                           </p>
                         </div>
 
                         <div>
-                          <Label className="text-sm font-medium text-gray-600">Urgency Score</Label>
+                          <Label className="text-sm font-medium text-gray-600">
+                            Urgency Score
+                          </Label>
                           <div className="mt-1 flex items-center gap-2">
-                            <Progress value={calculateUrgencyScore()} className="flex-1" />
-                            <span className="text-sm font-medium">{calculateUrgencyScore()}/100</span>
+                            <Progress
+                              value={calculateUrgencyScore()}
+                              className="flex-1"
+                            />
+                            <span className="text-sm font-medium">
+                              {calculateUrgencyScore()}/100
+                            </span>
                           </div>
                         </div>
 
                         {createTicketForm.tags.length > 0 && (
                           <div>
-                            <Label className="text-sm font-medium text-gray-600">Tags</Label>
+                            <Label className="text-sm font-medium text-gray-600">
+                              Tags
+                            </Label>
                             <div className="mt-1 flex flex-wrap gap-1">
-                              {createTicketForm.tags.map(tag => (
-                                <Badge key={tag} variant="outline" className="text-xs">
+                              {createTicketForm.tags.map((tag) => (
+                                <Badge
+                                  key={tag}
+                                  variant="outline"
+                                  className="text-xs"
+                                >
                                   {tag}
                                 </Badge>
                               ))}
@@ -2139,7 +2566,9 @@ const EnhancedSupportManagement: React.FC<EnhancedSupportManagementProps> = ({
                     </div>
 
                     <div>
-                      <Label className="text-sm font-medium text-gray-600">Description</Label>
+                      <Label className="text-sm font-medium text-gray-600">
+                        Description
+                      </Label>
                       <div className="mt-1 p-3 bg-white dark:bg-gray-900 rounded border text-sm">
                         {createTicketForm.description}
                       </div>
@@ -2147,23 +2576,33 @@ const EnhancedSupportManagement: React.FC<EnhancedSupportManagementProps> = ({
 
                     {createTicketForm.autoDetectDevice && (
                       <div>
-                        <Label className="text-sm font-medium text-gray-600">Device Information</Label>
+                        <Label className="text-sm font-medium text-gray-600">
+                          Device Information
+                        </Label>
                         <div className="mt-1 grid grid-cols-2 md:grid-cols-4 gap-2 text-sm">
                           <div>
                             <span className="text-gray-500">Browser:</span>
-                            <span className="ml-1">{createTicketForm.deviceInfo.browser}</span>
+                            <span className="ml-1">
+                              {createTicketForm.deviceInfo.browser}
+                            </span>
                           </div>
                           <div>
                             <span className="text-gray-500">OS:</span>
-                            <span className="ml-1">{createTicketForm.deviceInfo.os}</span>
+                            <span className="ml-1">
+                              {createTicketForm.deviceInfo.os}
+                            </span>
                           </div>
                           <div>
                             <span className="text-gray-500">Device:</span>
-                            <span className="ml-1">{createTicketForm.deviceInfo.device}</span>
+                            <span className="ml-1">
+                              {createTicketForm.deviceInfo.device}
+                            </span>
                           </div>
                           <div>
                             <span className="text-gray-500">Screen:</span>
-                            <span className="ml-1">{createTicketForm.deviceInfo.screenSize}</span>
+                            <span className="ml-1">
+                              {createTicketForm.deviceInfo.screenSize}
+                            </span>
                           </div>
                         </div>
                       </div>
@@ -2173,12 +2612,19 @@ const EnhancedSupportManagement: React.FC<EnhancedSupportManagementProps> = ({
                   <div className="bg-blue-50 dark:bg-blue-900/20 p-4 rounded-lg">
                     <div className="flex items-center gap-2 mb-2">
                       <Clock className="w-4 h-4 text-blue-600" />
-                      <span className="font-medium text-blue-900 dark:text-blue-100">Expected Response Time</span>
+                      <span className="font-medium text-blue-900 dark:text-blue-100">
+                        Expected Response Time
+                      </span>
                     </div>
                     <p className="text-sm text-blue-700 dark:text-blue-200">
-                      Based on priority and current workload: {createTicketForm.priority === "urgent" ? "Within 1 hour" :
-                      createTicketForm.priority === "high" ? "Within 4 hours" :
-                      createTicketForm.priority === "medium" ? "Within 24 hours" : "Within 48 hours"}
+                      Based on priority and current workload:{" "}
+                      {createTicketForm.priority === "urgent"
+                        ? "Within 1 hour"
+                        : createTicketForm.priority === "high"
+                          ? "Within 4 hours"
+                          : createTicketForm.priority === "medium"
+                            ? "Within 24 hours"
+                            : "Within 48 hours"}
                     </p>
                   </div>
                 </div>
@@ -2190,7 +2636,7 @@ const EnhancedSupportManagement: React.FC<EnhancedSupportManagementProps> = ({
                 {createTicketStep > 1 && (
                   <Button
                     variant="outline"
-                    onClick={() => setCreateTicketStep(prev => prev - 1)}
+                    onClick={() => setCreateTicketStep((prev) => prev - 1)}
                     disabled={isSubmittingTicket}
                   >
                     <ArrowDown className="w-4 h-4 mr-2 rotate-90" />
@@ -2210,11 +2656,14 @@ const EnhancedSupportManagement: React.FC<EnhancedSupportManagementProps> = ({
 
                 {createTicketStep < 3 ? (
                   <Button
-                    onClick={() => setCreateTicketStep(prev => prev + 1)}
+                    onClick={() => setCreateTicketStep((prev) => prev + 1)}
                     disabled={(() => {
                       const validation = validateTicketForm();
-                      return createTicketStep === 1 ? !validation.step1Valid :
-                             createTicketStep === 2 ? !validation.step2Valid : false;
+                      return createTicketStep === 1
+                        ? !validation.step1Valid
+                        : createTicketStep === 2
+                          ? !validation.step2Valid
+                          : false;
                     })()}
                   >
                     Next
@@ -2223,7 +2672,11 @@ const EnhancedSupportManagement: React.FC<EnhancedSupportManagementProps> = ({
                 ) : (
                   <Button
                     onClick={handleCreateTicket}
-                    disabled={isSubmittingTicket || !validateTicketForm().step1Valid || !validateTicketForm().step2Valid}
+                    disabled={
+                      isSubmittingTicket ||
+                      !validateTicketForm().step1Valid ||
+                      !validateTicketForm().step2Valid
+                    }
                     className="min-w-[120px]"
                   >
                     {isSubmittingTicket ? (
