@@ -282,7 +282,7 @@ export default function Index({ initialProfile }: IndexProps) {
           const sessionResponse = await WordProgressAPI.startSession({
             childId: currentProfile.id,
             sessionType: "word_cards",
-            category: selectedCategory !== "all" ? selectedCategory : undefined,
+            category: selectedCategory,
           });
           setCurrentSessionId(sessionResponse.sessionId);
 
