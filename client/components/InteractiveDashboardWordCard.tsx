@@ -93,6 +93,8 @@ export function InteractiveDashboardWordCard({
   className,
   onRequestNewWords,
   onSessionProgress,
+  dashboardSession,
+  onGenerateNewSession,
 }: InteractiveDashboardWordCardProps) {
   // Session Management
   const SESSION_SIZE = 20;
@@ -239,7 +241,7 @@ export function InteractiveDashboardWordCard({
           id: "speed_demon",
           title: "SPEED DEMON!",
           description: `Lightning fast! Completed in ${minutes} minutes with ${accuracy}% accuracy!`,
-          emoji: "⚡",
+          emoji: "���",
           unlocked: true,
         });
       }
