@@ -1788,7 +1788,7 @@ const EnhancedUserManagement: React.FC<EnhancedUserManagementProps> = ({
                 <Upload className="w-4 h-4 mr-2" />
                 Import Users
               </DropdownMenuItem>
-              <DropdownMenuItem>
+              <DropdownMenuItem onClick={() => setShowExportDialog(true)}>
                 <Download className="w-4 h-4 mr-2" />
                 Export Users
               </DropdownMenuItem>
