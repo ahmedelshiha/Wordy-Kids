@@ -529,6 +529,7 @@ export class EnhancedWordSelector {
    * Select remembered words for reinforcement
    */
   private static selectRememberedWordsForReview(
+    categoryWords: Word[],
     userHistory: Map<number, WordHistory>,
     userProgress: {
       rememberedWords: Set<number>;
