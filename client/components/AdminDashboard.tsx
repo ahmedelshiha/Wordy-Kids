@@ -109,6 +109,7 @@ import WordEditor from "@/components/WordEditor";
 import ContentModerationPanel from "@/components/ContentModerationPanel";
 import AdvancedAnalyticsDashboard from "@/components/AdvancedAnalyticsDashboard";
 import EnhancedUserManagement from "@/components/EnhancedUserManagement";
+import { wordsDatabase, Word, getAllCategories, getWordsByCategory } from "@/data/wordsDatabase";
 
 interface AdminWord {
   id: string;
