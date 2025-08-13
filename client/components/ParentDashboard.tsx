@@ -2433,7 +2433,7 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
   // Helper functions for dynamic content
   const getCategoryEmoji = (category: string) => {
     const emojis: Record<string, string> = {
-      Animals: "���",
+      Animals: "🦋",
       Science: "🔬",
       Colors: "🌈",
       Food: "��",
