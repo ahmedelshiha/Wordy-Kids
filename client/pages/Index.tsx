@@ -1306,7 +1306,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                   {selectedCategory ? `${selectedCategory.charAt(0).toUpperCase() + selectedCategory.slice(1)} Words` : "Select a Category"}
                                 </h2>
                                 <p className="text-sm text-slate-600">
-                                  {`Learn ${selectedCategory} vocabulary!`}
+                                  {selectedCategory ? `Learn ${selectedCategory} vocabulary!` : "Choose a category to start learning!"}
                                 </p>
                               </div>
                               <div className="flex justify-center">
