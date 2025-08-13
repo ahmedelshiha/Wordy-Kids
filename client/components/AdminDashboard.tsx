@@ -111,17 +111,7 @@ import AdvancedAnalyticsDashboard from "@/components/AdvancedAnalyticsDashboard"
 import EnhancedUserManagement from "@/components/EnhancedUserManagement";
 import { wordsDatabase, Word, getAllCategories, getWordsByCategory } from "@/data/wordsDatabase";
 
-interface AdminWord {
-  id: string;
-  word: string;
-  pronunciation: string;
-  definition: string;
-  example: string;
-  category: string;
-  difficulty: "easy" | "medium" | "hard";
-  funFact?: string;
-  imageUrl?: string;
-  audioUrl?: string;
+interface AdminWord extends Word {
   status: "approved" | "pending" | "rejected";
   submittedBy?: string;
   submittedAt: Date;
@@ -129,6 +119,16 @@ interface AdminWord {
   approvedAt?: Date;
   usageCount: number;
   accuracy: number;
+  lastUsed?: Date;
+  tags?: string[];
+  isActive: boolean;
+  modificationHistory?: Array<{
+    id: string;
+    action: "created" | "updated" | "approved" | "rejected";
+    timestamp: Date;
+    author: string;
+    changes?: Record<string, any>;
+  }>;
 }
 
 interface AdminUser {
