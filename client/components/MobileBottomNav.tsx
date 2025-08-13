@@ -121,7 +121,7 @@ export function MobileBottomNav({
             className="absolute inset-0 bg-black/20"
             onClick={onMoreToggle}
           />
-          <div className="absolute bottom-20 left-4 right-4 bg-white rounded-3xl shadow-2xl p-4 border-4 border-rainbow">
+          <div className="absolute bottom-20 left-3 right-3 bg-white rounded-3xl shadow-2xl p-4 border-4 border-rainbow max-h-[70vh] overflow-y-auto">
             <div className="text-center mb-4">
               <div className="text-2xl mb-2">🎪</div>
               <h3 className="text-lg font-bold text-gray-800">
@@ -130,7 +130,7 @@ export function MobileBottomNav({
               <p className="text-sm text-gray-600">Tap what you want to do!</p>
             </div>
 
-            <div className="grid grid-cols-2 gap-3">
+            <div className="grid grid-cols-2 gap-2">
               {secondaryMenuItems.map((item) => (
                 <button
                   key={item.id}
@@ -138,7 +138,7 @@ export function MobileBottomNav({
                     item.onClick();
                     onMoreToggle();
                   }}
-                  className="flex flex-col items-center gap-2 p-4 rounded-2xl bg-gradient-to-br from-blue-50 to-purple-50 hover:from-blue-100 hover:to-purple-100 transition-all duration-300 transform hover:scale-105 active:scale-95 border-2 border-purple-200"
+                  className="flex flex-col items-center gap-2 p-3 rounded-2xl bg-gradient-to-br from-blue-50 to-purple-50 active:from-blue-100 active:to-purple-100 transition-all duration-200 transform active:scale-95 border-2 border-purple-200 min-h-[80px] justify-center"
                 >
                   <div className="text-3xl">{item.emoji}</div>
                   <span className="text-sm font-bold text-gray-700">
@@ -158,34 +158,34 @@ export function MobileBottomNav({
         </div>
       )}
 
-      {/* Bottom Navigation Bar */}
+      {/* Optimized Bottom Navigation Bar */}
       <div className="fixed bottom-0 left-0 right-0 z-30 lg:hidden">
-        <div className="bg-white/95 backdrop-blur-lg border-t-4 border-rainbow shadow-2xl">
-          <div className="flex items-center justify-around px-2 py-3">
+        <div className="bg-white/95 backdrop-blur-lg border-t-4 border-rainbow shadow-2xl safe-area-padding-bottom">
+          <div className="flex items-center justify-around px-1 py-2">
             {/* Primary Navigation Tabs */}
             {primaryTabs.map((tab) => (
               <button
                 key={tab.id}
                 onClick={() => onTabChange(tab.id)}
                 className={cn(
-                  "flex flex-col items-center gap-1 p-3 rounded-2xl transition-all duration-300 transform hover:scale-105 active:scale-95 relative min-w-0 flex-1 mx-1",
+                  "flex flex-col items-center gap-1 p-2 rounded-xl transition-all duration-200 transform active:scale-95 relative min-w-0 flex-1 mx-0.5 min-h-[60px] justify-center",
                   activeTab === tab.id
-                    ? `bg-gradient-to-br ${tab.color} text-white shadow-lg animate-gentle-float`
-                    : `${tab.bgColor} ${tab.textColor} hover:shadow-md`,
+                    ? `bg-gradient-to-br ${tab.color} text-white shadow-lg`
+                    : `${tab.bgColor} ${tab.textColor}`,
                 )}
               >
                 {/* Emoji Icon */}
                 <div
                   className={cn(
-                    "text-2xl transition-transform duration-300",
-                    activeTab === tab.id ? "animate-sparkle" : "",
+                    "text-xl transition-transform duration-200",
+                    activeTab === tab.id ? "scale-110" : "",
                   )}
                 >
                   {tab.emoji}
                 </div>
 
                 {/* Label */}
-                <span className="text-xs font-bold leading-tight text-center">
+                <span className="text-xs font-semibold leading-tight text-center truncate max-w-full">
                   {tab.label}
                 </span>
 
@@ -207,21 +207,21 @@ export function MobileBottomNav({
             <button
               onClick={onMoreToggle}
               className={cn(
-                "flex flex-col items-center gap-1 p-3 rounded-2xl transition-all duration-300 transform hover:scale-105 active:scale-95 min-w-0 flex-1 mx-1",
+                "flex flex-col items-center gap-1 p-2 rounded-xl transition-all duration-200 transform active:scale-95 min-w-0 flex-1 mx-0.5 min-h-[60px] justify-center",
                 showMoreMenu
                   ? "bg-gradient-to-br from-blue-500 to-purple-500 text-white shadow-lg"
-                  : "bg-blue-100 text-blue-600 hover:shadow-md",
+                  : "bg-blue-100 text-blue-600",
               )}
             >
               <div
                 className={cn(
-                  "text-2xl transition-transform duration-300",
-                  showMoreMenu ? "rotate-90" : "",
+                  "text-xl transition-transform duration-200",
+                  showMoreMenu ? "rotate-90 scale-110" : "",
                 )}
               >
                 🎪
               </div>
-              <span className="text-xs font-bold leading-tight text-center">
+              <span className="text-xs font-semibold leading-tight text-center">
                 More
               </span>
 
