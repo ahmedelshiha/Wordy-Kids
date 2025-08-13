@@ -354,6 +354,8 @@ export function ChildFriendlyCategorySelector({
     Array<{ id: string; emoji: string; x: number; y: number }>
   >([]);
   const [showEncouragement, setShowEncouragement] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [showMobileSearch, setShowMobileSearch] = useState(false);
 
   // Add floating animation elements
   useEffect(() => {
