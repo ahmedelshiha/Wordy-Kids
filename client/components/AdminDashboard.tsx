@@ -1386,41 +1386,80 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onNavigateBack }) => {
 
   return (
     <div className="space-y-6">
-      {/* Header */}
-      <div className="flex items-center justify-between">
-        <div className="flex items-center gap-4">
-          {onNavigateBack && (
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={onNavigateBack}
-              className="flex items-center gap-2"
-            >
-              <ArrowLeft className="w-4 h-4" />
-              Back to Main
-            </Button>
-          )}
-          <div>
-            <h1 className="text-3xl font-bold text-slate-800">
-              🛡️ Administrator Dashboard
-            </h1>
-            <p className="text-slate-600">
-              System management and oversight platform
-            </p>
+      {/* Enhanced Mobile Header */}
+      <div className="mb-4 md:mb-6">
+        {/* Mobile Header */}
+        <div className="md:hidden">
+          <div className="flex items-center justify-between mb-3 px-2">
+            {onNavigateBack && (
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={onNavigateBack}
+                className="flex items-center gap-1 px-2"
+              >
+                <ArrowLeft className="w-4 h-4" />
+                <span className="sr-only md:inline">Back</span>
+              </Button>
+            )}
+            <div className="flex-1 text-center">
+              <h1 className="text-lg font-bold text-slate-800">
+                🛡️ Admin Panel
+              </h1>
+            </div>
+            <div className="flex gap-1">
+              <Button variant="outline" size="sm" className="relative p-2">
+                <Bell className="w-4 h-4" />
+                <Badge className="absolute -top-1 -right-1 bg-red-500 text-white text-xs px-1 min-w-[16px] h-4 text-[10px]">
+                  3
+                </Badge>
+              </Button>
+              <Button variant="outline" size="sm" className="p-2">
+                <Settings className="w-4 h-4" />
+              </Button>
+            </div>
           </div>
+          <p className="text-xs text-slate-600 text-center px-2">
+            System management and oversight
+          </p>
         </div>
-        <div className="flex gap-2">
-          <Button variant="outline" size="sm" className="relative">
-            <Bell className="w-4 h-4 mr-2" />
-            System Alerts
-            <Badge className="absolute -top-2 -right-2 bg-red-500 text-white text-xs px-1 min-w-[20px] h-5">
-              3
-            </Badge>
-          </Button>
-          <Button variant="outline" size="sm">
-            <Settings className="w-4 h-4 mr-2" />
-            Settings
-          </Button>
+
+        {/* Desktop Header */}
+        <div className="hidden md:flex items-center justify-between">
+          <div className="flex items-center gap-4">
+            {onNavigateBack && (
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={onNavigateBack}
+                className="flex items-center gap-2"
+              >
+                <ArrowLeft className="w-4 h-4" />
+                Back to Main
+              </Button>
+            )}
+            <div>
+              <h1 className="text-3xl font-bold text-slate-800">
+                🛡️ Administrator Dashboard
+              </h1>
+              <p className="text-slate-600">
+                System management and oversight platform
+              </p>
+            </div>
+          </div>
+          <div className="flex gap-2">
+            <Button variant="outline" size="sm" className="relative">
+              <Bell className="w-4 h-4 mr-2" />
+              System Alerts
+              <Badge className="absolute -top-2 -right-2 bg-red-500 text-white text-xs px-1 min-w-[20px] h-5">
+                3
+              </Badge>
+            </Button>
+            <Button variant="outline" size="sm">
+              <Settings className="w-4 h-4 mr-2" />
+              Settings
+            </Button>
+          </div>
         </div>
       </div>
 
