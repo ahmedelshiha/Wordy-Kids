@@ -430,16 +430,16 @@ export function AchievementSystem({
   );
 
   const renderCategoryFun = () => (
-    <div className="space-y-6">
-      <Card className="bg-gradient-to-br from-yellow-50 to-orange-50">
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2 text-educational-orange">
-            <PieChart className="w-6 h-6" />
+    <div className="space-y-4 md:space-y-6">
+      <Card className="bg-gradient-to-br from-yellow-50 to-orange-50 mx-2 md:mx-0">
+        <CardHeader className="pb-3 md:pb-6">
+          <CardTitle className="flex items-center gap-2 text-educational-orange text-lg md:text-xl">
+            <PieChart className="w-5 h-5 md:w-6 md:h-6" />
             🎨 Your Learning Rainbow!
           </CardTitle>
         </CardHeader>
-        <CardContent>
-          <div className="space-y-4">
+        <CardContent className="px-3 md:px-6">
+          <div className="space-y-3 md:space-y-4">
             {stats.categoryBreakdown.map((category, index) => {
               const colors = [
                 "from-educational-blue to-blue-400",
@@ -454,24 +454,24 @@ export function AchievementSystem({
               const icon = icons[index % icons.length];
 
               return (
-                <div key={category.category} className="space-y-3">
+                <div key={category.category} className="space-y-2 md:space-y-3">
                   <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-3">
+                    <div className="flex items-center gap-2 md:gap-3">
                       <div
-                        className={`w-8 h-8 rounded-full bg-gradient-to-r ${color} flex items-center justify-center text-white shadow-lg`}
+                        className={`w-6 h-6 md:w-8 md:h-8 rounded-full bg-gradient-to-r ${color} flex items-center justify-center text-white shadow-lg text-sm md:text-base`}
                       >
                         {icon}
                       </div>
                       <div>
-                        <span className="font-bold text-gray-800">
+                        <span className="font-bold text-gray-800 text-sm md:text-base">
                           {category.category}
                         </span>
-                        <p className="text-xs text-gray-500">
+                        <p className="text-xs text-gray-500 hidden md:block">
                           You're doing amazing! 🌟
                         </p>
                       </div>
                     </div>
-                    <div className="flex gap-4 text-sm">
+                    <div className="flex flex-col md:flex-row gap-1 md:gap-4 text-xs md:text-sm">
                       <span className="bg-educational-blue/20 px-2 py-1 rounded-full text-educational-blue font-semibold">
                         {category.wordsLearned} words!
                       </span>
@@ -498,22 +498,22 @@ export function AchievementSystem({
   );
 
   const renderStreakFun = () => (
-    <div className="space-y-6">
-      <Card className="bg-gradient-to-br from-green-50 to-blue-50">
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2 text-educational-green">
-            <Activity className="w-6 h-6" />
+    <div className="space-y-4 md:space-y-6">
+      <Card className="bg-gradient-to-br from-green-50 to-blue-50 mx-2 md:mx-0">
+        <CardHeader className="pb-3 md:pb-6">
+          <CardTitle className="flex items-center gap-2 text-educational-green text-lg md:text-xl">
+            <Activity className="w-5 h-5 md:w-6 md:h-6" />
             🔥 Your Learning Adventure Map!
           </CardTitle>
         </CardHeader>
-        <CardContent>
-          <div className="space-y-4">
-            <p className="text-center text-educational-purple font-semibold">
+        <CardContent className="px-3 md:px-6">
+          <div className="space-y-3 md:space-y-4">
+            <p className="text-center text-educational-purple font-semibold text-sm md:text-base">
               Look at all the days you've been learning! Each square is a day of
               adventure! 🗺️
             </p>
 
-            <div className="grid grid-cols-10 gap-1 justify-center">
+            <div className="grid grid-cols-10 gap-0.5 md:gap-1 justify-center">
               {stats.streakData.map((day, index) => {
                 const emojis = ["💫", "⭐", "🌟", "✨", "🎊"];
                 const randomEmoji =
