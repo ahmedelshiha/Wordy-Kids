@@ -518,7 +518,7 @@ export default function LoginForm() {
                   className="p-0 h-auto text-xs text-gray-500 hover:text-gray-700 underline-offset-2"
                   disabled={isLoading}
                 >
-                  Forgot password?
+                  🤔 Forgot password?
                 </Button>
               </div>
 
