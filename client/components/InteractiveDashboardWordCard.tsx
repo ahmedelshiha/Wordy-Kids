@@ -21,6 +21,11 @@ import { cn } from "@/lib/utils";
 import { audioService } from "@/lib/audioService";
 import { AchievementTracker } from "@/lib/achievementTracker";
 import { EnhancedAchievementPopup } from "@/components/EnhancedAchievementPopup";
+import {
+  DashboardWordGenerator,
+  DashboardWordSession,
+  UserProgress,
+} from "@/lib/dashboardWordGenerator";
 
 interface Word {
   id: number;
@@ -57,6 +62,9 @@ interface InteractiveDashboardWordCardProps {
   className?: string;
   onRequestNewWords?: () => void; // New prop to request fresh words
   onSessionProgress?: (stats: SessionStats) => void; // New prop to report session progress
+  // Systematic word generation props
+  dashboardSession?: DashboardWordSession | null;
+  onGenerateNewSession?: () => void; // Function to generate new systematic session
 }
 
 export interface SessionStats {
@@ -89,6 +97,8 @@ export function InteractiveDashboardWordCard({
   className,
   onRequestNewWords,
   onSessionProgress,
+  dashboardSession,
+  onGenerateNewSession,
 }: InteractiveDashboardWordCardProps) {
   // Session Management
   const SESSION_SIZE = 20;
@@ -118,7 +128,15 @@ export function InteractiveDashboardWordCard({
   const [guess, setGuess] = useState("");
   const [showHint, setShowHint] = useState(false);
 
-  // Initialize session with 20 words from available words
+  // Systematic progression state - DISABLED for clean UI
+  // const [progressionInfo, setProgressionInfo] = useState({
+  //   stage: "Foundation Building",
+  //   description: "Mastering easy words from all categories",
+  //   nextMilestone: 50,
+  //   progress: 0
+  // });
+
+  // Initialize session with systematic word generation
   useEffect(() => {
     if (words.length > 0 && sessionWords.length === 0) {
       const sessionWordSet = words.slice(0, SESSION_SIZE);
@@ -131,9 +149,26 @@ export function InteractiveDashboardWordCard({
         accuracy: 0,
         sessionStartTime: Date.now(),
       });
-      console.log(`New session started with ${sessionWordSet.length} words`);
+
+      // Update progression info if dashboard session is available
+      if (dashboardSession) {
+        const wordsCompleted = rememberedWordsCount;
+        // const progInfo = DashboardWordGenerator.getProgressionInfo(wordsCompleted);
+        // setProgressionInfo(progInfo);
+
+        console.log(`Systematic session started:`, {
+          stage: dashboardSession.sessionInfo.progressionStage,
+          difficulty: dashboardSession.sessionInfo.difficulty,
+          categories: dashboardSession.sessionInfo.categoriesUsed,
+          words: sessionWordSet.length,
+        });
+      } else {
+        console.log(
+          `Standard session started with ${sessionWordSet.length} words`,
+        );
+      }
     }
-  }, [words]);
+  }, [words, dashboardSession]);
 
   const currentWord = sessionWords[currentWordIndex] || null;
   const sessionProgress = Math.round(
@@ -370,10 +405,17 @@ export function InteractiveDashboardWordCard({
 
       setShowSessionComplete(true);
 
+      // Update progression info based on total words completed
+      const totalWordsCompleted =
+        rememberedWordsCount + newStats.wordsRemembered;
+      // const updatedProgInfo = DashboardWordGenerator.getProgressionInfo(totalWordsCompleted);
+      // setProgressionInfo(updatedProgInfo);
+
       console.log("Session completed!", {
         stats: newStats,
         achievements: achievements.map((a) => a.title),
         journeyAchievements: sessionJourneyAchievements.length,
+        totalWordsCompleted,
       });
       return;
     }
@@ -430,8 +472,12 @@ export function InteractiveDashboardWordCard({
       sessionStartTime: Date.now(),
     });
 
-    // Request new words for next session
-    if (onRequestNewWords) {
+    // Request new systematic session if available
+    if (onGenerateNewSession) {
+      console.log("Generating new systematic session...");
+      onGenerateNewSession();
+    } else if (onRequestNewWords) {
+      // Fallback to regular word request
       onRequestNewWords();
     }
 
@@ -571,7 +617,7 @@ export function InteractiveDashboardWordCard({
 
                         if (wordsLearned >= goal) {
                           if (wordsLearned >= goal * 2)
-                            return "🌟 SUPERSTAR! Amazing effort!";
+                            return "�� SUPERSTAR! Amazing effort!";
                           if (wordsLearned >= goal * 1.5)
                             return "🚀 Beyond awesome! Keep going!";
                           return "🎉 Goal achieved! You're incredible!";

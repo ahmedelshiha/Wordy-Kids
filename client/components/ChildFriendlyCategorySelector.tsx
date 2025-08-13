@@ -36,21 +36,6 @@ interface ChildFriendlyCategorySelectorProps {
 
 const enrichedCategories: Category[] = [
   {
-    id: "all",
-    name: "All Words",
-    icon: "📚",
-    color: "bg-slate-500",
-    gradient: "from-slate-400 to-slate-600",
-    wordCount: wordsDatabase.length,
-    description: "Explore our complete magical vocabulary collection!",
-    funFact: "Did you know we have over 100 amazing words to discover?",
-    difficultyBreakdown: {
-      easy: wordsDatabase.filter((w) => w.difficulty === "easy").length,
-      medium: wordsDatabase.filter((w) => w.difficulty === "medium").length,
-      hard: wordsDatabase.filter((w) => w.difficulty === "hard").length,
-    },
-  },
-  {
     id: "animals",
     name: "Animals",
     icon: "🦋",
@@ -343,10 +328,10 @@ const enrichedCategories: Category[] = [
         .length,
     },
   },
-].filter((category) => category.wordCount > 0 || category.id === "all");
+].filter((category) => category.wordCount > 0);
 
 export function ChildFriendlyCategorySelector({
-  selectedCategory = "all",
+  selectedCategory,
   onSelectCategory,
   userInterests = [],
 }: ChildFriendlyCategorySelectorProps) {
@@ -469,7 +454,7 @@ export function ChildFriendlyCategorySelector({
                   📚 {wordsDatabase.length}
                 </Badge>
                 <Badge className="bg-educational-blue text-white px-2 py-0.5 text-xs">
-                  🎯 {categories.length - 1}
+                  🎯 {categories.length}
                 </Badge>
               </div>
             </div>
@@ -492,7 +477,7 @@ export function ChildFriendlyCategorySelector({
               📚 {wordsDatabase.length} Amazing Words
             </Badge>
             <Badge className="bg-educational-blue text-white px-3 py-1 text-sm animate-pulse delay-100">
-              🎯 {categories.length - 1} Fun Categories
+              🎯 {categories.length} Fun Categories
             </Badge>
             <Badge className="bg-educational-purple text-white px-3 py-1 text-sm animate-pulse delay-200">
               ⭐ 3 Difficulty Levels
@@ -800,7 +785,7 @@ export function ChildFriendlyCategorySelector({
               </div>
               <div>
                 <div className="text-2xl font-bold text-educational-green">
-                  {categories.length - 1}
+                  {categories.length}
                 </div>
                 <div className="text-xs text-slate-600">Categories</div>
               </div>
@@ -864,8 +849,11 @@ export function ChildFriendlyCategorySelector({
         >
           <span className="relative z-10 flex items-center gap-2">
             <Sparkles className="w-6 h-6 animate-spin" />
-            🚀 Start Learning{" "}
-            {categories.find((c) => c.id === selectedCategory)?.name}! 🚀
+            🚀{" "}
+            {selectedCategory
+              ? `Start Learning ${categories.find((c) => c.id === selectedCategory)?.name}!`
+              : "Select a Category First!"}{" "}
+            🚀
             <Star className="w-6 h-6 animate-pulse" />
           </span>
 

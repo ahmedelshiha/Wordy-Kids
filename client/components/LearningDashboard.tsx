@@ -61,6 +61,9 @@ interface LearningDashboardProps {
   rememberedWordsCount?: number;
   onRequestNewWords?: () => void;
   onSessionProgress?: (stats: SessionStats) => void;
+  // Systematic word generation props
+  dashboardSession?: any; // DashboardWordSession
+  onGenerateNewSession?: () => void;
 }
 
 export const LearningDashboard: React.FC<LearningDashboardProps> = ({
@@ -78,6 +81,8 @@ export const LearningDashboard: React.FC<LearningDashboardProps> = ({
   rememberedWordsCount = 0,
   onRequestNewWords,
   onSessionProgress,
+  dashboardSession,
+  onGenerateNewSession,
 }) => {
   const completionPercentage = Math.round(
     (stats.wordsLearned / stats.totalWords) * 100,
@@ -164,6 +169,8 @@ export const LearningDashboard: React.FC<LearningDashboardProps> = ({
           rememberedWordsCount={rememberedWordsCount}
           onRequestNewWords={onRequestNewWords}
           onSessionProgress={onSessionProgress}
+          dashboardSession={dashboardSession}
+          onGenerateNewSession={onGenerateNewSession}
         />
       ) : (
         // Fallback welcome section if no words available

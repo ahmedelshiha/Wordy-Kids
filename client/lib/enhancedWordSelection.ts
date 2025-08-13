@@ -78,14 +78,27 @@ export class EnhancedWordSelector {
     );
 
     // Determine session strategy based on exhaustion and performance
-    const sessionStrategy = this.determineSessionStrategy(
+    let sessionStrategy = this.determineSessionStrategy(
       exhaustionLevel,
       childStats,
       categoryWords.length,
     );
 
+    // Override cross_category strategy if user selected a specific category
+    // Only use cross_category when user selected "all" or when no words available in selected category
+    if (sessionStrategy === "cross_category") {
+      if (selectedCategory !== "all" && categoryWords.length > 0) {
+        // Force staying within the selected category by using targeted_review or mixed_reinforcement
+        sessionStrategy =
+          exhaustionLevel >= 0.8 ? "targeted_review" : "mixed_reinforcement";
+        console.log(
+          `Overriding cross_category strategy to ${sessionStrategy} to respect category selection: ${selectedCategory}`,
+        );
+      }
+    }
+
     console.log(
-      `Session Strategy: ${sessionStrategy}, Exhaustion: ${exhaustionLevel.toFixed(2)}`,
+      `Session Strategy: ${sessionStrategy}, Exhaustion: ${exhaustionLevel.toFixed(2)}, Category: ${selectedCategory}`,
     );
 
     // Generate words based on strategy
@@ -111,6 +124,7 @@ export class EnhancedWordSelector {
 
       case "targeted_review":
         selectedWords = this.selectReviewWords(
+          categoryWords,
           userHistory,
           userProgress,
           childStats,
@@ -118,6 +132,7 @@ export class EnhancedWordSelector {
         break;
 
       case "cross_category":
+        // Only executed when user selected "all" or no words available in category
         selectedWords = this.selectCrossCategoryWords(
           userHistory,
           userProgress,
@@ -336,10 +351,12 @@ export class EnhancedWordSelector {
     // 40% review words (prioritize forgotten words)
     const reviewSlots = this.SESSION_SIZE - selected.length;
     const forgottenReviews = this.selectForgottenWordsForReview(
+      availableWords,
       userHistory,
       userProgress,
     );
     const rememberedReviews = this.selectRememberedWordsForReview(
+      availableWords,
       userHistory,
       userProgress,
     );
@@ -365,6 +382,7 @@ export class EnhancedWordSelector {
    * Select words specifically for review
    */
   private static selectReviewWords(
+    categoryWords: Word[],
     userHistory: Map<number, WordHistory>,
     userProgress: {
       rememberedWords: Set<number>;
@@ -377,6 +395,7 @@ export class EnhancedWordSelector {
 
     // Prioritize forgotten words
     const forgottenWords = this.selectForgottenWordsForReview(
+      categoryWords,
       userHistory,
       userProgress,
     );
@@ -386,6 +405,7 @@ export class EnhancedWordSelector {
 
     // Add some remembered words for reinforcement
     const rememberedWords = this.selectRememberedWordsForReview(
+      categoryWords,
       userHistory,
       userProgress,
     );
@@ -480,6 +500,7 @@ export class EnhancedWordSelector {
    * Select forgotten words that are ready for review
    */
   private static selectForgottenWordsForReview(
+    categoryWords: Word[],
     userHistory: Map<number, WordHistory>,
     userProgress: {
       rememberedWords: Set<number>;
@@ -491,7 +512,7 @@ export class EnhancedWordSelector {
     const forgottenWords: Word[] = [];
 
     userProgress.forgottenWords.forEach((wordId) => {
-      const word = wordsDatabase.find((w) => w.id === wordId);
+      const word = categoryWords.find((w) => w.id === wordId);
       const history = userHistory.get(wordId);
 
       if (word && history && now >= history.nextEligibleTime) {
@@ -513,6 +534,7 @@ export class EnhancedWordSelector {
    * Select remembered words for reinforcement
    */
   private static selectRememberedWordsForReview(
+    categoryWords: Word[],
     userHistory: Map<number, WordHistory>,
     userProgress: {
       rememberedWords: Set<number>;
@@ -524,7 +546,7 @@ export class EnhancedWordSelector {
     const rememberedWords: Word[] = [];
 
     userProgress.rememberedWords.forEach((wordId) => {
-      const word = wordsDatabase.find((w) => w.id === wordId);
+      const word = categoryWords.find((w) => w.id === wordId);
       const history = userHistory.get(wordId);
 
       if (word && history && now >= history.nextEligibleTime) {

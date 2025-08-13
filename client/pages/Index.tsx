@@ -47,6 +47,11 @@ import {
   WordHistory,
   SystematicWordSelection,
 } from "@/lib/enhancedWordSelection";
+import {
+  DashboardWordGenerator,
+  DashboardWordSession,
+  UserProgress,
+} from "@/lib/dashboardWordGenerator";
 import { isBackgroundAnimationsEnabled } from "@/lib/backgroundAnimations";
 import {
   generateQuizQuestions,
@@ -103,7 +108,7 @@ export default function Index({ initialProfile }: IndexProps) {
   const [selectedQuizType, setSelectedQuizType] = useState<
     "quick" | "standard" | "challenge" | "picture" | "spelling" | "speed"
   >("standard");
-  const [selectedCategory, setSelectedCategory] = useState("all");
+  const [selectedCategory, setSelectedCategory] = useState<string>("");
   const [learningMode, setLearningMode] = useState<
     "cards" | "matching" | "selector"
   >("selector");
@@ -150,29 +155,69 @@ export default function Index({ initialProfile }: IndexProps) {
   const [lastSystematicSelection, setLastSystematicSelection] =
     useState<SystematicWordSelection | null>(null);
 
+  // Dashboard word generation states
+  const [dashboardSession, setDashboardSession] =
+    useState<DashboardWordSession | null>(null);
+  const [dashboardSessionNumber, setDashboardSessionNumber] = useState(1);
+
   // Memoize displayWords to prevent recalculation on every render
   const displayWords = useMemo(() => {
     if (currentDashboardWords.length > 0) {
       return currentDashboardWords;
     }
     // Fallback calculation if currentDashboardWords is empty
-    const categoryWords =
-      selectedCategory === "all"
-        ? getRandomWords(20)
-        : getWordsByCategory(selectedCategory);
+    if (!selectedCategory) {
+      return []; // Return empty array if no category selected
+    }
+    const categoryWords = getWordsByCategory(selectedCategory);
     return categoryWords.slice(0, 20);
   }, [currentDashboardWords, selectedCategory]);
 
   // Initialize dashboard words when category changes or component mounts
   useEffect(() => {
     const initializeWords = () => {
-      if (currentDashboardWords.length === 0) {
+      if (selectedCategory && currentDashboardWords.length === 0) {
         generateFreshWords();
       }
     };
 
     initializeWords();
   }, [selectedCategory]); // Only re-initialize when category changes to prevent constant regeneration
+
+  // Initialize dashboard words for systematic learning (independent of category selection)
+  useEffect(() => {
+    const initializeDashboardWords = () => {
+      if (currentDashboardWords.length === 0) {
+        try {
+          generateDashboardWords();
+        } catch (error) {
+          console.error(
+            "Error generating dashboard words, using fallback:",
+            error,
+          );
+          // Fallback to random words if systematic generation fails
+          const fallbackWords = getRandomWords(20);
+          setCurrentDashboardWords(fallbackWords);
+        }
+      }
+    };
+
+    // Initialize dashboard words on component mount
+    initializeDashboardWords();
+  }, []); // Run only once on mount
+
+  // Regenerate dashboard words when user completes enough words to progress
+  useEffect(() => {
+    const wordsCompleted = rememberedWords.size;
+    const shouldRegenerate = wordsCompleted > 0 && wordsCompleted % 10 === 0; // Regenerate every 10 completed words
+
+    if (shouldRegenerate && dashboardSession) {
+      console.log(
+        `Regenerating dashboard words after ${wordsCompleted} completed words`,
+      );
+      generateDashboardWords();
+    }
+  }, [rememberedWords.size]); // Trigger when remembered words count changes
 
   // Debug logging for state changes
   useEffect(() => {
@@ -285,7 +330,7 @@ export default function Index({ initialProfile }: IndexProps) {
           const sessionResponse = await WordProgressAPI.startSession({
             childId: currentProfile.id,
             sessionType: "word_cards",
-            category: selectedCategory !== "all" ? selectedCategory : undefined,
+            category: selectedCategory,
           });
           setCurrentSessionId(sessionResponse.sessionId);
 
@@ -300,9 +345,7 @@ export default function Index({ initialProfile }: IndexProps) {
             wordsLearned: statsResponse.stats?.wordsRemembered || 0,
             streakDays: Math.floor(Math.random() * 5), // Demo data
             totalAccuracy: statsResponse.stats?.averageAccuracy || 80,
-            categoriesExplored: new Set([
-              selectedCategory !== "all" ? selectedCategory : "general",
-            ]),
+            categoriesExplored: new Set([selectedCategory]),
             timeSpentLearning: Math.floor(Math.random() * 120), // Demo data
             vowelQuizzesCompleted: 0,
           };
@@ -324,7 +367,7 @@ export default function Index({ initialProfile }: IndexProps) {
       type: "quiz",
       score: percentage,
       accuracy: percentage,
-      category: selectedCategory !== "all" ? selectedCategory : undefined,
+      category: selectedCategory,
     });
 
     setFeedback({
@@ -420,9 +463,17 @@ export default function Index({ initialProfile }: IndexProps) {
 
     // Reset session number for new category
     setSessionNumber(1);
+
+    // Clear current dashboard words to force regeneration
+    setCurrentDashboardWords([]);
   };
 
   const generateFreshWords = () => {
+    if (!selectedCategory) {
+      console.log("No category selected, skipping word generation");
+      return [];
+    }
+
     console.log(
       `Generating fresh words with enhanced system for category: ${selectedCategory}`,
     );
@@ -469,11 +520,65 @@ export default function Index({ initialProfile }: IndexProps) {
       console.error("Error in enhanced word generation:", error);
 
       // Fallback to original system
-      const fallbackWords =
-        selectedCategory === "all"
-          ? getRandomWords(20)
-          : getWordsByCategory(selectedCategory).slice(0, 20);
+      if (!selectedCategory) {
+        setCurrentDashboardWords([]);
+        return [];
+      }
+      const fallbackWords = getWordsByCategory(selectedCategory).slice(0, 20);
 
+      setCurrentDashboardWords(fallbackWords);
+      return fallbackWords;
+    }
+  };
+
+  const generateDashboardWords = () => {
+    console.log("Generating systematic dashboard words...");
+
+    try {
+      // Calculate total words completed (remembered words)
+      const wordsCompleted = rememberedWords.size;
+
+      // Create user progress object
+      const userProgress: UserProgress = {
+        wordsCompleted,
+        currentDifficulty:
+          wordsCompleted < 50
+            ? "easy"
+            : wordsCompleted < 100
+              ? "medium"
+              : "hard",
+        rememberedWords,
+        forgottenWords,
+        categoryProgress: new Map(),
+      };
+
+      // Generate systematic dashboard session
+      const session = DashboardWordGenerator.generateDashboardSession(
+        userProgress,
+        dashboardSessionNumber,
+      );
+
+      // Update states
+      setDashboardSession(session);
+      setCurrentDashboardWords(session.words);
+      setDashboardSessionNumber((prev) => prev + 1);
+
+      console.log("Dashboard session generated:", {
+        difficulty: session.sessionInfo.difficulty,
+        stage: session.sessionInfo.progressionStage,
+        categories: session.sessionInfo.categoriesUsed,
+        wordCount: session.words.length,
+        words: session.words.map(
+          (w) => `${w.word} (${w.category}, ${w.difficulty})`,
+        ),
+      });
+
+      return session.words;
+    } catch (error) {
+      console.error("Error generating dashboard words:", error);
+
+      // Fallback to random words
+      const fallbackWords = getRandomWords(20);
       setCurrentDashboardWords(fallbackWords);
       return fallbackWords;
     }
@@ -509,13 +614,12 @@ export default function Index({ initialProfile }: IndexProps) {
       let achievementMessage = "";
 
       // Format category name for display
-      const categoryDisplayName =
-        selectedCategory === "all" ? "this word set" : selectedCategory;
+      const categoryDisplayName = selectedCategory;
 
       if (accuracy === 100) {
         achievementTitle = "Perfect Category Mastery! 🏆";
         achievementIcon = "🏆";
-        achievementMessage = `Outstanding! You remembered ALL ${totalWords} words in ${categoryDisplayName}! You're a true champion!\n\n🎁 Perfect Mastery Bonus: 200 points!\n✨ New adventure zone unlocked!\n��� Master badge earned!`;
+        achievementMessage = `Outstanding! You remembered ALL ${totalWords} words in ${categoryDisplayName}! You're a true champion!\n\n🎁 Perfect Mastery Bonus: 200 points!\n✨ New adventure zone unlocked!\n👑 Master badge earned!`;
       } else if (accuracy >= 90) {
         achievementTitle = "Category Expert! 🎓";
         achievementIcon = "🎓⭐";
@@ -523,10 +627,10 @@ export default function Index({ initialProfile }: IndexProps) {
       } else if (accuracy >= 75) {
         achievementTitle = "Category Scholar! 📚✨";
         achievementIcon = "📚";
-        achievementMessage = `Great job! You completed ${categoryDisplayName} with ${accuracy}% accuracy! Keep up the good work!\n\n🎁 Scholar Bonus: 100 points!\n📚 Scholar badge earned!`;
+        achievementMessage = `Great job! You completed ${categoryDisplayName} with ${accuracy}% accuracy! Keep up the good work!\n\n🎓 Scholar Bonus: 100 points!\n📚 Scholar badge earned!`;
       } else if (accuracy >= 50) {
         achievementTitle = "Category Explorer! 🗺️🌟";
-        achievementIcon = "����";
+        achievementIcon = "🗺️";
         achievementMessage = `Good effort! You finished ${categoryDisplayName} with ${accuracy}% accuracy! Practice makes perfect!\n\n🎁 Explorer Bonus: 75 points!\n🎯 Explorer badge earned!`;
       } else {
         achievementTitle = "Category Challenger! 💪";
@@ -840,7 +944,7 @@ export default function Index({ initialProfile }: IndexProps) {
               </div>
             </div>
             <h1 className="text-2xl md:text-3xl font-bold mb-1">
-              🦉 Wordy's Adventure!
+              🌟 Wordy's Adventure!
             </h1>
             <p className="text-lg font-semibold text-educational-yellow-light mb-2">
               Fun vocabulary learning for kids! 📚
@@ -858,7 +962,7 @@ export default function Index({ initialProfile }: IndexProps) {
               📚
             </div>
             <div className="hidden md:block absolute bottom-10 left-20 text-4xl animate-bounce delay-1000">
-              🎉📚✨
+              🎯📚✨
             </div>
             <div className="hidden md:block absolute bottom-20 right-10 text-3xl animate-pulse delay-500">
               🚀
@@ -1099,7 +1203,7 @@ export default function Index({ initialProfile }: IndexProps) {
                       />
                     </div>
                     <span className="font-medium lg:font-semibold text-sm lg:text-base">
-                      🌟 My Journey
+                      🎯 My Journey
                     </span>
                   </button>
 
@@ -1222,6 +1326,8 @@ export default function Index({ initialProfile }: IndexProps) {
                       // Stay in current tab - practice component will show as overlay
                     }}
                     onRequestNewWords={generateFreshWords}
+                    dashboardSession={dashboardSession}
+                    onGenerateNewSession={generateDashboardWords}
                   />
 
                   {/* Enhanced Word Selection Debug Panel */}
@@ -1277,17 +1383,12 @@ export default function Index({ initialProfile }: IndexProps) {
 
                 <TabsContent value="learn">
                   <div className="space-y-8">
-                    {selectedCategory === "all" &&
-                    learningMode === "selector" ? (
+                    {learningMode === "selector" || !selectedCategory ? (
                       <ChildFriendlyCategorySelector
                         selectedCategory={selectedCategory}
                         onSelectCategory={(category) => {
                           handleCategoryChange(category);
-                          if (category === "all") {
-                            setLearningMode("cards");
-                          } else {
-                            setLearningMode("cards");
-                          }
+                          setLearningMode("cards");
                         }}
                         userInterests={currentProfile?.interests || []}
                       />
@@ -1300,20 +1401,19 @@ export default function Index({ initialProfile }: IndexProps) {
                             <div className="block sm:hidden">
                               <div className="text-center mb-2">
                                 <h2 className="text-lg font-bold text-slate-800">
-                                  {selectedCategory === "all"
-                                    ? "All Words"
-                                    : `${selectedCategory.charAt(0).toUpperCase() + selectedCategory.slice(1)} Words`}
+                                  {selectedCategory
+                                    ? `${selectedCategory.charAt(0).toUpperCase() + selectedCategory.slice(1)} Words`
+                                    : "Select a Category"}
                                 </h2>
                                 <p className="text-sm text-slate-600">
-                                  {selectedCategory === "all"
-                                    ? "Learn vocabulary from all categories!"
-                                    : `Learn ${selectedCategory} vocabulary!`}
+                                  {selectedCategory
+                                    ? `Learn ${selectedCategory} vocabulary!`
+                                    : "Choose a category to start learning!"}
                                 </p>
                               </div>
                               <div className="flex justify-center">
                                 <Button
                                   onClick={() => {
-                                    setSelectedCategory("all");
                                     setLearningMode("selector");
                                   }}
                                   variant="outline"
@@ -1329,20 +1429,19 @@ export default function Index({ initialProfile }: IndexProps) {
                             <div className="hidden sm:flex items-center justify-between gap-2">
                               <div className="text-left flex-1 min-w-0">
                                 <h2 className="text-lg md:text-xl font-bold text-slate-800 truncate">
-                                  {selectedCategory === "all"
-                                    ? "All Words"
-                                    : `${selectedCategory.charAt(0).toUpperCase() + selectedCategory.slice(1)} Words`}
+                                  {selectedCategory
+                                    ? `${selectedCategory.charAt(0).toUpperCase() + selectedCategory.slice(1)} Words`
+                                    : "Select a Category"}
                                 </h2>
                                 <p className="text-sm md:text-base text-slate-600">
-                                  {selectedCategory === "all"
-                                    ? "Learn vocabulary from all categories!"
-                                    : `Learn ${selectedCategory} vocabulary!`}
+                                  {selectedCategory
+                                    ? `Learn ${selectedCategory} vocabulary!`
+                                    : "Choose a category to start learning!"}
                                 </p>
                               </div>
                               <div className="flex-shrink-0">
                                 <Button
                                   onClick={() => {
-                                    setSelectedCategory("all");
                                     setLearningMode("selector");
                                   }}
                                   variant="outline"
@@ -1596,7 +1695,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                                     type: "celebration",
                                                     title:
                                                       completionResult.title,
-                                                    message: `${completionResult.message}\n\n✅ Remembered: ${completionResult.totalRemembered} words\n❌ Need practice: ${completionResult.totalWords - completionResult.totalRemembered} words\n\n🎉 Category Achievement Unlocked! 🎉`,
+                                                    message: `${completionResult.message}\n\n✅ Remembered: ${completionResult.totalRemembered} words\n❌ Need practice: ${completionResult.totalWords - completionResult.totalRemembered} words\n\n🏆 Category Achievement Unlocked! 🎉`,
                                                     points:
                                                       completionResult.totalRemembered *
                                                         20 +
@@ -1722,8 +1821,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                               }
                                               variant="ghost"
                                               size="sm"
-                                              className="px-2 sm:px-3 py-1 text-xs sm:text-sm h-8 sm:h-9"
-                                              className="text-gray-500 hover:text-gray-700 hover:bg-gray-100 py-1 px-3"
+                                              className="px-2 sm:px-3 py-1 text-xs sm:text-sm h-8 sm:h-9 text-gray-500 hover:text-gray-700 hover:bg-gray-100"
                                             >
                                               🤔 Try another word
                                             </Button>
@@ -1736,9 +1834,9 @@ export default function Index({ initialProfile }: IndexProps) {
                                           variant="outline"
                                           className="text-sm"
                                         >
-                                          {selectedCategory === "all"
-                                            ? "Random Selection"
-                                            : `${selectedCategory} Category`}{" "}
+                                          {selectedCategory
+                                            ? `${selectedCategory} Category`
+                                            : "No Category"}{" "}
                                           - Word {currentWordIndex + 1} of{" "}
                                           {displayWords.length}
                                         </Badge>
@@ -2201,9 +2299,7 @@ export default function Index({ initialProfile }: IndexProps) {
                     <GameLikeLearning
                       words={(() => {
                         const categoryWords =
-                          selectedCategory === "all"
-                            ? getRandomWords(20)
-                            : getWordsByCategory(selectedCategory);
+                          getWordsByCategory(selectedCategory);
                         return categoryWords.slice(0, 10);
                       })()}
                       onComplete={handleGameComplete}

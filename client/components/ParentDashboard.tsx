@@ -157,7 +157,7 @@ const sampleChildren: ChildProfile[] = [
     id: "1",
     name: "Alex",
     age: 8,
-    avatar: "���",
+    avatar: "👦",
     level: 3,
     totalPoints: 1250,
     wordsLearned: 47,
@@ -1172,7 +1172,7 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
                         <div>
                           <div>{child.name}'s Goals</div>
                           <p className="text-xs md:text-sm font-normal text-slate-600">
-                            {activeGoals} active • {completedGoals} completed
+                            {activeGoals} active �� {completedGoals} completed
                           </p>
                         </div>
                       </CardTitle>
@@ -2433,10 +2433,10 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
   // Helper functions for dynamic content
   const getCategoryEmoji = (category: string) => {
     const emojis: Record<string, string> = {
-      Animals: "���",
+      Animals: "🦋",
       Science: "🔬",
       Colors: "🌈",
-      Food: "��",
+      Food: "🍎",
       Transportation: "🚗",
       Nature: "🌲",
       Sports: "⚽",
@@ -2900,7 +2900,7 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
                           .map(
                             (strength) => `
                             <li>
-                                <span style="color: #10b981; font-size: 16px;">���</span>
+                                <span style="color: #10b981; font-size: 16px;">💪</span>
                                 <span>${strength}</span>
                             </li>
                         `,
