@@ -2176,10 +2176,7 @@ export default function Index({ initialProfile }: IndexProps) {
                   ) : gameMode ? (
                     <GameLikeLearning
                       words={(() => {
-                        const categoryWords =
-                          selectedCategory === "all"
-                            ? getRandomWords(20)
-                            : getWordsByCategory(selectedCategory);
+                        const categoryWords = getWordsByCategory(selectedCategory);
                         return categoryWords.slice(0, 10);
                       })()}
                       onComplete={handleGameComplete}
