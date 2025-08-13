@@ -414,6 +414,142 @@ const EnhancedUserManagement: React.FC<EnhancedUserManagementProps> = ({
     { type: "delete", label: "Delete Users", icon: X, variant: "destructive" },
   ];
 
+  // Form validation functions
+  const validateStep = (step: number): boolean => {
+    const errors: Record<string, string> = {};
+
+    switch (step) {
+      case 1: // Basic Information
+        if (!newUserData.name.trim()) {
+          errors.name = "Name is required";
+        }
+        if (!newUserData.email.trim()) {
+          errors.email = "Email is required";
+        } else if (!/\S+@\S+\.\S+/.test(newUserData.email)) {
+          errors.email = "Email is invalid";
+        } else if (users.some(user => user.email === newUserData.email)) {
+          errors.email = "Email already exists";
+        }
+        if (!newUserData.role) {
+          errors.role = "Role is required";
+        }
+        break;
+
+      case 2: // Account Details
+        if (newUserData.password && newUserData.password.length < 8) {
+          errors.password = "Password must be at least 8 characters";
+        }
+        if (newUserData.password !== newUserData.confirmPassword) {
+          errors.confirmPassword = "Passwords do not match";
+        }
+        if (newUserData.role === "child" && !newUserData.parentId) {
+          errors.parentId = "Parent is required for child accounts";
+        }
+        break;
+
+      case 3: // Contact & Preferences - Optional, no validation needed
+        break;
+    }
+
+    setFormErrors(errors);
+    return Object.keys(errors).length === 0;
+  };
+
+  const resetAddUserForm = () => {
+    setNewUserData({
+      name: "",
+      email: "",
+      role: "parent",
+      status: "active",
+      subscriptionType: "free",
+      parentId: "",
+      location: {
+        country: "",
+        state: "",
+        city: "",
+      },
+      preferences: {
+        notifications: true,
+        emailUpdates: true,
+        language: "en",
+        timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+      },
+      tags: [],
+      notes: "",
+      password: "",
+      confirmPassword: "",
+      sendWelcomeEmail: true,
+    });
+    setAddUserStep(1);
+    setFormErrors({});
+  };
+
+  const handleAddUser = async () => {
+    if (!validateStep(addUserStep)) return;
+
+    setIsSubmitting(true);
+
+    try {
+      // Simulate API call
+      await new Promise(resolve => setTimeout(resolve, 1500));
+
+      // Create new user
+      const newUser: AdminUser = {
+        id: (users.length + 1).toString(),
+        name: newUserData.name,
+        email: newUserData.email,
+        role: newUserData.role,
+        status: newUserData.status,
+        createdAt: new Date(),
+        lastActive: new Date(),
+        totalSessions: 0,
+        supportTickets: 0,
+        subscriptionType: newUserData.subscriptionType,
+        parentId: newUserData.parentId || undefined,
+        childrenCount: newUserData.role === "parent" ? 0 : undefined,
+        location: {
+          country: newUserData.location.country,
+          state: newUserData.location.state,
+          city: newUserData.location.city,
+        },
+        preferences: newUserData.preferences,
+        tags: newUserData.tags,
+        notes: newUserData.notes,
+        progress: newUserData.role === "child" ? {
+          wordsLearned: 0,
+          averageAccuracy: 0,
+          streakDays: 0,
+          totalPlayTime: 0,
+        } : undefined,
+      };
+
+      // Add to users list
+      setUsers(prev => [newUser, ...prev]);
+
+      // Reset form and close dialog
+      resetAddUserForm();
+      setShowUserDialog(false);
+
+      // Show success message (you could implement a toast here)
+      console.log("User created successfully:", newUser);
+
+    } catch (error) {
+      console.error("Error creating user:", error);
+      setFormErrors({ submit: "Failed to create user. Please try again." });
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const getParentUsers = () => {
+    return users.filter(user => user.role === "parent");
+  };
+
+  const getAvailableCountries = () => {
+    const countries = [...new Set(users.map(user => user.location?.country).filter(Boolean))];
+    return ["United States", "Canada", "United Kingdom", "Australia", "Germany", "France", "Spain", "Italy", "Japan", "Singapore", "Mexico", "Brazil", ...countries].filter((country, index, self) => self.indexOf(country) === index);
+  };
+
   // Filtering and sorting logic
   const filteredAndSortedUsers = useMemo(() => {
     let filtered = users.filter((user) => {
