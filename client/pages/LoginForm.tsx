@@ -4,20 +4,20 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
-import { 
-  ArrowLeft, 
-  LogIn, 
-  Eye, 
-  EyeOff, 
-  Mail, 
-  Lock, 
-  CheckCircle2, 
+import {
+  ArrowLeft,
+  LogIn,
+  Eye,
+  EyeOff,
+  Mail,
+  Lock,
+  CheckCircle2,
   AlertCircle,
   Loader2,
   Shield,
   UserCheck,
   Sparkles,
-  Heart
+  Heart,
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
@@ -35,12 +35,12 @@ interface ValidationState {
 export default function LoginForm() {
   const navigate = useNavigate();
   const emailInputRef = useRef<HTMLInputElement>(null);
-  
+
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
-  
+
   const [showPassword, setShowPassword] = useState(false);
   const [rememberMe, setRememberMe] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -48,13 +48,13 @@ export default function LoginForm() {
     email: false,
     password: false,
   });
-  
+
   const [errors, setErrors] = useState<FormErrors>({});
   const [validationState, setValidationState] = useState<ValidationState>({
     email: "neutral",
     password: "neutral",
   });
-  
+
   const [message, setMessage] = useState<{
     type: "success" | "error" | "info";
     text: string;
@@ -69,7 +69,7 @@ export default function LoginForm() {
   useEffect(() => {
     const rememberedEmail = localStorage.getItem("rememberedEmail");
     if (rememberedEmail) {
-      setFormData(prev => ({ ...prev, email: rememberedEmail }));
+      setFormData((prev) => ({ ...prev, email: rememberedEmail }));
       setRememberMe(true);
     }
   }, []);
@@ -91,32 +91,32 @@ export default function LoginForm() {
 
   // Update validation state
   const updateValidation = (field: keyof ValidationState, value: string) => {
-    const isValid = field === "email" 
-      ? !validateEmail(value) 
-      : !validatePassword(value);
-    
-    setValidationState(prev => ({
+    const isValid =
+      field === "email" ? !validateEmail(value) : !validatePassword(value);
+
+    setValidationState((prev) => ({
       ...prev,
-      [field]: value ? (isValid ? "valid" : "invalid") : "neutral"
+      [field]: value ? (isValid ? "valid" : "invalid") : "neutral",
     }));
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     const trimmedValue = value.trimStart(); // Only trim leading spaces
-    
-    setFormData(prev => ({
+
+    setFormData((prev) => ({
       ...prev,
       [name]: trimmedValue,
     }));
 
     // Real-time validation
     if (touched[name as keyof typeof touched]) {
-      const error = name === "email" 
-        ? validateEmail(trimmedValue) 
-        : validatePassword(trimmedValue);
-      
-      setErrors(prev => ({
+      const error =
+        name === "email"
+          ? validateEmail(trimmedValue)
+          : validatePassword(trimmedValue);
+
+      setErrors((prev) => ({
         ...prev,
         [name]: error,
         general: undefined,
@@ -133,14 +133,13 @@ export default function LoginForm() {
   };
 
   const handleBlur = (field: keyof typeof touched) => {
-    setTouched(prev => ({ ...prev, [field]: true }));
-    
+    setTouched((prev) => ({ ...prev, [field]: true }));
+
     const value = formData[field];
-    const error = field === "email" 
-      ? validateEmail(value) 
-      : validatePassword(value);
-    
-    setErrors(prev => ({ ...prev, [field]: error }));
+    const error =
+      field === "email" ? validateEmail(value) : validatePassword(value);
+
+    setErrors((prev) => ({ ...prev, [field]: error }));
   };
 
   const handleKeyDown = (e: React.KeyboardEvent, nextField?: string) => {
@@ -154,20 +153,20 @@ export default function LoginForm() {
   const validateForm = () => {
     const emailError = validateEmail(formData.email);
     const passwordError = validatePassword(formData.password);
-    
+
     const newErrors: FormErrors = {};
     if (emailError) newErrors.email = emailError;
     if (passwordError) newErrors.password = passwordError;
-    
+
     setErrors(newErrors);
     setTouched({ email: true, password: true });
-    
+
     return Object.keys(newErrors).length === 0;
   };
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!validateForm()) {
       setMessage({
         type: "error",
@@ -184,8 +183,8 @@ export default function LoginForm() {
 
     try {
       // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1200));
-      
+      await new Promise((resolve) => setTimeout(resolve, 1200));
+
       const registeredUsers = JSON.parse(
         localStorage.getItem("wordAdventureUsers") || "[]",
       );
@@ -212,16 +211,17 @@ export default function LoginForm() {
         });
 
         setTimeout(() => {
-          navigate("/app", { 
-            state: { 
+          navigate("/app", {
+            state: {
               loginSuccess: true,
-              userEmail: email 
-            }
+              userEmail: email,
+            },
           });
         }, 1000);
       } else {
-        setErrors({ 
-          general: "Invalid email or password. Please check your credentials and try again." 
+        setErrors({
+          general:
+            "Invalid email or password. Please check your credentials and try again.",
         });
         setMessage({
           type: "error",
@@ -260,7 +260,7 @@ export default function LoginForm() {
   const getInputClassName = (field: keyof ValidationState) => {
     const baseClass = "pr-10 transition-all duration-200";
     const state = validationState[field];
-    
+
     if (state === "valid") {
       return `${baseClass} border-green-400 focus:border-green-500 focus:ring-green-500/20`;
     } else if (state === "invalid") {
@@ -269,20 +269,37 @@ export default function LoginForm() {
     return `${baseClass} focus:border-blue-500 focus:ring-blue-500/20`;
   };
 
-  const isFormValid = !Object.keys(errors).length && formData.email && formData.password;
+  const isFormValid =
+    !Object.keys(errors).length && formData.email && formData.password;
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 flex items-center justify-center p-4 relative overflow-hidden">
       {/* Enhanced Background Pattern */}
       <div className="absolute inset-0 opacity-10">
-        <div className="absolute top-10 left-10 text-4xl animate-gentle-float">⭐</div>
-        <div className="absolute top-20 right-16 text-3xl animate-gentle-float animation-delay-200">📚</div>
-        <div className="absolute bottom-20 left-16 text-4xl animate-gentle-float animation-delay-100">🎯</div>
-        <div className="absolute bottom-10 right-20 text-3xl animate-gentle-float animation-delay-300">🚀</div>
-        <div className="absolute top-1/2 left-8 text-2xl animate-sparkle">✨</div>
-        <div className="absolute top-1/3 right-8 text-3xl animate-gentle-float animation-delay-200">🎪</div>
-        <div className="absolute bottom-1/3 left-1/4 text-2xl animate-sparkle animation-delay-100">🌈</div>
-        <div className="absolute top-1/4 right-1/4 text-3xl animate-gentle-float animation-delay-300">🎨</div>
+        <div className="absolute top-10 left-10 text-4xl animate-gentle-float">
+          ⭐
+        </div>
+        <div className="absolute top-20 right-16 text-3xl animate-gentle-float animation-delay-200">
+          📚
+        </div>
+        <div className="absolute bottom-20 left-16 text-4xl animate-gentle-float animation-delay-100">
+          🎯
+        </div>
+        <div className="absolute bottom-10 right-20 text-3xl animate-gentle-float animation-delay-300">
+          🚀
+        </div>
+        <div className="absolute top-1/2 left-8 text-2xl animate-sparkle">
+          ✨
+        </div>
+        <div className="absolute top-1/3 right-8 text-3xl animate-gentle-float animation-delay-200">
+          🎪
+        </div>
+        <div className="absolute bottom-1/3 left-1/4 text-2xl animate-sparkle animation-delay-100">
+          🌈
+        </div>
+        <div className="absolute top-1/4 right-1/4 text-3xl animate-gentle-float animation-delay-300">
+          🎨
+        </div>
       </div>
 
       <div className="w-full max-w-md mx-auto relative z-10">
@@ -320,8 +337,8 @@ export default function LoginForm() {
             <form onSubmit={handleLogin} className="space-y-5">
               {/* Email Field with Enhanced Validation */}
               <div className="space-y-2">
-                <Label 
-                  htmlFor="email" 
+                <Label
+                  htmlFor="email"
                   className="text-sm font-medium text-gray-700 flex items-center gap-2"
                 >
                   <Mail className="w-4 h-4 text-gray-500" />
@@ -351,7 +368,10 @@ export default function LoginForm() {
                   )}
                 </div>
                 {errors.email && (
-                  <p id="email-error" className="text-sm text-red-600 flex items-center gap-1">
+                  <p
+                    id="email-error"
+                    className="text-sm text-red-600 flex items-center gap-1"
+                  >
                     <AlertCircle className="w-3 h-3" />
                     {errors.email}
                   </p>
@@ -360,8 +380,8 @@ export default function LoginForm() {
 
               {/* Password Field with Enhanced Validation */}
               <div className="space-y-2">
-                <Label 
-                  htmlFor="password" 
+                <Label
+                  htmlFor="password"
                   className="text-sm font-medium text-gray-700 flex items-center gap-2"
                 >
                   <Lock className="w-4 h-4 text-gray-500" />
@@ -376,10 +396,14 @@ export default function LoginForm() {
                     value={formData.password}
                     onChange={handleInputChange}
                     onBlur={() => handleBlur("password")}
-                    onKeyDown={(e) => e.key === "Enter" && handleLogin(e as any)}
+                    onKeyDown={(e) =>
+                      e.key === "Enter" && handleLogin(e as any)
+                    }
                     disabled={isLoading}
                     className={getInputClassName("password")}
-                    aria-describedby={errors.password ? "password-error" : undefined}
+                    aria-describedby={
+                      errors.password ? "password-error" : undefined
+                    }
                     aria-invalid={!!errors.password}
                   />
                   <div className="absolute right-3 top-1/2 transform -translate-y-1/2 flex items-center gap-1">
@@ -394,7 +418,9 @@ export default function LoginForm() {
                       onClick={() => setShowPassword(!showPassword)}
                       className="text-gray-500 hover:text-gray-700 transition-colors ml-1"
                       disabled={isLoading}
-                      aria-label={showPassword ? "Hide password" : "Show password"}
+                      aria-label={
+                        showPassword ? "Hide password" : "Show password"
+                      }
                     >
                       {showPassword ? (
                         <EyeOff className="w-4 h-4" />
@@ -405,7 +431,10 @@ export default function LoginForm() {
                   </div>
                 </div>
                 {errors.password && (
-                  <p id="password-error" className="text-sm text-red-600 flex items-center gap-1">
+                  <p
+                    id="password-error"
+                    className="text-sm text-red-600 flex items-center gap-1"
+                  >
                     <AlertCircle className="w-3 h-3" />
                     {errors.password}
                   </p>
@@ -420,8 +449,8 @@ export default function LoginForm() {
                   onCheckedChange={setRememberMe}
                   disabled={isLoading}
                 />
-                <Label 
-                  htmlFor="remember" 
+                <Label
+                  htmlFor="remember"
                   className="text-sm text-gray-600 cursor-pointer flex items-center gap-1"
                 >
                   <Shield className="w-3 h-3" />
@@ -436,8 +465,8 @@ export default function LoginForm() {
                     message?.type === "success"
                       ? "bg-green-50 text-green-800 border-green-200"
                       : message?.type === "info"
-                      ? "bg-blue-50 text-blue-800 border-blue-200"
-                      : "bg-red-50 text-red-800 border-red-200"
+                        ? "bg-blue-50 text-blue-800 border-blue-200"
+                        : "bg-red-50 text-red-800 border-red-200"
                   }`}
                   role="alert"
                   aria-live="polite"
@@ -525,7 +554,9 @@ export default function LoginForm() {
             🚀 Quick Demo Access
           </p>
           <p className="text-xs text-blue-600">
-            Try: <code className="bg-blue-100 px-1 rounded">demo@example.com</code> / <code className="bg-blue-100 px-1 rounded">demo123</code>
+            Try:{" "}
+            <code className="bg-blue-100 px-1 rounded">demo@example.com</code> /{" "}
+            <code className="bg-blue-100 px-1 rounded">demo123</code>
           </p>
         </div>
       </div>
