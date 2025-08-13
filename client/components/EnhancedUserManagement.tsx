@@ -570,6 +570,266 @@ const EnhancedUserManagement: React.FC<EnhancedUserManagementProps> = ({
     return ["United States", "Canada", "United Kingdom", "Australia", "Germany", "France", "Spain", "Italy", "Japan", "Singapore", "Mexico", "Brazil", ...countries].filter((country, index, self) => self.indexOf(country) === index);
   };
 
+  // Import Users utility functions
+  const resetImportForm = () => {
+    setImportFile(null);
+    setImportData([]);
+    setImportHeaders([]);
+    setFieldMapping({});
+    setImportValidation({ valid: [], invalid: [], warnings: [] });
+    setImportProgress(0);
+    setImportResults(null);
+    setImportStep(1);
+  };
+
+  const parseCSV = (text: string): string[][] => {
+    const lines = text.split('\n').filter(line => line.trim());
+    return lines.map(line => {
+      const result = [];
+      let current = '';
+      let inQuotes = false;
+
+      for (let i = 0; i < line.length; i++) {
+        const char = line[i];
+
+        if (char === '"') {
+          inQuotes = !inQuotes;
+        } else if (char === ',' && !inQuotes) {
+          result.push(current.trim());
+          current = '';
+        } else {
+          current += char;
+        }
+      }
+
+      result.push(current.trim());
+      return result;
+    });
+  };
+
+  const processImportFile = async (file: File) => {
+    try {
+      const text = await file.text();
+      let data: string[][];
+
+      if (file.name.endsWith('.csv')) {
+        data = parseCSV(text);
+      } else {
+        throw new Error('Unsupported file type. Please upload a CSV file.');
+      }
+
+      if (data.length < 2) {
+        throw new Error('File must contain at least a header row and one data row.');
+      }
+
+      const headers = data[0].map(h => h.replace(/"/g, '').trim());
+      const rows = data.slice(1).map((row, index) => {
+        const obj: any = { _rowIndex: index + 2 }; // +2 because we start from row 2 (after header)
+        headers.forEach((header, i) => {
+          obj[header] = row[i] ? row[i].replace(/"/g, '').trim() : '';
+        });
+        return obj;
+      });
+
+      setImportHeaders(headers);
+      setImportData(rows);
+
+      // Auto-map common fields
+      const autoMapping: Record<string, string> = {};
+      headers.forEach(header => {
+        const lowerHeader = header.toLowerCase();
+        if (lowerHeader.includes('name') || lowerHeader === 'full name' || lowerHeader === 'user name') {
+          autoMapping[header] = 'name';
+        } else if (lowerHeader.includes('email') || lowerHeader === 'email address') {
+          autoMapping[header] = 'email';
+        } else if (lowerHeader.includes('role') || lowerHeader === 'user role') {
+          autoMapping[header] = 'role';
+        } else if (lowerHeader.includes('status') || lowerHeader === 'account status') {
+          autoMapping[header] = 'status';
+        } else if (lowerHeader.includes('subscription') || lowerHeader === 'plan') {
+          autoMapping[header] = 'subscriptionType';
+        } else if (lowerHeader.includes('country')) {
+          autoMapping[header] = 'location.country';
+        } else if (lowerHeader.includes('state') || lowerHeader.includes('region')) {
+          autoMapping[header] = 'location.state';
+        } else if (lowerHeader.includes('city')) {
+          autoMapping[header] = 'location.city';
+        }
+      });
+
+      setFieldMapping(autoMapping);
+      setImportStep(2);
+
+    } catch (error) {
+      console.error('Error processing file:', error);
+      setFormErrors({ file: error instanceof Error ? error.message : 'Failed to process file' });
+    }
+  };
+
+  const validateImportData = () => {
+    const valid: any[] = [];
+    const invalid: any[] = [];
+    const warnings: any[] = [];
+
+    importData.forEach(row => {
+      const errors: string[] = [];
+      const warns: string[] = [];
+
+      // Get mapped values
+      const mappedData: any = {};
+      Object.entries(fieldMapping).forEach(([header, field]) => {
+        if (field.includes('.')) {
+          const [parent, child] = field.split('.');
+          if (!mappedData[parent]) mappedData[parent] = {};
+          mappedData[parent][child] = row[header];
+        } else {
+          mappedData[field] = row[header];
+        }
+      });
+
+      // Validate required fields
+      if (!mappedData.name || mappedData.name.trim() === '') {
+        errors.push('Name is required');
+      }
+
+      if (!mappedData.email || mappedData.email.trim() === '') {
+        errors.push('Email is required');
+      } else if (!/\S+@\S+\.\S+/.test(mappedData.email)) {
+        errors.push('Invalid email format');
+      } else if (users.some(user => user.email === mappedData.email)) {
+        errors.push('Email already exists');
+      }
+
+      if (!mappedData.role) {
+        warns.push('Role not specified, will default to "parent"');
+        mappedData.role = 'parent';
+      } else if (!['parent', 'child', 'teacher', 'admin'].includes(mappedData.role)) {
+        errors.push('Invalid role. Must be: parent, child, teacher, or admin');
+      }
+
+      if (mappedData.status && !['active', 'inactive', 'pending', 'suspended'].includes(mappedData.status)) {
+        warns.push('Invalid status, will default to "active"');
+        mappedData.status = 'active';
+      }
+
+      if (mappedData.subscriptionType && !['free', 'premium', 'family', 'school'].includes(mappedData.subscriptionType)) {
+        warns.push('Invalid subscription type, will default to "free"');
+        mappedData.subscriptionType = 'free';
+      }
+
+      const validationResult = {
+        ...row,
+        _mappedData: mappedData,
+        _errors: errors,
+        _warnings: warns
+      };
+
+      if (errors.length > 0) {
+        invalid.push(validationResult);
+      } else {
+        if (warns.length > 0) {
+          warnings.push(validationResult);
+        }
+        valid.push(validationResult);
+      }
+    });
+
+    setImportValidation({ valid, invalid, warnings });
+    setImportStep(3);
+  };
+
+  const performImport = async () => {
+    setIsImporting(true);
+    setImportProgress(0);
+
+    const results = {
+      success: 0,
+      failed: 0,
+      errors: [] as Array<{ row: number; error: string; data: any }>
+    };
+
+    const validUsers = [...importValidation.valid, ...importValidation.warnings];
+    const totalUsers = validUsers.length;
+
+    try {
+      for (let i = 0; i < validUsers.length; i++) {
+        const userData = validUsers[i];
+        const progress = Math.round(((i + 1) / totalUsers) * 100);
+        setImportProgress(progress);
+
+        try {
+          // Simulate API delay
+          await new Promise(resolve => setTimeout(resolve, 100));
+
+          const newUser: AdminUser = {
+            id: (users.length + i + 1).toString(),
+            name: userData._mappedData.name,
+            email: userData._mappedData.email,
+            role: userData._mappedData.role || 'parent',
+            status: userData._mappedData.status || 'active',
+            createdAt: new Date(),
+            lastActive: new Date(),
+            totalSessions: 0,
+            supportTickets: 0,
+            subscriptionType: userData._mappedData.subscriptionType || 'free',
+            location: {
+              country: userData._mappedData.location?.country || '',
+              state: userData._mappedData.location?.state || '',
+              city: userData._mappedData.location?.city || '',
+            },
+            preferences: {
+              notifications: true,
+              emailUpdates: true,
+              language: 'en',
+              timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+            },
+            progress: userData._mappedData.role === 'child' ? {
+              wordsLearned: 0,
+              averageAccuracy: 0,
+              streakDays: 0,
+              totalPlayTime: 0,
+            } : undefined,
+          };
+
+          // Add to users list (we'll batch this at the end)
+          setUsers(prev => [newUser, ...prev]);
+          results.success++;
+
+        } catch (error) {
+          results.failed++;
+          results.errors.push({
+            row: userData._rowIndex,
+            error: error instanceof Error ? error.message : 'Unknown error',
+            data: userData._mappedData
+          });
+        }
+      }
+
+      setImportResults(results);
+      setImportStep(4);
+
+    } catch (error) {
+      console.error('Import failed:', error);
+      setFormErrors({ import: 'Import process failed. Please try again.' });
+    } finally {
+      setIsImporting(false);
+    }
+  };
+
+  const getFieldMappingOptions = () => {
+    return [
+      { value: '', label: 'Do not import' },
+      { value: 'name', label: 'Full Name *' },
+      { value: 'email', label: 'Email Address *' },
+      { value: 'role', label: 'User Role' },
+      { value: 'status', label: 'Account Status' },
+      { value: 'subscriptionType', label: 'Subscription Type' },
+      { value: 'location.country', label: 'Country' },
+      { value: 'location.state', label: 'State/Region' },
+      { value: 'location.city', label: 'City' },
+    ];
+  };
+
   // Filtering and sorting logic
   const filteredAndSortedUsers = useMemo(() => {
     let filtered = users.filter((user) => {
