@@ -1214,18 +1214,22 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
             </CardHeader>
             <CardContent className="px-3 md:px-6">
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-6">
-                {/* Words That Need Practice */}
+                {/* Words That Need Practice - Enhanced with Real Data */}
                 <div>
-                  <div className="flex items-center gap-2 mb-4">
-                    <AlertCircle className="w-5 h-5 text-orange-500" />
-                    <h3 className="text-lg font-semibold text-orange-700">
-                      Words Needing Practice
-                    </h3>
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="flex items-center gap-2">
+                      <AlertCircle className="w-4 h-4 md:w-5 md:h-5 text-orange-500" />
+                      <h3 className="text-base md:text-lg font-semibold text-orange-700">
+                        Practice Needed
+                      </h3>
+                    </div>
+                    <Badge className="bg-orange-100 text-orange-700 text-xs">
+                      {childrenWordStats[selectedChild.id]?.wordsNeedingPractice || 0} words
+                    </Badge>
                   </div>
-                  <div className="bg-orange-50 p-4 rounded-lg">
-                    <p className="text-sm text-gray-600 mb-3">
-                      These words were marked as "I Forgot" or have low accuracy
-                      rates. Focus practice sessions on these:
+                  <div className="bg-orange-50 p-3 md:p-4 rounded-lg">
+                    <p className="text-xs md:text-sm text-gray-600 mb-3">
+                      Words marked as "I Forgot" or with low accuracy rates. Focus practice here:
                     </p>
                     <div className="space-y-2 max-h-48 overflow-y-auto">
                       {/* Simulated struggling words - in real app this would come from API */}
@@ -2194,7 +2198,7 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
                           .map(
                             (area) => `
                             <li>
-                                <span style="color: #f59e0b; font-size: 16px;">🔄</span>
+                                <span style="color: #f59e0b; font-size: 16px;">��</span>
                                 <span>${area}</span>
                             </li>
                         `,
