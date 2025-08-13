@@ -906,14 +906,18 @@ const EnhancedSupportManagement: React.FC<EnhancedSupportManagementProps> = ({
                       </DropdownMenuItem>
                       <DropdownMenuSeparator />
                       <DropdownMenuLabel>Assign To</DropdownMenuLabel>
-                      {agents.map(agent => (
-                        <DropdownMenuItem 
-                          key={agent.id} 
+                      {agents && agents.length > 0 ? agents.map(agent => (
+                        <DropdownMenuItem
+                          key={agent.id}
                           onClick={() => handleBulkAssign(agent.name)}
                         >
                           {agent.name}
                         </DropdownMenuItem>
-                      ))}
+                      )) : (
+                        <DropdownMenuItem disabled>
+                          No agents available
+                        </DropdownMenuItem>
+                      )}
                       <DropdownMenuSeparator />
                       <DropdownMenuItem className="text-red-600">
                         <Trash2 className="w-4 h-4 mr-2" />
