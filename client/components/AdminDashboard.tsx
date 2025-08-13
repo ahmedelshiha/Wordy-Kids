@@ -1192,7 +1192,7 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onNavigateBack }) => {
                   onClick={() => setSortOrder(sortOrder === "asc" ? "desc" : "asc")}
                   className="px-3"
                 >
-                  {sortOrder === "asc" ? "��" : "↓"}
+                  {sortOrder === "asc" ? "↑" : "↓"}
                 </Button>
               </div>
             </div>
@@ -2186,16 +2186,30 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onNavigateBack }) => {
       <div className="md:hidden fixed bottom-6 right-4 z-50">
         <div className="flex flex-col gap-2">
           {activeTab === "content" && (
-            <Button
-              onClick={() => {
-                setWordEditorMode("create");
-                setEditingWord(null);
-                setShowWordEditor(true);
-              }}
-              className="w-14 h-14 rounded-full bg-educational-blue hover:bg-educational-blue/90 shadow-lg"
-            >
-              <Plus className="w-6 h-6" />
-            </Button>
+            <div className="flex flex-col gap-2">
+              <Button
+                onClick={() => {
+                  setCreateMethod("wizard");
+                  setShowCreateWizard(true);
+                }}
+                className="w-14 h-14 rounded-full bg-blue-600 hover:bg-blue-700 shadow-lg group relative"
+              >
+                <Plus className="w-6 h-6" />
+                <div className="absolute -top-1 -right-1 w-3 h-3 bg-green-500 rounded-full opacity-0 group-hover:opacity-100 transition-opacity" />
+              </Button>
+              <Button
+                onClick={() => {
+                  setWordEditorMode("create");
+                  setEditingWord(null);
+                  setShowWordEditor(true);
+                }}
+                size="sm"
+                variant="outline"
+                className="w-12 h-8 rounded-full bg-white/90 hover:bg-white shadow-md text-xs"
+              >
+                Quick
+              </Button>
+            </div>
           )}
           {activeTab === "tickets" && (
             <Button
