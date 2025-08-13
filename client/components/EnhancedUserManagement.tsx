@@ -1624,6 +1624,664 @@ const EnhancedUserManagement: React.FC<EnhancedUserManagementProps> = ({
           </AlertDialogContent>
         </AlertDialog>
       )}
+
+      {/* Enhanced Add User Dialog */}
+      {showUserDialog && (
+        <Dialog open={showUserDialog} onOpenChange={(open) => {
+          if (!open) {
+            setShowUserDialog(false);
+            resetAddUserForm();
+          }
+        }}>
+          <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto w-[95vw] sm:w-full">
+            <DialogHeader>
+              <DialogTitle className="flex items-center gap-3">
+                <div className="w-10 h-10 bg-blue-100 dark:bg-blue-900 rounded-full flex items-center justify-center">
+                  <Plus className="w-5 h-5 text-blue-600 dark:text-blue-400" />
+                </div>
+                <div>
+                  <h2 className="text-xl font-semibold">Add New User</h2>
+                  <p className="text-sm text-gray-500 font-normal">Create a new user account with personalized settings</p>
+                </div>
+              </DialogTitle>
+            </DialogHeader>
+
+            {/* Progress Indicator */}
+            <div className="flex items-center justify-between mb-6">
+              {[1, 2, 3].map((step) => (
+                <div key={step} className="flex items-center">
+                  <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium transition-colors ${
+                    step <= addUserStep
+                      ? "bg-blue-600 text-white"
+                      : "bg-gray-200 text-gray-600 dark:bg-gray-700 dark:text-gray-400"
+                  }`}>
+                    {step < addUserStep ? (
+                      <CheckCircle className="w-4 h-4" />
+                    ) : (
+                      step
+                    )}
+                  </div>
+                  {step < 3 && (
+                    <div className={`w-12 sm:w-24 h-1 mx-2 transition-colors ${
+                      step < addUserStep ? "bg-blue-600" : "bg-gray-200 dark:bg-gray-700"
+                    }`} />
+                  )}
+                </div>
+              ))}
+            </div>
+
+            {/* Step Titles */}
+            <div className="text-center mb-6">
+              <h3 className="text-lg font-semibold">
+                {addUserStep === 1 && "Basic Information"}
+                {addUserStep === 2 && "Account Details"}
+                {addUserStep === 3 && "Contact & Preferences"}
+              </h3>
+              <p className="text-sm text-gray-500">
+                {addUserStep === 1 && "Enter the user's basic information and role"}
+                {addUserStep === 2 && "Set up account credentials and permissions"}
+                {addUserStep === 3 && "Add contact details and preferences (optional)"}
+              </p>
+            </div>
+
+            {/* Step 1: Basic Information */}
+            {addUserStep === 1 && (
+              <div className="space-y-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <Label htmlFor="name" className="text-sm font-medium">
+                      Full Name <span className="text-red-500">*</span>
+                    </Label>
+                    <Input
+                      id="name"
+                      value={newUserData.name}
+                      onChange={(e) => {
+                        setNewUserData(prev => ({ ...prev, name: e.target.value }));
+                        if (formErrors.name) {
+                          setFormErrors(prev => ({ ...prev, name: "" }));
+                        }
+                      }}
+                      placeholder="Enter full name"
+                      className={formErrors.name ? "border-red-500" : ""}
+                    />
+                    {formErrors.name && (
+                      <p className="text-sm text-red-500 mt-1">{formErrors.name}</p>
+                    )}
+                  </div>
+
+                  <div>
+                    <Label htmlFor="email" className="text-sm font-medium">
+                      Email Address <span className="text-red-500">*</span>
+                    </Label>
+                    <Input
+                      id="email"
+                      type="email"
+                      value={newUserData.email}
+                      onChange={(e) => {
+                        setNewUserData(prev => ({ ...prev, email: e.target.value }));
+                        if (formErrors.email) {
+                          setFormErrors(prev => ({ ...prev, email: "" }));
+                        }
+                      }}
+                      placeholder="Enter email address"
+                      className={formErrors.email ? "border-red-500" : ""}
+                    />
+                    {formErrors.email && (
+                      <p className="text-sm text-red-500 mt-1">{formErrors.email}</p>
+                    )}
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <Label htmlFor="role" className="text-sm font-medium">
+                      User Role <span className="text-red-500">*</span>
+                    </Label>
+                    <Select
+                      value={newUserData.role}
+                      onValueChange={(value: AdminUser["role"]) => {
+                        setNewUserData(prev => ({ ...prev, role: value }));
+                        if (formErrors.role) {
+                          setFormErrors(prev => ({ ...prev, role: "" }));
+                        }
+                      }}
+                    >
+                      <SelectTrigger className={formErrors.role ? "border-red-500" : ""}>
+                        <SelectValue placeholder="Select role" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="parent">
+                          <div className="flex items-center gap-2">
+                            <Users className="w-4 h-4" />
+                            <div>
+                              <div className="font-medium">Parent</div>
+                              <div className="text-xs text-gray-500">Can manage children accounts</div>
+                            </div>
+                          </div>
+                        </SelectItem>
+                        <SelectItem value="child">
+                          <div className="flex items-center gap-2">
+                            <GraduationCap className="w-4 h-4" />
+                            <div>
+                              <div className="font-medium">Child</div>
+                              <div className="text-xs text-gray-500">Learning account for students</div>
+                            </div>
+                          </div>
+                        </SelectItem>
+                        <SelectItem value="teacher">
+                          <div className="flex items-center gap-2">
+                            <BookOpen className="w-4 h-4" />
+                            <div>
+                              <div className="font-medium">Teacher</div>
+                              <div className="text-xs text-gray-500">Educator with content management</div>
+                            </div>
+                          </div>
+                        </SelectItem>
+                        <SelectItem value="admin">
+                          <div className="flex items-center gap-2">
+                            <Shield className="w-4 h-4" />
+                            <div>
+                              <div className="font-medium">Administrator</div>
+                              <div className="text-xs text-gray-500">Full system access</div>
+                            </div>
+                          </div>
+                        </SelectItem>
+                      </SelectContent>
+                    </Select>
+                    {formErrors.role && (
+                      <p className="text-sm text-red-500 mt-1">{formErrors.role}</p>
+                    )}
+                  </div>
+
+                  <div>
+                    <Label htmlFor="status" className="text-sm font-medium">
+                      Account Status
+                    </Label>
+                    <Select
+                      value={newUserData.status}
+                      onValueChange={(value: AdminUser["status"]) =>
+                        setNewUserData(prev => ({ ...prev, status: value }))
+                      }
+                    >
+                      <SelectTrigger>
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="active">
+                          <div className="flex items-center gap-2">
+                            <CheckCircle className="w-4 h-4 text-green-500" />
+                            Active
+                          </div>
+                        </SelectItem>
+                        <SelectItem value="pending">
+                          <div className="flex items-center gap-2">
+                            <Clock className="w-4 h-4 text-yellow-500" />
+                            Pending Activation
+                          </div>
+                        </SelectItem>
+                        <SelectItem value="inactive">
+                          <div className="flex items-center gap-2">
+                            <XCircle className="w-4 h-4 text-gray-500" />
+                            Inactive
+                          </div>
+                        </SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                </div>
+
+                {/* Role-specific information */}
+                {newUserData.role === "child" && (
+                  <div className="p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg border border-blue-200 dark:border-blue-800">
+                    <div className="flex items-start gap-2">
+                      <Info className="w-4 h-4 text-blue-600 mt-0.5 flex-shrink-0" />
+                      <div className="text-sm text-blue-800 dark:text-blue-200">
+                        <p className="font-medium">Child Account Notice</p>
+                        <p>Child accounts require a parent to be assigned in the next step. They will have access to learning games and progress tracking.</p>
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                {newUserData.role === "teacher" && (
+                  <div className="p-3 bg-green-50 dark:bg-green-900/20 rounded-lg border border-green-200 dark:border-green-800">
+                    <div className="flex items-start gap-2">
+                      <Info className="w-4 h-4 text-green-600 mt-0.5 flex-shrink-0" />
+                      <div className="text-sm text-green-800 dark:text-green-200">
+                        <p className="font-medium">Teacher Account Permissions</p>
+                        <p>Teachers can create and manage educational content, view student progress, and access analytics.</p>
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </div>
+            )}
+
+            {/* Step 2: Account Details */}
+            {addUserStep === 2 && (
+              <div className="space-y-4">
+                {newUserData.role === "child" && (
+                  <div>
+                    <Label htmlFor="parentId" className="text-sm font-medium">
+                      Assign Parent <span className="text-red-500">*</span>
+                    </Label>
+                    <Select
+                      value={newUserData.parentId}
+                      onValueChange={(value) => {
+                        setNewUserData(prev => ({ ...prev, parentId: value }));
+                        if (formErrors.parentId) {
+                          setFormErrors(prev => ({ ...prev, parentId: "" }));
+                        }
+                      }}
+                    >
+                      <SelectTrigger className={formErrors.parentId ? "border-red-500" : ""}>
+                        <SelectValue placeholder="Select a parent" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {getParentUsers().map((parent) => (
+                          <SelectItem key={parent.id} value={parent.id}>
+                            <div className="flex items-center gap-2">
+                              <Avatar className="w-6 h-6">
+                                <AvatarFallback className="text-xs">
+                                  {parent.name.split(" ").map(n => n[0]).join("").toUpperCase()}
+                                </AvatarFallback>
+                              </Avatar>
+                              <div>
+                                <div className="font-medium">{parent.name}</div>
+                                <div className="text-xs text-gray-500">{parent.email}</div>
+                              </div>
+                            </div>
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                    {formErrors.parentId && (
+                      <p className="text-sm text-red-500 mt-1">{formErrors.parentId}</p>
+                    )}
+                  </div>
+                )}
+
+                <div>
+                  <Label htmlFor="subscriptionType" className="text-sm font-medium">
+                    Subscription Plan
+                  </Label>
+                  <Select
+                    value={newUserData.subscriptionType}
+                    onValueChange={(value: AdminUser["subscriptionType"]) =>
+                      setNewUserData(prev => ({ ...prev, subscriptionType: value }))
+                    }
+                  >
+                    <SelectTrigger>
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="free">
+                        <div className="flex items-center gap-2">
+                          <div className="w-3 h-3 rounded-full bg-gray-400"></div>
+                          <div>
+                            <div className="font-medium">Free</div>
+                            <div className="text-xs text-gray-500">Basic features</div>
+                          </div>
+                        </div>
+                      </SelectItem>
+                      <SelectItem value="premium">
+                        <div className="flex items-center gap-2">
+                          <div className="w-3 h-3 rounded-full bg-purple-500"></div>
+                          <div>
+                            <div className="font-medium">Premium</div>
+                            <div className="text-xs text-gray-500">Advanced features</div>
+                          </div>
+                        </div>
+                      </SelectItem>
+                      <SelectItem value="family">
+                        <div className="flex items-center gap-2">
+                          <div className="w-3 h-3 rounded-full bg-blue-500"></div>
+                          <div>
+                            <div className="font-medium">Family</div>
+                            <div className="text-xs text-gray-500">Multiple children support</div>
+                          </div>
+                        </div>
+                      </SelectItem>
+                      <SelectItem value="school">
+                        <div className="flex items-center gap-2">
+                          <div className="w-3 h-3 rounded-full bg-orange-500"></div>
+                          <div>
+                            <div className="font-medium">School</div>
+                            <div className="text-xs text-gray-500">Educational institution</div>
+                          </div>
+                        </div>
+                      </SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <Label htmlFor="password" className="text-sm font-medium">
+                      Password (Optional)
+                    </Label>
+                    <Input
+                      id="password"
+                      type="password"
+                      value={newUserData.password}
+                      onChange={(e) => {
+                        setNewUserData(prev => ({ ...prev, password: e.target.value }));
+                        if (formErrors.password) {
+                          setFormErrors(prev => ({ ...prev, password: "" }));
+                        }
+                      }}
+                      placeholder="Leave empty to auto-generate"
+                      className={formErrors.password ? "border-red-500" : ""}
+                    />
+                    {formErrors.password && (
+                      <p className="text-sm text-red-500 mt-1">{formErrors.password}</p>
+                    )}
+                  </div>
+
+                  <div>
+                    <Label htmlFor="confirmPassword" className="text-sm font-medium">
+                      Confirm Password
+                    </Label>
+                    <Input
+                      id="confirmPassword"
+                      type="password"
+                      value={newUserData.confirmPassword}
+                      onChange={(e) => {
+                        setNewUserData(prev => ({ ...prev, confirmPassword: e.target.value }));
+                        if (formErrors.confirmPassword) {
+                          setFormErrors(prev => ({ ...prev, confirmPassword: "" }));
+                        }
+                      }}
+                      placeholder="Confirm password"
+                      className={formErrors.confirmPassword ? "border-red-500" : ""}
+                      disabled={!newUserData.password}
+                    />
+                    {formErrors.confirmPassword && (
+                      <p className="text-sm text-red-500 mt-1">{formErrors.confirmPassword}</p>
+                    )}
+                  </div>
+                </div>
+
+                <div className="flex items-center space-x-2">
+                  <Checkbox
+                    id="sendWelcomeEmail"
+                    checked={newUserData.sendWelcomeEmail}
+                    onCheckedChange={(checked) =>
+                      setNewUserData(prev => ({ ...prev, sendWelcomeEmail: checked as boolean }))
+                    }
+                  />
+                  <Label htmlFor="sendWelcomeEmail" className="text-sm">
+                    Send welcome email with login instructions
+                  </Label>
+                </div>
+
+                {!newUserData.password && (
+                  <div className="p-3 bg-amber-50 dark:bg-amber-900/20 rounded-lg border border-amber-200 dark:border-amber-800">
+                    <div className="flex items-start gap-2">
+                      <Info className="w-4 h-4 text-amber-600 mt-0.5 flex-shrink-0" />
+                      <div className="text-sm text-amber-800 dark:text-amber-200">
+                        <p className="font-medium">Auto-Generated Password</p>
+                        <p>A secure password will be generated automatically and sent via welcome email.</p>
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </div>
+            )}
+
+            {/* Step 3: Contact & Preferences */}
+            {addUserStep === 3 && (
+              <div className="space-y-4">
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                  <div>
+                    <Label htmlFor="country" className="text-sm font-medium">
+                      Country
+                    </Label>
+                    <Select
+                      value={newUserData.location.country}
+                      onValueChange={(value) =>
+                        setNewUserData(prev => ({
+                          ...prev,
+                          location: { ...prev.location, country: value }
+                        }))
+                      }
+                    >
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select country" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {getAvailableCountries().map((country) => (
+                          <SelectItem key={country} value={country}>
+                            {country}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </div>
+
+                  <div>
+                    <Label htmlFor="state" className="text-sm font-medium">
+                      State/Region
+                    </Label>
+                    <Input
+                      id="state"
+                      value={newUserData.location.state}
+                      onChange={(e) =>
+                        setNewUserData(prev => ({
+                          ...prev,
+                          location: { ...prev.location, state: e.target.value }
+                        }))
+                      }
+                      placeholder="Enter state/region"
+                    />
+                  </div>
+
+                  <div>
+                    <Label htmlFor="city" className="text-sm font-medium">
+                      City
+                    </Label>
+                    <Input
+                      id="city"
+                      value={newUserData.location.city}
+                      onChange={(e) =>
+                        setNewUserData(prev => ({
+                          ...prev,
+                          location: { ...prev.location, city: e.target.value }
+                        }))
+                      }
+                      placeholder="Enter city"
+                    />
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <Label htmlFor="language" className="text-sm font-medium">
+                      Preferred Language
+                    </Label>
+                    <Select
+                      value={newUserData.preferences.language}
+                      onValueChange={(value) =>
+                        setNewUserData(prev => ({
+                          ...prev,
+                          preferences: { ...prev.preferences, language: value }
+                        }))
+                      }
+                    >
+                      <SelectTrigger>
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="en">English</SelectItem>
+                        <SelectItem value="es">Spanish</SelectItem>
+                        <SelectItem value="fr">French</SelectItem>
+                        <SelectItem value="de">German</SelectItem>
+                        <SelectItem value="it">Italian</SelectItem>
+                        <SelectItem value="pt">Portuguese</SelectItem>
+                        <SelectItem value="ja">Japanese</SelectItem>
+                        <SelectItem value="zh">Chinese</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+
+                  <div>
+                    <Label htmlFor="timezone" className="text-sm font-medium">
+                      Timezone
+                    </Label>
+                    <Input
+                      id="timezone"
+                      value={newUserData.preferences.timezone}
+                      onChange={(e) =>
+                        setNewUserData(prev => ({
+                          ...prev,
+                          preferences: { ...prev.preferences, timezone: e.target.value }
+                        }))
+                      }
+                      placeholder="Timezone"
+                      readOnly
+                      className="bg-gray-50 dark:bg-gray-800"
+                    />
+                  </div>
+                </div>
+
+                <div className="space-y-3">
+                  <Label className="text-sm font-medium">Notification Preferences</Label>
+                  <div className="space-y-2">
+                    <div className="flex items-center space-x-2">
+                      <Checkbox
+                        id="notifications"
+                        checked={newUserData.preferences.notifications}
+                        onCheckedChange={(checked) =>
+                          setNewUserData(prev => ({
+                            ...prev,
+                            preferences: { ...prev.preferences, notifications: checked as boolean }
+                          }))
+                        }
+                      />
+                      <Label htmlFor="notifications" className="text-sm">
+                        Enable push notifications
+                      </Label>
+                    </div>
+
+                    <div className="flex items-center space-x-2">
+                      <Checkbox
+                        id="emailUpdates"
+                        checked={newUserData.preferences.emailUpdates}
+                        onCheckedChange={(checked) =>
+                          setNewUserData(prev => ({
+                            ...prev,
+                            preferences: { ...prev.preferences, emailUpdates: checked as boolean }
+                          }))
+                        }
+                      />
+                      <Label htmlFor="emailUpdates" className="text-sm">
+                        Receive email updates and newsletters
+                      </Label>
+                    </div>
+                  </div>
+                </div>
+
+                <div>
+                  <Label htmlFor="tags" className="text-sm font-medium">
+                    User Tags (Optional)
+                  </Label>
+                  <Input
+                    id="tags"
+                    value={newUserData.tags.join(", ")}
+                    onChange={(e) =>
+                      setNewUserData(prev => ({
+                        ...prev,
+                        tags: e.target.value.split(",").map(tag => tag.trim()).filter(Boolean)
+                      }))
+                    }
+                    placeholder="e.g., new-user, premium-trial, beta-tester"
+                  />
+                  <p className="text-xs text-gray-500 mt-1">Separate multiple tags with commas</p>
+                </div>
+
+                <div>
+                  <Label htmlFor="notes" className="text-sm font-medium">
+                    Admin Notes (Optional)
+                  </Label>
+                  <Textarea
+                    id="notes"
+                    value={newUserData.notes}
+                    onChange={(e) =>
+                      setNewUserData(prev => ({ ...prev, notes: e.target.value }))
+                    }
+                    placeholder="Add any additional notes about this user..."
+                    rows={3}
+                  />
+                </div>
+              </div>
+            )}
+
+            {/* Form Errors */}
+            {formErrors.submit && (
+              <div className="p-3 bg-red-50 dark:bg-red-900/20 rounded-lg border border-red-200 dark:border-red-800">
+                <div className="flex items-center gap-2">
+                  <AlertTriangle className="w-4 h-4 text-red-600" />
+                  <p className="text-sm text-red-800 dark:text-red-200 font-medium">
+                    {formErrors.submit}
+                  </p>
+                </div>
+              </div>
+            )}
+
+            {/* Dialog Footer */}
+            <div className="flex flex-col sm:flex-row gap-3 pt-4 border-t">
+              <Button
+                variant="outline"
+                onClick={() => {
+                  if (addUserStep > 1) {
+                    setAddUserStep(prev => prev - 1);
+                  } else {
+                    setShowUserDialog(false);
+                    resetAddUserForm();
+                  }
+                }}
+                className="order-2 sm:order-1"
+              >
+                {addUserStep > 1 ? "Previous" : "Cancel"}
+              </Button>
+
+              <div className="flex gap-3 flex-1 order-1 sm:order-2">
+                {addUserStep < 3 ? (
+                  <Button
+                    onClick={() => {
+                      if (validateStep(addUserStep)) {
+                        setAddUserStep(prev => prev + 1);
+                      }
+                    }}
+                    className="flex-1"
+                  >
+                    Next Step
+                    <ChevronDown className="w-4 h-4 ml-2 rotate-[-90deg]" />
+                  </Button>
+                ) : (
+                  <Button
+                    onClick={handleAddUser}
+                    disabled={isSubmitting}
+                    className="flex-1"
+                  >
+                    {isSubmitting ? (
+                      <>
+                        <RefreshCw className="w-4 h-4 mr-2 animate-spin" />
+                        Creating User...
+                      </>
+                    ) : (
+                      <>
+                        <Save className="w-4 h-4 mr-2" />
+                        Create User
+                      </>
+                    )}
+                  </Button>
+                )}
+              </div>
+            </div>
+          </DialogContent>
+        </Dialog>
+      )}
     </div>
   );
 };
