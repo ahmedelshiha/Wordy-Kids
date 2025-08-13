@@ -493,6 +493,52 @@ export default function Index({ initialProfile }: IndexProps) {
     }
   };
 
+  const generateDashboardWords = () => {
+    console.log("Generating systematic dashboard words...");
+
+    try {
+      // Calculate total words completed (remembered words)
+      const wordsCompleted = rememberedWords.size;
+
+      // Create user progress object
+      const userProgress: UserProgress = {
+        wordsCompleted,
+        currentDifficulty: wordsCompleted < 50 ? "easy" : wordsCompleted < 100 ? "medium" : "hard",
+        rememberedWords,
+        forgottenWords,
+        categoryProgress: new Map()
+      };
+
+      // Generate systematic dashboard session
+      const session = DashboardWordGenerator.generateDashboardSession(
+        userProgress,
+        dashboardSessionNumber
+      );
+
+      // Update states
+      setDashboardSession(session);
+      setCurrentDashboardWords(session.words);
+      setDashboardSessionNumber(prev => prev + 1);
+
+      console.log("Dashboard session generated:", {
+        difficulty: session.sessionInfo.difficulty,
+        stage: session.sessionInfo.progressionStage,
+        categories: session.sessionInfo.categoriesUsed,
+        wordCount: session.words.length,
+        words: session.words.map(w => `${w.word} (${w.category}, ${w.difficulty})`)
+      });
+
+      return session.words;
+    } catch (error) {
+      console.error("Error generating dashboard words:", error);
+
+      // Fallback to random words
+      const fallbackWords = getRandomWords(20);
+      setCurrentDashboardWords(fallbackWords);
+      return fallbackWords;
+    }
+  };
+
   const checkCategoryCompletion = (
     displayWords: any[],
     rememberedWords: Set<number>,
