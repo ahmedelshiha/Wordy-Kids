@@ -2562,6 +2562,562 @@ const EnhancedUserManagement: React.FC<EnhancedUserManagementProps> = ({
           </DialogContent>
         </Dialog>
       )}
+
+      {/* Enhanced Import Users Dialog */}
+      {showImportDialog && (
+        <Dialog open={showImportDialog} onOpenChange={(open) => {
+          if (!open) {
+            setShowImportDialog(false);
+            resetImportForm();
+          }
+        }}>
+          <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto w-[95vw] sm:w-full">
+            <DialogHeader>
+              <DialogTitle className="flex items-center gap-3">
+                <div className="w-10 h-10 bg-green-100 dark:bg-green-900 rounded-full flex items-center justify-center">
+                  <Upload className="w-5 h-5 text-green-600 dark:text-green-400" />
+                </div>
+                <div>
+                  <h2 className="text-xl font-semibold">Import Users</h2>
+                  <p className="text-sm text-gray-500 font-normal">Bulk import users from CSV file</p>
+                </div>
+              </DialogTitle>
+            </DialogHeader>
+
+            {/* Progress Indicator */}
+            <div className="flex items-center justify-between mb-6">
+              {[1, 2, 3, 4].map((step) => (
+                <div key={step} className="flex items-center">
+                  <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium transition-colors ${
+                    step <= importStep
+                      ? "bg-green-600 text-white"
+                      : "bg-gray-200 text-gray-600 dark:bg-gray-700 dark:text-gray-400"
+                  }`}>
+                    {step < importStep ? (
+                      <CheckCircle className="w-4 h-4" />
+                    ) : (
+                      step
+                    )}
+                  </div>
+                  {step < 4 && (
+                    <div className={`w-8 sm:w-16 h-1 mx-2 transition-colors ${
+                      step < importStep ? "bg-green-600" : "bg-gray-200 dark:bg-gray-700"
+                    }`} />
+                  )}
+                </div>
+              ))}
+            </div>
+
+            {/* Step Titles */}
+            <div className="text-center mb-6">
+              <h3 className="text-lg font-semibold">
+                {importStep === 1 && "Upload File"}
+                {importStep === 2 && "Map Fields"}
+                {importStep === 3 && "Review & Validate"}
+                {importStep === 4 && "Import Results"}
+              </h3>
+              <p className="text-sm text-gray-500">
+                {importStep === 1 && "Upload your CSV file containing user data"}
+                {importStep === 2 && "Map CSV columns to user fields"}
+                {importStep === 3 && "Review data and fix any validation errors"}
+                {importStep === 4 && "View import results and summary"}
+              </p>
+            </div>
+
+            {/* Step 1: Upload File */}
+            {importStep === 1 && (
+              <div className="space-y-6">
+                {/* File Upload Area */}
+                <div className="border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg p-8 text-center">
+                  <input
+                    type="file"
+                    accept=".csv"
+                    onChange={(e) => {
+                      const file = e.target.files?.[0];
+                      if (file) {
+                        setImportFile(file);
+                        setFormErrors(prev => ({ ...prev, file: "" }));
+                      }
+                    }}
+                    className="hidden"
+                    id="import-file"
+                  />
+                  <label
+                    htmlFor="import-file"
+                    className="cursor-pointer flex flex-col items-center space-y-4"
+                  >
+                    <div className="w-16 h-16 bg-blue-100 dark:bg-blue-900 rounded-full flex items-center justify-center">
+                      <Upload className="w-8 h-8 text-blue-600 dark:text-blue-400" />
+                    </div>
+                    <div>
+                      <p className="text-lg font-medium">
+                        {importFile ? importFile.name : "Choose a CSV file to upload"}
+                      </p>
+                      <p className="text-sm text-gray-500">
+                        Click to browse or drag and drop your file here
+                      </p>
+                    </div>
+                  </label>
+
+                  {importFile && (
+                    <div className="mt-4 flex items-center justify-center gap-4 text-sm">
+                      <div className="flex items-center gap-2 text-green-600">
+                        <CheckCircle className="w-4 h-4" />
+                        File selected: {importFile.name}
+                      </div>
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => setImportFile(null)}
+                      >
+                        Remove
+                      </Button>
+                    </div>
+                  )}
+                </div>
+
+                {formErrors.file && (
+                  <div className="p-3 bg-red-50 dark:bg-red-900/20 rounded-lg border border-red-200 dark:border-red-800">
+                    <div className="flex items-center gap-2">
+                      <AlertTriangle className="w-4 h-4 text-red-600" />
+                      <p className="text-sm text-red-800 dark:text-red-200">{formErrors.file}</p>
+                    </div>
+                  </div>
+                )}
+
+                {/* CSV Format Information */}
+                <div className="bg-blue-50 dark:bg-blue-900/20 rounded-lg p-4 border border-blue-200 dark:border-blue-800">
+                  <h4 className="font-medium text-blue-900 dark:text-blue-100 mb-2">CSV Format Requirements</h4>
+                  <ul className="text-sm text-blue-800 dark:text-blue-200 space-y-1">
+                    <li>• First row must contain column headers</li>
+                    <li>• Required fields: Name, Email</li>
+                    <li>• Optional fields: Role, Status, Subscription, Country, State, City</li>
+                    <li>• Role values: parent, child, teacher, admin</li>
+                    <li>• Status values: active, inactive, pending, suspended</li>
+                    <li>• Subscription values: free, premium, family, school</li>
+                  </ul>
+                </div>
+
+                {/* Sample Template */}
+                <div className="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
+                  <div>
+                    <h4 className="font-medium">Need a template?</h4>
+                    <p className="text-sm text-gray-600 dark:text-gray-400">
+                      Download our CSV template to get started quickly
+                    </p>
+                  </div>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => {
+                      const csvContent = "Name,Email,Role,Status,Subscription,Country,State,City\nJohn Doe,john@example.com,parent,active,premium,United States,California,San Francisco\nJane Smith,jane@example.com,child,active,family,United States,New York,New York";
+                      const blob = new Blob([csvContent], { type: 'text/csv' });
+                      const url = window.URL.createObjectURL(blob);
+                      const a = document.createElement('a');
+                      a.href = url;
+                      a.download = 'user_import_template.csv';
+                      a.click();
+                    }}
+                  >
+                    <Download className="w-4 h-4 mr-2" />
+                    Download Template
+                  </Button>
+                </div>
+              </div>
+            )}
+
+            {/* Step 2: Map Fields */}
+            {importStep === 2 && (
+              <div className="space-y-6">
+                <div className="bg-amber-50 dark:bg-amber-900/20 rounded-lg p-4 border border-amber-200 dark:border-amber-800">
+                  <div className="flex items-start gap-2">
+                    <Info className="w-4 h-4 text-amber-600 mt-0.5 flex-shrink-0" />
+                    <div className="text-sm text-amber-800 dark:text-amber-200">
+                      <p className="font-medium">Field Mapping</p>
+                      <p>Map your CSV columns to user fields. Required fields are marked with *</p>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="grid gap-4">
+                  {importHeaders.map((header, index) => (
+                    <div key={index} className="grid grid-cols-1 sm:grid-cols-3 gap-4 items-center p-4 border rounded-lg">
+                      <div>
+                        <Label className="font-medium">CSV Column</Label>
+                        <p className="text-sm text-gray-600 dark:text-gray-400">{header}</p>
+                        {importData[0] && (
+                          <p className="text-xs text-gray-500 mt-1">
+                            Sample: "{importData[0][header]}"
+                          </p>
+                        )}
+                      </div>
+
+                      <div className="sm:col-span-2">
+                        <Label className="font-medium">Maps to</Label>
+                        <Select
+                          value={fieldMapping[header] || ''}
+                          onValueChange={(value) => {
+                            setFieldMapping(prev => ({
+                              ...prev,
+                              [header]: value
+                            }));
+                          }}
+                        >
+                          <SelectTrigger>
+                            <SelectValue placeholder="Select field to map to" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            {getFieldMappingOptions().map((option) => (
+                              <SelectItem key={option.value} value={option.value}>
+                                {option.label}
+                              </SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+
+                {/* Mapping Summary */}
+                <div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-4">
+                  <h4 className="font-medium mb-3">Mapping Summary</h4>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
+                    <div>
+                      <p className="font-medium text-green-600">Mapped Fields:</p>
+                      <ul className="mt-1 space-y-1">
+                        {Object.entries(fieldMapping)
+                          .filter(([, field]) => field)
+                          .map(([header, field]) => (
+                            <li key={header}>
+                              {header} → {getFieldMappingOptions().find(o => o.value === field)?.label}
+                            </li>
+                          ))}
+                      </ul>
+                    </div>
+                    <div>
+                      <p className="font-medium text-gray-600">Unmapped Columns:</p>
+                      <ul className="mt-1 space-y-1">
+                        {importHeaders
+                          .filter(header => !fieldMapping[header])
+                          .map(header => (
+                            <li key={header}>{header}</li>
+                          ))}
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* Step 3: Review & Validate */}
+            {importStep === 3 && (
+              <div className="space-y-6">
+                {/* Validation Summary */}
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                  <Card>
+                    <CardContent className="p-4 text-center">
+                      <CheckCircle className="w-8 h-8 text-green-500 mx-auto mb-2" />
+                      <div className="text-2xl font-bold text-green-600">
+                        {importValidation.valid.length}
+                      </div>
+                      <p className="text-sm text-gray-600">Valid Records</p>
+                    </CardContent>
+                  </Card>
+
+                  <Card>
+                    <CardContent className="p-4 text-center">
+                      <AlertTriangle className="w-8 h-8 text-yellow-500 mx-auto mb-2" />
+                      <div className="text-2xl font-bold text-yellow-600">
+                        {importValidation.warnings.length}
+                      </div>
+                      <p className="text-sm text-gray-600">With Warnings</p>
+                    </CardContent>
+                  </Card>
+
+                  <Card>
+                    <CardContent className="p-4 text-center">
+                      <XCircle className="w-8 h-8 text-red-500 mx-auto mb-2" />
+                      <div className="text-2xl font-bold text-red-600">
+                        {importValidation.invalid.length}
+                      </div>
+                      <p className="text-sm text-gray-600">Invalid Records</p>
+                    </CardContent>
+                  </Card>
+                </div>
+
+                {/* Invalid Records */}
+                {importValidation.invalid.length > 0 && (
+                  <div>
+                    <h4 className="font-medium text-red-600 mb-3">
+                      Invalid Records ({importValidation.invalid.length})
+                    </h4>
+                    <div className="space-y-3 max-h-60 overflow-y-auto">
+                      {importValidation.invalid.slice(0, 10).map((record, index) => (
+                        <div key={index} className="p-3 bg-red-50 dark:bg-red-900/20 rounded border border-red-200 dark:border-red-800">
+                          <div className="flex justify-between items-start mb-2">
+                            <span className="font-medium text-red-800 dark:text-red-200">
+                              Row {record._rowIndex}
+                            </span>
+                            <Badge variant="destructive">Invalid</Badge>
+                          </div>
+                          <p className="text-sm text-red-700 dark:text-red-300">
+                            {record._mappedData.name || 'No name'} - {record._mappedData.email || 'No email'}
+                          </p>
+                          <ul className="text-xs text-red-600 dark:text-red-400 mt-1">
+                            {record._errors.map((error: string, i: number) => (
+                              <li key={i}>• {error}</li>
+                            ))}
+                          </ul>
+                        </div>
+                      ))}
+                      {importValidation.invalid.length > 10 && (
+                        <p className="text-sm text-gray-500 text-center">
+                          ... and {importValidation.invalid.length - 10} more invalid records
+                        </p>
+                      )}
+                    </div>
+                  </div>
+                )}
+
+                {/* Warning Records */}
+                {importValidation.warnings.length > 0 && (
+                  <div>
+                    <h4 className="font-medium text-yellow-600 mb-3">
+                      Records with Warnings ({importValidation.warnings.length})
+                    </h4>
+                    <div className="space-y-3 max-h-40 overflow-y-auto">
+                      {importValidation.warnings.slice(0, 5).map((record, index) => (
+                        <div key={index} className="p-3 bg-yellow-50 dark:bg-yellow-900/20 rounded border border-yellow-200 dark:border-yellow-800">
+                          <div className="flex justify-between items-start mb-2">
+                            <span className="font-medium text-yellow-800 dark:text-yellow-200">
+                              Row {record._rowIndex}
+                            </span>
+                            <Badge variant="secondary">Warning</Badge>
+                          </div>
+                          <p className="text-sm text-yellow-700 dark:text-yellow-300">
+                            {record._mappedData.name} - {record._mappedData.email}
+                          </p>
+                          <ul className="text-xs text-yellow-600 dark:text-yellow-400 mt-1">
+                            {record._warnings.map((warning: string, i: number) => (
+                              <li key={i}>• {warning}</li>
+                            ))}
+                          </ul>
+                        </div>
+                      ))}
+                      {importValidation.warnings.length > 5 && (
+                        <p className="text-sm text-gray-500 text-center">
+                          ... and {importValidation.warnings.length - 5} more records with warnings
+                        </p>
+                      )}
+                    </div>
+                  </div>
+                )}
+
+                {/* Valid Records Preview */}
+                {importValidation.valid.length > 0 && (
+                  <div>
+                    <h4 className="font-medium text-green-600 mb-3">
+                      Valid Records Preview ({importValidation.valid.length})
+                    </h4>
+                    <div className="space-y-2 max-h-40 overflow-y-auto">
+                      {importValidation.valid.slice(0, 5).map((record, index) => (
+                        <div key={index} className="p-3 bg-green-50 dark:bg-green-900/20 rounded border border-green-200 dark:border-green-800">
+                          <div className="flex justify-between items-center">
+                            <div className="flex items-center gap-3">
+                              <Avatar className="w-8 h-8">
+                                <AvatarFallback className="text-xs">
+                                  {record._mappedData.name?.split(' ').map((n: string) => n[0]).join('').toUpperCase() || '?'}
+                                </AvatarFallback>
+                              </Avatar>
+                              <div>
+                                <p className="font-medium text-green-800 dark:text-green-200">
+                                  {record._mappedData.name}
+                                </p>
+                                <p className="text-sm text-green-600 dark:text-green-400">
+                                  {record._mappedData.email} • {record._mappedData.role || 'parent'}
+                                </p>
+                              </div>
+                            </div>
+                            <Badge variant="default" className="bg-green-600">Valid</Badge>
+                          </div>
+                        </div>
+                      ))}
+                      {importValidation.valid.length > 5 && (
+                        <p className="text-sm text-gray-500 text-center">
+                          ... and {importValidation.valid.length - 5} more valid records
+                        </p>
+                      )}
+                    </div>
+                  </div>
+                )}
+              </div>
+            )}
+
+            {/* Step 4: Import Results */}
+            {importStep === 4 && importResults && (
+              <div className="space-y-6">
+                {/* Results Summary */}
+                <div className="text-center">
+                  <div className="w-16 h-16 bg-green-100 dark:bg-green-900 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <CheckCircle className="w-8 h-8 text-green-600" />
+                  </div>
+                  <h3 className="text-xl font-semibold mb-2">Import Complete!</h3>
+                  <p className="text-gray-600 dark:text-gray-400">
+                    Your user import has been processed successfully
+                  </p>
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <Card>
+                    <CardContent className="p-6 text-center">
+                      <CheckCircle className="w-12 h-12 text-green-500 mx-auto mb-3" />
+                      <div className="text-3xl font-bold text-green-600">
+                        {importResults.success}
+                      </div>
+                      <p className="text-sm text-gray-600">Users Successfully Imported</p>
+                    </CardContent>
+                  </Card>
+
+                  <Card>
+                    <CardContent className="p-6 text-center">
+                      <XCircle className="w-12 h-12 text-red-500 mx-auto mb-3" />
+                      <div className="text-3xl font-bold text-red-600">
+                        {importResults.failed}
+                      </div>
+                      <p className="text-sm text-gray-600">Failed Imports</p>
+                    </CardContent>
+                  </Card>
+                </div>
+
+                {/* Error Details */}
+                {importResults.errors.length > 0 && (
+                  <div>
+                    <h4 className="font-medium text-red-600 mb-3">Import Errors</h4>
+                    <div className="space-y-2 max-h-60 overflow-y-auto">
+                      {importResults.errors.map((error, index) => (
+                        <div key={index} className="p-3 bg-red-50 dark:bg-red-900/20 rounded border border-red-200 dark:border-red-800">
+                          <div className="flex justify-between items-start">
+                            <div>
+                              <p className="font-medium text-red-800 dark:text-red-200">
+                                Row {error.row}: {error.data.name || 'Unknown User'}
+                              </p>
+                              <p className="text-sm text-red-600 dark:text-red-400">{error.error}</p>
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {importResults.success > 0 && (
+                  <div className="bg-green-50 dark:bg-green-900/20 rounded-lg p-4 border border-green-200 dark:border-green-800">
+                    <div className="flex items-center gap-2">
+                      <CheckCircle className="w-5 h-5 text-green-600" />
+                      <p className="text-green-800 dark:text-green-200 font-medium">
+                        {importResults.success} user{importResults.success > 1 ? 's' : ''} have been successfully added to your system.
+                      </p>
+                    </div>
+                  </div>
+                )}
+              </div>
+            )}
+
+            {/* Import Progress */}
+            {isImporting && (
+              <div className="space-y-4">
+                <div className="text-center">
+                  <RefreshCw className="w-8 h-8 text-blue-600 mx-auto mb-2 animate-spin" />
+                  <p className="font-medium">Importing Users...</p>
+                  <p className="text-sm text-gray-500">Please wait while we process your data</p>
+                </div>
+                <div className="space-y-2">
+                  <div className="flex justify-between text-sm">
+                    <span>Progress</span>
+                    <span>{importProgress}%</span>
+                  </div>
+                  <Progress value={importProgress} className="h-2" />
+                </div>
+              </div>
+            )}
+
+            {/* Dialog Footer */}
+            {!isImporting && (
+              <div className="flex flex-col sm:flex-row gap-3 pt-4 border-t">
+                <Button
+                  variant="outline"
+                  onClick={() => {
+                    if (importStep > 1 && importStep < 4) {
+                      setImportStep(prev => prev - 1);
+                    } else {
+                      setShowImportDialog(false);
+                      resetImportForm();
+                    }
+                  }}
+                  className="order-2 sm:order-1"
+                >
+                  {importStep > 1 && importStep < 4 ? "Previous" : "Close"}
+                </Button>
+
+                <div className="flex gap-3 flex-1 order-1 sm:order-2">
+                  {importStep === 1 && (
+                    <Button
+                      onClick={() => {
+                        if (importFile) {
+                          processImportFile(importFile);
+                        } else {
+                          setFormErrors({ file: "Please select a CSV file to upload." });
+                        }
+                      }}
+                      disabled={!importFile}
+                      className="flex-1"
+                    >
+                      Process File
+                      <ChevronDown className="w-4 h-4 ml-2 rotate-[-90deg]" />
+                    </Button>
+                  )}
+
+                  {importStep === 2 && (
+                    <Button
+                      onClick={validateImportData}
+                      disabled={Object.values(fieldMapping).filter(Boolean).length === 0}
+                      className="flex-1"
+                    >
+                      Validate Data
+                      <ChevronDown className="w-4 h-4 ml-2 rotate-[-90deg]" />
+                    </Button>
+                  )}
+
+                  {importStep === 3 && (
+                    <Button
+                      onClick={performImport}
+                      disabled={importValidation.valid.length === 0 && importValidation.warnings.length === 0}
+                      className="flex-1"
+                    >
+                      <Upload className="w-4 h-4 mr-2" />
+                      Import {importValidation.valid.length + importValidation.warnings.length} Users
+                    </Button>
+                  )}
+
+                  {importStep === 4 && (
+                    <Button
+                      onClick={() => {
+                        setShowImportDialog(false);
+                        resetImportForm();
+                      }}
+                      className="flex-1"
+                    >
+                      <CheckCircle className="w-4 h-4 mr-2" />
+                      Finish
+                    </Button>
+                  )}
+                </div>
+              </div>
+            )}
+          </DialogContent>
+        </Dialog>
+      )}
     </div>
   );
 };
