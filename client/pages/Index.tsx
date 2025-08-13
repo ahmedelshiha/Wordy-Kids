@@ -420,6 +420,9 @@ export default function Index({ initialProfile }: IndexProps) {
 
     // Reset session number for new category
     setSessionNumber(1);
+
+    // Clear current dashboard words to force regeneration
+    setCurrentDashboardWords([]);
   };
 
   const generateFreshWords = () => {
@@ -1587,7 +1590,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                                     type: "celebration",
                                                     title:
                                                       completionResult.title,
-                                                    message: `${completionResult.message}\n\n✅ Remembered: ${completionResult.totalRemembered} words\n❌ Need practice: ${completionResult.totalWords - completionResult.totalRemembered} words\n\n��� Category Achievement Unlocked! 🎉`,
+                                                    message: `${completionResult.message}\n\n✅ Remembered: ${completionResult.totalRemembered} words\n��� Need practice: ${completionResult.totalWords - completionResult.totalRemembered} words\n\n��� Category Achievement Unlocked! 🎉`,
                                                     points:
                                                       completionResult.totalRemembered *
                                                         20 +
