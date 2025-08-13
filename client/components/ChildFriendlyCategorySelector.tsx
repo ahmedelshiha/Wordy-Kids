@@ -331,7 +331,7 @@ const enrichedCategories: Category[] = [
 ].filter((category) => category.wordCount > 0);
 
 export function ChildFriendlyCategorySelector({
-  selectedCategory = "all",
+  selectedCategory = "animals",
   onSelectCategory,
   userInterests = [],
 }: ChildFriendlyCategorySelectorProps) {
