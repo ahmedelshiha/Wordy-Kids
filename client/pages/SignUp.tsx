@@ -169,10 +169,21 @@ export default function SignUp() {
       (u: any) => u.email === formData.email,
     );
 
+    // Enhanced email validation
+    const emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
+    if (!emailRegex.test(formData.email)) {
+      setMessage({
+        type: "error",
+        text: "Please enter a valid email address format",
+      });
+      setIsLoading(false);
+      return;
+    }
+
     if (userExists) {
       setMessage({
         type: "error",
-        text: "Email already exists. Please use a different email.",
+        text: "This email is already registered. Please use a different email address or sign in instead.",
       });
       setIsLoading(false);
       return;
