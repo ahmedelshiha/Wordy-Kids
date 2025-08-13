@@ -320,7 +320,7 @@ export default function LoginForm() {
             </div>
           </div>
           <h1 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent mb-2">
-            Welcome Back!
+            Wordy Adventure !
           </h1>
           <p className="text-gray-600 text-lg">Continue your word adventure</p>
         </div>
@@ -513,6 +513,20 @@ export default function LoginForm() {
                 disabled={isLoading}
               >
                 Forgot your password?
+              </Button>
+
+              {/* Sign Up Button */}
+              <Button
+                type="button"
+                onClick={() => navigate("/signup")}
+                className="w-full py-3 bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 hover:from-blue-700 hover:via-purple-700 hover:to-pink-700 text-white font-semibold text-lg shadow-lg hover:shadow-xl transform hover:scale-[1.02] transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
+                disabled={isLoading}
+              >
+                <div className="flex items-center gap-3">
+                  <UserCheck className="w-5 h-5" />
+                  <span>Create New Account</span>
+                  <Sparkles className="w-4 h-4" />
+                </div>
               </Button>
             </form>
           </CardContent>
