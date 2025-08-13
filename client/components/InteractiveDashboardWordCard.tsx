@@ -408,9 +408,7 @@ export function InteractiveDashboardWordCard({
         stats: newStats,
         achievements: achievements.map((a) => a.title),
         journeyAchievements: sessionJourneyAchievements.length,
-        totalWordsCompleted,
-        newProgressionStage: updatedProgInfo.stage,
-        nextMilestone: updatedProgInfo.nextMilestone
+        totalWordsCompleted
       });
       return;
     }
