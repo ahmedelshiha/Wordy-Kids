@@ -400,10 +400,18 @@ export function InteractiveDashboardWordCard({
 
       setShowSessionComplete(true);
 
+      // Update progression info based on total words completed
+      const totalWordsCompleted = rememberedWordsCount + newStats.wordsRemembered;
+      const updatedProgInfo = DashboardWordGenerator.getProgressionInfo(totalWordsCompleted);
+      setProgressionInfo(updatedProgInfo);
+
       console.log("Session completed!", {
         stats: newStats,
         achievements: achievements.map((a) => a.title),
         journeyAchievements: sessionJourneyAchievements.length,
+        totalWordsCompleted,
+        newProgressionStage: updatedProgInfo.stage,
+        nextMilestone: updatedProgInfo.nextMilestone
       });
       return;
     }
