@@ -3382,6 +3382,426 @@ const EnhancedUserManagement: React.FC<EnhancedUserManagementProps> = ({
           </DialogContent>
         </Dialog>
       )}
+
+      {/* Enhanced Export Users Dialog */}
+      {showExportDialog && (
+        <Dialog open={showExportDialog} onOpenChange={(open) => {
+          if (!open) {
+            setShowExportDialog(false);
+            resetExportForm();
+          }
+        }}>
+          <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto w-[95vw] sm:w-full">
+            <DialogHeader>
+              <DialogTitle className="flex items-center gap-3">
+                <div className="w-10 h-10 bg-blue-100 dark:bg-blue-900 rounded-full flex items-center justify-center">
+                  <Download className="w-5 h-5 text-blue-600 dark:text-blue-400" />
+                </div>
+                <div>
+                  <h2 className="text-xl font-semibold">Export Users</h2>
+                  <p className="text-sm text-gray-500 font-normal">Export user data with customizable options</p>
+                </div>
+              </DialogTitle>
+            </DialogHeader>
+
+            {!isExporting ? (
+              <div className="space-y-6">
+                {/* Export Summary */}
+                <div className="bg-blue-50 dark:bg-blue-900/20 rounded-lg p-4 border border-blue-200 dark:border-blue-800">
+                  <div className="flex items-center justify-between mb-3">
+                    <h3 className="font-medium text-blue-900 dark:text-blue-100">Export Summary</h3>
+                    <Badge variant="secondary">{getFilteredExportUsers().length} users</Badge>
+                  </div>
+                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 text-sm">
+                    <div>
+                      <p className="font-medium text-blue-800 dark:text-blue-200">Total Users</p>
+                      <p className="text-blue-600 dark:text-blue-400">{getFilteredExportUsers().length}</p>
+                    </div>
+                    <div>
+                      <p className="font-medium text-blue-800 dark:text-blue-200">Format</p>
+                      <p className="text-blue-600 dark:text-blue-400">{exportFormat.toUpperCase()}</p>
+                    </div>
+                    <div>
+                      <p className="font-medium text-blue-800 dark:text-blue-200">Fields</p>
+                      <p className="text-blue-600 dark:text-blue-400">
+                        {Object.values(exportFields).filter(Boolean).length} selected
+                      </p>
+                    </div>
+                    <div>
+                      <p className="font-medium text-blue-800 dark:text-blue-200">File Size</p>
+                      <p className="text-blue-600 dark:text-blue-400">~{Math.round(getFilteredExportUsers().length * 0.5)}KB</p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Export Format Selection */}
+                <div className="space-y-4">
+                  <h3 className="text-lg font-semibold">Export Format</h3>
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                    <div
+                      className={`p-4 border-2 rounded-lg cursor-pointer transition-all ${
+                        exportFormat === 'csv'
+                          ? 'border-blue-500 bg-blue-50 dark:bg-blue-900/20'
+                          : 'border-gray-200 dark:border-gray-700 hover:border-gray-300'
+                      }`}
+                      onClick={() => setExportFormat('csv')}
+                    >
+                      <div className="flex items-center gap-3">
+                        <div className={`w-4 h-4 rounded-full border-2 ${
+                          exportFormat === 'csv'
+                            ? 'border-blue-500 bg-blue-500'
+                            : 'border-gray-300'
+                        }`}>
+                          {exportFormat === 'csv' && (
+                            <div className="w-2 h-2 bg-white rounded-full mx-auto mt-0.5" />
+                          )}
+                        </div>
+                        <div>
+                          <h4 className="font-medium">CSV</h4>
+                          <p className="text-sm text-gray-500">Comma-separated values</p>
+                        </div>
+                      </div>
+                      <div className="mt-3 text-xs text-gray-600 dark:text-gray-400">
+                        Compatible with Excel, Google Sheets, and most applications
+                      </div>
+                    </div>
+
+                    <div
+                      className={`p-4 border-2 rounded-lg cursor-pointer transition-all ${
+                        exportFormat === 'json'
+                          ? 'border-blue-500 bg-blue-50 dark:bg-blue-900/20'
+                          : 'border-gray-200 dark:border-gray-700 hover:border-gray-300'
+                      }`}
+                      onClick={() => setExportFormat('json')}
+                    >
+                      <div className="flex items-center gap-3">
+                        <div className={`w-4 h-4 rounded-full border-2 ${
+                          exportFormat === 'json'
+                            ? 'border-blue-500 bg-blue-500'
+                            : 'border-gray-300'
+                        }`}>
+                          {exportFormat === 'json' && (
+                            <div className="w-2 h-2 bg-white rounded-full mx-auto mt-0.5" />
+                          )}
+                        </div>
+                        <div>
+                          <h4 className="font-medium">JSON</h4>
+                          <p className="text-sm text-gray-500">Structured data format</p>
+                        </div>
+                      </div>
+                      <div className="mt-3 text-xs text-gray-600 dark:text-gray-400">
+                        Perfect for developers and API integrations
+                      </div>
+                    </div>
+
+                    <div
+                      className={`p-4 border-2 rounded-lg cursor-pointer transition-all ${
+                        exportFormat === 'xlsx'
+                          ? 'border-blue-500 bg-blue-50 dark:bg-blue-900/20'
+                          : 'border-gray-200 dark:border-gray-700 hover:border-gray-300'
+                      }`}
+                      onClick={() => setExportFormat('xlsx')}
+                    >
+                      <div className="flex items-center gap-3">
+                        <div className={`w-4 h-4 rounded-full border-2 ${
+                          exportFormat === 'xlsx'
+                            ? 'border-blue-500 bg-blue-500'
+                            : 'border-gray-300'
+                        }`}>
+                          {exportFormat === 'xlsx' && (
+                            <div className="w-2 h-2 bg-white rounded-full mx-auto mt-0.5" />
+                          )}
+                        </div>
+                        <div>
+                          <h4 className="font-medium">Excel</h4>
+                          <p className="text-sm text-gray-500">Microsoft Excel format</p>
+                        </div>
+                      </div>
+                      <div className="mt-3 text-xs text-gray-600 dark:text-gray-400">
+                        Native Excel support with formatting
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Filter Options */}
+                <div className="space-y-4">
+                  <h3 className="text-lg font-semibold">Filter Options</h3>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                    <div>
+                      <Label className="text-sm font-medium">User Role</Label>
+                      <Select
+                        value={exportFilters.role}
+                        onValueChange={(value) =>
+                          setExportFilters(prev => ({ ...prev, role: value }))
+                        }
+                      >
+                        <SelectTrigger>
+                          <SelectValue />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="all">All Roles</SelectItem>
+                          <SelectItem value="parent">Parents</SelectItem>
+                          <SelectItem value="child">Children</SelectItem>
+                          <SelectItem value="teacher">Teachers</SelectItem>
+                          <SelectItem value="admin">Administrators</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+
+                    <div>
+                      <Label className="text-sm font-medium">Account Status</Label>
+                      <Select
+                        value={exportFilters.status}
+                        onValueChange={(value) =>
+                          setExportFilters(prev => ({ ...prev, status: value }))
+                        }
+                      >
+                        <SelectTrigger>
+                          <SelectValue />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="all">All Status</SelectItem>
+                          <SelectItem value="active">Active</SelectItem>
+                          <SelectItem value="pending">Pending</SelectItem>
+                          <SelectItem value="suspended">Suspended</SelectItem>
+                          <SelectItem value="inactive">Inactive</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+
+                    <div>
+                      <Label className="text-sm font-medium">Subscription</Label>
+                      <Select
+                        value={exportFilters.subscription}
+                        onValueChange={(value) =>
+                          setExportFilters(prev => ({ ...prev, subscription: value }))
+                        }
+                      >
+                        <SelectTrigger>
+                          <SelectValue />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="all">All Plans</SelectItem>
+                          <SelectItem value="free">Free</SelectItem>
+                          <SelectItem value="premium">Premium</SelectItem>
+                          <SelectItem value="family">Family</SelectItem>
+                          <SelectItem value="school">School</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+
+                    <div>
+                      <Label className="text-sm font-medium">Date Range</Label>
+                      <Select
+                        value={exportFilters.dateRange}
+                        onValueChange={(value) =>
+                          setExportFilters(prev => ({ ...prev, dateRange: value }))
+                        }
+                      >
+                        <SelectTrigger>
+                          <SelectValue />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="all">All Time</SelectItem>
+                          <SelectItem value="last7days">Last 7 days</SelectItem>
+                          <SelectItem value="last30days">Last 30 days</SelectItem>
+                          <SelectItem value="last90days">Last 90 days</SelectItem>
+                          <SelectItem value="lastYear">Last year</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center space-x-2">
+                    <Checkbox
+                      id="includeInactive"
+                      checked={exportFilters.includeInactive}
+                      onCheckedChange={(checked) =>
+                        setExportFilters(prev => ({ ...prev, includeInactive: checked as boolean }))
+                      }
+                    />
+                    <Label htmlFor="includeInactive" className="text-sm">
+                      Include inactive users in export
+                    </Label>
+                  </div>
+                </div>
+
+                {/* Field Selection */}
+                <div className="space-y-4">
+                  <div className="flex items-center justify-between">
+                    <h3 className="text-lg font-semibold">Select Fields to Export</h3>
+                    <div className="flex gap-2">
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => {
+                          const allSelected = Object.fromEntries(
+                            Object.keys(exportFields).map(key => [key, true])
+                          );
+                          setExportFields(allSelected);
+                        }}
+                      >
+                        Select All
+                      </Button>
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => {
+                          const requiredOnly = Object.fromEntries(
+                            getExportableFields().map(field => [
+                              field.key,
+                              field.required
+                            ])
+                          );
+                          setExportFields(requiredOnly);
+                        }}
+                      >
+                        Required Only
+                      </Button>
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+                    {getExportableFields().map((field) => (
+                      <div
+                        key={field.key}
+                        className={`flex items-center space-x-3 p-3 rounded-lg border ${
+                          field.required
+                            ? 'bg-blue-50 dark:bg-blue-900/20 border-blue-200 dark:border-blue-800'
+                            : 'border-gray-200 dark:border-gray-700'
+                        }`}
+                      >
+                        <Checkbox
+                          id={field.key}
+                          checked={exportFields[field.key]}
+                          onCheckedChange={(checked) =>
+                            setExportFields(prev => ({ ...prev, [field.key]: checked as boolean }))
+                          }
+                          disabled={field.required}
+                        />
+                        <Label
+                          htmlFor={field.key}
+                          className={`text-sm flex-1 ${field.required ? 'font-medium' : ''}`}
+                        >
+                          {field.label}
+                          {field.required && <span className="text-blue-600 ml-1">*</span>}
+                        </Label>
+                      </div>
+                    ))}
+                  </div>
+
+                  <div className="text-xs text-gray-500">
+                    * Required fields cannot be deselected
+                  </div>
+                </div>
+
+                {/* Preview */}
+                <div className="space-y-4">
+                  <h3 className="text-lg font-semibold">Preview</h3>
+                  <div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-4">
+                    <div className="text-sm font-mono">
+                      {exportFormat === 'csv' && (
+                        <div>
+                          <div className="text-green-600 dark:text-green-400">
+                            {Object.entries(exportFields)
+                              .filter(([_, selected]) => selected)
+                              .map(([key]) => key)
+                              .join(', ')}
+                          </div>
+                          <div className="mt-2 text-gray-600 dark:text-gray-400">
+                            Sample data row will appear here...
+                          </div>
+                        </div>
+                      )}
+                      {exportFormat === 'json' && (
+                        <div>
+                          <div className="text-green-600 dark:text-green-400">{'{'}</div>
+                          {Object.entries(exportFields)
+                            .filter(([_, selected]) => selected)
+                            .map(([key], index, array) => (
+                              <div key={key} className="ml-4 text-gray-600 dark:text-gray-400">
+                                "{key}": "sample_value"{index < array.length - 1 ? ',' : ''}
+                              </div>
+                            ))}
+                          <div className="text-green-600 dark:text-green-400">{'}'}</div>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </div>
+
+                {/* Error Display */}
+                {formErrors.export && (
+                  <div className="p-3 bg-red-50 dark:bg-red-900/20 rounded-lg border border-red-200 dark:border-red-800">
+                    <div className="flex items-center gap-2">
+                      <AlertTriangle className="w-4 h-4 text-red-600" />
+                      <p className="text-sm text-red-800 dark:text-red-200">{formErrors.export}</p>
+                    </div>
+                  </div>
+                )}
+              </div>
+            ) : (
+              /* Export Progress */
+              <div className="space-y-6 text-center py-8">
+                <div className="w-16 h-16 bg-blue-100 dark:bg-blue-900 rounded-full flex items-center justify-center mx-auto">
+                  <RefreshCw className="w-8 h-8 text-blue-600 animate-spin" />
+                </div>
+                <div>
+                  <h3 className="text-xl font-semibold mb-2">Exporting Users...</h3>
+                  <p className="text-gray-600 dark:text-gray-400">
+                    Please wait while we prepare your export file
+                  </p>
+                </div>
+                <div className="max-w-sm mx-auto space-y-2">
+                  <div className="flex justify-between text-sm">
+                    <span>Progress</span>
+                    <span>{exportProgress}%</span>
+                  </div>
+                  <Progress value={exportProgress} className="h-2" />
+                </div>
+                {exportProgress === 100 && (
+                  <div className="bg-green-50 dark:bg-green-900/20 rounded-lg p-4 border border-green-200 dark:border-green-800">
+                    <div className="flex items-center justify-center gap-2">
+                      <CheckCircle className="w-5 h-5 text-green-600" />
+                      <p className="text-green-800 dark:text-green-200 font-medium">
+                        Export completed! Your download should start automatically.
+                      </p>
+                    </div>
+                  </div>
+                )}
+              </div>
+            )}
+
+            {/* Dialog Footer */}
+            {!isExporting && (
+              <div className="flex flex-col sm:flex-row gap-3 pt-4 border-t">
+                <Button
+                  variant="outline"
+                  onClick={() => {
+                    setShowExportDialog(false);
+                    resetExportForm();
+                  }}
+                  className="order-2 sm:order-1"
+                >
+                  Cancel
+                </Button>
+
+                <div className="flex gap-3 flex-1 order-1 sm:order-2">
+                  <Button
+                    onClick={performExport}
+                    disabled={getFilteredExportUsers().length === 0 || Object.values(exportFields).filter(Boolean).length === 0}
+                    className="flex-1"
+                  >
+                    <Download className="w-4 h-4 mr-2" />
+                    Export {getFilteredExportUsers().length} Users
+                  </Button>
+                </div>
+              </div>
+            )}
+          </DialogContent>
+        </Dialog>
+      )}
     </div>
   );
 };
