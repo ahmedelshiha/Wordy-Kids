@@ -260,7 +260,7 @@ const WORD_TEMPLATES: WordTemplate[] = [
     id: "nature",
     name: "Nature",
     description: "Natural world and environment",
-    icon: <Tree className="w-5 h-5" />,
+    icon: <Leaf className="w-5 h-5" />,
     category: "Nature",
     difficulty: "easy",
     structure: {
@@ -541,7 +541,7 @@ const CreateWordWizard: React.FC<CreateWordWizardProps> = ({
   const getWordSpecificEmojis = (word: string): string[] => {
     const emojiMap: Record<string, string[]> = {
       // Animals
-      cat: ["🐱", "🐈", "����"], dog: ["🐶", "🐕", "🦮"], fish: ["🐟", "🐠", "🎣"],
+      cat: ["🐱", "🐈", "😺"], dog: ["🐶", "🐕", "🦮"], fish: ["🐟", "🐠", "🎣"],
       bird: ["🐦", "🕊️", "🦅"], butterfly: ["🦋", "🌸"], bee: ["🐝", "🍯"],
       // Food
       apple: ["🍎", "🍏", "🌳"], pizza: ["🍕", "🇮🇹"], cake: ["🎂", "🧁", "🎉"],
