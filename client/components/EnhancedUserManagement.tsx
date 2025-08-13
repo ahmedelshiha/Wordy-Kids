@@ -545,60 +545,125 @@ const EnhancedUserManagement: React.FC<EnhancedUserManagementProps> = ({
   );
 
   const renderFilters = () => (
-    <Card className="mb-6">
-      <CardContent className="p-4">
-        <div className="flex flex-col lg:flex-row gap-4 items-start lg:items-center">
-          <div className="flex-1 min-w-0">
-            <div className="relative">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
-              <Input
-                placeholder="Search users by name, email, or tags..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="pl-10"
-              />
-            </div>
+    <Card className="mb-4 md:mb-6">
+      <CardContent className="p-3 md:p-4">
+        {/* Mobile Search */}
+        <div className="space-y-3 md:space-y-0">
+          <div className="relative">
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
+            <Input
+              placeholder="Search users by name, email, or tags..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="pl-10"
+            />
           </div>
-          
-          <div className="flex flex-wrap gap-2">
-            <Select value={filters.role} onValueChange={(value) => setFilters(prev => ({ ...prev, role: value }))}>
-              <SelectTrigger className="w-32">
-                <SelectValue placeholder="Role" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="all">All Roles</SelectItem>
-                <SelectItem value="parent">Parents</SelectItem>
-                <SelectItem value="child">Children</SelectItem>
-                <SelectItem value="teacher">Teachers</SelectItem>
-                <SelectItem value="admin">Admins</SelectItem>
-              </SelectContent>
-            </Select>
 
-            <Select value={filters.status} onValueChange={(value) => setFilters(prev => ({ ...prev, status: value }))}>
-              <SelectTrigger className="w-32">
-                <SelectValue placeholder="Status" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="all">All Status</SelectItem>
-                <SelectItem value="active">Active</SelectItem>
-                <SelectItem value="suspended">Suspended</SelectItem>
-                <SelectItem value="pending">Pending</SelectItem>
-                <SelectItem value="inactive">Inactive</SelectItem>
-              </SelectContent>
-            </Select>
+          {/* Mobile Filter Toggle */}
+          <div className="md:hidden">
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="outline" className="w-full justify-between">
+                  <span className="flex items-center gap-2">
+                    <Filter className="w-4 h-4" />
+                    Filters
+                    {(filters.role !== "all" || filters.status !== "all" || filters.subscription !== "all") && (
+                      <Badge variant="secondary" className="ml-2">
+                        {[filters.role, filters.status, filters.subscription].filter(f => f !== "all").length}
+                      </Badge>
+                    )}
+                  </span>
+                  <ChevronDown className="w-4 h-4" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="w-56">
+                <DropdownMenuLabel>Filter by Role</DropdownMenuLabel>
+                <DropdownMenuItem onClick={() => setFilters(prev => ({ ...prev, role: "all" }))}>
+                  All Roles
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={() => setFilters(prev => ({ ...prev, role: "parent" }))}>
+                  Parents
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={() => setFilters(prev => ({ ...prev, role: "child" }))}>
+                  Children
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={() => setFilters(prev => ({ ...prev, role: "teacher" }))}>
+                  Teachers
+                </DropdownMenuItem>
+                <DropdownMenuSeparator />
+                <DropdownMenuLabel>Filter by Status</DropdownMenuLabel>
+                <DropdownMenuItem onClick={() => setFilters(prev => ({ ...prev, status: "all" }))}>
+                  All Status
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={() => setFilters(prev => ({ ...prev, status: "active" }))}>
+                  Active
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={() => setFilters(prev => ({ ...prev, status: "suspended" }))}>
+                  Suspended
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={() => setFilters(prev => ({ ...prev, status: "pending" }))}>
+                  Pending
+                </DropdownMenuItem>
+                <DropdownMenuSeparator />
+                <DropdownMenuLabel>Filter by Subscription</DropdownMenuLabel>
+                <DropdownMenuItem onClick={() => setFilters(prev => ({ ...prev, subscription: "all" }))}>
+                  All Plans
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={() => setFilters(prev => ({ ...prev, subscription: "free" }))}>
+                  Free
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={() => setFilters(prev => ({ ...prev, subscription: "premium" }))}>
+                  Premium
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={() => setFilters(prev => ({ ...prev, subscription: "family" }))}>
+                  Family
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </div>
 
-            <Select value={filters.subscription} onValueChange={(value) => setFilters(prev => ({ ...prev, subscription: value }))}>
-              <SelectTrigger className="w-36">
-                <SelectValue placeholder="Subscription" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="all">All Plans</SelectItem>
-                <SelectItem value="free">Free</SelectItem>
-                <SelectItem value="premium">Premium</SelectItem>
-                <SelectItem value="family">Family</SelectItem>
-                <SelectItem value="school">School</SelectItem>
-              </SelectContent>
-            </Select>
+          {/* Desktop Filters */}
+          <div className="hidden md:flex md:items-center gap-4 mt-4 lg:mt-0">
+            <div className="flex flex-wrap gap-2 flex-1">
+              <Select value={filters.role} onValueChange={(value) => setFilters(prev => ({ ...prev, role: value }))}>
+                <SelectTrigger className="w-32">
+                  <SelectValue placeholder="Role" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">All Roles</SelectItem>
+                  <SelectItem value="parent">Parents</SelectItem>
+                  <SelectItem value="child">Children</SelectItem>
+                  <SelectItem value="teacher">Teachers</SelectItem>
+                  <SelectItem value="admin">Admins</SelectItem>
+                </SelectContent>
+              </Select>
+
+              <Select value={filters.status} onValueChange={(value) => setFilters(prev => ({ ...prev, status: value }))}>
+                <SelectTrigger className="w-32">
+                  <SelectValue placeholder="Status" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">All Status</SelectItem>
+                  <SelectItem value="active">Active</SelectItem>
+                  <SelectItem value="suspended">Suspended</SelectItem>
+                  <SelectItem value="pending">Pending</SelectItem>
+                  <SelectItem value="inactive">Inactive</SelectItem>
+                </SelectContent>
+              </Select>
+
+              <Select value={filters.subscription} onValueChange={(value) => setFilters(prev => ({ ...prev, subscription: value }))}>
+                <SelectTrigger className="w-36">
+                  <SelectValue placeholder="Subscription" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">All Plans</SelectItem>
+                  <SelectItem value="free">Free</SelectItem>
+                  <SelectItem value="premium">Premium</SelectItem>
+                  <SelectItem value="family">Family</SelectItem>
+                  <SelectItem value="school">School</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
 
             <div className="flex gap-2">
               <Button
