@@ -734,16 +734,39 @@ export function ChildFriendlyCategorySelector({
         </Card>
       </div>
 
-      {/* Call to Action */}
-      <div className="text-center">
-        <div className="flex justify-center mb-4">
+      {/* Enhanced Call to Action */}
+      <div className="text-center px-2 md:px-0">
+        {/* Mobile CTA */}
+        <div className="md:hidden">
+          <Card className="bg-gradient-to-r from-educational-green/10 to-educational-blue/10 border-educational-blue/20">
+            <CardContent className="p-4">
+              <div className="flex items-center justify-center gap-2 text-educational-blue mb-3">
+                <Heart className="w-5 h-5 fill-current animate-gentle-bounce" />
+                <span className="font-semibold text-sm">
+                  Ready to start learning?
+                </span>
+                <Heart className="w-5 h-5 fill-current animate-gentle-bounce" />
+              </div>
+              {selectedCategory !== "all" && (
+                <div className="text-xs text-slate-600 mb-3">
+                  You selected: <span className="font-semibold text-educational-blue">
+                    {categories.find(c => c.id === selectedCategory)?.name}
+                  </span>
+                </div>
+              )}
+            </CardContent>
+          </Card>
+        </div>
+
+        {/* Desktop CTA */}
+        <div className="hidden md:flex justify-center mb-4">
           <div className="bg-white rounded-full p-4 shadow-lg">
             <div className="flex items-center gap-2 text-educational-blue">
-              <Heart className="w-5 h-5 fill-current" />
+              <Heart className="w-5 h-5 fill-current animate-gentle-bounce" />
               <span className="font-semibold">
                 Ready for your Wordy's Adventure?
               </span>
-              <Heart className="w-5 h-5 fill-current" />
+              <Heart className="w-5 h-5 fill-current animate-gentle-bounce" />
             </div>
           </div>
         </div>
