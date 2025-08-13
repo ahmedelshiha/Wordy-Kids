@@ -413,11 +413,11 @@ export default function SignUp() {
         <div className="text-center mt-4 md:mt-6">
           <Button
             onClick={handleBackToLogin}
-            variant="ghost"
-            className="text-gray-600 hover:text-gray-800"
+            variant="link"
+            className="p-0 h-auto text-sm text-gray-500 hover:text-gray-700 underline-offset-2"
             disabled={isLoading}
           >
-            <ArrowLeft className="w-4 h-4 mr-2" />
+            <ArrowLeft className="w-3 h-3 mr-1" />
             Back to Sign In
           </Button>
         </div>
