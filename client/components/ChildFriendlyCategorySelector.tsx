@@ -446,18 +446,13 @@ export function ChildFriendlyCategorySelector({
 
       {/* Header */}
       <div className="text-center relative">
-        <div className="flex justify-center mb-2 md:mb-4">
-          <div className="bg-gradient-to-r from-educational-blue via-educational-purple to-educational-pink p-2 md:p-4 rounded-full animate-pulse">
-            <Sparkles className="w-6 h-6 md:w-12 md:h-12 text-white" />
-          </div>
-        </div>
-        <h2 className="text-lg md:text-4xl font-bold text-slate-800 mb-2 md:mb-4 bg-gradient-to-r from-educational-blue to-educational-purple bg-clip-text text-transparent">
+        <h2 className="text-lg md:text-4xl font-bold text-slate-800 mb-1 md:mb-2 bg-gradient-to-r from-educational-blue to-educational-purple bg-clip-text text-transparent">
           🌟 Choose Your Learning Adventure! 🌟
         </h2>
-        <p className="text-sm md:text-lg text-slate-600 max-w-2xl mx-auto mb-2 md:mb-4">
+        <p className="text-sm md:text-lg text-slate-600 max-w-2xl mx-auto mb-1 md:mb-2">
           {getPersonalizedMessage()}
         </p>
-        <div className="flex justify-center gap-1 md:gap-2 mb-3 md:mb-6 flex-wrap">
+        <div className="flex justify-center gap-1 md:gap-2 mb-2 md:mb-4 flex-wrap">
           <Badge className="bg-educational-green text-white px-2 md:px-3 py-0.5 md:py-1 text-xs md:text-sm animate-pulse">
             📚 {wordsDatabase.length} Amazing Words
           </Badge>
