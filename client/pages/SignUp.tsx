@@ -73,17 +73,18 @@ export default function SignUp() {
     setIsLoading(true);
     setMessage(null);
 
-    // Basic validation
-    if (
-      !formData.childName ||
-      !formData.birthDate ||
-      !formData.email ||
-      !formData.password ||
-      !formData.confirmPassword
-    ) {
+    // Enhanced validation with specific field feedback
+    const errors = [];
+    if (!formData.childName.trim()) errors.push("Child's name");
+    if (!formData.birthDate.trim()) errors.push("Birth date");
+    if (!formData.email.trim()) errors.push("Parent email");
+    if (!formData.password) errors.push("Password");
+    if (!formData.confirmPassword) errors.push("Password confirmation");
+
+    if (errors.length > 0) {
       setMessage({
         type: "error",
-        text: "Please fill in all fields",
+        text: `Please complete: ${errors.join(", ")}`,
       });
       setIsLoading(false);
       return;
@@ -98,10 +99,20 @@ export default function SignUp() {
       return;
     }
 
-    if (formData.password.length < 6) {
+    // Enhanced password validation
+    if (formData.password.length < 8) {
       setMessage({
         type: "error",
-        text: "Password must be at least 6 characters long",
+        text: "Password must be at least 8 characters for account security",
+      });
+      setIsLoading(false);
+      return;
+    }
+
+    if (!/(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/.test(formData.password)) {
+      setMessage({
+        type: "error",
+        text: "Password should include uppercase, lowercase, and numbers for better security",
       });
       setIsLoading(false);
       return;
@@ -144,7 +155,7 @@ export default function SignUp() {
     if (actualAge < 3 || actualAge > 18) {
       setMessage({
         type: "error",
-        text: "Child must be between 3 and 18 years old for this platform.",
+        text: `Child appears to be ${actualAge} years old. This platform is designed for children aged 3-18 years.`,
       });
       setIsLoading(false);
       return;
@@ -292,7 +303,10 @@ export default function SignUp() {
                   id="childName"
                   name="childName"
                   type="text"
-                  placeholder="Enter your child's name"
+                  placeholder="Enter your child's first name"
+                  autoComplete="given-name"
+                  spellCheck={true}
+                  maxLength={50}
                   value={formData.childName}
                   onChange={handleInputChange}
                   className="mt-1 md:mt-2 border-gray-300 focus:border-blue-500 text-base"
@@ -361,7 +375,10 @@ export default function SignUp() {
                   id="email"
                   name="email"
                   type="email"
-                  placeholder="Enter parent's email"
+                  placeholder="Enter parent's email address"
+                  autoComplete="email"
+                  inputMode="email"
+                  spellCheck={false}
                   value={formData.email}
                   onChange={handleInputChange}
                   className="mt-1 md:mt-2 border-gray-300 focus:border-blue-500 text-base"
@@ -383,7 +400,8 @@ export default function SignUp() {
                     id="password"
                     name="password"
                     type={showPassword ? "text" : "password"}
-                    placeholder="Create parent password"
+                    placeholder="Create password (min 8 chars, mixed case + numbers)"
+                    autoComplete="new-password"
                     value={formData.password}
                     onChange={handleInputChange}
                     className="border-gray-300 focus:border-blue-500 pr-10"
@@ -418,7 +436,8 @@ export default function SignUp() {
                     id="confirmPassword"
                     name="confirmPassword"
                     type={showConfirmPassword ? "text" : "password"}
-                    placeholder="Confirm your password"
+                    placeholder="Re-enter password to confirm"
+                    autoComplete="new-password"
                     value={formData.confirmPassword}
                     onChange={handleInputChange}
                     className="border-gray-300 focus:border-blue-500 pr-10"
