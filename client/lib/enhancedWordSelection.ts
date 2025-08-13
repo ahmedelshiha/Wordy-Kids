@@ -87,15 +87,15 @@ export class EnhancedWordSelector {
     // Override cross_category strategy if user selected a specific category
     // Only use cross_category when user selected "all" or when no words available in selected category
     if (sessionStrategy === "cross_category") {
-      if (category !== "all" && categoryWords.length > 0) {
+      if (selectedCategory !== "all" && categoryWords.length > 0) {
         // Force staying within the selected category by using targeted_review or mixed_reinforcement
         sessionStrategy = exhaustionLevel >= 0.8 ? "targeted_review" : "mixed_reinforcement";
-        console.log(`Overriding cross_category strategy to ${sessionStrategy} to respect category selection: ${category}`);
+        console.log(`Overriding cross_category strategy to ${sessionStrategy} to respect category selection: ${selectedCategory}`);
       }
     }
 
     console.log(
-      `Session Strategy: ${sessionStrategy}, Exhaustion: ${exhaustionLevel.toFixed(2)}, Category: ${category}`,
+      `Session Strategy: ${sessionStrategy}, Exhaustion: ${exhaustionLevel.toFixed(2)}, Category: ${selectedCategory}`,
     );
 
     // Generate words based on strategy
