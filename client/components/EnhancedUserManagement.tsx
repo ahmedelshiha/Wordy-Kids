@@ -484,60 +484,60 @@ const EnhancedUserManagement: React.FC<EnhancedUserManagementProps> = ({
   };
 
   const renderUserStats = () => (
-    <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-8 gap-4 mb-6">
+    <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-2 sm:gap-4 mb-4 md:mb-6">
       <Card>
-        <CardContent className="p-4 text-center">
-          <Users className="w-6 h-6 text-blue-500 mx-auto mb-2" />
-          <div className="text-2xl font-bold text-blue-600">{userStats.total}</div>
+        <CardContent className="p-3 sm:p-4 text-center">
+          <Users className="w-5 h-5 sm:w-6 sm:h-6 text-blue-500 mx-auto mb-1 sm:mb-2" />
+          <div className="text-lg sm:text-2xl font-bold text-blue-600">{userStats.total}</div>
           <p className="text-xs text-slate-600">Total Users</p>
         </CardContent>
       </Card>
       <Card>
-        <CardContent className="p-4 text-center">
-          <UserCheck className="w-6 h-6 text-green-500 mx-auto mb-2" />
-          <div className="text-2xl font-bold text-green-600">{userStats.active}</div>
+        <CardContent className="p-3 sm:p-4 text-center">
+          <UserCheck className="w-5 h-5 sm:w-6 sm:h-6 text-green-500 mx-auto mb-1 sm:mb-2" />
+          <div className="text-lg sm:text-2xl font-bold text-green-600">{userStats.active}</div>
           <p className="text-xs text-slate-600">Active</p>
         </CardContent>
       </Card>
       <Card>
-        <CardContent className="p-4 text-center">
-          <Users className="w-6 h-6 text-green-500 mx-auto mb-2" />
-          <div className="text-2xl font-bold text-green-600">{userStats.parents}</div>
+        <CardContent className="p-3 sm:p-4 text-center">
+          <Users className="w-5 h-5 sm:w-6 sm:h-6 text-green-500 mx-auto mb-1 sm:mb-2" />
+          <div className="text-lg sm:text-2xl font-bold text-green-600">{userStats.parents}</div>
           <p className="text-xs text-slate-600">Parents</p>
         </CardContent>
       </Card>
       <Card>
-        <CardContent className="p-4 text-center">
-          <GraduationCap className="w-6 h-6 text-pink-500 mx-auto mb-2" />
-          <div className="text-2xl font-bold text-pink-600">{userStats.children}</div>
+        <CardContent className="p-3 sm:p-4 text-center">
+          <GraduationCap className="w-5 h-5 sm:w-6 sm:h-6 text-pink-500 mx-auto mb-1 sm:mb-2" />
+          <div className="text-lg sm:text-2xl font-bold text-pink-600">{userStats.children}</div>
           <p className="text-xs text-slate-600">Children</p>
         </CardContent>
       </Card>
       <Card>
-        <CardContent className="p-4 text-center">
-          <BookOpen className="w-6 h-6 text-blue-500 mx-auto mb-2" />
-          <div className="text-2xl font-bold text-blue-600">{userStats.teachers}</div>
+        <CardContent className="p-3 sm:p-4 text-center">
+          <BookOpen className="w-5 h-5 sm:w-6 sm:h-6 text-blue-500 mx-auto mb-1 sm:mb-2" />
+          <div className="text-lg sm:text-2xl font-bold text-blue-600">{userStats.teachers}</div>
           <p className="text-xs text-slate-600">Teachers</p>
         </CardContent>
       </Card>
       <Card>
-        <CardContent className="p-4 text-center">
-          <CreditCard className="w-6 h-6 text-purple-500 mx-auto mb-2" />
-          <div className="text-2xl font-bold text-purple-600">{userStats.premium}</div>
+        <CardContent className="p-3 sm:p-4 text-center">
+          <CreditCard className="w-5 h-5 sm:w-6 sm:h-6 text-purple-500 mx-auto mb-1 sm:mb-2" />
+          <div className="text-lg sm:text-2xl font-bold text-purple-600">{userStats.premium}</div>
           <p className="text-xs text-slate-600">Premium</p>
         </CardContent>
       </Card>
       <Card>
-        <CardContent className="p-4 text-center">
-          <Ban className="w-6 h-6 text-red-500 mx-auto mb-2" />
-          <div className="text-2xl font-bold text-red-600">{userStats.suspended}</div>
+        <CardContent className="p-3 sm:p-4 text-center">
+          <Ban className="w-5 h-5 sm:w-6 sm:h-6 text-red-500 mx-auto mb-1 sm:mb-2" />
+          <div className="text-lg sm:text-2xl font-bold text-red-600">{userStats.suspended}</div>
           <p className="text-xs text-slate-600">Suspended</p>
         </CardContent>
       </Card>
       <Card>
-        <CardContent className="p-4 text-center">
-          <Clock className="w-6 h-6 text-yellow-500 mx-auto mb-2" />
-          <div className="text-2xl font-bold text-yellow-600">{userStats.pending}</div>
+        <CardContent className="p-3 sm:p-4 text-center">
+          <Clock className="w-5 h-5 sm:w-6 sm:h-6 text-yellow-500 mx-auto mb-1 sm:mb-2" />
+          <div className="text-lg sm:text-2xl font-bold text-yellow-600">{userStats.pending}</div>
           <p className="text-xs text-slate-600">Pending</p>
         </CardContent>
       </Card>
@@ -929,16 +929,52 @@ const EnhancedUserManagement: React.FC<EnhancedUserManagementProps> = ({
   );
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 md:space-y-6">
       {/* Header */}
-      <div className="flex items-center justify-between">
-        <div>
-          <h2 className="text-3xl font-bold">👥 Enhanced User Management</h2>
-          <p className="text-slate-600 mt-1">
+      <div className="flex flex-col space-y-4 md:flex-row md:items-center md:justify-between md:space-y-0">
+        <div className="min-w-0">
+          <h2 className="text-2xl md:text-3xl font-bold truncate">👥 Enhanced User Management</h2>
+          <p className="text-slate-600 mt-1 text-sm md:text-base">
             Comprehensive user administration with advanced filtering and bulk operations
           </p>
         </div>
-        <div className="flex gap-2">
+
+        {/* Mobile Action Menu */}
+        <div className="flex gap-2 md:hidden">
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="outline" size="sm" className="flex-1">
+                <Plus className="w-4 h-4 mr-2" />
+                Actions
+                <ChevronDown className="w-4 h-4 ml-2" />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end" className="w-48">
+              <DropdownMenuItem onClick={() => setShowUserDialog(true)}>
+                <Plus className="w-4 h-4 mr-2" />
+                Add User
+              </DropdownMenuItem>
+              <DropdownMenuItem>
+                <Upload className="w-4 h-4 mr-2" />
+                Import Users
+              </DropdownMenuItem>
+              <DropdownMenuItem>
+                <Download className="w-4 h-4 mr-2" />
+                Export Users
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+          <Button
+            variant={viewMode === "cards" ? "default" : "outline"}
+            size="sm"
+            onClick={() => setViewMode(viewMode === "table" ? "cards" : "table")}
+          >
+            {viewMode === "table" ? <Grid className="w-4 h-4" /> : <List className="w-4 h-4" />}
+          </Button>
+        </div>
+
+        {/* Desktop Actions */}
+        <div className="hidden md:flex gap-2">
           <Button variant="outline" size="sm">
             <Upload className="w-4 h-4 mr-2" />
             Import Users
