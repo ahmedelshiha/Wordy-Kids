@@ -3382,24 +3382,34 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
               </CardContent>
             </Card>
 
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
+            <Card className="overflow-hidden">
+              <CardHeader className="pb-3 bg-gradient-to-r from-orange-50 to-yellow-50">
+                <CardTitle className="flex items-center gap-2 text-base md:text-lg">
                   <Target className="w-5 h-5 text-orange-500" />
-                  Areas for Growth
+                  <div>
+                    <div>Areas for Growth</div>
+                    <p className="text-xs md:text-sm font-normal text-slate-600 mt-1">
+                      Focus areas for improvement
+                    </p>
+                  </div>
                 </CardTitle>
               </CardHeader>
-              <CardContent className="space-y-4">
+              <CardContent className="p-3 md:p-6 space-y-4">
                 <div>
-                  <h4 className="font-semibold mb-2">Practice Categories</h4>
-                  <div className="flex flex-wrap gap-2">
+                  <div className="flex items-center justify-between mb-3">
+                    <h4 className="font-semibold text-slate-800">Practice Categories</h4>
+                    <Badge variant="outline" className="text-orange-600 border-orange-300">
+                      {reportData.learningPath.strugglingCategories.length} areas
+                    </Badge>
+                  </div>
+                  <div className="grid grid-cols-2 md:flex md:flex-wrap gap-2">
                     {reportData.learningPath.strugglingCategories.map(
                       (category: string) => (
                         <Badge
                           key={category}
-                          className="bg-orange-100 text-orange-800"
+                          className="bg-orange-100 text-orange-800 hover:bg-orange-200 transition-colors justify-center py-2 md:py-1"
                         >
-                          {category}
+                          🎯 {category}
                         </Badge>
                       ),
                     )}
@@ -3407,18 +3417,31 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
                 </div>
 
                 <div>
-                  <h4 className="font-semibold mb-2">Words to Practice</h4>
-                  <div className="flex flex-wrap gap-2">
-                    {reportData.learningPath.practiceNeeded.map(
+                  <div className="flex items-center justify-between mb-3">
+                    <h4 className="font-semibold text-slate-800">Words to Practice</h4>
+                    <Badge variant="outline" className="text-orange-600 border-orange-300">
+                      {reportData.learningPath.practiceNeeded.length} words
+                    </Badge>
+                  </div>
+                  <div className="grid grid-cols-2 md:flex md:flex-wrap gap-2">
+                    {reportData.learningPath.practiceNeeded.slice(0, 8).map(
                       (word: string) => (
                         <Badge
                           key={word}
                           variant="outline"
-                          className="text-orange-600 border-orange-300"
+                          className="text-orange-600 border-orange-300 hover:bg-orange-50 transition-colors justify-center py-2 md:py-1 capitalize"
                         >
-                          {word}
+                          🔄 {word}
                         </Badge>
                       ),
+                    )}
+                    {reportData.learningPath.practiceNeeded.length > 8 && (
+                      <Badge
+                        variant="outline"
+                        className="text-slate-500 border-slate-300 justify-center py-2 md:py-1"
+                      >
+                        +{reportData.learningPath.practiceNeeded.length - 8} more
+                      </Badge>
                     )}
                   </div>
                 </div>
