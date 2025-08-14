@@ -244,7 +244,7 @@ export const WordCard: React.FC<WordCardProps> = ({
       className={`relative w-full max-w-xs sm:max-w-sm mx-auto ${className}`}
     >
       <Card
-        className={`h-[400px] sm:h-[380px] md:h-[360px] cursor-pointer transition-all duration-500 transform-gpu active:scale-95 ${
+        className={`h-[400px] sm:h-[380px] md:h-[360px] cursor-pointer transition-all duration-500 transform-gpu active:scale-95 hover:scale-[1.02] shadow-xl hover:shadow-2xl ${
           isFlipped ? "[transform:rotateY(180deg)]" : ""
         } ${
           adventureStatus && adventureStatus.health < 30
@@ -252,11 +252,29 @@ export const WordCard: React.FC<WordCardProps> = ({
             : adventureStatus && adventureStatus.health < 50
               ? "ring-2 ring-orange-400/50 shadow-orange-400/20 shadow-lg"
               : ""
-        }`}
-        style={{ transformStyle: "preserve-3d" }}
+        } ${isGesturing ? 'scale-[1.02] ring-2 ring-blue-400/50' : ''}`}
+        style={{
+          transformStyle: "preserve-3d",
+          touchAction: 'pan-y',
+        }}
         onClick={() => {
           setIsFlipped(!isFlipped);
           audioService.playWhooshSound();
+          if (navigator.vibrate) {
+            navigator.vibrate([30, 20, 30]);
+          }
+        }}
+        onTouchStart={handleTouchStart}
+        onTouchEnd={handleTouchEnd}
+        role="button"
+        tabIndex={0}
+        aria-label={`Word card for ${word.word}. ${isFlipped ? 'Showing definition' : 'Showing word'}. Tap to flip or swipe for actions.`}
+        onKeyDown={(e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            setIsFlipped(!isFlipped);
+            audioService.playWhooshSound();
+          }
         }}
       >
         {/* Front of card - Mobile Optimized */}
