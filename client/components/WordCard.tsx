@@ -860,6 +860,45 @@ export const WordCard: React.FC<WordCardProps> = ({
         />
       )}
 
+      {/* Swipe Direction Visual Feedback */}
+      {isGesturing && swipeDirection && (
+        <div className="absolute inset-0 pointer-events-none z-20 rounded-xl overflow-hidden">
+          <div
+            className={`absolute inset-0 transition-opacity duration-200 ${
+              swipeDirection === 'right'
+                ? 'bg-gradient-to-r from-green-400/20 via-green-400/10 to-transparent'
+                : swipeDirection === 'left'
+                  ? 'bg-gradient-to-l from-red-400/20 via-red-400/10 to-transparent'
+                  : swipeDirection === 'up'
+                    ? 'bg-gradient-to-t from-blue-400/20 via-blue-400/10 to-transparent'
+                    : swipeDirection === 'down'
+                      ? 'bg-gradient-to-b from-purple-400/20 via-purple-400/10 to-transparent'
+                      : ''
+            }`}
+          />
+          <div className="absolute inset-0 flex items-center justify-center">
+            <div
+              className={`w-16 h-16 rounded-full flex items-center justify-center backdrop-blur-sm border-2 ${
+                swipeDirection === 'right'
+                  ? 'bg-green-400/30 border-green-400/60 text-green-200'
+                  : swipeDirection === 'left'
+                    ? 'bg-red-400/30 border-red-400/60 text-red-200'
+                    : swipeDirection === 'up'
+                      ? 'bg-blue-400/30 border-blue-400/60 text-blue-200'
+                      : swipeDirection === 'down'
+                        ? 'bg-purple-400/30 border-purple-400/60 text-purple-200'
+                        : ''
+              } animate-pulse`}
+            >
+              {swipeDirection === 'right' && (isFlipped ? <RotateCcw className="w-8 h-8" /> : <span className="text-2xl">🔄</span>)}
+              {swipeDirection === 'left' && <Heart className="w-8 h-8" />}
+              {swipeDirection === 'up' && <Volume2 className="w-8 h-8" />}
+              {swipeDirection === 'down' && isFlipped && <RotateCcw className="w-8 h-8" />}
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Screen reader live region for accessibility */}
       <div
         aria-live="polite"
