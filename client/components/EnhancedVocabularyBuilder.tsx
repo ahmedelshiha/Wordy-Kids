@@ -886,13 +886,16 @@ export const EnhancedVocabularyBuilder: React.FC<EnhancedVocabularyBuilderProps>
       </div>
 
       {/* Live region for announcements */}
-      <div 
-        aria-live="polite" 
-        aria-atomic="true" 
+      <div
+        aria-live="polite"
+        aria-atomic="true"
         className="sr-only"
         role="status"
       >
-        {/* Screen reader announcements will be inserted here */}
+        {/* Current word announcement for screen readers */}
+        Word {currentWordIndex + 1} of {sessionWords.length}: {currentWord.word}
+        {showDefinition && `. Definition: ${currentWord.definition}`}
+        {isPaused && '. Session is paused.'}
       </div>
     </div>
   );
