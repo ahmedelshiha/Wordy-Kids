@@ -362,9 +362,9 @@ export const MobileLearningGoalsPanel: React.FC<MobileLearningGoalsPanelProps> =
                 <div className="grid grid-cols-3 gap-2 text-center">
                   <div>
                     <div className="text-sm font-bold text-blue-600">
-                      {currentProgress.wordsLearned * 7} {/* Estimate weekly */}
+                      {Math.min(currentProgress.wordsLearned * 5, 50)}
                     </div>
-                    <div className="text-xs text-gray-600">Words</div>
+                    <div className="text-xs text-gray-600">Est. Weekly</div>
                   </div>
                   <div>
                     <div className="text-sm font-bold text-green-600">
