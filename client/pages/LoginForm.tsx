@@ -412,7 +412,7 @@ export default function LoginForm() {
                     id="password"
                     name="password"
                     type={showPassword ? "text" : "password"}
-                    placeholder="Enter your password (min 6 characters)"
+                    placeholder="Enter your password"
                     autoComplete="current-password"
                     enterKeyHint="done"
                     value={formData.password}
