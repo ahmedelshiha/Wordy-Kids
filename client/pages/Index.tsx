@@ -1465,132 +1465,76 @@ export default function Index({ initialProfile }: IndexProps) {
                     ) : (
                       <>
                         <div className="text-center">
-                          {/* Enhanced Navigation Header with Breadcrumbs */}
-                          <div className="mb-4">
-                            {/* Mobile: Enhanced navigation with breadcrumbs and quick actions */}
+                          {/* Compact Mobile Header */}
+                          <div className="mb-2">
+                            {/* Mobile: Compact navigation */}
                             <div className="block sm:hidden">
-                              {/* Mobile Breadcrumb */}
-                              <div className="flex items-center justify-center gap-2 mb-2 text-xs text-slate-500">
-                                <BookOpen className="w-3 h-3" />
-                                <span>Word Library</span>
-                                <ArrowRight className="w-3 h-3" />
-                                <span className="text-slate-700 font-medium">
-                                  {selectedCategory ? selectedCategory.charAt(0).toUpperCase() + selectedCategory.slice(1) : "Category"}
-                                </span>
-                                <ArrowRight className="w-3 h-3" />
-                                <span className="text-blue-600 font-medium">Learning</span>
-                              </div>
-
-                              {/* Category Title & Stats */}
-                              <div className="text-center mb-3">
-                                <h2 className="text-lg font-bold text-slate-800 mb-1">
-                                  {selectedCategory
-                                    ? `${selectedCategory.charAt(0).toUpperCase() + selectedCategory.slice(1)} Words`
-                                    : "Select a Category"}
-                                </h2>
-                                <div className="flex items-center justify-center gap-4 text-xs text-slate-600 mb-2">
-                                  <div className="flex items-center gap-1">
-                                    <Target className="w-3 h-3" />
-                                    <span>Word {currentWordIndex + 1} of {displayWords.length}</span>
-                                  </div>
-                                  <div className="flex items-center gap-1">
-                                    <Heart className="w-3 h-3 text-green-500" />
-                                    <span>{rememberedWords.size} learned</span>
-                                  </div>
-                                </div>
-                                <p className="text-sm text-slate-600">
-                                  {selectedCategory
-                                    ? `Learn ${selectedCategory} vocabulary!`
-                                    : "Choose a category to start learning!"}
-                                </p>
-                              </div>
-
-                              {/* Enhanced Navigation Buttons */}
-                              <div className="flex gap-2 justify-center">
+                              {/* Minimal Header with Essential Info */}
+                              <div className="flex items-center justify-between mb-1.5 px-2">
+                                {/* Left: Back Button */}
                                 <Button
                                   onClick={() => {
-                                    // Add haptic feedback
                                     if (navigator.vibrate) {
                                       navigator.vibrate([50, 30, 50]);
                                     }
-                                    // Play navigation sound
                                     audioService.playClickSound();
-                                    // Smooth transition back to library
                                     setLearningMode("selector");
-                                    // Reset current word index for next time
                                     setCurrentWordIndex(0);
                                   }}
-                                  variant="outline"
-                                  className="flex items-center gap-2 px-4 py-2 h-10 rounded-xl text-sm font-medium hover:bg-blue-50 hover:border-blue-300 transition-all duration-200 shadow-sm hover:shadow-md active:scale-95"
+                                  variant="ghost"
+                                  size="sm"
+                                  className="h-8 px-2 text-slate-600 hover:bg-slate-100 rounded-lg"
                                 >
-                                  <BookOpen className="w-4 h-4" />
-                                  <span>Back to Library</span>
+                                  <BookOpen className="w-3.5 h-3.5" />
                                 </Button>
 
-                                {/* Quick Category Switch Button */}
+                                {/* Center: Category and Progress */}
+                                <div className="flex-1 text-center">
+                                  <div className="text-sm font-semibold text-slate-800 truncate px-2">
+                                    {selectedCategory ? selectedCategory.charAt(0).toUpperCase() + selectedCategory.slice(1) : "Category"}
+                                  </div>
+                                  <div className="text-xs text-slate-500">
+                                    {currentWordIndex + 1}/{displayWords.length} • {rememberedWords.size} ✅
+                                  </div>
+                                </div>
+
+                                {/* Right: Switch Button */}
                                 <Button
                                   onClick={() => {
                                     if (navigator.vibrate) {
                                       navigator.vibrate(25);
                                     }
                                     audioService.playClickSound();
-                                    // Quick access to category selector without going to main library
                                     setSelectedCategory("");
                                     setLearningMode("selector");
                                     setCurrentWordIndex(0);
                                   }}
                                   variant="ghost"
-                                  className="flex items-center gap-1 px-3 py-2 h-10 rounded-xl text-sm text-slate-600 hover:bg-slate-100 transition-all duration-200 active:scale-95"
+                                  size="sm"
+                                  className="h-8 px-2 text-slate-600 hover:bg-slate-100 rounded-lg"
                                 >
-                                  <Shuffle className="w-4 h-4" />
-                                  <span>Switch</span>
+                                  <Shuffle className="w-3.5 h-3.5" />
                                 </Button>
                               </div>
                             </div>
 
-                            {/* Desktop/Tablet: Enhanced side by side layout */}
+                            {/* Desktop/Tablet: Compact layout */}
                             <div className="hidden sm:block">
-                              {/* Desktop Breadcrumb */}
-                              <div className="flex items-center justify-center gap-2 mb-3 text-sm text-slate-500">
-                                <BookOpen className="w-4 h-4" />
-                                <span>Word Library</span>
-                                <ArrowRight className="w-4 h-4" />
-                                <span className="text-slate-700 font-medium">
-                                  {selectedCategory ? selectedCategory.charAt(0).toUpperCase() + selectedCategory.slice(1) : "Category"}
-                                </span>
-                                <ArrowRight className="w-4 h-4" />
-                                <span className="text-blue-600 font-medium">Learning Session</span>
-                              </div>
-
-                              <div className="flex items-center justify-between gap-4">
+                              <div className="flex items-center justify-between gap-4 mb-2">
                                 <div className="text-left flex-1 min-w-0">
-                                  <h2 className="text-lg md:text-xl font-bold text-slate-800 truncate mb-1">
+                                  <h2 className="text-base md:text-lg font-bold text-slate-800 truncate">
                                     {selectedCategory
                                       ? `${selectedCategory.charAt(0).toUpperCase() + selectedCategory.slice(1)} Words`
                                       : "Select a Category"}
                                   </h2>
-                                  <div className="flex items-center gap-4 text-sm text-slate-600 mb-1">
-                                    <div className="flex items-center gap-1">
-                                      <Target className="w-4 h-4" />
-                                      <span>Word {currentWordIndex + 1} of {displayWords.length}</span>
-                                    </div>
-                                    <div className="flex items-center gap-1">
-                                      <Heart className="w-4 h-4 text-green-500" />
-                                      <span>{rememberedWords.size} learned</span>
-                                    </div>
-                                    <div className="flex items-center gap-1">
-                                      <Brain className="w-4 h-4 text-orange-500" />
-                                      <span>{forgottenWords.size} to review</span>
-                                    </div>
+                                  <div className="flex items-center gap-3 text-xs text-slate-600">
+                                    <span>{currentWordIndex + 1}/{displayWords.length}</span>
+                                    <span>{rememberedWords.size} learned</span>
+                                    <span>{forgottenWords.size} review</span>
                                   </div>
-                                  <p className="text-sm md:text-base text-slate-600">
-                                    {selectedCategory
-                                      ? `Learn ${selectedCategory} vocabulary!`
-                                      : "Choose a category to start learning!"}
-                                  </p>
                                 </div>
 
-                                <div className="flex-shrink-0 flex gap-2">
+                                <div className="flex-shrink-0 flex gap-1">
                                   <Button
                                     onClick={() => {
                                       if (navigator.vibrate) {
@@ -1602,10 +1546,10 @@ export default function Index({ initialProfile }: IndexProps) {
                                       setCurrentWordIndex(0);
                                     }}
                                     variant="ghost"
-                                    className="flex items-center gap-1 text-xs px-2 py-1 h-8 rounded-md hover:bg-slate-100 transition-all duration-200 active:scale-95"
+                                    size="sm"
+                                    className="h-7 px-2 text-xs rounded-md hover:bg-slate-100"
                                   >
                                     <Shuffle className="w-3 h-3" />
-                                    <span>Switch Category</span>
                                   </Button>
 
                                   <Button
@@ -1617,11 +1561,11 @@ export default function Index({ initialProfile }: IndexProps) {
                                       setLearningMode("selector");
                                       setCurrentWordIndex(0);
                                     }}
-                                    variant="outline"
-                                    className="flex items-center gap-1 text-sm px-3 py-2 h-8 rounded-md hover:bg-blue-50 hover:border-blue-300 transition-all duration-200 shadow-sm hover:shadow-md active:scale-95"
+                                    variant="ghost"
+                                    size="sm"
+                                    className="h-7 px-2 text-xs rounded-md hover:bg-slate-100"
                                   >
-                                    <BookOpen className="w-4 h-4" />
-                                    <span>Back to Library</span>
+                                    <BookOpen className="w-3 h-3" />
                                   </Button>
                                 </div>
                               </div>
@@ -1636,15 +1580,11 @@ export default function Index({ initialProfile }: IndexProps) {
                                 <>
                                   {displayWords.length > 0 && (
                                     <>
-                                      {/* Progress indicator for navigation context */}
-                                      <div className="max-w-xs sm:max-w-sm md:max-w-md mx-auto mb-2">
-                                        <div className="flex items-center justify-between text-xs text-slate-500 mb-2">
-                                          <span>Progress in {selectedCategory}</span>
-                                          <span>{Math.round(((currentWordIndex + 1) / displayWords.length) * 100)}% complete</span>
-                                        </div>
-                                        <div className="w-full bg-slate-200 rounded-full h-1.5">
+                                      {/* Minimal progress indicator */}
+                                      <div className="max-w-xs sm:max-w-sm md:max-w-md mx-auto mb-1">
+                                        <div className="w-full bg-slate-200 rounded-full h-1">
                                           <div
-                                            className="bg-blue-500 h-1.5 rounded-full transition-all duration-300 ease-out"
+                                            className="bg-blue-500 h-1 rounded-full transition-all duration-300 ease-out"
                                             style={{ width: `${((currentWordIndex + 1) / displayWords.length) * 100}%` }}
                                           ></div>
                                         </div>
