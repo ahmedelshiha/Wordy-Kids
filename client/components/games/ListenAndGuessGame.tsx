@@ -5,6 +5,13 @@ import React, {
   useRef,
   useState,
 } from "react";
+import { EnhancedAchievementTracker } from "@/lib/enhancedAchievementTracker";
+import {
+  generateListenAndGuessWords,
+  getProgressiveListenAndGuessWords,
+  getCategoryListenAndGuessWords,
+  ListenAndGuessWord,
+} from "@/lib/listenAndGuessGeneration";
 
 /**
  * Listen & Guess — Kid‑friendly vocabulary game
@@ -26,14 +33,8 @@ import React, {
  */
 
 // ---------- Types ----------
-export type WordItem = {
-  id: string | number;
-  word: string; // the vocabulary item (won't be shown during question)
-  imageUrl: string; // correct picture
-  distractorImages: string[]; // pool of wrong pictures
-  audioUrl?: string; // optional mp3/ogg fallback
-  category?: string;
-};
+// Use the new ListenAndGuessWord type from the generation service
+export type WordItem = ListenAndGuessWord;
 
 export type GameFinishStats = {
   totalRounds: number;
@@ -44,10 +45,13 @@ export type GameFinishStats = {
 };
 
 export type ListenAndGuessProps = {
-  words: WordItem[];
+  words?: WordItem[]; // Now optional - will generate from database if not provided
   rounds?: number; // default 10
   optionsPerRound?: 3 | 4 | 5;
   funnyVoiceChance?: number; // 0..1 (chance to use a silly voice variant)
+  difficulty?: "easy" | "medium" | "hard";
+  category?: string;
+  playerLevel?: number;
   onFinish?: (stats: GameFinishStats) => void;
   onExit?: () => void;
   className?: string;
@@ -139,6 +143,9 @@ export default function ListenAndGuessGame({
   rounds = 10,
   optionsPerRound = 3,
   funnyVoiceChance = 0.25,
+  difficulty,
+  category,
+  playerLevel = 1,
   onFinish,
   onExit,
   className = "",
@@ -155,9 +162,26 @@ export default function ListenAndGuessGame({
 
   const { containerRef, fire } = useConfetti();
 
+  // Generate or use provided words
+  const gameWords = useMemo(() => {
+    if (words && words.length > 0) {
+      return words;
+    }
+
+    // Generate words systematically from database
+    if (category && category !== "all") {
+      return getCategoryListenAndGuessWords(category, rounds);
+    } else if (difficulty) {
+      return generateListenAndGuessWords(rounds, difficulty);
+    } else {
+      // Use progressive difficulty based on player level
+      return getProgressiveListenAndGuessWords(playerLevel, 1);
+    }
+  }, [words, rounds, category, difficulty, playerLevel]);
+
   // Precompute the sequence of rounds
   const sequence = useMemo(() => {
-    const pool = shuffle(words);
+    const pool = shuffle(gameWords);
     const roundsArr = [] as { word: WordItem; options: string[] }[];
     for (let i = 0; i < Math.min(rounds, pool.length); i++) {
       const w = pool[i];
@@ -169,7 +193,7 @@ export default function ListenAndGuessGame({
       roundsArr.push({ word: w, options: opts });
     }
     return roundsArr;
-  }, [words, rounds, optionsPerRound]);
+  }, [gameWords, rounds, optionsPerRound]);
 
   const current = sequence[roundIdx];
 
