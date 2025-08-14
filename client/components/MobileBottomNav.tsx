@@ -74,7 +74,7 @@ export function MobileBottomNav({
     },
     {
       id: "progress",
-      emoji: "🌟",
+      emoji: "����",
       label: userRole === "parent" ? "Reports" : "My Journey",
       icon: Trophy,
       color: "from-yellow-500 to-orange-500",
@@ -129,14 +129,13 @@ export function MobileBottomNav({
   ];
 
   const secondaryMenuItems = [
-    // Add progress for child mode since it's not in primary tabs
-    ...(userRole === "child" ? [{
-      id: "progress",
-      emoji: "🌟",
-      label: "My Journey",
-      icon: Trophy,
-      onClick: () => onTabChange("progress"),
-    }] : []),
+    {
+      id: "parent",
+      emoji: "👨‍👩‍👧‍👦",
+      label: "Parent Zone",
+      icon: Users,
+      onClick: onParentClick,
+    },
     {
       id: "admin",
       emoji: "🛡️",
