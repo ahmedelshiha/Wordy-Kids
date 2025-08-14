@@ -292,6 +292,13 @@ export function InteractiveDashboardWordCard({
     setIsAnswered(false);
     setGuess("");
     setShowHint(false);
+    setImageLoaded(false);
+    setImageError(false);
+    setIsTransitioning(true);
+
+    // Reset transition state after brief delay
+    const timer = setTimeout(() => setIsTransitioning(false), 300);
+    return () => clearTimeout(timer);
   }, [currentWordIndex]);
 
   const playPronunciation = () => {
