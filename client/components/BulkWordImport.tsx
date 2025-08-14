@@ -153,6 +153,11 @@ telescope,/ˈteləskoʊp/,An instrument for looking at distant objects,Astronome
   const handleImport = () => {
     const validWords = parsedWords.filter((word) => word.status === "valid");
     onImport(validWords);
+
+    // Trigger real-time database refresh
+    refreshWordDatabase();
+    realTimeWordDB.invalidateCaches();
+
     handleReset();
   };
 
