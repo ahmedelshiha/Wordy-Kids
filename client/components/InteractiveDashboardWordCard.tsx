@@ -908,7 +908,13 @@ export function InteractiveDashboardWordCard({
           </div>
 
           {/* Picture Display */}
-          <div className="mb-4 md:mb-6">{renderWordImage()}</div>
+          <div
+            className="mb-4 md:mb-6"
+            role="img"
+            aria-label={`Picture showing ${currentWord.emoji} ${currentWord.word}`}
+          >
+            {renderWordImage()}
+          </div>
 
           {/* Game Instructions */}
           <div className="text-center mb-3 sm:mb-4 md:mb-5">
