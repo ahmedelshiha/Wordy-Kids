@@ -920,10 +920,11 @@ export function InteractiveDashboardWordCard({
               onClick={playPronunciation}
               disabled={isPlaying}
               size="sm"
-              className="bg-educational-blue hover:bg-educational-blue/90 text-white p-2 rounded-full transition-all duration-300 transform hover:scale-105"
+              className="bg-educational-blue hover:bg-educational-blue/90 text-white p-2 sm:p-3 rounded-full transition-all duration-300 transform hover:scale-105 active:scale-95 min-w-[44px] min-h-[44px] disabled:opacity-50"
+              aria-label="Play pronunciation"
             >
               <Volume2
-                className={cn("w-4 h-4", isPlaying && "animate-pulse")}
+                className={cn("w-4 h-4 sm:w-5 sm:h-5", isPlaying && "animate-pulse")}
               />
             </Button>
 
