@@ -3858,9 +3858,14 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
             </Button>
           )}
           <div>
-            <h1 className="text-xl md:text-3xl font-bold text-slate-800">
-              Parent Dashboard
-            </h1>
+            <div className="flex items-center gap-2">
+              <h1 className="text-xl md:text-3xl font-bold text-slate-800">
+                Parent Dashboard
+              </h1>
+              <div className="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-xs font-medium hidden md:flex items-center gap-1">
+                👨‍👩‍👧‍👦 Parent Mode
+              </div>
+            </div>
             <p className="text-xs md:text-base text-slate-600 hidden md:block">
               Comprehensive learning management for your family
             </p>
@@ -4010,7 +4015,7 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
                 Choose Avatar
               </Label>
               <div className="grid grid-cols-5 sm:grid-cols-9 gap-1 sm:gap-2">
-                {["👦", "👧", "🧒", "👶", "🦸‍♂️", "🦸‍♀️", "🧑‍��", "👨‍🎓", "👩‍🎓"].map(
+                {["👦", "👧", "🧒", "👶", "🦸‍♂️", "🦸‍♀️", "🧑‍🎓", "👨‍🎓", "👩‍🎓"].map(
                   (emoji) => (
                     <Button
                       key={emoji}
