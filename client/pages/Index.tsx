@@ -1448,12 +1448,15 @@ export default function Index({ initialProfile }: IndexProps) {
 
                   <button
                     onClick={() => setUserRole("parent")}
-                    className="w-full flex items-center gap-4 p-4 rounded-2xl transition-all bg-white text-gray-700 hover:bg-blue-50 hover:border-blue-200 border-2 border-transparent"
+                    className="w-full flex items-center gap-4 p-4 rounded-2xl transition-all bg-white text-gray-700 hover:bg-blue-50 hover:border-blue-200 border-2 border-transparent group"
                   >
-                    <div className="p-2 rounded-xl bg-blue-100">
+                    <div className="p-2 rounded-xl bg-blue-100 group-hover:bg-blue-200 transition-colors">
                       <Users className="w-5 h-5 text-blue-600" />
                     </div>
-                    <span className="font-semibold">Parent Dashboard</span>
+                    <div className="text-left">
+                      <div className="font-semibold">Parent Dashboard</div>
+                      <div className="text-xs text-gray-500">Monitor progress & settings</div>
+                    </div>
                   </button>
 
                   <button
