@@ -199,6 +199,12 @@ export function InteractiveDashboardWordCard({
   const [guess, setGuess] = useState("");
   const [showHint, setShowHint] = useState(false);
 
+  // Progressive enhancement states
+  const [imageLoaded, setImageLoaded] = useState(false);
+  const [imageError, setImageError] = useState(false);
+  const [isTransitioning, setIsTransitioning] = useState(false);
+  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
+
   // Systematic progression state - DISABLED for clean UI
   // const [progressionInfo, setProgressionInfo] = useState({
   //   stage: "Foundation Building",
