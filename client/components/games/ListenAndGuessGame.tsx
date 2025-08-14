@@ -206,22 +206,16 @@ export default function ListenAndGuessGame({
       .map(w => w.emoji);
   }, [optionsPerRound]);
 
-  // Generate or use provided words
+  // Generate or use provided words - Enhanced with database emojis
   const gameWords = useMemo(() => {
     if (words && words.length > 0) {
       return words;
     }
 
-    // Generate words systematically from database
-    if (category && category !== "all") {
-      return getCategoryListenAndGuessWords(category, rounds);
-    } else if (difficulty) {
-      return generateListenAndGuessWords(rounds, difficulty);
-    } else {
-      // Use progressive difficulty based on player level
-      return getProgressiveListenAndGuessWords(playerLevel, 1);
-    }
-  }, [words, rounds, category, difficulty, playerLevel]);
+    // Use database-based word generation with emojis
+    const difficultyLevel = difficulty || (playerLevel <= 3 ? "easy" : playerLevel <= 7 ? "medium" : "hard");
+    return generateDatabaseWords(rounds, category, difficultyLevel);
+  }, [words, rounds, category, difficulty, playerLevel, generateDatabaseWords]);
 
   // Precompute the sequence of rounds
   const sequence = useMemo(() => {
