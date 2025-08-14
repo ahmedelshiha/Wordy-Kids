@@ -245,16 +245,67 @@ export default function ListenAndGuessGame({
 
         if (roundIdx + 1 < sequence.length) setRoundIdx((r) => r + 1);
         else {
+          const finalCorrect = correctCount + (isCorrect ? 1 : 0);
+          const finalWrong = wrongCount + (isCorrect ? 0 : 1);
+          const finalCoins = coins + (isCorrect ? 5 : 0);
+          const finalBestStreak = Math.max(
+            bestStreak,
+            isCorrect ? streak + 1 : bestStreak,
+          );
+
           const stats: GameFinishStats = {
             totalRounds: sequence.length,
-            correct: correctCount + (isCorrect ? 1 : 0),
-            wrong: wrongCount + (isCorrect ? 0 : 1),
-            coins: coins + (isCorrect ? 5 : 0),
-            streakBest: Math.max(
-              bestStreak,
-              isCorrect ? streak + 1 : bestStreak,
-            ),
+            correct: finalCorrect,
+            wrong: finalWrong,
+            coins: finalCoins,
+            streakBest: finalBestStreak,
           };
+
+          // Track achievements for Listen & Guess completion
+          const achievementUpdates = {
+            totalQuizzes: 1,
+            quizzesCompleted: 1,
+            listenAndGuessGamesPlayed: 1,
+            correctAnswers: finalCorrect,
+            totalAnswers: sequence.length,
+            currentStreak: isCorrect ? streak + 1 : 0,
+            bestStreak: finalBestStreak,
+            coinsEarned: finalCoins,
+            wordsLearned: finalCorrect, // Each correct answer = word learned
+            difficulty: difficulty || (playerLevel <= 5 ? "easy" : "medium"),
+          };
+
+          // Calculate accuracy and add bonus achievements
+          const accuracy = (finalCorrect / sequence.length) * 100;
+          if (accuracy >= 90) {
+            achievementUpdates.perfectScores = 1;
+          }
+          if (finalBestStreak >= 5) {
+            achievementUpdates.streakAchievements = 1;
+          }
+
+          // Track session achievements
+          achievementUpdates.sessionStats = {
+            questionsAnswered: sequence.length,
+            correctAnswers: finalCorrect,
+            timeSpent: Date.now() - performance.now(), // Approximate session time
+            gamesCompleted: 1,
+          };
+
+          try {
+            const newAchievements = EnhancedAchievementTracker.updateProgress(achievementUpdates);
+
+            if (newAchievements.length > 0) {
+              console.log(`🎉 Listen & Guess: ${newAchievements.length} new achievements unlocked!`);
+              // Show achievement notification (could be enhanced with UI feedback)
+              newAchievements.forEach(achievement => {
+                console.log(`✨ Achievement: ${achievement.name} - ${achievement.description}`);
+              });
+            }
+          } catch (error) {
+            console.error("Error tracking achievements:", error);
+          }
+
           onFinish?.(stats);
         }
       }, 1500);
