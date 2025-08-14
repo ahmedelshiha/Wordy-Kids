@@ -384,17 +384,30 @@ export const EnhancedWordLibrary: React.FC<EnhancedWordLibraryProps> = ({
                 <span>
                   Word {currentWordIndex + 1} of {filteredWords.length}
                 </span>
-                <span>
-                  {Math.round(
-                    ((currentWordIndex + 1) / filteredWords.length) * 100,
+                <div className="flex items-center gap-2">
+                  {wordsLoading && (
+                    <RefreshCw className="w-3 h-3 animate-spin text-blue-500" />
                   )}
-                  %
-                </span>
+                  <span className="text-green-600">
+                    📚 {realTimeWords.length} words
+                  </span>
+                  <span>
+                    {Math.round(
+                      ((currentWordIndex + 1) / filteredWords.length) * 100,
+                    )}
+                    %
+                  </span>
+                </div>
               </div>
               <Progress
                 value={((currentWordIndex + 1) / filteredWords.length) * 100}
                 className="h-1"
               />
+              {lastUpdate && (
+                <div className="text-xs text-gray-500 mt-1 text-center">
+                  Last updated: {new Date(lastUpdate).toLocaleTimeString()}
+                </div>
+              )}
             </div>
           )}
         </div>
