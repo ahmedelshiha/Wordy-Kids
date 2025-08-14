@@ -3297,14 +3297,10 @@ export default function Index({ initialProfile }: IndexProps) {
 
           {/* Mobile Bottom Navigation - Show for both child and parent modes */}
           <MobileBottomNav
-            activeTab={userRole === "parent" ? "parent" : activeTab}
+            activeTab={userRole === "parent" ? "" : activeTab}
             onTabChange={(tab) => {
-              if (tab === "parent") {
-                setUserRole("parent");
-              } else {
-                setUserRole("child");
-                setActiveTab(tab);
-              }
+              setUserRole("child");
+              setActiveTab(tab);
               setShowMobileMoreMenu(false);
             }}
             onSettingsClick={() => {
