@@ -443,7 +443,7 @@ function GameCompletionDialog({ show, stats, onContinue, onExit }: GameCompletio
 
 // ---------- Component ----------
 export default function WordGardenGame({
-  rounds = 8,
+  rounds = 10,
   optionsPerRound = 3,
   difficulty = "easy",
   category,
@@ -787,7 +787,7 @@ export default function WordGardenGame({
                 />
               </div>
               <div className="absolute top-2 left-2">
-                <span className="text-lg animate-sparkle">✨</span>
+                <span className="text-lg animate-sparkle">���</span>
               </div>
             </button>
           ))}
