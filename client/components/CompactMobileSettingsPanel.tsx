@@ -31,6 +31,8 @@ import {
   setSoundEnabled,
   isSoundEnabled,
   playSoundIfEnabled,
+  setUIInteractionSoundsEnabled,
+  isUIInteractionSoundsEnabled,
 } from "@/lib/soundEffects";
 import { enhancedAudioService, VoiceType } from "@/lib/enhancedAudioService";
 import { audioService } from "@/lib/audioService";
