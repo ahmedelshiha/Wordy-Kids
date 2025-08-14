@@ -16,152 +16,174 @@ export interface ListenAndGuessWord {
 }
 
 // High-quality image URLs for common words (using Unsplash with specific search terms)
-const imageDatabase: Record<string, { correct: string; distractors: string[] }> = {
+const imageDatabase: Record<
+  string,
+  { correct: string; distractors: string[] }
+> = {
   // FOOD
   apple: {
-    correct: "https://images.unsplash.com/photo-1568702846914-96b305d2aaeb?w=200&h=200&fit=crop&auto=format",
+    correct:
+      "https://images.unsplash.com/photo-1568702846914-96b305d2aaeb?w=200&h=200&fit=crop&auto=format",
     distractors: [
       "https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?w=200&h=200&fit=crop&auto=format", // banana
       "https://images.unsplash.com/photo-1582979512210-99b6a53386f9?w=200&h=200&fit=crop&auto=format", // strawberry
-    ]
+    ],
   },
   banana: {
-    correct: "https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?w=200&h=200&fit=crop&auto=format",
+    correct:
+      "https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?w=200&h=200&fit=crop&auto=format",
     distractors: [
       "https://images.unsplash.com/photo-1568702846914-96b305d2aaeb?w=200&h=200&fit=crop&auto=format", // apple
       "https://images.unsplash.com/photo-1611080626919-7cf5a9dbab5b?w=200&h=200&fit=crop&auto=format", // orange
-    ]
+    ],
   },
   orange: {
-    correct: "https://images.unsplash.com/photo-1611080626919-7cf5a9dbab5b?w=200&h=200&fit=crop&auto=format",
+    correct:
+      "https://images.unsplash.com/photo-1611080626919-7cf5a9dbab5b?w=200&h=200&fit=crop&auto=format",
     distractors: [
       "https://images.unsplash.com/photo-1568702846914-96b305d2aaeb?w=200&h=200&fit=crop&auto=format", // apple
       "https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?w=200&h=200&fit=crop&auto=format", // banana
-    ]
+    ],
   },
 
   // ANIMALS
   cat: {
-    correct: "https://images.unsplash.com/photo-1574158622682-e40e69881006?w=200&h=200&fit=crop&auto=format",
+    correct:
+      "https://images.unsplash.com/photo-1574158622682-e40e69881006?w=200&h=200&fit=crop&auto=format",
     distractors: [
       "https://images.unsplash.com/photo-1583337130417-3346a1be7dee?w=200&h=200&fit=crop&auto=format", // dog
       "https://images.unsplash.com/photo-1552728089-57bdde30beb3?w=200&h=200&fit=crop&auto=format", // bird
-    ]
+    ],
   },
   dog: {
-    correct: "https://images.unsplash.com/photo-1583337130417-3346a1be7dee?w=200&h=200&fit=crop&auto=format",
+    correct:
+      "https://images.unsplash.com/photo-1583337130417-3346a1be7dee?w=200&h=200&fit=crop&auto=format",
     distractors: [
       "https://images.unsplash.com/photo-1574158622682-e40e69881006?w=200&h=200&fit=crop&auto=format", // cat
       "https://images.unsplash.com/photo-1552728089-57bdde30beb3?w=200&h=200&fit=crop&auto=format", // bird
-    ]
+    ],
   },
   bird: {
-    correct: "https://images.unsplash.com/photo-1552728089-57bdde30beb3?w=200&h=200&fit=crop&auto=format",
+    correct:
+      "https://images.unsplash.com/photo-1552728089-57bdde30beb3?w=200&h=200&fit=crop&auto=format",
     distractors: [
       "https://images.unsplash.com/photo-1574158622682-e40e69881006?w=200&h=200&fit=crop&auto=format", // cat
       "https://images.unsplash.com/photo-1583337130417-3346a1be7dee?w=200&h=200&fit=crop&auto=format", // dog
-    ]
+    ],
   },
   fish: {
-    correct: "https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=200&h=200&fit=crop&auto=format",
+    correct:
+      "https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=200&h=200&fit=crop&auto=format",
     distractors: [
       "https://images.unsplash.com/photo-1552728089-57bdde30beb3?w=200&h=200&fit=crop&auto=format", // bird
       "https://images.unsplash.com/photo-1574158622682-e40e69881006?w=200&h=200&fit=crop&auto=format", // cat
-    ]
+    ],
   },
   elephant: {
-    correct: "https://images.unsplash.com/photo-1564760055775-d63b17a55c44?w=200&h=200&fit=crop&auto=format",
+    correct:
+      "https://images.unsplash.com/photo-1564760055775-d63b17a55c44?w=200&h=200&fit=crop&auto=format",
     distractors: [
       "https://images.unsplash.com/photo-1583337130417-3346a1be7dee?w=200&h=200&fit=crop&auto=format", // dog
       "https://images.unsplash.com/photo-1574158622682-e40e69881006?w=200&h=200&fit=crop&auto=format", // cat
-    ]
+    ],
   },
 
   // OBJECTS & TOYS
   ball: {
-    correct: "https://images.unsplash.com/photo-1593766827228-8737b4534aa6?w=200&h=200&fit=crop&auto=format",
+    correct:
+      "https://images.unsplash.com/photo-1593766827228-8737b4534aa6?w=200&h=200&fit=crop&auto=format",
     distractors: [
       "https://images.unsplash.com/photo-1568702846914-96b305d2aaeb?w=200&h=200&fit=crop&auto=format", // apple
       "https://images.unsplash.com/photo-1494905998402-395d579af36f?w=200&h=200&fit=crop&auto=format", // car
-    ]
+    ],
   },
   car: {
-    correct: "https://images.unsplash.com/photo-1494905998402-395d579af36f?w=200&h=200&fit=crop&auto=format",
+    correct:
+      "https://images.unsplash.com/photo-1494905998402-395d579af36f?w=200&h=200&fit=crop&auto=format",
     distractors: [
       "https://images.unsplash.com/photo-1593766827228-8737b4534aa6?w=200&h=200&fit=crop&auto=format", // ball
       "https://images.unsplash.com/photo-1583337130417-3346a1be7dee?w=200&h=200&fit=crop&auto=format", // dog
-    ]
+    ],
   },
   book: {
-    correct: "https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=200&h=200&fit=crop&auto=format",
+    correct:
+      "https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=200&h=200&fit=crop&auto=format",
     distractors: [
       "https://images.unsplash.com/photo-1593766827228-8737b4534aa6?w=200&h=200&fit=crop&auto=format", // ball
       "https://images.unsplash.com/photo-1494905998402-395d579af36f?w=200&h=200&fit=crop&auto=format", // car
-    ]
+    ],
   },
 
   // NATURE
   sun: {
-    correct: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=200&h=200&fit=crop&auto=format",
+    correct:
+      "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=200&h=200&fit=crop&auto=format",
     distractors: [
       "https://images.unsplash.com/photo-1574158622682-e40e69881006?w=200&h=200&fit=crop&auto=format", // cat
       "https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?w=200&h=200&fit=crop&auto=format", // banana
-    ]
+    ],
   },
   flower: {
-    correct: "https://images.unsplash.com/photo-1464207687429-7505649dae38?w=200&h=200&fit=crop&auto=format",
+    correct:
+      "https://images.unsplash.com/photo-1464207687429-7505649dae38?w=200&h=200&fit=crop&auto=format",
     distractors: [
       "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=200&h=200&fit=crop&auto=format", // sun
       "https://images.unsplash.com/photo-1568702846914-96b305d2aaeb?w=200&h=200&fit=crop&auto=format", // apple
-    ]
+    ],
   },
   tree: {
-    correct: "https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=200&h=200&fit=crop&auto=format",
+    correct:
+      "https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=200&h=200&fit=crop&auto=format",
     distractors: [
       "https://images.unsplash.com/photo-1464207687429-7505649dae38?w=200&h=200&fit=crop&auto=format", // flower
       "https://images.unsplash.com/photo-1593766827228-8737b4534aa6?w=200&h=200&fit=crop&auto=format", // ball
-    ]
+    ],
   },
 
   // BODY PARTS
   hand: {
-    correct: "https://images.unsplash.com/photo-1586094819848-a9f1b3e8e3f3?w=200&h=200&fit=crop&auto=format",
+    correct:
+      "https://images.unsplash.com/photo-1586094819848-a9f1b3e8e3f3?w=200&h=200&fit=crop&auto=format",
     distractors: [
       "https://images.unsplash.com/photo-1574158622682-e40e69881006?w=200&h=200&fit=crop&auto=format", // cat
       "https://images.unsplash.com/photo-1568702846914-96b305d2aaeb?w=200&h=200&fit=crop&auto=format", // apple
-    ]
+    ],
   },
   eye: {
-    correct: "https://images.unsplash.com/photo-1583821997113-0e9b4b0ec8b1?w=200&h=200&fit=crop&auto=format",
+    correct:
+      "https://images.unsplash.com/photo-1583821997113-0e9b4b0ec8b1?w=200&h=200&fit=crop&auto=format",
     distractors: [
       "https://images.unsplash.com/photo-1586094819848-a9f1b3e8e3f3?w=200&h=200&fit=crop&auto=format", // hand
       "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=200&h=200&fit=crop&auto=format", // sun
-    ]
+    ],
   },
 
   // COLORS
   red: {
-    correct: "https://images.unsplash.com/photo-1568702846914-96b305d2aaeb?w=200&h=200&fit=crop&auto=format", // red apple
+    correct:
+      "https://images.unsplash.com/photo-1568702846914-96b305d2aaeb?w=200&h=200&fit=crop&auto=format", // red apple
     distractors: [
       "https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?w=200&h=200&fit=crop&auto=format", // yellow banana
       "https://images.unsplash.com/photo-1464207687429-7505649dae38?w=200&h=200&fit=crop&auto=format", // colorful flower
-    ]
+    ],
   },
   blue: {
-    correct: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=200&h=200&fit=crop&auto=format", // blue sky
+    correct:
+      "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=200&h=200&fit=crop&auto=format", // blue sky
     distractors: [
       "https://images.unsplash.com/photo-1568702846914-96b305d2aaeb?w=200&h=200&fit=crop&auto=format", // red apple
       "https://images.unsplash.com/photo-1464207687429-7505649dae38?w=200&h=200&fit=crop&auto=format", // colorful flower
-    ]
+    ],
   },
 
   // NUMBERS (using visual representations)
   one: {
-    correct: "https://images.unsplash.com/photo-1568702846914-96b305d2aaeb?w=200&h=200&fit=crop&auto=format", // one apple
+    correct:
+      "https://images.unsplash.com/photo-1568702846914-96b305d2aaeb?w=200&h=200&fit=crop&auto=format", // one apple
     distractors: [
       "https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?w=200&h=200&fit=crop&auto=format", // banana (different object)
       "https://images.unsplash.com/photo-1593766827228-8737b4534aa6?w=200&h=200&fit=crop&auto=format", // ball (different object)
-    ]
+    ],
   },
 };
 
@@ -203,7 +225,10 @@ export function generateListenAndGuessWords(
   }
 
   // Shuffle and get required count
-  const shuffledWords = shuffleArray(wordsWithImages).slice(0, Math.min(count, wordsWithImages.length));
+  const shuffledWords = shuffleArray(wordsWithImages).slice(
+    0,
+    Math.min(count, wordsWithImages.length),
+  );
 
   // Convert to ListenAndGuessWord format
   return shuffledWords.map((word) => {
@@ -279,11 +304,14 @@ function shuffleArray<T>(array: T[]): T[] {
  */
 export function getDailyListenAndGuessChallenge(): ListenAndGuessWord[] {
   const today = new Date();
-  const dayOfYear = Math.floor((today.getTime() - new Date(today.getFullYear(), 0, 0).getTime()) / 86400000);
-  
+  const dayOfYear = Math.floor(
+    (today.getTime() - new Date(today.getFullYear(), 0, 0).getTime()) /
+      86400000,
+  );
+
   // Use day of year as seed for consistent daily challenges
   const categories = ["food", "animals", "nature", "toys", "colors"];
   const selectedCategory = categories[dayOfYear % categories.length];
-  
+
   return getCategoryListenAndGuessWords(selectedCategory, 6);
 }

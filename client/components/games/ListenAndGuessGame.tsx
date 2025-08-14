@@ -319,13 +319,18 @@ export default function ListenAndGuessGame({
           };
 
           try {
-            const newAchievements = EnhancedAchievementTracker.updateProgress(achievementUpdates);
+            const newAchievements =
+              EnhancedAchievementTracker.updateProgress(achievementUpdates);
 
             if (newAchievements.length > 0) {
-              console.log(`🎉 Listen & Guess: ${newAchievements.length} new achievements unlocked!`);
+              console.log(
+                `🎉 Listen & Guess: ${newAchievements.length} new achievements unlocked!`,
+              );
               // Show achievement notification (could be enhanced with UI feedback)
-              newAchievements.forEach(achievement => {
-                console.log(`✨ Achievement: ${achievement.name} - ${achievement.description}`);
+              newAchievements.forEach((achievement) => {
+                console.log(
+                  `✨ Achievement: ${achievement.name} - ${achievement.description}`,
+                );
               });
             }
           } catch (error) {
@@ -356,7 +361,8 @@ export default function ListenAndGuessGame({
     {
       id: "fallback-1",
       word: "apple",
-      imageUrl: "https://images.unsplash.com/photo-1568702846914-96b305d2aaeb?w=200&h=200&fit=crop&auto=format",
+      imageUrl:
+        "https://images.unsplash.com/photo-1568702846914-96b305d2aaeb?w=200&h=200&fit=crop&auto=format",
       distractorImages: [
         "https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?w=200&h=200&fit=crop&auto=format",
         "https://images.unsplash.com/photo-1611080626919-7cf5a9dbab5b?w=200&h=200&fit=crop&auto=format",
@@ -367,7 +373,8 @@ export default function ListenAndGuessGame({
     {
       id: "fallback-2",
       word: "cat",
-      imageUrl: "https://images.unsplash.com/photo-1574158622682-e40e69881006?w=200&h=200&fit=crop&auto=format",
+      imageUrl:
+        "https://images.unsplash.com/photo-1574158622682-e40e69881006?w=200&h=200&fit=crop&auto=format",
       distractorImages: [
         "https://images.unsplash.com/photo-1583337130417-3346a1be7dee?w=200&h=200&fit=crop&auto=format",
         "https://images.unsplash.com/photo-1552728089-57bdde30beb3?w=200&h=200&fit=crop&auto=format",
@@ -493,7 +500,7 @@ export default function ListenAndGuessGame({
                     : "border-transparent hover:border-yellow-300 animate-fade-in"
                 } ${locked ? "cursor-not-allowed" : "cursor-pointer hover:shadow-xl hover:scale-105"}`}
                 style={{
-                  animationDelay: `${i * 100}ms`
+                  animationDelay: `${i * 100}ms`,
                 }}
               >
                 <img
@@ -503,14 +510,18 @@ export default function ListenAndGuessGame({
                   loading="lazy"
                 />
                 {/* fun corner badge with animation */}
-                <span className="absolute top-2 left-2 text-lg animate-sparkle">✨</span>
+                <span className="absolute top-2 left-2 text-lg animate-sparkle">
+                  ✨
+                </span>
 
                 {/* Answer feedback with enhanced animations */}
                 {showAnswer && isCorrect && (
                   <div className="absolute inset-0 bg-green-500/30 flex items-center justify-center backdrop-blur-sm">
                     <div className="text-center">
                       <span className="text-5xl animate-gentle-bounce">✅</span>
-                      <div className="text-white font-bold text-sm mt-1 text-shadow">Correct!</div>
+                      <div className="text-white font-bold text-sm mt-1 text-shadow">
+                        Correct!
+                      </div>
                     </div>
                   </div>
                 )}
@@ -518,7 +529,9 @@ export default function ListenAndGuessGame({
                   <div className="absolute inset-0 bg-red-500/30 flex items-center justify-center backdrop-blur-sm">
                     <div className="text-center">
                       <span className="text-5xl animate-wiggle">❌</span>
-                      <div className="text-white font-bold text-sm mt-1 text-shadow">Try again!</div>
+                      <div className="text-white font-bold text-sm mt-1 text-shadow">
+                        Try again!
+                      </div>
                     </div>
                   </div>
                 )}
