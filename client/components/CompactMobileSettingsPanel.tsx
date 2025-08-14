@@ -684,81 +684,20 @@ export const CompactMobileSettingsPanel: React.FC<
             {/* Goals & Analytics Section */}
             <div className="border rounded-lg">
               <CompactSectionHeader
-                title="Goals & Analytics"
-                emoji="📊"
+                title="Learning Goals"
+                emoji="🎯"
                 isExpanded={expandedSections.goals}
                 onToggle={() => toggleSection("goals")}
               />
               {expandedSections.goals && (
-                <div
-                  className="px-2 pb-2 space-y-2 max-h-[35vh] overflow-y-auto scroll-smooth"
-                  style={{ WebkitOverflowScrolling: "touch" }}
-                >
-                  {/* Current Goals Overview */}
-                  <div className="space-y-2">
-                    <CompactSettingRow
-                      icon={Calendar}
-                      label="Daily Progress"
-                      description={`${currentProgress.wordsLearned}/${dailyGoal[0]} words today`}
-                    >
-                      <div className="text-right">
-                        <div className="text-xs font-bold text-green-600">
-                          {Math.round((currentProgress.wordsLearned / dailyGoal[0]) * 100)}%
-                        </div>
-                      </div>
-                    </CompactSettingRow>
-
-                    <CompactSettingRow
-                      icon={Award}
-                      label="Accuracy Rate"
-                      description="Your learning precision"
-                    >
-                      <Badge variant="outline" className={cn(
-                        "text-xs px-2 py-0",
-                        currentProgress.accuracy >= 80 ? "text-green-600 border-green-200" :
-                        currentProgress.accuracy >= 60 ? "text-yellow-600 border-yellow-200" :
-                        "text-red-600 border-red-200"
-                      )}>
-                        {currentProgress.accuracy}%
-                      </Badge>
-                    </CompactSettingRow>
-
-                    <CompactSettingRow
-                      icon={TrendingUp}
-                      label="Learning Sessions"
-                      description="Sessions completed today"
-                    >
-                      <Badge variant="outline" className="text-xs px-2 py-0">
-                        {currentProgress.sessionCount}
-                      </Badge>
-                    </CompactSettingRow>
-                  </div>
-
-                  {/* Quick Actions */}
-                  <div className="pt-2 space-y-2">
-                    <button
-                      onClick={() => {
-                        setShowGoalsPanel(true);
-                        if (deviceInfo.hasHaptic) triggerHapticFeedback("medium");
-                      }}
-                      className="w-full p-2 bg-gradient-to-r from-blue-500 to-purple-500 text-white rounded-lg text-sm font-medium hover:shadow-md transition-all duration-200 flex items-center justify-center gap-2"
-                    >
-                      <BarChart3 className="w-4 h-4" />
-                      Goals Dashboard
-                    </button>
-                  </div>
-
-                  {/* Goal Insights */}
-                  <div className="mt-2 p-2 bg-gradient-to-br from-yellow-50 to-orange-50 rounded-lg border border-yellow-200">
-                    <p className="text-xs font-medium text-orange-800 mb-1">💡 Smart Insight</p>
-                    <p className="text-xs text-orange-700">
-                      {currentProgress.accuracy >= 80
-                        ? "Great accuracy! Consider increasing your daily goal."
-                        : currentProgress.accuracy >= 60
-                        ? "Good progress! Focus on difficult words for better accuracy."
-                        : "Take your time with each word to improve accuracy."}
-                    </p>
-                  </div>
+                <div className="p-2">
+                  <QuickGoalsWidget
+                    currentProgress={currentProgress}
+                    onExpandClick={() => {
+                      setShowGoalsPanel(true);
+                      if (deviceInfo.hasHaptic) triggerHapticFeedback("medium");
+                    }}
+                  />
                 </div>
               )}
             </div>
