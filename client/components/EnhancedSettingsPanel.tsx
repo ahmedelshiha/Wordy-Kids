@@ -332,7 +332,7 @@ export const EnhancedSettingsPanel: React.FC<EnhancedSettingsPanelProps> = ({
             <nav className="p-4 space-y-2">
               {[
                 { id: "audio", label: "Audio Settings", icon: Volume2, emoji: "🔊" },
-                { id: "appearance", label: "Appearance", icon: Palette, emoji: "��" },
+                { id: "appearance", label: "Appearance", icon: Palette, emoji: "🎨" },
                 { id: "learning", label: "Learning", icon: Target, emoji: "🎯" },
                 { id: "accessibility", label: "Accessibility", icon: Eye, emoji: "♿" },
                 { id: "notifications", label: "Notifications", icon: Bell, emoji: "🔔" },
@@ -1014,6 +1014,76 @@ export const EnhancedSettingsPanel: React.FC<EnhancedSettingsPanelProps> = ({
                     </div>
                   </Card>
 
+                  {/* Device Information */}
+                  <Card className="p-4">
+                    <div className="space-y-4">
+                      <h4 className="font-medium flex items-center gap-2">
+                        {deviceInfo.isMobile ? (
+                          <Smartphone className="w-4 h-4" />
+                        ) : deviceInfo.isTablet ? (
+                          <Tablet className="w-4 h-4" />
+                        ) : (
+                          <Monitor className="w-4 h-4" />
+                        )}
+                        Device Information
+                      </h4>
+
+                      <div className="grid grid-cols-2 gap-3">
+                        <div className="p-3 bg-slate-50 rounded-lg text-center">
+                          <div className="text-lg mb-1">
+                            {deviceInfo.isMobile ? "📱" : deviceInfo.isTablet ? "📱" : "💻"}
+                          </div>
+                          <p className="text-sm font-medium">
+                            {deviceInfo.isMobile ? "Mobile" : deviceInfo.isTablet ? "Tablet" : "Desktop"}
+                          </p>
+                          <p className="text-xs text-slate-600">{deviceInfo.screenSize} screen</p>
+                        </div>
+
+                        <div className="p-3 bg-slate-50 rounded-lg text-center">
+                          <div className="text-lg mb-1">
+                            {deviceInfo.hasTouch ? "👆" : "🖱️"}
+                          </div>
+                          <p className="text-sm font-medium">
+                            {deviceInfo.hasTouch ? "Touch" : "Mouse"}
+                          </p>
+                          <p className="text-xs text-slate-600">Primary input</p>
+                        </div>
+
+                        {deviceInfo.hasHaptic && (
+                          <div className="p-3 bg-green-50 rounded-lg text-center">
+                            <div className="text-lg mb-1">📳</div>
+                            <p className="text-sm font-medium text-green-700">Haptic</p>
+                            <p className="text-xs text-green-600">Feedback enabled</p>
+                          </div>
+                        )}
+
+                        <div className="p-3 bg-slate-50 rounded-lg text-center">
+                          <div className="text-lg mb-1">
+                            {deviceInfo.orientation === "portrait" ? "📱" : "📲"}
+                          </div>
+                          <p className="text-sm font-medium capitalize">{deviceInfo.orientation}</p>
+                          <p className="text-xs text-slate-600">Orientation</p>
+                        </div>
+                      </div>
+
+                      {(deviceInfo.prefersReducedMotion || deviceInfo.prefersHighContrast) && (
+                        <div className="p-3 bg-blue-50 rounded-lg border border-blue-200">
+                          <p className="text-sm font-medium text-blue-800 mb-2">
+                            🌟 Accessibility Preferences Detected
+                          </p>
+                          <div className="space-y-1">
+                            {deviceInfo.prefersReducedMotion && (
+                              <p className="text-xs text-blue-700">✓ Reduced motion preferred</p>
+                            )}
+                            {deviceInfo.prefersHighContrast && (
+                              <p className="text-xs text-blue-700">✓ High contrast preferred</p>
+                            )}
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  </Card>
+
                   {/* Data Management */}
                   <Card className="p-4">
                     <div className="space-y-4">
@@ -1021,7 +1091,7 @@ export const EnhancedSettingsPanel: React.FC<EnhancedSettingsPanelProps> = ({
                         <Shield className="w-4 h-4" />
                         Data Management
                       </h4>
-                      
+
                       <div className="grid gap-2">
                         <Button variant="outline" className="justify-start h-12">
                           <Download className="w-4 h-4 mr-3" />
