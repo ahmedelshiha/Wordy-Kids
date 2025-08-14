@@ -3,7 +3,7 @@ import { useSearchParams, useNavigate } from "react-router-dom";
 import { EnhancedChildLogin } from "@/components/EnhancedChildLogin";
 import { AvatarCustomization } from "@/components/AvatarCustomization";
 import { LevelSelection } from "@/components/LevelSelection";
-import Index from "./Index";
+import Index from "./pages/Index";
 
 export default function App() {
   const [searchParams] = useSearchParams();
