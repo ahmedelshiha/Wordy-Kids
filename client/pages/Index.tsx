@@ -232,6 +232,32 @@ export default function Index({ initialProfile }: IndexProps) {
     }
   }, [rememberedWords.size]); // Trigger when remembered words count changes
 
+  // Update current progress for goals tracking
+  useEffect(() => {
+    const totalWordsLearned = rememberedWords.size;
+    const totalAttempts = rememberedWords.size + forgottenWords.size;
+    const accuracy = totalAttempts > 0 ? Math.round((rememberedWords.size / totalAttempts) * 100) : 0;
+
+    setCurrentProgress({
+      wordsLearned: totalWordsLearned,
+      wordsRemembered: rememberedWords.size,
+      sessionCount: dailySessionCount,
+      accuracy: accuracy,
+    });
+  }, [rememberedWords, forgottenWords, dailySessionCount]);
+
+  // Load saved learning goals on mount
+  useEffect(() => {
+    const savedGoals = localStorage.getItem("learningGoals");
+    if (savedGoals) {
+      try {
+        setLearningGoals(JSON.parse(savedGoals));
+      } catch (error) {
+        console.error("Error loading learning goals:", error);
+      }
+    }
+  }, []);
+
   // Debug logging for state changes
   useEffect(() => {
     console.log("State Update:", {
@@ -240,12 +266,16 @@ export default function Index({ initialProfile }: IndexProps) {
       currentDashboardWordsLength: currentDashboardWords.length,
       learningStatsWeeklyProgress: rememberedWords.size,
       childStatsWordsRemembered: childStats?.wordsRemembered,
+      currentProgress,
+      learningGoalsCount: learningGoals.length,
     });
   }, [
     rememberedWords.size,
     forgottenWords.size,
     currentDashboardWords.length,
     childStats?.wordsRemembered,
+    currentProgress,
+    learningGoals.length,
   ]);
 
   // Dynamic learning stats that reflect actual progress
@@ -843,7 +873,7 @@ export default function Index({ initialProfile }: IndexProps) {
         notifications.push({
           type: "celebration",
           title: "🎉 Level Up! 🎉",
-          message: `Congratulations! You've reached a new level!\n\n��� Keep up the amazing work!`,
+          message: `Congratulations! You've reached a new level!\n\n🌟 Keep up the amazing work!`,
           points: 50,
         });
       }
