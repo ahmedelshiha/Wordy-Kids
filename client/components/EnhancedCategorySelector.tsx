@@ -675,7 +675,7 @@ export function EnhancedCategorySelector({
           {showGameification && (
             <div className="flex justify-center gap-3 mb-6 flex-wrap">
               <Badge className="bg-educational-green text-white px-4 py-2 text-sm animate-pulse">
-                📚 {realTimeWords.length} Amazing Words
+                📚 {realTimeWords.length > 0 ? realTimeWords.length : wordsDatabase.length} Amazing Words
               </Badge>
               <Badge className="bg-educational-blue text-white px-4 py-2 text-sm animate-pulse delay-100">
                 🎯 {categories.length} Fun Categories
