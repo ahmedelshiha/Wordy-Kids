@@ -574,14 +574,17 @@ export default function WordGardenGame({
               Leave your garden?
             </DialogTitle>
             <DialogDescription className="text-gray-600">
-              Your plants will be waiting for you! Are you sure you want to exit Word Garden?
+              Your plants will be waiting for you! Are you sure you want to exit
+              Word Garden?
             </DialogDescription>
           </DialogHeader>
 
           <div className="flex flex-col gap-3 mt-4">
             {/* Garden Progress Summary */}
             <div className="bg-green-50 rounded-lg p-3 border border-green-200">
-              <div className="text-sm text-green-800 font-medium mb-1">🌱 Garden Progress</div>
+              <div className="text-sm text-green-800 font-medium mb-1">
+                🌱 Garden Progress
+              </div>
               <div className="flex justify-between text-sm text-green-700">
                 <span>Plants grown: {correctCount}</span>
                 <span>Best streak: {bestStreak}</span>
