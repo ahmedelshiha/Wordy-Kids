@@ -6,6 +6,7 @@ import { Brain, Play, Clock, Target, Trophy } from "lucide-react";
 import { QuizGame } from "../QuizGame";
 import { generateQuizQuestions } from "@/lib/gameGeneration";
 import { VowelRescue } from "./VowelRescue";
+import ListenAndGuessGame, { DemoWords } from "./ListenAndGuessGame";
 import {
   getSystematicEasyVowelQuestions,
   getSystematicMediumVowelQuestions,
@@ -125,6 +126,18 @@ export function QuizGames({
       color: "from-educational-orange to-orange-400",
       points: "Variable",
     },
+    {
+      id: "listen-guess",
+      title: "Listen & Guess",
+      description:
+        "Listen carefully and pick the right picture! Perfect for audio learners.",
+      icon: "🎧",
+      difficulty: "Easy",
+      questions: 10,
+      timePerQuestion: "No limit",
+      color: "from-educational-pink to-pink-400",
+      points: "50-100 pts",
+    },
   ];
 
   const handleQuizStart = (quizType: string) => {
@@ -137,6 +150,21 @@ export function QuizGames({
   };
 
   if (activeQuiz) {
+    // Handle Listen & Guess game
+    if (activeQuiz === "listen-guess") {
+      return (
+        <ListenAndGuessGame
+          words={DemoWords}
+          rounds={10}
+          optionsPerRound={3}
+          onFinish={(stats) => {
+            onQuizComplete(stats.correct, stats.totalRounds);
+          }}
+          onExit={handleQuizBack}
+        />
+      );
+    }
+
     // Handle Vowel Rescue games
     if (activeQuiz.startsWith("vowel-")) {
       let vowelQuestions;
