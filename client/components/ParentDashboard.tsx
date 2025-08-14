@@ -3954,7 +3954,9 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
           </DialogHeader>
           <div className="space-y-3 sm:space-y-4">
             <div className="space-y-1 sm:space-y-2">
-              <Label htmlFor="childName" className="text-sm font-medium">Name</Label>
+              <Label htmlFor="childName" className="text-sm font-medium">
+                Name
+              </Label>
               <Input
                 id="childName"
                 value={newChildData.name}
@@ -3968,11 +3970,16 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
             </div>
             <div className="grid grid-cols-2 gap-3">
               <div className="space-y-1 sm:space-y-2">
-                <Label htmlFor="childAge" className="text-sm font-medium">Age</Label>
+                <Label htmlFor="childAge" className="text-sm font-medium">
+                  Age
+                </Label>
                 <Select
                   value={newChildData.age.toString()}
                   onValueChange={(value) =>
-                    setNewChildData((prev) => ({ ...prev, age: parseInt(value) }))
+                    setNewChildData((prev) => ({
+                      ...prev,
+                      age: parseInt(value),
+                    }))
                   }
                 >
                   <SelectTrigger className="h-10">
@@ -3995,7 +4002,9 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
               </div>
             </div>
             <div>
-              <Label className="text-sm font-medium mb-2 block">Choose Avatar</Label>
+              <Label className="text-sm font-medium mb-2 block">
+                Choose Avatar
+              </Label>
               <div className="grid grid-cols-5 sm:grid-cols-9 gap-1 sm:gap-2">
                 {["👦", "👧", "🧒", "👶", "🦸‍♂️", "🦸‍♀️", "🧑‍🎓", "👨‍🎓", "👩‍🎓"].map(
                   (emoji) => (
