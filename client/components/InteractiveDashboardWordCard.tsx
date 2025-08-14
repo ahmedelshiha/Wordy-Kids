@@ -310,7 +310,7 @@ export function InteractiveDashboardWordCard({
     if (currentWord && !isPlaying) {
       triggerHapticFeedback("light"); // Light feedback for audio action
       setIsPlaying(true);
-      audioService.pronounceWord(currentWord.word, {
+      enhancedAudioService.pronounceWord(currentWord.word, {
         onStart: () => setIsPlaying(true),
         onEnd: () => setIsPlaying(false),
         onError: () => setIsPlaying(false),
@@ -667,7 +667,7 @@ export function InteractiveDashboardWordCard({
           {imageError && (
             <div className="absolute inset-0 bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center">
               <div className="text-center">
-                <div className="text-4xl mb-2">{currentWord.emoji || "🖼️"}</div>
+                <div className="text-4xl mb-2">{currentWord.emoji || "🖼��"}</div>
                 <span className="text-xs text-gray-500">
                   Image not available
                 </span>
