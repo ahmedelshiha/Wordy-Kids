@@ -342,15 +342,15 @@ export default function LoginForm() {
         </div>
 
         {/* Enhanced Login Card */}
-        <Card className="shadow-2xl border-0 bg-white/95 backdrop-blur-sm animate-fade-in animation-delay-100 mx-2 sm:mx-0">
-          <CardHeader className="pb-3 sm:pb-4 px-4 sm:px-6">
-            <CardTitle id="login-title" className="text-center text-lg sm:text-xl text-gray-800 flex items-center justify-center gap-2">
+        <Card className="shadow-lg sm:shadow-2xl border-0 bg-white/95 backdrop-blur-sm animate-fade-in animation-delay-100 mx-1 sm:mx-0">
+          <CardHeader className="pb-2 sm:pb-3 px-3 sm:px-4 md:px-6">
+            <CardTitle id="login-title" className="text-center text-base sm:text-lg text-gray-800 flex items-center justify-center gap-2">
               <UserCheck className="w-5 h-5 text-blue-500" />
               Sign In to Continue
             </CardTitle>
           </CardHeader>
-          <CardContent className="space-y-4 sm:space-y-6 px-4 sm:px-6">
-            <form onSubmit={handleLogin} className="space-y-4 sm:space-y-5" role="form" aria-labelledby="login-title">
+          <CardContent className="space-y-3 sm:space-y-4 px-3 sm:px-4 md:px-6">
+            <form onSubmit={handleLogin} className="space-y-3 sm:space-y-4" role="form" aria-labelledby="login-title">
               {/* Email Field with Enhanced Validation */}
               <div className="space-y-2">
                 <Label
