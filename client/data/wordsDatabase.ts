@@ -2252,7 +2252,7 @@ export const wordsDatabase: Word[] = [
     definition: "A person who goes to school to learn",
     example: "I am a student in second grade",
     funFact: "Student means eager to learn!",
-    emoji: "🧑‍���",
+    emoji: "🧑‍🎓",
     category: "school",
     difficulty: "easy",
   },
