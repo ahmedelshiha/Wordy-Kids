@@ -2981,6 +2981,9 @@ export default function Index({ initialProfile }: IndexProps) {
                                 score: stats.correct,
                                 total: stats.totalRounds,
                                 celebrationType: "confetti",
+                                autoHide: true,
+                                hideDelay: 3000,
+                                onContinue: () => setFeedback(null),
                               });
                             }}
                           />
