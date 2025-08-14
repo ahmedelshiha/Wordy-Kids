@@ -518,20 +518,64 @@
   margin-bottom: env(safe-area-inset-bottom);
 }
 
+/* Mobile performance optimizations with hardware acceleration */
+.mobile-optimized {
+  transform: translateZ(0);
+  will-change: transform;
+  -webkit-transform: translateZ(0);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+
+.touch-optimized {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.hardware-accelerated {
+  transform: translate3d(0, 0, 0);
+  -webkit-transform: translate3d(0, 0, 0);
+}
+
 /* Touch-optimized animations */
 @media (max-width: 768px) {
   .animate-gentle-float,
   .animate-kid-float,
   .animate-kid-float-delayed {
     animation-duration: 4s;
+    transform: translateZ(0);
   }
 
   .animate-sparkle {
     animation-duration: 3s;
+    transform: translateZ(0);
   }
 
   .animate-wiggle {
     animation-duration: 3s;
+    transform: translateZ(0);
+  }
+
+  /* Mobile-specific optimizations for word library */
+  .word-card-mobile {
+    transform: translateZ(0);
+    will-change: transform;
+    -webkit-perspective: 1000px;
+    perspective: 1000px;
+  }
+
+  .category-card-mobile {
+    transform: translateZ(0);
+    transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  }
+
+  .category-card-mobile:active {
+    transform: scale(0.98) translateZ(0);
   }
 }
 
