@@ -267,7 +267,7 @@ export function EncouragingFeedback({
           </div>
 
           {/* Action Buttons */}
-          <div className="flex justify-center gap-3 pt-4">
+          <div className="flex justify-center gap-2 pt-3">
             {feedback.onTryAgain && (
               <Button
                 onClick={() => {
@@ -275,7 +275,7 @@ export function EncouragingFeedback({
                   feedback.onTryAgain?.();
                   onClose();
                 }}
-                className="bg-white/20 hover:bg-white/30 text-white border-white/30 px-6 py-3 text-lg"
+                className="bg-white/20 hover:bg-white/30 text-white border-white/30 px-4 py-2 text-base"
                 variant="outline"
               >
                 Try Again 🔄
@@ -289,7 +289,7 @@ export function EncouragingFeedback({
                   feedback.onContinue?.();
                   onClose();
                 }}
-                className="bg-white text-gray-800 hover:bg-white/90 px-6 py-3 text-lg font-semibold"
+                className="bg-white text-gray-800 hover:bg-white/90 px-4 py-2 text-base font-semibold"
               >
                 {feedback.type === "success" || feedback.type === "celebration"
                   ? "Continue! 🚀"
@@ -303,7 +303,7 @@ export function EncouragingFeedback({
                   audioService.playWhooshSound();
                   onClose();
                 }}
-                className="bg-white text-gray-800 hover:bg-white/90 px-6 py-3 text-lg font-semibold"
+                className="bg-white text-gray-800 hover:bg-white/90 px-4 py-2 text-base font-semibold"
               >
                 Awesome! 👍
               </Button>
