@@ -138,7 +138,7 @@ function useConfetti() {
 }
 
 // Garden plant stage visuals (simple emojis; swap with your images if desired)
-const STAGES = ["🌱", "🌿", "🌸"]; // sprout -> leaf -> blossom
+const STAGES = ["🌱", "��", "🌸"]; // sprout -> leaf -> blossom
 
 // Generate emoji-based image using SVG data URI with larger size to match ListenAndGuess
 function generateEmojiImage(emoji: string, fallbackText?: string): string {
@@ -519,7 +519,7 @@ export default function WordGardenGame({
       </div>
 
       {/* Garden row (visual progress) */}
-      <div className="mt-4 grid grid-cols-4 gap-2">
+      <div className="mt-4 grid grid-cols-4 gap-3">
         {gardenStages.map((stage, idx) => {
           const isActive = idx === roundIdx;
           const isCompleted = idx < roundIdx;
@@ -529,7 +529,7 @@ export default function WordGardenGame({
           return (
             <div
               key={idx}
-              className={`rounded-2xl h-16 flex items-center justify-center text-2xl transition-all duration-300 ${
+              className={`rounded-3xl h-20 flex items-center justify-center transition-all duration-300 ${
                 justGrew
                   ? "bg-yellow-200 ring-4 ring-yellow-400 shadow-lg"
                   : isActive
@@ -540,7 +540,7 @@ export default function WordGardenGame({
               }`}
             >
               <span
-                className={`transition-all duration-500 ${
+                className={`text-4xl transition-all duration-500 ${
                   justGrew
                     ? "animate-bounce scale-125 drop-shadow-lg"
                     : isActive
