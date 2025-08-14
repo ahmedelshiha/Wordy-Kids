@@ -428,12 +428,12 @@ export function InteractiveDashboardWordCard({
       // Combine all session achievements
       const allSessionAchievements = [...sessionJourneyAchievements, ...enhancedSessionAchievements];
 
-      // Add session journey achievements to the display queue
-      if (sessionJourneyAchievements.length > 0) {
+      // Add all session achievements to the display queue
+      if (allSessionAchievements.length > 0) {
         setTimeout(() => {
           setJourneyAchievements((prev) => [
             ...prev,
-            ...sessionJourneyAchievements,
+            ...allSessionAchievements,
           ]);
         }, 3000); // Show after session completion celebration
       }
@@ -993,7 +993,7 @@ export function InteractiveDashboardWordCard({
 
                 <div>
                   <h3 className="text-lg font-semibold text-gray-700 mb-2">
-                    💬 Example:
+                    ���� Example:
                   </h3>
                   <p className="text-lg text-gray-700 italic leading-relaxed">
                     "{currentWord.example}"
@@ -1056,7 +1056,7 @@ export function InteractiveDashboardWordCard({
                   className="text-gray-500 hover:text-gray-700 hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed py-1 px-3"
                 >
                   <SkipForward className="w-4 h-4 mr-1" />
-                  ��� Try another word
+                  🤔 Try another word
                 </Button>
               </div>
 
