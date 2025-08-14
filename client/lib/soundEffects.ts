@@ -191,12 +191,27 @@ export const playSound = {
 
 // Enable/disable sound effects
 let soundEnabled = true;
+let uiInteractionSoundsEnabled = false; // Disabled by default
 
 export const setSoundEnabled = (enabled: boolean) => {
   soundEnabled = enabled;
 };
 
 export const isSoundEnabled = () => soundEnabled;
+
+export const setUIInteractionSoundsEnabled = (enabled: boolean) => {
+  uiInteractionSoundsEnabled = enabled;
+  localStorage.setItem('uiInteractionSoundsEnabled', enabled.toString());
+};
+
+export const isUIInteractionSoundsEnabled = () => {
+  // Load from localStorage on first call
+  const saved = localStorage.getItem('uiInteractionSoundsEnabled');
+  if (saved !== null) {
+    uiInteractionSoundsEnabled = saved === 'true';
+  }
+  return uiInteractionSoundsEnabled;
+};
 
 // Wrapped functions that check if sound is enabled
 export const playSoundIfEnabled = {
