@@ -1136,6 +1136,220 @@
   }
 }
 
+/* Enhanced Word Card 3D Flip Animations */
+.preserve-3d {
+  transform-style: preserve-3d;
+}
+
+.backface-hidden {
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+
+.rotate-y-180 {
+  transform: rotateY(180deg);
+}
+
+.hover\:scale-102:hover {
+  transform: scale(1.02);
+}
+
+@keyframes gentle-bounce {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+@keyframes gentle-float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-12px);
+  }
+}
+
+@keyframes sparkle-enhanced {
+  0%, 100% {
+    transform: scale(1) rotate(0deg);
+    opacity: 1;
+  }
+  25% {
+    transform: scale(1.2) rotate(90deg);
+    opacity: 0.8;
+  }
+  50% {
+    transform: scale(0.8) rotate(180deg);
+    opacity: 1;
+  }
+  75% {
+    transform: scale(1.1) rotate(270deg);
+    opacity: 0.9;
+  }
+}
+
+.animate-gentle-bounce {
+  animation: gentle-bounce 3s ease-in-out infinite;
+}
+
+.animate-gentle-float {
+  animation: gentle-float 4s ease-in-out infinite;
+}
+
+.animate-sparkle {
+  animation: sparkle-enhanced 2s ease-in-out infinite;
+}
+
+/* Enhanced kid-friendly word card animations */
+@keyframes word-card-flip {
+  0% {
+    transform: rotateY(0deg);
+  }
+  50% {
+    transform: rotateY(-90deg);
+  }
+  100% {
+    transform: rotateY(-180deg);
+  }
+}
+
+@keyframes emoji-bounce {
+  0%, 20%, 50%, 80%, 100% {
+    transform: translateY(0) scale(1);
+  }
+  40% {
+    transform: translateY(-12px) scale(1.05);
+  }
+  60% {
+    transform: translateY(-6px) scale(1.02);
+  }
+}
+
+@keyframes star-fill {
+  0% {
+    transform: scale(0.8);
+    opacity: 0.5;
+  }
+  50% {
+    transform: scale(1.2);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes celebration-sparkles {
+  0% {
+    transform: scale(0) rotate(0deg);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1.2) rotate(180deg);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(0) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+.animate-emoji-bounce {
+  animation: emoji-bounce 1.5s ease-in-out;
+}
+
+.animate-star-fill {
+  animation: star-fill 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.animate-celebration-sparkles {
+  animation: celebration-sparkles 1.5s ease-out infinite;
+}
+
+/* Voice button pulse animations */
+@keyframes voice-pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.4);
+  }
+  70% {
+    box-shadow: 0 0 0 15px rgba(59, 130, 246, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(59, 130, 246, 0);
+  }
+}
+
+@keyframes funny-voice-pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(168, 85, 247, 0.4);
+  }
+  70% {
+    box-shadow: 0 0 0 15px rgba(168, 85, 247, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(168, 85, 247, 0);
+  }
+}
+
+.animate-voice-pulse {
+  animation: voice-pulse 2s infinite;
+}
+
+.animate-funny-voice-pulse {
+  animation: funny-voice-pulse 2s infinite;
+}
+
+/* Mini-game animations */
+@keyframes mini-game-appear {
+  0% {
+    transform: scale(0.8) translateY(20px);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1) translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes letter-highlight {
+  0%, 100% {
+    background-color: rgba(234, 179, 8, 0.3);
+    border-color: rgba(234, 179, 8, 0.6);
+  }
+  50% {
+    background-color: rgba(234, 179, 8, 0.5);
+    border-color: rgba(234, 179, 8, 0.8);
+  }
+}
+
+@keyframes puzzle-piece-place {
+  0% {
+    transform: scale(0.9) rotate(-5deg);
+  }
+  50% {
+    transform: scale(1.1) rotate(2deg);
+  }
+  100% {
+    transform: scale(1) rotate(0deg);
+  }
+}
+
+.animate-mini-game-appear {
+  animation: mini-game-appear 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.animate-letter-highlight {
+  animation: letter-highlight 1s ease-in-out infinite;
+}
+
+.animate-puzzle-piece-place {
+  animation: puzzle-piece-place 0.3s ease-out;
+}
+
 /* Compact Settings Panel Mobile Optimizations */
 .compact-settings-mobile {
   /* Optimized for mobile performance and touch */
