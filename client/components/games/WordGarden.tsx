@@ -341,19 +341,12 @@ export default function WordGardenGame({
 
         // Proceed next round after a short delay
         setTimeout(() => {
-          console.log('WordGarden: Proceeding to next round', {
-            currentRound: roundIdx,
-            nextRound: roundIdx + 1,
-            poolLength: pool.length
-          });
           setAttempts(0);
           setLocked(false);
           const nextRound = roundIdx + 1;
           if (nextRound < pool.length) {
             setRoundIdx(nextRound);
-            console.log('WordGarden: Advanced to round', nextRound);
           } else {
-            console.log('WordGarden: Game complete');
             onFinish?.({
               totalRounds: pool.length,
               correct: nextCorrect,
