@@ -213,6 +213,20 @@ export function InteractiveDashboardWordCard({
   //   progress: 0
   // });
 
+  // Progressive enhancement detection
+  useEffect(() => {
+    // Check for reduced motion preference
+    const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+    setPrefersReducedMotion(mediaQuery.matches);
+
+    const handleChange = (event: MediaQueryListEvent) => {
+      setPrefersReducedMotion(event.matches);
+    };
+
+    mediaQuery.addEventListener('change', handleChange);
+    return () => mediaQuery.removeEventListener('change', handleChange);
+  }, []);
+
   // Initialize session with systematic word generation
   useEffect(() => {
     if (words.length > 0 && sessionWords.length === 0) {
