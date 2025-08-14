@@ -917,14 +917,14 @@ export function InteractiveDashboardWordCard({
           </div>
 
           {/* Game Instructions */}
-          <div className="text-center mb-3 sm:mb-4 md:mb-5">
-            <h2 className="text-base sm:text-lg md:text-xl lg:text-2xl font-bold text-gray-800 mb-1 sm:mb-2">
+          <header className="text-center mb-3 sm:mb-4 md:mb-5" role="banner">
+            <h1 className="text-base sm:text-lg md:text-xl lg:text-2xl font-bold text-gray-800 mb-1 sm:mb-2">
               🤔 What is this?
-            </h2>
-            <p className="text-xs sm:text-sm md:text-base text-gray-600 px-2">
+            </h1>
+            <p className="text-xs sm:text-sm md:text-base text-gray-600 px-2" id="game-instructions">
               Look at the picture and guess the word!
             </p>
-          </div>
+          </header>
 
           {/* Action Buttons Row - Mobile Optimized */}
           <div className="flex justify-center items-center gap-2 sm:gap-3 mb-3 sm:mb-4 px-2">
