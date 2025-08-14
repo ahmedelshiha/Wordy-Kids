@@ -111,7 +111,7 @@ const AVATAR_OPTIONS = [
   { emoji: '🐸', label: 'Frog', category: 'animals' },
   { emoji: '🐼', label: 'Panda', category: 'animals' },
   { emoji: '🦊', label: 'Fox', category: 'animals' },
-  { emoji: '🐻', label: 'Bear', category: 'animals' },
+  { emoji: '���', label: 'Bear', category: 'animals' },
   { emoji: '🐱', label: 'Cat', category: 'animals' }
 ];
 
@@ -396,7 +396,7 @@ export function EnhancedAddChildProfile({
                         type="button"
                         variant={formData.age === age ? "default" : "outline"}
                         className={cn(
-                          "h-12 rounded-xl transition-all duration-200 transform",
+                          "h-10 rounded-lg transition-all duration-200 transform",
                           formData.age === age 
                             ? "bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-lg scale-105" 
                             : "border-purple-200 hover:border-purple-300 hover:bg-purple-50",
