@@ -98,7 +98,7 @@ interface JourneyProgress {
 
 export class EnhancedAchievementTracker {
   private static achievements: Achievement[] = [
-    // 🌟 BEGINNER ACHIEVEMENTS - Kid-friendly first steps
+    // 🌟 BEGINNER ACHIEVEMENTS - More challenging and special
     {
       id: "first_word_wizard",
       name: "First Word Wizard",
@@ -123,19 +123,26 @@ export class EnhancedAchievementTracker {
     {
       id: "word_collector_scout",
       name: "Word Collector Scout",
-      description: "Collect 5 amazing words!",
-      funnyDescription: "🎒 You're like a word treasure hunter! 5 shiny words in your collection!",
+      description: "Collect 15 amazing words with 80%+ accuracy!",
+      funnyDescription: "🎒 You're like a word treasure hunter! 15 shiny words with great accuracy!",
       icon: "🎯",
       category: "learning",
       difficulty: "bronze",
-      requirements: 5,
+      requirements: 15,
       currentProgress: 0,
       unlocked: false,
       criteria: [
         {
           type: "wordsLearned",
-          target: 5,
+          target: 15,
           operator: ">=",
+          additionalRequirements: [
+            {
+              type: "accuracy",
+              target: 80,
+              operator: ">=",
+            },
+          ],
         },
       ],
       reward: { type: "badge", item: "Scout Badge", emoji: "🏕️" },
@@ -144,11 +151,54 @@ export class EnhancedAchievementTracker {
     {
       id: "word_party_starter",
       name: "Word Party Starter",
-      description: "Learn 10 words and throw a word party!",
-      funnyDescription: "🎉 PARTY TIME! 10 words learned = one amazing celebration!",
+      description: "Learn 25 words and throw a word party!",
+      funnyDescription: "🎉 PARTY TIME! 25 words learned = one EPIC celebration!",
       icon: "🎉",
       category: "learning",
       difficulty: "silver",
+      requirements: 25,
+      currentProgress: 0,
+      unlocked: false,
+      criteria: [
+        {
+          type: "wordsLearned",
+          target: 25,
+          operator: ">=",
+        },
+      ],
+      reward: { type: "sound_effect", item: "Party Horns", emoji: "📯" },
+    },
+
+    // 🎪 SURPRISE ACHIEVEMENTS - Random fun achievements
+    {
+      id: "lucky_learner",
+      name: "Lucky Learner",
+      description: "Get 7 words correct in a row - what luck!",
+      funnyDescription: "🍀 WHOA! 7 perfect words in a row? You must have a magic lucky charm!",
+      icon: "🍀",
+      category: "streak",
+      difficulty: "silver",
+      requirements: 7,
+      currentProgress: 0,
+      unlocked: false,
+      criteria: [
+        {
+          type: "perfectSessions",
+          target: 1,
+          operator: ">=",
+        },
+      ],
+      reward: { type: "sticker", item: "Four-Leaf Clover", emoji: "🍀" },
+    },
+
+    {
+      id: "emoji_hunter",
+      name: "Emoji Hunter",
+      description: "Find words with 10 different emojis!",
+      funnyDescription: "😍 You're an emoji detective! 10 different emoji words found!",
+      icon: "🕵️‍♂️",
+      category: "exploration",
+      difficulty: "bronze",
       requirements: 10,
       currentProgress: 0,
       unlocked: false,
@@ -159,10 +209,10 @@ export class EnhancedAchievementTracker {
           operator: ">=",
         },
       ],
-      reward: { type: "sound_effect", item: "Party Horns", emoji: "📯" },
+      reward: { type: "sticker", item: "Detective Badge", emoji: "🔍" },
     },
 
-    // �� DIFFICULTY MASTERS - New systematic achievements
+    // 🔥 DIFFICULTY MASTERS - New systematic achievements
     {
       id: "easy_peasy_champion",
       name: "Easy Peasy Champion",
