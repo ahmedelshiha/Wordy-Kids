@@ -281,6 +281,142 @@ export function EnhancedCategorySelector({
   const [announceSelection, setAnnounceSelection] = useState(true);
   const searchInputRef = useRef<HTMLInputElement>(null);
 
+  // Generate enriched categories from real-time data
+  const generateEnrichedCategories = (): Category[] => {
+    if (!realTimeWords.length) return [];
+
+    const categoryMap = new Map<string, any>();
+
+    // Process real-time words to build category data
+    realTimeWords.forEach(word => {
+      if (!categoryMap.has(word.category)) {
+        categoryMap.set(word.category, {
+          words: [],
+          easy: 0,
+          medium: 0,
+          hard: 0
+        });
+      }
+
+      const categoryData = categoryMap.get(word.category);
+      categoryData.words.push(word);
+      categoryData[word.difficulty]++;
+    });
+
+    // Create enriched categories with real-time data
+    const enrichedCategories: Category[] = [];
+
+    categoryMap.forEach((data, categoryId) => {
+      const staticCategory = enrichedCategories.find(cat => cat.id === categoryId);
+
+      enrichedCategories.push({
+        id: categoryId,
+        name: categoryId.charAt(0).toUpperCase() + categoryId.slice(1),
+        icon: getCategoryIcon(categoryId),
+        color: getCategoryColor(categoryId),
+        gradient: getCategoryGradient(categoryId),
+        wordCount: data.words.length,
+        description: getCategoryDescription(categoryId),
+        funFact: getCategoryFunFact(categoryId),
+        difficulty: getDifficultyLevel(data.easy, data.medium, data.hard),
+        estimatedTime: `${Math.ceil(data.words.length / 10)}-${Math.ceil(data.words.length / 5)} min`,
+        difficultyBreakdown: {
+          easy: data.easy,
+          medium: data.medium,
+          hard: data.hard,
+        },
+      });
+    });
+
+    return enrichedCategories.filter(category => category.wordCount > 0);
+  };
+
+  // Helper functions for category attributes
+  const getCategoryIcon = (category: string): string => {
+    const icons: Record<string, string> = {
+      animals: "🦋",
+      nature: "🌳",
+      food: "🍎",
+      colors: "🌈",
+      objects: "🏠",
+      body: "👁️",
+      family: "👨‍👩‍👧‍👦",
+      feelings: "😊",
+      clothes: "👕",
+      numbers: "🔢",
+      default: "📚"
+    };
+    return icons[category] || icons.default;
+  };
+
+  const getCategoryColor = (category: string): string => {
+    const colors: Record<string, string> = {
+      animals: "bg-educational-blue",
+      nature: "bg-educational-green",
+      food: "bg-educational-orange",
+      colors: "bg-educational-pink",
+      objects: "bg-educational-purple",
+      body: "bg-educational-yellow",
+      default: "bg-slate-400"
+    };
+    return colors[category] || colors.default;
+  };
+
+  const getCategoryGradient = (category: string): string => {
+    const gradients: Record<string, string> = {
+      animals: "from-blue-400 to-blue-600",
+      nature: "from-green-400 to-green-600",
+      food: "from-orange-400 to-orange-600",
+      colors: "from-pink-400 to-pink-600",
+      objects: "from-purple-400 to-purple-600",
+      body: "from-yellow-400 to-yellow-600",
+      default: "from-slate-400 to-slate-600"
+    };
+    return gradients[category] || gradients.default;
+  };
+
+  const getCategoryDescription = (category: string): string => {
+    const descriptions: Record<string, string> = {
+      animals: "Meet amazing creatures from around the world!",
+      nature: "Explore the magical wonders of our natural world!",
+      food: "Discover delicious foods from everywhere!",
+      colors: "Learn about the beautiful colors around us!",
+      objects: "Explore everyday things around you!",
+      body: "Learn about your amazing body!",
+      family: "Meet the special people in your life!",
+      feelings: "Understand and express your emotions!",
+      clothes: "Discover what we wear every day!",
+      numbers: "Count and learn with numbers!",
+      default: "Discover amazing new words!"
+    };
+    return descriptions[category] || descriptions.default;
+  };
+
+  const getCategoryFunFact = (category: string): string => {
+    const funFacts: Record<string, string> = {
+      animals: "Some animals can taste with their feet!",
+      nature: "Trees can live for thousands of years!",
+      food: "Honey never spoils!",
+      colors: "Humans can see 10 million colors!",
+      objects: "The wheel was invented 5,500 years ago!",
+      body: "Your heart beats 100,000 times a day!",
+      default: "Words are magical!"
+    };
+    return funFacts[category] || funFacts.default;
+  };
+
+  const getDifficultyLevel = (easy: number, medium: number, hard: number): "beginner" | "intermediate" | "advanced" => {
+    const total = easy + medium + hard;
+    const easyPercent = (easy / total) * 100;
+
+    if (easyPercent > 70) return "beginner";
+    if (easyPercent > 40) return "intermediate";
+    return "advanced";
+  };
+
+  // Get current enriched categories
+  const currentEnrichedCategories = generateEnrichedCategories();
+
   // Enhanced floating animation elements
   useEffect(() => {
     const elements = [
