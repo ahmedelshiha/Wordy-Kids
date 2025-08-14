@@ -208,7 +208,7 @@ export const CompactSettingsPanel: React.FC<CompactSettingsPanelProps> = ({
 
   return (
     <div className="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-end sm:items-center justify-center z-50 p-2">
-      <Card className="w-full max-w-sm sm:max-w-md mx-2 mb-2 sm:mb-0 max-h-[85vh] sm:max-h-[90vh] overflow-hidden animate-mobile-slide-in shadow-xl rounded-2xl">
+      <Card className="compact-settings-mobile w-full max-w-sm sm:max-w-md mx-2 mb-2 sm:mb-0 max-h-[85vh] sm:max-h-[90vh] overflow-hidden animate-mobile-slide-in shadow-xl rounded-2xl">
         <CardHeader className="pb-3 bg-gradient-to-r from-educational-blue to-educational-purple text-white rounded-t-2xl">
           <div className="flex items-center justify-between">
             <CardTitle className="flex items-center gap-2">
