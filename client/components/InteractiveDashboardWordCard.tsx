@@ -102,6 +102,46 @@ export function InteractiveDashboardWordCard({
   dashboardSession,
   onGenerateNewSession,
 }: InteractiveDashboardWordCardProps) {
+
+  // Keyboard navigation handler
+  const handleKeyDown = (event: React.KeyboardEvent) => {
+    if (isAnswered) return;
+
+    switch (event.key) {
+      case '1':
+      case 'f':
+      case 'F':
+        event.preventDefault();
+        handleWordAction("needs_practice");
+        break;
+      case '2':
+      case 'r':
+      case 'R':
+        event.preventDefault();
+        handleWordAction("remembered");
+        break;
+      case 'h':
+      case 'H':
+        event.preventDefault();
+        if (!showHint && !showWordName) {
+          setShowHint(true);
+        }
+        break;
+      case 's':
+      case 'S':
+        event.preventDefault();
+        if (!showWordName) {
+          setShowWordName(true);
+        }
+        break;
+      case ' ':
+        event.preventDefault();
+        playPronunciation();
+        break;
+      default:
+        break;
+    }
+  };
   // Session Management
   const SESSION_SIZE = 20;
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
