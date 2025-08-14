@@ -42,7 +42,7 @@ const successMessages = [
   "Excellent! That's how it's done! 💪",
   "Perfect! You make learning look easy! ✨",
   "Outstanding! You're becoming a word master! 📚",
-  "Brilliant! Your hard work is paying off! 🌟",
+  "Brilliant! Your hard work is paying off! ����",
 ];
 
 const encouragementMessages = [
@@ -84,6 +84,7 @@ export function EncouragingFeedback({
 }: ChildFeedbackSystemProps) {
   const [showExtra, setShowExtra] = useState(false);
   const [currentAnimation, setCurrentAnimation] = useState<string>("");
+  const [timeLeft, setTimeLeft] = useState<number | null>(null);
 
   useEffect(() => {
     if (feedback) {
