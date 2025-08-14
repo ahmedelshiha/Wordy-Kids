@@ -13,6 +13,10 @@ import AppPage from "./pages/App";
 import NotFound from "./pages/NotFound";
 import AdminPage from "./pages/AdminPage";
 import { EnhancedWordCardDemo } from "./components/EnhancedWordCardDemo";
+import {
+  WordDatabaseNotifications,
+  CompactWordDatabaseNotifications,
+} from "./components/WordDatabaseNotifications";
 
 const queryClient = new QueryClient();
 
@@ -21,6 +25,8 @@ const App = () => (
     <TooltipProvider>
       <Toaster />
       <Sonner />
+      <WordDatabaseNotifications />
+      <CompactWordDatabaseNotifications />
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<LoginForm />} />

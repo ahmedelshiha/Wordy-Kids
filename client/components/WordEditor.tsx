@@ -102,6 +102,8 @@ import {
   PieChart,
   LineChart,
 } from "lucide-react";
+import { refreshWordDatabase } from "@/lib/cacheManager";
+import { realTimeWordDB } from "@/lib/realTimeWordDatabase";
 
 interface AdminWord {
   id: string;
@@ -538,6 +540,11 @@ const WordEditor: React.FC<WordEditorProps> = ({
         await new Promise((resolve) => setTimeout(resolve, 1000));
 
         onSave(wordToSave);
+
+        // Trigger real-time database refresh
+        refreshWordDatabase();
+        realTimeWordDB.invalidateCaches();
+
         setHasUnsavedChanges(false);
         onOpenChange(false);
       } catch (error) {

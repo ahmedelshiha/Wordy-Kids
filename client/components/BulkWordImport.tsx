@@ -33,6 +33,8 @@ import {
   Save,
   RefreshCw,
 } from "lucide-react";
+import { refreshWordDatabase } from "@/lib/cacheManager";
+import { realTimeWordDB } from "@/lib/realTimeWordDatabase";
 
 interface WordImportData {
   word: string;
@@ -151,6 +153,11 @@ telescope,/ˈteləskoʊp/,An instrument for looking at distant objects,Astronome
   const handleImport = () => {
     const validWords = parsedWords.filter((word) => word.status === "valid");
     onImport(validWords);
+
+    // Trigger real-time database refresh
+    refreshWordDatabase();
+    realTimeWordDB.invalidateCaches();
+
     handleReset();
   };
 

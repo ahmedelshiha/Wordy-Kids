@@ -9,6 +9,8 @@ import { Separator } from "@/components/ui/separator";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Progress } from "@/components/ui/progress";
 import { Switch } from "@/components/ui/switch";
+import { refreshWordDatabase } from "@/lib/cacheManager";
+import { realTimeWordDB } from "@/lib/realTimeWordDatabase";
 import {
   Select,
   SelectContent,
@@ -338,7 +340,7 @@ const SMART_SUGGESTIONS = {
     objects: ["📚", "🪑", "🏠", "🚗", "📱", "✏️", "🎒", "👕", "👟", "⚽"],
     nature: ["🌈", "🌸", "🌊", "⛰️", "🌙", "☀️", "❄️", "🍃", "🌺", "🦋"],
     food: ["🍕", "🍎", "🥖", "🧁", "🥕", "🍓", "🥪", "🍝", "🥗", "🍯"],
-    science: ["🔬", "🧪", "⚗️", "🔭", "🧬", "⚛️", "🌡️", "💡", "🔋", "🧲"],
+    science: ["🔬", "🧪", "⚗️", "🔭", "���", "⚛️", "🌡️", "💡", "🔋", "🧲"],
     transport: ["🚲", "🚗", "✈️", "🚢", "🚂", "🚌", "🛵", "🛸", "🚁", "⛵"],
   },
   pronunciations: {
@@ -752,6 +754,11 @@ const CreateWordWizard: React.FC<CreateWordWizardProps> = ({
         await new Promise((resolve) => setTimeout(resolve, 1500));
 
         onSave(newWord);
+
+        // Trigger real-time database refresh
+        refreshWordDatabase();
+        realTimeWordDB.invalidateCaches();
+
         onOpenChange(false);
 
         // Reset form

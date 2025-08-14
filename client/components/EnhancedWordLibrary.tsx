@@ -30,12 +30,15 @@ import {
   Shuffle,
   Play,
   Pause,
+  RefreshCw,
 } from "lucide-react";
 import { EnhancedWordCard } from "./EnhancedWordCard";
 import { EnhancedCategorySelector } from "./EnhancedCategorySelector";
 import { EnhancedVocabularyBuilder } from "./EnhancedVocabularyBuilder";
 import { wordsDatabase, getWordsByCategory } from "@/data/wordsDatabase";
 import { audioService } from "@/lib/audioService";
+import { useRealTimeWords, realTimeWordDB } from "@/lib/realTimeWordDatabase";
+import { cacheManager, refreshWordDatabase } from "@/lib/cacheManager";
 
 interface Word {
   id: number;
@@ -69,6 +72,16 @@ export const EnhancedWordLibrary: React.FC<EnhancedWordLibraryProps> = ({
   enableAdvancedFeatures = true,
   showMobileOptimizations = true,
 }) => {
+  // Real-time word database integration
+  const {
+    words: realTimeWords,
+    categories: realTimeCategories,
+    lastUpdate,
+    isLoading: wordsLoading,
+    refresh: refreshWords,
+    invalidateCaches,
+  } = useRealTimeWords();
+
   const [viewMode, setViewMode] = useState<ViewMode>("categories");
   const [wordViewMode, setWordViewMode] = useState<WordViewMode>("grid");
   const [selectedCategory, setSelectedCategory] = useState<string>("all");
@@ -81,6 +94,7 @@ export const EnhancedWordLibrary: React.FC<EnhancedWordLibraryProps> = ({
   const [bookmarkedWords, setBookmarkedWords] = useState<Set<number>>(
     new Set(),
   );
+  const [refreshing, setRefreshing] = useState(false);
 
   // Accessibility and mobile settings
   const [accessibilityMode, setAccessibilityMode] = useState(false);
@@ -105,16 +119,40 @@ export const EnhancedWordLibrary: React.FC<EnhancedWordLibraryProps> = ({
     return () => window.removeEventListener("resize", checkMobile);
   }, []);
 
+  // Update current words when real-time data changes
   useEffect(() => {
+    // Use real-time data if available, otherwise fall back to static data
+    const wordsToUse = realTimeWords.length > 0 ? realTimeWords : wordsDatabase;
+
     if (selectedCategory && selectedCategory !== "all") {
-      const categoryWords = getWordsByCategory(selectedCategory);
+      const categoryWords = wordsToUse.filter(
+        (word) => word.category === selectedCategory,
+      );
       setCurrentWords(categoryWords);
       setViewMode("words");
     } else if (selectedCategory === "all") {
-      setCurrentWords(wordsDatabase);
+      setCurrentWords(wordsToUse);
       setViewMode("words");
     }
-  }, [selectedCategory]);
+  }, [selectedCategory, realTimeWords, lastUpdate]);
+
+  // Handle manual refresh
+  const handleRefresh = async () => {
+    setRefreshing(true);
+    try {
+      await refreshWords();
+      invalidateCaches();
+
+      // Show success feedback
+      if ("vibrate" in navigator) {
+        navigator.vibrate([100, 50, 100]);
+      }
+    } catch (error) {
+      console.error("Failed to refresh words:", error);
+    } finally {
+      setRefreshing(false);
+    }
+  };
 
   // Filter words based on search and difficulty
   const filteredWords = currentWords.filter((word) => {
@@ -316,6 +354,19 @@ export const EnhancedWordLibrary: React.FC<EnhancedWordLibraryProps> = ({
                   >
                     <Filter className="w-4 h-4" />
                   </Button>
+
+                  <Button
+                    size="sm"
+                    variant="outline"
+                    onClick={handleRefresh}
+                    disabled={refreshing || wordsLoading}
+                    className="min-h-[44px] min-w-[44px] p-0"
+                    aria-label="Refresh word database"
+                  >
+                    <RefreshCw
+                      className={`w-4 h-4 ${refreshing || wordsLoading ? "animate-spin" : ""}`}
+                    />
+                  </Button>
                 </>
               )}
 
@@ -338,17 +389,34 @@ export const EnhancedWordLibrary: React.FC<EnhancedWordLibraryProps> = ({
                 <span>
                   Word {currentWordIndex + 1} of {filteredWords.length}
                 </span>
-                <span>
-                  {Math.round(
-                    ((currentWordIndex + 1) / filteredWords.length) * 100,
+                <div className="flex items-center gap-2">
+                  {wordsLoading && (
+                    <RefreshCw className="w-3 h-3 animate-spin text-blue-500" />
                   )}
-                  %
-                </span>
+                  <span className="text-green-600">
+                    📚{" "}
+                    {realTimeWords.length > 0
+                      ? realTimeWords.length
+                      : wordsDatabase.length}{" "}
+                    words
+                  </span>
+                  <span>
+                    {Math.round(
+                      ((currentWordIndex + 1) / filteredWords.length) * 100,
+                    )}
+                    %
+                  </span>
+                </div>
               </div>
               <Progress
                 value={((currentWordIndex + 1) / filteredWords.length) * 100}
                 className="h-1"
               />
+              {lastUpdate && (
+                <div className="text-xs text-gray-500 mt-1 text-center">
+                  Last updated: {new Date(lastUpdate).toLocaleTimeString()}
+                </div>
+              )}
             </div>
           )}
         </div>
