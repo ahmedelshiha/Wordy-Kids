@@ -1161,10 +1161,10 @@ export function InteractiveDashboardWordCard({
                   <div className="text-xs font-bold text-gray-700">
                     🚀 {sessionStats.wordsCompleted}/{SESSION_SIZE}
                   </div>
-                  <div className="flex-1 mx-2">
-                    <div className="w-full bg-gray-200 rounded-full h-1.5">
+                  <div className="flex-1 mx-3">
+                    <div className="w-full bg-gradient-to-r from-gray-200 to-gray-300 rounded-full h-2 shadow-inner">
                       <div
-                        className="bg-gradient-to-r from-blue-500 to-purple-500 h-1.5 rounded-full transition-all duration-300"
+                        className="bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-500 h-2 rounded-full transition-all duration-500 ease-out shadow-sm"
                         style={{
                           width: `${(sessionStats.wordsCompleted / SESSION_SIZE) * 100}%`,
                         }}
