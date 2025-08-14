@@ -439,18 +439,6 @@ export default function WordGardenGame({
       />
 
       <div className="relative rounded-3xl shadow-xl p-4 md:p-6 bg-gradient-to-b from-green-600 to-emerald-700 text-white">
-        {/* Enhanced Exit Button */}
-        {onExit && (
-          <button
-            onClick={() => setShowExitDialog(true)}
-            className="absolute top-4 right-4 w-12 h-12 rounded-full bg-gradient-to-b from-red-400 to-red-500 hover:from-red-500 hover:to-red-600 flex items-center justify-center transition-all duration-200 z-20 touch-target active:scale-90 text-white font-bold text-lg shadow-lg border-2 border-white/30 hover:border-white/50"
-            aria-label="Exit game"
-          >
-            <div className="flex flex-col items-center justify-center">
-              <span className="text-lg leading-none">🚪</span>
-            </div>
-          </button>
-        )}
         {/* Top bar */}
         <div className="mb-3">
           <div className="flex items-center justify-between text-sm opacity-90">
