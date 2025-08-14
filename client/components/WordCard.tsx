@@ -277,7 +277,7 @@ export const WordCard: React.FC<WordCardProps> = ({
           }
         }}
       >
-        {/* Front of card - Mobile Optimized */}
+        {/* Front of card - Enhanced Mobile Optimized */}
         <CardContent
           className={`absolute inset-0 w-full h-full ${getCategoryColor(word.category)} rounded-xl p-3 sm:p-4 flex flex-col text-white`}
           style={{ backfaceVisibility: "hidden" }}
