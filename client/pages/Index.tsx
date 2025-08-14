@@ -396,6 +396,91 @@ export default function Index({ initialProfile }: IndexProps) {
     }
   }, [rememberedWords.size, forgottenWords.size, currentProgress, persistenceService]);
 
+  // Session restoration handlers
+  const handleSessionRestore = useCallback((sessionData: SessionData) => {
+    try {
+      // Restore UI state
+      if (sessionData.activeTab) setActiveTab(sessionData.activeTab);
+      if (sessionData.currentWordIndex !== undefined) setCurrentWordIndex(sessionData.currentWordIndex);
+      if (sessionData.selectedCategory) setSelectedCategory(sessionData.selectedCategory);
+      if (sessionData.learningMode) setLearningMode(sessionData.learningMode);
+      if (sessionData.userRole) setUserRole(sessionData.userRole);
+
+      // Restore progress data
+      if (sessionData.forgottenWords) {
+        setForgottenWords(new Set(sessionData.forgottenWords));
+      }
+      if (sessionData.rememberedWords) {
+        setRememberedWords(new Set(sessionData.rememberedWords));
+      }
+      if (sessionData.excludedWordIds) {
+        setExcludedWordIds(new Set(sessionData.excludedWordIds));
+      }
+      if (sessionData.currentProgress) {
+        setCurrentProgress(sessionData.currentProgress);
+      }
+      if (sessionData.dailySessionCount !== undefined) {
+        setDailySessionCount(sessionData.dailySessionCount);
+      }
+
+      // Restore profile and session data
+      if (sessionData.currentProfile) setCurrentProfile(sessionData.currentProfile);
+      if (sessionData.childStats) setChildStats(sessionData.childStats);
+      if (sessionData.currentSessionId) setCurrentSessionId(sessionData.currentSessionId);
+
+      // Restore learning data
+      if (sessionData.learningGoals) setLearningGoals(sessionData.learningGoals);
+      if (sessionData.currentDashboardWords) setCurrentDashboardWords(sessionData.currentDashboardWords);
+      if (sessionData.customWords) setCustomWords(sessionData.customWords);
+      if (sessionData.practiceWords) setPracticeWords(sessionData.practiceWords);
+
+      // Restore advanced learning state
+      if (sessionData.userWordHistory) {
+        setUserWordHistory(new Map(sessionData.userWordHistory));
+      }
+      if (sessionData.sessionNumber !== undefined) setSessionNumber(sessionData.sessionNumber);
+      if (sessionData.lastSystematicSelection) setLastSystematicSelection(sessionData.lastSystematicSelection);
+      if (sessionData.dashboardSession) setDashboardSession(sessionData.dashboardSession);
+      if (sessionData.dashboardSessionNumber !== undefined) setDashboardSessionNumber(sessionData.dashboardSessionNumber);
+
+      // Restore UI flags
+      if (sessionData.showQuiz !== undefined) setShowQuiz(sessionData.showQuiz);
+      if (sessionData.selectedQuizType) setSelectedQuizType(sessionData.selectedQuizType);
+      if (sessionData.showMatchingGame !== undefined) setShowMatchingGame(sessionData.showMatchingGame);
+      if (sessionData.gameMode !== undefined) setGameMode(sessionData.gameMode);
+      if (sessionData.showPracticeGame !== undefined) setShowPracticeGame(sessionData.showPracticeGame);
+
+      setIsSessionInitialized(true);
+      setShowSessionRestoration(false);
+
+      console.log('Session restored successfully:', {
+        wordsLearned: sessionData.currentProgress?.wordsLearned || 0,
+        activeTab: sessionData.activeTab,
+        selectedCategory: sessionData.selectedCategory,
+      });
+    } catch (error) {
+      console.error('Failed to restore session:', error);
+      handleNewSession();
+    }
+  }, []);
+
+  const handleNewSession = useCallback(() => {
+    // Clear any existing session data
+    sessionPersistence.clearSession();
+    persistenceService.clearAllSessions();
+
+    setIsSessionInitialized(true);
+    setShowSessionRestoration(false);
+    setSessionRestorationData(null);
+
+    console.log('Started new session');
+  }, [sessionPersistence, persistenceService]);
+
+  const handleSessionRestorationDismiss = useCallback(() => {
+    setShowSessionRestoration(false);
+    setIsSessionInitialized(true);
+  }, []);
+
   // Debug logging for state changes
   useEffect(() => {
     console.log("State Update:", {
@@ -406,6 +491,8 @@ export default function Index({ initialProfile }: IndexProps) {
       childStatsWordsRemembered: childStats?.wordsRemembered,
       currentProgress,
       learningGoalsCount: learningGoals.length,
+      isSessionInitialized,
+      lastAutoSave: new Date(lastAutoSave).toLocaleTimeString(),
     });
   }, [
     rememberedWords.size,
@@ -414,6 +501,8 @@ export default function Index({ initialProfile }: IndexProps) {
     childStats?.wordsRemembered,
     currentProgress,
     learningGoals.length,
+    isSessionInitialized,
+    lastAutoSave,
   ]);
 
   // Dynamic learning stats that reflect actual progress and goals
