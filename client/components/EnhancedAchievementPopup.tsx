@@ -368,11 +368,21 @@ export function EnhancedAchievementPopup({
                             </span>
                           </div>
                           <div className="text-base font-bold">
-                            🎁 {currentAchievement.reward.item}
+                            {currentAchievement.reward.emoji || "🎁"} {currentAchievement.reward.item}
                           </div>
                           {currentAchievement.reward.value && (
                             <div className="text-xs text-white/90">
                               +{currentAchievement.reward.value} points
+                            </div>
+                          )}
+                          {currentAchievement.reward.type === "sticker" && (
+                            <div className="text-xs text-white/90 animate-bounce">
+                              ✨ New sticker for your collection! ✨
+                            </div>
+                          )}
+                          {currentAchievement.reward.type === "badge" && (
+                            <div className="text-xs text-white/90 animate-pulse">
+                              🏅 Amazing badge earned! 🏅
                             </div>
                           )}
                         </motion.div>
