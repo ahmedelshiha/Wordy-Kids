@@ -102,6 +102,8 @@ import {
   PieChart,
   LineChart,
 } from "lucide-react";
+import { refreshWordDatabase } from "@/lib/cacheManager";
+import { realTimeWordDB } from "@/lib/realTimeWordDatabase";
 
 interface AdminWord {
   id: string;
