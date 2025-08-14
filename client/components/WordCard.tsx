@@ -410,29 +410,10 @@ export const WordCard: React.FC<WordCardProps> = ({
               )}
             </div>
 
-            {/* Enhanced Mobile-Optimized Favorite Button */}
-            <Button
-              size="sm"
-              variant="ghost"
-              className={`text-white hover:bg-white/20 active:bg-white/30 p-1.5 h-auto min-w-[40px] min-h-[40px] transition-all duration-200 rounded-full flex-shrink-0 border border-white/20 bg-white/10 backdrop-blur-sm active:scale-95 ${
-                isFavorited
-                  ? "scale-105 text-red-300 border-red-300/40 bg-red-500/20"
-                  : "hover:border-white/40"
-              }`}
-              onClick={(e) => {
-                e.stopPropagation();
-                handleFavorite();
-              }}
-            >
-              <Heart
-                className={`w-4 h-4 transition-all duration-200 ${
-                  isFavorited ? "fill-current animate-pulse" : ""
-                }`}
-              />
-              {showSparkles && isFavorited && (
-                <Star className="w-2.5 h-2.5 absolute -top-0.5 -right-0.5 text-yellow-300 animate-bounce" />
-              )}
-            </Button>
+            {/* Hidden Favorite Button - Moved to back card or accessible via swipe left */}
+            <div className="opacity-0 pointer-events-none">
+              {/* Heart button is now hidden but functionality preserved through swipe gestures */}
+            </div>
           </div>
 
           {/* Mobile-Optimized Image/Emoji Container - Larger Size */}
