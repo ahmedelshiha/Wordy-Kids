@@ -2913,14 +2913,14 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
 
                 <div style="margin-bottom: 30px;">
                     <h3 style="color: #d97706; margin-bottom: 15px; display: flex; align-items: center; gap: 8px;">
-                        �� Growth Opportunities
+                        📈 Growth Opportunities
                     </h3>
                     <ul class="insights-list">
                         ${reportData.parentInsights.areasForGrowth
                           .map(
                             (area) => `
                             <li>
-                                <span style="color: #f59e0b; font-size: 16px;">��</span>
+                                <span style="color: #f59e0b; font-size: 16px;">📋</span>
                                 <span>${area}</span>
                             </li>
                         `,
@@ -2951,7 +2951,7 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
             <!-- Achievements -->
             <div class="section">
                 <h2 class="section-title">
-                    �� Recent Achievements
+                    🏆 Recent Achievements
                 </h2>
                 <div class="achievement-grid">
                     ${reportData.achievements
