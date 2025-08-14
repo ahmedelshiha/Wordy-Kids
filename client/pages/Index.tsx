@@ -1260,6 +1260,28 @@ export default function Index({ initialProfile }: IndexProps) {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 relative overflow-x-hidden">
+      {/* Session Restoration Modal */}
+      {showSessionRestoration && sessionRestorationData && (
+        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+          <SessionRestoration
+            onRestore={handleSessionRestore}
+            onDismiss={handleSessionRestorationDismiss}
+            onNewSession={handleNewSession}
+            autoRestoreEnabled={true}
+            showDetailed={true}
+          />
+        </div>
+      )}
+
+      {/* Loading State */}
+      {!isSessionInitialized && !showSessionRestoration && (
+        <div className="fixed inset-0 bg-white z-50 flex items-center justify-center">
+          <div className="text-center">
+            <div className="w-8 h-8 border-4 border-blue-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+            <p className="text-gray-600">Initializing your learning session...</p>
+          </div>
+        </div>
+      )}
       {/* Optimized Mobile-First Header */}
       <header className="relative overflow-hidden bg-gradient-to-r from-educational-blue via-educational-purple to-educational-pink text-white">
         <div className="absolute inset-0 bg-black/10"></div>
@@ -2472,7 +2494,7 @@ export default function Index({ initialProfile }: IndexProps) {
                               Picture Fun!
                             </h3>
                             <p className="text-xs md:text-sm text-gray-600 mb-2 md:mb-3 hidden md:block">
-                              Look at pictures and guess the words! ��
+                              Look at pictures and guess the words! ���
                             </p>
                             <div className="flex justify-center gap-1 mb-2 md:mb-3">
                               <span className="bg-educational-orange/20 text-educational-orange px-1.5 py-0.5 rounded-full text-xs">
