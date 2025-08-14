@@ -365,7 +365,7 @@ export function EnhancedAddChildProfile({
                       setFormData(prev => ({ ...prev, name: e.target.value }));
                       if (nameError) setNameError('');
                     }}
-                    placeholder="Enter their name"
+                    placeholder="Name"
                     className={cn(
                       "text-center text-sm font-medium h-8 rounded-md border-2 transition-all duration-200",
                       nameError 
