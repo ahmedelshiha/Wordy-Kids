@@ -352,10 +352,10 @@ export const WordCard: React.FC<WordCardProps> = ({
             </Button>
           </div>
 
-          {/* Mobile-Optimized Image/Emoji Container */}
+          {/* Mobile-Optimized Image/Emoji Container - Larger Size */}
           {word.imageUrl ? (
             <div className="relative mx-auto mb-1.5">
-              <div className="w-28 h-28 sm:w-32 sm:h-32 md:w-36 md:h-36 rounded-full bg-white/20 backdrop-blur-sm shadow-lg ring-1 ring-white/30 flex items-center justify-center overflow-hidden">
+              <div className="w-32 h-32 sm:w-36 sm:h-36 md:w-40 md:h-40 rounded-full bg-white/20 backdrop-blur-sm shadow-lg ring-1 ring-white/30 flex items-center justify-center overflow-hidden">
                 <img
                   src={word.imageUrl}
                   alt={word.word}
@@ -365,14 +365,14 @@ export const WordCard: React.FC<WordCardProps> = ({
             </div>
           ) : (
             <div className="relative mx-auto mb-1.5">
-              <div className="w-28 h-28 sm:w-32 sm:h-32 md:w-36 md:h-36 rounded-full bg-gradient-to-br from-white/30 via-white/20 to-white/10 backdrop-blur-md shadow-lg ring-1 ring-white/30 flex items-center justify-center relative overflow-hidden">
+              <div className="w-32 h-32 sm:w-36 sm:h-36 md:w-40 md:h-40 rounded-full bg-gradient-to-br from-white/30 via-white/20 to-white/10 backdrop-blur-md shadow-lg ring-1 ring-white/30 flex items-center justify-center relative overflow-hidden">
                 {/* Decorative background elements */}
-                <div className="absolute top-1 left-1 w-2 h-2 bg-white/20 rounded-full animate-pulse"></div>
-                <div className="absolute bottom-1.5 right-1.5 w-1.5 h-1.5 bg-white/15 rounded-full animate-bounce delay-300"></div>
-                <div className="absolute top-1/2 right-1 w-1 h-1 bg-white/25 rounded-full animate-ping delay-700"></div>
+                <div className="absolute top-1 left-1 w-2.5 h-2.5 bg-white/20 rounded-full animate-pulse"></div>
+                <div className="absolute bottom-2 right-2 w-2 h-2 bg-white/15 rounded-full animate-bounce delay-300"></div>
+                <div className="absolute top-1/2 right-1.5 w-1.5 h-1.5 bg-white/25 rounded-full animate-ping delay-700"></div>
 
-                {/* Main emoji - Larger sizing */}
-                <span className="text-4xl sm:text-5xl md:text-6xl relative z-10 drop-shadow-lg">
+                {/* Main emoji - Even Larger sizing */}
+                <span className="text-5xl sm:text-6xl md:text-7xl relative z-10 drop-shadow-lg">
                   {word.emoji || "📚"}
                 </span>
 
@@ -382,41 +382,43 @@ export const WordCard: React.FC<WordCardProps> = ({
             </div>
           )}
 
-          {/* Mobile-Optimized Word and Pronunciation */}
-          <div className="flex-1 flex flex-col justify-center items-center text-center space-y-1.5">
-            <h2 className="text-base sm:text-lg md:text-xl font-bold tracking-wide drop-shadow-md leading-tight px-1">
-              {word.word}
-            </h2>
+          {/* Mobile-Optimized Word with Inline Speaker */}
+          <div className="flex-1 flex flex-col justify-center items-center text-center space-y-1">
+            {/* Word name with speaker button inline */}
+            <div className="flex items-center justify-center gap-2">
+              <h2 className="text-base sm:text-lg md:text-xl font-bold tracking-wide drop-shadow-md leading-tight">
+                {word.word}
+              </h2>
+              <Button
+                size="sm"
+                variant="ghost"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handlePronounce();
+                }}
+                disabled={isPlaying}
+                className={`text-white hover:bg-white/30 hover:scale-105 p-1.5 h-auto min-w-[32px] min-h-[32px] rounded-full transition-all duration-200 border border-white/40 bg-white/10 backdrop-blur-sm shadow-md ${
+                  isPlaying
+                    ? "scale-105 bg-yellow-400/30 border-yellow-300/60 shadow-yellow-300/30 animate-bounce"
+                    : "hover:border-white/60"
+                }`}
+              >
+                <Volume2
+                  className={`w-3 h-3 sm:w-3.5 sm:h-3.5 transition-all duration-200 ${isPlaying ? "text-yellow-200 animate-pulse scale-105" : "text-white"}`}
+                />
+                {showSparkles && (
+                  <Sparkles className="w-2 h-2 absolute -top-0.5 -right-0.5 text-yellow-300 animate-spin" />
+                )}
+                {isPlaying && (
+                  <div className="absolute inset-0 rounded-full border border-yellow-300/50 animate-ping"></div>
+                )}
+              </Button>
+            </div>
 
+            {/* Pronunciation text only */}
             {word.pronunciation && (
-              <div className="flex flex-col sm:flex-row items-center gap-1 sm:gap-1.5">
-                <span className="text-xs sm:text-sm opacity-90 font-medium leading-tight">
-                  {word.pronunciation}
-                </span>
-                <Button
-                  size="sm"
-                  variant="ghost"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    handlePronounce();
-                  }}
-                  disabled={isPlaying}
-                  className={`text-white hover:bg-white/30 hover:scale-105 p-1.5 h-auto min-w-[36px] min-h-[36px] rounded-full transition-all duration-200 border border-white/40 bg-white/10 backdrop-blur-sm shadow-md ${
-                    isPlaying
-                      ? "scale-105 bg-yellow-400/30 border-yellow-300/60 shadow-yellow-300/30 animate-bounce"
-                      : "hover:border-white/60"
-                  }`}
-                >
-                  <Volume2
-                    className={`w-3.5 h-3.5 sm:w-4 sm:h-4 transition-all duration-200 ${isPlaying ? "text-yellow-200 animate-pulse scale-105" : "text-white"}`}
-                  />
-                  {showSparkles && (
-                    <Sparkles className="w-2.5 h-2.5 absolute -top-0.5 -right-0.5 text-yellow-300 animate-spin" />
-                  )}
-                  {isPlaying && (
-                    <div className="absolute inset-0 rounded-full border border-yellow-300/50 animate-ping"></div>
-                  )}
-                </Button>
+              <div className="text-xs sm:text-sm opacity-90 font-medium leading-tight">
+                {word.pronunciation}
               </div>
             )}
           </div>
