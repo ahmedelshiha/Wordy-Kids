@@ -115,13 +115,6 @@ export function MobileBottomNav({
 
   const secondaryMenuItems = [
     {
-      id: "parent",
-      emoji: "👨‍👩‍👧‍👦",
-      label: "Parent Zone",
-      icon: Users,
-      onClick: onParentClick,
-    },
-    {
       id: "admin",
       emoji: "🛡️",
       label: "Admin",
