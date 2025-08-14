@@ -367,7 +367,7 @@ export function EnhancedAddChildProfile({
                     }}
                     placeholder="Enter their name"
                     className={cn(
-                      "text-center text-lg font-medium h-10 rounded-lg border-2 transition-all duration-200",
+                      "text-center text-base font-medium h-10 rounded-lg border-2 transition-all duration-200",
                       nameError 
                         ? "border-red-300 bg-red-50" 
                         : "border-purple-200 focus:border-purple-400 bg-white"
