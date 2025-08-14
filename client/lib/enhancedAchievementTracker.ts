@@ -1117,7 +1117,6 @@ export class EnhancedAchievementTracker {
     const morningMessages = [
       "🌅 Good morning, Word Warrior! Ready for an adventure?",
       "☀️ Rise and shine! Time to catch some word magic!",
-      "🌈 Morning rainbow! Let's paint the day with new words!",
     ];
 
     const afternoonMessages = [
