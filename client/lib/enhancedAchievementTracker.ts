@@ -485,7 +485,7 @@ export class EnhancedAchievementTracker {
       id: "ultimate_word_wizard",
       name: "Ultimate Word Wizard",
       description: "Learn 300 words, maintain 95% accuracy, and reach 50 perfect sessions!",
-      funnyDescription: "🧙‍♂��✨ ULTIMATE COSMIC MAGIC! You're the SUPREME Word Wizard of the entire GALAXY!",
+      funnyDescription: "🧙‍♂️✨ ULTIMATE COSMIC MAGIC! You're the SUPREME Word Wizard of the entire GALAXY!",
       icon: "🧙‍♂️",
       category: "journey",
       difficulty: "rainbow",
@@ -1043,6 +1043,86 @@ export class EnhancedAchievementTracker {
   }
 
   /**
+   * Get fun motivational message based on progress
+   */
+  static getMotivationalMessage(): string {
+    const hour = new Date().getHours();
+    const progress = this.journeyProgress;
+
+    const morningMessages = [
+      "🌅 Good morning, Word Warrior! Ready for an adventure?",
+      "☀️ Rise and shine! Time to catch some word magic!",
+      "🌈 Morning rainbow! Let's paint the day with new words!"
+    ];
+
+    const afternoonMessages = [
+      "🌞 Afternoon power! Your brain is ready for word challenges!",
+      "⚡ Afternoon energy boost! Time for some word lightning!",
+      "🎯 Afternoon target practice! Let's hit those word bullseyes!"
+    ];
+
+    const eveningMessages = [
+      "🌙 Evening magic time! Perfect for word enchantments!",
+      "⭐ Star-powered learning! Your evening word adventure awaits!",
+      "🦉 Wise owl hours! Time for some smart word hunting!"
+    ];
+
+    let messages = morningMessages;
+    if (hour >= 12 && hour < 18) messages = afternoonMessages;
+    else if (hour >= 18) messages = eveningMessages;
+
+    return messages[Math.floor(Math.random() * messages.length)];
+  }
+
+  /**
+   * Get next achievement tease
+   */
+  static getNextAchievementTease(): string | null {
+    const nextAchievement = this.achievements
+      .filter(a => !a.unlocked)
+      .sort((a, b) => (b.currentProgress / b.requirements) - (a.currentProgress / a.requirements))[0];
+
+    if (!nextAchievement) return null;
+
+    const progressPercent = Math.round((nextAchievement.currentProgress / nextAchievement.requirements) * 100);
+
+    if (progressPercent >= 90) {
+      return `🔥 SO CLOSE! "${nextAchievement.name}" is ${progressPercent}% complete!`;
+    } else if (progressPercent >= 75) {
+      return `👀 Almost there! "${nextAchievement.name}" is ${progressPercent}% done!`;
+    } else if (progressPercent >= 50) {
+      return `💪 Keep going! "${nextAchievement.name}" is halfway there!`;
+    }
+
+    return null;
+  }
+
+  /**
+   * Check if today is a special achievement day
+   */
+  static getTodaySpecialMessage(): string | null {
+    const today = new Date();
+    const dayOfWeek = today.getDay();
+    const isWeekend = dayOfWeek === 0 || dayOfWeek === 6;
+
+    if (isWeekend) {
+      return "🎊 WEEKEND BONUS! Double the fun, double the achievement magic!";
+    }
+
+    // Monday motivation
+    if (dayOfWeek === 1) {
+      return "🚀 MONDAY POWER-UP! Start the week with word magic!";
+    }
+
+    // Friday celebration
+    if (dayOfWeek === 5) {
+      return "🎉 FRIDAY FUN! End the week with a word party!";
+    }
+
+    return null;
+  }
+
+  /**
    * Reset progress (for testing)
    */
   static resetProgress(): void {
@@ -1051,6 +1131,9 @@ export class EnhancedAchievementTracker {
       achievement.currentProgress = 0;
       achievement.dateUnlocked = undefined;
     });
+
+    this.achievementCooldowns.clear();
+    this.lastAchievementTime = 0;
 
     this.journeyProgress = {
       wordsLearned: 0,
