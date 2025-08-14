@@ -78,6 +78,8 @@ const CATEGORY_COLORS = {
   quiz: "bg-educational-green",
   exploration: "bg-educational-pink",
   social: "bg-gray-500",
+  difficulty: "bg-gradient-to-r from-green-400 to-blue-500",
+  session: "bg-gradient-to-r from-purple-400 to-pink-500",
 } as const;
 
 // Memoized celebration particles component
