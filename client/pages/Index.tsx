@@ -2639,7 +2639,7 @@ export default function Index({ initialProfile }: IndexProps) {
       {backgroundAnimationsEnabled && <FloatingBubbles />}
 
       {/* Settings Panel */}
-      <CompactSettingsPanel
+      <EnhancedMobileSettingsPanel
         isOpen={showSettings}
         onClose={() => setShowSettings(false)}
       />
