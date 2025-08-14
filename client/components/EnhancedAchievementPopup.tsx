@@ -500,6 +500,30 @@ export function EnhancedAchievementPopup({
                     </div>
                   </div>
 
+                  {/* Auto-close progress indicator */}
+                  {autoCloseDelay > 0 && !isPaused && (
+                    <div className="mt-2 mb-1">
+                      <div className="flex items-center justify-center gap-1 mb-1">
+                        <div className="text-xs text-white/60">
+                          Auto-closing in {Math.ceil(timeRemaining / 1000)}s
+                        </div>
+                        <div className="text-xs text-white/40">
+                          (hover to pause)
+                        </div>
+                      </div>
+                      <div className="w-full bg-white/20 rounded-full h-1">
+                        <motion.div
+                          className="bg-white/60 h-1 rounded-full"
+                          initial={{ width: "100%" }}
+                          animate={{
+                            width: `${(timeRemaining / autoCloseDelay) * 100}%`
+                          }}
+                          transition={{ duration: 0.1 }}
+                        />
+                      </div>
+                    </div>
+                  )}
+
                   {/* Simplified Achievement Counter */}
                   {achievements.length > 1 && (
                     <div className="text-xs text-white/70 mt-1">
