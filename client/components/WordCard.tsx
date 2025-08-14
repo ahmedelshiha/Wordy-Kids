@@ -69,6 +69,8 @@ export const WordCard: React.FC<WordCardProps> = ({
   const [adventureStatus, setAdventureStatus] =
     useState<WordAdventureStatus | null>(null);
   const [wordAchievements, setWordAchievements] = useState<any[]>([]);
+  const [touchStart, setTouchStart] = useState<{x: number, y: number} | null>(null);
+  const [isGesturing, setIsGesturing] = useState(false);
 
   // Initialize adventure status for this word
   React.useEffect(() => {
