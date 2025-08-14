@@ -148,6 +148,16 @@ export default function Index({ initialProfile }: IndexProps) {
   const [excludedWordIds, setExcludedWordIds] = useState<Set<number>>(
     new Set(),
   );
+
+  // Learning goals state and progress tracking
+  const [learningGoals, setLearningGoals] = useState<any[]>([]);
+  const [currentProgress, setCurrentProgress] = useState({
+    wordsLearned: 0,
+    wordsRemembered: 0,
+    sessionCount: 0,
+    accuracy: 0,
+  });
+  const [dailySessionCount, setDailySessionCount] = useState(0);
   const [currentDashboardWords, setCurrentDashboardWords] = useState<any[]>([]);
 
   // Enhanced word selection states
@@ -833,7 +843,7 @@ export default function Index({ initialProfile }: IndexProps) {
         notifications.push({
           type: "celebration",
           title: "🎉 Level Up! 🎉",
-          message: `Congratulations! You've reached a new level!\n\n🌟 Keep up the amazing work!`,
+          message: `Congratulations! You've reached a new level!\n\n��� Keep up the amazing work!`,
           points: 50,
         });
       }
