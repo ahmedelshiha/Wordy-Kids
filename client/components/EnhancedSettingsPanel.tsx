@@ -307,7 +307,10 @@ export const EnhancedSettingsPanel: React.FC<EnhancedSettingsPanelProps> = ({
                     key={tab.id}
                     variant={activeTab === tab.id ? "default" : "outline"}
                     size="sm"
-                    onClick={() => setActiveTab(tab.id)}
+                    onClick={() => {
+                      setActiveTab(tab.id);
+                      if (deviceInfo.hasHaptic) triggerHapticFeedback("light");
+                    }}
                     className={cn(
                       "settings-tab-mobile flex-shrink-0 min-w-[80px] h-12 flex flex-col gap-1 text-xs",
                       activeTab === tab.id && "bg-educational-blue text-white shadow-lg"
