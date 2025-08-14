@@ -50,10 +50,12 @@ export function AchievementTeaser({ className }: AchievementTeaserProps) {
       setShowTeaser(false);
       setTimeout(() => {
         // Update all messages for variety
-        setMotivationalMessage(EnhancedAchievementTracker.getMotivationalMessage());
+        setMotivationalMessage(
+          EnhancedAchievementTracker.getMotivationalMessage(),
+        );
         setSpecialMessage(EnhancedAchievementTracker.getTodaySpecialMessage());
         setCurrentTease(EnhancedAchievementTracker.getNextAchievementTease());
-        setMessageIndex(prev => prev + 1);
+        setMessageIndex((prev) => prev + 1);
         setShowTeaser(true);
       }, 300);
     }, rotationInterval);
@@ -68,7 +70,24 @@ export function AchievementTeaser({ className }: AchievementTeaserProps) {
   };
 
   const getRandomEmoji = () => {
-    const emojis = ["🌟", "⭐", "✨", "🎯", "🚀", "💫", "🌈", "🎊", "🦋", "🌺", "🎪", "🦄", "🎵", "🌸", "🎨", "🏰"];
+    const emojis = [
+      "🌟",
+      "⭐",
+      "✨",
+      "🎯",
+      "🚀",
+      "💫",
+      "🌈",
+      "🎊",
+      "🦋",
+      "🌺",
+      "🎪",
+      "🦄",
+      "🎵",
+      "🌸",
+      "🎨",
+      "🏰",
+    ];
     return emojis[Math.floor(Math.random() * emojis.length)];
   };
 
@@ -82,10 +101,12 @@ export function AchievementTeaser({ className }: AchievementTeaserProps) {
     // Cycle to next message on tap (mobile-friendly)
     setShowTeaser(false);
     setTimeout(() => {
-      setMotivationalMessage(EnhancedAchievementTracker.getMotivationalMessage());
+      setMotivationalMessage(
+        EnhancedAchievementTracker.getMotivationalMessage(),
+      );
       setSpecialMessage(EnhancedAchievementTracker.getTodaySpecialMessage());
       setCurrentTease(EnhancedAchievementTracker.getNextAchievementTease());
-      setMessageIndex(prev => prev + 1);
+      setMessageIndex((prev) => prev + 1);
       setShowTeaser(true);
     }, 200);
   };
@@ -106,7 +127,7 @@ export function AchievementTeaser({ className }: AchievementTeaserProps) {
           animate={{
             opacity: 1,
             y: 0,
-            scale: isPressed ? 0.98 : 1
+            scale: isPressed ? 0.98 : 1,
           }}
           exit={{ opacity: 0, y: -5, scale: 0.98 }}
           transition={{
@@ -129,7 +150,7 @@ export function AchievementTeaser({ className }: AchievementTeaserProps) {
                 : isTease
                   ? "bg-gradient-to-r from-blue-100 via-purple-50 to-indigo-100 border-blue-200 shadow-blue-100/50 hover:shadow-blue-200/60"
                   : "bg-gradient-to-r from-green-100 via-emerald-50 to-blue-100 border-green-200 shadow-green-100/50 hover:shadow-green-200/60"
-            } ${isPressed ? 'scale-98 shadow-lg' : ''}`}
+            } ${isPressed ? "scale-98 shadow-lg" : ""}`}
             role="button"
             tabIndex={0}
             aria-label="Tap for a new motivational message"

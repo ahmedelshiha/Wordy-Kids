@@ -169,7 +169,9 @@ export function EnhancedAchievementPopup({
   const [showReward, setShowReward] = useState(false);
   const [claimed, setClaimed] = useState<Set<string>>(new Set());
   const [isClosing, setIsClosing] = useState(false);
-  const [autoCloseTimer, setAutoCloseTimer] = useState<NodeJS.Timeout | null>(null);
+  const [autoCloseTimer, setAutoCloseTimer] = useState<NodeJS.Timeout | null>(
+    null,
+  );
   const [isPaused, setIsPaused] = useState(false);
   const [timeRemaining, setTimeRemaining] = useState(autoCloseDelay);
 
@@ -205,7 +207,12 @@ export function EnhancedAchievementPopup({
 
   // Auto-close timer management
   useEffect(() => {
-    if (achievements.length > 0 && !isClosing && !isPaused && autoCloseDelay > 0) {
+    if (
+      achievements.length > 0 &&
+      !isClosing &&
+      !isPaused &&
+      autoCloseDelay > 0
+    ) {
       setTimeRemaining(autoCloseDelay);
 
       const startTime = Date.now();
@@ -229,7 +236,14 @@ export function EnhancedAchievementPopup({
         clearInterval(interval);
       };
     }
-  }, [achievements.length, currentIndex, isClosing, isPaused, autoCloseDelay, onClose]);
+  }, [
+    achievements.length,
+    currentIndex,
+    isClosing,
+    isPaused,
+    autoCloseDelay,
+    onClose,
+  ]);
 
   // Cleanup timer on unmount
   useEffect(() => {
@@ -535,7 +549,7 @@ export function EnhancedAchievementPopup({
                           className="bg-white/60 h-1 rounded-full"
                           initial={{ width: "100%" }}
                           animate={{
-                            width: `${(timeRemaining / autoCloseDelay) * 100}%`
+                            width: `${(timeRemaining / autoCloseDelay) * 100}%`,
                           }}
                           transition={{ duration: 0.1, ease: "linear" }}
                         />

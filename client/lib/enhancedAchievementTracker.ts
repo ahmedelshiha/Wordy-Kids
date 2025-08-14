@@ -1228,9 +1228,11 @@ export class EnhancedAchievementTracker {
 
     if (isWeekend) {
       selectedMessages = weekendMessages;
-    } else if (dayOfWeek === 1) { // Monday
+    } else if (dayOfWeek === 1) {
+      // Monday
       selectedMessages = mondayMessages;
-    } else if (dayOfWeek === 5) { // Friday
+    } else if (dayOfWeek === 5) {
+      // Friday
       selectedMessages = fridayMessages;
     } else {
       // Regular time-based messages
@@ -1239,7 +1241,9 @@ export class EnhancedAchievementTracker {
       else if (hour >= 18) selectedMessages = eveningMessages;
     }
 
-    return selectedMessages[Math.floor(Math.random() * selectedMessages.length)];
+    return selectedMessages[
+      Math.floor(Math.random() * selectedMessages.length)
+    ];
   }
 
   /**
