@@ -276,6 +276,126 @@ export default function Index({ initialProfile }: IndexProps) {
     }
   }, []);
 
+  // Session persistence initialization
+  useEffect(() => {
+    const initializeSession = async () => {
+      try {
+        const savedSession = sessionPersistence.loadSession();
+
+        if (savedSession && !isSessionInitialized) {
+          // Check if session is recent enough to restore automatically
+          const sessionAge = Date.now() - (savedSession.lastSaved || 0);
+          const isRecentSession = sessionAge < 30 * 60 * 1000; // 30 minutes
+
+          if (isRecentSession && savedSession.currentProgress?.wordsLearned > 0) {
+            setSessionRestorationData(savedSession);
+            setShowSessionRestoration(true);
+          } else {
+            // Start fresh but mark session as initialized
+            setIsSessionInitialized(true);
+          }
+        } else {
+          setIsSessionInitialized(true);
+        }
+      } catch (error) {
+        console.error('Failed to initialize session:', error);
+        setIsSessionInitialized(true);
+      }
+    };
+
+    if (!isSessionInitialized) {
+      initializeSession();
+    }
+  }, [sessionPersistence, isSessionInitialized]);
+
+  // Auto-save session data
+  const saveSessionData = useCallback(() => {
+    if (!isSessionInitialized) return;
+
+    const sessionData: Partial<SessionData> = {
+      activeTab,
+      currentWordIndex,
+      selectedCategory,
+      learningMode,
+      userRole,
+      forgottenWords: Array.from(forgottenWords),
+      rememberedWords: Array.from(rememberedWords),
+      excludedWordIds: Array.from(excludedWordIds),
+      currentProgress,
+      dailySessionCount,
+      currentProfile,
+      childStats,
+      currentSessionId,
+      learningGoals,
+      currentDashboardWords,
+      customWords,
+      practiceWords,
+      userWordHistory: Array.from(userWordHistory.entries()),
+      sessionNumber,
+      lastSystematicSelection,
+      dashboardSession,
+      dashboardSessionNumber,
+      showQuiz,
+      selectedQuizType,
+      showMatchingGame,
+      gameMode,
+      showPracticeGame,
+    };
+
+    persistenceService.queueSave(sessionData, 'medium');
+    setLastAutoSave(Date.now());
+  }, [
+    isSessionInitialized,
+    activeTab,
+    currentWordIndex,
+    selectedCategory,
+    learningMode,
+    userRole,
+    forgottenWords,
+    rememberedWords,
+    excludedWordIds,
+    currentProgress,
+    dailySessionCount,
+    currentProfile,
+    childStats,
+    currentSessionId,
+    learningGoals,
+    currentDashboardWords,
+    customWords,
+    practiceWords,
+    userWordHistory,
+    sessionNumber,
+    lastSystematicSelection,
+    dashboardSession,
+    dashboardSessionNumber,
+    showQuiz,
+    selectedQuizType,
+    showMatchingGame,
+    gameMode,
+    showPracticeGame,
+    persistenceService,
+  ]);
+
+  // Auto-save whenever important state changes
+  useEffect(() => {
+    const saveTimer = setTimeout(() => {
+      saveSessionData();
+    }, 1000); // Debounce saves
+
+    return () => clearTimeout(saveTimer);
+  }, [saveSessionData]);
+
+  // Force save on critical actions
+  useEffect(() => {
+    if (rememberedWords.size > 0 || forgottenWords.size > 0) {
+      persistenceService.queueSave({
+        forgottenWords: Array.from(forgottenWords),
+        rememberedWords: Array.from(rememberedWords),
+        currentProgress,
+      }, 'high');
+    }
+  }, [rememberedWords.size, forgottenWords.size, currentProgress, persistenceService]);
+
   // Debug logging for state changes
   useEffect(() => {
     console.log("State Update:", {
