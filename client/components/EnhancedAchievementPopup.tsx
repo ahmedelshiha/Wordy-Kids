@@ -21,6 +21,7 @@ interface Achievement {
   id: string;
   name: string;
   description: string;
+  funnyDescription?: string; // Kid-friendly version
   icon: string;
   category:
     | "learning"
