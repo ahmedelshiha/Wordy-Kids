@@ -595,7 +595,7 @@ export function InteractiveDashboardWordCard({
                         return "🏆";
                       }
                       if (percentage >= 90) return "⭐";
-                      if (percentage >= 75) return "🎯";
+                      if (percentage >= 75) return "��";
                       if (percentage >= 50) return "💪";
                       return "🌟";
                     })()}
@@ -823,14 +823,6 @@ export function InteractiveDashboardWordCard({
           {/* Category and Progress Header */}
           <div className="text-center mb-6 md:mb-8 mt-8 md:mt-6">
             <div className="flex items-center justify-center gap-4 mb-4">
-              <Badge
-                className={cn(
-                  "text-sm px-3 py-1",
-                  getDifficultyColor(currentWord.difficulty),
-                )}
-              >
-                {currentWord.category}
-              </Badge>
               {/* Difficulty classification badge */}
               <Badge
                 className={cn(
@@ -842,6 +834,14 @@ export function InteractiveDashboardWordCard({
                 )}
               >
                 {currentWord.difficulty ? currentWord.difficulty.charAt(0).toUpperCase() + currentWord.difficulty.slice(1) : "Medium"}
+              </Badge>
+              <Badge
+                className={cn(
+                  "text-sm px-3 py-1",
+                  getDifficultyColor(currentWord.difficulty),
+                )}
+              >
+                {currentWord.category}
               </Badge>
               {/* Hidden: Word progress and Session progress badges */}
               <Badge
