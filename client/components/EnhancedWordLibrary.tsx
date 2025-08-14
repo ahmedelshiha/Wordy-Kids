@@ -36,6 +36,8 @@ import { EnhancedCategorySelector } from "./EnhancedCategorySelector";
 import { EnhancedVocabularyBuilder } from "./EnhancedVocabularyBuilder";
 import { wordsDatabase, getWordsByCategory } from "@/data/wordsDatabase";
 import { audioService } from "@/lib/audioService";
+import { useRealTimeWords, realTimeWordDB } from "@/lib/realTimeWordDatabase";
+import { cacheManager, refreshWordDatabase } from "@/lib/cacheManager";
 
 interface Word {
   id: number;
