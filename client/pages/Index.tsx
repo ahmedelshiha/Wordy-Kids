@@ -16,6 +16,7 @@ import { WordMatchingGame } from "@/components/WordMatchingGame";
 import { GameHub } from "@/components/games/GameHub";
 import { VowelRescue } from "@/components/games/VowelRescue";
 import ListenAndGuessGame from "@/components/games/ListenAndGuessGame";
+import WordGarden from "@/components/games/WordGarden";
 import {
   getSystematicEasyVowelQuestions,
   getSystematicMediumVowelQuestions,
