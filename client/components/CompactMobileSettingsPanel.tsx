@@ -383,7 +383,7 @@ export const CompactMobileSettingsPanel: React.FC<CompactMobileSettingsPanelProp
                 onToggle={() => toggleSection("appearance")}
               />
               {expandedSections.appearance && (
-                <div className="px-2 pb-2 space-y-1">
+                <div className="px-2 pb-2 space-y-1 max-h-[30vh] overflow-y-auto">
                   <CompactSettingRow
                     icon={darkMode ? Moon : Sun}
                     label="Dark Mode"
