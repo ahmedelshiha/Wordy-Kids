@@ -312,7 +312,19 @@ export const WordCard: React.FC<WordCardProps> = ({
             : adventureStatus && adventureStatus.health < 50
               ? "ring-2 ring-orange-400/50 shadow-orange-400/20 shadow-lg"
               : ""
-        } ${isGesturing ? "scale-[1.02] ring-2 ring-blue-400/50" : ""}`}
+        } ${
+          isGesturing
+            ? swipeDirection === 'right'
+              ? "scale-[1.02] ring-2 ring-green-400/50 shadow-green-400/20"
+              : swipeDirection === 'left'
+                ? "scale-[1.02] ring-2 ring-red-400/50 shadow-red-400/20"
+                : swipeDirection === 'up'
+                  ? "scale-[1.02] ring-2 ring-blue-400/50 shadow-blue-400/20"
+                  : swipeDirection === 'down'
+                    ? "scale-[1.02] ring-2 ring-purple-400/50 shadow-purple-400/20"
+                    : "scale-[1.02] ring-2 ring-blue-400/50"
+            : ""
+        }`}
         style={{
           transformStyle: "preserve-3d",
           touchAction: "pan-y",
@@ -350,7 +362,7 @@ export const WordCard: React.FC<WordCardProps> = ({
                 className={`${getDifficultyColor(word.difficulty)} text-[9px] font-medium px-1 py-0.5 leading-none`}
               >
                 {word.difficulty === "easy"
-                  ? "���� Easy"
+                  ? "🌟 Easy"
                   : word.difficulty === "medium"
                     ? "⭐ Med"
                     : "🔥 Hard"}
