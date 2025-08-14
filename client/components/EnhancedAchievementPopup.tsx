@@ -294,9 +294,14 @@ export function EnhancedAchievementPopup({
 
   const handleNext = useCallback(() => {
     if (currentIndex < achievements.length - 1) {
+      // Temporarily pause auto-close during navigation
+      setIsPaused(true);
       setCurrentIndex(currentIndex + 1);
       setShowReward(false);
-      setTimeout(() => setShowReward(true), 400);
+      setTimeout(() => {
+        setShowReward(true);
+        setIsPaused(false); // Resume auto-close for new achievement
+      }, 400);
     } else {
       setIsClosing(true);
       setTimeout(onClose, 300);
@@ -305,9 +310,14 @@ export function EnhancedAchievementPopup({
 
   const handlePrevious = useCallback(() => {
     if (currentIndex > 0) {
+      // Temporarily pause auto-close during navigation
+      setIsPaused(true);
       setCurrentIndex(currentIndex - 1);
       setShowReward(false);
-      setTimeout(() => setShowReward(true), 400);
+      setTimeout(() => {
+        setShowReward(true);
+        setIsPaused(false); // Resume auto-close for new achievement
+      }, 400);
     }
   }, [currentIndex]);
 
