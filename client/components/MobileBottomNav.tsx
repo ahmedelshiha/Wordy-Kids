@@ -38,6 +38,7 @@ export function MobileBottomNav({
   showMoreMenu,
   onMoreToggle,
   achievementCount = 0,
+  userRole = "child",
 }: MobileBottomNavProps) {
   const primaryTabs = [
     {
