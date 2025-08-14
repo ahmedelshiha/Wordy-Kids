@@ -145,7 +145,7 @@ export const WordCard: React.FC<WordCardProps> = ({
         navigator.vibrate([100, 50, 100]);
       }
     } else {
-      playSoundIfEnabled.click();
+      playUIInteractionSoundIfEnabled.click();
       if (navigator.vibrate) {
         navigator.vibrate(50);
       }
