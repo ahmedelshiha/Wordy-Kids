@@ -18,6 +18,7 @@ import {
   WordDatabaseNotifications,
   CompactWordDatabaseNotifications,
 } from "./components/WordDatabaseNotifications";
+import { WordAdventureDemo } from "./pages/WordAdventureDemo";
 
 const queryClient = new QueryClient();
 
