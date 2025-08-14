@@ -166,7 +166,7 @@ export function EnhancedAddChildProfile({
       setFormData({
         name: '',
         age: 6,
-        avatar: '��',
+        avatar: '👦',
         interests: [],
         backgroundColor: 'from-pink-200 to-pink-300',
         parentConnection: 'child'
@@ -389,7 +389,7 @@ export function EnhancedAddChildProfile({
                   <Label className="text-xs font-medium text-gray-700 mb-2 block">
                     Age
                   </Label>
-                  <div className="grid grid-cols-3 gap-2">
+                  <div className="grid grid-cols-3 gap-1">
                     {[4, 5, 6, 7, 8, 9, 10, 11, 12].map((age) => (
                       <Button
                         key={age}
