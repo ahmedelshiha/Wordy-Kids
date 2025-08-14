@@ -32,7 +32,6 @@ import {
 import {
   Tooltip,
   TooltipContent,
-  TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import {
@@ -1552,7 +1551,7 @@ const CreateWordWizard: React.FC<CreateWordWizardProps> = ({
                 }
               >
                 {formData.difficulty === "easy"
-                  ? "��"
+                  ? "🌟"
                   : formData.difficulty === "medium"
                     ? "⭐"
                     : "🔥"}
