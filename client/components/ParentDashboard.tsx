@@ -4159,6 +4159,15 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
           </DialogFooter>
         </DialogContent>
       </Dialog>
+
+      {/* Mobile Floating Action Button for Adding Children */}
+      <div className="md:hidden">
+        <QuickAddChildButton
+          onClick={() => setShowAddChildDialog(true)}
+          variant="floating"
+          className="fixed bottom-20 right-4 z-50"
+        />
+      </div>
     </div>
   );
 };
