@@ -138,18 +138,6 @@ export function QuizGames({
       color: "from-educational-orange to-orange-400",
       points: "Variable",
     },
-    {
-      id: "listen-guess",
-      title: "Listen & Guess",
-      description:
-        "Listen carefully and pick the right picture! Perfect for audio learners.",
-      icon: "🎧",
-      difficulty: "Easy",
-      questions: 10,
-      timePerQuestion: "No limit",
-      color: "from-educational-pink to-pink-400",
-      points: "50-100 pts",
-    },
   ];
 
   const handleQuizStart = (quizType: string) => {
