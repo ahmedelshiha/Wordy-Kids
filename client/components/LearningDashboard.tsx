@@ -64,6 +64,14 @@ interface LearningDashboardProps {
   // Systematic word generation props
   dashboardSession?: any; // DashboardWordSession
   onGenerateNewSession?: () => void;
+  // Learning goals integration
+  currentProgress?: {
+    wordsLearned: number;
+    wordsRemembered: number;
+    sessionCount: number;
+    accuracy: number;
+  };
+  learningGoals?: any[];
 }
 
 export const LearningDashboard: React.FC<LearningDashboardProps> = ({
