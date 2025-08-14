@@ -35,24 +35,28 @@ export const useMobileDevice = (): MobileDeviceInfo => {
       const isTablet = width > 768 && width <= 1024;
       const isDesktop = width > 1024;
       const hasTouch = "ontouchstart" in window || navigator.maxTouchPoints > 0;
-      
+
       // Check for haptic feedback support
       const hasHaptic = "vibrate" in navigator && hasTouch;
-      
+
       // Check for vibration API support
       const supportsVibration = "vibrate" in navigator;
-      
+
       // Determine screen size category
       let screenSize: "small" | "medium" | "large" = "large";
       if (width <= 480) screenSize = "small";
       else if (width <= 768) screenSize = "medium";
-      
+
       // Determine orientation
       const orientation = height > width ? "portrait" : "landscape";
-      
+
       // Check for accessibility preferences
-      const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-      const prefersHighContrast = window.matchMedia("(prefers-contrast: high)").matches;
+      const prefersReducedMotion = window.matchMedia(
+        "(prefers-reduced-motion: reduce)",
+      ).matches;
+      const prefersHighContrast = window.matchMedia(
+        "(prefers-contrast: high)",
+      ).matches;
 
       setDeviceInfo({
         isMobile,
@@ -76,19 +80,24 @@ export const useMobileDevice = (): MobileDeviceInfo => {
     window.addEventListener("orientationchange", updateDeviceInfo);
 
     // Listen for preference changes
-    const reducedMotionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const reducedMotionQuery = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    );
     const highContrastQuery = window.matchMedia("(prefers-contrast: high)");
-    
+
     const handleReducedMotionChange = () => updateDeviceInfo();
     const handleHighContrastChange = () => updateDeviceInfo();
-    
+
     reducedMotionQuery.addEventListener("change", handleReducedMotionChange);
     highContrastQuery.addEventListener("change", handleHighContrastChange);
 
     return () => {
       window.removeEventListener("resize", updateDeviceInfo);
       window.removeEventListener("orientationchange", updateDeviceInfo);
-      reducedMotionQuery.removeEventListener("change", handleReducedMotionChange);
+      reducedMotionQuery.removeEventListener(
+        "change",
+        handleReducedMotionChange,
+      );
       highContrastQuery.removeEventListener("change", handleHighContrastChange);
     };
   }, []);
@@ -97,14 +106,16 @@ export const useMobileDevice = (): MobileDeviceInfo => {
 };
 
 // Utility function for haptic feedback
-export const triggerHapticFeedback = (type: "light" | "medium" | "heavy" = "light") => {
+export const triggerHapticFeedback = (
+  type: "light" | "medium" | "heavy" = "light",
+) => {
   if ("vibrate" in navigator) {
     const patterns = {
       light: 10,
       medium: 20,
       heavy: 50,
     };
-    
+
     navigator.vibrate(patterns[type]);
   }
 };
@@ -121,10 +132,7 @@ export const deviceCapabilities = {
   hasWebGL: () => {
     try {
       const canvas = document.createElement("canvas");
-      return !!(
-        window.WebGLRenderingContext &&
-        canvas.getContext("webgl")
-      );
+      return !!(window.WebGLRenderingContext && canvas.getContext("webgl"));
     } catch {
       return false;
     }

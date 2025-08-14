@@ -51,7 +51,10 @@ import {
 } from "@/lib/soundEffects";
 import { audioService, VoiceType } from "@/lib/audioService";
 import { cn } from "@/lib/utils";
-import { useMobileDevice, triggerHapticFeedback } from "@/hooks/use-mobile-device";
+import {
+  useMobileDevice,
+  triggerHapticFeedback,
+} from "@/hooks/use-mobile-device";
 
 interface EnhancedSettingsPanelProps {
   isOpen: boolean;
@@ -64,7 +67,8 @@ export const EnhancedSettingsPanel: React.FC<EnhancedSettingsPanelProps> = ({
 }) => {
   // Audio settings
   const [soundOn, setSoundOn] = useState(isSoundEnabled());
-  const [selectedVoiceType, setSelectedVoiceType] = useState<VoiceType>("woman");
+  const [selectedVoiceType, setSelectedVoiceType] =
+    useState<VoiceType>("woman");
   const [speechRate, setSpeechRate] = useState([1]);
   const [volume, setVolume] = useState([80]);
   const [availableVoices, setAvailableVoices] = useState<any[]>([]);
@@ -92,7 +96,8 @@ export const EnhancedSettingsPanel: React.FC<EnhancedSettingsPanelProps> = ({
 
   // Notification settings
   const [dailyReminders, setDailyReminders] = useState(true);
-  const [achievementNotifications, setAchievementNotifications] = useState(true);
+  const [achievementNotifications, setAchievementNotifications] =
+    useState(true);
   const [streakReminders, setStreakReminders] = useState(true);
 
   // Profile settings
@@ -114,10 +119,14 @@ export const EnhancedSettingsPanel: React.FC<EnhancedSettingsPanelProps> = ({
 
     // Load settings from localStorage
     const loadSettings = () => {
-      const backgroundAnimationsSettings = localStorage.getItem("backgroundAnimations");
+      const backgroundAnimationsSettings = localStorage.getItem(
+        "backgroundAnimations",
+      );
       setBackgroundAnimations(backgroundAnimationsSettings === "true");
 
-      const accessibilitySettings = localStorage.getItem("accessibilitySettings");
+      const accessibilitySettings = localStorage.getItem(
+        "accessibilitySettings",
+      );
       if (accessibilitySettings) {
         const settings = JSON.parse(accessibilitySettings);
         setHighContrast(settings.highContrast || false);
@@ -154,7 +163,8 @@ export const EnhancedSettingsPanel: React.FC<EnhancedSettingsPanelProps> = ({
 
   const handleVoicePreview = (voiceType: VoiceType) => {
     const previewTexts = {
-      woman: "Hi there! I'm a friendly woman's voice. I love helping you learn new words!",
+      woman:
+        "Hi there! I'm a friendly woman's voice. I love helping you learn new words!",
       man: "Hello! I'm a man's voice. Let's discover some amazing vocabulary together!",
       kid: "Hey! I'm a fun kid's voice. Learning words is super exciting!",
     };
@@ -163,42 +173,63 @@ export const EnhancedSettingsPanel: React.FC<EnhancedSettingsPanelProps> = ({
 
   const handleSaveSettings = () => {
     // Save all settings to localStorage
-    localStorage.setItem("backgroundAnimations", backgroundAnimations.toString());
-    
-    localStorage.setItem("accessibilitySettings", JSON.stringify({
-      highContrast,
-      largeText,
-      reducedMotion,
-      screenReader,
-      keyboardNavigation,
-      hapticFeedback,
-      focusIndicators,
-    }));
+    localStorage.setItem(
+      "backgroundAnimations",
+      backgroundAnimations.toString(),
+    );
 
-    localStorage.setItem("learningSettings", JSON.stringify({
-      dailyGoal: dailyGoal[0],
-      difficulty,
-      autoPlay,
-      showHints,
-      repeatOnMistake,
-    }));
+    localStorage.setItem(
+      "accessibilitySettings",
+      JSON.stringify({
+        highContrast,
+        largeText,
+        reducedMotion,
+        screenReader,
+        keyboardNavigation,
+        hapticFeedback,
+        focusIndicators,
+      }),
+    );
 
-    localStorage.setItem("audioSettings", JSON.stringify({
-      speechRate: speechRate[0],
-      volume: volume[0],
-    }));
+    localStorage.setItem(
+      "learningSettings",
+      JSON.stringify({
+        dailyGoal: dailyGoal[0],
+        difficulty,
+        autoPlay,
+        showHints,
+        repeatOnMistake,
+      }),
+    );
 
-    localStorage.setItem("notificationSettings", JSON.stringify({
-      dailyReminders,
-      achievementNotifications,
-      streakReminders,
-    }));
+    localStorage.setItem(
+      "audioSettings",
+      JSON.stringify({
+        speechRate: speechRate[0],
+        volume: volume[0],
+      }),
+    );
+
+    localStorage.setItem(
+      "notificationSettings",
+      JSON.stringify({
+        dailyReminders,
+        achievementNotifications,
+        streakReminders,
+      }),
+    );
 
     // Dispatch events for components that need to know about changes
-    window.dispatchEvent(new CustomEvent("backgroundAnimationsChanged", { detail: backgroundAnimations }));
-    window.dispatchEvent(new CustomEvent("accessibilityChanged", { 
-      detail: { highContrast, largeText, reducedMotion }
-    }));
+    window.dispatchEvent(
+      new CustomEvent("backgroundAnimationsChanged", {
+        detail: backgroundAnimations,
+      }),
+    );
+    window.dispatchEvent(
+      new CustomEvent("accessibilityChanged", {
+        detail: { highContrast, largeText, reducedMotion },
+      }),
+    );
 
     setHasUnsavedChanges(false);
     playSoundIfEnabled();
@@ -213,36 +244,46 @@ export const EnhancedSettingsPanel: React.FC<EnhancedSettingsPanelProps> = ({
     audioService.setVoiceType("woman");
     setSpeechRate([1]);
     setVolume([80]);
-    
+
     setDarkMode(false);
     setBackgroundAnimations(false);
     setAnimationSpeed([1]);
     setHighContrast(false);
     setLargeText(false);
     setReducedMotion(false);
-    
+
     setDailyGoal([10]);
     setDifficulty("medium");
     setAutoPlay(true);
     setShowHints(true);
     setRepeatOnMistake(true);
-    
+
     setScreenReader(false);
     setKeyboardNavigation(false);
     setHapticFeedback(true);
     setFocusIndicators(true);
-    
+
     setDailyReminders(true);
     setAchievementNotifications(true);
     setStreakReminders(true);
-    
+
     document.documentElement.classList.remove("dark");
     setHasUnsavedChanges(true);
   };
 
   const difficultyLevels = [
-    { value: "easy", label: "Easy", color: "bg-educational-green", emoji: "🟢" },
-    { value: "medium", label: "Medium", color: "bg-educational-orange", emoji: "🟡" },
+    {
+      value: "easy",
+      label: "Easy",
+      color: "bg-educational-green",
+      emoji: "🟢",
+    },
+    {
+      value: "medium",
+      label: "Medium",
+      color: "bg-educational-orange",
+      emoji: "🟡",
+    },
     { value: "hard", label: "Hard", color: "bg-educational-pink", emoji: "🔴" },
   ];
 
@@ -266,7 +307,9 @@ export const EnhancedSettingsPanel: React.FC<EnhancedSettingsPanelProps> = ({
               </div>
               <div>
                 <h2 className="text-xl font-bold">Settings & Preferences</h2>
-                <p className="text-sm opacity-90">Customize your learning experience</p>
+                <p className="text-sm opacity-90">
+                  Customize your learning experience
+                </p>
               </div>
             </CardTitle>
             <Button
@@ -279,7 +322,7 @@ export const EnhancedSettingsPanel: React.FC<EnhancedSettingsPanelProps> = ({
               <X className="w-5 h-5" />
             </Button>
           </div>
-          
+
           {hasUnsavedChanges && (
             <div className="mt-3 p-2 bg-yellow-500/20 rounded-lg border border-yellow-300/30">
               <p className="text-sm flex items-center gap-2">
@@ -290,20 +333,42 @@ export const EnhancedSettingsPanel: React.FC<EnhancedSettingsPanelProps> = ({
           )}
         </CardHeader>
 
-        <div className={cn(
-          "flex h-full",
-          deviceInfo.isMobile ? "flex-col" : "md:flex-row"
-        )}>
+        <div
+          className={cn(
+            "flex h-full",
+            deviceInfo.isMobile ? "flex-col" : "md:flex-row",
+          )}
+        >
           {/* Mobile Tabs - Horizontal scrolling on mobile */}
           <div className="md:hidden">
             <ScrollArea className="w-full">
               <div className="flex gap-2 p-4 border-b">
                 {[
                   { id: "audio", label: "Audio", icon: Volume2, emoji: "🔊" },
-                  { id: "appearance", label: "Appearance", icon: Palette, emoji: "🎨" },
-                  { id: "learning", label: "Learning", icon: Target, emoji: "🎯" },
-                  { id: "accessibility", label: "Access", icon: Eye, emoji: "♿" },
-                  { id: "notifications", label: "Alerts", icon: Bell, emoji: "🔔" },
+                  {
+                    id: "appearance",
+                    label: "Appearance",
+                    icon: Palette,
+                    emoji: "🎨",
+                  },
+                  {
+                    id: "learning",
+                    label: "Learning",
+                    icon: Target,
+                    emoji: "🎯",
+                  },
+                  {
+                    id: "accessibility",
+                    label: "Access",
+                    icon: Eye,
+                    emoji: "♿",
+                  },
+                  {
+                    id: "notifications",
+                    label: "Alerts",
+                    icon: Bell,
+                    emoji: "🔔",
+                  },
                   { id: "profile", label: "Profile", icon: User, emoji: "👤" },
                 ].map((tab) => (
                   <Button
@@ -316,7 +381,8 @@ export const EnhancedSettingsPanel: React.FC<EnhancedSettingsPanelProps> = ({
                     }}
                     className={cn(
                       "settings-tab-mobile flex-shrink-0 min-w-[80px] h-12 flex flex-col gap-1 text-xs",
-                      activeTab === tab.id && "bg-educational-blue text-white shadow-lg"
+                      activeTab === tab.id &&
+                        "bg-educational-blue text-white shadow-lg",
                     )}
                   >
                     <span className="text-base">{tab.emoji}</span>
@@ -331,11 +397,36 @@ export const EnhancedSettingsPanel: React.FC<EnhancedSettingsPanelProps> = ({
           <div className="hidden md:block w-64 border-r bg-slate-50">
             <nav className="p-4 space-y-2">
               {[
-                { id: "audio", label: "Audio Settings", icon: Volume2, emoji: "🔊" },
-                { id: "appearance", label: "Appearance", icon: Palette, emoji: "🎨" },
-                { id: "learning", label: "Learning", icon: Target, emoji: "🎯" },
-                { id: "accessibility", label: "Accessibility", icon: Eye, emoji: "♿" },
-                { id: "notifications", label: "Notifications", icon: Bell, emoji: "🔔" },
+                {
+                  id: "audio",
+                  label: "Audio Settings",
+                  icon: Volume2,
+                  emoji: "🔊",
+                },
+                {
+                  id: "appearance",
+                  label: "Appearance",
+                  icon: Palette,
+                  emoji: "🎨",
+                },
+                {
+                  id: "learning",
+                  label: "Learning",
+                  icon: Target,
+                  emoji: "🎯",
+                },
+                {
+                  id: "accessibility",
+                  label: "Accessibility",
+                  icon: Eye,
+                  emoji: "♿",
+                },
+                {
+                  id: "notifications",
+                  label: "Notifications",
+                  icon: Bell,
+                  emoji: "🔔",
+                },
                 { id: "profile", label: "Profile", icon: User, emoji: "👤" },
               ].map((tab) => (
                 <Button
@@ -347,7 +438,8 @@ export const EnhancedSettingsPanel: React.FC<EnhancedSettingsPanelProps> = ({
                   }}
                   className={cn(
                     "w-full justify-start gap-3 h-12",
-                    activeTab === tab.id && "bg-educational-blue text-white shadow-lg"
+                    activeTab === tab.id &&
+                      "bg-educational-blue text-white shadow-lg",
                   )}
                 >
                   <span className="text-lg">{tab.emoji}</span>
@@ -381,7 +473,9 @@ export const EnhancedSettingsPanel: React.FC<EnhancedSettingsPanelProps> = ({
                         )}
                         <div>
                           <p className="font-medium">Sound Effects</p>
-                          <p className="text-sm text-slate-600">Play sounds for interactions and feedback</p>
+                          <p className="text-sm text-slate-600">
+                            Play sounds for interactions and feedback
+                          </p>
                         </div>
                       </div>
                       <Switch
@@ -391,7 +485,8 @@ export const EnhancedSettingsPanel: React.FC<EnhancedSettingsPanelProps> = ({
                           setSoundOn(checked);
                           setSoundEnabled(checked);
                           setHasUnsavedChanges(true);
-                          if (deviceInfo.hasHaptic) triggerHapticFeedback("medium");
+                          if (deviceInfo.hasHaptic)
+                            triggerHapticFeedback("medium");
                         }}
                       />
                     </div>
@@ -460,15 +555,34 @@ export const EnhancedSettingsPanel: React.FC<EnhancedSettingsPanelProps> = ({
                         <Mic className="w-4 h-4" />
                         <p className="font-medium">Pronunciation Voice</p>
                       </div>
-                      <p className="text-sm text-slate-600">Choose your preferred voice for word pronunciation</p>
+                      <p className="text-sm text-slate-600">
+                        Choose your preferred voice for word pronunciation
+                      </p>
 
                       <div className="grid gap-3">
                         {[
-                          { type: "woman" as VoiceType, label: "Woman Voice", emoji: "👩", description: "Friendly female voice" },
-                          { type: "man" as VoiceType, label: "Man Voice", emoji: "👨", description: "Strong male voice" },
-                          { type: "kid" as VoiceType, label: "Kid Voice", emoji: "🧒", description: "Fun child-like voice" },
+                          {
+                            type: "woman" as VoiceType,
+                            label: "Woman Voice",
+                            emoji: "👩",
+                            description: "Friendly female voice",
+                          },
+                          {
+                            type: "man" as VoiceType,
+                            label: "Man Voice",
+                            emoji: "👨",
+                            description: "Strong male voice",
+                          },
+                          {
+                            type: "kid" as VoiceType,
+                            label: "Kid Voice",
+                            emoji: "🧒",
+                            description: "Fun child-like voice",
+                          },
                         ].map((voice) => {
-                          const isAvailable = availableVoices.find((v) => v.type === voice.type)?.available ?? true;
+                          const isAvailable =
+                            availableVoices.find((v) => v.type === voice.type)
+                              ?.available ?? true;
                           const isSelected = selectedVoiceType === voice.type;
 
                           return (
@@ -479,22 +593,33 @@ export const EnhancedSettingsPanel: React.FC<EnhancedSettingsPanelProps> = ({
                                 isSelected
                                   ? "border-educational-blue bg-educational-blue/10 shadow-md"
                                   : "border-slate-200 hover:border-slate-300 hover:shadow-sm",
-                                !isAvailable && "opacity-50 cursor-not-allowed"
+                                !isAvailable && "opacity-50 cursor-not-allowed",
                               )}
-                              onClick={() => isAvailable && handleVoiceTypeChange(voice.type)}
+                              onClick={() =>
+                                isAvailable && handleVoiceTypeChange(voice.type)
+                              }
                             >
                               <div className="flex items-center gap-3">
                                 <span className="text-2xl">{voice.emoji}</span>
                                 <div>
-                                  <p className={cn("font-medium", isSelected && "text-educational-blue")}>
+                                  <p
+                                    className={cn(
+                                      "font-medium",
+                                      isSelected && "text-educational-blue",
+                                    )}
+                                  >
                                     {voice.label}
                                   </p>
-                                  <p className="text-sm text-slate-600">{voice.description}</p>
+                                  <p className="text-sm text-slate-600">
+                                    {voice.description}
+                                  </p>
                                 </div>
                               </div>
                               <div className="flex items-center gap-2">
                                 {isSelected && (
-                                  <Badge className="bg-educational-blue text-white">Selected</Badge>
+                                  <Badge className="bg-educational-blue text-white">
+                                    Selected
+                                  </Badge>
                                 )}
                                 {isAvailable && (
                                   <Button
@@ -537,21 +662,30 @@ export const EnhancedSettingsPanel: React.FC<EnhancedSettingsPanelProps> = ({
                         <Sun className="w-4 h-4" />
                         Theme Settings
                       </h4>
-                      
+
                       <div className="grid gap-3">
                         <div className="flex items-center justify-between p-3 rounded-lg border">
                           <div className="flex items-center gap-3">
-                            {darkMode ? <Moon className="w-5 h-5" /> : <Sun className="w-5 h-5" />}
+                            {darkMode ? (
+                              <Moon className="w-5 h-5" />
+                            ) : (
+                              <Sun className="w-5 h-5" />
+                            )}
                             <div>
                               <p className="font-medium">Dark Mode</p>
-                              <p className="text-sm text-slate-600">Switch to dark theme</p>
+                              <p className="text-sm text-slate-600">
+                                Switch to dark theme
+                              </p>
                             </div>
                           </div>
                           <Switch
                             checked={darkMode}
                             onCheckedChange={(checked) => {
                               setDarkMode(checked);
-                              document.documentElement.classList.toggle("dark", checked);
+                              document.documentElement.classList.toggle(
+                                "dark",
+                                checked,
+                              );
                               setHasUnsavedChanges(true);
                             }}
                           />
@@ -562,7 +696,9 @@ export const EnhancedSettingsPanel: React.FC<EnhancedSettingsPanelProps> = ({
                             <Eye className="w-5 h-5" />
                             <div>
                               <p className="font-medium">High Contrast</p>
-                              <p className="text-sm text-slate-600">Enhance text visibility</p>
+                              <p className="text-sm text-slate-600">
+                                Enhance text visibility
+                              </p>
                             </div>
                           </div>
                           <Switch
@@ -579,7 +715,9 @@ export const EnhancedSettingsPanel: React.FC<EnhancedSettingsPanelProps> = ({
                             <Type className="w-5 h-5" />
                             <div>
                               <p className="font-medium">Large Text</p>
-                              <p className="text-sm text-slate-600">Increase text size for better readability</p>
+                              <p className="text-sm text-slate-600">
+                                Increase text size for better readability
+                              </p>
                             </div>
                           </div>
                           <Switch
@@ -605,7 +743,9 @@ export const EnhancedSettingsPanel: React.FC<EnhancedSettingsPanelProps> = ({
                       <div className="flex items-center justify-between p-3 rounded-lg border">
                         <div>
                           <p className="font-medium">Background Animations</p>
-                          <p className="text-sm text-slate-600">Show floating elements and bubbles</p>
+                          <p className="text-sm text-slate-600">
+                            Show floating elements and bubbles
+                          </p>
                         </div>
                         <Switch
                           checked={backgroundAnimations}
@@ -619,7 +759,9 @@ export const EnhancedSettingsPanel: React.FC<EnhancedSettingsPanelProps> = ({
                       <div className="flex items-center justify-between p-3 rounded-lg border">
                         <div>
                           <p className="font-medium">Reduce Motion</p>
-                          <p className="text-sm text-slate-600">Minimize animations for sensitive users</p>
+                          <p className="text-sm text-slate-600">
+                            Minimize animations for sensitive users
+                          </p>
                         </div>
                         <Switch
                           checked={reducedMotion}
@@ -663,7 +805,9 @@ export const EnhancedSettingsPanel: React.FC<EnhancedSettingsPanelProps> = ({
                     <div className="p-2 bg-green-100 rounded-xl">
                       <Target className="w-5 h-5 text-green-600" />
                     </div>
-                    <h3 className="text-lg font-semibold">Learning Preferences</h3>
+                    <h3 className="text-lg font-semibold">
+                      Learning Preferences
+                    </h3>
                   </div>
 
                   {/* Daily Goal */}
@@ -674,7 +818,10 @@ export const EnhancedSettingsPanel: React.FC<EnhancedSettingsPanelProps> = ({
                           <Target className="w-4 h-4" />
                           Daily Goal
                         </p>
-                        <Badge variant="outline" className="bg-green-50 text-green-700 border-green-200">
+                        <Badge
+                          variant="outline"
+                          className="bg-green-50 text-green-700 border-green-200"
+                        >
                           {dailyGoal[0]} words
                         </Badge>
                       </div>
@@ -707,10 +854,13 @@ export const EnhancedSettingsPanel: React.FC<EnhancedSettingsPanelProps> = ({
                         {difficultyLevels.map((level) => (
                           <Button
                             key={level.value}
-                            variant={difficulty === level.value ? "default" : "outline"}
+                            variant={
+                              difficulty === level.value ? "default" : "outline"
+                            }
                             className={cn(
                               "h-14 flex flex-col gap-1",
-                              difficulty === level.value && `${level.color} text-white shadow-lg`
+                              difficulty === level.value &&
+                                `${level.color} text-white shadow-lg`,
                             )}
                             onClick={() => {
                               setDifficulty(level.value);
@@ -718,7 +868,9 @@ export const EnhancedSettingsPanel: React.FC<EnhancedSettingsPanelProps> = ({
                             }}
                           >
                             <span className="text-lg">{level.emoji}</span>
-                            <span className="text-sm font-medium">{level.label}</span>
+                            <span className="text-sm font-medium">
+                              {level.label}
+                            </span>
                           </Button>
                         ))}
                       </div>
@@ -732,13 +884,14 @@ export const EnhancedSettingsPanel: React.FC<EnhancedSettingsPanelProps> = ({
                         <Zap className="w-4 h-4" />
                         Learning Features
                       </h4>
-                      
+
                       <div className="grid gap-3">
                         {[
                           {
                             id: "autoPlay",
                             label: "Auto-play Audio",
-                            description: "Automatically pronounce words when shown",
+                            description:
+                              "Automatically pronounce words when shown",
                             checked: autoPlay,
                             onChange: setAutoPlay,
                             icon: Play,
@@ -754,18 +907,24 @@ export const EnhancedSettingsPanel: React.FC<EnhancedSettingsPanelProps> = ({
                           {
                             id: "repeatOnMistake",
                             label: "Repeat on Mistake",
-                            description: "Replay audio when you get an answer wrong",
+                            description:
+                              "Replay audio when you get an answer wrong",
                             checked: repeatOnMistake,
                             onChange: setRepeatOnMistake,
                             icon: RotateCcw,
                           },
                         ].map((feature) => (
-                          <div key={feature.id} className="flex items-center justify-between p-3 rounded-lg border">
+                          <div
+                            key={feature.id}
+                            className="flex items-center justify-between p-3 rounded-lg border"
+                          >
                             <div className="flex items-center gap-3">
                               <feature.icon className="w-5 h-5" />
                               <div>
                                 <p className="font-medium">{feature.label}</p>
-                                <p className="text-sm text-slate-600">{feature.description}</p>
+                                <p className="text-sm text-slate-600">
+                                  {feature.description}
+                                </p>
                               </div>
                             </div>
                             <Switch
@@ -799,7 +958,7 @@ export const EnhancedSettingsPanel: React.FC<EnhancedSettingsPanelProps> = ({
                         <Shield className="w-4 h-4" />
                         Accessibility Features
                       </h4>
-                      
+
                       <div className="grid gap-3">
                         {[
                           {
@@ -835,12 +994,17 @@ export const EnhancedSettingsPanel: React.FC<EnhancedSettingsPanelProps> = ({
                             icon: Eye,
                           },
                         ].map((feature) => (
-                          <div key={feature.id} className="flex items-center justify-between p-3 rounded-lg border">
+                          <div
+                            key={feature.id}
+                            className="flex items-center justify-between p-3 rounded-lg border"
+                          >
                             <div className="flex items-center gap-3">
                               <feature.icon className="w-5 h-5" />
                               <div>
                                 <p className="font-medium">{feature.label}</p>
-                                <p className="text-sm text-slate-600">{feature.description}</p>
+                                <p className="text-sm text-slate-600">
+                                  {feature.description}
+                                </p>
                               </div>
                             </div>
                             <Switch
@@ -862,10 +1026,13 @@ export const EnhancedSettingsPanel: React.FC<EnhancedSettingsPanelProps> = ({
                         <Heart className="w-4 h-4 text-orange-600" />
                       </div>
                       <div>
-                        <p className="font-medium text-orange-800">Accessibility Commitment</p>
+                        <p className="font-medium text-orange-800">
+                          Accessibility Commitment
+                        </p>
                         <p className="text-sm text-orange-700">
-                          We're committed to making learning accessible for everyone. 
-                          These features help ensure everyone can enjoy and benefit from our app.
+                          We're committed to making learning accessible for
+                          everyone. These features help ensure everyone can
+                          enjoy and benefit from our app.
                         </p>
                       </div>
                     </div>
@@ -889,13 +1056,14 @@ export const EnhancedSettingsPanel: React.FC<EnhancedSettingsPanelProps> = ({
                         <Bell className="w-4 h-4" />
                         Notification Preferences
                       </h4>
-                      
+
                       <div className="grid gap-3">
                         {[
                           {
                             id: "dailyReminders",
                             label: "Daily Learning Reminders",
-                            description: "Get notified to maintain your learning streak",
+                            description:
+                              "Get notified to maintain your learning streak",
                             checked: dailyReminders,
                             onChange: setDailyReminders,
                             icon: Calendar,
@@ -903,7 +1071,8 @@ export const EnhancedSettingsPanel: React.FC<EnhancedSettingsPanelProps> = ({
                           {
                             id: "achievementNotifications",
                             label: "Achievement Notifications",
-                            description: "Celebrate when you unlock new achievements",
+                            description:
+                              "Celebrate when you unlock new achievements",
                             checked: achievementNotifications,
                             onChange: setAchievementNotifications,
                             icon: Award,
@@ -911,18 +1080,24 @@ export const EnhancedSettingsPanel: React.FC<EnhancedSettingsPanelProps> = ({
                           {
                             id: "streakReminders",
                             label: "Streak Reminders",
-                            description: "Gentle reminders to keep your learning streak alive",
+                            description:
+                              "Gentle reminders to keep your learning streak alive",
                             checked: streakReminders,
                             onChange: setStreakReminders,
                             icon: Star,
                           },
                         ].map((feature) => (
-                          <div key={feature.id} className="flex items-center justify-between p-3 rounded-lg border">
+                          <div
+                            key={feature.id}
+                            className="flex items-center justify-between p-3 rounded-lg border"
+                          >
                             <div className="flex items-center gap-3">
                               <feature.icon className="w-5 h-5" />
                               <div>
                                 <p className="font-medium">{feature.label}</p>
-                                <p className="text-sm text-slate-600">{feature.description}</p>
+                                <p className="text-sm text-slate-600">
+                                  {feature.description}
+                                </p>
                               </div>
                             </div>
                             <Switch
@@ -957,15 +1132,18 @@ export const EnhancedSettingsPanel: React.FC<EnhancedSettingsPanelProps> = ({
                         <Languages className="w-4 h-4" />
                         Language & Region
                       </h4>
-                      
+
                       <div className="grid gap-3">
                         {languages.map((lang) => (
                           <Button
                             key={lang.code}
-                            variant={language === lang.code ? "default" : "outline"}
+                            variant={
+                              language === lang.code ? "default" : "outline"
+                            }
                             className={cn(
                               "justify-start h-12",
-                              language === lang.code && "bg-educational-blue text-white"
+                              language === lang.code &&
+                                "bg-educational-blue text-white",
                             )}
                             onClick={() => {
                               setLanguage(lang.code);
@@ -974,7 +1152,9 @@ export const EnhancedSettingsPanel: React.FC<EnhancedSettingsPanelProps> = ({
                           >
                             <span className="text-lg mr-3">{lang.flag}</span>
                             <span>{lang.name}</span>
-                            {language === lang.code && <Check className="w-4 h-4 ml-auto" />}
+                            {language === lang.code && (
+                              <Check className="w-4 h-4 ml-auto" />
+                            )}
                           </Button>
                         ))}
                       </div>
@@ -988,22 +1168,32 @@ export const EnhancedSettingsPanel: React.FC<EnhancedSettingsPanelProps> = ({
                         <TrendingUp className="w-4 h-4" />
                         Your Progress
                       </h4>
-                      
+
                       <div className="grid grid-cols-2 gap-4">
                         <div className="text-center p-4 bg-gradient-to-br from-blue-50 to-purple-50 rounded-xl border-2 border-blue-200">
                           <div className="text-3xl mb-2">🎯</div>
-                          <p className="font-bold text-lg text-blue-700">Level 3</p>
+                          <p className="font-bold text-lg text-blue-700">
+                            Level 3
+                          </p>
                           <p className="text-sm text-blue-600">Word Explorer</p>
                         </div>
                         <div className="text-center p-4 bg-gradient-to-br from-yellow-50 to-orange-50 rounded-xl border-2 border-yellow-200">
                           <div className="text-3xl mb-2">🏆</div>
-                          <p className="font-bold text-lg text-orange-700">1,250</p>
-                          <p className="text-sm text-orange-600">Points Earned</p>
+                          <p className="font-bold text-lg text-orange-700">
+                            1,250
+                          </p>
+                          <p className="text-sm text-orange-600">
+                            Points Earned
+                          </p>
                         </div>
                         <div className="text-center p-4 bg-gradient-to-br from-green-50 to-emerald-50 rounded-xl border-2 border-green-200">
                           <div className="text-3xl mb-2">🔥</div>
-                          <p className="font-bold text-lg text-green-700">7 Days</p>
-                          <p className="text-sm text-green-600">Current Streak</p>
+                          <p className="font-bold text-lg text-green-700">
+                            7 Days
+                          </p>
+                          <p className="text-sm text-green-600">
+                            Current Streak
+                          </p>
                         </div>
                         <div className="text-center p-4 bg-gradient-to-br from-pink-50 to-rose-50 rounded-xl border-2 border-pink-200">
                           <div className="text-3xl mb-2">📚</div>
@@ -1031,12 +1221,22 @@ export const EnhancedSettingsPanel: React.FC<EnhancedSettingsPanelProps> = ({
                       <div className="grid grid-cols-2 gap-3">
                         <div className="p-3 bg-slate-50 rounded-lg text-center">
                           <div className="text-lg mb-1">
-                            {deviceInfo.isMobile ? "📱" : deviceInfo.isTablet ? "📱" : "💻"}
+                            {deviceInfo.isMobile
+                              ? "📱"
+                              : deviceInfo.isTablet
+                                ? "📱"
+                                : "💻"}
                           </div>
                           <p className="text-sm font-medium">
-                            {deviceInfo.isMobile ? "Mobile" : deviceInfo.isTablet ? "Tablet" : "Desktop"}
+                            {deviceInfo.isMobile
+                              ? "Mobile"
+                              : deviceInfo.isTablet
+                                ? "Tablet"
+                                : "Desktop"}
                           </p>
-                          <p className="text-xs text-slate-600">{deviceInfo.screenSize} screen</p>
+                          <p className="text-xs text-slate-600">
+                            {deviceInfo.screenSize} screen
+                          </p>
                         </div>
 
                         <div className="p-3 bg-slate-50 rounded-lg text-center">
@@ -1046,37 +1246,52 @@ export const EnhancedSettingsPanel: React.FC<EnhancedSettingsPanelProps> = ({
                           <p className="text-sm font-medium">
                             {deviceInfo.hasTouch ? "Touch" : "Mouse"}
                           </p>
-                          <p className="text-xs text-slate-600">Primary input</p>
+                          <p className="text-xs text-slate-600">
+                            Primary input
+                          </p>
                         </div>
 
                         {deviceInfo.hasHaptic && (
                           <div className="p-3 bg-green-50 rounded-lg text-center">
                             <div className="text-lg mb-1">📳</div>
-                            <p className="text-sm font-medium text-green-700">Haptic</p>
-                            <p className="text-xs text-green-600">Feedback enabled</p>
+                            <p className="text-sm font-medium text-green-700">
+                              Haptic
+                            </p>
+                            <p className="text-xs text-green-600">
+                              Feedback enabled
+                            </p>
                           </div>
                         )}
 
                         <div className="p-3 bg-slate-50 rounded-lg text-center">
                           <div className="text-lg mb-1">
-                            {deviceInfo.orientation === "portrait" ? "📱" : "📲"}
+                            {deviceInfo.orientation === "portrait"
+                              ? "📱"
+                              : "📲"}
                           </div>
-                          <p className="text-sm font-medium capitalize">{deviceInfo.orientation}</p>
+                          <p className="text-sm font-medium capitalize">
+                            {deviceInfo.orientation}
+                          </p>
                           <p className="text-xs text-slate-600">Orientation</p>
                         </div>
                       </div>
 
-                      {(deviceInfo.prefersReducedMotion || deviceInfo.prefersHighContrast) && (
+                      {(deviceInfo.prefersReducedMotion ||
+                        deviceInfo.prefersHighContrast) && (
                         <div className="p-3 bg-blue-50 rounded-lg border border-blue-200">
                           <p className="text-sm font-medium text-blue-800 mb-2">
                             🌟 Accessibility Preferences Detected
                           </p>
                           <div className="space-y-1">
                             {deviceInfo.prefersReducedMotion && (
-                              <p className="text-xs text-blue-700">✓ Reduced motion preferred</p>
+                              <p className="text-xs text-blue-700">
+                                ✓ Reduced motion preferred
+                              </p>
                             )}
                             {deviceInfo.prefersHighContrast && (
-                              <p className="text-xs text-blue-700">✓ High contrast preferred</p>
+                              <p className="text-xs text-blue-700">
+                                ✓ High contrast preferred
+                              </p>
                             )}
                           </div>
                         </div>
@@ -1093,11 +1308,17 @@ export const EnhancedSettingsPanel: React.FC<EnhancedSettingsPanelProps> = ({
                       </h4>
 
                       <div className="grid gap-2">
-                        <Button variant="outline" className="justify-start h-12">
+                        <Button
+                          variant="outline"
+                          className="justify-start h-12"
+                        >
                           <Download className="w-4 h-4 mr-3" />
                           Export My Data
                         </Button>
-                        <Button variant="outline" className="justify-start h-12">
+                        <Button
+                          variant="outline"
+                          className="justify-start h-12"
+                        >
                           <Upload className="w-4 h-4 mr-3" />
                           Import Data
                         </Button>
