@@ -368,7 +368,7 @@ function GardenAchievementPopup({
                 className="animate-bounce"
                 style={{ animationDelay: "0.1s" }}
               >
-                🌸
+                ��
               </span>
               <span
                 className="animate-bounce"
@@ -630,7 +630,7 @@ export default function WordGardenGame({
         category: category,
       });
 
-      // Show garden-specific achievements
+      // Show garden-specific achievements - ALL DISABLED
       // Disabled: Growing Streak popup at 3 correct answers
       // if (nextStreak === 3) {
       //   setAchievementData({
@@ -641,21 +641,24 @@ export default function WordGardenGame({
       //   });
       //   setShowAchievement(true);
       // } else
-      if (nextStreak === 5) {
-        setAchievementData({
-          title: "Garden Master!",
-          description: "5 perfect plants! You're a true gardener! 🏆",
-          plantEmoji: "🌻",
-        });
-        setShowAchievement(true);
-      } else if (nextCorrectTotal === 1) {
-        setAchievementData({
-          title: "First Sprout!",
-          description: "Your first plant has sprouted! Keep growing! 🌱",
-          plantEmoji: "🌱",
-        });
-        setShowAchievement(true);
-      }
+      // Disabled: Garden Master popup at 5 streak
+      // if (nextStreak === 5) {
+      //   setAchievementData({
+      //     title: "Garden Master!",
+      //     description: "5 perfect plants! You're a true gardener! 🏆",
+      //     plantEmoji: "🌻",
+      //   });
+      //   setShowAchievement(true);
+      // } else
+      // Disabled: First Sprout popup at 1 correct
+      // if (nextCorrectTotal === 1) {
+      //   setAchievementData({
+      //     title: "First Sprout!",
+      //     description: "Your first plant has sprouted! Keep growing! 🌱",
+      //     plantEmoji: "🌱",
+      //   });
+      //   setShowAchievement(true);
+      // }
     },
     [difficulty, category],
   );
