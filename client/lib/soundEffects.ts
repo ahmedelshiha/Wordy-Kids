@@ -222,3 +222,10 @@ export const playSoundIfEnabled = {
   hover: () => soundEnabled && soundEffects.playHover(),
   pronunciation: () => soundEnabled && soundEffects.playPronunciation(),
 };
+
+// UI interaction sounds (category selection, card interactions) - separate setting
+export const playUIInteractionSoundIfEnabled = {
+  cheer: () => isUIInteractionSoundsEnabled() && soundEffects.playSuccess(),
+  whoosh: () => isUIInteractionSoundsEnabled() && soundEffects.playHover(),
+  click: () => isUIInteractionSoundsEnabled() && soundEffects.playClick(),
+};
