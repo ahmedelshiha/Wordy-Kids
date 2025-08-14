@@ -28,7 +28,8 @@ import {
   isSoundEnabled,
   playSoundIfEnabled,
 } from "@/lib/soundEffects";
-import { audioService, VoiceType } from "@/lib/audioService";
+import { enhancedAudioService, VoiceType } from "@/lib/enhancedAudioService";
+import { audioService } from "@/lib/audioService";
 import { cn } from "@/lib/utils";
 import {
   useMobileDevice,
