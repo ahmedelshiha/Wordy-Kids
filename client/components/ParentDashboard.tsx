@@ -3944,22 +3944,22 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
           </TabsTrigger>
         </TabsList>
 
-        <TabsContent value="overview" className="overflow-y-auto max-h-[70vh] lg:max-h-none scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100">
+        <TabsContent value="overview" className="tab-content-mobile overflow-y-auto max-h-[70vh] lg:max-h-none scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100">
           {renderOverview()}
         </TabsContent>
-        <TabsContent value="goals" className="overflow-y-auto max-h-[70vh] lg:max-h-none scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100">
+        <TabsContent value="goals" className="tab-content-mobile overflow-y-auto max-h-[70vh] lg:max-h-none scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100">
           {renderGoalsManagement()}
         </TabsContent>
-        <TabsContent value="custom-words" className="overflow-y-auto max-h-[70vh] lg:max-h-none scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100">
+        <TabsContent value="custom-words" className="tab-content-mobile overflow-y-auto max-h-[70vh] lg:max-h-none scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100">
           {renderCustomWords()}
         </TabsContent>
-        <TabsContent value="analytics" className="overflow-y-auto max-h-[70vh] lg:max-h-none scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100">
+        <TabsContent value="analytics" className="tab-content-mobile overflow-y-auto max-h-[70vh] lg:max-h-none scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100">
           {renderDetailedAnalytics()}
         </TabsContent>
-        <TabsContent value="notifications" className="overflow-y-auto max-h-[70vh] lg:max-h-none scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100">
+        <TabsContent value="notifications" className="tab-content-mobile overflow-y-auto max-h-[70vh] lg:max-h-none scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100">
           {renderNotifications()}
         </TabsContent>
-        <TabsContent value="reports" className="overflow-y-auto max-h-[70vh] lg:max-h-none scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100">
+        <TabsContent value="reports" className="tab-content-mobile overflow-y-auto max-h-[70vh] lg:max-h-none scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100">
           {renderDetailedReports()}
         </TabsContent>
       </Tabs>
