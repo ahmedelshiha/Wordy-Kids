@@ -2687,7 +2687,7 @@ export default function Index({ initialProfile }: IndexProps) {
                             <Card className="cursor-pointer hover:shadow-lg transition-all duration-300 hover:scale-105 border-2 border-educational-pink/30 animate-kid-float">
                               <CardContent className="p-3 md:p-4 text-center">
                                 <div className="text-3xl md:text-5xl mb-2 md:mb-3 animate-gentle-bounce">
-                                  🎧
+                                  ��
                                 </div>
                                 <h3 className="text-sm md:text-lg font-bold text-educational-pink mb-1 md:mb-2">
                                   Listen & Guess
@@ -2955,6 +2955,16 @@ export default function Index({ initialProfile }: IndexProps) {
                             }}
                           />
                         </div>
+                      ) : selectedQuizType === "listen-guess" ? (
+                        <ListenAndGuessGame
+                          category={selectedCategory}
+                          onComplete={(correct, total, streak) => {
+                            handleQuizComplete(correct, total);
+                          }}
+                          onExit={handleQuizExit}
+                          playerLevel={1}
+                          rounds={10}
+                        />
                       ) : selectedQuizType?.startsWith("vowel-") ? (
                         <VowelRescue
                           questions={(() => {
