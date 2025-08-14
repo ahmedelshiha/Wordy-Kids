@@ -272,7 +272,7 @@ export function EnhancedAddChildProfile({
   if (showSuccess) {
     return (
       <Dialog open={isOpen} onOpenChange={onClose}>
-        <DialogContent className="max-w-md mx-auto bg-gradient-to-br from-green-50 to-emerald-50 border-green-200">
+        <DialogContent className="max-w-md mx-auto bg-gradient-to-br from-green-50 to-emerald-50 border-green-200 w-[95vw] sm:w-full">
           <div className="text-center py-8">
             <div className="mb-6 relative">
               <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto animate-pulse">
