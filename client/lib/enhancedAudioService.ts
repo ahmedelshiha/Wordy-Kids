@@ -451,6 +451,13 @@ export class EnhancedAudioService {
     this.selectedVoiceType = voiceType;
     localStorage.setItem("preferred-voice-type", voiceType);
     console.log(`Voice type set to: ${voiceType}`);
+
+    // Dispatch event for components to listen to voice changes
+    window.dispatchEvent(
+      new CustomEvent("voiceTypeChanged", {
+        detail: { voiceType, voiceInfo: this.getVoiceInfo(voiceType) },
+      })
+    );
   }
 
   public getVoiceType(): VoiceType {
