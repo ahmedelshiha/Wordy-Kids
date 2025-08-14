@@ -229,7 +229,7 @@ export default function ListenAndGuessGame({
 
           // Track real-time achievement progress for correct answers
           try {
-            EnhancedAchievementTracker.updateProgress({
+            EnhancedAchievementTracker.updateJourneyProgress({
               correctAnswers: 1,
               totalAnswers: 1,
               currentStreak: ns,
