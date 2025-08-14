@@ -1038,7 +1038,7 @@ export default function Index({ initialProfile }: IndexProps) {
               🎯📚✨
             </div>
             <div className="hidden md:block absolute bottom-20 right-10 text-3xl animate-pulse delay-500">
-              ����
+              🚀
             </div>
             <div
               className="hidden md:block absolute top-1/2 left-5 text-2xl animate-spin"
@@ -2639,7 +2639,7 @@ export default function Index({ initialProfile }: IndexProps) {
       {backgroundAnimationsEnabled && <FloatingBubbles />}
 
       {/* Settings Panel */}
-      <EnhancedMobileSettingsPanel
+      <CompactMobileSettingsPanel
         isOpen={showSettings}
         onClose={() => setShowSettings(false)}
       />
