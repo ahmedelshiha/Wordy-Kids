@@ -155,15 +155,45 @@ export const WordCard: React.FC<WordCardProps> = ({
     onFavorite?.(word);
   };
 
-  // Enhanced touch gesture handling
+  // Enhanced touch gesture handling with better mobile navigation
   const handleTouchStart = (e: React.TouchEvent) => {
     const touch = e.touches[0];
     setTouchStart({ x: touch.clientX, y: touch.clientY });
+    setTouchPosition({ x: touch.clientX, y: touch.clientY });
     setIsGesturing(true);
+    setSwipeDirection(null);
 
     // Light haptic feedback on touch start
     if (navigator.vibrate) {
       navigator.vibrate(25);
+    }
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    if (!touchStart) return;
+
+    const touch = e.touches[0];
+    const deltaX = touch.clientX - touchStart.x;
+    const deltaY = touch.clientY - touchStart.y;
+
+    setTouchPosition({ x: touch.clientX, y: touch.clientY });
+
+    // Determine swipe direction early for visual feedback
+    const threshold = 30;
+    if (Math.abs(deltaX) > threshold || Math.abs(deltaY) > threshold) {
+      if (Math.abs(deltaX) > Math.abs(deltaY)) {
+        if (deltaX > threshold) {
+          setSwipeDirection('right');
+        } else if (deltaX < -threshold) {
+          setSwipeDirection('left');
+        }
+      } else {
+        if (deltaY < -threshold) {
+          setSwipeDirection('up');
+        } else if (deltaY > threshold) {
+          setSwipeDirection('down');
+        }
+      }
     }
   };
 
