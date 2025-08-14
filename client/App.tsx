@@ -3,6 +3,7 @@ import { useSearchParams, useNavigate } from "react-router-dom";
 import { EnhancedChildLogin } from "@/components/EnhancedChildLogin";
 import { AvatarCustomization } from "@/components/AvatarCustomization";
 import { LevelSelection } from "@/components/LevelSelection";
+import { WordLearningSessionProvider } from "@/contexts/WordLearningSessionContext";
 import Index from "./pages/Index";
 
 export default function App() {
@@ -71,7 +72,11 @@ export default function App() {
 
   // If logged in, show the main app
   if (isLoggedIn && currentProfile) {
-    return <Index initialProfile={currentProfile} />;
+    return (
+      <WordLearningSessionProvider>
+        <Index initialProfile={currentProfile} />
+      </WordLearningSessionProvider>
+    );
   }
 
   // Show level selection after profile creation
