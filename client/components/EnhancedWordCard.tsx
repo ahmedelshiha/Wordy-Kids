@@ -151,7 +151,7 @@ export const EnhancedWordCard: React.FC<EnhancedWordCardProps> = ({
     }
 
     // Use real speech synthesis for pronunciation
-    audioService.pronounceWord(word.word, {
+    enhancedAudioService.pronounceWord(word.word, {
       onStart: () => {
         console.log("Started pronunciation");
       },
