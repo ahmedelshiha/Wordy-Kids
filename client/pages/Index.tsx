@@ -1209,7 +1209,7 @@ export default function Index({ initialProfile }: IndexProps) {
       } else {
         achievementTitle = "Category Challenger! 💪";
         achievementIcon = "💪";
-        achievementMessage = `Nice try! You completed ${categoryDisplayName} with ${accuracy}% accuracy! Every attempt makes you stronger!\n\n🎁 Challenger Bonus: 50 points!\n�� Challenger badge earned!`;
+        achievementMessage = `Nice try! You completed ${categoryDisplayName} with ${accuracy}% accuracy! Every attempt makes you stronger!\n\n�� Challenger Bonus: 50 points!\n�� Challenger badge earned!`;
       }
 
       return {
@@ -2981,8 +2981,12 @@ export default function Index({ initialProfile }: IndexProps) {
                                 score: stats.correct,
                                 total: stats.totalRounds,
                                 celebrationType: "confetti",
+                                autoHide: true,
+                                hideDelay: 3000,
+                                onContinue: () => setFeedback(null),
                               });
                             }}
+                            onExit={() => setGameMode(false)}
                           />
                         </div>
                       ) : gameMode ? (

@@ -53,6 +53,7 @@ export type WordGardenGameProps = {
 
   // INTEGRATIONS
   onFinish?: (stats: GameFinishStats) => void;
+  onExit?: () => void;
 
   // UX
   className?: string;
@@ -137,16 +138,16 @@ function useConfetti() {
 }
 
 // Garden plant stage visuals (simple emojis; swap with your images if desired)
-const STAGES = ["🌱", "🌿", "🌸"]; // sprout -> leaf -> blossom
+const STAGES = ["🌱", "��", "🌸"]; // sprout -> leaf -> blossom
 
-// Generate emoji-based image using SVG data URI
+// Generate emoji-based image using SVG data URI with larger size to match ListenAndGuess
 function generateEmojiImage(emoji: string, fallbackText?: string): string {
   if (emoji && emoji !== "") {
-    // Create SVG with emoji
+    // Create SVG with larger emoji to match ListenAndGuess game style
     const svg = `
       <svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 200 200">
         <rect width="200" height="200" fill="#f0fdf4" rx="20"/>
-        <text x="100" y="120" font-size="80" text-anchor="middle" font-family="Arial, sans-serif">${emoji}</text>
+        <text x="100" y="130" font-size="120" text-anchor="middle" font-family="Arial, sans-serif">${emoji}</text>
       </svg>
     `;
 
@@ -220,6 +221,7 @@ export default function WordGardenGame({
   category,
   className = "",
   onFinish,
+  onExit,
 }: WordGardenGameProps) {
   const sessionId = useMemo(() => uuid(), []);
 
@@ -238,6 +240,7 @@ export default function WordGardenGame({
   const [gardenStages, setGardenStages] = useState<number[]>(
     Array.from({ length: rounds }, () => 0),
   );
+  const [recentlyGrown, setRecentlyGrown] = useState<number | null>(null);
 
   const { ref: confettiRef, burst } = useConfetti();
 
@@ -328,6 +331,12 @@ export default function WordGardenGame({
           ),
         );
 
+        // Mark this plant as recently grown for special animation
+        setRecentlyGrown(roundIdx);
+
+        // Clear the recently grown state after animation
+        setTimeout(() => setRecentlyGrown(null), 1200);
+
         // Sparkles + confetti
         burst();
 
@@ -339,7 +348,7 @@ export default function WordGardenGame({
         // Haptic feedback
         if (navigator && "vibrate" in navigator) (navigator as any).vibrate(30);
 
-        // Proceed next round after a short delay
+        // Wait longer to show the plant growth before moving to next round
         setTimeout(() => {
           setAttempts(0);
           setLocked(false);
@@ -354,7 +363,7 @@ export default function WordGardenGame({
               bestStreak: Math.max(bestStreak, nextStreak),
             });
           }
-        }, 900);
+        }, 1500);
       } else {
         setWrongCount((w) => w + 1);
         setStreak(0);
@@ -419,7 +428,17 @@ export default function WordGardenGame({
         className="pointer-events-none absolute inset-0 overflow-hidden"
       />
 
-      <div className="rounded-3xl shadow-xl p-4 md:p-6 bg-gradient-to-b from-green-600 to-emerald-700 text-white">
+      <div className="relative rounded-3xl shadow-xl p-4 md:p-6 bg-gradient-to-b from-green-600 to-emerald-700 text-white">
+        {/* Exit Button */}
+        {onExit && (
+          <button
+            onClick={onExit}
+            className="absolute top-4 right-4 w-10 h-10 rounded-full bg-white/20 hover:bg-white/30 flex items-center justify-center transition-all duration-200 z-20 touch-target active:scale-90 text-white font-bold text-lg"
+            aria-label="Exit game"
+          >
+            ✕
+          </button>
+        )}
         {/* Top bar */}
         <div className="mb-3">
           <div className="flex items-center justify-between text-sm opacity-90">
@@ -458,21 +477,28 @@ export default function WordGardenGame({
 
         {/* Options grid */}
         <div
-          className={`grid gap-3 ${optionsPerRound === 4 ? "grid-cols-2" : "grid-cols-3"}`}
+          className={`grid gap-4 ${optionsPerRound === 4 ? "grid-cols-2" : "grid-cols-3"}`}
         >
           {options.map((img, i) => (
             <button
               key={i}
               onClick={() => choose(img)}
               disabled={locked}
-              className="relative aspect-square rounded-2xl bg-white/95 hover:bg-white active:scale-95 transition-all shadow-lg overflow-hidden border-4 border-transparent focus:outline-none focus:ring-4 focus:ring-yellow-300 disabled:opacity-50"
+              className="relative aspect-square rounded-3xl bg-white/95 hover:bg-white active:scale-95 transition-all duration-300 shadow-mobile-lg overflow-hidden border-4 border-transparent focus:outline-none focus:ring-4 focus:ring-yellow-300 touch-target mobile-optimized disabled:opacity-50"
+              style={{
+                animationDelay: `${i * 100}ms`,
+              }}
             >
-              <img
-                src={img}
-                alt="option"
-                className="w-full h-full object-contain p-3"
-              />
-              <span className="absolute top-1 left-1 text-lg">✨</span>
+              <div className="w-full h-full flex items-center justify-center p-3">
+                <img
+                  src={img}
+                  alt="option"
+                  className="w-full h-full object-contain"
+                />
+              </div>
+              <div className="absolute top-2 left-2">
+                <span className="text-lg animate-sparkle">✨</span>
+              </div>
             </button>
           ))}
         </div>
@@ -493,17 +519,42 @@ export default function WordGardenGame({
       </div>
 
       {/* Garden row (visual progress) */}
-      <div className="mt-4 grid grid-cols-4 gap-2">
-        {gardenStages.map((stage, idx) => (
-          <div
-            key={idx}
-            className={`rounded-2xl h-16 flex items-center justify-center text-2xl ${idx === roundIdx ? "bg-emerald-100" : "bg-emerald-50"}`}
-          >
-            <span className={idx === roundIdx ? "animate-bounce" : ""}>
-              {STAGES[stage]}
-            </span>
-          </div>
-        ))}
+      <div className="mt-4 grid grid-cols-4 gap-3">
+        {gardenStages.map((stage, idx) => {
+          const isActive = idx === roundIdx;
+          const isCompleted = idx < roundIdx;
+          const hasGrown = stage > 0;
+          const justGrew = recentlyGrown === idx;
+
+          return (
+            <div
+              key={idx}
+              className={`rounded-3xl h-20 flex items-center justify-center transition-all duration-300 ${
+                justGrew
+                  ? "bg-yellow-200 ring-4 ring-yellow-400 shadow-lg"
+                  : isActive
+                    ? "bg-emerald-200 ring-2 ring-emerald-400"
+                    : isCompleted && hasGrown
+                      ? "bg-emerald-100"
+                      : "bg-emerald-50"
+              }`}
+            >
+              <span
+                className={`text-4xl transition-all duration-500 ${
+                  justGrew
+                    ? "animate-bounce scale-125 drop-shadow-lg"
+                    : isActive
+                      ? "animate-bounce scale-110"
+                      : hasGrown
+                        ? "scale-105"
+                        : ""
+                }`}
+              >
+                {STAGES[stage]}
+              </span>
+            </div>
+          );
+        })}
       </div>
 
       {/* Styles for confetti dots */}

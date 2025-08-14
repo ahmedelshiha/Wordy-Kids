@@ -84,6 +84,7 @@ export function EncouragingFeedback({
 }: ChildFeedbackSystemProps) {
   const [showExtra, setShowExtra] = useState(false);
   const [currentAnimation, setCurrentAnimation] = useState<string>("");
+  const [timeLeft, setTimeLeft] = useState<number | null>(null);
 
   useEffect(() => {
     if (feedback) {
@@ -114,9 +115,24 @@ export function EncouragingFeedback({
       // Auto-hide if specified
       if (feedback.autoHide) {
         const delay = feedback.hideDelay || 3000;
+        setTimeLeft(Math.ceil(delay / 1000));
+
+        // Countdown timer
+        const countdownInterval = setInterval(() => {
+          setTimeLeft((prev) => {
+            if (prev === null || prev <= 1) {
+              clearInterval(countdownInterval);
+              return null;
+            }
+            return prev - 1;
+          });
+        }, 1000);
+
         setTimeout(() => {
           onClose();
         }, delay);
+
+        return () => clearInterval(countdownInterval);
       }
 
       // Clear animation after a delay
@@ -131,17 +147,17 @@ export function EncouragingFeedback({
   const getIcon = () => {
     switch (feedback.type) {
       case "success":
-        return <Star className="w-16 h-16 text-yellow-400 fill-current" />;
+        return <Star className="w-12 h-12 text-yellow-400 fill-current" />;
       case "partial":
-        return <ThumbsUp className="w-16 h-16 text-blue-400" />;
+        return <ThumbsUp className="w-12 h-12 text-blue-400" />;
       case "encouragement":
-        return <Heart className="w-16 h-16 text-pink-400 fill-current" />;
+        return <Heart className="w-12 h-12 text-pink-400 fill-current" />;
       case "celebration":
-        return <Trophy className="w-16 h-16 text-gold-400" />;
+        return <Trophy className="w-12 h-12 text-gold-400" />;
       case "try_again":
-        return <Smile className="w-16 h-16 text-purple-400" />;
+        return <Smile className="w-12 h-12 text-purple-400" />;
       default:
-        return <Sparkles className="w-16 h-16 text-blue-400" />;
+        return <Sparkles className="w-12 h-12 text-blue-400" />;
     }
   };
 
@@ -213,7 +229,7 @@ export function EncouragingFeedback({
         )}
 
       <Card
-        className={`max-w-md mx-auto bg-gradient-to-br ${getBackgroundGradient()} text-white shadow-2xl ${
+        className={`max-w-sm w-full mx-4 bg-gradient-to-br ${getBackgroundGradient()} text-white shadow-2xl rounded-3xl ${
           currentAnimation === "bounce"
             ? "animate-bounce"
             : currentAnimation === "pulse"
@@ -223,40 +239,42 @@ export function EncouragingFeedback({
                 : ""
         }`}
       >
-        <CardContent className="p-8 text-center space-y-6">
+        <CardContent className="p-6 text-center space-y-4">
           {/* Icon */}
           <div className="flex justify-center">
             <div
-              className={`p-4 rounded-full bg-white/20 backdrop-blur-sm ${
+              className={`p-3 rounded-full bg-white/20 backdrop-blur-sm ${
                 feedback.showAnimation !== false ? "animate-pulse" : ""
               }`}
             >
-              {getIcon()}
+              <div className="w-12 h-12 flex items-center justify-center">
+                {getIcon()}
+              </div>
             </div>
           </div>
 
           {/* Title */}
           {feedback.title && (
-            <h2 className="text-2xl font-bold text-white">{feedback.title}</h2>
+            <h2 className="text-xl font-bold text-white">{feedback.title}</h2>
           )}
 
           {/* Message */}
-          <div className="space-y-3">
-            <p className="text-lg text-white/95 leading-relaxed">
+          <div className="space-y-2">
+            <p className="text-base text-white/95 leading-relaxed">
               {feedback.message || getRandomMessage()}
             </p>
 
             {/* Points and Streak */}
             {(feedback.points || feedback.streak) && (
-              <div className="flex justify-center gap-4">
+              <div className="flex justify-center gap-2 flex-wrap">
                 {feedback.points && (
-                  <Badge className="bg-white/30 text-white border-white/30 text-lg py-2 px-4">
-                    <Zap className="w-4 h-4 mr-2" />+{feedback.points} points
+                  <Badge className="bg-white/30 text-white border-white/30 text-sm py-1 px-3">
+                    <Zap className="w-3 h-3 mr-1" />+{feedback.points} points
                   </Badge>
                 )}
                 {feedback.streak && (
-                  <Badge className="bg-white/30 text-white border-white/30 text-lg py-2 px-4">
-                    <Target className="w-4 h-4 mr-2" />
+                  <Badge className="bg-white/30 text-white border-white/30 text-sm py-1 px-3">
+                    <Target className="w-3 h-3 mr-1" />
                     {feedback.streak} day streak
                   </Badge>
                 )}
@@ -265,7 +283,7 @@ export function EncouragingFeedback({
           </div>
 
           {/* Action Buttons */}
-          <div className="flex justify-center gap-3 pt-4">
+          <div className="flex justify-center gap-2 pt-3">
             {feedback.onTryAgain && (
               <Button
                 onClick={() => {
@@ -273,7 +291,7 @@ export function EncouragingFeedback({
                   feedback.onTryAgain?.();
                   onClose();
                 }}
-                className="bg-white/20 hover:bg-white/30 text-white border-white/30 px-6 py-3 text-lg"
+                className="bg-white/20 hover:bg-white/30 text-white border-white/30 px-4 py-2 text-base"
                 variant="outline"
               >
                 Try Again 🔄
@@ -287,7 +305,7 @@ export function EncouragingFeedback({
                   feedback.onContinue?.();
                   onClose();
                 }}
-                className="bg-white text-gray-800 hover:bg-white/90 px-6 py-3 text-lg font-semibold"
+                className="bg-white text-gray-800 hover:bg-white/90 px-4 py-2 text-base font-semibold"
               >
                 {feedback.type === "success" || feedback.type === "celebration"
                   ? "Continue! 🚀"
@@ -301,7 +319,7 @@ export function EncouragingFeedback({
                   audioService.playWhooshSound();
                   onClose();
                 }}
-                className="bg-white text-gray-800 hover:bg-white/90 px-6 py-3 text-lg font-semibold"
+                className="bg-white text-gray-800 hover:bg-white/90 px-4 py-2 text-base font-semibold"
               >
                 Awesome! 👍
               </Button>
@@ -319,15 +337,21 @@ export function EncouragingFeedback({
 
           {/* Special Celebration Features */}
           {feedback.type === "celebration" && (
-            <div className="pt-4 border-t border-white/20 space-y-2">
+            <div className="pt-3 border-t border-white/20 space-y-2">
               <div className="flex items-center justify-center gap-2 text-yellow-300">
-                <Crown className="w-5 h-5" />
-                <span className="font-bold text-lg">You're Amazing!</span>
-                <Crown className="w-5 h-5" />
+                <Crown className="w-4 h-4" />
+                <span className="font-bold text-base">You're Amazing!</span>
+                <Crown className="w-4 h-4" />
               </div>
-              <p className="text-sm text-white/80">
+              <p className="text-xs text-white/80">
                 🎁 Keep up the great work for more surprises!
               </p>
+              {feedback.autoHide && timeLeft && (
+                <p className="text-xs text-white/60">
+                  Auto-closing in {timeLeft} second{timeLeft !== 1 ? "s" : ""}
+                  ...
+                </p>
+              )}
             </div>
           )}
         </CardContent>
