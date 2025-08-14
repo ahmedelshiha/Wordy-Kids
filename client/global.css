@@ -1128,7 +1128,9 @@
   background: rgba(59, 130, 246, 0.2);
   border-radius: 50%;
   transform: translate(-50%, -50%);
-  transition: width 0.3s, height 0.3s;
+  transition:
+    width 0.3s,
+    height 0.3s;
   z-index: 0;
 }
 

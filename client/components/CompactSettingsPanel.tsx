@@ -47,7 +47,8 @@ export const CompactSettingsPanel: React.FC<CompactSettingsPanelProps> = ({
 }) => {
   // Essential settings only
   const [soundOn, setSoundOn] = useState(isSoundEnabled());
-  const [selectedVoiceType, setSelectedVoiceType] = useState<VoiceType>("woman");
+  const [selectedVoiceType, setSelectedVoiceType] =
+    useState<VoiceType>("woman");
   const [volume, setVolume] = useState([80]);
   const [darkMode, setDarkMode] = useState(false);
   const [backgroundAnimations, setBackgroundAnimations] = useState(false);
@@ -56,9 +57,11 @@ export const CompactSettingsPanel: React.FC<CompactSettingsPanelProps> = ({
   const [dailyReminders, setDailyReminders] = useState(true);
   const [largeText, setLargeText] = useState(false);
   const [autoPlay, setAutoPlay] = useState(true);
-  
+
   // Collapsible sections
-  const [expandedSections, setExpandedSections] = useState<Record<string, boolean>>({
+  const [expandedSections, setExpandedSections] = useState<
+    Record<string, boolean>
+  >({
     audio: true,
     appearance: false,
     learning: false,
@@ -71,12 +74,16 @@ export const CompactSettingsPanel: React.FC<CompactSettingsPanelProps> = ({
   useEffect(() => {
     // Load settings from localStorage
     setSelectedVoiceType(audioService.getVoiceType());
-    
+
     const loadSettings = () => {
-      const backgroundAnimationsSettings = localStorage.getItem("backgroundAnimations");
+      const backgroundAnimationsSettings = localStorage.getItem(
+        "backgroundAnimations",
+      );
       setBackgroundAnimations(backgroundAnimationsSettings === "true");
 
-      const accessibilitySettings = localStorage.getItem("accessibilitySettings");
+      const accessibilitySettings = localStorage.getItem(
+        "accessibilitySettings",
+      );
       if (accessibilitySettings) {
         const settings = JSON.parse(accessibilitySettings);
         setLargeText(settings.largeText || false);
@@ -107,9 +114,9 @@ export const CompactSettingsPanel: React.FC<CompactSettingsPanelProps> = ({
   }, [isOpen]);
 
   const toggleSection = (section: string) => {
-    setExpandedSections(prev => ({
+    setExpandedSections((prev) => ({
       ...prev,
-      [section]: !prev[section]
+      [section]: !prev[section],
     }));
     if (deviceInfo.hasHaptic) triggerHapticFeedback("light");
   };
@@ -122,33 +129,52 @@ export const CompactSettingsPanel: React.FC<CompactSettingsPanelProps> = ({
 
   const handleSaveSettings = () => {
     // Save all settings to localStorage
-    localStorage.setItem("backgroundAnimations", backgroundAnimations.toString());
-    
-    localStorage.setItem("accessibilitySettings", JSON.stringify({
-      largeText,
-      hapticFeedback,
-    }));
+    localStorage.setItem(
+      "backgroundAnimations",
+      backgroundAnimations.toString(),
+    );
 
-    localStorage.setItem("learningSettings", JSON.stringify({
-      dailyGoal: dailyGoal[0],
-      autoPlay,
-    }));
+    localStorage.setItem(
+      "accessibilitySettings",
+      JSON.stringify({
+        largeText,
+        hapticFeedback,
+      }),
+    );
 
-    localStorage.setItem("audioSettings", JSON.stringify({
-      volume: volume[0],
-    }));
+    localStorage.setItem(
+      "learningSettings",
+      JSON.stringify({
+        dailyGoal: dailyGoal[0],
+        autoPlay,
+      }),
+    );
 
-    localStorage.setItem("notificationSettings", JSON.stringify({
-      dailyReminders,
-    }));
+    localStorage.setItem(
+      "audioSettings",
+      JSON.stringify({
+        volume: volume[0],
+      }),
+    );
+
+    localStorage.setItem(
+      "notificationSettings",
+      JSON.stringify({
+        dailyReminders,
+      }),
+    );
 
     // Dispatch events for components that need to know about changes
-    window.dispatchEvent(new CustomEvent("backgroundAnimationsChanged", {
-      detail: backgroundAnimations,
-    }));
-    window.dispatchEvent(new CustomEvent("accessibilityChanged", {
-      detail: { largeText },
-    }));
+    window.dispatchEvent(
+      new CustomEvent("backgroundAnimationsChanged", {
+        detail: backgroundAnimations,
+      }),
+    );
+    window.dispatchEvent(
+      new CustomEvent("accessibilityChanged", {
+        detail: { largeText },
+      }),
+    );
 
     setHasUnsavedChanges(false);
     playSoundIfEnabled.success();
@@ -179,9 +205,13 @@ export const CompactSettingsPanel: React.FC<CompactSettingsPanelProps> = ({
       <div className="flex items-center gap-3 flex-1 min-w-0">
         <Icon className="w-4 h-4 text-slate-600 flex-shrink-0" />
         <div className="min-w-0 flex-1">
-          <p className="font-medium text-sm text-slate-900 leading-tight setting-label">{label}</p>
+          <p className="font-medium text-sm text-slate-900 leading-tight setting-label">
+            {label}
+          </p>
           {description && (
-            <p className="text-xs text-slate-500 line-clamp-1 leading-tight setting-description">{description}</p>
+            <p className="text-xs text-slate-500 line-clamp-1 leading-tight setting-description">
+              {description}
+            </p>
           )}
         </div>
       </div>
@@ -196,7 +226,9 @@ export const CompactSettingsPanel: React.FC<CompactSettingsPanelProps> = ({
     >
       <div className="flex items-center gap-2">
         <span className="text-lg">{emoji}</span>
-        <span className="font-medium text-slate-900 text-sm sm:text-base">{title}</span>
+        <span className="font-medium text-slate-900 text-sm sm:text-base">
+          {title}
+        </span>
       </div>
       {isExpanded ? (
         <ChevronUp className="w-4 h-4 text-slate-500" />
@@ -214,7 +246,9 @@ export const CompactSettingsPanel: React.FC<CompactSettingsPanelProps> = ({
             <CardTitle className="flex items-center gap-2">
               <Settings className="w-5 h-5" />
               <div>
-                <h2 className="text-lg font-bold section-title">Quick Settings</h2>
+                <h2 className="text-lg font-bold section-title">
+                  Quick Settings
+                </h2>
                 <p className="text-xs opacity-90">Essential preferences</p>
               </div>
             </CardTitle>
@@ -260,7 +294,7 @@ export const CompactSettingsPanel: React.FC<CompactSettingsPanelProps> = ({
                       }}
                     />
                   </SettingRow>
-                  
+
                   <SettingRow
                     icon={Volume2}
                     label="Volume"
@@ -296,25 +330,38 @@ export const CompactSettingsPanel: React.FC<CompactSettingsPanelProps> = ({
                   </SettingRow>
 
                   <div className="pt-2">
-                    <p className="text-xs font-medium text-slate-700 mb-2">Voice</p>
+                    <p className="text-xs font-medium text-slate-700 mb-2">
+                      Voice
+                    </p>
                     <div className="flex gap-1">
                       {[
-                        { type: "woman" as VoiceType, emoji: "👩", label: "Woman" },
+                        {
+                          type: "woman" as VoiceType,
+                          emoji: "👩",
+                          label: "Woman",
+                        },
                         { type: "man" as VoiceType, emoji: "👨", label: "Man" },
                         { type: "kid" as VoiceType, emoji: "🧒", label: "Kid" },
                       ].map((voice) => (
                         <Button
                           key={voice.type}
                           size="sm"
-                          variant={selectedVoiceType === voice.type ? "default" : "outline"}
+                          variant={
+                            selectedVoiceType === voice.type
+                              ? "default"
+                              : "outline"
+                          }
                           className={cn(
                             "flex-1 h-9 text-xs min-h-[36px] touch-target voice-button",
-                            selectedVoiceType === voice.type && "bg-educational-blue"
+                            selectedVoiceType === voice.type &&
+                              "bg-educational-blue",
                           )}
                           onClick={() => handleVoiceTypeChange(voice.type)}
                         >
                           <span className="mr-1">{voice.emoji}</span>
-                          <span className="voice-label hidden xs:inline">{voice.label}</span>
+                          <span className="voice-label hidden xs:inline">
+                            {voice.label}
+                          </span>
                         </Button>
                       ))}
                     </div>
@@ -342,7 +389,10 @@ export const CompactSettingsPanel: React.FC<CompactSettingsPanelProps> = ({
                       checked={darkMode}
                       onCheckedChange={(checked) => {
                         setDarkMode(checked);
-                        document.documentElement.classList.toggle("dark", checked);
+                        document.documentElement.classList.toggle(
+                          "dark",
+                          checked,
+                        );
                         setHasUnsavedChanges(true);
                       }}
                     />
