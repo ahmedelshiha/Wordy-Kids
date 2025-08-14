@@ -533,10 +533,10 @@ export default function WordGardenGame({
                 justGrew
                   ? "bg-yellow-200 ring-4 ring-yellow-400 shadow-lg"
                   : isActive
-                  ? "bg-emerald-200 ring-2 ring-emerald-400"
-                  : isCompleted && hasGrown
-                  ? "bg-emerald-100"
-                  : "bg-emerald-50"
+                    ? "bg-emerald-200 ring-2 ring-emerald-400"
+                    : isCompleted && hasGrown
+                      ? "bg-emerald-100"
+                      : "bg-emerald-50"
               }`}
             >
               <span
@@ -544,10 +544,10 @@ export default function WordGardenGame({
                   justGrew
                     ? "animate-bounce scale-125 drop-shadow-lg"
                     : isActive
-                    ? "animate-bounce scale-110"
-                    : hasGrown
-                    ? "scale-105"
-                    : ""
+                      ? "animate-bounce scale-110"
+                      : hasGrown
+                        ? "scale-105"
+                        : ""
                 }`}
               >
                 {STAGES[stage]}

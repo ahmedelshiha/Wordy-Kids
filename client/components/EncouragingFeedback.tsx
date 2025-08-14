@@ -348,7 +348,8 @@ export function EncouragingFeedback({
               </p>
               {feedback.autoHide && timeLeft && (
                 <p className="text-xs text-white/60">
-                  Auto-closing in {timeLeft} second{timeLeft !== 1 ? 's' : ''}...
+                  Auto-closing in {timeLeft} second{timeLeft !== 1 ? "s" : ""}
+                  ...
                 </p>
               )}
             </div>
