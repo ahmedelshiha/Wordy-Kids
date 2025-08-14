@@ -192,7 +192,7 @@ export const CompactSettingsPanel: React.FC<CompactSettingsPanelProps> = ({
   const SectionHeader = ({ title, emoji, isExpanded, onToggle }: any) => (
     <button
       onClick={onToggle}
-      className="w-full flex items-center justify-between p-3 hover:bg-slate-50 active:bg-slate-100 transition-colors rounded-lg min-h-[44px] touch-target"
+      className="w-full flex items-center justify-between p-3 hover:bg-slate-50 active:bg-slate-100 transition-colors rounded-lg min-h-[44px] touch-target compact-touch-feedback"
     >
       <div className="flex items-center gap-2">
         <span className="text-lg">{emoji}</span>
