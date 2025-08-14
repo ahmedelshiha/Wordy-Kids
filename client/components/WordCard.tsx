@@ -301,7 +301,7 @@ export const WordCard: React.FC<WordCardProps> = ({
 
   return (
     <div
-      className={`relative w-full max-w-[320px] sm:max-w-sm mx-auto ${className}`}
+      className={`relative w-full max-w-[340px] sm:max-w-[380px] md:max-w-sm mx-auto ${className}`}
     >
       <Card
         className={`h-[360px] sm:h-[380px] md:h-[360px] cursor-pointer transition-all duration-300 transform-gpu active:scale-[0.98] hover:scale-[1.01] shadow-lg hover:shadow-xl ${
