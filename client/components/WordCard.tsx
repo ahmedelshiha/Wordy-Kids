@@ -472,17 +472,17 @@ export const WordCard: React.FC<WordCardProps> = ({
                   handlePronounce();
                 }}
                 disabled={isPlaying}
-                className={`text-white hover:bg-white/30 hover:scale-105 p-1.5 h-auto min-w-[32px] min-h-[32px] rounded-full transition-all duration-200 border border-white/40 bg-white/10 backdrop-blur-sm shadow-md ${
+                className={`text-white hover:bg-white/30 hover:scale-105 active:scale-95 p-2 h-auto min-w-[40px] min-h-[40px] rounded-full transition-all duration-200 border border-white/40 bg-white/10 backdrop-blur-sm shadow-md ${
                   isPlaying
                     ? "scale-105 bg-yellow-400/30 border-yellow-300/60 shadow-yellow-300/30 animate-bounce"
                     : "hover:border-white/60"
                 }`}
               >
                 <Volume2
-                  className={`w-3 h-3 sm:w-3.5 sm:h-3.5 transition-all duration-200 ${isPlaying ? "text-yellow-200 animate-pulse scale-105" : "text-white"}`}
+                  className={`w-4 h-4 transition-all duration-200 ${isPlaying ? "text-yellow-200 animate-pulse scale-105" : "text-white"}`}
                 />
                 {showSparkles && (
-                  <Sparkles className="w-2 h-2 absolute -top-0.5 -right-0.5 text-yellow-300 animate-spin" />
+                  <Sparkles className="w-2.5 h-2.5 absolute -top-0.5 -right-0.5 text-yellow-300 animate-spin" />
                 )}
                 {isPlaying && (
                   <div className="absolute inset-0 rounded-full border border-yellow-300/50 animate-ping"></div>
