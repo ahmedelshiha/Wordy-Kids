@@ -885,7 +885,7 @@ export function InteractiveDashboardWordCard({
               </Badge>
               <Badge
                 className={cn(
-                  "text-sm px-3 py-1",
+                  "text-xs sm:text-sm px-2 sm:px-3 py-1",
                   getDifficultyColor(currentWord.difficulty),
                 )}
               >
