@@ -40,6 +40,7 @@ const App = () => (
           <Route path="/word-card-demo" element={<EnhancedWordCardDemo />} />
           <Route path="/word-garden-demo" element={<WordGardenDemo />} />
           <Route path="/word-adventure-demo" element={<WordAdventureDemo />} />
+          <Route path="/word-adventure-test" element={<WordAdventureTest />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
