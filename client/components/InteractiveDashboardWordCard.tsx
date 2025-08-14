@@ -276,6 +276,7 @@ export function InteractiveDashboardWordCard({
 
   const playPronunciation = () => {
     if (currentWord && !isPlaying) {
+      triggerHapticFeedback('light'); // Light feedback for audio action
       setIsPlaying(true);
       audioService.pronounceWord(currentWord.word, {
         onStart: () => setIsPlaying(true),
