@@ -467,21 +467,28 @@ export default function WordGardenGame({
 
         {/* Options grid */}
         <div
-          className={`grid gap-3 ${optionsPerRound === 4 ? "grid-cols-2" : "grid-cols-3"}`}
+          className={`grid gap-4 ${optionsPerRound === 4 ? "grid-cols-2" : "grid-cols-3"}`}
         >
           {options.map((img, i) => (
             <button
               key={i}
               onClick={() => choose(img)}
               disabled={locked}
-              className="relative aspect-square rounded-2xl bg-white/95 hover:bg-white active:scale-95 transition-all shadow-lg overflow-hidden border-4 border-transparent focus:outline-none focus:ring-4 focus:ring-yellow-300 disabled:opacity-50"
+              className="relative aspect-square rounded-3xl bg-white/95 hover:bg-white active:scale-95 transition-all duration-300 shadow-mobile-lg overflow-hidden border-4 border-transparent focus:outline-none focus:ring-4 focus:ring-yellow-300 touch-target mobile-optimized disabled:opacity-50"
+              style={{
+                animationDelay: `${i * 100}ms`,
+              }}
             >
-              <img
-                src={img}
-                alt="option"
-                className="w-full h-full object-contain p-3"
-              />
-              <span className="absolute top-1 left-1 text-lg">✨</span>
+              <div className="w-full h-full flex items-center justify-center p-3">
+                <img
+                  src={img}
+                  alt="option"
+                  className="w-full h-full object-contain"
+                />
+              </div>
+              <div className="absolute top-2 left-2">
+                <span className="text-lg animate-sparkle">✨</span>
+              </div>
             </button>
           ))}
         </div>
