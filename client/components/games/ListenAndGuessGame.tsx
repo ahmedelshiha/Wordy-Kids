@@ -230,12 +230,14 @@ export default function ListenAndGuessGame({
           // Track real-time achievement progress for correct answers
           try {
             EnhancedAchievementTracker.updateJourneyProgress({
-              correctAnswers: 1,
-              totalAnswers: 1,
-              currentStreak: ns,
-              coinsEarned: 5,
               wordsLearned: 1,
-              listenAndGuessCorrect: 1,
+              sessionStats: {
+                totalSessions: 1,
+                perfectSessions: 0,
+                averageWordsPerSession: 1,
+                fastestSession: 1,
+                longestStreak: ns,
+              },
             });
           } catch (error) {
             console.error("Error tracking real-time achievements:", error);
