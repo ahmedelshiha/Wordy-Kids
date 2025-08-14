@@ -68,6 +68,7 @@ import {
   Filter,
   Search,
   ChevronDown,
+  ChevronRight,
   Palette,
   Shield,
   AlertCircle,
