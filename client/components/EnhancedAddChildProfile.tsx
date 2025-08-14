@@ -299,7 +299,7 @@ export function EnhancedAddChildProfile({
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="max-w-md mx-auto p-0 gap-0 bg-gradient-to-br from-purple-50 to-pink-50 border-purple-200 max-h-[90vh] sm:max-h-[85vh] overflow-hidden w-[95vw] sm:w-full">
+      <DialogContent className="mx-auto p-0 gap-0 bg-gradient-to-br from-purple-50 to-pink-50 border-purple-200 overflow-hidden w-[98vw] max-w-[400px] h-[90vh] max-h-[600px] sm:h-auto sm:max-h-[85vh] flex flex-col">
         {/* Header */}
         <div className="p-4 sm:p-6 pb-4">
           <div className="flex items-center justify-between mb-4">
