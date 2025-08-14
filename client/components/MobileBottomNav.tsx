@@ -48,12 +48,12 @@ export function MobileBottomNav({
   const primaryTabs = userRole === 'parent' ? [
     {
       id: "back-to-child",
-      emoji: "👦",
+      emoji: "🎯",
       label: "Back to Learning",
       icon: ArrowLeft,
       color: "from-educational-blue to-educational-purple",
-      bgColor: "bg-blue-100",
-      textColor: "text-blue-600",
+      bgColor: "bg-gradient-to-r from-blue-100 to-purple-100",
+      textColor: "text-blue-700 font-semibold",
       badge: undefined,
       action: onBackToChild,
     },
