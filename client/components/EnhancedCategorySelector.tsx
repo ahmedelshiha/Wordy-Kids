@@ -343,7 +343,7 @@ export function EnhancedCategorySelector({
       body: "👁️",
       family: "👨‍👩‍👧‍👦",
       feelings: "😊",
-      clothes: "👕",
+      clothes: "����",
       numbers: "🔢",
       default: "📚"
     };
@@ -417,6 +417,15 @@ export function EnhancedCategorySelector({
 
   // Get current enriched categories
   const currentEnrichedCategories = generateEnrichedCategories();
+
+  // Debug logging
+  React.useEffect(() => {
+    console.log('Category Selector Debug:');
+    console.log('- Real-time words count:', realTimeWords.length);
+    console.log('- Real-time categories:', realTimeCategories);
+    console.log('- Generated categories count:', currentEnrichedCategories.length);
+    console.log('- Generated categories:', currentEnrichedCategories.map(c => c.name));
+  }, [realTimeWords, realTimeCategories, currentEnrichedCategories]);
 
   // Enhanced floating animation elements
   useEffect(() => {
