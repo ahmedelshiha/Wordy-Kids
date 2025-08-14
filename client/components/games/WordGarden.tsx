@@ -245,6 +245,7 @@ export default function WordGardenGame({
   const [bestStreak, setBestStreak] = useState(0);
   const [locked, setLocked] = useState(false);
   const [attempts, setAttempts] = useState(0); // attempts for current word
+  const [showExitDialog, setShowExitDialog] = useState(false);
 
   const [gardenStages, setGardenStages] = useState<number[]>(
     Array.from({ length: rounds }, () => 0),
