@@ -22,6 +22,10 @@ import {
   Vibrate,
   ChevronDown,
   ChevronUp,
+  BarChart3,
+  TrendingUp,
+  Award,
+  Calendar,
 } from "lucide-react";
 import {
   setSoundEnabled,
@@ -31,19 +35,33 @@ import {
 import { enhancedAudioService, VoiceType } from "@/lib/enhancedAudioService";
 import { audioService } from "@/lib/audioService";
 import { cn } from "@/lib/utils";
+import { ChevronRight } from "lucide-react";
 import {
   useMobileDevice,
   triggerHapticFeedback,
 } from "@/hooks/use-mobile-device";
+import { EnhancedLearningGoalsPanel } from "@/components/EnhancedLearningGoalsPanel";
 
 interface CompactMobileSettingsPanelProps {
   isOpen: boolean;
   onClose: () => void;
+  currentProgress?: {
+    wordsLearned: number;
+    wordsRemembered: number;
+    sessionCount: number;
+    accuracy: number;
+  };
+  onGoalUpdate?: (goals: any[]) => void;
 }
 
 export const CompactMobileSettingsPanel: React.FC<
   CompactMobileSettingsPanelProps
-> = ({ isOpen, onClose }) => {
+> = ({
+  isOpen,
+  onClose,
+  currentProgress = { wordsLearned: 0, wordsRemembered: 0, sessionCount: 0, accuracy: 0 },
+  onGoalUpdate
+}) => {
   // Essential settings only
   const [soundOn, setSoundOn] = useState(isSoundEnabled());
   const [selectedVoiceType, setSelectedVoiceType] =
@@ -56,6 +74,7 @@ export const CompactMobileSettingsPanel: React.FC<
   const [dailyReminders, setDailyReminders] = useState(true);
   const [largeText, setLargeText] = useState(false);
   const [autoPlay, setAutoPlay] = useState(true);
+  const [showGoalsPanel, setShowGoalsPanel] = useState(false);
 
   // Collapsible sections
   const [expandedSections, setExpandedSections] = useState<
@@ -63,7 +82,8 @@ export const CompactMobileSettingsPanel: React.FC<
   >({
     audio: true,
     appearance: false,
-    learning: false,
+    learning: true,
+    goals: false,
     other: false,
   });
 
@@ -619,6 +639,125 @@ export const CompactMobileSettingsPanel: React.FC<
                       <span>50</span>
                     </div>
                   </div>
+
+                  {/* Quick Progress Summary */}
+                  <div className="mt-3 p-3 bg-gradient-to-r from-blue-50 to-purple-50 rounded-lg border border-blue-200">
+                    <div className="flex items-center justify-between mb-2">
+                      <span className="text-xs font-medium text-blue-800">Today's Progress</span>
+                      <span className="text-xs text-blue-600">
+                        {currentProgress.wordsLearned}/{dailyGoal[0]} words
+                      </span>
+                    </div>
+                    <div className="w-full bg-blue-200 rounded-full h-1.5">
+                      <div
+                        className="bg-blue-600 h-1.5 rounded-full transition-all duration-300"
+                        style={{
+                          width: `${Math.min((currentProgress.wordsLearned / dailyGoal[0]) * 100, 100)}%`
+                        }}
+                      />
+                    </div>
+                    <div className="flex justify-between mt-2 text-xs">
+                      <span className="text-green-600">{currentProgress.wordsRemembered} remembered</span>
+                      <span className="text-purple-600">{currentProgress.accuracy}% accuracy</span>
+                    </div>
+                  </div>
+
+                  {/* Advanced Goals Button */}
+                  <button
+                    onClick={() => {
+                      setShowGoalsPanel(true);
+                      if (deviceInfo.hasHaptic) triggerHapticFeedback("medium");
+                    }}
+                    className="w-full mt-2 p-3 bg-gradient-to-r from-educational-blue to-educational-purple text-white rounded-lg hover:shadow-lg transition-all duration-200 flex items-center justify-between"
+                  >
+                    <div className="flex items-center gap-2">
+                      <BarChart3 className="w-4 h-4" />
+                      <span className="text-sm font-medium">Advanced Goals & Analytics</span>
+                    </div>
+                    <ChevronRight className="w-4 h-4" />
+                  </button>
+                </div>
+              )}
+            </div>
+
+            {/* Goals & Analytics Section */}
+            <div className="border rounded-lg">
+              <CompactSectionHeader
+                title="Goals & Analytics"
+                emoji="📊"
+                isExpanded={expandedSections.goals}
+                onToggle={() => toggleSection("goals")}
+              />
+              {expandedSections.goals && (
+                <div
+                  className="px-2 pb-2 space-y-2 max-h-[35vh] overflow-y-auto scroll-smooth"
+                  style={{ WebkitOverflowScrolling: "touch" }}
+                >
+                  {/* Current Goals Overview */}
+                  <div className="space-y-2">
+                    <CompactSettingRow
+                      icon={Calendar}
+                      label="Daily Progress"
+                      description={`${currentProgress.wordsLearned}/${dailyGoal[0]} words today`}
+                    >
+                      <div className="text-right">
+                        <div className="text-xs font-bold text-green-600">
+                          {Math.round((currentProgress.wordsLearned / dailyGoal[0]) * 100)}%
+                        </div>
+                      </div>
+                    </CompactSettingRow>
+
+                    <CompactSettingRow
+                      icon={Award}
+                      label="Accuracy Rate"
+                      description="Your learning precision"
+                    >
+                      <Badge variant="outline" className={cn(
+                        "text-xs px-2 py-0",
+                        currentProgress.accuracy >= 80 ? "text-green-600 border-green-200" :
+                        currentProgress.accuracy >= 60 ? "text-yellow-600 border-yellow-200" :
+                        "text-red-600 border-red-200"
+                      )}>
+                        {currentProgress.accuracy}%
+                      </Badge>
+                    </CompactSettingRow>
+
+                    <CompactSettingRow
+                      icon={TrendingUp}
+                      label="Learning Sessions"
+                      description="Sessions completed today"
+                    >
+                      <Badge variant="outline" className="text-xs px-2 py-0">
+                        {currentProgress.sessionCount}
+                      </Badge>
+                    </CompactSettingRow>
+                  </div>
+
+                  {/* Quick Actions */}
+                  <div className="pt-2 space-y-2">
+                    <button
+                      onClick={() => {
+                        setShowGoalsPanel(true);
+                        if (deviceInfo.hasHaptic) triggerHapticFeedback("medium");
+                      }}
+                      className="w-full p-2 bg-gradient-to-r from-blue-500 to-purple-500 text-white rounded-lg text-sm font-medium hover:shadow-md transition-all duration-200 flex items-center justify-center gap-2"
+                    >
+                      <BarChart3 className="w-4 h-4" />
+                      Open Goals Dashboard
+                    </button>
+                  </div>
+
+                  {/* Goal Insights */}
+                  <div className="mt-2 p-2 bg-gradient-to-br from-yellow-50 to-orange-50 rounded-lg border border-yellow-200">
+                    <p className="text-xs font-medium text-orange-800 mb-1">💡 Smart Insight</p>
+                    <p className="text-xs text-orange-700">
+                      {currentProgress.accuracy >= 80
+                        ? "Great accuracy! Consider increasing your daily goal."
+                        : currentProgress.accuracy >= 60
+                        ? "Good progress! Focus on difficult words for better accuracy."
+                        : "Take your time with each word to improve accuracy."}
+                    </p>
+                  </div>
                 </div>
               )}
             </div>
@@ -696,6 +835,20 @@ export const CompactMobileSettingsPanel: React.FC<
           </div>
         </div>
       </Card>
+
+      {/* Enhanced Learning Goals Panel */}
+      {showGoalsPanel && (
+        <EnhancedLearningGoalsPanel
+          isOpen={showGoalsPanel}
+          onClose={() => setShowGoalsPanel(false)}
+          currentProgress={currentProgress}
+          onGoalUpdate={onGoalUpdate}
+          onPreferencesUpdate={(preferences) => {
+            console.log("Learning preferences updated:", preferences);
+            // Handle preferences update
+          }}
+        />
+      )}
     </div>
   );
 };
