@@ -421,18 +421,26 @@ export const WordCard: React.FC<WordCardProps> = ({
             )}
           </div>
 
-          {/* Mobile-Optimized Footer */}
-          <div className="text-center">
+          {/* Enhanced Mobile Footer with Gesture Hints */}
+          <div className="text-center space-y-2">
             {adventureStatus && (
               <p className="text-xs opacity-60 mb-2">
                 Last seen:{" "}
                 {new Date(adventureStatus.last_seen).toLocaleDateString()}
               </p>
             )}
-            <p className="text-xs sm:text-sm opacity-75 mb-2">
+            <p className="text-xs sm:text-sm opacity-75">
               <RotateCcw className="w-3 h-3 sm:w-4 sm:h-4 inline mr-1" />
               Tap to see definition
             </p>
+
+            {/* Mobile gesture hints */}
+            <div className="flex justify-center gap-3 text-xs opacity-60 sm:hidden">
+              <span>← ❤️</span>
+              <span>↑ 🔊</span>
+              <span>→ 🔄</span>
+            </div>
+
             <div className="flex justify-center gap-1.5">
               <div className="w-2 h-2 bg-white/50 rounded-full animate-bounce"></div>
               <div className="w-2 h-2 bg-white/50 rounded-full animate-bounce delay-100"></div>
