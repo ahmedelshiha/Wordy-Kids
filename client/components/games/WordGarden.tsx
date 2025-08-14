@@ -460,7 +460,7 @@ function GameCompletionDialog({
 
         {/* Garden icons */}
         <div className="flex justify-center gap-2 text-3xl my-4">
-          {Array.from({ length: Math.min(stats.correct, 8) }, (_, i) => (
+          {Array.from({ length: Math.min(stats.correct, 10) }, (_, i) => (
             <span
               key={i}
               className="animate-gentle-float"
@@ -888,7 +888,7 @@ export default function WordGardenGame({
       </div>
 
       {/* Garden row (visual progress) */}
-      <div className="mt-4 grid grid-cols-4 gap-3">
+      <div className="mt-4 grid grid-cols-5 gap-2">
         {gardenStages.map((stage, idx) => {
           const isActive = idx === roundIdx;
           const isCompleted = idx < roundIdx;
