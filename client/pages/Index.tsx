@@ -87,6 +87,7 @@ import {
   LogOut,
   Sword,
   BookOpen,
+  RotateCcw,
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { WordProgressAPI } from "@/lib/wordProgressApi";
@@ -121,6 +122,7 @@ export default function Index({ initialProfile }: IndexProps) {
   const [customWords, setCustomWords] = useState<any[]>([]);
   const [backgroundAnimationsEnabled, setBackgroundAnimationsEnabled] =
     useState(false);
+  const [navigationHistory, setNavigationHistory] = useState<string[]>([]);
 
   // New child-friendly states
   const [currentProfile, setCurrentProfile] = useState<any>(
@@ -321,6 +323,37 @@ export default function Index({ initialProfile }: IndexProps) {
       );
     };
   }, []);
+
+  // Track navigation history for better back navigation
+  useEffect(() => {
+    const currentPath = `${learningMode}-${selectedCategory || 'no-category'}`;
+    setNavigationHistory(prev => {
+      const newHistory = [...prev, currentPath];
+      // Keep only last 5 navigation steps
+      return newHistory.slice(-5);
+    });
+  }, [learningMode, selectedCategory]);
+
+  // Enhanced navigation with keyboard support
+  useEffect(() => {
+    const handleKeyNavigation = (e: KeyboardEvent) => {
+      // Only handle when in cards mode and not in input fields
+      if (learningMode === "cards" && !['INPUT', 'TEXTAREA'].includes((e.target as HTMLElement)?.tagName)) {
+        if (e.key === 'Escape') {
+          e.preventDefault();
+          if (navigator.vibrate) {
+            navigator.vibrate([50, 30, 50]);
+          }
+          audioService.playClickSound();
+          setLearningMode("selector");
+          setCurrentWordIndex(0);
+        }
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyNavigation);
+    return () => window.removeEventListener('keydown', handleKeyNavigation);
+  }, [learningMode]);
 
   // Initialize learning session and load child stats
   useEffect(() => {
@@ -1335,7 +1368,7 @@ export default function Index({ initialProfile }: IndexProps) {
                     lastSystematicSelection && (
                       <div className="mt-4 p-3 bg-gray-100 rounded-lg text-xs">
                         <h4 className="font-bold mb-2">
-                          🔧 Enhanced Word Selection Debug
+                          ��� Enhanced Word Selection Debug
                         </h4>
                         <div className="grid grid-cols-2 gap-2">
                           <div>
