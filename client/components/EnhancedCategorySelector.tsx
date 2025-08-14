@@ -336,7 +336,7 @@ export function EnhancedCategorySelector({
   const getCategoryIcon = (category: string): string => {
     const icons: Record<string, string> = {
       animals: "🦋",
-      nature: "���",
+      nature: "🌳",
       food: "🍎",
       colors: "🌈",
       objects: "🏠",
@@ -424,7 +424,7 @@ export function EnhancedCategorySelector({
     const descriptions: Record<string, string> = {
       animals: "Meet amazing creatures from pets to wild animals!",
       nature: "Explore the magical wonders of our natural world!",
-      food: "Discover delicious foods from everywhere!",
+      food: "Discover delicious foods and favorite meals!",
       colors: "Learn about the beautiful colors around us!",
       objects: "Explore everyday things around you!",
       body: "Learn about your amazing body!",
