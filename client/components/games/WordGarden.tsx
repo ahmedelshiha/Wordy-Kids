@@ -437,12 +437,16 @@ function GameCompletionDialog({
           <div className="flex justify-between items-center text-center">
             <div className="flex-1">
               <div className="text-2xl">🌱</div>
-              <div className="text-lg font-bold text-white">{stats.correct}</div>
+              <div className="text-lg font-bold text-white">
+                {stats.correct}
+              </div>
               <div className="text-xs text-green-100">Plants</div>
             </div>
             <div className="flex-1">
               <div className="text-2xl">⭐</div>
-              <div className="text-lg font-bold text-white">{stats.bestStreak}</div>
+              <div className="text-lg font-bold text-white">
+                {stats.bestStreak}
+              </div>
               <div className="text-xs text-green-100">Streak</div>
             </div>
             <div className="flex-1">

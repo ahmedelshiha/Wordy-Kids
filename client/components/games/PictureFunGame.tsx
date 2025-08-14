@@ -203,12 +203,16 @@ function GameCompletionDialog({
           <div className="flex justify-between items-center text-center">
             <div className="flex-1">
               <div className="text-2xl">📸</div>
-              <div className="text-lg font-bold text-white">{stats.correct}</div>
+              <div className="text-lg font-bold text-white">
+                {stats.correct}
+              </div>
               <div className="text-xs text-orange-100">Correct</div>
             </div>
             <div className="flex-1">
               <div className="text-2xl">⭐</div>
-              <div className="text-lg font-bold text-white">{stats.bestStreak}</div>
+              <div className="text-lg font-bold text-white">
+                {stats.bestStreak}
+              </div>
               <div className="text-xs text-orange-100">Streak</div>
             </div>
             <div className="flex-1">
@@ -300,7 +304,12 @@ export default function PictureFunGame({
     setError(null);
 
     try {
-      const words = generateDatabaseWords(rounds, optionsPerRound, category, difficulty);
+      const words = generateDatabaseWords(
+        rounds,
+        optionsPerRound,
+        category,
+        difficulty,
+      );
       if (!mounted) return;
       setPool(words);
       setLoading(false);
@@ -412,7 +421,12 @@ export default function PictureFunGame({
     // Generate new words
     setLoading(true);
     try {
-      const words = generateDatabaseWords(rounds, optionsPerRound, category, difficulty);
+      const words = generateDatabaseWords(
+        rounds,
+        optionsPerRound,
+        category,
+        difficulty,
+      );
       setPool(words);
       setLoading(false);
     } catch (e) {
