@@ -22,6 +22,7 @@ import { audioService } from "@/lib/audioService";
 import { AchievementTracker } from "@/lib/achievementTracker";
 import { EnhancedAchievementTracker } from "@/lib/enhancedAchievementTracker";
 import { EnhancedAchievementPopup } from "@/components/EnhancedAchievementPopup";
+import { AchievementTeaser } from "@/components/AchievementTeaser";
 import {
   DashboardWordGenerator,
   DashboardWordSession,
