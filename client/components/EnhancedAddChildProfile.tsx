@@ -166,7 +166,7 @@ export function EnhancedAddChildProfile({
       setFormData({
         name: '',
         age: 6,
-        avatar: '👦',
+        avatar: '��',
         interests: [],
         backgroundColor: 'from-pink-200 to-pink-300',
         parentConnection: 'child'
@@ -353,7 +353,7 @@ export function EnhancedAddChildProfile({
           <form ref={formRef} className="space-y-4">
             {/* Step 1: Basic Info */}
             {currentStep === 0 && (
-              <div className="space-y-4 animate-slide-in-from-right">
+              <div className="space-y-3 animate-slide-in-from-right">
                 <div>
                   <Label htmlFor="childName" className="text-xs font-medium text-gray-700 mb-1 block">
                     Child's name
