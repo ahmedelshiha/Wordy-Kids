@@ -226,12 +226,38 @@ export default function ListenAndGuessGame({
         setStreak((s) => {
           const ns = s + 1;
           setBestStreak((b) => Math.max(b, ns));
+
+          // Track real-time achievement progress for correct answers
+          try {
+            EnhancedAchievementTracker.updateProgress({
+              correctAnswers: 1,
+              totalAnswers: 1,
+              currentStreak: ns,
+              coinsEarned: 5,
+              wordsLearned: 1,
+              listenAndGuessCorrect: 1,
+            });
+          } catch (error) {
+            console.error("Error tracking real-time achievements:", error);
+          }
+
           return ns;
         });
         fire();
       } else {
         setWrongCount((w) => w + 1);
         setStreak(0);
+
+        // Track wrong answers for achievement progress
+        try {
+          EnhancedAchievementTracker.updateProgress({
+            totalAnswers: 1,
+            currentStreak: 0,
+          });
+        } catch (error) {
+          console.error("Error tracking achievement progress:", error);
+        }
+
         // gentle buzz
         if (navigator && "vibrate" in navigator)
           (navigator as any).vibrate([40, 60, 40]);
