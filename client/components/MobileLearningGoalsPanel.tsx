@@ -54,10 +54,17 @@ interface MobileLearningGoalsPanelProps {
   onGoalUpdate?: (goals: MobileGoalData[]) => void;
 }
 
-export const MobileLearningGoalsPanel: React.FC<MobileLearningGoalsPanelProps> = ({
+export const MobileLearningGoalsPanel: React.FC<
+  MobileLearningGoalsPanelProps
+> = ({
   isOpen,
   onClose,
-  currentProgress = { wordsLearned: 0, wordsRemembered: 0, sessionCount: 0, accuracy: 0 },
+  currentProgress = {
+    wordsLearned: 0,
+    wordsRemembered: 0,
+    sessionCount: 0,
+    accuracy: 0,
+  },
   onGoalUpdate,
 }) => {
   const [goals, setGoals] = useState<MobileGoalData[]>([
@@ -73,7 +80,7 @@ export const MobileLearningGoalsPanel: React.FC<MobileLearningGoalsPanelProps> =
     },
     {
       id: "weekly-accuracy",
-      type: "weekly", 
+      type: "weekly",
       target: 85,
       current: currentProgress.accuracy,
       isActive: true,
@@ -88,8 +95,8 @@ export const MobileLearningGoalsPanel: React.FC<MobileLearningGoalsPanelProps> =
 
   // Update goals with current progress
   useEffect(() => {
-    setGoals(prevGoals =>
-      prevGoals.map(goal => {
+    setGoals((prevGoals) =>
+      prevGoals.map((goal) => {
         if (goal.id === "daily-words") {
           return { ...goal, current: currentProgress.wordsLearned };
         }
@@ -97,7 +104,7 @@ export const MobileLearningGoalsPanel: React.FC<MobileLearningGoalsPanelProps> =
           return { ...goal, current: currentProgress.accuracy };
         }
         return goal;
-      })
+      }),
     );
   }, [currentProgress]);
 
@@ -110,17 +117,21 @@ export const MobileLearningGoalsPanel: React.FC<MobileLearningGoalsPanelProps> =
   };
 
   const toggleGoalActive = (id: string) => {
-    setGoals(prev => prev.map(goal => 
-      goal.id === id ? { ...goal, isActive: !goal.isActive } : goal
-    ));
+    setGoals((prev) =>
+      prev.map((goal) =>
+        goal.id === id ? { ...goal, isActive: !goal.isActive } : goal,
+      ),
+    );
     setHasUnsavedChanges(true);
     if (deviceInfo.hasHaptic) triggerHapticFeedback("medium");
   };
 
   const adjustGoalTarget = (id: string, newTarget: number) => {
-    setGoals(prev => prev.map(goal => 
-      goal.id === id ? { ...goal, target: newTarget } : goal
-    ));
+    setGoals((prev) =>
+      prev.map((goal) =>
+        goal.id === id ? { ...goal, target: newTarget } : goal,
+      ),
+    );
     setHasUnsavedChanges(true);
   };
 
@@ -130,10 +141,14 @@ export const MobileLearningGoalsPanel: React.FC<MobileLearningGoalsPanelProps> =
 
   const getGoalIcon = (type: string) => {
     switch (type) {
-      case "daily": return Calendar;
-      case "weekly": return Target;
-      case "monthly": return TrendingUp;
-      default: return Target;
+      case "daily":
+        return Calendar;
+      case "weekly":
+        return Target;
+      case "monthly":
+        return TrendingUp;
+      default:
+        return Target;
     }
   };
 
@@ -182,9 +197,11 @@ export const MobileLearningGoalsPanel: React.FC<MobileLearningGoalsPanelProps> =
             <Card className="bg-gradient-to-r from-blue-50 to-purple-50 border-blue-200">
               <CardContent className="p-3">
                 <div className="flex items-center justify-between mb-2">
-                  <h3 className="text-sm font-semibold text-blue-800">Today's Progress</h3>
+                  <h3 className="text-sm font-semibold text-blue-800">
+                    Today's Progress
+                  </h3>
                   <Badge variant="outline" className="text-xs">
-                    {goals.filter(g => g.isActive).length} goals
+                    {goals.filter((g) => g.isActive).length} goals
                   </Badge>
                 </div>
                 <div className="grid grid-cols-3 gap-2 text-center">
@@ -202,7 +219,7 @@ export const MobileLearningGoalsPanel: React.FC<MobileLearningGoalsPanelProps> =
                   </div>
                   <div>
                     <div className="text-lg font-bold text-orange-600">
-                      {Math.max(...goals.map(g => g.streak))}
+                      {Math.max(...goals.map((g) => g.streak))}
                     </div>
                     <div className="text-xs text-orange-600">Streak</div>
                   </div>
@@ -228,16 +245,19 @@ export const MobileLearningGoalsPanel: React.FC<MobileLearningGoalsPanelProps> =
                     key={goal.id}
                     className={cn(
                       "transition-all duration-200",
-                      goal.isActive ? "border-educational-blue/30 bg-blue-50/30" : "border-gray-200 bg-gray-50/30"
+                      goal.isActive
+                        ? "border-educational-blue/30 bg-blue-50/30"
+                        : "border-gray-200 bg-gray-50/30",
                     )}
                   >
                     <CardContent className="p-3">
                       {/* Goal Header */}
-                      <div 
+                      <div
                         className="flex items-center justify-between cursor-pointer"
                         onClick={() => {
                           setExpandedGoal(isExpanded ? null : goal.id);
-                          if (deviceInfo.hasHaptic) triggerHapticFeedback("light");
+                          if (deviceInfo.hasHaptic)
+                            triggerHapticFeedback("light");
                         }}
                       >
                         <div className="flex items-center gap-2 flex-1">
@@ -287,13 +307,15 @@ export const MobileLearningGoalsPanel: React.FC<MobileLearningGoalsPanelProps> =
                           {/* Target Adjustment */}
                           <div>
                             <label className="text-xs font-medium text-gray-700 mb-1 block">
-                              Target: {goal.target} {goal.type === "weekly-accuracy" ? "%" : "words"}
+                              Target: {goal.target}{" "}
+                              {goal.type === "weekly-accuracy" ? "%" : "words"}
                             </label>
                             <CompactMobileSlider
                               value={[goal.target]}
                               onValueChange={(value) => {
                                 adjustGoalTarget(goal.id, value[0]);
-                                if (deviceInfo.hasHaptic) triggerHapticFeedback("light");
+                                if (deviceInfo.hasHaptic)
+                                  triggerHapticFeedback("light");
                               }}
                               max={goal.type === "weekly-accuracy" ? 100 : 50}
                               min={goal.type === "weekly-accuracy" ? 50 : 5}
@@ -308,13 +330,17 @@ export const MobileLearningGoalsPanel: React.FC<MobileLearningGoalsPanelProps> =
                               <div className="text-sm font-bold text-green-600">
                                 {goal.streak}
                               </div>
-                              <div className="text-xs text-green-600">Current Streak</div>
+                              <div className="text-xs text-green-600">
+                                Current Streak
+                              </div>
                             </div>
                             <div className="text-center p-2 bg-purple-50 rounded-lg">
                               <div className="text-sm font-bold text-purple-600">
                                 {Math.round(progress)}%
                               </div>
-                              <div className="text-xs text-purple-600">Progress</div>
+                              <div className="text-xs text-purple-600">
+                                Progress
+                              </div>
                             </div>
                           </div>
                         </div>
@@ -343,7 +369,9 @@ export const MobileLearningGoalsPanel: React.FC<MobileLearningGoalsPanelProps> =
                       🌟 Start with just 5 words today - small steps count!
                     </div>
                   )}
-                  {goals.find(g => g.id === "daily-words" && g.current >= g.target) && (
+                  {goals.find(
+                    (g) => g.id === "daily-words" && g.current >= g.target,
+                  ) && (
                     <div className="text-xs p-2 bg-white/60 rounded-lg">
                       🎉 Daily goal achieved! You're on fire!
                     </div>
@@ -374,7 +402,14 @@ export const MobileLearningGoalsPanel: React.FC<MobileLearningGoalsPanelProps> =
                   </div>
                   <div>
                     <div className="text-sm font-bold text-purple-600">
-                      {Math.round((goals.filter(g => g.isActive && getGoalProgress(g) >= 100).length / goals.filter(g => g.isActive).length) * 100) || 0}%
+                      {Math.round(
+                        (goals.filter(
+                          (g) => g.isActive && getGoalProgress(g) >= 100,
+                        ).length /
+                          goals.filter((g) => g.isActive).length) *
+                          100,
+                      ) || 0}
+                      %
                     </div>
                     <div className="text-xs text-gray-600">Goals Met</div>
                   </div>
@@ -400,7 +435,7 @@ export const MobileLearningGoalsPanel: React.FC<MobileLearningGoalsPanelProps> =
                     isActive: true,
                     streak: 0,
                     description: "Learn words daily",
-                  }
+                  },
                 ]);
                 setHasUnsavedChanges(true);
               }}

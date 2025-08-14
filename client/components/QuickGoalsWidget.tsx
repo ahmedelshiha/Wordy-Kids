@@ -51,10 +51,14 @@ export const QuickGoalsWidget: React.FC<QuickGoalsWidgetProps> = ({
 
   const getIcon = (type: string) => {
     switch (type) {
-      case "daily": return Calendar;
-      case "weekly": return Target;
-      case "monthly": return TrendingUp;
-      default: return Target;
+      case "daily":
+        return Calendar;
+      case "weekly":
+        return Target;
+      case "monthly":
+        return TrendingUp;
+      default:
+        return Target;
     }
   };
 
@@ -73,8 +77,8 @@ export const QuickGoalsWidget: React.FC<QuickGoalsWidgetProps> = ({
               isCompleted
                 ? "bg-green-50 border-green-200"
                 : progress >= 75
-                ? "bg-blue-50 border-blue-200"
-                : "bg-gray-50 border-gray-200"
+                  ? "bg-blue-50 border-blue-200"
+                  : "bg-gray-50 border-gray-200",
             )}
           >
             <div className="flex items-center justify-between mb-1">
@@ -92,8 +96,8 @@ export const QuickGoalsWidget: React.FC<QuickGoalsWidgetProps> = ({
                   isCompleted
                     ? "text-green-600 border-green-300"
                     : progress >= 75
-                    ? "text-blue-600 border-blue-300"
-                    : "text-gray-600 border-gray-300"
+                      ? "text-blue-600 border-blue-300"
+                      : "text-gray-600 border-gray-300",
                 )}
               >
                 {goal.current}/{goal.target}
@@ -107,7 +111,9 @@ export const QuickGoalsWidget: React.FC<QuickGoalsWidgetProps> = ({
               {isCompleted && (
                 <div className="flex items-center gap-1">
                   <Flame className="w-3 h-3 text-orange-500" />
-                  <span className="text-xs text-orange-600 font-medium">Done!</span>
+                  <span className="text-xs text-orange-600 font-medium">
+                    Done!
+                  </span>
                 </div>
               )}
             </div>

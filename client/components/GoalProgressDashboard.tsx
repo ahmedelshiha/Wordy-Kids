@@ -78,7 +78,9 @@ export const GoalProgressDashboard: React.FC<GoalProgressDashboardProps> = ({
   overallStats,
   className,
 }) => {
-  const [selectedPeriod, setSelectedPeriod] = useState<"day" | "week" | "month">("week");
+  const [selectedPeriod, setSelectedPeriod] = useState<
+    "day" | "week" | "month"
+  >("week");
   const [animationEnabled, setAnimationEnabled] = useState(true);
 
   // Animation effect for progress bars
@@ -89,50 +91,54 @@ export const GoalProgressDashboard: React.FC<GoalProgressDashboardProps> = ({
 
   const getGoalStatus = (goal: GoalProgressData) => {
     const progress = (goal.current / goal.target) * 100;
-    
+
     if (progress >= 100) {
-      return { 
-        status: "completed", 
-        color: "text-green-600", 
+      return {
+        status: "completed",
+        color: "text-green-600",
         bg: "bg-green-50 border-green-200",
-        icon: CheckCircle 
+        icon: CheckCircle,
       };
     }
     if (progress >= 75) {
-      return { 
-        status: "on-track", 
-        color: "text-blue-600", 
+      return {
+        status: "on-track",
+        color: "text-blue-600",
         bg: "bg-blue-50 border-blue-200",
-        icon: Target 
+        icon: Target,
       };
     }
     if (progress >= 50) {
-      return { 
-        status: "behind", 
-        color: "text-yellow-600", 
+      return {
+        status: "behind",
+        color: "text-yellow-600",
         bg: "bg-yellow-50 border-yellow-200",
-        icon: AlertCircle 
+        icon: AlertCircle,
       };
     }
-    return { 
-      status: "critical", 
-      color: "text-red-600", 
+    return {
+      status: "critical",
+      color: "text-red-600",
       bg: "bg-red-50 border-red-200",
-      icon: AlertCircle 
+      icon: AlertCircle,
     };
   };
 
   const getDifficultyColor = (difficulty: string) => {
     switch (difficulty) {
-      case "easy": return "bg-green-100 text-green-700 border-green-300";
-      case "medium": return "bg-yellow-100 text-yellow-700 border-yellow-300";
-      case "hard": return "bg-red-100 text-red-700 border-red-300";
-      default: return "bg-gray-100 text-gray-700 border-gray-300";
+      case "easy":
+        return "bg-green-100 text-green-700 border-green-300";
+      case "medium":
+        return "bg-yellow-100 text-yellow-700 border-yellow-300";
+      case "hard":
+        return "bg-red-100 text-red-700 border-red-300";
+      default:
+        return "bg-gray-100 text-gray-700 border-gray-300";
     }
   };
 
-  const activeGoals = goals.filter(goal => goal.isActive);
-  const completedGoals = goals.filter(goal => goal.current >= goal.target);
+  const activeGoals = goals.filter((goal) => goal.isActive);
+  const completedGoals = goals.filter((goal) => goal.current >= goal.target);
 
   return (
     <div className={cn("space-y-4", className)}>
@@ -194,41 +200,59 @@ export const GoalProgressDashboard: React.FC<GoalProgressDashboardProps> = ({
           {activeGoals.length === 0 ? (
             <div className="text-center py-6 text-gray-500">
               <Target className="w-8 h-8 mx-auto mb-2 opacity-50" />
-              <p className="text-sm">No active goals. Create one to start tracking!</p>
+              <p className="text-sm">
+                No active goals. Create one to start tracking!
+              </p>
             </div>
           ) : (
             activeGoals.map((goal) => {
               const status = getGoalStatus(goal);
-              const progress = Math.min((goal.current / goal.target) * 100, 100);
+              const progress = Math.min(
+                (goal.current / goal.target) * 100,
+                100,
+              );
               const StatusIcon = status.icon;
 
               return (
-                <Card 
-                  key={goal.id} 
+                <Card
+                  key={goal.id}
                   className={cn("transition-all duration-300", status.bg)}
                 >
                   <CardContent className="p-4">
                     <div className="flex items-start justify-between mb-3">
                       <div className="flex items-center gap-3">
-                        <div className={cn(
-                          "p-2 rounded-xl",
-                          status.color.includes("green") ? "bg-green-100" :
-                          status.color.includes("blue") ? "bg-blue-100" :
-                          status.color.includes("yellow") ? "bg-yellow-100" :
-                          "bg-red-100"
-                        )}>
+                        <div
+                          className={cn(
+                            "p-2 rounded-xl",
+                            status.color.includes("green")
+                              ? "bg-green-100"
+                              : status.color.includes("blue")
+                                ? "bg-blue-100"
+                                : status.color.includes("yellow")
+                                  ? "bg-yellow-100"
+                                  : "bg-red-100",
+                          )}
+                        >
                           <StatusIcon className={cn("w-4 h-4", status.color)} />
                         </div>
                         <div>
-                          <h4 className="font-semibold text-sm">{goal.title}</h4>
+                          <h4 className="font-semibold text-sm">
+                            {goal.title}
+                          </h4>
                           <div className="flex items-center gap-2 mt-1">
-                            <Badge 
-                              variant="outline" 
-                              className={cn("text-xs", getDifficultyColor(goal.difficulty))}
+                            <Badge
+                              variant="outline"
+                              className={cn(
+                                "text-xs",
+                                getDifficultyColor(goal.difficulty),
+                              )}
                             >
                               {goal.difficulty}
                             </Badge>
-                            <Badge variant="outline" className="text-xs capitalize">
+                            <Badge
+                              variant="outline"
+                              className="text-xs capitalize"
+                            >
                               {goal.type}
                             </Badge>
                           </div>
@@ -246,11 +270,11 @@ export const GoalProgressDashboard: React.FC<GoalProgressDashboardProps> = ({
 
                     {/* Progress Bar */}
                     <div className="mb-3">
-                      <Progress 
-                        value={progress} 
+                      <Progress
+                        value={progress}
                         className={cn(
                           "h-2 transition-all duration-1000",
-                          animationEnabled && "animate-pulse"
+                          animationEnabled && "animate-pulse",
                         )}
                       />
                     </div>
@@ -258,11 +282,15 @@ export const GoalProgressDashboard: React.FC<GoalProgressDashboardProps> = ({
                     {/* Goal Details */}
                     <div className="grid grid-cols-3 gap-4 text-center text-xs">
                       <div>
-                        <div className="font-bold text-orange-600">{goal.streak}</div>
+                        <div className="font-bold text-orange-600">
+                          {goal.streak}
+                        </div>
                         <div className="text-gray-600">Streak</div>
                       </div>
                       <div>
-                        <div className="font-bold text-green-600">{goal.bestStreak}</div>
+                        <div className="font-bold text-green-600">
+                          {goal.bestStreak}
+                        </div>
                         <div className="text-gray-600">Best</div>
                       </div>
                       <div>
@@ -299,13 +327,15 @@ export const GoalProgressDashboard: React.FC<GoalProgressDashboardProps> = ({
                     <span className="text-xs text-gray-600">
                       {category.wordsLearned} words
                     </span>
-                    <Badge 
-                      variant="outline" 
+                    <Badge
+                      variant="outline"
                       className={cn(
                         "text-xs",
-                        category.accuracy >= 80 ? "text-green-600 border-green-200" :
-                        category.accuracy >= 60 ? "text-yellow-600 border-yellow-200" :
-                        "text-red-600 border-red-200"
+                        category.accuracy >= 80
+                          ? "text-green-600 border-green-200"
+                          : category.accuracy >= 60
+                            ? "text-yellow-600 border-yellow-200"
+                            : "text-red-600 border-red-200",
                       )}
                     >
                       {category.accuracy}%
@@ -353,17 +383,14 @@ export const GoalProgressDashboard: React.FC<GoalProgressDashboardProps> = ({
             <h4 className="text-sm font-medium mb-2">Weekly Streak Pattern</h4>
             <div className="flex justify-between items-end h-16 mb-2">
               {streakData.weeklyStreaks.map((streak, index) => (
-                <div 
-                  key={index} 
-                  className="flex flex-col items-center"
-                >
-                  <div 
+                <div key={index} className="flex flex-col items-center">
+                  <div
                     className={cn(
                       "w-4 rounded-t transition-all duration-500",
-                      streak > 0 ? "bg-orange-500" : "bg-gray-200"
+                      streak > 0 ? "bg-orange-500" : "bg-gray-200",
                     )}
-                    style={{ 
-                      height: `${Math.max((streak / Math.max(...streakData.weeklyStreaks)) * 48, 4)}px` 
+                    style={{
+                      height: `${Math.max((streak / Math.max(...streakData.weeklyStreaks)) * 48, 4)}px`,
                     }}
                   />
                   <div className="text-xs text-gray-500 mt-1">
@@ -394,7 +421,7 @@ export const GoalProgressDashboard: React.FC<GoalProgressDashboardProps> = ({
           <CardContent>
             <div className="grid gap-2">
               {completedGoals.slice(0, 3).map((goal) => (
-                <div 
+                <div
                   key={goal.id}
                   className="flex items-center gap-3 p-2 bg-white/60 rounded-lg"
                 >
@@ -432,7 +459,7 @@ export const GoalProgressDashboard: React.FC<GoalProgressDashboardProps> = ({
                 </div>
               </div>
             </div>
-            
+
             <div className="flex items-center gap-3 p-3 bg-white/60 rounded-lg">
               <TrendingUp className="w-4 h-4 text-green-600" />
               <div>
@@ -448,11 +475,18 @@ export const GoalProgressDashboard: React.FC<GoalProgressDashboardProps> = ({
               <div>
                 <div className="text-sm font-medium">Favorite Category</div>
                 <div className="text-xs text-gray-600">
-                  {categoryProgress.reduce((prev, curr) => 
-                    prev.progress > curr.progress ? prev : curr
-                  ).name} ({categoryProgress.reduce((prev, curr) => 
-                    prev.progress > curr.progress ? prev : curr
-                  ).progress}% mastery)
+                  {
+                    categoryProgress.reduce((prev, curr) =>
+                      prev.progress > curr.progress ? prev : curr,
+                    ).name
+                  }{" "}
+                  (
+                  {
+                    categoryProgress.reduce((prev, curr) =>
+                      prev.progress > curr.progress ? prev : curr,
+                    ).progress
+                  }
+                  % mastery)
                 </div>
               </div>
             </div>

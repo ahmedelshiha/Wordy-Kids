@@ -20,7 +20,10 @@ import {
   Zap,
   Crown,
 } from "lucide-react";
-import { playSoundIfEnabled, playUIInteractionSoundIfEnabled } from "@/lib/soundEffects";
+import {
+  playSoundIfEnabled,
+  playUIInteractionSoundIfEnabled,
+} from "@/lib/soundEffects";
 import { audioService } from "@/lib/audioService";
 import { enhancedAudioService } from "@/lib/enhancedAudioService";
 import { adventureService } from "@/lib/adventureService";
@@ -76,7 +79,10 @@ export const WordCard: React.FC<WordCardProps> = ({
   );
   const [isGesturing, setIsGesturing] = useState(false);
   const [swipeDirection, setSwipeDirection] = useState<string | null>(null);
-  const [touchPosition, setTouchPosition] = useState<{ x: number; y: number } | null>(null);
+  const [touchPosition, setTouchPosition] = useState<{
+    x: number;
+    y: number;
+  } | null>(null);
 
   // Voice settings integration
   const voiceSettings = useVoiceSettings();
@@ -183,15 +189,15 @@ export const WordCard: React.FC<WordCardProps> = ({
     if (Math.abs(deltaX) > threshold || Math.abs(deltaY) > threshold) {
       if (Math.abs(deltaX) > Math.abs(deltaY)) {
         if (deltaX > threshold) {
-          setSwipeDirection('right');
+          setSwipeDirection("right");
         } else if (deltaX < -threshold) {
-          setSwipeDirection('left');
+          setSwipeDirection("left");
         }
       } else {
         if (deltaY < -threshold) {
-          setSwipeDirection('up');
+          setSwipeDirection("up");
         } else if (deltaY > threshold) {
-          setSwipeDirection('down');
+          setSwipeDirection("down");
         }
       }
     }
@@ -314,13 +320,13 @@ export const WordCard: React.FC<WordCardProps> = ({
               : ""
         } ${
           isGesturing
-            ? swipeDirection === 'right'
+            ? swipeDirection === "right"
               ? "scale-[1.02] ring-2 ring-green-400/50 shadow-green-400/20"
-              : swipeDirection === 'left'
+              : swipeDirection === "left"
                 ? "scale-[1.02] ring-2 ring-red-400/50 shadow-red-400/20"
-                : swipeDirection === 'up'
+                : swipeDirection === "up"
                   ? "scale-[1.02] ring-2 ring-blue-400/50 shadow-blue-400/20"
-                  : swipeDirection === 'down'
+                  : swipeDirection === "down"
                     ? "scale-[1.02] ring-2 ring-purple-400/50 shadow-purple-400/20"
                     : "scale-[1.02] ring-2 ring-blue-400/50"
             : ""
@@ -409,7 +415,9 @@ export const WordCard: React.FC<WordCardProps> = ({
               size="sm"
               variant="ghost"
               className={`text-white hover:bg-white/20 active:bg-white/30 p-1.5 h-auto min-w-[40px] min-h-[40px] transition-all duration-200 rounded-full flex-shrink-0 border border-white/20 bg-white/10 backdrop-blur-sm active:scale-95 ${
-                isFavorited ? "scale-105 text-red-300 border-red-300/40 bg-red-500/20" : "hover:border-white/40"
+                isFavorited
+                  ? "scale-105 text-red-300 border-red-300/40 bg-red-500/20"
+                  : "hover:border-white/40"
               }`}
               onClick={(e) => {
                 e.stopPropagation();
@@ -515,15 +523,21 @@ export const WordCard: React.FC<WordCardProps> = ({
             <div className="hidden sm:block">
               <div className="flex justify-center gap-2 text-[9px] opacity-70">
                 <span className="flex items-center gap-0.5">
-                  <span className="w-4 h-2 bg-white/20 rounded-sm flex items-center justify-center text-[8px]">←</span>
+                  <span className="w-4 h-2 bg-white/20 rounded-sm flex items-center justify-center text-[8px]">
+                    ←
+                  </span>
                   <span>❤️</span>
                 </span>
                 <span className="flex items-center gap-0.5">
-                  <span className="w-4 h-2 bg-white/20 rounded-sm flex items-center justify-center text-[8px]">↑</span>
+                  <span className="w-4 h-2 bg-white/20 rounded-sm flex items-center justify-center text-[8px]">
+                    ↑
+                  </span>
                   <span>🔊</span>
                 </span>
                 <span className="flex items-center gap-0.5">
-                  <span className="w-4 h-2 bg-white/20 rounded-sm flex items-center justify-center text-[8px]">→</span>
+                  <span className="w-4 h-2 bg-white/20 rounded-sm flex items-center justify-center text-[8px]">
+                    →
+                  </span>
                   <span>🔄</span>
                 </span>
               </div>
@@ -576,7 +590,9 @@ export const WordCard: React.FC<WordCardProps> = ({
           {/* Enhanced Back Navigation Hint */}
           <div className="absolute top-1.5 left-1.5 z-10">
             <div className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-full px-2 py-1">
-              <span className="text-[9px] text-white/80 font-medium">← Swipe or tap ↻</span>
+              <span className="text-[9px] text-white/80 font-medium">
+                ← Swipe or tap ↻
+              </span>
             </div>
           </div>
 
@@ -865,35 +881,42 @@ export const WordCard: React.FC<WordCardProps> = ({
         <div className="absolute inset-0 pointer-events-none z-20 rounded-xl overflow-hidden">
           <div
             className={`absolute inset-0 transition-opacity duration-200 ${
-              swipeDirection === 'right'
-                ? 'bg-gradient-to-r from-green-400/20 via-green-400/10 to-transparent'
-                : swipeDirection === 'left'
-                  ? 'bg-gradient-to-l from-red-400/20 via-red-400/10 to-transparent'
-                  : swipeDirection === 'up'
-                    ? 'bg-gradient-to-t from-blue-400/20 via-blue-400/10 to-transparent'
-                    : swipeDirection === 'down'
-                      ? 'bg-gradient-to-b from-purple-400/20 via-purple-400/10 to-transparent'
-                      : ''
+              swipeDirection === "right"
+                ? "bg-gradient-to-r from-green-400/20 via-green-400/10 to-transparent"
+                : swipeDirection === "left"
+                  ? "bg-gradient-to-l from-red-400/20 via-red-400/10 to-transparent"
+                  : swipeDirection === "up"
+                    ? "bg-gradient-to-t from-blue-400/20 via-blue-400/10 to-transparent"
+                    : swipeDirection === "down"
+                      ? "bg-gradient-to-b from-purple-400/20 via-purple-400/10 to-transparent"
+                      : ""
             }`}
           />
           <div className="absolute inset-0 flex items-center justify-center">
             <div
               className={`w-16 h-16 rounded-full flex items-center justify-center backdrop-blur-sm border-2 ${
-                swipeDirection === 'right'
-                  ? 'bg-green-400/30 border-green-400/60 text-green-200'
-                  : swipeDirection === 'left'
-                    ? 'bg-red-400/30 border-red-400/60 text-red-200'
-                    : swipeDirection === 'up'
-                      ? 'bg-blue-400/30 border-blue-400/60 text-blue-200'
-                      : swipeDirection === 'down'
-                        ? 'bg-purple-400/30 border-purple-400/60 text-purple-200'
-                        : ''
+                swipeDirection === "right"
+                  ? "bg-green-400/30 border-green-400/60 text-green-200"
+                  : swipeDirection === "left"
+                    ? "bg-red-400/30 border-red-400/60 text-red-200"
+                    : swipeDirection === "up"
+                      ? "bg-blue-400/30 border-blue-400/60 text-blue-200"
+                      : swipeDirection === "down"
+                        ? "bg-purple-400/30 border-purple-400/60 text-purple-200"
+                        : ""
               } animate-pulse`}
             >
-              {swipeDirection === 'right' && (isFlipped ? <RotateCcw className="w-8 h-8" /> : <span className="text-2xl">🔄</span>)}
-              {swipeDirection === 'left' && <Heart className="w-8 h-8" />}
-              {swipeDirection === 'up' && <Volume2 className="w-8 h-8" />}
-              {swipeDirection === 'down' && isFlipped && <RotateCcw className="w-8 h-8" />}
+              {swipeDirection === "right" &&
+                (isFlipped ? (
+                  <RotateCcw className="w-8 h-8" />
+                ) : (
+                  <span className="text-2xl">🔄</span>
+                ))}
+              {swipeDirection === "left" && <Heart className="w-8 h-8" />}
+              {swipeDirection === "up" && <Volume2 className="w-8 h-8" />}
+              {swipeDirection === "down" && isFlipped && (
+                <RotateCcw className="w-8 h-8" />
+              )}
             </div>
           </div>
         </div>

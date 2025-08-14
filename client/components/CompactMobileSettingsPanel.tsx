@@ -62,12 +62,19 @@ export const CompactMobileSettingsPanel: React.FC<
 > = ({
   isOpen,
   onClose,
-  currentProgress = { wordsLearned: 0, wordsRemembered: 0, sessionCount: 0, accuracy: 0 },
-  onGoalUpdate
+  currentProgress = {
+    wordsLearned: 0,
+    wordsRemembered: 0,
+    sessionCount: 0,
+    accuracy: 0,
+  },
+  onGoalUpdate,
 }) => {
   // Essential settings only
   const [soundOn, setSoundOn] = useState(isSoundEnabled());
-  const [uiInteractionSounds, setUiInteractionSounds] = useState(isUIInteractionSoundsEnabled());
+  const [uiInteractionSounds, setUiInteractionSounds] = useState(
+    isUIInteractionSoundsEnabled(),
+  );
   const [selectedVoiceType, setSelectedVoiceType] =
     useState<VoiceType>("woman");
   const [volume, setVolume] = useState([80]);
@@ -667,7 +674,9 @@ export const CompactMobileSettingsPanel: React.FC<
                   {/* Quick Progress Summary */}
                   <div className="mt-3 p-3 bg-gradient-to-r from-blue-50 to-purple-50 rounded-lg border border-blue-200">
                     <div className="flex items-center justify-between mb-2">
-                      <span className="text-xs font-medium text-blue-800">Today's Progress</span>
+                      <span className="text-xs font-medium text-blue-800">
+                        Today's Progress
+                      </span>
                       <span className="text-xs text-blue-600">
                         {currentProgress.wordsLearned}/{dailyGoal[0]} words
                       </span>
@@ -676,13 +685,17 @@ export const CompactMobileSettingsPanel: React.FC<
                       <div
                         className="bg-blue-600 h-1.5 rounded-full transition-all duration-300"
                         style={{
-                          width: `${Math.min((currentProgress.wordsLearned / dailyGoal[0]) * 100, 100)}%`
+                          width: `${Math.min((currentProgress.wordsLearned / dailyGoal[0]) * 100, 100)}%`,
                         }}
                       />
                     </div>
                     <div className="flex justify-between mt-2 text-xs">
-                      <span className="text-green-600">{currentProgress.wordsRemembered} remembered</span>
-                      <span className="text-purple-600">{currentProgress.accuracy}% accuracy</span>
+                      <span className="text-green-600">
+                        {currentProgress.wordsRemembered} remembered
+                      </span>
+                      <span className="text-purple-600">
+                        {currentProgress.accuracy}% accuracy
+                      </span>
                     </div>
                   </div>
 
@@ -696,7 +709,9 @@ export const CompactMobileSettingsPanel: React.FC<
                   >
                     <div className="flex items-center gap-2">
                       <BarChart3 className="w-4 h-4" />
-                      <span className="text-sm font-medium">Learning Goals</span>
+                      <span className="text-sm font-medium">
+                        Learning Goals
+                      </span>
                     </div>
                     <ChevronRight className="w-4 h-4" />
                   </button>

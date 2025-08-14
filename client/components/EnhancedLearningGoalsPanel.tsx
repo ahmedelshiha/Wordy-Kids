@@ -91,7 +91,12 @@ export const EnhancedLearningGoalsPanel: React.FC<
 > = ({
   isOpen,
   onClose,
-  currentProgress = { wordsLearned: 0, wordsRemembered: 0, sessionCount: 0, accuracy: 0 },
+  currentProgress = {
+    wordsLearned: 0,
+    wordsRemembered: 0,
+    sessionCount: 0,
+    accuracy: 0,
+  },
   onGoalUpdate,
   onPreferencesUpdate,
 }) => {
@@ -180,8 +185,8 @@ export const EnhancedLearningGoalsPanel: React.FC<
 
   // Update goals with current progress
   useEffect(() => {
-    setGoals(prevGoals =>
-      prevGoals.map(goal => {
+    setGoals((prevGoals) =>
+      prevGoals.map((goal) => {
         if (goal.id === "daily-words") {
           return { ...goal, current: currentProgress.wordsLearned };
         }
@@ -189,40 +194,44 @@ export const EnhancedLearningGoalsPanel: React.FC<
           return { ...goal, current: currentProgress.accuracy };
         }
         return goal;
-      })
+      }),
     );
   }, [currentProgress]);
 
   const handleSaveGoals = () => {
     localStorage.setItem("learningGoals", JSON.stringify(goals));
     localStorage.setItem("learningPreferences", JSON.stringify(preferences));
-    
+
     if (onGoalUpdate) onGoalUpdate(goals);
     if (onPreferencesUpdate) onPreferencesUpdate(preferences);
-    
+
     setHasUnsavedChanges(false);
     if (deviceInfo.hasHaptic) triggerHapticFeedback("heavy");
     onClose();
   };
 
   const updateGoal = (id: string, updates: Partial<GoalData>) => {
-    setGoals(prev => prev.map(goal => 
-      goal.id === id ? { ...goal, ...updates } : goal
-    ));
+    setGoals((prev) =>
+      prev.map((goal) => (goal.id === id ? { ...goal, ...updates } : goal)),
+    );
     setHasUnsavedChanges(true);
   };
 
   const toggleGoalActive = (id: string) => {
-    updateGoal(id, { isActive: !goals.find(g => g.id === id)?.isActive });
+    updateGoal(id, { isActive: !goals.find((g) => g.id === id)?.isActive });
     if (deviceInfo.hasHaptic) triggerHapticFeedback("medium");
   };
 
   const getGoalIcon = (type: string) => {
     switch (type) {
-      case "daily": return Calendar;
-      case "weekly": return Target;
-      case "monthly": return TrendingUp;
-      default: return Target;
+      case "daily":
+        return Calendar;
+      case "weekly":
+        return Target;
+      case "monthly":
+        return TrendingUp;
+      default:
+        return Target;
     }
   };
 
@@ -232,17 +241,44 @@ export const EnhancedLearningGoalsPanel: React.FC<
 
   const getGoalStatus = (goal: GoalData) => {
     const progress = getGoalProgress(goal);
-    if (progress >= 100) return { status: "completed", color: "text-green-600", bg: "bg-green-50" };
-    if (progress >= 75) return { status: "on-track", color: "text-blue-600", bg: "bg-blue-50" };
-    if (progress >= 50) return { status: "behind", color: "text-yellow-600", bg: "bg-yellow-50" };
+    if (progress >= 100)
+      return {
+        status: "completed",
+        color: "text-green-600",
+        bg: "bg-green-50",
+      };
+    if (progress >= 75)
+      return { status: "on-track", color: "text-blue-600", bg: "bg-blue-50" };
+    if (progress >= 50)
+      return { status: "behind", color: "text-yellow-600", bg: "bg-yellow-50" };
     return { status: "far-behind", color: "text-red-600", bg: "bg-red-50" };
   };
 
   const categories = [
-    { id: "animals", name: "Animals", emoji: "🐾", progress: analytics.categoryProgress.animals },
-    { id: "food", name: "Food", emoji: "🍎", progress: analytics.categoryProgress.food },
-    { id: "colors", name: "Colors", emoji: "🌈", progress: analytics.categoryProgress.colors },
-    { id: "numbers", name: "Numbers", emoji: "🔢", progress: analytics.categoryProgress.numbers },
+    {
+      id: "animals",
+      name: "Animals",
+      emoji: "🐾",
+      progress: analytics.categoryProgress.animals,
+    },
+    {
+      id: "food",
+      name: "Food",
+      emoji: "🍎",
+      progress: analytics.categoryProgress.food,
+    },
+    {
+      id: "colors",
+      name: "Colors",
+      emoji: "🌈",
+      progress: analytics.categoryProgress.colors,
+    },
+    {
+      id: "numbers",
+      name: "Numbers",
+      emoji: "🔢",
+      progress: analytics.categoryProgress.numbers,
+    },
   ];
 
   if (!isOpen) return null;
@@ -284,7 +320,11 @@ export const EnhancedLearningGoalsPanel: React.FC<
           )}
         </CardHeader>
 
-        <Tabs value={activeTab} onValueChange={setActiveTab} className="flex flex-col h-full">
+        <Tabs
+          value={activeTab}
+          onValueChange={setActiveTab}
+          className="flex flex-col h-full"
+        >
           {/* Tab Navigation */}
           <TabsList className="grid w-full grid-cols-4 m-4 mb-0">
             <TabsTrigger value="goals" className="flex items-center gap-1">
@@ -338,20 +378,28 @@ export const EnhancedLearningGoalsPanel: React.FC<
                           "transition-all duration-200",
                           goal.isActive
                             ? "border-educational-blue/30 bg-blue-50/50"
-                            : "border-gray-200 bg-gray-50/50"
+                            : "border-gray-200 bg-gray-50/50",
                         )}
                       >
                         <CardContent className="p-4">
                           <div className="flex items-start justify-between mb-3">
                             <div className="flex items-center gap-3">
-                              <div className={cn(
-                                "p-2 rounded-xl",
-                                goal.isActive ? "bg-educational-blue/10" : "bg-gray-100"
-                              )}>
-                                <IconComponent className={cn(
-                                  "w-5 h-5",
-                                  goal.isActive ? "text-educational-blue" : "text-gray-500"
-                                )} />
+                              <div
+                                className={cn(
+                                  "p-2 rounded-xl",
+                                  goal.isActive
+                                    ? "bg-educational-blue/10"
+                                    : "bg-gray-100",
+                                )}
+                              >
+                                <IconComponent
+                                  className={cn(
+                                    "w-5 h-5",
+                                    goal.isActive
+                                      ? "text-educational-blue"
+                                      : "text-gray-500",
+                                  )}
+                                />
                               </div>
                               <div>
                                 <h4 className="font-semibold capitalize">
@@ -363,12 +411,20 @@ export const EnhancedLearningGoalsPanel: React.FC<
                               </div>
                             </div>
                             <div className="flex items-center gap-2">
-                              <Badge className={cn(status.bg, status.color, "text-xs")}>
+                              <Badge
+                                className={cn(
+                                  status.bg,
+                                  status.color,
+                                  "text-xs",
+                                )}
+                              >
                                 {status.status.replace("-", " ")}
                               </Badge>
                               <CompactMobileSwitch
                                 checked={goal.isActive}
-                                onCheckedChange={() => toggleGoalActive(goal.id)}
+                                onCheckedChange={() =>
+                                  toggleGoalActive(goal.id)
+                                }
                               />
                             </div>
                           </div>
@@ -379,7 +435,10 @@ export const EnhancedLearningGoalsPanel: React.FC<
                               <div className="flex justify-between text-sm mb-1">
                                 <span>Progress</span>
                                 <span className="font-medium">
-                                  {goal.current}/{goal.target} {goal.type === "weekly-accuracy" ? "%" : "words"}
+                                  {goal.current}/{goal.target}{" "}
+                                  {goal.type === "weekly-accuracy"
+                                    ? "%"
+                                    : "words"}
                                 </span>
                               </div>
                               <Progress value={progress} className="h-2" />
@@ -391,19 +450,25 @@ export const EnhancedLearningGoalsPanel: React.FC<
                                 <div className="text-lg font-bold text-orange-600">
                                   {goal.streak}
                                 </div>
-                                <div className="text-xs text-gray-600">Current Streak</div>
+                                <div className="text-xs text-gray-600">
+                                  Current Streak
+                                </div>
                               </div>
                               <div>
                                 <div className="text-lg font-bold text-green-600">
                                   {goal.bestStreak}
                                 </div>
-                                <div className="text-xs text-gray-600">Best Streak</div>
+                                <div className="text-xs text-gray-600">
+                                  Best Streak
+                                </div>
                               </div>
                               <div>
                                 <div className="text-lg font-bold text-purple-600">
                                   {Math.round(progress)}%
                                 </div>
-                                <div className="text-xs text-gray-600">Complete</div>
+                                <div className="text-xs text-gray-600">
+                                  Complete
+                                </div>
                               </div>
                             </div>
 
@@ -460,13 +525,15 @@ export const EnhancedLearningGoalsPanel: React.FC<
                             startDate: new Date().toISOString(),
                             description: "Learn 50 words this week",
                           };
-                          setGoals(prev => [...prev, newGoal]);
+                          setGoals((prev) => [...prev, newGoal]);
                           setHasUnsavedChanges(true);
                         }}
                       >
                         <div className="text-left">
                           <div className="font-medium">Weekly Challenge</div>
-                          <div className="text-xs text-gray-600">Learn 50 words this week</div>
+                          <div className="text-xs text-gray-600">
+                            Learn 50 words this week
+                          </div>
                         </div>
                         <ChevronRight className="w-4 h-4 ml-auto" />
                       </Button>
@@ -491,7 +558,9 @@ export const EnhancedLearningGoalsPanel: React.FC<
                         <div className="text-2xl font-bold text-blue-600">
                           {currentProgress.wordsLearned}
                         </div>
-                        <div className="text-sm text-gray-600">Words Learned</div>
+                        <div className="text-sm text-gray-600">
+                          Words Learned
+                        </div>
                       </div>
                       <div className="text-center">
                         <div className="text-2xl font-bold text-green-600">
@@ -509,14 +578,20 @@ export const EnhancedLearningGoalsPanel: React.FC<
                     <h4 className="font-semibold mb-3">Category Progress</h4>
                     <div className="space-y-3">
                       {categories.map((category) => (
-                        <div key={category.id} className="flex items-center gap-3">
+                        <div
+                          key={category.id}
+                          className="flex items-center gap-3"
+                        >
                           <span className="text-xl">{category.emoji}</span>
                           <div className="flex-1">
                             <div className="flex justify-between text-sm mb-1">
                               <span>{category.name}</span>
                               <span>{category.progress}%</span>
                             </div>
-                            <Progress value={category.progress} className="h-2" />
+                            <Progress
+                              value={category.progress}
+                              className="h-2"
+                            />
                           </div>
                         </div>
                       ))}
@@ -533,13 +608,17 @@ export const EnhancedLearningGoalsPanel: React.FC<
                         <div className="text-xl font-bold text-educational-blue">
                           {analytics.weeklyAverage}
                         </div>
-                        <div className="text-xs text-gray-600">Avg Words/Day</div>
+                        <div className="text-xs text-gray-600">
+                          Avg Words/Day
+                        </div>
                       </div>
                       <div>
                         <div className="text-xl font-bold text-educational-orange">
                           {Math.round(analytics.goalCompletionRate)}%
                         </div>
-                        <div className="text-xs text-gray-600">Goal Completion</div>
+                        <div className="text-xs text-gray-600">
+                          Goal Completion
+                        </div>
                       </div>
                       <div>
                         <div className="text-xl font-bold text-educational-green">
@@ -567,23 +646,35 @@ export const EnhancedLearningGoalsPanel: React.FC<
                       <div className="flex items-center justify-between p-3 bg-green-50 rounded-lg">
                         <div className="flex items-center gap-2">
                           <TrendingUp className="w-4 h-4 text-green-600" />
-                          <span className="text-sm font-medium">Accuracy Improving</span>
+                          <span className="text-sm font-medium">
+                            Accuracy Improving
+                          </span>
                         </div>
-                        <span className="text-xs text-green-600">+5% this week</span>
+                        <span className="text-xs text-green-600">
+                          +5% this week
+                        </span>
                       </div>
                       <div className="flex items-center justify-between p-3 bg-blue-50 rounded-lg">
                         <div className="flex items-center gap-2">
                           <Clock className="w-4 h-4 text-blue-600" />
-                          <span className="text-sm font-medium">Peak Learning Time</span>
+                          <span className="text-sm font-medium">
+                            Peak Learning Time
+                          </span>
                         </div>
-                        <span className="text-xs text-blue-600">9:00 AM - 10:00 AM</span>
+                        <span className="text-xs text-blue-600">
+                          9:00 AM - 10:00 AM
+                        </span>
                       </div>
                       <div className="flex items-center justify-between p-3 bg-purple-50 rounded-lg">
                         <div className="flex items-center gap-2">
                           <Heart className="w-4 h-4 text-purple-600" />
-                          <span className="text-sm font-medium">Favorite Category</span>
+                          <span className="text-sm font-medium">
+                            Favorite Category
+                          </span>
                         </div>
-                        <span className="text-xs text-purple-600">Colors (90% mastery)</span>
+                        <span className="text-xs text-purple-600">
+                          Colors (90% mastery)
+                        </span>
                       </div>
                     </div>
                   </CardContent>
@@ -598,13 +689,21 @@ export const EnhancedLearningGoalsPanel: React.FC<
                     </h4>
                     <div className="space-y-2">
                       <div className="p-2 bg-white/60 rounded-lg">
-                        <p className="text-sm">Focus on <strong>Numbers</strong> category - only 45% mastery</p>
+                        <p className="text-sm">
+                          Focus on <strong>Numbers</strong> category - only 45%
+                          mastery
+                        </p>
                       </div>
                       <div className="p-2 bg-white/60 rounded-lg">
-                        <p className="text-sm">Consider increasing daily goal to <strong>15 words</strong></p>
+                        <p className="text-sm">
+                          Consider increasing daily goal to{" "}
+                          <strong>15 words</strong>
+                        </p>
                       </div>
                       <div className="p-2 bg-white/60 rounded-lg">
-                        <p className="text-sm">Try evening sessions for better retention</p>
+                        <p className="text-sm">
+                          Try evening sessions for better retention
+                        </p>
                       </div>
                     </div>
                   </CardContent>
@@ -621,7 +720,9 @@ export const EnhancedLearningGoalsPanel: React.FC<
                 {/* Auto-adjustment Settings */}
                 <Card>
                   <CardContent className="p-4">
-                    <h4 className="font-semibold mb-3">Smart Goal Management</h4>
+                    <h4 className="font-semibold mb-3">
+                      Smart Goal Management
+                    </h4>
                     <div className="space-y-3">
                       <div className="flex items-center justify-between">
                         <div>
@@ -633,7 +734,10 @@ export const EnhancedLearningGoalsPanel: React.FC<
                         <CompactMobileSwitch
                           checked={preferences.autoAdjustGoals}
                           onCheckedChange={(checked) => {
-                            setPreferences(prev => ({ ...prev, autoAdjustGoals: checked }));
+                            setPreferences((prev) => ({
+                              ...prev,
+                              autoAdjustGoals: checked,
+                            }));
                             setHasUnsavedChanges(true);
                           }}
                         />
@@ -648,7 +752,10 @@ export const EnhancedLearningGoalsPanel: React.FC<
                         <CompactMobileSwitch
                           checked={preferences.adaptiveDifficulty}
                           onCheckedChange={(checked) => {
-                            setPreferences(prev => ({ ...prev, adaptiveDifficulty: checked }));
+                            setPreferences((prev) => ({
+                              ...prev,
+                              adaptiveDifficulty: checked,
+                            }));
                             setHasUnsavedChanges(true);
                           }}
                         />
@@ -663,26 +770,51 @@ export const EnhancedLearningGoalsPanel: React.FC<
                     <h4 className="font-semibold mb-3">Motivation Style</h4>
                     <div className="grid gap-2">
                       {[
-                        { id: "encouraging", label: "Encouraging", emoji: "🌟", desc: "Positive reinforcement" },
-                        { id: "challenging", label: "Challenging", emoji: "🎯", desc: "Push your limits" },
-                        { id: "balanced", label: "Balanced", emoji: "⚖️", desc: "Mix of both styles" },
+                        {
+                          id: "encouraging",
+                          label: "Encouraging",
+                          emoji: "🌟",
+                          desc: "Positive reinforcement",
+                        },
+                        {
+                          id: "challenging",
+                          label: "Challenging",
+                          emoji: "🎯",
+                          desc: "Push your limits",
+                        },
+                        {
+                          id: "balanced",
+                          label: "Balanced",
+                          emoji: "⚖️",
+                          desc: "Mix of both styles",
+                        },
                       ].map((style) => (
                         <Button
                           key={style.id}
-                          variant={preferences.motivationStyle === style.id ? "default" : "outline"}
+                          variant={
+                            preferences.motivationStyle === style.id
+                              ? "default"
+                              : "outline"
+                          }
                           className={cn(
                             "h-auto p-3 justify-start",
-                            preferences.motivationStyle === style.id && "bg-educational-blue text-white"
+                            preferences.motivationStyle === style.id &&
+                              "bg-educational-blue text-white",
                           )}
                           onClick={() => {
-                            setPreferences(prev => ({ ...prev, motivationStyle: style.id as any }));
+                            setPreferences((prev) => ({
+                              ...prev,
+                              motivationStyle: style.id as any,
+                            }));
                             setHasUnsavedChanges(true);
                           }}
                         >
                           <span className="text-lg mr-3">{style.emoji}</span>
                           <div className="text-left">
                             <div className="font-medium">{style.label}</div>
-                            <div className="text-xs opacity-75">{style.desc}</div>
+                            <div className="text-xs opacity-75">
+                              {style.desc}
+                            </div>
                           </div>
                         </Button>
                       ))}
@@ -696,26 +828,36 @@ export const EnhancedLearningGoalsPanel: React.FC<
                     <h4 className="font-semibold mb-3">Focus Areas</h4>
                     <div className="grid grid-cols-2 gap-2">
                       {[
-                        { id: "vocabulary", label: "Vocabulary", icon: BookOpen },
-                        { id: "pronunciation", label: "Pronunciation", icon: PlayCircle },
+                        {
+                          id: "vocabulary",
+                          label: "Vocabulary",
+                          icon: BookOpen,
+                        },
+                        {
+                          id: "pronunciation",
+                          label: "Pronunciation",
+                          icon: PlayCircle,
+                        },
                         { id: "memory", label: "Memory", icon: Brain },
                         { id: "speed", label: "Speed", icon: Timer },
                       ].map((area) => {
-                        const isSelected = preferences.focusAreas.includes(area.id);
+                        const isSelected = preferences.focusAreas.includes(
+                          area.id,
+                        );
                         return (
                           <Button
                             key={area.id}
                             variant={isSelected ? "default" : "outline"}
                             className={cn(
                               "h-12 flex flex-col gap-1 text-xs",
-                              isSelected && "bg-educational-purple text-white"
+                              isSelected && "bg-educational-purple text-white",
                             )}
                             onClick={() => {
-                              setPreferences(prev => ({
+                              setPreferences((prev) => ({
                                 ...prev,
                                 focusAreas: isSelected
-                                  ? prev.focusAreas.filter(a => a !== area.id)
-                                  : [...prev.focusAreas, area.id]
+                                  ? prev.focusAreas.filter((a) => a !== area.id)
+                                  : [...prev.focusAreas, area.id],
                               }));
                               setHasUnsavedChanges(true);
                             }}

@@ -1,4 +1,4 @@
-import { SessionData } from '@/hooks/useSessionPersistence';
+import { SessionData } from "@/hooks/useSessionPersistence";
 
 interface PersistenceServiceConfig {
   autoSaveInterval: number;
@@ -13,7 +13,7 @@ interface QueuedSave {
   data: Partial<SessionData>;
   timestamp: number;
   retries: number;
-  priority: 'low' | 'medium' | 'high';
+  priority: "low" | "medium" | "high";
 }
 
 class SessionPersistenceService {
@@ -57,38 +57,44 @@ class SessionPersistenceService {
   private async initIndexedDB(): Promise<void> {
     return new Promise((resolve, reject) => {
       if (!window.indexedDB) {
-        console.warn('IndexedDB not supported, falling back to localStorage only');
+        console.warn(
+          "IndexedDB not supported, falling back to localStorage only",
+        );
         resolve();
         return;
       }
 
-      const request = indexedDB.open('WordAdventureDB', 1);
+      const request = indexedDB.open("WordAdventureDB", 1);
 
       request.onerror = () => {
-        console.error('Failed to open IndexedDB:', request.error);
+        console.error("Failed to open IndexedDB:", request.error);
         reject(request.error);
       };
 
       request.onsuccess = () => {
         this.indexedDB = request.result;
-        console.log('IndexedDB initialized successfully');
+        console.log("IndexedDB initialized successfully");
         resolve();
       };
 
       request.onupgradeneeded = (event) => {
         const db = (event.target as IDBOpenDBRequest).result;
-        
+
         // Create object store for session data
-        if (!db.objectStoreNames.contains('sessions')) {
-          const sessionStore = db.createObjectStore('sessions', { keyPath: 'id' });
-          sessionStore.createIndex('timestamp', 'timestamp', { unique: false });
-          sessionStore.createIndex('type', 'type', { unique: false });
+        if (!db.objectStoreNames.contains("sessions")) {
+          const sessionStore = db.createObjectStore("sessions", {
+            keyPath: "id",
+          });
+          sessionStore.createIndex("timestamp", "timestamp", { unique: false });
+          sessionStore.createIndex("type", "type", { unique: false });
         }
 
         // Create object store for backup data
-        if (!db.objectStoreNames.contains('backups')) {
-          const backupStore = db.createObjectStore('backups', { keyPath: 'id' });
-          backupStore.createIndex('timestamp', 'timestamp', { unique: false });
+        if (!db.objectStoreNames.contains("backups")) {
+          const backupStore = db.createObjectStore("backups", {
+            keyPath: "id",
+          });
+          backupStore.createIndex("timestamp", "timestamp", { unique: false });
         }
       };
     });
@@ -105,9 +111,9 @@ class SessionPersistenceService {
       }
     };
 
-    window.addEventListener('online', updateNetworkStatus);
-    window.addEventListener('offline', updateNetworkStatus);
-    
+    window.addEventListener("online", updateNetworkStatus);
+    window.addEventListener("offline", updateNetworkStatus);
+
     // Initial status
     this.networkStatus = navigator.onLine;
   }
@@ -132,9 +138,9 @@ class SessionPersistenceService {
       }
     };
 
-    window.addEventListener('beforeunload', handleBeforeUnload);
-    window.addEventListener('pagehide', handlePageHide);
-    document.addEventListener('visibilitychange', handleVisibilityChange);
+    window.addEventListener("beforeunload", handleBeforeUnload);
+    window.addEventListener("pagehide", handlePageHide);
+    document.addEventListener("visibilitychange", handleVisibilityChange);
   }
 
   private startBackgroundProcessing() {
@@ -146,16 +152,19 @@ class SessionPersistenceService {
     }, this.config.autoSaveInterval);
 
     // Clear interval when page is hidden to save resources
-    document.addEventListener('visibilitychange', () => {
+    document.addEventListener("visibilitychange", () => {
       if (document.hidden) {
         clearInterval(processInterval);
       }
     });
   }
 
-  public queueSave(data: Partial<SessionData>, priority: 'low' | 'medium' | 'high' = 'medium'): string {
+  public queueSave(
+    data: Partial<SessionData>,
+    priority: "low" | "medium" | "high" = "medium",
+  ): string {
     const id = `save_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
-    
+
     const queuedSave: QueuedSave = {
       id,
       data,
@@ -196,14 +205,16 @@ class SessionPersistenceService {
           await this.executeSave(queuedSave);
         } catch (error) {
           console.error(`Failed to save ${queuedSave.id}:`, error);
-          
+
           // Retry logic
           if (queuedSave.retries < this.config.maxRetries) {
             queuedSave.retries++;
             queuedSave.timestamp = Date.now();
             this.saveQueue.unshift(queuedSave); // Add back to front for immediate retry
           } else {
-            console.error(`Giving up on save ${queuedSave.id} after ${this.config.maxRetries} retries`);
+            console.error(
+              `Giving up on save ${queuedSave.id} after ${this.config.maxRetries} retries`,
+            );
           }
         }
       });
@@ -211,9 +222,9 @@ class SessionPersistenceService {
       await Promise.allSettled(savePromises);
     } finally {
       this.isProcessing = false;
-      
+
       // Schedule retry if there are failed items
-      if (this.saveQueue.some(save => save.retries > 0)) {
+      if (this.saveQueue.some((save) => save.retries > 0)) {
         this.scheduleRetry();
       }
     }
@@ -236,13 +247,13 @@ class SessionPersistenceService {
     try {
       const existingData = this.loadFromLocalStorage() || {};
       const mergedData = { ...existingData, ...data, lastSaved: Date.now() };
-      
+
       // Compress and save
       const compressed = this.compressData(mergedData);
-      localStorage.setItem('wordAdventure_sessionData', compressed);
+      localStorage.setItem("wordAdventure_sessionData", compressed);
     } catch (localStorageError) {
-      console.warn('localStorage save failed:', localStorageError);
-      
+      console.warn("localStorage save failed:", localStorageError);
+
       // Fallback to IndexedDB if available
       if (this.indexedDB) {
         await this.saveToIndexedDB(queuedSave);
@@ -256,7 +267,7 @@ class SessionPersistenceService {
       try {
         await this.saveToIndexedDB(queuedSave);
       } catch (indexedDBError) {
-        console.warn('IndexedDB backup save failed:', indexedDBError);
+        console.warn("IndexedDB backup save failed:", indexedDBError);
         // Don't throw, localStorage save might have succeeded
       }
     }
@@ -266,24 +277,27 @@ class SessionPersistenceService {
       try {
         await this.syncToNetwork(data);
       } catch (networkError) {
-        console.warn('Network sync failed:', networkError);
+        console.warn("Network sync failed:", networkError);
         // Don't throw, local saves might have succeeded
       }
     }
   }
 
   private async saveToIndexedDB(queuedSave: QueuedSave): Promise<void> {
-    if (!this.indexedDB) throw new Error('IndexedDB not available');
+    if (!this.indexedDB) throw new Error("IndexedDB not available");
 
     return new Promise((resolve, reject) => {
-      const transaction = this.indexedDB!.transaction(['sessions'], 'readwrite');
-      const store = transaction.objectStore('sessions');
+      const transaction = this.indexedDB!.transaction(
+        ["sessions"],
+        "readwrite",
+      );
+      const store = transaction.objectStore("sessions");
 
       const sessionRecord = {
         id: queuedSave.id,
         data: queuedSave.data,
         timestamp: queuedSave.timestamp,
-        type: 'session_data',
+        type: "session_data",
       };
 
       const request = store.put(sessionRecord);
@@ -296,15 +310,15 @@ class SessionPersistenceService {
   private async syncToNetwork(data: Partial<SessionData>): Promise<void> {
     // This would sync to a backend API if available
     // For now, this is a placeholder for future network sync functionality
-    
+
     if (!navigator.onLine) {
-      throw new Error('Network not available');
+      throw new Error("Network not available");
     }
 
     // Simulate network request
     return new Promise((resolve) => {
       setTimeout(() => {
-        console.log('Session data synced to network (simulated)');
+        console.log("Session data synced to network (simulated)");
         resolve();
       }, 100);
     });
@@ -312,12 +326,12 @@ class SessionPersistenceService {
 
   private loadFromLocalStorage(): SessionData | null {
     try {
-      const saved = localStorage.getItem('wordAdventure_sessionData');
+      const saved = localStorage.getItem("wordAdventure_sessionData");
       if (!saved) return null;
-      
+
       return this.decompressData(saved);
     } catch (error) {
-      console.error('Failed to load from localStorage:', error);
+      console.error("Failed to load from localStorage:", error);
       return null;
     }
   }
@@ -325,7 +339,7 @@ class SessionPersistenceService {
   private compressData(data: any): string {
     // Simple compression by removing whitespace and reducing precision
     return JSON.stringify(data, (key, value) => {
-      if (typeof value === 'number' && !Number.isInteger(value)) {
+      if (typeof value === "number" && !Number.isInteger(value)) {
         return Math.round(value * 100) / 100;
       }
       return value;
@@ -336,7 +350,7 @@ class SessionPersistenceService {
     try {
       return JSON.parse(compressed);
     } catch (error) {
-      console.error('Failed to decompress data:', error);
+      console.error("Failed to decompress data:", error);
       return null;
     }
   }
@@ -346,20 +360,20 @@ class SessionPersistenceService {
     if (this.debounceTimer) {
       clearTimeout(this.debounceTimer);
     }
-    
+
     this.processQueue();
   }
 
   public async loadLatestSession(): Promise<SessionData | null> {
     // Try localStorage first
     let data = this.loadFromLocalStorage();
-    
+
     if (!data && this.indexedDB) {
       // Fallback to IndexedDB
       try {
         data = await this.loadFromIndexedDB();
       } catch (error) {
-        console.error('Failed to load from IndexedDB:', error);
+        console.error("Failed to load from IndexedDB:", error);
       }
     }
 
@@ -370,12 +384,12 @@ class SessionPersistenceService {
     if (!this.indexedDB) return null;
 
     return new Promise((resolve, reject) => {
-      const transaction = this.indexedDB!.transaction(['sessions'], 'readonly');
-      const store = transaction.objectStore('sessions');
-      const index = store.index('timestamp');
+      const transaction = this.indexedDB!.transaction(["sessions"], "readonly");
+      const store = transaction.objectStore("sessions");
+      const index = store.index("timestamp");
 
       // Get the most recent session
-      const request = index.openCursor(null, 'prev');
+      const request = index.openCursor(null, "prev");
 
       request.onsuccess = () => {
         const cursor = request.result;
@@ -392,17 +406,20 @@ class SessionPersistenceService {
 
   public clearAllSessions(): void {
     // Clear localStorage
-    localStorage.removeItem('wordAdventure_sessionData');
-    localStorage.removeItem('wordAdventure_sessionBackup');
+    localStorage.removeItem("wordAdventure_sessionData");
+    localStorage.removeItem("wordAdventure_sessionBackup");
 
     // Clear queue
     this.saveQueue = [];
 
     // Clear IndexedDB
     if (this.indexedDB) {
-      const transaction = this.indexedDB.transaction(['sessions', 'backups'], 'readwrite');
-      transaction.objectStore('sessions').clear();
-      transaction.objectStore('backups').clear();
+      const transaction = this.indexedDB.transaction(
+        ["sessions", "backups"],
+        "readwrite",
+      );
+      transaction.objectStore("sessions").clear();
+      transaction.objectStore("backups").clear();
     }
   }
 
@@ -419,7 +436,9 @@ class SessionPersistenceService {
 // Global singleton instance
 let persistenceService: SessionPersistenceService | null = null;
 
-export const getSessionPersistenceService = (config?: Partial<PersistenceServiceConfig>): SessionPersistenceService => {
+export const getSessionPersistenceService = (
+  config?: Partial<PersistenceServiceConfig>,
+): SessionPersistenceService => {
   if (!persistenceService) {
     persistenceService = new SessionPersistenceService(config);
   }

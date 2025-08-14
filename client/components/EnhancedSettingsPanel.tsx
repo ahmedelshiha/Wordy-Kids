@@ -69,7 +69,9 @@ export const EnhancedSettingsPanel: React.FC<EnhancedSettingsPanelProps> = ({
 }) => {
   // Audio settings
   const [soundOn, setSoundOn] = useState(isSoundEnabled());
-  const [uiInteractionSounds, setUiInteractionSounds] = useState(isUIInteractionSoundsEnabled());
+  const [uiInteractionSounds, setUiInteractionSounds] = useState(
+    isUIInteractionSoundsEnabled(),
+  );
   const [selectedVoiceType, setSelectedVoiceType] =
     useState<VoiceType>("woman");
   const [speechRate, setSpeechRate] = useState([1]);

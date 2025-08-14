@@ -1,15 +1,15 @@
-import React, { useEffect, useState, useCallback } from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import { Progress } from '@/components/ui/progress';
-import { 
-  RotateCcw, 
-  Clock, 
-  Wifi, 
-  WifiOff, 
-  AlertCircle, 
-  CheckCircle2, 
+import React, { useEffect, useState, useCallback } from "react";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { Progress } from "@/components/ui/progress";
+import {
+  RotateCcw,
+  Clock,
+  Wifi,
+  WifiOff,
+  AlertCircle,
+  CheckCircle2,
   Database,
   CloudOff,
   RefreshCw,
@@ -17,10 +17,13 @@ import {
   TrendingUp,
   Calendar,
   Target,
-  BookOpen
-} from 'lucide-react';
-import { SessionData, useSessionPersistence } from '@/hooks/useSessionPersistence';
-import { getSessionPersistenceService } from '@/lib/sessionPersistenceService';
+  BookOpen,
+} from "lucide-react";
+import {
+  SessionData,
+  useSessionPersistence,
+} from "@/hooks/useSessionPersistence";
+import { getSessionPersistenceService } from "@/lib/sessionPersistenceService";
 
 interface SessionRestorationProps {
   onRestore: (sessionData: SessionData) => void;
@@ -54,11 +57,14 @@ export const SessionRestoration: React.FC<SessionRestorationProps> = ({
   const [sessionInfo, setSessionInfo] = useState<SessionInfo | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [networkStatus, setNetworkStatus] = useState(navigator.onLine);
-  const [restorationStatus, setRestorationStatus] = useState<'idle' | 'restoring' | 'success' | 'error'>('idle');
+  const [restorationStatus, setRestorationStatus] = useState<
+    "idle" | "restoring" | "success" | "error"
+  >("idle");
   const [autoRestoreCountdown, setAutoRestoreCountdown] = useState(10);
   const [showAutoRestore, setShowAutoRestore] = useState(false);
 
-  const { loadSession, isSessionActive, sessionAge, compressedSize } = useSessionPersistence();
+  const { loadSession, isSessionActive, sessionAge, compressedSize } =
+    useSessionPersistence();
   const persistenceService = getSessionPersistenceService();
 
   // Format time duration
@@ -87,7 +93,7 @@ export const SessionRestoration: React.FC<SessionRestorationProps> = ({
     try {
       // Try multiple sources for session data
       let data = loadSession();
-      
+
       if (!data) {
         // Fallback to persistence service
         data = await persistenceService.loadLatestSession();
@@ -95,7 +101,7 @@ export const SessionRestoration: React.FC<SessionRestorationProps> = ({
 
       if (data) {
         setSessionData(data);
-        
+
         // Analyze session information
         const info: SessionInfo = {
           age: Date.now() - (data.lastSaved || 0),
@@ -105,22 +111,23 @@ export const SessionRestoration: React.FC<SessionRestorationProps> = ({
             accuracy: data.currentProgress?.accuracy || 0,
             sessionCount: data.currentProgress?.sessionCount || 0,
           },
-          lastTab: data.activeTab || 'dashboard',
+          lastTab: data.activeTab || "dashboard",
           categories: data.selectedCategory ? [data.selectedCategory] : [],
           timeSpent: data.totalTimeSpent || 0,
         };
-        
+
         setSessionInfo(info);
 
         // Show auto-restore if session is recent and auto-restore is enabled
-        if (autoRestoreEnabled && info.age < 30 * 60 * 1000) { // Less than 30 minutes old
+        if (autoRestoreEnabled && info.age < 30 * 60 * 1000) {
+          // Less than 30 minutes old
           setShowAutoRestore(true);
           setAutoRestoreCountdown(10);
         }
       }
     } catch (error) {
-      console.error('Failed to load session data:', error);
-      setRestorationStatus('error');
+      console.error("Failed to load session data:", error);
+      setRestorationStatus("error");
     } finally {
       setIsLoading(false);
     }
@@ -134,7 +141,7 @@ export const SessionRestoration: React.FC<SessionRestorationProps> = ({
       if (autoRestoreCountdown === 1) {
         handleRestore();
       } else {
-        setAutoRestoreCountdown(prev => prev - 1);
+        setAutoRestoreCountdown((prev) => prev - 1);
       }
     }, 1000);
 
@@ -147,12 +154,12 @@ export const SessionRestoration: React.FC<SessionRestorationProps> = ({
       setNetworkStatus(navigator.onLine);
     };
 
-    window.addEventListener('online', handleNetworkChange);
-    window.addEventListener('offline', handleNetworkChange);
+    window.addEventListener("online", handleNetworkChange);
+    window.addEventListener("offline", handleNetworkChange);
 
     return () => {
-      window.removeEventListener('online', handleNetworkChange);
-      window.removeEventListener('offline', handleNetworkChange);
+      window.removeEventListener("online", handleNetworkChange);
+      window.removeEventListener("offline", handleNetworkChange);
     };
   }, []);
 
@@ -164,22 +171,22 @@ export const SessionRestoration: React.FC<SessionRestorationProps> = ({
   const handleRestore = async () => {
     if (!sessionData) return;
 
-    setRestorationStatus('restoring');
+    setRestorationStatus("restoring");
     setShowAutoRestore(false);
 
     try {
       // Simulate restoration delay for better UX
-      await new Promise(resolve => setTimeout(resolve, 500));
-      
+      await new Promise((resolve) => setTimeout(resolve, 500));
+
       onRestore(sessionData);
-      setRestorationStatus('success');
-      
+      setRestorationStatus("success");
+
       setTimeout(() => {
         onDismiss();
       }, 1000);
     } catch (error) {
-      console.error('Failed to restore session:', error);
-      setRestorationStatus('error');
+      console.error("Failed to restore session:", error);
+      setRestorationStatus("error");
     }
   };
 
@@ -199,7 +206,9 @@ export const SessionRestoration: React.FC<SessionRestorationProps> = ({
         <CardContent className="p-6">
           <div className="flex items-center justify-center space-x-2">
             <RefreshCw className="w-5 h-5 animate-spin text-blue-500" />
-            <span className="text-sm text-gray-600">Loading session data...</span>
+            <span className="text-sm text-gray-600">
+              Loading session data...
+            </span>
           </div>
         </CardContent>
       </Card>
@@ -211,11 +220,16 @@ export const SessionRestoration: React.FC<SessionRestorationProps> = ({
       <Card className="w-full max-w-md mx-auto border-green-200 bg-green-50">
         <CardContent className="p-6 text-center">
           <CheckCircle2 className="w-12 h-12 text-green-500 mx-auto mb-3" />
-          <h3 className="text-lg font-semibold text-green-800 mb-2">Fresh Start!</h3>
+          <h3 className="text-lg font-semibold text-green-800 mb-2">
+            Fresh Start!
+          </h3>
           <p className="text-sm text-green-600 mb-4">
             No previous session found. You're starting with a clean slate.
           </p>
-          <Button onClick={handleNewSession} className="bg-green-600 hover:bg-green-700">
+          <Button
+            onClick={handleNewSession}
+            className="bg-green-600 hover:bg-green-700"
+          >
             Begin Learning Journey
           </Button>
         </CardContent>
@@ -233,12 +247,18 @@ export const SessionRestoration: React.FC<SessionRestorationProps> = ({
           </CardTitle>
           <div className="flex items-center gap-2">
             {networkStatus ? (
-              <Badge variant="outline" className="text-green-600 border-green-300">
+              <Badge
+                variant="outline"
+                className="text-green-600 border-green-300"
+              >
                 <Wifi className="w-3 h-3 mr-1" />
                 Online
               </Badge>
             ) : (
-              <Badge variant="outline" className="text-orange-600 border-orange-300">
+              <Badge
+                variant="outline"
+                className="text-orange-600 border-orange-300"
+              >
                 <WifiOff className="w-3 h-3 mr-1" />
                 Offline
               </Badge>
@@ -272,8 +292,8 @@ export const SessionRestoration: React.FC<SessionRestorationProps> = ({
                 Cancel
               </Button>
             </div>
-            <Progress 
-              value={(10 - autoRestoreCountdown) * 10} 
+            <Progress
+              value={(10 - autoRestoreCountdown) * 10}
               className="h-2 bg-blue-200"
             />
           </div>
@@ -354,7 +374,7 @@ export const SessionRestoration: React.FC<SessionRestorationProps> = ({
         )}
 
         {/* Restoration status */}
-        {restorationStatus === 'restoring' && (
+        {restorationStatus === "restoring" && (
           <div className="bg-blue-100 border border-blue-300 rounded-lg p-3">
             <div className="flex items-center justify-center space-x-2">
               <RefreshCw className="w-4 h-4 animate-spin text-blue-600" />
@@ -365,7 +385,7 @@ export const SessionRestoration: React.FC<SessionRestorationProps> = ({
           </div>
         )}
 
-        {restorationStatus === 'success' && (
+        {restorationStatus === "success" && (
           <div className="bg-green-100 border border-green-300 rounded-lg p-3">
             <div className="flex items-center justify-center space-x-2">
               <CheckCircle2 className="w-4 h-4 text-green-600" />
@@ -376,7 +396,7 @@ export const SessionRestoration: React.FC<SessionRestorationProps> = ({
           </div>
         )}
 
-        {restorationStatus === 'error' && (
+        {restorationStatus === "error" && (
           <div className="bg-red-100 border border-red-300 rounded-lg p-3">
             <div className="flex items-center justify-center space-x-2">
               <AlertCircle className="w-4 h-4 text-red-600" />
@@ -388,7 +408,7 @@ export const SessionRestoration: React.FC<SessionRestorationProps> = ({
         )}
 
         {/* Action buttons */}
-        {restorationStatus === 'idle' && (
+        {restorationStatus === "idle" && (
           <div className="flex gap-2 pt-2">
             <Button
               onClick={handleRestore}
