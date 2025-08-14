@@ -12,14 +12,18 @@ import {
   LogOut,
   Sword,
   Shield,
+  ArrowLeft,
+  Home,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface MobileBottomNavProps {
   activeTab: string;
+  userRole: 'child' | 'parent';
   onTabChange: (tab: string) => void;
   onSettingsClick: () => void;
   onParentClick: () => void;
+  onBackToChild?: () => void;
   onAdminClick: () => void;
   onSignOut: () => void;
   showMoreMenu: boolean;
@@ -29,16 +33,42 @@ interface MobileBottomNavProps {
 
 export function MobileBottomNav({
   activeTab,
+  userRole,
   onTabChange,
   onSettingsClick,
   onParentClick,
+  onBackToChild,
   onAdminClick,
   onSignOut,
   showMoreMenu,
   onMoreToggle,
   achievementCount = 0,
 }: MobileBottomNavProps) {
-  const primaryTabs = [
+  // Different tabs based on user role
+  const primaryTabs = userRole === 'parent' ? [
+    {
+      id: "back-to-child",
+      emoji: "👦",
+      label: "Back to Learning",
+      icon: ArrowLeft,
+      color: "from-educational-blue to-educational-purple",
+      bgColor: "bg-blue-100",
+      textColor: "text-blue-600",
+      badge: undefined,
+      action: onBackToChild,
+    },
+    {
+      id: "parent-home",
+      emoji: "👨‍👩‍👧‍👦",
+      label: "Parent Dashboard",
+      icon: Users,
+      color: "from-purple-500 to-pink-500",
+      bgColor: "bg-purple-100",
+      textColor: "text-purple-600",
+      badge: undefined,
+      action: () => {}, // Already in parent mode
+    }
+  ] : [
     {
       id: "dashboard",
       emoji: "🏠",
@@ -166,10 +196,16 @@ export function MobileBottomNav({
             {primaryTabs.map((tab) => (
               <button
                 key={tab.id}
-                onClick={() => onTabChange(tab.id)}
+                onClick={() => {
+                  if (tab.action) {
+                    tab.action();
+                  } else {
+                    onTabChange(tab.id);
+                  }
+                }}
                 className={cn(
                   "flex flex-col items-center gap-1 p-2 rounded-xl transition-all duration-200 transform active:scale-95 relative min-w-0 flex-1 mx-0.5 min-h-[60px] justify-center",
-                  activeTab === tab.id
+                  (activeTab === tab.id || (userRole === 'parent' && tab.id === 'parent-home'))
                     ? `bg-gradient-to-br ${tab.color} text-white shadow-lg`
                     : `${tab.bgColor} ${tab.textColor}`,
                 )}
