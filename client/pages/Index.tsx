@@ -3294,11 +3294,16 @@ export default function Index({ initialProfile }: IndexProps) {
             />
           )}
 
-          {/* Mobile Bottom Navigation */}
+          {/* Mobile Bottom Navigation - Show for both child and parent modes */}
           <MobileBottomNav
-            activeTab={activeTab}
+            activeTab={userRole === "parent" ? "parent" : activeTab}
             onTabChange={(tab) => {
-              setActiveTab(tab);
+              if (tab === "parent") {
+                setUserRole("parent");
+              } else {
+                setUserRole("child");
+                setActiveTab(tab);
+              }
               setShowMobileMoreMenu(false);
             }}
             onSettingsClick={() => {
@@ -3318,6 +3323,7 @@ export default function Index({ initialProfile }: IndexProps) {
               setShowMobileMoreMenu(false);
             }}
             showMoreMenu={showMobileMoreMenu}
+            userRole={userRole}
             onMoreToggle={() => setShowMobileMoreMenu(!showMobileMoreMenu)}
             achievementCount={
               learningStats.badges.filter((b) => b.earned).length
