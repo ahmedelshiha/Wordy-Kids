@@ -117,6 +117,7 @@ export const EnhancedSettingsPanel: React.FC<EnhancedSettingsPanelProps> = ({
   useEffect(() => {
     // Initialize settings from localStorage and audio service
     setSelectedVoiceType(audioService.getVoiceType());
+    setUiInteractionSounds(isUIInteractionSoundsEnabled());
     const voices = audioService.getAvailableVoices();
     setAvailableVoices(voices);
 
