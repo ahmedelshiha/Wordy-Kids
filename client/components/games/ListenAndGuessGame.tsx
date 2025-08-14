@@ -165,7 +165,9 @@ export default function ListenAndGuessGame({
   const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
   const [showCelebration, setShowCelebration] = useState(false);
   const [showSparkleExplosion, setShowSparkleExplosion] = useState(false);
-  const [achievementUnlocked, setAchievementUnlocked] = useState<string | null>(null);
+  const [achievementUnlocked, setAchievementUnlocked] = useState<string | null>(
+    null,
+  );
   const [sparkleCount, setSparkleCount] = useState(0);
   const [showCompletionPopup, setShowCompletionPopup] = useState(false);
   const [isRestarting, setIsRestarting] = useState(false);
@@ -232,7 +234,15 @@ export default function ListenAndGuessGame({
       difficulty ||
       (playerLevel <= 3 ? "easy" : playerLevel <= 7 ? "medium" : "hard");
     return generateDatabaseWords(rounds, category, difficultyLevel);
-  }, [words, rounds, category, difficulty, playerLevel, generateDatabaseWords, isRestarting]);
+  }, [
+    words,
+    rounds,
+    category,
+    difficulty,
+    playerLevel,
+    generateDatabaseWords,
+    isRestarting,
+  ]);
 
   // Precompute the sequence of rounds
   const sequence = useMemo(() => {
@@ -304,7 +314,7 @@ export default function ListenAndGuessGame({
         // Enhanced celebration effects with sparkles like other quizzes
         setShowCelebration(true);
         setShowSparkleExplosion(true);
-        setSparkleCount(prev => prev + 1);
+        setSparkleCount((prev) => prev + 1);
         audioService.playSuccessSound();
         fire();
 
@@ -571,8 +581,12 @@ export default function ListenAndGuessGame({
                   <Sparkles className="w-4 h-4 absolute -top-1 -right-1 animate-spin" />
                 </div>
                 <div>
-                  <div className="font-bold text-lg">🎉 Achievement Unlocked!</div>
-                  <div className="text-sm opacity-90">{achievementUnlocked}</div>
+                  <div className="font-bold text-lg">
+                    🎉 Achievement Unlocked!
+                  </div>
+                  <div className="text-sm opacity-90">
+                    {achievementUnlocked}
+                  </div>
                 </div>
               </div>
             </div>
@@ -591,7 +605,9 @@ export default function ListenAndGuessGame({
                 </div>
               </div>
 
-              <h2 className="text-lg sm:text-xl font-bold mb-2">🏆 Great Job!</h2>
+              <h2 className="text-lg sm:text-xl font-bold mb-2">
+                🏆 Great Job!
+              </h2>
               <p className="text-sm mb-3">
                 {correctCount}/{sequence.length} correct!
               </p>
@@ -599,11 +615,15 @@ export default function ListenAndGuessGame({
               {/* Compact Stats */}
               <div className="flex gap-2 mb-4 text-xs sm:text-sm">
                 <div className="bg-white/20 rounded-lg p-2 flex-1">
-                  <div className="text-lg sm:text-xl font-bold">{correctCount}</div>
+                  <div className="text-lg sm:text-xl font-bold">
+                    {correctCount}
+                  </div>
                   <div className="opacity-90 text-xs">Correct</div>
                 </div>
                 <div className="bg-white/20 rounded-lg p-2 flex-1">
-                  <div className="text-lg sm:text-xl font-bold">{bestStreak}</div>
+                  <div className="text-lg sm:text-xl font-bold">
+                    {bestStreak}
+                  </div>
                   <div className="opacity-90 text-xs">Streak</div>
                 </div>
               </div>
@@ -615,7 +635,9 @@ export default function ListenAndGuessGame({
                     <Crown className="w-3 h-3 sm:w-4 sm:h-4" />
                     <span className="font-bold text-xs">Achievement!</span>
                   </div>
-                  <div className="text-xs mt-0.5 opacity-90 truncate">{achievementUnlocked}</div>
+                  <div className="text-xs mt-0.5 opacity-90 truncate">
+                    {achievementUnlocked}
+                  </div>
                 </div>
               )}
 
@@ -633,7 +655,7 @@ export default function ListenAndGuessGame({
                     setShowSparkleExplosion(false);
                     setAchievementUnlocked(null);
                     setSparkleCount(0);
-                    setIsRestarting(prev => !prev); // Trigger regeneration
+                    setIsRestarting((prev) => !prev); // Trigger regeneration
                   }}
                   className="w-full bg-white/20 hover:bg-white/30 text-white font-bold py-2 px-4 rounded-lg transition-all duration-200 active:scale-95 flex items-center justify-center gap-2 text-sm touch-target"
                 >
