@@ -256,6 +256,13 @@ export function EnhancedAchievementPopup({
 
   const handleClaimReward = useCallback(() => {
     if (currentAchievement && !claimed.has(currentAchievement.id)) {
+      // Pause auto-close when claiming
+      setIsPaused(true);
+      if (autoCloseTimer) {
+        clearTimeout(autoCloseTimer);
+        setAutoCloseTimer(null);
+      }
+
       setClaimed((prev) => new Set(prev).add(currentAchievement.id));
       onAchievementClaim?.(currentAchievement);
       audioService.playCheerSound();
@@ -265,6 +272,7 @@ export function EnhancedAchievementPopup({
         setTimeout(() => {
           setCurrentIndex(currentIndex + 1);
           setShowReward(false);
+          setIsPaused(false); // Resume auto-close for next achievement
           setTimeout(() => setShowReward(true), 800);
         }, 1200);
       } else {
@@ -281,6 +289,7 @@ export function EnhancedAchievementPopup({
     achievements.length,
     onAchievementClaim,
     onClose,
+    autoCloseTimer,
   ]);
 
   const handleNext = useCallback(() => {
