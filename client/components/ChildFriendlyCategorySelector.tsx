@@ -328,6 +328,63 @@ const enrichedCategories: Category[] = [
         .length,
     },
   },
+  {
+    id: "colors",
+    name: "Colors",
+    icon: "🌈",
+    color: "bg-rainbow",
+    gradient: "from-red-400 via-yellow-400 to-blue-400",
+    wordCount: getWordsByCategory("colors").length,
+    description: "Discover beautiful colors that make the world bright!",
+    funFact: "Colors can change how we feel and think!",
+    difficultyBreakdown: {
+      easy: getWordsByCategory("colors").filter((w) => w.difficulty === "easy")
+        .length,
+      medium: getWordsByCategory("colors").filter(
+        (w) => w.difficulty === "medium",
+      ).length,
+      hard: getWordsByCategory("colors").filter((w) => w.difficulty === "hard")
+        .length,
+    },
+  },
+  {
+    id: "numbers",
+    name: "Numbers",
+    icon: "🔢",
+    color: "bg-educational-blue",
+    gradient: "from-blue-500 to-indigo-600",
+    wordCount: getWordsByCategory("numbers").length,
+    description: "Learn to count and explore the magic of numbers!",
+    funFact: "Numbers help us understand the world around us!",
+    difficultyBreakdown: {
+      easy: getWordsByCategory("numbers").filter((w) => w.difficulty === "easy")
+        .length,
+      medium: getWordsByCategory("numbers").filter(
+        (w) => w.difficulty === "medium",
+      ).length,
+      hard: getWordsByCategory("numbers").filter((w) => w.difficulty === "hard")
+        .length,
+    },
+  },
+  {
+    id: "objects",
+    name: "Objects",
+    icon: "🧸",
+    color: "bg-educational-purple",
+    gradient: "from-purple-400 to-purple-600",
+    wordCount: getWordsByCategory("objects").length,
+    description: "Explore everyday objects and fun things around you!",
+    funFact: "Objects tell stories about how people live!",
+    difficultyBreakdown: {
+      easy: getWordsByCategory("objects").filter((w) => w.difficulty === "easy")
+        .length,
+      medium: getWordsByCategory("objects").filter(
+        (w) => w.difficulty === "medium",
+      ).length,
+      hard: getWordsByCategory("objects").filter((w) => w.difficulty === "hard")
+        .length,
+    },
+  },
 ].filter((category) => category.wordCount > 0);
 
 export function ChildFriendlyCategorySelector({
