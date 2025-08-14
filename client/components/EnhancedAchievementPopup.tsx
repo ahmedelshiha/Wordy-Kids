@@ -60,6 +60,7 @@ interface EnhancedAchievementPopupProps {
   achievements: Achievement[];
   onClose: () => void;
   onAchievementClaim?: (achievement: Achievement) => void;
+  autoCloseDelay?: number; // Auto-close delay in milliseconds (default: 8000ms = 8 seconds)
 }
 
 const DIFFICULTY_COLORS = {
@@ -162,11 +163,17 @@ export function EnhancedAchievementPopup({
   achievements,
   onClose,
   onAchievementClaim,
+  autoCloseDelay = 8000, // Default 8 seconds
 }: EnhancedAchievementPopupProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [showReward, setShowReward] = useState(false);
   const [claimed, setClaimed] = useState<Set<string>>(new Set());
   const [isClosing, setIsClosing] = useState(false);
+  const [autoCloseTimer, setAutoCloseTimer] = useState<NodeJS.Timeout | null>(
+    null,
+  );
+  const [isPaused, setIsPaused] = useState(false);
+  const [timeRemaining, setTimeRemaining] = useState(autoCloseDelay);
 
   const currentAchievement = achievements[currentIndex];
 
@@ -198,8 +205,78 @@ export function EnhancedAchievementPopup({
     }
   }, [achievements.length, currentIndex, isClosing]);
 
+  // Auto-close timer management
+  useEffect(() => {
+    if (
+      achievements.length > 0 &&
+      !isClosing &&
+      !isPaused &&
+      autoCloseDelay > 0
+    ) {
+      setTimeRemaining(autoCloseDelay);
+
+      const startTime = Date.now();
+      const interval = setInterval(() => {
+        const elapsed = Date.now() - startTime;
+        const remaining = Math.max(0, autoCloseDelay - elapsed);
+        setTimeRemaining(remaining);
+
+        if (remaining <= 0) {
+          clearInterval(interval);
+          if (!isPaused) {
+            setIsClosing(true);
+            setTimeout(onClose, 300);
+          }
+        }
+      }, 100); // Update every 100ms for smooth progress
+
+      setAutoCloseTimer(interval as any);
+
+      return () => {
+        clearInterval(interval);
+      };
+    }
+  }, [
+    achievements.length,
+    currentIndex,
+    isClosing,
+    isPaused,
+    autoCloseDelay,
+    onClose,
+  ]);
+
+  // Cleanup timer on unmount
+  useEffect(() => {
+    return () => {
+      if (autoCloseTimer) {
+        clearTimeout(autoCloseTimer);
+      }
+    };
+  }, [autoCloseTimer]);
+
+  // Pause auto-close when user hovers or interacts
+  const handleMouseEnter = useCallback(() => {
+    setIsPaused(true);
+    if (autoCloseTimer) {
+      clearTimeout(autoCloseTimer);
+      setAutoCloseTimer(null);
+    }
+  }, [autoCloseTimer]);
+
+  const handleMouseLeave = useCallback(() => {
+    setIsPaused(false);
+    // Auto-close timer will restart via useEffect
+  }, []);
+
   const handleClaimReward = useCallback(() => {
     if (currentAchievement && !claimed.has(currentAchievement.id)) {
+      // Pause auto-close when claiming
+      setIsPaused(true);
+      if (autoCloseTimer) {
+        clearTimeout(autoCloseTimer);
+        setAutoCloseTimer(null);
+      }
+
       setClaimed((prev) => new Set(prev).add(currentAchievement.id));
       onAchievementClaim?.(currentAchievement);
       audioService.playCheerSound();
@@ -209,6 +286,7 @@ export function EnhancedAchievementPopup({
         setTimeout(() => {
           setCurrentIndex(currentIndex + 1);
           setShowReward(false);
+          setIsPaused(false); // Resume auto-close for next achievement
           setTimeout(() => setShowReward(true), 800);
         }, 1200);
       } else {
@@ -225,13 +303,19 @@ export function EnhancedAchievementPopup({
     achievements.length,
     onAchievementClaim,
     onClose,
+    autoCloseTimer,
   ]);
 
   const handleNext = useCallback(() => {
     if (currentIndex < achievements.length - 1) {
+      // Temporarily pause auto-close during navigation
+      setIsPaused(true);
       setCurrentIndex(currentIndex + 1);
       setShowReward(false);
-      setTimeout(() => setShowReward(true), 400);
+      setTimeout(() => {
+        setShowReward(true);
+        setIsPaused(false); // Resume auto-close for new achievement
+      }, 400);
     } else {
       setIsClosing(true);
       setTimeout(onClose, 300);
@@ -240,9 +324,14 @@ export function EnhancedAchievementPopup({
 
   const handlePrevious = useCallback(() => {
     if (currentIndex > 0) {
+      // Temporarily pause auto-close during navigation
+      setIsPaused(true);
       setCurrentIndex(currentIndex - 1);
       setShowReward(false);
-      setTimeout(() => setShowReward(true), 400);
+      setTimeout(() => {
+        setShowReward(true);
+        setIsPaused(false); // Resume auto-close for new achievement
+      }, 400);
     }
   }, [currentIndex]);
 
@@ -271,6 +360,10 @@ export function EnhancedAchievementPopup({
             exit={{ scale: 0.9, opacity: 0, y: -20 }}
             transition={{ type: "spring", duration: 0.4, damping: 20 }}
             className="relative w-full max-w-xs sm:max-w-sm mx-2 sm:mx-4"
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}
+            onTouchStart={handleMouseEnter}
+            onTouchEnd={handleMouseLeave}
           >
             <Card
               className={`bg-gradient-to-br ${difficultyColor} text-white shadow-xl border-0 overflow-hidden rounded-2xl`}
@@ -439,6 +532,30 @@ export function EnhancedAchievementPopup({
                       </Button>
                     </div>
                   </div>
+
+                  {/* Auto-close progress indicator */}
+                  {autoCloseDelay > 0 && !isPaused && timeRemaining > 0 && (
+                    <div className="mt-2 mb-1">
+                      <div className="text-center mb-1">
+                        <div className="text-xs text-white/60">
+                          Auto-closing in {Math.ceil(timeRemaining / 1000)}s
+                        </div>
+                        <div className="text-xs text-white/40 hidden sm:block">
+                          (tap to pause)
+                        </div>
+                      </div>
+                      <div className="w-full bg-white/20 rounded-full h-1 mx-auto">
+                        <motion.div
+                          className="bg-white/60 h-1 rounded-full"
+                          initial={{ width: "100%" }}
+                          animate={{
+                            width: `${(timeRemaining / autoCloseDelay) * 100}%`,
+                          }}
+                          transition={{ duration: 0.1, ease: "linear" }}
+                        />
+                      </div>
+                    </div>
+                  )}
 
                   {/* Simplified Achievement Counter */}
                   {achievements.length > 1 && (

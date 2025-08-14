@@ -684,6 +684,7 @@ export function VowelRescue({
               console.log("Achievement claimed:", achievement);
               // Could add additional reward logic here
             }}
+            autoCloseDelay={7000} // Auto-close after 7 seconds for game achievements
           />
         )}
 

@@ -644,6 +644,7 @@ export const WordCard: React.FC<WordCardProps> = ({
             console.log("Word mastery achievement claimed:", achievement);
             // Could add additional reward logic here
           }}
+          autoCloseDelay={5000} // Auto-close after 5 seconds for word achievements
         />
       )}
     </div>

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -102,6 +103,78 @@ export function InteractiveDashboardWordCard({
   dashboardSession,
   onGenerateNewSession,
 }: InteractiveDashboardWordCardProps) {
+  // Haptic feedback utility for mobile
+  const triggerHapticFeedback = (
+    type: "light" | "medium" | "heavy" = "light",
+  ) => {
+    if ("vibrate" in navigator) {
+      switch (type) {
+        case "light":
+          navigator.vibrate(10);
+          break;
+        case "medium":
+          navigator.vibrate(25);
+          break;
+        case "heavy":
+          navigator.vibrate([50, 30, 50]);
+          break;
+      }
+    }
+  };
+
+  // Touch handlers with haptic feedback
+  const handleTouchStart = (callback?: () => void) => {
+    triggerHapticFeedback("light");
+    if (callback) callback();
+  };
+
+  const handleActionWithFeedback = (
+    action: () => void,
+    feedbackType: "light" | "medium" | "heavy" = "medium",
+  ) => {
+    triggerHapticFeedback(feedbackType);
+    action();
+  };
+
+  // Keyboard navigation handler
+  const handleKeyDown = (event: React.KeyboardEvent) => {
+    if (isAnswered) return;
+
+    switch (event.key) {
+      case "1":
+      case "f":
+      case "F":
+        event.preventDefault();
+        handleWordAction("needs_practice");
+        break;
+      case "2":
+      case "r":
+      case "R":
+        event.preventDefault();
+        handleWordAction("remembered");
+        break;
+      case "h":
+      case "H":
+        event.preventDefault();
+        if (!showHint && !showWordName) {
+          setShowHint(true);
+        }
+        break;
+      case "s":
+      case "S":
+        event.preventDefault();
+        if (!showWordName) {
+          setShowWordName(true);
+        }
+        break;
+      case " ":
+        event.preventDefault();
+        playPronunciation();
+        break;
+      default:
+        break;
+    }
+  };
   // Session Management
   const SESSION_SIZE = 20;
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
@@ -130,6 +203,12 @@ export function InteractiveDashboardWordCard({
   const [guess, setGuess] = useState("");
   const [showHint, setShowHint] = useState(false);
 
+  // Progressive enhancement states
+  const [imageLoaded, setImageLoaded] = useState(false);
+  const [imageError, setImageError] = useState(false);
+  const [isTransitioning, setIsTransitioning] = useState(false);
+  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
+
   // Systematic progression state - DISABLED for clean UI
   // const [progressionInfo, setProgressionInfo] = useState({
   //   stage: "Foundation Building",
@@ -137,6 +216,20 @@ export function InteractiveDashboardWordCard({
   //   nextMilestone: 50,
   //   progress: 0
   // });
+
+  // Progressive enhancement detection
+  useEffect(() => {
+    // Check for reduced motion preference
+    const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+    setPrefersReducedMotion(mediaQuery.matches);
+
+    const handleChange = (event: MediaQueryListEvent) => {
+      setPrefersReducedMotion(event.matches);
+    };
+
+    mediaQuery.addEventListener("change", handleChange);
+    return () => mediaQuery.removeEventListener("change", handleChange);
+  }, []);
 
   // Initialize session with systematic word generation
   useEffect(() => {
@@ -203,10 +296,18 @@ export function InteractiveDashboardWordCard({
     setIsAnswered(false);
     setGuess("");
     setShowHint(false);
+    setImageLoaded(false);
+    setImageError(false);
+    setIsTransitioning(true);
+
+    // Reset transition state after brief delay
+    const timer = setTimeout(() => setIsTransitioning(false), 300);
+    return () => clearTimeout(timer);
   }, [currentWordIndex]);
 
   const playPronunciation = () => {
     if (currentWord && !isPlaying) {
+      triggerHapticFeedback("light"); // Light feedback for audio action
       setIsPlaying(true);
       audioService.pronounceWord(currentWord.word, {
         onStart: () => setIsPlaying(true),
@@ -296,6 +397,15 @@ export function InteractiveDashboardWordCard({
     status: "remembered" | "needs_practice" | "skipped",
   ) => {
     if (!currentWord || isAnswered) return;
+
+    // Provide haptic feedback based on action
+    if (status === "remembered") {
+      triggerHapticFeedback("heavy"); // Strong feedback for positive action
+    } else if (status === "needs_practice") {
+      triggerHapticFeedback("medium"); // Medium feedback for learning action
+    } else {
+      triggerHapticFeedback("light"); // Light feedback for skip
+    }
 
     console.log(`Word Action: ${currentWord.word} - ${status}`, {
       wordId: currentWord.id,
@@ -544,11 +654,36 @@ export function InteractiveDashboardWordCard({
   const renderWordImage = () => {
     if (currentWord?.imageUrl) {
       return (
-        <img
-          src={currentWord.imageUrl}
-          alt="Picture to guess"
-          className="w-full h-64 object-cover rounded-2xl shadow-lg"
-        />
+        <div className="relative w-full h-64 rounded-2xl overflow-hidden shadow-lg">
+          {!imageLoaded && !imageError && (
+            <div className="absolute inset-0 bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center">
+              <div className="flex flex-col items-center gap-2">
+                <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-gray-400"></div>
+                <span className="text-xs text-gray-500">Loading image...</span>
+              </div>
+            </div>
+          )}
+          {imageError && (
+            <div className="absolute inset-0 bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center">
+              <div className="text-center">
+                <div className="text-4xl mb-2">{currentWord.emoji || "🖼️"}</div>
+                <span className="text-xs text-gray-500">
+                  Image not available
+                </span>
+              </div>
+            </div>
+          )}
+          <img
+            src={currentWord.imageUrl}
+            alt={`Picture showing ${currentWord.word}`}
+            className={`w-full h-64 object-cover transition-opacity duration-300 ${
+              imageLoaded ? "opacity-100" : "opacity-0"
+            }`}
+            onLoad={() => setImageLoaded(true)}
+            onError={() => setImageError(true)}
+            loading="lazy"
+          />
+        </div>
       );
     }
 
@@ -613,7 +748,13 @@ export function InteractiveDashboardWordCard({
   }
 
   return (
-    <div className={cn("space-y-6", className)}>
+    <div
+      className={cn("space-y-6", className)}
+      role="main"
+      aria-label="Interactive word learning card"
+      tabIndex={0}
+      onKeyDown={handleKeyDown}
+    >
       {/* Today's Word Quest - Mobile Optimized Top Left */}
       <div className="mb-4 hidden">
         <Card className="bg-gradient-to-r from-educational-blue/10 to-educational-purple/10 border-educational-blue/20 hover:shadow-lg transition-all duration-300">
@@ -779,60 +920,58 @@ export function InteractiveDashboardWordCard({
       </div> */}
 
       {/* Interactive Word Card */}
-      <Card
-        className={cn(
-          "w-full max-w-3xl mx-auto transition-all duration-500 transform hover:scale-[1.02] relative overflow-hidden",
-          celebrationEffect &&
-            "animate-pulse shadow-2xl border-yellow-400 border-4",
-        )}
+      <motion.div
+        initial={{ opacity: 0, y: 20, scale: 0.95 }}
+        animate={{ opacity: 1, y: 0, scale: 1 }}
+        transition={{
+          duration: 0.5,
+          ease: "easeOut",
+          type: "spring",
+          damping: 20,
+        }}
+        whileHover={{
+          scale: 1.02,
+          transition: { duration: 0.2 },
+        }}
+        whileTap={{
+          scale: 0.98,
+          transition: { duration: 0.1 },
+        }}
+        className="will-change-transform"
       >
-        {/* Celebration Sparkles */}
-        {celebrationEffect && (
-          <div className="absolute inset-0 bg-gradient-to-r from-yellow-400/20 to-pink-400/20 animate-pulse z-20">
-            <div className="absolute top-4 left-4 text-2xl animate-bounce">
-              ✨
+        <Card
+          className={cn(
+            "w-full max-w-3xl mx-auto relative overflow-hidden",
+            "bg-gradient-to-br from-white via-blue-50/30 to-purple-50/30",
+            "shadow-lg hover:shadow-xl border-0 rounded-2xl sm:rounded-3xl",
+            "backdrop-blur-sm ring-1 ring-black/5",
+            celebrationEffect &&
+              "animate-pulse shadow-2xl border-yellow-400 border-4 bg-gradient-to-br from-yellow-50 to-orange-50",
+          )}
+        >
+          {/* Celebration Sparkles */}
+          {celebrationEffect && (
+            <div className="absolute inset-0 bg-gradient-to-r from-yellow-400/20 to-pink-400/20 animate-pulse z-20">
+              <div className="absolute top-4 left-4 text-2xl animate-bounce">
+                ✨
+              </div>
+              <div className="absolute top-6 right-6 text-3xl animate-spin">
+                🌟
+              </div>
+              <div className="absolute bottom-4 left-6 text-2xl animate-bounce delay-300">
+                🎊
+              </div>
+              <div className="absolute bottom-6 right-4 text-2xl animate-pulse delay-500">
+                💫
+              </div>
             </div>
-            <div className="absolute top-6 right-6 text-3xl animate-spin">
-              🌟
-            </div>
-            <div className="absolute bottom-4 left-6 text-2xl animate-bounce delay-300">
-              🎊
-            </div>
-            <div className="absolute bottom-6 right-4 text-2xl animate-pulse delay-500">
-              💫
-            </div>
-          </div>
-        )}
+          )}
 
-        <CardContent className="p-4 md:p-8 relative z-10">
-          {/* Today's Word Quest - Left Corner without container */}
-          <div className="absolute top-2 left-2 md:top-3 md:left-3 z-20 mb-4">
-            <div className="flex items-center gap-1 md:gap-2">
-              <span className="text-sm md:text-base">
-                {(() => {
-                  const wordsLearned = Math.max(
-                    sessionStats.wordsRemembered,
-                    rememberedWordsCount || 0,
-                  );
-                  const goal = dailyGoal.target;
-                  const percentage = Math.round((wordsLearned / goal) * 100);
-
-                  if (wordsLearned >= goal) {
-                    if (wordsLearned >= goal * 2) return "⭐";
-                    if (wordsLearned >= goal * 1.5) return "🚀";
-                    return "🏆";
-                  }
-                  if (percentage >= 90) return "⭐";
-                  if (percentage >= 75) return "🎯";
-                  if (percentage >= 50) return "💪";
-                  return "🌟";
-                })()}
-              </span>
-              <div>
-                <div className="text-xs font-bold text-slate-800 leading-tight">
-                  Today's Word Quest
-                </div>
-                <div className="text-xs text-slate-600 mt-0.5">
+          <CardContent className="p-3 sm:p-4 md:p-6 lg:p-8 relative z-10">
+            {/* Today's Word Quest - Left Corner without container */}
+            <div className="absolute top-2 left-2 md:top-3 md:left-3 z-20 mb-4 hidden">
+              <div className="flex items-center gap-1 md:gap-2">
+                <span className="text-sm md:text-base">
                   {(() => {
                     const wordsLearned = Math.max(
                       sessionStats.wordsRemembered,
@@ -842,309 +981,445 @@ export function InteractiveDashboardWordCard({
                     const percentage = Math.round((wordsLearned / goal) * 100);
 
                     if (wordsLearned >= goal) {
-                      if (wordsLearned >= goal * 2)
-                        return "⭐ SUPERSTAR! Amazing effort!";
-                      if (wordsLearned >= goal * 1.5)
-                        return "🚀 Beyond awesome! Keep going!";
-                      return "🎉 Goal achieved! You're incredible!";
+                      if (wordsLearned >= goal * 2) return "⭐";
+                      if (wordsLearned >= goal * 1.5) return "🚀";
+                      return "🏆";
                     }
-                    if (percentage >= 90) return "🌟 Almost there, superstar!";
-                    if (percentage >= 75) return "🚀 You're doing great!";
-                    if (percentage >= 50) return "💪 Keep going, champion!";
-                    if (percentage >= 25) return "🌱 Nice start!";
-                    return "🌟 Ready for an adventure?";
+                    if (percentage >= 90) return "⭐";
+                    if (percentage >= 75) return "🎯";
+                    if (percentage >= 50) return "💪";
+                    return "🌟";
                   })()}
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Achievement Teaser - Motivational hints */}
-          <AchievementTeaser className="mb-3" />
-
-          {/* Category and Progress Header */}
-          <div className="text-center mb-6 md:mb-8 mt-8 md:mt-6">
-            <div className="flex items-center justify-center gap-4 mb-4">
-              {/* Difficulty classification badge */}
-              <Badge
-                className={cn(
-                  "text-sm px-3 py-1",
-                  currentWord.difficulty === "easy"
-                    ? "bg-green-100 text-green-700 border-green-300"
-                    : currentWord.difficulty === "medium"
-                      ? "bg-yellow-100 text-yellow-700 border-yellow-300"
-                      : currentWord.difficulty === "hard"
-                        ? "bg-red-100 text-red-700 border-red-300"
-                        : "bg-gray-100 text-gray-700 border-gray-300",
-                )}
-              >
-                {currentWord.difficulty
-                  ? currentWord.difficulty.charAt(0).toUpperCase() +
-                    currentWord.difficulty.slice(1)
-                  : "Medium"}
-              </Badge>
-              <Badge
-                className={cn(
-                  "text-sm px-3 py-1",
-                  getDifficultyColor(currentWord.difficulty),
-                )}
-              >
-                {currentWord.category}
-              </Badge>
-              {/* Hidden: Word progress and Session progress badges */}
-              <Badge
-                variant="outline"
-                className="text-sm px-3 py-1 bg-purple-50 text-purple-700 border-purple-300"
-              >
-                {sessionStats.accuracy}% Accuracy
-              </Badge>
-            </div>
-          </div>
-
-          {/* Picture Display */}
-          <div className="mb-4 md:mb-6">{renderWordImage()}</div>
-
-          {/* Game Instructions */}
-          <div className="text-center mb-3 md:mb-4">
-            <h2 className="text-lg md:text-2xl font-bold text-gray-800 mb-1 md:mb-2">
-              🤔 What is this?
-            </h2>
-            <p className="text-sm md:text-base text-gray-600">
-              Look at the picture and guess the word!
-            </p>
-          </div>
-
-          {/* Action Buttons Row - Compact and Kid-Friendly */}
-          <div className="flex justify-center items-center gap-2 mb-3 md:mb-4">
-            <Button
-              onClick={playPronunciation}
-              disabled={isPlaying}
-              size="sm"
-              className="bg-educational-blue hover:bg-educational-blue/90 text-white p-2 rounded-full transition-all duration-300 transform hover:scale-105"
-            >
-              <Volume2
-                className={cn("w-4 h-4", isPlaying && "animate-pulse")}
-              />
-            </Button>
-
-            {!showHint && !showWordName && (
-              <Button
-                onClick={() => setShowHint(true)}
-                variant="outline"
-                size="sm"
-                className="px-3 py-2 text-sm rounded-xl transition-all duration-300 transform hover:scale-105"
-              >
-                <Lightbulb className="w-4 h-4 mr-1" />
-                💡 Hint
-              </Button>
-            )}
-
-            {!showWordName && (
-              <Button
-                onClick={() => setShowWordName(true)}
-                size="sm"
-                className="bg-educational-purple hover:bg-educational-purple/90 text-white px-3 py-2 text-sm rounded-xl transition-all duration-300 transform hover:scale-105"
-              >
-                <Eye className="w-4 h-4 mr-1" />
-                👁️ Show
-              </Button>
-            )}
-          </div>
-
-          {/* Hint Display */}
-          {showHint && !showWordName && (
-            <div className="bg-yellow-50 border-2 border-yellow-200 rounded-xl p-3 mb-3 text-center">
-              <div className="flex items-center justify-center gap-2 mb-1">
-                <Lightbulb className="w-4 h-4 text-yellow-600" />
-                <h3 className="text-sm font-semibold text-yellow-800">
-                  💡 Hint:
-                </h3>
-              </div>
-              <p className="text-yellow-700 text-sm">
-                "{currentWord.definition}"
-              </p>
-            </div>
-          )}
-
-          {/* Word Name and Details */}
-          {showWordName && (
-            <div className="space-y-3 md:space-y-4 mb-6 md:mb-8">
-              {/* Word Name */}
-              <div className="text-center bg-gradient-to-r from-green-50 to-blue-50 p-3 md:p-4 rounded-2xl border-2 border-green-200">
-                <div className="flex items-center justify-center gap-2 md:gap-3 mb-2 md:mb-3">
-                  <div className="text-2xl md:text-3xl">
-                    {currentWord.emoji}
-                  </div>
-                  <h1 className="text-base md:text-lg lg:text-xl font-bold text-gray-800 tracking-wide">
-                    {currentWord.word.toUpperCase()}
-                  </h1>
-                  <div className="text-2xl md:text-3xl">
-                    {currentWord.emoji}
-                  </div>
-                </div>
-
-                {/* Pronunciation */}
-                {currentWord.pronunciation && (
-                  <div className="flex items-center justify-center gap-2">
-                    <span className="text-lg text-gray-600 font-mono">
-                      /{currentWord.pronunciation}/
-                    </span>
-                  </div>
-                )}
-              </div>
-
-              {/* Definition and Example - Hidden to show word name only */}
-              <div className="hidden bg-gray-50 p-6 rounded-2xl">
-                <div className="mb-4">
-                  <h3 className="text-lg font-semibold text-gray-700 mb-2">
-                    📖 Definition:
-                  </h3>
-                  <p className="text-xl text-gray-800 leading-relaxed">
-                    {currentWord.definition}
-                  </p>
-                </div>
-
+                </span>
                 <div>
-                  <h3 className="text-lg font-semibold text-gray-700 mb-2">
-                    💬 Example:
-                  </h3>
-                  <p className="text-lg text-gray-700 italic leading-relaxed">
-                    "{currentWord.example}"
-                  </p>
+                  <div className="text-xs font-bold text-slate-800 leading-tight">
+                    Today's Word Quest
+                  </div>
+                  <div className="text-xs text-slate-600 mt-0.5">
+                    {(() => {
+                      const wordsLearned = Math.max(
+                        sessionStats.wordsRemembered,
+                        rememberedWordsCount || 0,
+                      );
+                      const goal = dailyGoal.target;
+                      const percentage = Math.round(
+                        (wordsLearned / goal) * 100,
+                      );
+
+                      if (wordsLearned >= goal) {
+                        if (wordsLearned >= goal * 2)
+                          return "⭐ SUPERSTAR! Amazing effort!";
+                        if (wordsLearned >= goal * 1.5)
+                          return "🚀 Beyond awesome! Keep going!";
+                        return "🎉 Goal achieved! You're incredible!";
+                      }
+                      if (percentage >= 90)
+                        return "🌟 Almost there, superstar!";
+                      if (percentage >= 75) return "🚀 You're doing great!";
+                      if (percentage >= 50) return "💪 Keep going, champion!";
+                      if (percentage >= 25) return "🌱 Nice start!";
+                      return "🌟 Ready for an adventure?";
+                    })()}
+                  </div>
                 </div>
               </div>
             </div>
-          )}
 
-          {/* Action Buttons - Always visible */}
-          {!isAnswered && (
-            <div className="space-y-4">
-              <div className="grid grid-cols-2 gap-3">
-                <Button
-                  onClick={() => handleWordAction("needs_practice")}
-                  disabled={isAnswered}
-                  className="flex-1 bg-gradient-to-r from-red-400 to-pink-500 hover:from-red-500 hover:to-pink-600 text-white font-bold border-0 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 active:scale-95 py-4 px-3 min-h-[60px] relative overflow-hidden disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
-                >
-                  <div className="absolute inset-0 bg-white/20 rounded-xl opacity-0 hover:opacity-100 transition-opacity duration-300"></div>
-                  <div className="relative z-10 flex items-center justify-center">
-                    <span className="text-lg mr-1 animate-wiggle">😔</span>
-                    <div className="text-center">
-                      <div className="font-bold text-xs md:text-sm">
-                        I Forgot
-                      </div>
-                      <div className="text-xs opacity-90 mt-0.5">
-                        Need practice! 💪
-                      </div>
-                    </div>
-                  </div>
-                </Button>
+            {/* Achievement Teaser - Motivational hints */}
+            <div aria-live="polite" aria-label="Motivational messages">
+              <AchievementTeaser className="mb-3" />
+            </div>
 
-                <Button
-                  onClick={() => handleWordAction("remembered")}
-                  disabled={isAnswered}
-                  className="flex-1 bg-gradient-to-r from-green-400 to-emerald-500 hover:from-green-500 hover:to-emerald-600 text-white font-bold border-0 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 active:scale-95 py-4 px-3 min-h-[60px] relative overflow-hidden disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
+            {/* Category and Progress Header */}
+            <div className="text-center mb-4 sm:mb-6 md:mb-8 mt-4 sm:mt-6 md:mt-8">
+              <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-3 md:gap-4 mb-3 sm:mb-4">
+                {/* Difficulty classification badge */}
+                <Badge
+                  className={cn(
+                    "text-xs sm:text-sm px-2 sm:px-3 py-1",
+                    currentWord.difficulty === "easy"
+                      ? "bg-green-100 text-green-700 border-green-300"
+                      : currentWord.difficulty === "medium"
+                        ? "bg-yellow-100 text-yellow-700 border-yellow-300"
+                        : currentWord.difficulty === "hard"
+                          ? "bg-red-100 text-red-700 border-red-300"
+                          : "bg-gray-100 text-gray-700 border-gray-300",
+                  )}
                 >
-                  <div className="absolute inset-0 bg-white/20 rounded-xl opacity-0 hover:opacity-100 transition-opacity duration-300"></div>
-                  <div className="relative z-10 flex items-center justify-center">
-                    <span className="text-lg mr-1 animate-bounce">😊</span>
-                    <div className="text-center">
-                      <div className="font-bold text-xs md:text-sm">
-                        I Remember
-                      </div>
-                      <div className="text-xs opacity-90 mt-0.5">
-                        Awesome! ⭐
-                      </div>
-                    </div>
-                  </div>
-                </Button>
+                  {currentWord.difficulty
+                    ? currentWord.difficulty.charAt(0).toUpperCase() +
+                      currentWord.difficulty.slice(1)
+                    : "Medium"}
+                </Badge>
+                <Badge
+                  className={cn(
+                    "text-xs sm:text-sm px-2 sm:px-3 py-1",
+                    getDifficultyColor(currentWord.difficulty),
+                  )}
+                >
+                  {currentWord.category}
+                </Badge>
+                {/* Hidden: Word progress and Session progress badges */}
+                <Badge
+                  variant="outline"
+                  className="text-xs sm:text-sm px-2 sm:px-3 py-1 bg-purple-50 text-purple-700 border-purple-300"
+                >
+                  {sessionStats.accuracy}% Accuracy
+                </Badge>
               </div>
+            </div>
 
-              {/* Skip button (smaller, less prominent) */}
-              <div className="text-center mt-1 mb-0">
+            {/* Picture Display */}
+            <div
+              className="mb-4 md:mb-6"
+              role="img"
+              aria-label={`Picture showing ${currentWord.emoji} ${currentWord.word}`}
+            >
+              {renderWordImage()}
+            </div>
+
+            {/* Game Instructions */}
+            <header className="text-center mb-3 sm:mb-4 md:mb-5" role="banner">
+              <h1 className="text-base sm:text-lg md:text-xl lg:text-2xl font-bold text-gray-800 mb-1 sm:mb-2">
+                🤔 What is this?
+              </h1>
+              <p
+                className="text-xs sm:text-sm md:text-base text-gray-600 px-2"
+                id="game-instructions"
+              >
+                Look at the picture and guess the word!
+              </p>
+            </header>
+
+            {/* Action Buttons Row - Mobile Optimized */}
+            <div
+              className="flex justify-center items-center gap-2 sm:gap-3 mb-3 sm:mb-4 px-2"
+              role="toolbar"
+              aria-label="Word learning controls"
+              aria-describedby="game-instructions"
+            >
+              <Button
+                onClick={playPronunciation}
+                disabled={isPlaying}
+                size="sm"
+                className="bg-educational-blue hover:bg-educational-blue/90 text-white p-2 sm:p-3 rounded-full transition-all duration-300 transform hover:scale-105 active:scale-95 min-w-[44px] min-h-[44px] disabled:opacity-50"
+                aria-label="Play pronunciation"
+              >
+                <Volume2
+                  className={cn(
+                    "w-4 h-4 sm:w-5 sm:h-5",
+                    isPlaying && "animate-pulse",
+                  )}
+                />
+              </Button>
+
+              {!showHint && !showWordName && (
                 <Button
-                  onClick={() => handleWordAction("skipped")}
-                  variant="ghost"
+                  onClick={() =>
+                    handleActionWithFeedback(() => setShowHint(true), "light")
+                  }
+                  variant="outline"
                   size="sm"
-                  disabled={isAnswered}
-                  className="text-gray-500 hover:text-gray-700 hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed py-1 px-3"
+                  className="px-3 py-2 text-xs sm:text-sm rounded-xl transition-all duration-300 transform hover:scale-105 active:scale-95 min-h-[44px] touch-manipulation"
+                  aria-label="Show hint"
                 >
-                  <SkipForward className="w-4 h-4 mr-1" />
-                  🤔 Try another word
+                  <Lightbulb className="w-4 h-4 mr-1" />
+                  💡 Hint
                 </Button>
-              </div>
+              )}
 
-              {/* Compact Session Progress */}
-              <div className="mt-3 bg-gradient-to-r from-blue-50 to-purple-50 rounded-lg p-2 border border-blue-200">
-                {/* Compact Progress Bar */}
-                <div className="flex items-center justify-between mb-2">
-                  <div className="text-xs font-bold text-gray-700">
-                    🚀 {sessionStats.wordsCompleted}/{SESSION_SIZE}
-                  </div>
-                  <div className="flex-1 mx-2">
-                    <div className="w-full bg-gray-200 rounded-full h-1.5">
-                      <div
-                        className="bg-gradient-to-r from-blue-500 to-purple-500 h-1.5 rounded-full transition-all duration-300"
-                        style={{
-                          width: `${(sessionStats.wordsCompleted / SESSION_SIZE) * 100}%`,
-                        }}
-                      ></div>
-                    </div>
-                  </div>
-                  <div className="text-xs text-gray-600">
-                    {Math.round(
-                      (sessionStats.wordsCompleted / SESSION_SIZE) * 100,
-                    )}
-                    %
-                  </div>
-                </div>
+              {!showWordName && (
+                <Button
+                  onClick={() =>
+                    handleActionWithFeedback(
+                      () => setShowWordName(true),
+                      "medium",
+                    )
+                  }
+                  size="sm"
+                  className="bg-educational-purple hover:bg-educational-purple/90 text-white px-3 py-2 text-xs sm:text-sm rounded-xl transition-all duration-300 transform hover:scale-105 active:scale-95 min-h-[44px] touch-manipulation"
+                  aria-label="Show word answer"
+                >
+                  <Eye className="w-4 h-4 mr-1" />
+                  👁️ Show
+                </Button>
+              )}
+            </div>
 
-                <div className="flex items-center justify-center gap-2">
-                  {/* Compact Stats */}
-                  <div className="bg-green-100 rounded-md px-2 py-1 text-center">
-                    <div className="text-xs">
-                      😊 {sessionStats.wordsRemembered}
-                    </div>
+            {/* Hint Display */}
+            <AnimatePresence>
+              {showHint && !showWordName && (
+                <motion.div
+                  initial={{ opacity: 0, y: -20, scale: 0.95 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  exit={{ opacity: 0, y: -10, scale: 0.95 }}
+                  transition={{
+                    duration: 0.3,
+                    type: "spring",
+                    damping: 20,
+                  }}
+                  className="bg-gradient-to-br from-yellow-50 via-orange-50/50 to-amber-50 border border-yellow-200/60 rounded-2xl p-4 mb-4 text-center shadow-lg backdrop-blur-sm ring-1 ring-yellow-200/20 will-change-transform"
+                  role="region"
+                  aria-label="Word hint"
+                  aria-live="polite"
+                >
+                  <div className="flex items-center justify-center gap-2 mb-1">
+                    <Lightbulb
+                      className="w-4 h-4 text-yellow-600"
+                      aria-hidden="true"
+                    />
+                    <h2 className="text-sm font-semibold text-yellow-800">
+                      💡 Hint:
+                    </h2>
                   </div>
-                  <div className="bg-orange-100 rounded-md px-2 py-1 text-center">
-                    <div className="text-xs">
-                      💪 {sessionStats.wordsForgotten}
-                    </div>
-                  </div>
-                </div>
+                  <p className="text-yellow-700 text-sm" id="hint-text">
+                    "{currentWord.definition}"
+                  </p>
+                </motion.div>
+              )}
+            </AnimatePresence>
 
-                {/* Compact encouraging message */}
-                <div className="mt-1 text-center">
-                  {sessionStats.wordsRemembered >= 15 ? (
-                    <div className="text-green-600 font-medium text-xs">
-                      🌟 You're a superstar!
+            {/* Word Name and Details */}
+            {showWordName && (
+              <div
+                className="space-y-3 md:space-y-4 mb-6 md:mb-8"
+                role="region"
+                aria-label="Word answer revealed"
+                aria-live="polite"
+              >
+                {/* Word Name */}
+                <div className="text-center bg-gradient-to-br from-green-50 via-emerald-50/30 to-blue-50 p-4 md:p-6 rounded-2xl border border-green-200/60 shadow-lg backdrop-blur-sm ring-1 ring-green-100/50">
+                  <div className="flex items-center justify-center gap-2 md:gap-3 mb-2 md:mb-3">
+                    <div className="text-2xl md:text-3xl" aria-hidden="true">
+                      {currentWord.emoji}
                     </div>
-                  ) : sessionStats.wordsRemembered >= 10 ? (
-                    <div className="text-green-600 font-medium text-xs">
-                      🎯 Awesome job!
+                    <h2
+                      className="text-base md:text-lg lg:text-xl font-bold text-gray-800 tracking-wide"
+                      id="word-answer"
+                    >
+                      {currentWord.word.toUpperCase()}
+                    </h2>
+                    <div className="text-2xl md:text-3xl" aria-hidden="true">
+                      {currentWord.emoji}
                     </div>
-                  ) : sessionStats.wordsCompleted >= 10 ? (
-                    <div className="text-blue-600 font-medium text-xs">
-                      🔥 Keep going!
-                    </div>
-                  ) : (
-                    <div className="text-purple-600 font-medium text-xs">
-                      🌟 Great start!
+                  </div>
+
+                  {/* Pronunciation */}
+                  {currentWord.pronunciation && (
+                    <div className="flex items-center justify-center gap-2">
+                      <span className="text-lg text-gray-600 font-mono">
+                        /{currentWord.pronunciation}/
+                      </span>
                     </div>
                   )}
                 </div>
-              </div>
-            </div>
-          )}
 
-          {/* Loading next word indicator */}
-          {isAnswered && (
-            <div className="text-center py-6">
-              <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-educational-purple mx-auto mb-2"></div>
-              <p className="text-gray-600">Loading next word...</p>
-            </div>
-          )}
-        </CardContent>
-      </Card>
+                {/* Definition and Example - Hidden to show word name only */}
+                <div className="hidden bg-gray-50 p-6 rounded-2xl">
+                  <div className="mb-4">
+                    <h3 className="text-lg font-semibold text-gray-700 mb-2">
+                      📖 Definition:
+                    </h3>
+                    <p className="text-xl text-gray-800 leading-relaxed">
+                      {currentWord.definition}
+                    </p>
+                  </div>
+
+                  <div>
+                    <h3 className="text-lg font-semibold text-gray-700 mb-2">
+                      💬 Example:
+                    </h3>
+                    <p className="text-lg text-gray-700 italic leading-relaxed">
+                      "{currentWord.example}"
+                    </p>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* Action Buttons - Always visible */}
+            {!isAnswered && (
+              <div
+                className="space-y-3 sm:space-y-4 px-2 sm:px-0"
+                role="group"
+                aria-label="Word learning choices"
+              >
+                <div className="grid grid-cols-2 gap-2 sm:gap-3">
+                  <Button
+                    onClick={() => handleWordAction("needs_practice")}
+                    disabled={isAnswered}
+                    className="w-full bg-gradient-to-r from-red-400 to-pink-500 hover:from-red-500 hover:to-pink-600 active:from-red-600 active:to-pink-700 text-white font-bold border-0 rounded-lg sm:rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 active:scale-95 py-2 sm:py-3 md:py-4 px-2 sm:px-3 min-h-[48px] sm:min-h-[56px] md:min-h-[64px] relative overflow-hidden disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none touch-manipulation"
+                    aria-label="Mark word as forgotten"
+                  >
+                    <div className="absolute inset-0 bg-white/20 rounded-xl opacity-0 hover:opacity-100 transition-opacity duration-300"></div>
+                    <div className="relative z-10 flex items-center justify-center">
+                      <span className="text-base sm:text-lg mr-1 sm:mr-2 animate-wiggle">
+                        😔
+                      </span>
+                      <div className="text-center">
+                        <div className="font-bold text-xs sm:text-sm md:text-base">
+                          I Forgot
+                        </div>
+                        <div className="text-xs opacity-90 mt-0.5 hidden sm:block">
+                          Need practice! 💪
+                        </div>
+                      </div>
+                    </div>
+                  </Button>
+
+                  <Button
+                    onClick={() => handleWordAction("remembered")}
+                    disabled={isAnswered}
+                    className="w-full bg-gradient-to-r from-green-400 to-emerald-500 hover:from-green-500 hover:to-emerald-600 active:from-green-600 active:to-emerald-700 text-white font-bold border-0 rounded-lg sm:rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 active:scale-95 py-2 sm:py-3 md:py-4 px-2 sm:px-3 min-h-[48px] sm:min-h-[56px] md:min-h-[64px] relative overflow-hidden disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none touch-manipulation"
+                    aria-label="Mark word as remembered"
+                  >
+                    <div className="absolute inset-0 bg-white/20 rounded-xl opacity-0 hover:opacity-100 transition-opacity duration-300"></div>
+                    <div className="relative z-10 flex items-center justify-center">
+                      <span className="text-base sm:text-lg mr-1 sm:mr-2 animate-bounce">
+                        😊
+                      </span>
+                      <div className="text-center">
+                        <div className="font-bold text-xs sm:text-sm md:text-base">
+                          I Remember
+                        </div>
+                        <div className="text-xs opacity-90 mt-0.5 hidden sm:block">
+                          Awesome! ⭐
+                        </div>
+                      </div>
+                    </div>
+                  </Button>
+                </div>
+
+                {/* Skip button (smaller, less prominent) - HIDDEN */}
+                <div className="hidden text-center mt-1 mb-0">
+                  <Button
+                    onClick={() => handleWordAction("skipped")}
+                    variant="ghost"
+                    size="sm"
+                    disabled={isAnswered}
+                    className="text-gray-500 hover:text-gray-700 hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed py-1 px-3"
+                  >
+                    <SkipForward className="w-4 h-4 mr-1" />
+                    🤔 Try another word
+                  </Button>
+
+                  {/* Keyboard shortcuts hint - Desktop only */}
+                  <div className="hidden md:block mt-2 text-xs text-gray-400">
+                    💡 Shortcuts:{" "}
+                    <kbd className="px-1 py-0.5 bg-gray-100 rounded text-xs">
+                      1
+                    </kbd>{" "}
+                    or{" "}
+                    <kbd className="px-1 py-0.5 bg-gray-100 rounded text-xs">
+                      F
+                    </kbd>{" "}
+                    for Forgot,
+                    <kbd className="px-1 py-0.5 bg-gray-100 rounded text-xs ml-1">
+                      2
+                    </kbd>{" "}
+                    or{" "}
+                    <kbd className="px-1 py-0.5 bg-gray-100 rounded text-xs">
+                      R
+                    </kbd>{" "}
+                    for Remember,
+                    <kbd className="px-1 py-0.5 bg-gray-100 rounded text-xs ml-1">
+                      Space
+                    </kbd>{" "}
+                    for Audio
+                  </div>
+                </div>
+
+                {/* Compact Session Progress */}
+                <div className="mt-2 bg-gradient-to-br from-blue-50 via-indigo-50/30 to-purple-50 rounded-xl p-3 sm:p-4 border border-blue-200/60 shadow-md backdrop-blur-sm ring-1 ring-blue-100/30">
+                  {/* Compact Progress Bar */}
+                  <div className="flex items-center justify-between mb-2">
+                    <div className="text-xs font-bold text-gray-700">
+                      🚀 {sessionStats.wordsCompleted}/{SESSION_SIZE}
+                    </div>
+                    <div className="flex-1 mx-3">
+                      <div className="w-full bg-gradient-to-r from-gray-200 to-gray-300 rounded-full h-2 shadow-inner relative overflow-hidden">
+                        <div
+                          className="bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-500 h-2 rounded-full transition-all duration-700 ease-out shadow-sm relative"
+                          style={{
+                            width: `${(sessionStats.wordsCompleted / SESSION_SIZE) * 100}%`,
+                          }}
+                        >
+                          {/* Progress shimmer effect */}
+                          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent transform -skew-x-12 animate-pulse"></div>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="text-xs text-gray-600">
+                      {Math.round(
+                        (sessionStats.wordsCompleted / SESSION_SIZE) * 100,
+                      )}
+                      %
+                    </div>
+                  </div>
+
+                  <div className="flex items-center justify-center gap-2">
+                    {/* Compact Stats */}
+                    <div className="bg-green-100 rounded-md px-2 py-1 text-center">
+                      <div className="text-xs">
+                        😊 {sessionStats.wordsRemembered}
+                      </div>
+                    </div>
+                    <div className="bg-orange-100 rounded-md px-2 py-1 text-center">
+                      <div className="text-xs">
+                        💪 {sessionStats.wordsForgotten}
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Compact encouraging message */}
+                  <div className="mt-1 text-center">
+                    {sessionStats.wordsRemembered >= 15 ? (
+                      <div className="text-green-600 font-medium text-xs">
+                        🌟 You're a superstar!
+                      </div>
+                    ) : sessionStats.wordsRemembered >= 10 ? (
+                      <div className="text-green-600 font-medium text-xs">
+                        🎯 Awesome job!
+                      </div>
+                    ) : sessionStats.wordsCompleted >= 10 ? (
+                      <div className="text-blue-600 font-medium text-xs">
+                        🔥 Keep going!
+                      </div>
+                    ) : (
+                      <div className="text-purple-600 font-medium text-xs">
+                        🌟 Great start!
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* Loading next word indicator */}
+            <AnimatePresence>
+              {isAnswered && (
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.9 }}
+                  transition={{ duration: 0.3 }}
+                  className="text-center py-6"
+                >
+                  <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-educational-purple mx-auto mb-2 will-change-transform"></div>
+                  <motion.p
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.2 }}
+                    className="text-gray-600"
+                  >
+                    Loading next word...
+                  </motion.p>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </CardContent>
+        </Card>
+      </motion.div>
 
       {/* Quick Action Buttons - Hidden per user request */}
       {/* <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-2xl mx-auto">
@@ -1219,6 +1494,7 @@ export function InteractiveDashboardWordCard({
             );
             // Could add additional reward logic here
           }}
+          autoCloseDelay={5000} // Auto-close after 5 seconds
         />
       )}
     </div>

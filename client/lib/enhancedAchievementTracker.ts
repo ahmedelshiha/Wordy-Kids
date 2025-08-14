@@ -1117,26 +1117,133 @@ export class EnhancedAchievementTracker {
     const morningMessages = [
       "🌅 Good morning, Word Warrior! Ready for an adventure?",
       "☀️ Rise and shine! Time to catch some word magic!",
-      "🌈 Morning rainbow! Let's paint the day with new words!",
+      "🌈 Morning sunshine! Let's discover amazing new words!",
+      "🦋 Good morning, butterfly! Fly into a world of words!",
+      "🌸 Fresh morning blooms! Perfect time for learning!",
+      "🐝 Buzzing with excitement! Morning word hunt begins!",
+      "🎈 Morning balloons of joy! Let's float into learning!",
+      "⭐ Wake up, superstar! Your word kingdom awaits!",
+      "🚀 Morning rocket launch! Blast off to word adventures!",
+      "🎨 Paint your morning with colorful new words!",
+      "🦄 Magical morning unicorn says: Time to learn!",
+      "🌟 Sparkly morning ahead! Words are waiting for you!",
+      "🍀 Lucky morning! Today's the day for word treasures!",
+      "🎪 Morning circus of words! Step right up to learn!",
+      "🎵 Morning melody! Let's sing along with new words!",
+      "🌺 Bloom with the morning! Grow your word garden!",
+      "🦜 Good morning, word parrot! Ready to repeat success?",
+      "🎯 Morning target practice! Aim for word mastery!",
+      "🏰 Your morning word castle is ready to explore!",
+      "🌊 Ride the morning wave of wonderful words!",
     ];
 
     const afternoonMessages = [
       "🌞 Afternoon power! Your brain is ready for word challenges!",
       "⚡ Afternoon energy boost! Time for some word lightning!",
       "🎯 Afternoon target practice! Let's hit those word bullseyes!",
+      "🌻 Sunny afternoon vibes! Perfect for word adventures!",
+      "🦋 Afternoon butterfly dance! Flutter through new words!",
+      "🎪 Afternoon word carnival! Come one, come all to learn!",
+      "🏖️ Beach afternoon energy! Surf the waves of words!",
+      "🍎 Afternoon snack time! Feed your brain with words!",
+      "🎨 Afternoon art class! Paint pictures with new words!",
+      "🚂 All aboard the afternoon word train! Choo-choo!",
+      "🎵 Afternoon concert! Let's make music with words!",
+      "🏃‍♂️ Afternoon word marathon! You're doing amazing!",
+      "🌈 Afternoon rainbow bridge! Cross over to new words!",
+      "🎭 Afternoon word theater! You're the star of the show!",
+      "🏆 Afternoon champion! Time to claim your word victories!",
+      "🎊 Afternoon party time! Celebrate with new words!",
+      "🦖 Roaring afternoon! Dinosaur-sized word adventures!",
+      "🎸 Rock your afternoon! Strum the strings of success!",
+      "🌮 Spicy afternoon learning! Add flavor with new words!",
+      "🎢 Afternoon roller coaster! Up and down with word fun!",
+      "🧙‍♂️ Afternoon magic hour! Cast spells with new words!",
+      "🏖️ Afternoon beach day! Build sandcastles of knowledge!",
     ];
 
     const eveningMessages = [
       "🌙 Evening magic time! Perfect for word enchantments!",
       "⭐ Star-powered learning! Your evening word adventure awaits!",
       "🦉 Wise owl hours! Time for some smart word hunting!",
+      "🌃 City lights sparkle! So do your amazing word skills!",
+      "🌛 Crescent moon smiles! Evening word mysteries await!",
+      "✨ Twilight twinkles! Sprinkle some word magic tonight!",
+      "🎆 Evening fireworks! Light up your mind with words!",
+      "🌟 Evening star wishes! Make your word dreams come true!",
+      "🦇 Evening bat flight! Swoop into word adventures!",
+      "🌒 Moon phases! Transform your brain with new words!",
+      "🕯️ Candlelit learning! Warm and cozy word time!",
+      "🎭 Evening theater! Tonight's show: Amazing Word Learning!",
+      "🌊 Evening ocean waves! Drift into peaceful word learning!",
+      "🎪 Evening word circus! The grand finale of your day!",
+      "🍕 Evening treat time! Slice up some delicious words!",
+      "🎬 Evening movie night! You're the star learning words!",
+      "🌹 Evening garden blooms! Your word skills are flowering!",
+      "🎵 Evening lullaby! Let words sing you to success!",
+      "🏰 Evening castle glow! Your word kingdom grows stronger!",
+      "🦋 Evening butterfly dreams! Float through word wonderland!",
+      "🎨 Evening masterpiece! Paint your mind with new words!",
+      "🌈 Evening rainbow magic! Colors of learning everywhere!",
     ];
 
-    let messages = morningMessages;
-    if (hour >= 12 && hour < 18) messages = afternoonMessages;
-    else if (hour >= 18) messages = eveningMessages;
+    // Special weekend messages
+    const weekendMessages = [
+      "🎉 Weekend word party! No school but lots of fun learning!",
+      "🏖️ Weekend vibes! Relax and learn at your own pace!",
+      "🎪 Weekend word carnival! Extra fun, extra learning!",
+      "🦋 Free weekend spirit! Let your word wings soar!",
+      "🎨 Creative weekend! Paint with words and imagination!",
+      "🌈 Rainbow weekend! Every color of learning is here!",
+      "🎊 Weekend celebration! Learning never takes a break!",
+      "🏰 Weekend word kingdom! You rule your learning adventure!",
+      "🎵 Weekend word symphony! Make beautiful learning music!",
+      "🦄 Magical weekend! Unicorns believe in your word power!",
+    ];
 
-    return messages[Math.floor(Math.random() * messages.length)];
+    // Special day messages
+    const dayOfWeek = new Date().getDay();
+    const isWeekend = dayOfWeek === 0 || dayOfWeek === 6;
+
+    // Monday motivation
+    const mondayMessages = [
+      "💪 Monday Motivation! Start the week with word power!",
+      "🚀 Monday Blast Off! Launch into an amazing week!",
+      "⭐ Marvelous Monday! Make this week sparkle with words!",
+      "🌟 Monday Magic! Transform your week with learning!",
+      "🎯 Monday Mission! Your word adventure begins now!",
+    ];
+
+    // Friday celebration
+    const fridayMessages = [
+      "🎉 Friday Fun! End the week with a word celebration!",
+      "🏆 Fantastic Friday! You've earned your learning crown!",
+      "🌈 Friday Rainbow! Look at all the words you've collected!",
+      "🎪 Friday Festival! Celebrate your amazing week of learning!",
+      "⭐ Friday Superstar! You've shined all week long!",
+    ];
+
+    // Determine which message set to use
+    let selectedMessages;
+
+    if (isWeekend) {
+      selectedMessages = weekendMessages;
+    } else if (dayOfWeek === 1) {
+      // Monday
+      selectedMessages = mondayMessages;
+    } else if (dayOfWeek === 5) {
+      // Friday
+      selectedMessages = fridayMessages;
+    } else {
+      // Regular time-based messages
+      selectedMessages = morningMessages;
+      if (hour >= 12 && hour < 18) selectedMessages = afternoonMessages;
+      else if (hour >= 18) selectedMessages = eveningMessages;
+    }
+
+    return selectedMessages[
+      Math.floor(Math.random() * selectedMessages.length)
+    ];
   }
 
   /**

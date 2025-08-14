@@ -14,6 +14,8 @@ export function AchievementTeaser({ className }: AchievementTeaserProps) {
   const [motivationalMessage, setMotivationalMessage] = useState<string>("");
   const [specialMessage, setSpecialMessage] = useState<string | null>(null);
   const [showTeaser, setShowTeaser] = useState(false);
+  const [isPressed, setIsPressed] = useState(false);
+  const [messageIndex, setMessageIndex] = useState(0);
 
   useEffect(() => {
     // Get messages on component mount and periodically
@@ -39,12 +41,24 @@ export function AchievementTeaser({ className }: AchievementTeaserProps) {
     };
   }, []);
 
-  // Cycle through messages every 8 seconds
+  // Cycle through messages every 8 seconds (longer for mobile to read)
   useEffect(() => {
+    const isMobile = window.innerWidth < 768;
+    const rotationInterval = isMobile ? 10000 : 8000; // 10s on mobile, 8s on desktop
+
     const messageRotation = setInterval(() => {
       setShowTeaser(false);
-      setTimeout(() => setShowTeaser(true), 300);
-    }, 8000);
+      setTimeout(() => {
+        // Update all messages for variety
+        setMotivationalMessage(
+          EnhancedAchievementTracker.getMotivationalMessage(),
+        );
+        setSpecialMessage(EnhancedAchievementTracker.getTodaySpecialMessage());
+        setCurrentTease(EnhancedAchievementTracker.getNextAchievementTease());
+        setMessageIndex((prev) => prev + 1);
+        setShowTeaser(true);
+      }, 300);
+    }, rotationInterval);
 
     return () => clearInterval(messageRotation);
   }, []);
@@ -52,12 +66,49 @@ export function AchievementTeaser({ className }: AchievementTeaserProps) {
   const getRandomIcon = () => {
     const icons = [Trophy, Star, Sparkles, Target, Zap];
     const IconComponent = icons[Math.floor(Math.random() * icons.length)];
-    return <IconComponent className="w-3 h-3" />;
+    return <IconComponent className="w-3 h-3 sm:w-4 sm:h-4" />;
   };
 
   const getRandomEmoji = () => {
-    const emojis = ["🌟", "⭐", "✨", "🎯", "🚀", "💫", "🌈", "🎊"];
+    const emojis = [
+      "🌟",
+      "⭐",
+      "✨",
+      "🎯",
+      "🚀",
+      "💫",
+      "🌈",
+      "🎊",
+      "🦋",
+      "🌺",
+      "🎪",
+      "🦄",
+      "🎵",
+      "🌸",
+      "🎨",
+      "🏰",
+    ];
     return emojis[Math.floor(Math.random() * emojis.length)];
+  };
+
+  // Touch handlers for mobile interactivity
+  const handleTouchStart = () => {
+    setIsPressed(true);
+  };
+
+  const handleTouchEnd = () => {
+    setIsPressed(false);
+    // Cycle to next message on tap (mobile-friendly)
+    setShowTeaser(false);
+    setTimeout(() => {
+      setMotivationalMessage(
+        EnhancedAchievementTracker.getMotivationalMessage(),
+      );
+      setSpecialMessage(EnhancedAchievementTracker.getTodaySpecialMessage());
+      setCurrentTease(EnhancedAchievementTracker.getNextAchievementTease());
+      setMessageIndex((prev) => prev + 1);
+      setShowTeaser(true);
+    }, 200);
   };
 
   // Priority: Special message > Achievement tease > Motivational message
@@ -73,26 +124,39 @@ export function AchievementTeaser({ className }: AchievementTeaserProps) {
       {showTeaser && (
         <motion.div
           initial={{ opacity: 0, y: -10, scale: 0.95 }}
-          animate={{ opacity: 1, y: 0, scale: 1 }}
+          animate={{
+            opacity: 1,
+            y: 0,
+            scale: isPressed ? 0.98 : 1,
+          }}
           exit={{ opacity: 0, y: -5, scale: 0.98 }}
           transition={{
             type: "spring",
             duration: 0.5,
             damping: 20,
           }}
-          className={className}
+          className={`${className} cursor-pointer select-none`}
+          onTouchStart={handleTouchStart}
+          onTouchEnd={handleTouchEnd}
+          onMouseDown={handleTouchStart}
+          onMouseUp={handleTouchEnd}
+          onMouseLeave={() => setIsPressed(false)}
+          whileTap={{ scale: 0.98 }}
         >
           <Card
-            className={`border-0 shadow-sm transition-all duration-500 hover:shadow-md ${
+            className={`border-0 shadow-sm transition-all duration-500 hover:shadow-md active:shadow-lg rounded-xl sm:rounded-2xl backdrop-blur-sm overflow-hidden ${
               isSpecial
-                ? "bg-gradient-to-r from-yellow-100 to-orange-100 border-yellow-200"
+                ? "bg-gradient-to-r from-yellow-100 via-orange-50 to-pink-100 border-yellow-200 shadow-yellow-100/50 hover:shadow-yellow-200/60"
                 : isTease
-                  ? "bg-gradient-to-r from-blue-100 to-purple-100 border-blue-200"
-                  : "bg-gradient-to-r from-green-100 to-blue-100 border-green-200"
-            }`}
+                  ? "bg-gradient-to-r from-blue-100 via-purple-50 to-indigo-100 border-blue-200 shadow-blue-100/50 hover:shadow-blue-200/60"
+                  : "bg-gradient-to-r from-green-100 via-emerald-50 to-blue-100 border-green-200 shadow-green-100/50 hover:shadow-green-200/60"
+            } ${isPressed ? "scale-98 shadow-lg" : ""}`}
+            role="button"
+            tabIndex={0}
+            aria-label="Tap for a new motivational message"
           >
-            <CardContent className="p-2 md:p-3">
-              <div className="flex items-center gap-2">
+            <CardContent className="p-2 sm:p-3 md:p-4">
+              <div className="flex items-center gap-2 sm:gap-3">
                 <motion.div
                   animate={{
                     rotate: [0, 5, -5, 0],
@@ -102,13 +166,14 @@ export function AchievementTeaser({ className }: AchievementTeaserProps) {
                     duration: 2,
                     repeat: Infinity,
                     repeatDelay: 3,
+                    ease: "easeInOut",
                   }}
-                  className={`${
+                  className={`flex-shrink-0 will-change-transform ${
                     isSpecial
-                      ? "text-yellow-600"
+                      ? "text-yellow-600 drop-shadow-sm"
                       : isTease
-                        ? "text-purple-600"
-                        : "text-blue-600"
+                        ? "text-purple-600 drop-shadow-sm"
+                        : "text-blue-600 drop-shadow-sm"
                   }`}
                 >
                   {getRandomIcon()}
@@ -119,12 +184,12 @@ export function AchievementTeaser({ className }: AchievementTeaserProps) {
                     key={currentMessage} // Force re-render on message change
                     initial={{ opacity: 0, x: 10 }}
                     animate={{ opacity: 1, x: 0 }}
-                    className={`text-xs md:text-sm font-medium leading-tight ${
+                    className={`text-xs sm:text-sm md:text-base font-medium leading-tight line-clamp-2 ${
                       isSpecial
-                        ? "text-yellow-800"
+                        ? "text-yellow-800 drop-shadow-sm"
                         : isTease
-                          ? "text-purple-800"
-                          : "text-blue-800"
+                          ? "text-purple-800 drop-shadow-sm"
+                          : "text-blue-800 drop-shadow-sm"
                     }`}
                   >
                     {currentMessage}
@@ -140,23 +205,35 @@ export function AchievementTeaser({ className }: AchievementTeaserProps) {
                     duration: 2,
                     repeat: Infinity,
                     repeatDelay: 4,
+                    ease: "easeInOut",
                   }}
-                  className="text-sm"
+                  className="text-sm sm:text-base md:text-lg flex-shrink-0 will-change-transform"
                 >
                   {getRandomEmoji()}
                 </motion.div>
               </div>
 
+              {/* Mobile tap indicator */}
+              <div className="flex items-center justify-center mt-1 sm:hidden">
+                <motion.div
+                  animate={{ opacity: [0.3, 0.7, 0.3] }}
+                  transition={{ duration: 2, repeat: Infinity }}
+                  className="text-xs text-gray-500 flex items-center gap-1"
+                >
+                  👆 <span>Tap for new message</span>
+                </motion.div>
+              </div>
+
               {isTease && (
                 <motion.div
-                  initial={{ width: 0 }}
-                  animate={{ width: "100%" }}
-                  transition={{ duration: 1, delay: 0.5 }}
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.5, delay: 0.3 }}
                   className="mt-2"
                 >
                   <Badge
                     variant="outline"
-                    className="text-xs bg-white/50 text-purple-700 border-purple-300 animate-pulse"
+                    className="text-xs sm:text-sm bg-white/60 text-purple-700 border-purple-300 animate-pulse rounded-full px-2 py-1 shadow-sm will-change-transform"
                   >
                     🎯 Keep going!
                   </Badge>
