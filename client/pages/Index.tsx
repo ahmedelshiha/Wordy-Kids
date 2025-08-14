@@ -489,8 +489,13 @@ export default function Index({ initialProfile }: IndexProps) {
   };
 
   const handleCategoryChange = (categoryId: string) => {
+    // Enhanced category change with better UX
+    const previousCategory = selectedCategory;
+
     setSelectedCategory(categoryId);
     setCurrentWordIndex(0);
+    setForgottenWords(new Set());
+    setRememberedWords(new Set());
     // Reset excluded words when changing category
     setExcludedWordIds(new Set());
 
@@ -499,6 +504,38 @@ export default function Index({ initialProfile }: IndexProps) {
 
     // Clear current dashboard words to force regeneration
     setCurrentDashboardWords([]);
+
+    // Play transition sound for better feedback
+    if (categoryId !== previousCategory) {
+      audioService.playWhooshSound();
+
+      // Light haptic feedback
+      if (navigator.vibrate) {
+        navigator.vibrate(50);
+      }
+    }
+  };
+
+  // Enhanced smart back navigation
+  const handleSmartBackNavigation = () => {
+    if (navigator.vibrate) {
+      navigator.vibrate([50, 30, 50]);
+    }
+    audioService.playClickSound();
+
+    // If user has made progress, show a subtle confirmation
+    const hasProgress = rememberedWords.size > 0 || forgottenWords.size > 0;
+
+    if (hasProgress && window.confirm) {
+      // Note: In a real app, you might want to use a custom modal instead of alert
+      // For now, just proceed without confirmation for better UX
+    }
+
+    setLearningMode("selector");
+    setCurrentWordIndex(0);
+
+    // Preserve some session data for potential return
+    // You could implement "Continue where you left off" feature
   };
 
   const generateFreshWords = () => {
