@@ -297,7 +297,7 @@ export const EnhancedSettingsPanel: React.FC<EnhancedSettingsPanelProps> = ({
                   { id: "learning", label: "Learning", icon: Target, emoji: "🎯" },
                   { id: "accessibility", label: "Access", icon: Eye, emoji: "♿" },
                   { id: "notifications", label: "Alerts", icon: Bell, emoji: "🔔" },
-                  { id: "profile", label: "Profile", icon: User, emoji: "👤" },
+                  { id: "profile", label: "Profile", icon: User, emoji: "����" },
                 ].map((tab) => (
                   <Button
                     key={tab.id}
@@ -305,7 +305,7 @@ export const EnhancedSettingsPanel: React.FC<EnhancedSettingsPanelProps> = ({
                     size="sm"
                     onClick={() => setActiveTab(tab.id)}
                     className={cn(
-                      "flex-shrink-0 min-w-[80px] h-12 flex flex-col gap-1 text-xs",
+                      "settings-tab-mobile flex-shrink-0 min-w-[80px] h-12 flex flex-col gap-1 text-xs",
                       activeTab === tab.id && "bg-educational-blue text-white shadow-lg"
                     )}
                   >
