@@ -85,6 +85,9 @@ export const EnhancedWordCard: React.FC<EnhancedWordCardProps> = ({
   const [highContrastMode, setHighContrastMode] = useState(false);
   const cardRef = useRef<HTMLDivElement>(null);
 
+  // Voice settings integration
+  const voiceSettings = useVoiceSettings();
+
   // Initialize adventure status for this word
   React.useEffect(() => {
     let status = adventureService.getWordAdventureStatus(word.id.toString());
