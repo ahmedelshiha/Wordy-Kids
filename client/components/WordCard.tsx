@@ -283,20 +283,20 @@ export const WordCard: React.FC<WordCardProps> = ({
           style={{ backfaceVisibility: "hidden" }}
         >
           {/* Mobile-First Header with Badges */}
-          <div className="flex flex-wrap items-start justify-between gap-2 mb-3">
-            <div className="flex flex-wrap gap-1.5">
+          <div className="flex flex-wrap items-start justify-between gap-1 mb-2">
+            <div className="flex flex-wrap gap-1 max-w-[70%]">
               <Badge
-                className={`${getDifficultyColor(word.difficulty)} text-xs font-medium px-2 py-1`}
+                className={`${getDifficultyColor(word.difficulty)} text-[10px] font-medium px-1.5 py-0.5 leading-tight`}
               >
                 {word.difficulty === "easy"
                   ? "🌟 Easy"
                   : word.difficulty === "medium"
-                    ? "⭐ Medium"
+                    ? "⭐ Med"
                     : "🔥 Hard"}
               </Badge>
               <Badge
                 variant="outline"
-                className="bg-white/20 border-white/30 text-white text-xs px-2 py-1"
+                className="bg-white/20 border-white/30 text-white text-[10px] px-1.5 py-0.5 leading-tight truncate max-w-[80px]"
               >
                 {word.category}
               </Badge>
@@ -305,7 +305,7 @@ export const WordCard: React.FC<WordCardProps> = ({
               {adventureStatus && (
                 <Badge
                   variant="outline"
-                  className={`text-xs flex items-center gap-1 px-2 py-1 ${
+                  className={`text-[10px] flex items-center gap-0.5 px-1.5 py-0.5 leading-tight ${
                     adventureStatus.health >= 80
                       ? "bg-green-500/20 border-green-400/50 text-green-200"
                       : adventureStatus.health >= 50
@@ -316,15 +316,15 @@ export const WordCard: React.FC<WordCardProps> = ({
                   }`}
                 >
                   {adventureStatus.health >= 80 ? (
-                    <Crown className="w-3 h-3" />
+                    <Crown className="w-2.5 h-2.5" />
                   ) : adventureStatus.health >= 50 ? (
-                    <Shield className="w-3 h-3" />
+                    <Shield className="w-2.5 h-2.5" />
                   ) : adventureStatus.health >= 30 ? (
-                    <Target className="w-3 h-3" />
+                    <Target className="w-2.5 h-2.5" />
                   ) : (
-                    <Flame className="w-3 h-3" />
+                    <Flame className="w-2.5 h-2.5" />
                   )}
-                  <span className="font-medium">{adventureStatus.health}%</span>
+                  <span className="font-medium text-[9px]">{adventureStatus.health}%</span>
                 </Badge>
               )}
             </div>
@@ -333,8 +333,8 @@ export const WordCard: React.FC<WordCardProps> = ({
             <Button
               size="sm"
               variant="ghost"
-              className={`text-white hover:bg-white/20 p-2 h-auto min-w-[44px] min-h-[44px] transition-all duration-300 rounded-full ${
-                isFavorited ? "scale-110 text-red-300" : ""
+              className={`text-white hover:bg-white/20 p-1.5 h-auto min-w-[36px] min-h-[36px] transition-all duration-300 rounded-full flex-shrink-0 ${
+                isFavorited ? "scale-105 text-red-300" : ""
               }`}
               onClick={(e) => {
                 e.stopPropagation();
@@ -342,20 +342,20 @@ export const WordCard: React.FC<WordCardProps> = ({
               }}
             >
               <Heart
-                className={`w-4 h-4 transition-all duration-300 ${
+                className={`w-3.5 h-3.5 transition-all duration-300 ${
                   isFavorited ? "fill-current animate-pulse" : ""
                 }`}
               />
               {showSparkles && isFavorited && (
-                <Star className="w-3 h-3 absolute -top-1 -right-1 text-yellow-300 animate-bounce" />
+                <Star className="w-2.5 h-2.5 absolute -top-0.5 -right-0.5 text-yellow-300 animate-bounce" />
               )}
             </Button>
           </div>
 
           {/* Mobile-Optimized Image/Emoji Container */}
           {word.imageUrl ? (
-            <div className="relative mx-auto mb-3">
-              <div className="w-32 h-32 sm:w-36 sm:h-36 md:w-40 md:h-40 rounded-full bg-white/20 backdrop-blur-sm shadow-2xl ring-4 ring-white/30 flex items-center justify-center overflow-hidden">
+            <div className="relative mx-auto mb-2">
+              <div className="w-24 h-24 sm:w-28 sm:h-28 md:w-32 md:h-32 rounded-full bg-white/20 backdrop-blur-sm shadow-xl ring-2 ring-white/30 flex items-center justify-center overflow-hidden">
                 <img
                   src={word.imageUrl}
                   alt={word.word}
@@ -364,15 +364,15 @@ export const WordCard: React.FC<WordCardProps> = ({
               </div>
             </div>
           ) : (
-            <div className="relative mx-auto mb-3">
-              <div className="w-32 h-32 sm:w-36 sm:h-36 md:w-40 md:h-40 rounded-full bg-gradient-to-br from-white/30 via-white/20 to-white/10 backdrop-blur-md shadow-2xl ring-4 ring-white/30 flex items-center justify-center relative overflow-hidden">
+            <div className="relative mx-auto mb-2">
+              <div className="w-24 h-24 sm:w-28 sm:h-28 md:w-32 md:h-32 rounded-full bg-gradient-to-br from-white/30 via-white/20 to-white/10 backdrop-blur-md shadow-xl ring-2 ring-white/30 flex items-center justify-center relative overflow-hidden">
                 {/* Decorative background elements */}
-                <div className="absolute top-1 left-1 w-3 h-3 bg-white/20 rounded-full animate-pulse"></div>
-                <div className="absolute bottom-2 right-2 w-2 h-2 bg-white/15 rounded-full animate-bounce delay-300"></div>
-                <div className="absolute top-1/2 right-1 w-1.5 h-1.5 bg-white/25 rounded-full animate-ping delay-700"></div>
+                <div className="absolute top-1 left-1 w-2 h-2 bg-white/20 rounded-full animate-pulse"></div>
+                <div className="absolute bottom-1.5 right-1.5 w-1.5 h-1.5 bg-white/15 rounded-full animate-bounce delay-300"></div>
+                <div className="absolute top-1/2 right-1 w-1 h-1 bg-white/25 rounded-full animate-ping delay-700"></div>
 
                 {/* Main emoji - Mobile optimized sizing */}
-                <span className="text-5xl sm:text-6xl md:text-7xl relative z-10 drop-shadow-lg">
+                <span className="text-3xl sm:text-4xl md:text-5xl relative z-10 drop-shadow-lg">
                   {word.emoji || "📚"}
                 </span>
 
@@ -383,14 +383,14 @@ export const WordCard: React.FC<WordCardProps> = ({
           )}
 
           {/* Mobile-Optimized Word and Pronunciation */}
-          <div className="flex-1 flex flex-col justify-center items-center text-center space-y-3">
-            <h2 className="text-xl sm:text-2xl md:text-3xl font-bold tracking-wide drop-shadow-md">
+          <div className="flex-1 flex flex-col justify-center items-center text-center space-y-2">
+            <h2 className="text-lg sm:text-xl md:text-2xl font-bold tracking-wide drop-shadow-md leading-tight">
               {word.word}
             </h2>
 
             {word.pronunciation && (
-              <div className="flex flex-col sm:flex-row items-center gap-2 sm:gap-3">
-                <span className="text-sm sm:text-base opacity-90 font-medium">
+              <div className="flex flex-col sm:flex-row items-center gap-1.5 sm:gap-2">
+                <span className="text-xs sm:text-sm opacity-90 font-medium leading-tight">
                   {word.pronunciation}
                 </span>
                 <Button
@@ -401,20 +401,20 @@ export const WordCard: React.FC<WordCardProps> = ({
                     handlePronounce();
                   }}
                   disabled={isPlaying}
-                  className={`text-white hover:bg-white/30 hover:scale-110 p-3 h-auto min-w-[48px] min-h-[48px] rounded-full transition-all duration-300 border-2 border-white/40 bg-white/10 backdrop-blur-sm shadow-lg ${
+                  className={`text-white hover:bg-white/30 hover:scale-105 p-2 h-auto min-w-[40px] min-h-[40px] rounded-full transition-all duration-300 border border-white/40 bg-white/10 backdrop-blur-sm shadow-lg ${
                     isPlaying
-                      ? "scale-125 bg-yellow-400/30 border-yellow-300/60 shadow-yellow-300/30 animate-bounce"
+                      ? "scale-110 bg-yellow-400/30 border-yellow-300/60 shadow-yellow-300/30 animate-bounce"
                       : "hover:border-white/60"
                   }`}
                 >
                   <Volume2
-                    className={`w-5 h-5 sm:w-6 sm:h-6 transition-all duration-300 ${isPlaying ? "text-yellow-200 animate-pulse scale-110" : "text-white"}`}
+                    className={`w-4 h-4 sm:w-5 sm:h-5 transition-all duration-300 ${isPlaying ? "text-yellow-200 animate-pulse scale-105" : "text-white"}`}
                   />
                   {showSparkles && (
-                    <Sparkles className="w-4 h-4 absolute -top-1 -right-1 text-yellow-300 animate-spin" />
+                    <Sparkles className="w-3 h-3 absolute -top-0.5 -right-0.5 text-yellow-300 animate-spin" />
                   )}
                   {isPlaying && (
-                    <div className="absolute inset-0 rounded-full border-2 border-yellow-300/50 animate-ping"></div>
+                    <div className="absolute inset-0 rounded-full border border-yellow-300/50 animate-ping"></div>
                   )}
                 </Button>
               </div>
@@ -422,76 +422,76 @@ export const WordCard: React.FC<WordCardProps> = ({
           </div>
 
           {/* Enhanced Mobile Footer with Gesture Hints */}
-          <div className="text-center space-y-2">
+          <div className="text-center space-y-1">
             {adventureStatus && (
-              <p className="text-xs opacity-60 mb-2">
+              <p className="text-[10px] opacity-60 mb-1 leading-tight">
                 Last seen:{" "}
                 {new Date(adventureStatus.last_seen).toLocaleDateString()}
               </p>
             )}
-            <p className="text-xs sm:text-sm opacity-75">
-              <RotateCcw className="w-3 h-3 sm:w-4 sm:h-4 inline mr-1" />
+            <p className="text-[10px] sm:text-xs opacity-75 leading-tight">
+              <RotateCcw className="w-2.5 h-2.5 sm:w-3 sm:h-3 inline mr-1" />
               Tap to see definition
             </p>
 
             {/* Mobile gesture hints */}
-            <div className="flex justify-center gap-3 text-xs opacity-60 sm:hidden">
+            <div className="flex justify-center gap-2 text-[9px] opacity-60 sm:hidden">
               <span>← ❤️</span>
               <span>↑ 🔊</span>
               <span>→ 🔄</span>
             </div>
 
-            <div className="flex justify-center gap-1.5">
-              <div className="w-2 h-2 bg-white/50 rounded-full animate-bounce"></div>
-              <div className="w-2 h-2 bg-white/50 rounded-full animate-bounce delay-100"></div>
-              <div className="w-2 h-2 bg-white/50 rounded-full animate-bounce delay-200"></div>
+            <div className="flex justify-center gap-1">
+              <div className="w-1.5 h-1.5 bg-white/50 rounded-full animate-bounce"></div>
+              <div className="w-1.5 h-1.5 bg-white/50 rounded-full animate-bounce delay-100"></div>
+              <div className="w-1.5 h-1.5 bg-white/50 rounded-full animate-bounce delay-200"></div>
             </div>
           </div>
         </CardContent>
 
         {/* Back of card - Mobile Optimized */}
         <CardContent
-          className="absolute inset-0 w-full h-full bg-gradient-to-br from-slate-700 to-slate-900 rounded-xl p-4 sm:p-5 flex flex-col text-white"
+          className="absolute inset-0 w-full h-full bg-gradient-to-br from-slate-700 to-slate-900 rounded-xl p-3 sm:p-4 flex flex-col text-white overflow-hidden"
           style={{
             backfaceVisibility: "hidden",
             transform: "rotateY(180deg)",
           }}
         >
           {/* Mobile-Optimized Back Button */}
-          <div className="absolute top-3 right-3">
+          <div className="absolute top-2 right-2 z-10">
             <Button
               size="sm"
               variant="ghost"
-              className="text-white hover:bg-white/20 p-2 h-auto min-w-[44px] min-h-[44px] rounded-full"
+              className="text-white hover:bg-white/20 p-1.5 h-auto min-w-[36px] min-h-[36px] rounded-full"
               onClick={(e) => {
                 e.stopPropagation();
                 setIsFlipped(false);
               }}
             >
-              <RotateCcw className="w-4 h-4" />
+              <RotateCcw className="w-3.5 h-3.5" />
             </Button>
           </div>
 
-          <h3 className="text-lg sm:text-xl font-semibold mb-3 text-center pr-12">
+          <h3 className="text-base sm:text-lg font-semibold mb-2 text-center pr-10 leading-tight">
             {word.word} {word.emoji}
           </h3>
 
-          <div className="space-y-3 flex-1 overflow-y-auto">
+          <div className="space-y-2 flex-1 overflow-y-auto">
             <div>
-              <h4 className="text-xs font-medium mb-1 text-yellow-300">
+              <h4 className="text-[10px] font-medium mb-0.5 text-yellow-300">
                 Definition:
               </h4>
-              <p className="text-sm sm:text-base leading-relaxed">
+              <p className="text-xs sm:text-sm leading-snug">
                 {word.definition}
               </p>
             </div>
 
             {word.example && (
               <div>
-                <h4 className="text-xs font-medium mb-1 text-green-300">
+                <h4 className="text-[10px] font-medium mb-0.5 text-green-300">
                   Example:
                 </h4>
-                <p className="text-sm italic opacity-90 leading-relaxed">
+                <p className="text-xs italic opacity-90 leading-snug">
                   "{word.example}"
                 </p>
               </div>
@@ -499,10 +499,10 @@ export const WordCard: React.FC<WordCardProps> = ({
 
             {word.funFact && (
               <div>
-                <h4 className="text-xs font-medium mb-1 text-pink-300">
+                <h4 className="text-[10px] font-medium mb-0.5 text-pink-300">
                   Fun Fact:
                 </h4>
-                <p className="text-xs sm:text-sm opacity-90 leading-relaxed">
+                <p className="text-[10px] sm:text-xs opacity-90 leading-snug">
                   {word.funFact}
                 </p>
               </div>
@@ -511,17 +511,17 @@ export const WordCard: React.FC<WordCardProps> = ({
 
           {/* Mobile-Optimized Vocabulary Builder Features */}
           {showVocabularyBuilder && (
-            <div className="border-t border-white/20 pt-3 mt-3">
+            <div className="border-t border-white/20 pt-2 mt-2">
               {/* Adventure Word Health - Mobile Optimized */}
-              <div className="mb-3">
-                <div className="flex items-center justify-between mb-2">
-                  <h4 className="text-sm font-medium text-blue-300 flex items-center gap-1">
-                    <Heart className="w-3 h-3" />
+              <div className="mb-2">
+                <div className="flex items-center justify-between mb-1">
+                  <h4 className="text-xs font-medium text-blue-300 flex items-center gap-1">
+                    <Heart className="w-2.5 h-2.5" />
                     Word Health
                   </h4>
-                  <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-1">
                     <span
-                      className={`text-sm font-bold ${
+                      className={`text-xs font-bold ${
                         (adventureStatus?.health || 100) >= 80
                           ? "text-green-300"
                           : (adventureStatus?.health || 100) >= 50
@@ -534,7 +534,7 @@ export const WordCard: React.FC<WordCardProps> = ({
                       {adventureStatus?.health || 100}%
                     </span>
                     {(adventureStatus?.health || 100) < 50 && (
-                      <AlertTriangle className="w-3 h-3 text-orange-300 animate-pulse" />
+                      <AlertTriangle className="w-2.5 h-2.5 text-orange-300 animate-pulse" />
                     )}
                   </div>
                 </div>
@@ -550,28 +550,28 @@ export const WordCard: React.FC<WordCardProps> = ({
                 />
 
                 {/* Mobile-Optimized Adventure Status */}
-                <div className="mt-2 flex items-center justify-between text-xs">
-                  <div className="flex items-center gap-1">
+                <div className="mt-1 flex items-center justify-between text-[10px]">
+                  <div className="flex items-center gap-0.5">
                     {(adventureStatus?.health || 100) < 30 ? (
                       <>
-                        <Flame className="w-3 h-3 text-red-400 animate-pulse" />
+                        <Flame className="w-2.5 h-2.5 text-red-400 animate-pulse" />
                         <span className="text-red-300 font-medium">
                           Needs Rescue!
                         </span>
                       </>
                     ) : (adventureStatus?.health || 100) < 50 ? (
                       <>
-                        <Target className="w-3 h-3 text-orange-400" />
+                        <Target className="w-2.5 h-2.5 text-orange-400" />
                         <span className="text-orange-300">Needs Practice</span>
                       </>
                     ) : (adventureStatus?.health || 100) < 80 ? (
                       <>
-                        <Shield className="w-3 h-3 text-yellow-400" />
+                        <Shield className="w-2.5 h-2.5 text-yellow-400" />
                         <span className="text-yellow-300">Good</span>
                       </>
                     ) : (
                       <>
-                        <Crown className="w-3 h-3 text-green-400" />
+                        <Crown className="w-2.5 h-2.5 text-green-400" />
                         <span className="text-green-300">Mastered</span>
                       </>
                     )}
@@ -583,16 +583,16 @@ export const WordCard: React.FC<WordCardProps> = ({
               </div>
 
               {/* Mobile-Optimized Adventure Rating Buttons */}
-              <div className="space-y-2">
-                <h4 className="text-sm font-medium text-purple-300 mb-2 flex items-center gap-1">
-                  <Sword className="w-3 h-3" />
+              <div className="space-y-1">
+                <h4 className="text-xs font-medium text-purple-300 mb-1 flex items-center gap-0.5">
+                  <Sword className="w-2.5 h-2.5" />
                   Rate Your Knowledge
                 </h4>
-                <div className="flex gap-2 justify-center">
+                <div className="flex gap-1 justify-center">
                   <Button
                     size="sm"
                     variant="ghost"
-                    className="flex-1 bg-red-500/20 hover:bg-red-500/30 active:bg-red-500/40 text-red-200 border border-red-500/30 transition-all active:scale-95 min-h-[44px] text-xs"
+                    className="flex-1 bg-red-500/20 hover:bg-red-500/30 active:bg-red-500/40 text-red-200 border border-red-500/30 transition-all active:scale-95 min-h-[36px] text-[10px] px-2"
                     onClick={(e) => {
                       e.stopPropagation();
                       // Track in adventure system
@@ -624,13 +624,13 @@ export const WordCard: React.FC<WordCardProps> = ({
                       onWordMastered?.(word.id, "hard");
                     }}
                   >
-                    <ThumbsDown className="w-3 h-3 mr-1" />
+                    <ThumbsDown className="w-2.5 h-2.5 mr-0.5" />
                     Forgot
                   </Button>
                   <Button
                     size="sm"
                     variant="ghost"
-                    className="flex-1 bg-yellow-500/20 hover:bg-yellow-500/30 active:bg-yellow-500/40 text-yellow-200 border border-yellow-500/30 transition-all active:scale-95 min-h-[44px] text-xs"
+                    className="flex-1 bg-yellow-500/20 hover:bg-yellow-500/30 active:bg-yellow-500/40 text-yellow-200 border border-yellow-500/30 transition-all active:scale-95 min-h-[36px] text-[10px] px-2"
                     onClick={(e) => {
                       e.stopPropagation();
                       // Track in adventure system with hesitation
@@ -662,13 +662,13 @@ export const WordCard: React.FC<WordCardProps> = ({
                       onWordMastered?.(word.id, "medium");
                     }}
                   >
-                    <Star className="w-3 h-3 mr-1" />
+                    <Star className="w-2.5 h-2.5 mr-0.5" />
                     Kinda
                   </Button>
                   <Button
                     size="sm"
                     variant="ghost"
-                    className="flex-1 bg-green-500/20 hover:bg-green-500/30 active:bg-green-500/40 text-green-200 border border-green-500/30 transition-all active:scale-95 min-h-[44px] text-xs"
+                    className="flex-1 bg-green-500/20 hover:bg-green-500/30 active:bg-green-500/40 text-green-200 border border-green-500/30 transition-all active:scale-95 min-h-[36px] text-[10px] px-2"
                     onClick={(e) => {
                       e.stopPropagation();
                       // Track in adventure system as correct
@@ -700,24 +700,24 @@ export const WordCard: React.FC<WordCardProps> = ({
                       onWordMastered?.(word.id, "easy");
                     }}
                   >
-                    <ThumbsUp className="w-3 h-3 mr-1" />
+                    <ThumbsUp className="w-2.5 h-2.5 mr-0.5" />
                     Easy!
                   </Button>
                 </div>
 
                 {/* Mobile-Optimized Adventure Quick Actions */}
                 {(adventureStatus?.health || 100) < 50 && (
-                  <div className="mt-3 p-3 bg-orange-500/10 rounded-lg border border-orange-500/20">
-                    <div className="flex flex-col sm:flex-row items-center justify-between gap-2">
-                      <div className="flex items-center gap-2">
-                        <AlertTriangle className="w-4 h-4 text-orange-400" />
-                        <span className="text-xs text-orange-300 font-medium text-center sm:text-left">
+                  <div className="mt-2 p-2 bg-orange-500/10 rounded-lg border border-orange-500/20">
+                    <div className="flex flex-col sm:flex-row items-center justify-between gap-1">
+                      <div className="flex items-center gap-1">
+                        <AlertTriangle className="w-3 h-3 text-orange-400" />
+                        <span className="text-[10px] text-orange-300 font-medium text-center sm:text-left">
                           This word needs practice!
                         </span>
                       </div>
                       <Button
                         size="sm"
-                        className="bg-orange-500/20 hover:bg-orange-500/30 active:bg-orange-500/40 text-orange-200 border border-orange-500/30 px-3 py-2 h-auto text-xs min-h-[40px] transition-all active:scale-95"
+                        className="bg-orange-500/20 hover:bg-orange-500/30 active:bg-orange-500/40 text-orange-200 border border-orange-500/30 px-2 py-1 h-auto text-[10px] min-h-[32px] transition-all active:scale-95"
                         onClick={(e) => {
                           e.stopPropagation();
                           // Trigger adventure rescue - this could open adventure dashboard
@@ -727,7 +727,7 @@ export const WordCard: React.FC<WordCardProps> = ({
                           );
                         }}
                       >
-                        <Sword className="w-3 h-3 mr-1" />
+                        <Sword className="w-2.5 h-2.5 mr-0.5" />
                         Rescue
                       </Button>
                     </div>
