@@ -184,8 +184,9 @@ export function AchievementTeaser({ className }: AchievementTeaserProps) {
                     duration: 2,
                     repeat: Infinity,
                     repeatDelay: 4,
+                    ease: "easeInOut",
                   }}
-                  className="text-sm sm:text-base md:text-lg flex-shrink-0"
+                  className="text-sm sm:text-base md:text-lg flex-shrink-0 will-change-transform"
                 >
                   {getRandomEmoji()}
                 </motion.div>
