@@ -297,7 +297,7 @@ export const EnhancedSettingsPanel: React.FC<EnhancedSettingsPanelProps> = ({
                   { id: "learning", label: "Learning", icon: Target, emoji: "🎯" },
                   { id: "accessibility", label: "Access", icon: Eye, emoji: "♿" },
                   { id: "notifications", label: "Alerts", icon: Bell, emoji: "🔔" },
-                  { id: "profile", label: "Profile", icon: User, emoji: "����" },
+                  { id: "profile", label: "Profile", icon: User, emoji: "👤" },
                 ].map((tab) => (
                   <Button
                     key={tab.id}
@@ -346,7 +346,7 @@ export const EnhancedSettingsPanel: React.FC<EnhancedSettingsPanelProps> = ({
 
           {/* Content Area */}
           <ScrollArea className="flex-1 h-[60vh] md:h-[70vh]">
-            <div className="p-4 md:p-6 space-y-6">
+            <div className="settings-content-mobile p-4 md:p-6 space-y-6">
               {/* Audio Settings */}
               {activeTab === "audio" && (
                 <div className="space-y-6 animate-fade-in">
