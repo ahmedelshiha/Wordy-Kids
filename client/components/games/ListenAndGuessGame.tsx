@@ -579,45 +579,48 @@ export default function ListenAndGuessGame({
           </div>
         )}
 
-        {/* Game Completion Popup */}
+        {/* Game Completion Popup - Mobile Optimized */}
         {showCompletionPopup && (
-          <div className="absolute inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50">
-            <div className="bg-gradient-to-br from-green-500 via-blue-500 to-purple-600 p-8 rounded-3xl shadow-2xl border-4 border-white/30 max-w-sm mx-4 text-center text-white achievement-glow">
-              <div className="flex justify-center mb-4">
+          <div className="absolute inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-50 p-3">
+            <div className="bg-gradient-to-br from-green-500 via-blue-500 to-purple-600 p-4 sm:p-6 rounded-2xl shadow-xl border-2 border-white/30 w-full max-w-xs sm:max-w-sm text-center text-white achievement-glow">
+              {/* Compact Header */}
+              <div className="flex justify-center mb-3">
                 <div className="relative">
-                  <div className="text-6xl animate-bounce">🎉</div>
-                  <Sparkles className="w-8 h-8 absolute -top-2 -right-2 text-yellow-300 animate-spin" />
-                  <Star className="w-6 h-6 absolute -bottom-1 -left-2 text-pink-300 animate-pulse" />
+                  <div className="text-3xl sm:text-4xl animate-bounce">🎉</div>
+                  <Sparkles className="w-4 h-4 sm:w-5 sm:h-5 absolute -top-1 -right-1 text-yellow-300 animate-spin" />
                 </div>
               </div>
 
-              <h2 className="text-2xl font-bold mb-3">🏆 Amazing Work!</h2>
-              <p className="text-lg mb-4">
-                You completed {correctCount}/{sequence.length} questions!
+              <h2 className="text-lg sm:text-xl font-bold mb-2">🏆 Great Job!</h2>
+              <p className="text-sm mb-3">
+                {correctCount}/{sequence.length} correct!
               </p>
 
-              <div className="grid grid-cols-2 gap-3 mb-6 text-sm">
-                <div className="bg-white/20 rounded-lg p-3">
-                  <div className="text-2xl font-bold">{correctCount}</div>
-                  <div className="opacity-90">Correct</div>
+              {/* Compact Stats */}
+              <div className="flex gap-2 mb-4 text-xs sm:text-sm">
+                <div className="bg-white/20 rounded-lg p-2 flex-1">
+                  <div className="text-lg sm:text-xl font-bold">{correctCount}</div>
+                  <div className="opacity-90 text-xs">Correct</div>
                 </div>
-                <div className="bg-white/20 rounded-lg p-3">
-                  <div className="text-2xl font-bold">{bestStreak}</div>
-                  <div className="opacity-90">Best Streak</div>
+                <div className="bg-white/20 rounded-lg p-2 flex-1">
+                  <div className="text-lg sm:text-xl font-bold">{bestStreak}</div>
+                  <div className="opacity-90 text-xs">Streak</div>
                 </div>
               </div>
 
+              {/* Compact Achievement Badge */}
               {achievementUnlocked && (
-                <div className="bg-yellow-500/30 border-2 border-yellow-300 rounded-xl p-3 mb-4">
-                  <div className="flex items-center justify-center gap-2">
-                    <Crown className="w-5 h-5" />
-                    <span className="font-bold text-sm">New Achievement!</span>
+                <div className="bg-yellow-500/30 border border-yellow-300 rounded-lg p-2 mb-3">
+                  <div className="flex items-center justify-center gap-1">
+                    <Crown className="w-3 h-3 sm:w-4 sm:h-4" />
+                    <span className="font-bold text-xs">Achievement!</span>
                   </div>
-                  <div className="text-xs mt-1 opacity-90">{achievementUnlocked}</div>
+                  <div className="text-xs mt-0.5 opacity-90 truncate">{achievementUnlocked}</div>
                 </div>
               )}
 
-              <div className="space-y-3">
+              {/* Compact Action Buttons */}
+              <div className="space-y-2">
                 <button
                   onClick={() => {
                     // Reset game state for restart
@@ -632,10 +635,10 @@ export default function ListenAndGuessGame({
                     setSparkleCount(0);
                     setIsRestarting(prev => !prev); // Trigger regeneration
                   }}
-                  className="w-full bg-white/20 hover:bg-white/30 text-white font-bold py-3 px-6 rounded-xl transition-all duration-200 active:scale-95 flex items-center justify-center gap-2"
+                  className="w-full bg-white/20 hover:bg-white/30 text-white font-bold py-2 px-4 rounded-lg transition-all duration-200 active:scale-95 flex items-center justify-center gap-2 text-sm touch-target"
                 >
-                  <Sparkles className="w-5 h-5" />
-                  Play Again with New Words!
+                  <Sparkles className="w-4 h-4" />
+                  Play Again!
                 </button>
 
                 {onExit && (
@@ -644,9 +647,9 @@ export default function ListenAndGuessGame({
                       setShowCompletionPopup(false);
                       onExit();
                     }}
-                    className="w-full bg-white/10 hover:bg-white/20 text-white font-semibold py-2 px-6 rounded-xl transition-all duration-200"
+                    className="w-full bg-white/10 hover:bg-white/20 text-white font-medium py-1.5 px-4 rounded-lg transition-all duration-200 text-sm touch-target"
                   >
-                    Exit Game
+                    Exit
                   </button>
                 )}
               </div>
