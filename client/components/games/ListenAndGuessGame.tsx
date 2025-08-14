@@ -6,12 +6,15 @@ import React, {
   useState,
 } from "react";
 import { EnhancedAchievementTracker } from "@/lib/enhancedAchievementTracker";
+import { CelebrationEffect } from "@/components/CelebrationEffect";
+import { audioService } from "@/lib/audioService";
 import {
   generateListenAndGuessWords,
   getProgressiveListenAndGuessWords,
   getCategoryListenAndGuessWords,
   ListenAndGuessWord,
 } from "@/lib/listenAndGuessGeneration";
+import { getWordsByCategory, getRandomWords, Word } from "@/data/wordsDatabase";
 
 /**
  * Listen & Guess — Kid‑friendly vocabulary game
@@ -159,25 +162,71 @@ export default function ListenAndGuessGame({
   const [locked, setLocked] = useState(false); // prevent double taps
   const [showAnswer, setShowAnswer] = useState(false);
   const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
+  const [showCelebration, setShowCelebration] = useState(false);
 
   const { containerRef, fire } = useConfetti();
 
-  // Generate or use provided words
+  // Enhanced word generation using database words with emojis
+  const generateDatabaseWords = useCallback(
+    (
+      count: number,
+      category?: string,
+      difficulty?: "easy" | "medium" | "hard",
+    ): WordItem[] => {
+      let dbWords: Word[] = [];
+
+      if (category && category !== "all") {
+        dbWords = getWordsByCategory(category);
+      } else {
+        dbWords = getRandomWords(count * 3); // Get more words to have options
+      }
+
+      if (difficulty) {
+        dbWords = dbWords.filter((w) => w.difficulty === difficulty);
+      }
+
+      // Convert database words to ListenAndGuessWord format using emojis
+      return dbWords.slice(0, count).map((word) => ({
+        id: word.id,
+        word: word.word,
+        imageUrl: word.emoji, // Use emoji instead of external image
+        distractorImages: generateDistractorEmojis(word, dbWords),
+        category: word.category,
+        difficulty: word.difficulty,
+      }));
+    },
+    [],
+  );
+
+  // Generate distractor emojis from the same category or similar words
+  const generateDistractorEmojis = useCallback(
+    (targetWord: Word, allWords: Word[]): string[] => {
+      const sameCategory = allWords.filter(
+        (w) => w.category === targetWord.category && w.id !== targetWord.id,
+      );
+
+      const otherWords = allWords.filter((w) => w.id !== targetWord.id);
+      const distractors = sameCategory.length >= 3 ? sameCategory : otherWords;
+
+      return shuffle(distractors)
+        .slice(0, optionsPerRound - 1)
+        .map((w) => w.emoji);
+    },
+    [optionsPerRound],
+  );
+
+  // Generate or use provided words - Enhanced with database emojis
   const gameWords = useMemo(() => {
     if (words && words.length > 0) {
       return words;
     }
 
-    // Generate words systematically from database
-    if (category && category !== "all") {
-      return getCategoryListenAndGuessWords(category, rounds);
-    } else if (difficulty) {
-      return generateListenAndGuessWords(rounds, difficulty);
-    } else {
-      // Use progressive difficulty based on player level
-      return getProgressiveListenAndGuessWords(playerLevel, 1);
-    }
-  }, [words, rounds, category, difficulty, playerLevel]);
+    // Use database-based word generation with emojis
+    const difficultyLevel =
+      difficulty ||
+      (playerLevel <= 3 ? "easy" : playerLevel <= 7 ? "medium" : "hard");
+    return generateDatabaseWords(rounds, category, difficultyLevel);
+  }, [words, rounds, category, difficulty, playerLevel, generateDatabaseWords]);
 
   // Precompute the sequence of rounds
   const sequence = useMemo(() => {
@@ -229,13 +278,15 @@ export default function ListenAndGuessGame({
 
           // Track real-time achievement progress for correct answers
           try {
-            EnhancedAchievementTracker.updateProgress({
-              correctAnswers: 1,
-              totalAnswers: 1,
-              currentStreak: ns,
-              coinsEarned: 5,
+            EnhancedAchievementTracker.updateJourneyProgress({
               wordsLearned: 1,
-              listenAndGuessCorrect: 1,
+              sessionStats: {
+                totalSessions: 1,
+                perfectSessions: 0,
+                averageWordsPerSession: 1,
+                fastestSession: 1,
+                longestStreak: ns,
+              },
             });
           } catch (error) {
             console.error("Error tracking real-time achievements:", error);
@@ -243,6 +294,10 @@ export default function ListenAndGuessGame({
 
           return ns;
         });
+
+        // Play celebration effects like other quizzes
+        setShowCelebration(true);
+        audioService.playSuccessSound();
         fire();
       } else {
         setWrongCount((w) => w + 1);
@@ -250,9 +305,14 @@ export default function ListenAndGuessGame({
 
         // Track wrong answers for achievement progress
         try {
-          EnhancedAchievementTracker.updateProgress({
-            totalAnswers: 1,
-            currentStreak: 0,
+          EnhancedAchievementTracker.updateJourneyProgress({
+            sessionStats: {
+              totalSessions: 1,
+              perfectSessions: 0,
+              averageWordsPerSession: 1,
+              fastestSession: 1,
+              longestStreak: 0,
+            },
           });
         } catch (error) {
           console.error("Error tracking achievement progress:", error);
@@ -288,39 +348,52 @@ export default function ListenAndGuessGame({
           };
 
           // Track achievements for Listen & Guess completion
-          const achievementUpdates = {
-            totalQuizzes: 1,
-            quizzesCompleted: 1,
-            listenAndGuessGamesPlayed: 1,
-            correctAnswers: finalCorrect,
-            totalAnswers: sequence.length,
-            currentStreak: isCorrect ? streak + 1 : 0,
-            bestStreak: finalBestStreak,
-            coinsEarned: finalCoins,
-            wordsLearned: finalCorrect, // Each correct answer = word learned
-            difficulty: difficulty || (playerLevel <= 5 ? "easy" : "medium"),
-          };
-
-          // Calculate accuracy and add bonus achievements
           const accuracy = (finalCorrect / sequence.length) * 100;
-          if (accuracy >= 90) {
-            achievementUpdates.perfectScores = 1;
-          }
-          if (finalBestStreak >= 5) {
-            achievementUpdates.streakAchievements = 1;
-          }
-
-          // Track session achievements
-          achievementUpdates.sessionStats = {
-            questionsAnswered: sequence.length,
-            correctAnswers: finalCorrect,
-            timeSpent: Date.now() - performance.now(), // Approximate session time
-            gamesCompleted: 1,
+          const achievementUpdates = {
+            wordsLearned: finalCorrect, // Each correct answer = word learned
+            totalAccuracy: accuracy,
+            quizzesPerfect: accuracy >= 90 ? 1 : 0,
+            streakDays: finalBestStreak >= 5 ? 1 : 0,
+            sessionStats: {
+              totalSessions: 1,
+              perfectSessions: accuracy >= 90 ? 1 : 0,
+              averageWordsPerSession: finalCorrect,
+              fastestSession: 1, // Simple session tracking
+              longestStreak: finalBestStreak,
+            },
+            difficultyStats: {
+              easy:
+                playerLevel <= 5
+                  ? {
+                      completed: finalCorrect,
+                      total: sequence.length,
+                      accuracy,
+                    }
+                  : { completed: 0, total: 0, accuracy: 0 },
+              medium:
+                playerLevel > 5 && playerLevel <= 10
+                  ? {
+                      completed: finalCorrect,
+                      total: sequence.length,
+                      accuracy,
+                    }
+                  : { completed: 0, total: 0, accuracy: 0 },
+              hard:
+                playerLevel > 10
+                  ? {
+                      completed: finalCorrect,
+                      total: sequence.length,
+                      accuracy,
+                    }
+                  : { completed: 0, total: 0, accuracy: 0 },
+            },
           };
 
           try {
             const newAchievements =
-              EnhancedAchievementTracker.updateProgress(achievementUpdates);
+              EnhancedAchievementTracker.updateJourneyProgress(
+                achievementUpdates,
+              );
 
             if (newAchievements.length > 0) {
               console.log(
@@ -503,12 +576,9 @@ export default function ListenAndGuessGame({
                   animationDelay: `${i * 100}ms`,
                 }}
               >
-                <img
-                  src={img}
-                  alt="option"
-                  className="w-full h-full object-contain p-3"
-                  loading="lazy"
-                />
+                <div className="w-full h-full flex items-center justify-center p-3">
+                  <span className="text-6xl md:text-8xl">{img}</span>
+                </div>
                 {/* fun corner badge with animation */}
                 <span className="absolute top-2 left-2 text-lg animate-sparkle">
                   ✨
