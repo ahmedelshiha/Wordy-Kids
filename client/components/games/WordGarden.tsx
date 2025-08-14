@@ -494,16 +494,32 @@ export default function WordGardenGame({
 
       {/* Garden row (visual progress) */}
       <div className="mt-4 grid grid-cols-4 gap-2">
-        {gardenStages.map((stage, idx) => (
-          <div
-            key={idx}
-            className={`rounded-2xl h-16 flex items-center justify-center text-2xl ${idx === roundIdx ? "bg-emerald-100" : "bg-emerald-50"}`}
-          >
-            <span className={idx === roundIdx ? "animate-bounce" : ""}>
-              {STAGES[stage]}
-            </span>
-          </div>
-        ))}
+        {gardenStages.map((stage, idx) => {
+          const isActive = idx === roundIdx;
+          const isCompleted = idx < roundIdx;
+          const hasGrown = stage > 0;
+
+          return (
+            <div
+              key={idx}
+              className={`rounded-2xl h-16 flex items-center justify-center text-2xl transition-all duration-300 ${
+                isActive
+                  ? "bg-emerald-200 ring-2 ring-emerald-400"
+                  : isCompleted && hasGrown
+                  ? "bg-emerald-100"
+                  : "bg-emerald-50"
+              }`}
+            >
+              <span
+                className={`transition-all duration-500 ${
+                  isActive ? "animate-bounce scale-110" : hasGrown ? "scale-105" : ""
+                }`}
+              >
+                {STAGES[stage]}
+              </span>
+            </div>
+          );
+        })}
       </div>
 
       {/* Styles for confetti dots */}
