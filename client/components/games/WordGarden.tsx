@@ -12,7 +12,7 @@ import { EnhancedAchievementTracker } from "@/lib/enhancedAchievementTracker";
 /**
  * Word Garden — Listen & Pick Game for Ages 3–5
  * -------------------------------------------------
- * • Pulls words from your website DB using existing word service
+ * �� Pulls words from your website DB using existing word service
  * • Kids listen to pronunciation then pick the matching picture
  * • Every correct answer grows a plant in the garden (visual progress)
  * • Integrates with achievements + sparkle celebration hooks
@@ -360,7 +360,7 @@ export default function WordGardenGame({
         setStreak(0);
 
         // Play incorrect sound
-        audioService.playIncorrectSound();
+        audioService.playEncouragementSound();
 
         // gentle buzz
         if (navigator && "vibrate" in navigator)
