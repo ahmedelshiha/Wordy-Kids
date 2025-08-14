@@ -289,30 +289,31 @@ export default function LoginForm() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 flex items-center justify-center p-3 sm:p-6 md:p-8 relative overflow-hidden safe-area-padding-top safe-area-padding-bottom">
-      {/* Enhanced Background Pattern */}
+      {/* Compact Background Pattern - fewer elements on mobile */}
       <div className="absolute inset-0 opacity-10">
-        <div className="absolute top-10 left-10 text-4xl animate-gentle-float">
+        <div className="absolute top-8 left-8 text-2xl sm:text-4xl animate-gentle-float">
           ⭐
         </div>
-        <div className="absolute top-20 right-16 text-3xl animate-gentle-float animation-delay-200">
-          ���
+        <div className="absolute top-16 right-8 text-xl sm:text-3xl animate-gentle-float animation-delay-200">
+          📚
         </div>
-        <div className="absolute bottom-20 left-16 text-4xl animate-gentle-float animation-delay-100">
+        <div className="absolute bottom-16 left-8 text-2xl sm:text-4xl animate-gentle-float animation-delay-100">
           🎯
         </div>
-        <div className="absolute bottom-10 right-20 text-3xl animate-gentle-float animation-delay-300">
+        <div className="absolute bottom-8 right-8 text-xl sm:text-3xl animate-gentle-float animation-delay-300">
           🚀
         </div>
-        <div className="absolute top-1/2 left-8 text-2xl animate-sparkle">
+        {/* Hide some decorative elements on mobile */}
+        <div className="hidden sm:block absolute top-1/2 left-8 text-2xl animate-sparkle">
           ✨
         </div>
-        <div className="absolute top-1/3 right-8 text-3xl animate-gentle-float animation-delay-200">
+        <div className="hidden sm:block absolute top-1/3 right-8 text-3xl animate-gentle-float animation-delay-200">
           🎪
         </div>
-        <div className="absolute bottom-1/3 left-1/4 text-2xl animate-sparkle animation-delay-100">
+        <div className="hidden sm:block absolute bottom-1/3 left-1/4 text-2xl animate-sparkle animation-delay-100">
           🌈
         </div>
-        <div className="absolute top-1/4 right-1/4 text-3xl animate-gentle-float animation-delay-300">
+        <div className="hidden sm:block absolute top-1/4 right-1/4 text-3xl animate-gentle-float animation-delay-300">
           🎨
         </div>
       </div>
