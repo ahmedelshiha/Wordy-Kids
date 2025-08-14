@@ -325,6 +325,7 @@ export const WordCard: React.FC<WordCardProps> = ({
           }
         }}
         onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
         onTouchEnd={handleTouchEnd}
         role="button"
         tabIndex={0}
