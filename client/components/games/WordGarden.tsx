@@ -64,6 +64,10 @@ export type WordGardenGameProps = {
   onFinish?: (stats: GameFinishStats) => void;
   onExit?: () => void;
 
+  // EXIT DIALOG
+  showExitDialog?: boolean;
+  onCloseExitDialog?: () => void;
+
   // UX
   className?: string;
 };
