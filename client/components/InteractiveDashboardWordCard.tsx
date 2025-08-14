@@ -864,7 +864,9 @@ export function InteractiveDashboardWordCard({
           </div>
 
           {/* Achievement Teaser - Motivational hints */}
-          <AchievementTeaser className="mb-3" />
+          <div aria-live="polite" aria-label="Motivational messages">
+            <AchievementTeaser className="mb-3" />
+          </div>
 
           {/* Category and Progress Header */}
           <div className="text-center mb-4 sm:mb-6 md:mb-8 mt-4 sm:mt-6 md:mt-8">
