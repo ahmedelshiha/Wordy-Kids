@@ -2975,7 +2975,7 @@ export default function Index({ initialProfile }: IndexProps) {
                             </Button>
                           </div>
                           <WordGarden
-                            rounds={8}
+                            rounds={10}
                             optionsPerRound={3}
                             difficulty="easy"
                             showExitDialog={showExitDialog}
