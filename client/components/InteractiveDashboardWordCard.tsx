@@ -635,7 +635,7 @@ export function InteractiveDashboardWordCard({
                       if (wordsLearned >= goal) {
                         if (wordsLearned >= goal * 2) return "⭐";
                         if (wordsLearned >= goal * 1.5) return "🚀";
-                        return "🏆";
+                        return "����";
                       }
                       if (percentage >= 90) return "⭐";
                       if (percentage >= 75) return "🎯";
@@ -663,7 +663,7 @@ export function InteractiveDashboardWordCard({
                             return "�� SUPERSTAR! Amazing effort!";
                           if (wordsLearned >= goal * 1.5)
                             return "🚀 Beyond awesome! Keep going!";
-                          return "🎉 Goal achieved! You're incredible!";
+                          return "��� Goal achieved! You're incredible!";
                         }
                         if (percentage >= 90)
                           return "🌟 Almost there, superstar!";
@@ -945,7 +945,8 @@ export function InteractiveDashboardWordCard({
               <Button
                 onClick={() => setShowWordName(true)}
                 size="sm"
-                className="bg-educational-purple hover:bg-educational-purple/90 text-white px-3 py-2 text-sm rounded-xl transition-all duration-300 transform hover:scale-105"
+                className="bg-educational-purple hover:bg-educational-purple/90 text-white px-3 py-2 text-xs sm:text-sm rounded-xl transition-all duration-300 transform hover:scale-105 active:scale-95 min-h-[44px]"
+                aria-label="Show word answer"
               >
                 <Eye className="w-4 h-4 mr-1" />
                 👁️ Show
