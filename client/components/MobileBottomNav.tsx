@@ -195,11 +195,15 @@ export function MobileBottomNav({
           />
           <div className="absolute bottom-20 left-3 right-3 bg-white rounded-3xl shadow-2xl p-4 border-4 border-rainbow max-h-[70vh] overflow-y-auto">
             <div className="text-center mb-4">
-              <div className="text-2xl mb-2">🎪</div>
+              <div className="text-2xl mb-2">{userRole === 'parent' ? '👨‍👩‍👧‍👦' : '🎪'}</div>
               <h3 className="text-lg font-bold text-gray-800">
-                More Fun Stuff!
+                {userRole === 'parent' ? 'Parent Navigation' : 'More Fun Stuff!'}
               </h3>
-              <p className="text-sm text-gray-600">Tap what you want to do!</p>
+              <p className="text-sm text-gray-600">
+                {userRole === 'parent'
+                  ? 'Navigate back to child learning areas'
+                  : 'Tap what you want to do!'}
+              </p>
             </div>
 
             <div className="grid grid-cols-2 gap-2">
