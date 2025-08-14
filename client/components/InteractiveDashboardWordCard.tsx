@@ -821,7 +821,7 @@ export function InteractiveDashboardWordCard({
             </div>
           </div>
           {/* Category and Progress Header */}
-          <div className="text-center mb-4 md:mb-6 mt-8 md:mt-6">
+          <div className="text-center mb-6 md:mb-8 mt-8 md:mt-6">
             <div className="flex items-center justify-center gap-4 mb-4">
               <Badge
                 className={cn(
