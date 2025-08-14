@@ -1,3 +1,4 @@
+import React from 'react';
 import { Word } from "@/data/wordsDatabase";
 
 // Event types for word database changes
