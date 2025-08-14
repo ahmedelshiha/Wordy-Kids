@@ -277,11 +277,11 @@ export default function ListenAndGuessGame({
         <div className="absolute top-0 left-0 w-32 h-32 bg-white/10 rounded-full blur-xl animate-gentle-float"></div>
         <div className="absolute top-1/2 right-0 w-24 h-24 bg-yellow-300/20 rounded-full blur-lg animate-kid-float-delayed"></div>
         <div className="absolute bottom-0 left-1/2 w-28 h-28 bg-pink-300/15 rounded-full blur-xl animate-kid-float"></div>
-        {/* Exit Button */}
+        {/* Exit Button with enhanced mobile styling */}
         {onExit && (
           <button
             onClick={onExit}
-            className="absolute top-4 right-4 w-8 h-8 rounded-full bg-white/20 hover:bg-white/30 flex items-center justify-center transition-colors"
+            className="absolute top-4 right-4 w-10 h-10 rounded-full bg-white/20 hover:bg-white/30 flex items-center justify-center transition-all duration-200 z-20 touch-target active:scale-90 text-white font-bold text-lg"
             aria-label="Exit game"
           >
             ✕
