@@ -511,7 +511,7 @@ export default function WordGardenGame({
     return () => {
       mounted = false;
     };
-  }, [rounds, difficulty]);
+  }, [rounds, difficulty, optionsPerRound]);
 
   const current: WordItem | undefined = pool[roundIdx];
 
