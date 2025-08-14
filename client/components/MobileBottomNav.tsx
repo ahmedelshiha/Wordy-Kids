@@ -84,82 +84,49 @@ export function MobileBottomNav({
     },
   ];
 
-  // Optimized tab layout - max 4 tabs for better mobile UX
-  const primaryTabs = userRole === "parent"
-    ? [
-        {
-          id: "parent",
-          emoji: "👨‍👩‍👧‍👦",
-          label: "Parent Zone",
-          icon: Users,
-          color: "from-blue-500 to-indigo-500",
-          bgColor: "bg-blue-100",
-          textColor: "text-blue-600",
-          badge: undefined,
-        },
-        {
-          id: "dashboard",
-          emoji: "🏠",
-          label: "Home",
-          icon: Target,
-          color: "from-purple-500 to-pink-500",
-          bgColor: "bg-purple-100",
-          textColor: "text-purple-600",
-          badge: undefined,
-        },
-        {
-          id: "progress",
-          emoji: "📊",
-          label: "Reports",
-          icon: Trophy,
-          color: "from-yellow-500 to-orange-500",
-          bgColor: "bg-yellow-100",
-          textColor: "text-yellow-600",
-          badge: undefined,
-        },
-      ]
-    : [
-        {
-          id: "dashboard",
-          emoji: "🏠",
-          label: "Home",
-          icon: Target,
-          color: "from-purple-500 to-pink-500",
-          bgColor: "bg-purple-100",
-          textColor: "text-purple-600",
-          badge: undefined,
-        },
-        {
-          id: "learn",
-          emoji: "📚",
-          label: "Learn",
-          icon: BookOpen,
-          color: "from-green-500 to-emerald-500",
-          bgColor: "bg-green-100",
-          textColor: "text-green-600",
-          badge: undefined,
-        },
-        {
-          id: "quiz",
-          emoji: "🎮",
-          label: "Quiz",
-          icon: Brain,
-          color: "from-pink-500 to-rose-500",
-          bgColor: "bg-pink-100",
-          textColor: "text-pink-600",
-          badge: undefined,
-        },
-        {
-          id: "parent",
-          emoji: "👨‍👩‍👧‍👦",
-          label: "Parent",
-          icon: Users,
-          color: "from-blue-500 to-indigo-500",
-          bgColor: "bg-blue-100",
-          textColor: "text-blue-600",
-          badge: undefined,
-        },
-      ];
+  // Primary tabs without parent dashboard - moved to More section
+  const primaryTabs = [
+    {
+      id: "dashboard",
+      emoji: "🏠",
+      label: "Home",
+      icon: Target,
+      color: "from-purple-500 to-pink-500",
+      bgColor: "bg-purple-100",
+      textColor: "text-purple-600",
+      badge: undefined,
+    },
+    {
+      id: "learn",
+      emoji: "📚",
+      label: "Learn",
+      icon: BookOpen,
+      color: "from-green-500 to-emerald-500",
+      bgColor: "bg-green-100",
+      textColor: "text-green-600",
+      badge: undefined,
+    },
+    {
+      id: "quiz",
+      emoji: "🎮",
+      label: "Quiz",
+      icon: Brain,
+      color: "from-pink-500 to-rose-500",
+      bgColor: "bg-pink-100",
+      textColor: "text-pink-600",
+      badge: undefined,
+    },
+    {
+      id: "progress",
+      emoji: "🌟",
+      label: userRole === "parent" ? "Reports" : "My Journey",
+      icon: Trophy,
+      color: "from-yellow-500 to-orange-500",
+      bgColor: "bg-yellow-100",
+      textColor: "text-yellow-600",
+      badge: undefined,
+    },
+  ];
 
   const secondaryMenuItems = [
     // Add progress for child mode since it's not in primary tabs
