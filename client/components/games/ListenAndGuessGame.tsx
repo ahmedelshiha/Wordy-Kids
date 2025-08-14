@@ -6,12 +6,15 @@ import React, {
   useState,
 } from "react";
 import { EnhancedAchievementTracker } from "@/lib/enhancedAchievementTracker";
+import { CelebrationEffect } from "@/components/CelebrationEffect";
+import { audioService } from "@/lib/audioService";
 import {
   generateListenAndGuessWords,
   getProgressiveListenAndGuessWords,
   getCategoryListenAndGuessWords,
   ListenAndGuessWord,
 } from "@/lib/listenAndGuessGeneration";
+import { getWordsByCategory, getRandomWords, Word } from "@/data/wordsDatabase";
 
 /**
  * Listen & Guess — Kid‑friendly vocabulary game
