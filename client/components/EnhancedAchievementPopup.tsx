@@ -36,9 +36,10 @@ interface Achievement {
   unlocked: boolean;
   dateUnlocked?: Date;
   reward?: {
-    type: "avatar_accessory" | "theme" | "sound_effect" | "title" | "points";
+    type: "avatar_accessory" | "theme" | "sound_effect" | "title" | "points" | "sticker" | "badge";
     item: string;
     value?: number;
+    emoji?: string;
   };
   criteria?: Array<{
     type: string;
