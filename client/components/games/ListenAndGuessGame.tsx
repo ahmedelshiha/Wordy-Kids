@@ -431,7 +431,9 @@ export default function ListenAndGuessGame({
             console.error("Error tracking achievements:", error);
           }
 
-          onFinish?.(stats);
+          // Show completion popup instead of calling onFinish immediately
+          setShowCompletionPopup(true);
+          setShowSparkleExplosion(true);
         }
       }, 1500);
     },
