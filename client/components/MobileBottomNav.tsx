@@ -162,6 +162,14 @@ export function MobileBottomNav({
       ];
 
   const secondaryMenuItems = [
+    // Add progress for child mode since it's not in primary tabs
+    ...(userRole === "child" ? [{
+      id: "progress",
+      emoji: "🌟",
+      label: "My Journey",
+      icon: Trophy,
+      onClick: () => onTabChange("progress"),
+    }] : []),
     {
       id: "admin",
       emoji: "🛡️",
