@@ -544,9 +544,15 @@ export const WordCard: React.FC<WordCardProps> = ({
             {/* Mobile-only compact hints with better visibility */}
             <div className="sm:hidden">
               <div className="flex justify-center gap-2 text-[9px] opacity-75">
-                <span className="bg-white/10 rounded-full px-1.5 py-0.5">← ❤️</span>
-                <span className="bg-white/10 rounded-full px-1.5 py-0.5">↑ 🔊</span>
-                <span className="bg-white/10 rounded-full px-1.5 py-0.5">→ 🔄</span>
+                <span className="bg-white/10 rounded-full px-1.5 py-0.5">
+                  ← ❤️
+                </span>
+                <span className="bg-white/10 rounded-full px-1.5 py-0.5">
+                  ↑ 🔊
+                </span>
+                <span className="bg-white/10 rounded-full px-1.5 py-0.5">
+                  → 🔄
+                </span>
               </div>
             </div>
 

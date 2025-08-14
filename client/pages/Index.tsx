@@ -312,7 +312,7 @@ export default function Index({ initialProfile }: IndexProps) {
               // Update last accessed time for the restored session
               sessionPersistence.saveSession({
                 lastSaved: Date.now(),
-                sessionStartTime: Date.now()
+                sessionStartTime: Date.now(),
               });
             }, 800);
           } else {
@@ -1525,8 +1525,7 @@ export default function Index({ initialProfile }: IndexProps) {
             <p className="text-gray-600">
               {isRestoringSession
                 ? "Restoring your previous session..."
-                : "Initializing your learning session..."
-              }
+                : "Initializing your learning session..."}
             </p>
           </div>
         </div>
