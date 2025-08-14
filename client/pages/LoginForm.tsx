@@ -437,11 +437,12 @@ export default function LoginForm() {
                     <button
                       type="button"
                       onClick={() => setShowPassword(!showPassword)}
-                      className="text-gray-500 hover:text-gray-700 transition-colors ml-1"
+                      className="text-gray-500 hover:text-gray-700 transition-colors ml-1 min-h-[44px] min-w-[44px] touch-target flex items-center justify-center"
                       disabled={isLoading}
                       aria-label={
                         showPassword ? "Hide password" : "Show password"
                       }
+                      aria-pressed={showPassword}
                     >
                       {showPassword ? (
                         <EyeOff className="w-4 h-4" />
@@ -463,18 +464,21 @@ export default function LoginForm() {
               </div>
 
               {/* Remember Me Checkbox */}
-              <div className="flex items-center space-x-2">
+              <div className="flex items-center space-x-3 py-1">
                 <Checkbox
                   id="remember"
                   checked={rememberMe}
                   onCheckedChange={setRememberMe}
                   disabled={isLoading}
+                  className="min-h-[20px] min-w-[20px]"
+                  aria-describedby="remember-description"
                 />
                 <Label
                   htmlFor="remember"
-                  className="text-sm text-gray-600 cursor-pointer flex items-center gap-1"
+                  id="remember-description"
+                  className="text-sm text-gray-600 cursor-pointer flex items-center gap-1 leading-relaxed"
                 >
-                  <Shield className="w-3 h-3" />
+                  <Shield className="w-3 h-3 flex-shrink-0" />
                   Keep me signed in (personal devices only)
                 </Label>
               </div>
