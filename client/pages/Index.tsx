@@ -2805,6 +2805,17 @@ export default function Index({ initialProfile }: IndexProps) {
         </div>
       </div>
 
+      {/* Session Restoration Notification */}
+      {showSessionRestoration && (
+        <SessionRestorationNotification
+          onRestore={handleSessionRestore}
+          onDismiss={() => {
+            setShowSessionRestoration(false);
+            setSessionRestored(true);
+          }}
+        />
+      )}
+
       {/* Enhanced Achievement Popup */}
       {achievementPopup.length > 0 && (
         <EnhancedAchievementPopup
