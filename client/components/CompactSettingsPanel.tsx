@@ -410,7 +410,7 @@ export const CompactSettingsPanel: React.FC<CompactSettingsPanelProps> = ({
                       max={50}
                       min={5}
                       step={5}
-                      className="w-full"
+                      className="w-full compact-slider-mobile"
                     />
                     <div className="flex justify-between text-xs text-slate-500 mt-1">
                       <span>5</span>
