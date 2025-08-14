@@ -69,6 +69,7 @@ export const CompactMobileSettingsPanel: React.FC<CompactMobileSettingsPanelProp
   });
 
   const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false);
+  const [previewingVoice, setPreviewingVoice] = useState<VoiceType | null>(null);
   const deviceInfo = useMobileDevice();
 
   useEffect(() => {
