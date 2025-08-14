@@ -1115,14 +1115,20 @@ export const EnhancedSettingsPanel: React.FC<EnhancedSettingsPanelProps> = ({
           <div className="flex flex-col sm:flex-row gap-3">
             <Button
               variant="outline"
-              onClick={handleResetToDefaults}
+              onClick={() => {
+                handleResetToDefaults();
+                if (deviceInfo.hasHaptic) triggerHapticFeedback("medium");
+              }}
               className="flex-1 flex items-center justify-center gap-2 h-12"
             >
               <RotateCcw className="w-4 h-4" />
               Reset to Defaults
             </Button>
             <Button
-              onClick={handleSaveSettings}
+              onClick={() => {
+                handleSaveSettings();
+                if (deviceInfo.hasHaptic) triggerHapticFeedback("heavy");
+              }}
               className="flex-1 bg-educational-blue hover:bg-educational-blue/90 text-white h-12 flex items-center justify-center gap-2 shadow-lg"
             >
               <Save className="w-4 h-4" />
