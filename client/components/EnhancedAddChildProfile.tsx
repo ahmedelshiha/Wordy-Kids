@@ -350,7 +350,7 @@ export function EnhancedAddChildProfile({
 
         {/* Form content */}
         <div className="px-3 sm:px-4 pb-3 flex-1 overflow-y-auto min-h-0">
-          <form ref={formRef} className="space-y-6">
+          <form ref={formRef} className="space-y-4">
             {/* Step 1: Basic Info */}
             {currentStep === 0 && (
               <div className="space-y-6 animate-slide-in-from-right">
