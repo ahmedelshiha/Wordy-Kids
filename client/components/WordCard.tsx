@@ -404,12 +404,12 @@ export const WordCard: React.FC<WordCardProps> = ({
               )}
             </div>
 
-            {/* Mobile-Optimized Favorite Button */}
+            {/* Enhanced Mobile-Optimized Favorite Button */}
             <Button
               size="sm"
               variant="ghost"
-              className={`text-white hover:bg-white/20 p-1 h-auto min-w-[32px] min-h-[32px] transition-all duration-200 rounded-full flex-shrink-0 ${
-                isFavorited ? "scale-105 text-red-300" : ""
+              className={`text-white hover:bg-white/20 active:bg-white/30 p-1.5 h-auto min-w-[40px] min-h-[40px] transition-all duration-200 rounded-full flex-shrink-0 border border-white/20 bg-white/10 backdrop-blur-sm active:scale-95 ${
+                isFavorited ? "scale-105 text-red-300 border-red-300/40 bg-red-500/20" : "hover:border-white/40"
               }`}
               onClick={(e) => {
                 e.stopPropagation();
@@ -417,12 +417,12 @@ export const WordCard: React.FC<WordCardProps> = ({
               }}
             >
               <Heart
-                className={`w-3 h-3 transition-all duration-200 ${
+                className={`w-4 h-4 transition-all duration-200 ${
                   isFavorited ? "fill-current animate-pulse" : ""
                 }`}
               />
               {showSparkles && isFavorited && (
-                <Star className="w-2 h-2 absolute -top-0.5 -right-0.5 text-yellow-300 animate-bounce" />
+                <Star className="w-2.5 h-2.5 absolute -top-0.5 -right-0.5 text-yellow-300 animate-bounce" />
               )}
             </Button>
           </div>
