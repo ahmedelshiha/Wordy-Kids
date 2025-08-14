@@ -877,44 +877,43 @@ export default function WordGardenGame({
         }}
       />
 
-      {/* Enhanced Exit Confirmation Dialog */}
+      {/* Enhanced Exit Confirmation Dialog - Mobile Optimized */}
       <Dialog open={showExitDialog} onOpenChange={onCloseExitDialog}>
-        <DialogContent className="sm:max-w-md">
-          <DialogHeader className="text-center">
-            <div className="text-6xl mb-2">🌱</div>
-            <DialogTitle className="text-xl font-bold text-gray-800">
-              Leave your garden?
+        <DialogContent className="sm:max-w-xs max-w-[90vw] p-4">
+          <DialogHeader className="text-center pb-2">
+            <div className="text-4xl mb-1">🌱</div>
+            <DialogTitle className="text-lg font-bold text-gray-800">
+              Leave garden?
             </DialogTitle>
-            <DialogDescription className="text-gray-600">
-              Your plants will be waiting for you! Are you sure you want to exit
-              Word Garden?
+            <DialogDescription className="text-sm text-gray-600">
+              Your plants are waiting!
             </DialogDescription>
           </DialogHeader>
 
-          <div className="flex flex-col gap-3 mt-4">
-            {/* Garden Progress Summary */}
-            <div className="bg-green-50 rounded-lg p-3 border border-green-200">
-              <div className="text-sm text-green-800 font-medium mb-1">
-                🌱 Garden Progress
+          {/* Compact Garden Progress Summary */}
+          <div className="bg-green-50 rounded-lg p-2 border border-green-200 my-3">
+            <div className="flex items-center justify-between text-sm">
+              <div className="text-green-800">
+                <span className="font-medium">🌱 {correctCount}</span>
+                <span className="text-xs ml-1">grown</span>
               </div>
-              <div className="flex justify-between text-sm text-green-700">
-                <span>Plants grown: {correctCount}</span>
-                <span>Best streak: {bestStreak}</span>
+              <div className="text-green-700">
+                <span className="font-medium">⭐ {bestStreak}</span>
+                <span className="text-xs ml-1">streak</span>
               </div>
-              <div className="text-xs text-green-600 mt-1">
-                Round {roundIdx + 1} of {pool.length}
+              <div className="text-green-600 text-xs">
+                {roundIdx + 1}/{pool.length}
               </div>
             </div>
           </div>
 
-          <DialogFooter className="flex flex-col-reverse sm:flex-row gap-2 mt-6">
+          <DialogFooter className="flex gap-2 pt-2">
             <Button
               variant="outline"
               onClick={() => onCloseExitDialog?.()}
-              className="flex-1 bg-green-50 hover:bg-green-100 text-green-700 border-green-300"
+              className="flex-1 bg-green-50 hover:bg-green-100 text-green-700 border-green-300 text-sm py-2"
             >
-              <span className="mr-2">🌱</span>
-              Keep Growing!
+              🌱 Stay
             </Button>
             <Button
               variant="destructive"
@@ -922,10 +921,9 @@ export default function WordGardenGame({
                 onCloseExitDialog?.();
                 onExit?.();
               }}
-              className="flex-1 bg-red-500 hover:bg-red-600"
+              className="flex-1 bg-red-500 hover:bg-red-600 text-sm py-2"
             >
-              <span className="mr-2">🚪</span>
-              Exit Garden
+              🚪 Exit
             </Button>
           </DialogFooter>
         </DialogContent>
