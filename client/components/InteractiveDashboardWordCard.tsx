@@ -366,6 +366,15 @@ export function InteractiveDashboardWordCard({
   ) => {
     if (!currentWord || isAnswered) return;
 
+    // Provide haptic feedback based on action
+    if (status === "remembered") {
+      triggerHapticFeedback('heavy'); // Strong feedback for positive action
+    } else if (status === "needs_practice") {
+      triggerHapticFeedback('medium'); // Medium feedback for learning action
+    } else {
+      triggerHapticFeedback('light'); // Light feedback for skip
+    }
+
     console.log(`Word Action: ${currentWord.word} - ${status}`, {
       wordId: currentWord.id,
       sessionProgress: `${currentWordIndex + 1}/${SESSION_SIZE}`,
