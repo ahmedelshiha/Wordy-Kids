@@ -33,6 +33,8 @@ interface LearningStats {
   favoriteCategory: string;
   totalPoints: number;
   level: number;
+  dailyGoalProgress?: number;
+  dailyGoalTarget?: number;
   badges: Array<{
     id: string;
     name: string;
