@@ -636,7 +636,7 @@ export function EnhancedAddChildProfile({
         </div>
 
         {/* Footer */}
-        <div className="p-4 sm:p-6 pt-4 border-t border-purple-100 flex-shrink-0 bg-purple-50/50">
+        <div className="p-3 sm:p-4 pt-3 border-t border-purple-100 flex-shrink-0 bg-purple-50/50">
           <div className="flex justify-between gap-3">
             <Button
               variant="outline"
