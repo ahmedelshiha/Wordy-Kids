@@ -486,7 +486,7 @@ export const CompactMobileSettingsPanel: React.FC<CompactMobileSettingsPanelProp
                 onToggle={() => toggleSection("other")}
               />
               {expandedSections.other && (
-                <div className="px-2 pb-2 space-y-1">
+                <div className="px-2 pb-2 space-y-1 max-h-[30vh] overflow-y-auto">
                   <CompactSettingRow
                     icon={Bell}
                     label="Reminders"
