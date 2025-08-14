@@ -352,7 +352,7 @@ export default function LoginForm() {
           <CardContent className="space-y-3 sm:space-y-4 px-3 sm:px-4 md:px-6">
             <form onSubmit={handleLogin} className="space-y-3 sm:space-y-4" role="form" aria-labelledby="login-title">
               {/* Email Field with Enhanced Validation */}
-              <div className="space-y-2">
+              <div className="space-y-1 sm:space-y-2">
                 <Label
                   htmlFor="email"
                   className="text-sm font-medium text-gray-700 flex items-center gap-2"
@@ -399,7 +399,7 @@ export default function LoginForm() {
               </div>
 
               {/* Password Field with Enhanced Validation */}
-              <div className="space-y-2">
+              <div className="space-y-1 sm:space-y-2">
                 <Label
                   htmlFor="password"
                   className="text-sm font-medium text-gray-700 flex items-center gap-2"
@@ -465,7 +465,7 @@ export default function LoginForm() {
               </div>
 
               {/* Remember Me Checkbox */}
-              <div className="flex items-center space-x-3 py-1">
+              <div className="flex items-center space-x-2 sm:space-x-3">
                 <Checkbox
                   id="remember"
                   checked={rememberMe}
