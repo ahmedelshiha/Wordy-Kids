@@ -631,15 +631,17 @@ export default function WordGardenGame({
       });
 
       // Show garden-specific achievements
-      if (nextStreak === 3) {
-        setAchievementData({
-          title: "Growing Streak!",
-          description:
-            "3 plants in a row! Your garden is blooming beautifully! 🌸",
-          plantEmoji: "🌸",
-        });
-        setShowAchievement(true);
-      } else if (nextStreak === 5) {
+      // Disabled: Growing Streak popup at 3 correct answers
+      // if (nextStreak === 3) {
+      //   setAchievementData({
+      //     title: "Growing Streak!",
+      //     description:
+      //       "3 plants in a row! Your garden is blooming beautifully! 🌸",
+      //     plantEmoji: "🌸",
+      //   });
+      //   setShowAchievement(true);
+      // } else
+      if (nextStreak === 5) {
         setAchievementData({
           title: "Garden Master!",
           description: "5 perfect plants! You're a true gardener! 🏆",
@@ -858,7 +860,7 @@ export default function WordGardenGame({
             className="rounded-full px-5 py-3 bg-white text-emerald-700 font-bold active:scale-95 transition-transform min-w-[56px] min-h-[56px]"
             aria-label="Play sound"
           >
-            🔊 Play
+            �� Play
           </button>
         </div>
 
