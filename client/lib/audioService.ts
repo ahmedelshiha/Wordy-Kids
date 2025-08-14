@@ -1,6 +1,9 @@
 // Audio service for pronunciation and sound effects
 export type VoiceType = "man" | "woman" | "kid";
 
+// Import UI interaction sounds setting
+import { isUIInteractionSoundsEnabled } from "./soundEffects";
+
 export class AudioService {
   private static instance: AudioService;
   private speechSynthesis: SpeechSynthesis;
