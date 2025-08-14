@@ -12,7 +12,7 @@ import { EnhancedAchievementTracker } from "@/lib/enhancedAchievementTracker";
 /**
  * Word Garden — Listen & Pick Game for Ages 3–5
  * -------------------------------------------------
- * �� Pulls words from your website DB using existing word service
+ * 🌟 Pulls words from your website DB using existing word service
  * • Kids listen to pronunciation then pick the matching picture
  * • Every correct answer grows a plant in the garden (visual progress)
  * • Integrates with achievements + sparkle celebration hooks
@@ -138,7 +138,7 @@ function useConfetti() {
 }
 
 // Garden plant stage visuals (simple emojis; swap with your images if desired)
-const STAGES = ["🌱", "��", "🌸"]; // sprout -> leaf -> blossom
+const STAGES = ["🌱", "🌿", "🌸"]; // sprout -> leaf -> blossom
 
 // Generate emoji-based image using SVG data URI with larger size to match ListenAndGuess
 function generateEmojiImage(emoji: string, fallbackText?: string): string {

@@ -768,14 +768,14 @@ export default function Index({ initialProfile }: IndexProps) {
       {
         id: "streak-starter",
         name: "Streak Master",
-        icon: "��",
+        icon: "🔥",
         earned: true,
         description: "7-day learning streak",
       },
       {
         id: "category-explorer",
         name: "Category Explorer",
-        icon: "��️",
+        icon: "🗺️",
         earned: rememberedWords.size >= 10,
         description: "Explored 5+ categories",
       },
@@ -1209,7 +1209,7 @@ export default function Index({ initialProfile }: IndexProps) {
       } else {
         achievementTitle = "Category Challenger! 💪";
         achievementIcon = "💪";
-        achievementMessage = `Nice try! You completed ${categoryDisplayName} with ${accuracy}% accuracy! Every attempt makes you stronger!\n\n�� Challenger Bonus: 50 points!\n�� Challenger badge earned!`;
+        achievementMessage = `Nice try! You completed ${categoryDisplayName} with ${accuracy}% accuracy! Every attempt makes you stronger!\n\n🏆 Challenger Bonus: 50 points!\n🎖️ Challenger badge earned!`;
       }
 
       return {
@@ -1498,7 +1498,7 @@ export default function Index({ initialProfile }: IndexProps) {
     setFeedback({
       type: "celebration",
       title: "Practice Complete! 🏆",
-      message: `Great job practicing your tricky words!\n\n✅ Remembered: ${results.correctWords.length} words\n�� Accuracy: ${results.accuracy}%\n\nKeep practicing to master all your words!`,
+      message: `Great job practicing your tricky words!\n\n✅ Remembered: ${results.correctWords.length} words\n🎯 Accuracy: ${results.accuracy}%\n\nKeep practicing to master all your words!`,
       points: results.correctWords.length * 15,
       onContinue: () => setFeedback(null),
     });
