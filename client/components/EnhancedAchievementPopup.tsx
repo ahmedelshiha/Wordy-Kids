@@ -256,29 +256,29 @@ export function EnhancedAchievementPopup({
         >
           <CelebrationParticles />
 
-          {/* Main Achievement Card */}
+          {/* Main Achievement Card - Mobile Optimized */}
           <motion.div
-            initial={{ scale: 0.8, opacity: 0, y: 30 }}
+            initial={{ scale: 0.9, opacity: 0, y: 20 }}
             animate={{ scale: 1, opacity: 1, y: 0 }}
-            exit={{ scale: 0.8, opacity: 0, y: -30 }}
-            transition={{ type: "spring", duration: 0.5, damping: 25 }}
-            className="relative"
+            exit={{ scale: 0.9, opacity: 0, y: -20 }}
+            transition={{ type: "spring", duration: 0.4, damping: 20 }}
+            className="relative w-full max-w-xs sm:max-w-sm mx-2 sm:mx-4"
           >
             <Card
-              className={`w-full max-w-md mx-4 bg-gradient-to-br ${difficultyColor} text-white shadow-2xl border-0 overflow-hidden`}
+              className={`bg-gradient-to-br ${difficultyColor} text-white shadow-xl border-0 overflow-hidden rounded-2xl`}
             >
-              {/* Close Button */}
+              {/* Close Button - Smaller for mobile */}
               <Button
                 onClick={handleClose}
                 variant="ghost"
                 size="sm"
-                className="absolute top-3 right-3 text-white/80 hover:text-white hover:bg-white/20 rounded-full z-10 transition-colors"
+                className="absolute top-2 right-2 text-white/80 hover:text-white hover:bg-white/20 rounded-full z-10 transition-colors w-6 h-6 p-0"
                 aria-label="Close achievement popup"
               >
-                <X className="w-4 h-4" />
+                <X className="w-3 h-3" />
               </Button>
 
-              <CardContent className="p-6 text-center relative">
+              <CardContent className="p-3 sm:p-4 text-center relative">
                 {/* Achievement Icon with Animation */}
                 <motion.div
                   initial={{ scale: 0, rotate: -90 }}
