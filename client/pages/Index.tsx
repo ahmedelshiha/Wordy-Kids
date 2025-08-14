@@ -1902,7 +1902,7 @@ export default function Index({ initialProfile }: IndexProps) {
                     lastSystematicSelection && (
                       <div className="mt-4 p-3 bg-gray-100 rounded-lg text-xs">
                         <h4 className="font-bold mb-2">
-                          ��� Enhanced Word Selection Debug
+                          🔧 Enhanced Word Selection Debug
                         </h4>
                         <div className="grid grid-cols-2 gap-2">
                           <div>
