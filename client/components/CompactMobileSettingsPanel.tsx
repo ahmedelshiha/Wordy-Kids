@@ -67,6 +67,7 @@ export const CompactMobileSettingsPanel: React.FC<
 }) => {
   // Essential settings only
   const [soundOn, setSoundOn] = useState(isSoundEnabled());
+  const [uiInteractionSounds, setUiInteractionSounds] = useState(isUIInteractionSoundsEnabled());
   const [selectedVoiceType, setSelectedVoiceType] =
     useState<VoiceType>("woman");
   const [volume, setVolume] = useState([80]);
