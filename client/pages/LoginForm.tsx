@@ -480,7 +480,7 @@ export default function LoginForm() {
                   className="text-sm text-gray-600 cursor-pointer flex items-center gap-1 leading-relaxed"
                 >
                   <Shield className="w-3 h-3 flex-shrink-0" />
-                  Keep me signed in (personal devices only)
+                  Keep me signed in
                 </Label>
               </div>
 
