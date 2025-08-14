@@ -151,7 +151,7 @@ export const CompactSettingsPanel: React.FC<CompactSettingsPanelProps> = ({
     }));
 
     setHasUnsavedChanges(false);
-    playSoundIfEnabled();
+    playSoundIfEnabled.success();
     onClose();
   };
 
