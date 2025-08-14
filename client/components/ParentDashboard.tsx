@@ -2437,7 +2437,7 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
     const emojis: Record<string, string> = {
       Animals: "🦋",
       Science: "🔬",
-      Colors: "���",
+      Colors: "🌈",
       Food: "🍎",
       Transportation: "🚗",
       Nature: "🌲",
@@ -2834,7 +2834,7 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
                 <div class="category-grid">
                     <div class="category-section">
                         <div class="category-header">
-                            �� Strengths & Mastered Areas
+                            ⭐ Strengths & Mastered Areas
                         </div>
                         <h4 style="margin: 15px 0 10px 0; color: #059669;">💪 Strong Categories</h4>
                         <div class="badge-container">
