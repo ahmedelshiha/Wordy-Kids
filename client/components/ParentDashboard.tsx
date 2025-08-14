@@ -3985,7 +3985,7 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
       <EnhancedAddChildProfile
         isOpen={showAddChildDialog}
         onClose={() => setShowAddChildDialog(false)}
-        onSave={(childData) => {
+        onAddChild={(childData) => {
           const newChild: ChildProfile = {
             id: Date.now().toString(),
             name: childData.name,
