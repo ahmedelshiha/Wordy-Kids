@@ -486,7 +486,7 @@ export const CompactMobileSettingsPanel: React.FC<CompactMobileSettingsPanelProp
                 onToggle={() => toggleSection("other")}
               />
               {expandedSections.other && (
-                <div className="px-2 pb-2 space-y-1 max-h-[30vh] overflow-y-auto">
+                <div className="px-2 pb-2 space-y-1 max-h-[30vh] overflow-y-auto scroll-smooth" style={{ WebkitOverflowScrolling: 'touch' }}>
                   <CompactSettingRow
                     icon={Bell}
                     label="Reminders"
