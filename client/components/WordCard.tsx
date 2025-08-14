@@ -534,19 +534,30 @@ export const WordCard: React.FC<WordCardProps> = ({
             transform: "rotateY(180deg)",
           }}
         >
-          {/* Mobile-Optimized Back Button */}
+          {/* Enhanced Mobile Back Navigation */}
           <div className="absolute top-1.5 right-1.5 z-10">
             <Button
               size="sm"
               variant="ghost"
-              className="text-white hover:bg-white/20 p-1 h-auto min-w-[32px] min-h-[32px] rounded-full"
+              className="text-white hover:bg-white/20 active:bg-white/30 p-1.5 h-auto min-w-[40px] min-h-[40px] rounded-full border border-white/20 bg-white/10 backdrop-blur-sm transition-all duration-200 active:scale-95"
               onClick={(e) => {
                 e.stopPropagation();
                 setIsFlipped(false);
+                audioService.playWhooshSound();
+                if (navigator.vibrate) {
+                  navigator.vibrate([40, 20, 40]);
+                }
               }}
             >
-              <RotateCcw className="w-3 h-3" />
+              <RotateCcw className="w-4 h-4" />
             </Button>
+          </div>
+
+          {/* Enhanced Back Navigation Hint */}
+          <div className="absolute top-1.5 left-1.5 z-10">
+            <div className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-full px-2 py-1">
+              <span className="text-[9px] text-white/80 font-medium">← Swipe or tap ↻</span>
+            </div>
           </div>
 
           <h3 className="text-sm sm:text-base font-semibold mb-1.5 text-center pr-8 leading-tight">
