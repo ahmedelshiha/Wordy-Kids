@@ -419,9 +419,9 @@ export function EnhancedAddChildProfile({
             {/* Step 2: Avatar Selection */}
             {currentStep === 1 && (
               <div className="space-y-4 animate-slide-in-from-right">
-                <div className="text-center mb-6">
-                  <div className="w-24 h-24 bg-gradient-to-br from-purple-100 to-pink-100 rounded-full flex items-center justify-center mx-auto mb-4 animate-gentle-bounce">
-                    <span className="text-4xl">{formData.avatar}</span>
+                <div className="text-center mb-4">
+                  <div className="w-20 h-20 bg-gradient-to-br from-purple-100 to-pink-100 rounded-full flex items-center justify-center mx-auto mb-3 animate-gentle-bounce">
+                    <span className="text-3xl">{formData.avatar}</span>
                   </div>
                   <p className="text-sm text-gray-600">Selected avatar</p>
                 </div>
