@@ -367,7 +367,7 @@ export function EnhancedAddChildProfile({
                     }}
                     placeholder="Enter their name"
                     className={cn(
-                      "text-center text-lg font-medium h-12 rounded-xl border-2 transition-all duration-200",
+                      "text-center text-lg font-medium h-10 rounded-lg border-2 transition-all duration-200",
                       nameError 
                         ? "border-red-300 bg-red-50" 
                         : "border-purple-200 focus:border-purple-400 bg-white"
@@ -641,7 +641,7 @@ export function EnhancedAddChildProfile({
             <Button
               variant="outline"
               onClick={currentStep === 0 ? onClose : handleBack}
-              className="flex-1 h-12 rounded-xl border-purple-200 hover:bg-purple-50"
+              className="flex-1 h-10 rounded-lg border-purple-200 hover:bg-purple-50"
               disabled={isSubmitting}
             >
               {currentStep === 0 ? (
@@ -661,7 +661,7 @@ export function EnhancedAddChildProfile({
               <Button
                 onClick={handleSubmit}
                 disabled={isSubmitting || !formData.name.trim()}
-                className="flex-1 h-12 rounded-xl bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white shadow-lg"
+                className="flex-1 h-10 rounded-lg bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white shadow-lg"
               >
                 {isSubmitting ? (
                   <>
@@ -682,7 +682,7 @@ export function EnhancedAddChildProfile({
                   (currentStep === 0 && !formData.name.trim()) ||
                   (currentStep === 2 && formData.interests.length === 0)
                 }
-                className="flex-1 h-12 rounded-xl bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white shadow-lg"
+                className="flex-1 h-10 rounded-lg bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white shadow-lg"
               >
                 Next
                 <ChevronRight className="w-4 h-4 ml-2" />
