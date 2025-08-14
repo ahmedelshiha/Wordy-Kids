@@ -2516,7 +2516,7 @@ export default function Index({ initialProfile }: IndexProps) {
                           setShowMatchingGame(false);
                           setFeedback({
                             type: "celebration",
-                            title: "Matching Game Complete! 🎯✨",
+                            title: "Matching Game Complete! 🎯��",
                             message: `You matched ${score} pairs in ${timeSpent} seconds!`,
                             points: score * 15,
                             onContinue: () => setFeedback(null),
@@ -2683,6 +2683,11 @@ export default function Index({ initialProfile }: IndexProps) {
       <CompactMobileSettingsPanel
         isOpen={showSettings}
         onClose={() => setShowSettings(false)}
+        currentProgress={currentProgress}
+        onGoalUpdate={(goals) => {
+          setLearningGoals(goals);
+          console.log("Learning goals updated:", goals);
+        }}
       />
 
       {/* Word Creator */}
