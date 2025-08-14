@@ -791,6 +791,32 @@ export function InteractiveDashboardWordCard({
                 <div className="text-xs font-bold text-slate-800 leading-tight">
                   Today's Word Quest
                 </div>
+                <div className="text-xs text-slate-600 mt-0.5">
+                  {(() => {
+                    const wordsLearned = Math.max(
+                      sessionStats.wordsRemembered,
+                      rememberedWordsCount || 0,
+                    );
+                    const goal = dailyGoal.target;
+                    const percentage = Math.round(
+                      (wordsLearned / goal) * 100,
+                    );
+
+                    if (wordsLearned >= goal) {
+                      if (wordsLearned >= goal * 2)
+                        return "⭐ SUPERSTAR! Amazing effort!";
+                      if (wordsLearned >= goal * 1.5)
+                        return "🚀 Beyond awesome! Keep going!";
+                      return "🎉 Goal achieved! You're incredible!";
+                    }
+                    if (percentage >= 90)
+                      return "🌟 Almost there, superstar!";
+                    if (percentage >= 75) return "🚀 You're doing great!";
+                    if (percentage >= 50) return "💪 Keep going, champion!";
+                    if (percentage >= 25) return "🌱 Nice start!";
+                    return "🌟 Ready for an adventure?";
+                  })()}
+                </div>
               </div>
             </div>
           </div>
