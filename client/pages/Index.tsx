@@ -1709,7 +1709,7 @@ export default function Index({ initialProfile }: IndexProps) {
           {/* Main Content with Sidebar Layout */}
           <main className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 scroll-smooth">
             {userRole === "parent" ? (
-              <div className="w-full p-4 md:p-8">
+              <div className="w-full p-4 md:p-8 pb-20 lg:pb-8 overflow-y-auto max-h-screen">
                 <ParentDashboard
                   children={undefined}
                   sessions={undefined}
