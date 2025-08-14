@@ -1,6 +1,9 @@
 // Audio service for pronunciation and sound effects
 export type VoiceType = "man" | "woman" | "kid";
 
+// Import UI interaction sounds setting
+import { isUIInteractionSoundsEnabled } from "./soundEffects";
+
 export class AudioService {
   private static instance: AudioService;
   private speechSynthesis: SpeechSynthesis;
@@ -516,7 +519,7 @@ export class AudioService {
 
   // Fun sound effects using Web Audio API for better child engagement
   public playCheerSound(): void {
-    if (!this.isEnabled) return;
+    if (!this.isEnabled || !isUIInteractionSoundsEnabled()) return;
 
     try {
       const audioContext = new (window.AudioContext ||
@@ -558,7 +561,7 @@ export class AudioService {
   }
 
   public playWhooshSound(): void {
-    if (!this.isEnabled) return;
+    if (!this.isEnabled || !isUIInteractionSoundsEnabled()) return;
 
     try {
       const audioContext = new (window.AudioContext ||
@@ -596,7 +599,7 @@ export class AudioService {
   }
 
   public playClickSound(): void {
-    if (!this.isEnabled) return;
+    if (!this.isEnabled || !isUIInteractionSoundsEnabled()) return;
 
     try {
       const audioContext = new (window.AudioContext ||

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from "react";
+import React, { useState, useEffect, useMemo, useCallback } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -27,6 +27,12 @@ import { EnhancedAchievementPopup } from "@/components/EnhancedAchievementPopup"
 import { CompactMobileSettingsPanel } from "@/components/CompactMobileSettingsPanel";
 import { FloatingBubbles } from "@/components/FloatingBubbles";
 import { CelebrationEffect } from "@/components/CelebrationEffect";
+import { SessionRestoration } from "@/components/SessionRestoration";
+import {
+  useSessionPersistence,
+  SessionData,
+} from "@/hooks/useSessionPersistence";
+import { getSessionPersistenceService } from "@/lib/sessionPersistenceService";
 import { DailyChallenge } from "@/components/DailyChallenge";
 import { ReadingComprehension } from "@/components/ReadingComprehension";
 import { ParentDashboard } from "@/components/ParentDashboard";
@@ -148,6 +154,32 @@ export default function Index({ initialProfile }: IndexProps) {
   const [excludedWordIds, setExcludedWordIds] = useState<Set<number>>(
     new Set(),
   );
+
+  // Session persistence states
+  const [showSessionRestoration, setShowSessionRestoration] = useState(false);
+  const [sessionRestorationData, setSessionRestorationData] =
+    useState<SessionData | null>(null);
+  const [isSessionInitialized, setIsSessionInitialized] = useState(false);
+  const [lastAutoSave, setLastAutoSave] = useState<number>(Date.now());
+
+  // Initialize session persistence
+  const sessionPersistence = useSessionPersistence({
+    autoSaveInterval: 3000, // Save every 3 seconds
+    enableBackgroundSync: true,
+    compressionEnabled: true,
+  });
+
+  const persistenceService = getSessionPersistenceService();
+
+  // Learning goals state and progress tracking
+  const [learningGoals, setLearningGoals] = useState<any[]>([]);
+  const [currentProgress, setCurrentProgress] = useState({
+    wordsLearned: 0,
+    wordsRemembered: 0,
+    sessionCount: 0,
+    accuracy: 0,
+  });
+  const [dailySessionCount, setDailySessionCount] = useState(0);
   const [currentDashboardWords, setCurrentDashboardWords] = useState<any[]>([]);
 
   // Enhanced word selection states
@@ -222,6 +254,457 @@ export default function Index({ initialProfile }: IndexProps) {
     }
   }, [rememberedWords.size]); // Trigger when remembered words count changes
 
+  // Update current progress for goals tracking
+  useEffect(() => {
+    const totalWordsLearned = rememberedWords.size;
+    const totalAttempts = rememberedWords.size + forgottenWords.size;
+    const accuracy =
+      totalAttempts > 0
+        ? Math.round((rememberedWords.size / totalAttempts) * 100)
+        : 0;
+
+    setCurrentProgress({
+      wordsLearned: totalWordsLearned,
+      wordsRemembered: rememberedWords.size,
+      sessionCount: dailySessionCount,
+      accuracy: accuracy,
+    });
+  }, [rememberedWords, forgottenWords, dailySessionCount]);
+
+  // Load saved learning goals on mount
+  useEffect(() => {
+    const savedGoals = localStorage.getItem("learningGoals");
+    if (savedGoals) {
+      try {
+        setLearningGoals(JSON.parse(savedGoals));
+      } catch (error) {
+        console.error("Error loading learning goals:", error);
+      }
+    }
+  }, []);
+
+  // Session persistence initialization
+  useEffect(() => {
+    const initializeSession = async () => {
+      try {
+        const savedSession = sessionPersistence.loadSession();
+
+        if (savedSession && !isSessionInitialized) {
+          // Check if session is recent enough to restore automatically
+          const sessionAge = Date.now() - (savedSession.lastSaved || 0);
+          const isRecentSession = sessionAge < 30 * 60 * 1000; // 30 minutes
+
+          if (
+            isRecentSession &&
+            savedSession.currentProgress?.wordsLearned > 0
+          ) {
+            setSessionRestorationData(savedSession);
+            setShowSessionRestoration(true);
+          } else {
+            // Start fresh but mark session as initialized
+            setIsSessionInitialized(true);
+          }
+        } else {
+          setIsSessionInitialized(true);
+        }
+      } catch (error) {
+        console.error("Failed to initialize session:", error);
+        setIsSessionInitialized(true);
+      }
+    };
+
+    if (!isSessionInitialized) {
+      initializeSession();
+    }
+  }, [sessionPersistence, isSessionInitialized]);
+
+  // Auto-save session data
+  const saveSessionData = useCallback(() => {
+    if (!isSessionInitialized) return;
+
+    const sessionData: Partial<SessionData> = {
+      activeTab,
+      currentWordIndex,
+      selectedCategory,
+      learningMode,
+      userRole,
+      forgottenWords: Array.from(forgottenWords),
+      rememberedWords: Array.from(rememberedWords),
+      excludedWordIds: Array.from(excludedWordIds),
+      currentProgress,
+      dailySessionCount,
+      currentProfile,
+      childStats,
+      currentSessionId,
+      learningGoals,
+      currentDashboardWords,
+      customWords,
+      practiceWords,
+      userWordHistory: Array.from(userWordHistory.entries()),
+      sessionNumber,
+      lastSystematicSelection,
+      dashboardSession,
+      dashboardSessionNumber,
+      showQuiz,
+      selectedQuizType,
+      showMatchingGame,
+      gameMode,
+      showPracticeGame,
+    };
+
+    persistenceService.queueSave(sessionData, "medium");
+    setLastAutoSave(Date.now());
+  }, [
+    isSessionInitialized,
+    activeTab,
+    currentWordIndex,
+    selectedCategory,
+    learningMode,
+    userRole,
+    forgottenWords,
+    rememberedWords,
+    excludedWordIds,
+    currentProgress,
+    dailySessionCount,
+    currentProfile,
+    childStats,
+    currentSessionId,
+    learningGoals,
+    currentDashboardWords,
+    customWords,
+    practiceWords,
+    userWordHistory,
+    sessionNumber,
+    lastSystematicSelection,
+    dashboardSession,
+    dashboardSessionNumber,
+    showQuiz,
+    selectedQuizType,
+    showMatchingGame,
+    gameMode,
+    showPracticeGame,
+    persistenceService,
+  ]);
+
+  // Auto-save whenever important state changes
+  useEffect(() => {
+    const saveTimer = setTimeout(() => {
+      saveSessionData();
+    }, 1000); // Debounce saves
+
+    return () => clearTimeout(saveTimer);
+  }, [saveSessionData]);
+
+  // Force save on critical actions
+  useEffect(() => {
+    if (rememberedWords.size > 0 || forgottenWords.size > 0) {
+      persistenceService.queueSave(
+        {
+          forgottenWords: Array.from(forgottenWords),
+          rememberedWords: Array.from(rememberedWords),
+          currentProgress,
+        },
+        "high",
+      );
+    }
+  }, [
+    rememberedWords.size,
+    forgottenWords.size,
+    currentProgress,
+    persistenceService,
+  ]);
+
+  // Enhanced tab navigation preservation
+  useEffect(() => {
+    const handleVisibilityChange = () => {
+      if (document.hidden) {
+        // Tab becoming hidden - force save current state
+        console.log("Tab hidden, force saving session data");
+        persistenceService.queueSave(
+          {
+            activeTab,
+            currentWordIndex,
+            selectedCategory,
+            learningMode,
+            userRole,
+            forgottenWords: Array.from(forgottenWords),
+            rememberedWords: Array.from(rememberedWords),
+            excludedWordIds: Array.from(excludedWordIds),
+            currentProgress,
+            dailySessionCount,
+            currentProfile,
+            childStats,
+            currentSessionId,
+            learningGoals,
+            currentDashboardWords,
+            customWords,
+            practiceWords,
+            showQuiz,
+            selectedQuizType,
+            showMatchingGame,
+            gameMode,
+            showPracticeGame,
+          },
+          "high",
+        );
+
+        // Force immediate sync
+        persistenceService.forceSync();
+      } else {
+        // Tab becoming visible - check for updates from other tabs
+        console.log("Tab visible, checking for session updates");
+        const latestSession = sessionPersistence.loadSession();
+
+        if (latestSession && latestSession.lastSaved > lastAutoSave) {
+          console.log("Found newer session data from another tab");
+
+          // Show brief notification that session was updated
+          setFeedback({
+            type: "info",
+            title: "Session Updated 🔄",
+            message: "Your progress was synced from another tab",
+            onContinue: () => setFeedback(null),
+          });
+
+          // Update current state with latest data (selective update to avoid disruption)
+          if (latestSession.currentProgress) {
+            setCurrentProgress(latestSession.currentProgress);
+          }
+          if (latestSession.forgottenWords) {
+            setForgottenWords(new Set(latestSession.forgottenWords));
+          }
+          if (latestSession.rememberedWords) {
+            setRememberedWords(new Set(latestSession.rememberedWords));
+          }
+          if (latestSession.learningGoals) {
+            setLearningGoals(latestSession.learningGoals);
+          }
+          if (latestSession.dailySessionCount !== undefined) {
+            setDailySessionCount(latestSession.dailySessionCount);
+          }
+
+          setLastAutoSave(latestSession.lastSaved);
+        }
+      }
+    };
+
+    const handleBeforeUnload = (event: BeforeUnloadEvent) => {
+      // Force save before page unload
+      persistenceService.forceSync();
+
+      // Show warning if user has unsaved progress
+      if (rememberedWords.size > 0 || forgottenWords.size > 0) {
+        const message =
+          "You have learning progress that might be lost. Are you sure you want to leave?";
+        event.preventDefault();
+        event.returnValue = message;
+        return message;
+      }
+    };
+
+    const handlePageShow = (event: PageTransitionEvent) => {
+      if (event.persisted) {
+        // Page restored from bfcache, reload latest session
+        console.log("Page restored from cache, reloading session");
+        const latestSession = sessionPersistence.loadSession();
+        if (latestSession) {
+          setLastAutoSave(latestSession.lastSaved);
+        }
+      }
+    };
+
+    const handleStorageChange = (event: StorageEvent) => {
+      if (event.key === "wordAdventure_sessionData" && event.newValue) {
+        // Another tab updated the session data
+        console.log("Session data updated by another tab");
+        try {
+          const updatedData = JSON.parse(event.newValue);
+          if (updatedData.lastSaved > lastAutoSave) {
+            setLastAutoSave(updatedData.lastSaved);
+
+            // Show subtle notification
+            setFeedback({
+              type: "info",
+              title: "Progress Synced 📱",
+              message: "Your learning progress was updated from another device",
+              onContinue: () => setFeedback(null),
+            });
+          }
+        } catch (error) {
+          console.error("Failed to parse updated session data:", error);
+        }
+      }
+    };
+
+    // Add event listeners
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+    window.addEventListener("beforeunload", handleBeforeUnload);
+    window.addEventListener("pageshow", handlePageShow);
+    window.addEventListener("storage", handleStorageChange);
+
+    return () => {
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+      window.removeEventListener("beforeunload", handleBeforeUnload);
+      window.removeEventListener("pageshow", handlePageShow);
+      window.removeEventListener("storage", handleStorageChange);
+    };
+  }, [
+    activeTab,
+    currentWordIndex,
+    selectedCategory,
+    learningMode,
+    userRole,
+    forgottenWords,
+    rememberedWords,
+    excludedWordIds,
+    currentProgress,
+    dailySessionCount,
+    currentProfile,
+    childStats,
+    currentSessionId,
+    learningGoals,
+    currentDashboardWords,
+    customWords,
+    practiceWords,
+    showQuiz,
+    selectedQuizType,
+    showMatchingGame,
+    gameMode,
+    showPracticeGame,
+    persistenceService,
+    sessionPersistence,
+    lastAutoSave,
+    setFeedback,
+  ]);
+
+  // Tab focus detection for immediate synchronization
+  useEffect(() => {
+    const handleFocus = () => {
+      console.log("Window focused, checking for session updates");
+      const latestSession = sessionPersistence.loadSession();
+
+      if (latestSession && latestSession.lastSaved > lastAutoSave) {
+        // Silently sync progress without disrupting user
+        if (latestSession.currentProgress) {
+          setCurrentProgress(latestSession.currentProgress);
+        }
+        setLastAutoSave(latestSession.lastSaved);
+      }
+    };
+
+    const handleBlur = () => {
+      console.log("Window blurred, saving current state");
+      saveSessionData();
+    };
+
+    window.addEventListener("focus", handleFocus);
+    window.addEventListener("blur", handleBlur);
+
+    return () => {
+      window.removeEventListener("focus", handleFocus);
+      window.removeEventListener("blur", handleBlur);
+    };
+  }, [sessionPersistence, lastAutoSave, saveSessionData]);
+
+  // Session restoration handlers
+  const handleSessionRestore = useCallback((sessionData: SessionData) => {
+    try {
+      // Restore UI state
+      if (sessionData.activeTab) setActiveTab(sessionData.activeTab);
+      if (sessionData.currentWordIndex !== undefined)
+        setCurrentWordIndex(sessionData.currentWordIndex);
+      if (sessionData.selectedCategory)
+        setSelectedCategory(sessionData.selectedCategory);
+      if (sessionData.learningMode) setLearningMode(sessionData.learningMode);
+      if (sessionData.userRole) setUserRole(sessionData.userRole);
+
+      // Restore progress data
+      if (sessionData.forgottenWords) {
+        setForgottenWords(new Set(sessionData.forgottenWords));
+      }
+      if (sessionData.rememberedWords) {
+        setRememberedWords(new Set(sessionData.rememberedWords));
+      }
+      if (sessionData.excludedWordIds) {
+        setExcludedWordIds(new Set(sessionData.excludedWordIds));
+      }
+      if (sessionData.currentProgress) {
+        setCurrentProgress(sessionData.currentProgress);
+      }
+      if (sessionData.dailySessionCount !== undefined) {
+        setDailySessionCount(sessionData.dailySessionCount);
+      }
+
+      // Restore profile and session data
+      if (sessionData.currentProfile)
+        setCurrentProfile(sessionData.currentProfile);
+      if (sessionData.childStats) setChildStats(sessionData.childStats);
+      if (sessionData.currentSessionId)
+        setCurrentSessionId(sessionData.currentSessionId);
+
+      // Restore learning data
+      if (sessionData.learningGoals)
+        setLearningGoals(sessionData.learningGoals);
+      if (sessionData.currentDashboardWords)
+        setCurrentDashboardWords(sessionData.currentDashboardWords);
+      if (sessionData.customWords) setCustomWords(sessionData.customWords);
+      if (sessionData.practiceWords)
+        setPracticeWords(sessionData.practiceWords);
+
+      // Restore advanced learning state
+      if (sessionData.userWordHistory) {
+        setUserWordHistory(new Map(sessionData.userWordHistory));
+      }
+      if (sessionData.sessionNumber !== undefined)
+        setSessionNumber(sessionData.sessionNumber);
+      if (sessionData.lastSystematicSelection)
+        setLastSystematicSelection(sessionData.lastSystematicSelection);
+      if (sessionData.dashboardSession)
+        setDashboardSession(sessionData.dashboardSession);
+      if (sessionData.dashboardSessionNumber !== undefined)
+        setDashboardSessionNumber(sessionData.dashboardSessionNumber);
+
+      // Restore UI flags
+      if (sessionData.showQuiz !== undefined) setShowQuiz(sessionData.showQuiz);
+      if (sessionData.selectedQuizType)
+        setSelectedQuizType(sessionData.selectedQuizType);
+      if (sessionData.showMatchingGame !== undefined)
+        setShowMatchingGame(sessionData.showMatchingGame);
+      if (sessionData.gameMode !== undefined) setGameMode(sessionData.gameMode);
+      if (sessionData.showPracticeGame !== undefined)
+        setShowPracticeGame(sessionData.showPracticeGame);
+
+      setIsSessionInitialized(true);
+      setShowSessionRestoration(false);
+
+      console.log("Session restored successfully:", {
+        wordsLearned: sessionData.currentProgress?.wordsLearned || 0,
+        activeTab: sessionData.activeTab,
+        selectedCategory: sessionData.selectedCategory,
+      });
+    } catch (error) {
+      console.error("Failed to restore session:", error);
+      handleNewSession();
+    }
+  }, []);
+
+  const handleNewSession = useCallback(() => {
+    // Clear any existing session data
+    sessionPersistence.clearSession();
+    persistenceService.clearAllSessions();
+
+    setIsSessionInitialized(true);
+    setShowSessionRestoration(false);
+    setSessionRestorationData(null);
+
+    console.log("Started new session");
+  }, [sessionPersistence, persistenceService]);
+
+  const handleSessionRestorationDismiss = useCallback(() => {
+    setShowSessionRestoration(false);
+    setIsSessionInitialized(true);
+  }, []);
+
   // Debug logging for state changes
   useEffect(() => {
     console.log("State Update:", {
@@ -230,33 +713,39 @@ export default function Index({ initialProfile }: IndexProps) {
       currentDashboardWordsLength: currentDashboardWords.length,
       learningStatsWeeklyProgress: rememberedWords.size,
       childStatsWordsRemembered: childStats?.wordsRemembered,
+      currentProgress,
+      learningGoalsCount: learningGoals.length,
+      isSessionInitialized,
+      lastAutoSave: new Date(lastAutoSave).toLocaleTimeString(),
     });
   }, [
     rememberedWords.size,
     forgottenWords.size,
     currentDashboardWords.length,
     childStats?.wordsRemembered,
+    currentProgress,
+    learningGoals.length,
+    isSessionInitialized,
+    lastAutoSave,
   ]);
 
-  // Dynamic learning stats that reflect actual progress
+  // Dynamic learning stats that reflect actual progress and goals
   const learningStats = {
     wordsLearned: rememberedWords.size,
     totalWords: wordsDatabase.length,
     currentStreak: 7,
-    weeklyGoal: 20,
+    weeklyGoal:
+      learningGoals.find((g) => g.type === "weekly" && g.isActive)?.target ||
+      20,
     weeklyProgress: rememberedWords.size, // Allow progress beyond daily goal
-    accuracyRate:
-      rememberedWords.size > 0
-        ? Math.round(
-            (rememberedWords.size /
-              (rememberedWords.size + forgottenWords.size)) *
-              100,
-          )
-        : 0,
+    accuracyRate: currentProgress.accuracy,
     favoriteCategory: "Animals",
     totalPoints:
       rememberedWords.size * 50 + (rememberedWords.size > 10 ? 500 : 0), // Dynamic points
     level: Math.floor(rememberedWords.size / 5) + 1, // Level up every 5 words
+    dailyGoalProgress: currentProgress.wordsLearned,
+    dailyGoalTarget:
+      learningGoals.find((g) => g.type === "daily" && g.isActive)?.target || 10,
     badges: [
       {
         id: "first-word",
@@ -818,6 +1307,32 @@ export default function Index({ initialProfile }: IndexProps) {
         timeSpent: responseTime ? Math.round(responseTime / 1000 / 60) : 1, // Convert to minutes
       });
 
+      // Update session tracking
+      if (status === "remembered" || status === "needs_practice") {
+        setDailySessionCount((prev) => prev + 1);
+      }
+
+      // Check daily goal completion
+      const updatedWordsLearned =
+        status === "remembered"
+          ? rememberedWords.size + 1
+          : rememberedWords.size;
+      const dailyGoal = learningGoals.find(
+        (goal) => goal.type === "daily" && goal.isActive,
+      );
+      if (dailyGoal && updatedWordsLearned >= dailyGoal.target) {
+        setAchievementPopup((prev) => [
+          ...prev,
+          {
+            id: `daily-goal-${Date.now()}`,
+            title: "Daily Goal Achieved!",
+            description: `Amazing! You've learned ${dailyGoal.target} words today!`,
+            emoji: "🏆",
+            unlocked: true,
+          },
+        ]);
+      }
+
       // Show achievement notifications in sequence
       const notifications = [];
 
@@ -980,1744 +1495,1854 @@ export default function Index({ initialProfile }: IndexProps) {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 relative overflow-x-hidden">
-      {/* Optimized Mobile-First Header */}
-      <header className="relative overflow-hidden bg-gradient-to-r from-educational-blue via-educational-purple to-educational-pink text-white">
-        <div className="absolute inset-0 bg-black/10"></div>
-        <div className="relative container mx-auto px-4 py-2 md:py-4">
-          {/* Mobile header - ultra compact */}
-          <div className="flex items-center justify-between md:hidden">
-            <div className="flex items-center gap-2">
-              <div className="bg-white/20 backdrop-blur-sm rounded-full p-1">
-                <img
-                  src="https://cdn.builder.io/api/v1/image/assets%2Fa33f74a2f97141a4a1ef43d9448f9bda%2F2a4b7e4c3c38485b966cfd2cff50da9e?format=webp&width=800"
-                  alt="Wordy Logo"
-                  className="w-5 h-5 rounded-full"
-                />
-              </div>
-              <div>
-                <h1 className="text-sm font-bold leading-tight">
-                  Wordy's Adventure!
-                </h1>
-                <p className="text-xs text-educational-yellow-light opacity-90">
-                  Let's Learn! 🦉
-                </p>
-              </div>
-            </div>
-            {/* Mobile menu trigger could go here if needed */}
-          </div>
-
-          {/* Desktop header */}
-          <div className="text-center max-w-4xl mx-auto hidden md:block">
-            <div className="flex justify-center items-center gap-6 mb-4">
-              <div className="bg-white/20 backdrop-blur-sm rounded-full p-3">
-                <img
-                  src="https://cdn.builder.io/api/v1/image/assets%2Fa33f74a2f97141a4a1ef43d9448f9bda%2F2a4b7e4c3c38485b966cfd2cff50da9e?format=webp&width=800"
-                  alt="Wordy Logo"
-                  className="w-16 h-16 rounded-full"
-                />
-              </div>
-            </div>
-            <h1 className="text-2xl md:text-3xl font-bold mb-1">
-              🌟 Wordy's Adventure!
-            </h1>
-            <p className="text-lg font-semibold text-educational-yellow-light mb-2">
-              Fun vocabulary learning for kids! 🌟
-            </p>
-          </div>
-        </div>
-
-        {/* Enhanced Floating Elements - hidden on mobile to reduce clutter, conditional on setting */}
-        {backgroundAnimationsEnabled && (
-          <>
-            <div className="hidden md:block absolute top-10 left-10 text-3xl animate-bounce">
-              🌟
-            </div>
-            <div className="hidden md:block absolute top-20 right-20 text-2xl animate-pulse">
-              📚
-            </div>
-            <div className="hidden md:block absolute bottom-10 left-20 text-4xl animate-bounce delay-1000">
-              🎯📚✨
-            </div>
-            <div className="hidden md:block absolute bottom-20 right-10 text-3xl animate-pulse delay-500">
-              🚀
-            </div>
-            <div
-              className="hidden md:block absolute top-1/2 left-5 text-2xl animate-spin"
-              style={{ animationDuration: "3s" }}
-            >
-              ✨
-            </div>
-            <div className="hidden md:block absolute top-1/3 right-5 text-2xl animate-bounce delay-700">
-              🎪
-            </div>
-          </>
-        )}
-      </header>
-
-      {/* Mobile Menu Overlay */}
-      {isMobileMenuOpen && (
-        <div className="fixed inset-0 z-50 md:hidden">
-          <div
-            className="absolute inset-0 bg-black/50"
-            onClick={() => setIsMobileMenuOpen(false)}
+      {/* Session Restoration Modal */}
+      {showSessionRestoration && sessionRestorationData && (
+        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+          <SessionRestoration
+            onRestore={handleSessionRestore}
+            onDismiss={handleSessionRestorationDismiss}
+            onNewSession={handleNewSession}
+            autoRestoreEnabled={true}
+            showDetailed={true}
           />
-          <aside className="absolute left-0 top-0 w-80 h-full bg-gradient-to-b from-purple-100 to-pink-100 p-6 flex flex-col shadow-2xl">
-            {/* Mobile Navigation */}
-            <nav className="flex-1 space-y-2">
-              {[
-                {
-                  id: "dashboard",
-                  icon: Target,
-                  label: "Dashboard",
-                  color: "purple",
-                },
-                {
-                  id: "learn",
-                  icon: BookOpen,
-                  label: "Word Library",
-                  color: "green",
-                },
-                { id: "quiz", icon: Brain, label: "Quiz Time", color: "pink" },
-                {
-                  id: "progress",
-                  icon: Trophy,
-                  label: "🌟 My Journey",
-                  color: "yellow",
-                },
-              ].map(({ id, icon: Icon, label, color }) => (
-                <button
-                  key={id}
-                  onClick={() => {
-                    setActiveTab(id);
-                    setIsMobileMenuOpen(false);
-                  }}
-                  className={`w-full flex items-center gap-3 p-3 rounded-xl transition-all ${
-                    activeTab === id
-                      ? "bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-lg"
-                      : "bg-white text-gray-700 hover:bg-purple-50"
-                  }`}
-                >
-                  <div
-                    className={`p-2 rounded-lg ${activeTab === id ? "bg-white/20" : `bg-${color}-100`}`}
-                  >
-                    <Icon
-                      className={`w-4 h-4 ${activeTab === id ? "text-white" : `text-${color}-600`}`}
-                    />
-                  </div>
-                  <span className="font-semibold text-sm">{label}</span>
-                </button>
-              ))}
-
-              <button
-                onClick={() => {
-                  setUserRole("parent");
-                  setIsMobileMenuOpen(false);
-                }}
-                className="w-full flex items-center gap-3 p-3 rounded-xl transition-all bg-white text-gray-700 hover:bg-blue-50 border-2 border-transparent"
-              >
-                <div className="p-2 rounded-lg bg-blue-100">
-                  <Users className="w-4 h-4 text-blue-600" />
-                </div>
-                <span className="font-semibold text-sm">Parent Dashboard</span>
-              </button>
-
-              <button
-                onClick={() => setShowSettings(true)}
-                className="w-full flex items-center gap-3 p-3 rounded-xl bg-white text-gray-700 hover:bg-purple-50 transition-all border border-purple-200"
-              >
-                <div className="p-2 rounded-lg bg-gray-100">
-                  <Settings className="w-4 h-4 text-gray-600" />
-                </div>
-                <span className="font-semibold text-sm">Settings</span>
-              </button>
-
-              <button
-                onClick={handleSignOut}
-                className="w-full flex items-center gap-3 p-3 rounded-xl bg-white text-gray-700 hover:bg-red-50 transition-all border border-red-200"
-              >
-                <div className="p-2 rounded-lg bg-red-100">
-                  <LogOut className="w-4 h-4 text-red-600" />
-                </div>
-                <span className="font-semibold text-sm">Sign Out</span>
-              </button>
-            </nav>
-          </aside>
         </div>
       )}
 
-      {/* Main Content with Sidebar Layout */}
-      <main className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 scroll-smooth">
-        {userRole === "parent" ? (
-          <div className="w-full p-4 md:p-8">
-            <ParentDashboard
-              children={undefined}
-              sessions={undefined}
-              onNavigateBack={() => setUserRole("child")}
-            />
+      {/* Loading State */}
+      {!isSessionInitialized && !showSessionRestoration && (
+        <div className="fixed inset-0 bg-white z-50 flex items-center justify-center">
+          <div className="text-center">
+            <div className="w-8 h-8 border-4 border-blue-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+            <p className="text-gray-600">
+              Initializing your learning session...
+            </p>
           </div>
-        ) : (
-          <div className="flex flex-col lg:flex-row min-h-screen">
-            {/* Desktop Sidebar - Hidden on Mobile */}
-            <aside className="hidden lg:flex lg:w-80 xl:w-96 bg-gradient-to-b from-purple-50 to-pink-50 border-r border-purple-200 overflow-y-auto lg:max-h-screen">
-              <div className="p-4 lg:p-6">
-                {/* Logo Section - Mobile & Desktop */}
-                <div className="flex items-center gap-3 mb-6 lg:mb-8">
-                  <div className="w-8 h-8 lg:w-10 lg:h-10 bg-white rounded-xl flex items-center justify-center p-1">
+        </div>
+      )}
+      {/* Main Content - Only show when session is initialized */}
+      {isSessionInitialized && (
+        <>
+          {/* Optimized Mobile-First Header */}
+          <header className="relative overflow-hidden bg-gradient-to-r from-educational-blue via-educational-purple to-educational-pink text-white">
+            <div className="absolute inset-0 bg-black/10"></div>
+            <div className="relative container mx-auto px-4 py-2 md:py-4">
+              {/* Mobile header - ultra compact */}
+              <div className="flex items-center justify-between md:hidden">
+                <div className="flex items-center gap-2">
+                  <div className="bg-white/20 backdrop-blur-sm rounded-full p-1">
                     <img
                       src="https://cdn.builder.io/api/v1/image/assets%2Fa33f74a2f97141a4a1ef43d9448f9bda%2F2a4b7e4c3c38485b966cfd2cff50da9e?format=webp&width=800"
                       alt="Wordy Logo"
-                      className="w-full h-full rounded-lg"
+                      className="w-5 h-5 rounded-full"
                     />
                   </div>
                   <div>
-                    <h1 className="text-lg lg:text-xl font-bold text-gray-800">
+                    <h1 className="text-sm font-bold leading-tight">
                       Wordy's Adventure!
                     </h1>
-                    <p className="text-xs lg:text-sm text-gray-600">
-                      Fun Learning Games
+                    <p className="text-xs text-educational-yellow-light opacity-90">
+                      Let's Learn! 🦉
                     </p>
                   </div>
                 </div>
+                {/* Mobile menu trigger could go here if needed */}
+              </div>
 
-                {/* Navigation Menu */}
-                <nav className="space-y-2">
-                  <button
-                    onClick={() => setActiveTab("dashboard")}
-                    className={`w-full flex items-center gap-3 p-3 lg:p-4 rounded-xl lg:rounded-2xl transition-all ${
-                      activeTab === "dashboard"
-                        ? "bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-lg"
-                        : "bg-white text-gray-700 hover:bg-purple-50 border border-purple-100"
-                    }`}
-                  >
-                    <div
-                      className={`p-2 rounded-lg lg:rounded-xl ${activeTab === "dashboard" ? "bg-white/20" : "bg-purple-100"}`}
+              {/* Desktop header */}
+              <div className="text-center max-w-4xl mx-auto hidden md:block">
+                <div className="flex justify-center items-center gap-6 mb-4">
+                  <div className="bg-white/20 backdrop-blur-sm rounded-full p-3">
+                    <img
+                      src="https://cdn.builder.io/api/v1/image/assets%2Fa33f74a2f97141a4a1ef43d9448f9bda%2F2a4b7e4c3c38485b966cfd2cff50da9e?format=webp&width=800"
+                      alt="Wordy Logo"
+                      className="w-16 h-16 rounded-full"
+                    />
+                  </div>
+                </div>
+                <h1 className="text-2xl md:text-3xl font-bold mb-1">
+                  🌟 Wordy's Adventure!
+                </h1>
+                <p className="text-lg font-semibold text-educational-yellow-light mb-2">
+                  Fun vocabulary learning for kids! 🌟
+                </p>
+              </div>
+            </div>
+
+            {/* Enhanced Floating Elements - hidden on mobile to reduce clutter, conditional on setting */}
+            {backgroundAnimationsEnabled && (
+              <>
+                <div className="hidden md:block absolute top-10 left-10 text-3xl animate-bounce">
+                  🌟
+                </div>
+                <div className="hidden md:block absolute top-20 right-20 text-2xl animate-pulse">
+                  📚
+                </div>
+                <div className="hidden md:block absolute bottom-10 left-20 text-4xl animate-bounce delay-1000">
+                  🎯📚✨
+                </div>
+                <div className="hidden md:block absolute bottom-20 right-10 text-3xl animate-pulse delay-500">
+                  🚀
+                </div>
+                <div
+                  className="hidden md:block absolute top-1/2 left-5 text-2xl animate-spin"
+                  style={{ animationDuration: "3s" }}
+                >
+                  ✨
+                </div>
+                <div className="hidden md:block absolute top-1/3 right-5 text-2xl animate-bounce delay-700">
+                  🎪
+                </div>
+              </>
+            )}
+          </header>
+
+          {/* Mobile Menu Overlay */}
+          {isMobileMenuOpen && (
+            <div className="fixed inset-0 z-50 md:hidden">
+              <div
+                className="absolute inset-0 bg-black/50"
+                onClick={() => setIsMobileMenuOpen(false)}
+              />
+              <aside className="absolute left-0 top-0 w-80 h-full bg-gradient-to-b from-purple-100 to-pink-100 p-6 flex flex-col shadow-2xl">
+                {/* Mobile Navigation */}
+                <nav className="flex-1 space-y-2">
+                  {[
+                    {
+                      id: "dashboard",
+                      icon: Target,
+                      label: "Dashboard",
+                      color: "purple",
+                    },
+                    {
+                      id: "learn",
+                      icon: BookOpen,
+                      label: "Word Library",
+                      color: "green",
+                    },
+                    {
+                      id: "quiz",
+                      icon: Brain,
+                      label: "Quiz Time",
+                      color: "pink",
+                    },
+                    {
+                      id: "progress",
+                      icon: Trophy,
+                      label: "🌟 My Journey",
+                      color: "yellow",
+                    },
+                  ].map(({ id, icon: Icon, label, color }) => (
+                    <button
+                      key={id}
+                      onClick={() => {
+                        setActiveTab(id);
+                        setIsMobileMenuOpen(false);
+                      }}
+                      className={`w-full flex items-center gap-3 p-3 rounded-xl transition-all ${
+                        activeTab === id
+                          ? "bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-lg"
+                          : "bg-white text-gray-700 hover:bg-purple-50"
+                      }`}
                     >
-                      <Target
-                        className={`w-4 h-4 lg:w-5 lg:h-5 ${activeTab === "dashboard" ? "text-white" : "text-purple-600"}`}
-                      />
-                    </div>
-                    <span className="font-medium lg:font-semibold text-sm lg:text-base">
-                      Dashboard
-                    </span>
-                  </button>
+                      <div
+                        className={`p-2 rounded-lg ${activeTab === id ? "bg-white/20" : `bg-${color}-100`}`}
+                      >
+                        <Icon
+                          className={`w-4 h-4 ${activeTab === id ? "text-white" : `text-${color}-600`}`}
+                        />
+                      </div>
+                      <span className="font-semibold text-sm">{label}</span>
+                    </button>
+                  ))}
 
                   <button
-                    onClick={() => setActiveTab("learn")}
-                    className={`w-full flex items-center gap-3 p-3 lg:p-4 rounded-xl lg:rounded-2xl transition-all ${
-                      activeTab === "learn"
-                        ? "bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-lg"
-                        : "bg-white text-gray-700 hover:bg-purple-50 border border-purple-100"
-                    }`}
+                    onClick={() => {
+                      setUserRole("parent");
+                      setIsMobileMenuOpen(false);
+                    }}
+                    className="w-full flex items-center gap-3 p-3 rounded-xl transition-all bg-white text-gray-700 hover:bg-blue-50 border-2 border-transparent"
                   >
-                    <div
-                      className={`p-2 rounded-lg lg:rounded-xl ${activeTab === "learn" ? "bg-white/20" : "bg-green-100"}`}
-                    >
-                      <BookOpen
-                        className={`w-4 h-4 lg:w-5 lg:h-5 ${activeTab === "learn" ? "text-white" : "text-green-600"}`}
-                      />
+                    <div className="p-2 rounded-lg bg-blue-100">
+                      <Users className="w-4 h-4 text-blue-600" />
                     </div>
-                    <span className="font-medium lg:font-semibold text-sm lg:text-base">
-                      Word Library
-                    </span>
-                  </button>
-
-                  <button
-                    onClick={() => setActiveTab("quiz")}
-                    className={`w-full flex items-center gap-3 p-3 lg:p-4 rounded-xl lg:rounded-2xl transition-all ${
-                      activeTab === "quiz"
-                        ? "bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-lg"
-                        : "bg-white text-gray-700 hover:bg-purple-50 border border-purple-100"
-                    }`}
-                  >
-                    <div
-                      className={`p-2 rounded-lg lg:rounded-xl ${activeTab === "quiz" ? "bg-white/20" : "bg-pink-100"}`}
-                    >
-                      <Brain
-                        className={`w-4 h-4 lg:w-5 lg:h-5 ${activeTab === "quiz" ? "text-white" : "text-pink-600"}`}
-                      />
-                    </div>
-                    <span className="font-medium lg:font-semibold text-sm lg:text-base">
-                      Quiz Time
-                    </span>
-                  </button>
-
-                  <button
-                    onClick={() => setActiveTab("adventure")}
-                    className={`hidden w-full flex items-center gap-3 p-3 lg:p-4 rounded-xl lg:rounded-2xl transition-all ${
-                      activeTab === "adventure"
-                        ? "bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-lg"
-                        : "bg-white text-gray-700 hover:bg-purple-50 border border-purple-100"
-                    }`}
-                  >
-                    <div
-                      className={`p-2 rounded-lg lg:rounded-xl ${activeTab === "adventure" ? "bg-white/20" : "bg-green-100"}`}
-                    >
-                      <Sword
-                        className={`w-4 h-4 lg:w-5 lg:h-5 ${activeTab === "adventure" ? "text-white" : "text-green-600"}`}
-                      />
-                    </div>
-                    <span className="font-medium lg:font-semibold text-sm lg:text-base">
-                      🎯 Word Practice
-                    </span>
-                  </button>
-
-                  <button
-                    onClick={() => setActiveTab("progress")}
-                    className={`w-full flex items-center gap-3 p-3 lg:p-4 rounded-xl lg:rounded-2xl transition-all ${
-                      activeTab === "progress"
-                        ? "bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-lg"
-                        : "bg-white text-gray-700 hover:bg-purple-50 border border-purple-100"
-                    }`}
-                  >
-                    <div
-                      className={`p-2 rounded-lg lg:rounded-xl ${activeTab === "progress" ? "bg-white/20" : "bg-yellow-100"}`}
-                    >
-                      <Trophy
-                        className={`w-4 h-4 lg:w-5 lg:h-5 ${activeTab === "progress" ? "text-white" : "text-yellow-600"}`}
-                      />
-                    </div>
-                    <span className="font-medium lg:font-semibold text-sm lg:text-base">
-                      🎯 My Journey
-                    </span>
-                  </button>
-
-                  <button
-                    onClick={() => setUserRole("parent")}
-                    className="w-full flex items-center gap-4 p-4 rounded-2xl transition-all bg-white text-gray-700 hover:bg-blue-50 hover:border-blue-200 border-2 border-transparent"
-                  >
-                    <div className="p-2 rounded-xl bg-blue-100">
-                      <Users className="w-5 h-5 text-blue-600" />
-                    </div>
-                    <span className="font-semibold">Parent Dashboard</span>
-                  </button>
-
-                  <button
-                    onClick={() => navigate("/admin")}
-                    className="w-full flex items-center gap-4 p-4 rounded-2xl transition-all bg-white text-gray-700 hover:bg-red-50 hover:border-red-200 border-2 border-transparent"
-                  >
-                    <div className="p-2 rounded-xl bg-red-100">
-                      <Shield className="w-5 h-5 text-red-600" />
-                    </div>
-                    <span className="font-semibold">
-                      Administrator Dashboard
+                    <span className="font-semibold text-sm">
+                      Parent Dashboard
                     </span>
                   </button>
 
                   <button
                     onClick={() => setShowSettings(true)}
-                    className="w-full flex items-center gap-4 p-4 rounded-2xl bg-white text-gray-700 hover:bg-purple-50 transition-all border border-purple-200"
+                    className="w-full flex items-center gap-3 p-3 rounded-xl bg-white text-gray-700 hover:bg-purple-50 transition-all border border-purple-200"
                   >
-                    <div className="p-2 rounded-xl bg-gray-100">
-                      <Settings className="w-5 h-5 text-gray-600" />
+                    <div className="p-2 rounded-lg bg-gray-100">
+                      <Settings className="w-4 h-4 text-gray-600" />
                     </div>
-                    <span className="font-semibold">Settings</span>
+                    <span className="font-semibold text-sm">Settings</span>
                   </button>
 
                   <button
                     onClick={handleSignOut}
-                    className="w-full flex items-center gap-4 p-4 rounded-2xl bg-white text-gray-700 hover:bg-red-50 transition-all border border-red-200"
+                    className="w-full flex items-center gap-3 p-3 rounded-xl bg-white text-gray-700 hover:bg-red-50 transition-all border border-red-200"
                   >
-                    <div className="p-2 rounded-xl bg-red-100">
-                      <LogOut className="w-5 h-5 text-red-600" />
+                    <div className="p-2 rounded-lg bg-red-100">
+                      <LogOut className="w-4 h-4 text-red-600" />
                     </div>
-                    <span className="font-semibold">Sign Out</span>
+                    <span className="font-semibold text-sm">Sign Out</span>
                   </button>
                 </nav>
+              </aside>
+            </div>
+          )}
+
+          {/* Main Content with Sidebar Layout */}
+          <main className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 scroll-smooth">
+            {userRole === "parent" ? (
+              <div className="w-full p-4 md:p-8">
+                <ParentDashboard
+                  children={undefined}
+                  sessions={undefined}
+                  onNavigateBack={() => setUserRole("child")}
+                />
               </div>
-            </aside>
-
-            {/* Main Content Area - Optimized Mobile Spacing */}
-            <div className="flex-1 p-3 sm:p-4 lg:p-8 pb-20 sm:pb-24 lg:pb-8 overflow-y-auto scroll-smooth">
-              <Tabs
-                value={activeTab}
-                onValueChange={setActiveTab}
-                className="w-full"
-              >
-                <TabsContent value="dashboard">
-                  <LearningDashboard
-                    stats={learningStats}
-                    userName="Explorer"
-                    childStats={childStats}
-                    forgottenWordsCount={forgottenWords.size}
-                    rememberedWordsCount={rememberedWords.size}
-                    availableWords={currentDashboardWords}
-                    onWordProgress={async (word, status) => {
-                      console.log(`Word Progress: ${word.word} - ${status}`, {
-                        wordId: word.id,
-                        currentRemembered: rememberedWords.size,
-                        currentForgotten: forgottenWords.size,
-                      });
-
-                      // Handle word progress in dashboard
-                      if (status === "remembered") {
-                        setRememberedWords((prev) => {
-                          const newSet = new Set([...prev, word.id]);
-                          console.log(
-                            `Updated remembered words: ${newSet.size}`,
-                            Array.from(newSet),
-                          );
-                          return newSet;
-                        });
-                        setForgottenWords((prev) => {
-                          const newSet = new Set(prev);
-                          newSet.delete(word.id);
-                          return newSet;
-                        });
-                      } else if (status === "needs_practice") {
-                        setForgottenWords((prev) => {
-                          const newSet = new Set([...prev, word.id]);
-                          console.log(
-                            `Updated forgotten words: ${newSet.size}`,
-                            Array.from(newSet),
-                          );
-                          return newSet;
-                        });
-                        setRememberedWords((prev) => {
-                          const newSet = new Set(prev);
-                          newSet.delete(word.id);
-                          return newSet;
-                        });
-                      }
-
-                      // Record progress in database (this handles all achievements)
-                      await handleWordProgress(
-                        word,
-                        status === "remembered"
-                          ? "remembered"
-                          : "needs_practice",
-                      );
-                    }}
-                    onQuickQuiz={() => {
-                      setSelectedQuizType("quick");
-                      setShowQuiz(true);
-                      setActiveTab("quiz"); // Navigate to quiz tab
-                    }}
-                    onAdventure={() => {
-                      setActiveTab("adventure");
-                    }}
-                    onPracticeForgotten={() => {
-                      startPracticeGame();
-                      // Stay in current tab - practice component will show as overlay
-                    }}
-                    onRequestNewWords={generateFreshWords}
-                    dashboardSession={dashboardSession}
-                    onGenerateNewSession={generateDashboardWords}
-                  />
-
-                  {/* Enhanced Word Selection Debug Panel */}
-                  {process.env.NODE_ENV === "development" &&
-                    lastSystematicSelection && (
-                      <div className="mt-4 p-3 bg-gray-100 rounded-lg text-xs">
-                        <h4 className="font-bold mb-2">
-                          ��� Enhanced Word Selection Debug
-                        </h4>
-                        <div className="grid grid-cols-2 gap-2">
-                          <div>
-                            <strong>Strategy:</strong>{" "}
-                            {
-                              lastSystematicSelection.sessionInfo
-                                .sessionStrategy
-                            }
-                          </div>
-                          <div>
-                            <strong>Difficulty:</strong>{" "}
-                            {lastSystematicSelection.sessionInfo.difficulty}
-                          </div>
-                          <div>
-                            <strong>New Words:</strong>{" "}
-                            {lastSystematicSelection.sessionInfo.totalNewWords}
-                          </div>
-                          <div>
-                            <strong>Review Words:</strong>{" "}
-                            {lastSystematicSelection.sessionInfo.reviewWords}
-                          </div>
-                          <div>
-                            <strong>Exhaustion:</strong>{" "}
-                            {(
-                              lastSystematicSelection.sessionInfo
-                                .exhaustionLevel * 100
-                            ).toFixed(1)}
-                            %
-                          </div>
-                          <div>
-                            <strong>Categories:</strong>{" "}
-                            {lastSystematicSelection.sessionInfo.categories.join(
-                              ", ",
-                            )}
-                          </div>
-                        </div>
-                        <div className="mt-2">
-                          <strong>Session #{sessionNumber - 1}</strong> |{" "}
-                          <strong>Word History:</strong> {userWordHistory.size}{" "}
-                          words tracked
-                        </div>
+            ) : (
+              <div className="flex flex-col lg:flex-row min-h-screen">
+                {/* Desktop Sidebar - Hidden on Mobile */}
+                <aside className="hidden lg:flex lg:w-80 xl:w-96 bg-gradient-to-b from-purple-50 to-pink-50 border-r border-purple-200 overflow-y-auto lg:max-h-screen">
+                  <div className="p-4 lg:p-6">
+                    {/* Logo Section - Mobile & Desktop */}
+                    <div className="flex items-center gap-3 mb-6 lg:mb-8">
+                      <div className="w-8 h-8 lg:w-10 lg:h-10 bg-white rounded-xl flex items-center justify-center p-1">
+                        <img
+                          src="https://cdn.builder.io/api/v1/image/assets%2Fa33f74a2f97141a4a1ef43d9448f9bda%2F2a4b7e4c3c38485b966cfd2cff50da9e?format=webp&width=800"
+                          alt="Wordy Logo"
+                          className="w-full h-full rounded-lg"
+                        />
                       </div>
-                    )}
-                </TabsContent>
-
-                <TabsContent value="learn">
-                  <div className="space-y-8">
-                    {learningMode === "selector" || !selectedCategory ? (
-                      <ChildFriendlyCategorySelector
-                        selectedCategory={selectedCategory}
-                        onSelectCategory={(category) => {
-                          handleCategoryChange(category);
-                          setLearningMode("cards");
-                        }}
-                        userInterests={currentProfile?.interests || []}
-                      />
-                    ) : (
-                      <>
-                        <div className="text-center">
-                          {/* Compact Mobile Header */}
-                          <div className="mb-2">
-                            {/* Mobile: Compact navigation */}
-                            <div className="block sm:hidden">
-                              {/* Minimal Header with Essential Info */}
-                              <div className="flex items-center justify-between mb-1.5 px-2">
-                                {/* Left: Back Button */}
-                                <Button
-                                  onClick={() => {
-                                    if (navigator.vibrate) {
-                                      navigator.vibrate([50, 30, 50]);
-                                    }
-                                    audioService.playClickSound();
-                                    setLearningMode("selector");
-                                    setCurrentWordIndex(0);
-                                  }}
-                                  variant="ghost"
-                                  size="sm"
-                                  className="h-8 px-2 text-slate-600 hover:bg-slate-100 rounded-lg"
-                                >
-                                  <BookOpen className="w-3.5 h-3.5" />
-                                </Button>
-
-                                {/* Center: Category and Progress */}
-                                <div className="flex-1 text-center">
-                                  <div className="text-sm font-semibold text-slate-800 truncate px-2">
-                                    {selectedCategory
-                                      ? selectedCategory
-                                          .charAt(0)
-                                          .toUpperCase() +
-                                        selectedCategory.slice(1)
-                                      : "Category"}
-                                  </div>
-                                  <div className="text-xs text-slate-500">
-                                    {currentWordIndex + 1}/{displayWords.length}{" "}
-                                    • {rememberedWords.size} ✅
-                                  </div>
-                                </div>
-
-                                {/* Right: Switch Button */}
-                                <Button
-                                  onClick={() => {
-                                    if (navigator.vibrate) {
-                                      navigator.vibrate(25);
-                                    }
-                                    audioService.playClickSound();
-                                    setSelectedCategory("");
-                                    setLearningMode("selector");
-                                    setCurrentWordIndex(0);
-                                  }}
-                                  variant="ghost"
-                                  size="sm"
-                                  className="h-8 px-2 text-slate-600 hover:bg-slate-100 rounded-lg"
-                                >
-                                  <Shuffle className="w-3.5 h-3.5" />
-                                </Button>
-                              </div>
-                            </div>
-
-                            {/* Desktop/Tablet: Compact layout */}
-                            <div className="hidden sm:block">
-                              <div className="flex items-center justify-between gap-4 mb-2">
-                                <div className="text-left flex-1 min-w-0">
-                                  <h2 className="text-base md:text-lg font-bold text-slate-800 truncate">
-                                    {selectedCategory
-                                      ? `${selectedCategory.charAt(0).toUpperCase() + selectedCategory.slice(1)} Words`
-                                      : "Select a Category"}
-                                  </h2>
-                                  <div className="flex items-center gap-3 text-xs text-slate-600">
-                                    <span>
-                                      {currentWordIndex + 1}/
-                                      {displayWords.length}
-                                    </span>
-                                    <span>{rememberedWords.size} learned</span>
-                                    <span>{forgottenWords.size} review</span>
-                                  </div>
-                                </div>
-
-                                <div className="flex-shrink-0 flex gap-1">
-                                  <Button
-                                    onClick={() => {
-                                      if (navigator.vibrate) {
-                                        navigator.vibrate(25);
-                                      }
-                                      audioService.playClickSound();
-                                      setSelectedCategory("");
-                                      setLearningMode("selector");
-                                      setCurrentWordIndex(0);
-                                    }}
-                                    variant="ghost"
-                                    size="sm"
-                                    className="h-7 px-2 text-xs rounded-md hover:bg-slate-100"
-                                  >
-                                    <Shuffle className="w-3 h-3" />
-                                  </Button>
-
-                                  <Button
-                                    onClick={() => {
-                                      if (navigator.vibrate) {
-                                        navigator.vibrate([50, 30, 50]);
-                                      }
-                                      audioService.playClickSound();
-                                      setLearningMode("selector");
-                                      setCurrentWordIndex(0);
-                                    }}
-                                    variant="ghost"
-                                    size="sm"
-                                    className="h-7 px-2 text-xs rounded-md hover:bg-slate-100"
-                                  >
-                                    <BookOpen className="w-3 h-3" />
-                                  </Button>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-
-                        {learningMode === "cards" && (
-                          <>
-                            {(() => {
-                              return (
-                                <>
-                                  {displayWords.length > 0 && (
-                                    <>
-                                      {/* Minimal progress indicator */}
-                                      <div className="max-w-xs sm:max-w-sm md:max-w-md mx-auto mb-1">
-                                        <div className="w-full bg-slate-200 rounded-full h-1">
-                                          <div
-                                            className="bg-blue-500 h-1 rounded-full transition-all duration-300 ease-out"
-                                            style={{
-                                              width: `${((currentWordIndex + 1) / displayWords.length) * 100}%`,
-                                            }}
-                                          ></div>
-                                        </div>
-                                      </div>
-
-                                      <div
-                                        className={`max-w-xs sm:max-w-sm md:max-w-md mx-auto px-1 sm:px-2 md:px-0 relative ${
-                                          celebrationEffect &&
-                                          "animate-pulse shadow-2xl"
-                                        }`}
-                                      >
-                                        {/* Celebration Sparkles */}
-                                        {celebrationEffect && (
-                                          <div className="absolute inset-0 bg-gradient-to-r from-yellow-400/20 to-pink-400/20 animate-pulse z-20 rounded-xl">
-                                            <div className="absolute top-4 left-4 text-2xl animate-bounce">
-                                              ✨
-                                            </div>
-                                            <div className="absolute top-6 right-6 text-3xl animate-spin">
-                                              🌟
-                                            </div>
-                                            <div className="absolute bottom-4 left-6 text-2xl animate-bounce delay-300">
-                                              🎊
-                                            </div>
-                                            <div className="absolute bottom-6 right-4 text-2xl animate-pulse delay-500">
-                                              💫
-                                            </div>
-                                          </div>
-                                        )}
-                                        <WordCard
-                                          word={{
-                                            ...(displayWords[
-                                              currentWordIndex
-                                            ] || displayWords[0]),
-                                            masteryLevel: Math.floor(
-                                              Math.random() * 100,
-                                            ),
-                                            lastReviewed: new Date(
-                                              Date.now() -
-                                                Math.random() *
-                                                  7 *
-                                                  24 *
-                                                  60 *
-                                                  60 *
-                                                  1000,
-                                            ),
-                                            nextReview: new Date(
-                                              Date.now() +
-                                                Math.random() *
-                                                  3 *
-                                                  24 *
-                                                  60 *
-                                                  60 *
-                                                  1000,
-                                            ),
-                                          }}
-                                          onPronounce={(word) =>
-                                            console.log(
-                                              "Playing pronunciation for:",
-                                              word.word,
-                                            )
-                                          }
-                                          onFavorite={(word) =>
-                                            console.log("Favorited:", word.word)
-                                          }
-                                          onWordMastered={handleWordMastered}
-                                          showVocabularyBuilder={true}
-                                        />
-                                      </div>
-
-                                      <div className="space-y-4">
-                                        {/* Mobile-Optimized Learning Progress Buttons */}
-                                        <div className="flex justify-center gap-2 sm:gap-3 md:gap-4 px-2 sm:px-4 md:px-0">
-                                          <Button
-                                            onClick={async () => {
-                                              const currentWord =
-                                                displayWords[currentWordIndex];
-                                              if (currentWord) {
-                                                // Mark as forgotten for extra practice
-                                                setForgottenWords(
-                                                  (prev) =>
-                                                    new Set([
-                                                      ...prev,
-                                                      currentWord.id,
-                                                    ]),
-                                                );
-                                                setRememberedWords((prev) => {
-                                                  const newSet = new Set(prev);
-                                                  newSet.delete(currentWord.id);
-                                                  return newSet;
-                                                });
-
-                                                // Record progress in database (this handles all achievements)
-                                                await handleWordProgress(
-                                                  currentWord,
-                                                  "needs_practice",
-                                                );
-                                                // Show encouragement effects and play sound
-                                                audioService.playEncouragementSound();
-                                                setShowCelebration(true);
-                                                setTimeout(
-                                                  () =>
-                                                    setShowCelebration(false),
-                                                  1000,
-                                                );
-                                              }
-                                              // Auto-advance to next word
-                                              if (
-                                                currentWordIndex <
-                                                displayWords.length - 1
-                                              ) {
-                                                setCurrentWordIndex(
-                                                  currentWordIndex + 1,
-                                                );
-                                              } else {
-                                                // Check if we've reviewed all words in category
-                                                const updatedForgottenWords =
-                                                  new Set([
-                                                    ...forgottenWords,
-                                                    currentWord.id,
-                                                  ]);
-                                                const completionResult =
-                                                  checkCategoryCompletion(
-                                                    displayWords,
-                                                    rememberedWords,
-                                                    updatedForgottenWords,
-                                                    currentWord.id,
-                                                  );
-
-                                                if (
-                                                  completionResult.shouldShow
-                                                ) {
-                                                  // Show category completion feedback (not achievement since words were forgotten)
-                                                  setFeedback({
-                                                    type: "celebration",
-                                                    title:
-                                                      "Category Review Complete! 📚",
-                                                    message: `You've reviewed all ${completionResult.totalWords} words in ${selectedCategory === "all" ? "this word set" : selectedCategory}!\\n\\n✅ Remembered: ${completionResult.totalRemembered} words\\n❌ Need practice: ${completionResult.totalWords - completionResult.totalRemembered} words\\n\\n${completionResult.totalWords - completionResult.totalRemembered > 0 ? "Don't worry! Let's practice the tricky ones again! ���📚" : "Amazing work! 🎉"}`,
-                                                    points:
-                                                      completionResult.totalRemembered *
-                                                      10, // Fewer points since words were forgotten
-                                                    onContinue: () => {
-                                                      setFeedback(null);
-                                                      setCurrentWordIndex(0);
-                                                    },
-                                                  });
-                                                } else {
-                                                  // Restart with forgotten words for practice
-                                                  setCurrentWordIndex(0);
-                                                }
-                                              }
-                                            }}
-                                            className="flex-1 bg-gradient-to-r from-red-400 to-pink-500 hover:from-red-500 hover:to-pink-600 text-white font-bold border-0 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform active:scale-95 py-3 sm:py-4 px-3 sm:px-6 min-h-[56px] sm:min-h-[60px] relative overflow-hidden text-sm sm:text-base"
-                                            disabled={isLoadingProgress}
-                                          >
-                                            <div className="absolute inset-0 bg-white/20 rounded-xl opacity-0 hover:opacity-100 transition-opacity duration-300"></div>
-                                            <div className="relative z-10 flex items-center justify-center">
-                                              <span className="text-xl sm:text-2xl mr-1 sm:mr-2 animate-wiggle">
-                                                😔
-                                              </span>
-                                              <div className="text-center">
-                                                <div className="font-bold text-base sm:text-lg">
-                                                  I Forgot
-                                                </div>
-                                                <div className="text-xs opacity-90 hidden sm:block">
-                                                  Need practice! 💪
-                                                </div>
-                                              </div>
-                                            </div>
-                                          </Button>
-
-                                          <Button
-                                            onClick={async () => {
-                                              const currentWord =
-                                                displayWords[currentWordIndex];
-                                              if (currentWord) {
-                                                // Mark as remembered
-                                                setRememberedWords(
-                                                  (prev) =>
-                                                    new Set([
-                                                      ...prev,
-                                                      currentWord.id,
-                                                    ]),
-                                                );
-                                                setForgottenWords((prev) => {
-                                                  const newSet = new Set(prev);
-                                                  newSet.delete(currentWord.id);
-                                                  return newSet;
-                                                });
-
-                                                // Record progress in database (this handles all achievements)
-                                                await handleWordProgress(
-                                                  currentWord,
-                                                  "remembered",
-                                                );
-                                                // Show enhanced celebration effects and play success sound
-                                                setCelebrationEffect(true);
-                                                audioService.playSuccessSound();
-                                                setShowCelebration(true);
-                                                setTimeout(() => {
-                                                  setCelebrationEffect(false);
-                                                  setShowCelebration(false);
-                                                }, 2000);
-                                              }
-                                              // Auto-advance to next word
-                                              if (
-                                                currentWordIndex <
-                                                displayWords.length - 1
-                                              ) {
-                                                setCurrentWordIndex(
-                                                  currentWordIndex + 1,
-                                                );
-                                              } else {
-                                                // Check for category completion and show achievement
-                                                const currentWord =
-                                                  displayWords[
-                                                    currentWordIndex
-                                                  ];
-                                                const updatedRememberedWords =
-                                                  new Set([
-                                                    ...rememberedWords,
-                                                    currentWord.id,
-                                                  ]);
-                                                const completionResult =
-                                                  checkCategoryCompletion(
-                                                    displayWords,
-                                                    updatedRememberedWords,
-                                                    forgottenWords,
-                                                    currentWord.id,
-                                                  );
-
-                                                if (
-                                                  completionResult.shouldShow
-                                                ) {
-                                                  // Show enhanced category completion achievement
-                                                  setFeedback({
-                                                    type: "celebration",
-                                                    title:
-                                                      completionResult.title,
-                                                    message: `${completionResult.message}\n\n✅ Remembered: ${completionResult.totalRemembered} words\n❌ Need practice: ${completionResult.totalWords - completionResult.totalRemembered} words\n\n🏆 Category Achievement Unlocked! 🎉`,
-                                                    points:
-                                                      completionResult.totalRemembered *
-                                                        20 +
-                                                      (completionResult.accuracy >=
-                                                      90
-                                                        ? 100
-                                                        : completionResult.accuracy >=
-                                                            75
-                                                          ? 75
-                                                          : completionResult.accuracy >=
-                                                              50
-                                                            ? 50
-                                                            : 25),
-                                                    onContinue: () => {
-                                                      setFeedback(null);
-                                                      // Reset for new category or continue practicing
-                                                      const totalForgotten =
-                                                        completionResult.totalWords -
-                                                        completionResult.totalRemembered;
-                                                      if (totalForgotten > 0) {
-                                                        // Restart with forgotten words for focused practice
-                                                        setCurrentWordIndex(0);
-                                                      } else {
-                                                        // Perfect completion - reset for new round
-                                                        setCurrentWordIndex(0);
-                                                        setRememberedWords(
-                                                          new Set(),
-                                                        );
-                                                        setForgottenWords(
-                                                          new Set(),
-                                                        );
-                                                      }
-                                                    },
-                                                  });
-                                                }
-                                              }
-                                            }}
-                                            className="flex-1 bg-gradient-to-r from-green-400 to-emerald-500 hover:from-green-500 hover:to-emerald-600 text-white font-bold border-0 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform active:scale-95 py-3 sm:py-4 px-3 sm:px-6 min-h-[56px] sm:min-h-[60px] relative overflow-hidden text-sm sm:text-base"
-                                            disabled={isLoadingProgress}
-                                          >
-                                            <div className="absolute inset-0 bg-white/20 rounded-xl opacity-0 hover:opacity-100 transition-opacity duration-300"></div>
-                                            <div className="relative z-10 flex items-center justify-center">
-                                              <span className="text-xl sm:text-2xl mr-1 sm:mr-2 animate-bounce">
-                                                😊
-                                              </span>
-                                              <div className="text-center">
-                                                <div className="font-bold text-base sm:text-lg">
-                                                  I Remember!
-                                                </div>
-                                                <div className="text-xs opacity-90 hidden sm:block">
-                                                  Awesome! ⭐
-                                                </div>
-                                              </div>
-                                            </div>
-                                          </Button>
-                                        </div>
-
-                                        {/* Mobile-Optimized Learning Progress Indicator */}
-                                        <div className="text-center space-y-2">
-                                          <div className="flex justify-center gap-3 sm:gap-4 text-sm">
-                                            <div className="flex items-center gap-1 text-green-600 bg-green-50 px-2 py-1 rounded-lg">
-                                              <span className="text-sm">
-                                                ✅
-                                              </span>
-                                              <span className="font-bold text-sm">
-                                                {rememberedWords.size}
-                                              </span>
-                                              <span className="text-xs opacity-75 hidden sm:inline">
-                                                remembered
-                                              </span>
-                                            </div>
-                                            <div className="flex items-center gap-1 text-red-600 bg-red-50 px-2 py-1 rounded-lg">
-                                              <span className="text-sm">
-                                                💪
-                                              </span>
-                                              <span className="font-bold text-sm">
-                                                {forgottenWords.size}
-                                              </span>
-                                              <span className="text-xs opacity-75 hidden sm:inline">
-                                                practice
-                                              </span>
-                                            </div>
-                                          </div>
-
-                                          {/* Compact Navigation Controls */}
-                                          <div className="flex justify-center items-center gap-2 mt-3 max-w-xs sm:max-w-sm md:max-w-md mx-auto">
-                                            {/* Previous Button */}
-                                            <Button
-                                              onClick={() => {
-                                                if (currentWordIndex > 0) {
-                                                  setCurrentWordIndex(
-                                                    currentWordIndex - 1,
-                                                  );
-                                                  audioService.playClickSound();
-                                                  if (navigator.vibrate) {
-                                                    navigator.vibrate(25);
-                                                  }
-                                                }
-                                              }}
-                                              disabled={currentWordIndex === 0}
-                                              variant="ghost"
-                                              size="sm"
-                                              className="h-8 w-8 rounded-full p-0 disabled:opacity-30 hover:bg-slate-100"
-                                            >
-                                              <span className="text-lg">←</span>
-                                            </Button>
-
-                                            {/* Compact Progress */}
-                                            <div className="flex-1 flex items-center justify-center gap-2 text-xs text-slate-600">
-                                              <span className="font-medium">
-                                                {currentWordIndex + 1}/
-                                                {displayWords.length}
-                                              </span>
-                                            </div>
-
-                                            {/* Next Button */}
-                                            <Button
-                                              onClick={() => {
-                                                if (
-                                                  currentWordIndex <
-                                                  displayWords.length - 1
-                                                ) {
-                                                  setCurrentWordIndex(
-                                                    currentWordIndex + 1,
-                                                  );
-                                                  audioService.playClickSound();
-                                                  if (navigator.vibrate) {
-                                                    navigator.vibrate(25);
-                                                  }
-                                                } else {
-                                                  setCelebrationEffect(true);
-                                                  setTimeout(() => {
-                                                    setCelebrationEffect(false);
-                                                    if (
-                                                      window.confirm(
-                                                        "Great job! You've completed all words in this category. Return to library to choose another category?",
-                                                      )
-                                                    ) {
-                                                      handleSmartBackNavigation();
-                                                    }
-                                                  }, 2000);
-                                                }
-                                              }}
-                                              disabled={
-                                                currentWordIndex ===
-                                                displayWords.length - 1
-                                              }
-                                              variant="ghost"
-                                              size="sm"
-                                              className="h-8 w-8 rounded-full p-0 disabled:opacity-30 hover:bg-slate-100"
-                                            >
-                                              <span className="text-lg">→</span>
-                                            </Button>
-                                          </div>
-                                        </div>
-                                      </div>
-
-                                      {/* Minimal Status Indicator */}
-                                      <div className="text-center mt-2">
-                                        {(() => {
-                                          const currentWord =
-                                            displayWords[currentWordIndex];
-                                          if (!currentWord) return null;
-
-                                          if (
-                                            rememberedWords.has(currentWord.id)
-                                          ) {
-                                            return (
-                                              <div className="text-xs text-green-600 font-medium">
-                                                ✅ Learned
-                                              </div>
-                                            );
-                                          } else if (
-                                            forgottenWords.has(currentWord.id)
-                                          ) {
-                                            return (
-                                              <div className="text-xs text-orange-600 font-medium">
-                                                🤔 Review
-                                              </div>
-                                            );
-                                          } else {
-                                            return (
-                                              <div className="text-xs text-blue-600 font-medium">
-                                                🆕 New
-                                              </div>
-                                            );
-                                          }
-                                        })()}
-                                      </div>
-                                    </>
-                                  )}
-                                </>
-                              );
-                            })()}
-                          </>
-                        )}
-                      </>
-                    )}
-                  </div>
-                </TabsContent>
-
-                <TabsContent value="quiz">
-                  {!showQuiz && !gameMode && !showMatchingGame ? (
-                    <div className="space-y-8">
-                      {/* Quiz Header - Kid-Friendly & Mobile Optimized */}
-                      <div className="text-center">
-                        <div className="flex justify-center mb-4">
-                          <div className="bg-gradient-to-r from-educational-blue via-educational-purple to-educational-pink p-3 md:p-4 rounded-full shadow-lg animate-gentle-bounce">
-                            <Brain className="w-8 h-8 md:w-12 md:h-12 text-white" />
-                          </div>
-                        </div>
-                        <h2 className="text-xl md:text-3xl font-bold text-gray-800 mb-2 md:mb-4">
-                          ��� Quiz Time!
-                        </h2>
-                        <p className="text-sm md:text-lg text-gray-600 mb-4 md:mb-6 px-4">
-                          Test your vocabulary with super fun quizzes! 🌟
+                      <div>
+                        <h1 className="text-lg lg:text-xl font-bold text-gray-800">
+                          Wordy's Adventure!
+                        </h1>
+                        <p className="text-xs lg:text-sm text-gray-600">
+                          Fun Learning Games
                         </p>
                       </div>
-
-                      {/* Kid-Friendly Quiz Cards - Mobile Optimized */}
-                      <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 md:gap-4 max-w-6xl mx-auto px-2">
-                        {/* Matching Game */}
-                        <Card className="hidden cursor-pointer hover:shadow-xl transition-all duration-300 hover:scale-105 border-2 border-educational-purple/30">
-                          <CardContent className="p-6 text-center">
-                            <div className="text-6xl mb-4">🧩</div>
-                            <h3 className="text-xl font-bold text-educational-purple mb-2">
-                              Matching Game
-                            </h3>
-                            <p className="text-gray-600 mb-4">
-                              Match words with their meanings in this brain
-                              game!
-                            </p>
-                            <div className="flex justify-center gap-2 mb-4">
-                              <span className="bg-educational-purple/20 text-educational-purple px-2 py-1 rounded-full text-xs">
-                                Memory Challenge
-                              </span>
-                              <span className="bg-educational-purple/20 text-educational-purple px-2 py-1 rounded-full text-xs">
-                                Timed
-                              </span>
-                            </div>
-                            <Button
-                              onClick={() => setShowMatchingGame(true)}
-                              className="w-full bg-educational-purple text-white hover:bg-educational-purple/90"
-                            >
-                              <Shuffle className="w-4 h-4 mr-2" />
-                              Start Matching!
-                            </Button>
-                          </CardContent>
-                        </Card>
-                        {/* Easy Quiz */}
-                        <Card className="hidden cursor-pointer hover:shadow-lg transition-all duration-300 hover:scale-105 border-2 border-educational-green/30 animate-kid-float-delayed">
-                          <CardContent className="p-6 text-center">
-                            <div className="text-6xl mb-4">🌱</div>
-                            <h3 className="text-xl font-bold text-educational-green mb-2">
-                              Easy Quiz
-                            </h3>
-                            <p className="text-gray-600 mb-4">
-                              Perfect for beginners! Simple words and
-                              definitions.
-                            </p>
-                            <div className="flex justify-center gap-2 mb-4">
-                              <span className="bg-educational-green/20 text-educational-green px-2 py-1 rounded-full text-xs">
-                                5 Questions
-                              </span>
-                              <span className="bg-educational-green/20 text-educational-green px-2 py-1 rounded-full text-xs">
-                                30s Each
-                              </span>
-                            </div>
-                            <Button
-                              onClick={() => {
-                                setSelectedQuizType("quick");
-                                setShowQuiz(true);
-                              }}
-                              className="w-full bg-educational-green text-white hover:bg-educational-green/90"
-                            >
-                              <Play className="w-4 h-4 mr-2" />
-                              Start Easy Quiz
-                            </Button>
-                          </CardContent>
-                        </Card>
-
-                        {/* Standard Quiz */}
-                        <Card className="hidden cursor-pointer hover:shadow-lg transition-all duration-300 hover:scale-105 border-2 border-educational-blue/30 animate-kid-float">
-                          <CardContent className="p-3 md:p-4 text-center">
-                            <div className="text-3xl md:text-5xl mb-2 md:mb-3 animate-gentle-bounce">
-                              🎯
-                            </div>
-                            <h3 className="text-sm md:text-lg font-bold text-educational-blue mb-1 md:mb-2">
-                              Challenge Me!
-                            </h3>
-                            <p className="text-xs md:text-sm text-gray-600 mb-2 md:mb-3 hidden md:block">
-                              Ready for more? Let's go! 💪
-                            </p>
-                            <div className="flex justify-center gap-1 mb-2 md:mb-3">
-                              <span className="bg-educational-blue/20 text-educational-blue px-1.5 py-0.5 rounded-full text-xs">
-                                🎯 Cool!
-                              </span>
-                            </div>
-                            <Button
-                              onClick={() => {
-                                setSelectedQuizType("standard");
-                                setShowQuiz(true);
-                              }}
-                              className="w-full bg-educational-blue text-white hover:bg-educational-blue/90 py-1.5 md:py-2 text-xs md:text-sm rounded-xl animate-wiggle"
-                              size="sm"
-                            >
-                              <Play className="w-3 h-3 md:w-4 md:h-4 mr-1" />
-                              Bring It On! ⚡
-                            </Button>
-                          </CardContent>
-                        </Card>
-
-                        {/* Challenge Quiz */}
-                        <Card className="hidden cursor-pointer hover:shadow-lg transition-all duration-300 hover:scale-105 border-2 border-educational-purple/30 animate-kid-float-delayed">
-                          <CardContent className="p-6 text-center">
-                            <div className="text-6xl mb-4">🏆</div>
-                            <h3 className="text-xl font-bold text-educational-purple mb-2">
-                              Challenge Quiz
-                            </h3>
-                            <p className="text-gray-600 mb-4">
-                              For advanced learners! Tricky words and concepts.
-                            </p>
-                            <div className="flex justify-center gap-2 mb-4">
-                              <span className="bg-educational-purple/20 text-educational-purple px-2 py-1 rounded-full text-xs">
-                                15 Questions
-                              </span>
-                              <span className="bg-educational-purple/20 text-educational-purple px-2 py-1 rounded-full text-xs">
-                                25s Each
-                              </span>
-                            </div>
-                            <Button
-                              onClick={() => {
-                                setSelectedQuizType("challenge");
-                                setShowQuiz(true);
-                              }}
-                              className="w-full bg-educational-purple text-white hover:bg-educational-purple/90"
-                            >
-                              <Play className="w-4 h-4 mr-2" />
-                              Start Challenge Quiz
-                            </Button>
-                          </CardContent>
-                        </Card>
-
-                        {/* Picture Quiz - Kid-Friendly */}
-                        <Card className="cursor-pointer hover:shadow-lg active:shadow-xl transition-all duration-200 active:scale-95 border-2 border-educational-orange/30">
-                          <CardContent className="p-3 md:p-4 text-center">
-                            <div className="text-3xl md:text-5xl mb-2 md:mb-3 animate-bounce">
-                              🖼️
-                            </div>
-                            <h3 className="text-sm md:text-lg font-bold text-educational-orange mb-1 md:mb-2">
-                              Picture Fun!
-                            </h3>
-                            <p className="text-xs md:text-sm text-gray-600 mb-2 md:mb-3 hidden md:block">
-                              Look at pictures and guess the words! ��
-                            </p>
-                            <div className="flex justify-center gap-1 mb-2 md:mb-3">
-                              <span className="bg-educational-orange/20 text-educational-orange px-1.5 py-0.5 rounded-full text-xs">
-                                🎯 Fun!
-                              </span>
-                            </div>
-                            <Button
-                              onClick={() => {
-                                setSelectedQuizType("picture");
-                                setShowQuiz(true);
-                              }}
-                              className="w-full bg-educational-orange text-white hover:bg-educational-orange/90 active:bg-educational-orange/80 py-2 text-xs sm:text-sm rounded-xl min-h-[44px]"
-                              size="sm"
-                            >
-                              <Play className="w-3 h-3 md:w-4 md:h-4 mr-1" />
-                              Let's Play! 🚀
-                            </Button>
-                          </CardContent>
-                        </Card>
-
-                        {/* Spelling Quiz */}
-                        <Card className="hidden cursor-pointer hover:shadow-xl transition-all duration-300 hover:scale-105 border-2 border-educational-pink/30">
-                          <CardContent className="p-6 text-center">
-                            <div className="text-6xl mb-4">✏️</div>
-                            <h3 className="text-xl font-bold text-educational-pink mb-2">
-                              Spelling Quiz
-                            </h3>
-                            <p className="text-gray-600 mb-4">
-                              Test your spelling skills with audio challenges.
-                            </p>
-                            <div className="flex justify-center gap-2 mb-4">
-                              <span className="bg-educational-pink/20 text-educational-pink px-2 py-1 rounded-full text-xs">
-                                10 Questions
-                              </span>
-                              <span className="bg-educational-pink/20 text-educational-pink px-2 py-1 rounded-full text-xs">
-                                45s Each
-                              </span>
-                            </div>
-                            <Button
-                              onClick={() => {
-                                setSelectedQuizType("spelling");
-                                setShowQuiz(true);
-                              }}
-                              className="w-full bg-educational-pink text-white hover:bg-educational-pink/90"
-                            >
-                              <Play className="w-4 h-4 mr-2" />
-                              Start Spelling Quiz
-                            </Button>
-                          </CardContent>
-                        </Card>
-
-                        {/* Speed Quiz */}
-                        <Card className="hidden cursor-pointer hover:shadow-xl transition-all duration-300 hover:scale-105 border-2 border-educational-yellow/30">
-                          <CardContent className="p-6 text-center">
-                            <div className="text-6xl mb-4">⚡</div>
-                            <h3 className="text-xl font-bold text-educational-yellow mb-2">
-                              Speed Quiz
-                            </h3>
-                            <p className="text-gray-600 mb-4">
-                              Quick-fire questions! How fast can you answer?
-                            </p>
-                            <div className="flex justify-center gap-2 mb-4">
-                              <span className="bg-educational-yellow/20 text-educational-yellow px-2 py-1 rounded-full text-xs">
-                                20 Questions
-                              </span>
-                              <span className="bg-educational-yellow/20 text-educational-yellow px-2 py-1 rounded-full text-xs">
-                                15s Each
-                              </span>
-                            </div>
-                            <Button
-                              onClick={() => {
-                                setSelectedQuizType("speed");
-                                setShowQuiz(true);
-                              }}
-                              className="w-full bg-educational-yellow text-white hover:bg-educational-yellow/90"
-                            >
-                              <Play className="w-4 h-4 mr-2" />
-                              Start Speed Quiz
-                            </Button>
-                          </CardContent>
-                        </Card>
-
-                        {/* Vowel Rescue - Easy */}
-                        <Card className="cursor-pointer hover:shadow-lg transition-all duration-300 hover:scale-105 border-2 border-educational-green/30 animate-kid-float">
-                          <CardContent className="p-3 md:p-4 text-center">
-                            <div className="text-3xl md:text-5xl mb-2 md:mb-3 animate-bounce">
-                              🎯
-                            </div>
-                            <h3 className="text-sm md:text-lg font-bold text-educational-green mb-1 md:mb-2">
-                              Vowel Rescue!
-                            </h3>
-                            <p className="text-xs md:text-sm text-gray-600 mb-2 md:mb-3 hidden md:block">
-                              Help rescue missing vowels! 🌟
-                            </p>
-                            <div className="flex justify-center gap-1 mb-2 md:mb-3">
-                              <span className="bg-educational-green/20 text-educational-green px-1.5 py-0.5 rounded-full text-xs">
-                                🎯 Easy!
-                              </span>
-                            </div>
-                            <Button
-                              onClick={() => {
-                                setSelectedQuizType("vowel-easy");
-                                setShowQuiz(true);
-                              }}
-                              className="w-full bg-educational-green text-white hover:bg-educational-green/90 py-1.5 md:py-2 text-xs md:text-sm rounded-xl animate-wiggle"
-                              size="sm"
-                            >
-                              <Play className="w-3 h-3 md:w-4 md:h-4 mr-1" />
-                              Rescue Vowels! 🚀
-                            </Button>
-                          </CardContent>
-                        </Card>
-
-                        {/* Vowel Challenge - Medium */}
-                        <Card className="cursor-pointer hover:shadow-lg transition-all duration-300 hover:scale-105 border-2 border-educational-purple/30 animate-kid-float-delayed">
-                          <CardContent className="p-3 md:p-4 text-center">
-                            <div className="text-3xl md:text-5xl mb-2 md:mb-3 animate-sparkle">
-                              🎯
-                            </div>
-                            <h3 className="text-sm md:text-lg font-bold text-educational-purple mb-1 md:mb-2">
-                              Vowel Challenge!
-                            </h3>
-                            <p className="text-xs md:text-sm text-gray-600 mb-2 md:mb-3 hidden md:block">
-                              Multiple missing vowels! 💪
-                            </p>
-                            <div className="flex justify-center gap-1 mb-2 md:mb-3">
-                              <span className="bg-educational-purple/20 text-educational-purple px-1.5 py-0.5 rounded-full text-xs">
-                                🎯 Medium!
-                              </span>
-                            </div>
-                            <Button
-                              onClick={() => {
-                                setSelectedQuizType("vowel-challenge");
-                                setShowQuiz(true);
-                              }}
-                              className="w-full bg-educational-purple text-white hover:bg-educational-purple/90 py-1.5 md:py-2 text-xs md:text-sm rounded-xl"
-                              size="sm"
-                            >
-                              <Play className="w-3 h-3 md:w-4 md:h-4 mr-1" />
-                              Take Challenge! ⚡
-                            </Button>
-                          </CardContent>
-                        </Card>
-
-                        {/* Vowel Rush - Timed */}
-                        <Card className="cursor-pointer hover:shadow-lg transition-all duration-300 hover:scale-105 border-2 border-educational-orange/30 animate-gentle-bounce">
-                          <CardContent className="p-3 md:p-4 text-center">
-                            <div className="text-3xl md:text-5xl mb-2 md:mb-3 animate-pulse">
-                              🎯
-                            </div>
-                            <h3 className="text-sm md:text-lg font-bold text-educational-orange mb-1 md:mb-2">
-                              Vowel Rush!
-                            </h3>
-                            <p className="text-xs md:text-sm text-gray-600 mb-2 md:mb-3 hidden md:block">
-                              60 seconds speed challenge! ⏰
-                            </p>
-                            <div className="flex justify-center gap-1 mb-2 md:mb-3">
-                              <span className="bg-educational-orange/20 text-educational-orange px-1.5 py-0.5 rounded-full text-xs">
-                                🎯 Timed!
-                              </span>
-                            </div>
-                            <Button
-                              onClick={() => {
-                                setSelectedQuizType("vowel-timed");
-                                setShowQuiz(true);
-                              }}
-                              className="w-full bg-educational-orange text-white hover:bg-educational-orange/90 py-1.5 md:py-2 text-xs md:text-sm rounded-xl animate-bounce"
-                              size="sm"
-                            >
-                              <Play className="w-3 h-3 md:w-4 md:h-4 mr-1" />
-                              Rush Mode! 🔥
-                            </Button>
-                          </CardContent>
-                        </Card>
-                      </div>
-
-                      {/* Recent Scores */}
-                      <div className="max-w-2xl mx-auto">
-                        <Card className="bg-gradient-to-r from-educational-blue/10 to-educational-purple/10 hidden">
-                          <CardHeader>
-                            <CardTitle className="flex items-center gap-2">
-                              <Trophy className="w-5 h-5 text-educational-orange" />
-                              Your Recent Quiz Scores
-                            </CardTitle>
-                          </CardHeader>
-                          <CardContent>
-                            <div className="space-y-3">
-                              <div className="flex justify-between items-center p-3 bg-white rounded-lg">
-                                <div className="flex items-center gap-3">
-                                  <span className="text-2xl">🎯</span>
-                                  <div>
-                                    <div className="font-semibold">
-                                      Standard Quiz
-                                    </div>
-                                    <div className="text-sm text-gray-600">
-                                      Yesterday
-                                    </div>
-                                  </div>
-                                </div>
-                                <div className="text-right">
-                                  <div className="font-bold text-educational-blue">
-                                    8/10
-                                  </div>
-                                  <div className="text-sm text-gray-600">
-                                    80%
-                                  </div>
-                                </div>
-                              </div>
-                              <div className="flex justify-between items-center p-3 bg-white rounded-lg">
-                                <div className="flex items-center gap-3">
-                                  <span className="text-2xl">🌱</span>
-                                  <div>
-                                    <div className="font-semibold">
-                                      Easy Quiz
-                                    </div>
-                                    <div className="text-sm text-gray-600">
-                                      2 days ago
-                                    </div>
-                                  </div>
-                                </div>
-                                <div className="text-right">
-                                  <div className="font-bold text-educational-green">
-                                    5/5
-                                  </div>
-                                  <div className="text-sm text-gray-600">
-                                    100%
-                                  </div>
-                                </div>
-                              </div>
-                              <div className="flex justify-between items-center p-3 bg-white rounded-lg">
-                                <div className="flex items-center gap-3">
-                                  <span className="text-2xl">🏆</span>
-                                  <div>
-                                    <div className="font-semibold">
-                                      Challenge Quiz
-                                    </div>
-                                    <div className="text-sm text-gray-600">
-                                      3 days ago
-                                    </div>
-                                  </div>
-                                </div>
-                                <div className="text-right">
-                                  <div className="font-bold text-educational-purple">
-                                    12/15
-                                  </div>
-                                  <div className="text-sm text-gray-600">
-                                    80%
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          </CardContent>
-                        </Card>
-                      </div>
                     </div>
-                  ) : gameMode ? (
-                    <GameLikeLearning
-                      words={(() => {
-                        const categoryWords =
-                          getWordsByCategory(selectedCategory);
-                        return categoryWords.slice(0, 10);
-                      })()}
-                      onComplete={handleGameComplete}
-                      onBack={() => setGameMode(false)}
-                      userProfile={currentProfile}
-                    />
-                  ) : showMatchingGame ? (
-                    <div className="space-y-6">
-                      <div className="flex items-center justify-between">
-                        <h2 className="text-2xl font-bold text-gray-800">
-                          🧩 Word Matching Game
-                        </h2>
-                      </div>
-                      <WordMatchingGame
-                        pairs={generateMatchingPairs(
-                          6,
-                          undefined,
-                          selectedCategory,
+
+                    {/* Navigation Menu */}
+                    <nav className="space-y-2">
+                      <button
+                        onClick={() => setActiveTab("dashboard")}
+                        className={`w-full flex items-center gap-3 p-3 lg:p-4 rounded-xl lg:rounded-2xl transition-all ${
+                          activeTab === "dashboard"
+                            ? "bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-lg"
+                            : "bg-white text-gray-700 hover:bg-purple-50 border border-purple-100"
+                        }`}
+                      >
+                        <div
+                          className={`p-2 rounded-lg lg:rounded-xl ${activeTab === "dashboard" ? "bg-white/20" : "bg-purple-100"}`}
+                        >
+                          <Target
+                            className={`w-4 h-4 lg:w-5 lg:h-5 ${activeTab === "dashboard" ? "text-white" : "text-purple-600"}`}
+                          />
+                        </div>
+                        <span className="font-medium lg:font-semibold text-sm lg:text-base">
+                          Dashboard
+                        </span>
+                      </button>
+
+                      <button
+                        onClick={() => setActiveTab("learn")}
+                        className={`w-full flex items-center gap-3 p-3 lg:p-4 rounded-xl lg:rounded-2xl transition-all ${
+                          activeTab === "learn"
+                            ? "bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-lg"
+                            : "bg-white text-gray-700 hover:bg-purple-50 border border-purple-100"
+                        }`}
+                      >
+                        <div
+                          className={`p-2 rounded-lg lg:rounded-xl ${activeTab === "learn" ? "bg-white/20" : "bg-green-100"}`}
+                        >
+                          <BookOpen
+                            className={`w-4 h-4 lg:w-5 lg:h-5 ${activeTab === "learn" ? "text-white" : "text-green-600"}`}
+                          />
+                        </div>
+                        <span className="font-medium lg:font-semibold text-sm lg:text-base">
+                          Word Library
+                        </span>
+                      </button>
+
+                      <button
+                        onClick={() => setActiveTab("quiz")}
+                        className={`w-full flex items-center gap-3 p-3 lg:p-4 rounded-xl lg:rounded-2xl transition-all ${
+                          activeTab === "quiz"
+                            ? "bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-lg"
+                            : "bg-white text-gray-700 hover:bg-purple-50 border border-purple-100"
+                        }`}
+                      >
+                        <div
+                          className={`p-2 rounded-lg lg:rounded-xl ${activeTab === "quiz" ? "bg-white/20" : "bg-pink-100"}`}
+                        >
+                          <Brain
+                            className={`w-4 h-4 lg:w-5 lg:h-5 ${activeTab === "quiz" ? "text-white" : "text-pink-600"}`}
+                          />
+                        </div>
+                        <span className="font-medium lg:font-semibold text-sm lg:text-base">
+                          Quiz Time
+                        </span>
+                      </button>
+
+                      <button
+                        onClick={() => setActiveTab("adventure")}
+                        className={`hidden w-full flex items-center gap-3 p-3 lg:p-4 rounded-xl lg:rounded-2xl transition-all ${
+                          activeTab === "adventure"
+                            ? "bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-lg"
+                            : "bg-white text-gray-700 hover:bg-purple-50 border border-purple-100"
+                        }`}
+                      >
+                        <div
+                          className={`p-2 rounded-lg lg:rounded-xl ${activeTab === "adventure" ? "bg-white/20" : "bg-green-100"}`}
+                        >
+                          <Sword
+                            className={`w-4 h-4 lg:w-5 lg:h-5 ${activeTab === "adventure" ? "text-white" : "text-green-600"}`}
+                          />
+                        </div>
+                        <span className="font-medium lg:font-semibold text-sm lg:text-base">
+                          🎯 Word Practice
+                        </span>
+                      </button>
+
+                      <button
+                        onClick={() => setActiveTab("progress")}
+                        className={`w-full flex items-center gap-3 p-3 lg:p-4 rounded-xl lg:rounded-2xl transition-all ${
+                          activeTab === "progress"
+                            ? "bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-lg"
+                            : "bg-white text-gray-700 hover:bg-purple-50 border border-purple-100"
+                        }`}
+                      >
+                        <div
+                          className={`p-2 rounded-lg lg:rounded-xl ${activeTab === "progress" ? "bg-white/20" : "bg-yellow-100"}`}
+                        >
+                          <Trophy
+                            className={`w-4 h-4 lg:w-5 lg:h-5 ${activeTab === "progress" ? "text-white" : "text-yellow-600"}`}
+                          />
+                        </div>
+                        <span className="font-medium lg:font-semibold text-sm lg:text-base">
+                          🎯 My Journey
+                        </span>
+                      </button>
+
+                      <button
+                        onClick={() => setUserRole("parent")}
+                        className="w-full flex items-center gap-4 p-4 rounded-2xl transition-all bg-white text-gray-700 hover:bg-blue-50 hover:border-blue-200 border-2 border-transparent"
+                      >
+                        <div className="p-2 rounded-xl bg-blue-100">
+                          <Users className="w-5 h-5 text-blue-600" />
+                        </div>
+                        <span className="font-semibold">Parent Dashboard</span>
+                      </button>
+
+                      <button
+                        onClick={() => navigate("/admin")}
+                        className="w-full flex items-center gap-4 p-4 rounded-2xl transition-all bg-white text-gray-700 hover:bg-red-50 hover:border-red-200 border-2 border-transparent"
+                      >
+                        <div className="p-2 rounded-xl bg-red-100">
+                          <Shield className="w-5 h-5 text-red-600" />
+                        </div>
+                        <span className="font-semibold">
+                          Administrator Dashboard
+                        </span>
+                      </button>
+
+                      <button
+                        onClick={() => setShowSettings(true)}
+                        className="w-full flex items-center gap-4 p-4 rounded-2xl bg-white text-gray-700 hover:bg-purple-50 transition-all border border-purple-200"
+                      >
+                        <div className="p-2 rounded-xl bg-gray-100">
+                          <Settings className="w-5 h-5 text-gray-600" />
+                        </div>
+                        <span className="font-semibold">Settings</span>
+                      </button>
+
+                      <button
+                        onClick={handleSignOut}
+                        className="w-full flex items-center gap-4 p-4 rounded-2xl bg-white text-gray-700 hover:bg-red-50 transition-all border border-red-200"
+                      >
+                        <div className="p-2 rounded-xl bg-red-100">
+                          <LogOut className="w-5 h-5 text-red-600" />
+                        </div>
+                        <span className="font-semibold">Sign Out</span>
+                      </button>
+                    </nav>
+                  </div>
+                </aside>
+
+                {/* Main Content Area - Optimized Mobile Spacing */}
+                <div className="flex-1 p-3 sm:p-4 lg:p-8 pb-20 sm:pb-24 lg:pb-8 overflow-y-auto scroll-smooth">
+                  <Tabs
+                    value={activeTab}
+                    onValueChange={setActiveTab}
+                    className="w-full"
+                  >
+                    <TabsContent value="dashboard">
+                      <LearningDashboard
+                        stats={learningStats}
+                        userName="Explorer"
+                        childStats={childStats}
+                        forgottenWordsCount={forgottenWords.size}
+                        rememberedWordsCount={rememberedWords.size}
+                        availableWords={currentDashboardWords}
+                        onWordProgress={async (word, status) => {
+                          console.log(
+                            `Word Progress: ${word.word} - ${status}`,
+                            {
+                              wordId: word.id,
+                              currentRemembered: rememberedWords.size,
+                              currentForgotten: forgottenWords.size,
+                            },
+                          );
+
+                          // Handle word progress in dashboard
+                          if (status === "remembered") {
+                            setRememberedWords((prev) => {
+                              const newSet = new Set([...prev, word.id]);
+                              console.log(
+                                `Updated remembered words: ${newSet.size}`,
+                                Array.from(newSet),
+                              );
+                              return newSet;
+                            });
+                            setForgottenWords((prev) => {
+                              const newSet = new Set(prev);
+                              newSet.delete(word.id);
+                              return newSet;
+                            });
+                          } else if (status === "needs_practice") {
+                            setForgottenWords((prev) => {
+                              const newSet = new Set([...prev, word.id]);
+                              console.log(
+                                `Updated forgotten words: ${newSet.size}`,
+                                Array.from(newSet),
+                              );
+                              return newSet;
+                            });
+                            setRememberedWords((prev) => {
+                              const newSet = new Set(prev);
+                              newSet.delete(word.id);
+                              return newSet;
+                            });
+                          }
+
+                          // Record progress in database (this handles all achievements)
+                          await handleWordProgress(
+                            word,
+                            status === "remembered"
+                              ? "remembered"
+                              : "needs_practice",
+                          );
+                        }}
+                        onQuickQuiz={() => {
+                          setSelectedQuizType("quick");
+                          setShowQuiz(true);
+                          setActiveTab("quiz"); // Navigate to quiz tab
+                        }}
+                        onAdventure={() => {
+                          setActiveTab("adventure");
+                        }}
+                        onPracticeForgotten={() => {
+                          startPracticeGame();
+                          // Stay in current tab - practice component will show as overlay
+                        }}
+                        onRequestNewWords={generateFreshWords}
+                        dashboardSession={dashboardSession}
+                        onGenerateNewSession={generateDashboardWords}
+                      />
+
+                      {/* Enhanced Word Selection Debug Panel */}
+                      {process.env.NODE_ENV === "development" &&
+                        lastSystematicSelection && (
+                          <div className="mt-4 p-3 bg-gray-100 rounded-lg text-xs">
+                            <h4 className="font-bold mb-2">
+                              🔧 Enhanced Word Selection Debug
+                            </h4>
+                            <div className="grid grid-cols-2 gap-2">
+                              <div>
+                                <strong>Strategy:</strong>{" "}
+                                {
+                                  lastSystematicSelection.sessionInfo
+                                    .sessionStrategy
+                                }
+                              </div>
+                              <div>
+                                <strong>Difficulty:</strong>{" "}
+                                {lastSystematicSelection.sessionInfo.difficulty}
+                              </div>
+                              <div>
+                                <strong>New Words:</strong>{" "}
+                                {
+                                  lastSystematicSelection.sessionInfo
+                                    .totalNewWords
+                                }
+                              </div>
+                              <div>
+                                <strong>Review Words:</strong>{" "}
+                                {
+                                  lastSystematicSelection.sessionInfo
+                                    .reviewWords
+                                }
+                              </div>
+                              <div>
+                                <strong>Exhaustion:</strong>{" "}
+                                {(
+                                  lastSystematicSelection.sessionInfo
+                                    .exhaustionLevel * 100
+                                ).toFixed(1)}
+                                %
+                              </div>
+                              <div>
+                                <strong>Categories:</strong>{" "}
+                                {lastSystematicSelection.sessionInfo.categories.join(
+                                  ", ",
+                                )}
+                              </div>
+                            </div>
+                            <div className="mt-2">
+                              <strong>Session #{sessionNumber - 1}</strong> |{" "}
+                              <strong>Word History:</strong>{" "}
+                              {userWordHistory.size} words tracked
+                            </div>
+                          </div>
                         )}
-                        onComplete={(score, timeSpent) => {
-                          setShowMatchingGame(false);
+                    </TabsContent>
+
+                    <TabsContent value="learn">
+                      <div className="space-y-8">
+                        {learningMode === "selector" || !selectedCategory ? (
+                          <ChildFriendlyCategorySelector
+                            selectedCategory={selectedCategory}
+                            onSelectCategory={(category) => {
+                              handleCategoryChange(category);
+                              setLearningMode("cards");
+                            }}
+                            userInterests={currentProfile?.interests || []}
+                          />
+                        ) : (
+                          <>
+                            <div className="text-center">
+                              {/* Compact Mobile Header */}
+                              <div className="mb-2">
+                                {/* Mobile: Compact navigation */}
+                                <div className="block sm:hidden">
+                                  {/* Minimal Header with Essential Info */}
+                                  <div className="flex items-center justify-between mb-1.5 px-2">
+                                    {/* Left: Back Button */}
+                                    <Button
+                                      onClick={() => {
+                                        if (navigator.vibrate) {
+                                          navigator.vibrate([50, 30, 50]);
+                                        }
+                                        audioService.playClickSound();
+                                        setLearningMode("selector");
+                                        setCurrentWordIndex(0);
+                                      }}
+                                      variant="ghost"
+                                      size="sm"
+                                      className="h-8 px-2 text-slate-600 hover:bg-slate-100 rounded-lg"
+                                    >
+                                      <BookOpen className="w-3.5 h-3.5" />
+                                    </Button>
+
+                                    {/* Center: Category and Progress */}
+                                    <div className="flex-1 text-center">
+                                      <div className="text-sm font-semibold text-slate-800 truncate px-2">
+                                        {selectedCategory
+                                          ? selectedCategory
+                                              .charAt(0)
+                                              .toUpperCase() +
+                                            selectedCategory.slice(1)
+                                          : "Category"}
+                                      </div>
+                                      <div className="text-xs text-slate-500">
+                                        {currentWordIndex + 1}/
+                                        {displayWords.length} •{" "}
+                                        {rememberedWords.size} ✅
+                                      </div>
+                                    </div>
+
+                                    {/* Right: Switch Button */}
+                                    <Button
+                                      onClick={() => {
+                                        if (navigator.vibrate) {
+                                          navigator.vibrate(25);
+                                        }
+                                        audioService.playClickSound();
+                                        setSelectedCategory("");
+                                        setLearningMode("selector");
+                                        setCurrentWordIndex(0);
+                                      }}
+                                      variant="ghost"
+                                      size="sm"
+                                      className="h-8 px-2 text-slate-600 hover:bg-slate-100 rounded-lg"
+                                    >
+                                      <Shuffle className="w-3.5 h-3.5" />
+                                    </Button>
+                                  </div>
+                                </div>
+
+                                {/* Desktop/Tablet: Compact layout */}
+                                <div className="hidden sm:block">
+                                  <div className="flex items-center justify-between gap-4 mb-2">
+                                    <div className="text-left flex-1 min-w-0">
+                                      <h2 className="text-base md:text-lg font-bold text-slate-800 truncate">
+                                        {selectedCategory
+                                          ? `${selectedCategory.charAt(0).toUpperCase() + selectedCategory.slice(1)} Words`
+                                          : "Select a Category"}
+                                      </h2>
+                                      <div className="flex items-center gap-3 text-xs text-slate-600">
+                                        <span>
+                                          {currentWordIndex + 1}/
+                                          {displayWords.length}
+                                        </span>
+                                        <span>
+                                          {rememberedWords.size} learned
+                                        </span>
+                                        <span>
+                                          {forgottenWords.size} review
+                                        </span>
+                                      </div>
+                                    </div>
+
+                                    <div className="flex-shrink-0 flex gap-1">
+                                      <Button
+                                        onClick={() => {
+                                          if (navigator.vibrate) {
+                                            navigator.vibrate(25);
+                                          }
+                                          audioService.playClickSound();
+                                          setSelectedCategory("");
+                                          setLearningMode("selector");
+                                          setCurrentWordIndex(0);
+                                        }}
+                                        variant="ghost"
+                                        size="sm"
+                                        className="h-7 px-2 text-xs rounded-md hover:bg-slate-100"
+                                      >
+                                        <Shuffle className="w-3 h-3" />
+                                      </Button>
+
+                                      <Button
+                                        onClick={() => {
+                                          if (navigator.vibrate) {
+                                            navigator.vibrate([50, 30, 50]);
+                                          }
+                                          audioService.playClickSound();
+                                          setLearningMode("selector");
+                                          setCurrentWordIndex(0);
+                                        }}
+                                        variant="ghost"
+                                        size="sm"
+                                        className="h-7 px-2 text-xs rounded-md hover:bg-slate-100"
+                                      >
+                                        <BookOpen className="w-3 h-3" />
+                                      </Button>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+
+                            {learningMode === "cards" && (
+                              <>
+                                {(() => {
+                                  return (
+                                    <>
+                                      {displayWords.length > 0 && (
+                                        <>
+                                          {/* Minimal progress indicator */}
+                                          <div className="max-w-xs sm:max-w-sm md:max-w-md mx-auto mb-1">
+                                            <div className="w-full bg-slate-200 rounded-full h-1">
+                                              <div
+                                                className="bg-blue-500 h-1 rounded-full transition-all duration-300 ease-out"
+                                                style={{
+                                                  width: `${((currentWordIndex + 1) / displayWords.length) * 100}%`,
+                                                }}
+                                              ></div>
+                                            </div>
+                                          </div>
+
+                                          <div
+                                            className={`max-w-xs sm:max-w-sm md:max-w-md mx-auto px-1 sm:px-2 md:px-0 relative ${
+                                              celebrationEffect &&
+                                              "animate-pulse shadow-2xl"
+                                            }`}
+                                          >
+                                            {/* Celebration Sparkles */}
+                                            {celebrationEffect && (
+                                              <div className="absolute inset-0 bg-gradient-to-r from-yellow-400/20 to-pink-400/20 animate-pulse z-20 rounded-xl">
+                                                <div className="absolute top-4 left-4 text-2xl animate-bounce">
+                                                  ✨
+                                                </div>
+                                                <div className="absolute top-6 right-6 text-3xl animate-spin">
+                                                  🌟
+                                                </div>
+                                                <div className="absolute bottom-4 left-6 text-2xl animate-bounce delay-300">
+                                                  🎊
+                                                </div>
+                                                <div className="absolute bottom-6 right-4 text-2xl animate-pulse delay-500">
+                                                  💫
+                                                </div>
+                                              </div>
+                                            )}
+                                            <WordCard
+                                              word={{
+                                                ...(displayWords[
+                                                  currentWordIndex
+                                                ] || displayWords[0]),
+                                                masteryLevel: Math.floor(
+                                                  Math.random() * 100,
+                                                ),
+                                                lastReviewed: new Date(
+                                                  Date.now() -
+                                                    Math.random() *
+                                                      7 *
+                                                      24 *
+                                                      60 *
+                                                      60 *
+                                                      1000,
+                                                ),
+                                                nextReview: new Date(
+                                                  Date.now() +
+                                                    Math.random() *
+                                                      3 *
+                                                      24 *
+                                                      60 *
+                                                      60 *
+                                                      1000,
+                                                ),
+                                              }}
+                                              onPronounce={(word) =>
+                                                console.log(
+                                                  "Playing pronunciation for:",
+                                                  word.word,
+                                                )
+                                              }
+                                              onFavorite={(word) =>
+                                                console.log(
+                                                  "Favorited:",
+                                                  word.word,
+                                                )
+                                              }
+                                              onWordMastered={
+                                                handleWordMastered
+                                              }
+                                              showVocabularyBuilder={true}
+                                            />
+                                          </div>
+
+                                          <div className="space-y-4">
+                                            {/* Mobile-Optimized Learning Progress Buttons */}
+                                            <div className="flex justify-center gap-2 sm:gap-3 md:gap-4 px-2 sm:px-4 md:px-0">
+                                              <Button
+                                                onClick={async () => {
+                                                  const currentWord =
+                                                    displayWords[
+                                                      currentWordIndex
+                                                    ];
+                                                  if (currentWord) {
+                                                    // Mark as forgotten for extra practice
+                                                    setForgottenWords(
+                                                      (prev) =>
+                                                        new Set([
+                                                          ...prev,
+                                                          currentWord.id,
+                                                        ]),
+                                                    );
+                                                    setRememberedWords(
+                                                      (prev) => {
+                                                        const newSet = new Set(
+                                                          prev,
+                                                        );
+                                                        newSet.delete(
+                                                          currentWord.id,
+                                                        );
+                                                        return newSet;
+                                                      },
+                                                    );
+
+                                                    // Record progress in database (this handles all achievements)
+                                                    await handleWordProgress(
+                                                      currentWord,
+                                                      "needs_practice",
+                                                    );
+                                                    // Show encouragement effects and play sound
+                                                    audioService.playEncouragementSound();
+                                                    setShowCelebration(true);
+                                                    setTimeout(
+                                                      () =>
+                                                        setShowCelebration(
+                                                          false,
+                                                        ),
+                                                      1000,
+                                                    );
+                                                  }
+                                                  // Auto-advance to next word
+                                                  if (
+                                                    currentWordIndex <
+                                                    displayWords.length - 1
+                                                  ) {
+                                                    setCurrentWordIndex(
+                                                      currentWordIndex + 1,
+                                                    );
+                                                  } else {
+                                                    // Check if we've reviewed all words in category
+                                                    const updatedForgottenWords =
+                                                      new Set([
+                                                        ...forgottenWords,
+                                                        currentWord.id,
+                                                      ]);
+                                                    const completionResult =
+                                                      checkCategoryCompletion(
+                                                        displayWords,
+                                                        rememberedWords,
+                                                        updatedForgottenWords,
+                                                        currentWord.id,
+                                                      );
+
+                                                    if (
+                                                      completionResult.shouldShow
+                                                    ) {
+                                                      // Show category completion feedback (not achievement since words were forgotten)
+                                                      setFeedback({
+                                                        type: "celebration",
+                                                        title:
+                                                          "Category Review Complete! 📚",
+                                                        message: `You've reviewed all ${completionResult.totalWords} words in ${selectedCategory === "all" ? "this word set" : selectedCategory}!\\n\\n✅ Remembered: ${completionResult.totalRemembered} words\\n❌ Need practice: ${completionResult.totalWords - completionResult.totalRemembered} words\\n\\n${completionResult.totalWords - completionResult.totalRemembered > 0 ? "Don't worry! Let's practice the tricky ones again! ���📚" : "Amazing work! 🎉"}`,
+                                                        points:
+                                                          completionResult.totalRemembered *
+                                                          10, // Fewer points since words were forgotten
+                                                        onContinue: () => {
+                                                          setFeedback(null);
+                                                          setCurrentWordIndex(
+                                                            0,
+                                                          );
+                                                        },
+                                                      });
+                                                    } else {
+                                                      // Restart with forgotten words for practice
+                                                      setCurrentWordIndex(0);
+                                                    }
+                                                  }
+                                                }}
+                                                className="flex-1 bg-gradient-to-r from-red-400 to-pink-500 hover:from-red-500 hover:to-pink-600 text-white font-bold border-0 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform active:scale-95 py-3 sm:py-4 px-3 sm:px-6 min-h-[56px] sm:min-h-[60px] relative overflow-hidden text-sm sm:text-base"
+                                                disabled={isLoadingProgress}
+                                              >
+                                                <div className="absolute inset-0 bg-white/20 rounded-xl opacity-0 hover:opacity-100 transition-opacity duration-300"></div>
+                                                <div className="relative z-10 flex items-center justify-center">
+                                                  <span className="text-xl sm:text-2xl mr-1 sm:mr-2 animate-wiggle">
+                                                    😔
+                                                  </span>
+                                                  <div className="text-center">
+                                                    <div className="font-bold text-base sm:text-lg">
+                                                      I Forgot
+                                                    </div>
+                                                    <div className="text-xs opacity-90 hidden sm:block">
+                                                      Need practice! 💪
+                                                    </div>
+                                                  </div>
+                                                </div>
+                                              </Button>
+
+                                              <Button
+                                                onClick={async () => {
+                                                  const currentWord =
+                                                    displayWords[
+                                                      currentWordIndex
+                                                    ];
+                                                  if (currentWord) {
+                                                    // Mark as remembered
+                                                    setRememberedWords(
+                                                      (prev) =>
+                                                        new Set([
+                                                          ...prev,
+                                                          currentWord.id,
+                                                        ]),
+                                                    );
+                                                    setForgottenWords(
+                                                      (prev) => {
+                                                        const newSet = new Set(
+                                                          prev,
+                                                        );
+                                                        newSet.delete(
+                                                          currentWord.id,
+                                                        );
+                                                        return newSet;
+                                                      },
+                                                    );
+
+                                                    // Record progress in database (this handles all achievements)
+                                                    await handleWordProgress(
+                                                      currentWord,
+                                                      "remembered",
+                                                    );
+                                                    // Show enhanced celebration effects and play success sound
+                                                    setCelebrationEffect(true);
+                                                    audioService.playSuccessSound();
+                                                    setShowCelebration(true);
+                                                    setTimeout(() => {
+                                                      setCelebrationEffect(
+                                                        false,
+                                                      );
+                                                      setShowCelebration(false);
+                                                    }, 2000);
+                                                  }
+                                                  // Auto-advance to next word
+                                                  if (
+                                                    currentWordIndex <
+                                                    displayWords.length - 1
+                                                  ) {
+                                                    setCurrentWordIndex(
+                                                      currentWordIndex + 1,
+                                                    );
+                                                  } else {
+                                                    // Check for category completion and show achievement
+                                                    const currentWord =
+                                                      displayWords[
+                                                        currentWordIndex
+                                                      ];
+                                                    const updatedRememberedWords =
+                                                      new Set([
+                                                        ...rememberedWords,
+                                                        currentWord.id,
+                                                      ]);
+                                                    const completionResult =
+                                                      checkCategoryCompletion(
+                                                        displayWords,
+                                                        updatedRememberedWords,
+                                                        forgottenWords,
+                                                        currentWord.id,
+                                                      );
+
+                                                    if (
+                                                      completionResult.shouldShow
+                                                    ) {
+                                                      // Show enhanced category completion achievement
+                                                      setFeedback({
+                                                        type: "celebration",
+                                                        title:
+                                                          completionResult.title,
+                                                        message: `${completionResult.message}\n\n✅ Remembered: ${completionResult.totalRemembered} words\n❌ Need practice: ${completionResult.totalWords - completionResult.totalRemembered} words\n\n🏆 Category Achievement Unlocked! 🎉`,
+                                                        points:
+                                                          completionResult.totalRemembered *
+                                                            20 +
+                                                          (completionResult.accuracy >=
+                                                          90
+                                                            ? 100
+                                                            : completionResult.accuracy >=
+                                                                75
+                                                              ? 75
+                                                              : completionResult.accuracy >=
+                                                                  50
+                                                                ? 50
+                                                                : 25),
+                                                        onContinue: () => {
+                                                          setFeedback(null);
+                                                          // Reset for new category or continue practicing
+                                                          const totalForgotten =
+                                                            completionResult.totalWords -
+                                                            completionResult.totalRemembered;
+                                                          if (
+                                                            totalForgotten > 0
+                                                          ) {
+                                                            // Restart with forgotten words for focused practice
+                                                            setCurrentWordIndex(
+                                                              0,
+                                                            );
+                                                          } else {
+                                                            // Perfect completion - reset for new round
+                                                            setCurrentWordIndex(
+                                                              0,
+                                                            );
+                                                            setRememberedWords(
+                                                              new Set(),
+                                                            );
+                                                            setForgottenWords(
+                                                              new Set(),
+                                                            );
+                                                          }
+                                                        },
+                                                      });
+                                                    }
+                                                  }
+                                                }}
+                                                className="flex-1 bg-gradient-to-r from-green-400 to-emerald-500 hover:from-green-500 hover:to-emerald-600 text-white font-bold border-0 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform active:scale-95 py-3 sm:py-4 px-3 sm:px-6 min-h-[56px] sm:min-h-[60px] relative overflow-hidden text-sm sm:text-base"
+                                                disabled={isLoadingProgress}
+                                              >
+                                                <div className="absolute inset-0 bg-white/20 rounded-xl opacity-0 hover:opacity-100 transition-opacity duration-300"></div>
+                                                <div className="relative z-10 flex items-center justify-center">
+                                                  <span className="text-xl sm:text-2xl mr-1 sm:mr-2 animate-bounce">
+                                                    😊
+                                                  </span>
+                                                  <div className="text-center">
+                                                    <div className="font-bold text-base sm:text-lg">
+                                                      I Remember!
+                                                    </div>
+                                                    <div className="text-xs opacity-90 hidden sm:block">
+                                                      Awesome! ⭐
+                                                    </div>
+                                                  </div>
+                                                </div>
+                                              </Button>
+                                            </div>
+
+                                            {/* Mobile-Optimized Learning Progress Indicator */}
+                                            <div className="text-center space-y-2">
+                                              <div className="flex justify-center gap-3 sm:gap-4 text-sm">
+                                                <div className="flex items-center gap-1 text-green-600 bg-green-50 px-2 py-1 rounded-lg">
+                                                  <span className="text-sm">
+                                                    ✅
+                                                  </span>
+                                                  <span className="font-bold text-sm">
+                                                    {rememberedWords.size}
+                                                  </span>
+                                                  <span className="text-xs opacity-75 hidden sm:inline">
+                                                    remembered
+                                                  </span>
+                                                </div>
+                                                <div className="flex items-center gap-1 text-red-600 bg-red-50 px-2 py-1 rounded-lg">
+                                                  <span className="text-sm">
+                                                    💪
+                                                  </span>
+                                                  <span className="font-bold text-sm">
+                                                    {forgottenWords.size}
+                                                  </span>
+                                                  <span className="text-xs opacity-75 hidden sm:inline">
+                                                    practice
+                                                  </span>
+                                                </div>
+                                              </div>
+
+                                              {/* Compact Navigation Controls */}
+                                              <div className="flex justify-center items-center gap-2 mt-3 max-w-xs sm:max-w-sm md:max-w-md mx-auto">
+                                                {/* Previous Button */}
+                                                <Button
+                                                  onClick={() => {
+                                                    if (currentWordIndex > 0) {
+                                                      setCurrentWordIndex(
+                                                        currentWordIndex - 1,
+                                                      );
+                                                      audioService.playClickSound();
+                                                      if (navigator.vibrate) {
+                                                        navigator.vibrate(25);
+                                                      }
+                                                    }
+                                                  }}
+                                                  disabled={
+                                                    currentWordIndex === 0
+                                                  }
+                                                  variant="ghost"
+                                                  size="sm"
+                                                  className="h-8 w-8 rounded-full p-0 disabled:opacity-30 hover:bg-slate-100"
+                                                >
+                                                  <span className="text-lg">
+                                                    ←
+                                                  </span>
+                                                </Button>
+
+                                                {/* Compact Progress */}
+                                                <div className="flex-1 flex items-center justify-center gap-2 text-xs text-slate-600">
+                                                  <span className="font-medium">
+                                                    {currentWordIndex + 1}/
+                                                    {displayWords.length}
+                                                  </span>
+                                                </div>
+
+                                                {/* Next Button */}
+                                                <Button
+                                                  onClick={() => {
+                                                    if (
+                                                      currentWordIndex <
+                                                      displayWords.length - 1
+                                                    ) {
+                                                      setCurrentWordIndex(
+                                                        currentWordIndex + 1,
+                                                      );
+                                                      audioService.playClickSound();
+                                                      if (navigator.vibrate) {
+                                                        navigator.vibrate(25);
+                                                      }
+                                                    } else {
+                                                      setCelebrationEffect(
+                                                        true,
+                                                      );
+                                                      setTimeout(() => {
+                                                        setCelebrationEffect(
+                                                          false,
+                                                        );
+                                                        if (
+                                                          window.confirm(
+                                                            "Great job! You've completed all words in this category. Return to library to choose another category?",
+                                                          )
+                                                        ) {
+                                                          handleSmartBackNavigation();
+                                                        }
+                                                      }, 2000);
+                                                    }
+                                                  }}
+                                                  disabled={
+                                                    currentWordIndex ===
+                                                    displayWords.length - 1
+                                                  }
+                                                  variant="ghost"
+                                                  size="sm"
+                                                  className="h-8 w-8 rounded-full p-0 disabled:opacity-30 hover:bg-slate-100"
+                                                >
+                                                  <span className="text-lg">
+                                                    →
+                                                  </span>
+                                                </Button>
+                                              </div>
+                                            </div>
+                                          </div>
+
+                                          {/* Minimal Status Indicator */}
+                                          <div className="text-center mt-2">
+                                            {(() => {
+                                              const currentWord =
+                                                displayWords[currentWordIndex];
+                                              if (!currentWord) return null;
+
+                                              if (
+                                                rememberedWords.has(
+                                                  currentWord.id,
+                                                )
+                                              ) {
+                                                return (
+                                                  <div className="text-xs text-green-600 font-medium">
+                                                    ✅ Learned
+                                                  </div>
+                                                );
+                                              } else if (
+                                                forgottenWords.has(
+                                                  currentWord.id,
+                                                )
+                                              ) {
+                                                return (
+                                                  <div className="text-xs text-orange-600 font-medium">
+                                                    🤔 Review
+                                                  </div>
+                                                );
+                                              } else {
+                                                return (
+                                                  <div className="text-xs text-blue-600 font-medium">
+                                                    🆕 New
+                                                  </div>
+                                                );
+                                              }
+                                            })()}
+                                          </div>
+                                        </>
+                                      )}
+                                    </>
+                                  );
+                                })()}
+                              </>
+                            )}
+                          </>
+                        )}
+                      </div>
+                    </TabsContent>
+
+                    <TabsContent value="quiz">
+                      {!showQuiz && !gameMode && !showMatchingGame ? (
+                        <div className="space-y-8">
+                          {/* Quiz Header - Kid-Friendly & Mobile Optimized */}
+                          <div className="text-center">
+                            <div className="flex justify-center mb-4">
+                              <div className="bg-gradient-to-r from-educational-blue via-educational-purple to-educational-pink p-3 md:p-4 rounded-full shadow-lg animate-gentle-bounce">
+                                <Brain className="w-8 h-8 md:w-12 md:h-12 text-white" />
+                              </div>
+                            </div>
+                            <h2 className="text-xl md:text-3xl font-bold text-gray-800 mb-2 md:mb-4">
+                              🧠 Quiz Time!
+                            </h2>
+                            <p className="text-sm md:text-lg text-gray-600 mb-4 md:mb-6 px-4">
+                              Test your vocabulary with super fun quizzes! 🌟
+                            </p>
+                          </div>
+
+                          {/* Kid-Friendly Quiz Cards - Mobile Optimized */}
+                          <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 md:gap-4 max-w-6xl mx-auto px-2">
+                            {/* Matching Game */}
+                            <Card className="hidden cursor-pointer hover:shadow-xl transition-all duration-300 hover:scale-105 border-2 border-educational-purple/30">
+                              <CardContent className="p-6 text-center">
+                                <div className="text-6xl mb-4">🧩</div>
+                                <h3 className="text-xl font-bold text-educational-purple mb-2">
+                                  Matching Game
+                                </h3>
+                                <p className="text-gray-600 mb-4">
+                                  Match words with their meanings in this brain
+                                  game!
+                                </p>
+                                <div className="flex justify-center gap-2 mb-4">
+                                  <span className="bg-educational-purple/20 text-educational-purple px-2 py-1 rounded-full text-xs">
+                                    Memory Challenge
+                                  </span>
+                                  <span className="bg-educational-purple/20 text-educational-purple px-2 py-1 rounded-full text-xs">
+                                    Timed
+                                  </span>
+                                </div>
+                                <Button
+                                  onClick={() => setShowMatchingGame(true)}
+                                  className="w-full bg-educational-purple text-white hover:bg-educational-purple/90"
+                                >
+                                  <Shuffle className="w-4 h-4 mr-2" />
+                                  Start Matching!
+                                </Button>
+                              </CardContent>
+                            </Card>
+                            {/* Easy Quiz */}
+                            <Card className="hidden cursor-pointer hover:shadow-lg transition-all duration-300 hover:scale-105 border-2 border-educational-green/30 animate-kid-float-delayed">
+                              <CardContent className="p-6 text-center">
+                                <div className="text-6xl mb-4">🌱</div>
+                                <h3 className="text-xl font-bold text-educational-green mb-2">
+                                  Easy Quiz
+                                </h3>
+                                <p className="text-gray-600 mb-4">
+                                  Perfect for beginners! Simple words and
+                                  definitions.
+                                </p>
+                                <div className="flex justify-center gap-2 mb-4">
+                                  <span className="bg-educational-green/20 text-educational-green px-2 py-1 rounded-full text-xs">
+                                    5 Questions
+                                  </span>
+                                  <span className="bg-educational-green/20 text-educational-green px-2 py-1 rounded-full text-xs">
+                                    30s Each
+                                  </span>
+                                </div>
+                                <Button
+                                  onClick={() => {
+                                    setSelectedQuizType("quick");
+                                    setShowQuiz(true);
+                                  }}
+                                  className="w-full bg-educational-green text-white hover:bg-educational-green/90"
+                                >
+                                  <Play className="w-4 h-4 mr-2" />
+                                  Start Easy Quiz
+                                </Button>
+                              </CardContent>
+                            </Card>
+
+                            {/* Standard Quiz */}
+                            <Card className="hidden cursor-pointer hover:shadow-lg transition-all duration-300 hover:scale-105 border-2 border-educational-blue/30 animate-kid-float">
+                              <CardContent className="p-3 md:p-4 text-center">
+                                <div className="text-3xl md:text-5xl mb-2 md:mb-3 animate-gentle-bounce">
+                                  🎯
+                                </div>
+                                <h3 className="text-sm md:text-lg font-bold text-educational-blue mb-1 md:mb-2">
+                                  Challenge Me!
+                                </h3>
+                                <p className="text-xs md:text-sm text-gray-600 mb-2 md:mb-3 hidden md:block">
+                                  Ready for more? Let's go! 💪
+                                </p>
+                                <div className="flex justify-center gap-1 mb-2 md:mb-3">
+                                  <span className="bg-educational-blue/20 text-educational-blue px-1.5 py-0.5 rounded-full text-xs">
+                                    🎯 Cool!
+                                  </span>
+                                </div>
+                                <Button
+                                  onClick={() => {
+                                    setSelectedQuizType("standard");
+                                    setShowQuiz(true);
+                                  }}
+                                  className="w-full bg-educational-blue text-white hover:bg-educational-blue/90 py-1.5 md:py-2 text-xs md:text-sm rounded-xl animate-wiggle"
+                                  size="sm"
+                                >
+                                  <Play className="w-3 h-3 md:w-4 md:h-4 mr-1" />
+                                  Bring It On! ⚡
+                                </Button>
+                              </CardContent>
+                            </Card>
+
+                            {/* Challenge Quiz */}
+                            <Card className="hidden cursor-pointer hover:shadow-lg transition-all duration-300 hover:scale-105 border-2 border-educational-purple/30 animate-kid-float-delayed">
+                              <CardContent className="p-6 text-center">
+                                <div className="text-6xl mb-4">🏆</div>
+                                <h3 className="text-xl font-bold text-educational-purple mb-2">
+                                  Challenge Quiz
+                                </h3>
+                                <p className="text-gray-600 mb-4">
+                                  For advanced learners! Tricky words and
+                                  concepts.
+                                </p>
+                                <div className="flex justify-center gap-2 mb-4">
+                                  <span className="bg-educational-purple/20 text-educational-purple px-2 py-1 rounded-full text-xs">
+                                    15 Questions
+                                  </span>
+                                  <span className="bg-educational-purple/20 text-educational-purple px-2 py-1 rounded-full text-xs">
+                                    25s Each
+                                  </span>
+                                </div>
+                                <Button
+                                  onClick={() => {
+                                    setSelectedQuizType("challenge");
+                                    setShowQuiz(true);
+                                  }}
+                                  className="w-full bg-educational-purple text-white hover:bg-educational-purple/90"
+                                >
+                                  <Play className="w-4 h-4 mr-2" />
+                                  Start Challenge Quiz
+                                </Button>
+                              </CardContent>
+                            </Card>
+
+                            {/* Picture Quiz - Kid-Friendly */}
+                            <Card className="cursor-pointer hover:shadow-lg active:shadow-xl transition-all duration-200 active:scale-95 border-2 border-educational-orange/30">
+                              <CardContent className="p-3 md:p-4 text-center">
+                                <div className="text-3xl md:text-5xl mb-2 md:mb-3 animate-bounce">
+                                  🖼️
+                                </div>
+                                <h3 className="text-sm md:text-lg font-bold text-educational-orange mb-1 md:mb-2">
+                                  Picture Fun!
+                                </h3>
+                                <p className="text-xs md:text-sm text-gray-600 mb-2 md:mb-3 hidden md:block">
+                                  Look at pictures and guess the words! 📸
+                                </p>
+                                <div className="flex justify-center gap-1 mb-2 md:mb-3">
+                                  <span className="bg-educational-orange/20 text-educational-orange px-1.5 py-0.5 rounded-full text-xs">
+                                    🎯 Fun!
+                                  </span>
+                                </div>
+                                <Button
+                                  onClick={() => {
+                                    setSelectedQuizType("picture");
+                                    setShowQuiz(true);
+                                  }}
+                                  className="w-full bg-educational-orange text-white hover:bg-educational-orange/90 active:bg-educational-orange/80 py-2 text-xs sm:text-sm rounded-xl min-h-[44px]"
+                                  size="sm"
+                                >
+                                  <Play className="w-3 h-3 md:w-4 md:h-4 mr-1" />
+                                  Let's Play! 🚀
+                                </Button>
+                              </CardContent>
+                            </Card>
+
+                            {/* Spelling Quiz */}
+                            <Card className="hidden cursor-pointer hover:shadow-xl transition-all duration-300 hover:scale-105 border-2 border-educational-pink/30">
+                              <CardContent className="p-6 text-center">
+                                <div className="text-6xl mb-4">✏️</div>
+                                <h3 className="text-xl font-bold text-educational-pink mb-2">
+                                  Spelling Quiz
+                                </h3>
+                                <p className="text-gray-600 mb-4">
+                                  Test your spelling skills with audio
+                                  challenges.
+                                </p>
+                                <div className="flex justify-center gap-2 mb-4">
+                                  <span className="bg-educational-pink/20 text-educational-pink px-2 py-1 rounded-full text-xs">
+                                    10 Questions
+                                  </span>
+                                  <span className="bg-educational-pink/20 text-educational-pink px-2 py-1 rounded-full text-xs">
+                                    45s Each
+                                  </span>
+                                </div>
+                                <Button
+                                  onClick={() => {
+                                    setSelectedQuizType("spelling");
+                                    setShowQuiz(true);
+                                  }}
+                                  className="w-full bg-educational-pink text-white hover:bg-educational-pink/90"
+                                >
+                                  <Play className="w-4 h-4 mr-2" />
+                                  Start Spelling Quiz
+                                </Button>
+                              </CardContent>
+                            </Card>
+
+                            {/* Speed Quiz */}
+                            <Card className="hidden cursor-pointer hover:shadow-xl transition-all duration-300 hover:scale-105 border-2 border-educational-yellow/30">
+                              <CardContent className="p-6 text-center">
+                                <div className="text-6xl mb-4">⚡</div>
+                                <h3 className="text-xl font-bold text-educational-yellow mb-2">
+                                  Speed Quiz
+                                </h3>
+                                <p className="text-gray-600 mb-4">
+                                  Quick-fire questions! How fast can you answer?
+                                </p>
+                                <div className="flex justify-center gap-2 mb-4">
+                                  <span className="bg-educational-yellow/20 text-educational-yellow px-2 py-1 rounded-full text-xs">
+                                    20 Questions
+                                  </span>
+                                  <span className="bg-educational-yellow/20 text-educational-yellow px-2 py-1 rounded-full text-xs">
+                                    15s Each
+                                  </span>
+                                </div>
+                                <Button
+                                  onClick={() => {
+                                    setSelectedQuizType("speed");
+                                    setShowQuiz(true);
+                                  }}
+                                  className="w-full bg-educational-yellow text-white hover:bg-educational-yellow/90"
+                                >
+                                  <Play className="w-4 h-4 mr-2" />
+                                  Start Speed Quiz
+                                </Button>
+                              </CardContent>
+                            </Card>
+
+                            {/* Vowel Rescue - Easy */}
+                            <Card className="cursor-pointer hover:shadow-lg transition-all duration-300 hover:scale-105 border-2 border-educational-green/30 animate-kid-float">
+                              <CardContent className="p-3 md:p-4 text-center">
+                                <div className="text-3xl md:text-5xl mb-2 md:mb-3 animate-bounce">
+                                  🎯
+                                </div>
+                                <h3 className="text-sm md:text-lg font-bold text-educational-green mb-1 md:mb-2">
+                                  Vowel Rescue!
+                                </h3>
+                                <p className="text-xs md:text-sm text-gray-600 mb-2 md:mb-3 hidden md:block">
+                                  Help rescue missing vowels! 🆘
+                                </p>
+                                <div className="flex justify-center gap-1 mb-2 md:mb-3">
+                                  <span className="bg-educational-green/20 text-educational-green px-1.5 py-0.5 rounded-full text-xs">
+                                    🎯 Easy!
+                                  </span>
+                                </div>
+                                <Button
+                                  onClick={() => {
+                                    setSelectedQuizType("vowel-easy");
+                                    setShowQuiz(true);
+                                  }}
+                                  className="w-full bg-educational-green text-white hover:bg-educational-green/90 py-1.5 md:py-2 text-xs md:text-sm rounded-xl animate-wiggle"
+                                  size="sm"
+                                >
+                                  <Play className="w-3 h-3 md:w-4 md:h-4 mr-1" />
+                                  Rescue Vowels! 🚀
+                                </Button>
+                              </CardContent>
+                            </Card>
+
+                            {/* Vowel Challenge - Medium */}
+                            <Card className="cursor-pointer hover:shadow-lg transition-all duration-300 hover:scale-105 border-2 border-educational-purple/30 animate-kid-float-delayed">
+                              <CardContent className="p-3 md:p-4 text-center">
+                                <div className="text-3xl md:text-5xl mb-2 md:mb-3 animate-sparkle">
+                                  🎯
+                                </div>
+                                <h3 className="text-sm md:text-lg font-bold text-educational-purple mb-1 md:mb-2">
+                                  Vowel Challenge!
+                                </h3>
+                                <p className="text-xs md:text-sm text-gray-600 mb-2 md:mb-3 hidden md:block">
+                                  Multiple missing vowels! 💪
+                                </p>
+                                <div className="flex justify-center gap-1 mb-2 md:mb-3">
+                                  <span className="bg-educational-purple/20 text-educational-purple px-1.5 py-0.5 rounded-full text-xs">
+                                    🎯 Medium!
+                                  </span>
+                                </div>
+                                <Button
+                                  onClick={() => {
+                                    setSelectedQuizType("vowel-challenge");
+                                    setShowQuiz(true);
+                                  }}
+                                  className="w-full bg-educational-purple text-white hover:bg-educational-purple/90 py-1.5 md:py-2 text-xs md:text-sm rounded-xl"
+                                  size="sm"
+                                >
+                                  <Play className="w-3 h-3 md:w-4 md:h-4 mr-1" />
+                                  Take Challenge! ⚡
+                                </Button>
+                              </CardContent>
+                            </Card>
+
+                            {/* Vowel Rush - Timed */}
+                            <Card className="cursor-pointer hover:shadow-lg transition-all duration-300 hover:scale-105 border-2 border-educational-orange/30 animate-gentle-bounce">
+                              <CardContent className="p-3 md:p-4 text-center">
+                                <div className="text-3xl md:text-5xl mb-2 md:mb-3 animate-pulse">
+                                  🎯
+                                </div>
+                                <h3 className="text-sm md:text-lg font-bold text-educational-orange mb-1 md:mb-2">
+                                  Vowel Rush!
+                                </h3>
+                                <p className="text-xs md:text-sm text-gray-600 mb-2 md:mb-3 hidden md:block">
+                                  60 seconds speed challenge! ⏰
+                                </p>
+                                <div className="flex justify-center gap-1 mb-2 md:mb-3">
+                                  <span className="bg-educational-orange/20 text-educational-orange px-1.5 py-0.5 rounded-full text-xs">
+                                    🎯 Timed!
+                                  </span>
+                                </div>
+                                <Button
+                                  onClick={() => {
+                                    setSelectedQuizType("vowel-timed");
+                                    setShowQuiz(true);
+                                  }}
+                                  className="w-full bg-educational-orange text-white hover:bg-educational-orange/90 py-1.5 md:py-2 text-xs md:text-sm rounded-xl animate-bounce"
+                                  size="sm"
+                                >
+                                  <Play className="w-3 h-3 md:w-4 md:h-4 mr-1" />
+                                  Rush Mode! 🔥
+                                </Button>
+                              </CardContent>
+                            </Card>
+                          </div>
+
+                          {/* Recent Scores */}
+                          <div className="max-w-2xl mx-auto">
+                            <Card className="bg-gradient-to-r from-educational-blue/10 to-educational-purple/10 hidden">
+                              <CardHeader>
+                                <CardTitle className="flex items-center gap-2">
+                                  <Trophy className="w-5 h-5 text-educational-orange" />
+                                  Your Recent Quiz Scores
+                                </CardTitle>
+                              </CardHeader>
+                              <CardContent>
+                                <div className="space-y-3">
+                                  <div className="flex justify-between items-center p-3 bg-white rounded-lg">
+                                    <div className="flex items-center gap-3">
+                                      <span className="text-2xl">🎯</span>
+                                      <div>
+                                        <div className="font-semibold">
+                                          Standard Quiz
+                                        </div>
+                                        <div className="text-sm text-gray-600">
+                                          Yesterday
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <div className="text-right">
+                                      <div className="font-bold text-educational-blue">
+                                        8/10
+                                      </div>
+                                      <div className="text-sm text-gray-600">
+                                        80%
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div className="flex justify-between items-center p-3 bg-white rounded-lg">
+                                    <div className="flex items-center gap-3">
+                                      <span className="text-2xl">🌱</span>
+                                      <div>
+                                        <div className="font-semibold">
+                                          Easy Quiz
+                                        </div>
+                                        <div className="text-sm text-gray-600">
+                                          2 days ago
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <div className="text-right">
+                                      <div className="font-bold text-educational-green">
+                                        5/5
+                                      </div>
+                                      <div className="text-sm text-gray-600">
+                                        100%
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div className="flex justify-between items-center p-3 bg-white rounded-lg">
+                                    <div className="flex items-center gap-3">
+                                      <span className="text-2xl">🏆</span>
+                                      <div>
+                                        <div className="font-semibold">
+                                          Challenge Quiz
+                                        </div>
+                                        <div className="text-sm text-gray-600">
+                                          3 days ago
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <div className="text-right">
+                                      <div className="font-bold text-educational-purple">
+                                        12/15
+                                      </div>
+                                      <div className="text-sm text-gray-600">
+                                        80%
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </CardContent>
+                            </Card>
+                          </div>
+                        </div>
+                      ) : gameMode ? (
+                        <GameLikeLearning
+                          words={(() => {
+                            const categoryWords =
+                              getWordsByCategory(selectedCategory);
+                            return categoryWords.slice(0, 10);
+                          })()}
+                          onComplete={handleGameComplete}
+                          onBack={() => setGameMode(false)}
+                          userProfile={currentProfile}
+                        />
+                      ) : showMatchingGame ? (
+                        <div className="space-y-6">
+                          <div className="flex items-center justify-between">
+                            <h2 className="text-2xl font-bold text-gray-800">
+                              🧩 Word Matching Game
+                            </h2>
+                          </div>
+                          <WordMatchingGame
+                            pairs={generateMatchingPairs(
+                              6,
+                              undefined,
+                              selectedCategory,
+                            )}
+                            onComplete={(score, timeSpent) => {
+                              setShowMatchingGame(false);
+                              setFeedback({
+                                type: "celebration",
+                                title: "Matching Game Complete! 🎯✨",
+                                message: `You matched ${score} pairs in ${timeSpent} seconds!`,
+                                points: score * 15,
+                                onContinue: () => setFeedback(null),
+                              });
+                            }}
+                          />
+                        </div>
+                      ) : selectedQuizType?.startsWith("vowel-") ? (
+                        <VowelRescue
+                          questions={(() => {
+                            switch (selectedQuizType) {
+                              case "vowel-easy":
+                                return getSystematicEasyVowelQuestions(
+                                  10,
+                                  selectedCategory,
+                                  currentProfile,
+                                );
+                              case "vowel-challenge":
+                                return getSystematicMediumVowelQuestions(
+                                  8,
+                                  selectedCategory,
+                                  currentProfile,
+                                );
+                              case "vowel-timed":
+                                return getSystematicTimedVowelQuestions(
+                                  selectedCategory,
+                                  currentProfile,
+                                );
+                              default:
+                                return getSystematicEasyVowelQuestions(
+                                  10,
+                                  selectedCategory,
+                                  currentProfile,
+                                );
+                            }
+                          })()}
+                          onComplete={handleQuizComplete}
+                          onExit={handleQuizExit}
+                          gameMode={
+                            selectedQuizType === "vowel-easy"
+                              ? "easy"
+                              : selectedQuizType === "vowel-challenge"
+                                ? "challenge"
+                                : selectedQuizType === "vowel-timed"
+                                  ? "timed"
+                                  : "easy"
+                          }
+                        />
+                      ) : (
+                        <QuizGame
+                          questions={(() => {
+                            const generateQuizQuestionsByType = (
+                              type: string,
+                            ) => {
+                              switch (type) {
+                                case "quick":
+                                  return generateQuizQuestions(
+                                    5,
+                                    "easy",
+                                    selectedCategory,
+                                    "definition",
+                                  );
+
+                                case "standard":
+                                  return generateQuizQuestions(
+                                    10,
+                                    undefined,
+                                    selectedCategory,
+                                    "definition",
+                                  );
+
+                                case "challenge":
+                                  return generateQuizQuestions(
+                                    15,
+                                    "hard",
+                                    selectedCategory,
+                                    "definition",
+                                  );
+
+                                case "picture":
+                                  return generateQuizQuestions(
+                                    10,
+                                    undefined,
+                                    selectedCategory,
+                                    "picture",
+                                  );
+
+                                case "spelling":
+                                  return generateQuizQuestions(
+                                    10,
+                                    undefined,
+                                    selectedCategory,
+                                    "spelling",
+                                  );
+
+                                case "speed":
+                                  return generateQuizQuestions(
+                                    20,
+                                    undefined,
+                                    selectedCategory,
+                                    "definition",
+                                  );
+
+                                default:
+                                  return generateQuizQuestions(
+                                    10,
+                                    undefined,
+                                    selectedCategory,
+                                    "definition",
+                                  );
+                              }
+                            };
+
+                            return generateQuizQuestionsByType(
+                              selectedQuizType,
+                            );
+                          })()}
+                          onComplete={handleQuizComplete}
+                          onExit={handleQuizExit}
+                        />
+                      )}
+                    </TabsContent>
+
+                    <TabsContent value="adventure" className="hidden">
+                      <AdventureDashboard
+                        words={wordsDatabase.map((word) => ({
+                          id: word.id,
+                          word: word.word,
+                          definition: word.definition,
+                          emoji: word.emoji,
+                          imageUrl: word.imageUrl,
+                          wrongDefinitions: [
+                            "A type of ancient tool used by early humans",
+                            "A scientific term for weather patterns",
+                            "A mathematical concept related to geometry",
+                            "A historical event from the medieval period",
+                          ],
+                          hint: `This word starts with "${word.word.charAt(0)}" and relates to ${word.category}`,
+                        }))}
+                      />
+                    </TabsContent>
+
+                    <TabsContent value="progress">
+                      <AchievementSystem
+                        onUnlock={(achievement) => {
                           setFeedback({
                             type: "celebration",
-                            title: "Matching Game Complete! 🎯✨",
-                            message: `You matched ${score} pairs in ${timeSpent} seconds!`,
-                            points: score * 15,
+                            title: "Achievement Unlocked! 🏆",
+                            message: `You earned: ${achievement.name}`,
                             onContinue: () => setFeedback(null),
                           });
                         }}
                       />
-                    </div>
-                  ) : selectedQuizType?.startsWith("vowel-") ? (
-                    <VowelRescue
-                      questions={(() => {
-                        switch (selectedQuizType) {
-                          case "vowel-easy":
-                            return getSystematicEasyVowelQuestions(
-                              10,
-                              selectedCategory,
-                              currentProfile,
-                            );
-                          case "vowel-challenge":
-                            return getSystematicMediumVowelQuestions(
-                              8,
-                              selectedCategory,
-                              currentProfile,
-                            );
-                          case "vowel-timed":
-                            return getSystematicTimedVowelQuestions(
-                              selectedCategory,
-                              currentProfile,
-                            );
-                          default:
-                            return getSystematicEasyVowelQuestions(
-                              10,
-                              selectedCategory,
-                              currentProfile,
-                            );
-                        }
-                      })()}
-                      onComplete={handleQuizComplete}
-                      onExit={handleQuizExit}
-                      gameMode={
-                        selectedQuizType === "vowel-easy"
-                          ? "easy"
-                          : selectedQuizType === "vowel-challenge"
-                            ? "challenge"
-                            : selectedQuizType === "vowel-timed"
-                              ? "timed"
-                              : "easy"
-                      }
-                    />
-                  ) : (
-                    <QuizGame
-                      questions={(() => {
-                        const generateQuizQuestionsByType = (type: string) => {
-                          switch (type) {
-                            case "quick":
-                              return generateQuizQuestions(
-                                5,
-                                "easy",
-                                selectedCategory,
-                                "definition",
-                              );
+                    </TabsContent>
+                  </Tabs>
+                </div>
+              </div>
+            )}
+          </main>
 
-                            case "standard":
-                              return generateQuizQuestions(
-                                10,
-                                undefined,
-                                selectedCategory,
-                                "definition",
-                              );
+          {/* Word Practice Game */}
 
-                            case "challenge":
-                              return generateQuizQuestions(
-                                15,
-                                "hard",
-                                selectedCategory,
-                                "definition",
-                              );
+          {/* Enhanced Components */}
+          {showCelebration && <CelebrationEffect trigger={showCelebration} />}
+          {backgroundAnimationsEnabled && <FloatingBubbles />}
 
-                            case "picture":
-                              return generateQuizQuestions(
-                                10,
-                                undefined,
-                                selectedCategory,
-                                "picture",
-                              );
+          {/* Settings Panel */}
+          <CompactMobileSettingsPanel
+            isOpen={showSettings}
+            onClose={() => setShowSettings(false)}
+            currentProgress={currentProgress}
+            onGoalUpdate={(goals) => {
+              setLearningGoals(goals);
+              console.log("Learning goals updated:", goals);
+            }}
+          />
 
-                            case "spelling":
-                              return generateQuizQuestions(
-                                10,
-                                undefined,
-                                selectedCategory,
-                                "spelling",
-                              );
+          {/* Word Creator */}
+          {showWordCreator && (
+            <WordCreator
+              onWordCreated={handleWordCreated}
+              onClose={() => setShowWordCreator(false)}
+            />
+          )}
 
-                            case "speed":
-                              return generateQuizQuestions(
-                                20,
-                                undefined,
-                                selectedCategory,
-                                "definition",
-                              );
+          {/* Feedback System */}
+          {feedback && (
+            <EncouragingFeedback
+              feedback={feedback}
+              onClose={() => setFeedback(null)}
+            />
+          )}
 
-                            default:
-                              return generateQuizQuestions(
-                                10,
-                                undefined,
-                                selectedCategory,
-                                "definition",
-                              );
-                          }
-                        };
+          {/* Mobile Bottom Navigation */}
+          <MobileBottomNav
+            activeTab={activeTab}
+            onTabChange={(tab) => {
+              setActiveTab(tab);
+              setShowMobileMoreMenu(false);
+            }}
+            onSettingsClick={() => {
+              setShowSettings(true);
+              setShowMobileMoreMenu(false);
+            }}
+            onParentClick={() => {
+              setUserRole("parent");
+              setShowMobileMoreMenu(false);
+            }}
+            onAdminClick={() => {
+              navigate("/admin");
+              setShowMobileMoreMenu(false);
+            }}
+            onSignOut={() => {
+              handleSignOut();
+              setShowMobileMoreMenu(false);
+            }}
+            showMoreMenu={showMobileMoreMenu}
+            onMoreToggle={() => setShowMobileMoreMenu(!showMobileMoreMenu)}
+            achievementCount={
+              learningStats.badges.filter((b) => b.earned).length
+            }
+          />
 
-                        return generateQuizQuestionsByType(selectedQuizType);
-                      })()}
-                      onComplete={handleQuizComplete}
-                      onExit={handleQuizExit}
-                    />
-                  )}
-                </TabsContent>
-
-                <TabsContent value="adventure" className="hidden">
-                  <AdventureDashboard
-                    words={wordsDatabase.map((word) => ({
-                      id: word.id,
-                      word: word.word,
-                      definition: word.definition,
-                      emoji: word.emoji,
-                      imageUrl: word.imageUrl,
-                      wrongDefinitions: [
-                        "A type of ancient tool used by early humans",
-                        "A scientific term for weather patterns",
-                        "A mathematical concept related to geometry",
-                        "A historical event from the medieval period",
-                      ],
-                      hint: `This word starts with "${word.word.charAt(0)}" and relates to ${word.category}`,
-                    }))}
-                  />
-                </TabsContent>
-
-                <TabsContent value="progress">
-                  <AchievementSystem
-                    onUnlock={(achievement) => {
-                      setFeedback({
-                        type: "celebration",
-                        title: "Achievement Unlocked! 🏆",
-                        message: `You earned: ${achievement.name}`,
-                        onContinue: () => setFeedback(null),
-                      });
-                    }}
-                  />
-                </TabsContent>
-              </Tabs>
+          {/* Mobile-Optimized Floating Helper */}
+          <div className="fixed bottom-24 sm:bottom-20 lg:bottom-6 right-3 sm:right-4 md:right-6 z-40">
+            <div
+              className="bg-gradient-to-r from-educational-purple to-educational-pink p-3 md:p-4 rounded-full shadow-2xl cursor-pointer transition-all duration-300 min-w-[48px] min-h-[48px] flex items-center justify-center active:scale-95"
+              onClick={() =>
+                setFeedback({
+                  type: "encouragement",
+                  title: "Need Help? 🤗",
+                  message:
+                    "You're doing amazing! Keep learning and exploring new words!",
+                  onContinue: () => setFeedback(null),
+                })
+              }
+            >
+              <Heart className="w-5 md:w-6 h-5 md:h-6 text-white fill-current animate-pulse" />
             </div>
           </div>
-        )}
-      </main>
 
-      {/* Word Practice Game */}
-
-      {/* Enhanced Components */}
-      {showCelebration && <CelebrationEffect trigger={showCelebration} />}
-      {backgroundAnimationsEnabled && <FloatingBubbles />}
-
-      {/* Settings Panel */}
-      <CompactMobileSettingsPanel
-        isOpen={showSettings}
-        onClose={() => setShowSettings(false)}
-      />
-
-      {/* Word Creator */}
-      {showWordCreator && (
-        <WordCreator
-          onWordCreated={handleWordCreated}
-          onClose={() => setShowWordCreator(false)}
-        />
-      )}
-
-      {/* Feedback System */}
-      {feedback && (
-        <EncouragingFeedback
-          feedback={feedback}
-          onClose={() => setFeedback(null)}
-        />
-      )}
-
-      {/* Mobile Bottom Navigation */}
-      <MobileBottomNav
-        activeTab={activeTab}
-        onTabChange={(tab) => {
-          setActiveTab(tab);
-          setShowMobileMoreMenu(false);
-        }}
-        onSettingsClick={() => {
-          setShowSettings(true);
-          setShowMobileMoreMenu(false);
-        }}
-        onParentClick={() => {
-          setUserRole("parent");
-          setShowMobileMoreMenu(false);
-        }}
-        onAdminClick={() => {
-          navigate("/admin");
-          setShowMobileMoreMenu(false);
-        }}
-        onSignOut={() => {
-          handleSignOut();
-          setShowMobileMoreMenu(false);
-        }}
-        showMoreMenu={showMobileMoreMenu}
-        onMoreToggle={() => setShowMobileMoreMenu(!showMobileMoreMenu)}
-        achievementCount={learningStats.badges.filter((b) => b.earned).length}
-      />
-
-      {/* Mobile-Optimized Floating Helper */}
-      <div className="fixed bottom-24 sm:bottom-20 lg:bottom-6 right-3 sm:right-4 md:right-6 z-40">
-        <div
-          className="bg-gradient-to-r from-educational-purple to-educational-pink p-3 md:p-4 rounded-full shadow-2xl cursor-pointer transition-all duration-300 min-w-[48px] min-h-[48px] flex items-center justify-center active:scale-95"
-          onClick={() =>
-            setFeedback({
-              type: "encouragement",
-              title: "Need Help? 🤗",
-              message:
-                "You're doing amazing! Keep learning and exploring new words!",
-              onContinue: () => setFeedback(null),
-            })
-          }
-        >
-          <Heart className="w-5 md:w-6 h-5 md:h-6 text-white fill-current animate-pulse" />
-        </div>
-      </div>
-
-      {/* Enhanced Achievement Popup */}
-      {achievementPopup.length > 0 && (
-        <EnhancedAchievementPopup
-          achievements={achievementPopup}
-          onClose={() => setAchievementPopup([])}
-          onAchievementClaim={(achievement) => {
-            console.log("Achievement claimed:", achievement);
-            // Could add additional reward logic here like updating user points
-          }}
-          autoCloseDelay={6000} // Auto-close after 6 seconds
-        />
+          {/* Enhanced Achievement Popup */}
+          {achievementPopup.length > 0 && (
+            <EnhancedAchievementPopup
+              achievements={achievementPopup}
+              onClose={() => setAchievementPopup([])}
+              onAchievementClaim={(achievement) => {
+                console.log("Achievement claimed:", achievement);
+                // Could add additional reward logic here like updating user points
+              }}
+              autoCloseDelay={6000} // Auto-close after 6 seconds
+            />
+          )}
+        </>
       )}
     </div>
   );

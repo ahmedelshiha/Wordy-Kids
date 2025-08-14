@@ -33,6 +33,8 @@ interface LearningStats {
   favoriteCategory: string;
   totalPoints: number;
   level: number;
+  dailyGoalProgress?: number;
+  dailyGoalTarget?: number;
   badges: Array<{
     id: string;
     name: string;
@@ -64,6 +66,14 @@ interface LearningDashboardProps {
   // Systematic word generation props
   dashboardSession?: any; // DashboardWordSession
   onGenerateNewSession?: () => void;
+  // Learning goals integration
+  currentProgress?: {
+    wordsLearned: number;
+    wordsRemembered: number;
+    sessionCount: number;
+    accuracy: number;
+  };
+  learningGoals?: any[];
 }
 
 export const LearningDashboard: React.FC<LearningDashboardProps> = ({
@@ -83,6 +93,13 @@ export const LearningDashboard: React.FC<LearningDashboardProps> = ({
   onSessionProgress,
   dashboardSession,
   onGenerateNewSession,
+  currentProgress = {
+    wordsLearned: 0,
+    wordsRemembered: 0,
+    sessionCount: 0,
+    accuracy: 0,
+  },
+  learningGoals = [],
 }) => {
   const completionPercentage = Math.round(
     (stats.wordsLearned / stats.totalWords) * 100,
@@ -159,8 +176,8 @@ export const LearningDashboard: React.FC<LearningDashboardProps> = ({
             onPracticeForgotten || (() => console.log("Practice forgotten"))
           }
           dailyGoal={{
-            target: stats.weeklyGoal, // Using weekly goal as daily for demo
-            completed: stats.weeklyProgress,
+            target: stats.dailyGoalTarget || stats.weeklyGoal, // Use daily goal if available
+            completed: stats.dailyGoalProgress || stats.weeklyProgress,
             streak: stats.currentStreak,
           }}
           currentLevel={stats.level}

@@ -20,7 +20,10 @@ import {
   Zap,
   Crown,
 } from "lucide-react";
-import { playSoundIfEnabled } from "@/lib/soundEffects";
+import {
+  playSoundIfEnabled,
+  playUIInteractionSoundIfEnabled,
+} from "@/lib/soundEffects";
 import { audioService } from "@/lib/audioService";
 import { enhancedAudioService } from "@/lib/enhancedAudioService";
 import { adventureService } from "@/lib/adventureService";
@@ -75,6 +78,11 @@ export const WordCard: React.FC<WordCardProps> = ({
     null,
   );
   const [isGesturing, setIsGesturing] = useState(false);
+  const [swipeDirection, setSwipeDirection] = useState<string | null>(null);
+  const [touchPosition, setTouchPosition] = useState<{
+    x: number;
+    y: number;
+  } | null>(null);
 
   // Voice settings integration
   const voiceSettings = useVoiceSettings();
@@ -145,7 +153,7 @@ export const WordCard: React.FC<WordCardProps> = ({
         navigator.vibrate([100, 50, 100]);
       }
     } else {
-      playSoundIfEnabled.click();
+      playUIInteractionSoundIfEnabled.click();
       if (navigator.vibrate) {
         navigator.vibrate(50);
       }
@@ -153,15 +161,45 @@ export const WordCard: React.FC<WordCardProps> = ({
     onFavorite?.(word);
   };
 
-  // Enhanced touch gesture handling
+  // Enhanced touch gesture handling with better mobile navigation
   const handleTouchStart = (e: React.TouchEvent) => {
     const touch = e.touches[0];
     setTouchStart({ x: touch.clientX, y: touch.clientY });
+    setTouchPosition({ x: touch.clientX, y: touch.clientY });
     setIsGesturing(true);
+    setSwipeDirection(null);
 
     // Light haptic feedback on touch start
     if (navigator.vibrate) {
       navigator.vibrate(25);
+    }
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    if (!touchStart) return;
+
+    const touch = e.touches[0];
+    const deltaX = touch.clientX - touchStart.x;
+    const deltaY = touch.clientY - touchStart.y;
+
+    setTouchPosition({ x: touch.clientX, y: touch.clientY });
+
+    // Determine swipe direction early for visual feedback
+    const threshold = 30;
+    if (Math.abs(deltaX) > threshold || Math.abs(deltaY) > threshold) {
+      if (Math.abs(deltaX) > Math.abs(deltaY)) {
+        if (deltaX > threshold) {
+          setSwipeDirection("right");
+        } else if (deltaX < -threshold) {
+          setSwipeDirection("left");
+        }
+      } else {
+        if (deltaY < -threshold) {
+          setSwipeDirection("up");
+        } else if (deltaY > threshold) {
+          setSwipeDirection("down");
+        }
+      }
     }
   };
 
@@ -174,23 +212,41 @@ export const WordCard: React.FC<WordCardProps> = ({
     const threshold = 60;
 
     setIsGesturing(false);
+    setSwipeDirection(null);
+    setTouchPosition(null);
 
-    // Handle swipe gestures
+    // Enhanced swipe gestures with improved back navigation
     if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > threshold) {
       if (deltaX > 0) {
-        // Swipe right - flip card
-        setIsFlipped(!isFlipped);
-        audioService.playWhooshSound();
-        if (navigator.vibrate) {
-          navigator.vibrate([50, 30, 50]);
+        if (isFlipped) {
+          // Swipe right on back - go back to front (enhanced back navigation)
+          setIsFlipped(false);
+          audioService.playWhooshSound();
+          if (navigator.vibrate) {
+            navigator.vibrate([50, 30, 50]);
+          }
+        } else {
+          // Swipe right on front - flip to back
+          setIsFlipped(true);
+          audioService.playWhooshSound();
+          if (navigator.vibrate) {
+            navigator.vibrate([50, 30, 50]);
+          }
         }
       } else {
-        // Swipe left - favorite
+        // Swipe left - favorite (works on both sides)
         handleFavorite();
       }
     } else if (deltaY < -threshold) {
-      // Swipe up - pronounce
+      // Swipe up - pronounce (works on both sides)
       handlePronounce();
+    } else if (deltaY > threshold && isFlipped) {
+      // Swipe down on back side - enhanced back navigation
+      setIsFlipped(false);
+      audioService.playWhooshSound();
+      if (navigator.vibrate) {
+        navigator.vibrate([40, 20, 40]);
+      }
     }
 
     setTouchStart(null);
@@ -251,10 +307,10 @@ export const WordCard: React.FC<WordCardProps> = ({
 
   return (
     <div
-      className={`relative w-full max-w-[320px] sm:max-w-sm mx-auto ${className}`}
+      className={`relative w-full max-w-[340px] sm:max-w-[380px] md:max-w-sm mx-auto ${className}`}
     >
       <Card
-        className={`h-[360px] sm:h-[380px] md:h-[360px] cursor-pointer transition-all duration-300 transform-gpu active:scale-[0.98] hover:scale-[1.01] shadow-lg hover:shadow-xl ${
+        className={`h-[380px] sm:h-[420px] md:h-[400px] cursor-pointer transition-all duration-300 transform-gpu active:scale-[0.98] hover:scale-[1.01] shadow-lg hover:shadow-xl ${
           isFlipped ? "[transform:rotateY(180deg)]" : ""
         } ${
           adventureStatus && adventureStatus.health < 30
@@ -262,7 +318,19 @@ export const WordCard: React.FC<WordCardProps> = ({
             : adventureStatus && adventureStatus.health < 50
               ? "ring-2 ring-orange-400/50 shadow-orange-400/20 shadow-lg"
               : ""
-        } ${isGesturing ? "scale-[1.02] ring-2 ring-blue-400/50" : ""}`}
+        } ${
+          isGesturing
+            ? swipeDirection === "right"
+              ? "scale-[1.02] ring-2 ring-green-400/50 shadow-green-400/20"
+              : swipeDirection === "left"
+                ? "scale-[1.02] ring-2 ring-red-400/50 shadow-red-400/20"
+                : swipeDirection === "up"
+                  ? "scale-[1.02] ring-2 ring-blue-400/50 shadow-blue-400/20"
+                  : swipeDirection === "down"
+                    ? "scale-[1.02] ring-2 ring-purple-400/50 shadow-purple-400/20"
+                    : "scale-[1.02] ring-2 ring-blue-400/50"
+            : ""
+        }`}
         style={{
           transformStyle: "preserve-3d",
           touchAction: "pan-y",
@@ -275,6 +343,7 @@ export const WordCard: React.FC<WordCardProps> = ({
           }
         }}
         onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
         onTouchEnd={handleTouchEnd}
         role="button"
         tabIndex={0}
@@ -341,12 +410,14 @@ export const WordCard: React.FC<WordCardProps> = ({
               )}
             </div>
 
-            {/* Mobile-Optimized Favorite Button */}
+            {/* Enhanced Mobile-Optimized Favorite Button */}
             <Button
               size="sm"
               variant="ghost"
-              className={`text-white hover:bg-white/20 p-1 h-auto min-w-[32px] min-h-[32px] transition-all duration-200 rounded-full flex-shrink-0 ${
-                isFavorited ? "scale-105 text-red-300" : ""
+              className={`text-white hover:bg-white/20 active:bg-white/30 p-1.5 h-auto min-w-[40px] min-h-[40px] transition-all duration-200 rounded-full flex-shrink-0 border border-white/20 bg-white/10 backdrop-blur-sm active:scale-95 ${
+                isFavorited
+                  ? "scale-105 text-red-300 border-red-300/40 bg-red-500/20"
+                  : "hover:border-white/40"
               }`}
               onClick={(e) => {
                 e.stopPropagation();
@@ -354,12 +425,12 @@ export const WordCard: React.FC<WordCardProps> = ({
               }}
             >
               <Heart
-                className={`w-3 h-3 transition-all duration-200 ${
+                className={`w-4 h-4 transition-all duration-200 ${
                   isFavorited ? "fill-current animate-pulse" : ""
                 }`}
               />
               {showSparkles && isFavorited && (
-                <Star className="w-2 h-2 absolute -top-0.5 -right-0.5 text-yellow-300 animate-bounce" />
+                <Star className="w-2.5 h-2.5 absolute -top-0.5 -right-0.5 text-yellow-300 animate-bounce" />
               )}
             </Button>
           </div>
@@ -409,17 +480,17 @@ export const WordCard: React.FC<WordCardProps> = ({
                   handlePronounce();
                 }}
                 disabled={isPlaying}
-                className={`text-white hover:bg-white/30 hover:scale-105 p-1.5 h-auto min-w-[32px] min-h-[32px] rounded-full transition-all duration-200 border border-white/40 bg-white/10 backdrop-blur-sm shadow-md ${
+                className={`text-white hover:bg-white/30 hover:scale-105 active:scale-95 p-2 h-auto min-w-[40px] min-h-[40px] rounded-full transition-all duration-200 border border-white/40 bg-white/10 backdrop-blur-sm shadow-md ${
                   isPlaying
                     ? "scale-105 bg-yellow-400/30 border-yellow-300/60 shadow-yellow-300/30 animate-bounce"
                     : "hover:border-white/60"
                 }`}
               >
                 <Volume2
-                  className={`w-3 h-3 sm:w-3.5 sm:h-3.5 transition-all duration-200 ${isPlaying ? "text-yellow-200 animate-pulse scale-105" : "text-white"}`}
+                  className={`w-4 h-4 transition-all duration-200 ${isPlaying ? "text-yellow-200 animate-pulse scale-105" : "text-white"}`}
                 />
                 {showSparkles && (
-                  <Sparkles className="w-2 h-2 absolute -top-0.5 -right-0.5 text-yellow-300 animate-spin" />
+                  <Sparkles className="w-2.5 h-2.5 absolute -top-0.5 -right-0.5 text-yellow-300 animate-spin" />
                 )}
                 {isPlaying && (
                   <div className="absolute inset-0 rounded-full border border-yellow-300/50 animate-ping"></div>
@@ -448,11 +519,37 @@ export const WordCard: React.FC<WordCardProps> = ({
               Tap to see definition
             </p>
 
-            {/* Mobile gesture hints - more compact */}
-            <div className="flex justify-center gap-1.5 text-[8px] opacity-60 sm:hidden">
-              <span>← ❤️</span>
-              <span>↑ 🔊</span>
-              <span>→ 🔄</span>
+            {/* Enhanced Mobile gesture hints with better visual feedback */}
+            <div className="hidden sm:block">
+              <div className="flex justify-center gap-2 text-[9px] opacity-70">
+                <span className="flex items-center gap-0.5">
+                  <span className="w-4 h-2 bg-white/20 rounded-sm flex items-center justify-center text-[8px]">
+                    ←
+                  </span>
+                  <span>❤️</span>
+                </span>
+                <span className="flex items-center gap-0.5">
+                  <span className="w-4 h-2 bg-white/20 rounded-sm flex items-center justify-center text-[8px]">
+                    ↑
+                  </span>
+                  <span>🔊</span>
+                </span>
+                <span className="flex items-center gap-0.5">
+                  <span className="w-4 h-2 bg-white/20 rounded-sm flex items-center justify-center text-[8px]">
+                    →
+                  </span>
+                  <span>🔄</span>
+                </span>
+              </div>
+            </div>
+
+            {/* Mobile-only compact hints */}
+            <div className="sm:hidden">
+              <div className="flex justify-center gap-1.5 text-[8px] opacity-60">
+                <span>← ❤️</span>
+                <span>↑ 🔊</span>
+                <span>→ 🔄</span>
+              </div>
             </div>
 
             <div className="flex justify-center gap-0.5">
@@ -471,26 +568,39 @@ export const WordCard: React.FC<WordCardProps> = ({
             transform: "rotateY(180deg)",
           }}
         >
-          {/* Mobile-Optimized Back Button */}
+          {/* Enhanced Mobile Back Navigation */}
           <div className="absolute top-1.5 right-1.5 z-10">
             <Button
               size="sm"
               variant="ghost"
-              className="text-white hover:bg-white/20 p-1 h-auto min-w-[32px] min-h-[32px] rounded-full"
+              className="text-white hover:bg-white/20 active:bg-white/30 p-1.5 h-auto min-w-[40px] min-h-[40px] rounded-full border border-white/20 bg-white/10 backdrop-blur-sm transition-all duration-200 active:scale-95"
               onClick={(e) => {
                 e.stopPropagation();
                 setIsFlipped(false);
+                audioService.playWhooshSound();
+                if (navigator.vibrate) {
+                  navigator.vibrate([40, 20, 40]);
+                }
               }}
             >
-              <RotateCcw className="w-3 h-3" />
+              <RotateCcw className="w-4 h-4" />
             </Button>
+          </div>
+
+          {/* Enhanced Back Navigation Hint */}
+          <div className="absolute top-1.5 left-1.5 z-10">
+            <div className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-full px-2 py-1">
+              <span className="text-[9px] text-white/80 font-medium">
+                ← Swipe or tap ↻
+              </span>
+            </div>
           </div>
 
           <h3 className="text-sm sm:text-base font-semibold mb-1.5 text-center pr-8 leading-tight">
             {word.word} {word.emoji}
           </h3>
 
-          <div className="space-y-1.5 flex-1 overflow-y-auto">
+          <div className="space-y-1.5 flex-1 overflow-y-auto scrollbar-thin scrollbar-thumb-white/20 scrollbar-track-transparent">
             <div>
               <h4 className="text-[9px] font-medium mb-0.5 text-yellow-300">
                 Definition:
@@ -764,6 +874,52 @@ export const WordCard: React.FC<WordCardProps> = ({
           }}
           autoCloseDelay={5000} // Auto-close after 5 seconds for word achievements
         />
+      )}
+
+      {/* Swipe Direction Visual Feedback */}
+      {isGesturing && swipeDirection && (
+        <div className="absolute inset-0 pointer-events-none z-20 rounded-xl overflow-hidden">
+          <div
+            className={`absolute inset-0 transition-opacity duration-200 ${
+              swipeDirection === "right"
+                ? "bg-gradient-to-r from-green-400/20 via-green-400/10 to-transparent"
+                : swipeDirection === "left"
+                  ? "bg-gradient-to-l from-red-400/20 via-red-400/10 to-transparent"
+                  : swipeDirection === "up"
+                    ? "bg-gradient-to-t from-blue-400/20 via-blue-400/10 to-transparent"
+                    : swipeDirection === "down"
+                      ? "bg-gradient-to-b from-purple-400/20 via-purple-400/10 to-transparent"
+                      : ""
+            }`}
+          />
+          <div className="absolute inset-0 flex items-center justify-center">
+            <div
+              className={`w-16 h-16 rounded-full flex items-center justify-center backdrop-blur-sm border-2 ${
+                swipeDirection === "right"
+                  ? "bg-green-400/30 border-green-400/60 text-green-200"
+                  : swipeDirection === "left"
+                    ? "bg-red-400/30 border-red-400/60 text-red-200"
+                    : swipeDirection === "up"
+                      ? "bg-blue-400/30 border-blue-400/60 text-blue-200"
+                      : swipeDirection === "down"
+                        ? "bg-purple-400/30 border-purple-400/60 text-purple-200"
+                        : ""
+              } animate-pulse`}
+            >
+              {swipeDirection === "right" &&
+                (isFlipped ? (
+                  <RotateCcw className="w-8 h-8" />
+                ) : (
+                  <span className="text-2xl">🔄</span>
+                ))}
+              {swipeDirection === "left" && <Heart className="w-8 h-8" />}
+              {swipeDirection === "up" && <Volume2 className="w-8 h-8" />}
+              {swipeDirection === "down" && isFlipped && (
+                <RotateCcw className="w-8 h-8" />
+              )}
+            </div>
+          </div>
+        </div>
       )}
 
       {/* Screen reader live region for accessibility */}

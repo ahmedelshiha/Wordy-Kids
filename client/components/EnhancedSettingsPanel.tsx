@@ -48,6 +48,8 @@ import {
   setSoundEnabled,
   isSoundEnabled,
   playSoundIfEnabled,
+  setUIInteractionSoundsEnabled,
+  isUIInteractionSoundsEnabled,
 } from "@/lib/soundEffects";
 import { audioService, VoiceType } from "@/lib/audioService";
 import { cn } from "@/lib/utils";
@@ -67,6 +69,9 @@ export const EnhancedSettingsPanel: React.FC<EnhancedSettingsPanelProps> = ({
 }) => {
   // Audio settings
   const [soundOn, setSoundOn] = useState(isSoundEnabled());
+  const [uiInteractionSounds, setUiInteractionSounds] = useState(
+    isUIInteractionSoundsEnabled(),
+  );
   const [selectedVoiceType, setSelectedVoiceType] =
     useState<VoiceType>("woman");
   const [speechRate, setSpeechRate] = useState([1]);
@@ -114,6 +119,7 @@ export const EnhancedSettingsPanel: React.FC<EnhancedSettingsPanelProps> = ({
   useEffect(() => {
     // Initialize settings from localStorage and audio service
     setSelectedVoiceType(audioService.getVoiceType());
+    setUiInteractionSounds(isUIInteractionSoundsEnabled());
     const voices = audioService.getAvailableVoices();
     setAvailableVoices(voices);
 
@@ -240,6 +246,8 @@ export const EnhancedSettingsPanel: React.FC<EnhancedSettingsPanelProps> = ({
     // Reset all settings to defaults
     setSoundOn(true);
     setSoundEnabled(true);
+    setUiInteractionSounds(false); // Reset to disabled by default
+    setUIInteractionSoundsEnabled(false);
     setSelectedVoiceType("woman");
     audioService.setVoiceType("woman");
     setSpeechRate([1]);
@@ -344,7 +352,7 @@ export const EnhancedSettingsPanel: React.FC<EnhancedSettingsPanelProps> = ({
             <ScrollArea className="w-full">
               <div className="flex gap-2 p-4 border-b">
                 {[
-                  { id: "audio", label: "Audio", icon: Volume2, emoji: "🔊" },
+                  { id: "audio", label: "Audio", icon: Volume2, emoji: "��" },
                   {
                     id: "appearance",
                     label: "Appearance",
@@ -484,6 +492,36 @@ export const EnhancedSettingsPanel: React.FC<EnhancedSettingsPanelProps> = ({
                         onCheckedChange={(checked) => {
                           setSoundOn(checked);
                           setSoundEnabled(checked);
+                          setHasUnsavedChanges(true);
+                          if (deviceInfo.hasHaptic)
+                            triggerHapticFeedback("medium");
+                        }}
+                      />
+                    </div>
+                  </Card>
+
+                  {/* UI Interaction Sounds Toggle */}
+                  <Card className="settings-option-mobile p-4 hover:shadow-md transition-shadow">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-3">
+                        {uiInteractionSounds ? (
+                          <Volume2 className="w-5 h-5 text-blue-600" />
+                        ) : (
+                          <VolumeX className="w-5 h-5 text-gray-400" />
+                        )}
+                        <div>
+                          <p className="font-medium">UI Interaction Sounds</p>
+                          <p className="text-sm text-slate-600">
+                            Sounds when touching categories and word cards
+                          </p>
+                        </div>
+                      </div>
+                      <Switch
+                        className="settings-switch-mobile"
+                        checked={uiInteractionSounds}
+                        onCheckedChange={(checked) => {
+                          setUiInteractionSounds(checked);
+                          setUIInteractionSoundsEnabled(checked);
                           setHasUnsavedChanges(true);
                           if (deviceInfo.hasHaptic)
                             triggerHapticFeedback("medium");

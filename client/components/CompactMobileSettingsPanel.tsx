@@ -22,30 +22,59 @@ import {
   Vibrate,
   ChevronDown,
   ChevronUp,
+  BarChart3,
+  TrendingUp,
+  Award,
+  Calendar,
 } from "lucide-react";
 import {
   setSoundEnabled,
   isSoundEnabled,
   playSoundIfEnabled,
+  setUIInteractionSoundsEnabled,
+  isUIInteractionSoundsEnabled,
 } from "@/lib/soundEffects";
 import { enhancedAudioService, VoiceType } from "@/lib/enhancedAudioService";
 import { audioService } from "@/lib/audioService";
 import { cn } from "@/lib/utils";
+import { ChevronRight } from "lucide-react";
 import {
   useMobileDevice,
   triggerHapticFeedback,
 } from "@/hooks/use-mobile-device";
+import { MobileLearningGoalsPanel } from "@/components/MobileLearningGoalsPanel";
+import { QuickGoalsWidget } from "@/components/QuickGoalsWidget";
 
 interface CompactMobileSettingsPanelProps {
   isOpen: boolean;
   onClose: () => void;
+  currentProgress?: {
+    wordsLearned: number;
+    wordsRemembered: number;
+    sessionCount: number;
+    accuracy: number;
+  };
+  onGoalUpdate?: (goals: any[]) => void;
 }
 
 export const CompactMobileSettingsPanel: React.FC<
   CompactMobileSettingsPanelProps
-> = ({ isOpen, onClose }) => {
+> = ({
+  isOpen,
+  onClose,
+  currentProgress = {
+    wordsLearned: 0,
+    wordsRemembered: 0,
+    sessionCount: 0,
+    accuracy: 0,
+  },
+  onGoalUpdate,
+}) => {
   // Essential settings only
   const [soundOn, setSoundOn] = useState(isSoundEnabled());
+  const [uiInteractionSounds, setUiInteractionSounds] = useState(
+    isUIInteractionSoundsEnabled(),
+  );
   const [selectedVoiceType, setSelectedVoiceType] =
     useState<VoiceType>("woman");
   const [volume, setVolume] = useState([80]);
@@ -56,6 +85,7 @@ export const CompactMobileSettingsPanel: React.FC<
   const [dailyReminders, setDailyReminders] = useState(true);
   const [largeText, setLargeText] = useState(false);
   const [autoPlay, setAutoPlay] = useState(true);
+  const [showGoalsPanel, setShowGoalsPanel] = useState(false);
 
   // Collapsible sections
   const [expandedSections, setExpandedSections] = useState<
@@ -63,7 +93,8 @@ export const CompactMobileSettingsPanel: React.FC<
   >({
     audio: true,
     appearance: false,
-    learning: false,
+    learning: true,
+    goals: false,
     other: false,
   });
 
@@ -76,6 +107,7 @@ export const CompactMobileSettingsPanel: React.FC<
   useEffect(() => {
     // Load settings from localStorage
     setSelectedVoiceType(enhancedAudioService.getVoiceType());
+    setUiInteractionSounds(isUIInteractionSoundsEnabled());
 
     const loadSettings = () => {
       const backgroundAnimationsSettings = localStorage.getItem(
@@ -207,6 +239,8 @@ export const CompactMobileSettingsPanel: React.FC<
   const handleResetToDefaults = () => {
     setSoundOn(true);
     setSoundEnabled(true);
+    setUiInteractionSounds(false); // Reset to disabled by default
+    setUIInteractionSoundsEnabled(false);
     setSelectedVoiceType("woman");
     enhancedAudioService.setVoiceType("woman");
     audioService.setVoiceType("woman");
@@ -272,9 +306,9 @@ export const CompactMobileSettingsPanel: React.FC<
   );
 
   return (
-    <div className="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-end sm:items-center justify-center z-50 p-2">
-      <Card className="w-full max-w-sm mx-2 mb-2 sm:mb-0 max-h-[85vh] overflow-hidden animate-mobile-slide-in shadow-xl rounded-2xl flex flex-col">
-        <CardHeader className="pb-2 bg-gradient-to-r from-educational-blue to-educational-purple text-white rounded-t-2xl">
+    <div className="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-end justify-center z-50 p-1">
+      <Card className="w-full max-w-sm mx-1 mb-1 max-h-[88vh] overflow-hidden animate-mobile-slide-in shadow-xl rounded-t-3xl flex flex-col">
+        <CardHeader className="pb-2 bg-gradient-to-r from-educational-blue to-educational-purple text-white rounded-t-3xl">
           <div className="flex items-center justify-between">
             <CardTitle className="flex items-center gap-2">
               <Settings className="w-4 h-4" />
@@ -299,7 +333,7 @@ export const CompactMobileSettingsPanel: React.FC<
           )}
         </CardHeader>
 
-        <ScrollArea className="flex-1 max-h-[60vh] sm:max-h-[65vh] overflow-y-auto scroll-smooth">
+        <ScrollArea className="flex-1 max-h-[68vh] overflow-y-auto scroll-smooth">
           <div
             className="p-2 space-y-1 min-h-0"
             style={{ WebkitOverflowScrolling: "touch" }}
@@ -327,6 +361,23 @@ export const CompactMobileSettingsPanel: React.FC<
                       onCheckedChange={(checked) => {
                         setSoundOn(checked);
                         setSoundEnabled(checked);
+                        setHasUnsavedChanges(true);
+                        if (deviceInfo.hasHaptic)
+                          triggerHapticFeedback("light");
+                      }}
+                    />
+                  </CompactSettingRow>
+
+                  <CompactSettingRow
+                    icon={uiInteractionSounds ? Volume2 : VolumeX}
+                    label="UI Interaction Sounds"
+                    description="Sounds for category & card touches"
+                  >
+                    <CompactMobileSwitch
+                      checked={uiInteractionSounds}
+                      onCheckedChange={(checked) => {
+                        setUiInteractionSounds(checked);
+                        setUIInteractionSoundsEnabled(checked);
                         setHasUnsavedChanges(true);
                         if (deviceInfo.hasHaptic)
                           triggerHapticFeedback("light");
@@ -619,6 +670,72 @@ export const CompactMobileSettingsPanel: React.FC<
                       <span>50</span>
                     </div>
                   </div>
+
+                  {/* Quick Progress Summary */}
+                  <div className="mt-3 p-3 bg-gradient-to-r from-blue-50 to-purple-50 rounded-lg border border-blue-200">
+                    <div className="flex items-center justify-between mb-2">
+                      <span className="text-xs font-medium text-blue-800">
+                        Today's Progress
+                      </span>
+                      <span className="text-xs text-blue-600">
+                        {currentProgress.wordsLearned}/{dailyGoal[0]} words
+                      </span>
+                    </div>
+                    <div className="w-full bg-blue-200 rounded-full h-1.5">
+                      <div
+                        className="bg-blue-600 h-1.5 rounded-full transition-all duration-300"
+                        style={{
+                          width: `${Math.min((currentProgress.wordsLearned / dailyGoal[0]) * 100, 100)}%`,
+                        }}
+                      />
+                    </div>
+                    <div className="flex justify-between mt-2 text-xs">
+                      <span className="text-green-600">
+                        {currentProgress.wordsRemembered} remembered
+                      </span>
+                      <span className="text-purple-600">
+                        {currentProgress.accuracy}% accuracy
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* Advanced Goals Button */}
+                  <button
+                    onClick={() => {
+                      setShowGoalsPanel(true);
+                      if (deviceInfo.hasHaptic) triggerHapticFeedback("medium");
+                    }}
+                    className="w-full mt-2 p-3 bg-gradient-to-r from-educational-blue to-educational-purple text-white rounded-lg hover:shadow-lg transition-all duration-200 flex items-center justify-between"
+                  >
+                    <div className="flex items-center gap-2">
+                      <BarChart3 className="w-4 h-4" />
+                      <span className="text-sm font-medium">
+                        Learning Goals
+                      </span>
+                    </div>
+                    <ChevronRight className="w-4 h-4" />
+                  </button>
+                </div>
+              )}
+            </div>
+
+            {/* Goals & Analytics Section */}
+            <div className="border rounded-lg">
+              <CompactSectionHeader
+                title="Learning Goals"
+                emoji="🎯"
+                isExpanded={expandedSections.goals}
+                onToggle={() => toggleSection("goals")}
+              />
+              {expandedSections.goals && (
+                <div className="p-2">
+                  <QuickGoalsWidget
+                    currentProgress={currentProgress}
+                    onExpandClick={() => {
+                      setShowGoalsPanel(true);
+                      if (deviceInfo.hasHaptic) triggerHapticFeedback("medium");
+                    }}
+                  />
                 </div>
               )}
             </div>
@@ -676,7 +793,7 @@ export const CompactMobileSettingsPanel: React.FC<
         </ScrollArea>
 
         {/* Compact Action Bar */}
-        <div className="border-t bg-slate-50 p-2 rounded-b-2xl">
+        <div className="border-t bg-slate-50 p-2 rounded-b-3xl">
           <div className="flex gap-2">
             <Button
               variant="outline"
@@ -696,6 +813,16 @@ export const CompactMobileSettingsPanel: React.FC<
           </div>
         </div>
       </Card>
+
+      {/* Mobile Learning Goals Panel */}
+      {showGoalsPanel && (
+        <MobileLearningGoalsPanel
+          isOpen={showGoalsPanel}
+          onClose={() => setShowGoalsPanel(false)}
+          currentProgress={currentProgress}
+          onGoalUpdate={onGoalUpdate}
+        />
+      )}
     </div>
   );
 };
