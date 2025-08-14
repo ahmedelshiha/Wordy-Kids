@@ -442,6 +442,35 @@
   animation-delay: 200ms;
 }
 
+/* Mobile-optimized animation classes */
+.animate-card-flip {
+  animation: cardFlip 0.6s ease-in-out;
+}
+
+.animate-touch-feedback {
+  animation: touchFeedback 0.2s ease-out;
+}
+
+.animate-mobile-slide-in {
+  animation: mobileSlideIn 0.4s ease-out;
+}
+
+.animate-mobile-pulse {
+  animation: mobilePulse 1.5s infinite;
+}
+
+.animate-swipe-indicator {
+  animation: swipeIndicator 2s ease-in-out infinite;
+}
+
+.animate-category-hover {
+  animation: categoryHover 0.3s ease-out forwards;
+}
+
+.animate-mobile-sparkle {
+  animation: mobileSparkle 1s ease-in-out infinite;
+}
+
 .border-rainbow {
   animation: rainbowBorder 3s linear infinite;
 }
