@@ -62,6 +62,24 @@ export function AchievementTeaser({ className }: AchievementTeaserProps) {
     return emojis[Math.floor(Math.random() * emojis.length)];
   };
 
+  // Touch handlers for mobile interactivity
+  const handleTouchStart = () => {
+    setIsPressed(true);
+  };
+
+  const handleTouchEnd = () => {
+    setIsPressed(false);
+    // Cycle to next message on tap (mobile-friendly)
+    setShowTeaser(false);
+    setTimeout(() => {
+      setMotivationalMessage(EnhancedAchievementTracker.getMotivationalMessage());
+      setSpecialMessage(EnhancedAchievementTracker.getTodaySpecialMessage());
+      setCurrentTease(EnhancedAchievementTracker.getNextAchievementTease());
+      setMessageIndex(prev => prev + 1);
+      setShowTeaser(true);
+    }, 200);
+  };
+
   // Priority: Special message > Achievement tease > Motivational message
   const currentMessage = specialMessage || currentTease || motivationalMessage;
 
