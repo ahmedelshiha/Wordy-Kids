@@ -425,7 +425,7 @@ export function GameLikeLearning({
                 {game.difficulty === "easy"
                   ? "🌟 Easy"
                   : game.difficulty === "medium"
-                    ? "�� Medium"
+                    ? "⚡ Medium"
                     : "🔥 Hard"}
               </Badge>
             </CardHeader>

@@ -1174,7 +1174,7 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
                         <div>
                           <div>{child.name}'s Goals</div>
                           <p className="text-xs md:text-sm font-normal text-slate-600">
-                            {activeGoals} active �� {completedGoals} completed
+                            {activeGoals} active 🎯 {completedGoals} completed
                           </p>
                         </div>
                       </CardTitle>
