@@ -75,6 +75,8 @@ export const WordCard: React.FC<WordCardProps> = ({
     null,
   );
   const [isGesturing, setIsGesturing] = useState(false);
+  const [swipeDirection, setSwipeDirection] = useState<string | null>(null);
+  const [touchPosition, setTouchPosition] = useState<{ x: number; y: number } | null>(null);
 
   // Voice settings integration
   const voiceSettings = useVoiceSettings();
