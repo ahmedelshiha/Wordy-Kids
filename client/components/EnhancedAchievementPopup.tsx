@@ -68,6 +68,7 @@ const DIFFICULTY_ICONS = {
   silver: Star,
   gold: Crown,
   diamond: Gem,
+  rainbow: Sparkles,
 } as const;
 
 const CATEGORY_COLORS = {
