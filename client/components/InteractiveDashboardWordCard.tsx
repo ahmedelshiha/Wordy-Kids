@@ -791,13 +791,6 @@ export function InteractiveDashboardWordCard({
                 <div className="text-xs font-bold text-slate-800 leading-tight">
                   Today's Quest
                 </div>
-                <div className="text-xs font-semibold text-slate-700">
-                  {Math.max(
-                    sessionStats.wordsRemembered,
-                    rememberedWordsCount || 0,
-                  )}
-                  /{dailyGoal.target}
-                </div>
               </div>
             </div>
           </div>
