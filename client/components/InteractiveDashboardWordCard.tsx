@@ -763,7 +763,7 @@ export function InteractiveDashboardWordCard({
 
         <CardContent className="p-4 md:p-8 relative z-10">
           {/* Today's Word Quest - Left Corner without container */}
-          <div className="absolute top-2 left-2 md:top-3 md:left-3 z-20">
+          <div className="absolute top-2 left-2 md:top-3 md:left-3 z-20 mb-4">
             <div className="flex items-center gap-1 md:gap-2">
               <span className="text-sm md:text-base">
                 {(() => {
