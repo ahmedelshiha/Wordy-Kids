@@ -2778,7 +2778,7 @@ export default function Index({ initialProfile }: IndexProps) {
                               Vowel Rescue!
                             </h3>
                             <p className="text-xs md:text-sm text-gray-600 mb-2 md:mb-3 hidden md:block">
-                              Help rescue missing vowels! ���
+                              Help rescue missing vowels! 🆘
                             </p>
                             <div className="flex justify-center gap-1 mb-2 md:mb-3">
                               <span className="bg-educational-green/20 text-educational-green px-1.5 py-0.5 rounded-full text-xs">
