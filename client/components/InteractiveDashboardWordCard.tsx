@@ -824,7 +824,7 @@ export function InteractiveDashboardWordCard({
                   }
                   if (percentage >= 90) return "⭐";
                   if (percentage >= 75) return "🎯";
-                  if (percentage >= 50) return "��";
+                  if (percentage >= 50) return "💪";
                   return "🌟";
                 })()}
               </span>
@@ -905,11 +905,11 @@ export function InteractiveDashboardWordCard({
           <div className="mb-4 md:mb-6">{renderWordImage()}</div>
 
           {/* Game Instructions */}
-          <div className="text-center mb-3 md:mb-4">
-            <h2 className="text-lg md:text-2xl font-bold text-gray-800 mb-1 md:mb-2">
+          <div className="text-center mb-3 sm:mb-4 md:mb-5">
+            <h2 className="text-base sm:text-lg md:text-xl lg:text-2xl font-bold text-gray-800 mb-1 sm:mb-2">
               🤔 What is this?
             </h2>
-            <p className="text-sm md:text-base text-gray-600">
+            <p className="text-xs sm:text-sm md:text-base text-gray-600 px-2">
               Look at the picture and guess the word!
             </p>
           </div>
