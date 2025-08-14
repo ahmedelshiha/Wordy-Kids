@@ -70,10 +70,9 @@ class RealTimeWordDatabaseService {
   // Check for changes in the words database
   private async checkForChanges() {
     try {
-      // Re-import the words database to get latest data
-      delete require.cache[require.resolve("@/data/wordsDatabase")];
+      // Import the words database (browser will handle caching)
       const { wordsDatabase, getAllCategories } = await import("@/data/wordsDatabase");
-      
+
       const newWords = [...wordsDatabase];
       const newCategories = getAllCategories();
       
