@@ -1938,7 +1938,7 @@ export const wordsDatabase: Word[] = [
     definition: "To make pictures with pencils or crayons",
     example: "I draw pictures of my family",
     funFact: "Drawing improves hand-eye coordination!",
-    emoji: "����",
+    emoji: "🎨",
     category: "actions",
     difficulty: "easy",
   },
@@ -2017,7 +2017,7 @@ export const wordsDatabase: Word[] = [
     definition: "When white flakes fall from the sky",
     example: "Snowy days are perfect for sledding",
     funFact: "Every snowflake is unique!",
-    emoji: "❄️",
+    emoji: "❄��",
     category: "weather",
     difficulty: "easy",
   },
@@ -2252,7 +2252,7 @@ export const wordsDatabase: Word[] = [
     definition: "A person who goes to school to learn",
     example: "I am a student in second grade",
     funFact: "Student means eager to learn!",
-    emoji: "🧑‍🎓",
+    emoji: "🧑‍���",
     category: "school",
     difficulty: "easy",
   },
@@ -3162,7 +3162,7 @@ export const wordsDatabase: Word[] = [
     difficulty: "easy",
   },
 
-  // MY FAVOURITE FOOD CATEGORY - New Category
+  // FOOD CATEGORY (continued from my-favourite-food)
   {
     id: 3101,
     word: "Beans",
@@ -3171,7 +3171,7 @@ export const wordsDatabase: Word[] = [
     example: "Green beans are crunchy and delicious",
     funFact: "Beans can grow in space!",
     emoji: "🫘",
-    category: "my-favourite-food",
+    category: "food",
     difficulty: "easy",
   },
   {
@@ -3182,7 +3182,7 @@ export const wordsDatabase: Word[] = [
     example: "I like scrambled eggs for breakfast",
     funFact: "An egg shell has 17,000 tiny holes!",
     emoji: "🥚",
-    category: "my-favourite-food",
+    category: "food",
     difficulty: "easy",
   },
   {
@@ -3193,7 +3193,7 @@ export const wordsDatabase: Word[] = [
     example: "Tomatoes make pizza sauce taste great",
     funFact: "Tomatoes were once thought to be poisonous!",
     emoji: "🍅",
-    category: "my-favourite-food",
+    category: "food",
     difficulty: "easy",
   },
   {
@@ -3204,7 +3204,7 @@ export const wordsDatabase: Word[] = [
     example: "Onions add flavor to many dishes",
     funFact: "Onions make you cry because of sulfur gas!",
     emoji: "🧅",
-    category: "my-favourite-food",
+    category: "food",
     difficulty: "easy",
   },
   {
@@ -3215,7 +3215,7 @@ export const wordsDatabase: Word[] = [
     example: "Fresh peas are sweet and crunchy",
     funFact: "Peas were the first vegetable grown in space!",
     emoji: "🟢",
-    category: "my-favourite-food",
+    category: "food",
     difficulty: "easy",
   },
   {
@@ -3226,7 +3226,7 @@ export const wordsDatabase: Word[] = [
     example: "Coconut water is very refreshing",
     funFact: "A coconut can travel 3,000 miles by sea!",
     emoji: "🥥",
-    category: "my-favourite-food",
+    category: "food",
     difficulty: "medium",
   },
   {
@@ -3237,7 +3237,7 @@ export const wordsDatabase: Word[] = [
     example: "I eat cereal and fruit for breakfast",
     funFact: "Breakfast means 'breaking the fast' of sleeping!",
     emoji: "🍳",
-    category: "my-favourite-food",
+    category: "food",
     difficulty: "easy",
   },
   {
@@ -3248,7 +3248,7 @@ export const wordsDatabase: Word[] = [
     example: "Our family has dinner together every night",
     funFact: "Dinner used to be eaten at noon!",
     emoji: "🍽️",
-    category: "my-favourite-food",
+    category: "food",
     difficulty: "easy",
   },
   {
@@ -3259,7 +3259,7 @@ export const wordsDatabase: Word[] = [
     example: "I like mashed potatoes with butter",
     funFact: "Potatoes were the first food grown in space!",
     emoji: "🥔",
-    category: "my-favourite-food",
+    category: "food",
     difficulty: "easy",
   },
   {
@@ -3270,7 +3270,7 @@ export const wordsDatabase: Word[] = [
     example: "I put sausage on my pizza",
     funFact: "The longest sausage ever made was 38 miles long!",
     emoji: "���",
-    category: "my-favourite-food",
+    category: "food",
     difficulty: "medium",
   },
 
