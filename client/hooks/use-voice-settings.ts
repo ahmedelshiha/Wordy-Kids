@@ -27,11 +27,17 @@ export const useVoiceSettings = () => {
     };
 
     // Listen for voice type changes
-    window.addEventListener("voiceTypeChanged", handleVoiceChange as EventListener);
+    window.addEventListener(
+      "voiceTypeChanged",
+      handleVoiceChange as EventListener,
+    );
 
     // Cleanup listener
     return () => {
-      window.removeEventListener("voiceTypeChanged", handleVoiceChange as EventListener);
+      window.removeEventListener(
+        "voiceTypeChanged",
+        handleVoiceChange as EventListener,
+      );
     };
   }, []);
 
@@ -39,8 +45,12 @@ export const useVoiceSettings = () => {
 };
 
 // Helper hook for components that only need to know when voice changes (for re-rendering)
-export const useVoiceChangeListener = (callback?: (voiceType: VoiceType) => void) => {
-  const [voiceType, setVoiceType] = useState<VoiceType>(enhancedAudioService.getVoiceType());
+export const useVoiceChangeListener = (
+  callback?: (voiceType: VoiceType) => void,
+) => {
+  const [voiceType, setVoiceType] = useState<VoiceType>(
+    enhancedAudioService.getVoiceType(),
+  );
 
   useEffect(() => {
     const handleVoiceChange = (event: CustomEvent) => {
@@ -49,10 +59,16 @@ export const useVoiceChangeListener = (callback?: (voiceType: VoiceType) => void
       callback?.(newVoiceType);
     };
 
-    window.addEventListener("voiceTypeChanged", handleVoiceChange as EventListener);
+    window.addEventListener(
+      "voiceTypeChanged",
+      handleVoiceChange as EventListener,
+    );
 
     return () => {
-      window.removeEventListener("voiceTypeChanged", handleVoiceChange as EventListener);
+      window.removeEventListener(
+        "voiceTypeChanged",
+        handleVoiceChange as EventListener,
+      );
     };
   }, [callback]);
 

@@ -1,7 +1,7 @@
-import * as React from "react"
-import * as SwitchPrimitives from "@radix-ui/react-switch"
+import * as React from "react";
+import * as SwitchPrimitives from "@radix-ui/react-switch";
 
-import { cn } from "@/lib/utils"
+import { cn } from "@/lib/utils";
 
 const CompactMobileSwitch = React.forwardRef<
   React.ElementRef<typeof SwitchPrimitives.Root>,
@@ -13,7 +13,7 @@ const CompactMobileSwitch = React.forwardRef<
       // Compact mobile optimizations
       "touch-target active:scale-95 transition-transform duration-150",
       "focus:ring-2 focus:ring-blue-200",
-      className
+      className,
     )}
     {...props}
     ref={ref}
@@ -21,11 +21,11 @@ const CompactMobileSwitch = React.forwardRef<
     <SwitchPrimitives.Thumb
       className={cn(
         "pointer-events-none block h-4 w-4 rounded-full bg-background shadow-lg ring-0 transition-transform data-[state=checked]:translate-x-5 data-[state=unchecked]:translate-x-0",
-        "border border-gray-200"
+        "border border-gray-200",
       )}
     />
   </SwitchPrimitives.Root>
-))
-CompactMobileSwitch.displayName = SwitchPrimitives.Root.displayName
+));
+CompactMobileSwitch.displayName = SwitchPrimitives.Root.displayName;
 
-export { CompactMobileSwitch }
+export { CompactMobileSwitch };

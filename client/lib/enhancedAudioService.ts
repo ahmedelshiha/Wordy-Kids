@@ -34,7 +34,7 @@ export class EnhancedAudioService {
       const loadVoices = () => {
         this.voices = this.speechSynthesis.getVoices();
         this.voicesLoaded = this.voices.length > 0;
-        
+
         if (this.voicesLoaded) {
           console.log(`Loaded ${this.voices.length} voices`);
           this.debugVoices();
@@ -66,11 +66,16 @@ export class EnhancedAudioService {
       this.voices = this.speechSynthesis.getVoices();
     }
 
-    const englishVoices = this.voices.filter((voice) =>
-      voice.lang.startsWith("en") || voice.lang.includes("US") || voice.lang.includes("GB")
+    const englishVoices = this.voices.filter(
+      (voice) =>
+        voice.lang.startsWith("en") ||
+        voice.lang.includes("US") ||
+        voice.lang.includes("GB"),
     );
 
-    console.log(`Looking for ${voiceType} voice among ${englishVoices.length} English voices`);
+    console.log(
+      `Looking for ${voiceType} voice among ${englishVoices.length} English voices`,
+    );
 
     let filteredVoices: SpeechSynthesisVoice[] = [];
 
@@ -107,16 +112,16 @@ export class EnhancedAudioService {
         filteredVoices = englishVoices.filter((voice) => {
           const name = voice.name.toLowerCase();
           const uri = voice.voiceURI.toLowerCase();
-          
+
           // Check for explicit male indicators
-          const hasMaleIndicators = 
+          const hasMaleIndicators =
             name.includes("male") ||
             name.includes("man") ||
             uri.includes("male") ||
             uri.includes("man");
-            
+
           // Check for common male names
-          const hasMaleNames = 
+          const hasMaleNames =
             name.includes("david") ||
             name.includes("mark") ||
             name.includes("alex") ||
@@ -160,12 +165,12 @@ export class EnhancedAudioService {
         // If no explicit male voices found, use smarter filtering
         if (filteredVoices.length === 0) {
           console.log("No explicit male voices found, using smart filtering");
-          
+
           // Filter out obvious female voices and get remaining
           const nonFemaleVoices = englishVoices.filter((voice) => {
             const name = voice.name.toLowerCase();
             const uri = voice.voiceURI.toLowerCase();
-            
+
             const hasObviousFemaleIndicators =
               name.includes("female") ||
               name.includes("woman") ||
@@ -266,31 +271,33 @@ export class EnhancedAudioService {
     // Log the selection process
     console.log(`Found ${filteredVoices.length} voices for ${voiceType}:`);
     filteredVoices.forEach((voice, idx) => {
-      console.log(`  ${idx + 1}. ${voice.name} (${voice.lang}) - Local: ${voice.localService}`);
+      console.log(
+        `  ${idx + 1}. ${voice.name} (${voice.lang}) - Local: ${voice.localService}`,
+      );
     });
 
     // Return the best match
     if (filteredVoices.length > 0) {
       // Prefer local voices for better performance
-      const localVoices = filteredVoices.filter(v => v.localService);
+      const localVoices = filteredVoices.filter((v) => v.localService);
       if (localVoices.length > 0) {
         console.log(`Selected local voice: ${localVoices[0].name}`);
         return localVoices[0];
       }
-      
+
       console.log(`Selected voice: ${filteredVoices[0].name}`);
       return filteredVoices[0];
     }
 
     // Ultimate fallback
     const fallback = englishVoices.length > 0 ? englishVoices[0] : null;
-    console.log(`Fallback voice: ${fallback?.name || 'None'}`);
+    console.log(`Fallback voice: ${fallback?.name || "None"}`);
     return fallback;
   }
 
   private getVoicesByGender(gender: "male" | "female"): SpeechSynthesisVoice[] {
     const englishVoices = this.voices.filter((voice) =>
-      voice.lang.startsWith("en")
+      voice.lang.startsWith("en"),
     );
 
     return englishVoices.filter((voice) => {
@@ -456,7 +463,7 @@ export class EnhancedAudioService {
     window.dispatchEvent(
       new CustomEvent("voiceTypeChanged", {
         detail: { voiceType, voiceInfo: this.getVoiceInfo(voiceType) },
-      })
+      }),
     );
   }
 
@@ -530,8 +537,11 @@ export class EnhancedAudioService {
     console.log("=== Available Voices Debug ===");
     console.log("Total voices:", this.voices.length);
 
-    const englishVoices = this.voices.filter((voice) =>
-      voice.lang.startsWith("en") || voice.lang.includes("US") || voice.lang.includes("GB")
+    const englishVoices = this.voices.filter(
+      (voice) =>
+        voice.lang.startsWith("en") ||
+        voice.lang.includes("US") ||
+        voice.lang.includes("GB"),
     );
     console.log("English voices:", englishVoices.length);
 
@@ -560,11 +570,7 @@ export class EnhancedAudioService {
     } = {},
   ): void {
     const voiceDefaults = this.getVoiceDefaults(this.selectedVoiceType);
-    const {
-      rate = voiceDefaults.rate * 0.85,
-      onStart,
-      onEnd,
-    } = options;
+    const { rate = voiceDefaults.rate * 0.85, onStart, onEnd } = options;
 
     this.pronounceWord(definition, {
       rate,
@@ -588,9 +594,10 @@ export class EnhancedAudioService {
       "Perfect!",
     ];
 
-    const phrase = successPhrases[Math.floor(Math.random() * successPhrases.length)];
+    const phrase =
+      successPhrases[Math.floor(Math.random() * successPhrases.length)];
     const voiceDefaults = this.getVoiceDefaults(this.selectedVoiceType);
-    
+
     this.pronounceWord(phrase, {
       rate: Math.min(voiceDefaults.rate + 0.2, 1.2),
       pitch: Math.min(voiceDefaults.pitch + 0.1, 1.5),
@@ -610,8 +617,11 @@ export class EnhancedAudioService {
       "You're learning!",
     ];
 
-    const phrase = encouragementPhrases[Math.floor(Math.random() * encouragementPhrases.length)];
-    
+    const phrase =
+      encouragementPhrases[
+        Math.floor(Math.random() * encouragementPhrases.length)
+      ];
+
     this.pronounceWord(phrase, {
       volume: 0.7,
     });

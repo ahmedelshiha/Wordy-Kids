@@ -41,10 +41,9 @@ interface CompactMobileSettingsPanelProps {
   onClose: () => void;
 }
 
-export const CompactMobileSettingsPanel: React.FC<CompactMobileSettingsPanelProps> = ({
-  isOpen,
-  onClose,
-}) => {
+export const CompactMobileSettingsPanel: React.FC<
+  CompactMobileSettingsPanelProps
+> = ({ isOpen, onClose }) => {
   // Essential settings only
   const [soundOn, setSoundOn] = useState(isSoundEnabled());
   const [selectedVoiceType, setSelectedVoiceType] =
@@ -69,7 +68,9 @@ export const CompactMobileSettingsPanel: React.FC<CompactMobileSettingsPanelProp
   });
 
   const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false);
-  const [previewingVoice, setPreviewingVoice] = useState<VoiceType | null>(null);
+  const [previewingVoice, setPreviewingVoice] = useState<VoiceType | null>(
+    null,
+  );
   const deviceInfo = useMobileDevice();
 
   useEffect(() => {
@@ -140,7 +141,7 @@ export const CompactMobileSettingsPanel: React.FC<CompactMobileSettingsPanelProp
     try {
       await enhancedAudioService.previewVoice(
         voiceType,
-        "Hello! This is how I sound when reading words to you."
+        "Hello! This is how I sound when reading words to you.",
       );
     } catch (error) {
       console.error("Voice preview error:", error);
@@ -224,7 +225,12 @@ export const CompactMobileSettingsPanel: React.FC<CompactMobileSettingsPanelProp
 
   if (!isOpen) return null;
 
-  const CompactSettingRow = ({ icon: Icon, label, children, description }: any) => (
+  const CompactSettingRow = ({
+    icon: Icon,
+    label,
+    children,
+    description,
+  }: any) => (
     <div className="flex items-center justify-between py-2 px-2 border-b border-slate-100 last:border-b-0 min-h-[40px]">
       <div className="flex items-center gap-2 flex-1 min-w-0">
         <Icon className="w-4 h-4 text-slate-600 flex-shrink-0" />
@@ -243,16 +249,19 @@ export const CompactMobileSettingsPanel: React.FC<CompactMobileSettingsPanelProp
     </div>
   );
 
-  const CompactSectionHeader = ({ title, emoji, isExpanded, onToggle }: any) => (
+  const CompactSectionHeader = ({
+    title,
+    emoji,
+    isExpanded,
+    onToggle,
+  }: any) => (
     <button
       onClick={onToggle}
       className="w-full flex items-center justify-between p-2 hover:bg-slate-50 active:bg-slate-100 transition-colors rounded-lg min-h-[36px] touch-target"
     >
       <div className="flex items-center gap-2">
         <span className="text-base">{emoji}</span>
-        <span className="font-medium text-slate-900 text-sm">
-          {title}
-        </span>
+        <span className="font-medium text-slate-900 text-sm">{title}</span>
       </div>
       {isExpanded ? (
         <ChevronUp className="w-4 h-4 text-slate-500" />
@@ -270,9 +279,7 @@ export const CompactMobileSettingsPanel: React.FC<CompactMobileSettingsPanelProp
             <CardTitle className="flex items-center gap-2">
               <Settings className="w-4 h-4" />
               <div>
-                <h2 className="text-base font-bold">
-                  Settings
-                </h2>
+                <h2 className="text-base font-bold">Settings</h2>
                 <p className="text-xs opacity-90">Quick preferences</p>
               </div>
             </CardTitle>
@@ -293,7 +300,10 @@ export const CompactMobileSettingsPanel: React.FC<CompactMobileSettingsPanelProp
         </CardHeader>
 
         <ScrollArea className="flex-1 max-h-[60vh] sm:max-h-[65vh] overflow-y-auto scroll-smooth">
-          <div className="p-2 space-y-1 min-h-0" style={{ WebkitOverflowScrolling: 'touch' }}>
+          <div
+            className="p-2 space-y-1 min-h-0"
+            style={{ WebkitOverflowScrolling: "touch" }}
+          >
             {/* Audio Section */}
             <div className="border rounded-lg">
               <CompactSectionHeader
@@ -303,7 +313,10 @@ export const CompactMobileSettingsPanel: React.FC<CompactMobileSettingsPanelProp
                 onToggle={() => toggleSection("audio")}
               />
               {expandedSections.audio && (
-                <div className="px-2 pb-2 space-y-1 max-h-[40vh] overflow-y-auto scroll-smooth" style={{ WebkitOverflowScrolling: 'touch' }}>
+                <div
+                  className="px-2 pb-2 space-y-1 max-h-[40vh] overflow-y-auto scroll-smooth"
+                  style={{ WebkitOverflowScrolling: "touch" }}
+                >
                   <CompactSettingRow
                     icon={soundOn ? Volume2 : VolumeX}
                     label="Sound Effects"
@@ -315,7 +328,8 @@ export const CompactMobileSettingsPanel: React.FC<CompactMobileSettingsPanelProp
                         setSoundOn(checked);
                         setSoundEnabled(checked);
                         setHasUnsavedChanges(true);
-                        if (deviceInfo.hasHaptic) triggerHapticFeedback("light");
+                        if (deviceInfo.hasHaptic)
+                          triggerHapticFeedback("light");
                       }}
                     />
                   </CompactSettingRow>
@@ -331,7 +345,8 @@ export const CompactMobileSettingsPanel: React.FC<CompactMobileSettingsPanelProp
                         onValueChange={(value) => {
                           setVolume(value);
                           setHasUnsavedChanges(true);
-                          if (deviceInfo.hasHaptic) triggerHapticFeedback("light");
+                          if (deviceInfo.hasHaptic)
+                            triggerHapticFeedback("light");
                         }}
                         max={100}
                         min={0}
@@ -350,7 +365,8 @@ export const CompactMobileSettingsPanel: React.FC<CompactMobileSettingsPanelProp
                       onCheckedChange={(checked) => {
                         setAutoPlay(checked);
                         setHasUnsavedChanges(true);
-                        if (deviceInfo.hasHaptic) triggerHapticFeedback("light");
+                        if (deviceInfo.hasHaptic)
+                          triggerHapticFeedback("light");
                       }}
                     />
                   </CompactSettingRow>
@@ -380,7 +396,9 @@ export const CompactMobileSettingsPanel: React.FC<CompactMobileSettingsPanelProp
                           description: "Higher pitched voice",
                         },
                       ].map((voice) => {
-                        const voiceInfo = enhancedAudioService.getVoiceInfo(voice.type);
+                        const voiceInfo = enhancedAudioService.getVoiceInfo(
+                          voice.type,
+                        );
                         const isSelected = selectedVoiceType === voice.type;
                         const isPreviewing = previewingVoice === voice.type;
 
@@ -389,32 +407,45 @@ export const CompactMobileSettingsPanel: React.FC<CompactMobileSettingsPanelProp
                             key={voice.type}
                             className={cn(
                               "border rounded-lg p-2 transition-all duration-200",
-                              isSelected ? "border-educational-blue bg-educational-blue/10" : "border-gray-200",
-                              "hover:border-educational-blue/50"
+                              isSelected
+                                ? "border-educational-blue bg-educational-blue/10"
+                                : "border-gray-200",
+                              "hover:border-educational-blue/50",
                             )}
                           >
                             <div className="flex items-center justify-between">
                               <button
-                                onClick={() => handleVoiceTypeChange(voice.type)}
+                                onClick={() =>
+                                  handleVoiceTypeChange(voice.type)
+                                }
                                 className="flex items-center gap-2 flex-1 text-left"
                               >
                                 <span className="text-base">{voice.emoji}</span>
                                 <div className="flex-1 min-w-0">
-                                  <p className={cn(
-                                    "text-sm font-medium",
-                                    isSelected ? "text-educational-blue" : "text-slate-700"
-                                  )}>
+                                  <p
+                                    className={cn(
+                                      "text-sm font-medium",
+                                      isSelected
+                                        ? "text-educational-blue"
+                                        : "text-slate-700",
+                                    )}
+                                  >
                                     {voice.label}
                                   </p>
                                   <p className="text-xs text-slate-500 truncate">
-                                    {voiceInfo ? voiceInfo.name : voice.description}
+                                    {voiceInfo
+                                      ? voiceInfo.name
+                                      : voice.description}
                                   </p>
                                 </div>
                               </button>
 
                               <div className="flex items-center gap-1">
                                 {isSelected && (
-                                  <Badge variant="secondary" className="text-xs px-1 py-0">
+                                  <Badge
+                                    variant="secondary"
+                                    className="text-xs px-1 py-0"
+                                  >
                                     Active
                                   </Badge>
                                 )}
@@ -440,21 +471,39 @@ export const CompactMobileSettingsPanel: React.FC<CompactMobileSettingsPanelProp
 
                     <div className="mt-2 p-2 bg-blue-50 rounded-lg">
                       <p className="text-xs text-blue-700">
-                        💡 Tap <Play className="w-3 h-3 inline mx-1" /> to preview each voice
+                        💡 Tap <Play className="w-3 h-3 inline mx-1" /> to
+                        preview each voice
                       </p>
                     </div>
 
                     {/* Debug information for voice availability */}
                     <div className="mt-2 p-2 bg-gray-50 rounded-lg">
-                      <p className="text-xs text-gray-600 mb-1">Voice Status:</p>
-                      {enhancedAudioService.getAvailableVoices().map((voiceInfo) => (
-                        <div key={voiceInfo.type} className="text-xs text-gray-500 flex justify-between">
-                          <span className="capitalize">{voiceInfo.type}:</span>
-                          <span className={voiceInfo.available ? "text-green-600" : "text-red-500"}>
-                            {voiceInfo.available ? "✓ Available" : "✗ Not found"}
-                          </span>
-                        </div>
-                      ))}
+                      <p className="text-xs text-gray-600 mb-1">
+                        Voice Status:
+                      </p>
+                      {enhancedAudioService
+                        .getAvailableVoices()
+                        .map((voiceInfo) => (
+                          <div
+                            key={voiceInfo.type}
+                            className="text-xs text-gray-500 flex justify-between"
+                          >
+                            <span className="capitalize">
+                              {voiceInfo.type}:
+                            </span>
+                            <span
+                              className={
+                                voiceInfo.available
+                                  ? "text-green-600"
+                                  : "text-red-500"
+                              }
+                            >
+                              {voiceInfo.available
+                                ? "✓ Available"
+                                : "✗ Not found"}
+                            </span>
+                          </div>
+                        ))}
                     </div>
                   </div>
                 </div>
@@ -470,7 +519,10 @@ export const CompactMobileSettingsPanel: React.FC<CompactMobileSettingsPanelProp
                 onToggle={() => toggleSection("appearance")}
               />
               {expandedSections.appearance && (
-                <div className="px-2 pb-2 space-y-1 max-h-[30vh] overflow-y-auto scroll-smooth" style={{ WebkitOverflowScrolling: 'touch' }}>
+                <div
+                  className="px-2 pb-2 space-y-1 max-h-[30vh] overflow-y-auto scroll-smooth"
+                  style={{ WebkitOverflowScrolling: "touch" }}
+                >
                   <CompactSettingRow
                     icon={darkMode ? Moon : Sun}
                     label="Dark Mode"
@@ -485,7 +537,8 @@ export const CompactMobileSettingsPanel: React.FC<CompactMobileSettingsPanelProp
                           checked,
                         );
                         setHasUnsavedChanges(true);
-                        if (deviceInfo.hasHaptic) triggerHapticFeedback("light");
+                        if (deviceInfo.hasHaptic)
+                          triggerHapticFeedback("light");
                       }}
                     />
                   </CompactSettingRow>
@@ -500,7 +553,8 @@ export const CompactMobileSettingsPanel: React.FC<CompactMobileSettingsPanelProp
                       onCheckedChange={(checked) => {
                         setLargeText(checked);
                         setHasUnsavedChanges(true);
-                        if (deviceInfo.hasHaptic) triggerHapticFeedback("light");
+                        if (deviceInfo.hasHaptic)
+                          triggerHapticFeedback("light");
                       }}
                     />
                   </CompactSettingRow>
@@ -515,7 +569,8 @@ export const CompactMobileSettingsPanel: React.FC<CompactMobileSettingsPanelProp
                       onCheckedChange={(checked) => {
                         setBackgroundAnimations(checked);
                         setHasUnsavedChanges(true);
-                        if (deviceInfo.hasHaptic) triggerHapticFeedback("light");
+                        if (deviceInfo.hasHaptic)
+                          triggerHapticFeedback("light");
                       }}
                     />
                   </CompactSettingRow>
@@ -532,7 +587,10 @@ export const CompactMobileSettingsPanel: React.FC<CompactMobileSettingsPanelProp
                 onToggle={() => toggleSection("learning")}
               />
               {expandedSections.learning && (
-                <div className="px-2 pb-2 space-y-2 max-h-[35vh] overflow-y-auto scroll-smooth" style={{ WebkitOverflowScrolling: 'touch' }}>
+                <div
+                  className="px-2 pb-2 space-y-2 max-h-[35vh] overflow-y-auto scroll-smooth"
+                  style={{ WebkitOverflowScrolling: "touch" }}
+                >
                   <CompactSettingRow
                     icon={Target}
                     label="Daily Goal"
@@ -548,7 +606,8 @@ export const CompactMobileSettingsPanel: React.FC<CompactMobileSettingsPanelProp
                       onValueChange={(value) => {
                         setDailyGoal(value);
                         setHasUnsavedChanges(true);
-                        if (deviceInfo.hasHaptic) triggerHapticFeedback("light");
+                        if (deviceInfo.hasHaptic)
+                          triggerHapticFeedback("light");
                       }}
                       max={50}
                       min={5}
@@ -573,7 +632,10 @@ export const CompactMobileSettingsPanel: React.FC<CompactMobileSettingsPanelProp
                 onToggle={() => toggleSection("other")}
               />
               {expandedSections.other && (
-                <div className="px-2 pb-2 space-y-1 max-h-[30vh] overflow-y-auto scroll-smooth" style={{ WebkitOverflowScrolling: 'touch' }}>
+                <div
+                  className="px-2 pb-2 space-y-1 max-h-[30vh] overflow-y-auto scroll-smooth"
+                  style={{ WebkitOverflowScrolling: "touch" }}
+                >
                   <CompactSettingRow
                     icon={Bell}
                     label="Reminders"
@@ -584,7 +646,8 @@ export const CompactMobileSettingsPanel: React.FC<CompactMobileSettingsPanelProp
                       onCheckedChange={(checked) => {
                         setDailyReminders(checked);
                         setHasUnsavedChanges(true);
-                        if (deviceInfo.hasHaptic) triggerHapticFeedback("light");
+                        if (deviceInfo.hasHaptic)
+                          triggerHapticFeedback("light");
                       }}
                     />
                   </CompactSettingRow>
@@ -600,7 +663,8 @@ export const CompactMobileSettingsPanel: React.FC<CompactMobileSettingsPanelProp
                         onCheckedChange={(checked) => {
                           setHapticFeedback(checked);
                           setHasUnsavedChanges(true);
-                          if (deviceInfo.hasHaptic) triggerHapticFeedback("light");
+                          if (deviceInfo.hasHaptic)
+                            triggerHapticFeedback("light");
                         }}
                       />
                     </CompactSettingRow>

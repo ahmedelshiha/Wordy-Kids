@@ -1,7 +1,7 @@
-import * as React from "react"
-import * as SliderPrimitive from "@radix-ui/react-slider"
+import * as React from "react";
+import * as SliderPrimitive from "@radix-ui/react-slider";
 
-import { cn } from "@/lib/utils"
+import { cn } from "@/lib/utils";
 
 const MobileSlider = React.forwardRef<
   React.ElementRef<typeof SliderPrimitive.Root>,
@@ -14,14 +14,14 @@ const MobileSlider = React.forwardRef<
       // Enhanced mobile styling
       "h-12 py-4", // Larger touch area
       "cursor-pointer",
-      className
+      className,
     )}
     {...props}
   >
     <SliderPrimitive.Track className="relative h-3 w-full grow overflow-hidden rounded-full bg-secondary">
       <SliderPrimitive.Range className="absolute h-full bg-primary" />
     </SliderPrimitive.Track>
-    <SliderPrimitive.Thumb 
+    <SliderPrimitive.Thumb
       className={cn(
         "block h-7 w-7 rounded-full border-2 border-primary bg-background ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
         // Enhanced mobile thumb
@@ -31,11 +31,11 @@ const MobileSlider = React.forwardRef<
         // Ensure minimum touch target
         "min-h-[44px] min-w-[44px] cursor-grab active:cursor-grabbing",
         // Better visual feedback
-        "hover:scale-105"
-      )} 
+        "hover:scale-105",
+      )}
     />
   </SliderPrimitive.Root>
-))
-MobileSlider.displayName = SliderPrimitive.Root.displayName
+));
+MobileSlider.displayName = SliderPrimitive.Root.displayName;
 
-export { MobileSlider }
+export { MobileSlider };

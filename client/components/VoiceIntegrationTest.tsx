@@ -9,10 +9,13 @@ export const VoiceIntegrationTest: React.FC = () => {
   const voiceSettings = useVoiceSettings();
 
   const testPronunciation = () => {
-    enhancedAudioService.pronounceWord("Hello! Voice integration is working perfectly.", {
-      onStart: () => console.log("Test pronunciation started"),
-      onEnd: () => console.log("Test pronunciation ended"),
-    });
+    enhancedAudioService.pronounceWord(
+      "Hello! Voice integration is working perfectly.",
+      {
+        onStart: () => console.log("Test pronunciation started"),
+        onEnd: () => console.log("Test pronunciation ended"),
+      },
+    );
   };
 
   const changeVoice = (voiceType: VoiceType) => {
@@ -45,7 +48,9 @@ export const VoiceIntegrationTest: React.FC = () => {
               <Button
                 key={voiceType}
                 size="sm"
-                variant={voiceSettings.voiceType === voiceType ? "default" : "outline"}
+                variant={
+                  voiceSettings.voiceType === voiceType ? "default" : "outline"
+                }
                 onClick={() => changeVoice(voiceType)}
                 className="flex-1 capitalize"
               >

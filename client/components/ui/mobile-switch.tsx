@@ -1,7 +1,7 @@
-import * as React from "react"
-import * as SwitchPrimitives from "@radix-ui/react-switch"
+import * as React from "react";
+import * as SwitchPrimitives from "@radix-ui/react-switch";
 
-import { cn } from "@/lib/utils"
+import { cn } from "@/lib/utils";
 
 const MobileSwitch = React.forwardRef<
   React.ElementRef<typeof SwitchPrimitives.Root>,
@@ -16,7 +16,7 @@ const MobileSwitch = React.forwardRef<
       "active:scale-95 transition-all duration-150",
       // Improved accessibility
       "focus:ring-4 focus:ring-blue-200",
-      className
+      className,
     )}
     {...props}
     ref={ref}
@@ -25,11 +25,11 @@ const MobileSwitch = React.forwardRef<
       className={cn(
         "pointer-events-none block h-6 w-6 rounded-full bg-background shadow-lg ring-0 transition-transform data-[state=checked]:translate-x-6 data-[state=unchecked]:translate-x-0",
         // Enhanced mobile thumb
-        "border border-gray-200 shadow-md"
+        "border border-gray-200 shadow-md",
       )}
     />
   </SwitchPrimitives.Root>
-))
-MobileSwitch.displayName = SwitchPrimitives.Root.displayName
+));
+MobileSwitch.displayName = SwitchPrimitives.Root.displayName;
 
-export { MobileSwitch }
+export { MobileSwitch };

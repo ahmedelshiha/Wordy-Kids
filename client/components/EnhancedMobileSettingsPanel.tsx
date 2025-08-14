@@ -41,10 +41,9 @@ interface EnhancedMobileSettingsPanelProps {
   onClose: () => void;
 }
 
-export const EnhancedMobileSettingsPanel: React.FC<EnhancedMobileSettingsPanelProps> = ({
-  isOpen,
-  onClose,
-}) => {
+export const EnhancedMobileSettingsPanel: React.FC<
+  EnhancedMobileSettingsPanelProps
+> = ({ isOpen, onClose }) => {
   // Essential settings only
   const [soundOn, setSoundOn] = useState(isSoundEnabled());
   const [selectedVoiceType, setSelectedVoiceType] =
@@ -203,7 +202,12 @@ export const EnhancedMobileSettingsPanel: React.FC<EnhancedMobileSettingsPanelPr
 
   if (!isOpen) return null;
 
-  const MobileSettingRow = ({ icon: Icon, label, children, description }: any) => (
+  const MobileSettingRow = ({
+    icon: Icon,
+    label,
+    children,
+    description,
+  }: any) => (
     <div className="flex items-center justify-between py-4 px-3 border-b border-slate-100 last:border-b-0 min-h-[60px] touch-target">
       <div className="flex items-center gap-4 flex-1 min-w-0">
         <Icon className="w-5 h-5 text-slate-600 flex-shrink-0" />
@@ -229,9 +233,7 @@ export const EnhancedMobileSettingsPanel: React.FC<EnhancedMobileSettingsPanelPr
     >
       <div className="flex items-center gap-3">
         <span className="text-xl">{emoji}</span>
-        <span className="font-semibold text-slate-900 text-base">
-          {title}
-        </span>
+        <span className="font-semibold text-slate-900 text-base">{title}</span>
       </div>
       {isExpanded ? (
         <ChevronUp className="w-5 h-5 text-slate-500" />
@@ -249,10 +251,10 @@ export const EnhancedMobileSettingsPanel: React.FC<EnhancedMobileSettingsPanelPr
             <CardTitle className="flex items-center gap-3">
               <Settings className="w-6 h-6" />
               <div>
-                <h2 className="text-xl font-bold">
-                  Learning Settings
-                </h2>
-                <p className="text-sm opacity-90 mt-1">Personalize your experience</p>
+                <h2 className="text-xl font-bold">Learning Settings</h2>
+                <p className="text-sm opacity-90 mt-1">
+                  Personalize your experience
+                </p>
               </div>
             </CardTitle>
             <Button
@@ -294,7 +296,8 @@ export const EnhancedMobileSettingsPanel: React.FC<EnhancedMobileSettingsPanelPr
                         setSoundOn(checked);
                         setSoundEnabled(checked);
                         setHasUnsavedChanges(true);
-                        if (deviceInfo.hasHaptic) triggerHapticFeedback("light");
+                        if (deviceInfo.hasHaptic)
+                          triggerHapticFeedback("light");
                       }}
                     />
                   </MobileSettingRow>
@@ -310,7 +313,8 @@ export const EnhancedMobileSettingsPanel: React.FC<EnhancedMobileSettingsPanelPr
                         onValueChange={(value) => {
                           setVolume(value);
                           setHasUnsavedChanges(true);
-                          if (deviceInfo.hasHaptic) triggerHapticFeedback("light");
+                          if (deviceInfo.hasHaptic)
+                            triggerHapticFeedback("light");
                         }}
                         max={100}
                         min={0}
@@ -330,7 +334,8 @@ export const EnhancedMobileSettingsPanel: React.FC<EnhancedMobileSettingsPanelPr
                       onCheckedChange={(checked) => {
                         setAutoPlay(checked);
                         setHasUnsavedChanges(true);
-                        if (deviceInfo.hasHaptic) triggerHapticFeedback("light");
+                        if (deviceInfo.hasHaptic)
+                          triggerHapticFeedback("light");
                       }}
                     />
                   </MobileSettingRow>
@@ -347,7 +352,11 @@ export const EnhancedMobileSettingsPanel: React.FC<EnhancedMobileSettingsPanelPr
                           label: "Woman",
                         },
                         { type: "man" as VoiceType, emoji: "👨", label: "Man" },
-                        { type: "kid" as VoiceType, emoji: "🧒", label: "Child" },
+                        {
+                          type: "kid" as VoiceType,
+                          emoji: "🧒",
+                          label: "Child",
+                        },
                       ].map((voice) => (
                         <Button
                           key={voice.type}
@@ -400,7 +409,8 @@ export const EnhancedMobileSettingsPanel: React.FC<EnhancedMobileSettingsPanelPr
                           checked,
                         );
                         setHasUnsavedChanges(true);
-                        if (deviceInfo.hasHaptic) triggerHapticFeedback("light");
+                        if (deviceInfo.hasHaptic)
+                          triggerHapticFeedback("light");
                       }}
                     />
                   </MobileSettingRow>
@@ -415,7 +425,8 @@ export const EnhancedMobileSettingsPanel: React.FC<EnhancedMobileSettingsPanelPr
                       onCheckedChange={(checked) => {
                         setLargeText(checked);
                         setHasUnsavedChanges(true);
-                        if (deviceInfo.hasHaptic) triggerHapticFeedback("light");
+                        if (deviceInfo.hasHaptic)
+                          triggerHapticFeedback("light");
                       }}
                     />
                   </MobileSettingRow>
@@ -430,7 +441,8 @@ export const EnhancedMobileSettingsPanel: React.FC<EnhancedMobileSettingsPanelPr
                       onCheckedChange={(checked) => {
                         setBackgroundAnimations(checked);
                         setHasUnsavedChanges(true);
-                        if (deviceInfo.hasHaptic) triggerHapticFeedback("light");
+                        if (deviceInfo.hasHaptic)
+                          triggerHapticFeedback("light");
                       }}
                     />
                   </MobileSettingRow>
@@ -453,7 +465,10 @@ export const EnhancedMobileSettingsPanel: React.FC<EnhancedMobileSettingsPanelPr
                     label="Daily Word Goal"
                     description={`Target: ${dailyGoal[0]} words per day`}
                   >
-                    <Badge variant="secondary" className="text-sm px-3 py-1 font-semibold">
+                    <Badge
+                      variant="secondary"
+                      className="text-sm px-3 py-1 font-semibold"
+                    >
                       {dailyGoal[0]}
                     </Badge>
                   </MobileSettingRow>
@@ -463,7 +478,8 @@ export const EnhancedMobileSettingsPanel: React.FC<EnhancedMobileSettingsPanelPr
                       onValueChange={(value) => {
                         setDailyGoal(value);
                         setHasUnsavedChanges(true);
-                        if (deviceInfo.hasHaptic) triggerHapticFeedback("light");
+                        if (deviceInfo.hasHaptic)
+                          triggerHapticFeedback("light");
                       }}
                       max={50}
                       min={5}
@@ -499,7 +515,8 @@ export const EnhancedMobileSettingsPanel: React.FC<EnhancedMobileSettingsPanelPr
                       onCheckedChange={(checked) => {
                         setDailyReminders(checked);
                         setHasUnsavedChanges(true);
-                        if (deviceInfo.hasHaptic) triggerHapticFeedback("light");
+                        if (deviceInfo.hasHaptic)
+                          triggerHapticFeedback("light");
                       }}
                     />
                   </MobileSettingRow>
@@ -515,7 +532,8 @@ export const EnhancedMobileSettingsPanel: React.FC<EnhancedMobileSettingsPanelPr
                         onCheckedChange={(checked) => {
                           setHapticFeedback(checked);
                           setHasUnsavedChanges(true);
-                          if (deviceInfo.hasHaptic) triggerHapticFeedback("light");
+                          if (deviceInfo.hasHaptic)
+                            triggerHapticFeedback("light");
                         }}
                       />
                     </MobileSettingRow>
