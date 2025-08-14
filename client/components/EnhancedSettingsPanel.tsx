@@ -103,6 +103,9 @@ export const EnhancedSettingsPanel: React.FC<EnhancedSettingsPanelProps> = ({
   const [activeTab, setActiveTab] = useState("audio");
   const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false);
 
+  // Mobile device detection
+  const deviceInfo = useMobileDevice();
+
   useEffect(() => {
     // Initialize settings from localStorage and audio service
     setSelectedVoiceType(audioService.getVoiceType());
