@@ -7,6 +7,7 @@ import React, {
 } from "react";
 import { EnhancedAchievementTracker } from "@/lib/enhancedAchievementTracker";
 import { CelebrationEffect } from "@/components/CelebrationEffect";
+import { Sparkles, Star, Crown, Zap } from "lucide-react";
 import { audioService } from "@/lib/audioService";
 import {
   generateListenAndGuessWords,
@@ -163,6 +164,9 @@ export default function ListenAndGuessGame({
   const [showAnswer, setShowAnswer] = useState(false);
   const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
   const [showCelebration, setShowCelebration] = useState(false);
+  const [showSparkleExplosion, setShowSparkleExplosion] = useState(false);
+  const [achievementUnlocked, setAchievementUnlocked] = useState<string | null>(null);
+  const [sparkleCount, setSparkleCount] = useState(0);
 
   const { containerRef, fire } = useConfetti();
 
@@ -295,10 +299,15 @@ export default function ListenAndGuessGame({
           return ns;
         });
 
-        // Play celebration effects like other quizzes
+        // Enhanced celebration effects with sparkles like other quizzes
         setShowCelebration(true);
+        setShowSparkleExplosion(true);
+        setSparkleCount(prev => prev + 1);
         audioService.playSuccessSound();
         fire();
+
+        // Auto-hide sparkle explosion after animation
+        setTimeout(() => setShowSparkleExplosion(false), 1500);
       } else {
         setWrongCount((w) => w + 1);
         setStreak(0);
@@ -399,7 +408,17 @@ export default function ListenAndGuessGame({
               console.log(
                 `🎉 Listen & Guess: ${newAchievements.length} new achievements unlocked!`,
               );
-              // Show achievement notification (could be enhanced with UI feedback)
+
+              // Enhanced UI feedback for achievement unlocks
+              setAchievementUnlocked(newAchievements[0].name);
+              setShowSparkleExplosion(true);
+
+              // Auto-hide achievement notification
+              setTimeout(() => {
+                setAchievementUnlocked(null);
+                setShowSparkleExplosion(false);
+              }, 3000);
+
               newAchievements.forEach((achievement) => {
                 console.log(
                   `✨ Achievement: ${achievement.name} - ${achievement.description}`,
@@ -490,10 +509,17 @@ export default function ListenAndGuessGame({
     <div
       className={`relative w-full max-w-md mx-auto select-none ${className}`}
     >
-      {/* Confetti layer */}
+      {/* Confetti and sparkle effects layer */}
       <div
         ref={containerRef}
         className="pointer-events-none absolute inset-0 overflow-hidden"
+      />
+
+      {/* Enhanced celebration effects */}
+      <CelebrationEffect
+        trigger={showCelebration}
+        type="stars"
+        onComplete={() => setShowCelebration(false)}
       />
 
       {/* Card container with enhanced mobile styling */}
@@ -511,6 +537,42 @@ export default function ListenAndGuessGame({
           >
             ✕
           </button>
+        )}
+
+        {/* Sparkle explosion effect */}
+        {showSparkleExplosion && (
+          <div className="absolute inset-0 pointer-events-none z-30">
+            <div className="absolute top-1/4 left-1/4 animate-ping">
+              <Sparkles className="w-8 h-8 text-yellow-300" />
+            </div>
+            <div className="absolute top-1/3 right-1/4 animate-pulse animation-delay-200">
+              <Star className="w-6 h-6 text-pink-300" />
+            </div>
+            <div className="absolute bottom-1/3 left-1/3 animate-bounce animation-delay-100">
+              <Zap className="w-7 h-7 text-blue-300" />
+            </div>
+            <div className="absolute top-1/2 right-1/3 animate-spin">
+              <Crown className="w-5 h-5 text-purple-300" />
+            </div>
+          </div>
+        )}
+
+        {/* Achievement unlock notification */}
+        {achievementUnlocked && (
+          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-40 animate-bounce">
+            <div className="bg-gradient-to-r from-yellow-400 via-pink-500 to-purple-600 p-4 rounded-2xl shadow-2xl border-4 border-white/50 backdrop-blur-sm">
+              <div className="flex items-center gap-3 text-white">
+                <div className="relative">
+                  <Crown className="w-8 h-8" />
+                  <Sparkles className="w-4 h-4 absolute -top-1 -right-1 animate-spin" />
+                </div>
+                <div>
+                  <div className="font-bold text-lg">🎉 Achievement Unlocked!</div>
+                  <div className="text-sm opacity-90">{achievementUnlocked}</div>
+                </div>
+              </div>
+            </div>
+          </div>
         )}
 
         {/* Top bar: progress + round */}
@@ -579,10 +641,13 @@ export default function ListenAndGuessGame({
                 <div className="w-full h-full flex items-center justify-center p-3">
                   <span className="text-6xl md:text-8xl">{img}</span>
                 </div>
-                {/* fun corner badge with animation */}
-                <span className="absolute top-2 left-2 text-lg animate-sparkle">
-                  ✨
-                </span>
+                {/* Enhanced fun corner badge with dynamic sparkles */}
+                <div className="absolute top-2 left-2">
+                  <span className="text-lg animate-sparkle">✨</span>
+                  {sparkleCount > 3 && (
+                    <Sparkles className="w-4 h-4 absolute -top-1 -right-1 text-yellow-400 animate-spin" />
+                  )}
+                </div>
 
                 {/* Answer feedback with enhanced animations */}
                 {showAnswer && isCorrect && (
@@ -606,9 +671,14 @@ export default function ListenAndGuessGame({
                   </div>
                 )}
 
-                {/* Sparkle effects for hover */}
+                {/* Enhanced sparkle effects for hover and interaction */}
                 <div className="absolute top-1 right-1 opacity-0 hover:opacity-100 transition-opacity">
                   <span className="text-xs animate-mobile-sparkle">⭐</span>
+                  {showSparkleExplosion && (
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <Sparkles className="w-6 h-6 text-yellow-300 animate-ping" />
+                    </div>
+                  )}
                 </div>
               </button>
             );
@@ -641,7 +711,7 @@ export default function ListenAndGuessGame({
         </div>
       </div>
 
-      {/* Enhanced styles for confetti dots and animations */}
+      {/* Enhanced styles for confetti, sparkles, and animations */}
       <style>{`
         .confetti-dot{position:absolute;top:60%;border-radius:9999px;box-shadow:0 0 0 1px rgba(255,255,255,.15) inset;}
 
@@ -661,12 +731,39 @@ export default function ListenAndGuessGame({
           }
         }
 
+        @keyframes sparkleRotate {
+          0% { transform: rotate(0deg) scale(1); }
+          25% { transform: rotate(90deg) scale(1.2); }
+          50% { transform: rotate(180deg) scale(1); }
+          75% { transform: rotate(270deg) scale(1.2); }
+          100% { transform: rotate(360deg) scale(1); }
+        }
+
+        @keyframes achievementGlow {
+          0%, 100% {
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+            transform: scale(1);
+          }
+          50% {
+            box-shadow: 0 0 40px rgba(255, 215, 0, 0.8);
+            transform: scale(1.05);
+          }
+        }
+
         .card-entrance {
           animation: cardEntrance 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
 
         .celebration-pulse {
           animation: celebrationPulse 0.8s ease-in-out;
+        }
+
+        .sparkle-rotate {
+          animation: sparkleRotate 2s ease-in-out infinite;
+        }
+
+        .achievement-glow {
+          animation: achievementGlow 1.5s ease-in-out infinite;
         }
       `}</style>
     </div>
