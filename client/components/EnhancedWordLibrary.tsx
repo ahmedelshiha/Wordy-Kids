@@ -30,6 +30,7 @@ import {
   Shuffle,
   Play,
   Pause,
+  RefreshCw,
 } from "lucide-react";
 import { EnhancedWordCard } from "./EnhancedWordCard";
 import { EnhancedCategorySelector } from "./EnhancedCategorySelector";
