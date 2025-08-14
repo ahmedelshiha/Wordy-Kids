@@ -209,13 +209,13 @@ export const WordCard: React.FC<WordCardProps> = ({
     const touch = e.changedTouches[0];
     const deltaX = touch.clientX - touchStart.x;
     const deltaY = touch.clientY - touchStart.y;
-    const threshold = 60;
+    const threshold = 40; // Reduced threshold for more responsive gestures
 
     setIsGesturing(false);
     setSwipeDirection(null);
     setTouchPosition(null);
 
-    // Enhanced swipe gestures with improved back navigation
+    // Enhanced swipe gestures with improved back navigation and mobile optimization
     if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > threshold) {
       if (deltaX > 0) {
         if (isFlipped) {
@@ -223,14 +223,14 @@ export const WordCard: React.FC<WordCardProps> = ({
           setIsFlipped(false);
           audioService.playWhooshSound();
           if (navigator.vibrate) {
-            navigator.vibrate([50, 30, 50]);
+            navigator.vibrate([60, 40, 60]);
           }
         } else {
           // Swipe right on front - flip to back
           setIsFlipped(true);
           audioService.playWhooshSound();
           if (navigator.vibrate) {
-            navigator.vibrate([50, 30, 50]);
+            navigator.vibrate([60, 40, 60]);
           }
         }
       } else {
@@ -245,7 +245,17 @@ export const WordCard: React.FC<WordCardProps> = ({
       setIsFlipped(false);
       audioService.playWhooshSound();
       if (navigator.vibrate) {
-        navigator.vibrate([40, 20, 40]);
+        navigator.vibrate([50, 30, 50]);
+      }
+    } else if (Math.abs(deltaX) < 20 && Math.abs(deltaY) < 20) {
+      // Small movement - consider it a tap on mobile
+      if (isFlipped) {
+        // Tap on back - go back to front for better mobile UX
+        setIsFlipped(false);
+        audioService.playWhooshSound();
+        if (navigator.vibrate) {
+          navigator.vibrate([30, 20, 30]);
+        }
       }
     }
 
