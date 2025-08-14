@@ -390,7 +390,7 @@ export const EnhancedWordLibrary: React.FC<EnhancedWordLibraryProps> = ({
                     <RefreshCw className="w-3 h-3 animate-spin text-blue-500" />
                   )}
                   <span className="text-green-600">
-                    📚 {realTimeWords.length} words
+                    📚 {realTimeWords.length > 0 ? realTimeWords.length : wordsDatabase.length} words
                   </span>
                   <span>
                     {Math.round(
