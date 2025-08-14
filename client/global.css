@@ -752,6 +752,36 @@
   outline: 3px solid #3b82f6;
   outline-offset: 2px;
   border-radius: 8px;
+  box-shadow: 0 0 0 6px rgba(59, 130, 246, 0.15);
+}
+
+/* Enhanced accessibility helpers */
+.focus-ring-mobile {
+  transition: all 0.2s ease-out;
+}
+
+.focus-ring-mobile:focus-visible {
+  outline: 3px solid #3b82f6;
+  outline-offset: 2px;
+  box-shadow: 0 0 0 6px rgba(59, 130, 246, 0.15);
+}
+
+/* Screen reader improvements */
+.sr-only-mobile-show:focus {
+  position: static;
+  width: auto;
+  height: auto;
+  padding: 0.75rem 1rem;
+  margin: 0.5rem;
+  overflow: visible;
+  clip: auto;
+  white-space: normal;
+  background: #1f2937;
+  color: #ffffff;
+  border-radius: 8px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  z-index: 9999;
 }
 
 /* Improved button states for touch */
