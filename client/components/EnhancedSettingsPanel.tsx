@@ -358,7 +358,7 @@ export const EnhancedSettingsPanel: React.FC<EnhancedSettingsPanelProps> = ({
                   </div>
 
                   {/* Sound Effects Toggle */}
-                  <Card className="p-4 hover:shadow-md transition-shadow">
+                  <Card className="settings-option-mobile p-4 hover:shadow-md transition-shadow">
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-3">
                         {soundOn ? (
