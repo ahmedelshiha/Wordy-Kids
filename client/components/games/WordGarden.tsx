@@ -18,6 +18,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { motion, AnimatePresence } from "framer-motion";
+import { Sparkles, Star, Crown, Zap } from "lucide-react";
 
 /**
  * Word Garden — Listen & Pick Game for Ages 3–5
@@ -161,7 +162,7 @@ const PLANT_TYPES = [
   ["🌱", "💚", "🌷"], // tulip - green heart to pink tulip
   ["🌱", "🌳", "🌸"], // cherry tree - tree to cherry blossom
   ["🌱", "🍀", "🌺"], // clover hibiscus - clover to tropical flower
-  ["🌱", "🎋", "🏵️"], // bamboo rosette - bamboo to decorative flower
+  ["��", "🎋", "🏵️"], // bamboo rosette - bamboo to decorative flower
   ["🌱", "🌲", "🍄"], // forest mushroom - pine to mushroom
   ["🌱", "🪴", "🌻"], // potted sunflower - pot plant to big sunflower
   ["🌱", "🌿", "💐"], // bouquet garden - leaves to flower bouquet
@@ -519,6 +520,10 @@ export default function WordGardenGame({
   const [locked, setLocked] = useState(false);
   const [attempts, setAttempts] = useState(0); // attempts for current word
   const [gameComplete, setGameComplete] = useState(false);
+  const [showAnswer, setShowAnswer] = useState(false);
+  const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
+  const [showSparkleExplosion, setShowSparkleExplosion] = useState(false);
+  const [sparkleCount, setSparkleCount] = useState(0);
 
   // Achievement popup state
   const [showAchievement, setShowAchievement] = useState(false);
@@ -658,6 +663,8 @@ export default function WordGardenGame({
       if (!current || locked) return;
       setLocked(true);
       setAttempts((a) => a + 1);
+      setSelectedAnswer(img);
+      setShowAnswer(true);
 
       const isCorrect = img === current.imageUrl;
 
@@ -684,8 +691,13 @@ export default function WordGardenGame({
         // Clear the recently grown state after animation
         setTimeout(() => setRecentlyGrown(null), 1200);
 
-        // Sparkles + confetti
+        // Enhanced celebration effects with sparkles
+        setShowSparkleExplosion(true);
+        setSparkleCount((prev) => prev + 1);
         burst();
+
+        // Auto-hide sparkle explosion after animation
+        setTimeout(() => setShowSparkleExplosion(false), 1500);
 
         checkAchievements(nextCorrect, nextStreak);
 
@@ -699,6 +711,8 @@ export default function WordGardenGame({
         setTimeout(() => {
           setAttempts(0);
           setLocked(false);
+          setShowAnswer(false);
+          setSelectedAnswer(null);
           const nextRound = roundIdx + 1;
           if (nextRound < pool.length) {
             setRoundIdx(nextRound);
@@ -716,7 +730,11 @@ export default function WordGardenGame({
         // gentle buzz
         if (navigator && "vibrate" in navigator)
           (navigator as any).vibrate([40, 60, 40]);
-        setTimeout(() => setLocked(false), 400);
+        setTimeout(() => {
+          setLocked(false);
+          setShowAnswer(false);
+          setSelectedAnswer(null);
+        }, 1200);
       }
     },
     [
@@ -844,32 +862,98 @@ export default function WordGardenGame({
           </button>
         </div>
 
+        {/* Sparkle explosion effect */}
+        {showSparkleExplosion && (
+          <div className="absolute inset-0 pointer-events-none z-30">
+            <div className="absolute top-1/4 left-1/4 animate-ping">
+              <Sparkles className="w-8 h-8 text-yellow-300" />
+            </div>
+            <div className="absolute top-1/3 right-1/4 animate-pulse animation-delay-200">
+              <Star className="w-6 h-6 text-pink-300" />
+            </div>
+            <div className="absolute bottom-1/3 left-1/3 animate-bounce animation-delay-100">
+              <Zap className="w-7 h-7 text-blue-300" />
+            </div>
+            <div className="absolute top-1/2 right-1/3 animate-spin">
+              <Crown className="w-5 h-5 text-purple-300" />
+            </div>
+          </div>
+        )}
+
         {/* Options grid */}
         <div
           className={`grid gap-4 ${optionsPerRound === 4 ? "grid-cols-2" : "grid-cols-3"}`}
         >
-          {options.map((img, i) => (
-            <button
-              key={i}
-              onClick={() => choose(img)}
-              disabled={locked}
-              className="relative aspect-square rounded-3xl bg-white/95 hover:bg-white active:scale-95 transition-all duration-300 shadow-mobile-lg overflow-hidden border-4 border-transparent focus:outline-none focus:ring-4 focus:ring-yellow-300 touch-target mobile-optimized disabled:opacity-50"
-              style={{
-                animationDelay: `${i * 100}ms`,
-              }}
-            >
-              <div className="w-full h-full flex items-center justify-center p-2">
-                <img
-                  src={img}
-                  alt="option"
-                  className="w-full h-full object-contain rounded-2xl"
-                />
-              </div>
-              <div className="absolute top-2 left-2">
-                <span className="text-lg animate-sparkle">✨</span>
-              </div>
-            </button>
-          ))}
+          {options.map((img, i) => {
+            const isCorrect = img === current.imageUrl;
+            const isSelected = img === selectedAnswer;
+            const shouldHighlight = showAnswer && (isCorrect || isSelected);
+
+            return (
+              <button
+                key={i}
+                onClick={() => choose(img)}
+                disabled={locked}
+                className={`relative aspect-square rounded-3xl bg-white/95 hover:bg-white active:scale-95 transition-all duration-300 shadow-mobile-lg overflow-hidden border-4 focus:outline-none focus:ring-4 focus:ring-yellow-300 touch-target mobile-optimized ${
+                  shouldHighlight
+                    ? isCorrect
+                      ? "border-green-400 ring-4 ring-green-300 animate-gentle-bounce border-rainbow"
+                      : "border-red-400 ring-4 ring-red-300 animate-wiggle"
+                    : "border-transparent hover:border-yellow-300 animate-fade-in"
+                } ${locked ? "cursor-not-allowed" : "cursor-pointer hover:shadow-xl hover:scale-105"}`}
+                style={{
+                  animationDelay: `${i * 100}ms`,
+                }}
+              >
+                <div className="w-full h-full flex items-center justify-center p-2">
+                  <img
+                    src={img}
+                    alt="option"
+                    className="w-full h-full object-contain rounded-2xl"
+                  />
+                </div>
+                {/* Enhanced fun corner badge with dynamic sparkles */}
+                <div className="absolute top-2 left-2">
+                  <span className="text-lg animate-sparkle">✨</span>
+                  {sparkleCount > 3 && (
+                    <Sparkles className="w-4 h-4 absolute -top-1 -right-1 text-yellow-400 animate-spin" />
+                  )}
+                </div>
+
+                {/* Answer feedback with enhanced animations */}
+                {showAnswer && isCorrect && (
+                  <div className="absolute inset-0 bg-green-500/30 flex items-center justify-center backdrop-blur-sm">
+                    <div className="text-center">
+                      <span className="text-5xl animate-gentle-bounce">✅</span>
+                      <div className="text-white font-bold text-sm mt-1 text-shadow">
+                        Correct!
+                      </div>
+                    </div>
+                  </div>
+                )}
+                {showAnswer && isSelected && !isCorrect && (
+                  <div className="absolute inset-0 bg-red-500/30 flex items-center justify-center backdrop-blur-sm">
+                    <div className="text-center">
+                      <span className="text-5xl animate-wiggle">❌</span>
+                      <div className="text-white font-bold text-sm mt-1 text-shadow">
+                        Try again!
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                {/* Enhanced sparkle effects for hover and interaction */}
+                <div className="absolute top-1 right-1 opacity-0 hover:opacity-100 transition-opacity">
+                  <span className="text-xs animate-mobile-sparkle">⭐</span>
+                  {showSparkleExplosion && (
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <Sparkles className="w-6 h-6 text-yellow-300 animate-ping" />
+                    </div>
+                  )}
+                </div>
+              </button>
+            );
+          })}
         </div>
 
         {/* Bottom: XP + streak */}
@@ -928,8 +1012,42 @@ export default function WordGardenGame({
         })}
       </div>
 
-      {/* Styles for confetti dots */}
-      <style>{`.wg-confetti{position:absolute;top:60%;border-radius:9999px;box-shadow:0 0 0 1px rgba(255,255,255,.15) inset}`}</style>
+      {/* Enhanced styles for confetti, sparkles, and animations */}
+      <style>{`
+        .wg-confetti{position:absolute;top:60%;border-radius:9999px;box-shadow:0 0 0 1px rgba(255,255,255,.15) inset}
+
+        @keyframes celebrationPulse {
+          0%, 100% { transform: scale(1); }
+          50% { transform: scale(1.05); }
+        }
+
+        @keyframes cardEntrance {
+          0% {
+            opacity: 0;
+            transform: translateY(20px) scale(0.8);
+          }
+          100% {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+          }
+        }
+
+        @keyframes sparkleRotate {
+          0% { transform: rotate(0deg) scale(1); }
+          25% { transform: rotate(90deg) scale(1.2); }
+          50% { transform: rotate(180deg) scale(1); }
+          75% { transform: rotate(270deg) scale(1.2); }
+          100% { transform: rotate(360deg) scale(1); }
+        }
+
+        .celebration-pulse {
+          animation: celebrationPulse 0.8s ease-in-out;
+        }
+
+        .sparkle-rotate {
+          animation: sparkleRotate 2s ease-in-out infinite;
+        }
+      `}</style>
 
       {/* Green Garden Achievement Popup */}
       <GardenAchievementPopup
