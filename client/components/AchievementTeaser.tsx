@@ -180,6 +180,17 @@ export function AchievementTeaser({ className }: AchievementTeaserProps) {
                 </motion.div>
               </div>
 
+              {/* Mobile tap indicator */}
+              <div className="flex items-center justify-center mt-1 sm:hidden">
+                <motion.div
+                  animate={{ opacity: [0.3, 0.7, 0.3] }}
+                  transition={{ duration: 2, repeat: Infinity }}
+                  className="text-xs text-gray-500 flex items-center gap-1"
+                >
+                  👆 <span>Tap for new message</span>
+                </motion.div>
+              </div>
+
               {isTease && (
                 <motion.div
                   initial={{ width: 0 }}
