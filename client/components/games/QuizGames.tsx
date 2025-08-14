@@ -129,7 +129,8 @@ export function QuizGames({
     {
       id: "listen-guess",
       title: "Listen & Guess",
-      description: "Listen carefully and pick the right picture! Perfect for audio learners.",
+      description:
+        "Listen carefully and pick the right picture! Perfect for audio learners.",
       icon: "🎧",
       difficulty: "Easy",
       questions: 10,
