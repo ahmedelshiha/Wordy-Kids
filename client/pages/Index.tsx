@@ -2682,125 +2682,33 @@ export default function Index({ initialProfile }: IndexProps) {
 
                           {/* Kid-Friendly Quiz Cards - Mobile Optimized */}
                           <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 md:gap-4 max-w-6xl mx-auto px-2">
-                            {/* Matching Game */}
-                            <Card className="hidden cursor-pointer hover:shadow-xl transition-all duration-300 hover:scale-105 border-2 border-educational-purple/30">
-                              <CardContent className="p-6 text-center">
-                                <div className="text-6xl mb-4">🧩</div>
-                                <h3 className="text-xl font-bold text-educational-purple mb-2">
-                                  Matching Game
-                                </h3>
-                                <p className="text-gray-600 mb-4">
-                                  Match words with their meanings in this brain
-                                  game!
-                                </p>
-                                <div className="flex justify-center gap-2 mb-4">
-                                  <span className="bg-educational-purple/20 text-educational-purple px-2 py-1 rounded-full text-xs">
-                                    Memory Challenge
-                                  </span>
-                                  <span className="bg-educational-purple/20 text-educational-purple px-2 py-1 rounded-full text-xs">
-                                    Timed
-                                  </span>
-                                </div>
-                                <Button
-                                  onClick={() => setShowMatchingGame(true)}
-                                  className="w-full bg-educational-purple text-white hover:bg-educational-purple/90"
-                                >
-                                  <Shuffle className="w-4 h-4 mr-2" />
-                                  Start Matching!
-                                </Button>
-                              </CardContent>
-                            </Card>
-                            {/* Easy Quiz */}
-                            <Card className="hidden cursor-pointer hover:shadow-lg transition-all duration-300 hover:scale-105 border-2 border-educational-green/30 animate-kid-float-delayed">
-                              <CardContent className="p-6 text-center">
-                                <div className="text-6xl mb-4">🌱</div>
-                                <h3 className="text-xl font-bold text-educational-green mb-2">
-                                  Easy Quiz
-                                </h3>
-                                <p className="text-gray-600 mb-4">
-                                  Perfect for beginners! Simple words and
-                                  definitions.
-                                </p>
-                                <div className="flex justify-center gap-2 mb-4">
-                                  <span className="bg-educational-green/20 text-educational-green px-2 py-1 rounded-full text-xs">
-                                    5 Questions
-                                  </span>
-                                  <span className="bg-educational-green/20 text-educational-green px-2 py-1 rounded-full text-xs">
-                                    30s Each
-                                  </span>
-                                </div>
-                                <Button
-                                  onClick={() => {
-                                    setSelectedQuizType("quick");
-                                    setShowQuiz(true);
-                                  }}
-                                  className="w-full bg-educational-green text-white hover:bg-educational-green/90"
-                                >
-                                  <Play className="w-4 h-4 mr-2" />
-                                  Start Easy Quiz
-                                </Button>
-                              </CardContent>
-                            </Card>
-
-                            {/* Standard Quiz */}
-                            <Card className="hidden cursor-pointer hover:shadow-lg transition-all duration-300 hover:scale-105 border-2 border-educational-blue/30 animate-kid-float">
+                            {/* Listen & Guess Quiz */}
+                            <Card className="cursor-pointer hover:shadow-lg transition-all duration-300 hover:scale-105 border-2 border-educational-pink/30 animate-kid-float">
                               <CardContent className="p-3 md:p-4 text-center">
                                 <div className="text-3xl md:text-5xl mb-2 md:mb-3 animate-gentle-bounce">
-                                  🎯
+                                  🎧
                                 </div>
-                                <h3 className="text-sm md:text-lg font-bold text-educational-blue mb-1 md:mb-2">
-                                  Challenge Me!
+                                <h3 className="text-sm md:text-lg font-bold text-educational-pink mb-1 md:mb-2">
+                                  Listen & Guess
                                 </h3>
                                 <p className="text-xs md:text-sm text-gray-600 mb-2 md:mb-3 hidden md:block">
-                                  Ready for more? Let's go! 💪
+                                  Listen and pick the right picture! 🎵
                                 </p>
                                 <div className="flex justify-center gap-1 mb-2 md:mb-3">
-                                  <span className="bg-educational-blue/20 text-educational-blue px-1.5 py-0.5 rounded-full text-xs">
-                                    🎯 Cool!
+                                  <span className="bg-educational-pink/20 text-educational-pink px-1.5 py-0.5 rounded-full text-xs">
+                                    🎯 Audio!
                                   </span>
                                 </div>
                                 <Button
                                   onClick={() => {
-                                    setSelectedQuizType("standard");
+                                    setSelectedQuizType("listen-guess");
                                     setShowQuiz(true);
                                   }}
-                                  className="w-full bg-educational-blue text-white hover:bg-educational-blue/90 py-1.5 md:py-2 text-xs md:text-sm rounded-xl animate-wiggle"
+                                  className="w-full bg-educational-pink text-white hover:bg-educational-pink/90 py-1.5 md:py-2 text-xs md:text-sm rounded-xl animate-wiggle"
                                   size="sm"
                                 >
                                   <Play className="w-3 h-3 md:w-4 md:h-4 mr-1" />
-                                  Bring It On! ⚡
-                                </Button>
-                              </CardContent>
-                            </Card>
-
-                            {/* Challenge Quiz */}
-                            <Card className="hidden cursor-pointer hover:shadow-lg transition-all duration-300 hover:scale-105 border-2 border-educational-purple/30 animate-kid-float-delayed">
-                              <CardContent className="p-6 text-center">
-                                <div className="text-6xl mb-4">🏆</div>
-                                <h3 className="text-xl font-bold text-educational-purple mb-2">
-                                  Challenge Quiz
-                                </h3>
-                                <p className="text-gray-600 mb-4">
-                                  For advanced learners! Tricky words and
-                                  concepts.
-                                </p>
-                                <div className="flex justify-center gap-2 mb-4">
-                                  <span className="bg-educational-purple/20 text-educational-purple px-2 py-1 rounded-full text-xs">
-                                    15 Questions
-                                  </span>
-                                  <span className="bg-educational-purple/20 text-educational-purple px-2 py-1 rounded-full text-xs">
-                                    25s Each
-                                  </span>
-                                </div>
-                                <Button
-                                  onClick={() => {
-                                    setSelectedQuizType("challenge");
-                                    setShowQuiz(true);
-                                  }}
-                                  className="w-full bg-educational-purple text-white hover:bg-educational-purple/90"
-                                >
-                                  <Play className="w-4 h-4 mr-2" />
-                                  Start Challenge Quiz
+                                  Let's Listen! 🎧
                                 </Button>
                               </CardContent>
                             </Card>
@@ -2836,68 +2744,6 @@ export default function Index({ initialProfile }: IndexProps) {
                               </CardContent>
                             </Card>
 
-                            {/* Spelling Quiz */}
-                            <Card className="hidden cursor-pointer hover:shadow-xl transition-all duration-300 hover:scale-105 border-2 border-educational-pink/30">
-                              <CardContent className="p-6 text-center">
-                                <div className="text-6xl mb-4">✏️</div>
-                                <h3 className="text-xl font-bold text-educational-pink mb-2">
-                                  Spelling Quiz
-                                </h3>
-                                <p className="text-gray-600 mb-4">
-                                  Test your spelling skills with audio
-                                  challenges.
-                                </p>
-                                <div className="flex justify-center gap-2 mb-4">
-                                  <span className="bg-educational-pink/20 text-educational-pink px-2 py-1 rounded-full text-xs">
-                                    10 Questions
-                                  </span>
-                                  <span className="bg-educational-pink/20 text-educational-pink px-2 py-1 rounded-full text-xs">
-                                    45s Each
-                                  </span>
-                                </div>
-                                <Button
-                                  onClick={() => {
-                                    setSelectedQuizType("spelling");
-                                    setShowQuiz(true);
-                                  }}
-                                  className="w-full bg-educational-pink text-white hover:bg-educational-pink/90"
-                                >
-                                  <Play className="w-4 h-4 mr-2" />
-                                  Start Spelling Quiz
-                                </Button>
-                              </CardContent>
-                            </Card>
-
-                            {/* Speed Quiz */}
-                            <Card className="hidden cursor-pointer hover:shadow-xl transition-all duration-300 hover:scale-105 border-2 border-educational-yellow/30">
-                              <CardContent className="p-6 text-center">
-                                <div className="text-6xl mb-4">⚡</div>
-                                <h3 className="text-xl font-bold text-educational-yellow mb-2">
-                                  Speed Quiz
-                                </h3>
-                                <p className="text-gray-600 mb-4">
-                                  Quick-fire questions! How fast can you answer?
-                                </p>
-                                <div className="flex justify-center gap-2 mb-4">
-                                  <span className="bg-educational-yellow/20 text-educational-yellow px-2 py-1 rounded-full text-xs">
-                                    20 Questions
-                                  </span>
-                                  <span className="bg-educational-yellow/20 text-educational-yellow px-2 py-1 rounded-full text-xs">
-                                    15s Each
-                                  </span>
-                                </div>
-                                <Button
-                                  onClick={() => {
-                                    setSelectedQuizType("speed");
-                                    setShowQuiz(true);
-                                  }}
-                                  className="w-full bg-educational-yellow text-white hover:bg-educational-yellow/90"
-                                >
-                                  <Play className="w-4 h-4 mr-2" />
-                                  Start Speed Quiz
-                                </Button>
-                              </CardContent>
-                            </Card>
 
                             {/* Vowel Rescue - Easy */}
                             <Card className="cursor-pointer hover:shadow-lg transition-all duration-300 hover:scale-105 border-2 border-educational-green/30 animate-kid-float">
