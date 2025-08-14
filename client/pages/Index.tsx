@@ -87,6 +87,7 @@ import {
   LogOut,
   Sword,
   BookOpen,
+  RotateCcw,
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { WordProgressAPI } from "@/lib/wordProgressApi";
@@ -121,6 +122,7 @@ export default function Index({ initialProfile }: IndexProps) {
   const [customWords, setCustomWords] = useState<any[]>([]);
   const [backgroundAnimationsEnabled, setBackgroundAnimationsEnabled] =
     useState(false);
+  const [navigationHistory, setNavigationHistory] = useState<string[]>([]);
 
   // New child-friendly states
   const [currentProfile, setCurrentProfile] = useState<any>(
@@ -322,6 +324,40 @@ export default function Index({ initialProfile }: IndexProps) {
     };
   }, []);
 
+  // Track navigation history for better back navigation
+  useEffect(() => {
+    const currentPath = `${learningMode}-${selectedCategory || "no-category"}`;
+    setNavigationHistory((prev) => {
+      const newHistory = [...prev, currentPath];
+      // Keep only last 5 navigation steps
+      return newHistory.slice(-5);
+    });
+  }, [learningMode, selectedCategory]);
+
+  // Enhanced navigation with keyboard support
+  useEffect(() => {
+    const handleKeyNavigation = (e: KeyboardEvent) => {
+      // Only handle when in cards mode and not in input fields
+      if (
+        learningMode === "cards" &&
+        !["INPUT", "TEXTAREA"].includes((e.target as HTMLElement)?.tagName)
+      ) {
+        if (e.key === "Escape") {
+          e.preventDefault();
+          if (navigator.vibrate) {
+            navigator.vibrate([50, 30, 50]);
+          }
+          audioService.playClickSound();
+          setLearningMode("selector");
+          setCurrentWordIndex(0);
+        }
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyNavigation);
+    return () => window.removeEventListener("keydown", handleKeyNavigation);
+  }, [learningMode]);
+
   // Initialize learning session and load child stats
   useEffect(() => {
     const initializeSession = async () => {
@@ -456,8 +492,13 @@ export default function Index({ initialProfile }: IndexProps) {
   };
 
   const handleCategoryChange = (categoryId: string) => {
+    // Enhanced category change with better UX
+    const previousCategory = selectedCategory;
+
     setSelectedCategory(categoryId);
     setCurrentWordIndex(0);
+    setForgottenWords(new Set());
+    setRememberedWords(new Set());
     // Reset excluded words when changing category
     setExcludedWordIds(new Set());
 
@@ -466,6 +507,38 @@ export default function Index({ initialProfile }: IndexProps) {
 
     // Clear current dashboard words to force regeneration
     setCurrentDashboardWords([]);
+
+    // Play transition sound for better feedback
+    if (categoryId !== previousCategory) {
+      audioService.playWhooshSound();
+
+      // Light haptic feedback
+      if (navigator.vibrate) {
+        navigator.vibrate(50);
+      }
+    }
+  };
+
+  // Enhanced smart back navigation
+  const handleSmartBackNavigation = () => {
+    if (navigator.vibrate) {
+      navigator.vibrate([50, 30, 50]);
+    }
+    audioService.playClickSound();
+
+    // If user has made progress, show a subtle confirmation
+    const hasProgress = rememberedWords.size > 0 || forgottenWords.size > 0;
+
+    if (hasProgress && window.confirm) {
+      // Note: In a real app, you might want to use a custom modal instead of alert
+      // For now, just proceed without confirmation for better UX
+    }
+
+    setLearningMode("selector");
+    setCurrentWordIndex(0);
+
+    // Preserve some session data for potential return
+    // You could implement "Continue where you left off" feature
   };
 
   const generateFreshWords = () => {
@@ -635,7 +708,7 @@ export default function Index({ initialProfile }: IndexProps) {
       } else {
         achievementTitle = "Category Challenger! 💪";
         achievementIcon = "💪";
-        achievementMessage = `Nice try! You completed ${categoryDisplayName} with ${accuracy}% accuracy! Every attempt makes you stronger!\n\n🎁 Challenger Bonus: 50 points!\n💪 Challenger badge earned!`;
+        achievementMessage = `Nice try! You completed ${categoryDisplayName} with ${accuracy}% accuracy! Every attempt makes you stronger!\n\n🎁 Challenger Bonus: 50 points!\n�� Challenger badge earned!`;
       }
 
       return {
@@ -1335,7 +1408,7 @@ export default function Index({ initialProfile }: IndexProps) {
                     lastSystematicSelection && (
                       <div className="mt-4 p-3 bg-gray-100 rounded-lg text-xs">
                         <h4 className="font-bold mb-2">
-                          🔧 Enhanced Word Selection Debug
+                          ��� Enhanced Word Selection Debug
                         </h4>
                         <div className="grid grid-cols-2 gap-2">
                           <div>
@@ -1395,61 +1468,118 @@ export default function Index({ initialProfile }: IndexProps) {
                     ) : (
                       <>
                         <div className="text-center">
-                          {/* Mobile-Optimized Category Header */}
-                          <div className="mb-3">
-                            {/* Mobile: Stack title and button vertically for better touch targets */}
+                          {/* Compact Mobile Header */}
+                          <div className="mb-2">
+                            {/* Mobile: Compact navigation */}
                             <div className="block sm:hidden">
-                              <div className="text-center mb-2">
-                                <h2 className="text-lg font-bold text-slate-800">
-                                  {selectedCategory
-                                    ? `${selectedCategory.charAt(0).toUpperCase() + selectedCategory.slice(1)} Words`
-                                    : "Select a Category"}
-                                </h2>
-                                <p className="text-sm text-slate-600">
-                                  {selectedCategory
-                                    ? `Learn ${selectedCategory} vocabulary!`
-                                    : "Choose a category to start learning!"}
-                                </p>
-                              </div>
-                              <div className="flex justify-center">
+                              {/* Minimal Header with Essential Info */}
+                              <div className="flex items-center justify-between mb-1.5 px-2">
+                                {/* Left: Back Button */}
                                 <Button
                                   onClick={() => {
+                                    if (navigator.vibrate) {
+                                      navigator.vibrate([50, 30, 50]);
+                                    }
+                                    audioService.playClickSound();
                                     setLearningMode("selector");
+                                    setCurrentWordIndex(0);
                                   }}
-                                  variant="outline"
-                                  className="flex items-center gap-2 px-4 py-2 h-10 rounded-xl text-sm font-medium"
+                                  variant="ghost"
+                                  size="sm"
+                                  className="h-8 px-2 text-slate-600 hover:bg-slate-100 rounded-lg"
                                 >
-                                  <span>←</span>
-                                  <span>Back to Library</span>
+                                  <BookOpen className="w-3.5 h-3.5" />
+                                </Button>
+
+                                {/* Center: Category and Progress */}
+                                <div className="flex-1 text-center">
+                                  <div className="text-sm font-semibold text-slate-800 truncate px-2">
+                                    {selectedCategory
+                                      ? selectedCategory
+                                          .charAt(0)
+                                          .toUpperCase() +
+                                        selectedCategory.slice(1)
+                                      : "Category"}
+                                  </div>
+                                  <div className="text-xs text-slate-500">
+                                    {currentWordIndex + 1}/{displayWords.length}{" "}
+                                    • {rememberedWords.size} ✅
+                                  </div>
+                                </div>
+
+                                {/* Right: Switch Button */}
+                                <Button
+                                  onClick={() => {
+                                    if (navigator.vibrate) {
+                                      navigator.vibrate(25);
+                                    }
+                                    audioService.playClickSound();
+                                    setSelectedCategory("");
+                                    setLearningMode("selector");
+                                    setCurrentWordIndex(0);
+                                  }}
+                                  variant="ghost"
+                                  size="sm"
+                                  className="h-8 px-2 text-slate-600 hover:bg-slate-100 rounded-lg"
+                                >
+                                  <Shuffle className="w-3.5 h-3.5" />
                                 </Button>
                               </div>
                             </div>
 
-                            {/* Tablet/Desktop: Side by side layout */}
-                            <div className="hidden sm:flex items-center justify-between gap-2">
-                              <div className="text-left flex-1 min-w-0">
-                                <h2 className="text-lg md:text-xl font-bold text-slate-800 truncate">
-                                  {selectedCategory
-                                    ? `${selectedCategory.charAt(0).toUpperCase() + selectedCategory.slice(1)} Words`
-                                    : "Select a Category"}
-                                </h2>
-                                <p className="text-sm md:text-base text-slate-600">
-                                  {selectedCategory
-                                    ? `Learn ${selectedCategory} vocabulary!`
-                                    : "Choose a category to start learning!"}
-                                </p>
-                              </div>
-                              <div className="flex-shrink-0">
-                                <Button
-                                  onClick={() => {
-                                    setLearningMode("selector");
-                                  }}
-                                  variant="outline"
-                                  className="flex items-center gap-1 text-xs px-2 py-1 h-7 rounded-md"
-                                >
-                                  <span className="text-sm">←</span>
-                                  <span>Back to Library</span>
-                                </Button>
+                            {/* Desktop/Tablet: Compact layout */}
+                            <div className="hidden sm:block">
+                              <div className="flex items-center justify-between gap-4 mb-2">
+                                <div className="text-left flex-1 min-w-0">
+                                  <h2 className="text-base md:text-lg font-bold text-slate-800 truncate">
+                                    {selectedCategory
+                                      ? `${selectedCategory.charAt(0).toUpperCase() + selectedCategory.slice(1)} Words`
+                                      : "Select a Category"}
+                                  </h2>
+                                  <div className="flex items-center gap-3 text-xs text-slate-600">
+                                    <span>
+                                      {currentWordIndex + 1}/
+                                      {displayWords.length}
+                                    </span>
+                                    <span>{rememberedWords.size} learned</span>
+                                    <span>{forgottenWords.size} review</span>
+                                  </div>
+                                </div>
+
+                                <div className="flex-shrink-0 flex gap-1">
+                                  <Button
+                                    onClick={() => {
+                                      if (navigator.vibrate) {
+                                        navigator.vibrate(25);
+                                      }
+                                      audioService.playClickSound();
+                                      setSelectedCategory("");
+                                      setLearningMode("selector");
+                                      setCurrentWordIndex(0);
+                                    }}
+                                    variant="ghost"
+                                    size="sm"
+                                    className="h-7 px-2 text-xs rounded-md hover:bg-slate-100"
+                                  >
+                                    <Shuffle className="w-3 h-3" />
+                                  </Button>
+
+                                  <Button
+                                    onClick={() => {
+                                      if (navigator.vibrate) {
+                                        navigator.vibrate([50, 30, 50]);
+                                      }
+                                      audioService.playClickSound();
+                                      setLearningMode("selector");
+                                      setCurrentWordIndex(0);
+                                    }}
+                                    variant="ghost"
+                                    size="sm"
+                                    className="h-7 px-2 text-xs rounded-md hover:bg-slate-100"
+                                  >
+                                    <BookOpen className="w-3 h-3" />
+                                  </Button>
+                                </div>
                               </div>
                             </div>
                           </div>
@@ -1462,6 +1592,18 @@ export default function Index({ initialProfile }: IndexProps) {
                                 <>
                                   {displayWords.length > 0 && (
                                     <>
+                                      {/* Minimal progress indicator */}
+                                      <div className="max-w-xs sm:max-w-sm md:max-w-md mx-auto mb-1">
+                                        <div className="w-full bg-slate-200 rounded-full h-1">
+                                          <div
+                                            className="bg-blue-500 h-1 rounded-full transition-all duration-300 ease-out"
+                                            style={{
+                                              width: `${((currentWordIndex + 1) / displayWords.length) * 100}%`,
+                                            }}
+                                          ></div>
+                                        </div>
+                                      </div>
+
                                       <div
                                         className={`max-w-xs sm:max-w-sm md:max-w-md mx-auto px-1 sm:px-2 md:px-0 relative ${
                                           celebrationEffect &&
@@ -1780,68 +1922,81 @@ export default function Index({ initialProfile }: IndexProps) {
                                             </div>
                                           </div>
 
-                                          {/* Mobile-Optimized Quick Navigation */}
-                                          <div className="flex justify-center gap-1 sm:gap-2 mt-3">
+                                          {/* Compact Navigation Controls */}
+                                          <div className="flex justify-center items-center gap-2 mt-3 max-w-xs sm:max-w-sm md:max-w-md mx-auto">
+                                            {/* Previous Button */}
                                             <Button
-                                              onClick={() =>
-                                                setCurrentWordIndex(
-                                                  Math.max(
-                                                    0,
+                                              onClick={() => {
+                                                if (currentWordIndex > 0) {
+                                                  setCurrentWordIndex(
                                                     currentWordIndex - 1,
-                                                  ),
-                                                )
-                                              }
+                                                  );
+                                                  audioService.playClickSound();
+                                                  if (navigator.vibrate) {
+                                                    navigator.vibrate(25);
+                                                  }
+                                                }
+                                              }}
                                               disabled={currentWordIndex === 0}
                                               variant="ghost"
                                               size="sm"
-                                              className="px-2 sm:px-3 py-1 text-xs sm:text-sm h-8 sm:h-9"
+                                              className="h-8 w-8 rounded-full p-0 disabled:opacity-30 hover:bg-slate-100"
                                             >
-                                              ← Prev
+                                              <span className="text-lg">←</span>
                                             </Button>
 
-                                            <div className="bg-slate-100 px-3 py-1 rounded-lg flex items-center">
-                                              <span className="text-xs sm:text-sm font-medium text-slate-600">
-                                                {currentWordIndex + 1} /{" "}
+                                            {/* Compact Progress */}
+                                            <div className="flex-1 flex items-center justify-center gap-2 text-xs text-slate-600">
+                                              <span className="font-medium">
+                                                {currentWordIndex + 1}/
                                                 {displayWords.length}
                                               </span>
                                             </div>
 
+                                            {/* Next Button */}
                                             <Button
-                                              onClick={() =>
-                                                setCurrentWordIndex(
-                                                  Math.min(
-                                                    displayWords.length - 1,
+                                              onClick={() => {
+                                                if (
+                                                  currentWordIndex <
+                                                  displayWords.length - 1
+                                                ) {
+                                                  setCurrentWordIndex(
                                                     currentWordIndex + 1,
-                                                  ),
-                                                )
-                                              }
+                                                  );
+                                                  audioService.playClickSound();
+                                                  if (navigator.vibrate) {
+                                                    navigator.vibrate(25);
+                                                  }
+                                                } else {
+                                                  setCelebrationEffect(true);
+                                                  setTimeout(() => {
+                                                    setCelebrationEffect(false);
+                                                    if (
+                                                      window.confirm(
+                                                        "Great job! You've completed all words in this category. Return to library to choose another category?",
+                                                      )
+                                                    ) {
+                                                      handleSmartBackNavigation();
+                                                    }
+                                                  }, 2000);
+                                                }
+                                              }}
                                               disabled={
                                                 currentWordIndex ===
                                                 displayWords.length - 1
                                               }
                                               variant="ghost"
                                               size="sm"
-                                              className="px-2 sm:px-3 py-1 text-xs sm:text-sm h-8 sm:h-9 text-gray-500 hover:text-gray-700 hover:bg-gray-100"
+                                              className="h-8 w-8 rounded-full p-0 disabled:opacity-30 hover:bg-slate-100"
                                             >
-                                              🤔 Try another word
+                                              <span className="text-lg">→</span>
                                             </Button>
                                           </div>
                                         </div>
                                       </div>
 
-                                      <div className="text-center mt-4 space-y-2">
-                                        <Badge
-                                          variant="outline"
-                                          className="text-sm"
-                                        >
-                                          {selectedCategory
-                                            ? `${selectedCategory} Category`
-                                            : "No Category"}{" "}
-                                          - Word {currentWordIndex + 1} of{" "}
-                                          {displayWords.length}
-                                        </Badge>
-
-                                        {/* Current Word Status */}
+                                      {/* Minimal Status Indicator */}
+                                      <div className="text-center mt-2">
                                         {(() => {
                                           const currentWord =
                                             displayWords[currentWordIndex];
@@ -1851,26 +2006,23 @@ export default function Index({ initialProfile }: IndexProps) {
                                             rememberedWords.has(currentWord.id)
                                           ) {
                                             return (
-                                              <Badge className="bg-green-100 text-green-700 border-green-300">
-                                                ✅ You remembered this word!
-                                              </Badge>
+                                              <div className="text-xs text-green-600 font-medium">
+                                                ✅ Learned
+                                              </div>
                                             );
                                           } else if (
                                             forgottenWords.has(currentWord.id)
                                           ) {
                                             return (
-                                              <Badge className="bg-red-100 text-red-700 border-red-300">
-                                                ❌ Marked for practice
-                                              </Badge>
+                                              <div className="text-xs text-orange-600 font-medium">
+                                                🤔 Review
+                                              </div>
                                             );
                                           } else {
                                             return (
-                                              <Badge
-                                                variant="secondary"
-                                                className="bg-blue-100 text-blue-700 border-blue-300"
-                                              >
-                                                🆕 New word to learn
-                                              </Badge>
+                                              <div className="text-xs text-blue-600 font-medium">
+                                                🆕 New
+                                              </div>
                                             );
                                           }
                                         })()}

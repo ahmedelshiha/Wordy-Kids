@@ -12,6 +12,7 @@ import SignUp from "./pages/SignUp";
 import AppPage from "./pages/App";
 import NotFound from "./pages/NotFound";
 import AdminPage from "./pages/AdminPage";
+import { EnhancedWordCardDemo } from "./components/EnhancedWordCardDemo";
 
 const queryClient = new QueryClient();
 
@@ -27,6 +28,7 @@ const App = () => (
           <Route path="/app" element={<AppPage />} />
           <Route path="/profile" element={<Login />} />
           <Route path="/admin" element={<AdminPage />} />
+          <Route path="/word-card-demo" element={<EnhancedWordCardDemo />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>

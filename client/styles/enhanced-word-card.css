@@ -1,0 +1,559 @@
+/* Enhanced Mobile Word Card Styles */
+
+/* Hardware-accelerated base styles */
+.word-card-container {
+  transform: translateZ(0);
+  will-change: transform;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  -webkit-perspective: 1000px;
+  perspective: 1000px;
+}
+
+/* Enhanced flip animation with better mobile performance */
+.word-card-flip {
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  transform-style: preserve-3d;
+}
+
+.word-card-flip.flipped {
+  transform: rotateY(180deg);
+}
+
+/* Mobile touch feedback animations */
+.word-card-touch-active {
+  transform: scale(0.98) translateZ(0);
+  transition: transform 0.1s ease-out;
+}
+
+.word-card-touch-feedback {
+  position: relative;
+  overflow: hidden;
+}
+
+.word-card-touch-feedback::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  transition:
+    width 0.3s ease-out,
+    height 0.3s ease-out;
+  pointer-events: none;
+}
+
+.word-card-touch-feedback.active::before {
+  width: 200px;
+  height: 200px;
+}
+
+/* Enhanced gesture indicators */
+.gesture-hint {
+  animation: gestureHintPulse 1s ease-in-out infinite;
+}
+
+@keyframes gestureHintPulse {
+  0%,
+  100% {
+    opacity: 0.7;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.05);
+  }
+}
+
+/* Swipe direction indicators */
+.swipe-indicator {
+  position: absolute;
+  pointer-events: none;
+  transition: all 0.2s ease-out;
+}
+
+.swipe-indicator.left {
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%) translateX(-10px);
+  opacity: 0;
+}
+
+.swipe-indicator.right {
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%) translateX(10px);
+  opacity: 0;
+}
+
+.swipe-indicator.up {
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%) translateY(-10px);
+  opacity: 0;
+}
+
+.swipe-indicator.down {
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%) translateY(10px);
+  opacity: 0;
+}
+
+.swipe-indicator.active {
+  opacity: 1;
+  transform: translateY(-50%) translateX(0) !important;
+}
+
+/* Enhanced pronunciation button animations */
+.pronunciation-button {
+  position: relative;
+  overflow: hidden;
+}
+
+.pronunciation-button.playing {
+  animation: pronunciationPulse 1s ease-in-out infinite;
+}
+
+@keyframes pronunciationPulse {
+  0%,
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(250, 204, 21, 0.4);
+  }
+  50% {
+    transform: scale(1.05);
+    box-shadow: 0 0 0 10px rgba(250, 204, 21, 0);
+  }
+}
+
+/* Sound wave animation for pronunciation */
+.sound-waves {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
+.sound-wave {
+  position: absolute;
+  border: 2px solid rgba(250, 204, 21, 0.6);
+  border-radius: 50%;
+  animation: soundWaveExpand 1.5s ease-out infinite;
+}
+
+.sound-wave:nth-child(1) {
+  animation-delay: 0s;
+}
+.sound-wave:nth-child(2) {
+  animation-delay: 0.3s;
+}
+.sound-wave:nth-child(3) {
+  animation-delay: 0.6s;
+}
+
+@keyframes soundWaveExpand {
+  0% {
+    width: 0;
+    height: 0;
+    opacity: 1;
+  }
+  100% {
+    width: 100px;
+    height: 100px;
+    opacity: 0;
+  }
+}
+
+/* Enhanced favorite animation */
+.favorite-button {
+  transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.favorite-button.favorited {
+  animation: favoriteHeartBeat 0.6s ease-in-out;
+}
+
+@keyframes favoriteHeartBeat {
+  0% {
+    transform: scale(1);
+  }
+  25% {
+    transform: scale(1.2);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  75% {
+    transform: scale(1.25);
+  }
+  100% {
+    transform: scale(1.15);
+  }
+}
+
+/* Sparkle animation for interactions */
+.sparkle-effect {
+  position: absolute;
+  pointer-events: none;
+  animation: sparkleFloat 2s ease-out forwards;
+}
+
+@keyframes sparkleFloat {
+  0% {
+    opacity: 1;
+    transform: translateY(0) scale(0);
+  }
+  50% {
+    opacity: 1;
+    transform: translateY(-20px) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-40px) scale(0);
+  }
+}
+
+/* Category-specific gradient animations */
+.category-gradient {
+  background-size: 200% 200%;
+  animation: gradientShift 6s ease infinite;
+}
+
+@keyframes gradientShift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* Enhanced health status animations */
+.health-critical {
+  animation: healthCriticalPulse 1s ease-in-out infinite;
+}
+
+@keyframes healthCriticalPulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 0 10px rgba(239, 68, 68, 0);
+  }
+}
+
+.health-warning {
+  animation: healthWarningGlow 2s ease-in-out infinite;
+}
+
+@keyframes healthWarningGlow {
+  0%,
+  100% {
+    box-shadow: 0 0 5px rgba(245, 158, 11, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 15px rgba(245, 158, 11, 0.6);
+  }
+}
+
+/* Loading skeleton for word cards */
+.word-card-skeleton {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: loading 1.5s infinite;
+}
+
+@keyframes loading {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+/* Difficulty badge animations */
+.difficulty-easy {
+  background: linear-gradient(45deg, #10b981, #059669);
+  animation: difficultyEasyShine 3s ease-in-out infinite;
+}
+
+.difficulty-medium {
+  background: linear-gradient(45deg, #f59e0b, #d97706);
+  animation: difficultyMediumShine 3s ease-in-out infinite;
+}
+
+.difficulty-hard {
+  background: linear-gradient(45deg, #ef4444, #dc2626);
+  animation: difficultyHardShine 3s ease-in-out infinite;
+}
+
+@keyframes difficultyEasyShine {
+  0%,
+  100% {
+    box-shadow: 0 0 5px rgba(16, 185, 129, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 15px rgba(16, 185, 129, 0.6);
+  }
+}
+
+@keyframes difficultyMediumShine {
+  0%,
+  100% {
+    box-shadow: 0 0 5px rgba(245, 158, 11, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 15px rgba(245, 158, 11, 0.6);
+  }
+}
+
+@keyframes difficultyHardShine {
+  0%,
+  100% {
+    box-shadow: 0 0 5px rgba(239, 68, 68, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 15px rgba(239, 68, 68, 0.6);
+  }
+}
+
+/* Enhanced accessibility focus styles */
+.word-card-focus:focus-visible {
+  outline: 3px solid #3b82f6;
+  outline-offset: 2px;
+  border-radius: 12px;
+}
+
+.word-card-focus:focus-visible .card-content {
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.5);
+}
+
+/* High contrast mode styles */
+.high-contrast .word-card {
+  border: 2px solid #ffffff;
+  background: #000000 !important;
+  color: #ffffff !important;
+}
+
+.high-contrast .badge {
+  background: #ffffff !important;
+  color: #000000 !important;
+  border: 1px solid #ffffff;
+}
+
+/* Large text mode adjustments */
+.large-text .word-title {
+  font-size: 2rem !important;
+  line-height: 1.2;
+}
+
+.large-text .word-pronunciation {
+  font-size: 1.25rem !important;
+}
+
+.large-text .word-definition {
+  font-size: 1.125rem !important;
+  line-height: 1.5;
+}
+
+/* Reduced motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  .word-card-flip,
+  .pronunciation-button,
+  .favorite-button,
+  .category-gradient,
+  .health-critical,
+  .health-warning,
+  .difficulty-easy,
+  .difficulty-medium,
+  .difficulty-hard {
+    animation: none !important;
+    transition: none !important;
+  }
+
+  .word-card-touch-feedback::before {
+    transition: none !important;
+  }
+}
+
+/* Mobile-specific optimizations */
+@media (max-width: 768px) {
+  .word-card-container {
+    -webkit-user-select: none;
+    user-select: none;
+    -webkit-touch-callout: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  /* Ensure touch targets are at least 44px */
+  .touch-target {
+    min-height: 44px;
+    min-width: 44px;
+  }
+
+  /* Optimize animations for mobile performance */
+  .word-card-flip {
+    transition-duration: 0.4s;
+  }
+
+  /* Reduce animation complexity on smaller screens */
+  .category-gradient {
+    animation-duration: 8s;
+  }
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+  .word-card-skeleton {
+    background: linear-gradient(90deg, #374151 25%, #4b5563 50%, #374151 75%);
+  }
+}
+
+/* Print styles */
+@media print {
+  .word-card {
+    break-inside: avoid;
+    box-shadow: none !important;
+    background: white !important;
+    color: black !important;
+  }
+
+  .word-card-flip {
+    transform: none !important;
+  }
+
+  .word-card .card-back {
+    position: static !important;
+    transform: none !important;
+    display: block !important;
+    margin-top: 1rem;
+    border-top: 1px solid #ccc;
+    padding-top: 1rem;
+  }
+}
+
+/* Hover effects for desktop */
+@media (hover: hover) and (pointer: fine) {
+  .word-card:hover {
+    transform: translateY(-4px) scale(1.02);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+  }
+
+  .pronunciation-button:hover {
+    transform: scale(1.1);
+  }
+
+  .favorite-button:hover {
+    transform: scale(1.1);
+  }
+}
+
+/* Custom scrollbar for word content */
+.word-content::-webkit-scrollbar {
+  width: 6px;
+}
+
+.word-content::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 3px;
+}
+
+.word-content::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 3px;
+}
+
+.word-content::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.5);
+}
+
+/* Achievement celebration animation */
+.achievement-celebration {
+  animation: achievementBounce 0.6s ease-out;
+}
+
+@keyframes achievementBounce {
+  0% {
+    transform: scale(1) translateY(0);
+  }
+  25% {
+    transform: scale(1.1) translateY(-10px);
+  }
+  50% {
+    transform: scale(1.05) translateY(-5px);
+  }
+  75% {
+    transform: scale(1.02) translateY(-2px);
+  }
+  100% {
+    transform: scale(1) translateY(0);
+  }
+}
+
+/* Gesture learning hints */
+.gesture-tutorial {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0, 0, 0, 0.8);
+  color: white;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 12px;
+  pointer-events: none;
+  animation: fadeInOut 3s ease-in-out;
+}
+
+@keyframes fadeInOut {
+  0%,
+  100% {
+    opacity: 0;
+  }
+  20%,
+  80% {
+    opacity: 1;
+  }
+}
+
+/* Enhanced button states for better mobile feedback */
+.mobile-button {
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.mobile-button:active {
+  transform: scale(0.95);
+}
+
+.mobile-button::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  transition:
+    width 0.3s ease,
+    height 0.3s ease;
+}
+
+.mobile-button:active::after {
+  width: 120%;
+  height: 120%;
+}

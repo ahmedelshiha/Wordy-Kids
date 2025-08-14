@@ -208,6 +208,88 @@
   }
 }
 
+/* Enhanced mobile word library animations */
+@keyframes cardFlip {
+  0% {
+    transform: rotateY(0deg);
+  }
+  50% {
+    transform: rotateY(-90deg);
+  }
+  100% {
+    transform: rotateY(-180deg);
+  }
+}
+
+@keyframes touchFeedback {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(0.95);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes mobileSlideIn {
+  0% {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes mobilePulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 0 10px rgba(59, 130, 246, 0);
+  }
+}
+
+@keyframes swipeIndicator {
+  0% {
+    transform: translateX(-10px);
+    opacity: 0.5;
+  }
+  50% {
+    transform: translateX(10px);
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(-10px);
+    opacity: 0.5;
+  }
+}
+
+@keyframes categoryHover {
+  0% {
+    transform: scale(1) translateY(0);
+  }
+  100% {
+    transform: scale(1.02) translateY(-2px);
+  }
+}
+
+@keyframes mobileSparkle {
+  0%,
+  100% {
+    transform: scale(0) rotate(0deg);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1) rotate(180deg);
+    opacity: 1;
+  }
+}
+
 @keyframes gentleFloat {
   0%,
   100% {
@@ -362,6 +444,35 @@
   animation-delay: 200ms;
 }
 
+/* Mobile-optimized animation classes */
+.animate-card-flip {
+  animation: cardFlip 0.6s ease-in-out;
+}
+
+.animate-touch-feedback {
+  animation: touchFeedback 0.2s ease-out;
+}
+
+.animate-mobile-slide-in {
+  animation: mobileSlideIn 0.4s ease-out;
+}
+
+.animate-mobile-pulse {
+  animation: mobilePulse 1.5s infinite;
+}
+
+.animate-swipe-indicator {
+  animation: swipeIndicator 2s ease-in-out infinite;
+}
+
+.animate-category-hover {
+  animation: categoryHover 0.3s ease-out forwards;
+}
+
+.animate-mobile-sparkle {
+  animation: mobileSparkle 1s ease-in-out infinite;
+}
+
 .border-rainbow {
   animation: rainbowBorder 3s linear infinite;
 }
@@ -409,20 +520,64 @@
   margin-bottom: env(safe-area-inset-bottom);
 }
 
+/* Mobile performance optimizations with hardware acceleration */
+.mobile-optimized {
+  transform: translateZ(0);
+  will-change: transform;
+  -webkit-transform: translateZ(0);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+
+.touch-optimized {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.hardware-accelerated {
+  transform: translate3d(0, 0, 0);
+  -webkit-transform: translate3d(0, 0, 0);
+}
+
 /* Touch-optimized animations */
 @media (max-width: 768px) {
   .animate-gentle-float,
   .animate-kid-float,
   .animate-kid-float-delayed {
     animation-duration: 4s;
+    transform: translateZ(0);
   }
 
   .animate-sparkle {
     animation-duration: 3s;
+    transform: translateZ(0);
   }
 
   .animate-wiggle {
     animation-duration: 3s;
+    transform: translateZ(0);
+  }
+
+  /* Mobile-specific optimizations for word library */
+  .word-card-mobile {
+    transform: translateZ(0);
+    will-change: transform;
+    -webkit-perspective: 1000px;
+    perspective: 1000px;
+  }
+
+  .category-card-mobile {
+    transform: translateZ(0);
+    transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  }
+
+  .category-card-mobile:active {
+    transform: scale(0.98) translateZ(0);
   }
 }
 
@@ -452,5 +607,249 @@
 
   .scroll-smooth {
     scroll-behavior: smooth;
+  }
+}
+
+/* Enhanced mobile touch interactions */
+.touch-target {
+  min-height: 44px;
+  min-width: 44px;
+  touch-action: manipulation;
+}
+
+.touch-feedback {
+  transition:
+    transform 0.1s ease-out,
+    box-shadow 0.1s ease-out;
+}
+
+.touch-feedback:active {
+  transform: scale(0.98);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.swipe-container {
+  overflow-x: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+}
+
+.swipe-container::-webkit-scrollbar {
+  display: none;
+}
+
+.swipe-item {
+  scroll-snap-align: center;
+  flex-shrink: 0;
+}
+
+/* Pull-to-refresh indicator */
+.pull-to-refresh {
+  transform: translateY(-100%);
+  transition: transform 0.3s ease-out;
+}
+
+.pull-to-refresh.active {
+  transform: translateY(0);
+}
+
+/* Mobile-optimized ripple effect */
+.ripple {
+  position: relative;
+  overflow: hidden;
+}
+
+.ripple::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.5);
+  transform: translate(-50%, -50%);
+  transition:
+    width 0.3s,
+    height 0.3s;
+}
+
+.ripple:active::before {
+  width: 300px;
+  height: 300px;
+}
+
+/* Enhanced focus states for mobile */
+.focus-visible-mobile:focus-visible {
+  outline: 3px solid #3b82f6;
+  outline-offset: 2px;
+  border-radius: 8px;
+}
+
+/* Improved button states for touch */
+.button-touch {
+  position: relative;
+  overflow: hidden;
+  transform: translateZ(0);
+  transition: all 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.button-touch:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.button-touch:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12);
+}
+
+/* Mobile card interactions */
+.card-mobile {
+  transition:
+    transform 0.2s ease-out,
+    box-shadow 0.2s ease-out;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.card-mobile:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.card-mobile:active {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.12);
+}
+
+/* Swipe gesture indicators */
+.swipe-hint {
+  position: relative;
+}
+
+.swipe-hint::after {
+  content: "";
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 40px;
+  height: 4px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(59, 130, 246, 0.5),
+    transparent
+  );
+  border-radius: 2px;
+  animation: swipeIndicator 2s ease-in-out infinite;
+}
+
+/* Mobile loading states */
+.loading-mobile {
+  position: relative;
+  overflow: hidden;
+}
+
+.loading-mobile::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.4),
+    transparent
+  );
+  animation: shimmer 1.5s infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    left: -100%;
+  }
+  100% {
+    left: 100%;
+  }
+}
+
+/* Enhanced mobile typography */
+.text-mobile-friendly {
+  line-height: 1.6;
+  letter-spacing: 0.01em;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Mobile-optimized shadows */
+.shadow-mobile {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.shadow-mobile-lg {
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+}
+
+.shadow-mobile-xl {
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+}
+
+/* Haptic feedback simulation */
+.haptic-light:active {
+  animation: hapticFeedback 0.1s ease-out;
+}
+
+.haptic-medium:active {
+  animation: hapticFeedback 0.15s ease-out;
+}
+
+.haptic-heavy:active {
+  animation: hapticFeedback 0.2s ease-out;
+}
+
+@keyframes hapticFeedback {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(0.95);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* Mobile accessibility helpers */
+.sr-only-mobile {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+@media (max-width: 768px) {
+  .sr-only-mobile:focus {
+    position: static;
+    width: auto;
+    height: auto;
+    padding: 0.5rem;
+    margin: 0;
+    overflow: visible;
+    clip: auto;
+    white-space: normal;
+    background: #000;
+    color: #fff;
+    border-radius: 4px;
   }
 }
