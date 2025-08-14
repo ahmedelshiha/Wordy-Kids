@@ -743,7 +743,7 @@ export default function Index({ initialProfile }: IndexProps) {
         achievementIcon = "📚";
         achievementMessage = `Great job! You completed ${categoryDisplayName} with ${accuracy}% accuracy! Keep up the good work!\n\n🎓 Scholar Bonus: 100 points!\n📚 Scholar badge earned!`;
       } else if (accuracy >= 50) {
-        achievementTitle = "Category Explorer! 🗺️🌟";
+        achievementTitle = "Category Explorer! ���️🌟";
         achievementIcon = "🗺️";
         achievementMessage = `Good effort! You finished ${categoryDisplayName} with ${accuracy}% accuracy! Practice makes perfect!\n\n🎁 Explorer Bonus: 75 points!\n🎯 Explorer badge earned!`;
       } else {
@@ -857,6 +857,24 @@ export default function Index({ initialProfile }: IndexProps) {
         category: word.category,
         timeSpent: responseTime ? Math.round(responseTime / 1000 / 60) : 1, // Convert to minutes
       });
+
+      // Update session tracking
+      if (status === "remembered" || status === "needs_practice") {
+        setDailySessionCount(prev => prev + 1);
+      }
+
+      // Check daily goal completion
+      const updatedWordsLearned = status === "remembered" ? rememberedWords.size + 1 : rememberedWords.size;
+      const dailyGoal = learningGoals.find(goal => goal.type === "daily" && goal.isActive);
+      if (dailyGoal && updatedWordsLearned >= dailyGoal.target) {
+        setAchievementPopup(prev => [...prev, {
+          id: `daily-goal-${Date.now()}`,
+          title: "Daily Goal Achieved!",
+          description: `Amazing! You've learned ${dailyGoal.target} words today!`,
+          emoji: "🏆",
+          unlocked: true,
+        }]);
+      }
 
       // Show achievement notifications in sequence
       const notifications = [];
@@ -2516,7 +2534,7 @@ export default function Index({ initialProfile }: IndexProps) {
                           setShowMatchingGame(false);
                           setFeedback({
                             type: "celebration",
-                            title: "Matching Game Complete! 🎯��",
+                            title: "Matching Game Complete! 🎯✨",
                             message: `You matched ${score} pairs in ${timeSpent} seconds!`,
                             points: score * 15,
                             onContinue: () => setFeedback(null),
