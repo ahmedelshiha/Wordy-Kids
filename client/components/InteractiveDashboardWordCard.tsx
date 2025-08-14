@@ -804,7 +804,7 @@ export function InteractiveDashboardWordCard({
           </div>
         )}
 
-        <CardContent className="p-4 md:p-8 relative z-10">
+        <CardContent className="p-3 sm:p-4 md:p-6 lg:p-8 relative z-10">
           {/* Today's Word Quest - Left Corner without container */}
           <div className="absolute top-2 left-2 md:top-3 md:left-3 z-20 mb-4 hidden">
             <div className="flex items-center gap-1 md:gap-2">
@@ -851,7 +851,7 @@ export function InteractiveDashboardWordCard({
                     if (percentage >= 90) return "🌟 Almost there, superstar!";
                     if (percentage >= 75) return "🚀 You're doing great!";
                     if (percentage >= 50) return "💪 Keep going, champion!";
-                    if (percentage >= 25) return "🌱 Nice start!";
+                    if (percentage >= 25) return "�� Nice start!";
                     return "🌟 Ready for an adventure?";
                   })()}
                 </div>
