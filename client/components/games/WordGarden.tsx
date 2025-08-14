@@ -494,7 +494,7 @@ export default function WordGardenGame({
     setLoading(true);
     setError(null);
 
-    fetchWords({ limit: rounds, difficulty })
+    fetchWords({ limit: rounds, difficulty, optionsPerRound })
       .then((list) => {
         if (!mounted) return;
         setPool(list);
@@ -749,7 +749,7 @@ export default function WordGardenGame({
         {/* Mascot + Play */}
         <div className="flex items-center justify-between gap-3 mb-4">
           <div className="flex items-center gap-2">
-            <span className="text-4xl">���</span>
+            <span className="text-4xl">🦋</span>
             <div className="leading-tight">
               <div className="text-xs uppercase tracking-wide opacity-90">
                 Word Garden
