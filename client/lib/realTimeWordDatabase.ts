@@ -72,30 +72,42 @@ class RealTimeWordDatabaseService {
   private async checkForChanges() {
     try {
       // Import the words database (browser will handle caching)
-      const { wordsDatabase, getAllCategories } = await import("@/data/wordsDatabase");
+      const module = await import("@/data/wordsDatabase");
 
+      if (!module || !module.wordsDatabase || !module.getAllCategories) {
+        console.warn('Word database module not properly loaded');
+        return;
+      }
+
+      const { wordsDatabase, getAllCategories } = module;
       const newWords = [...wordsDatabase];
       const newCategories = getAllCategories();
-      
+
+      // Validate data
+      if (!Array.isArray(newWords) || !Array.isArray(newCategories)) {
+        console.warn('Invalid word database data structure');
+        return;
+      }
+
       // Check if words have changed
       const wordsChanged = this.hasWordsChanged(newWords);
       const categoriesChanged = this.hasCategoriesChanged(newCategories);
-      
+
       if (wordsChanged || categoriesChanged) {
         const previousWordCount = this.currentWords.length;
         const newWordCount = newWords.length;
-        
+
         this.currentWords = newWords;
         this.currentCategories = newCategories;
         this.lastUpdate = Date.now();
-        
+
         // Determine the type of change
         let eventType: WordDatabaseEvent['type'] = 'full-refresh';
         let eventData: any = {
           words: newWords,
           categories: newCategories
         };
-        
+
         if (newWordCount > previousWordCount) {
           eventType = 'words-added';
           eventData.words = newWords.slice(previousWordCount);
@@ -106,18 +118,19 @@ class RealTimeWordDatabaseService {
         } else {
           eventType = 'words-updated';
         }
-        
+
         // Notify all listeners
         this.notifyListeners({
           type: eventType,
           timestamp: this.lastUpdate,
           data: eventData
         });
-        
+
         console.log('Word database changes detected:', eventType, `(${newWordCount} words)`);
       }
     } catch (error) {
       console.error('Error checking for word database changes:', error);
+      // Don't throw the error to prevent crashes
     }
   }
 
