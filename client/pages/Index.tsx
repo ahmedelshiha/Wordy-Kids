@@ -1713,7 +1713,8 @@ export default function Index({ initialProfile }: IndexProps) {
                 <ParentDashboard
                   children={undefined}
                   sessions={undefined}
-                  onNavigateBack={undefined}
+                  onNavigateBack={() => setUserRole("child")}
+                  showMobileBackButton={false}
                 />
               </div>
             ) : (
