@@ -15,6 +15,7 @@ import {
   Zap,
 } from "lucide-react";
 import { audioService } from "@/lib/audioService";
+import { EnhancedAchievementTracker } from "@/lib/enhancedAchievementTracker";
 
 interface Achievement {
   id: string;
