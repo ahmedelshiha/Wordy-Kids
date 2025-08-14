@@ -84,7 +84,7 @@ export function MobileBottomNav({
     },
   ];
 
-  // Add parent tab when in child mode, or modify for parent mode
+  // Optimized tab layout - max 4 tabs for better mobile UX
   const primaryTabs = userRole === "parent"
     ? [
         {
@@ -97,10 +97,58 @@ export function MobileBottomNav({
           textColor: "text-blue-600",
           badge: undefined,
         },
-        ...baseTabs.filter(tab => tab.id !== "learn" && tab.id !== "quiz"),
+        {
+          id: "dashboard",
+          emoji: "🏠",
+          label: "Home",
+          icon: Target,
+          color: "from-purple-500 to-pink-500",
+          bgColor: "bg-purple-100",
+          textColor: "text-purple-600",
+          badge: undefined,
+        },
+        {
+          id: "progress",
+          emoji: "📊",
+          label: "Reports",
+          icon: Trophy,
+          color: "from-yellow-500 to-orange-500",
+          bgColor: "bg-yellow-100",
+          textColor: "text-yellow-600",
+          badge: undefined,
+        },
       ]
     : [
-        ...baseTabs,
+        {
+          id: "dashboard",
+          emoji: "🏠",
+          label: "Home",
+          icon: Target,
+          color: "from-purple-500 to-pink-500",
+          bgColor: "bg-purple-100",
+          textColor: "text-purple-600",
+          badge: undefined,
+        },
+        {
+          id: "learn",
+          emoji: "📚",
+          label: "Learn",
+          icon: BookOpen,
+          color: "from-green-500 to-emerald-500",
+          bgColor: "bg-green-100",
+          textColor: "text-green-600",
+          badge: undefined,
+        },
+        {
+          id: "quiz",
+          emoji: "🎮",
+          label: "Quiz",
+          icon: Brain,
+          color: "from-pink-500 to-rose-500",
+          bgColor: "bg-pink-100",
+          textColor: "text-pink-600",
+          badge: undefined,
+        },
         {
           id: "parent",
           emoji: "👨‍👩‍👧‍👦",
