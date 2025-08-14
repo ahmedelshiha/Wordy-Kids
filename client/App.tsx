@@ -12,6 +12,7 @@ import SignUp from "./pages/SignUp";
 import AppPage from "./pages/App";
 import NotFound from "./pages/NotFound";
 import AdminPage from "./pages/AdminPage";
+import WordGardenDemo from "./pages/WordGardenDemo";
 import { EnhancedWordCardDemo } from "./components/EnhancedWordCardDemo";
 import {
   WordDatabaseNotifications,
