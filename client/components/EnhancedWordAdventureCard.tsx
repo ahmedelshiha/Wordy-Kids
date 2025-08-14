@@ -163,7 +163,7 @@ export const EnhancedWordAdventureCard: React.FC<EnhancedWordAdventureCardProps>
     // Mark as heard for star progress
     if (!hasHeardPronunciation) {
       setHasHeardPronunciation(true);
-      playUIInteractionSoundIfEnabled.success();
+      playUIInteractionSoundIfEnabled.cheer();
     }
 
     try {
