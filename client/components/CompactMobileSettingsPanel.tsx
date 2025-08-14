@@ -270,8 +270,8 @@ export const CompactMobileSettingsPanel: React.FC<CompactMobileSettingsPanelProp
           )}
         </CardHeader>
 
-        <ScrollArea className="flex-1 max-h-[60vh] sm:max-h-[65vh] overflow-y-auto">
-          <div className="p-2 space-y-1 min-h-0">
+        <ScrollArea className="flex-1 max-h-[60vh] sm:max-h-[65vh] overflow-y-auto scroll-smooth">
+          <div className="p-2 space-y-1 min-h-0" style={{ WebkitOverflowScrolling: 'touch' }}>
             {/* Audio Section */}
             <div className="border rounded-lg">
               <CompactSectionHeader
