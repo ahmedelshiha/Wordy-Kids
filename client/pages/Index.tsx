@@ -517,13 +517,8 @@ export default function Index({ initialProfile }: IndexProps) {
           if (updatedData.lastSaved > lastAutoSave) {
             setLastAutoSave(updatedData.lastSaved);
 
-            // Show subtle notification
-            setFeedback({
-              type: "info",
-              title: "Progress Synced 📱",
-              message: "Your learning progress was updated from another device",
-              onContinue: () => setFeedback(null),
-            });
+            // Progress synced silently in background - no popup message
+            console.log("Progress synced from another device - updated silently");
           }
         } catch (error) {
           console.error("Failed to parse updated session data:", error);
