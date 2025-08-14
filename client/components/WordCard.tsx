@@ -132,7 +132,7 @@ export const WordCard: React.FC<WordCardProps> = ({
   const handleFavorite = () => {
     setIsFavorited(!isFavorited);
     if (!isFavorited) {
-      audioService.playCheerSound();
+      enhancedAudioService.playSuccessSound(); // Use success sound instead of cheer for consistency
       setShowSparkles(true);
       setTimeout(() => setShowSparkles(false), 1000);
 
