@@ -2938,7 +2938,7 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
                           .map(
                             (rec) => `
                             <li>
-                                <span style="color: #8b5cf6; font-size: 16px;">��</span>
+                                <span style="color: #8b5cf6; font-size: 16px;">💡</span>
                                 <span>${rec}</span>
                             </li>
                         `,
