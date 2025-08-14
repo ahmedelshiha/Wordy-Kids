@@ -495,28 +495,32 @@ export const WordCard: React.FC<WordCardProps> = ({
                 {new Date(adventureStatus.last_seen).toLocaleDateString()}
               </p>
             )}
-            <p className="text-[9px] sm:text-[10px] opacity-75 leading-tight">
-              <RotateCcw className="w-2 h-2 sm:w-2.5 sm:h-2.5 inline mr-0.5" />
-              Tap to see definition
-            </p>
+
+            {/* Enhanced tap to flip hint with larger touch area */}
+            <div className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-full px-3 py-1.5 mx-auto w-fit">
+              <p className="text-[10px] sm:text-[11px] opacity-90 leading-tight font-medium">
+                <RotateCcw className="w-2.5 h-2.5 sm:w-3 sm:h-3 inline mr-1" />
+                Tap to see definition
+              </p>
+            </div>
 
             {/* Enhanced Mobile gesture hints with better visual feedback */}
             <div className="hidden sm:block">
-              <div className="flex justify-center gap-2 text-[9px] opacity-70">
-                <span className="flex items-center gap-0.5">
-                  <span className="w-4 h-2 bg-white/20 rounded-sm flex items-center justify-center text-[8px]">
+              <div className="flex justify-center gap-3 text-[9px] opacity-80">
+                <span className="flex items-center gap-1 bg-white/10 rounded-full px-2 py-1">
+                  <span className="w-5 h-3 bg-white/20 rounded-sm flex items-center justify-center text-[8px] font-bold">
                     ←
                   </span>
                   <span>❤️</span>
                 </span>
-                <span className="flex items-center gap-0.5">
-                  <span className="w-4 h-2 bg-white/20 rounded-sm flex items-center justify-center text-[8px]">
+                <span className="flex items-center gap-1 bg-white/10 rounded-full px-2 py-1">
+                  <span className="w-5 h-3 bg-white/20 rounded-sm flex items-center justify-center text-[8px] font-bold">
                     ↑
                   </span>
                   <span>🔊</span>
                 </span>
-                <span className="flex items-center gap-0.5">
-                  <span className="w-4 h-2 bg-white/20 rounded-sm flex items-center justify-center text-[8px]">
+                <span className="flex items-center gap-1 bg-white/10 rounded-full px-2 py-1">
+                  <span className="w-5 h-3 bg-white/20 rounded-sm flex items-center justify-center text-[8px] font-bold">
                     →
                   </span>
                   <span>🔄</span>
@@ -524,19 +528,20 @@ export const WordCard: React.FC<WordCardProps> = ({
               </div>
             </div>
 
-            {/* Mobile-only compact hints */}
+            {/* Mobile-only compact hints with better visibility */}
             <div className="sm:hidden">
-              <div className="flex justify-center gap-1.5 text-[8px] opacity-60">
-                <span>← ❤️</span>
-                <span>↑ 🔊</span>
-                <span>→ 🔄</span>
+              <div className="flex justify-center gap-2 text-[9px] opacity-75">
+                <span className="bg-white/10 rounded-full px-1.5 py-0.5">← ❤️</span>
+                <span className="bg-white/10 rounded-full px-1.5 py-0.5">↑ 🔊</span>
+                <span className="bg-white/10 rounded-full px-1.5 py-0.5">→ 🔄</span>
               </div>
             </div>
 
-            <div className="flex justify-center gap-0.5">
-              <div className="w-1 h-1 bg-white/50 rounded-full animate-bounce"></div>
-              <div className="w-1 h-1 bg-white/50 rounded-full animate-bounce delay-100"></div>
-              <div className="w-1 h-1 bg-white/50 rounded-full animate-bounce delay-200"></div>
+            {/* Enhanced swipe indicator */}
+            <div className="flex justify-center gap-1 mt-1">
+              <div className="w-1.5 h-1.5 bg-white/60 rounded-full animate-bounce"></div>
+              <div className="w-1.5 h-1.5 bg-white/60 rounded-full animate-bounce delay-100"></div>
+              <div className="w-1.5 h-1.5 bg-white/60 rounded-full animate-bounce delay-200"></div>
             </div>
           </div>
         </CardContent>
