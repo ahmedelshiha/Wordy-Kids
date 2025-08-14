@@ -144,19 +144,21 @@ function convertToWordItem(word: Word, allWords: Word[]): WordItem {
 const fetchWords = async (params: FetchParams): Promise<WordItem[]> => {
   // Use existing word database functions
   let words: Word[];
-  
+
+  // Get a larger pool for better distractor selection
+  const allWords = getRandomWords(params.limit * 4);
+
   if (params.difficulty) {
     // Get words by difficulty and category
-    const allWords = getRandomWords(params.limit * 3); // Get more to filter
     words = allWords
       .filter(w => w.difficulty === params.difficulty)
       .slice(0, params.limit);
   } else {
-    words = getRandomWords(params.limit);
+    words = allWords.slice(0, params.limit);
   }
 
-  // Convert to WordItem format
-  return words.map(convertToWordItem);
+  // Convert to WordItem format with access to all words for distractors
+  return words.map(word => convertToWordItem(word, allWords));
 };
 
 // ---------- Component ----------
