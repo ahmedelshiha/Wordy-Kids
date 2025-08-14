@@ -927,7 +927,12 @@ export function InteractiveDashboardWordCard({
           </header>
 
           {/* Action Buttons Row - Mobile Optimized */}
-          <div className="flex justify-center items-center gap-2 sm:gap-3 mb-3 sm:mb-4 px-2">
+          <div
+            className="flex justify-center items-center gap-2 sm:gap-3 mb-3 sm:mb-4 px-2"
+            role="toolbar"
+            aria-label="Word learning controls"
+            aria-describedby="game-instructions"
+          >
             <Button
               onClick={playPronunciation}
               disabled={isPlaying}
