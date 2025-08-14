@@ -23,7 +23,7 @@ import {
 import { AchievementTracker } from "@/lib/achievementTracker";
 import { audioService } from "@/lib/audioService";
 import { EnhancedAchievementPopup } from "@/components/EnhancedAchievementPopup";
-import { EnhancedSettingsPanel } from "@/components/EnhancedSettingsPanel";
+import { CompactSettingsPanel } from "@/components/CompactSettingsPanel";
 import { FloatingBubbles } from "@/components/FloatingBubbles";
 import { CelebrationEffect } from "@/components/CelebrationEffect";
 import { DailyChallenge } from "@/components/DailyChallenge";
@@ -2050,7 +2050,7 @@ export default function Index({ initialProfile }: IndexProps) {
                           </div>
                         </div>
                         <h2 className="text-xl md:text-3xl font-bold text-gray-800 mb-2 md:mb-4">
-                          🎮 Quiz Time!
+                          ��� Quiz Time!
                         </h2>
                         <p className="text-sm md:text-lg text-gray-600 mb-4 md:mb-6 px-4">
                           Test your vocabulary with super fun quizzes! 🌟
@@ -2639,7 +2639,7 @@ export default function Index({ initialProfile }: IndexProps) {
       {backgroundAnimationsEnabled && <FloatingBubbles />}
 
       {/* Settings Panel */}
-      <EnhancedSettingsPanel
+      <CompactSettingsPanel
         isOpen={showSettings}
         onClose={() => setShowSettings(false)}
       />
