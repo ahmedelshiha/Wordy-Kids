@@ -449,12 +449,12 @@ export class EnhancedAchievementTracker {
       reward: { type: "badge", item: "Weekend Warrior Shield", emoji: "🛡️" },
     },
 
-    // 🌈 RAINBOW ACHIEVEMENTS - Ultimate kid-friendly goals
+    // 🌈 RAINBOW ACHIEVEMENTS - EXTREMELY challenging ultimate goals
     {
       id: "word_rainbow_collector",
       name: "Word Rainbow Collector",
-      description: "Master all difficulty levels: 30 easy, 20 medium, 10 hard words!",
-      funnyDescription: "🌈 YOU DID IT ALL! Easy, medium, hard - you collected the ENTIRE WORD RAINBOW!",
+      description: "Master all difficulty levels: 100 easy, 75 medium, 50 hard words with 90%+ accuracy!",
+      funnyDescription: "🌈 ULTIMATE RAINBOW MAGIC! You collected the ENTIRE WORD UNIVERSE! You're a LEGEND!",
       icon: "🌈",
       category: "difficulty",
       difficulty: "rainbow",
@@ -464,17 +464,17 @@ export class EnhancedAchievementTracker {
       criteria: [
         {
           type: "easyWords",
-          target: 30,
+          target: 100,
           operator: ">=",
         },
         {
           type: "mediumWords",
-          target: 20,
+          target: 75,
           operator: ">=",
         },
         {
           type: "hardWords",
-          target: 10,
+          target: 50,
           operator: ">=",
         },
       ],
@@ -484,8 +484,8 @@ export class EnhancedAchievementTracker {
     {
       id: "ultimate_word_wizard",
       name: "Ultimate Word Wizard",
-      description: "Learn 100 words, maintain 90% accuracy, and reach 30 perfect sessions!",
-      funnyDescription: "🧙‍♂️✨ ULTIMATE MAGIC! You're the greatest Word Wizard in the entire universe!",
+      description: "Learn 300 words, maintain 95% accuracy, and reach 50 perfect sessions!",
+      funnyDescription: "🧙‍♂️✨ ULTIMATE COSMIC MAGIC! You're the SUPREME Word Wizard of the entire GALAXY!",
       icon: "🧙‍♂️",
       category: "journey",
       difficulty: "rainbow",
@@ -495,21 +495,75 @@ export class EnhancedAchievementTracker {
       criteria: [
         {
           type: "wordsLearned",
-          target: 100,
+          target: 300,
           operator: ">=",
         },
         {
           type: "accuracy",
-          target: 90,
+          target: 95,
           operator: ">=",
         },
         {
           type: "perfectSessions",
-          target: 30,
+          target: 50,
           operator: ">=",
         },
       ],
       reward: { type: "title", item: "Ultimate Word Wizard", emoji: "🧙‍♂️" },
+    },
+
+    // 🎊 MYSTERY ACHIEVEMENTS - Hidden until unlocked
+    {
+      id: "mystery_box_opener",
+      name: "Mystery Box Opener",
+      description: "??? SECRET ACHIEVEMENT ???",
+      funnyDescription: "🎁 SURPRISE! You found a hidden treasure! What a mystery solver!",
+      icon: "🎁",
+      category: "exploration",
+      difficulty: "diamond",
+      requirements: 50,
+      currentProgress: 0,
+      unlocked: false,
+      criteria: [
+        {
+          type: "wordsLearned",
+          target: 50,
+          operator: ">=",
+        },
+      ],
+      reward: { type: "sticker", item: "Mystery Box", emoji: "📦" },
+    },
+
+    // 🎮 COMBO ACHIEVEMENTS - Special combinations
+    {
+      id: "triple_threat_master",
+      name: "Triple Threat Master",
+      description: "Get 3 perfect sessions, learn 75 words, and achieve 5 daily goals!",
+      funnyDescription: "💥 TRIPLE POWER! You're like a superhero with 3 amazing powers!",
+      icon: "💥",
+      category: "journey",
+      difficulty: "diamond",
+      requirements: 3,
+      currentProgress: 0,
+      unlocked: false,
+      criteria: [
+        {
+          type: "perfectSessions",
+          target: 3,
+          operator: ">=",
+        },
+        {
+          type: "wordsLearned",
+          target: 75,
+          operator: ">=",
+        },
+        {
+          type: "dailyGoal",
+          target: 5,
+          operator: ">=",
+        },
+      ],
+      reward: { type: "avatar_accessory", item: "Superhero Cape", emoji: "🦸‍♂️" },
     },
 
     // 🎪 FUN ACHIEVEMENTS - Super kid-friendly
