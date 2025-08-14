@@ -28,6 +28,7 @@ import {
   getWordsByCategory,
   wordsDatabase,
 } from "@/data/wordsDatabase";
+import { useRealTimeWords } from "@/lib/realTimeWordDatabase";
 
 interface Category {
   id: string;
