@@ -323,7 +323,7 @@ export function EnhancedAchievementPopup({
 
                   {/* Hidden criteria for mobile - too much text */}
 
-                  {/* Optimized Reward Display */}
+                  {/* Compact Reward Display for mobile */}
                   {currentAchievement.reward && (
                     <AnimatePresence>
                       {showReward && (
@@ -331,34 +331,31 @@ export function EnhancedAchievementPopup({
                           initial={{ scale: 0.9, opacity: 0 }}
                           animate={{ scale: 1, opacity: 1 }}
                           transition={{
-                            delay: 0.8,
+                            delay: 0.3,
                             type: "spring",
-                            duration: 0.4,
+                            duration: 0.3,
                           }}
-                          className="bg-white/15 rounded-lg p-3 mb-4"
+                          className="bg-white/20 rounded-xl p-2 mb-3"
                         >
-                          <div className="flex items-center justify-center gap-2 mb-1">
-                            <Gift className="w-4 h-4" />
-                            <span className="font-semibold text-sm">
-                              Reward Unlocked!
-                            </span>
+                          <div className="text-xs font-bold text-yellow-200 mb-1 animate-pulse">
+                            🎁 REWARD TIME! 🎁
                           </div>
-                          <div className="text-base font-bold">
+                          <div className="text-sm font-bold">
                             {currentAchievement.reward.emoji || "🎁"} {currentAchievement.reward.item}
                           </div>
-                          {currentAchievement.reward.value && (
-                            <div className="text-xs text-white/90">
-                              +{currentAchievement.reward.value} points
-                            </div>
-                          )}
                           {currentAchievement.reward.type === "sticker" && (
-                            <div className="text-xs text-white/90 animate-bounce">
-                              ✨ New sticker for your collection! ✨
+                            <div className="text-xs text-white/90 animate-bounce mt-1">
+                              ✨ Sticker added! ✨
                             </div>
                           )}
                           {currentAchievement.reward.type === "badge" && (
-                            <div className="text-xs text-white/90 animate-pulse">
-                              🏅 Amazing badge earned! 🏅
+                            <div className="text-xs text-white/90 animate-pulse mt-1">
+                              🏅 Badge earned! 🏅
+                            </div>
+                          )}
+                          {currentAchievement.reward.value && (
+                            <div className="text-xs text-white/90 mt-1">
+                              +{currentAchievement.reward.value} points!
                             </div>
                           )}
                         </motion.div>
