@@ -248,7 +248,7 @@ export default function ListenAndGuessGame({
       roundsArr.push({ word: w, options: opts });
     }
     return roundsArr;
-  }, [gameWords, rounds, optionsPerRound]);
+  }, [gameWords, rounds, optionsPerRound, isRestarting]);
 
   const current = sequence[roundIdx];
 
