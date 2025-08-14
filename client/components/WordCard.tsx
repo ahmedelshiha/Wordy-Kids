@@ -876,6 +876,23 @@ export const WordCard: React.FC<WordCardProps> = ({
               </div>
             </div>
           )}
+
+          {/* Enhanced Mobile Navigation Footer for Back Card */}
+          <div className="absolute bottom-2 left-2 right-2 z-10">
+            <div className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-full px-3 py-1.5 flex items-center justify-center">
+              <div className="flex items-center gap-3 text-[9px] text-white/80">
+                <span className="flex items-center gap-1">
+                  <span className="animate-pulse">←</span>
+                  <span>Swipe back</span>
+                </span>
+                <span className="w-px h-3 bg-white/30"></span>
+                <span className="flex items-center gap-1">
+                  <span className="animate-pulse">↓</span>
+                  <span>or tap anywhere</span>
+                </span>
+              </div>
+            </div>
+          </div>
         </CardContent>
       </Card>
 
