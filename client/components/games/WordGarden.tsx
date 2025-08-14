@@ -52,6 +52,7 @@ export type FetchParams = {
   limit: number;
   difficulty?: "easy" | "medium" | "hard";
   excludeMastered?: boolean;
+  optionsPerRound: number;
 };
 
 export type WordGardenGameProps = {
@@ -895,7 +896,7 @@ export default function WordGardenGame({
           <div className="bg-green-50 rounded-lg p-2 border border-green-200 my-3">
             <div className="flex items-center justify-between text-sm">
               <div className="text-green-800">
-                <span className="font-medium">��� {correctCount}</span>
+                <span className="font-medium">🌱 {correctCount}</span>
                 <span className="text-xs ml-1">grown</span>
               </div>
               <div className="text-green-700">
