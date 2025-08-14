@@ -360,6 +360,23 @@ export const CompactMobileSettingsPanel: React.FC<
                   </CompactSettingRow>
 
                   <CompactSettingRow
+                    icon={uiInteractionSounds ? Volume2 : VolumeX}
+                    label="UI Interaction Sounds"
+                    description="Sounds for category & card touches"
+                  >
+                    <CompactMobileSwitch
+                      checked={uiInteractionSounds}
+                      onCheckedChange={(checked) => {
+                        setUiInteractionSounds(checked);
+                        setUIInteractionSoundsEnabled(checked);
+                        setHasUnsavedChanges(true);
+                        if (deviceInfo.hasHaptic)
+                          triggerHapticFeedback("light");
+                      }}
+                    />
+                  </CompactSettingRow>
+
+                  <CompactSettingRow
                     icon={Volume2}
                     label="Volume"
                     description={`${volume[0]}%`}
