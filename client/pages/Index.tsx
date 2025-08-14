@@ -159,6 +159,7 @@ export default function Index({ initialProfile }: IndexProps) {
   const [showSessionRestoration, setShowSessionRestoration] = useState(false);
   const [sessionRestorationData, setSessionRestorationData] =
     useState<SessionData | null>(null);
+  const [isRestoringSession, setIsRestoringSession] = useState(false);
   const [isSessionInitialized, setIsSessionInitialized] = useState(false);
   const [lastAutoSave, setLastAutoSave] = useState<number>(Date.now());
 
