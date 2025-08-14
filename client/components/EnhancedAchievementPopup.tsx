@@ -363,13 +363,13 @@ export function EnhancedAchievementPopup({
                     </AnimatePresence>
                   )}
 
-                  {/* Achievement Navigation Dots */}
+                  {/* Simplified Navigation Dots for mobile */}
                   {achievements.length > 1 && (
-                    <div className="flex items-center justify-center gap-1.5 mb-4">
+                    <div className="flex items-center justify-center gap-1 mb-2">
                       {achievements.map((_, index) => (
                         <div
                           key={index}
-                          className={`w-2 h-2 rounded-full transition-colors ${
+                          className={`w-1.5 h-1.5 rounded-full transition-colors ${
                             index === currentIndex ? "bg-white" : "bg-white/30"
                           }`}
                         />
@@ -377,34 +377,34 @@ export function EnhancedAchievementPopup({
                     </div>
                   )}
 
-                  {/* Action Buttons */}
-                  <div className="space-y-2">
+                  {/* Compact Action Buttons */}
+                  <div className="space-y-1.5">
                     {showReward &&
                       currentAchievement.reward &&
                       !claimed.has(currentAchievement.id) && (
                         <motion.div
                           initial={{ scale: 0.95, opacity: 0 }}
                           animate={{ scale: 1, opacity: 1 }}
-                          transition={{ delay: 1.0 }}
+                          transition={{ delay: 0.4 }}
                         >
                           <Button
                             onClick={handleClaimReward}
-                            className="w-full bg-white text-gray-800 hover:bg-white/90 font-bold py-2.5 rounded-xl shadow-lg transition-colors"
+                            className="w-full bg-white text-gray-800 hover:bg-white/90 font-bold py-2 px-3 rounded-lg shadow-lg transition-colors text-sm"
                           >
-                            <Zap className="w-4 h-4 mr-2" />
-                            Claim Reward!
+                            <Zap className="w-3 h-3 mr-1" />
+                            🎉 GET IT! 🎉
                           </Button>
                         </motion.div>
                       )}
 
-                    <div className="flex gap-2">
-                      {currentIndex > 0 && (
+                    <div className="flex gap-1.5">
+                      {achievements.length > 1 && currentIndex > 0 && (
                         <Button
                           onClick={handlePrevious}
                           variant="outline"
-                          className="flex-1 bg-white/15 text-white border-white/25 hover:bg-white/25 transition-colors"
+                          className="flex-1 bg-white/15 text-white border-white/25 hover:bg-white/25 transition-colors py-1.5 text-xs"
                         >
-                          Previous
+                          ← Back
                         </Button>
                       )}
 
@@ -413,19 +413,19 @@ export function EnhancedAchievementPopup({
                           achievements.length > 1 ? handleNext : handleClose
                         }
                         variant="outline"
-                        className="flex-1 bg-white/15 text-white border-white/25 hover:bg-white/25 transition-colors"
+                        className="flex-1 bg-white/15 text-white border-white/25 hover:bg-white/25 transition-colors py-1.5 text-xs"
                       >
                         {currentIndex < achievements.length - 1
-                          ? "Next"
-                          : "Continue"}
+                          ? "Next →"
+                          : "🚀 AWESOME! 🚀"}
                       </Button>
                     </div>
                   </div>
 
-                  {/* Achievement Counter */}
+                  {/* Simplified Achievement Counter */}
                   {achievements.length > 1 && (
-                    <div className="text-xs text-white/70 mt-2">
-                      Achievement {currentIndex + 1} of {achievements.length}
+                    <div className="text-xs text-white/70 mt-1">
+                      {currentIndex + 1} of {achievements.length} 🏆
                     </div>
                   )}
                 </motion.div>
