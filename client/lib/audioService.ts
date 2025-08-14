@@ -599,7 +599,7 @@ export class AudioService {
   }
 
   public playClickSound(): void {
-    if (!this.isEnabled) return;
+    if (!this.isEnabled || !isUIInteractionSoundsEnabled()) return;
 
     try {
       const audioContext = new (window.AudioContext ||
