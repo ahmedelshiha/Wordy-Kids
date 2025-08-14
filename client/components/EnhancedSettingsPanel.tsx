@@ -244,6 +244,8 @@ export const EnhancedSettingsPanel: React.FC<EnhancedSettingsPanelProps> = ({
     // Reset all settings to defaults
     setSoundOn(true);
     setSoundEnabled(true);
+    setUiInteractionSounds(false); // Reset to disabled by default
+    setUIInteractionSoundsEnabled(false);
     setSelectedVoiceType("woman");
     audioService.setVoiceType("woman");
     setSpeechRate([1]);
