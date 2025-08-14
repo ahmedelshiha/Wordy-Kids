@@ -12,7 +12,7 @@ import { EnhancedAchievementTracker } from "@/lib/enhancedAchievementTracker";
 /**
  * Word Garden — Listen & Pick Game for Ages 3–5
  * -------------------------------------------------
- * • Pulls words from your website DB using existing word service
+ * �� Pulls words from your website DB using existing word service
  * • Kids listen to pronunciation then pick the matching picture
  * • Every correct answer grows a plant in the garden (visual progress)
  * • Integrates with achievements + sparkle celebration hooks
@@ -149,7 +149,9 @@ function generateEmojiImage(emoji: string, fallbackText?: string): string {
         <text x="100" y="120" font-size="80" text-anchor="middle" font-family="Arial, sans-serif">${emoji}</text>
       </svg>
     `;
-    return `data:image/svg+xml;base64,${btoa(svg)}`;
+
+    // Use URL encoding instead of base64 to avoid Unicode issues
+    return `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`;
   }
 
   // Fallback to placeholder if no emoji
@@ -291,39 +293,16 @@ export default function WordGardenGame({
 
   const checkAchievements = useCallback(
     (nextCorrectTotal: number, nextStreak: number) => {
-      const tracker = EnhancedAchievementTracker.getInstance();
-
-      // Award achievements based on progress
-      if (nextStreak === 3) {
-        tracker.recordAchievement(
-          "sprout-streak-3",
-          "Got 3 words in a row!",
-          "learning",
-        );
-      }
-      if (nextStreak === 5) {
-        tracker.recordAchievement(
-          "green-thumb-streak-5",
-          "Amazing streak of 5!",
-          "streak",
-        );
-      }
-      if (nextCorrectTotal === 5) {
-        tracker.recordAchievement(
-          "garden-starter-5",
-          "Learning garden started!",
-          "learning",
-        );
-      }
-      if (nextCorrectTotal === 10) {
-        tracker.recordAchievement(
-          "garden-bloomer-10",
-          "Garden is blooming!",
-          "learning",
-        );
-      }
+      // Use the EnhancedAchievementTracker static methods directly
+      EnhancedAchievementTracker.trackActivity({
+        type: "wordLearning",
+        wordsLearned: 1,
+        accuracy: nextStreak > 0 ? 100 : 80, // Assume good accuracy for correct answers
+        difficulty: difficulty,
+        category: category,
+      });
     },
-    [],
+    [difficulty, category],
   );
 
   const choose = useCallback(
@@ -355,7 +334,7 @@ export default function WordGardenGame({
         checkAchievements(nextCorrect, nextStreak);
 
         // Play success sound
-        audioService.playCorrectSound();
+        audioService.playSuccessSound();
 
         // Haptic feedback
         if (navigator && "vibrate" in navigator) (navigator as any).vibrate(30);
@@ -364,14 +343,15 @@ export default function WordGardenGame({
         setTimeout(() => {
           setAttempts(0);
           setLocked(false);
-          if (roundIdx + 1 < pool.length) {
-            setRoundIdx((r) => r + 1);
+          const nextRound = roundIdx + 1;
+          if (nextRound < pool.length) {
+            setRoundIdx(nextRound);
           } else {
             onFinish?.({
               totalRounds: pool.length,
               correct: nextCorrect,
               wrong: wrongCount,
-              bestStreak,
+              bestStreak: Math.max(bestStreak, nextStreak),
             });
           }
         }, 900);
@@ -380,7 +360,7 @@ export default function WordGardenGame({
         setStreak(0);
 
         // Play incorrect sound
-        audioService.playIncorrectSound();
+        audioService.playEncouragementSound();
 
         // gentle buzz
         if (navigator && "vibrate" in navigator)
@@ -391,7 +371,6 @@ export default function WordGardenGame({
     [
       current,
       locked,
-      attempts,
       correctCount,
       streak,
       roundIdx,
