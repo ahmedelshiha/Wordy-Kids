@@ -112,7 +112,7 @@ const AVATAR_OPTIONS = [
   { emoji: '🐼', label: 'Panda', category: 'animals' },
   { emoji: '🦊', label: 'Fox', category: 'animals' },
   { emoji: '🐻', label: 'Bear', category: 'animals' },
-  { emoji: '🐱', label: 'Cat', category: 'animals' }
+  { emoji: '���', label: 'Cat', category: 'animals' }
 ];
 
 const INTEREST_OPTIONS = [
@@ -349,7 +349,7 @@ export function EnhancedAddChildProfile({
         </div>
 
         {/* Form content */}
-        <div className="px-6 pb-6 flex-1 overflow-y-auto">
+        <div className="px-4 sm:px-6 pb-6 flex-1 overflow-y-auto">
           <form ref={formRef} className="space-y-6">
             {/* Step 1: Basic Info */}
             {currentStep === 0 && (
