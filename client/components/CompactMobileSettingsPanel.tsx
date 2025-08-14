@@ -232,6 +232,8 @@ export const CompactMobileSettingsPanel: React.FC<
   const handleResetToDefaults = () => {
     setSoundOn(true);
     setSoundEnabled(true);
+    setUiInteractionSounds(false); // Reset to disabled by default
+    setUIInteractionSoundsEnabled(false);
     setSelectedVoiceType("woman");
     enhancedAudioService.setVoiceType("woman");
     audioService.setVoiceType("woman");
