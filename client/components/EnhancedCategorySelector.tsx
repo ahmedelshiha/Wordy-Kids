@@ -635,7 +635,7 @@ export function EnhancedCategorySelector({
               </h2>
               <div className="flex gap-1">
                 <Badge className="bg-educational-green text-white px-2 py-1 text-xs">
-                  📚 {wordsDatabase.length}
+                  📚 {realTimeWords.length}
                 </Badge>
                 <Badge className="bg-educational-blue text-white px-2 py-1 text-xs">
                   🎯 {categories.length}
