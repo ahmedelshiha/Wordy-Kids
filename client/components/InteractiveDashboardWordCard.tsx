@@ -1046,7 +1046,8 @@ export function InteractiveDashboardWordCard({
                 <Button
                   onClick={() => handleWordAction("remembered")}
                   disabled={isAnswered}
-                  className="flex-1 bg-gradient-to-r from-green-400 to-emerald-500 hover:from-green-500 hover:to-emerald-600 text-white font-bold border-0 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 active:scale-95 py-4 px-3 min-h-[60px] relative overflow-hidden disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
+                  className="w-full sm:flex-1 bg-gradient-to-r from-green-400 to-emerald-500 hover:from-green-500 hover:to-emerald-600 active:from-green-600 active:to-emerald-700 text-white font-bold border-0 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 active:scale-95 py-4 sm:py-5 px-3 min-h-[64px] sm:min-h-[72px] relative overflow-hidden disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
+                  aria-label="Mark word as remembered"
                 >
                   <div className="absolute inset-0 bg-white/20 rounded-xl opacity-0 hover:opacity-100 transition-opacity duration-300"></div>
                   <div className="relative z-10 flex items-center justify-center">
