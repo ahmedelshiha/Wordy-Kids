@@ -355,8 +355,8 @@ export function EnhancedAddChildProfile({
             {currentStep === 0 && (
               <div className="space-y-4 animate-slide-in-from-right">
                 <div>
-                  <Label htmlFor="childName" className="text-sm font-medium text-gray-700 mb-2 block">
-                    What's your child's name?
+                  <Label htmlFor="childName" className="text-xs font-medium text-gray-700 mb-1 block">
+                    Child's name
                   </Label>
                   <Input
                     id="childName"
@@ -367,7 +367,7 @@ export function EnhancedAddChildProfile({
                     }}
                     placeholder="Enter their name"
                     className={cn(
-                      "text-center text-base font-medium h-10 rounded-lg border-2 transition-all duration-200",
+                      "text-center text-sm font-medium h-8 rounded-md border-2 transition-all duration-200",
                       nameError 
                         ? "border-red-300 bg-red-50" 
                         : "border-purple-200 focus:border-purple-400 bg-white"
@@ -386,8 +386,8 @@ export function EnhancedAddChildProfile({
                 </div>
 
                 <div>
-                  <Label className="text-sm font-medium text-gray-700 mb-3 block">
-                    How old are they?
+                  <Label className="text-xs font-medium text-gray-700 mb-2 block">
+                    Age
                   </Label>
                   <div className="grid grid-cols-3 gap-2">
                     {[4, 5, 6, 7, 8, 9, 10, 11, 12].map((age) => (
@@ -396,7 +396,7 @@ export function EnhancedAddChildProfile({
                         type="button"
                         variant={formData.age === age ? "default" : "outline"}
                         className={cn(
-                          "h-10 rounded-lg transition-all duration-200 transform",
+                          "h-8 rounded-md transition-all duration-200 transform",
                           formData.age === age 
                             ? "bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-lg scale-105" 
                             : "border-purple-200 hover:border-purple-300 hover:bg-purple-50",
@@ -408,7 +408,7 @@ export function EnhancedAddChildProfile({
                         }}
                         aria-pressed={formData.age === age}
                       >
-                        <span className="text-lg font-semibold">{age}</span>
+                        <span className="text-sm font-semibold">{age}</span>
                       </Button>
                     ))}
                   </div>
