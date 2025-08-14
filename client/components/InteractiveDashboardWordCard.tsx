@@ -831,6 +831,18 @@ export function InteractiveDashboardWordCard({
               >
                 {currentWord.category}
               </Badge>
+              {/* Difficulty classification badge */}
+              <Badge
+                className={cn(
+                  "text-sm px-3 py-1",
+                  currentWord.difficulty === "easy" ? "bg-green-100 text-green-700 border-green-300" :
+                  currentWord.difficulty === "medium" ? "bg-yellow-100 text-yellow-700 border-yellow-300" :
+                  currentWord.difficulty === "hard" ? "bg-red-100 text-red-700 border-red-300" :
+                  "bg-gray-100 text-gray-700 border-gray-300"
+                )}
+              >
+                {currentWord.difficulty ? currentWord.difficulty.charAt(0).toUpperCase() + currentWord.difficulty.slice(1) : "Medium"}
+              </Badge>
               {/* Hidden: Word progress and Session progress badges */}
               <Badge
                 variant="outline"
