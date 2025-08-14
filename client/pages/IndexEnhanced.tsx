@@ -14,7 +14,7 @@ import { EncouragingFeedback } from "@/components/EncouragingFeedback";
 import { GameLikeLearning } from "@/components/GameLikeLearning";
 import { WordMatchingGame } from "@/components/WordMatchingGame";
 import { VocabularyBuilder } from "@/components/VocabularyBuilder";
-import { SettingsPanel } from "@/components/SettingsPanel";
+import { EnhancedSettingsPanel } from "@/components/EnhancedSettingsPanel";
 import { FloatingBubbles } from "@/components/FloatingBubbles";
 import { CelebrationEffect } from "@/components/CelebrationEffect";
 import { DailyChallenge } from "@/components/DailyChallenge";
