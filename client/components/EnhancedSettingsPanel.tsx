@@ -254,7 +254,7 @@ export const EnhancedSettingsPanel: React.FC<EnhancedSettingsPanelProps> = ({
   return (
     <div className="settings-panel-mobile fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-2 md:p-4">
       <Card className="settings-card-mobile w-full max-w-4xl max-h-[95vh] md:max-h-[90vh] overflow-hidden animate-mobile-slide-in shadow-2xl">
-        <CardHeader className="pb-4 bg-gradient-to-r from-educational-blue to-educational-purple text-white">
+        <CardHeader className="settings-header-mobile pb-4 bg-gradient-to-r from-educational-blue to-educational-purple text-white">
           <div className="flex items-center justify-between">
             <CardTitle className="flex items-center gap-3">
               <div className="p-2 bg-white/20 rounded-xl backdrop-blur-sm">
