@@ -171,6 +171,7 @@ export function EnhancedAchievementPopup({
   const [isClosing, setIsClosing] = useState(false);
   const [autoCloseTimer, setAutoCloseTimer] = useState<NodeJS.Timeout | null>(null);
   const [isPaused, setIsPaused] = useState(false);
+  const [timeRemaining, setTimeRemaining] = useState(autoCloseDelay);
 
   const currentAchievement = achievements[currentIndex];
 
