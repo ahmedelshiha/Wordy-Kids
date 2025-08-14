@@ -232,7 +232,7 @@ export default function ListenAndGuessGame({
       difficulty ||
       (playerLevel <= 3 ? "easy" : playerLevel <= 7 ? "medium" : "hard");
     return generateDatabaseWords(rounds, category, difficultyLevel);
-  }, [words, rounds, category, difficulty, playerLevel, generateDatabaseWords]);
+  }, [words, rounds, category, difficulty, playerLevel, generateDatabaseWords, isRestarting]);
 
   // Precompute the sequence of rounds
   const sequence = useMemo(() => {
