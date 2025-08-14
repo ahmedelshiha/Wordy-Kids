@@ -319,7 +319,7 @@ export const CompactMobileSettingsPanel: React.FC<
           )}
         </CardHeader>
 
-        <ScrollArea className="flex-1 max-h-[60vh] sm:max-h-[65vh] overflow-y-auto scroll-smooth">
+        <ScrollArea className="flex-1 max-h-[68vh] overflow-y-auto scroll-smooth">
           <div
             className="p-2 space-y-1 min-h-0"
             style={{ WebkitOverflowScrolling: "touch" }}
@@ -749,7 +749,7 @@ export const CompactMobileSettingsPanel: React.FC<
 
                   {/* Goal Insights */}
                   <div className="mt-2 p-2 bg-gradient-to-br from-yellow-50 to-orange-50 rounded-lg border border-yellow-200">
-                    <p className="text-xs font-medium text-orange-800 mb-1">💡 Smart Insight</p>
+                    <p className="text-xs font-medium text-orange-800 mb-1">���� Smart Insight</p>
                     <p className="text-xs text-orange-700">
                       {currentProgress.accuracy >= 80
                         ? "Great accuracy! Consider increasing your daily goal."
