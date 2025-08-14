@@ -458,13 +458,8 @@ export default function Index({ initialProfile }: IndexProps) {
         if (latestSession && latestSession.lastSaved > lastAutoSave) {
           console.log("Found newer session data from another tab");
 
-          // Show brief notification that session was updated
-          setFeedback({
-            type: "info",
-            title: "Session Updated 🔄",
-            message: "Your progress was synced from another tab",
-            onContinue: () => setFeedback(null),
-          });
+          // Session updated silently in background - no popup message
+          console.log("Session updated from another tab - progress synced silently");
 
           // Update current state with latest data (selective update to avoid disruption)
           if (latestSession.currentProgress) {
