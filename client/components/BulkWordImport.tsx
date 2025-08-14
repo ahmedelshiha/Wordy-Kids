@@ -33,6 +33,8 @@ import {
   Save,
   RefreshCw,
 } from "lucide-react";
+import { refreshWordDatabase } from "@/lib/cacheManager";
+import { realTimeWordDB } from "@/lib/realTimeWordDatabase";
 
 interface WordImportData {
   word: string;
