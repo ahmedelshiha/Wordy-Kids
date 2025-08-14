@@ -271,8 +271,12 @@ export default function ListenAndGuessGame({
         className="pointer-events-none absolute inset-0 overflow-hidden"
       />
 
-      {/* Card container */}
-      <div className="rounded-3xl shadow-xl p-4 md:p-6 bg-gradient-to-b from-sky-600 to-blue-700 text-white">
+      {/* Card container with enhanced mobile styling */}
+      <div className="rounded-3xl shadow-mobile-xl p-4 md:p-6 bg-gradient-to-br from-sky-600 via-blue-600 to-purple-700 text-white mobile-optimized card-entrance relative overflow-hidden">
+        {/* Animated background elements */}
+        <div className="absolute top-0 left-0 w-32 h-32 bg-white/10 rounded-full blur-xl animate-gentle-float"></div>
+        <div className="absolute top-1/2 right-0 w-24 h-24 bg-yellow-300/20 rounded-full blur-lg animate-kid-float-delayed"></div>
+        <div className="absolute bottom-0 left-1/2 w-28 h-28 bg-pink-300/15 rounded-full blur-xl animate-kid-float"></div>
         {/* Exit Button */}
         {onExit && (
           <button
