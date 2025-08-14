@@ -373,7 +373,7 @@ export default function WordGardenGame({
               totalRounds: pool.length,
               correct: nextCorrect,
               wrong: wrongCount,
-              bestStreak,
+              bestStreak: Math.max(bestStreak, nextStreak),
             });
           }
         }, 900);
