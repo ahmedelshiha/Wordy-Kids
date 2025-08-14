@@ -3848,7 +3848,9 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
               variant="outline"
               size="sm"
               onClick={onNavigateBack}
-              className="flex items-center gap-1 md:gap-2 text-xs md:text-sm px-2 md:px-3"
+              className={`flex items-center gap-1 md:gap-2 text-xs md:text-sm px-2 md:px-3 ${
+                showMobileBackButton ? "" : "hidden md:flex"
+              }`}
             >
               <ArrowLeft className="w-3 h-3 md:w-4 md:h-4" />
               <span className="hidden md:inline">Back to Main</span>
@@ -4008,7 +4010,7 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
                 Choose Avatar
               </Label>
               <div className="grid grid-cols-5 sm:grid-cols-9 gap-1 sm:gap-2">
-                {["👦", "👧", "🧒", "👶", "🦸‍♂️", "🦸‍♀️", "🧑‍🎓", "👨‍🎓", "👩‍🎓"].map(
+                {["👦", "👧", "🧒", "👶", "🦸‍♂️", "🦸‍♀️", "🧑‍��", "👨‍🎓", "👩‍🎓"].map(
                   (emoji) => (
                     <Button
                       key={emoji}
