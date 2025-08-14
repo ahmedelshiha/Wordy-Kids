@@ -304,7 +304,7 @@ export const WordCard: React.FC<WordCardProps> = ({
       className={`relative w-full max-w-[340px] sm:max-w-[380px] md:max-w-sm mx-auto ${className}`}
     >
       <Card
-        className={`h-[360px] sm:h-[380px] md:h-[360px] cursor-pointer transition-all duration-300 transform-gpu active:scale-[0.98] hover:scale-[1.01] shadow-lg hover:shadow-xl ${
+        className={`h-[380px] sm:h-[420px] md:h-[400px] cursor-pointer transition-all duration-300 transform-gpu active:scale-[0.98] hover:scale-[1.01] shadow-lg hover:shadow-xl ${
           isFlipped ? "[transform:rotateY(180deg)]" : ""
         } ${
           adventureStatus && adventureStatus.health < 30
@@ -350,7 +350,7 @@ export const WordCard: React.FC<WordCardProps> = ({
                 className={`${getDifficultyColor(word.difficulty)} text-[9px] font-medium px-1 py-0.5 leading-none`}
               >
                 {word.difficulty === "easy"
-                  ? "🌟 Easy"
+                  ? "���� Easy"
                   : word.difficulty === "medium"
                     ? "⭐ Med"
                     : "🔥 Hard"}
