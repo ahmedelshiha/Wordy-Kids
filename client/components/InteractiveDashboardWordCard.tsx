@@ -1155,7 +1155,7 @@ export function InteractiveDashboardWordCard({
               </div>
 
               {/* Compact Session Progress */}
-              <div className="mt-3 bg-gradient-to-r from-blue-50 to-purple-50 rounded-lg p-2 border border-blue-200">
+              <div className="mt-4 bg-gradient-to-br from-blue-50 via-indigo-50/30 to-purple-50 rounded-xl p-3 sm:p-4 border border-blue-200/60 shadow-md backdrop-blur-sm ring-1 ring-blue-100/30">
                 {/* Compact Progress Bar */}
                 <div className="flex items-center justify-between mb-2">
                   <div className="text-xs font-bold text-gray-700">
