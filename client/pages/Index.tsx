@@ -27,6 +27,9 @@ import { EnhancedAchievementPopup } from "@/components/EnhancedAchievementPopup"
 import { CompactMobileSettingsPanel } from "@/components/CompactMobileSettingsPanel";
 import { FloatingBubbles } from "@/components/FloatingBubbles";
 import { CelebrationEffect } from "@/components/CelebrationEffect";
+import { SessionRestoration } from "@/components/SessionRestoration";
+import { useSessionPersistence, SessionData } from "@/hooks/useSessionPersistence";
+import { getSessionPersistenceService } from "@/lib/sessionPersistenceService";
 import { DailyChallenge } from "@/components/DailyChallenge";
 import { ReadingComprehension } from "@/components/ReadingComprehension";
 import { ParentDashboard } from "@/components/ParentDashboard";
@@ -1557,7 +1560,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                   </div>
                                   <div className="text-xs text-slate-500">
                                     {currentWordIndex + 1}/{displayWords.length}{" "}
-                                    • {rememberedWords.size} ✅
+                                    • {rememberedWords.size} ��
                                   </div>
                                 </div>
 
@@ -2516,7 +2519,7 @@ export default function Index({ initialProfile }: IndexProps) {
                     <div className="space-y-6">
                       <div className="flex items-center justify-between">
                         <h2 className="text-2xl font-bold text-gray-800">
-                          🧩 Word Matching Game
+                          �� Word Matching Game
                         </h2>
                       </div>
                       <WordMatchingGame
