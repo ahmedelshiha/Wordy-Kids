@@ -213,7 +213,7 @@ export function EncouragingFeedback({
         )}
 
       <Card
-        className={`max-w-md mx-auto bg-gradient-to-br ${getBackgroundGradient()} text-white shadow-2xl ${
+        className={`max-w-sm w-full mx-4 bg-gradient-to-br ${getBackgroundGradient()} text-white shadow-2xl rounded-3xl ${
           currentAnimation === "bounce"
             ? "animate-bounce"
             : currentAnimation === "pulse"
@@ -223,7 +223,7 @@ export function EncouragingFeedback({
                 : ""
         }`}
       >
-        <CardContent className="p-8 text-center space-y-6">
+        <CardContent className="p-6 text-center space-y-4">
           {/* Icon */}
           <div className="flex justify-center">
             <div
