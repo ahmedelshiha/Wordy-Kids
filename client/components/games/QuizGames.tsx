@@ -149,6 +149,21 @@ export function QuizGames({
   };
 
   if (activeQuiz) {
+    // Handle Listen & Guess game
+    if (activeQuiz === "listen-guess") {
+      return (
+        <ListenAndGuessGame
+          words={DemoWords}
+          rounds={10}
+          optionsPerRound={3}
+          onFinish={(stats) => {
+            onQuizComplete(stats.correct, stats.totalRounds);
+          }}
+          onExit={handleQuizBack}
+        />
+      );
+    }
+
     // Handle Vowel Rescue games
     if (activeQuiz.startsWith("vowel-")) {
       let vowelQuestions;
