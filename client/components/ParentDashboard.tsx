@@ -3868,11 +3868,41 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
               Parent Dashboard
             </h1>
             <p className="text-xs md:text-base text-slate-600 hidden md:block">
-              Comprehensive learning management for your family
+              Monitor your child's learning progress and achievements
             </p>
             <p className="text-xs text-slate-600 md:hidden">
               Manage your family's learning
             </p>
+
+            {/* Quick Navigation - Show available child tabs */}
+            {onNavigateBack && (
+              <div className="flex items-center gap-2 mt-2 flex-wrap">
+                <span className="text-xs text-slate-500">Quick return to:</span>
+                {[
+                  { id: "dashboard", label: "Dashboard", icon: Target },
+                  { id: "learn", label: "Word Library", icon: BookOpen },
+                  { id: "quiz", label: "Quiz", icon: Brain },
+                  { id: "progress", label: "Journey", icon: Trophy }
+                ].map(({ id, label, icon: Icon }) => (
+                  <Button
+                    key={id}
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => {
+                      onNavigateBack();
+                      // This will be handled by the parent component to set the correct tab
+                      setTimeout(() => {
+                        window.dispatchEvent(new CustomEvent('navigateToTab', { detail: { tab: id } }));
+                      }, 100);
+                    }}
+                    className="text-xs px-2 py-1 h-6 text-slate-600 hover:text-educational-blue hover:bg-educational-blue/10"
+                  >
+                    <Icon className="w-3 h-3 mr-1" />
+                    {label}
+                  </Button>
+                ))}
+              </div>
+            )}
           </div>
         </div>
       </div>
