@@ -279,33 +279,33 @@ export function EnhancedAchievementPopup({
               </Button>
 
               <CardContent className="p-3 sm:p-4 text-center relative">
-                {/* Achievement Icon with Animation */}
+                {/* Achievement Icon with Animation - Smaller for mobile */}
                 <motion.div
                   initial={{ scale: 0, rotate: -90 }}
                   animate={{ scale: 1, rotate: 0 }}
-                  transition={{ delay: 0.2, type: "spring", duration: 0.6 }}
-                  className="text-6xl mb-4 relative flex justify-center"
+                  transition={{ delay: 0.1, type: "spring", duration: 0.4 }}
+                  className="text-4xl sm:text-5xl mb-2 relative flex justify-center"
                 >
                   <span>{currentAchievement.icon}</span>
                   <SparkleEffects show={showReward} />
                 </motion.div>
 
-                {/* Achievement Details */}
+                {/* Achievement Details - Compact for mobile */}
                 <motion.div
-                  initial={{ opacity: 0, y: 15 }}
+                  initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.4 }}
+                  transition={{ delay: 0.2 }}
                 >
-                  <div className="flex items-center justify-center gap-2 mb-3">
-                    <DifficultyIcon className="w-5 h-5" />
-                    <h3 className="text-xl font-bold">Achievement Unlocked!</h3>
+                  <div className="flex items-center justify-center gap-1 mb-2">
+                    <DifficultyIcon className="w-3 h-3 sm:w-4 sm:h-4" />
+                    <h3 className="text-sm sm:text-base font-bold animate-bounce">🎉 WOW! 🎉</h3>
                   </div>
 
-                  <h4 className="text-lg mb-3 font-semibold">
+                  <h4 className="text-sm sm:text-base mb-2 font-bold text-yellow-200">
                     {currentAchievement.name}
                   </h4>
 
-                  <p className="text-white/90 mb-4 text-sm leading-relaxed">
+                  <p className="text-white/90 mb-3 text-xs sm:text-sm leading-tight px-1">
                     {currentAchievement.funnyDescription ||
                      EnhancedAchievementTracker.getKidFriendlyDescription(currentAchievement.id) ||
                      currentAchievement.description}
