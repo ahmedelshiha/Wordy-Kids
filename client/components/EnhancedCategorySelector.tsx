@@ -384,9 +384,7 @@ export function EnhancedCategorySelector({
       sports: "bg-orange-600",
       greetings: "bg-blue-400",
       technology: "bg-gray-500",
-      "at-the-zoo": "bg-green-600",
       "at-the-clothes-shop": "bg-pink-500",
-      "my-favourite-food": "bg-green-400",
       "at-home": "bg-blue-400",
       default: "bg-slate-400",
     };
