@@ -369,6 +369,24 @@ export function InteractiveDashboardWordCard({
         timeSpent: 1, // Assume 1 minute per word on average
       });
 
+      // Track enhanced achievements with difficulty-based progression
+      const enhancedAchievements = EnhancedAchievementTracker.trackActivity({
+        type: "wordLearning",
+        wordsLearned: status === "remembered" ? 1 : 0,
+        accuracy:
+          status === "remembered"
+            ? 100
+            : status === "needs_practice"
+              ? 0
+              : undefined,
+        category: currentWord.category,
+        difficulty: currentWord.difficulty,
+        timeSpent: 1,
+      });
+
+      // Combine achievements from both systems
+      const allNewAchievements = [...newJourneyAchievements, ...enhancedAchievements];
+
       // Show journey achievements if any were unlocked
       if (newJourneyAchievements.length > 0) {
         setTimeout(() => {
