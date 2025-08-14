@@ -303,7 +303,7 @@ export default function ListenAndGuessGame({
         {/* Mascot + play button */}
         <div className="flex items-center justify-between gap-3 mb-4">
           <div className="flex items-center gap-2">
-            <span className="text-4xl animate-bounce">🦊</span>
+            <span className="text-4xl animate-gentle-float">🦊</span>
             <div className="leading-tight">
               <div className="text-xs uppercase tracking-wide opacity-90">
                 Listen & Guess
@@ -314,7 +314,7 @@ export default function ListenAndGuessGame({
 
           <button
             onClick={playPrompt}
-            className="shrink-0 rounded-full px-5 py-3 bg-white text-blue-700 font-bold active:scale-95 transition-transform min-w-[56px] min-h-[56px] hover:shadow-lg"
+            className="shrink-0 rounded-full px-6 py-4 bg-white text-blue-700 font-bold active:scale-95 transition-all duration-200 min-w-[64px] min-h-[64px] hover:shadow-lg animate-mobile-pulse border-3 border-yellow-300 touch-target"
             aria-label="Play sound"
             disabled={locked}
           >
@@ -324,7 +324,7 @@ export default function ListenAndGuessGame({
 
         {/* Options grid */}
         <div
-          className={`grid gap-3 ${optionsPerRound === 5 ? "grid-cols-3" : optionsPerRound === 4 ? "grid-cols-2" : "grid-cols-3"}`}
+          className={`grid gap-4 ${optionsPerRound === 5 ? "grid-cols-3" : optionsPerRound === 4 ? "grid-cols-2" : "grid-cols-3"}`}
         >
           {current.options.map((img, i) => {
             const isCorrect = img === current.word.imageUrl;
@@ -336,58 +336,106 @@ export default function ListenAndGuessGame({
                 key={i}
                 onClick={() => choose(img)}
                 disabled={locked}
-                className={`relative aspect-square rounded-2xl bg-white/90 hover:bg-white active:scale-95 transition-all shadow-lg overflow-hidden border-4 focus:outline-none focus:ring-4 focus:ring-yellow-300 ${
+                className={`relative aspect-square rounded-3xl bg-white/95 hover:bg-white active:scale-95 transition-all duration-300 shadow-mobile-lg overflow-hidden border-4 focus:outline-none focus:ring-4 focus:ring-yellow-300 touch-target mobile-optimized ${
                   shouldHighlight
                     ? isCorrect
-                      ? "border-green-400 ring-4 ring-green-300 animate-pulse"
-                      : "border-red-400 ring-4 ring-red-300 animate-pulse"
-                    : "border-transparent hover:border-yellow-300"
-                } ${locked ? "cursor-not-allowed" : "cursor-pointer"}`}
+                      ? "border-green-400 ring-4 ring-green-300 animate-gentle-bounce border-rainbow"
+                      : "border-red-400 ring-4 ring-red-300 animate-wiggle"
+                    : "border-transparent hover:border-yellow-300 animate-fade-in"
+                } ${locked ? "cursor-not-allowed" : "cursor-pointer hover:shadow-xl hover:scale-105"}`}
+                style={{
+                  animationDelay: `${i * 100}ms`
+                }}
               >
                 <img
                   src={img}
                   alt="option"
-                  className="w-full h-full object-contain p-2"
+                  className="w-full h-full object-contain p-3"
+                  loading="lazy"
                 />
-                {/* fun corner badge */}
-                <span className="absolute top-1 left-1 text-lg">✨</span>
+                {/* fun corner badge with animation */}
+                <span className="absolute top-2 left-2 text-lg animate-sparkle">✨</span>
 
-                {/* Answer feedback */}
+                {/* Answer feedback with enhanced animations */}
                 {showAnswer && isCorrect && (
-                  <div className="absolute inset-0 bg-green-500/20 flex items-center justify-center">
-                    <span className="text-4xl animate-bounce">✅</span>
+                  <div className="absolute inset-0 bg-green-500/30 flex items-center justify-center backdrop-blur-sm">
+                    <div className="text-center">
+                      <span className="text-5xl animate-gentle-bounce">✅</span>
+                      <div className="text-white font-bold text-sm mt-1 text-shadow">Correct!</div>
+                    </div>
                   </div>
                 )}
                 {showAnswer && isSelected && !isCorrect && (
-                  <div className="absolute inset-0 bg-red-500/20 flex items-center justify-center">
-                    <span className="text-4xl animate-bounce">❌</span>
+                  <div className="absolute inset-0 bg-red-500/30 flex items-center justify-center backdrop-blur-sm">
+                    <div className="text-center">
+                      <span className="text-5xl animate-wiggle">❌</span>
+                      <div className="text-white font-bold text-sm mt-1 text-shadow">Try again!</div>
+                    </div>
                   </div>
                 )}
+
+                {/* Sparkle effects for hover */}
+                <div className="absolute top-1 right-1 opacity-0 hover:opacity-100 transition-opacity">
+                  <span className="text-xs animate-mobile-sparkle">⭐</span>
+                </div>
               </button>
             );
           })}
         </div>
 
-        {/* Bottom: XP + streak */}
-        <div className="mt-5">
-          <div className="text-sm flex items-center justify-between">
-            <span>XP</span>
-            <span>
-              Streak: {streak} (Best {bestStreak})
-            </span>
+        {/* Bottom: XP + streak with enhanced visuals */}
+        <div className="mt-6">
+          <div className="text-sm flex items-center justify-between mb-2">
+            <div className="flex items-center gap-2">
+              <span className="text-lg">🌟</span>
+              <span>XP Progress</span>
+            </div>
+            <div className="flex items-center gap-2 bg-white/20 rounded-full px-3 py-1">
+              <span className="text-lg">🔥</span>
+              <span>
+                Streak: {streak} (Best {bestStreak})
+              </span>
+            </div>
           </div>
-          <div className="mt-2 h-3 rounded-full bg-white/20">
+          <div className="mt-2 h-4 rounded-full bg-white/20 overflow-hidden">
             <div
-              className="h-3 rounded-full bg-emerald-300 transition-all duration-300"
+              className="h-4 rounded-full bg-gradient-to-r from-emerald-300 to-green-400 transition-all duration-500 ease-out animate-mobile-slide-in"
               style={{ width: `${xpPct}%` }}
             />
+          </div>
+          <div className="text-center mt-2 text-xs opacity-90">
+            {correctCount}/{sequence.length} questions answered correctly!
           </div>
         </div>
       </div>
 
-      {/* Styles for confetti dots */}
+      {/* Enhanced styles for confetti dots and animations */}
       <style>{`
-        .confetti-dot{position:absolute;top:60%;border-radius:9999px;box-shadow:0 0 0 1px rgba(255,255,255,.15) inset}
+        .confetti-dot{position:absolute;top:60%;border-radius:9999px;box-shadow:0 0 0 1px rgba(255,255,255,.15) inset;}
+
+        @keyframes celebrationPulse {
+          0%, 100% { transform: scale(1); }
+          50% { transform: scale(1.05); }
+        }
+
+        @keyframes cardEntrance {
+          0% {
+            opacity: 0;
+            transform: translateY(20px) scale(0.8);
+          }
+          100% {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+          }
+        }
+
+        .card-entrance {
+          animation: cardEntrance 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .celebration-pulse {
+          animation: celebrationPulse 0.8s ease-in-out;
+        }
       `}</style>
     </div>
   );
