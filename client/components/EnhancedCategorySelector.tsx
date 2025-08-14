@@ -452,7 +452,7 @@ export function EnhancedCategorySelector({
 
     // Screen reader announcement
     if (announceSelection && "speechSynthesis" in window) {
-      const category = enrichedCategories.find((cat) => cat.id === categoryId);
+      const category = currentEnrichedCategories.find((cat) => cat.id === categoryId);
       if (category) {
         const utterance = new SpeechSynthesisUtterance(
           `Selected ${category.name} category with ${category.wordCount} words`,
