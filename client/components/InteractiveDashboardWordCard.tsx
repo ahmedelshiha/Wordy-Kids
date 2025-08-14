@@ -1037,24 +1037,34 @@ export function InteractiveDashboardWordCard({
           </div>
 
           {/* Hint Display */}
-          {showHint && !showWordName && (
-            <div
-              className="bg-gradient-to-br from-yellow-50 via-orange-50/50 to-amber-50 border border-yellow-200/60 rounded-2xl p-4 mb-4 text-center shadow-lg backdrop-blur-sm ring-1 ring-yellow-200/20"
-              role="region"
-              aria-label="Word hint"
-              aria-live="polite"
-            >
-              <div className="flex items-center justify-center gap-2 mb-1">
-                <Lightbulb className="w-4 h-4 text-yellow-600" aria-hidden="true" />
-                <h2 className="text-sm font-semibold text-yellow-800">
-                  💡 Hint:
-                </h2>
-              </div>
-              <p className="text-yellow-700 text-sm" id="hint-text">
-                "{currentWord.definition}"
-              </p>
-            </div>
-          )}
+          <AnimatePresence>
+            {showHint && !showWordName && (
+              <motion.div
+                initial={{ opacity: 0, y: -20, scale: 0.95 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                exit={{ opacity: 0, y: -10, scale: 0.95 }}
+                transition={{
+                  duration: 0.3,
+                  type: "spring",
+                  damping: 20
+                }}
+                className="bg-gradient-to-br from-yellow-50 via-orange-50/50 to-amber-50 border border-yellow-200/60 rounded-2xl p-4 mb-4 text-center shadow-lg backdrop-blur-sm ring-1 ring-yellow-200/20 will-change-transform"
+                role="region"
+                aria-label="Word hint"
+                aria-live="polite"
+              >
+                <div className="flex items-center justify-center gap-2 mb-1">
+                  <Lightbulb className="w-4 h-4 text-yellow-600" aria-hidden="true" />
+                  <h2 className="text-sm font-semibold text-yellow-800">
+                    💡 Hint:
+                  </h2>
+                </div>
+                <p className="text-yellow-700 text-sm" id="hint-text">
+                  "{currentWord.definition}"
+                </p>
+              </motion.div>
+            )}
+          </AnimatePresence>
 
           {/* Word Name and Details */}
           {showWordName && (
