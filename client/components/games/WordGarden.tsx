@@ -366,22 +366,17 @@ export default function WordGardenGame({
         setTimeout(() => {
           setAttempts(0);
           setLocked(false);
-          setRoundIdx((currentRound) => {
-            if (currentRound + 1 < pool.length) {
-              return currentRound + 1;
-            } else {
-              // Game is complete
-              setTimeout(() => {
-                onFinish?.({
-                  totalRounds: pool.length,
-                  correct: nextCorrect,
-                  wrong: wrongCount,
-                  bestStreak: Math.max(bestStreak, nextStreak),
-                });
-              }, 100);
-              return currentRound;
-            }
-          });
+          const nextRound = roundIdx + 1;
+          if (nextRound < pool.length) {
+            setRoundIdx(nextRound);
+          } else {
+            onFinish?.({
+              totalRounds: pool.length,
+              correct: nextCorrect,
+              wrong: wrongCount,
+              bestStreak: Math.max(bestStreak, nextStreak),
+            });
+          }
         }, 900);
       } else {
         setWrongCount((w) => w + 1);
