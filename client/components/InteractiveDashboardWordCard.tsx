@@ -826,16 +826,35 @@ export function InteractiveDashboardWordCard({
       </div> */}
 
       {/* Interactive Word Card */}
-      <Card
-        className={cn(
-          "w-full max-w-3xl mx-auto transition-all duration-500 transform hover:scale-[1.02] relative overflow-hidden",
-          "bg-gradient-to-br from-white via-blue-50/30 to-purple-50/30",
-          "shadow-lg hover:shadow-xl border-0 rounded-2xl sm:rounded-3xl",
-          "backdrop-blur-sm ring-1 ring-black/5",
-          celebrationEffect &&
-            "animate-pulse shadow-2xl border-yellow-400 border-4 bg-gradient-to-br from-yellow-50 to-orange-50",
-        )}
+      <motion.div
+        initial={{ opacity: 0, y: 20, scale: 0.95 }}
+        animate={{ opacity: 1, y: 0, scale: 1 }}
+        transition={{
+          duration: 0.5,
+          ease: "easeOut",
+          type: "spring",
+          damping: 20
+        }}
+        whileHover={{
+          scale: 1.02,
+          transition: { duration: 0.2 }
+        }}
+        whileTap={{
+          scale: 0.98,
+          transition: { duration: 0.1 }
+        }}
+        className="will-change-transform"
       >
+        <Card
+          className={cn(
+            "w-full max-w-3xl mx-auto relative overflow-hidden",
+            "bg-gradient-to-br from-white via-blue-50/30 to-purple-50/30",
+            "shadow-lg hover:shadow-xl border-0 rounded-2xl sm:rounded-3xl",
+            "backdrop-blur-sm ring-1 ring-black/5",
+            celebrationEffect &&
+              "animate-pulse shadow-2xl border-yellow-400 border-4 bg-gradient-to-br from-yellow-50 to-orange-50",
+          )}
+        >
         {/* Celebration Sparkles */}
         {celebrationEffect && (
           <div className="absolute inset-0 bg-gradient-to-r from-yellow-400/20 to-pink-400/20 animate-pulse z-20">
@@ -1226,7 +1245,8 @@ export function InteractiveDashboardWordCard({
             </div>
           )}
         </CardContent>
-      </Card>
+        </Card>
+      </motion.div>
 
       {/* Quick Action Buttons - Hidden per user request */}
       {/* <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-2xl mx-auto">
