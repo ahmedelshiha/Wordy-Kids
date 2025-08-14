@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from 'react';
-import { Alert, AlertDescription } from '@/components/ui/alert';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import { CheckCircle, RefreshCw, Plus, Sparkles, X } from 'lucide-react';
-import { useRealTimeWords } from '@/lib/realTimeWordDatabase';
+import React, { useEffect, useState } from "react";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { CheckCircle, RefreshCw, Plus, Sparkles, X } from "lucide-react";
+import { useRealTimeWords } from "@/lib/realTimeWordDatabase";
 
 interface Notification {
   id: string;
-  type: 'words-added' | 'words-updated' | 'categories-changed' | 'full-refresh';
+  type: "words-added" | "words-updated" | "categories-changed" | "full-refresh";
   message: string;
   count?: number;
   timestamp: number;
@@ -22,23 +22,23 @@ export function WordDatabaseNotifications() {
     // Listen for word database changes
     const handleWordDatabaseEvent = (event: any) => {
       const { type, data, timestamp } = event.detail || event;
-      
-      let message = 'Word database updated!';
+
+      let message = "Word database updated!";
       let count = 0;
-      
+
       switch (type) {
-        case 'words-added':
+        case "words-added":
           count = data?.words?.length || 0;
-          message = `${count} new word${count === 1 ? '' : 's'} added!`;
+          message = `${count} new word${count === 1 ? "" : "s"} added!`;
           break;
-        case 'words-updated':
-          message = 'Words have been updated!';
+        case "words-updated":
+          message = "Words have been updated!";
           break;
-        case 'categories-changed':
-          message = 'Categories updated!';
+        case "categories-changed":
+          message = "Categories updated!";
           break;
-        case 'full-refresh':
-          message = 'Word database refreshed!';
+        case "full-refresh":
+          message = "Word database refreshed!";
           break;
       }
 
@@ -47,66 +47,76 @@ export function WordDatabaseNotifications() {
         type,
         message,
         count,
-        timestamp
+        timestamp,
       };
 
-      setNotifications(prev => [...prev.slice(-4), notification]); // Keep last 5 notifications
+      setNotifications((prev) => [...prev.slice(-4), notification]); // Keep last 5 notifications
 
       // Auto-dismiss after 5 seconds
       setTimeout(() => {
-        setNotifications(prev => 
-          prev.map(n => n.id === notification.id ? { ...n, dismissed: true } : n)
+        setNotifications((prev) =>
+          prev.map((n) =>
+            n.id === notification.id ? { ...n, dismissed: true } : n,
+          ),
         );
       }, 5000);
 
       // Remove dismissed notifications after animation
       setTimeout(() => {
-        setNotifications(prev => prev.filter(n => n.id !== notification.id));
+        setNotifications((prev) =>
+          prev.filter((n) => n.id !== notification.id),
+        );
       }, 5500);
     };
 
     // Listen for custom events
-    window.addEventListener('wordDatabaseUpdate', handleWordDatabaseEvent);
-    window.addEventListener('wordDatabaseRefresh', handleWordDatabaseEvent);
+    window.addEventListener("wordDatabaseUpdate", handleWordDatabaseEvent);
+    window.addEventListener("wordDatabaseRefresh", handleWordDatabaseEvent);
 
     // Listen for storage events (cross-tab)
     const handleStorageChange = (event: StorageEvent) => {
-      if (event.key === 'wordDatabaseUpdate' || event.key === 'wordDatabaseRefresh') {
+      if (
+        event.key === "wordDatabaseUpdate" ||
+        event.key === "wordDatabaseRefresh"
+      ) {
         handleWordDatabaseEvent({
-          type: 'full-refresh',
-          timestamp: parseInt(event.newValue || '0')
+          type: "full-refresh",
+          timestamp: parseInt(event.newValue || "0"),
         });
       }
     };
 
-    window.addEventListener('storage', handleStorageChange);
+    window.addEventListener("storage", handleStorageChange);
 
     return () => {
-      window.removeEventListener('wordDatabaseUpdate', handleWordDatabaseEvent);
-      window.removeEventListener('wordDatabaseRefresh', handleWordDatabaseEvent);
-      window.removeEventListener('storage', handleStorageChange);
+      window.removeEventListener("wordDatabaseUpdate", handleWordDatabaseEvent);
+      window.removeEventListener(
+        "wordDatabaseRefresh",
+        handleWordDatabaseEvent,
+      );
+      window.removeEventListener("storage", handleStorageChange);
     };
   }, []);
 
   const dismissNotification = (id: string) => {
-    setNotifications(prev =>
-      prev.map(n => n.id === id ? { ...n, dismissed: true } : n)
+    setNotifications((prev) =>
+      prev.map((n) => (n.id === id ? { ...n, dismissed: true } : n)),
     );
-    
+
     setTimeout(() => {
-      setNotifications(prev => prev.filter(n => n.id !== id));
+      setNotifications((prev) => prev.filter((n) => n.id !== id));
     }, 500);
   };
 
   const getNotificationIcon = (type: string) => {
     switch (type) {
-      case 'words-added':
+      case "words-added":
         return <Plus className="w-4 h-4 text-green-600" />;
-      case 'words-updated':
+      case "words-updated":
         return <CheckCircle className="w-4 h-4 text-blue-600" />;
-      case 'categories-changed':
+      case "categories-changed":
         return <Sparkles className="w-4 h-4 text-purple-600" />;
-      case 'full-refresh':
+      case "full-refresh":
         return <RefreshCw className="w-4 h-4 text-orange-600" />;
       default:
         return <CheckCircle className="w-4 h-4 text-blue-600" />;
@@ -115,16 +125,16 @@ export function WordDatabaseNotifications() {
 
   const getNotificationColor = (type: string) => {
     switch (type) {
-      case 'words-added':
-        return 'border-green-200 bg-green-50 text-green-800';
-      case 'words-updated':
-        return 'border-blue-200 bg-blue-50 text-blue-800';
-      case 'categories-changed':
-        return 'border-purple-200 bg-purple-50 text-purple-800';
-      case 'full-refresh':
-        return 'border-orange-200 bg-orange-50 text-orange-800';
+      case "words-added":
+        return "border-green-200 bg-green-50 text-green-800";
+      case "words-updated":
+        return "border-blue-200 bg-blue-50 text-blue-800";
+      case "categories-changed":
+        return "border-purple-200 bg-purple-50 text-purple-800";
+      case "full-refresh":
+        return "border-orange-200 bg-orange-50 text-orange-800";
       default:
-        return 'border-blue-200 bg-blue-50 text-blue-800';
+        return "border-blue-200 bg-blue-50 text-blue-800";
     }
   };
 
@@ -138,9 +148,10 @@ export function WordDatabaseNotifications() {
           className={`
             ${getNotificationColor(notification.type)}
             transform transition-all duration-500 ease-in-out
-            ${notification.dismissed 
-              ? 'translate-x-full opacity-0 scale-95' 
-              : 'translate-x-0 opacity-100 scale-100'
+            ${
+              notification.dismissed
+                ? "translate-x-full opacity-0 scale-95"
+                : "translate-x-0 opacity-100 scale-100"
             }
             shadow-lg border
           `}
@@ -152,8 +163,8 @@ export function WordDatabaseNotifications() {
                 {notification.message}
               </AlertDescription>
               {notification.count && notification.count > 0 && (
-                <Badge 
-                  variant="secondary" 
+                <Badge
+                  variant="secondary"
                   className="ml-2 bg-white/80 text-current"
                 >
                   +{notification.count}
@@ -177,29 +188,30 @@ export function WordDatabaseNotifications() {
 
 // Compact version for mobile
 export function CompactWordDatabaseNotifications() {
-  const [latestNotification, setLatestNotification] = useState<Notification | null>(null);
+  const [latestNotification, setLatestNotification] =
+    useState<Notification | null>(null);
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
     const handleWordDatabaseEvent = (event: any) => {
       const { type, data, timestamp } = event.detail || event;
-      
-      let message = '📚 Updated!';
+
+      let message = "📚 Updated!";
       let count = 0;
-      
+
       switch (type) {
-        case 'words-added':
+        case "words-added":
           count = data?.words?.length || 0;
-          message = `🎉 +${count} word${count === 1 ? '' : 's'}!`;
+          message = `🎉 +${count} word${count === 1 ? "" : "s"}!`;
           break;
-        case 'words-updated':
-          message = '✨ Words updated!';
+        case "words-updated":
+          message = "✨ Words updated!";
           break;
-        case 'categories-changed':
-          message = '🏷️ Categories updated!';
+        case "categories-changed":
+          message = "🏷️ Categories updated!";
           break;
-        case 'full-refresh':
-          message = '🔄 Refreshed!';
+        case "full-refresh":
+          message = "🔄 Refreshed!";
           break;
       }
 
@@ -208,7 +220,7 @@ export function CompactWordDatabaseNotifications() {
         type,
         message,
         count,
-        timestamp
+        timestamp,
       };
 
       setLatestNotification(notification);
@@ -225,12 +237,15 @@ export function CompactWordDatabaseNotifications() {
       }, 3500);
     };
 
-    window.addEventListener('wordDatabaseUpdate', handleWordDatabaseEvent);
-    window.addEventListener('wordDatabaseRefresh', handleWordDatabaseEvent);
+    window.addEventListener("wordDatabaseUpdate", handleWordDatabaseEvent);
+    window.addEventListener("wordDatabaseRefresh", handleWordDatabaseEvent);
 
     return () => {
-      window.removeEventListener('wordDatabaseUpdate', handleWordDatabaseEvent);
-      window.removeEventListener('wordDatabaseRefresh', handleWordDatabaseEvent);
+      window.removeEventListener("wordDatabaseUpdate", handleWordDatabaseEvent);
+      window.removeEventListener(
+        "wordDatabaseRefresh",
+        handleWordDatabaseEvent,
+      );
     };
   }, []);
 
@@ -242,7 +257,7 @@ export function CompactWordDatabaseNotifications() {
         className={`
           bg-white border border-gray-200 rounded-full px-4 py-2 shadow-lg
           transform transition-all duration-300 ease-in-out
-          ${isVisible ? 'translate-y-0 opacity-100 scale-100' : '-translate-y-2 opacity-0 scale-95'}
+          ${isVisible ? "translate-y-0 opacity-100 scale-100" : "-translate-y-2 opacity-0 scale-95"}
         `}
       >
         <span className="text-sm font-medium text-gray-700">

@@ -264,7 +264,7 @@ export function EnhancedCategorySelector({
     words: realTimeWords,
     categories: realTimeCategories,
     lastUpdate,
-    isLoading: wordsLoading
+    isLoading: wordsLoading,
   } = useRealTimeWords();
 
   const [hoveredCategory, setHoveredCategory] = useState<string | null>(null);
@@ -291,13 +291,13 @@ export function EnhancedCategorySelector({
     const categoryMap = new Map<string, any>();
 
     // Process words to build category data
-    wordsToUse.forEach(word => {
+    wordsToUse.forEach((word) => {
       if (!categoryMap.has(word.category)) {
         categoryMap.set(word.category, {
           words: [],
           easy: 0,
           medium: 0,
-          hard: 0
+          hard: 0,
         });
       }
 
@@ -329,7 +329,7 @@ export function EnhancedCategorySelector({
       });
     });
 
-    return enrichedCategories.filter(category => category.wordCount > 0);
+    return enrichedCategories.filter((category) => category.wordCount > 0);
   };
 
   // Helper functions for category attributes
@@ -345,7 +345,7 @@ export function EnhancedCategorySelector({
       feelings: "😊",
       clothes: "����",
       numbers: "🔢",
-      default: "📚"
+      default: "📚",
     };
     return icons[category] || icons.default;
   };
@@ -358,7 +358,7 @@ export function EnhancedCategorySelector({
       colors: "bg-educational-pink",
       objects: "bg-educational-purple",
       body: "bg-educational-yellow",
-      default: "bg-slate-400"
+      default: "bg-slate-400",
     };
     return colors[category] || colors.default;
   };
@@ -371,7 +371,7 @@ export function EnhancedCategorySelector({
       colors: "from-pink-400 to-pink-600",
       objects: "from-purple-400 to-purple-600",
       body: "from-yellow-400 to-yellow-600",
-      default: "from-slate-400 to-slate-600"
+      default: "from-slate-400 to-slate-600",
     };
     return gradients[category] || gradients.default;
   };
@@ -388,7 +388,7 @@ export function EnhancedCategorySelector({
       feelings: "Understand and express your emotions!",
       clothes: "Discover what we wear every day!",
       numbers: "Count and learn with numbers!",
-      default: "Discover amazing new words!"
+      default: "Discover amazing new words!",
     };
     return descriptions[category] || descriptions.default;
   };
@@ -401,12 +401,16 @@ export function EnhancedCategorySelector({
       colors: "Humans can see 10 million colors!",
       objects: "The wheel was invented 5,500 years ago!",
       body: "Your heart beats 100,000 times a day!",
-      default: "Words are magical!"
+      default: "Words are magical!",
     };
     return funFacts[category] || funFacts.default;
   };
 
-  const getDifficultyLevel = (easy: number, medium: number, hard: number): "beginner" | "intermediate" | "advanced" => {
+  const getDifficultyLevel = (
+    easy: number,
+    medium: number,
+    hard: number,
+  ): "beginner" | "intermediate" | "advanced" => {
     const total = easy + medium + hard;
     const easyPercent = (easy / total) * 100;
 
@@ -420,11 +424,17 @@ export function EnhancedCategorySelector({
 
   // Debug logging
   React.useEffect(() => {
-    console.log('Category Selector Debug:');
-    console.log('- Real-time words count:', realTimeWords.length);
-    console.log('- Real-time categories:', realTimeCategories);
-    console.log('- Generated categories count:', currentEnrichedCategories.length);
-    console.log('- Generated categories:', currentEnrichedCategories.map(c => c.name));
+    console.log("Category Selector Debug:");
+    console.log("- Real-time words count:", realTimeWords.length);
+    console.log("- Real-time categories:", realTimeCategories);
+    console.log(
+      "- Generated categories count:",
+      currentEnrichedCategories.length,
+    );
+    console.log(
+      "- Generated categories:",
+      currentEnrichedCategories.map((c) => c.name),
+    );
   }, [realTimeWords, realTimeCategories, currentEnrichedCategories]);
 
   // Enhanced floating animation elements
@@ -462,7 +472,9 @@ export function EnhancedCategorySelector({
 
     // Screen reader announcement
     if (announceSelection && "speechSynthesis" in window) {
-      const category = currentEnrichedCategories.find((cat) => cat.id === categoryId);
+      const category = currentEnrichedCategories.find(
+        (cat) => cat.id === categoryId,
+      );
       if (category) {
         const utterance = new SpeechSynthesisUtterance(
           `Selected ${category.name} category with ${category.wordCount} words`,
@@ -645,7 +657,10 @@ export function EnhancedCategorySelector({
               </h2>
               <div className="flex gap-1">
                 <Badge className="bg-educational-green text-white px-2 py-1 text-xs">
-                  📚 {realTimeWords.length > 0 ? realTimeWords.length : wordsDatabase.length}
+                  📚{" "}
+                  {realTimeWords.length > 0
+                    ? realTimeWords.length
+                    : wordsDatabase.length}
                 </Badge>
                 <Badge className="bg-educational-blue text-white px-2 py-1 text-xs">
                   🎯 {categories.length}
@@ -684,7 +699,11 @@ export function EnhancedCategorySelector({
           {showGameification && (
             <div className="flex justify-center gap-3 mb-6 flex-wrap">
               <Badge className="bg-educational-green text-white px-4 py-2 text-sm animate-pulse">
-                📚 {realTimeWords.length > 0 ? realTimeWords.length : wordsDatabase.length} Amazing Words
+                📚{" "}
+                {realTimeWords.length > 0
+                  ? realTimeWords.length
+                  : wordsDatabase.length}{" "}
+                Amazing Words
               </Badge>
               <Badge className="bg-educational-blue text-white px-4 py-2 text-sm animate-pulse delay-100">
                 🎯 {categories.length} Fun Categories

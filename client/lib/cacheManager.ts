@@ -2,8 +2,8 @@
 export class CacheManager {
   private static instance: CacheManager;
   private cacheVersions = new Map<string, number>();
-  private readonly CACHE_VERSION_KEY = 'cacheVersions';
-  private readonly GLOBAL_CACHE_VERSION_KEY = 'globalCacheVersion';
+  private readonly CACHE_VERSION_KEY = "cacheVersions";
+  private readonly GLOBAL_CACHE_VERSION_KEY = "globalCacheVersion";
 
   constructor() {
     this.loadCacheVersions();
@@ -25,7 +25,7 @@ export class CacheManager {
         this.cacheVersions = new Map(Object.entries(parsed));
       }
     } catch (error) {
-      console.warn('Failed to load cache versions:', error);
+      console.warn("Failed to load cache versions:", error);
       this.cacheVersions.clear();
     }
   }
@@ -36,7 +36,7 @@ export class CacheManager {
       const obj = Object.fromEntries(this.cacheVersions);
       localStorage.setItem(this.CACHE_VERSION_KEY, JSON.stringify(obj));
     } catch (error) {
-      console.warn('Failed to save cache versions:', error);
+      console.warn("Failed to save cache versions:", error);
     }
   }
 
@@ -50,12 +50,12 @@ export class CacheManager {
   incrementGlobalCacheVersion(): number {
     const newVersion = this.getGlobalCacheVersion() + 1;
     localStorage.setItem(this.GLOBAL_CACHE_VERSION_KEY, newVersion.toString());
-    
+
     // Clear all versioned caches
     this.cacheVersions.clear();
     this.saveCacheVersions();
-    
-    console.log('Global cache version incremented to:', newVersion);
+
+    console.log("Global cache version incremented to:", newVersion);
     return newVersion;
   }
 
@@ -89,14 +89,14 @@ export class CacheManager {
         data: value,
         timestamp: Date.now(),
         version: this.getCacheVersion(cacheKey || key),
-        globalVersion: this.getGlobalCacheVersion()
+        globalVersion: this.getGlobalCacheVersion(),
       });
       localStorage.setItem(versionedKey, serialized);
-      
+
       // Clean up old versions
       this.cleanupOldVersions(key);
     } catch (error) {
-      console.warn('Failed to set cached item:', error);
+      console.warn("Failed to set cached item:", error);
     }
   }
 
@@ -105,7 +105,7 @@ export class CacheManager {
     try {
       const versionedKey = this.createVersionedKey(key, cacheKey);
       const stored = localStorage.getItem(versionedKey);
-      
+
       if (!stored) {
         return null;
       }
@@ -125,7 +125,7 @@ export class CacheManager {
 
       return parsed.data;
     } catch (error) {
-      console.warn('Failed to get cached item:', error);
+      console.warn("Failed to get cached item:", error);
       return null;
     }
   }
@@ -133,8 +133,8 @@ export class CacheManager {
   // Remove item and all its versions
   removeItem(key: string): void {
     // Remove all versions of this key
-    Object.keys(localStorage).forEach(storageKey => {
-      if (storageKey.startsWith(key + '_v')) {
+    Object.keys(localStorage).forEach((storageKey) => {
+      if (storageKey.startsWith(key + "_v")) {
         localStorage.removeItem(storageKey);
       }
     });
@@ -143,8 +143,8 @@ export class CacheManager {
   // Clean up old versions of a key
   private cleanupOldVersions(baseKey: string): void {
     const currentVersion = this.createVersionedKey(baseKey);
-    Object.keys(localStorage).forEach(key => {
-      if (key.startsWith(baseKey + '_v') && key !== currentVersion) {
+    Object.keys(localStorage).forEach((key) => {
+      if (key.startsWith(baseKey + "_v") && key !== currentVersion) {
         localStorage.removeItem(key);
       }
     });
@@ -153,42 +153,42 @@ export class CacheManager {
   // Invalidate specific cache categories
   invalidateWordCaches(): void {
     const wordCacheKeys = [
-      'wordsDatabase',
-      'wordsByCategory',
-      'wordProgress',
-      'sessionWords',
-      'userWordHistory',
-      'forgottenWords',
-      'rememberedWords',
-      'wordStats',
-      'categoryStats'
+      "wordsDatabase",
+      "wordsByCategory",
+      "wordProgress",
+      "sessionWords",
+      "userWordHistory",
+      "forgottenWords",
+      "rememberedWords",
+      "wordStats",
+      "categoryStats",
     ];
 
-    wordCacheKeys.forEach(key => {
+    wordCacheKeys.forEach((key) => {
       this.incrementCacheVersion(key);
       this.cleanupOldVersions(key);
     });
 
     // Also remove any non-versioned word-related caches
     this.removeNonVersionedWordCaches();
-    
-    console.log('Word-related caches invalidated');
+
+    console.log("Word-related caches invalidated");
   }
 
   // Remove non-versioned word-related caches
   private removeNonVersionedWordCaches(): void {
     const keysToRemove: string[] = [];
-    
-    Object.keys(localStorage).forEach(key => {
+
+    Object.keys(localStorage).forEach((key) => {
       // Match word-related keys that aren't versioned
       if (
-        (key.includes('word') || 
-         key.includes('category') || 
-         key.includes('session') ||
-         key.includes('progress') ||
-         key.includes('vocabulary') ||
-         key.includes('adventure')) &&
-        !key.includes('_v') && // Not versioned
+        (key.includes("word") ||
+          key.includes("category") ||
+          key.includes("session") ||
+          key.includes("progress") ||
+          key.includes("vocabulary") ||
+          key.includes("adventure")) &&
+        !key.includes("_v") && // Not versioned
         key !== this.CACHE_VERSION_KEY &&
         key !== this.GLOBAL_CACHE_VERSION_KEY
       ) {
@@ -196,47 +196,47 @@ export class CacheManager {
       }
     });
 
-    keysToRemove.forEach(key => {
+    keysToRemove.forEach((key) => {
       localStorage.removeItem(key);
     });
 
     if (keysToRemove.length > 0) {
-      console.log('Removed non-versioned word caches:', keysToRemove);
+      console.log("Removed non-versioned word caches:", keysToRemove);
     }
   }
 
   // Invalidate category-specific caches
   invalidateCategoryCaches(): void {
     const categoryKeys = [
-      'categories',
-      'categoryStats',
-      'categoryProgress',
-      'availableCategories'
+      "categories",
+      "categoryStats",
+      "categoryProgress",
+      "availableCategories",
     ];
 
-    categoryKeys.forEach(key => {
+    categoryKeys.forEach((key) => {
       this.incrementCacheVersion(key);
     });
-    
-    console.log('Category-related caches invalidated');
+
+    console.log("Category-related caches invalidated");
   }
 
   // Invalidate session caches
   invalidateSessionCaches(): void {
     const sessionKeys = [
-      'currentSession',
-      'sessionHistory',
-      'sessionStats',
-      'sessionWords',
-      'sessionProgress'
+      "currentSession",
+      "sessionHistory",
+      "sessionStats",
+      "sessionWords",
+      "sessionProgress",
     ];
 
-    sessionKeys.forEach(key => {
+    sessionKeys.forEach((key) => {
       this.incrementCacheVersion(key);
       this.removeItem(key);
     });
-    
-    console.log('Session-related caches invalidated');
+
+    console.log("Session-related caches invalidated");
   }
 
   // Get cache statistics
@@ -250,15 +250,15 @@ export class CacheManager {
     let wordRelatedItems = 0;
     let totalSize = 0;
 
-    Object.keys(localStorage).forEach(key => {
+    Object.keys(localStorage).forEach((key) => {
       totalItems++;
       totalSize += localStorage.getItem(key)?.length || 0;
-      
+
       if (
-        key.includes('word') || 
-        key.includes('category') || 
-        key.includes('session') ||
-        key.includes('progress')
+        key.includes("word") ||
+        key.includes("category") ||
+        key.includes("session") ||
+        key.includes("progress")
       ) {
         wordRelatedItems++;
       }
@@ -268,7 +268,7 @@ export class CacheManager {
       totalItems,
       wordRelatedItems,
       totalSize,
-      versions: Object.fromEntries(this.cacheVersions)
+      versions: Object.fromEntries(this.cacheVersions),
     };
   }
 
@@ -277,19 +277,19 @@ export class CacheManager {
     const protectedKeys = [
       this.CACHE_VERSION_KEY,
       this.GLOBAL_CACHE_VERSION_KEY,
-      'theme',
-      'language',
-      'userPreferences'
+      "theme",
+      "language",
+      "userPreferences",
     ];
 
-    Object.keys(localStorage).forEach(key => {
+    Object.keys(localStorage).forEach((key) => {
       if (!protectedKeys.includes(key)) {
         localStorage.removeItem(key);
       }
     });
 
     this.incrementGlobalCacheVersion();
-    console.log('All caches cleared');
+    console.log("All caches cleared");
   }
 }
 
@@ -324,7 +324,7 @@ export class SmartStorage {
   clear(): void {
     this.invalidate();
     // Clean up any existing items
-    Object.keys(localStorage).forEach(storageKey => {
+    Object.keys(localStorage).forEach((storageKey) => {
       if (storageKey.includes(this.cacheKey)) {
         localStorage.removeItem(storageKey);
       }
@@ -333,10 +333,10 @@ export class SmartStorage {
 }
 
 // Pre-configured smart storage instances
-export const wordStorage = new SmartStorage('words');
-export const categoryStorage = new SmartStorage('categories');
-export const sessionStorage = new SmartStorage('sessions');
-export const progressStorage = new SmartStorage('progress');
+export const wordStorage = new SmartStorage("words");
+export const categoryStorage = new SmartStorage("categories");
+export const sessionStorage = new SmartStorage("sessions");
+export const progressStorage = new SmartStorage("progress");
 
 // Utility functions for common cache operations
 export const invalidateAllWordData = () => {
@@ -347,13 +347,15 @@ export const invalidateAllWordData = () => {
 
 export const refreshWordDatabase = () => {
   invalidateAllWordData();
-  
+
   // Dispatch event to notify components
-  window.dispatchEvent(new CustomEvent('wordDatabaseRefresh', {
-    detail: { timestamp: Date.now() }
-  }));
-  
+  window.dispatchEvent(
+    new CustomEvent("wordDatabaseRefresh", {
+      detail: { timestamp: Date.now() },
+    }),
+  );
+
   // Cross-tab notification
-  localStorage.setItem('wordDatabaseRefresh', Date.now().toString());
-  localStorage.removeItem('wordDatabaseRefresh');
+  localStorage.setItem("wordDatabaseRefresh", Date.now().toString());
+  localStorage.removeItem("wordDatabaseRefresh");
 };

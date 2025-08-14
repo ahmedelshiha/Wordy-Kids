@@ -79,7 +79,7 @@ export const EnhancedWordLibrary: React.FC<EnhancedWordLibraryProps> = ({
     lastUpdate,
     isLoading: wordsLoading,
     refresh: refreshWords,
-    invalidateCaches
+    invalidateCaches,
   } = useRealTimeWords();
 
   const [viewMode, setViewMode] = useState<ViewMode>("categories");
@@ -125,7 +125,9 @@ export const EnhancedWordLibrary: React.FC<EnhancedWordLibraryProps> = ({
     const wordsToUse = realTimeWords.length > 0 ? realTimeWords : wordsDatabase;
 
     if (selectedCategory && selectedCategory !== "all") {
-      const categoryWords = wordsToUse.filter(word => word.category === selectedCategory);
+      const categoryWords = wordsToUse.filter(
+        (word) => word.category === selectedCategory,
+      );
       setCurrentWords(categoryWords);
       setViewMode("words");
     } else if (selectedCategory === "all") {
@@ -146,7 +148,7 @@ export const EnhancedWordLibrary: React.FC<EnhancedWordLibraryProps> = ({
         navigator.vibrate([100, 50, 100]);
       }
     } catch (error) {
-      console.error('Failed to refresh words:', error);
+      console.error("Failed to refresh words:", error);
     } finally {
       setRefreshing(false);
     }
@@ -361,7 +363,9 @@ export const EnhancedWordLibrary: React.FC<EnhancedWordLibraryProps> = ({
                     className="min-h-[44px] min-w-[44px] p-0"
                     aria-label="Refresh word database"
                   >
-                    <RefreshCw className={`w-4 h-4 ${refreshing || wordsLoading ? 'animate-spin' : ''}`} />
+                    <RefreshCw
+                      className={`w-4 h-4 ${refreshing || wordsLoading ? "animate-spin" : ""}`}
+                    />
                   </Button>
                 </>
               )}
@@ -390,7 +394,11 @@ export const EnhancedWordLibrary: React.FC<EnhancedWordLibraryProps> = ({
                     <RefreshCw className="w-3 h-3 animate-spin text-blue-500" />
                   )}
                   <span className="text-green-600">
-                    📚 {realTimeWords.length > 0 ? realTimeWords.length : wordsDatabase.length} words
+                    📚{" "}
+                    {realTimeWords.length > 0
+                      ? realTimeWords.length
+                      : wordsDatabase.length}{" "}
+                    words
                   </span>
                   <span>
                     {Math.round(

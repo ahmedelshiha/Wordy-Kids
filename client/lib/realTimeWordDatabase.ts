@@ -1,9 +1,14 @@
-import React from 'react';
+import React from "react";
 import { Word } from "@/data/wordsDatabase";
 
 // Event types for word database changes
 export interface WordDatabaseEvent {
-  type: 'words-added' | 'words-updated' | 'words-deleted' | 'categories-changed' | 'full-refresh';
+  type:
+    | "words-added"
+    | "words-updated"
+    | "words-deleted"
+    | "categories-changed"
+    | "full-refresh";
   timestamp: number;
   data?: {
     words?: Word[];
@@ -27,7 +32,9 @@ class RealTimeWordDatabaseService {
 
     try {
       // Import the current words database
-      const { wordsDatabase, getAllCategories } = await import("@/data/wordsDatabase");
+      const { wordsDatabase, getAllCategories } = await import(
+        "@/data/wordsDatabase"
+      );
       this.currentWords = [...wordsDatabase];
       this.currentCategories = getAllCategories();
       this.lastUpdate = Date.now();
@@ -36,10 +43,16 @@ class RealTimeWordDatabaseService {
       // Start monitoring for changes
       this.startMonitoring();
 
-      console.log('Real-time word database initialized with', this.currentWords.length, 'words and', this.currentCategories.length, 'categories');
-      console.log('Categories:', this.currentCategories);
+      console.log(
+        "Real-time word database initialized with",
+        this.currentWords.length,
+        "words and",
+        this.currentCategories.length,
+        "categories",
+      );
+      console.log("Categories:", this.currentCategories);
     } catch (error) {
-      console.error('Failed to initialize real-time word database:', error);
+      console.error("Failed to initialize real-time word database:", error);
     }
   }
 
@@ -52,10 +65,13 @@ class RealTimeWordDatabaseService {
     }, 10000);
 
     // Listen for storage events (when admin adds words via localStorage)
-    window.addEventListener('storage', this.handleStorageChange.bind(this));
+    window.addEventListener("storage", this.handleStorageChange.bind(this));
 
     // Listen for custom events (when admin adds words in current tab)
-    window.addEventListener('wordDatabaseUpdate', this.handleCustomEvent.bind(this));
+    window.addEventListener(
+      "wordDatabaseUpdate",
+      this.handleCustomEvent.bind(this),
+    );
   }
 
   // Stop monitoring
@@ -64,8 +80,11 @@ class RealTimeWordDatabaseService {
       clearInterval(this.checkInterval);
       this.checkInterval = null;
     }
-    window.removeEventListener('storage', this.handleStorageChange.bind(this));
-    window.removeEventListener('wordDatabaseUpdate', this.handleCustomEvent.bind(this));
+    window.removeEventListener("storage", this.handleStorageChange.bind(this));
+    window.removeEventListener(
+      "wordDatabaseUpdate",
+      this.handleCustomEvent.bind(this),
+    );
     this.listeners.clear();
     this.isInitialized = false;
   }
@@ -77,7 +96,7 @@ class RealTimeWordDatabaseService {
       const module = await import("@/data/wordsDatabase");
 
       if (!module || !module.wordsDatabase || !module.getAllCategories) {
-        console.warn('Word database module not properly loaded');
+        console.warn("Word database module not properly loaded");
         return;
       }
 
@@ -87,7 +106,7 @@ class RealTimeWordDatabaseService {
 
       // Validate data
       if (!Array.isArray(newWords) || !Array.isArray(newCategories)) {
-        console.warn('Invalid word database data structure');
+        console.warn("Invalid word database data structure");
         return;
       }
 
@@ -104,41 +123,45 @@ class RealTimeWordDatabaseService {
         this.lastUpdate = Date.now();
 
         // Determine the type of change
-        let eventType: WordDatabaseEvent['type'] = 'full-refresh';
+        let eventType: WordDatabaseEvent["type"] = "full-refresh";
         let eventData: any = {
           words: newWords,
-          categories: newCategories
+          categories: newCategories,
         };
 
         if (newWordCount > previousWordCount) {
-          eventType = 'words-added';
+          eventType = "words-added";
           eventData.words = newWords.slice(previousWordCount);
         } else if (newWordCount < previousWordCount) {
-          eventType = 'words-deleted';
+          eventType = "words-deleted";
         } else if (categoriesChanged) {
-          eventType = 'categories-changed';
+          eventType = "categories-changed";
         } else {
-          eventType = 'words-updated';
+          eventType = "words-updated";
         }
 
         // Notify all listeners
         this.notifyListeners({
           type: eventType,
           timestamp: this.lastUpdate,
-          data: eventData
+          data: eventData,
         });
 
-        console.log('Word database changes detected:', eventType, `(${newWordCount} words)`);
+        console.log(
+          "Word database changes detected:",
+          eventType,
+          `(${newWordCount} words)`,
+        );
       }
     } catch (error) {
-      console.error('Error checking for word database changes:', error);
+      console.error("Error checking for word database changes:", error);
       // Don't throw the error to prevent crashes
     }
   }
 
   // Handle storage events (cross-tab communication)
   private handleStorageChange(event: StorageEvent) {
-    if (event.key === 'wordDatabaseUpdate') {
+    if (event.key === "wordDatabaseUpdate") {
       this.triggerRefresh();
     }
   }
@@ -153,7 +176,7 @@ class RealTimeWordDatabaseService {
     if (newWords.length !== this.currentWords.length) {
       return true;
     }
-    
+
     // Quick check using JSON comparison (for simplicity)
     return JSON.stringify(newWords) !== JSON.stringify(this.currentWords);
   }
@@ -163,8 +186,11 @@ class RealTimeWordDatabaseService {
     if (newCategories.length !== this.currentCategories.length) {
       return true;
     }
-    
-    return JSON.stringify(newCategories.sort()) !== JSON.stringify(this.currentCategories.sort());
+
+    return (
+      JSON.stringify(newCategories.sort()) !==
+      JSON.stringify(this.currentCategories.sort())
+    );
   }
 
   // Add event listener
@@ -180,11 +206,11 @@ class RealTimeWordDatabaseService {
 
   // Notify all listeners
   private notifyListeners(event: WordDatabaseEvent) {
-    this.listeners.forEach(callback => {
+    this.listeners.forEach((callback) => {
       try {
         callback(event);
       } catch (error) {
-        console.error('Error in word database listener:', error);
+        console.error("Error in word database listener:", error);
       }
     });
   }
@@ -212,27 +238,30 @@ class RealTimeWordDatabaseService {
   // Invalidate all related caches
   invalidateCaches() {
     // Clear word-related localStorage caches
-    const keysToRemove = Object.keys(localStorage).filter(key => 
-      key.includes('word') || 
-      key.includes('category') || 
-      key.includes('session') ||
-      key.includes('progress')
+    const keysToRemove = Object.keys(localStorage).filter(
+      (key) =>
+        key.includes("word") ||
+        key.includes("category") ||
+        key.includes("session") ||
+        key.includes("progress"),
     );
-    
-    keysToRemove.forEach(key => {
+
+    keysToRemove.forEach((key) => {
       localStorage.removeItem(key);
     });
-    
+
     // Trigger a browser-wide cache invalidation event
-    localStorage.setItem('wordDatabaseUpdate', Date.now().toString());
-    localStorage.removeItem('wordDatabaseUpdate');
-    
+    localStorage.setItem("wordDatabaseUpdate", Date.now().toString());
+    localStorage.removeItem("wordDatabaseUpdate");
+
     // Dispatch custom event for current tab
-    window.dispatchEvent(new CustomEvent('wordDatabaseUpdate', {
-      detail: { timestamp: Date.now() }
-    }));
-    
-    console.log('Word database caches invalidated');
+    window.dispatchEvent(
+      new CustomEvent("wordDatabaseUpdate", {
+        detail: { timestamp: Date.now() },
+      }),
+    );
+
+    console.log("Word database caches invalidated");
   }
 }
 
@@ -243,7 +272,7 @@ export const realTimeWordDB = new RealTimeWordDatabaseService();
 realTimeWordDB.initialize();
 
 // Cleanup on page unload
-window.addEventListener('beforeunload', () => {
+window.addEventListener("beforeunload", () => {
   realTimeWordDB.destroy();
 });
 
@@ -275,12 +304,12 @@ export function useRealTimeWords() {
       setWords(realTimeWordDB.getCurrentWords());
       setCategories(realTimeWordDB.getCurrentCategories());
       setLastUpdate(realTimeWordDB.getLastUpdate());
-      
+
       // Show notification about the change
-      if (event.type === 'words-added' && event.data?.words) {
+      if (event.type === "words-added" && event.data?.words) {
         console.log(`${event.data.words.length} new words added!`);
-      } else if (event.type === 'categories-changed') {
-        console.log('Categories updated!');
+      } else if (event.type === "categories-changed") {
+        console.log("Categories updated!");
       }
     });
 
@@ -293,6 +322,6 @@ export function useRealTimeWords() {
     lastUpdate,
     isLoading,
     refresh: () => realTimeWordDB.triggerRefresh(),
-    invalidateCaches: () => realTimeWordDB.invalidateCaches()
+    invalidateCaches: () => realTimeWordDB.invalidateCaches(),
   };
 }
