@@ -53,6 +53,7 @@ export type WordGardenGameProps = {
 
   // INTEGRATIONS
   onFinish?: (stats: GameFinishStats) => void;
+  onExit?: () => void;
 
   // UX
   className?: string;
