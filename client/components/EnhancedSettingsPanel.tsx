@@ -1027,7 +1027,7 @@ export const EnhancedSettingsPanel: React.FC<EnhancedSettingsPanelProps> = ({
         </div>
 
         {/* Action Bar */}
-        <div className="border-t bg-slate-50 p-4">
+        <div className="settings-footer-mobile border-t bg-slate-50 p-4">
           <div className="flex flex-col sm:flex-row gap-3">
             <Button
               variant="outline"
