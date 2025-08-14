@@ -836,17 +836,13 @@ export const CompactMobileSettingsPanel: React.FC<
         </div>
       </Card>
 
-      {/* Enhanced Learning Goals Panel */}
+      {/* Mobile Learning Goals Panel */}
       {showGoalsPanel && (
-        <EnhancedLearningGoalsPanel
+        <MobileLearningGoalsPanel
           isOpen={showGoalsPanel}
           onClose={() => setShowGoalsPanel(false)}
           currentProgress={currentProgress}
           onGoalUpdate={onGoalUpdate}
-          onPreferencesUpdate={(preferences) => {
-            console.log("Learning preferences updated:", preferences);
-            // Handle preferences update
-          }}
         />
       )}
     </div>
