@@ -973,14 +973,19 @@ export function InteractiveDashboardWordCard({
 
           {/* Hint Display */}
           {showHint && !showWordName && (
-            <div className="bg-yellow-50 border-2 border-yellow-200 rounded-xl p-3 mb-3 text-center">
+            <div
+              className="bg-yellow-50 border-2 border-yellow-200 rounded-xl p-3 mb-3 text-center"
+              role="region"
+              aria-label="Word hint"
+              aria-live="polite"
+            >
               <div className="flex items-center justify-center gap-2 mb-1">
-                <Lightbulb className="w-4 h-4 text-yellow-600" />
-                <h3 className="text-sm font-semibold text-yellow-800">
+                <Lightbulb className="w-4 h-4 text-yellow-600" aria-hidden="true" />
+                <h2 className="text-sm font-semibold text-yellow-800">
                   💡 Hint:
-                </h3>
+                </h2>
               </div>
-              <p className="text-yellow-700 text-sm">
+              <p className="text-yellow-700 text-sm" id="hint-text">
                 "{currentWord.definition}"
               </p>
             </div>
