@@ -300,6 +300,18 @@ export default function Index({ initialProfile }: IndexProps) {
     }
   }, [activeTab, userRole]);
 
+  // Listen for navigation events from Parent Dashboard
+  useEffect(() => {
+    const handleNavigateToTab = (event: CustomEvent) => {
+      if (event.detail && event.detail.tab) {
+        setActiveTab(event.detail.tab);
+      }
+    };
+
+    window.addEventListener('navigateToTab', handleNavigateToTab as EventListener);
+    return () => window.removeEventListener('navigateToTab', handleNavigateToTab as EventListener);
+  }, []);
+
   // Auto-save learning state changes
   useEffect(() => {
     if (sessionRestored) {
