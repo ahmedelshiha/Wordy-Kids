@@ -355,9 +355,7 @@ export function EnhancedCategorySelector({
       greetings: "👋",
       technology: "📱",
       emotions: "😊",
-      "at-the-zoo": "🦁",
       "at-the-clothes-shop": "👗",
-      "my-favourite-food": "🥗",
       "at-home": "🏠",
       default: "📚",
     };
