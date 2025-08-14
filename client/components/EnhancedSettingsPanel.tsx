@@ -51,6 +51,7 @@ import {
 } from "@/lib/soundEffects";
 import { audioService, VoiceType } from "@/lib/audioService";
 import { cn } from "@/lib/utils";
+import { useMobileDevice, triggerHapticFeedback } from "@/hooks/use-mobile-device";
 
 interface EnhancedSettingsPanelProps {
   isOpen: boolean;
