@@ -396,6 +396,194 @@ export default function Index({ initialProfile }: IndexProps) {
     }
   }, [rememberedWords.size, forgottenWords.size, currentProgress, persistenceService]);
 
+  // Enhanced tab navigation preservation
+  useEffect(() => {
+    const handleVisibilityChange = () => {
+      if (document.hidden) {
+        // Tab becoming hidden - force save current state
+        console.log('Tab hidden, force saving session data');
+        persistenceService.queueSave({
+          activeTab,
+          currentWordIndex,
+          selectedCategory,
+          learningMode,
+          userRole,
+          forgottenWords: Array.from(forgottenWords),
+          rememberedWords: Array.from(rememberedWords),
+          excludedWordIds: Array.from(excludedWordIds),
+          currentProgress,
+          dailySessionCount,
+          currentProfile,
+          childStats,
+          currentSessionId,
+          learningGoals,
+          currentDashboardWords,
+          customWords,
+          practiceWords,
+          showQuiz,
+          selectedQuizType,
+          showMatchingGame,
+          gameMode,
+          showPracticeGame,
+        }, 'high');
+
+        // Force immediate sync
+        persistenceService.forceSync();
+      } else {
+        // Tab becoming visible - check for updates from other tabs
+        console.log('Tab visible, checking for session updates');
+        const latestSession = sessionPersistence.loadSession();
+
+        if (latestSession && latestSession.lastSaved > lastAutoSave) {
+          console.log('Found newer session data from another tab');
+
+          // Show brief notification that session was updated
+          setFeedback({
+            type: "info",
+            title: "Session Updated 🔄",
+            message: "Your progress was synced from another tab",
+            onContinue: () => setFeedback(null),
+          });
+
+          // Update current state with latest data (selective update to avoid disruption)
+          if (latestSession.currentProgress) {
+            setCurrentProgress(latestSession.currentProgress);
+          }
+          if (latestSession.forgottenWords) {
+            setForgottenWords(new Set(latestSession.forgottenWords));
+          }
+          if (latestSession.rememberedWords) {
+            setRememberedWords(new Set(latestSession.rememberedWords));
+          }
+          if (latestSession.learningGoals) {
+            setLearningGoals(latestSession.learningGoals);
+          }
+          if (latestSession.dailySessionCount !== undefined) {
+            setDailySessionCount(latestSession.dailySessionCount);
+          }
+
+          setLastAutoSave(latestSession.lastSaved);
+        }
+      }
+    };
+
+    const handleBeforeUnload = (event: BeforeUnloadEvent) => {
+      // Force save before page unload
+      persistenceService.forceSync();
+
+      // Show warning if user has unsaved progress
+      if (rememberedWords.size > 0 || forgottenWords.size > 0) {
+        const message = 'You have learning progress that might be lost. Are you sure you want to leave?';
+        event.preventDefault();
+        event.returnValue = message;
+        return message;
+      }
+    };
+
+    const handlePageShow = (event: PageTransitionEvent) => {
+      if (event.persisted) {
+        // Page restored from bfcache, reload latest session
+        console.log('Page restored from cache, reloading session');
+        const latestSession = sessionPersistence.loadSession();
+        if (latestSession) {
+          setLastAutoSave(latestSession.lastSaved);
+        }
+      }
+    };
+
+    const handleStorageChange = (event: StorageEvent) => {
+      if (event.key === 'wordAdventure_sessionData' && event.newValue) {
+        // Another tab updated the session data
+        console.log('Session data updated by another tab');
+        try {
+          const updatedData = JSON.parse(event.newValue);
+          if (updatedData.lastSaved > lastAutoSave) {
+            setLastAutoSave(updatedData.lastSaved);
+
+            // Show subtle notification
+            setFeedback({
+              type: "info",
+              title: "Progress Synced 📱",
+              message: "Your learning progress was updated from another device",
+              onContinue: () => setFeedback(null),
+            });
+          }
+        } catch (error) {
+          console.error('Failed to parse updated session data:', error);
+        }
+      }
+    };
+
+    // Add event listeners
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+    window.addEventListener('beforeunload', handleBeforeUnload);
+    window.addEventListener('pageshow', handlePageShow);
+    window.addEventListener('storage', handleStorageChange);
+
+    return () => {
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+      window.removeEventListener('beforeunload', handleBeforeUnload);
+      window.removeEventListener('pageshow', handlePageShow);
+      window.removeEventListener('storage', handleStorageChange);
+    };
+  }, [
+    activeTab,
+    currentWordIndex,
+    selectedCategory,
+    learningMode,
+    userRole,
+    forgottenWords,
+    rememberedWords,
+    excludedWordIds,
+    currentProgress,
+    dailySessionCount,
+    currentProfile,
+    childStats,
+    currentSessionId,
+    learningGoals,
+    currentDashboardWords,
+    customWords,
+    practiceWords,
+    showQuiz,
+    selectedQuizType,
+    showMatchingGame,
+    gameMode,
+    showPracticeGame,
+    persistenceService,
+    sessionPersistence,
+    lastAutoSave,
+    setFeedback,
+  ]);
+
+  // Tab focus detection for immediate synchronization
+  useEffect(() => {
+    const handleFocus = () => {
+      console.log('Window focused, checking for session updates');
+      const latestSession = sessionPersistence.loadSession();
+
+      if (latestSession && latestSession.lastSaved > lastAutoSave) {
+        // Silently sync progress without disrupting user
+        if (latestSession.currentProgress) {
+          setCurrentProgress(latestSession.currentProgress);
+        }
+        setLastAutoSave(latestSession.lastSaved);
+      }
+    };
+
+    const handleBlur = () => {
+      console.log('Window blurred, saving current state');
+      saveSessionData();
+    };
+
+    window.addEventListener('focus', handleFocus);
+    window.addEventListener('blur', handleBlur);
+
+    return () => {
+      window.removeEventListener('focus', handleFocus);
+      window.removeEventListener('blur', handleBlur);
+    };
+  }, [sessionPersistence, lastAutoSave, saveSessionData]);
+
   // Session restoration handlers
   const handleSessionRestore = useCallback((sessionData: SessionData) => {
     try {
