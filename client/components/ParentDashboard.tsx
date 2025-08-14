@@ -93,6 +93,7 @@ interface ChildProfile {
   weeklyGoal: number;
   weeklyProgress: number;
   favoriteCategory: string;
+  interests?: string[];
   lastActive: Date;
   preferredLearningTime: string;
   difficultyPreference: "easy" | "medium" | "hard";
