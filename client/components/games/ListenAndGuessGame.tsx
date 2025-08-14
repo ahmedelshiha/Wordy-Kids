@@ -295,34 +295,24 @@ export default function ListenAndGuessGame({
           };
 
           // Track achievements for Listen & Guess completion
-          const achievementUpdates = {
-            totalQuizzes: 1,
-            quizzesCompleted: 1,
-            listenAndGuessGamesPlayed: 1,
-            correctAnswers: finalCorrect,
-            totalAnswers: sequence.length,
-            currentStreak: isCorrect ? streak + 1 : 0,
-            bestStreak: finalBestStreak,
-            coinsEarned: finalCoins,
-            wordsLearned: finalCorrect, // Each correct answer = word learned
-            difficulty: difficulty || (playerLevel <= 5 ? "easy" : "medium"),
-          };
-
-          // Calculate accuracy and add bonus achievements
           const accuracy = (finalCorrect / sequence.length) * 100;
-          if (accuracy >= 90) {
-            achievementUpdates.perfectScores = 1;
-          }
-          if (finalBestStreak >= 5) {
-            achievementUpdates.streakAchievements = 1;
-          }
-
-          // Track session achievements
-          achievementUpdates.sessionStats = {
-            questionsAnswered: sequence.length,
-            correctAnswers: finalCorrect,
-            timeSpent: Date.now() - performance.now(), // Approximate session time
-            gamesCompleted: 1,
+          const achievementUpdates = {
+            wordsLearned: finalCorrect, // Each correct answer = word learned
+            totalAccuracy: accuracy,
+            quizzesPerfect: accuracy >= 90 ? 1 : 0,
+            streakDays: finalBestStreak >= 5 ? 1 : 0,
+            sessionStats: {
+              totalSessions: 1,
+              perfectSessions: accuracy >= 90 ? 1 : 0,
+              averageWordsPerSession: finalCorrect,
+              fastestSession: 1, // Simple session tracking
+              longestStreak: finalBestStreak,
+            },
+            difficultyStats: {
+              easy: playerLevel <= 5 ? { completed: finalCorrect, total: sequence.length, accuracy } : { completed: 0, total: 0, accuracy: 0 },
+              medium: playerLevel > 5 && playerLevel <= 10 ? { completed: finalCorrect, total: sequence.length, accuracy } : { completed: 0, total: 0, accuracy: 0 },
+              hard: playerLevel > 10 ? { completed: finalCorrect, total: sequence.length, accuracy } : { completed: 0, total: 0, accuracy: 0 },
+            },
           };
 
           try {
