@@ -278,25 +278,20 @@ export default function Index({ initialProfile }: IndexProps) {
     learningGoals.length,
   ]);
 
-  // Dynamic learning stats that reflect actual progress
+  // Dynamic learning stats that reflect actual progress and goals
   const learningStats = {
     wordsLearned: rememberedWords.size,
     totalWords: wordsDatabase.length,
     currentStreak: 7,
-    weeklyGoal: 20,
+    weeklyGoal: learningGoals.find(g => g.type === "weekly" && g.isActive)?.target || 20,
     weeklyProgress: rememberedWords.size, // Allow progress beyond daily goal
-    accuracyRate:
-      rememberedWords.size > 0
-        ? Math.round(
-            (rememberedWords.size /
-              (rememberedWords.size + forgottenWords.size)) *
-              100,
-          )
-        : 0,
+    accuracyRate: currentProgress.accuracy,
     favoriteCategory: "Animals",
     totalPoints:
       rememberedWords.size * 50 + (rememberedWords.size > 10 ? 500 : 0), // Dynamic points
     level: Math.floor(rememberedWords.size / 5) + 1, // Level up every 5 words
+    dailyGoalProgress: currentProgress.wordsLearned,
+    dailyGoalTarget: learningGoals.find(g => g.type === "daily" && g.isActive)?.target || 10,
     badges: [
       {
         id: "first-word",
@@ -743,7 +738,7 @@ export default function Index({ initialProfile }: IndexProps) {
         achievementIcon = "📚";
         achievementMessage = `Great job! You completed ${categoryDisplayName} with ${accuracy}% accuracy! Keep up the good work!\n\n🎓 Scholar Bonus: 100 points!\n📚 Scholar badge earned!`;
       } else if (accuracy >= 50) {
-        achievementTitle = "Category Explorer! ���️🌟";
+        achievementTitle = "Category Explorer! 🗺️🌟";
         achievementIcon = "🗺️";
         achievementMessage = `Good effort! You finished ${categoryDisplayName} with ${accuracy}% accuracy! Practice makes perfect!\n\n🎁 Explorer Bonus: 75 points!\n🎯 Explorer badge earned!`;
       } else {
