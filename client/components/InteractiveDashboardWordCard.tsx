@@ -1258,8 +1258,8 @@ export function InteractiveDashboardWordCard({
                 </Button>
               </div>
 
-              {/* Skip button (smaller, less prominent) */}
-              <div className="text-center mt-1 mb-0">
+              {/* Skip button (smaller, less prominent) - HIDDEN */}
+              <div className="hidden text-center mt-1 mb-0">
                 <Button
                   onClick={() => handleWordAction("skipped")}
                   variant="ghost"
@@ -1280,7 +1280,7 @@ export function InteractiveDashboardWordCard({
               </div>
 
               {/* Compact Session Progress */}
-              <div className="mt-4 bg-gradient-to-br from-blue-50 via-indigo-50/30 to-purple-50 rounded-xl p-3 sm:p-4 border border-blue-200/60 shadow-md backdrop-blur-sm ring-1 ring-blue-100/30">
+              <div className="mt-2 bg-gradient-to-br from-blue-50 via-indigo-50/30 to-purple-50 rounded-xl p-3 sm:p-4 border border-blue-200/60 shadow-md backdrop-blur-sm ring-1 ring-blue-100/30">
                 {/* Compact Progress Bar */}
                 <div className="flex items-center justify-between mb-2">
                   <div className="text-xs font-bold text-gray-700">
