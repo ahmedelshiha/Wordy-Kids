@@ -542,12 +542,9 @@ export default function ListenAndGuessGame({
                   animationDelay: `${i * 100}ms`,
                 }}
               >
-                <img
-                  src={img}
-                  alt="option"
-                  className="w-full h-full object-contain p-3"
-                  loading="lazy"
-                />
+                <div className="w-full h-full flex items-center justify-center p-3">
+                  <span className="text-6xl md:text-8xl">{img}</span>
+                </div>
                 {/* fun corner badge with animation */}
                 <span className="absolute top-2 left-2 text-lg animate-sparkle">
                   ✨
