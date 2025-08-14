@@ -351,6 +351,17 @@ export const EnhancedWordLibrary: React.FC<EnhancedWordLibraryProps> = ({
                   >
                     <Filter className="w-4 h-4" />
                   </Button>
+
+                  <Button
+                    size="sm"
+                    variant="outline"
+                    onClick={handleRefresh}
+                    disabled={refreshing || wordsLoading}
+                    className="min-h-[44px] min-w-[44px] p-0"
+                    aria-label="Refresh word database"
+                  >
+                    <RefreshCw className={`w-4 h-4 ${refreshing || wordsLoading ? 'animate-spin' : ''}`} />
+                  </Button>
                 </>
               )}
 
