@@ -208,6 +208,7 @@ export const CompactMobileSettingsPanel: React.FC<CompactMobileSettingsPanelProp
     setSoundOn(true);
     setSoundEnabled(true);
     setSelectedVoiceType("woman");
+    enhancedAudioService.setVoiceType("woman");
     audioService.setVoiceType("woman");
     setVolume([80]);
     setDarkMode(false);
