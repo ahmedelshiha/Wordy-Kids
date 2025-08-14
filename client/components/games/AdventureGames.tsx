@@ -28,11 +28,16 @@ export function AdventureGames({
     {
       id: "word_garden",
       title: "Word Garden",
-      description: "Listen and grow your vocabulary garden! Perfect for ages 3-5.",
+      description:
+        "Listen and grow your vocabulary garden! Perfect for ages 3-5.",
       icon: "🌱",
       difficulty: "Easy",
       timeLimit: "3-6 min",
-      rewards: ["🌸 Grow plants", "⭐ Garden achievements", "🦋 Nature rewards"],
+      rewards: [
+        "🌸 Grow plants",
+        "⭐ Garden achievements",
+        "🦋 Nature rewards",
+      ],
       color: "from-emerald-400 to-green-500",
       players: "Single Player",
     },
@@ -106,9 +111,7 @@ export function AdventureGames({
     return (
       <div className="space-y-6">
         <div className="flex items-center justify-between">
-          <h2 className="text-2xl font-bold text-gray-800">
-            🌱 Word Garden
-          </h2>
+          <h2 className="text-2xl font-bold text-gray-800">🌱 Word Garden</h2>
           <Button onClick={handleGameBack} variant="outline" size="sm">
             ← Back to Games
           </Button>
@@ -171,7 +174,8 @@ export function AdventureGames({
           🎮 Adventure Games Zone! 🚀
         </h2>
         <p className="text-gray-600 mb-6">
-          Choose your learning adventure and become a word master! New: Word Garden for little learners!
+          Choose your learning adventure and become a word master! New: Word
+          Garden for little learners!
         </p>
       </div>
 

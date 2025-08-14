@@ -2967,7 +2967,11 @@ export default function Index({ initialProfile }: IndexProps) {
                             rounds={8}
                             optionsPerRound={3}
                             difficulty="easy"
-                            category={selectedCategory !== "all" ? selectedCategory : undefined}
+                            category={
+                              selectedCategory !== "all"
+                                ? selectedCategory
+                                : undefined
+                            }
                             onFinish={(stats) => {
                               setGameMode(false);
                               setFeedback({
