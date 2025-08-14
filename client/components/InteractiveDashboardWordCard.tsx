@@ -387,10 +387,10 @@ export function InteractiveDashboardWordCard({
       // Combine achievements from both systems
       const allNewAchievements = [...newJourneyAchievements, ...enhancedAchievements];
 
-      // Show journey achievements if any were unlocked
-      if (newJourneyAchievements.length > 0) {
+      // Show enhanced achievements if any were unlocked
+      if (allNewAchievements.length > 0) {
         setTimeout(() => {
-          setJourneyAchievements(newJourneyAchievements);
+          setJourneyAchievements(allNewAchievements);
         }, 1500); // Show after feedback animation
       }
     } catch (error) {
