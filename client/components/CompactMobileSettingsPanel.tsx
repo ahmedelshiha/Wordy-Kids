@@ -124,9 +124,29 @@ export const CompactMobileSettingsPanel: React.FC<CompactMobileSettingsPanelProp
 
   const handleVoiceTypeChange = (voiceType: VoiceType) => {
     setSelectedVoiceType(voiceType);
+    enhancedAudioService.setVoiceType(voiceType);
+    // Also update the legacy service for compatibility
     audioService.setVoiceType(voiceType);
     setHasUnsavedChanges(true);
     if (deviceInfo.hasHaptic) triggerHapticFeedback("medium");
+  };
+
+  const handleVoicePreview = async (voiceType: VoiceType) => {
+    if (previewingVoice) return; // Prevent multiple previews at once
+
+    setPreviewingVoice(voiceType);
+    if (deviceInfo.hasHaptic) triggerHapticFeedback("light");
+
+    try {
+      await enhancedAudioService.previewVoice(
+        voiceType,
+        "Hello! This is how I sound when reading words to you."
+      );
+    } catch (error) {
+      console.error("Voice preview error:", error);
+    } finally {
+      setPreviewingVoice(null);
+    }
   };
 
   const handleSaveSettings = () => {
