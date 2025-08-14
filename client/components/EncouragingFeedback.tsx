@@ -42,7 +42,7 @@ const successMessages = [
   "Excellent! That's how it's done! 💪",
   "Perfect! You make learning look easy! ✨",
   "Outstanding! You're becoming a word master! 📚",
-  "Brilliant! Your hard work is paying off! ����",
+  "Brilliant! Your hard work is paying off! 🌟",
 ];
 
 const encouragementMessages = [
@@ -71,7 +71,7 @@ const tryAgainMessages = [
   "Oops! Let's try that again together! 🤗",
   "No worries! Practice makes perfect! 🎯",
   "That's okay! Every expert was once a beginner! 🌱",
-  "Let's give it another shot! You've got this! 💫",
+  "Let's give it another shot! You've got this! ����",
   "Don't worry! Learning is all about trying! 🎈",
   "It's alright! Mistakes help us grow! 🌟",
   "Let's try once more! I believe in you! 💝",
@@ -115,9 +115,24 @@ export function EncouragingFeedback({
       // Auto-hide if specified
       if (feedback.autoHide) {
         const delay = feedback.hideDelay || 3000;
+        setTimeLeft(Math.ceil(delay / 1000));
+
+        // Countdown timer
+        const countdownInterval = setInterval(() => {
+          setTimeLeft((prev) => {
+            if (prev === null || prev <= 1) {
+              clearInterval(countdownInterval);
+              return null;
+            }
+            return prev - 1;
+          });
+        }, 1000);
+
         setTimeout(() => {
           onClose();
         }, delay);
+
+        return () => clearInterval(countdownInterval);
       }
 
       // Clear animation after a delay
