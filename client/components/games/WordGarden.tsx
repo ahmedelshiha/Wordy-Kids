@@ -293,39 +293,16 @@ export default function WordGardenGame({
 
   const checkAchievements = useCallback(
     (nextCorrectTotal: number, nextStreak: number) => {
-      const tracker = EnhancedAchievementTracker.getInstance();
-
-      // Award achievements based on progress
-      if (nextStreak === 3) {
-        tracker.recordAchievement(
-          "sprout-streak-3",
-          "Got 3 words in a row!",
-          "learning",
-        );
-      }
-      if (nextStreak === 5) {
-        tracker.recordAchievement(
-          "green-thumb-streak-5",
-          "Amazing streak of 5!",
-          "streak",
-        );
-      }
-      if (nextCorrectTotal === 5) {
-        tracker.recordAchievement(
-          "garden-starter-5",
-          "Learning garden started!",
-          "learning",
-        );
-      }
-      if (nextCorrectTotal === 10) {
-        tracker.recordAchievement(
-          "garden-bloomer-10",
-          "Garden is blooming!",
-          "learning",
-        );
-      }
+      // Use the EnhancedAchievementTracker static methods directly
+      EnhancedAchievementTracker.trackActivity({
+        type: "wordLearning",
+        wordsLearned: 1,
+        accuracy: nextStreak > 0 ? 100 : 80, // Assume good accuracy for correct answers
+        difficulty: difficulty,
+        category: category,
+      });
     },
-    [],
+    [difficulty, category],
   );
 
   const choose = useCallback(
