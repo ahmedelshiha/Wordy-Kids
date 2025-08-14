@@ -386,7 +386,7 @@ export function EnhancedAddChildProfile({
                 </div>
 
                 <div>
-                  <Label className="text-xs font-medium text-gray-700 mb-2 block">
+                  <Label className="text-xs font-medium text-gray-700 mb-1 block">
                     Age
                   </Label>
                   <div className="grid grid-cols-3 gap-1">
