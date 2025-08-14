@@ -199,7 +199,6 @@ export const CompactMobileSettingsPanel: React.FC<CompactMobileSettingsPanelProp
     );
 
     setHasUnsavedChanges(false);
-    playSoundIfEnabled.success();
     if (deviceInfo.hasHaptic) triggerHapticFeedback("heavy");
     onClose();
   };
