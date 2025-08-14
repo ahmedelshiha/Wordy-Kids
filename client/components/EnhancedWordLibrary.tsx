@@ -121,15 +121,16 @@ export const EnhancedWordLibrary: React.FC<EnhancedWordLibraryProps> = ({
 
   // Update current words when real-time data changes
   useEffect(() => {
-    if (realTimeWords.length > 0) {
-      if (selectedCategory && selectedCategory !== "all") {
-        const categoryWords = realTimeWords.filter(word => word.category === selectedCategory);
-        setCurrentWords(categoryWords);
-        setViewMode("words");
-      } else if (selectedCategory === "all") {
-        setCurrentWords(realTimeWords);
-        setViewMode("words");
-      }
+    // Use real-time data if available, otherwise fall back to static data
+    const wordsToUse = realTimeWords.length > 0 ? realTimeWords : wordsDatabase;
+
+    if (selectedCategory && selectedCategory !== "all") {
+      const categoryWords = wordsToUse.filter(word => word.category === selectedCategory);
+      setCurrentWords(categoryWords);
+      setViewMode("words");
+    } else if (selectedCategory === "all") {
+      setCurrentWords(wordsToUse);
+      setViewMode("words");
     }
   }, [selectedCategory, realTimeWords, lastUpdate]);
 
