@@ -125,6 +125,12 @@ export function GameHub({
 
             <div className="grid grid-cols-2 gap-3">
               <div className="bg-white/80 rounded-lg p-3 text-center">
+                <div className="text-2xl mb-1">🌱</div>
+                <div className="text-sm font-semibold text-gray-700">
+                  Word Garden
+                </div>
+              </div>
+              <div className="bg-white/80 rounded-lg p-3 text-center">
                 <div className="text-2xl mb-1">🗺️</div>
                 <div className="text-sm font-semibold text-gray-700">
                   Word Quest
@@ -140,12 +146,6 @@ export function GameHub({
                 <div className="text-2xl mb-1">⚡</div>
                 <div className="text-sm font-semibold text-gray-700">
                   Speed Learning
-                </div>
-              </div>
-              <div className="bg-white/80 rounded-lg p-3 text-center">
-                <div className="text-2xl mb-1">🎤</div>
-                <div className="text-sm font-semibold text-gray-700">
-                  Pronunciation
                 </div>
               </div>
             </div>
