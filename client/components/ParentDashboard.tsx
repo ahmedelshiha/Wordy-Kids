@@ -3,8 +3,14 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
-import { EnhancedAddChildProfile, QuickAddChildButton } from "@/components/EnhancedAddChildProfile";
-import { EnhancedChildProfileCard, ChildProfileGrid } from "@/components/EnhancedChildProfileCard";
+import {
+  EnhancedAddChildProfile,
+  QuickAddChildButton,
+} from "@/components/EnhancedAddChildProfile";
+import {
+  EnhancedChildProfileCard,
+  ChildProfileGrid,
+} from "@/components/EnhancedChildProfileCard";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -3858,7 +3864,9 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
               <div className="hidden md:flex items-center gap-2 text-sm text-slate-500">
                 <span>Wordy's Adventure</span>
                 <ChevronRight className="w-4 h-4" />
-                <span className="font-medium text-slate-700">Parent Dashboard</span>
+                <span className="font-medium text-slate-700">
+                  Parent Dashboard
+                </span>
               </div>
             </div>
           )}
@@ -3881,7 +3889,7 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
                   { id: "dashboard", label: "Dashboard", icon: Target },
                   { id: "learn", label: "Word Library", icon: BookOpen },
                   { id: "quiz", label: "Quiz", icon: Brain },
-                  { id: "progress", label: "Journey", icon: Trophy }
+                  { id: "progress", label: "Journey", icon: Trophy },
                 ].map(({ id, label, icon: Icon }) => (
                   <Button
                     key={id}
@@ -3891,7 +3899,11 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
                       onNavigateBack();
                       // This will be handled by the parent component to set the correct tab
                       setTimeout(() => {
-                        window.dispatchEvent(new CustomEvent('navigateToTab', { detail: { tab: id } }));
+                        window.dispatchEvent(
+                          new CustomEvent("navigateToTab", {
+                            detail: { tab: id },
+                          }),
+                        );
                       }, 100);
                     }}
                     className="text-xs px-2 py-1 h-6 text-slate-600 hover:text-educational-blue hover:bg-educational-blue/10"
@@ -4001,7 +4013,8 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
             favoriteCategory: childData.interests?.[0] || "Animals",
             interests: childData.interests || [],
             lastActive: new Date(),
-            preferredLearningTime: childData.preferredLearningTime || "After school (4-6 PM)",
+            preferredLearningTime:
+              childData.preferredLearningTime || "After school (4-6 PM)",
             difficultyPreference: childData.difficultyPreference || "easy",
             parentNotes: "",
             customWords: [],

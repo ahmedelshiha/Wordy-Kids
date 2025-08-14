@@ -1654,92 +1654,91 @@ const CreateWordWizard: React.FC<CreateWordWizardProps> = ({
   };
 
   return (
-      <Dialog open={open} onOpenChange={onOpenChange}>
-        <DialogContent className="max-w-5xl max-h-[95vh] overflow-hidden flex flex-col">
-          <DialogHeader className="pb-4 border-b">
-            <DialogTitle className="flex items-center gap-2">
-              <Wand2 className="w-5 h-5 text-blue-500" />
-              Create New Word
-              {selectedTemplate && (
-                <Badge variant="outline" className="ml-2">
-                  {selectedTemplate.name} Template
-                </Badge>
-              )}
-            </DialogTitle>
-            <DialogDescription>
-              Use our guided wizard to create comprehensive word entries with
-              smart assistance
-            </DialogDescription>
-          </DialogHeader>
+    <Dialog open={open} onOpenChange={onOpenChange}>
+      <DialogContent className="max-w-5xl max-h-[95vh] overflow-hidden flex flex-col">
+        <DialogHeader className="pb-4 border-b">
+          <DialogTitle className="flex items-center gap-2">
+            <Wand2 className="w-5 h-5 text-blue-500" />
+            Create New Word
+            {selectedTemplate && (
+              <Badge variant="outline" className="ml-2">
+                {selectedTemplate.name} Template
+              </Badge>
+            )}
+          </DialogTitle>
+          <DialogDescription>
+            Use our guided wizard to create comprehensive word entries with
+            smart assistance
+          </DialogDescription>
+        </DialogHeader>
 
-          <div className="flex-1 overflow-y-auto p-2">
-            {renderStepIndicator()}
-            {renderCurrentStep()}
-          </div>
+        <div className="flex-1 overflow-y-auto p-2">
+          {renderStepIndicator()}
+          {renderCurrentStep()}
+        </div>
 
-          <DialogFooter className="border-t pt-4">
-            <div className="flex items-center justify-between w-full">
-              <div className="flex items-center gap-2">
-                {completionScore > 0 && (
-                  <div className="flex items-center gap-2 text-sm">
-                    <div className="w-16 h-2 bg-slate-200 rounded-full overflow-hidden">
-                      <div
-                        className="h-full bg-gradient-to-r from-red-400 via-yellow-400 to-green-400 transition-all"
-                        style={{ width: `${completionScore}%` }}
-                      />
-                    </div>
-                    <span className="text-slate-600">{completionScore}%</span>
+        <DialogFooter className="border-t pt-4">
+          <div className="flex items-center justify-between w-full">
+            <div className="flex items-center gap-2">
+              {completionScore > 0 && (
+                <div className="flex items-center gap-2 text-sm">
+                  <div className="w-16 h-2 bg-slate-200 rounded-full overflow-hidden">
+                    <div
+                      className="h-full bg-gradient-to-r from-red-400 via-yellow-400 to-green-400 transition-all"
+                      style={{ width: `${completionScore}%` }}
+                    />
                   </div>
-                )}
-              </div>
-
-              <div className="flex items-center gap-2">
-                <Button variant="outline" onClick={() => onOpenChange(false)}>
-                  Cancel
-                </Button>
-
-                {currentStep > 1 && (
-                  <Button variant="outline" onClick={handlePrevious}>
-                    <ArrowLeft className="w-4 h-4 mr-2" />
-                    Previous
-                  </Button>
-                )}
-
-                {currentStep < steps.length ? (
-                  <Button
-                    onClick={handleNext}
-                    disabled={
-                      currentStep === 2 &&
-                      (!formData.word || !formData.category)
-                    }
-                  >
-                    Next
-                    <ArrowRight className="w-4 h-4 ml-2" />
-                  </Button>
-                ) : (
-                  <Button
-                    onClick={handleSave}
-                    disabled={isSaving || validationErrors.length > 0}
-                    className="bg-blue-600 hover:bg-blue-700 min-w-[120px]"
-                  >
-                    {isSaving ? (
-                      <>
-                        <RefreshCw className="w-4 h-4 mr-2 animate-spin" />
-                        Creating...
-                      </>
-                    ) : (
-                      <>
-                        <Save className="w-4 h-4 mr-2" />
-                        Create Word
-                      </>
-                    )}
-                  </Button>
-                )}
-              </div>
+                  <span className="text-slate-600">{completionScore}%</span>
+                </div>
+              )}
             </div>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
+
+            <div className="flex items-center gap-2">
+              <Button variant="outline" onClick={() => onOpenChange(false)}>
+                Cancel
+              </Button>
+
+              {currentStep > 1 && (
+                <Button variant="outline" onClick={handlePrevious}>
+                  <ArrowLeft className="w-4 h-4 mr-2" />
+                  Previous
+                </Button>
+              )}
+
+              {currentStep < steps.length ? (
+                <Button
+                  onClick={handleNext}
+                  disabled={
+                    currentStep === 2 && (!formData.word || !formData.category)
+                  }
+                >
+                  Next
+                  <ArrowRight className="w-4 h-4 ml-2" />
+                </Button>
+              ) : (
+                <Button
+                  onClick={handleSave}
+                  disabled={isSaving || validationErrors.length > 0}
+                  className="bg-blue-600 hover:bg-blue-700 min-w-[120px]"
+                >
+                  {isSaving ? (
+                    <>
+                      <RefreshCw className="w-4 h-4 mr-2 animate-spin" />
+                      Creating...
+                    </>
+                  ) : (
+                    <>
+                      <Save className="w-4 h-4 mr-2" />
+                      Create Word
+                    </>
+                  )}
+                </Button>
+              )}
+            </div>
+          </div>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
   );
 };
 

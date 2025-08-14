@@ -1,24 +1,41 @@
-import React, { useState } from 'react';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Users, X, ArrowRight, Shield, BarChart3, Settings, Eye } from 'lucide-react';
+import React, { useState } from "react";
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import {
+  Users,
+  X,
+  ArrowRight,
+  Shield,
+  BarChart3,
+  Settings,
+  Eye,
+} from "lucide-react";
 
 interface FloatingParentAccessProps {
   onAccessParentDashboard: () => void;
   currentTab: string;
 }
 
-export function FloatingParentAccess({ onAccessParentDashboard, currentTab }: FloatingParentAccessProps) {
+export function FloatingParentAccess({
+  onAccessParentDashboard,
+  currentTab,
+}: FloatingParentAccessProps) {
   const [showQuickInfo, setShowQuickInfo] = useState(false);
 
   const getTabDisplayName = (tab: string) => {
     const tabNames: Record<string, string> = {
       dashboard: "Dashboard",
-      learn: "Word Library", 
+      learn: "Word Library",
       quiz: "Quiz Time",
       progress: "Learning Journey",
-      adventure: "Adventure Mode"
+      adventure: "Adventure Mode",
     };
     return tabNames[tab] || tab;
   };
@@ -50,7 +67,9 @@ export function FloatingParentAccess({ onAccessParentDashboard, currentTab }: Fl
                 </CardHeader>
                 <CardContent className="pt-0 space-y-3">
                   <div className="text-xs text-purple-700">
-                    <p className="mb-2">Monitor your child's learning progress:</p>
+                    <p className="mb-2">
+                      Monitor your child's learning progress:
+                    </p>
                     <ul className="space-y-1">
                       <li className="flex items-center gap-2">
                         <BarChart3 className="w-3 h-3" />
@@ -66,14 +85,14 @@ export function FloatingParentAccess({ onAccessParentDashboard, currentTab }: Fl
                       </li>
                     </ul>
                   </div>
-                  
+
                   <div className="flex items-center justify-between text-xs">
                     <span className="text-purple-600">Currently in:</span>
                     <Badge variant="secondary" className="text-purple-700">
                       {getTabDisplayName(currentTab)}
                     </Badge>
                   </div>
-                  
+
                   <Button
                     onClick={() => {
                       setShowQuickInfo(false);
@@ -89,7 +108,7 @@ export function FloatingParentAccess({ onAccessParentDashboard, currentTab }: Fl
               </Card>
             </div>
           )}
-          
+
           {/* Main Button */}
           <Button
             onClick={() => setShowQuickInfo(!showQuickInfo)}
@@ -100,10 +119,10 @@ export function FloatingParentAccess({ onAccessParentDashboard, currentTab }: Fl
           </Button>
         </div>
       </div>
-      
+
       {/* Backdrop for mobile */}
       {showQuickInfo && (
-        <div 
+        <div
           className="fixed inset-0 z-30 bg-black/20 md:hidden"
           onClick={() => setShowQuickInfo(false)}
         />
@@ -113,7 +132,11 @@ export function FloatingParentAccess({ onAccessParentDashboard, currentTab }: Fl
 }
 
 // Compact version for mobile
-export function CompactParentAccess({ onAccessParentDashboard }: { onAccessParentDashboard: () => void }) {
+export function CompactParentAccess({
+  onAccessParentDashboard,
+}: {
+  onAccessParentDashboard: () => void;
+}) {
   return (
     <Button
       onClick={onAccessParentDashboard}

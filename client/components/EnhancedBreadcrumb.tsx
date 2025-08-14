@@ -1,17 +1,17 @@
-import React from 'react';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import { 
-  ChevronRight, 
-  Home, 
-  Target, 
-  BookOpen, 
-  Brain, 
-  Trophy, 
+import React from "react";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import {
+  ChevronRight,
+  Home,
+  Target,
+  BookOpen,
+  Brain,
+  Trophy,
   Users,
   Sword,
-  ArrowLeft
-} from 'lucide-react';
+  ArrowLeft,
+} from "lucide-react";
 
 interface BreadcrumbItem {
   id: string;
@@ -23,30 +23,32 @@ interface BreadcrumbItem {
 
 interface EnhancedBreadcrumbProps {
   currentTab: string;
-  userRole: 'child' | 'parent';
+  userRole: "child" | "parent";
   selectedCategory?: string;
   learningMode?: string;
   onNavigate: (tab: string) => void;
   onBackToChild?: () => void;
 }
 
-export function EnhancedBreadcrumb({ 
-  currentTab, 
-  userRole, 
-  selectedCategory, 
+export function EnhancedBreadcrumb({
+  currentTab,
+  userRole,
+  selectedCategory,
   learningMode,
   onNavigate,
-  onBackToChild 
+  onBackToChild,
 }: EnhancedBreadcrumbProps) {
-  
   const getTabInfo = (tabId: string) => {
-    const tabs: Record<string, { label: string; icon: React.ComponentType<any>; color: string }> = {
+    const tabs: Record<
+      string,
+      { label: string; icon: React.ComponentType<any>; color: string }
+    > = {
       dashboard: { label: "Dashboard", icon: Target, color: "purple" },
       learn: { label: "Word Library", icon: BookOpen, color: "green" },
       quiz: { label: "Quiz Time", icon: Brain, color: "pink" },
       progress: { label: "My Journey", icon: Trophy, color: "yellow" },
       adventure: { label: "Adventure", icon: Sword, color: "blue" },
-      parent: { label: "Parent Dashboard", icon: Users, color: "purple" }
+      parent: { label: "Parent Dashboard", icon: Users, color: "purple" },
     };
     return tabs[tabId] || { label: tabId, icon: Home, color: "gray" };
   };
@@ -60,8 +62,8 @@ export function EnhancedBreadcrumb({
         id: "home",
         label: "Wordy's Adventure",
         icon: Home,
-        onClick: () => onNavigate("dashboard")
-      }
+        onClick: () => onNavigate("dashboard"),
+      },
     ];
 
     if (userRole === "parent") {
@@ -69,7 +71,7 @@ export function EnhancedBreadcrumb({
         id: "parent",
         label: "Parent Dashboard",
         icon: Users,
-        isActive: true
+        isActive: true,
       });
     } else {
       // Add current tab
@@ -78,7 +80,7 @@ export function EnhancedBreadcrumb({
         label: currentTabInfo.label,
         icon: currentTabInfo.icon,
         isActive: true,
-        onClick: () => onNavigate(currentTab)
+        onClick: () => onNavigate(currentTab),
       });
 
       // Add specific context if available
@@ -86,14 +88,15 @@ export function EnhancedBreadcrumb({
         items.push({
           id: "category",
           label: selectedCategory,
-          icon: BookOpen
+          icon: BookOpen,
         });
 
         if (learningMode && learningMode !== "selector") {
           items.push({
             id: "mode",
-            label: learningMode === "cards" ? "Learning Cards" : "Matching Game",
-            icon: learningMode === "cards" ? BookOpen : Brain
+            label:
+              learningMode === "cards" ? "Learning Cards" : "Matching Game",
+            icon: learningMode === "cards" ? BookOpen : Brain,
           });
         }
       }
@@ -114,25 +117,29 @@ export function EnhancedBreadcrumb({
               {index > 0 && (
                 <ChevronRight className="w-4 h-4 text-gray-400 mx-1" />
               )}
-              
+
               {item.onClick ? (
                 <Button
                   variant="ghost"
                   size="sm"
                   onClick={item.onClick}
                   className={`h-7 px-2 text-xs ${
-                    item.isActive 
-                      ? 'text-educational-blue font-medium' 
-                      : 'text-gray-600 hover:text-educational-blue'
+                    item.isActive
+                      ? "text-educational-blue font-medium"
+                      : "text-gray-600 hover:text-educational-blue"
                   }`}
                 >
                   <item.icon className="w-3 h-3 mr-1" />
                   {item.label}
                 </Button>
               ) : (
-                <div className={`flex items-center gap-1 px-2 py-1 rounded ${
-                  item.isActive ? 'text-educational-blue font-medium' : 'text-gray-600'
-                }`}>
+                <div
+                  className={`flex items-center gap-1 px-2 py-1 rounded ${
+                    item.isActive
+                      ? "text-educational-blue font-medium"
+                      : "text-gray-600"
+                  }`}
+                >
                   <item.icon className="w-3 h-3" />
                   <span>{item.label}</span>
                 </div>
@@ -154,19 +161,19 @@ export function EnhancedBreadcrumb({
               Back to Learning
             </Button>
           )}
-          
+
           {userRole === "child" && (
-            <Badge 
-              variant="secondary" 
+            <Badge
+              variant="secondary"
               className="text-xs px-2 py-1 bg-educational-blue/10 text-educational-blue"
             >
               Learning Mode
             </Badge>
           )}
-          
+
           {userRole === "parent" && (
-            <Badge 
-              variant="secondary" 
+            <Badge
+              variant="secondary"
               className="text-xs px-2 py-1 bg-purple-100 text-purple-700"
             >
               Parent View
@@ -179,19 +186,22 @@ export function EnhancedBreadcrumb({
 }
 
 // Compact version for mobile
-export function CompactBreadcrumb({ 
-  currentTab, 
-  userRole, 
-  onBackToChild 
-}: Pick<EnhancedBreadcrumbProps, 'currentTab' | 'userRole' | 'onBackToChild'>) {
+export function CompactBreadcrumb({
+  currentTab,
+  userRole,
+  onBackToChild,
+}: Pick<EnhancedBreadcrumbProps, "currentTab" | "userRole" | "onBackToChild">) {
   const getTabInfo = (tabId: string) => {
-    const tabs: Record<string, { label: string; icon: React.ComponentType<any> }> = {
+    const tabs: Record<
+      string,
+      { label: string; icon: React.ComponentType<any> }
+    > = {
       dashboard: { label: "Dashboard", icon: Target },
       learn: { label: "Word Library", icon: BookOpen },
       quiz: { label: "Quiz", icon: Brain },
       progress: { label: "Journey", icon: Trophy },
       adventure: { label: "Adventure", icon: Sword },
-      parent: { label: "Parent Dashboard", icon: Users }
+      parent: { label: "Parent Dashboard", icon: Users },
     };
     return tabs[tabId] || { label: tabId, icon: Home };
   };
@@ -208,7 +218,7 @@ export function CompactBreadcrumb({
             {currentTabInfo.label}
           </span>
         </div>
-        
+
         {userRole === "parent" && onBackToChild && (
           <Button
             variant="ghost"

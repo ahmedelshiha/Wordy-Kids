@@ -34,10 +34,23 @@ import { AdventureDashboard } from "@/components/AdventureDashboard";
 import { MobileBottomNav } from "@/components/MobileBottomNav";
 import { adventureService } from "@/lib/adventureService";
 import { useWordLearningSession } from "@/contexts/WordLearningSessionContext";
-import { SessionRestorationNotification, DetailedSessionRestorationModal } from "@/components/SessionRestorationNotification";
-import { SessionProgressIndicator, CompactSessionIndicator, SessionWarning } from "@/components/SessionProgressIndicator";
-import { FloatingParentAccess, CompactParentAccess } from "@/components/FloatingParentAccess";
-import { EnhancedBreadcrumb, CompactBreadcrumb } from "@/components/EnhancedBreadcrumb";
+import {
+  SessionRestorationNotification,
+  DetailedSessionRestorationModal,
+} from "@/components/SessionRestorationNotification";
+import {
+  SessionProgressIndicator,
+  CompactSessionIndicator,
+  SessionWarning,
+} from "@/components/SessionProgressIndicator";
+import {
+  FloatingParentAccess,
+  CompactParentAccess,
+} from "@/components/FloatingParentAccess";
+import {
+  EnhancedBreadcrumb,
+  CompactBreadcrumb,
+} from "@/components/EnhancedBreadcrumb";
 import {
   wordsDatabase,
   getWordsByCategory,
@@ -162,7 +175,7 @@ export default function Index({ initialProfile }: IndexProps) {
     restoreProgress,
     saveLearningState,
     saveQuizState,
-    saveUserProfile
+    saveUserProfile,
   } = useWordLearningSession();
   const [showSessionRestoration, setShowSessionRestoration] = useState(false);
   const [sessionRestored, setSessionRestored] = useState(false);
@@ -206,10 +219,11 @@ export default function Index({ initialProfile }: IndexProps) {
 
   // Session restoration effect
   useEffect(() => {
-    const hasStoredProgress = sessionData.rememberedWords.length > 0 ||
-                             sessionData.forgottenWords.length > 0 ||
-                             sessionData.selectedCategory !== '' ||
-                             sessionData.currentWordIndex > 0;
+    const hasStoredProgress =
+      sessionData.rememberedWords.length > 0 ||
+      sessionData.forgottenWords.length > 0 ||
+      sessionData.selectedCategory !== "" ||
+      sessionData.currentWordIndex > 0;
 
     if (hasStoredProgress && !sessionRestored) {
       setShowSessionRestoration(true);
@@ -250,7 +264,10 @@ export default function Index({ initialProfile }: IndexProps) {
   // Initialize dashboard words for systematic learning (independent of category selection)
   useEffect(() => {
     const initializeDashboardWords = () => {
-      if (currentDashboardWords.length === 0 && !sessionData.currentDashboardWords?.length) {
+      if (
+        currentDashboardWords.length === 0 &&
+        !sessionData.currentDashboardWords?.length
+      ) {
         try {
           generateDashboardWords();
         } catch (error) {
@@ -290,10 +307,16 @@ export default function Index({ initialProfile }: IndexProps) {
       saveProgress({
         rememberedWords,
         forgottenWords,
-        currentWordIndex
+        currentWordIndex,
       });
     }
-  }, [rememberedWords, forgottenWords, currentWordIndex, sessionRestored, saveProgress]);
+  }, [
+    rememberedWords,
+    forgottenWords,
+    currentWordIndex,
+    sessionRestored,
+    saveProgress,
+  ]);
 
   // Track active tab changes
   useEffect(() => {
@@ -310,8 +333,15 @@ export default function Index({ initialProfile }: IndexProps) {
       }
     };
 
-    window.addEventListener('navigateToTab', handleNavigateToTab as EventListener);
-    return () => window.removeEventListener('navigateToTab', handleNavigateToTab as EventListener);
+    window.addEventListener(
+      "navigateToTab",
+      handleNavigateToTab as EventListener,
+    );
+    return () =>
+      window.removeEventListener(
+        "navigateToTab",
+        handleNavigateToTab as EventListener,
+      );
   }, []);
 
   // Auto-save learning state changes
@@ -321,10 +351,17 @@ export default function Index({ initialProfile }: IndexProps) {
         activeTab,
         selectedCategory,
         learningMode,
-        currentDashboardWords
+        currentDashboardWords,
       });
     }
-  }, [activeTab, selectedCategory, learningMode, currentDashboardWords, sessionRestored, saveLearningState]);
+  }, [
+    activeTab,
+    selectedCategory,
+    learningMode,
+    currentDashboardWords,
+    sessionRestored,
+    saveLearningState,
+  ]);
 
   // Auto-save quiz state changes
   useEffect(() => {
@@ -332,7 +369,7 @@ export default function Index({ initialProfile }: IndexProps) {
       saveQuizState({
         showQuiz,
         selectedQuizType,
-        gameMode
+        gameMode,
       });
     }
   }, [showQuiz, selectedQuizType, gameMode, sessionRestored, saveQuizState]);
@@ -1099,8 +1136,9 @@ export default function Index({ initialProfile }: IndexProps) {
 
   return (
     <div
-      key={currentProfile?.id || 'default-profile'}
-      className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 relative overflow-x-hidden">
+      key={currentProfile?.id || "default-profile"}
+      className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 relative overflow-x-hidden"
+    >
       {/* Optimized Mobile-First Header */}
       <header className="relative overflow-hidden bg-gradient-to-r from-educational-blue via-educational-purple to-educational-pink text-white">
         <div className="absolute inset-0 bg-black/10"></div>
@@ -1189,7 +1227,8 @@ export default function Index({ initialProfile }: IndexProps) {
             setFeedback({
               type: "encouragement",
               title: "Welcome Back! 🎉",
-              message: "You've returned to your learning journey. Keep up the great work!",
+              message:
+                "You've returned to your learning journey. Keep up the great work!",
               onContinue: () => setFeedback(null),
             });
           }, 500);
@@ -1455,7 +1494,9 @@ export default function Index({ initialProfile }: IndexProps) {
                     </div>
                     <div className="text-left">
                       <div className="font-semibold">Parent Dashboard</div>
-                      <div className="text-xs text-gray-500">Monitor progress & settings</div>
+                      <div className="text-xs text-gray-500">
+                        Monitor progress & settings
+                      </div>
                     </div>
                   </button>
 

@@ -1,18 +1,27 @@
-import React, { useState, useEffect } from 'react';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { useWordLearningSession, useSessionRestoration } from '@/contexts/WordLearningSessionContext';
-import { RotateCcw, X, Clock, Trophy, BookOpen, Target } from 'lucide-react';
+import React, { useState, useEffect } from "react";
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import {
+  useWordLearningSession,
+  useSessionRestoration,
+} from "@/contexts/WordLearningSessionContext";
+import { RotateCcw, X, Clock, Trophy, BookOpen, Target } from "lucide-react";
 
 interface SessionRestorationNotificationProps {
   onRestore: () => void;
   onDismiss: () => void;
 }
 
-export function SessionRestorationNotification({ 
-  onRestore, 
-  onDismiss 
+export function SessionRestorationNotification({
+  onRestore,
+  onDismiss,
 }: SessionRestorationNotificationProps) {
   const { sessionData, getSessionStats } = useWordLearningSession();
   const { hasStoredProgress, getRestoreMessage } = useSessionRestoration();
@@ -31,7 +40,9 @@ export function SessionRestorationNotification({
   }
 
   const stats = getSessionStats();
-  const timeSinceLastSession = Math.round((Date.now() - sessionData.lastUpdated) / 1000 / 60);
+  const timeSinceLastSession = Math.round(
+    (Date.now() - sessionData.lastUpdated) / 1000 / 60,
+  );
 
   const handleRestore = () => {
     setIsVisible(false);
@@ -53,7 +64,9 @@ export function SessionRestorationNotification({
                 <RotateCcw className="w-4 h-4 text-white" />
               </div>
               <div>
-                <CardTitle className="text-lg text-gray-800">Welcome Back!</CardTitle>
+                <CardTitle className="text-lg text-gray-800">
+                  Welcome Back!
+                </CardTitle>
                 <CardDescription className="text-sm text-gray-600">
                   Continue your learning journey
                 </CardDescription>
@@ -69,12 +82,12 @@ export function SessionRestorationNotification({
             </Button>
           </div>
         </CardHeader>
-        
+
         <CardContent className="pt-0 space-y-4">
           <p className="text-sm text-gray-700 leading-relaxed">
             {getRestoreMessage()}
           </p>
-          
+
           {/* Progress summary */}
           <div className="grid grid-cols-2 gap-3">
             <div className="flex items-center gap-2 p-2 bg-white rounded-lg border">
@@ -86,7 +99,7 @@ export function SessionRestorationNotification({
                 <div className="text-xs text-gray-600">Words Learned</div>
               </div>
             </div>
-            
+
             <div className="flex items-center gap-2 p-2 bg-white rounded-lg border">
               <Target className="w-4 h-4 text-educational-green" />
               <div>
@@ -97,15 +110,15 @@ export function SessionRestorationNotification({
               </div>
             </div>
           </div>
-          
+
           {/* Session info */}
           <div className="flex items-center gap-2 text-xs text-gray-600">
             <Clock className="w-3 h-3" />
             <span>
-              Last activity: {timeSinceLastSession < 60 
+              Last activity:{" "}
+              {timeSinceLastSession < 60
                 ? `${timeSinceLastSession} min ago`
-                : `${Math.round(timeSinceLastSession / 60)} hrs ago`
-              }
+                : `${Math.round(timeSinceLastSession / 60)} hrs ago`}
             </span>
             {sessionData.selectedCategory && (
               <>
@@ -117,10 +130,10 @@ export function SessionRestorationNotification({
               </>
             )}
           </div>
-          
+
           {/* Action buttons */}
           <div className="flex gap-2 pt-2">
-            <Button 
+            <Button
               onClick={handleRestore}
               className="flex-1 bg-educational-blue hover:bg-educational-blue/90 text-white"
               size="sm"
@@ -128,9 +141,9 @@ export function SessionRestorationNotification({
               <RotateCcw className="w-4 h-4 mr-2" />
               Continue Learning
             </Button>
-            <Button 
+            <Button
               onClick={handleDismiss}
-              variant="outline" 
+              variant="outline"
               size="sm"
               className="px-4"
             >
@@ -144,10 +157,10 @@ export function SessionRestorationNotification({
 }
 
 // Enhanced version with more detailed progress information
-export function DetailedSessionRestorationModal({ 
+export function DetailedSessionRestorationModal({
   isOpen,
-  onRestore, 
-  onDismiss 
+  onRestore,
+  onDismiss,
 }: {
   isOpen: boolean;
   onRestore: () => void;
@@ -159,8 +172,12 @@ export function DetailedSessionRestorationModal({
 
   const stats = getSessionStats();
   const progressPercentage = Math.round(
-    (sessionData.rememberedWords.length / 
-     Math.max(sessionData.rememberedWords.length + sessionData.forgottenWords.length, 1)) * 100
+    (sessionData.rememberedWords.length /
+      Math.max(
+        sessionData.rememberedWords.length + sessionData.forgottenWords.length,
+        1,
+      )) *
+      100,
   );
 
   return (
@@ -177,12 +194,12 @@ export function DetailedSessionRestorationModal({
             We found your previous learning session
           </CardDescription>
         </CardHeader>
-        
+
         <CardContent className="space-y-6">
           {/* Progress overview */}
           <div className="bg-gradient-to-r from-blue-50 to-purple-50 p-4 rounded-lg">
             <h4 className="font-semibold text-gray-800 mb-3">Your Progress</h4>
-            
+
             <div className="grid grid-cols-2 gap-4 mb-4">
               <div className="text-center">
                 <div className="text-2xl font-bold text-educational-blue">
@@ -197,10 +214,10 @@ export function DetailedSessionRestorationModal({
                 <div className="text-sm text-gray-600">Need Practice</div>
               </div>
             </div>
-            
+
             {/* Progress bar */}
             <div className="w-full bg-gray-200 rounded-full h-2">
-              <div 
+              <div
                 className="bg-gradient-to-r from-educational-blue to-educational-purple h-2 rounded-full transition-all duration-500"
                 style={{ width: `${progressPercentage}%` }}
               />
@@ -209,42 +226,43 @@ export function DetailedSessionRestorationModal({
               {progressPercentage}% Success Rate
             </div>
           </div>
-          
+
           {/* Session details */}
           {sessionData.selectedCategory && (
             <div className="flex items-center gap-3 p-3 bg-white border rounded-lg">
               <BookOpen className="w-5 h-5 text-educational-green" />
               <div>
                 <div className="font-medium text-gray-800">Last Category</div>
-                <div className="text-sm text-gray-600">{sessionData.selectedCategory}</div>
+                <div className="text-sm text-gray-600">
+                  {sessionData.selectedCategory}
+                </div>
               </div>
             </div>
           )}
-          
+
           <div className="flex items-center gap-3 p-3 bg-white border rounded-lg">
             <Clock className="w-5 h-5 text-educational-orange" />
             <div>
-              <div className="font-medium text-gray-800">Time Spent Learning</div>
+              <div className="font-medium text-gray-800">
+                Time Spent Learning
+              </div>
               <div className="text-sm text-gray-600">
-                {stats.totalTimeSpent} minutes across {stats.sessionsCompleted} sessions
+                {stats.totalTimeSpent} minutes across {stats.sessionsCompleted}{" "}
+                sessions
               </div>
             </div>
           </div>
-          
+
           {/* Action buttons */}
           <div className="flex gap-3 pt-4">
-            <Button 
+            <Button
               onClick={onRestore}
               className="flex-1 bg-gradient-to-r from-educational-blue to-educational-purple hover:from-educational-blue/90 hover:to-educational-purple/90 text-white"
             >
               <RotateCcw className="w-4 h-4 mr-2" />
               Continue My Journey
             </Button>
-            <Button 
-              onClick={onDismiss}
-              variant="outline" 
-              className="px-6"
-            >
+            <Button onClick={onDismiss} variant="outline" className="px-6">
               Start Fresh
             </Button>
           </div>

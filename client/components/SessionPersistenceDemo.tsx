@@ -1,69 +1,81 @@
-import React, { useState, useEffect } from 'react';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { useWordLearningSession } from '@/contexts/WordLearningSessionContext';
-import { 
-  PlayCircle, 
-  PauseCircle, 
-  RotateCcw, 
-  Trash2, 
+import React, { useState, useEffect } from "react";
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { useWordLearningSession } from "@/contexts/WordLearningSessionContext";
+import {
+  PlayCircle,
+  PauseCircle,
+  RotateCcw,
+  Trash2,
   Clock,
   Trophy,
   BookOpen,
   Target,
   Zap,
   Save,
-  CheckCircle2
-} from 'lucide-react';
+  CheckCircle2,
+} from "lucide-react";
 
 export function SessionPersistenceDemo() {
-  const { 
-    sessionData, 
-    updateSession, 
-    clearSession, 
-    saveProgress, 
-    getSessionStats 
+  const {
+    sessionData,
+    updateSession,
+    clearSession,
+    saveProgress,
+    getSessionStats,
   } = useWordLearningSession();
-  
+
   const [demoProgress, setDemoProgress] = useState({
     rememberedWords: new Set<number>([1, 2, 3]),
     forgottenWords: new Set<number>([4, 5]),
-    currentWordIndex: 3
+    currentWordIndex: 3,
   });
-  
+
   const [isSimulating, setIsSimulating] = useState(false);
   const stats = getSessionStats();
 
   // Simulate learning progress
   const simulateLearning = () => {
     setIsSimulating(true);
-    
+
     const simulate = () => {
       const newWordId = Math.floor(Math.random() * 1000) + 10;
       const isRemembered = Math.random() > 0.3; // 70% success rate
-      
-      setDemoProgress(prev => {
+
+      setDemoProgress((prev) => {
         const newProgress = { ...prev };
-        
+
         if (isRemembered) {
-          newProgress.rememberedWords = new Set([...prev.rememberedWords, newWordId]);
+          newProgress.rememberedWords = new Set([
+            ...prev.rememberedWords,
+            newWordId,
+          ]);
         } else {
-          newProgress.forgottenWords = new Set([...prev.forgottenWords, newWordId]);
+          newProgress.forgottenWords = new Set([
+            ...prev.forgottenWords,
+            newWordId,
+          ]);
         }
-        
+
         newProgress.currentWordIndex = prev.currentWordIndex + 1;
-        
+
         // Save to session
         saveProgress(newProgress);
-        
+
         return newProgress;
       });
     };
-    
+
     // Simulate learning a new word every 2 seconds
     const interval = setInterval(simulate, 2000);
-    
+
     // Stop after 10 seconds
     setTimeout(() => {
       clearInterval(interval);
@@ -79,20 +91,27 @@ export function SessionPersistenceDemo() {
     setDemoProgress({
       rememberedWords: new Set<number>(),
       forgottenWords: new Set<number>(),
-      currentWordIndex: 0
+      currentWordIndex: 0,
     });
-    
+
     // Clear the session as well
     clearSession();
   };
 
   const demoStats = {
     totalWordsLearned: demoProgress.rememberedWords.size,
-    totalAttempts: demoProgress.rememberedWords.size + demoProgress.forgottenWords.size,
-    accuracy: demoProgress.rememberedWords.size + demoProgress.forgottenWords.size > 0 
-      ? Math.round((demoProgress.rememberedWords.size / (demoProgress.rememberedWords.size + demoProgress.forgottenWords.size)) * 100)
-      : 0,
-    currentWordIndex: demoProgress.currentWordIndex
+    totalAttempts:
+      demoProgress.rememberedWords.size + demoProgress.forgottenWords.size,
+    accuracy:
+      demoProgress.rememberedWords.size + demoProgress.forgottenWords.size > 0
+        ? Math.round(
+            (demoProgress.rememberedWords.size /
+              (demoProgress.rememberedWords.size +
+                demoProgress.forgottenWords.size)) *
+              100,
+          )
+        : 0,
+    currentWordIndex: demoProgress.currentWordIndex,
   };
 
   return (
@@ -102,7 +121,8 @@ export function SessionPersistenceDemo() {
           Session Persistence Demo
         </h1>
         <p className="text-gray-600">
-          Experience how your learning progress is automatically saved and restored
+          Experience how your learning progress is automatically saved and
+          restored
         </p>
       </div>
 
@@ -136,7 +156,7 @@ export function SessionPersistenceDemo() {
                 </>
               )}
             </Button>
-            
+
             <Button
               onClick={stopSimulation}
               variant="outline"
@@ -144,7 +164,7 @@ export function SessionPersistenceDemo() {
             >
               Stop
             </Button>
-            
+
             <Button
               onClick={resetDemo}
               variant="outline"
@@ -154,13 +174,14 @@ export function SessionPersistenceDemo() {
               Reset Demo
             </Button>
           </div>
-          
+
           {isSimulating && (
             <div className="p-3 bg-blue-50 border border-blue-200 rounded-lg">
               <div className="flex items-center gap-2 text-blue-800">
                 <Save className="w-4 h-4 animate-pulse" />
                 <span className="text-sm font-medium">
-                  Auto-saving progress... Open a new tab to see persistence in action!
+                  Auto-saving progress... Open a new tab to see persistence in
+                  action!
                 </span>
               </div>
             </div>
@@ -185,7 +206,7 @@ export function SessionPersistenceDemo() {
                 </div>
                 <div className="text-sm text-green-700">Words Learned</div>
               </div>
-              
+
               <div className="p-3 bg-blue-50 rounded-lg text-center">
                 <div className="text-2xl font-bold text-blue-600">
                   {demoStats.accuracy}%
@@ -193,15 +214,23 @@ export function SessionPersistenceDemo() {
                 <div className="text-sm text-blue-700">Accuracy</div>
               </div>
             </div>
-            
+
             <div className="p-3 bg-purple-50 rounded-lg">
               <div className="flex items-center justify-between">
-                <span className="text-purple-700 font-medium">Total Attempts:</span>
-                <span className="text-purple-800 font-bold">{demoStats.totalAttempts}</span>
+                <span className="text-purple-700 font-medium">
+                  Total Attempts:
+                </span>
+                <span className="text-purple-800 font-bold">
+                  {demoStats.totalAttempts}
+                </span>
               </div>
               <div className="flex items-center justify-between mt-1">
-                <span className="text-purple-700 font-medium">Current Word:</span>
-                <span className="text-purple-800 font-bold">#{demoStats.currentWordIndex}</span>
+                <span className="text-purple-700 font-medium">
+                  Current Word:
+                </span>
+                <span className="text-purple-800 font-bold">
+                  #{demoStats.currentWordIndex}
+                </span>
               </div>
             </div>
           </CardContent>
@@ -219,10 +248,13 @@ export function SessionPersistenceDemo() {
               <div className="flex items-center justify-between">
                 <span className="text-sm text-gray-600">Session Age:</span>
                 <Badge variant="secondary">
-                  {Math.round((Date.now() - sessionData.sessionStartTime) / 1000 / 60)} min
+                  {Math.round(
+                    (Date.now() - sessionData.sessionStartTime) / 1000 / 60,
+                  )}{" "}
+                  min
                 </Badge>
               </div>
-              
+
               <div className="flex items-center justify-between">
                 <span className="text-sm text-gray-600">Auto-save:</span>
                 <div className="flex items-center gap-1">
@@ -230,7 +262,7 @@ export function SessionPersistenceDemo() {
                   <span className="text-sm text-green-600">Enabled</span>
                 </div>
               </div>
-              
+
               <div className="flex items-center justify-between">
                 <span className="text-sm text-gray-600">Cross-tab Sync:</span>
                 <Badge variant="default" className="bg-blue-100 text-blue-800">
@@ -238,7 +270,7 @@ export function SessionPersistenceDemo() {
                 </Badge>
               </div>
             </div>
-            
+
             <div className="p-3 bg-gray-50 rounded-lg">
               <div className="text-sm text-gray-700 mb-2">
                 <strong>Try this:</strong>
@@ -265,44 +297,62 @@ export function SessionPersistenceDemo() {
         <CardContent>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             <div className="p-4 bg-blue-50 rounded-lg">
-              <h4 className="font-semibold text-blue-800 mb-2">Auto-Save Progress</h4>
+              <h4 className="font-semibold text-blue-800 mb-2">
+                Auto-Save Progress
+              </h4>
               <p className="text-sm text-blue-700">
-                Your learning progress is automatically saved every few seconds and when you switch tabs.
+                Your learning progress is automatically saved every few seconds
+                and when you switch tabs.
               </p>
             </div>
-            
+
             <div className="p-4 bg-green-50 rounded-lg">
-              <h4 className="font-semibold text-green-800 mb-2">Cross-Tab Sync</h4>
+              <h4 className="font-semibold text-green-800 mb-2">
+                Cross-Tab Sync
+              </h4>
               <p className="text-sm text-green-700">
-                Progress syncs across multiple tabs and windows in real-time using local storage events.
+                Progress syncs across multiple tabs and windows in real-time
+                using local storage events.
               </p>
             </div>
-            
+
             <div className="p-4 bg-purple-50 rounded-lg">
-              <h4 className="font-semibold text-purple-800 mb-2">Session Restoration</h4>
+              <h4 className="font-semibold text-purple-800 mb-2">
+                Session Restoration
+              </h4>
               <p className="text-sm text-purple-700">
-                When you return, you'll see a notification offering to continue where you left off.
+                When you return, you'll see a notification offering to continue
+                where you left off.
               </p>
             </div>
-            
+
             <div className="p-4 bg-orange-50 rounded-lg">
-              <h4 className="font-semibold text-orange-800 mb-2">Offline Support</h4>
+              <h4 className="font-semibold text-orange-800 mb-2">
+                Offline Support
+              </h4>
               <p className="text-sm text-orange-700">
-                Continue learning offline. Progress saves locally and syncs when online.
+                Continue learning offline. Progress saves locally and syncs when
+                online.
               </p>
             </div>
-            
+
             <div className="p-4 bg-pink-50 rounded-lg">
-              <h4 className="font-semibold text-pink-800 mb-2">Data Export/Import</h4>
+              <h4 className="font-semibold text-pink-800 mb-2">
+                Data Export/Import
+              </h4>
               <p className="text-sm text-pink-700">
-                Export your learning data for backup or import previous sessions.
+                Export your learning data for backup or import previous
+                sessions.
               </p>
             </div>
-            
+
             <div className="p-4 bg-yellow-50 rounded-lg">
-              <h4 className="font-semibold text-yellow-800 mb-2">Smart Recovery</h4>
+              <h4 className="font-semibold text-yellow-800 mb-2">
+                Smart Recovery
+              </h4>
               <p className="text-sm text-yellow-700">
-                Handles page refreshes, crashes, and long periods of inactivity gracefully.
+                Handles page refreshes, crashes, and long periods of inactivity
+                gracefully.
               </p>
             </div>
           </div>

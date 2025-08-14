@@ -1,30 +1,39 @@
-import React, { useState } from 'react';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Switch } from '@/components/ui/switch';
-import { useWordLearningSession } from '@/contexts/WordLearningSessionContext';
-import { sessionUtils } from '@/hooks/useSessionPersistence';
-import { 
-  Download, 
-  Upload, 
-  Trash2, 
-  Database, 
-  Clock, 
+import React, { useState } from "react";
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Switch } from "@/components/ui/switch";
+import { useWordLearningSession } from "@/contexts/WordLearningSessionContext";
+import { sessionUtils } from "@/hooks/useSessionPersistence";
+import {
+  Download,
+  Upload,
+  Trash2,
+  Database,
+  Clock,
   HardDrive,
   RefreshCw,
   Shield,
-  AlertTriangle
-} from 'lucide-react';
+  AlertTriangle,
+} from "lucide-react";
 
 export function SessionManagementSettings() {
-  const { sessionData, clearSession, getSessionStats } = useWordLearningSession();
+  const { sessionData, clearSession, getSessionStats } =
+    useWordLearningSession();
   const [showConfirmClear, setShowConfirmClear] = useState(false);
   const [autoSaveEnabled, setAutoSaveEnabled] = useState(true);
-  
+
   const stats = getSessionStats();
   const sessionSize = sessionUtils.getSessionSize();
-  const sessionAge = Math.round((Date.now() - sessionData.lastUpdated) / 1000 / 60); // minutes
+  const sessionAge = Math.round(
+    (Date.now() - sessionData.lastUpdated) / 1000 / 60,
+  ); // minutes
 
   const handleExportSession = () => {
     sessionUtils.exportSession();
@@ -35,9 +44,9 @@ export function SessionManagementSettings() {
     if (file) {
       sessionUtils.importSession(file).then((success) => {
         if (success) {
-          alert('Session imported successfully! Please refresh the page.');
+          alert("Session imported successfully! Please refresh the page.");
         } else {
-          alert('Failed to import session. Please check the file format.');
+          alert("Failed to import session. Please check the file format.");
         }
       });
     }
@@ -47,7 +56,7 @@ export function SessionManagementSettings() {
     if (showConfirmClear) {
       clearSession();
       setShowConfirmClear(false);
-      alert('Session cleared successfully!');
+      alert("Session cleared successfully!");
     } else {
       setShowConfirmClear(true);
       setTimeout(() => setShowConfirmClear(false), 5000); // Auto-cancel after 5 seconds
@@ -55,11 +64,11 @@ export function SessionManagementSettings() {
   };
 
   const formatBytes = (bytes: number) => {
-    if (bytes === 0) return '0 Bytes';
+    if (bytes === 0) return "0 Bytes";
     const k = 1024;
-    const sizes = ['Bytes', 'KB', 'MB'];
+    const sizes = ["Bytes", "KB", "MB"];
     const i = Math.floor(Math.log(bytes) / Math.log(k));
-    return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+    return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + " " + sizes[i];
   };
 
   const formatTime = (minutes: number) => {
@@ -89,10 +98,10 @@ export function SessionManagementSettings() {
                 <span className="text-sm font-medium">Session Age</span>
               </div>
               <div className="text-lg font-semibold text-gray-800">
-                {sessionAge < 1 ? 'Active' : formatTime(sessionAge)}
+                {sessionAge < 1 ? "Active" : formatTime(sessionAge)}
               </div>
             </div>
-            
+
             <div className="p-3 bg-gray-50 rounded-lg">
               <div className="flex items-center gap-2 mb-1">
                 <HardDrive className="w-4 h-4 text-gray-600" />
@@ -146,7 +155,9 @@ export function SessionManagementSettings() {
           {/* Auto-save toggle */}
           <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
             <div>
-              <div className="font-medium text-gray-800">Auto-save Progress</div>
+              <div className="font-medium text-gray-800">
+                Auto-save Progress
+              </div>
               <div className="text-sm text-gray-600">
                 Automatically save your progress as you learn
               </div>
@@ -167,7 +178,7 @@ export function SessionManagementSettings() {
               <Download className="w-4 h-4 mr-2" />
               Export Session
             </Button>
-            
+
             <div className="relative">
               <input
                 type="file"
@@ -176,11 +187,7 @@ export function SessionManagementSettings() {
                 className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
                 id="session-import"
               />
-              <Button
-                variant="outline"
-                className="w-full"
-                asChild
-              >
+              <Button variant="outline" className="w-full" asChild>
                 <label htmlFor="session-import" className="cursor-pointer">
                   <Upload className="w-4 h-4 mr-2" />
                   Import Session
@@ -195,10 +202,13 @@ export function SessionManagementSettings() {
               <div className="flex items-start gap-3">
                 <AlertTriangle className="w-5 h-5 text-red-600 mt-0.5" />
                 <div className="flex-1">
-                  <div className="font-medium text-red-800">Clear All Progress</div>
+                  <div className="font-medium text-red-800">
+                    Clear All Progress
+                  </div>
                   <div className="text-sm text-red-700 mb-3">
-                    This will permanently delete all your learning progress, including learned words, 
-                    quiz scores, and session history. This action cannot be undone.
+                    This will permanently delete all your learning progress,
+                    including learned words, quiz scores, and session history.
+                    This action cannot be undone.
                   </div>
                   <Button
                     onClick={handleClearSession}
@@ -246,14 +256,14 @@ export function SessionManagementSettings() {
                 {sessionAge < 60 ? "Active" : "Idle"}
               </Badge>
             </div>
-            
+
             <div className="flex items-center justify-between">
               <span className="text-sm">Data Integrity</span>
               <Badge variant="default" className="bg-green-100 text-green-800">
                 Good
               </Badge>
             </div>
-            
+
             <div className="flex items-center justify-between">
               <span className="text-sm">Cross-tab Sync</span>
               <Badge variant="default" className="bg-blue-100 text-blue-800">
