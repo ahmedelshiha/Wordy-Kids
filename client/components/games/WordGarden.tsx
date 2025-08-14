@@ -339,7 +339,7 @@ export default function WordGardenGame({
         // Haptic feedback
         if (navigator && "vibrate" in navigator) (navigator as any).vibrate(30);
 
-        // Proceed next round after a short delay
+        // Wait longer to show the plant growth before moving to next round
         setTimeout(() => {
           setAttempts(0);
           setLocked(false);
@@ -354,7 +354,7 @@ export default function WordGardenGame({
               bestStreak: Math.max(bestStreak, nextStreak),
             });
           }
-        }, 900);
+        }, 1500);
       } else {
         setWrongCount((w) => w + 1);
         setStreak(0);
