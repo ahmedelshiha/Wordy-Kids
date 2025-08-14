@@ -131,17 +131,17 @@ export function EncouragingFeedback({
   const getIcon = () => {
     switch (feedback.type) {
       case "success":
-        return <Star className="w-16 h-16 text-yellow-400 fill-current" />;
+        return <Star className="w-12 h-12 text-yellow-400 fill-current" />;
       case "partial":
-        return <ThumbsUp className="w-16 h-16 text-blue-400" />;
+        return <ThumbsUp className="w-12 h-12 text-blue-400" />;
       case "encouragement":
-        return <Heart className="w-16 h-16 text-pink-400 fill-current" />;
+        return <Heart className="w-12 h-12 text-pink-400 fill-current" />;
       case "celebration":
-        return <Trophy className="w-16 h-16 text-gold-400" />;
+        return <Trophy className="w-12 h-12 text-gold-400" />;
       case "try_again":
-        return <Smile className="w-16 h-16 text-purple-400" />;
+        return <Smile className="w-12 h-12 text-purple-400" />;
       default:
-        return <Sparkles className="w-16 h-16 text-blue-400" />;
+        return <Sparkles className="w-12 h-12 text-blue-400" />;
     }
   };
 
