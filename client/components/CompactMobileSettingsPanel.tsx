@@ -357,40 +357,92 @@ export const CompactMobileSettingsPanel: React.FC<CompactMobileSettingsPanelProp
                   </CompactSettingRow>
 
                   <div className="pt-1">
-                    <p className="text-xs font-medium text-slate-700 mb-1 px-1">
-                      Voice
+                    <p className="text-xs font-medium text-slate-700 mb-2 px-1">
+                      Voice Selection
                     </p>
-                    <div className="grid grid-cols-3 gap-1">
+                    <div className="space-y-2">
                       {[
                         {
                           type: "woman" as VoiceType,
                           emoji: "👩",
                           label: "Woman",
+                          description: "Clear female voice",
                         },
-                        { type: "man" as VoiceType, emoji: "👨", label: "Man" },
-                        { type: "kid" as VoiceType, emoji: "🧒", label: "Kid" },
-                      ].map((voice) => (
-                        <Button
-                          key={voice.type}
-                          size="sm"
-                          variant={
-                            selectedVoiceType === voice.type
-                              ? "default"
-                              : "outline"
-                          }
-                          className={cn(
-                            "h-8 text-xs px-1 min-h-[32px] flex-col gap-0",
-                            selectedVoiceType === voice.type &&
-                              "bg-educational-blue text-white scale-95",
-                          )}
-                          onClick={() => handleVoiceTypeChange(voice.type)}
-                        >
-                          <span className="text-xs">{voice.emoji}</span>
-                          <span className="text-[10px] leading-tight">
-                            {voice.label}
-                          </span>
-                        </Button>
-                      ))}
+                        {
+                          type: "man" as VoiceType,
+                          emoji: "👨",
+                          label: "Man",
+                          description: "Deep male voice",
+                        },
+                        {
+                          type: "kid" as VoiceType,
+                          emoji: "🧒",
+                          label: "Kid",
+                          description: "Higher pitched voice",
+                        },
+                      ].map((voice) => {
+                        const voiceInfo = enhancedAudioService.getVoiceInfo(voice.type);
+                        const isSelected = selectedVoiceType === voice.type;
+                        const isPreviewing = previewingVoice === voice.type;
+
+                        return (
+                          <div
+                            key={voice.type}
+                            className={cn(
+                              "border rounded-lg p-2 transition-all duration-200",
+                              isSelected ? "border-educational-blue bg-educational-blue/10" : "border-gray-200",
+                              "hover:border-educational-blue/50"
+                            )}
+                          >
+                            <div className="flex items-center justify-between">
+                              <button
+                                onClick={() => handleVoiceTypeChange(voice.type)}
+                                className="flex items-center gap-2 flex-1 text-left"
+                              >
+                                <span className="text-base">{voice.emoji}</span>
+                                <div className="flex-1 min-w-0">
+                                  <p className={cn(
+                                    "text-sm font-medium",
+                                    isSelected ? "text-educational-blue" : "text-slate-700"
+                                  )}>
+                                    {voice.label}
+                                  </p>
+                                  <p className="text-xs text-slate-500 truncate">
+                                    {voiceInfo ? voiceInfo.name : voice.description}
+                                  </p>
+                                </div>
+                              </button>
+
+                              <div className="flex items-center gap-1">
+                                {isSelected && (
+                                  <Badge variant="secondary" className="text-xs px-1 py-0">
+                                    Active
+                                  </Badge>
+                                )}
+                                <Button
+                                  size="sm"
+                                  variant="ghost"
+                                  disabled={isPreviewing}
+                                  onClick={() => handleVoicePreview(voice.type)}
+                                  className="h-6 w-6 p-0 text-slate-500 hover:text-educational-blue"
+                                >
+                                  {isPreviewing ? (
+                                    <div className="w-3 h-3 border border-current border-t-transparent rounded-full animate-spin" />
+                                  ) : (
+                                    <Play className="w-3 h-3" />
+                                  )}
+                                </Button>
+                              </div>
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
+
+                    <div className="mt-2 p-2 bg-blue-50 rounded-lg">
+                      <p className="text-xs text-blue-700">
+                        💡 Tap <Play className="w-3 h-3 inline mx-1" /> to preview each voice
+                      </p>
                     </div>
                   </div>
                 </div>
