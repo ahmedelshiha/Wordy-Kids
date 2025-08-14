@@ -1048,7 +1048,11 @@ export function InteractiveDashboardWordCard({
 
           {/* Action Buttons - Always visible */}
           {!isAnswered && (
-            <div className="space-y-3 sm:space-y-4 px-2 sm:px-0">
+            <div
+              className="space-y-3 sm:space-y-4 px-2 sm:px-0"
+              role="group"
+              aria-label="Word learning choices"
+            >
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                 <Button
                   onClick={() => handleWordAction("needs_practice")}
