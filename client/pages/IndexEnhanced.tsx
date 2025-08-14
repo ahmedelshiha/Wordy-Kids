@@ -823,7 +823,7 @@ export default function IndexEnhanced() {
 
       {/* Settings Panel */}
       {showSettings && (
-        <EnhancedMobileSettingsPanel
+        <CompactMobileSettingsPanel
           isOpen={showSettings}
           onClose={() => setShowSettings(false)}
         />
