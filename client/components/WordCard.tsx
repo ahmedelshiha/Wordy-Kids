@@ -27,6 +27,7 @@ import { adventureService } from "@/lib/adventureService";
 import { WordAdventureStatus } from "@shared/adventure";
 import { AchievementTracker } from "@/lib/achievementTracker";
 import { EnhancedAchievementPopup } from "@/components/EnhancedAchievementPopup";
+import { useVoiceSettings } from "@/hooks/use-voice-settings";
 
 interface Word {
   id: number;
