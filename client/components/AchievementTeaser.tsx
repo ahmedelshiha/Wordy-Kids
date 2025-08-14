@@ -93,14 +93,24 @@ export function AchievementTeaser({ className }: AchievementTeaserProps) {
       {showTeaser && (
         <motion.div
           initial={{ opacity: 0, y: -10, scale: 0.95 }}
-          animate={{ opacity: 1, y: 0, scale: 1 }}
+          animate={{
+            opacity: 1,
+            y: 0,
+            scale: isPressed ? 0.98 : 1
+          }}
           exit={{ opacity: 0, y: -5, scale: 0.98 }}
           transition={{
             type: "spring",
             duration: 0.5,
             damping: 20,
           }}
-          className={className}
+          className={`${className} cursor-pointer select-none`}
+          onTouchStart={handleTouchStart}
+          onTouchEnd={handleTouchEnd}
+          onMouseDown={handleTouchStart}
+          onMouseUp={handleTouchEnd}
+          onMouseLeave={() => setIsPressed(false)}
+          whileTap={{ scale: 0.98 }}
         >
           <Card
             className={`border-0 shadow-sm transition-all duration-500 hover:shadow-md rounded-xl sm:rounded-2xl backdrop-blur-sm ${
