@@ -371,13 +371,14 @@ export const EnhancedSettingsPanel: React.FC<EnhancedSettingsPanelProps> = ({
                           <p className="text-sm text-slate-600">Play sounds for interactions and feedback</p>
                         </div>
                       </div>
-                      <Switch 
-                        checked={soundOn} 
+                      <Switch
+                        className="settings-switch-mobile"
+                        checked={soundOn}
                         onCheckedChange={(checked) => {
                           setSoundOn(checked);
                           setSoundEnabled(checked);
                           setHasUnsavedChanges(true);
-                        }} 
+                        }}
                       />
                     </div>
                   </Card>
