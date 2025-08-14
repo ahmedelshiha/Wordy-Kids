@@ -36,6 +36,7 @@ const App = () => (
           <Route path="/profile" element={<Login />} />
           <Route path="/admin" element={<AdminPage />} />
           <Route path="/word-card-demo" element={<EnhancedWordCardDemo />} />
+          <Route path="/word-garden-demo" element={<WordGardenDemo />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
