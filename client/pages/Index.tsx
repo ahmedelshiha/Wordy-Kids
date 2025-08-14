@@ -35,6 +35,7 @@ import { MobileBottomNav } from "@/components/MobileBottomNav";
 import { adventureService } from "@/lib/adventureService";
 import { useWordLearningSession } from "@/contexts/WordLearningSessionContext";
 import { SessionRestorationNotification, DetailedSessionRestorationModal } from "@/components/SessionRestorationNotification";
+import { SessionProgressIndicator, CompactSessionIndicator, SessionWarning } from "@/components/SessionProgressIndicator";
 import {
   wordsDatabase,
   getWordsByCategory,
@@ -2815,6 +2816,11 @@ export default function Index({ initialProfile }: IndexProps) {
           }}
         />
       )}
+
+      {/* Session Progress Indicators */}
+      <SessionProgressIndicator />
+      <CompactSessionIndicator />
+      <SessionWarning />
 
       {/* Enhanced Achievement Popup */}
       {achievementPopup.length > 0 && (
