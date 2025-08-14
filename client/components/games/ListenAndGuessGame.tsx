@@ -579,6 +579,81 @@ export default function ListenAndGuessGame({
           </div>
         )}
 
+        {/* Game Completion Popup */}
+        {showCompletionPopup && (
+          <div className="absolute inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50">
+            <div className="bg-gradient-to-br from-green-500 via-blue-500 to-purple-600 p-8 rounded-3xl shadow-2xl border-4 border-white/30 max-w-sm mx-4 text-center text-white achievement-glow">
+              <div className="flex justify-center mb-4">
+                <div className="relative">
+                  <div className="text-6xl animate-bounce">🎉</div>
+                  <Sparkles className="w-8 h-8 absolute -top-2 -right-2 text-yellow-300 animate-spin" />
+                  <Star className="w-6 h-6 absolute -bottom-1 -left-2 text-pink-300 animate-pulse" />
+                </div>
+              </div>
+
+              <h2 className="text-2xl font-bold mb-3">🏆 Amazing Work!</h2>
+              <p className="text-lg mb-4">
+                You completed {correctCount}/{sequence.length} questions!
+              </p>
+
+              <div className="grid grid-cols-2 gap-3 mb-6 text-sm">
+                <div className="bg-white/20 rounded-lg p-3">
+                  <div className="text-2xl font-bold">{correctCount}</div>
+                  <div className="opacity-90">Correct</div>
+                </div>
+                <div className="bg-white/20 rounded-lg p-3">
+                  <div className="text-2xl font-bold">{bestStreak}</div>
+                  <div className="opacity-90">Best Streak</div>
+                </div>
+              </div>
+
+              {achievementUnlocked && (
+                <div className="bg-yellow-500/30 border-2 border-yellow-300 rounded-xl p-3 mb-4">
+                  <div className="flex items-center justify-center gap-2">
+                    <Crown className="w-5 h-5" />
+                    <span className="font-bold text-sm">New Achievement!</span>
+                  </div>
+                  <div className="text-xs mt-1 opacity-90">{achievementUnlocked}</div>
+                </div>
+              )}
+
+              <div className="space-y-3">
+                <button
+                  onClick={() => {
+                    // Reset game state for restart
+                    setRoundIdx(0);
+                    setCorrectCount(0);
+                    setWrongCount(0);
+                    setCoins(0);
+                    setStreak(0);
+                    setShowCompletionPopup(false);
+                    setShowSparkleExplosion(false);
+                    setAchievementUnlocked(null);
+                    setSparkleCount(0);
+                    setIsRestarting(prev => !prev); // Trigger regeneration
+                  }}
+                  className="w-full bg-white/20 hover:bg-white/30 text-white font-bold py-3 px-6 rounded-xl transition-all duration-200 active:scale-95 flex items-center justify-center gap-2"
+                >
+                  <Sparkles className="w-5 h-5" />
+                  Play Again with New Words!
+                </button>
+
+                {onExit && (
+                  <button
+                    onClick={() => {
+                      setShowCompletionPopup(false);
+                      onExit();
+                    }}
+                    className="w-full bg-white/10 hover:bg-white/20 text-white font-semibold py-2 px-6 rounded-xl transition-all duration-200"
+                  >
+                    Exit Game
+                  </button>
+                )}
+              </div>
+            </div>
+          </div>
+        )}
+
         {/* Top bar: progress + round */}
         <div className="mb-3">
           <div className="flex items-center justify-between text-sm opacity-90">
