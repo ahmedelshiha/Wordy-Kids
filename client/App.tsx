@@ -19,6 +19,7 @@ import {
   CompactWordDatabaseNotifications,
 } from "./components/WordDatabaseNotifications";
 import { WordAdventureDemo } from "./pages/WordAdventureDemo";
+import { WordAdventureTest } from "./pages/WordAdventureTest";
 
 const queryClient = new QueryClient();
 
