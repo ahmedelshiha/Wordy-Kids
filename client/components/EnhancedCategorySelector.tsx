@@ -471,9 +471,7 @@ export function EnhancedCategorySelector({
       sports: "Exercise makes your heart stronger!",
       greetings: "Saying hello makes people feel welcome!",
       technology: "The first computer filled an entire room!",
-      "at-the-zoo": "Zoos help protect endangered animals!",
       "at-the-clothes-shop": "There are over 1,800 types of fabric!",
-      "my-favourite-food": "Your taste buds can detect 5 different flavors!",
       "at-home": "Home is where memories are made!",
       default: "Words are magical!",
     };
