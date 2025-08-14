@@ -3943,50 +3943,69 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
         <TabsContent value="reports">{renderDetailedReports()}</TabsContent>
       </Tabs>
 
-      {/* Add Child Dialog */}
+      {/* Add Child Dialog - Compact Mobile Version */}
       <Dialog open={showAddChildDialog} onOpenChange={setShowAddChildDialog}>
-        <DialogContent>
-          <DialogHeader>
-            <DialogTitle>Add New Child Profile</DialogTitle>
-            <DialogDescription>
-              Create a learning profile for your child
+        <DialogContent className="sm:max-w-md max-w-[90vw] p-4 sm:p-6 gap-3 sm:gap-4">
+          <DialogHeader className="pb-2">
+            <DialogTitle className="text-lg sm:text-xl">Add Child</DialogTitle>
+            <DialogDescription className="text-sm hidden sm:block">
+              Create a learning profile
             </DialogDescription>
           </DialogHeader>
-          <div className="space-y-4">
-            <div>
-              <Label htmlFor="childName">Name</Label>
+          <div className="space-y-3 sm:space-y-4">
+            <div className="space-y-1 sm:space-y-2">
+              <Label htmlFor="childName" className="text-sm font-medium">
+                Name
+              </Label>
               <Input
                 id="childName"
                 value={newChildData.name}
                 onChange={(e) =>
                   setNewChildData((prev) => ({ ...prev, name: e.target.value }))
                 }
-                placeholder="Enter child's name"
+                placeholder="Child's name"
+                className="h-10 text-base sm:text-sm"
+                autoComplete="given-name"
               />
             </div>
-            <div>
-              <Label htmlFor="childAge">Age</Label>
-              <Select
-                value={newChildData.age.toString()}
-                onValueChange={(value) =>
-                  setNewChildData((prev) => ({ ...prev, age: parseInt(value) }))
-                }
-              >
-                <SelectTrigger>
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  {[4, 5, 6, 7, 8, 9, 10, 11, 12].map((age) => (
-                    <SelectItem key={age} value={age.toString()}>
-                      {age} years old
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
+            <div className="grid grid-cols-2 gap-3">
+              <div className="space-y-1 sm:space-y-2">
+                <Label htmlFor="childAge" className="text-sm font-medium">
+                  Age
+                </Label>
+                <Select
+                  value={newChildData.age.toString()}
+                  onValueChange={(value) =>
+                    setNewChildData((prev) => ({
+                      ...prev,
+                      age: parseInt(value),
+                    }))
+                  }
+                >
+                  <SelectTrigger className="h-10">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {[4, 5, 6, 7, 8, 9, 10, 11, 12].map((age) => (
+                      <SelectItem key={age} value={age.toString()}>
+                        {age} years
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+              <div className="space-y-1 sm:space-y-2">
+                <Label className="text-sm font-medium">Avatar</Label>
+                <div className="flex items-center justify-center h-10 bg-gray-50 rounded-md border">
+                  <span className="text-2xl">{newChildData.avatar}</span>
+                </div>
+              </div>
             </div>
             <div>
-              <Label htmlFor="avatar">Avatar</Label>
-              <div className="flex gap-2 mt-2">
+              <Label className="text-sm font-medium mb-2 block">
+                Choose Avatar
+              </Label>
+              <div className="grid grid-cols-5 sm:grid-cols-9 gap-1 sm:gap-2">
                 {["👦", "👧", "🧒", "👶", "🦸‍♂️", "🦸‍♀️", "🧑‍🎓", "👨‍🎓", "👩‍🎓"].map(
                   (emoji) => (
                     <Button
@@ -3998,6 +4017,7 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
                       onClick={() =>
                         setNewChildData((prev) => ({ ...prev, avatar: emoji }))
                       }
+                      className="h-8 w-8 sm:h-10 sm:w-10 p-0 text-base sm:text-lg"
                     >
                       {emoji}
                     </Button>
@@ -4006,10 +4026,11 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
               </div>
             </div>
           </div>
-          <DialogFooter>
+          <DialogFooter className="flex-col sm:flex-row gap-2 sm:gap-0 pt-2">
             <Button
               variant="outline"
               onClick={() => setShowAddChildDialog(false)}
+              className="w-full sm:w-auto order-2 sm:order-1 h-10"
             >
               Cancel
             </Button>
@@ -4056,7 +4077,7 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
                   });
                 }
               }}
-              className="bg-educational-blue"
+              className="bg-educational-blue w-full sm:w-auto order-1 sm:order-2 h-10"
               disabled={!newChildData.name.trim()}
             >
               Create Profile

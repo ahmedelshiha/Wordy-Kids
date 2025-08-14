@@ -124,10 +124,10 @@ export default function SignUp() {
     }
 
     // Enhanced password validation
-    if (formData.password.length < 8) {
+    if (formData.password.length < 6) {
       setMessage({
         type: "error",
-        text: "Password must be at least 8 characters for account security",
+        text: "Password must be at least 6 characters for account security",
       });
       setIsLoading(false);
       return;
@@ -448,7 +448,7 @@ export default function SignUp() {
                     id="password"
                     name="password"
                     type={showPassword ? "text" : "password"}
-                    placeholder="Create password (min 8 chars, mixed case + numbers)"
+                    placeholder="Create password (min 6 chars, mixed case + numbers)"
                     autoComplete="new-password"
                     value={formData.password}
                     onChange={handleInputChange}
