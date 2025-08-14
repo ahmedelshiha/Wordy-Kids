@@ -149,7 +149,9 @@ function generateEmojiImage(emoji: string, fallbackText?: string): string {
         <text x="100" y="120" font-size="80" text-anchor="middle" font-family="Arial, sans-serif">${emoji}</text>
       </svg>
     `;
-    return `data:image/svg+xml;base64,${btoa(svg)}`;
+
+    // Use URL encoding instead of base64 to avoid Unicode issues
+    return `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`;
   }
 
   // Fallback to placeholder if no emoji
