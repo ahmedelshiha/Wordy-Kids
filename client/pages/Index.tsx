@@ -459,7 +459,9 @@ export default function Index({ initialProfile }: IndexProps) {
           console.log("Found newer session data from another tab");
 
           // Session updated silently in background - no popup message
-          console.log("Session updated from another tab - progress synced silently");
+          console.log(
+            "Session updated from another tab - progress synced silently",
+          );
 
           // Update current state with latest data (selective update to avoid disruption)
           if (latestSession.currentProgress) {
@@ -518,7 +520,9 @@ export default function Index({ initialProfile }: IndexProps) {
             setLastAutoSave(updatedData.lastSaved);
 
             // Progress synced silently in background - no popup message
-            console.log("Progress synced from another device - updated silently");
+            console.log(
+              "Progress synced from another device - updated silently",
+            );
           }
         } catch (error) {
           console.error("Failed to parse updated session data:", error);
