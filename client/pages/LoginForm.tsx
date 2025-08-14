@@ -295,7 +295,7 @@ export default function LoginForm() {
           ⭐
         </div>
         <div className="absolute top-20 right-16 text-3xl animate-gentle-float animation-delay-200">
-          📚
+          ���
         </div>
         <div className="absolute bottom-20 left-16 text-4xl animate-gentle-float animation-delay-100">
           🎯
@@ -322,22 +322,22 @@ export default function LoginForm() {
         <div className="text-center mb-4 sm:mb-6 animate-fade-in">
           <div className="flex justify-center mb-3 sm:mb-4">
             <div className="relative">
-              <div className="bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 p-3 sm:p-4 md:p-6 rounded-full shadow-2xl animate-gentle-float">
+              <div className="bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 p-2 sm:p-3 md:p-4 rounded-full shadow-lg sm:shadow-2xl animate-gentle-float">
                 <img
                   src="https://cdn.builder.io/api/v1/image/assets%2F783bb0e1cd3e4c73aa9ce79d668738ac%2Fee8d2c4de0ab40c1b0b38ee3c2ef1020?format=webp&width=800"
                   alt="Wordy Logo"
-                  className="w-12 h-12 sm:w-16 sm:h-16 object-contain"
+                  className="w-10 h-10 sm:w-12 sm:h-12 md:w-16 md:h-16 object-contain"
                 />
               </div>
-              <div className="absolute -top-1 -right-1 bg-yellow-400 p-2 rounded-full animate-bounce">
-                <Sparkles className="w-4 h-4 text-white" />
+              <div className="absolute -top-1 -right-1 bg-yellow-400 p-1 sm:p-2 rounded-full animate-bounce">
+                <Sparkles className="w-3 h-3 sm:w-4 sm:h-4 text-white" />
               </div>
             </div>
           </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent mb-2">
+          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent mb-1">
             Wordy Adventure !
           </h1>
-          <p className="text-gray-600 text-base sm:text-lg">Continue your word adventure</p>
+          <p className="text-gray-600 text-sm sm:text-base">Continue your word adventure</p>
         </div>
 
         {/* Enhanced Login Card */}
