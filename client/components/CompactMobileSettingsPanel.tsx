@@ -294,7 +294,7 @@ export const CompactMobileSettingsPanel: React.FC<
   return (
     <div className="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-end justify-center z-50 p-1">
       <Card className="w-full max-w-sm mx-1 mb-1 max-h-[88vh] overflow-hidden animate-mobile-slide-in shadow-xl rounded-t-3xl flex flex-col">
-        <CardHeader className="pb-2 bg-gradient-to-r from-educational-blue to-educational-purple text-white rounded-t-2xl">
+        <CardHeader className="pb-2 bg-gradient-to-r from-educational-blue to-educational-purple text-white rounded-t-3xl">
           <div className="flex items-center justify-between">
             <CardTitle className="flex items-center gap-2">
               <Settings className="w-4 h-4" />
