@@ -120,14 +120,15 @@ function generatePlaceholderImage(text: string): string {
 }
 
 // Convert existing Word to WordItem format with placeholder images
-function convertToWordItem(word: Word): WordItem {
-  // Create placeholder distractor images based on different categories
-  const distractorCategories = ["food", "animals", "objects", "nature", "colors"];
-  const otherCategories = distractorCategories.filter(cat => cat !== word.category);
-  
-  const distractorImages = otherCategories.slice(0, 3).map(cat => 
-    generatePlaceholderImage(`${cat}-item`)
-  );
+function convertToWordItem(word: Word, allWords: Word[]): WordItem {
+  // Create distractor images from other words in different categories
+  const distractorWords = allWords
+    .filter(w => w.category !== word.category && w.id !== word.id)
+    .slice(0, 3);
+
+  const distractorImages = distractorWords.length >= 3
+    ? distractorWords.map(w => w.imageUrl || generatePlaceholderImage(w.word))
+    : Array.from({ length: 3 }, (_, i) => generatePlaceholderImage(`option-${i + 1}`));
 
   return {
     id: word.id,
