@@ -183,58 +183,59 @@ function generateEmojiImage(emoji: string, fallbackText?: string): string {
   return `https://via.placeholder.com/250x250/4ade80/ffffff?text=${encodeURIComponent(fallbackText || "Word")}`;
 }
 
-// Convert existing Word to WordItem format with emoji images
-function convertToWordItem(word: Word, allWords: Word[]): WordItem {
-  // Create distractor images from other words in different categories
-  const distractorWords = allWords
-    .filter((w) => w.category !== word.category && w.id !== word.id)
-    .slice(0, 3);
+// Enhanced word generation using database words with emojis (same as Listen & Guess)
+const generateDatabaseWords = (
+  count: number,
+  optionsPerRound: number,
+  category?: string,
+  difficulty?: "easy" | "medium" | "hard",
+): WordItem[] => {
+  let dbWords: Word[] = [];
 
-  const distractorImages =
-    distractorWords.length >= 3
-      ? distractorWords.map(
-          (w) => w.imageUrl || generateEmojiImage(w.emoji, w.word),
-        )
-      : Array.from({ length: 3 }, (_, i) => {
-          // Get random words for fallback distractors
-          const fallbackWords = allWords
-            .filter((fw) => fw.id !== word.id)
-            .slice(i * 2, i * 2 + 1);
-          const fallbackWord = fallbackWords[0];
-          return fallbackWord
-            ? generateEmojiImage(fallbackWord.emoji, fallbackWord.word)
-            : generateEmojiImage("❓", `Option ${i + 1}`);
-        });
-
-  return {
-    id: word.id,
-    word: word.word,
-    imageUrl: word.imageUrl || generateEmojiImage(word.emoji, word.word),
-    distractorImages,
-    audioUrl: undefined, // Will use Web Speech API
-    category: word.category,
-  };
-}
-
-// Fetch words function adapted to existing word database
-const fetchWords = async (params: FetchParams): Promise<WordItem[]> => {
-  // Use existing word database functions
-  let words: Word[];
-
-  // Get a larger pool for better distractor selection
-  const allWords = getRandomWords(params.limit * 4);
-
-  if (params.difficulty) {
-    // Get words by difficulty and category
-    words = allWords
-      .filter((w) => w.difficulty === params.difficulty)
-      .slice(0, params.limit);
+  if (category && category !== "all") {
+    dbWords = getWordsByCategory(category);
   } else {
-    words = allWords.slice(0, params.limit);
+    dbWords = getRandomWords(count * 3); // Get more words to have options
   }
 
-  // Convert to WordItem format with access to all words for distractors
-  return words.map((word) => convertToWordItem(word, allWords));
+  if (difficulty) {
+    dbWords = dbWords.filter((w) => w.difficulty === difficulty);
+  }
+
+  // Convert database words to WordItem format using emojis (same as Listen & Guess)
+  return dbWords.slice(0, count).map((word) => ({
+    id: word.id,
+    word: word.word,
+    imageUrl: generateEmojiImage(word.emoji, word.word), // Generate large SVG emoji for better garden visuals
+    distractorImages: generateDistractorEmojis(word, dbWords, optionsPerRound),
+    category: word.category,
+    difficulty: word.difficulty,
+  }));
+};
+
+// Generate distractor emojis from the same category or similar words (same as Listen & Guess)
+const generateDistractorEmojis = (
+  targetWord: Word,
+  allWords: Word[],
+  optionsPerRound: number
+): string[] => {
+  const sameCategory = allWords.filter(
+    (w) => w.category === targetWord.category && w.id !== targetWord.id,
+  );
+
+  const otherWords = allWords.filter((w) => w.id !== targetWord.id);
+  const distractors = sameCategory.length >= 3 ? sameCategory : otherWords;
+
+  return shuffle(distractors)
+    .slice(0, optionsPerRound - 1)
+    .map((w) => generateEmojiImage(w.emoji, w.word)); // Generate large SVG emojis for better garden visuals
+};
+
+// Fetch words function using the same logic as Listen & Guess
+const fetchWords = async (params: FetchParams & { optionsPerRound: number }): Promise<WordItem[]> => {
+  // Use database-based word generation with emojis (same approach as Listen & Guess)
+  const difficultyLevel = params.difficulty || "easy";
+  return generateDatabaseWords(params.limit, params.optionsPerRound, undefined, difficultyLevel);
 };
 
 // Green-themed Garden Achievement Component
@@ -748,7 +749,7 @@ export default function WordGardenGame({
         {/* Mascot + Play */}
         <div className="flex items-center justify-between gap-3 mb-4">
           <div className="flex items-center gap-2">
-            <span className="text-4xl">🦋</span>
+            <span className="text-4xl">���</span>
             <div className="leading-tight">
               <div className="text-xs uppercase tracking-wide opacity-90">
                 Word Garden
