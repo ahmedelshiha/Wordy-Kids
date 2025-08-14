@@ -12,14 +12,18 @@ import {
   LogOut,
   Sword,
   Shield,
+  ArrowLeft,
+  Home,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface MobileBottomNavProps {
   activeTab: string;
+  userRole: "child" | "parent";
   onTabChange: (tab: string) => void;
   onSettingsClick: () => void;
   onParentClick: () => void;
+  onBackToChild?: () => void;
   onAdminClick: () => void;
   onSignOut: () => void;
   showMoreMenu: boolean;
@@ -29,88 +33,162 @@ interface MobileBottomNavProps {
 
 export function MobileBottomNav({
   activeTab,
+  userRole,
   onTabChange,
   onSettingsClick,
   onParentClick,
+  onBackToChild,
   onAdminClick,
   onSignOut,
   showMoreMenu,
   onMoreToggle,
   achievementCount = 0,
 }: MobileBottomNavProps) {
-  const primaryTabs = [
-    {
-      id: "dashboard",
-      emoji: "🏠",
-      label: "Home",
-      icon: Target,
-      color: "from-purple-500 to-pink-500",
-      bgColor: "bg-purple-100",
-      textColor: "text-purple-600",
-      badge: undefined,
-    },
-    {
-      id: "learn",
-      emoji: "📚",
-      label: "Learn",
-      icon: BookOpen,
-      color: "from-green-500 to-emerald-500",
-      bgColor: "bg-green-100",
-      textColor: "text-green-600",
-      badge: undefined,
-    },
-    {
-      id: "quiz",
-      emoji: "🎮",
-      label: "Quiz",
-      icon: Brain,
-      color: "from-pink-500 to-rose-500",
-      bgColor: "bg-pink-100",
-      textColor: "text-pink-600",
-      badge: undefined,
-    },
-    {
-      id: "progress",
-      emoji: "🌟",
-      label: "My Journey",
-      icon: Trophy,
-      color: "from-yellow-500 to-orange-500",
-      bgColor: "bg-yellow-100",
-      textColor: "text-yellow-600",
-      badge: undefined,
-    },
-  ];
+  // Different tabs based on user role
+  const primaryTabs =
+    userRole === "parent"
+      ? [
+          {
+            id: "back-to-child",
+            emoji: "🎯",
+            label: "Back to Learning",
+            icon: ArrowLeft,
+            color: "from-educational-blue to-educational-purple",
+            bgColor: "bg-gradient-to-r from-blue-100 to-purple-100",
+            textColor: "text-blue-700 font-semibold",
+            badge: undefined,
+            action: onBackToChild,
+          },
+          {
+            id: "parent-home",
+            emoji: "👨‍👩‍👧‍👦",
+            label: "Parent Dashboard",
+            icon: Users,
+            color: "from-purple-500 to-pink-500",
+            bgColor: "bg-purple-100",
+            textColor: "text-purple-600",
+            badge: undefined,
+            action: () => {}, // Already in parent mode
+          },
+        ]
+      : [
+          {
+            id: "dashboard",
+            emoji: "🏠",
+            label: "Home",
+            icon: Target,
+            color: "from-purple-500 to-pink-500",
+            bgColor: "bg-purple-100",
+            textColor: "text-purple-600",
+            badge: undefined,
+          },
+          {
+            id: "learn",
+            emoji: "📚",
+            label: "Learn",
+            icon: BookOpen,
+            color: "from-green-500 to-emerald-500",
+            bgColor: "bg-green-100",
+            textColor: "text-green-600",
+            badge: undefined,
+          },
+          {
+            id: "quiz",
+            emoji: "🎮",
+            label: "Quiz",
+            icon: Brain,
+            color: "from-pink-500 to-rose-500",
+            bgColor: "bg-pink-100",
+            textColor: "text-pink-600",
+            badge: undefined,
+          },
+          {
+            id: "progress",
+            emoji: "🌟",
+            label: "My Journey",
+            icon: Trophy,
+            color: "from-yellow-500 to-orange-500",
+            bgColor: "bg-yellow-100",
+            textColor: "text-yellow-600",
+            badge: undefined,
+          },
+        ];
 
-  const secondaryMenuItems = [
-    {
-      id: "parent",
-      emoji: "👨‍👩‍👧‍👦",
-      label: "Parent Zone",
-      icon: Users,
-      onClick: onParentClick,
-    },
-    {
-      id: "admin",
-      emoji: "🛡️",
-      label: "Admin",
-      icon: Shield,
-      onClick: onAdminClick,
-    },
-    {
-      id: "settings",
-      emoji: "⚙️",
-      label: "Settings",
-      icon: Settings,
-      onClick: onSettingsClick,
-    },
-    {
-      id: "signout",
-      emoji: "👋",
-      label: "Sign Out",
-      icon: LogOut,
-      onClick: onSignOut,
-    },
-  ];
+  const secondaryMenuItems =
+    userRole === "parent"
+      ? [
+          {
+            id: "back-to-learning",
+            emoji: "👦",
+            label: "Back to Learning",
+            icon: ArrowLeft,
+            onClick: onBackToChild || (() => {}),
+          },
+          {
+            id: "child-dashboard",
+            emoji: "🏠",
+            label: "Child Dashboard",
+            icon: Home,
+            onClick: () => {
+              onBackToChild?.();
+              onTabChange("dashboard");
+            },
+          },
+          {
+            id: "child-learning",
+            emoji: "📚",
+            label: "Word Library",
+            icon: BookOpen,
+            onClick: () => {
+              onBackToChild?.();
+              onTabChange("learn");
+            },
+          },
+          {
+            id: "settings",
+            emoji: "⚙️",
+            label: "Settings",
+            icon: Settings,
+            onClick: onSettingsClick,
+          },
+          {
+            id: "signout",
+            emoji: "👋",
+            label: "Sign Out",
+            icon: LogOut,
+            onClick: onSignOut,
+          },
+        ]
+      : [
+          {
+            id: "parent",
+            emoji: "👨‍👩‍👧‍👦",
+            label: "Parent Zone",
+            icon: Users,
+            onClick: onParentClick,
+          },
+          {
+            id: "admin",
+            emoji: "🛡️",
+            label: "Admin",
+            icon: Shield,
+            onClick: onAdminClick,
+          },
+          {
+            id: "settings",
+            emoji: "⚙️",
+            label: "Settings",
+            icon: Settings,
+            onClick: onSettingsClick,
+          },
+          {
+            id: "signout",
+            emoji: "👋",
+            label: "Sign Out",
+            icon: LogOut,
+            onClick: onSignOut,
+          },
+        ];
 
   return (
     <>
@@ -123,11 +201,19 @@ export function MobileBottomNav({
           />
           <div className="absolute bottom-20 left-3 right-3 bg-white rounded-3xl shadow-2xl p-4 border-4 border-rainbow max-h-[70vh] overflow-y-auto">
             <div className="text-center mb-4">
-              <div className="text-2xl mb-2">🎪</div>
+              <div className="text-2xl mb-2">
+                {userRole === "parent" ? "👨‍👩‍👧‍👦" : "🎪"}
+              </div>
               <h3 className="text-lg font-bold text-gray-800">
-                More Fun Stuff!
+                {userRole === "parent"
+                  ? "Parent Navigation"
+                  : "More Fun Stuff!"}
               </h3>
-              <p className="text-sm text-gray-600">Tap what you want to do!</p>
+              <p className="text-sm text-gray-600">
+                {userRole === "parent"
+                  ? "Navigate back to child learning areas"
+                  : "Tap what you want to do!"}
+              </p>
             </div>
 
             <div className="grid grid-cols-2 gap-2">
@@ -166,12 +252,23 @@ export function MobileBottomNav({
             {primaryTabs.map((tab) => (
               <button
                 key={tab.id}
-                onClick={() => onTabChange(tab.id)}
+                onClick={() => {
+                  if (tab.action) {
+                    tab.action();
+                  } else {
+                    onTabChange(tab.id);
+                  }
+                }}
                 className={cn(
                   "flex flex-col items-center gap-1 p-2 rounded-xl transition-all duration-200 transform active:scale-95 relative min-w-0 flex-1 mx-0.5 min-h-[60px] justify-center",
-                  activeTab === tab.id
+                  activeTab === tab.id ||
+                    (userRole === "parent" && tab.id === "parent-home")
                     ? `bg-gradient-to-br ${tab.color} text-white shadow-lg`
                     : `${tab.bgColor} ${tab.textColor}`,
+                  // Add subtle pulse animation for back to learning button in parent mode
+                  userRole === "parent" && tab.id === "back-to-child"
+                    ? "animate-pulse"
+                    : "",
                 )}
               >
                 {/* Emoji Icon */}

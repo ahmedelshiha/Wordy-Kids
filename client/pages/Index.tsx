@@ -33,6 +33,24 @@ import { WordCreator } from "@/components/WordCreator";
 import { AdventureDashboard } from "@/components/AdventureDashboard";
 import { MobileBottomNav } from "@/components/MobileBottomNav";
 import { adventureService } from "@/lib/adventureService";
+import { useWordLearningSession } from "@/contexts/WordLearningSessionContext";
+import {
+  SessionRestorationNotification,
+  DetailedSessionRestorationModal,
+} from "@/components/SessionRestorationNotification";
+import {
+  SessionProgressIndicator,
+  CompactSessionIndicator,
+  SessionWarning,
+} from "@/components/SessionProgressIndicator";
+import {
+  FloatingParentAccess,
+  CompactParentAccess,
+} from "@/components/FloatingParentAccess";
+import {
+  EnhancedBreadcrumb,
+  CompactBreadcrumb,
+} from "@/components/EnhancedBreadcrumb";
 import {
   wordsDatabase,
   getWordsByCategory,
@@ -148,6 +166,19 @@ export default function Index({ initialProfile }: IndexProps) {
     new Set(),
   );
   const [currentDashboardWords, setCurrentDashboardWords] = useState<any[]>([]);
+  const [lastActiveTab, setLastActiveTab] = useState("dashboard");
+
+  // Session persistence
+  const {
+    sessionData,
+    saveProgress,
+    restoreProgress,
+    saveLearningState,
+    saveQuizState,
+    saveUserProfile,
+  } = useWordLearningSession();
+  const [showSessionRestoration, setShowSessionRestoration] = useState(false);
+  const [sessionRestored, setSessionRestored] = useState(false);
 
   // Enhanced word selection states
   const [userWordHistory, setUserWordHistory] = useState<
@@ -186,10 +217,57 @@ export default function Index({ initialProfile }: IndexProps) {
     initializeWords();
   }, [selectedCategory]); // Only re-initialize when category changes to prevent constant regeneration
 
+  // Session restoration effect
+  useEffect(() => {
+    const hasStoredProgress =
+      sessionData.rememberedWords.length > 0 ||
+      sessionData.forgottenWords.length > 0 ||
+      sessionData.selectedCategory !== "" ||
+      sessionData.currentWordIndex > 0;
+
+    if (hasStoredProgress && !sessionRestored) {
+      setShowSessionRestoration(true);
+    }
+  }, [sessionData, sessionRestored]);
+
+  // Restore session data
+  const handleSessionRestore = () => {
+    const progress = restoreProgress();
+    setRememberedWords(progress.rememberedWords);
+    setForgottenWords(progress.forgottenWords);
+    setCurrentWordIndex(progress.currentWordIndex);
+
+    if (sessionData.selectedCategory) {
+      setSelectedCategory(sessionData.selectedCategory);
+    }
+    if (sessionData.activeTab) {
+      setActiveTab(sessionData.activeTab);
+    }
+    if (sessionData.learningMode) {
+      setLearningMode(sessionData.learningMode);
+    }
+    if (sessionData.currentDashboardWords?.length > 0) {
+      setCurrentDashboardWords(sessionData.currentDashboardWords);
+    }
+    if (sessionData.showQuiz) {
+      setShowQuiz(sessionData.showQuiz);
+      setSelectedQuizType(sessionData.selectedQuizType);
+    }
+    if (sessionData.gameMode) {
+      setGameMode(sessionData.gameMode);
+    }
+
+    setSessionRestored(true);
+    setShowSessionRestoration(false);
+  };
+
   // Initialize dashboard words for systematic learning (independent of category selection)
   useEffect(() => {
     const initializeDashboardWords = () => {
-      if (currentDashboardWords.length === 0) {
+      if (
+        currentDashboardWords.length === 0 &&
+        !sessionData.currentDashboardWords?.length
+      ) {
         try {
           generateDashboardWords();
         } catch (error) {
@@ -204,9 +282,11 @@ export default function Index({ initialProfile }: IndexProps) {
       }
     };
 
-    // Initialize dashboard words on component mount
-    initializeDashboardWords();
-  }, []); // Run only once on mount
+    // Initialize dashboard words on component mount if no session data
+    if (!sessionRestored) {
+      initializeDashboardWords();
+    }
+  }, [sessionRestored]); // Run based on session restoration status
 
   // Regenerate dashboard words when user completes enough words to progress
   useEffect(() => {
@@ -221,6 +301,79 @@ export default function Index({ initialProfile }: IndexProps) {
     }
   }, [rememberedWords.size]); // Trigger when remembered words count changes
 
+  // Auto-save progress changes
+  useEffect(() => {
+    if (sessionRestored) {
+      saveProgress({
+        rememberedWords,
+        forgottenWords,
+        currentWordIndex,
+      });
+    }
+  }, [
+    rememberedWords,
+    forgottenWords,
+    currentWordIndex,
+    sessionRestored,
+    saveProgress,
+  ]);
+
+  // Track active tab changes
+  useEffect(() => {
+    if (activeTab !== "parent" && userRole === "child") {
+      setLastActiveTab(activeTab);
+    }
+  }, [activeTab, userRole]);
+
+  // Listen for navigation events from Parent Dashboard
+  useEffect(() => {
+    const handleNavigateToTab = (event: CustomEvent) => {
+      if (event.detail && event.detail.tab) {
+        setActiveTab(event.detail.tab);
+      }
+    };
+
+    window.addEventListener(
+      "navigateToTab",
+      handleNavigateToTab as EventListener,
+    );
+    return () =>
+      window.removeEventListener(
+        "navigateToTab",
+        handleNavigateToTab as EventListener,
+      );
+  }, []);
+
+  // Auto-save learning state changes
+  useEffect(() => {
+    if (sessionRestored) {
+      saveLearningState({
+        activeTab,
+        selectedCategory,
+        learningMode,
+        currentDashboardWords,
+      });
+    }
+  }, [
+    activeTab,
+    selectedCategory,
+    learningMode,
+    currentDashboardWords,
+    sessionRestored,
+    saveLearningState,
+  ]);
+
+  // Auto-save quiz state changes
+  useEffect(() => {
+    if (sessionRestored) {
+      saveQuizState({
+        showQuiz,
+        selectedQuizType,
+        gameMode,
+      });
+    }
+  }, [showQuiz, selectedQuizType, gameMode, sessionRestored, saveQuizState]);
+
   // Debug logging for state changes
   useEffect(() => {
     console.log("State Update:", {
@@ -229,12 +382,14 @@ export default function Index({ initialProfile }: IndexProps) {
       currentDashboardWordsLength: currentDashboardWords.length,
       learningStatsWeeklyProgress: rememberedWords.size,
       childStatsWordsRemembered: childStats?.wordsRemembered,
+      sessionRestored,
     });
   }, [
     rememberedWords.size,
     forgottenWords.size,
     currentDashboardWords.length,
     childStats?.wordsRemembered,
+    sessionRestored,
   ]);
 
   // Dynamic learning stats that reflect actual progress
@@ -322,7 +477,7 @@ export default function Index({ initialProfile }: IndexProps) {
         handleAnimationsChange as EventListener,
       );
     };
-  }, []);
+  }, []); // Removed currentProfile dependency to prevent recreating listeners
 
   // Track navigation history for better back navigation
   useEffect(() => {
@@ -355,7 +510,9 @@ export default function Index({ initialProfile }: IndexProps) {
     };
 
     window.addEventListener("keydown", handleKeyNavigation);
-    return () => window.removeEventListener("keydown", handleKeyNavigation);
+    return () => {
+      window.removeEventListener("keydown", handleKeyNavigation);
+    };
   }, [learningMode]);
 
   // Initialize learning session and load child stats
@@ -704,7 +861,7 @@ export default function Index({ initialProfile }: IndexProps) {
       } else if (accuracy >= 50) {
         achievementTitle = "Category Explorer! 🗺️🌟";
         achievementIcon = "🗺️";
-        achievementMessage = `Good effort! You finished ${categoryDisplayName} with ${accuracy}% accuracy! Practice makes perfect!\n\n🎁 Explorer Bonus: 75 points!\n🎯 Explorer badge earned!`;
+        achievementMessage = `Good effort! You finished ${categoryDisplayName} with ${accuracy}% accuracy! Practice makes perfect!\n\n���� Explorer Bonus: 75 points!\n🎯 Explorer badge earned!`;
       } else {
         achievementTitle = "Category Challenger! 💪";
         achievementIcon = "💪";
@@ -978,7 +1135,10 @@ export default function Index({ initialProfile }: IndexProps) {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 relative overflow-x-hidden">
+    <div
+      key={currentProfile?.id || "default-profile"}
+      className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 relative overflow-x-hidden"
+    >
       {/* Optimized Mobile-First Header */}
       <header className="relative overflow-hidden bg-gradient-to-r from-educational-blue via-educational-purple to-educational-pink text-white">
         <div className="absolute inset-0 bg-black/10"></div>
@@ -1052,6 +1212,37 @@ export default function Index({ initialProfile }: IndexProps) {
           </>
         )}
       </header>
+
+      {/* Enhanced Navigation Breadcrumb */}
+      <EnhancedBreadcrumb
+        currentTab={activeTab}
+        userRole={userRole}
+        selectedCategory={selectedCategory}
+        learningMode={learningMode}
+        onNavigate={setActiveTab}
+        onBackToChild={() => {
+          setUserRole("child");
+          setActiveTab(lastActiveTab || "dashboard");
+          setTimeout(() => {
+            setFeedback({
+              type: "encouragement",
+              title: "Welcome Back! 🎉",
+              message:
+                "You've returned to your learning journey. Keep up the great work!",
+              onContinue: () => setFeedback(null),
+            });
+          }, 500);
+        }}
+      />
+
+      <CompactBreadcrumb
+        currentTab={activeTab}
+        userRole={userRole}
+        onBackToChild={() => {
+          setUserRole("child");
+          setActiveTab(lastActiveTab || "dashboard");
+        }}
+      />
 
       {/* Mobile Menu Overlay */}
       {isMobileMenuOpen && (
@@ -1151,7 +1342,21 @@ export default function Index({ initialProfile }: IndexProps) {
             <ParentDashboard
               children={undefined}
               sessions={undefined}
-              onNavigateBack={() => setUserRole("child")}
+              onNavigateBack={() => {
+                setUserRole("child");
+                // Return to the last active tab, or dashboard if none
+                setActiveTab(lastActiveTab || "dashboard");
+
+                // Show a brief welcome back message
+                setTimeout(() => {
+                  setFeedback({
+                    type: "encouragement",
+                    title: "Welcome Back! 🎉",
+                    message: `You've returned to your learning journey. Keep up the great work!`,
+                    onContinue: () => setFeedback(null),
+                  });
+                }, 500);
+              }}
             />
           </div>
         ) : (
@@ -1282,12 +1487,17 @@ export default function Index({ initialProfile }: IndexProps) {
 
                   <button
                     onClick={() => setUserRole("parent")}
-                    className="w-full flex items-center gap-4 p-4 rounded-2xl transition-all bg-white text-gray-700 hover:bg-blue-50 hover:border-blue-200 border-2 border-transparent"
+                    className="w-full flex items-center gap-4 p-4 rounded-2xl transition-all bg-white text-gray-700 hover:bg-blue-50 hover:border-blue-200 border-2 border-transparent group"
                   >
-                    <div className="p-2 rounded-xl bg-blue-100">
+                    <div className="p-2 rounded-xl bg-blue-100 group-hover:bg-blue-200 transition-colors">
                       <Users className="w-5 h-5 text-blue-600" />
                     </div>
-                    <span className="font-semibold">Parent Dashboard</span>
+                    <div className="text-left">
+                      <div className="font-semibold">Parent Dashboard</div>
+                      <div className="text-xs text-gray-500">
+                        Monitor progress & settings
+                      </div>
+                    </div>
                   </button>
 
                   <button
@@ -2663,6 +2873,7 @@ export default function Index({ initialProfile }: IndexProps) {
       {/* Mobile Bottom Navigation */}
       <MobileBottomNav
         activeTab={activeTab}
+        userRole={userRole}
         onTabChange={(tab) => {
           setActiveTab(tab);
           setShowMobileMoreMenu(false);
@@ -2674,6 +2885,21 @@ export default function Index({ initialProfile }: IndexProps) {
         onParentClick={() => {
           setUserRole("parent");
           setShowMobileMoreMenu(false);
+        }}
+        onBackToChild={() => {
+          setUserRole("child");
+          setActiveTab(lastActiveTab || "dashboard");
+          setShowMobileMoreMenu(false);
+
+          // Show a brief welcome back message
+          setTimeout(() => {
+            setFeedback({
+              type: "encouragement",
+              title: "Welcome Back! 🎉",
+              message: `You've returned to your learning journey. Keep up the great work!`,
+              onContinue: () => setFeedback(null),
+            });
+          }, 500);
         }}
         onAdminClick={() => {
           navigate("/admin");
@@ -2705,6 +2931,35 @@ export default function Index({ initialProfile }: IndexProps) {
           <Heart className="w-5 md:w-6 h-5 md:h-6 text-white fill-current animate-pulse" />
         </div>
       </div>
+
+      {/* Session Restoration Notification */}
+      {showSessionRestoration && (
+        <SessionRestorationNotification
+          onRestore={handleSessionRestore}
+          onDismiss={() => {
+            setShowSessionRestoration(false);
+            setSessionRestored(true);
+          }}
+        />
+      )}
+
+      {/* Session Progress Indicators */}
+      <SessionProgressIndicator />
+      <CompactSessionIndicator />
+      <SessionWarning />
+
+      {/* Floating Parent Access - Only show when in child mode */}
+      {userRole === "child" && (
+        <>
+          <FloatingParentAccess
+            onAccessParentDashboard={() => setUserRole("parent")}
+            currentTab={activeTab}
+          />
+          <CompactParentAccess
+            onAccessParentDashboard={() => setUserRole("parent")}
+          />
+        </>
+      )}
 
       {/* Enhanced Achievement Popup */}
       {achievementPopup.length > 0 && (

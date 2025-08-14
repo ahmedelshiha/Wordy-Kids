@@ -3,6 +3,14 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
+import {
+  EnhancedAddChildProfile,
+  QuickAddChildButton,
+} from "@/components/EnhancedAddChildProfile";
+import {
+  EnhancedChildProfileCard,
+  ChildProfileGrid,
+} from "@/components/EnhancedChildProfileCard";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -68,6 +76,7 @@ import {
   Filter,
   Search,
   ChevronDown,
+  ChevronRight,
   Palette,
   Shield,
   AlertCircle,
@@ -90,6 +99,7 @@ interface ChildProfile {
   weeklyGoal: number;
   weeklyProgress: number;
   favoriteCategory: string;
+  interests?: string[];
   lastActive: Date;
   preferredLearningTime: string;
   difficultyPreference: "easy" | "medium" | "hard";
@@ -695,15 +705,11 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
               <p className="text-gray-600 mb-3 text-xs md:text-sm">
                 Add your first child to start tracking their learning progress
               </p>
-              <Button
+              <QuickAddChildButton
                 onClick={() => setShowAddChildDialog(true)}
-                className="bg-educational-blue text-xs md:text-sm w-full"
-                size="sm"
-              >
-                <UserPlus className="w-3 h-3 md:w-4 md:h-4 mr-1 md:mr-2" />
-                <span className="hidden md:inline">Add Your First Child</span>
-                <span className="md:hidden">Add Child</span>
-              </Button>
+                className="w-full text-xs md:text-sm"
+                variant="default"
+              />
             </CardContent>
           </Card>
         </div>
@@ -2449,7 +2455,7 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
     const emojis: Record<string, string> = {
       improving: "📈",
       stable: "➡️",
-      mastered: "🏆",
+      mastered: "��",
       needs_focus: "🎯",
       challenging: "💪",
     };
@@ -3842,27 +3848,72 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 md:gap-0">
         <div className="flex items-center gap-2 md:gap-4">
           {onNavigateBack && (
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={onNavigateBack}
-              className="flex items-center gap-1 md:gap-2 text-xs md:text-sm px-2 md:px-3"
-            >
-              <ArrowLeft className="w-3 h-3 md:w-4 md:h-4" />
-              <span className="hidden md:inline">Back to Main</span>
-              <span className="md:hidden">Back</span>
-            </Button>
+            <div className="flex items-center gap-2">
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={onNavigateBack}
+                className="flex items-center gap-1 md:gap-2 text-xs md:text-sm px-2 md:px-3 hover:bg-educational-blue hover:text-white transition-colors"
+              >
+                <ArrowLeft className="w-3 h-3 md:w-4 md:h-4" />
+                <span className="hidden md:inline">Back to Learning</span>
+                <span className="md:hidden">Back</span>
+              </Button>
+
+              {/* Breadcrumb */}
+              <div className="hidden md:flex items-center gap-2 text-sm text-slate-500">
+                <span>Wordy's Adventure</span>
+                <ChevronRight className="w-4 h-4" />
+                <span className="font-medium text-slate-700">
+                  Parent Dashboard
+                </span>
+              </div>
+            </div>
           )}
           <div>
             <h1 className="text-xl md:text-3xl font-bold text-slate-800">
               Parent Dashboard
             </h1>
             <p className="text-xs md:text-base text-slate-600 hidden md:block">
-              Comprehensive learning management for your family
+              Monitor your child's learning progress and achievements
             </p>
             <p className="text-xs text-slate-600 md:hidden">
               Manage your family's learning
             </p>
+
+            {/* Quick Navigation - Show available child tabs */}
+            {onNavigateBack && (
+              <div className="flex items-center gap-2 mt-2 flex-wrap">
+                <span className="text-xs text-slate-500">Quick return to:</span>
+                {[
+                  { id: "dashboard", label: "Dashboard", icon: Target },
+                  { id: "learn", label: "Word Library", icon: BookOpen },
+                  { id: "quiz", label: "Quiz", icon: Brain },
+                  { id: "progress", label: "Journey", icon: Trophy },
+                ].map(({ id, label, icon: Icon }) => (
+                  <Button
+                    key={id}
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => {
+                      onNavigateBack();
+                      // This will be handled by the parent component to set the correct tab
+                      setTimeout(() => {
+                        window.dispatchEvent(
+                          new CustomEvent("navigateToTab", {
+                            detail: { tab: id },
+                          }),
+                        );
+                      }, 100);
+                    }}
+                    className="text-xs px-2 py-1 h-6 text-slate-600 hover:text-educational-blue hover:bg-educational-blue/10"
+                  >
+                    <Icon className="w-3 h-3 mr-1" />
+                    {label}
+                  </Button>
+                ))}
+              </div>
+            )}
           </div>
         </div>
       </div>
@@ -3943,127 +3994,44 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
         <TabsContent value="reports">{renderDetailedReports()}</TabsContent>
       </Tabs>
 
-      {/* Add Child Dialog */}
-      <Dialog open={showAddChildDialog} onOpenChange={setShowAddChildDialog}>
-        <DialogContent>
-          <DialogHeader>
-            <DialogTitle>Add New Child Profile</DialogTitle>
-            <DialogDescription>
-              Create a learning profile for your child
-            </DialogDescription>
-          </DialogHeader>
-          <div className="space-y-4">
-            <div>
-              <Label htmlFor="childName">Name</Label>
-              <Input
-                id="childName"
-                value={newChildData.name}
-                onChange={(e) =>
-                  setNewChildData((prev) => ({ ...prev, name: e.target.value }))
-                }
-                placeholder="Enter child's name"
-              />
-            </div>
-            <div>
-              <Label htmlFor="childAge">Age</Label>
-              <Select
-                value={newChildData.age.toString()}
-                onValueChange={(value) =>
-                  setNewChildData((prev) => ({ ...prev, age: parseInt(value) }))
-                }
-              >
-                <SelectTrigger>
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  {[4, 5, 6, 7, 8, 9, 10, 11, 12].map((age) => (
-                    <SelectItem key={age} value={age.toString()}>
-                      {age} years old
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-            <div>
-              <Label htmlFor="avatar">Avatar</Label>
-              <div className="flex gap-2 mt-2">
-                {["👦", "👧", "🧒", "👶", "🦸‍♂️", "🦸‍♀️", "🧑‍🎓", "👨‍🎓", "👩‍🎓"].map(
-                  (emoji) => (
-                    <Button
-                      key={emoji}
-                      variant={
-                        newChildData.avatar === emoji ? "default" : "outline"
-                      }
-                      size="sm"
-                      onClick={() =>
-                        setNewChildData((prev) => ({ ...prev, avatar: emoji }))
-                      }
-                    >
-                      {emoji}
-                    </Button>
-                  ),
-                )}
-              </div>
-            </div>
-          </div>
-          <DialogFooter>
-            <Button
-              variant="outline"
-              onClick={() => setShowAddChildDialog(false)}
-            >
-              Cancel
-            </Button>
-            <Button
-              onClick={() => {
-                if (newChildData.name.trim()) {
-                  const newChild: ChildProfile = {
-                    id: Date.now().toString(),
-                    name: newChildData.name.trim(),
-                    age: newChildData.age,
-                    avatar: newChildData.avatar,
-                    level: 1,
-                    totalPoints: 0,
-                    wordsLearned: 0,
-                    currentStreak: 0,
-                    weeklyGoal: 10,
-                    weeklyProgress: 0,
-                    favoriteCategory: "Animals",
-                    lastActive: new Date(),
-                    preferredLearningTime:
-                      newChildData.preferredLearningTime ||
-                      "After school (4-6 PM)",
-                    difficultyPreference: newChildData.difficultyPreference,
-                    parentNotes: "",
-                    customWords: [],
-                    weeklyTarget: 15,
-                    monthlyTarget: 60,
-                    recentAchievements: [],
-                    learningStrengths: [],
-                    areasForImprovement: [],
-                    motivationalRewards: [],
-                  };
+      {/* Enhanced Add Child Dialog */}
+      <EnhancedAddChildProfile
+        isOpen={showAddChildDialog}
+        onClose={() => setShowAddChildDialog(false)}
+        onAddChild={(childData) => {
+          const newChild: ChildProfile = {
+            id: Date.now().toString(),
+            name: childData.name,
+            age: childData.age,
+            avatar: childData.avatar,
+            level: 1,
+            totalPoints: 0,
+            wordsLearned: 0,
+            currentStreak: 0,
+            weeklyGoal: 10,
+            weeklyProgress: 0,
+            favoriteCategory: childData.interests?.[0] || "Animals",
+            interests: childData.interests || [],
+            lastActive: new Date(),
+            preferredLearningTime:
+              childData.preferredLearningTime || "After school (4-6 PM)",
+            difficultyPreference: childData.difficultyPreference || "easy",
+            parentNotes: "",
+            customWords: [],
+            weeklyTarget: 15,
+            monthlyTarget: 60,
+            recentAchievements: [],
+            learningStrengths: [],
+            areasForImprovement: [],
+            motivationalRewards: [],
+          };
 
-                  const updatedChildren = [...children, newChild];
-                  setChildren(updatedChildren);
-                  setSelectedChild(newChild);
-                  setShowAddChildDialog(false);
-                  setNewChildData({
-                    name: "",
-                    age: 6,
-                    avatar: "👶",
-                    preferredLearningTime: "",
-                    difficultyPreference: "easy",
-                  });
-                }
-              }}
-              className="bg-educational-blue"
-              disabled={!newChildData.name.trim()}
-            >
-              Create Profile
-            </Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
+          const updatedChildren = [...children, newChild];
+          setChildren(updatedChildren);
+          setSelectedChild(newChild);
+          setShowAddChildDialog(false);
+        }}
+      />
 
       {/* Add Goal Dialog */}
       <Dialog open={showAddGoalDialog} onOpenChange={setShowAddGoalDialog}>
@@ -4204,6 +4172,15 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
           </DialogFooter>
         </DialogContent>
       </Dialog>
+
+      {/* Mobile Floating Action Button for Adding Children */}
+      <div className="md:hidden">
+        <QuickAddChildButton
+          onClick={() => setShowAddChildDialog(true)}
+          variant="floating"
+          className="fixed bottom-20 right-4 z-50"
+        />
+      </div>
     </div>
   );
 };
