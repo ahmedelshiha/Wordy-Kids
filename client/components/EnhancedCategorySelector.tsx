@@ -500,7 +500,7 @@ export function EnhancedCategorySelector({
 
   // Enhanced filtering and search
   const getFilteredCategories = () => {
-    let filtered = enrichedCategories;
+    let filtered = currentEnrichedCategories;
 
     // Search filter
     if (searchTerm) {
