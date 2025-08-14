@@ -112,7 +112,7 @@ const AVATAR_OPTIONS = [
   { emoji: '🐼', label: 'Panda', category: 'animals' },
   { emoji: '🦊', label: 'Fox', category: 'animals' },
   { emoji: '🐻', label: 'Bear', category: 'animals' },
-  { emoji: '���', label: 'Cat', category: 'animals' }
+  { emoji: '🐱', label: 'Cat', category: 'animals' }
 ];
 
 const INTEREST_OPTIONS = [
@@ -633,7 +633,7 @@ export function EnhancedAddChildProfile({
         </div>
 
         {/* Footer */}
-        <div className="p-6 pt-4 border-t border-purple-100">
+        <div className="p-4 sm:p-6 pt-4 border-t border-purple-100">
           <div className="flex justify-between gap-3">
             <Button
               variant="outline"
