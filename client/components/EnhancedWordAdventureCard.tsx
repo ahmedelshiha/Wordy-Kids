@@ -237,7 +237,7 @@ export const EnhancedWordAdventureCard: React.FC<EnhancedWordAdventureCardProps>
     setCurrentMiniGame(gameType);
     if (!hasPlayedGame) {
       setHasPlayedGame(true);
-      playUIInteractionSoundIfEnabled.success();
+      playUIInteractionSoundIfEnabled.cheer();
     }
     
     // Play different sounds for different games
