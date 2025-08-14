@@ -99,6 +99,24 @@ export default {
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+        "gentle-bounce": "gentle-bounce 3s ease-in-out infinite",
+        "gentle-float": "gentle-float 4s ease-in-out infinite",
+        sparkle: "sparkle-enhanced 2s ease-in-out infinite",
+        "emoji-bounce": "emoji-bounce 1.5s ease-in-out",
+        "star-fill": "star-fill 0.6s cubic-bezier(0.34, 1.56, 0.64, 1)",
+        "celebration-sparkles": "celebration-sparkles 1.5s ease-out infinite",
+        "voice-pulse": "voice-pulse 2s infinite",
+        "funny-voice-pulse": "funny-voice-pulse 2s infinite",
+        "mini-game-appear":
+          "mini-game-appear 0.4s cubic-bezier(0.34, 1.56, 0.64, 1)",
+        "letter-highlight": "letter-highlight 1s ease-in-out infinite",
+        "puzzle-piece-place": "puzzle-piece-place 0.3s ease-out",
+      },
+      transform: {
+        "preserve-3d": "preserve-3d",
+      },
+      backfaceVisibility: {
+        hidden: "hidden",
       },
     },
   },
