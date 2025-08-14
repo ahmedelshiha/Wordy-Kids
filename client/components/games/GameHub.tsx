@@ -110,7 +110,7 @@ export function GameHub({
                 <Gamepad2 className="w-8 h-8 text-white" />
               </div>
               <Badge className="bg-educational-green text-white">
-                4 Games Available
+                5 Games Available
               </Badge>
             </div>
             <CardTitle className="text-2xl text-educational-green">
@@ -124,6 +124,12 @@ export function GameHub({
             </p>
 
             <div className="grid grid-cols-2 gap-3">
+              <div className="bg-white/80 rounded-lg p-3 text-center">
+                <div className="text-2xl mb-1">🌱</div>
+                <div className="text-sm font-semibold text-gray-700">
+                  Word Garden
+                </div>
+              </div>
               <div className="bg-white/80 rounded-lg p-3 text-center">
                 <div className="text-2xl mb-1">🗺️</div>
                 <div className="text-sm font-semibold text-gray-700">
@@ -140,12 +146,6 @@ export function GameHub({
                 <div className="text-2xl mb-1">⚡</div>
                 <div className="text-sm font-semibold text-gray-700">
                   Speed Learning
-                </div>
-              </div>
-              <div className="bg-white/80 rounded-lg p-3 text-center">
-                <div className="text-2xl mb-1">🎤</div>
-                <div className="text-sm font-semibold text-gray-700">
-                  Pronunciation
                 </div>
               </div>
             </div>

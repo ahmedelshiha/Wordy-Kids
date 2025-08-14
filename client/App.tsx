@@ -12,6 +12,7 @@ import SignUp from "./pages/SignUp";
 import AppPage from "./pages/App";
 import NotFound from "./pages/NotFound";
 import AdminPage from "./pages/AdminPage";
+import WordGardenDemo from "./pages/WordGardenDemo";
 import { EnhancedWordCardDemo } from "./components/EnhancedWordCardDemo";
 import {
   WordDatabaseNotifications,
@@ -35,6 +36,7 @@ const App = () => (
           <Route path="/profile" element={<Login />} />
           <Route path="/admin" element={<AdminPage />} />
           <Route path="/word-card-demo" element={<EnhancedWordCardDemo />} />
+          <Route path="/word-garden-demo" element={<WordGardenDemo />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>

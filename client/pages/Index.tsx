@@ -16,6 +16,7 @@ import { WordMatchingGame } from "@/components/WordMatchingGame";
 import { GameHub } from "@/components/games/GameHub";
 import { VowelRescue } from "@/components/games/VowelRescue";
 import ListenAndGuessGame from "@/components/games/ListenAndGuessGame";
+import WordGarden from "@/components/games/WordGarden";
 import {
   getSystematicEasyVowelQuestions,
   getSystematicMediumVowelQuestions,
@@ -2837,6 +2838,36 @@ export default function Index({ initialProfile }: IndexProps) {
                                 </Button>
                               </CardContent>
                             </Card>
+
+                            {/* Word Garden - Listen & Pick */}
+                            <Card className="cursor-pointer hover:shadow-lg transition-all duration-300 hover:scale-105 border-2 border-emerald-400/30 animate-kid-float">
+                              <CardContent className="p-3 md:p-4 text-center">
+                                <div className="text-3xl md:text-5xl mb-2 md:mb-3 animate-gentle-bounce">
+                                  🌱
+                                </div>
+                                <h3 className="text-sm md:text-lg font-bold text-emerald-600 mb-1 md:mb-2">
+                                  Word Garden
+                                </h3>
+                                <p className="text-xs md:text-sm text-gray-600 mb-2 md:mb-3 hidden md:block">
+                                  Listen & grow your vocabulary garden! 🌸
+                                </p>
+                                <div className="flex justify-center gap-1 mb-2 md:mb-3">
+                                  <span className="bg-emerald-400/20 text-emerald-600 px-1.5 py-0.5 rounded-full text-xs">
+                                    🎯 Ages 3-5!
+                                  </span>
+                                </div>
+                                <Button
+                                  onClick={() => {
+                                    setGameMode("word-garden");
+                                  }}
+                                  className="w-full bg-emerald-500 text-white hover:bg-emerald-600 py-1.5 md:py-2 text-xs md:text-sm rounded-xl animate-wiggle"
+                                  size="sm"
+                                >
+                                  <Play className="w-3 h-3 md:w-4 md:h-4 mr-1" />
+                                  Grow Garden! 🌱
+                                </Button>
+                              </CardContent>
+                            </Card>
                           </div>
 
                           {/* Recent Scores */}
@@ -2917,6 +2948,42 @@ export default function Index({ initialProfile }: IndexProps) {
                               </CardContent>
                             </Card>
                           </div>
+                        </div>
+                      ) : gameMode === "word-garden" ? (
+                        <div className="space-y-6">
+                          <div className="flex items-center justify-between">
+                            <h2 className="text-2xl font-bold text-gray-800">
+                              🌱 Word Garden
+                            </h2>
+                            <Button
+                              onClick={() => setGameMode(false)}
+                              variant="outline"
+                              size="sm"
+                            >
+                              ← Back to Quiz Time
+                            </Button>
+                          </div>
+                          <WordGarden
+                            rounds={8}
+                            optionsPerRound={3}
+                            difficulty="easy"
+                            category={
+                              selectedCategory !== "all"
+                                ? selectedCategory
+                                : undefined
+                            }
+                            onFinish={(stats) => {
+                              setGameMode(false);
+                              setFeedback({
+                                type: "celebration",
+                                title: "Garden Complete! 🌸✨",
+                                message: `You grew ${stats.correct} plants out of ${stats.totalRounds}! Best streak: ${stats.bestStreak}`,
+                                score: stats.correct,
+                                total: stats.totalRounds,
+                                celebrationType: "confetti",
+                              });
+                            }}
+                          />
                         </div>
                       ) : gameMode ? (
                         <GameLikeLearning
