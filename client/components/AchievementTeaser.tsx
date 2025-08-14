@@ -41,12 +41,22 @@ export function AchievementTeaser({ className }: AchievementTeaserProps) {
     };
   }, []);
 
-  // Cycle through messages every 8 seconds
+  // Cycle through messages every 8 seconds (longer for mobile to read)
   useEffect(() => {
+    const isMobile = window.innerWidth < 768;
+    const rotationInterval = isMobile ? 10000 : 8000; // 10s on mobile, 8s on desktop
+
     const messageRotation = setInterval(() => {
       setShowTeaser(false);
-      setTimeout(() => setShowTeaser(true), 300);
-    }, 8000);
+      setTimeout(() => {
+        // Update all messages for variety
+        setMotivationalMessage(EnhancedAchievementTracker.getMotivationalMessage());
+        setSpecialMessage(EnhancedAchievementTracker.getTodaySpecialMessage());
+        setCurrentTease(EnhancedAchievementTracker.getNextAchievementTease());
+        setMessageIndex(prev => prev + 1);
+        setShowTeaser(true);
+      }, 300);
+    }, rotationInterval);
 
     return () => clearInterval(messageRotation);
   }, []);
