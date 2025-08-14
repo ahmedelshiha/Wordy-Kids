@@ -1908,14 +1908,13 @@ export default function Index({ initialProfile }: IndexProps) {
                                             </div>
                                           </div>
 
-                                          {/* Enhanced Navigation Controls with Quick Actions */}
-                                          <div className="flex justify-center items-center gap-3 mt-6 max-w-xs sm:max-w-sm md:max-w-md mx-auto">
+                                          {/* Compact Navigation Controls */}
+                                          <div className="flex justify-center items-center gap-2 mt-3 max-w-xs sm:max-w-sm md:max-w-md mx-auto">
+                                            {/* Previous Button */}
                                             <Button
                                               onClick={() => {
                                                 if (currentWordIndex > 0) {
-                                                  setCurrentWordIndex(
-                                                    currentWordIndex - 1,
-                                                  );
+                                                  setCurrentWordIndex(currentWordIndex - 1);
                                                   audioService.playClickSound();
                                                   if (navigator.vibrate) {
                                                     navigator.vibrate(25);
@@ -1923,160 +1922,71 @@ export default function Index({ initialProfile }: IndexProps) {
                                                 }
                                               }}
                                               disabled={currentWordIndex === 0}
-                                              variant="outline"
+                                              variant="ghost"
                                               size="sm"
-                                              className="rounded-full px-3 py-2 h-10 flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed hover:bg-blue-50 transition-all duration-200 active:scale-95"
+                                              className="h-8 w-8 rounded-full p-0 disabled:opacity-30 hover:bg-slate-100"
                                             >
-                                              <span>←</span>
-                                              <span className="hidden sm:inline">
-                                                Previous
-                                              </span>
+                                              <span className="text-lg">←</span>
                                             </Button>
 
-                                            <div className="text-center flex-1">
-                                              <p className="text-sm text-slate-600 font-medium mb-1">
-                                                {currentWordIndex + 1} of{" "}
-                                                {displayWords.length}
-                                              </p>
-                                              {/* Quick exit hint */}
-                                              <p className="text-xs text-slate-400 hidden sm:block">
-                                                Press ESC to return to library
-                                              </p>
+                                            {/* Compact Progress */}
+                                            <div className="flex-1 flex items-center justify-center gap-2 text-xs text-slate-600">
+                                              <span className="font-medium">{currentWordIndex + 1}/{displayWords.length}</span>
                                             </div>
 
+                                            {/* Next Button */}
                                             <Button
                                               onClick={() => {
-                                                if (
-                                                  currentWordIndex <
-                                                  displayWords.length - 1
-                                                ) {
-                                                  setCurrentWordIndex(
-                                                    currentWordIndex + 1,
-                                                  );
+                                                if (currentWordIndex < displayWords.length - 1) {
+                                                  setCurrentWordIndex(currentWordIndex + 1);
                                                   audioService.playClickSound();
                                                   if (navigator.vibrate) {
                                                     navigator.vibrate(25);
                                                   }
                                                 } else {
-                                                  // End of words - celebrate and offer to return to library
                                                   setCelebrationEffect(true);
                                                   setTimeout(() => {
                                                     setCelebrationEffect(false);
-                                                    // Auto-suggest returning to library after completion
                                                     if (window.confirm('Great job! You\'ve completed all words in this category. Return to library to choose another category?')) {
                                                       handleSmartBackNavigation();
                                                     }
                                                   }, 2000);
                                                 }
                                               }}
-                                              disabled={
-                                                currentWordIndex ===
-                                                displayWords.length - 1
-                                              }
-                                              variant="outline"
-                                              size="sm"
-                                              className="rounded-full px-3 py-2 h-10 flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed hover:bg-blue-50 transition-all duration-200 active:scale-95"
-                                            >
-                                              <span className="hidden sm:inline">
-                                                Next
-                                              </span>
-                                              <span>→</span>
-                                            </Button>
-                                          </div>
-
-                                          {/* Quick Actions Bar */}
-                                          <div className="flex justify-center gap-2 mt-4 max-w-xs sm:max-w-sm md:max-w-md mx-auto">
-                                            <Button
-                                              onClick={handleSmartBackNavigation}
+                                              disabled={currentWordIndex === displayWords.length - 1}
                                               variant="ghost"
                                               size="sm"
-                                              className="text-xs px-3 py-1 h-8 rounded-md text-slate-600 hover:bg-slate-100 transition-all duration-200 active:scale-95"
+                                              className="h-8 w-8 rounded-full p-0 disabled:opacity-30 hover:bg-slate-100"
                                             >
-                                              <BookOpen className="w-3 h-3 mr-1" />
-                                              Library
-                                            </Button>
-
-                                            <Button
-                                              onClick={() => {
-                                                if (navigator.vibrate) {
-                                                  navigator.vibrate(25);
-                                                }
-                                                audioService.playClickSound();
-                                                setSelectedCategory("");
-                                                setLearningMode("selector");
-                                                setCurrentWordIndex(0);
-                                              }}
-                                              variant="ghost"
-                                              size="sm"
-                                              className="text-xs px-3 py-1 h-8 rounded-md text-slate-600 hover:bg-slate-100 transition-all duration-200 active:scale-95"
-                                            >
-                                              <Shuffle className="w-3 h-3 mr-1" />
-                                              Switch
-                                            </Button>
-
-                                            <Button
-                                              onClick={() => {
-                                                setCurrentWordIndex(0);
-                                                setForgottenWords(new Set());
-                                                setRememberedWords(new Set());
-                                                audioService.playWhooshSound();
-                                                if (navigator.vibrate) {
-                                                  navigator.vibrate([30, 20, 30]);
-                                                }
-                                              }}
-                                              variant="ghost"
-                                              size="sm"
-                                              className="text-xs px-3 py-1 h-8 rounded-md text-slate-600 hover:bg-slate-100 transition-all duration-200 active:scale-95"
-                                            >
-                                              <RotateCcw className="w-3 h-3 mr-1" />
-                                              Restart
+                                              <span className="text-lg">→</span>
                                             </Button>
                                           </div>
                                         </div>
                                       </div>
 
-                                      <div className="text-center mt-4 space-y-2">
-                                        <Badge
-                                          variant="outline"
-                                          className="text-sm"
-                                        >
-                                          {selectedCategory
-                                            ? `${selectedCategory} Category`
-                                            : "No Category"}{" "}
-                                          - Word {currentWordIndex + 1} of{" "}
-                                          {displayWords.length}
-                                        </Badge>
-
-                                        {/* Current Word Status */}
+                                      {/* Minimal Status Indicator */}
+                                      <div className="text-center mt-2">
                                         {(() => {
-                                          const currentWord =
-                                            displayWords[currentWordIndex];
+                                          const currentWord = displayWords[currentWordIndex];
                                           if (!currentWord) return null;
 
-                                          if (
-                                            rememberedWords.has(currentWord.id)
-                                          ) {
+                                          if (rememberedWords.has(currentWord.id)) {
                                             return (
-                                              <Badge className="bg-green-100 text-green-700 border-green-300">
-                                                ✅ You remembered this word!
-                                              </Badge>
+                                              <div className="text-xs text-green-600 font-medium">
+                                                ✅ Learned
+                                              </div>
                                             );
-                                          } else if (
-                                            forgottenWords.has(currentWord.id)
-                                          ) {
+                                          } else if (forgottenWords.has(currentWord.id)) {
                                             return (
-                                              <Badge className="bg-red-100 text-red-700 border-red-300">
-                                                ❌ Marked for practice
-                                              </Badge>
+                                              <div className="text-xs text-orange-600 font-medium">
+                                                🤔 Review
+                                              </div>
                                             );
                                           } else {
                                             return (
-                                              <Badge
-                                                variant="secondary"
-                                                className="bg-blue-100 text-blue-700 border-blue-300"
-                                              >
-                                                🆕 New word to learn
-                                              </Badge>
+                                              <div className="text-xs text-blue-600 font-medium">
+                                                🆕 New
+                                              </div>
                                             );
                                           }
                                         })()}
