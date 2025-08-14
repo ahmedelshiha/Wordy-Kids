@@ -485,7 +485,7 @@ export class EnhancedAchievementTracker {
       id: "ultimate_word_wizard",
       name: "Ultimate Word Wizard",
       description: "Learn 300 words, maintain 95% accuracy, and reach 50 perfect sessions!",
-      funnyDescription: "🧙‍♂️✨ ULTIMATE COSMIC MAGIC! You're the SUPREME Word Wizard of the entire GALAXY!",
+      funnyDescription: "🧙‍♂��✨ ULTIMATE COSMIC MAGIC! You're the SUPREME Word Wizard of the entire GALAXY!",
       icon: "🧙‍♂️",
       category: "journey",
       difficulty: "rainbow",
@@ -858,13 +858,26 @@ export class EnhancedAchievementTracker {
   }
 
   /**
-   * Check for newly unlocked achievements
+   * Check for newly unlocked achievements with cooldown and teasing
    */
   private static checkForNewAchievements(): Achievement[] {
+    const now = Date.now();
     const newlyUnlocked: Achievement[] = [];
+
+    // Check if we're in achievement cooldown period
+    if (now - this.lastAchievementTime < this.ACHIEVEMENT_COOLDOWN_MS) {
+      console.log("🕐 Achievement cooldown active - preventing spam!");
+      return []; // No achievements during cooldown
+    }
 
     for (const achievement of this.achievements) {
       if (achievement.unlocked || !achievement.criteria) continue;
+
+      // Check if this specific achievement has its own cooldown
+      const achievementCooldown = this.achievementCooldowns.get(achievement.id) || 0;
+      if (now - achievementCooldown < this.ACHIEVEMENT_COOLDOWN_MS * 2) {
+        continue; // Skip this achievement if it's in cooldown
+      }
 
       const isUnlocked = this.evaluateAchievementCriteria(achievement);
 
@@ -873,12 +886,42 @@ export class EnhancedAchievementTracker {
         achievement.dateUnlocked = new Date();
         achievement.currentProgress = achievement.requirements;
         newlyUnlocked.push(achievement);
+
+        // Set cooldowns
+        this.lastAchievementTime = now;
+        this.achievementCooldowns.set(achievement.id, now);
+
+        console.log(`🎉 Achievement unlocked: ${achievement.name} (cooldown activated)`);
+
+        // Limit to 1 achievement at a time to prevent overwhelming
+        break;
       } else {
+        const oldProgress = achievement.currentProgress;
         achievement.currentProgress = this.calculateAchievementProgress(achievement);
+
+        // Add teasing for close achievements
+        this.checkForTeasingOpportunity(achievement, oldProgress);
       }
     }
 
     return newlyUnlocked;
+  }
+
+  /**
+   * Check if we should tease the user about almost completing an achievement
+   */
+  private static checkForTeasingOpportunity(achievement: Achievement, oldProgress: number): void {
+    const progressPercent = (achievement.currentProgress / achievement.requirements) * 100;
+    const oldProgressPercent = (oldProgress / achievement.requirements) * 100;
+
+    // Only tease once when they cross certain thresholds
+    if (oldProgressPercent < 75 && progressPercent >= 75) {
+      console.log(`👀 Almost there! ${achievement.name} is 75% complete!`);
+    } else if (oldProgressPercent < 90 && progressPercent >= 90) {
+      console.log(`🔥 SO CLOSE! ${achievement.name} is 90% complete!`);
+    } else if (oldProgressPercent < 95 && progressPercent >= 95) {
+      console.log(`⚡ ALMOST THERE! ${achievement.name} is 95% complete!`);
+    }
   }
 
   /**
