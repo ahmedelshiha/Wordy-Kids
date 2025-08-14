@@ -25,26 +25,24 @@ const queryClient = new QueryClient({
 });
 
 const MainApp = () => (
-  <React.StrictMode>
-    <QueryClientProvider client={queryClient}>
-      <TooltipProvider>
-        <Toaster />
-        <Sonner />
-        <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<LoginForm />} />
-            <Route path="/signup" element={<SignUp />} />
-            <Route path="/app" element={<App />} />
-            <Route path="/profile" element={<Login />} />
-            <Route path="/admin" element={<AdminPage />} />
-            <Route path="/word-card-demo" element={<EnhancedWordCardDemo />} />
-            {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </BrowserRouter>
-      </TooltipProvider>
-    </QueryClientProvider>
-  </React.StrictMode>
+  <QueryClientProvider client={queryClient}>
+    <TooltipProvider>
+      <Toaster />
+      <Sonner />
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<LoginForm />} />
+          <Route path="/signup" element={<SignUp />} />
+          <Route path="/app" element={<App />} />
+          <Route path="/profile" element={<Login />} />
+          <Route path="/admin" element={<AdminPage />} />
+          <Route path="/word-card-demo" element={<EnhancedWordCardDemo />} />
+          {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </BrowserRouter>
+    </TooltipProvider>
+  </QueryClientProvider>
 );
 
 // Ensure we only create the root once
