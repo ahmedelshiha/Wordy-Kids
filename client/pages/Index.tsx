@@ -157,6 +157,7 @@ export default function Index({ initialProfile }: IndexProps) {
   const [achievementPopup, setAchievementPopup] = useState<any[]>([]);
   const [currentSessionId, setCurrentSessionId] = useState<string | null>(null);
   const [childStats, setChildStats] = useState<ChildWordStats | null>(null);
+  const [showExitDialog, setShowExitDialog] = useState(false);
   const [isLoadingProgress, setIsLoadingProgress] = useState(false);
   const [showPracticeGame, setShowPracticeGame] = useState(false);
   const [practiceWords, setPracticeWords] = useState<any[]>([]);
