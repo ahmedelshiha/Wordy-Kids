@@ -6,7 +6,7 @@ import { Brain, Play, Clock, Target, Trophy } from "lucide-react";
 import { QuizGame } from "../QuizGame";
 import { generateQuizQuestions } from "@/lib/gameGeneration";
 import { VowelRescue } from "./VowelRescue";
-import ListenAndGuessGame, { DemoWords } from "./ListenAndGuessGame";
+import ListenAndGuessGame from "./ListenAndGuessGame";
 import {
   getSystematicEasyVowelQuestions,
   getSystematicMediumVowelQuestions,
@@ -27,6 +27,18 @@ export function QuizGames({
   const [activeQuiz, setActiveQuiz] = useState<string | null>(null);
 
   const quizTypes = [
+    {
+      id: "listen-guess",
+      title: "Listen & Guess",
+      description:
+        "Listen carefully and pick the right picture! Perfect for audio learners.",
+      icon: "🎧",
+      difficulty: "Easy",
+      questions: 10,
+      timePerQuestion: "No limit",
+      color: "from-educational-pink to-pink-400",
+      points: "50-100 pts",
+    },
     {
       id: "quick",
       title: "Quick Quiz",
@@ -126,18 +138,6 @@ export function QuizGames({
       color: "from-educational-orange to-orange-400",
       points: "Variable",
     },
-    {
-      id: "listen-guess",
-      title: "Listen & Guess",
-      description:
-        "Listen carefully and pick the right picture! Perfect for audio learners.",
-      icon: "🎧",
-      difficulty: "Easy",
-      questions: 10,
-      timePerQuestion: "No limit",
-      color: "from-educational-pink to-pink-400",
-      points: "50-100 pts",
-    },
   ];
 
   const handleQuizStart = (quizType: string) => {
@@ -154,9 +154,11 @@ export function QuizGames({
     if (activeQuiz === "listen-guess") {
       return (
         <ListenAndGuessGame
-          words={DemoWords}
+          category={selectedCategory}
+          difficulty="easy"
           rounds={10}
           optionsPerRound={3}
+          playerLevel={1} // Could be dynamic based on user progress
           onFinish={(stats) => {
             onQuizComplete(stats.correct, stats.totalRounds);
           }}
