@@ -191,7 +191,7 @@ export const EnhancedWordCard: React.FC<EnhancedWordCardProps> = ({
   const handleFavorite = () => {
     setIsFavorited(!isFavorited);
     if (!isFavorited) {
-      audioService.playCheerSound();
+      enhancedAudioService.playSuccessSound();
       setShowSparkles(true);
       setTimeout(() => setShowSparkles(false), 1000);
 
