@@ -281,7 +281,7 @@ export const CompactMobileSettingsPanel: React.FC<CompactMobileSettingsPanelProp
                 onToggle={() => toggleSection("audio")}
               />
               {expandedSections.audio && (
-                <div className="px-2 pb-2 space-y-1">
+                <div className="px-2 pb-2 space-y-1 max-h-[40vh] overflow-y-auto">
                   <CompactSettingRow
                     icon={soundOn ? Volume2 : VolumeX}
                     label="Sound Effects"
