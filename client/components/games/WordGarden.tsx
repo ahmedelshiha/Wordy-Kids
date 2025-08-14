@@ -8,11 +8,20 @@ import React, {
 import { Word, getWordsByCategory, getRandomWords } from "@/data/wordsDatabase";
 import { audioService } from "@/lib/audioService";
 import { EnhancedAchievementTracker } from "@/lib/enhancedAchievementTracker";
+import { Button } from "@/components/ui/button";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 
 /**
  * Word Garden — Listen & Pick Game for Ages 3–5
  * -------------------------------------------------
- * �� Pulls words from your website DB using existing word service
+ * 🌟 Pulls words from your website DB using existing word service
  * • Kids listen to pronunciation then pick the matching picture
  * • Every correct answer grows a plant in the garden (visual progress)
  * • Integrates with achievements + sparkle celebration hooks
@@ -54,6 +63,10 @@ export type WordGardenGameProps = {
   // INTEGRATIONS
   onFinish?: (stats: GameFinishStats) => void;
   onExit?: () => void;
+
+  // EXIT DIALOG
+  showExitDialog?: boolean;
+  onCloseExitDialog?: () => void;
 
   // UX
   className?: string;
@@ -138,7 +151,7 @@ function useConfetti() {
 }
 
 // Garden plant stage visuals (simple emojis; swap with your images if desired)
-const STAGES = ["🌱", "��", "🌸"]; // sprout -> leaf -> blossom
+const STAGES = ["🌱", "🌿", "🌸"]; // sprout -> leaf -> blossom
 
 // Generate emoji-based image using SVG data URI with larger size to match ListenAndGuess
 function generateEmojiImage(emoji: string, fallbackText?: string): string {
@@ -222,6 +235,8 @@ export default function WordGardenGame({
   className = "",
   onFinish,
   onExit,
+  showExitDialog = false,
+  onCloseExitDialog,
 }: WordGardenGameProps) {
   const sessionId = useMemo(() => uuid(), []);
 
@@ -429,16 +444,6 @@ export default function WordGardenGame({
       />
 
       <div className="relative rounded-3xl shadow-xl p-4 md:p-6 bg-gradient-to-b from-green-600 to-emerald-700 text-white">
-        {/* Exit Button */}
-        {onExit && (
-          <button
-            onClick={onExit}
-            className="absolute top-4 right-4 w-10 h-10 rounded-full bg-white/20 hover:bg-white/30 flex items-center justify-center transition-all duration-200 z-20 touch-target active:scale-90 text-white font-bold text-lg"
-            aria-label="Exit game"
-          >
-            ✕
-          </button>
-        )}
         {/* Top bar */}
         <div className="mb-3">
           <div className="flex items-center justify-between text-sm opacity-90">
@@ -559,6 +564,60 @@ export default function WordGardenGame({
 
       {/* Styles for confetti dots */}
       <style>{`.wg-confetti{position:absolute;top:60%;border-radius:9999px;box-shadow:0 0 0 1px rgba(255,255,255,.15) inset}`}</style>
+
+      {/* Enhanced Exit Confirmation Dialog */}
+      <Dialog open={showExitDialog} onOpenChange={onCloseExitDialog}>
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader className="text-center">
+            <div className="text-6xl mb-2">🌱</div>
+            <DialogTitle className="text-xl font-bold text-gray-800">
+              Leave your garden?
+            </DialogTitle>
+            <DialogDescription className="text-gray-600">
+              Your plants will be waiting for you! Are you sure you want to exit
+              Word Garden?
+            </DialogDescription>
+          </DialogHeader>
+
+          <div className="flex flex-col gap-3 mt-4">
+            {/* Garden Progress Summary */}
+            <div className="bg-green-50 rounded-lg p-3 border border-green-200">
+              <div className="text-sm text-green-800 font-medium mb-1">
+                🌱 Garden Progress
+              </div>
+              <div className="flex justify-between text-sm text-green-700">
+                <span>Plants grown: {correctCount}</span>
+                <span>Best streak: {bestStreak}</span>
+              </div>
+              <div className="text-xs text-green-600 mt-1">
+                Round {roundIdx + 1} of {pool.length}
+              </div>
+            </div>
+          </div>
+
+          <DialogFooter className="flex flex-col-reverse sm:flex-row gap-2 mt-6">
+            <Button
+              variant="outline"
+              onClick={() => onCloseExitDialog?.()}
+              className="flex-1 bg-green-50 hover:bg-green-100 text-green-700 border-green-300"
+            >
+              <span className="mr-2">🌱</span>
+              Keep Growing!
+            </Button>
+            <Button
+              variant="destructive"
+              onClick={() => {
+                onCloseExitDialog?.();
+                onExit?.();
+              }}
+              className="flex-1 bg-red-500 hover:bg-red-600"
+            >
+              <span className="mr-2">🚪</span>
+              Exit Garden
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </Wrapper>
   );
 }

@@ -3,6 +3,14 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import { WordCard } from "@/components/WordCard";
 import { LearningDashboard } from "@/components/LearningDashboard";
 import { QuizGame } from "@/components/QuizGame";
@@ -149,6 +157,7 @@ export default function Index({ initialProfile }: IndexProps) {
   const [achievementPopup, setAchievementPopup] = useState<any[]>([]);
   const [currentSessionId, setCurrentSessionId] = useState<string | null>(null);
   const [childStats, setChildStats] = useState<ChildWordStats | null>(null);
+  const [showExitDialog, setShowExitDialog] = useState(false);
   const [isLoadingProgress, setIsLoadingProgress] = useState(false);
   const [showPracticeGame, setShowPracticeGame] = useState(false);
   const [practiceWords, setPracticeWords] = useState<any[]>([]);
@@ -768,14 +777,14 @@ export default function Index({ initialProfile }: IndexProps) {
       {
         id: "streak-starter",
         name: "Streak Master",
-        icon: "��",
+        icon: "🔥",
         earned: true,
         description: "7-day learning streak",
       },
       {
         id: "category-explorer",
         name: "Category Explorer",
-        icon: "��️",
+        icon: "🗺️",
         earned: rememberedWords.size >= 10,
         description: "Explored 5+ categories",
       },
@@ -1209,7 +1218,7 @@ export default function Index({ initialProfile }: IndexProps) {
       } else {
         achievementTitle = "Category Challenger! 💪";
         achievementIcon = "💪";
-        achievementMessage = `Nice try! You completed ${categoryDisplayName} with ${accuracy}% accuracy! Every attempt makes you stronger!\n\n�� Challenger Bonus: 50 points!\n�� Challenger badge earned!`;
+        achievementMessage = `Nice try! You completed ${categoryDisplayName} with ${accuracy}% accuracy! Every attempt makes you stronger!\n\n🏆 Challenger Bonus: 50 points!\n🎖️ Challenger badge earned!`;
       }
 
       return {
@@ -1498,7 +1507,7 @@ export default function Index({ initialProfile }: IndexProps) {
     setFeedback({
       type: "celebration",
       title: "Practice Complete! 🏆",
-      message: `Great job practicing your tricky words!\n\n✅ Remembered: ${results.correctWords.length} words\n�� Accuracy: ${results.accuracy}%\n\nKeep practicing to master all your words!`,
+      message: `Great job practicing your tricky words!\n\n✅ Remembered: ${results.correctWords.length} words\n🎯 Accuracy: ${results.accuracy}%\n\nKeep practicing to master all your words!`,
       points: results.correctWords.length * 15,
       onContinue: () => setFeedback(null),
     });
@@ -2328,7 +2337,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                                         type: "celebration",
                                                         title:
                                                           "Category Review Complete! 📚",
-                                                        message: `You've reviewed all ${completionResult.totalWords} words in ${selectedCategory === "all" ? "this word set" : selectedCategory}!\\n\\n✅ Remembered: ${completionResult.totalRemembered} words\\n❌ Need practice: ${completionResult.totalWords - completionResult.totalRemembered} words\\n\\n${completionResult.totalWords - completionResult.totalRemembered > 0 ? "Don't worry! Let's practice the tricky ones again! ���📚" : "Amazing work! 🎉"}`,
+                                                        message: `You've reviewed all ${completionResult.totalWords} words in ${selectedCategory === "all" ? "this word set" : selectedCategory}!\\n\\n✅ Remembered: ${completionResult.totalRemembered} words\\n❌ Need practice: ${completionResult.totalWords - completionResult.totalRemembered} words\\n\\n${completionResult.totalWords - completionResult.totalRemembered > 0 ? "Don't worry! Let's practice the tricky ones again! 💪📚" : "Amazing work! 🎉"}`,
                                                         points:
                                                           completionResult.totalRemembered *
                                                           10, // Fewer points since words were forgotten
@@ -2630,7 +2639,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                               ) {
                                                 return (
                                                   <div className="text-xs text-green-600 font-medium">
-                                                    ✅ Learned
+                                                    �� Learned
                                                   </div>
                                                 );
                                               } else if (
@@ -2956,17 +2965,21 @@ export default function Index({ initialProfile }: IndexProps) {
                               🌱 Word Garden
                             </h2>
                             <Button
-                              onClick={() => setGameMode(false)}
+                              onClick={() => setShowExitDialog(true)}
                               variant="outline"
                               size="sm"
+                              className="bg-green-50 hover:bg-green-100 text-green-700 border-green-300 hover:border-green-400 transition-all duration-200 shadow-sm hover:shadow-md"
                             >
-                              ← Back to Quiz Time
+                              <span className="mr-2">🚪</span>
+                              Exit Garden
                             </Button>
                           </div>
                           <WordGarden
                             rounds={8}
                             optionsPerRound={3}
                             difficulty="easy"
+                            showExitDialog={showExitDialog}
+                            onCloseExitDialog={() => setShowExitDialog(false)}
                             category={
                               selectedCategory !== "all"
                                 ? selectedCategory

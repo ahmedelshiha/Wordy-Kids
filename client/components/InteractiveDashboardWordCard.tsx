@@ -806,7 +806,7 @@ export function InteractiveDashboardWordCard({
 
                         if (wordsLearned >= goal) {
                           if (wordsLearned >= goal * 2)
-                            return "�� SUPERSTAR! Amazing effort!";
+                            return "⭐ SUPERSTAR! Amazing effort!";
                           if (wordsLearned >= goal * 1.5)
                             return "🚀 Beyond awesome! Keep going!";
                           return "🎉 Goal achieved! You're incredible!";

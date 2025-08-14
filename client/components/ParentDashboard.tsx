@@ -1174,7 +1174,7 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
                         <div>
                           <div>{child.name}'s Goals</div>
                           <p className="text-xs md:text-sm font-normal text-slate-600">
-                            {activeGoals} active �� {completedGoals} completed
+                            {activeGoals} active 🎯 {completedGoals} completed
                           </p>
                         </div>
                       </CardTitle>
@@ -2437,7 +2437,7 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
     const emojis: Record<string, string> = {
       Animals: "🦋",
       Science: "🔬",
-      Colors: "���",
+      Colors: "🌈",
       Food: "🍎",
       Transportation: "🚗",
       Nature: "🌲",
@@ -2834,7 +2834,7 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
                 <div class="category-grid">
                     <div class="category-section">
                         <div class="category-header">
-                            �� Strengths & Mastered Areas
+                            ⭐ Strengths & Mastered Areas
                         </div>
                         <h4 style="margin: 15px 0 10px 0; color: #059669;">💪 Strong Categories</h4>
                         <div class="badge-container">
@@ -2913,14 +2913,14 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
 
                 <div style="margin-bottom: 30px;">
                     <h3 style="color: #d97706; margin-bottom: 15px; display: flex; align-items: center; gap: 8px;">
-                        �� Growth Opportunities
+                        📈 Growth Opportunities
                     </h3>
                     <ul class="insights-list">
                         ${reportData.parentInsights.areasForGrowth
                           .map(
                             (area) => `
                             <li>
-                                <span style="color: #f59e0b; font-size: 16px;">��</span>
+                                <span style="color: #f59e0b; font-size: 16px;">📋</span>
                                 <span>${area}</span>
                             </li>
                         `,
@@ -2938,7 +2938,7 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
                           .map(
                             (rec) => `
                             <li>
-                                <span style="color: #8b5cf6; font-size: 16px;">��</span>
+                                <span style="color: #8b5cf6; font-size: 16px;">💡</span>
                                 <span>${rec}</span>
                             </li>
                         `,
@@ -2951,7 +2951,7 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
             <!-- Achievements -->
             <div class="section">
                 <h2 class="section-title">
-                    �� Recent Achievements
+                    🏆 Recent Achievements
                 </h2>
                 <div class="achievement-grid">
                     ${reportData.achievements

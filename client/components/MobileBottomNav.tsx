@@ -74,7 +74,7 @@ export function MobileBottomNav({
     },
     {
       id: "progress",
-      emoji: "����",
+      emoji: "📊",
       label: userRole === "parent" ? "Reports" : "My Journey",
       icon: Trophy,
       color: "from-yellow-500 to-orange-500",

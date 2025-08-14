@@ -352,7 +352,7 @@ export const EnhancedSettingsPanel: React.FC<EnhancedSettingsPanelProps> = ({
             <ScrollArea className="w-full">
               <div className="flex gap-2 p-4 border-b">
                 {[
-                  { id: "audio", label: "Audio", icon: Volume2, emoji: "��" },
+                  { id: "audio", label: "Audio", icon: Volume2, emoji: "🔊" },
                   {
                     id: "appearance",
                     label: "Appearance",

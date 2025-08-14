@@ -97,7 +97,7 @@ const gameTypes = [
     difficulty: "medium",
     timeLimit: 120,
     rewards: [
-      "�� +20 points per match",
+      "💎 +20 points per match",
       "⚡ Speed bonuses",
       "🌟 Memory master badge",
     ],
@@ -425,7 +425,7 @@ export function GameLikeLearning({
                 {game.difficulty === "easy"
                   ? "🌟 Easy"
                   : game.difficulty === "medium"
-                    ? "�� Medium"
+                    ? "⚡ Medium"
                     : "🔥 Hard"}
               </Badge>
             </CardHeader>
