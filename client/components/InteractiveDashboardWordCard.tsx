@@ -20,6 +20,7 @@ import {
 import { cn } from "@/lib/utils";
 import { audioService } from "@/lib/audioService";
 import { AchievementTracker } from "@/lib/achievementTracker";
+import { EnhancedAchievementTracker } from "@/lib/enhancedAchievementTracker";
 import { EnhancedAchievementPopup } from "@/components/EnhancedAchievementPopup";
 import {
   DashboardWordGenerator,
@@ -595,7 +596,7 @@ export function InteractiveDashboardWordCard({
                         return "🏆";
                       }
                       if (percentage >= 90) return "⭐";
-                      if (percentage >= 75) return "��";
+                      if (percentage >= 75) return "🎯";
                       if (percentage >= 50) return "💪";
                       return "🌟";
                     })()}
