@@ -205,7 +205,7 @@ export const EnhancedWordAdventureCard: React.FC<EnhancedWordAdventureCardProps>
     
     if (!hasFlipped && !isFlipped) {
       setHasFlipped(true);
-      playUIInteractionSoundIfEnabled.success();
+      playUIInteractionSoundIfEnabled.cheer();
     }
 
     // Enhanced haptic feedback
