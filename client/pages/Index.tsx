@@ -304,7 +304,12 @@ export default function Index({ initialProfile }: IndexProps) {
               wordsLearned: savedSession.currentProgress?.wordsLearned || 0,
               sessionAge: Math.round(sessionAge / 1000 / 60), // in minutes
             });
-            handleSessionRestore(savedSession);
+            setIsRestoringSession(true);
+            // Small delay to show restoration feedback
+            setTimeout(() => {
+              handleSessionRestore(savedSession);
+              setIsRestoringSession(false);
+            }, 800);
           } else {
             // Start fresh but mark session as initialized
             setIsSessionInitialized(true);
