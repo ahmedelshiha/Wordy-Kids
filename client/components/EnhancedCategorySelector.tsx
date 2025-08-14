@@ -283,7 +283,10 @@ export function EnhancedCategorySelector({
 
   // Generate enriched categories from real-time data
   const generateEnrichedCategories = (): Category[] => {
-    if (!realTimeWords.length) return [];
+    // Fallback to static data if real-time words are not loaded yet
+    const wordsToUse = realTimeWords.length > 0 ? realTimeWords : wordsDatabase;
+
+    if (!wordsToUse.length) return [];
 
     const categoryMap = new Map<string, any>();
 
