@@ -584,7 +584,7 @@ export const WordCard: React.FC<WordCardProps> = ({
             {word.word} {word.emoji}
           </h3>
 
-          <div className="space-y-1.5 flex-1 overflow-y-auto">
+          <div className="space-y-1.5 flex-1 overflow-y-auto scrollbar-thin scrollbar-thumb-white/20 scrollbar-track-transparent">
             <div>
               <h4 className="text-[9px] font-medium mb-0.5 text-yellow-300">
                 Definition:
