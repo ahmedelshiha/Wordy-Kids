@@ -5,6 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { Gamepad2, Play, Zap, Timer, Star, Gift } from "lucide-react";
 import { GameLikeLearning } from "../GameLikeLearning";
 import { WordMatchingGame } from "../WordMatchingGame";
+import WordGarden from "./WordGarden";
 import { generateMatchingPairs } from "@/lib/gameGeneration";
 import { getWordsByCategory, getRandomWords } from "@/data/wordsDatabase";
 
@@ -24,6 +25,17 @@ export function AdventureGames({
   const [activeGame, setActiveGame] = useState<string | null>(null);
 
   const adventureGames = [
+    {
+      id: "word_garden",
+      title: "Word Garden",
+      description: "Listen and grow your vocabulary garden! Perfect for ages 3-5.",
+      icon: "🌱",
+      difficulty: "Easy",
+      timeLimit: "3-6 min",
+      rewards: ["🌸 Grow plants", "⭐ Garden achievements", "🦋 Nature rewards"],
+      color: "from-emerald-400 to-green-500",
+      players: "Single Player",
+    },
     {
       id: "word_adventure",
       title: "Word Adventure Quest",
@@ -90,6 +102,31 @@ export function AdventureGames({
     setActiveGame(null);
   };
 
+  if (activeGame === "word_garden") {
+    return (
+      <div className="space-y-6">
+        <div className="flex items-center justify-between">
+          <h2 className="text-2xl font-bold text-gray-800">
+            🌱 Word Garden
+          </h2>
+          <Button onClick={handleGameBack} variant="outline" size="sm">
+            ← Back to Games
+          </Button>
+        </div>
+        <WordGarden
+          rounds={8}
+          optionsPerRound={3}
+          difficulty="easy"
+          category={selectedCategory !== "all" ? selectedCategory : undefined}
+          onFinish={(stats) => {
+            onGameComplete(stats.correct, stats.totalRounds);
+            handleGameBack();
+          }}
+        />
+      </div>
+    );
+  }
+
   if (activeGame === "word_adventure") {
     return (
       <GameLikeLearning
@@ -134,7 +171,7 @@ export function AdventureGames({
           🎮 Adventure Games Zone! 🚀
         </h2>
         <p className="text-gray-600 mb-6">
-          Choose your learning adventure and become a word master!
+          Choose your learning adventure and become a word master! New: Word Garden for little learners!
         </p>
       </div>
 
