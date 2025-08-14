@@ -351,6 +351,50 @@ export default function ListenAndGuessGame({
     ],
   );
 
+  // Fallback demo words if generation fails
+  const fallbackWords: WordItem[] = [
+    {
+      id: "fallback-1",
+      word: "apple",
+      imageUrl: "https://images.unsplash.com/photo-1568702846914-96b305d2aaeb?w=200&h=200&fit=crop&auto=format",
+      distractorImages: [
+        "https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?w=200&h=200&fit=crop&auto=format",
+        "https://images.unsplash.com/photo-1611080626919-7cf5a9dbab5b?w=200&h=200&fit=crop&auto=format",
+      ],
+      category: "food",
+      difficulty: "easy",
+    },
+    {
+      id: "fallback-2",
+      word: "cat",
+      imageUrl: "https://images.unsplash.com/photo-1574158622682-e40e69881006?w=200&h=200&fit=crop&auto=format",
+      distractorImages: [
+        "https://images.unsplash.com/photo-1583337130417-3346a1be7dee?w=200&h=200&fit=crop&auto=format",
+        "https://images.unsplash.com/photo-1552728089-57bdde30beb3?w=200&h=200&fit=crop&auto=format",
+      ],
+      category: "animals",
+      difficulty: "easy",
+    },
+  ];
+
+  // If no words available, use fallback
+  if (sequence.length === 0) {
+    console.warn("No words available for Listen & Guess, using fallback words");
+    // Regenerate sequence with fallback words
+    const fallbackSequence = fallbackWords.map((w) => ({
+      word: w,
+      options: shuffle([w.imageUrl, ...w.distractorImages]),
+    }));
+
+    if (fallbackSequence.length === 0) {
+      return (
+        <div className={`w-full max-w-md mx-auto p-4 ${className}`}>
+          <EmptyState />
+        </div>
+      );
+    }
+  }
+
   if (!current) {
     return (
       <div className={`w-full max-w-md mx-auto p-4 ${className}`}>
