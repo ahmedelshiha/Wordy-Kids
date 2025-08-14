@@ -314,11 +314,6 @@ export default function WordGardenGame({
       const isCorrect = img === current.imageUrl;
 
       if (isCorrect) {
-        console.log('WordGarden: Correct answer chosen!', {
-          currentRound: roundIdx,
-          correctCount,
-          streak
-        });
         const nextCorrect = correctCount + 1;
         const nextStreak = streak + 1;
 
