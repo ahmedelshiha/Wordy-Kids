@@ -933,7 +933,8 @@ export function InteractiveDashboardWordCard({
                 onClick={() => setShowHint(true)}
                 variant="outline"
                 size="sm"
-                className="px-3 py-2 text-sm rounded-xl transition-all duration-300 transform hover:scale-105"
+                className="px-3 py-2 text-xs sm:text-sm rounded-xl transition-all duration-300 transform hover:scale-105 active:scale-95 min-h-[44px]"
+                aria-label="Show hint"
               >
                 <Lightbulb className="w-4 h-4 mr-1" />
                 💡 Hint
