@@ -1248,12 +1248,27 @@ export function InteractiveDashboardWordCard({
           )}
 
           {/* Loading next word indicator */}
-          {isAnswered && (
-            <div className="text-center py-6">
-              <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-educational-purple mx-auto mb-2"></div>
-              <p className="text-gray-600">Loading next word...</p>
-            </div>
-          )}
+          <AnimatePresence>
+            {isAnswered && (
+              <motion.div
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.9 }}
+                transition={{ duration: 0.3 }}
+                className="text-center py-6"
+              >
+                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-educational-purple mx-auto mb-2 will-change-transform"></div>
+                <motion.p
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.2 }}
+                  className="text-gray-600"
+                >
+                  Loading next word...
+                </motion.p>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </CardContent>
         </Card>
       </motion.div>
