@@ -1187,11 +1187,59 @@ export class EnhancedAchievementTracker {
       "🌈 Evening rainbow magic! Colors of learning everywhere!",
     ];
 
-    let messages = morningMessages;
-    if (hour >= 12 && hour < 18) messages = afternoonMessages;
-    else if (hour >= 18) messages = eveningMessages;
+    // Special weekend messages
+    const weekendMessages = [
+      "🎉 Weekend word party! No school but lots of fun learning!",
+      "🏖️ Weekend vibes! Relax and learn at your own pace!",
+      "🎪 Weekend word carnival! Extra fun, extra learning!",
+      "🦋 Free weekend spirit! Let your word wings soar!",
+      "🎨 Creative weekend! Paint with words and imagination!",
+      "🌈 Rainbow weekend! Every color of learning is here!",
+      "🎊 Weekend celebration! Learning never takes a break!",
+      "🏰 Weekend word kingdom! You rule your learning adventure!",
+      "🎵 Weekend word symphony! Make beautiful learning music!",
+      "🦄 Magical weekend! Unicorns believe in your word power!",
+    ];
 
-    return messages[Math.floor(Math.random() * messages.length)];
+    // Special day messages
+    const dayOfWeek = new Date().getDay();
+    const isWeekend = dayOfWeek === 0 || dayOfWeek === 6;
+
+    // Monday motivation
+    const mondayMessages = [
+      "💪 Monday Motivation! Start the week with word power!",
+      "🚀 Monday Blast Off! Launch into an amazing week!",
+      "⭐ Marvelous Monday! Make this week sparkle with words!",
+      "🌟 Monday Magic! Transform your week with learning!",
+      "🎯 Monday Mission! Your word adventure begins now!",
+    ];
+
+    // Friday celebration
+    const fridayMessages = [
+      "🎉 Friday Fun! End the week with a word celebration!",
+      "🏆 Fantastic Friday! You've earned your learning crown!",
+      "🌈 Friday Rainbow! Look at all the words you've collected!",
+      "🎪 Friday Festival! Celebrate your amazing week of learning!",
+      "⭐ Friday Superstar! You've shined all week long!",
+    ];
+
+    // Determine which message set to use
+    let selectedMessages;
+
+    if (isWeekend) {
+      selectedMessages = weekendMessages;
+    } else if (dayOfWeek === 1) { // Monday
+      selectedMessages = mondayMessages;
+    } else if (dayOfWeek === 5) { // Friday
+      selectedMessages = fridayMessages;
+    } else {
+      // Regular time-based messages
+      selectedMessages = morningMessages;
+      if (hour >= 12 && hour < 18) selectedMessages = afternoonMessages;
+      else if (hour >= 18) selectedMessages = eveningMessages;
+    }
+
+    return selectedMessages[Math.floor(Math.random() * selectedMessages.length)];
   }
 
   /**
