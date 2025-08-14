@@ -25,10 +25,12 @@ import {
 } from "lucide-react";
 import { playSoundIfEnabled } from "@/lib/soundEffects";
 import { audioService } from "@/lib/audioService";
+import { enhancedAudioService } from "@/lib/enhancedAudioService";
 import { adventureService } from "@/lib/adventureService";
 import { WordAdventureStatus } from "@shared/adventure";
 import { AchievementTracker } from "@/lib/achievementTracker";
 import { EnhancedAchievementPopup } from "@/components/EnhancedAchievementPopup";
+import { useVoiceSettings } from "@/hooks/use-voice-settings";
 
 interface Word {
   id: number;
@@ -82,6 +84,9 @@ export const EnhancedWordCard: React.FC<EnhancedWordCardProps> = ({
   const [isZoomed, setIsZoomed] = useState(false);
   const [highContrastMode, setHighContrastMode] = useState(false);
   const cardRef = useRef<HTMLDivElement>(null);
+
+  // Voice settings integration
+  const voiceSettings = useVoiceSettings();
 
   // Initialize adventure status for this word
   React.useEffect(() => {
@@ -150,7 +155,7 @@ export const EnhancedWordCard: React.FC<EnhancedWordCardProps> = ({
     }
 
     // Use real speech synthesis for pronunciation
-    audioService.pronounceWord(word.word, {
+    enhancedAudioService.pronounceWord(word.word, {
       onStart: () => {
         console.log("Started pronunciation");
       },
@@ -190,7 +195,7 @@ export const EnhancedWordCard: React.FC<EnhancedWordCardProps> = ({
   const handleFavorite = () => {
     setIsFavorited(!isFavorited);
     if (!isFavorited) {
-      audioService.playCheerSound();
+      enhancedAudioService.playSuccessSound();
       setShowSparkles(true);
       setTimeout(() => setShowSparkles(false), 1000);
 

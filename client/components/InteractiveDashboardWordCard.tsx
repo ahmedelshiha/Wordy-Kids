@@ -20,6 +20,7 @@ import {
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { audioService } from "@/lib/audioService";
+import { enhancedAudioService } from "@/lib/enhancedAudioService";
 import { AchievementTracker } from "@/lib/achievementTracker";
 import { EnhancedAchievementTracker } from "@/lib/enhancedAchievementTracker";
 import { EnhancedAchievementPopup } from "@/components/EnhancedAchievementPopup";
@@ -29,6 +30,7 @@ import {
   DashboardWordSession,
   UserProgress,
 } from "@/lib/dashboardWordGenerator";
+import { useVoiceSettings } from "@/hooks/use-voice-settings";
 
 interface Word {
   id: number;
@@ -203,6 +205,9 @@ export function InteractiveDashboardWordCard({
   const [guess, setGuess] = useState("");
   const [showHint, setShowHint] = useState(false);
 
+  // Voice settings integration
+  const voiceSettings = useVoiceSettings();
+
   // Progressive enhancement states
   const [imageLoaded, setImageLoaded] = useState(false);
   const [imageError, setImageError] = useState(false);
@@ -309,7 +314,7 @@ export function InteractiveDashboardWordCard({
     if (currentWord && !isPlaying) {
       triggerHapticFeedback("light"); // Light feedback for audio action
       setIsPlaying(true);
-      audioService.pronounceWord(currentWord.word, {
+      enhancedAudioService.pronounceWord(currentWord.word, {
         onStart: () => setIsPlaying(true),
         onEnd: () => setIsPlaying(false),
         onError: () => setIsPlaying(false),
@@ -452,10 +457,10 @@ export function InteractiveDashboardWordCard({
     // Show celebration effect for successful interactions
     if (status === "remembered") {
       setCelebrationEffect(true);
-      audioService.playSuccessSound();
+      enhancedAudioService.playSuccessSound();
       setTimeout(() => setCelebrationEffect(false), 2000);
     } else if (status === "needs_practice") {
-      audioService.playEncouragementSound();
+      enhancedAudioService.playEncouragementSound();
     }
 
     try {
@@ -666,7 +671,9 @@ export function InteractiveDashboardWordCard({
           {imageError && (
             <div className="absolute inset-0 bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center">
               <div className="text-center">
-                <div className="text-4xl mb-2">{currentWord.emoji || "🖼️"}</div>
+                <div className="text-4xl mb-2">
+                  {currentWord.emoji || "🖼���"}
+                </div>
                 <span className="text-xs text-gray-500">
                   Image not available
                 </span>

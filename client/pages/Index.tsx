@@ -22,8 +22,9 @@ import {
 } from "@/lib/vowelQuizGeneration";
 import { AchievementTracker } from "@/lib/achievementTracker";
 import { audioService } from "@/lib/audioService";
+import { enhancedAudioService } from "@/lib/enhancedAudioService";
 import { EnhancedAchievementPopup } from "@/components/EnhancedAchievementPopup";
-import { CompactSettingsPanel } from "@/components/CompactSettingsPanel";
+import { CompactMobileSettingsPanel } from "@/components/CompactMobileSettingsPanel";
 import { FloatingBubbles } from "@/components/FloatingBubbles";
 import { CelebrationEffect } from "@/components/CelebrationEffect";
 import { DailyChallenge } from "@/components/DailyChallenge";
@@ -1735,7 +1736,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                                     type: "celebration",
                                                     title:
                                                       "Category Review Complete! 📚",
-                                                    message: `You've reviewed all ${completionResult.totalWords} words in ${selectedCategory === "all" ? "this word set" : selectedCategory}!\\n\\n✅ Remembered: ${completionResult.totalRemembered} words\\n❌ Need practice: ${completionResult.totalWords - completionResult.totalRemembered} words\\n\\n${completionResult.totalWords - completionResult.totalRemembered > 0 ? "Don't worry! Let's practice the tricky ones again! 💪📚" : "Amazing work! 🎉"}`,
+                                                    message: `You've reviewed all ${completionResult.totalWords} words in ${selectedCategory === "all" ? "this word set" : selectedCategory}!\\n\\n✅ Remembered: ${completionResult.totalRemembered} words\\n❌ Need practice: ${completionResult.totalWords - completionResult.totalRemembered} words\\n\\n${completionResult.totalWords - completionResult.totalRemembered > 0 ? "Don't worry! Let's practice the tricky ones again! ���📚" : "Amazing work! 🎉"}`,
                                                     points:
                                                       completionResult.totalRemembered *
                                                       10, // Fewer points since words were forgotten
@@ -2639,7 +2640,7 @@ export default function Index({ initialProfile }: IndexProps) {
       {backgroundAnimationsEnabled && <FloatingBubbles />}
 
       {/* Settings Panel */}
-      <CompactSettingsPanel
+      <CompactMobileSettingsPanel
         isOpen={showSettings}
         onClose={() => setShowSettings(false)}
       />
