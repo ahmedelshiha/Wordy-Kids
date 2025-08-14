@@ -672,7 +672,7 @@ export const CompactMobileSettingsPanel: React.FC<
                   >
                     <div className="flex items-center gap-2">
                       <BarChart3 className="w-4 h-4" />
-                      <span className="text-sm font-medium">Advanced Goals & Analytics</span>
+                      <span className="text-sm font-medium">Learning Goals</span>
                     </div>
                     <ChevronRight className="w-4 h-4" />
                   </button>
