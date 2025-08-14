@@ -665,6 +665,11 @@ export class EnhancedAchievementTracker {
     },
   };
 
+  // Achievement cooldown system to prevent spam
+  private static achievementCooldowns: Map<string, number> = new Map();
+  private static lastAchievementTime: number = 0;
+  private static readonly ACHIEVEMENT_COOLDOWN_MS = 30000; // 30 seconds between achievements
+
   /**
    * Track activity with enhanced difficulty-based tracking
    */
