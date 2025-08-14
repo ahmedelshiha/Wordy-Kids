@@ -789,7 +789,7 @@ export function InteractiveDashboardWordCard({
               </span>
               <div>
                 <div className="text-xs font-bold text-slate-800 leading-tight">
-                  Today's Quest
+                  Today's Word Quest
                 </div>
               </div>
             </div>
