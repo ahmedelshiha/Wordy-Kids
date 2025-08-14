@@ -118,16 +118,37 @@ export const EnhancedWordLibrary: React.FC<EnhancedWordLibraryProps> = ({
     return () => window.removeEventListener("resize", checkMobile);
   }, []);
 
+  // Update current words when real-time data changes
   useEffect(() => {
-    if (selectedCategory && selectedCategory !== "all") {
-      const categoryWords = getWordsByCategory(selectedCategory);
-      setCurrentWords(categoryWords);
-      setViewMode("words");
-    } else if (selectedCategory === "all") {
-      setCurrentWords(wordsDatabase);
-      setViewMode("words");
+    if (realTimeWords.length > 0) {
+      if (selectedCategory && selectedCategory !== "all") {
+        const categoryWords = realTimeWords.filter(word => word.category === selectedCategory);
+        setCurrentWords(categoryWords);
+        setViewMode("words");
+      } else if (selectedCategory === "all") {
+        setCurrentWords(realTimeWords);
+        setViewMode("words");
+      }
     }
-  }, [selectedCategory]);
+  }, [selectedCategory, realTimeWords, lastUpdate]);
+
+  // Handle manual refresh
+  const handleRefresh = async () => {
+    setRefreshing(true);
+    try {
+      await refreshWords();
+      invalidateCaches();
+
+      // Show success feedback
+      if ("vibrate" in navigator) {
+        navigator.vibrate([100, 50, 100]);
+      }
+    } catch (error) {
+      console.error('Failed to refresh words:', error);
+    } finally {
+      setRefreshing(false);
+    }
+  };
 
   // Filter words based on search and difficulty
   const filteredWords = currentWords.filter((word) => {
