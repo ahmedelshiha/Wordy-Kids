@@ -1282,8 +1282,11 @@ export default function Index({ initialProfile }: IndexProps) {
           </div>
         </div>
       )}
-      {/* Optimized Mobile-First Header */}
-      <header className="relative overflow-hidden bg-gradient-to-r from-educational-blue via-educational-purple to-educational-pink text-white">
+      {/* Main Content - Only show when session is initialized */}
+      {isSessionInitialized && (
+        <>
+          {/* Optimized Mobile-First Header */}
+          <header className="relative overflow-hidden bg-gradient-to-r from-educational-blue via-educational-purple to-educational-pink text-white">
         <div className="absolute inset-0 bg-black/10"></div>
         <div className="relative container mx-auto px-4 py-2 md:py-4">
           {/* Mobile header - ultra compact */}
@@ -3025,6 +3028,8 @@ export default function Index({ initialProfile }: IndexProps) {
           }}
           autoCloseDelay={6000} // Auto-close after 6 seconds
         />
+      )}
+        </>
       )}
     </div>
   );
