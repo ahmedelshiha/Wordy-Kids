@@ -314,7 +314,7 @@ export const CompactSettingsPanel: React.FC<CompactSettingsPanelProps> = ({
                           onClick={() => handleVoiceTypeChange(voice.type)}
                         >
                           <span className="mr-1">{voice.emoji}</span>
-                          <span className="hidden xs:inline">{voice.label}</span>
+                          <span className="voice-label hidden xs:inline">{voice.label}</span>
                         </Button>
                       ))}
                     </div>
