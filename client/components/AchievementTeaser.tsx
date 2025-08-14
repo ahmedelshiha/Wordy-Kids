@@ -205,14 +205,14 @@ export function AchievementTeaser({ className }: AchievementTeaserProps) {
 
               {isTease && (
                 <motion.div
-                  initial={{ width: 0 }}
-                  animate={{ width: "100%" }}
-                  transition={{ duration: 1, delay: 0.5 }}
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.5, delay: 0.3 }}
                   className="mt-2"
                 >
                   <Badge
                     variant="outline"
-                    className="text-xs sm:text-sm bg-white/60 text-purple-700 border-purple-300 animate-pulse rounded-full px-2 py-1 shadow-sm"
+                    className="text-xs sm:text-sm bg-white/60 text-purple-700 border-purple-300 animate-pulse rounded-full px-2 py-1 shadow-sm will-change-transform"
                   >
                     🎯 Keep going!
                   </Badge>
