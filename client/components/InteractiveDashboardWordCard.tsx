@@ -1045,7 +1045,7 @@ export function InteractiveDashboardWordCard({
               aria-live="polite"
             >
               {/* Word Name */}
-              <div className="text-center bg-gradient-to-r from-green-50 to-blue-50 p-3 md:p-4 rounded-2xl border-2 border-green-200">
+              <div className="text-center bg-gradient-to-br from-green-50 via-emerald-50/30 to-blue-50 p-4 md:p-6 rounded-2xl border border-green-200/60 shadow-lg backdrop-blur-sm ring-1 ring-green-100/50">
                 <div className="flex items-center justify-center gap-2 md:gap-3 mb-2 md:mb-3">
                   <div className="text-2xl md:text-3xl" aria-hidden="true">
                     {currentWord.emoji}
