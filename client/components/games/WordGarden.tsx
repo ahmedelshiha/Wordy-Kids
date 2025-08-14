@@ -566,7 +566,7 @@ export default function WordGardenGame({
       <style>{`.wg-confetti{position:absolute;top:60%;border-radius:9999px;box-shadow:0 0 0 1px rgba(255,255,255,.15) inset}`}</style>
 
       {/* Enhanced Exit Confirmation Dialog */}
-      <Dialog open={showExitDialog} onOpenChange={setShowExitDialog}>
+      <Dialog open={showExitDialog} onOpenChange={onCloseExitDialog}>
         <DialogContent className="sm:max-w-md">
           <DialogHeader className="text-center">
             <div className="text-6xl mb-2">🌱</div>
@@ -595,7 +595,7 @@ export default function WordGardenGame({
           <DialogFooter className="flex flex-col-reverse sm:flex-row gap-2 mt-6">
             <Button
               variant="outline"
-              onClick={() => setShowExitDialog(false)}
+              onClick={() => onCloseExitDialog?.()}
               className="flex-1 bg-green-50 hover:bg-green-100 text-green-700 border-green-300"
             >
               <span className="mr-2">🌱</span>
@@ -604,7 +604,7 @@ export default function WordGardenGame({
             <Button
               variant="destructive"
               onClick={() => {
-                setShowExitDialog(false);
+                onCloseExitDialog?.();
                 onExit?.();
               }}
               className="flex-1 bg-red-500 hover:bg-red-600"
