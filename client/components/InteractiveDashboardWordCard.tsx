@@ -635,7 +635,7 @@ export function InteractiveDashboardWordCard({
                       if (wordsLearned >= goal) {
                         if (wordsLearned >= goal * 2) return "⭐";
                         if (wordsLearned >= goal * 1.5) return "🚀";
-                        return "����";
+                        return "🏆";
                       }
                       if (percentage >= 90) return "⭐";
                       if (percentage >= 75) return "🎯";
@@ -663,7 +663,7 @@ export function InteractiveDashboardWordCard({
                             return "�� SUPERSTAR! Amazing effort!";
                           if (wordsLearned >= goal * 1.5)
                             return "🚀 Beyond awesome! Keep going!";
-                          return "��� Goal achieved! You're incredible!";
+                          return "🎉 Goal achieved! You're incredible!";
                         }
                         if (percentage >= 90)
                           return "🌟 Almost there, superstar!";
@@ -1021,8 +1021,8 @@ export function InteractiveDashboardWordCard({
 
           {/* Action Buttons - Always visible */}
           {!isAnswered && (
-            <div className="space-y-4">
-              <div className="grid grid-cols-2 gap-3">
+            <div className="space-y-3 sm:space-y-4 px-2 sm:px-0">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                 <Button
                   onClick={() => handleWordAction("needs_practice")}
                   disabled={isAnswered}
