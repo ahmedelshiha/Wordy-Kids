@@ -250,15 +250,15 @@ export function EncouragingFeedback({
 
             {/* Points and Streak */}
             {(feedback.points || feedback.streak) && (
-              <div className="flex justify-center gap-4">
+              <div className="flex justify-center gap-2 flex-wrap">
                 {feedback.points && (
-                  <Badge className="bg-white/30 text-white border-white/30 text-lg py-2 px-4">
-                    <Zap className="w-4 h-4 mr-2" />+{feedback.points} points
+                  <Badge className="bg-white/30 text-white border-white/30 text-sm py-1 px-3">
+                    <Zap className="w-3 h-3 mr-1" />+{feedback.points} points
                   </Badge>
                 )}
                 {feedback.streak && (
-                  <Badge className="bg-white/30 text-white border-white/30 text-lg py-2 px-4">
-                    <Target className="w-4 h-4 mr-2" />
+                  <Badge className="bg-white/30 text-white border-white/30 text-sm py-1 px-3">
+                    <Target className="w-3 h-3 mr-1" />
                     {feedback.streak} day streak
                   </Badge>
                 )}
