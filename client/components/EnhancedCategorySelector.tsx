@@ -259,6 +259,14 @@ export function EnhancedCategorySelector({
   enableAccessibility = true,
   showGameification = true,
 }: EnhancedCategorySelectorProps) {
+  // Real-time word database integration
+  const {
+    words: realTimeWords,
+    categories: realTimeCategories,
+    lastUpdate,
+    isLoading: wordsLoading
+  } = useRealTimeWords();
+
   const [hoveredCategory, setHoveredCategory] = useState<string | null>(null);
   const [floatingElements, setFloatingElements] = useState<
     Array<{ id: string; emoji: string; x: number; y: number }>
