@@ -336,7 +336,7 @@ export function EnhancedCategorySelector({
   const getCategoryIcon = (category: string): string => {
     const icons: Record<string, string> = {
       animals: "🦋",
-      nature: "🌳",
+      nature: "���",
       food: "🍎",
       colors: "🌈",
       objects: "🏠",
@@ -422,7 +422,7 @@ export function EnhancedCategorySelector({
 
   const getCategoryDescription = (category: string): string => {
     const descriptions: Record<string, string> = {
-      animals: "Meet amazing creatures from around the world!",
+      animals: "Meet amazing creatures from pets to wild animals!",
       nature: "Explore the magical wonders of our natural world!",
       food: "Discover delicious foods from everywhere!",
       colors: "Learn about the beautiful colors around us!",
@@ -451,7 +451,7 @@ export function EnhancedCategorySelector({
 
   const getCategoryFunFact = (category: string): string => {
     const funFacts: Record<string, string> = {
-      animals: "Some animals can taste with their feet!",
+      animals: "There are over 8.7 million animal species on Earth!",
       nature: "Trees can live for thousands of years!",
       food: "Honey never spoils!",
       colors: "Humans can see 10 million colors!",
