@@ -322,7 +322,7 @@ export default function Index({ initialProfile }: IndexProps) {
         handleAnimationsChange as EventListener,
       );
     };
-  }, []);
+  }, []); // Removed currentProfile dependency to prevent recreating listeners
 
   // Track navigation history for better back navigation
   useEffect(() => {
@@ -355,7 +355,9 @@ export default function Index({ initialProfile }: IndexProps) {
     };
 
     window.addEventListener("keydown", handleKeyNavigation);
-    return () => window.removeEventListener("keydown", handleKeyNavigation);
+    return () => {
+      window.removeEventListener("keydown", handleKeyNavigation);
+    };
   }, [learningMode]);
 
   // Initialize learning session and load child stats
@@ -978,7 +980,9 @@ export default function Index({ initialProfile }: IndexProps) {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 relative overflow-x-hidden">
+    <div
+      key={currentProfile?.id || 'default-profile'}
+      className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 relative overflow-x-hidden">
       {/* Optimized Mobile-First Header */}
       <header className="relative overflow-hidden bg-gradient-to-r from-educational-blue via-educational-purple to-educational-pink text-white">
         <div className="absolute inset-0 bg-black/10"></div>
