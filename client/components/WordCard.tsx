@@ -511,11 +511,31 @@ export const WordCard: React.FC<WordCardProps> = ({
               Tap to see definition
             </p>
 
-            {/* Mobile gesture hints - more compact */}
-            <div className="flex justify-center gap-1.5 text-[8px] opacity-60 sm:hidden">
-              <span>← ❤️</span>
-              <span>↑ 🔊</span>
-              <span>→ 🔄</span>
+            {/* Enhanced Mobile gesture hints with better visual feedback */}
+            <div className="hidden sm:block">
+              <div className="flex justify-center gap-2 text-[9px] opacity-70">
+                <span className="flex items-center gap-0.5">
+                  <span className="w-4 h-2 bg-white/20 rounded-sm flex items-center justify-center text-[8px]">←</span>
+                  <span>❤️</span>
+                </span>
+                <span className="flex items-center gap-0.5">
+                  <span className="w-4 h-2 bg-white/20 rounded-sm flex items-center justify-center text-[8px]">↑</span>
+                  <span>🔊</span>
+                </span>
+                <span className="flex items-center gap-0.5">
+                  <span className="w-4 h-2 bg-white/20 rounded-sm flex items-center justify-center text-[8px]">→</span>
+                  <span>🔄</span>
+                </span>
+              </div>
+            </div>
+
+            {/* Mobile-only compact hints */}
+            <div className="sm:hidden">
+              <div className="flex justify-center gap-1.5 text-[8px] opacity-60">
+                <span>← ❤️</span>
+                <span>↑ 🔊</span>
+                <span>→ 🔄</span>
+              </div>
             </div>
 
             <div className="flex justify-center gap-0.5">
