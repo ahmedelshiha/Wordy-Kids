@@ -355,7 +355,7 @@ export const WordCard: React.FC<WordCardProps> = ({
           {/* Mobile-Optimized Image/Emoji Container */}
           {word.imageUrl ? (
             <div className="relative mx-auto mb-1.5">
-              <div className="w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 rounded-full bg-white/20 backdrop-blur-sm shadow-lg ring-1 ring-white/30 flex items-center justify-center overflow-hidden">
+              <div className="w-28 h-28 sm:w-32 sm:h-32 md:w-36 md:h-36 rounded-full bg-white/20 backdrop-blur-sm shadow-lg ring-1 ring-white/30 flex items-center justify-center overflow-hidden">
                 <img
                   src={word.imageUrl}
                   alt={word.word}
@@ -365,14 +365,14 @@ export const WordCard: React.FC<WordCardProps> = ({
             </div>
           ) : (
             <div className="relative mx-auto mb-1.5">
-              <div className="w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 rounded-full bg-gradient-to-br from-white/30 via-white/20 to-white/10 backdrop-blur-md shadow-lg ring-1 ring-white/30 flex items-center justify-center relative overflow-hidden">
-                {/* Decorative background elements - smaller for mobile */}
-                <div className="absolute top-0.5 left-0.5 w-1.5 h-1.5 bg-white/20 rounded-full animate-pulse"></div>
-                <div className="absolute bottom-1 right-1 w-1 h-1 bg-white/15 rounded-full animate-bounce delay-300"></div>
-                <div className="absolute top-1/2 right-0.5 w-0.5 h-0.5 bg-white/25 rounded-full animate-ping delay-700"></div>
+              <div className="w-28 h-28 sm:w-32 sm:h-32 md:w-36 md:h-36 rounded-full bg-gradient-to-br from-white/30 via-white/20 to-white/10 backdrop-blur-md shadow-lg ring-1 ring-white/30 flex items-center justify-center relative overflow-hidden">
+                {/* Decorative background elements */}
+                <div className="absolute top-1 left-1 w-2 h-2 bg-white/20 rounded-full animate-pulse"></div>
+                <div className="absolute bottom-1.5 right-1.5 w-1.5 h-1.5 bg-white/15 rounded-full animate-bounce delay-300"></div>
+                <div className="absolute top-1/2 right-1 w-1 h-1 bg-white/25 rounded-full animate-ping delay-700"></div>
 
-                {/* Main emoji - Mobile optimized sizing */}
-                <span className="text-2xl sm:text-3xl md:text-4xl relative z-10 drop-shadow-lg">
+                {/* Main emoji - Larger sizing */}
+                <span className="text-4xl sm:text-5xl md:text-6xl relative z-10 drop-shadow-lg">
                   {word.emoji || "📚"}
                 </span>
 
