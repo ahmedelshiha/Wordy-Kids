@@ -650,11 +650,34 @@ export function InteractiveDashboardWordCard({
   const renderWordImage = () => {
     if (currentWord?.imageUrl) {
       return (
-        <img
-          src={currentWord.imageUrl}
-          alt="Picture to guess"
-          className="w-full h-64 object-cover rounded-2xl shadow-lg"
-        />
+        <div className="relative w-full h-64 rounded-2xl overflow-hidden shadow-lg">
+          {!imageLoaded && !imageError && (
+            <div className="absolute inset-0 bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center">
+              <div className="flex flex-col items-center gap-2">
+                <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-gray-400"></div>
+                <span className="text-xs text-gray-500">Loading image...</span>
+              </div>
+            </div>
+          )}
+          {imageError && (
+            <div className="absolute inset-0 bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center">
+              <div className="text-center">
+                <div className="text-4xl mb-2">{currentWord.emoji || "🖼️"}</div>
+                <span className="text-xs text-gray-500">Image not available</span>
+              </div>
+            </div>
+          )}
+          <img
+            src={currentWord.imageUrl}
+            alt={`Picture showing ${currentWord.word}`}
+            className={`w-full h-64 object-cover transition-opacity duration-300 ${
+              imageLoaded ? 'opacity-100' : 'opacity-0'
+            }`}
+            onLoad={() => setImageLoaded(true)}
+            onError={() => setImageError(true)}
+            loading="lazy"
+          />
+        </div>
       );
     }
 
