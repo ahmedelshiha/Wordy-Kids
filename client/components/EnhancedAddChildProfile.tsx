@@ -273,22 +273,22 @@ export function EnhancedAddChildProfile({
     return (
       <Dialog open={isOpen} onOpenChange={onClose}>
         <DialogContent className="mx-auto bg-gradient-to-br from-green-50 to-emerald-50 border-green-200 w-[95vw] max-w-[400px] sm:w-full">
-          <div className="text-center py-8">
-            <div className="mb-6 relative">
-              <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto animate-pulse">
-                <Check className="w-10 h-10 text-green-600" />
+          <div className="text-center py-6">
+            <div className="mb-4 relative">
+              <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto animate-pulse">
+                <Check className="w-8 h-8 text-green-600" />
               </div>
-              <div className="absolute -top-2 -right-2 animate-bounce">
-                <Sparkles className="w-8 h-8 text-yellow-500" />
+              <div className="absolute -top-1 -right-1 animate-bounce">
+                <Sparkles className="w-6 h-6 text-yellow-500" />
               </div>
             </div>
-            <h2 className="text-2xl font-bold text-green-800 mb-2">
+            <h2 className="text-xl font-bold text-green-800 mb-2">
               Welcome to the family! 🎉
             </h2>
             <p className="text-green-700 mb-4">
               {formData.name} is ready to start their learning adventure!
             </p>
-            <div className="text-4xl mb-4 animate-bounce">
+            <div className="text-3xl mb-3 animate-bounce">
               {formData.avatar}
             </div>
           </div>
