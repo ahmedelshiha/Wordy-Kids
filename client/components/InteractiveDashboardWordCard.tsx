@@ -412,6 +412,22 @@ export function InteractiveDashboardWordCard({
         wordsLearned: newStats.wordsRemembered,
       });
 
+      // Track enhanced session completion achievements
+      const sessionTimeMinutes = Math.round(
+        (Date.now() - newStats.sessionStartTime) / 1000 / 60,
+      );
+      const enhancedSessionAchievements = EnhancedAchievementTracker.trackActivity({
+        type: "sessionComplete",
+        sessionStats: {
+          accuracy: newStats.accuracy,
+          timeMinutes: sessionTimeMinutes,
+          wordsCompleted: newStats.wordsCompleted,
+        },
+      });
+
+      // Combine all session achievements
+      const allSessionAchievements = [...sessionJourneyAchievements, ...enhancedSessionAchievements];
+
       // Add session journey achievements to the display queue
       if (sessionJourneyAchievements.length > 0) {
         setTimeout(() => {
@@ -1040,7 +1056,7 @@ export function InteractiveDashboardWordCard({
                   className="text-gray-500 hover:text-gray-700 hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed py-1 px-3"
                 >
                   <SkipForward className="w-4 h-4 mr-1" />
-                  🤔 Try another word
+                  ��� Try another word
                 </Button>
               </div>
 
