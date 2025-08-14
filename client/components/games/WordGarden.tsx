@@ -329,6 +329,12 @@ export default function WordGardenGame({
           ),
         );
 
+        // Mark this plant as recently grown for special animation
+        setRecentlyGrown(roundIdx);
+
+        // Clear the recently grown state after animation
+        setTimeout(() => setRecentlyGrown(null), 1200);
+
         // Sparkles + confetti
         burst();
 
