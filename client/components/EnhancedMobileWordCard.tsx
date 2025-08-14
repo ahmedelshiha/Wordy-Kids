@@ -100,6 +100,9 @@ export const EnhancedMobileWordCard: React.FC<EnhancedMobileWordCardProps> = ({
   const cardRef = useRef<HTMLDivElement>(null);
   const pronunciationRef = useRef<HTMLButtonElement>(null);
 
+  // Voice settings integration
+  const voiceSettings = useVoiceSettings();
+
   // Initialize adventure status
   useEffect(() => {
     let status = adventureService.getWordAdventureStatus(word.id.toString());
