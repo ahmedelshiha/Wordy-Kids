@@ -1051,12 +1051,12 @@ export function InteractiveDashboardWordCard({
                 >
                   <div className="absolute inset-0 bg-white/20 rounded-xl opacity-0 hover:opacity-100 transition-opacity duration-300"></div>
                   <div className="relative z-10 flex items-center justify-center">
-                    <span className="text-lg mr-1 animate-bounce">😊</span>
+                    <span className="text-lg sm:text-xl mr-2 animate-bounce">😊</span>
                     <div className="text-center">
-                      <div className="font-bold text-xs md:text-sm">
+                      <div className="font-bold text-sm sm:text-base md:text-lg">
                         I Remember
                       </div>
-                      <div className="text-xs opacity-90 mt-0.5">
+                      <div className="text-xs sm:text-sm opacity-90 mt-0.5">
                         Awesome! ⭐
                       </div>
                     </div>
