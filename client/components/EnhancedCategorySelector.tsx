@@ -413,9 +413,7 @@ export function EnhancedCategorySelector({
       sports: "from-orange-400 to-green-400",
       greetings: "from-blue-400 to-purple-400",
       technology: "from-gray-400 to-blue-400",
-      "at-the-zoo": "from-green-400 to-orange-400",
       "at-the-clothes-shop": "from-pink-400 to-purple-400",
-      "my-favourite-food": "from-green-400 to-yellow-400",
       "at-home": "from-blue-400 to-cyan-400",
       default: "from-slate-400 to-slate-600",
     };
