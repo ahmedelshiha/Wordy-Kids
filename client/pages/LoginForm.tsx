@@ -550,8 +550,9 @@ export default function LoginForm() {
               <Button
                 type="button"
                 onClick={() => navigate("/signup")}
-                className="w-full py-3 bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 hover:from-blue-700 hover:via-purple-700 hover:to-pink-700 text-white font-semibold text-lg shadow-lg hover:shadow-xl transform hover:scale-[1.02] transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
+                className="w-full py-3 sm:py-4 bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 hover:from-blue-700 hover:via-purple-700 hover:to-pink-700 text-white font-semibold text-base sm:text-lg shadow-lg hover:shadow-xl transform hover:scale-[1.02] transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none min-h-[48px] touch-target"
                 disabled={isLoading}
+                aria-label="Create new account"
               >
                 <div className="flex items-center gap-3">
                   <UserCheck className="w-5 h-5" />
@@ -565,8 +566,9 @@ export default function LoginForm() {
             <Button
               type="button"
               onClick={handleBackToMain}
-              className="w-full py-3 bg-gradient-to-r from-orange-500 via-yellow-500 to-amber-500 hover:from-orange-600 hover:via-yellow-600 hover:to-amber-600 text-white font-semibold text-lg shadow-lg hover:shadow-xl transform hover:scale-[1.02] transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
+              className="w-full py-3 sm:py-4 bg-gradient-to-r from-orange-500 via-yellow-500 to-amber-500 hover:from-orange-600 hover:via-yellow-600 hover:to-amber-600 text-white font-semibold text-base sm:text-lg shadow-lg hover:shadow-xl transform hover:scale-[1.02] transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none min-h-[48px] touch-target"
               disabled={isLoading}
+              aria-label="Sign in as guest to explore"
             >
               <div className="flex items-center justify-center gap-3">
                 <span className="text-xl animate-gentle-bounce">🎮</span>
