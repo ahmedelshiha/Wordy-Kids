@@ -163,7 +163,7 @@ export function EnhancedAchievementPopup({
   achievements,
   onClose,
   onAchievementClaim,
-  autoCloseDelay = 8000, // Default 8 seconds
+  autoCloseDelay = 3000, // Default 3 seconds
 }: EnhancedAchievementPopupProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [showReward, setShowReward] = useState(false);
