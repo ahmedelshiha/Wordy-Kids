@@ -52,11 +52,11 @@ export function AchievementTeaser({ className }: AchievementTeaserProps) {
   const getRandomIcon = () => {
     const icons = [Trophy, Star, Sparkles, Target, Zap];
     const IconComponent = icons[Math.floor(Math.random() * icons.length)];
-    return <IconComponent className="w-3 h-3" />;
+    return <IconComponent className="w-3 h-3 sm:w-4 sm:h-4" />;
   };
 
   const getRandomEmoji = () => {
-    const emojis = ["🌟", "⭐", "✨", "🎯", "🚀", "💫", "🌈", "🎊"];
+    const emojis = ["🌟", "⭐", "✨", "🎯", "🚀", "💫", "🌈", "🎊", "🦋", "🌺", "🎪", "🦄", "🎵", "🌸", "🎨", "🏰"];
     return emojis[Math.floor(Math.random() * emojis.length)];
   };
 
@@ -83,16 +83,16 @@ export function AchievementTeaser({ className }: AchievementTeaserProps) {
           className={className}
         >
           <Card
-            className={`border-0 shadow-sm transition-all duration-500 hover:shadow-md ${
+            className={`border-0 shadow-sm transition-all duration-500 hover:shadow-md rounded-xl sm:rounded-2xl backdrop-blur-sm ${
               isSpecial
-                ? "bg-gradient-to-r from-yellow-100 to-orange-100 border-yellow-200"
+                ? "bg-gradient-to-r from-yellow-100 via-orange-50 to-pink-100 border-yellow-200 shadow-yellow-100/50"
                 : isTease
-                  ? "bg-gradient-to-r from-blue-100 to-purple-100 border-blue-200"
-                  : "bg-gradient-to-r from-green-100 to-blue-100 border-green-200"
+                  ? "bg-gradient-to-r from-blue-100 via-purple-50 to-indigo-100 border-blue-200 shadow-blue-100/50"
+                  : "bg-gradient-to-r from-green-100 via-emerald-50 to-blue-100 border-green-200 shadow-green-100/50"
             }`}
           >
-            <CardContent className="p-2 md:p-3">
-              <div className="flex items-center gap-2">
+            <CardContent className="p-2 sm:p-3 md:p-4">
+              <div className="flex items-center gap-2 sm:gap-3">
                 <motion.div
                   animate={{
                     rotate: [0, 5, -5, 0],
@@ -103,12 +103,12 @@ export function AchievementTeaser({ className }: AchievementTeaserProps) {
                     repeat: Infinity,
                     repeatDelay: 3,
                   }}
-                  className={`${
+                  className={`flex-shrink-0 ${
                     isSpecial
-                      ? "text-yellow-600"
+                      ? "text-yellow-600 drop-shadow-sm"
                       : isTease
-                        ? "text-purple-600"
-                        : "text-blue-600"
+                        ? "text-purple-600 drop-shadow-sm"
+                        : "text-blue-600 drop-shadow-sm"
                   }`}
                 >
                   {getRandomIcon()}
@@ -119,12 +119,12 @@ export function AchievementTeaser({ className }: AchievementTeaserProps) {
                     key={currentMessage} // Force re-render on message change
                     initial={{ opacity: 0, x: 10 }}
                     animate={{ opacity: 1, x: 0 }}
-                    className={`text-xs md:text-sm font-medium leading-tight ${
+                    className={`text-xs sm:text-sm md:text-base font-medium leading-tight line-clamp-2 ${
                       isSpecial
-                        ? "text-yellow-800"
+                        ? "text-yellow-800 drop-shadow-sm"
                         : isTease
-                          ? "text-purple-800"
-                          : "text-blue-800"
+                          ? "text-purple-800 drop-shadow-sm"
+                          : "text-blue-800 drop-shadow-sm"
                     }`}
                   >
                     {currentMessage}
@@ -141,7 +141,7 @@ export function AchievementTeaser({ className }: AchievementTeaserProps) {
                     repeat: Infinity,
                     repeatDelay: 4,
                   }}
-                  className="text-sm"
+                  className="text-sm sm:text-base md:text-lg flex-shrink-0"
                 >
                   {getRandomEmoji()}
                 </motion.div>
@@ -156,7 +156,7 @@ export function AchievementTeaser({ className }: AchievementTeaserProps) {
                 >
                   <Badge
                     variant="outline"
-                    className="text-xs bg-white/50 text-purple-700 border-purple-300 animate-pulse"
+                    className="text-xs sm:text-sm bg-white/60 text-purple-700 border-purple-300 animate-pulse rounded-full px-2 py-1 shadow-sm"
                   >
                     🎯 Keep going!
                   </Badge>
