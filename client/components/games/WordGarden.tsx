@@ -235,6 +235,8 @@ export default function WordGardenGame({
   className = "",
   onFinish,
   onExit,
+  showExitDialog = false,
+  onCloseExitDialog,
 }: WordGardenGameProps) {
   const sessionId = useMemo(() => uuid(), []);
 
