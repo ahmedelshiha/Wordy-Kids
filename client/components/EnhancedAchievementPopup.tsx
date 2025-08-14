@@ -306,7 +306,9 @@ export function EnhancedAchievementPopup({
                   </h4>
 
                   <p className="text-white/90 mb-4 text-sm leading-relaxed">
-                    {currentAchievement.description}
+                    {currentAchievement.funnyDescription ||
+                     EnhancedAchievementTracker.getKidFriendlyDescription(currentAchievement.id) ||
+                     currentAchievement.description}
                   </p>
 
                   {/* Category and Difficulty Badges */}
