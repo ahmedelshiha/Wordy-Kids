@@ -353,7 +353,7 @@ export function EnhancedAddChildProfile({
           <form ref={formRef} className="space-y-4">
             {/* Step 1: Basic Info */}
             {currentStep === 0 && (
-              <div className="space-y-6 animate-slide-in-from-right">
+              <div className="space-y-4 animate-slide-in-from-right">
                 <div>
                   <Label htmlFor="childName" className="text-sm font-medium text-gray-700 mb-2 block">
                     What's your child's name?
@@ -418,7 +418,7 @@ export function EnhancedAddChildProfile({
 
             {/* Step 2: Avatar Selection */}
             {currentStep === 1 && (
-              <div className="space-y-6 animate-slide-in-from-right">
+              <div className="space-y-4 animate-slide-in-from-right">
                 <div className="text-center mb-6">
                   <div className="w-24 h-24 bg-gradient-to-br from-purple-100 to-pink-100 rounded-full flex items-center justify-center mx-auto mb-4 animate-gentle-bounce">
                     <span className="text-4xl">{formData.avatar}</span>
@@ -469,7 +469,7 @@ export function EnhancedAddChildProfile({
 
             {/* Step 3: Interests */}
             {currentStep === 2 && (
-              <div className="space-y-6 animate-slide-in-from-right">
+              <div className="space-y-4 animate-slide-in-from-right">
                 <div className="text-center mb-6">
                   <p className="text-sm text-gray-600 mb-4">
                     Select up to 5 things {formData.name} loves most
@@ -522,7 +522,7 @@ export function EnhancedAddChildProfile({
 
             {/* Step 4: Personalization */}
             {currentStep === 3 && (
-              <div className="space-y-6 animate-slide-in-from-right">
+              <div className="space-y-4 animate-slide-in-from-right">
                 {/* Background color selection */}
                 <div>
                   <Label className="text-sm font-medium text-gray-700 mb-3 block">
