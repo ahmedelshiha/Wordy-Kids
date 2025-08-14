@@ -37,6 +37,7 @@ import { useWordLearningSession } from "@/contexts/WordLearningSessionContext";
 import { SessionRestorationNotification, DetailedSessionRestorationModal } from "@/components/SessionRestorationNotification";
 import { SessionProgressIndicator, CompactSessionIndicator, SessionWarning } from "@/components/SessionProgressIndicator";
 import { FloatingParentAccess, CompactParentAccess } from "@/components/FloatingParentAccess";
+import { EnhancedBreadcrumb, CompactBreadcrumb } from "@/components/EnhancedBreadcrumb";
 import {
   wordsDatabase,
   getWordsByCategory,
@@ -1173,6 +1174,36 @@ export default function Index({ initialProfile }: IndexProps) {
           </>
         )}
       </header>
+
+      {/* Enhanced Navigation Breadcrumb */}
+      <EnhancedBreadcrumb
+        currentTab={activeTab}
+        userRole={userRole}
+        selectedCategory={selectedCategory}
+        learningMode={learningMode}
+        onNavigate={setActiveTab}
+        onBackToChild={() => {
+          setUserRole("child");
+          setActiveTab(lastActiveTab || "dashboard");
+          setTimeout(() => {
+            setFeedback({
+              type: "encouragement",
+              title: "Welcome Back! 🎉",
+              message: "You've returned to your learning journey. Keep up the great work!",
+              onContinue: () => setFeedback(null),
+            });
+          }, 500);
+        }}
+      />
+
+      <CompactBreadcrumb
+        currentTab={activeTab}
+        userRole={userRole}
+        onBackToChild={() => {
+          setUserRole("child");
+          setActiveTab(lastActiveTab || "dashboard");
+        }}
+      />
 
       {/* Mobile Menu Overlay */}
       {isMobileMenuOpen && (
