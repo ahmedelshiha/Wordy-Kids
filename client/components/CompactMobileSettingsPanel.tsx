@@ -743,7 +743,7 @@ export const CompactMobileSettingsPanel: React.FC<
                       className="w-full p-2 bg-gradient-to-r from-blue-500 to-purple-500 text-white rounded-lg text-sm font-medium hover:shadow-md transition-all duration-200 flex items-center justify-center gap-2"
                     >
                       <BarChart3 className="w-4 h-4" />
-                      Open Goals Dashboard
+                      Goals Dashboard
                     </button>
                   </div>
 
