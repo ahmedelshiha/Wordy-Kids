@@ -561,7 +561,7 @@ export class AudioService {
   }
 
   public playWhooshSound(): void {
-    if (!this.isEnabled) return;
+    if (!this.isEnabled || !isUIInteractionSoundsEnabled()) return;
 
     try {
       const audioContext = new (window.AudioContext ||
