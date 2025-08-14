@@ -388,6 +388,7 @@ export const EnhancedSettingsPanel: React.FC<EnhancedSettingsPanelProps> = ({
                           setSoundOn(checked);
                           setSoundEnabled(checked);
                           setHasUnsavedChanges(true);
+                          if (deviceInfo.hasHaptic) triggerHapticFeedback("medium");
                         }}
                       />
                     </div>
