@@ -554,12 +554,12 @@ export const WordCard: React.FC<WordCardProps> = ({
             transform: "rotateY(180deg)",
           }}
         >
-          {/* Enhanced Mobile Back Navigation */}
-          <div className="absolute top-1.5 right-1.5 z-10">
+          {/* Enhanced Mobile Back Navigation with Larger Touch Areas */}
+          <div className="absolute top-2 right-2 z-10">
             <Button
               size="sm"
               variant="ghost"
-              className="text-white hover:bg-white/20 active:bg-white/30 p-1.5 h-auto min-w-[40px] min-h-[40px] rounded-full border border-white/20 bg-white/10 backdrop-blur-sm transition-all duration-200 active:scale-95"
+              className="text-white hover:bg-white/30 active:bg-white/40 p-2 h-auto min-w-[44px] min-h-[44px] rounded-full border-2 border-white/30 bg-white/15 backdrop-blur-sm transition-all duration-200 active:scale-95 hover:scale-105 shadow-lg"
               onClick={(e) => {
                 e.stopPropagation();
                 setIsFlipped(false);
@@ -569,18 +569,35 @@ export const WordCard: React.FC<WordCardProps> = ({
                 }
               }}
             >
-              <RotateCcw className="w-4 h-4" />
+              <RotateCcw className="w-5 h-5" />
             </Button>
           </div>
 
-          {/* Enhanced Back Navigation Hint */}
-          <div className="absolute top-1.5 left-1.5 z-10">
-            <div className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-full px-2 py-1">
-              <span className="text-[9px] text-white/80 font-medium">
-                ← Swipe or tap ↻
+          {/* Enhanced Back Navigation Hint with Better Mobile Visibility */}
+          <div className="absolute top-2 left-2 z-10">
+            <div className="bg-white/15 backdrop-blur-sm border-2 border-white/30 rounded-full px-3 py-1.5 shadow-lg">
+              <span className="text-[10px] text-white/90 font-semibold flex items-center gap-1">
+                <span className="animate-pulse">←</span>
+                <span className="hidden sm:inline">Swipe or tap</span>
+                <span className="sm:hidden">Back</span>
+                <RotateCcw className="w-2.5 h-2.5 inline" />
               </span>
             </div>
           </div>
+
+          {/* Additional mobile back tap area - invisible but functional */}
+          <div
+            className="absolute top-0 left-0 w-full h-16 z-5 cursor-pointer md:hidden"
+            onClick={(e) => {
+              e.stopPropagation();
+              setIsFlipped(false);
+              audioService.playWhooshSound();
+              if (navigator.vibrate) {
+                navigator.vibrate([40, 20, 40]);
+              }
+            }}
+            aria-label="Tap to go back to word"
+          />
 
           <h3 className="text-sm sm:text-base font-semibold mb-1.5 text-center pr-8 leading-tight">
             {word.word} {word.emoji}
