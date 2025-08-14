@@ -202,6 +202,38 @@ export function EnhancedAchievementPopup({
     }
   }, [achievements.length, currentIndex, isClosing]);
 
+  // Auto-close timer management
+  useEffect(() => {
+    if (achievements.length > 0 && !isClosing && !isPaused && autoCloseDelay > 0) {
+      const timer = setTimeout(() => {
+        if (!isPaused) {
+          setIsClosing(true);
+          setTimeout(onClose, 300);
+        }
+      }, autoCloseDelay);
+
+      setAutoCloseTimer(timer);
+
+      return () => {
+        if (timer) clearTimeout(timer);
+      };
+    }
+  }, [achievements.length, currentIndex, isClosing, isPaused, autoCloseDelay, onClose]);
+
+  // Pause auto-close when user hovers or interacts
+  const handleMouseEnter = useCallback(() => {
+    setIsPaused(true);
+    if (autoCloseTimer) {
+      clearTimeout(autoCloseTimer);
+      setAutoCloseTimer(null);
+    }
+  }, [autoCloseTimer]);
+
+  const handleMouseLeave = useCallback(() => {
+    setIsPaused(false);
+    // Auto-close timer will restart via useEffect
+  }, []);
+
   const handleClaimReward = useCallback(() => {
     if (currentAchievement && !claimed.has(currentAchievement.id)) {
       setClaimed((prev) => new Set(prev).add(currentAchievement.id));
