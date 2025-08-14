@@ -2448,7 +2448,7 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
     const emojis: Record<string, string> = {
       improving: "📈",
       stable: "➡️",
-      mastered: "🏆",
+      mastered: "��",
       needs_focus: "🎯",
       challenging: "💪",
     };
@@ -3981,127 +3981,43 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
         <TabsContent value="reports">{renderDetailedReports()}</TabsContent>
       </Tabs>
 
-      {/* Add Child Dialog */}
-      <Dialog open={showAddChildDialog} onOpenChange={setShowAddChildDialog}>
-        <DialogContent>
-          <DialogHeader>
-            <DialogTitle>Add New Child Profile</DialogTitle>
-            <DialogDescription>
-              Create a learning profile for your child
-            </DialogDescription>
-          </DialogHeader>
-          <div className="space-y-4">
-            <div>
-              <Label htmlFor="childName">Name</Label>
-              <Input
-                id="childName"
-                value={newChildData.name}
-                onChange={(e) =>
-                  setNewChildData((prev) => ({ ...prev, name: e.target.value }))
-                }
-                placeholder="Enter child's name"
-              />
-            </div>
-            <div>
-              <Label htmlFor="childAge">Age</Label>
-              <Select
-                value={newChildData.age.toString()}
-                onValueChange={(value) =>
-                  setNewChildData((prev) => ({ ...prev, age: parseInt(value) }))
-                }
-              >
-                <SelectTrigger>
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  {[4, 5, 6, 7, 8, 9, 10, 11, 12].map((age) => (
-                    <SelectItem key={age} value={age.toString()}>
-                      {age} years old
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-            <div>
-              <Label htmlFor="avatar">Avatar</Label>
-              <div className="flex gap-2 mt-2">
-                {["👦", "👧", "🧒", "👶", "🦸‍♂️", "🦸‍♀️", "🧑‍🎓", "👨‍🎓", "👩‍🎓"].map(
-                  (emoji) => (
-                    <Button
-                      key={emoji}
-                      variant={
-                        newChildData.avatar === emoji ? "default" : "outline"
-                      }
-                      size="sm"
-                      onClick={() =>
-                        setNewChildData((prev) => ({ ...prev, avatar: emoji }))
-                      }
-                    >
-                      {emoji}
-                    </Button>
-                  ),
-                )}
-              </div>
-            </div>
-          </div>
-          <DialogFooter>
-            <Button
-              variant="outline"
-              onClick={() => setShowAddChildDialog(false)}
-            >
-              Cancel
-            </Button>
-            <Button
-              onClick={() => {
-                if (newChildData.name.trim()) {
-                  const newChild: ChildProfile = {
-                    id: Date.now().toString(),
-                    name: newChildData.name.trim(),
-                    age: newChildData.age,
-                    avatar: newChildData.avatar,
-                    level: 1,
-                    totalPoints: 0,
-                    wordsLearned: 0,
-                    currentStreak: 0,
-                    weeklyGoal: 10,
-                    weeklyProgress: 0,
-                    favoriteCategory: "Animals",
-                    lastActive: new Date(),
-                    preferredLearningTime:
-                      newChildData.preferredLearningTime ||
-                      "After school (4-6 PM)",
-                    difficultyPreference: newChildData.difficultyPreference,
-                    parentNotes: "",
-                    customWords: [],
-                    weeklyTarget: 15,
-                    monthlyTarget: 60,
-                    recentAchievements: [],
-                    learningStrengths: [],
-                    areasForImprovement: [],
-                    motivationalRewards: [],
-                  };
+      {/* Enhanced Add Child Dialog */}
+      <EnhancedAddChildProfile
+        isOpen={showAddChildDialog}
+        onClose={() => setShowAddChildDialog(false)}
+        onSave={(childData) => {
+          const newChild: ChildProfile = {
+            id: Date.now().toString(),
+            name: childData.name,
+            age: childData.age,
+            avatar: childData.avatar,
+            level: 1,
+            totalPoints: 0,
+            wordsLearned: 0,
+            currentStreak: 0,
+            weeklyGoal: 10,
+            weeklyProgress: 0,
+            favoriteCategory: childData.interests?.[0] || "Animals",
+            interests: childData.interests || [],
+            lastActive: new Date(),
+            preferredLearningTime: childData.preferredLearningTime || "After school (4-6 PM)",
+            difficultyPreference: childData.difficultyPreference || "easy",
+            parentNotes: "",
+            customWords: [],
+            weeklyTarget: 15,
+            monthlyTarget: 60,
+            recentAchievements: [],
+            learningStrengths: [],
+            areasForImprovement: [],
+            motivationalRewards: [],
+          };
 
-                  const updatedChildren = [...children, newChild];
-                  setChildren(updatedChildren);
-                  setSelectedChild(newChild);
-                  setShowAddChildDialog(false);
-                  setNewChildData({
-                    name: "",
-                    age: 6,
-                    avatar: "👶",
-                    preferredLearningTime: "",
-                    difficultyPreference: "easy",
-                  });
-                }
-              }}
-              className="bg-educational-blue"
-              disabled={!newChildData.name.trim()}
-            >
-              Create Profile
-            </Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
+          const updatedChildren = [...children, newChild];
+          setChildren(updatedChildren);
+          setSelectedChild(newChild);
+          setShowAddChildDialog(false);
+        }}
+      />
 
       {/* Add Goal Dialog */}
       <Dialog open={showAddGoalDialog} onOpenChange={setShowAddGoalDialog}>
