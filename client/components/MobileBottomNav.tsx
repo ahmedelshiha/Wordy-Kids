@@ -254,6 +254,8 @@ export function MobileBottomNav({
                   (activeTab === tab.id || (userRole === 'parent' && tab.id === 'parent-home'))
                     ? `bg-gradient-to-br ${tab.color} text-white shadow-lg`
                     : `${tab.bgColor} ${tab.textColor}`,
+                  // Add subtle pulse animation for back to learning button in parent mode
+                  userRole === 'parent' && tab.id === 'back-to-child' ? 'animate-pulse' : '',
                 )}
               >
                 {/* Emoji Icon */}
