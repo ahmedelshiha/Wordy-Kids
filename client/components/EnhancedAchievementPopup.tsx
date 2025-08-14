@@ -60,6 +60,7 @@ const DIFFICULTY_COLORS = {
   silver: "from-gray-300 to-gray-500",
   gold: "from-yellow-400 to-yellow-600",
   diamond: "from-blue-400 to-purple-600",
+  rainbow: "from-pink-400 via-purple-400 via-blue-400 via-green-400 via-yellow-400 to-red-400",
 } as const;
 
 const DIFFICULTY_ICONS = {
