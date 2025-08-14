@@ -253,8 +253,13 @@ export default function ListenAndGuessGame({
         // Track wrong answers for achievement progress
         try {
           EnhancedAchievementTracker.updateJourneyProgress({
-            totalAnswers: 1,
-            currentStreak: 0,
+            sessionStats: {
+              totalSessions: 1,
+              perfectSessions: 0,
+              averageWordsPerSession: 1,
+              fastestSession: 1,
+              longestStreak: 0,
+            },
           });
         } catch (error) {
           console.error("Error tracking achievement progress:", error);
