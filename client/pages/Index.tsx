@@ -23,7 +23,7 @@ import {
 import { AchievementTracker } from "@/lib/achievementTracker";
 import { audioService } from "@/lib/audioService";
 import { EnhancedAchievementPopup } from "@/components/EnhancedAchievementPopup";
-import { SettingsPanel } from "@/components/SettingsPanel";
+import { EnhancedSettingsPanel } from "@/components/EnhancedSettingsPanel";
 import { FloatingBubbles } from "@/components/FloatingBubbles";
 import { CelebrationEffect } from "@/components/CelebrationEffect";
 import { DailyChallenge } from "@/components/DailyChallenge";
@@ -2639,7 +2639,7 @@ export default function Index({ initialProfile }: IndexProps) {
       {backgroundAnimationsEnabled && <FloatingBubbles />}
 
       {/* Settings Panel */}
-      <SettingsPanel
+      <EnhancedSettingsPanel
         isOpen={showSettings}
         onClose={() => setShowSettings(false)}
       />

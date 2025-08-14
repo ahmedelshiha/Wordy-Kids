@@ -628,6 +628,210 @@
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
 }
 
+/* Enhanced Settings Panel Mobile Styles */
+.settings-panel-mobile {
+  /* Ensure proper mobile viewport handling */
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 9999;
+
+  /* Optimize for mobile performance */
+  transform: translateZ(0);
+  -webkit-overflow-scrolling: touch;
+
+  /* Prevent body scroll when open */
+  overscroll-behavior: contain;
+}
+
+.settings-card-mobile {
+  /* Responsive sizing for different screen sizes */
+  max-height: 95vh;
+  width: calc(100vw - 16px);
+  margin: 8px;
+
+  /* Mobile-optimized shadow */
+  box-shadow:
+    0 10px 25px rgba(0, 0, 0, 0.15),
+    0 20px 48px rgba(0, 0, 0, 0.15);
+
+  /* Smooth animations */
+  animation: settingsSlideUp 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes settingsSlideUp {
+  0% {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.settings-tab-mobile {
+  /* Enhanced mobile tab interactions */
+  min-height: 48px;
+  min-width: 80px;
+  touch-action: manipulation;
+  transition: all 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+
+  /* Haptic feedback simulation */
+  position: relative;
+  overflow: hidden;
+}
+
+.settings-tab-mobile:active {
+  transform: scale(0.95);
+}
+
+.settings-tab-mobile::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  transition:
+    width 0.3s,
+    height 0.3s;
+  z-index: 0;
+}
+
+.settings-tab-mobile:active::before {
+  width: 200px;
+  height: 200px;
+}
+
+.settings-switch-mobile {
+  /* Enhanced mobile switch styling */
+  min-height: 44px;
+  min-width: 44px;
+
+  /* Better touch targets */
+  padding: 8px;
+
+  /* Smooth animations */
+  transition: all 0.2s ease-out;
+}
+
+.settings-slider-mobile {
+  /* Mobile-optimized slider */
+  height: 44px;
+
+  /* Better thumb size for mobile */
+  --slider-thumb-size: 20px;
+
+  /* Enhanced touch area */
+  touch-action: pan-x;
+}
+
+.settings-option-mobile {
+  /* Mobile-optimized option cards */
+  min-height: 60px;
+  padding: 16px;
+  border-radius: 12px;
+
+  /* Better mobile touch feedback */
+  transition: all 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  cursor: pointer;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.settings-option-mobile:active {
+  transform: scale(0.98);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.settings-option-mobile:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Mobile-specific responsive breakpoints for settings */
+@media (max-width: 640px) {
+  .settings-card-mobile {
+    width: 100vw;
+    height: 100vh;
+    margin: 0;
+    border-radius: 0;
+    max-height: 100vh;
+  }
+
+  .settings-header-mobile {
+    padding: 20px 16px 16px;
+    border-radius: 0;
+  }
+
+  .settings-content-mobile {
+    padding: 16px;
+  }
+
+  .settings-footer-mobile {
+    padding: 16px;
+    border-radius: 0;
+  }
+}
+
+@media (min-width: 641px) and (max-width: 1024px) {
+  .settings-card-mobile {
+    width: calc(100vw - 32px);
+    margin: 16px;
+    border-radius: 16px;
+  }
+
+  .settings-header-mobile {
+    border-radius: 16px 16px 0 0;
+  }
+
+  .settings-footer-mobile {
+    border-radius: 0 0 16px 16px;
+  }
+}
+
+/* Enhanced accessibility for mobile settings */
+.settings-focus-mobile:focus-visible {
+  outline: 3px solid #3b82f6;
+  outline-offset: 2px;
+  border-radius: 8px;
+}
+
+/* High contrast mode enhancements */
+@media (prefers-contrast: high) {
+  .settings-option-mobile {
+    border: 2px solid currentColor;
+  }
+
+  .settings-tab-mobile {
+    border: 2px solid currentColor;
+  }
+}
+
+/* Reduced motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  .settings-card-mobile {
+    animation: none;
+    transition: none;
+  }
+
+  .settings-tab-mobile,
+  .settings-option-mobile,
+  .settings-switch-mobile {
+    transition: none;
+  }
+
+  .settings-tab-mobile::before {
+    display: none;
+  }
+}
+
 .swipe-container {
   overflow-x: auto;
   scrollbar-width: none;
