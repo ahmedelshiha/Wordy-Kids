@@ -249,7 +249,7 @@ export const EnhancedMobileWordCard: React.FC<EnhancedMobileWordCardProps> = ({
   const handleFavorite = () => {
     setIsFavorited(!isFavorited);
     if (!isFavorited) {
-      audioService.playCheerSound();
+      enhancedAudioService.playSuccessSound();
       setShowSparkles(true);
       setTimeout(() => setShowSparkles(false), 1000);
 
