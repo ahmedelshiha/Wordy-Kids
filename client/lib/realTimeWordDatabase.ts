@@ -43,14 +43,15 @@ class RealTimeWordDatabaseService {
 
   // Start monitoring for database changes
   private startMonitoring() {
-    // Check for changes every 1 second
+    // Only check for changes when explicitly triggered (more efficient for browser)
+    // Auto-check every 10 seconds as backup
     this.checkInterval = setInterval(() => {
       this.checkForChanges();
-    }, 1000);
+    }, 10000);
 
     // Listen for storage events (when admin adds words via localStorage)
     window.addEventListener('storage', this.handleStorageChange.bind(this));
-    
+
     // Listen for custom events (when admin adds words in current tab)
     window.addEventListener('wordDatabaseUpdate', this.handleCustomEvent.bind(this));
   }
