@@ -283,6 +283,10 @@ export default function ListenAndGuessGame({
 
           return ns;
         });
+
+        // Play celebration effects like other quizzes
+        setShowCelebration(true);
+        audioService.playSuccessSound();
         fire();
       } else {
         setWrongCount((w) => w + 1);
