@@ -351,7 +351,7 @@ export default function LoginForm() {
           <CardContent className="space-y-4 sm:space-y-6 px-4 sm:px-6">
             <form onSubmit={handleLogin} className="space-y-4 sm:space-y-5" role="form" aria-labelledby="login-title">
               {/* Email Field with Enhanced Validation */}
-              <div className="space-y-1 md:space-y-2">
+              <div className="space-y-2">
                 <Label
                   htmlFor="email"
                   className="text-sm font-medium text-gray-700 flex items-center gap-2"
@@ -369,12 +369,13 @@ export default function LoginForm() {
                     autoComplete="email"
                     inputMode="email"
                     spellCheck={false}
+                    enterKeyHint="next"
                     value={formData.email}
                     onChange={handleInputChange}
                     onBlur={() => handleBlur("email")}
                     onKeyDown={(e) => handleKeyDown(e, "password")}
                     disabled={isLoading}
-                    className={getInputClassName("email")}
+                    className={`${getInputClassName("email")} text-base sm:text-sm min-h-[44px] touch-target`}
                     aria-describedby={errors.email ? "email-error" : undefined}
                     aria-invalid={!!errors.email}
                   />
@@ -397,7 +398,7 @@ export default function LoginForm() {
               </div>
 
               {/* Password Field with Enhanced Validation */}
-              <div className="space-y-1 md:space-y-2">
+              <div className="space-y-2">
                 <Label
                   htmlFor="password"
                   className="text-sm font-medium text-gray-700 flex items-center gap-2"
@@ -412,6 +413,7 @@ export default function LoginForm() {
                     type={showPassword ? "text" : "password"}
                     placeholder="Enter your password (min 8 characters)"
                     autoComplete="current-password"
+                    enterKeyHint="done"
                     value={formData.password}
                     onChange={handleInputChange}
                     onBlur={() => handleBlur("password")}
@@ -419,7 +421,7 @@ export default function LoginForm() {
                       e.key === "Enter" && handleLogin(e as any)
                     }
                     disabled={isLoading}
-                    className={getInputClassName("password")}
+                    className={`${getInputClassName("password")} text-base sm:text-sm min-h-[44px] touch-target`}
                     aria-describedby={
                       errors.password ? "password-error" : undefined
                     }
