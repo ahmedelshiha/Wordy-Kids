@@ -445,7 +445,7 @@ export const CompactMobileSettingsPanel: React.FC<CompactMobileSettingsPanelProp
                 onToggle={() => toggleSection("learning")}
               />
               {expandedSections.learning && (
-                <div className="px-2 pb-2 space-y-2 max-h-[35vh] overflow-y-auto">
+                <div className="px-2 pb-2 space-y-2 max-h-[35vh] overflow-y-auto scroll-smooth" style={{ WebkitOverflowScrolling: 'touch' }}>
                   <CompactSettingRow
                     icon={Target}
                     label="Daily Goal"
