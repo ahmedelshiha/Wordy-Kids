@@ -162,7 +162,7 @@ const PLANT_TYPES = [
   ["🌱", "💚", "🌷"], // tulip - green heart to pink tulip
   ["🌱", "🌳", "🌸"], // cherry tree - tree to cherry blossom
   ["🌱", "🍀", "🌺"], // clover hibiscus - clover to tropical flower
-  ["��", "🎋", "🏵️"], // bamboo rosette - bamboo to decorative flower
+  ["🌱", "🎋", "🏵️"], // bamboo rosette - bamboo to decorative flower
   ["🌱", "🌲", "🍄"], // forest mushroom - pine to mushroom
   ["🌱", "🪴", "🌻"], // potted sunflower - pot plant to big sunflower
   ["🌱", "🌿", "💐"], // bouquet garden - leaves to flower bouquet
@@ -860,7 +860,7 @@ export default function WordGardenGame({
             className="rounded-full px-5 py-3 bg-white text-emerald-700 font-bold active:scale-95 transition-transform min-w-[56px] min-h-[56px]"
             aria-label="Play sound"
           >
-            �� Play
+            🔊 Play
           </button>
         </div>
 
