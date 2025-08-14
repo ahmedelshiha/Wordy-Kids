@@ -140,14 +140,14 @@ function useConfetti() {
 // Garden plant stage visuals (simple emojis; swap with your images if desired)
 const STAGES = ["🌱", "🌿", "🌸"]; // sprout -> leaf -> blossom
 
-// Generate emoji-based image using SVG data URI
+// Generate emoji-based image using SVG data URI with larger size to match ListenAndGuess
 function generateEmojiImage(emoji: string, fallbackText?: string): string {
   if (emoji && emoji !== "") {
-    // Create SVG with emoji
+    // Create SVG with larger emoji to match ListenAndGuess game style
     const svg = `
       <svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 200 200">
         <rect width="200" height="200" fill="#f0fdf4" rx="20"/>
-        <text x="100" y="120" font-size="80" text-anchor="middle" font-family="Arial, sans-serif">${emoji}</text>
+        <text x="100" y="130" font-size="120" text-anchor="middle" font-family="Arial, sans-serif">${emoji}</text>
       </svg>
     `;
 
