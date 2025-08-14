@@ -200,10 +200,53 @@ export default function Index({ initialProfile }: IndexProps) {
     initializeWords();
   }, [selectedCategory]); // Only re-initialize when category changes to prevent constant regeneration
 
+  // Session restoration effect
+  useEffect(() => {
+    const hasStoredProgress = sessionData.rememberedWords.length > 0 ||
+                             sessionData.forgottenWords.length > 0 ||
+                             sessionData.selectedCategory !== '' ||
+                             sessionData.currentWordIndex > 0;
+
+    if (hasStoredProgress && !sessionRestored) {
+      setShowSessionRestoration(true);
+    }
+  }, [sessionData, sessionRestored]);
+
+  // Restore session data
+  const handleSessionRestore = () => {
+    const progress = restoreProgress();
+    setRememberedWords(progress.rememberedWords);
+    setForgottenWords(progress.forgottenWords);
+    setCurrentWordIndex(progress.currentWordIndex);
+
+    if (sessionData.selectedCategory) {
+      setSelectedCategory(sessionData.selectedCategory);
+    }
+    if (sessionData.activeTab) {
+      setActiveTab(sessionData.activeTab);
+    }
+    if (sessionData.learningMode) {
+      setLearningMode(sessionData.learningMode);
+    }
+    if (sessionData.currentDashboardWords?.length > 0) {
+      setCurrentDashboardWords(sessionData.currentDashboardWords);
+    }
+    if (sessionData.showQuiz) {
+      setShowQuiz(sessionData.showQuiz);
+      setSelectedQuizType(sessionData.selectedQuizType);
+    }
+    if (sessionData.gameMode) {
+      setGameMode(sessionData.gameMode);
+    }
+
+    setSessionRestored(true);
+    setShowSessionRestoration(false);
+  };
+
   // Initialize dashboard words for systematic learning (independent of category selection)
   useEffect(() => {
     const initializeDashboardWords = () => {
-      if (currentDashboardWords.length === 0) {
+      if (currentDashboardWords.length === 0 && !sessionData.currentDashboardWords?.length) {
         try {
           generateDashboardWords();
         } catch (error) {
@@ -218,9 +261,11 @@ export default function Index({ initialProfile }: IndexProps) {
       }
     };
 
-    // Initialize dashboard words on component mount
-    initializeDashboardWords();
-  }, []); // Run only once on mount
+    // Initialize dashboard words on component mount if no session data
+    if (!sessionRestored) {
+      initializeDashboardWords();
+    }
+  }, [sessionRestored]); // Run based on session restoration status
 
   // Regenerate dashboard words when user completes enough words to progress
   useEffect(() => {
@@ -235,6 +280,40 @@ export default function Index({ initialProfile }: IndexProps) {
     }
   }, [rememberedWords.size]); // Trigger when remembered words count changes
 
+  // Auto-save progress changes
+  useEffect(() => {
+    if (sessionRestored) {
+      saveProgress({
+        rememberedWords,
+        forgottenWords,
+        currentWordIndex
+      });
+    }
+  }, [rememberedWords, forgottenWords, currentWordIndex, sessionRestored, saveProgress]);
+
+  // Auto-save learning state changes
+  useEffect(() => {
+    if (sessionRestored) {
+      saveLearningState({
+        activeTab,
+        selectedCategory,
+        learningMode,
+        currentDashboardWords
+      });
+    }
+  }, [activeTab, selectedCategory, learningMode, currentDashboardWords, sessionRestored, saveLearningState]);
+
+  // Auto-save quiz state changes
+  useEffect(() => {
+    if (sessionRestored) {
+      saveQuizState({
+        showQuiz,
+        selectedQuizType,
+        gameMode
+      });
+    }
+  }, [showQuiz, selectedQuizType, gameMode, sessionRestored, saveQuizState]);
+
   // Debug logging for state changes
   useEffect(() => {
     console.log("State Update:", {
@@ -243,12 +322,14 @@ export default function Index({ initialProfile }: IndexProps) {
       currentDashboardWordsLength: currentDashboardWords.length,
       learningStatsWeeklyProgress: rememberedWords.size,
       childStatsWordsRemembered: childStats?.wordsRemembered,
+      sessionRestored,
     });
   }, [
     rememberedWords.size,
     forgottenWords.size,
     currentDashboardWords.length,
     childStats?.wordsRemembered,
+    sessionRestored,
   ]);
 
   // Dynamic learning stats that reflect actual progress
@@ -720,7 +801,7 @@ export default function Index({ initialProfile }: IndexProps) {
       } else if (accuracy >= 50) {
         achievementTitle = "Category Explorer! 🗺️🌟";
         achievementIcon = "🗺️";
-        achievementMessage = `Good effort! You finished ${categoryDisplayName} with ${accuracy}% accuracy! Practice makes perfect!\n\n🎁 Explorer Bonus: 75 points!\n🎯 Explorer badge earned!`;
+        achievementMessage = `Good effort! You finished ${categoryDisplayName} with ${accuracy}% accuracy! Practice makes perfect!\n\n���� Explorer Bonus: 75 points!\n🎯 Explorer badge earned!`;
       } else {
         achievementTitle = "Category Challenger! 💪";
         achievementIcon = "💪";
