@@ -41,6 +41,7 @@ import {
   triggerHapticFeedback,
 } from "@/hooks/use-mobile-device";
 import { MobileLearningGoalsPanel } from "@/components/MobileLearningGoalsPanel";
+import { QuickGoalsWidget } from "@/components/QuickGoalsWidget";
 
 interface CompactMobileSettingsPanelProps {
   isOpen: boolean;
