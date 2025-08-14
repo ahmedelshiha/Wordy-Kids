@@ -495,6 +495,36 @@ export const EnhancedSettingsPanel: React.FC<EnhancedSettingsPanelProps> = ({
                     </div>
                   </Card>
 
+                  {/* UI Interaction Sounds Toggle */}
+                  <Card className="settings-option-mobile p-4 hover:shadow-md transition-shadow">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-3">
+                        {uiInteractionSounds ? (
+                          <Volume2 className="w-5 h-5 text-blue-600" />
+                        ) : (
+                          <VolumeX className="w-5 h-5 text-gray-400" />
+                        )}
+                        <div>
+                          <p className="font-medium">UI Interaction Sounds</p>
+                          <p className="text-sm text-slate-600">
+                            Sounds when touching categories and word cards
+                          </p>
+                        </div>
+                      </div>
+                      <Switch
+                        className="settings-switch-mobile"
+                        checked={uiInteractionSounds}
+                        onCheckedChange={(checked) => {
+                          setUiInteractionSounds(checked);
+                          setUIInteractionSoundsEnabled(checked);
+                          setHasUnsavedChanges(true);
+                          if (deviceInfo.hasHaptic)
+                            triggerHapticFeedback("medium");
+                        }}
+                      />
+                    </div>
+                  </Card>
+
                   {/* Volume Control */}
                   <Card className="p-4">
                     <div className="space-y-3">
