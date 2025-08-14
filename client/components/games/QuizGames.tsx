@@ -154,9 +154,11 @@ export function QuizGames({
     if (activeQuiz === "listen-guess") {
       return (
         <ListenAndGuessGame
-          words={DemoWords}
+          category={selectedCategory}
+          difficulty="easy"
           rounds={10}
           optionsPerRound={3}
+          playerLevel={1} // Could be dynamic based on user progress
           onFinish={(stats) => {
             onQuizComplete(stats.correct, stats.totalRounds);
           }}
