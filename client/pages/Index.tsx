@@ -947,7 +947,7 @@ export default function Index({ initialProfile }: IndexProps) {
               🌟 Wordy's Adventure!
             </h1>
             <p className="text-lg font-semibold text-educational-yellow-light mb-2">
-              Fun vocabulary learning for kids! ����
+              Fun vocabulary learning for kids! 🌟
             </p>
           </div>
         </div>
