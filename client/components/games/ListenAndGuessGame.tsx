@@ -250,7 +250,7 @@ export default function ListenAndGuessGame({
 
         // Track wrong answers for achievement progress
         try {
-          EnhancedAchievementTracker.updateProgress({
+          EnhancedAchievementTracker.updateJourneyProgress({
             totalAnswers: 1,
             currentStreak: 0,
           });
@@ -320,7 +320,7 @@ export default function ListenAndGuessGame({
 
           try {
             const newAchievements =
-              EnhancedAchievementTracker.updateProgress(achievementUpdates);
+              EnhancedAchievementTracker.updateJourneyProgress(achievementUpdates);
 
             if (newAchievements.length > 0) {
               console.log(
