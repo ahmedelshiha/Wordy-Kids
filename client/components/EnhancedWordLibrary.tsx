@@ -31,6 +31,7 @@ import {
   Play,
   Pause,
   RefreshCw,
+  Brain,
 } from "lucide-react";
 import { EnhancedWordCard } from "./EnhancedWordCard";
 import { EnhancedCategorySelector } from "./EnhancedCategorySelector";

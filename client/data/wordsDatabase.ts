@@ -788,7 +788,7 @@ export const wordsDatabase: Word[] = [
     definition: "The part of your body you hear with",
     example: "I listen to music with my ears",
     funFact: "Your ears help you balance!",
-    emoji: "👂",
+    emoji: "��",
     category: "body",
     difficulty: "easy",
   },
@@ -2017,7 +2017,7 @@ export const wordsDatabase: Word[] = [
     definition: "When white flakes fall from the sky",
     example: "Snowy days are perfect for sledding",
     funFact: "Every snowflake is unique!",
-    emoji: "❄️",
+    emoji: "❄��",
     category: "weather",
     difficulty: "easy",
   },
@@ -2252,7 +2252,7 @@ export const wordsDatabase: Word[] = [
     definition: "A person who goes to school to learn",
     example: "I am a student in second grade",
     funFact: "Student means eager to learn!",
-    emoji: "🧑‍🎓",
+    emoji: "🧑‍���",
     category: "school",
     difficulty: "easy",
   },
@@ -2894,7 +2894,7 @@ export const wordsDatabase: Word[] = [
     difficulty: "hard",
   },
 
-  // AT THE ZOO CATEGORY
+  // ANIMALS CATEGORY (continued from at-the-zoo)
   {
     id: 2001,
     word: "Frog",
@@ -2903,7 +2903,7 @@ export const wordsDatabase: Word[] = [
     example: "The frog jumps from lily pad to lily pad",
     funFact: "Frogs can jump 20 times their own body length!",
     emoji: "🐸",
-    category: "at-the-zoo",
+    category: "animals",
     difficulty: "easy",
   },
   {
@@ -2914,7 +2914,7 @@ export const wordsDatabase: Word[] = [
     example: "The little mouse squeaks and runs very fast",
     funFact: "A mouse's heart beats 632 times per minute!",
     emoji: "🐭",
-    category: "at-the-zoo",
+    category: "animals",
     difficulty: "easy",
   },
   {
@@ -2925,7 +2925,7 @@ export const wordsDatabase: Word[] = [
     example: "The mice hide in their tiny burrows",
     funFact: "Mice can squeeze through holes smaller than a dime!",
     emoji: "🐭",
-    category: "at-the-zoo",
+    category: "animals",
     difficulty: "easy",
   },
   {
@@ -2936,7 +2936,7 @@ export const wordsDatabase: Word[] = [
     example: "The sheep's wool keeps it warm in winter",
     funFact: "Sheep can recognize up to 50 different faces!",
     emoji: "🐑",
-    category: "at-the-zoo",
+    category: "animals",
     difficulty: "easy",
   },
   {
@@ -2947,7 +2947,7 @@ export const wordsDatabase: Word[] = [
     example: "The duck swims gracefully in the pond",
     funFact: "Ducks have waterproof feathers!",
     emoji: "🦆",
-    category: "at-the-zoo",
+    category: "animals",
     difficulty: "easy",
   },
   {
@@ -2958,7 +2958,7 @@ export const wordsDatabase: Word[] = [
     example: "The black and white cow moos loudly",
     funFact: "Cows have best friends and get stressed when separated!",
     emoji: "🐄",
-    category: "at-the-zoo",
+    category: "animals",
     difficulty: "easy",
   },
   {
@@ -2969,7 +2969,7 @@ export const wordsDatabase: Word[] = [
     example: "The chicken pecks at corn in the yard",
     funFact: "Chickens can remember over 100 different faces!",
     emoji: "🐔",
-    category: "at-the-zoo",
+    category: "animals",
     difficulty: "easy",
   },
   {
@@ -2980,7 +2980,7 @@ export const wordsDatabase: Word[] = [
     example: "The brown horse gallops across the field",
     funFact: "Horses can sleep both lying down and standing up!",
     emoji: "🐴",
-    category: "at-the-zoo",
+    category: "animals",
     difficulty: "easy",
   },
   {
@@ -2991,7 +2991,7 @@ export const wordsDatabase: Word[] = [
     example: "The playful goat climbs on rocks and trees",
     funFact: "Goats have rectangular pupils to see better!",
     emoji: "🐐",
-    category: "at-the-zoo",
+    category: "animals",
     difficulty: "easy",
   },
   {
@@ -3002,7 +3002,7 @@ export const wordsDatabase: Word[] = [
     example: "The green lizard basks in the warm sunlight",
     funFact: "Some lizards can regrow their tails if they lose them!",
     emoji: "🦎",
-    category: "at-the-zoo",
+    category: "animals",
     difficulty: "medium",
   },
   {
@@ -3013,7 +3013,7 @@ export const wordsDatabase: Word[] = [
     example: "The snake moves silently through the grass",
     funFact: "Snakes can unhinge their jaws to eat large prey!",
     emoji: "🐍",
-    category: "at-the-zoo",
+    category: "animals",
     difficulty: "medium",
   },
   {
@@ -3024,7 +3024,7 @@ export const wordsDatabase: Word[] = [
     example: "The dog wags its tail when it's happy",
     funFact: "A cat's tail has 19 to 23 vertebrae!",
     emoji: "🐕‍🦺",
-    category: "at-the-zoo",
+    category: "animals",
     difficulty: "easy",
   },
   {
@@ -3035,7 +3035,7 @@ export const wordsDatabase: Word[] = [
     example: "Every animal at the zoo is special and unique",
     funFact: "There are over 8.7 million animal species on Earth!",
     emoji: "🐾",
-    category: "at-the-zoo",
+    category: "animals",
     difficulty: "easy",
   },
   {
@@ -3046,7 +3046,7 @@ export const wordsDatabase: Word[] = [
     example: "The crocodile floats quietly in the swamp",
     funFact: "Crocodiles have been around for 200 million years!",
     emoji: "🐊",
-    category: "at-the-zoo",
+    category: "animals",
     difficulty: "hard",
   },
   {
@@ -3057,7 +3057,7 @@ export const wordsDatabase: Word[] = [
     example: "The spider carefully weaves its silky web",
     funFact: "Spider silk is stronger than steel of the same thickness!",
     emoji: "🕷️",
-    category: "at-the-zoo",
+    category: "animals",
     difficulty: "medium",
   },
   {
@@ -3068,7 +3068,7 @@ export const wordsDatabase: Word[] = [
     example: "The hippo splashes happily in the muddy river",
     funFact: "Hippos can hold their breath underwater for 5 minutes!",
     emoji: "🦛",
-    category: "at-the-zoo",
+    category: "animals",
     difficulty: "medium",
   },
 
@@ -3162,7 +3162,7 @@ export const wordsDatabase: Word[] = [
     difficulty: "easy",
   },
 
-  // MY FAVOURITE FOOD CATEGORY - New Category
+  // FOOD CATEGORY (continued from my-favourite-food)
   {
     id: 3101,
     word: "Beans",
@@ -3171,7 +3171,7 @@ export const wordsDatabase: Word[] = [
     example: "Green beans are crunchy and delicious",
     funFact: "Beans can grow in space!",
     emoji: "🫘",
-    category: "my-favourite-food",
+    category: "food",
     difficulty: "easy",
   },
   {
@@ -3182,7 +3182,7 @@ export const wordsDatabase: Word[] = [
     example: "I like scrambled eggs for breakfast",
     funFact: "An egg shell has 17,000 tiny holes!",
     emoji: "🥚",
-    category: "my-favourite-food",
+    category: "food",
     difficulty: "easy",
   },
   {
@@ -3193,7 +3193,7 @@ export const wordsDatabase: Word[] = [
     example: "Tomatoes make pizza sauce taste great",
     funFact: "Tomatoes were once thought to be poisonous!",
     emoji: "🍅",
-    category: "my-favourite-food",
+    category: "food",
     difficulty: "easy",
   },
   {
@@ -3204,7 +3204,7 @@ export const wordsDatabase: Word[] = [
     example: "Onions add flavor to many dishes",
     funFact: "Onions make you cry because of sulfur gas!",
     emoji: "🧅",
-    category: "my-favourite-food",
+    category: "food",
     difficulty: "easy",
   },
   {
@@ -3215,7 +3215,7 @@ export const wordsDatabase: Word[] = [
     example: "Fresh peas are sweet and crunchy",
     funFact: "Peas were the first vegetable grown in space!",
     emoji: "🟢",
-    category: "my-favourite-food",
+    category: "food",
     difficulty: "easy",
   },
   {
@@ -3226,7 +3226,7 @@ export const wordsDatabase: Word[] = [
     example: "Coconut water is very refreshing",
     funFact: "A coconut can travel 3,000 miles by sea!",
     emoji: "🥥",
-    category: "my-favourite-food",
+    category: "food",
     difficulty: "medium",
   },
   {
@@ -3237,7 +3237,7 @@ export const wordsDatabase: Word[] = [
     example: "I eat cereal and fruit for breakfast",
     funFact: "Breakfast means 'breaking the fast' of sleeping!",
     emoji: "🍳",
-    category: "my-favourite-food",
+    category: "food",
     difficulty: "easy",
   },
   {
@@ -3248,7 +3248,7 @@ export const wordsDatabase: Word[] = [
     example: "Our family has dinner together every night",
     funFact: "Dinner used to be eaten at noon!",
     emoji: "🍽️",
-    category: "my-favourite-food",
+    category: "food",
     difficulty: "easy",
   },
   {
@@ -3259,7 +3259,7 @@ export const wordsDatabase: Word[] = [
     example: "I like mashed potatoes with butter",
     funFact: "Potatoes were the first food grown in space!",
     emoji: "🥔",
-    category: "my-favourite-food",
+    category: "food",
     difficulty: "easy",
   },
   {
@@ -3270,7 +3270,7 @@ export const wordsDatabase: Word[] = [
     example: "I put sausage on my pizza",
     funFact: "The longest sausage ever made was 38 miles long!",
     emoji: "���",
-    category: "my-favourite-food",
+    category: "food",
     difficulty: "medium",
   },
 
@@ -3560,22 +3560,10 @@ export const categories = [
     color: "from-yellow-400 to-pink-400",
   },
   {
-    id: "at-the-zoo",
-    name: "At the Zoo",
-    emoji: "🦁",
-    color: "from-green-400 to-orange-400",
-  },
-  {
     id: "at-the-clothes-shop",
     name: "At the Clothes Shop",
     emoji: "👗",
     color: "from-pink-400 to-purple-400",
-  },
-  {
-    id: "my-favourite-food",
-    name: "My Favourite Food",
-    emoji: "🥗",
-    color: "from-green-400 to-yellow-400",
   },
   {
     id: "at-home",
