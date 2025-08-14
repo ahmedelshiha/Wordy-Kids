@@ -33,6 +33,8 @@ import { WordCreator } from "@/components/WordCreator";
 import { AdventureDashboard } from "@/components/AdventureDashboard";
 import { MobileBottomNav } from "@/components/MobileBottomNav";
 import { adventureService } from "@/lib/adventureService";
+import { useWordLearningSession } from "@/contexts/WordLearningSessionContext";
+import { SessionRestorationNotification, DetailedSessionRestorationModal } from "@/components/SessionRestorationNotification";
 import {
   wordsDatabase,
   getWordsByCategory,
@@ -148,6 +150,18 @@ export default function Index({ initialProfile }: IndexProps) {
     new Set(),
   );
   const [currentDashboardWords, setCurrentDashboardWords] = useState<any[]>([]);
+
+  // Session persistence
+  const {
+    sessionData,
+    saveProgress,
+    restoreProgress,
+    saveLearningState,
+    saveQuizState,
+    saveUserProfile
+  } = useWordLearningSession();
+  const [showSessionRestoration, setShowSessionRestoration] = useState(false);
+  const [sessionRestored, setSessionRestored] = useState(false);
 
   // Enhanced word selection states
   const [userWordHistory, setUserWordHistory] = useState<
