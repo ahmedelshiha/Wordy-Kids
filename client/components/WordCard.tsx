@@ -206,23 +206,41 @@ export const WordCard: React.FC<WordCardProps> = ({
     const threshold = 60;
 
     setIsGesturing(false);
+    setSwipeDirection(null);
+    setTouchPosition(null);
 
-    // Handle swipe gestures
+    // Enhanced swipe gestures with improved back navigation
     if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > threshold) {
       if (deltaX > 0) {
-        // Swipe right - flip card
-        setIsFlipped(!isFlipped);
-        audioService.playWhooshSound();
-        if (navigator.vibrate) {
-          navigator.vibrate([50, 30, 50]);
+        if (isFlipped) {
+          // Swipe right on back - go back to front (enhanced back navigation)
+          setIsFlipped(false);
+          audioService.playWhooshSound();
+          if (navigator.vibrate) {
+            navigator.vibrate([50, 30, 50]);
+          }
+        } else {
+          // Swipe right on front - flip to back
+          setIsFlipped(true);
+          audioService.playWhooshSound();
+          if (navigator.vibrate) {
+            navigator.vibrate([50, 30, 50]);
+          }
         }
       } else {
-        // Swipe left - favorite
+        // Swipe left - favorite (works on both sides)
         handleFavorite();
       }
     } else if (deltaY < -threshold) {
-      // Swipe up - pronounce
+      // Swipe up - pronounce (works on both sides)
       handlePronounce();
+    } else if (deltaY > threshold && isFlipped) {
+      // Swipe down on back side - enhanced back navigation
+      setIsFlipped(false);
+      audioService.playWhooshSound();
+      if (navigator.vibrate) {
+        navigator.vibrate([40, 20, 40]);
+      }
     }
 
     setTouchStart(null);
