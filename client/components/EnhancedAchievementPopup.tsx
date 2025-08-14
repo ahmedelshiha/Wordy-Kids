@@ -311,41 +311,17 @@ export function EnhancedAchievementPopup({
                      currentAchievement.description}
                   </p>
 
-                  {/* Category and Difficulty Badges */}
-                  <div className="flex items-center justify-center gap-2 mb-4">
-                    <Badge
-                      className={`${categoryColor} text-white border-0 text-xs`}
-                    >
-                      {currentAchievement.category.toUpperCase()}
-                    </Badge>
-                    <Badge className="bg-white/20 text-white border-0 text-xs">
-                      {currentAchievement.difficulty.toUpperCase()}
+                  {/* Simplified Badges for mobile */}
+                  <div className="flex items-center justify-center gap-1 mb-2">
+                    <Badge className="bg-white/25 text-white border-0 text-xs px-2 py-0.5 rounded-full">
+                      {currentAchievement.difficulty === "rainbow" ? "🌈 ULTIMATE" :
+                       currentAchievement.difficulty === "diamond" ? "💎 RARE" :
+                       currentAchievement.difficulty === "gold" ? "🏆 SUPER" :
+                       currentAchievement.difficulty === "silver" ? "⭐ COOL" : "🎯 YAY"}
                     </Badge>
                   </div>
 
-                  {/* Optimized Criteria Display */}
-                  {currentAchievement.criteria?.length && (
-                    <div className="bg-white/15 rounded-lg p-3 mb-4 text-left">
-                      <div className="text-sm font-semibold mb-2 text-center">
-                        🎯 Criteria Met:
-                      </div>
-                      {currentAchievement.criteria
-                        .slice(0, 3)
-                        .map((criterion, index) => (
-                          <div
-                            key={index}
-                            className="text-xs text-white/90 mb-1"
-                          >
-                            ✅{" "}
-                            {criterion.type
-                              .replace(/([A-Z])/g, " $1")
-                              .replace(/^./, (str) => str.toUpperCase())}
-                            : {criterion.target}
-                            {criterion.timeFrame && ` (${criterion.timeFrame})`}
-                          </div>
-                        ))}
-                    </div>
-                  )}
+                  {/* Hidden criteria for mobile - too much text */}
 
                   {/* Optimized Reward Display */}
                   {currentAchievement.reward && (
