@@ -505,12 +505,15 @@ export default function WordGardenGame({
           const isActive = idx === roundIdx;
           const isCompleted = idx < roundIdx;
           const hasGrown = stage > 0;
+          const justGrew = recentlyGrown === idx;
 
           return (
             <div
               key={idx}
               className={`rounded-2xl h-16 flex items-center justify-center text-2xl transition-all duration-300 ${
-                isActive
+                justGrew
+                  ? "bg-yellow-200 ring-4 ring-yellow-400 shadow-lg"
+                  : isActive
                   ? "bg-emerald-200 ring-2 ring-emerald-400"
                   : isCompleted && hasGrown
                   ? "bg-emerald-100"
@@ -519,7 +522,13 @@ export default function WordGardenGame({
             >
               <span
                 className={`transition-all duration-500 ${
-                  isActive ? "animate-bounce scale-110" : hasGrown ? "scale-105" : ""
+                  justGrew
+                    ? "animate-bounce scale-125 drop-shadow-lg"
+                    : isActive
+                    ? "animate-bounce scale-110"
+                    : hasGrown
+                    ? "scale-105"
+                    : ""
                 }`}
               >
                 {STAGES[stage]}
