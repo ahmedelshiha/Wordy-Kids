@@ -159,8 +159,8 @@ export const LearningDashboard: React.FC<LearningDashboardProps> = ({
             onPracticeForgotten || (() => console.log("Practice forgotten"))
           }
           dailyGoal={{
-            target: stats.weeklyGoal, // Using weekly goal as daily for demo
-            completed: stats.weeklyProgress,
+            target: stats.dailyGoalTarget || stats.weeklyGoal, // Use daily goal if available
+            completed: stats.dailyGoalProgress || stats.weeklyProgress,
             streak: stats.currentStreak,
           }}
           currentLevel={stats.level}
