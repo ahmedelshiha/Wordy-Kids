@@ -20,7 +20,9 @@ import {
 import { cn } from "@/lib/utils";
 import { audioService } from "@/lib/audioService";
 import { AchievementTracker } from "@/lib/achievementTracker";
+import { EnhancedAchievementTracker } from "@/lib/enhancedAchievementTracker";
 import { EnhancedAchievementPopup } from "@/components/EnhancedAchievementPopup";
+import { AchievementTeaser } from "@/components/AchievementTeaser";
 import {
   DashboardWordGenerator,
   DashboardWordSession,
@@ -368,10 +370,31 @@ export function InteractiveDashboardWordCard({
         timeSpent: 1, // Assume 1 minute per word on average
       });
 
-      // Show journey achievements if any were unlocked
-      if (newJourneyAchievements.length > 0) {
+      // Track enhanced achievements with difficulty-based progression
+      const enhancedAchievements = EnhancedAchievementTracker.trackActivity({
+        type: "wordLearning",
+        wordsLearned: status === "remembered" ? 1 : 0,
+        accuracy:
+          status === "remembered"
+            ? 100
+            : status === "needs_practice"
+              ? 0
+              : undefined,
+        category: currentWord.category,
+        difficulty: currentWord.difficulty,
+        timeSpent: 1,
+      });
+
+      // Combine achievements from both systems
+      const allNewAchievements = [
+        ...newJourneyAchievements,
+        ...enhancedAchievements,
+      ];
+
+      // Show enhanced achievements if any were unlocked
+      if (allNewAchievements.length > 0) {
         setTimeout(() => {
-          setJourneyAchievements(newJourneyAchievements);
+          setJourneyAchievements(allNewAchievements);
         }, 1500); // Show after feedback animation
       }
     } catch (error) {
@@ -393,12 +416,32 @@ export function InteractiveDashboardWordCard({
         wordsLearned: newStats.wordsRemembered,
       });
 
-      // Add session journey achievements to the display queue
-      if (sessionJourneyAchievements.length > 0) {
+      // Track enhanced session completion achievements
+      const sessionTimeMinutes = Math.round(
+        (Date.now() - newStats.sessionStartTime) / 1000 / 60,
+      );
+      const enhancedSessionAchievements =
+        EnhancedAchievementTracker.trackActivity({
+          type: "sessionComplete",
+          sessionStats: {
+            accuracy: newStats.accuracy,
+            timeMinutes: sessionTimeMinutes,
+            wordsCompleted: newStats.wordsCompleted,
+          },
+        });
+
+      // Combine all session achievements
+      const allSessionAchievements = [
+        ...sessionJourneyAchievements,
+        ...enhancedSessionAchievements,
+      ];
+
+      // Add all session achievements to the display queue
+      if (allSessionAchievements.length > 0) {
         setTimeout(() => {
           setJourneyAchievements((prev) => [
             ...prev,
-            ...sessionJourneyAchievements,
+            ...allSessionAchievements,
           ]);
         }, 3000); // Show after session completion celebration
       }
@@ -414,7 +457,7 @@ export function InteractiveDashboardWordCard({
       console.log("Session completed!", {
         stats: newStats,
         achievements: achievements.map((a) => a.title),
-        journeyAchievements: sessionJourneyAchievements.length,
+        journeyAchievements: allSessionAchievements.length,
         totalWordsCompleted,
       });
       return;
@@ -572,7 +615,7 @@ export function InteractiveDashboardWordCard({
   return (
     <div className={cn("space-y-6", className)}>
       {/* Today's Word Quest - Mobile Optimized Top Left */}
-      <div className="mb-4">
+      <div className="mb-4 hidden">
         <Card className="bg-gradient-to-r from-educational-blue/10 to-educational-purple/10 border-educational-blue/20 hover:shadow-lg transition-all duration-300">
           <CardContent className="p-3 md:p-4">
             <div className="flex items-center justify-between">
@@ -762,9 +805,84 @@ export function InteractiveDashboardWordCard({
         )}
 
         <CardContent className="p-4 md:p-8 relative z-10">
+          {/* Today's Word Quest - Left Corner without container */}
+          <div className="absolute top-2 left-2 md:top-3 md:left-3 z-20 mb-4">
+            <div className="flex items-center gap-1 md:gap-2">
+              <span className="text-sm md:text-base">
+                {(() => {
+                  const wordsLearned = Math.max(
+                    sessionStats.wordsRemembered,
+                    rememberedWordsCount || 0,
+                  );
+                  const goal = dailyGoal.target;
+                  const percentage = Math.round((wordsLearned / goal) * 100);
+
+                  if (wordsLearned >= goal) {
+                    if (wordsLearned >= goal * 2) return "⭐";
+                    if (wordsLearned >= goal * 1.5) return "🚀";
+                    return "🏆";
+                  }
+                  if (percentage >= 90) return "⭐";
+                  if (percentage >= 75) return "🎯";
+                  if (percentage >= 50) return "💪";
+                  return "🌟";
+                })()}
+              </span>
+              <div>
+                <div className="text-xs font-bold text-slate-800 leading-tight">
+                  Today's Word Quest
+                </div>
+                <div className="text-xs text-slate-600 mt-0.5">
+                  {(() => {
+                    const wordsLearned = Math.max(
+                      sessionStats.wordsRemembered,
+                      rememberedWordsCount || 0,
+                    );
+                    const goal = dailyGoal.target;
+                    const percentage = Math.round((wordsLearned / goal) * 100);
+
+                    if (wordsLearned >= goal) {
+                      if (wordsLearned >= goal * 2)
+                        return "⭐ SUPERSTAR! Amazing effort!";
+                      if (wordsLearned >= goal * 1.5)
+                        return "🚀 Beyond awesome! Keep going!";
+                      return "🎉 Goal achieved! You're incredible!";
+                    }
+                    if (percentage >= 90) return "🌟 Almost there, superstar!";
+                    if (percentage >= 75) return "🚀 You're doing great!";
+                    if (percentage >= 50) return "💪 Keep going, champion!";
+                    if (percentage >= 25) return "🌱 Nice start!";
+                    return "🌟 Ready for an adventure?";
+                  })()}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Achievement Teaser - Motivational hints */}
+          <AchievementTeaser className="mb-3" />
+
           {/* Category and Progress Header */}
-          <div className="text-center mb-4 md:mb-6">
+          <div className="text-center mb-6 md:mb-8 mt-8 md:mt-6">
             <div className="flex items-center justify-center gap-4 mb-4">
+              {/* Difficulty classification badge */}
+              <Badge
+                className={cn(
+                  "text-sm px-3 py-1",
+                  currentWord.difficulty === "easy"
+                    ? "bg-green-100 text-green-700 border-green-300"
+                    : currentWord.difficulty === "medium"
+                      ? "bg-yellow-100 text-yellow-700 border-yellow-300"
+                      : currentWord.difficulty === "hard"
+                        ? "bg-red-100 text-red-700 border-red-300"
+                        : "bg-gray-100 text-gray-700 border-gray-300",
+                )}
+              >
+                {currentWord.difficulty
+                  ? currentWord.difficulty.charAt(0).toUpperCase() +
+                    currentWord.difficulty.slice(1)
+                  : "Medium"}
+              </Badge>
               <Badge
                 className={cn(
                   "text-sm px-3 py-1",
