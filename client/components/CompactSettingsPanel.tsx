@@ -175,28 +175,28 @@ export const CompactSettingsPanel: React.FC<CompactSettingsPanelProps> = ({
   if (!isOpen) return null;
 
   const SettingRow = ({ icon: Icon, label, children, description }: any) => (
-    <div className="flex items-center justify-between py-3 border-b border-slate-100 last:border-b-0">
+    <div className="flex items-center justify-between py-3 px-1 border-b border-slate-100 last:border-b-0 min-h-[48px] touch-target">
       <div className="flex items-center gap-3 flex-1 min-w-0">
         <Icon className="w-4 h-4 text-slate-600 flex-shrink-0" />
         <div className="min-w-0 flex-1">
-          <p className="font-medium text-sm text-slate-900">{label}</p>
+          <p className="font-medium text-sm text-slate-900 leading-tight">{label}</p>
           {description && (
-            <p className="text-xs text-slate-500 line-clamp-1">{description}</p>
+            <p className="text-xs text-slate-500 line-clamp-1 leading-tight">{description}</p>
           )}
         </div>
       </div>
-      <div className="flex-shrink-0">{children}</div>
+      <div className="flex-shrink-0 ml-2">{children}</div>
     </div>
   );
 
   const SectionHeader = ({ title, emoji, isExpanded, onToggle }: any) => (
     <button
       onClick={onToggle}
-      className="w-full flex items-center justify-between p-3 hover:bg-slate-50 transition-colors rounded-lg"
+      className="w-full flex items-center justify-between p-3 hover:bg-slate-50 active:bg-slate-100 transition-colors rounded-lg min-h-[44px] touch-target"
     >
       <div className="flex items-center gap-2">
         <span className="text-lg">{emoji}</span>
-        <span className="font-medium text-slate-900">{title}</span>
+        <span className="font-medium text-slate-900 text-sm sm:text-base">{title}</span>
       </div>
       {isExpanded ? (
         <ChevronUp className="w-4 h-4 text-slate-500" />
@@ -207,9 +207,9 @@ export const CompactSettingsPanel: React.FC<CompactSettingsPanelProps> = ({
   );
 
   return (
-    <div className="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-end sm:items-center justify-center z-50">
-      <Card className="w-full max-w-md mx-4 mb-4 sm:mb-0 max-h-[90vh] overflow-hidden animate-mobile-slide-in shadow-xl">
-        <CardHeader className="pb-3 bg-gradient-to-r from-educational-blue to-educational-purple text-white">
+    <div className="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-end sm:items-center justify-center z-50 p-2">
+      <Card className="w-full max-w-sm sm:max-w-md mx-2 mb-2 sm:mb-0 max-h-[85vh] sm:max-h-[90vh] overflow-hidden animate-mobile-slide-in shadow-xl rounded-2xl">
+        <CardHeader className="pb-3 bg-gradient-to-r from-educational-blue to-educational-purple text-white rounded-t-2xl">
           <div className="flex items-center justify-between">
             <CardTitle className="flex items-center gap-2">
               <Settings className="w-5 h-5" />
@@ -234,7 +234,7 @@ export const CompactSettingsPanel: React.FC<CompactSettingsPanelProps> = ({
           )}
         </CardHeader>
 
-        <ScrollArea className="max-h-[60vh]">
+        <ScrollArea className="max-h-[55vh] sm:max-h-[60vh]">
           <div className="p-4 space-y-1">
             {/* Audio Section */}
             <div className="border rounded-lg">
@@ -307,13 +307,13 @@ export const CompactSettingsPanel: React.FC<CompactSettingsPanelProps> = ({
                           size="sm"
                           variant={selectedVoiceType === voice.type ? "default" : "outline"}
                           className={cn(
-                            "flex-1 h-8 text-xs",
+                            "flex-1 h-9 text-xs min-h-[36px] touch-target",
                             selectedVoiceType === voice.type && "bg-educational-blue"
                           )}
                           onClick={() => handleVoiceTypeChange(voice.type)}
                         >
                           <span className="mr-1">{voice.emoji}</span>
-                          {voice.label}
+                          <span className="hidden xs:inline">{voice.label}</span>
                         </Button>
                       ))}
                     </div>
@@ -466,7 +466,7 @@ export const CompactSettingsPanel: React.FC<CompactSettingsPanelProps> = ({
         </ScrollArea>
 
         {/* Action Bar */}
-        <div className="border-t bg-slate-50 p-3">
+        <div className="border-t bg-slate-50 p-3 rounded-b-2xl">
           <div className="flex gap-2">
             <Button
               variant="outline"
@@ -474,7 +474,7 @@ export const CompactSettingsPanel: React.FC<CompactSettingsPanelProps> = ({
                 handleResetToDefaults();
                 if (deviceInfo.hasHaptic) triggerHapticFeedback("medium");
               }}
-              className="flex-1 h-10 text-xs"
+              className="flex-1 h-11 text-xs min-h-[44px] touch-target"
             >
               <RotateCcw className="w-3 h-3 mr-1" />
               Reset
@@ -484,7 +484,7 @@ export const CompactSettingsPanel: React.FC<CompactSettingsPanelProps> = ({
                 handleSaveSettings();
                 if (deviceInfo.hasHaptic) triggerHapticFeedback("heavy");
               }}
-              className="flex-1 bg-educational-blue hover:bg-educational-blue/90 text-white h-10 text-xs"
+              className="flex-1 bg-educational-blue hover:bg-educational-blue/90 text-white h-11 text-xs min-h-[44px] touch-target"
             >
               <Save className="w-3 h-3 mr-1" />
               Save & Close
