@@ -132,10 +132,61 @@ export const WordCard: React.FC<WordCardProps> = ({
       audioService.playCheerSound();
       setShowSparkles(true);
       setTimeout(() => setShowSparkles(false), 1000);
+
+      // Enhanced haptic feedback
+      if (navigator.vibrate) {
+        navigator.vibrate([100, 50, 100]);
+      }
     } else {
       playSoundIfEnabled.click();
+      if (navigator.vibrate) {
+        navigator.vibrate(50);
+      }
     }
     onFavorite?.(word);
+  };
+
+  // Enhanced touch gesture handling
+  const handleTouchStart = (e: React.TouchEvent) => {
+    const touch = e.touches[0];
+    setTouchStart({ x: touch.clientX, y: touch.clientY });
+    setIsGesturing(true);
+
+    // Light haptic feedback on touch start
+    if (navigator.vibrate) {
+      navigator.vibrate(25);
+    }
+  };
+
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    if (!touchStart) return;
+
+    const touch = e.changedTouches[0];
+    const deltaX = touch.clientX - touchStart.x;
+    const deltaY = touch.clientY - touchStart.y;
+    const threshold = 60;
+
+    setIsGesturing(false);
+
+    // Handle swipe gestures
+    if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > threshold) {
+      if (deltaX > 0) {
+        // Swipe right - flip card
+        setIsFlipped(!isFlipped);
+        audioService.playWhooshSound();
+        if (navigator.vibrate) {
+          navigator.vibrate([50, 30, 50]);
+        }
+      } else {
+        // Swipe left - favorite
+        handleFavorite();
+      }
+    } else if (deltaY < -threshold) {
+      // Swipe up - pronounce
+      handlePronounce();
+    }
+
+    setTouchStart(null);
   };
 
   const getDifficultyColor = (difficulty: string) => {
