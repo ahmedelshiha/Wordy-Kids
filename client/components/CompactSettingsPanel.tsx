@@ -214,7 +214,7 @@ export const CompactSettingsPanel: React.FC<CompactSettingsPanelProps> = ({
             <CardTitle className="flex items-center gap-2">
               <Settings className="w-5 h-5" />
               <div>
-                <h2 className="text-lg font-bold">Quick Settings</h2>
+                <h2 className="text-lg font-bold section-title">Quick Settings</h2>
                 <p className="text-xs opacity-90">Essential preferences</p>
               </div>
             </CardTitle>
