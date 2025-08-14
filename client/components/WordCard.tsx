@@ -751,6 +751,19 @@ export const WordCard: React.FC<WordCardProps> = ({
           autoCloseDelay={5000} // Auto-close after 5 seconds for word achievements
         />
       )}
+
+      {/* Screen reader live region for accessibility */}
+      <div
+        aria-live="polite"
+        aria-atomic="true"
+        className="sr-only"
+        role="status"
+      >
+        {isFlipped ? `Showing definition for ${word.word}` : `Showing word ${word.word}`}
+        {isPlaying && ` Pronouncing ${word.word}`}
+        {isFavorited && ` ${word.word} added to favorites`}
+        {isGesturing && ' Gesture detected'}
+      </div>
     </div>
   );
 };
