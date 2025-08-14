@@ -1636,6 +1636,20 @@ export default function Index({ initialProfile }: IndexProps) {
                                 <>
                                   {displayWords.length > 0 && (
                                     <>
+                                      {/* Progress indicator for navigation context */}
+                                      <div className="max-w-xs sm:max-w-sm md:max-w-md mx-auto mb-2">
+                                        <div className="flex items-center justify-between text-xs text-slate-500 mb-2">
+                                          <span>Progress in {selectedCategory}</span>
+                                          <span>{Math.round(((currentWordIndex + 1) / displayWords.length) * 100)}% complete</span>
+                                        </div>
+                                        <div className="w-full bg-slate-200 rounded-full h-1.5">
+                                          <div
+                                            className="bg-blue-500 h-1.5 rounded-full transition-all duration-300 ease-out"
+                                            style={{ width: `${((currentWordIndex + 1) / displayWords.length) * 100}%` }}
+                                          ></div>
+                                        </div>
+                                      </div>
+
                                       <div
                                         className={`max-w-xs sm:max-w-sm md:max-w-md mx-auto px-1 sm:px-2 md:px-0 relative ${
                                           celebrationEffect &&
