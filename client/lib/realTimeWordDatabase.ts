@@ -24,7 +24,7 @@ class RealTimeWordDatabaseService {
   // Initialize the service
   async initialize() {
     if (this.isInitialized) return;
-    
+
     try {
       // Import the current words database
       const { wordsDatabase, getAllCategories } = await import("@/data/wordsDatabase");
@@ -32,11 +32,12 @@ class RealTimeWordDatabaseService {
       this.currentCategories = getAllCategories();
       this.lastUpdate = Date.now();
       this.isInitialized = true;
-      
+
       // Start monitoring for changes
       this.startMonitoring();
-      
-      console.log('Real-time word database initialized with', this.currentWords.length, 'words');
+
+      console.log('Real-time word database initialized with', this.currentWords.length, 'words and', this.currentCategories.length, 'categories');
+      console.log('Categories:', this.currentCategories);
     } catch (error) {
       console.error('Failed to initialize real-time word database:', error);
     }
