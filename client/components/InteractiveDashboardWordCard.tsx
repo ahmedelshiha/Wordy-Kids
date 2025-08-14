@@ -453,10 +453,10 @@ export function InteractiveDashboardWordCard({
     // Show celebration effect for successful interactions
     if (status === "remembered") {
       setCelebrationEffect(true);
-      audioService.playSuccessSound();
+      enhancedAudioService.playSuccessSound();
       setTimeout(() => setCelebrationEffect(false), 2000);
     } else if (status === "needs_practice") {
-      audioService.playEncouragementSound();
+      enhancedAudioService.playEncouragementSound();
     }
 
     try {
