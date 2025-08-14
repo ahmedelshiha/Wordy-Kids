@@ -590,14 +590,14 @@ export function ChildFriendlyCategorySelector({
           )}
         </div>
 
-        {/* Quick Categories Bar */}
+        {/* Quick Categories Bar - All Categories */}
         {!searchTerm && (
           <div>
             <h3 className="text-sm font-semibold text-slate-700 mb-3">
-              🚀 Quick Select
+              🚀 Quick Select - All Categories
             </h3>
-            <div className="flex gap-2 overflow-x-auto pb-2">
-              {enrichedCategories.slice(0, 6).map((category) => (
+            <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-thin scrollbar-thumb-slate-300 scrollbar-track-slate-100">
+              {enrichedCategories.map((category) => (
                 <Button
                   key={category.id}
                   variant={
@@ -618,6 +618,9 @@ export function ChildFriendlyCategorySelector({
                 </Button>
               ))}
             </div>
+            <p className="text-xs text-slate-500 mt-1">
+              📱 Scroll right to see all {enrichedCategories.length} categories
+            </p>
           </div>
         )}
       </div>
