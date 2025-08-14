@@ -9,6 +9,8 @@ import { Separator } from "@/components/ui/separator";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Progress } from "@/components/ui/progress";
 import { Switch } from "@/components/ui/switch";
+import { refreshWordDatabase } from "@/lib/cacheManager";
+import { realTimeWordDB } from "@/lib/realTimeWordDatabase";
 import {
   Select,
   SelectContent,
