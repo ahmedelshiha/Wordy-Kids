@@ -1019,7 +1019,7 @@ export function InteractiveDashboardWordCard({
           {/* Hint Display */}
           {showHint && !showWordName && (
             <div
-              className="bg-yellow-50 border-2 border-yellow-200 rounded-xl p-3 mb-3 text-center"
+              className="bg-gradient-to-br from-yellow-50 via-orange-50/50 to-amber-50 border border-yellow-200/60 rounded-2xl p-4 mb-4 text-center shadow-lg backdrop-blur-sm ring-1 ring-yellow-200/20"
               role="region"
               aria-label="Word hint"
               aria-live="polite"
