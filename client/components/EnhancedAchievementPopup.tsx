@@ -36,7 +36,14 @@ interface Achievement {
   unlocked: boolean;
   dateUnlocked?: Date;
   reward?: {
-    type: "avatar_accessory" | "theme" | "sound_effect" | "title" | "points" | "sticker" | "badge";
+    type:
+      | "avatar_accessory"
+      | "theme"
+      | "sound_effect"
+      | "title"
+      | "points"
+      | "sticker"
+      | "badge";
     item: string;
     value?: number;
     emoji?: string;
@@ -60,7 +67,8 @@ const DIFFICULTY_COLORS = {
   silver: "from-gray-300 to-gray-500",
   gold: "from-yellow-400 to-yellow-600",
   diamond: "from-blue-400 to-purple-600",
-  rainbow: "from-pink-400 via-purple-400 via-blue-400 via-green-400 via-yellow-400 to-red-400",
+  rainbow:
+    "from-pink-400 via-purple-400 via-blue-400 via-green-400 via-yellow-400 to-red-400",
 } as const;
 
 const DIFFICULTY_ICONS = {
@@ -298,7 +306,9 @@ export function EnhancedAchievementPopup({
                 >
                   <div className="flex items-center justify-center gap-1 mb-2">
                     <DifficultyIcon className="w-3 h-3 sm:w-4 sm:h-4" />
-                    <h3 className="text-sm sm:text-base font-bold animate-bounce">🎉 WOW! 🎉</h3>
+                    <h3 className="text-sm sm:text-base font-bold animate-bounce">
+                      🎉 WOW! 🎉
+                    </h3>
                   </div>
 
                   <h4 className="text-sm sm:text-base mb-2 font-bold text-yellow-200">
@@ -307,17 +317,24 @@ export function EnhancedAchievementPopup({
 
                   <p className="text-white/90 mb-3 text-xs sm:text-sm leading-tight px-1">
                     {currentAchievement.funnyDescription ||
-                     EnhancedAchievementTracker.getKidFriendlyDescription(currentAchievement.id) ||
-                     currentAchievement.description}
+                      EnhancedAchievementTracker.getKidFriendlyDescription(
+                        currentAchievement.id,
+                      ) ||
+                      currentAchievement.description}
                   </p>
 
                   {/* Simplified Badges for mobile */}
                   <div className="flex items-center justify-center gap-1 mb-2">
                     <Badge className="bg-white/25 text-white border-0 text-xs px-2 py-0.5 rounded-full">
-                      {currentAchievement.difficulty === "rainbow" ? "🌈 ULTIMATE" :
-                       currentAchievement.difficulty === "diamond" ? "💎 RARE" :
-                       currentAchievement.difficulty === "gold" ? "🏆 SUPER" :
-                       currentAchievement.difficulty === "silver" ? "⭐ COOL" : "🎯 YAY"}
+                      {currentAchievement.difficulty === "rainbow"
+                        ? "🌈 ULTIMATE"
+                        : currentAchievement.difficulty === "diamond"
+                          ? "💎 RARE"
+                          : currentAchievement.difficulty === "gold"
+                            ? "🏆 SUPER"
+                            : currentAchievement.difficulty === "silver"
+                              ? "⭐ COOL"
+                              : "🎯 YAY"}
                     </Badge>
                   </div>
 
@@ -341,7 +358,8 @@ export function EnhancedAchievementPopup({
                             🎁 REWARD TIME! 🎁
                           </div>
                           <div className="text-sm font-bold">
-                            {currentAchievement.reward.emoji || "🎁"} {currentAchievement.reward.item}
+                            {currentAchievement.reward.emoji || "🎁"}{" "}
+                            {currentAchievement.reward.item}
                           </div>
                           {currentAchievement.reward.type === "sticker" && (
                             <div className="text-xs text-white/90 animate-bounce mt-1">

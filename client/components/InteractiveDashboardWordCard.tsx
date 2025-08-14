@@ -386,7 +386,10 @@ export function InteractiveDashboardWordCard({
       });
 
       // Combine achievements from both systems
-      const allNewAchievements = [...newJourneyAchievements, ...enhancedAchievements];
+      const allNewAchievements = [
+        ...newJourneyAchievements,
+        ...enhancedAchievements,
+      ];
 
       // Show enhanced achievements if any were unlocked
       if (allNewAchievements.length > 0) {
@@ -417,17 +420,21 @@ export function InteractiveDashboardWordCard({
       const sessionTimeMinutes = Math.round(
         (Date.now() - newStats.sessionStartTime) / 1000 / 60,
       );
-      const enhancedSessionAchievements = EnhancedAchievementTracker.trackActivity({
-        type: "sessionComplete",
-        sessionStats: {
-          accuracy: newStats.accuracy,
-          timeMinutes: sessionTimeMinutes,
-          wordsCompleted: newStats.wordsCompleted,
-        },
-      });
+      const enhancedSessionAchievements =
+        EnhancedAchievementTracker.trackActivity({
+          type: "sessionComplete",
+          sessionStats: {
+            accuracy: newStats.accuracy,
+            timeMinutes: sessionTimeMinutes,
+            wordsCompleted: newStats.wordsCompleted,
+          },
+        });
 
       // Combine all session achievements
-      const allSessionAchievements = [...sessionJourneyAchievements, ...enhancedSessionAchievements];
+      const allSessionAchievements = [
+        ...sessionJourneyAchievements,
+        ...enhancedSessionAchievements,
+      ];
 
       // Add all session achievements to the display queue
       if (allSessionAchievements.length > 0) {
@@ -808,9 +815,7 @@ export function InteractiveDashboardWordCard({
                     rememberedWordsCount || 0,
                   );
                   const goal = dailyGoal.target;
-                  const percentage = Math.round(
-                    (wordsLearned / goal) * 100,
-                  );
+                  const percentage = Math.round((wordsLearned / goal) * 100);
 
                   if (wordsLearned >= goal) {
                     if (wordsLearned >= goal * 2) return "⭐";
@@ -834,9 +839,7 @@ export function InteractiveDashboardWordCard({
                       rememberedWordsCount || 0,
                     );
                     const goal = dailyGoal.target;
-                    const percentage = Math.round(
-                      (wordsLearned / goal) * 100,
-                    );
+                    const percentage = Math.round((wordsLearned / goal) * 100);
 
                     if (wordsLearned >= goal) {
                       if (wordsLearned >= goal * 2)
@@ -845,8 +848,7 @@ export function InteractiveDashboardWordCard({
                         return "🚀 Beyond awesome! Keep going!";
                       return "🎉 Goal achieved! You're incredible!";
                     }
-                    if (percentage >= 90)
-                      return "🌟 Almost there, superstar!";
+                    if (percentage >= 90) return "🌟 Almost there, superstar!";
                     if (percentage >= 75) return "🚀 You're doing great!";
                     if (percentage >= 50) return "💪 Keep going, champion!";
                     if (percentage >= 25) return "🌱 Nice start!";
@@ -867,13 +869,19 @@ export function InteractiveDashboardWordCard({
               <Badge
                 className={cn(
                   "text-sm px-3 py-1",
-                  currentWord.difficulty === "easy" ? "bg-green-100 text-green-700 border-green-300" :
-                  currentWord.difficulty === "medium" ? "bg-yellow-100 text-yellow-700 border-yellow-300" :
-                  currentWord.difficulty === "hard" ? "bg-red-100 text-red-700 border-red-300" :
-                  "bg-gray-100 text-gray-700 border-gray-300"
+                  currentWord.difficulty === "easy"
+                    ? "bg-green-100 text-green-700 border-green-300"
+                    : currentWord.difficulty === "medium"
+                      ? "bg-yellow-100 text-yellow-700 border-yellow-300"
+                      : currentWord.difficulty === "hard"
+                        ? "bg-red-100 text-red-700 border-red-300"
+                        : "bg-gray-100 text-gray-700 border-gray-300",
                 )}
               >
-                {currentWord.difficulty ? currentWord.difficulty.charAt(0).toUpperCase() + currentWord.difficulty.slice(1) : "Medium"}
+                {currentWord.difficulty
+                  ? currentWord.difficulty.charAt(0).toUpperCase() +
+                    currentWord.difficulty.slice(1)
+                  : "Medium"}
               </Badge>
               <Badge
                 className={cn(

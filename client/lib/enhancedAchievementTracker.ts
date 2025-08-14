@@ -19,7 +19,14 @@ interface Achievement {
   unlocked: boolean;
   dateUnlocked?: Date;
   reward?: {
-    type: "avatar_accessory" | "theme" | "sound_effect" | "title" | "points" | "sticker" | "badge";
+    type:
+      | "avatar_accessory"
+      | "theme"
+      | "sound_effect"
+      | "title"
+      | "points"
+      | "sticker"
+      | "badge";
     item: string;
     value?: number;
     emoji?: string;
@@ -63,14 +70,14 @@ interface JourneyProgress {
   totalAccuracy: number;
   timeSpentLearning: number; // in minutes
   lastActivityDate: Date;
-  
+
   // Enhanced difficulty-based stats
   difficultyStats: {
     easy: { completed: number; total: number; accuracy: number };
     medium: { completed: number; total: number; accuracy: number };
     hard: { completed: number; total: number; accuracy: number };
   };
-  
+
   // Session stats
   sessionStats: {
     totalSessions: number;
@@ -79,14 +86,14 @@ interface JourneyProgress {
     fastestSession: number; // time in minutes
     longestStreak: number;
   };
-  
+
   // Daily goals
   dailyGoalStats: {
     achieved: number;
     totalDays: number;
     currentStreak: number;
   };
-  
+
   // Fun stats
   funStats: {
     favoriteEmoji: string;
@@ -103,7 +110,8 @@ export class EnhancedAchievementTracker {
       id: "first_word_wizard",
       name: "First Word Wizard",
       description: "Learn your very first word! Welcome to the adventure!",
-      funnyDescription: "🎊 WHOOSH! You just learned your first word! You're officially a Word Wizard now!",
+      funnyDescription:
+        "🎊 WHOOSH! You just learned your first word! You're officially a Word Wizard now!",
       icon: "🧙‍♂️",
       category: "learning",
       difficulty: "bronze",
@@ -124,7 +132,8 @@ export class EnhancedAchievementTracker {
       id: "word_collector_scout",
       name: "Word Collector Scout",
       description: "Collect 15 amazing words with 80%+ accuracy!",
-      funnyDescription: "🎒 You're like a word treasure hunter! 15 shiny words with great accuracy!",
+      funnyDescription:
+        "🎒 You're like a word treasure hunter! 15 shiny words with great accuracy!",
       icon: "🎯",
       category: "learning",
       difficulty: "bronze",
@@ -152,7 +161,8 @@ export class EnhancedAchievementTracker {
       id: "word_party_starter",
       name: "Word Party Starter",
       description: "Learn 25 words and throw a word party!",
-      funnyDescription: "🎉 PARTY TIME! 25 words learned = one EPIC celebration!",
+      funnyDescription:
+        "🎉 PARTY TIME! 25 words learned = one EPIC celebration!",
       icon: "🎉",
       category: "learning",
       difficulty: "silver",
@@ -174,7 +184,8 @@ export class EnhancedAchievementTracker {
       id: "lucky_learner",
       name: "Lucky Learner",
       description: "Get 7 words correct in a row - what luck!",
-      funnyDescription: "🍀 WHOA! 7 perfect words in a row? You must have a magic lucky charm!",
+      funnyDescription:
+        "🍀 WHOA! 7 perfect words in a row? You must have a magic lucky charm!",
       icon: "🍀",
       category: "streak",
       difficulty: "silver",
@@ -195,7 +206,8 @@ export class EnhancedAchievementTracker {
       id: "emoji_hunter",
       name: "Emoji Hunter",
       description: "Find words with 10 different emojis!",
-      funnyDescription: "😍 You're an emoji detective! 10 different emoji words found!",
+      funnyDescription:
+        "😍 You're an emoji detective! 10 different emoji words found!",
       icon: "🕵️‍♂️",
       category: "exploration",
       difficulty: "bronze",
@@ -217,7 +229,8 @@ export class EnhancedAchievementTracker {
       id: "easy_peasy_champion",
       name: "Easy Peasy Champion",
       description: "Master 50 easy words with 90%+ accuracy!",
-      funnyDescription: "🌟 Easy words are your best friends! You're the ULTIMATE Easy Champion!",
+      funnyDescription:
+        "🌟 Easy words are your best friends! You're the ULTIMATE Easy Champion!",
       icon: "🌱",
       category: "difficulty",
       difficulty: "silver",
@@ -238,14 +251,19 @@ export class EnhancedAchievementTracker {
           ],
         },
       ],
-      reward: { type: "avatar_accessory", item: "Green Leaf Crown", emoji: "🌿" },
+      reward: {
+        type: "avatar_accessory",
+        item: "Green Leaf Crown",
+        emoji: "🌿",
+      },
     },
 
     {
       id: "medium_difficulty_hero",
       name: "Medium Difficulty Hero",
       description: "Conquer 35 medium words with 85%+ accuracy!",
-      funnyDescription: "⚡ You're SUPER brave! Medium words bow down to your powers!",
+      funnyDescription:
+        "⚡ You're SUPER brave! Medium words bow down to your powers!",
       icon: "⚡",
       category: "difficulty",
       difficulty: "gold",
@@ -273,7 +291,8 @@ export class EnhancedAchievementTracker {
       id: "hard_word_ninja",
       name: "Hard Word Ninja",
       description: "Master 20 hard words with 80%+ accuracy!",
-      funnyDescription: "🥷 LEGENDARY NINJA! Hard words tremble before your might!",
+      funnyDescription:
+        "🥷 LEGENDARY NINJA! Hard words tremble before your might!",
       icon: "🥷",
       category: "difficulty",
       difficulty: "diamond",
@@ -302,7 +321,8 @@ export class EnhancedAchievementTracker {
       id: "oops_comeback_king",
       name: "Oops Comeback King",
       description: "Get 3 wrong then 5 perfect in same session!",
-      funnyDescription: "😅 HAHA! You turned your oops into AWESOME! What a comeback!",
+      funnyDescription:
+        "😅 HAHA! You turned your oops into AWESOME! What a comeback!",
       icon: "👑",
       category: "session",
       difficulty: "gold",
@@ -323,7 +343,8 @@ export class EnhancedAchievementTracker {
       id: "speed_demon_junior",
       name: "Speed Demon Junior",
       description: "Complete 20 words in under 3 minutes with 85%+ accuracy!",
-      funnyDescription: "🏎️ ZOOM ZOOM! You're faster than a rocket ship learning words!",
+      funnyDescription:
+        "🏎️ ZOOM ZOOM! You're faster than a rocket ship learning words!",
       icon: "🏎️",
       category: "session",
       difficulty: "diamond",
@@ -345,7 +366,8 @@ export class EnhancedAchievementTracker {
       id: "perfect_session_superstar",
       name: "Perfect Session Superstar",
       description: "Complete 3 perfect sessions with 100% accuracy!",
-      funnyDescription: "⭐ TRIPLE SUPERSTAR! 3 perfect sessions = you're absolutely LEGENDARY!",
+      funnyDescription:
+        "⭐ TRIPLE SUPERSTAR! 3 perfect sessions = you're absolutely LEGENDARY!",
       icon: "⭐",
       category: "session",
       difficulty: "gold",
@@ -366,7 +388,8 @@ export class EnhancedAchievementTracker {
       id: "session_marathon_master",
       name: "Session Marathon Master",
       description: "Complete 10 perfect sessions total!",
-      funnyDescription: "🏃‍♂️ MARATHON LEGEND! 10 perfect sessions = you're UNSTOPPABLE!",
+      funnyDescription:
+        "🏃‍♂️ MARATHON LEGEND! 10 perfect sessions = you're UNSTOPPABLE!",
       icon: "🏆",
       category: "session",
       difficulty: "diamond",
@@ -388,7 +411,8 @@ export class EnhancedAchievementTracker {
       id: "daily_goal_achiever",
       name: "Daily Goal Achiever",
       description: "Reach your daily goal 5 times!",
-      funnyDescription: "🎯 BULLSEYE MASTER! 5 daily goals hit = you're a target champion!",
+      funnyDescription:
+        "🎯 BULLSEYE MASTER! 5 daily goals hit = you're a target champion!",
       icon: "🎯",
       category: "learning",
       difficulty: "bronze",
@@ -409,7 +433,8 @@ export class EnhancedAchievementTracker {
       id: "goal_streak_champion",
       name: "Goal Streak Champion",
       description: "Reach your daily goal 14 days in a row!",
-      funnyDescription: "🔥 LEGENDARY FIRE! 2 weeks of crushing goals = you're UNSTOPPABLE!",
+      funnyDescription:
+        "🔥 LEGENDARY FIRE! 2 weeks of crushing goals = you're UNSTOPPABLE!",
       icon: "🔥",
       category: "streak",
       difficulty: "gold",
@@ -432,7 +457,8 @@ export class EnhancedAchievementTracker {
       id: "weekend_warrior",
       name: "Weekend Warrior",
       description: "Learn 50 words on a weekend!",
-      funnyDescription: "🎊 WEEKEND HERO! 50 words on weekend = you're AMAZING!",
+      funnyDescription:
+        "🎊 WEEKEND HERO! 50 words on weekend = you're AMAZING!",
       icon: "🗡️",
       category: "streak",
       difficulty: "gold",
@@ -453,8 +479,10 @@ export class EnhancedAchievementTracker {
     {
       id: "word_rainbow_collector",
       name: "Word Rainbow Collector",
-      description: "Master all difficulty levels: 100 easy, 75 medium, 50 hard words with 90%+ accuracy!",
-      funnyDescription: "🌈 ULTIMATE RAINBOW MAGIC! You collected the ENTIRE WORD UNIVERSE! You're a LEGEND!",
+      description:
+        "Master all difficulty levels: 100 easy, 75 medium, 50 hard words with 90%+ accuracy!",
+      funnyDescription:
+        "🌈 ULTIMATE RAINBOW MAGIC! You collected the ENTIRE WORD UNIVERSE! You're a LEGEND!",
       icon: "🌈",
       category: "difficulty",
       difficulty: "rainbow",
@@ -484,8 +512,10 @@ export class EnhancedAchievementTracker {
     {
       id: "ultimate_word_wizard",
       name: "Ultimate Word Wizard",
-      description: "Learn 300 words, maintain 95% accuracy, and reach 50 perfect sessions!",
-      funnyDescription: "🧙‍♂️✨ ULTIMATE COSMIC MAGIC! You're the SUPREME Word Wizard of the entire GALAXY!",
+      description:
+        "Learn 300 words, maintain 95% accuracy, and reach 50 perfect sessions!",
+      funnyDescription:
+        "🧙‍♂️✨ ULTIMATE COSMIC MAGIC! You're the SUPREME Word Wizard of the entire GALAXY!",
       icon: "🧙‍♂️",
       category: "journey",
       difficulty: "rainbow",
@@ -517,7 +547,8 @@ export class EnhancedAchievementTracker {
       id: "mystery_box_opener",
       name: "Mystery Box Opener",
       description: "??? SECRET ACHIEVEMENT ???",
-      funnyDescription: "🎁 SURPRISE! You found a hidden treasure! What a mystery solver!",
+      funnyDescription:
+        "🎁 SURPRISE! You found a hidden treasure! What a mystery solver!",
       icon: "🎁",
       category: "exploration",
       difficulty: "diamond",
@@ -538,8 +569,10 @@ export class EnhancedAchievementTracker {
     {
       id: "triple_threat_master",
       name: "Triple Threat Master",
-      description: "Get 3 perfect sessions, learn 75 words, and achieve 5 daily goals!",
-      funnyDescription: "💥 TRIPLE POWER! You're like a superhero with 3 amazing powers!",
+      description:
+        "Get 3 perfect sessions, learn 75 words, and achieve 5 daily goals!",
+      funnyDescription:
+        "💥 TRIPLE POWER! You're like a superhero with 3 amazing powers!",
       icon: "💥",
       category: "journey",
       difficulty: "diamond",
@@ -592,7 +625,8 @@ export class EnhancedAchievementTracker {
       id: "category_explorer_extraordinaire",
       name: "Category Explorer Extraordinaire",
       description: "Explore 5 different word categories!",
-      funnyDescription: "🗺️ EXPLORER MODE ACTIVATED! 5 categories conquered = you're an adventurer!",
+      funnyDescription:
+        "🗺️ EXPLORER MODE ACTIVATED! 5 categories conquered = you're an adventurer!",
       icon: "🗺️",
       category: "exploration",
       difficulty: "silver",
@@ -614,7 +648,8 @@ export class EnhancedAchievementTracker {
       id: "pronunciation_parrot",
       name: "Pronunciation Parrot",
       description: "Listen to 25 word pronunciations!",
-      funnyDescription: "🦜 SQUAWK! You're a pronunciation parrot - repeat after me!",
+      funnyDescription:
+        "🦜 SQUAWK! You're a pronunciation parrot - repeat after me!",
       icon: "🦜",
       category: "learning",
       difficulty: "bronze",
@@ -695,7 +730,7 @@ export class EnhancedAchievementTracker {
           progressUpdate.wordsLearned =
             this.journeyProgress.wordsLearned + activity.wordsLearned;
         }
-        
+
         // Track difficulty-specific progress
         if (activity.difficulty && activity.wordsLearned) {
           const diffStats = { ...this.journeyProgress.difficultyStats };
@@ -703,14 +738,18 @@ export class EnhancedAchievementTracker {
           if (activity.accuracy) {
             const currentAccuracy = diffStats[activity.difficulty].accuracy;
             const totalCompleted = diffStats[activity.difficulty].completed;
-            diffStats[activity.difficulty].accuracy = 
-              (currentAccuracy * (totalCompleted - activity.wordsLearned) + activity.accuracy) / totalCompleted;
+            diffStats[activity.difficulty].accuracy =
+              (currentAccuracy * (totalCompleted - activity.wordsLearned) +
+                activity.accuracy) /
+              totalCompleted;
           }
           progressUpdate.difficultyStats = diffStats;
         }
 
         if (activity.category) {
-          const newCategories = new Set(this.journeyProgress.categoriesExplored);
+          const newCategories = new Set(
+            this.journeyProgress.categoriesExplored,
+          );
           newCategories.add(activity.category);
           progressUpdate.categoriesExplored = newCategories;
         }
@@ -720,19 +759,21 @@ export class EnhancedAchievementTracker {
         if (activity.sessionStats) {
           const sessionStats = { ...this.journeyProgress.sessionStats };
           sessionStats.totalSessions += 1;
-          
+
           if (activity.sessionStats.accuracy === 100) {
             sessionStats.perfectSessions += 1;
           }
-          
+
           if (activity.sessionStats.timeMinutes < sessionStats.fastestSession) {
             sessionStats.fastestSession = activity.sessionStats.timeMinutes;
           }
-          
-          sessionStats.averageWordsPerSession = 
-            (sessionStats.averageWordsPerSession * (sessionStats.totalSessions - 1) + 
-             activity.sessionStats.wordsCompleted) / sessionStats.totalSessions;
-          
+
+          sessionStats.averageWordsPerSession =
+            (sessionStats.averageWordsPerSession *
+              (sessionStats.totalSessions - 1) +
+              activity.sessionStats.wordsCompleted) /
+            sessionStats.totalSessions;
+
           progressUpdate.sessionStats = sessionStats;
         }
         break;
@@ -765,7 +806,9 @@ export class EnhancedAchievementTracker {
   /**
    * Enhanced achievement evaluation with difficulty tracking
    */
-  private static evaluateAchievementCriteria(achievement: Achievement): boolean {
+  private static evaluateAchievementCriteria(
+    achievement: Achievement,
+  ): boolean {
     if (!achievement.criteria) return false;
 
     return achievement.criteria.every((criterion) => {
@@ -776,63 +819,63 @@ export class EnhancedAchievementTracker {
             criterion.target,
             criterion.operator || ">=",
           );
-        
+
         case "mediumWords":
           return this.evaluateNumericCriterion(
             this.journeyProgress.difficultyStats.medium.completed,
             criterion.target,
             criterion.operator || ">=",
           );
-        
+
         case "hardWords":
           return this.evaluateNumericCriterion(
             this.journeyProgress.difficultyStats.hard.completed,
             criterion.target,
             criterion.operator || ">=",
           );
-        
+
         case "perfectSessions":
           return this.evaluateNumericCriterion(
             this.journeyProgress.sessionStats.perfectSessions,
             criterion.target,
             criterion.operator || ">=",
           );
-        
+
         case "speedLearning":
           return this.evaluateNumericCriterion(
             this.journeyProgress.sessionStats.fastestSession <= 5 ? 1 : 0,
             criterion.target,
             criterion.operator || ">=",
           );
-        
+
         case "dailyGoal":
           return this.evaluateNumericCriterion(
             this.journeyProgress.dailyGoalStats.achieved,
             criterion.target,
             criterion.operator || ">=",
           );
-        
+
         case "wordsLearned":
           return this.evaluateNumericCriterion(
             this.journeyProgress.wordsLearned,
             criterion.target,
             criterion.operator || ">=",
           );
-        
+
         case "accuracy":
           return this.evaluateNumericCriterion(
             this.journeyProgress.totalAccuracy,
             criterion.target,
             criterion.operator || ">=",
           );
-        
+
         case "categoryMastery":
           return this.evaluateNumericCriterion(
             this.journeyProgress.categoriesExplored.size,
             criterion.target,
             criterion.operator || ">=",
           );
-        
+
         default:
           return false;
       }
@@ -842,18 +885,20 @@ export class EnhancedAchievementTracker {
   /**
    * Update journey progress and check for newly unlocked achievements
    */
-  static updateJourneyProgress(progressUpdate: Partial<JourneyProgress>): Achievement[] {
+  static updateJourneyProgress(
+    progressUpdate: Partial<JourneyProgress>,
+  ): Achievement[] {
     Object.assign(this.journeyProgress, progressUpdate);
     const newlyUnlocked = this.checkForNewAchievements();
-    
+
     // Update fun stats
     if (newlyUnlocked.length > 0) {
       this.journeyProgress.funStats.totalCelebrations += newlyUnlocked.length;
-      this.journeyProgress.funStats.stickersEarned += newlyUnlocked.filter(a => 
-        a.reward?.type === "sticker"
+      this.journeyProgress.funStats.stickersEarned += newlyUnlocked.filter(
+        (a) => a.reward?.type === "sticker",
       ).length;
     }
-    
+
     return newlyUnlocked;
   }
 
@@ -874,7 +919,8 @@ export class EnhancedAchievementTracker {
       if (achievement.unlocked || !achievement.criteria) continue;
 
       // Check if this specific achievement has its own cooldown
-      const achievementCooldown = this.achievementCooldowns.get(achievement.id) || 0;
+      const achievementCooldown =
+        this.achievementCooldowns.get(achievement.id) || 0;
       if (now - achievementCooldown < this.ACHIEVEMENT_COOLDOWN_MS * 2) {
         continue; // Skip this achievement if it's in cooldown
       }
@@ -891,13 +937,16 @@ export class EnhancedAchievementTracker {
         this.lastAchievementTime = now;
         this.achievementCooldowns.set(achievement.id, now);
 
-        console.log(`🎉 Achievement unlocked: ${achievement.name} (cooldown activated)`);
+        console.log(
+          `🎉 Achievement unlocked: ${achievement.name} (cooldown activated)`,
+        );
 
         // Limit to 1 achievement at a time to prevent overwhelming
         break;
       } else {
         const oldProgress = achievement.currentProgress;
-        achievement.currentProgress = this.calculateAchievementProgress(achievement);
+        achievement.currentProgress =
+          this.calculateAchievementProgress(achievement);
 
         // Add teasing for close achievements
         this.checkForTeasingOpportunity(achievement, oldProgress);
@@ -910,8 +959,12 @@ export class EnhancedAchievementTracker {
   /**
    * Check if we should tease the user about almost completing an achievement
    */
-  private static checkForTeasingOpportunity(achievement: Achievement, oldProgress: number): void {
-    const progressPercent = (achievement.currentProgress / achievement.requirements) * 100;
+  private static checkForTeasingOpportunity(
+    achievement: Achievement,
+    oldProgress: number,
+  ): void {
+    const progressPercent =
+      (achievement.currentProgress / achievement.requirements) * 100;
     const oldProgressPercent = (oldProgress / achievement.requirements) * 100;
 
     // Only tease once when they cross certain thresholds
@@ -927,7 +980,9 @@ export class EnhancedAchievementTracker {
   /**
    * Calculate current progress towards achievement
    */
-  private static calculateAchievementProgress(achievement: Achievement): number {
+  private static calculateAchievementProgress(
+    achievement: Achievement,
+  ): number {
     if (!achievement.criteria) return 0;
 
     const criterionProgress = achievement.criteria.map((criterion) => {
@@ -993,7 +1048,7 @@ export class EnhancedAchievementTracker {
    * Get kid-friendly achievement description
    */
   static getKidFriendlyDescription(achievementId: string): string {
-    const achievement = this.achievements.find(a => a.id === achievementId);
+    const achievement = this.achievements.find((a) => a.id === achievementId);
     return achievement?.funnyDescription || achievement?.description || "";
   }
 
@@ -1003,7 +1058,13 @@ export class EnhancedAchievementTracker {
   static getAchievements(): Achievement[] {
     return [...this.achievements].sort((a, b) => {
       // Sort by difficulty, then by category
-      const difficultyOrder = { bronze: 1, silver: 2, gold: 3, diamond: 4, rainbow: 5 };
+      const difficultyOrder = {
+        bronze: 1,
+        silver: 2,
+        gold: 3,
+        diamond: 4,
+        rainbow: 5,
+      };
       return difficultyOrder[a.difficulty] - difficultyOrder[b.difficulty];
     });
   }
@@ -1028,8 +1089,12 @@ export class EnhancedAchievementTracker {
     nextAchievement?: Achievement;
   } {
     const nextAchievement = this.achievements
-      .filter(a => !a.unlocked)
-      .sort((a, b) => a.currentProgress / a.requirements - b.currentProgress / b.requirements)[0];
+      .filter((a) => !a.unlocked)
+      .sort(
+        (a, b) =>
+          a.currentProgress / a.requirements -
+          b.currentProgress / b.requirements,
+      )[0];
 
     return {
       totalWords: this.journeyProgress.wordsLearned,
@@ -1052,19 +1117,19 @@ export class EnhancedAchievementTracker {
     const morningMessages = [
       "🌅 Good morning, Word Warrior! Ready for an adventure?",
       "☀️ Rise and shine! Time to catch some word magic!",
-      "🌈 Morning rainbow! Let's paint the day with new words!"
+      "🌈 Morning rainbow! Let's paint the day with new words!",
     ];
 
     const afternoonMessages = [
       "🌞 Afternoon power! Your brain is ready for word challenges!",
       "⚡ Afternoon energy boost! Time for some word lightning!",
-      "🎯 Afternoon target practice! Let's hit those word bullseyes!"
+      "🎯 Afternoon target practice! Let's hit those word bullseyes!",
     ];
 
     const eveningMessages = [
       "🌙 Evening magic time! Perfect for word enchantments!",
       "⭐ Star-powered learning! Your evening word adventure awaits!",
-      "🦉 Wise owl hours! Time for some smart word hunting!"
+      "🦉 Wise owl hours! Time for some smart word hunting!",
     ];
 
     let messages = morningMessages;
@@ -1079,12 +1144,18 @@ export class EnhancedAchievementTracker {
    */
   static getNextAchievementTease(): string | null {
     const nextAchievement = this.achievements
-      .filter(a => !a.unlocked)
-      .sort((a, b) => (b.currentProgress / b.requirements) - (a.currentProgress / a.requirements))[0];
+      .filter((a) => !a.unlocked)
+      .sort(
+        (a, b) =>
+          b.currentProgress / b.requirements -
+          a.currentProgress / a.requirements,
+      )[0];
 
     if (!nextAchievement) return null;
 
-    const progressPercent = Math.round((nextAchievement.currentProgress / nextAchievement.requirements) * 100);
+    const progressPercent = Math.round(
+      (nextAchievement.currentProgress / nextAchievement.requirements) * 100,
+    );
 
     if (progressPercent >= 90) {
       return `🔥 SO CLOSE! "${nextAchievement.name}" is ${progressPercent}% complete!`;
