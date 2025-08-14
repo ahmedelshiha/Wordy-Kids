@@ -227,22 +227,24 @@ export function EncouragingFeedback({
           {/* Icon */}
           <div className="flex justify-center">
             <div
-              className={`p-4 rounded-full bg-white/20 backdrop-blur-sm ${
+              className={`p-3 rounded-full bg-white/20 backdrop-blur-sm ${
                 feedback.showAnimation !== false ? "animate-pulse" : ""
               }`}
             >
-              {getIcon()}
+              <div className="w-12 h-12 flex items-center justify-center">
+                {getIcon()}
+              </div>
             </div>
           </div>
 
           {/* Title */}
           {feedback.title && (
-            <h2 className="text-2xl font-bold text-white">{feedback.title}</h2>
+            <h2 className="text-xl font-bold text-white">{feedback.title}</h2>
           )}
 
           {/* Message */}
-          <div className="space-y-3">
-            <p className="text-lg text-white/95 leading-relaxed">
+          <div className="space-y-2">
+            <p className="text-base text-white/95 leading-relaxed">
               {feedback.message || getRandomMessage()}
             </p>
 
