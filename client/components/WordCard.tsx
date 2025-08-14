@@ -184,8 +184,8 @@ export const WordCard: React.FC<WordCardProps> = ({
 
     setTouchPosition({ x: touch.clientX, y: touch.clientY });
 
-    // Determine swipe direction early for visual feedback
-    const threshold = 30;
+    // Determine swipe direction early for visual feedback - more responsive on mobile
+    const threshold = 20; // Reduced for more responsive feedback
     if (Math.abs(deltaX) > threshold || Math.abs(deltaY) > threshold) {
       if (Math.abs(deltaX) > Math.abs(deltaY)) {
         if (deltaX > threshold) {
