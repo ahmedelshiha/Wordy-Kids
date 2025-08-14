@@ -168,6 +168,22 @@ export function QuizGames({
       );
     }
 
+    // Handle Picture Fun game
+    if (activeQuiz === "picture") {
+      return (
+        <PictureFunGame
+          category={selectedCategory}
+          difficulty="easy"
+          rounds={8}
+          optionsPerRound={4}
+          onFinish={(stats) => {
+            onQuizComplete(stats.correct, stats.totalRounds);
+          }}
+          onExit={handleQuizBack}
+        />
+      );
+    }
+
     // Handle Vowel Rescue games
     if (activeQuiz.startsWith("vowel-")) {
       let vowelQuestions;
