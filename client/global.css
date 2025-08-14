@@ -1155,7 +1155,8 @@
 }
 
 @keyframes gentle-bounce {
-  0%, 100% {
+  0%,
+  100% {
     transform: translateY(0px);
   }
   50% {
@@ -1164,7 +1165,8 @@
 }
 
 @keyframes gentle-float {
-  0%, 100% {
+  0%,
+  100% {
     transform: translateY(0px);
   }
   50% {
@@ -1173,7 +1175,8 @@
 }
 
 @keyframes sparkle-enhanced {
-  0%, 100% {
+  0%,
+  100% {
     transform: scale(1) rotate(0deg);
     opacity: 1;
   }
@@ -1217,7 +1220,11 @@
 }
 
 @keyframes emoji-bounce {
-  0%, 20%, 50%, 80%, 100% {
+  0%,
+  20%,
+  50%,
+  80%,
+  100% {
     transform: translateY(0) scale(1);
   }
   40% {
@@ -1316,7 +1323,8 @@
 }
 
 @keyframes letter-highlight {
-  0%, 100% {
+  0%,
+  100% {
     background-color: rgba(234, 179, 8, 0.3);
     border-color: rgba(234, 179, 8, 0.6);
   }

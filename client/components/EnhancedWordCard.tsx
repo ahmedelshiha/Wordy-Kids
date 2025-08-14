@@ -31,7 +31,10 @@ import {
   Music,
   Headphones,
 } from "lucide-react";
-import { playSoundIfEnabled, playUIInteractionSoundIfEnabled } from "@/lib/soundEffects";
+import {
+  playSoundIfEnabled,
+  playUIInteractionSoundIfEnabled,
+} from "@/lib/soundEffects";
 import { audioService } from "@/lib/audioService";
 import { enhancedAudioService } from "@/lib/enhancedAudioService";
 import { adventureService } from "@/lib/adventureService";
@@ -85,34 +88,42 @@ export const EnhancedWordCard: React.FC<EnhancedWordCardProps> = ({
   // Core states
   const [isFlipped, setIsFlipped] = useState(showDefinition);
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
-  
+
   // Audio and interaction states
   const [isPlaying, setIsPlaying] = useState(false);
   const [isFavorited, setIsFavorited] = useState(false);
   const [showSparkles, setShowSparkles] = useState(false);
   const [voiceMode, setVoiceMode] = useState<"normal" | "funny">("normal");
-  
+
   // Adventure and progress states
-  const [adventureStatus, setAdventureStatus] = useState<WordAdventureStatus | null>(null);
+  const [adventureStatus, setAdventureStatus] =
+    useState<WordAdventureStatus | null>(null);
   const [wordAchievements, setWordAchievements] = useState<any[]>([]);
   const [starProgress, setStarProgress] = useState(0);
-  
+
   // Gesture and interaction states
-  const [touchStart, setTouchStart] = useState<{ x: number; y: number } | null>(null);
+  const [touchStart, setTouchStart] = useState<{ x: number; y: number } | null>(
+    null,
+  );
   const [isGesturing, setIsGesturing] = useState(false);
   const [swipeDirection, setSwipeDirection] = useState<string | null>(null);
-  
+
   // Mini-game states
   const [activeMiniGame, setActiveMiniGame] = useState<MiniGame>(null);
   const [miniGameProgress, setMiniGameProgress] = useState(0);
-  const [emojiPieces, setEmojiPieces] = useState<boolean[]>([false, false, false, false]);
+  const [emojiPieces, setEmojiPieces] = useState<boolean[]>([
+    false,
+    false,
+    false,
+    false,
+  ]);
   const [letterSequence, setLetterSequence] = useState<string[]>([]);
   const [currentLetterIndex, setCurrentLetterIndex] = useState(0);
-  
+
   // Accessibility states
   const [highContrastMode, setHighContrastMode] = useState(false);
   const [largeTextMode, setLargeTextMode] = useState(false);
-  
+
   const cardRef = useRef<HTMLDivElement>(null);
   const voiceSettings = useVoiceSettings();
 
@@ -123,11 +134,11 @@ export const EnhancedWordCard: React.FC<EnhancedWordCardProps> = ({
       status = adventureService.initializeWordAdventure(word.id.toString());
     }
     setAdventureStatus(status);
-    
+
     // Load favorites from localStorage
     const favorites = JSON.parse(localStorage.getItem("favoriteWords") || "[]");
     setIsFavorited(favorites.includes(word.id));
-    
+
     // Initialize letter sequence for letter hunt game
     setLetterSequence(word.word.split(""));
   }, [word.id, word.word]);
@@ -147,7 +158,7 @@ export const EnhancedWordCard: React.FC<EnhancedWordCardProps> = ({
 
     setIsPlaying(true);
     setShowSparkles(true);
-    
+
     // Trigger star progress
     const newProgress = Math.min(starProgress + 1, 3);
     setStarProgress(newProgress);
@@ -217,7 +228,7 @@ export const EnhancedWordCard: React.FC<EnhancedWordCardProps> = ({
   const handleFavorite = () => {
     const newFavorited = !isFavorited;
     setIsFavorited(newFavorited);
-    
+
     // Save to localStorage
     const favorites = JSON.parse(localStorage.getItem("favoriteWords") || "[]");
     if (newFavorited) {
@@ -225,7 +236,7 @@ export const EnhancedWordCard: React.FC<EnhancedWordCardProps> = ({
       enhancedAudioService.playSuccessSound();
       setShowSparkles(true);
       setTimeout(() => setShowSparkles(false), 1000);
-      
+
       // Enhanced haptic feedback
       if (navigator.vibrate) {
         navigator.vibrate([100, 50, 100]);
@@ -240,7 +251,7 @@ export const EnhancedWordCard: React.FC<EnhancedWordCardProps> = ({
         navigator.vibrate(50);
       }
     }
-    
+
     localStorage.setItem("favoriteWords", JSON.stringify(favorites));
     onFavorite?.(word);
   };
@@ -249,13 +260,13 @@ export const EnhancedWordCard: React.FC<EnhancedWordCardProps> = ({
   const handleFlip = () => {
     setIsFlipped(!isFlipped);
     audioService.playWhooshSound();
-    
+
     // Trigger star progress for viewing back
     if (!isFlipped) {
       const newProgress = Math.min(starProgress + 1, 3);
       setStarProgress(newProgress);
     }
-    
+
     if (navigator.vibrate) {
       navigator.vibrate([30, 20, 30]);
     }
@@ -264,7 +275,7 @@ export const EnhancedWordCard: React.FC<EnhancedWordCardProps> = ({
   // Enhanced touch gesture handling
   const handleTouchStart = (e: React.TouchEvent) => {
     if (!enableSwipeGestures) return;
-    
+
     const touch = e.touches[0];
     setTouchStart({ x: touch.clientX, y: touch.clientY });
     setIsGesturing(true);
@@ -330,17 +341,17 @@ export const EnhancedWordCard: React.FC<EnhancedWordCardProps> = ({
   const startMiniGame = (game: MiniGame) => {
     setActiveMiniGame(game);
     setMiniGameProgress(0);
-    
+
     // Trigger star progress for playing mini-game
     const newProgress = Math.min(starProgress + 1, 3);
     setStarProgress(newProgress);
-    
+
     if (game === "emoji-builder") {
       setEmojiPieces([false, false, false, false]);
     } else if (game === "letter-hunt") {
       setCurrentLetterIndex(0);
     }
-    
+
     audioService.playClickSound();
   };
 
@@ -358,12 +369,12 @@ export const EnhancedWordCard: React.FC<EnhancedWordCardProps> = ({
     const newPieces = [...emojiPieces];
     newPieces[index] = true;
     setEmojiPieces(newPieces);
-    
+
     const progress = (newPieces.filter(Boolean).length / 4) * 100;
     setMiniGameProgress(progress);
-    
+
     audioService.playClickSound();
-    
+
     if (progress === 100) {
       setTimeout(() => {
         setActiveMiniGame(null);
@@ -373,15 +384,18 @@ export const EnhancedWordCard: React.FC<EnhancedWordCardProps> = ({
   };
 
   const handleLetterClick = (letter: string, index: number) => {
-    if (index === currentLetterIndex && letter === letterSequence[currentLetterIndex]) {
+    if (
+      index === currentLetterIndex &&
+      letter === letterSequence[currentLetterIndex]
+    ) {
       const newIndex = currentLetterIndex + 1;
       setCurrentLetterIndex(newIndex);
-      
+
       const progress = (newIndex / letterSequence.length) * 100;
       setMiniGameProgress(progress);
-      
+
       audioService.playClickSound();
-      
+
       if (newIndex === letterSequence.length) {
         setTimeout(() => {
           setActiveMiniGame(null);
@@ -401,13 +415,13 @@ export const EnhancedWordCard: React.FC<EnhancedWordCardProps> = ({
   const triggerCelebration = () => {
     setShowSparkles(true);
     enhancedAudioService.playSuccessSound();
-    
+
     if (navigator.vibrate) {
       navigator.vibrate([200, 100, 200, 100, 200]);
     }
-    
+
     setTimeout(() => setShowSparkles(false), 2000);
-    
+
     // Track achievement
     const achievements = AchievementTracker.trackActivity({
       type: "wordLearning",
@@ -438,15 +452,21 @@ export const EnhancedWordCard: React.FC<EnhancedWordCardProps> = ({
       colors: "from-violet-400 to-purple-500",
       numbers: "from-cyan-400 to-blue-500",
     };
-    return colors[category as keyof typeof colors] || "from-blue-400 to-purple-600";
+    return (
+      colors[category as keyof typeof colors] || "from-blue-400 to-purple-600"
+    );
   };
 
   const getDifficultyColor = (difficulty: string) => {
     switch (difficulty) {
-      case "easy": return "bg-educational-green text-white";
-      case "medium": return "bg-educational-orange text-white";
-      case "hard": return "bg-educational-pink text-white";
-      default: return "bg-gray-500 text-white";
+      case "easy":
+        return "bg-educational-green text-white";
+      case "medium":
+        return "bg-educational-orange text-white";
+      case "hard":
+        return "bg-educational-pink text-white";
+      default:
+        return "bg-gray-500 text-white";
     }
   };
 
@@ -458,7 +478,7 @@ export const EnhancedWordCard: React.FC<EnhancedWordCardProps> = ({
         className={cn(
           "relative w-full h-[420px] transition-all duration-700 transform-gpu preserve-3d",
           isFlipped && "rotate-y-180",
-          isGesturing && "scale-105"
+          isGesturing && "scale-105",
         )}
         style={{
           transformStyle: "preserve-3d",
@@ -479,22 +499,31 @@ export const EnhancedWordCard: React.FC<EnhancedWordCardProps> = ({
             `bg-gradient-to-br ${getCategoryColor(word.category)}`,
             "shadow-xl hover:shadow-2xl rounded-xl overflow-hidden",
             "cursor-pointer transition-all duration-300",
-            !isFlipped && "z-10"
+            !isFlipped && "z-10",
           )}
         >
           <CardContent className="p-4 h-full flex flex-col text-white relative">
             {/* Header with badges and star meter */}
             <div className="flex items-start justify-between mb-3">
               <div className="flex flex-wrap gap-1">
-                <Badge className={getDifficultyColor(word.difficulty)} variant="secondary">
-                  {word.difficulty === "easy" ? "🌟 Easy" : 
-                   word.difficulty === "medium" ? "⭐ Medium" : "🔥 Hard"}
+                <Badge
+                  className={getDifficultyColor(word.difficulty)}
+                  variant="secondary"
+                >
+                  {word.difficulty === "easy"
+                    ? "🌟 Easy"
+                    : word.difficulty === "medium"
+                      ? "⭐ Medium"
+                      : "🔥 Hard"}
                 </Badge>
-                <Badge variant="outline" className="bg-white/20 border-white/30 text-white text-xs">
+                <Badge
+                  variant="outline"
+                  className="bg-white/20 border-white/30 text-white text-xs"
+                >
                   {word.category}
                 </Badge>
               </div>
-              
+
               {/* Star Progress Meter */}
               <div className="flex items-center gap-1">
                 {[1, 2, 3].map((star) => (
@@ -502,9 +531,9 @@ export const EnhancedWordCard: React.FC<EnhancedWordCardProps> = ({
                     key={star}
                     className={cn(
                       "w-5 h-5 transition-all duration-300",
-                      star <= starProgress 
-                        ? "text-yellow-300 fill-yellow-300 animate-pulse" 
-                        : "text-white/30"
+                      star <= starProgress
+                        ? "text-yellow-300 fill-yellow-300 animate-pulse"
+                        : "text-white/30",
                     )}
                   />
                 ))}
@@ -519,12 +548,12 @@ export const EnhancedWordCard: React.FC<EnhancedWordCardProps> = ({
                   <div className="absolute top-2 left-2 w-3 h-3 bg-white/20 rounded-full animate-sparkle"></div>
                   <div className="absolute bottom-3 right-3 w-2 h-2 bg-white/15 rounded-full animate-bounce delay-300"></div>
                   <div className="absolute top-1/2 right-2 w-2 h-2 bg-white/25 rounded-full animate-ping delay-700"></div>
-                  
+
                   {/* Main emoji - extra large and animated */}
                   <span className="text-8xl relative z-10 drop-shadow-lg animate-gentle-bounce">
                     {word.emoji || "📚"}
                   </span>
-                  
+
                   {/* Sparkles effect */}
                   {showSparkles && (
                     <div className="absolute inset-0 overflow-hidden">
@@ -533,7 +562,9 @@ export const EnhancedWordCard: React.FC<EnhancedWordCardProps> = ({
                           key={i}
                           className={cn(
                             "absolute w-4 h-4 text-yellow-300 animate-sparkle",
-                            i % 2 === 0 ? "animation-delay-100" : "animation-delay-200"
+                            i % 2 === 0
+                              ? "animation-delay-100"
+                              : "animation-delay-200",
                           )}
                           style={{
                             top: `${Math.random() * 100}%`,
@@ -551,7 +582,7 @@ export const EnhancedWordCard: React.FC<EnhancedWordCardProps> = ({
                 <h2 className="text-4xl font-bold tracking-wide drop-shadow-md leading-tight animate-fade-in">
                   {word.word}
                 </h2>
-                
+
                 {word.pronunciation && (
                   <p className="text-lg opacity-90 font-medium leading-tight">
                     {word.pronunciation}
@@ -570,13 +601,15 @@ export const EnhancedWordCard: React.FC<EnhancedWordCardProps> = ({
                       "h-12 px-6 rounded-full transition-all duration-200",
                       "bg-white/20 hover:bg-white/30 border-2 border-white/40",
                       "text-white hover:scale-105 active:scale-95",
-                      isPlaying && voiceMode === "normal" && "bg-yellow-400/30 border-yellow-300/60 animate-pulse"
+                      isPlaying &&
+                        voiceMode === "normal" &&
+                        "bg-yellow-400/30 border-yellow-300/60 animate-pulse",
                     )}
                   >
                     <Volume2 className="w-5 h-5 mr-2" />
                     Normal Voice
                   </Button>
-                  
+
                   <Button
                     onClick={(e) => {
                       e.stopPropagation();
@@ -588,7 +621,9 @@ export const EnhancedWordCard: React.FC<EnhancedWordCardProps> = ({
                       "h-12 px-6 rounded-full transition-all duration-200",
                       "bg-white/20 hover:bg-white/30 border-2 border-white/40",
                       "text-white hover:scale-105 active:scale-95",
-                      isPlaying && voiceMode === "funny" && "bg-purple-400/30 border-purple-300/60 animate-pulse"
+                      isPlaying &&
+                        voiceMode === "funny" &&
+                        "bg-purple-400/30 border-purple-300/60 animate-pulse",
                     )}
                   >
                     <Smile className="w-5 h-5 mr-2" />
@@ -629,7 +664,7 @@ export const EnhancedWordCard: React.FC<EnhancedWordCardProps> = ({
           className={cn(
             "absolute inset-0 w-full h-full backface-hidden rotate-y-180",
             "bg-gradient-to-br from-slate-700 to-slate-900 rounded-xl overflow-hidden shadow-xl",
-            isFlipped && "z-10"
+            isFlipped && "z-10",
           )}
         >
           <CardContent className="p-4 h-full flex flex-col text-white relative overflow-y-auto">
@@ -639,7 +674,7 @@ export const EnhancedWordCard: React.FC<EnhancedWordCardProps> = ({
                 <span className="text-2xl">{word.emoji}</span>
                 <h3 className="text-xl font-bold">{word.word}</h3>
               </div>
-              
+
               <Button
                 onClick={(e) => {
                   e.stopPropagation();
@@ -676,7 +711,9 @@ export const EnhancedWordCard: React.FC<EnhancedWordCardProps> = ({
                 {activeMiniGame === "sound-match" && (
                   <div className="flex-1 flex flex-col items-center justify-center space-y-4">
                     <div className="text-center">
-                      <p className="text-lg mb-4">Listen and match the sound!</p>
+                      <p className="text-lg mb-4">
+                        Listen and match the sound!
+                      </p>
                       <Button
                         onClick={handleSoundMatch}
                         className="h-16 w-16 rounded-full bg-blue-500/30 hover:bg-blue-500/50 text-3xl"
@@ -691,7 +728,9 @@ export const EnhancedWordCard: React.FC<EnhancedWordCardProps> = ({
                 {activeMiniGame === "emoji-builder" && (
                   <div className="flex-1 flex flex-col items-center justify-center space-y-4">
                     <div className="text-center">
-                      <p className="text-lg mb-4">Build the emoji by clicking the pieces!</p>
+                      <p className="text-lg mb-4">
+                        Build the emoji by clicking the pieces!
+                      </p>
                       <div className="text-6xl mb-4">
                         {emojiPieces.every(Boolean) ? word.emoji : "❓"}
                       </div>
@@ -702,9 +741,9 @@ export const EnhancedWordCard: React.FC<EnhancedWordCardProps> = ({
                             onClick={() => handleEmojiPieceClick(index)}
                             className={cn(
                               "h-12 w-12 rounded-lg",
-                              filled 
-                                ? "bg-green-500/50 border-green-400" 
-                                : "bg-white/20 hover:bg-white/30 border-white/40"
+                              filled
+                                ? "bg-green-500/50 border-green-400"
+                                : "bg-white/20 hover:bg-white/30 border-white/40",
                             )}
                             disabled={filled}
                           >
@@ -720,18 +759,20 @@ export const EnhancedWordCard: React.FC<EnhancedWordCardProps> = ({
                 {activeMiniGame === "letter-hunt" && (
                   <div className="flex-1 flex flex-col items-center justify-center space-y-4">
                     <div className="text-center">
-                      <p className="text-lg mb-4">Tap letters in order to spell "{word.word}"</p>
+                      <p className="text-lg mb-4">
+                        Tap letters in order to spell "{word.word}"
+                      </p>
                       <div className="text-2xl mb-4">
                         {letterSequence.map((letter, index) => (
                           <span
                             key={index}
                             className={cn(
                               "inline-block w-8 h-8 mx-1 text-center border-2 rounded",
-                              index < currentLetterIndex 
+                              index < currentLetterIndex
                                 ? "bg-green-500/50 border-green-400 text-green-100"
                                 : index === currentLetterIndex
                                   ? "bg-yellow-500/50 border-yellow-400 text-yellow-100 animate-pulse"
-                                  : "border-white/40"
+                                  : "border-white/40",
                             )}
                           >
                             {index < currentLetterIndex ? letter : "_"}
@@ -739,15 +780,23 @@ export const EnhancedWordCard: React.FC<EnhancedWordCardProps> = ({
                         ))}
                       </div>
                       <div className="grid grid-cols-3 gap-2 max-w-48">
-                        {word.word.split("").sort(() => Math.random() - 0.5).map((letter, index) => (
-                          <Button
-                            key={index}
-                            onClick={() => handleLetterClick(letter, letterSequence.indexOf(letter))}
-                            className="h-12 w-12 rounded-lg bg-white/20 hover:bg-white/30 border border-white/40 text-lg font-bold"
-                          >
-                            {letter.toUpperCase()}
-                          </Button>
-                        ))}
+                        {word.word
+                          .split("")
+                          .sort(() => Math.random() - 0.5)
+                          .map((letter, index) => (
+                            <Button
+                              key={index}
+                              onClick={() =>
+                                handleLetterClick(
+                                  letter,
+                                  letterSequence.indexOf(letter),
+                                )
+                              }
+                              className="h-12 w-12 rounded-lg bg-white/20 hover:bg-white/30 border border-white/40 text-lg font-bold"
+                            >
+                              {letter.toUpperCase()}
+                            </Button>
+                          ))}
                       </div>
                     </div>
                   </div>
@@ -759,15 +808,21 @@ export const EnhancedWordCard: React.FC<EnhancedWordCardProps> = ({
                 {/* Definition in comic bubble style */}
                 <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-4 border border-white/20 relative">
                   <div className="absolute -top-2 left-6 w-4 h-4 bg-white/10 border-l border-t border-white/20 transform rotate-45"></div>
-                  <h4 className="text-sm font-medium mb-2 text-yellow-300">What it means:</h4>
+                  <h4 className="text-sm font-medium mb-2 text-yellow-300">
+                    What it means:
+                  </h4>
                   <p className="text-base leading-relaxed">{word.definition}</p>
                 </div>
 
                 {/* Example sentence */}
                 {word.example && (
                   <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-4 border border-white/20">
-                    <h4 className="text-sm font-medium mb-2 text-green-300">Example:</h4>
-                    <p className="text-base italic leading-relaxed">"{word.example}"</p>
+                    <h4 className="text-sm font-medium mb-2 text-green-300">
+                      Example:
+                    </h4>
+                    <p className="text-base italic leading-relaxed">
+                      "{word.example}"
+                    </p>
                   </div>
                 )}
 
@@ -862,7 +917,8 @@ export const EnhancedWordCard: React.FC<EnhancedWordCardProps> = ({
             <div className="mt-4 text-center">
               <div className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-full px-4 py-2 mx-auto w-fit">
                 <p className="text-xs text-white/80">
-                  <span className="animate-pulse">←</span> Tap anywhere to go back
+                  <span className="animate-pulse">←</span> Tap anywhere to go
+                  back
                 </p>
               </div>
             </div>
@@ -880,10 +936,15 @@ export const EnhancedWordCard: React.FC<EnhancedWordCardProps> = ({
           "absolute top-4 right-4 h-12 w-12 rounded-full z-20 transition-all duration-200",
           "bg-white/20 hover:bg-white/30 border-2 border-white/40",
           "hover:scale-110 active:scale-95",
-          isFavorited && "bg-red-500/30 border-red-400/60"
+          isFavorited && "bg-red-500/30 border-red-400/60",
         )}
       >
-        <Heart className={cn("w-5 h-5", isFavorited ? "fill-red-400 text-red-400" : "text-white")} />
+        <Heart
+          className={cn(
+            "w-5 h-5",
+            isFavorited ? "fill-red-400 text-red-400" : "text-white",
+          )}
+        />
       </Button>
 
       {/* Swipe direction feedback */}
@@ -892,10 +953,14 @@ export const EnhancedWordCard: React.FC<EnhancedWordCardProps> = ({
           <div
             className={cn(
               "absolute inset-0 transition-opacity duration-200",
-              swipeDirection === "right" && "bg-gradient-to-r from-green-400/20 via-green-400/10 to-transparent",
-              swipeDirection === "left" && "bg-gradient-to-l from-red-400/20 via-red-400/10 to-transparent",
-              swipeDirection === "up" && "bg-gradient-to-t from-blue-400/20 via-blue-400/10 to-transparent",
-              swipeDirection === "down" && "bg-gradient-to-b from-purple-400/20 via-purple-400/10 to-transparent"
+              swipeDirection === "right" &&
+                "bg-gradient-to-r from-green-400/20 via-green-400/10 to-transparent",
+              swipeDirection === "left" &&
+                "bg-gradient-to-l from-red-400/20 via-red-400/10 to-transparent",
+              swipeDirection === "up" &&
+                "bg-gradient-to-t from-blue-400/20 via-blue-400/10 to-transparent",
+              swipeDirection === "down" &&
+                "bg-gradient-to-b from-purple-400/20 via-purple-400/10 to-transparent",
             )}
           />
         </div>
@@ -920,7 +985,9 @@ export const EnhancedWordCard: React.FC<EnhancedWordCardProps> = ({
         className="sr-only"
         role="status"
       >
-        {isFlipped ? `Showing definition for ${word.word}` : `Showing word ${word.word}`}
+        {isFlipped
+          ? `Showing definition for ${word.word}`
+          : `Showing word ${word.word}`}
         {isPlaying && ` Pronouncing ${word.word}`}
         {isFavorited && ` ${word.word} added to favorites`}
         {activeMiniGame && ` Playing ${activeMiniGame} game`}

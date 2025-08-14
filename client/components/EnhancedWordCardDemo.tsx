@@ -7,23 +7,29 @@ import { ArrowLeft, ArrowRight, Shuffle } from "lucide-react";
 export function EnhancedWordCardDemo() {
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
   const [selectedCategory, setSelectedCategory] = useState("all");
-  
+
   // Filter words by category
-  const filteredWords = selectedCategory === "all" 
-    ? wordsDatabase 
-    : wordsDatabase.filter(word => word.category === selectedCategory);
-  
+  const filteredWords =
+    selectedCategory === "all"
+      ? wordsDatabase
+      : wordsDatabase.filter((word) => word.category === selectedCategory);
+
   const currentWord = filteredWords[currentWordIndex];
-  
+
   // Get unique categories
-  const categories = ["all", ...new Set(wordsDatabase.map(word => word.category))];
+  const categories = [
+    "all",
+    ...new Set(wordsDatabase.map((word) => word.category)),
+  ];
 
   const nextWord = () => {
     setCurrentWordIndex((prev) => (prev + 1) % filteredWords.length);
   };
 
   const prevWord = () => {
-    setCurrentWordIndex((prev) => (prev - 1 + filteredWords.length) % filteredWords.length);
+    setCurrentWordIndex(
+      (prev) => (prev - 1 + filteredWords.length) % filteredWords.length,
+    );
   };
 
   const randomWord = () => {
@@ -44,13 +50,16 @@ export function EnhancedWordCardDemo() {
             🎯 Enhanced Word Card Demo
           </h1>
           <p className="text-slate-600 text-lg">
-            Experience the new kid-friendly word card with mini-games, voice options, and interactive learning!
+            Experience the new kid-friendly word card with mini-games, voice
+            options, and interactive learning!
           </p>
         </div>
 
         {/* Category Filter */}
         <div className="mb-6">
-          <h3 className="text-lg font-semibold text-slate-700 mb-3">Choose Category:</h3>
+          <h3 className="text-lg font-semibold text-slate-700 mb-3">
+            Choose Category:
+          </h3>
           <div className="flex flex-wrap gap-2">
             {categories.map((category) => (
               <Button
@@ -58,8 +67,8 @@ export function EnhancedWordCardDemo() {
                 onClick={() => handleCategoryChange(category)}
                 variant={selectedCategory === category ? "default" : "outline"}
                 className={`capitalize ${
-                  selectedCategory === category 
-                    ? "bg-educational-blue text-white" 
+                  selectedCategory === category
+                    ? "bg-educational-blue text-white"
                     : ""
                 }`}
               >
@@ -76,7 +85,7 @@ export function EnhancedWordCardDemo() {
               word={currentWord}
               onPronounce={(word) => console.log("Pronounced:", word.word)}
               onFavorite={(word) => console.log("Favorited:", word.word)}
-              onWordMastered={(wordId, rating) => 
+              onWordMastered={(wordId, rating) =>
                 console.log(`Word ${wordId} mastered with rating:`, rating)
               }
               showVocabularyBuilder={true}
@@ -96,7 +105,7 @@ export function EnhancedWordCardDemo() {
             <ArrowLeft className="w-5 h-5 mr-2" />
             Previous
           </Button>
-          
+
           <div className="text-center">
             <p className="text-sm text-slate-600">
               {currentWordIndex + 1} of {filteredWords.length}
@@ -105,16 +114,12 @@ export function EnhancedWordCardDemo() {
               Category: {selectedCategory === "all" ? "All" : selectedCategory}
             </p>
           </div>
-          
-          <Button
-            onClick={randomWord}
-            className="h-12 px-6"
-            variant="outline"
-          >
+
+          <Button onClick={randomWord} className="h-12 px-6" variant="outline">
             <Shuffle className="w-5 h-5 mr-2" />
             Random
           </Button>
-          
+
           <Button
             onClick={nextWord}
             className="h-12 px-6"
@@ -132,7 +137,9 @@ export function EnhancedWordCardDemo() {
           </h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
             <div className="space-y-2">
-              <h4 className="font-semibold text-slate-700">🎮 Interactive Features:</h4>
+              <h4 className="font-semibold text-slate-700">
+                🎮 Interactive Features:
+              </h4>
               <ul className="space-y-1 text-slate-600">
                 <li>• Smooth 3D flip animation</li>
                 <li>• Star progress meter (hear, flip, play)</li>
@@ -152,16 +159,28 @@ export function EnhancedWordCardDemo() {
               </ul>
             </div>
           </div>
-          
+
           <div className="mt-4 p-4 bg-blue-50/50 rounded-xl">
             <h4 className="font-semibold text-blue-800 mb-2">💡 How to Use:</h4>
             <ul className="text-sm text-blue-700 space-y-1">
-              <li>• <strong>Tap</strong> the card to flip and see definition</li>
-              <li>• <strong>Swipe up</strong> to hear pronunciation</li>
-              <li>• <strong>Swipe left</strong> to favorite the word</li>
-              <li>• <strong>Try different voices</strong> - normal and funny!</li>
-              <li>• <strong>Play mini-games</strong> on the back to earn stars</li>
-              <li>• <strong>Rate your knowledge</strong> to track progress</li>
+              <li>
+                • <strong>Tap</strong> the card to flip and see definition
+              </li>
+              <li>
+                • <strong>Swipe up</strong> to hear pronunciation
+              </li>
+              <li>
+                • <strong>Swipe left</strong> to favorite the word
+              </li>
+              <li>
+                • <strong>Try different voices</strong> - normal and funny!
+              </li>
+              <li>
+                • <strong>Play mini-games</strong> on the back to earn stars
+              </li>
+              <li>
+                • <strong>Rate your knowledge</strong> to track progress
+              </li>
             </ul>
           </div>
         </div>
