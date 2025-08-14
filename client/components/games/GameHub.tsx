@@ -110,7 +110,7 @@ export function GameHub({
                 <Gamepad2 className="w-8 h-8 text-white" />
               </div>
               <Badge className="bg-educational-green text-white">
-                4 Games Available
+                5 Games Available
               </Badge>
             </div>
             <CardTitle className="text-2xl text-educational-green">
