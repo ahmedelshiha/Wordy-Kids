@@ -111,7 +111,49 @@ export function MobileBottomNav({
     },
   ];
 
-  const secondaryMenuItems = [
+  const secondaryMenuItems = userRole === 'parent' ? [
+    {
+      id: "back-to-learning",
+      emoji: "👦",
+      label: "Back to Learning",
+      icon: ArrowLeft,
+      onClick: onBackToChild || (() => {}),
+    },
+    {
+      id: "child-dashboard",
+      emoji: "🏠",
+      label: "Child Dashboard",
+      icon: Home,
+      onClick: () => {
+        onBackToChild?.();
+        onTabChange('dashboard');
+      },
+    },
+    {
+      id: "child-learning",
+      emoji: "📚",
+      label: "Word Library",
+      icon: BookOpen,
+      onClick: () => {
+        onBackToChild?.();
+        onTabChange('learn');
+      },
+    },
+    {
+      id: "settings",
+      emoji: "⚙️",
+      label: "Settings",
+      icon: Settings,
+      onClick: onSettingsClick,
+    },
+    {
+      id: "signout",
+      emoji: "👋",
+      label: "Sign Out",
+      icon: LogOut,
+      onClick: onSignOut,
+    },
+  ] : [
     {
       id: "parent",
       emoji: "👨‍👩‍👧‍👦",
