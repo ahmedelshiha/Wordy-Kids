@@ -411,14 +411,15 @@ function EmptyState() {
 export const DemoWords: WordItem[] = [
   {
     id: 1,
-    word: "star",
+    word: "apple",
     imageUrl:
-      "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=200&h=200&fit=crop&auto=format",
+      "https://images.unsplash.com/photo-1568702846914-96b305d2aaeb?w=200&h=200&fit=crop&auto=format",
     distractorImages: [
-      "https://images.unsplash.com/photo-1583337130417-3346a1be7dee?w=200&h=200&fit=crop&auto=format",
-      "https://images.unsplash.com/photo-1464207687429-7505649dae38?w=200&h=200&fit=crop&auto=format",
+      "https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?w=200&h=200&fit=crop&auto=format", // banana
+      "https://images.unsplash.com/photo-1494905998402-395d579af36f?w=200&h=200&fit=crop&auto=format", // car
     ],
     audioUrl: undefined,
+    category: "fruits",
   },
   {
     id: 2,
@@ -426,43 +427,47 @@ export const DemoWords: WordItem[] = [
     imageUrl:
       "https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?w=200&h=200&fit=crop&auto=format",
     distractorImages: [
-      "https://images.unsplash.com/photo-1574158622682-e40e69881006?w=200&h=200&fit=crop&auto=format",
-      "https://images.unsplash.com/photo-1494905998402-395d579af36f?w=200&h=200&fit=crop&auto=format",
+      "https://images.unsplash.com/photo-1568702846914-96b305d2aaeb?w=200&h=200&fit=crop&auto=format", // apple
+      "https://images.unsplash.com/photo-1574158622682-e40e69881006?w=200&h=200&fit=crop&auto=format", // cat
     ],
     audioUrl: undefined,
+    category: "fruits",
   },
   {
     id: 3,
-    word: "ball",
+    word: "cat",
     imageUrl:
-      "https://images.unsplash.com/photo-1593766827228-8737b4534aa6?w=200&h=200&fit=crop&auto=format",
+      "https://images.unsplash.com/photo-1574158622682-e40e69881006?w=200&h=200&fit=crop&auto=format",
     distractorImages: [
-      "https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=200&h=200&fit=crop&auto=format",
-      "https://images.unsplash.com/photo-1544723795-3fb6469f5b39?w=200&h=200&fit=crop&auto=format",
+      "https://images.unsplash.com/photo-1583337130417-3346a1be7dee?w=200&h=200&fit=crop&auto=format", // dog
+      "https://images.unsplash.com/photo-1552728089-57bdde30beb3?w=200&h=200&fit=crop&auto=format", // bird
     ],
     audioUrl: undefined,
+    category: "animals",
   },
   {
     id: 4,
+    word: "dog",
+    imageUrl:
+      "https://images.unsplash.com/photo-1583337130417-3346a1be7dee?w=200&h=200&fit=crop&auto=format",
+    distractorImages: [
+      "https://images.unsplash.com/photo-1574158622682-e40e69881006?w=200&h=200&fit=crop&auto=format", // cat
+      "https://images.unsplash.com/photo-1494905998402-395d579af36f?w=200&h=200&fit=crop&auto=format", // car
+    ],
+    audioUrl: undefined,
+    category: "animals",
+  },
+  {
+    id: 5,
     word: "bird",
     imageUrl:
       "https://images.unsplash.com/photo-1552728089-57bdde30beb3?w=200&h=200&fit=crop&auto=format",
     distractorImages: [
-      "https://images.unsplash.com/photo-1583212292454-1fe6229603b7?w=200&h=200&fit=crop&auto=format",
-      "https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=200&h=200&fit=crop&auto=format",
+      "https://images.unsplash.com/photo-1574158622682-e40e69881006?w=200&h=200&fit=crop&auto=format", // cat
+      "https://images.unsplash.com/photo-1593766827228-8737b4534aa6?w=200&h=200&fit=crop&auto=format", // ball
     ],
     audioUrl: undefined,
-  },
-  {
-    id: 5,
-    word: "sun",
-    imageUrl:
-      "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=200&h=200&fit=crop&auto=format",
-    distractorImages: [
-      "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=200&h=200&fit=crop&auto=format",
-      "https://images.unsplash.com/photo-1574158622682-e40e69881006?w=200&h=200&fit=crop&auto=format",
-    ],
-    audioUrl: undefined,
+    category: "animals",
   },
   {
     id: 6,
@@ -470,9 +475,58 @@ export const DemoWords: WordItem[] = [
     imageUrl:
       "https://images.unsplash.com/photo-1494905998402-395d579af36f?w=200&h=200&fit=crop&auto=format",
     distractorImages: [
-      "https://images.unsplash.com/photo-1593766827228-8737b4534aa6?w=200&h=200&fit=crop&auto=format",
-      "https://images.unsplash.com/photo-1552728089-57bdde30beb3?w=200&h=200&fit=crop&auto=format",
+      "https://images.unsplash.com/photo-1593766827228-8737b4534aa6?w=200&h=200&fit=crop&auto=format", // ball
+      "https://images.unsplash.com/photo-1583337130417-3346a1be7dee?w=200&h=200&fit=crop&auto=format", // dog
     ],
     audioUrl: undefined,
+    category: "vehicles",
+  },
+  {
+    id: 7,
+    word: "ball",
+    imageUrl:
+      "https://images.unsplash.com/photo-1593766827228-8737b4534aa6?w=200&h=200&fit=crop&auto=format",
+    distractorImages: [
+      "https://images.unsplash.com/photo-1568702846914-96b305d2aaeb?w=200&h=200&fit=crop&auto=format", // apple
+      "https://images.unsplash.com/photo-1494905998402-395d579af36f?w=200&h=200&fit=crop&auto=format", // car
+    ],
+    audioUrl: undefined,
+    category: "toys",
+  },
+  {
+    id: 8,
+    word: "sun",
+    imageUrl:
+      "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=200&h=200&fit=crop&auto=format",
+    distractorImages: [
+      "https://images.unsplash.com/photo-1574158622682-e40e69881006?w=200&h=200&fit=crop&auto=format", // cat
+      "https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?w=200&h=200&fit=crop&auto=format", // banana
+    ],
+    audioUrl: undefined,
+    category: "nature",
+  },
+  {
+    id: 9,
+    word: "flower",
+    imageUrl:
+      "https://images.unsplash.com/photo-1464207687429-7505649dae38?w=200&h=200&fit=crop&auto=format",
+    distractorImages: [
+      "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=200&h=200&fit=crop&auto=format", // sun
+      "https://images.unsplash.com/photo-1568702846914-96b305d2aaeb?w=200&h=200&fit=crop&auto=format", // apple
+    ],
+    audioUrl: undefined,
+    category: "nature",
+  },
+  {
+    id: 10,
+    word: "tree",
+    imageUrl:
+      "https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=200&h=200&fit=crop&auto=format",
+    distractorImages: [
+      "https://images.unsplash.com/photo-1464207687429-7505649dae38?w=200&h=200&fit=crop&auto=format", // flower
+      "https://images.unsplash.com/photo-1593766827228-8737b4534aa6?w=200&h=200&fit=crop&auto=format", // ball
+    ],
+    audioUrl: undefined,
+    category: "nature",
   },
 ];
