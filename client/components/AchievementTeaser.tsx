@@ -145,8 +145,9 @@ export function AchievementTeaser({ className }: AchievementTeaserProps) {
                     duration: 2,
                     repeat: Infinity,
                     repeatDelay: 3,
+                    ease: "easeInOut",
                   }}
-                  className={`flex-shrink-0 ${
+                  className={`flex-shrink-0 will-change-transform ${
                     isSpecial
                       ? "text-yellow-600 drop-shadow-sm"
                       : isTease
