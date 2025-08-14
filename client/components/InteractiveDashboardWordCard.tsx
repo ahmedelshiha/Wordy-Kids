@@ -851,7 +851,7 @@ export function InteractiveDashboardWordCard({
                     if (percentage >= 90) return "🌟 Almost there, superstar!";
                     if (percentage >= 75) return "🚀 You're doing great!";
                     if (percentage >= 50) return "💪 Keep going, champion!";
-                    if (percentage >= 25) return "�� Nice start!";
+                    if (percentage >= 25) return "🌱 Nice start!";
                     return "🌟 Ready for an adventure?";
                   })()}
                 </div>
@@ -863,7 +863,7 @@ export function InteractiveDashboardWordCard({
           <AchievementTeaser className="mb-3" />
 
           {/* Category and Progress Header */}
-          <div className="text-center mb-6 md:mb-8 mt-8 md:mt-6">
+          <div className="text-center mb-4 sm:mb-6 md:mb-8 mt-4 sm:mt-6 md:mt-8">
             <div className="flex items-center justify-center gap-4 mb-4">
               {/* Difficulty classification badge */}
               <Badge
