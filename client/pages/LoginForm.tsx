@@ -288,7 +288,7 @@ export default function LoginForm() {
     !Object.keys(errors).length && formData.email && formData.password;
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 flex items-center justify-center p-4 sm:p-6 md:p-8 relative overflow-hidden safe-area-padding-top safe-area-padding-bottom">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 flex items-center justify-center p-3 sm:p-6 md:p-8 relative overflow-hidden safe-area-padding-top safe-area-padding-bottom">
       {/* Enhanced Background Pattern */}
       <div className="absolute inset-0 opacity-10">
         <div className="absolute top-10 left-10 text-4xl animate-gentle-float">
@@ -317,10 +317,10 @@ export default function LoginForm() {
         </div>
       </div>
 
-      <div className="w-full max-w-md mx-auto relative z-10 px-2 sm:px-0">
+      <div className="w-full max-w-sm sm:max-w-md mx-auto relative z-10 px-3 sm:px-0">
         {/* Header Section with Enhanced Design */}
-        <div className="text-center mb-6 sm:mb-8 animate-fade-in">
-          <div className="flex justify-center mb-4 sm:mb-6">
+        <div className="text-center mb-4 sm:mb-6 animate-fade-in">
+          <div className="flex justify-center mb-3 sm:mb-4">
             <div className="relative">
               <div className="bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 p-3 sm:p-4 md:p-6 rounded-full shadow-2xl animate-gentle-float">
                 <img
