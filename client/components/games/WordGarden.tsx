@@ -571,6 +571,57 @@ export default function WordGardenGame({
 
       {/* Styles for confetti dots */}
       <style>{`.wg-confetti{position:absolute;top:60%;border-radius:9999px;box-shadow:0 0 0 1px rgba(255,255,255,.15) inset}`}</style>
+
+      {/* Enhanced Exit Confirmation Dialog */}
+      <Dialog open={showExitDialog} onOpenChange={setShowExitDialog}>
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader className="text-center">
+            <div className="text-6xl mb-2">🌱</div>
+            <DialogTitle className="text-xl font-bold text-gray-800">
+              Leave your garden?
+            </DialogTitle>
+            <DialogDescription className="text-gray-600">
+              Your plants will be waiting for you! Are you sure you want to exit Word Garden?
+            </DialogDescription>
+          </DialogHeader>
+
+          <div className="flex flex-col gap-3 mt-4">
+            {/* Garden Progress Summary */}
+            <div className="bg-green-50 rounded-lg p-3 border border-green-200">
+              <div className="text-sm text-green-800 font-medium mb-1">🌱 Garden Progress</div>
+              <div className="flex justify-between text-sm text-green-700">
+                <span>Plants grown: {correctCount}</span>
+                <span>Best streak: {bestStreak}</span>
+              </div>
+              <div className="text-xs text-green-600 mt-1">
+                Round {roundIdx + 1} of {pool.length}
+              </div>
+            </div>
+          </div>
+
+          <DialogFooter className="flex flex-col-reverse sm:flex-row gap-2 mt-6">
+            <Button
+              variant="outline"
+              onClick={() => setShowExitDialog(false)}
+              className="flex-1 bg-green-50 hover:bg-green-100 text-green-700 border-green-300"
+            >
+              <span className="mr-2">🌱</span>
+              Keep Growing!
+            </Button>
+            <Button
+              variant="destructive"
+              onClick={() => {
+                setShowExitDialog(false);
+                onExit?.();
+              }}
+              className="flex-1 bg-red-500 hover:bg-red-600"
+            >
+              <span className="mr-2">🚪</span>
+              Exit Garden
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </Wrapper>
   );
 }
