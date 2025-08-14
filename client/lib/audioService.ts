@@ -519,7 +519,7 @@ export class AudioService {
 
   // Fun sound effects using Web Audio API for better child engagement
   public playCheerSound(): void {
-    if (!this.isEnabled) return;
+    if (!this.isEnabled || !isUIInteractionSoundsEnabled()) return;
 
     try {
       const audioContext = new (window.AudioContext ||
