@@ -320,7 +320,7 @@ export const WordCard: React.FC<WordCardProps> = ({
       className={`relative w-full max-w-[340px] sm:max-w-[380px] md:max-w-sm mx-auto ${className}`}
     >
       <Card
-        className={`h-[380px] sm:h-[420px] md:h-[400px] cursor-pointer transition-all duration-300 transform-gpu active:scale-[0.98] hover:scale-[1.01] shadow-lg hover:shadow-xl ${
+        className={`h-[380px] sm:h-[420px] md:h-[400px] cursor-pointer transition-all duration-300 transform-gpu active:scale-[0.97] hover:scale-[1.01] shadow-xl hover:shadow-2xl mobile-optimized ${
           isFlipped ? "[transform:rotateY(180deg)]" : ""
         } ${
           adventureStatus && adventureStatus.health < 30
@@ -331,19 +331,22 @@ export const WordCard: React.FC<WordCardProps> = ({
         } ${
           isGesturing
             ? swipeDirection === "right"
-              ? "scale-[1.02] ring-2 ring-green-400/50 shadow-green-400/20"
+              ? "scale-[1.03] ring-3 ring-green-400/60 shadow-green-400/30 shadow-2xl"
               : swipeDirection === "left"
-                ? "scale-[1.02] ring-2 ring-red-400/50 shadow-red-400/20"
+                ? "scale-[1.03] ring-3 ring-red-400/60 shadow-red-400/30 shadow-2xl"
                 : swipeDirection === "up"
-                  ? "scale-[1.02] ring-2 ring-blue-400/50 shadow-blue-400/20"
+                  ? "scale-[1.03] ring-3 ring-blue-400/60 shadow-blue-400/30 shadow-2xl"
                   : swipeDirection === "down"
-                    ? "scale-[1.02] ring-2 ring-purple-400/50 shadow-purple-400/20"
-                    : "scale-[1.02] ring-2 ring-blue-400/50"
+                    ? "scale-[1.03] ring-3 ring-purple-400/60 shadow-purple-400/30 shadow-2xl"
+                    : "scale-[1.03] ring-2 ring-blue-400/50"
             : ""
         }`}
         style={{
           transformStyle: "preserve-3d",
-          touchAction: "pan-y",
+          touchAction: "manipulation",
+          WebkitTouchCallout: "none",
+          WebkitUserSelect: "none",
+          userSelect: "none",
         }}
         onClick={() => {
           setIsFlipped(!isFlipped);
