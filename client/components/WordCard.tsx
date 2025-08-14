@@ -20,7 +20,7 @@ import {
   Zap,
   Crown,
 } from "lucide-react";
-import { playSoundIfEnabled } from "@/lib/soundEffects";
+import { playSoundIfEnabled, playUIInteractionSoundIfEnabled } from "@/lib/soundEffects";
 import { audioService } from "@/lib/audioService";
 import { enhancedAudioService } from "@/lib/enhancedAudioService";
 import { adventureService } from "@/lib/adventureService";
