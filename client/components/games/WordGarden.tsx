@@ -334,7 +334,7 @@ export default function WordGardenGame({
         checkAchievements(nextCorrect, nextStreak);
 
         // Play success sound
-        audioService.playCorrectSound();
+        audioService.playSuccessSound();
 
         // Haptic feedback
         if (navigator && "vibrate" in navigator) (navigator as any).vibrate(30);
