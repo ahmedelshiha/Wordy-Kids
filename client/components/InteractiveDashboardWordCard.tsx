@@ -205,6 +205,9 @@ export function InteractiveDashboardWordCard({
   const [guess, setGuess] = useState("");
   const [showHint, setShowHint] = useState(false);
 
+  // Voice settings integration
+  const voiceSettings = useVoiceSettings();
+
   // Progressive enhancement states
   const [imageLoaded, setImageLoaded] = useState(false);
   const [imageError, setImageError] = useState(false);
