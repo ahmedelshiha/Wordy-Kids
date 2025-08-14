@@ -295,6 +295,3 @@ export function useRealTimeWords() {
     invalidateCaches: () => realTimeWordDB.invalidateCaches()
   };
 }
-
-// React import (will be available when used in components)
-declare const React: any;
