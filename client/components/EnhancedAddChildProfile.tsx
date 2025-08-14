@@ -321,7 +321,7 @@ export function EnhancedAddChildProfile({
           </div>
 
           {/* Progress bar */}
-          <div className="mb-6">
+          <div className="mb-4">
             <Progress 
               value={progress} 
               className="h-2 bg-purple-100"
