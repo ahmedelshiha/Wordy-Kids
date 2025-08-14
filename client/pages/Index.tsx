@@ -2877,7 +2877,6 @@ export default function Index({ initialProfile }: IndexProps) {
                                 </Button>
                               </CardContent>
                             </Card>
-
                           </div>
 
                           {/* Recent Scores */}

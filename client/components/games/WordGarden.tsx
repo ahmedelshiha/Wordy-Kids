@@ -230,7 +230,7 @@ const generateDatabaseWords = (
 const generateDistractorEmojis = (
   targetWord: Word,
   allWords: Word[],
-  optionsPerRound: number
+  optionsPerRound: number,
 ): string[] => {
   const sameCategory = allWords.filter(
     (w) => w.category === targetWord.category && w.id !== targetWord.id,
@@ -245,10 +245,17 @@ const generateDistractorEmojis = (
 };
 
 // Fetch words function using the same logic as Listen & Guess
-const fetchWords = async (params: FetchParams & { optionsPerRound: number }): Promise<WordItem[]> => {
+const fetchWords = async (
+  params: FetchParams & { optionsPerRound: number },
+): Promise<WordItem[]> => {
   // Use database-based word generation with emojis (same approach as Listen & Guess)
   const difficultyLevel = params.difficulty || "easy";
-  return generateDatabaseWords(params.limit, params.optionsPerRound, undefined, difficultyLevel);
+  return generateDatabaseWords(
+    params.limit,
+    params.optionsPerRound,
+    undefined,
+    difficultyLevel,
+  );
 };
 
 // Green-themed Garden Achievement Component
@@ -260,12 +267,12 @@ interface GardenAchievementProps {
   plantEmoji?: string;
 }
 
-function GardenAchievementPopup({ 
-  show, 
-  title, 
-  description, 
-  onClose, 
-  plantEmoji = "🌱" 
+function GardenAchievementPopup({
+  show,
+  title,
+  description,
+  onClose,
+  plantEmoji = "🌱",
 }: GardenAchievementProps) {
   useEffect(() => {
     if (show) {
@@ -297,8 +304,8 @@ function GardenAchievementPopup({
                   key={i}
                   className="absolute text-yellow-300 text-lg"
                   initial={{ scale: 0, rotate: 0 }}
-                  animate={{ 
-                    scale: [0, 1, 0], 
+                  animate={{
+                    scale: [0, 1, 0],
                     rotate: 360,
                     x: Math.cos((i * Math.PI * 2) / 8) * 60,
                     y: Math.sin((i * Math.PI * 2) / 8) * 60,
@@ -307,11 +314,11 @@ function GardenAchievementPopup({
                     duration: 2,
                     delay: i * 0.1,
                     repeat: Infinity,
-                    repeatDelay: 3
+                    repeatDelay: 3,
                   }}
                   style={{
-                    left: '50%',
-                    top: '50%',
+                    left: "50%",
+                    top: "50%",
                   }}
                 >
                   ✨
@@ -324,11 +331,11 @@ function GardenAchievementPopup({
               className="text-7xl mb-4"
               initial={{ scale: 0, rotate: -180 }}
               animate={{ scale: 1, rotate: 0 }}
-              transition={{ 
-                type: "spring", 
-                duration: 0.8, 
+              transition={{
+                type: "spring",
+                duration: 0.8,
                 damping: 12,
-                delay: 0.2 
+                delay: 0.2,
               }}
             >
               {plantEmoji}
@@ -356,9 +363,24 @@ function GardenAchievementPopup({
               transition={{ delay: 0.6 }}
             >
               <span className="animate-bounce">🌻</span>
-              <span className="animate-bounce" style={{ animationDelay: '0.1s' }}>🌸</span>
-              <span className="animate-bounce" style={{ animationDelay: '0.2s' }}>🌺</span>
-              <span className="animate-bounce" style={{ animationDelay: '0.3s' }}>🌷</span>
+              <span
+                className="animate-bounce"
+                style={{ animationDelay: "0.1s" }}
+              >
+                🌸
+              </span>
+              <span
+                className="animate-bounce"
+                style={{ animationDelay: "0.2s" }}
+              >
+                🌺
+              </span>
+              <span
+                className="animate-bounce"
+                style={{ animationDelay: "0.3s" }}
+              >
+                🌷
+              </span>
             </motion.div>
 
             {/* Auto-close indicator */}
@@ -385,9 +407,17 @@ interface GameCompletionDialogProps {
   onExit: () => void;
 }
 
-function GameCompletionDialog({ show, stats, onContinue, onExit }: GameCompletionDialogProps) {
-  const accuracy = stats.totalRounds > 0 ? Math.round((stats.correct / stats.totalRounds) * 100) : 0;
-  
+function GameCompletionDialog({
+  show,
+  stats,
+  onContinue,
+  onExit,
+}: GameCompletionDialogProps) {
+  const accuracy =
+    stats.totalRounds > 0
+      ? Math.round((stats.correct / stats.totalRounds) * 100)
+      : 0;
+
   return (
     <Dialog open={show} onOpenChange={() => {}}>
       <DialogContent className="sm:max-w-md bg-gradient-to-br from-green-50 to-emerald-100 border-green-300">
@@ -406,18 +436,22 @@ function GameCompletionDialog({ show, stats, onContinue, onExit }: GameCompletio
           <div className="grid grid-cols-2 gap-4 text-center">
             <div className="bg-white rounded-lg p-3 border border-green-200">
               <div className="text-3xl mb-1">🌱</div>
-              <div className="text-2xl font-bold text-green-800">{stats.correct}</div>
+              <div className="text-2xl font-bold text-green-800">
+                {stats.correct}
+              </div>
               <div className="text-sm text-green-600">Plants Grown</div>
             </div>
             <div className="bg-white rounded-lg p-3 border border-green-200">
               <div className="text-3xl mb-1">⭐</div>
-              <div className="text-2xl font-bold text-green-800">{stats.bestStreak}</div>
+              <div className="text-2xl font-bold text-green-800">
+                {stats.bestStreak}
+              </div>
               <div className="text-sm text-green-600">Best Streak</div>
             </div>
           </div>
           <div className="mt-3 text-center">
             <div className="text-lg font-bold text-green-800">
-              {accuracy}% Accuracy! 
+              {accuracy}% Accuracy!
               {accuracy >= 90 && " 🏆"}
               {accuracy >= 75 && accuracy < 90 && " 🎓"}
             </div>
@@ -427,7 +461,11 @@ function GameCompletionDialog({ show, stats, onContinue, onExit }: GameCompletio
         {/* Garden icons */}
         <div className="flex justify-center gap-2 text-3xl my-4">
           {Array.from({ length: Math.min(stats.correct, 8) }, (_, i) => (
-            <span key={i} className="animate-gentle-float" style={{ animationDelay: `${i * 0.1}s` }}>
+            <span
+              key={i}
+              className="animate-gentle-float"
+              style={{ animationDelay: `${i * 0.1}s` }}
+            >
               {PLANT_TYPES[i % PLANT_TYPES.length][2]}
             </span>
           ))}
@@ -487,7 +525,7 @@ export default function WordGardenGame({
   const [achievementData, setAchievementData] = useState({
     title: "",
     description: "",
-    plantEmoji: "🌱"
+    plantEmoji: "🌱",
   });
 
   // Generate diverse plant types ensuring variety
@@ -503,7 +541,11 @@ export default function WordGardenGame({
       do {
         plantType = Math.floor(Math.random() * PLANT_TYPES.length);
         attempts++;
-      } while (usedTypes.has(plantType) && attempts < 10 && usedTypes.size < PLANT_TYPES.length);
+      } while (
+        usedTypes.has(plantType) &&
+        attempts < 10 &&
+        usedTypes.size < PLANT_TYPES.length
+      );
 
       types.push(plantType);
       usedTypes.add(plantType);
@@ -587,22 +629,23 @@ export default function WordGardenGame({
       if (nextStreak === 3) {
         setAchievementData({
           title: "Growing Streak!",
-          description: "3 plants in a row! Your garden is blooming beautifully! 🌸",
-          plantEmoji: "🌸"
+          description:
+            "3 plants in a row! Your garden is blooming beautifully! 🌸",
+          plantEmoji: "🌸",
         });
         setShowAchievement(true);
       } else if (nextStreak === 5) {
         setAchievementData({
           title: "Garden Master!",
           description: "5 perfect plants! You're a true gardener! 🏆",
-          plantEmoji: "🌻"
+          plantEmoji: "🌻",
         });
         setShowAchievement(true);
       } else if (nextCorrectTotal === 1) {
         setAchievementData({
           title: "First Sprout!",
           description: "Your first plant has sprouted! Keep growing! 🌱",
-          plantEmoji: "🌱"
+          plantEmoji: "🌱",
         });
         setShowAchievement(true);
       }
@@ -702,7 +745,7 @@ export default function WordGardenGame({
     setGardenStages(Array.from({ length: rounds }, () => 0));
     setPlantTypes(generateDiversePlantTypes(rounds));
     setRecentlyGrown(null);
-    
+
     // Fetch new words
     setLoading(true);
     fetchWords({ limit: rounds, difficulty, optionsPerRound })
