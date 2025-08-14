@@ -372,6 +372,7 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
   children: propChildren,
   sessions = [],
   onNavigateBack,
+  showMobileBackButton = true,
 }) => {
   // Load children from localStorage or use empty array
   const [children, setChildren] = useState<ChildProfile[]>(() => {
