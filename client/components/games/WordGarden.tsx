@@ -255,7 +255,7 @@ function GardenAchievementPopup({
 }: GardenAchievementProps) {
   useEffect(() => {
     if (show) {
-      const timer = setTimeout(onClose, 4000);
+      const timer = setTimeout(onClose, 2000);
       return () => clearTimeout(timer);
     }
   }, [show, onClose]);
@@ -787,7 +787,7 @@ export default function WordGardenGame({
                 />
               </div>
               <div className="absolute top-2 left-2">
-                <span className="text-lg animate-sparkle">���</span>
+                <span className="text-lg animate-sparkle">✨</span>
               </div>
             </button>
           ))}
