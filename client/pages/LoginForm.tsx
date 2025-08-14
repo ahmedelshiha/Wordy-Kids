@@ -88,8 +88,8 @@ export default function LoginForm() {
   // Enhanced password validation with security standards
   const validatePassword = (password: string) => {
     if (!password) return "Password is required";
-    if (password.length < 8)
-      return "Password must be at least 8 characters for security";
+    if (password.length < 6)
+      return "Password must be at least 6 characters for security";
     if (password.length > 128)
       return "Password is too long (max 128 characters)";
     if (!/(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/.test(password)) {
@@ -411,7 +411,7 @@ export default function LoginForm() {
                     id="password"
                     name="password"
                     type={showPassword ? "text" : "password"}
-                    placeholder="Enter your password (min 8 characters)"
+                    placeholder="Enter your password (min 6 characters)"
                     autoComplete="current-password"
                     enterKeyHint="done"
                     value={formData.password}
