@@ -36,6 +36,7 @@ import { adventureService } from "@/lib/adventureService";
 import { useWordLearningSession } from "@/contexts/WordLearningSessionContext";
 import { SessionRestorationNotification, DetailedSessionRestorationModal } from "@/components/SessionRestorationNotification";
 import { SessionProgressIndicator, CompactSessionIndicator, SessionWarning } from "@/components/SessionProgressIndicator";
+import { FloatingParentAccess, CompactParentAccess } from "@/components/FloatingParentAccess";
 import {
   wordsDatabase,
   getWordsByCategory,
@@ -2855,6 +2856,19 @@ export default function Index({ initialProfile }: IndexProps) {
       <SessionProgressIndicator />
       <CompactSessionIndicator />
       <SessionWarning />
+
+      {/* Floating Parent Access - Only show when in child mode */}
+      {userRole === "child" && (
+        <>
+          <FloatingParentAccess
+            onAccessParentDashboard={() => setUserRole("parent")}
+            currentTab={activeTab}
+          />
+          <CompactParentAccess
+            onAccessParentDashboard={() => setUserRole("parent")}
+          />
+        </>
+      )}
 
       {/* Enhanced Achievement Popup */}
       {achievementPopup.length > 0 && (
