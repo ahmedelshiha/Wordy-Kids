@@ -298,8 +298,12 @@ export default function Index({ initialProfile }: IndexProps) {
             isRecentSession &&
             savedSession.currentProgress?.wordsLearned > 0
           ) {
-            setSessionRestorationData(savedSession);
-            setShowSessionRestoration(true);
+            // Auto-restore session in background without popup
+            console.log("Auto-restoring session in background", {
+              wordsLearned: savedSession.currentProgress?.wordsLearned || 0,
+              sessionAge: Math.round(sessionAge / 1000 / 60), // in minutes
+            });
+            handleSessionRestore(savedSession);
           } else {
             // Start fresh but mark session as initialized
             setIsSessionInitialized(true);
