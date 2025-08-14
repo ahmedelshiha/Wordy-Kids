@@ -486,7 +486,8 @@ export default function LoginForm() {
               {/* Error/Success Messages */}
               {(message || errors.general) && (
                 <div
-                  className={`text-center p-4 rounded-lg border transition-all duration-300 ${
+                  id="general-error"
+                  className={`text-center p-3 sm:p-4 rounded-lg border transition-all duration-300 text-sm sm:text-base ${
                     message?.type === "success"
                       ? "bg-green-50 text-green-800 border-green-200"
                       : message?.type === "info"
@@ -494,7 +495,8 @@ export default function LoginForm() {
                         : "bg-red-50 text-red-800 border-red-200"
                   }`}
                   role="alert"
-                  aria-live="polite"
+                  aria-live="assertive"
+                  aria-atomic="true"
                 >
                   <div className="flex items-center justify-center gap-2">
                     {message?.type === "success" ? (
@@ -513,7 +515,8 @@ export default function LoginForm() {
               <Button
                 type="submit"
                 disabled={isLoading}
-                className="w-full py-3 bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 hover:from-blue-700 hover:via-purple-700 hover:to-pink-700 text-white font-semibold text-lg shadow-lg hover:shadow-xl transform hover:scale-[1.02] transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
+                className="w-full py-3 sm:py-4 bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 hover:from-blue-700 hover:via-purple-700 hover:to-pink-700 text-white font-semibold text-base sm:text-lg shadow-lg hover:shadow-xl transform hover:scale-[1.02] transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none min-h-[48px] touch-target"
+                aria-describedby={errors.general ? "general-error" : undefined}
               >
                 {isLoading ? (
                   <div className="flex items-center gap-3">
@@ -530,13 +533,14 @@ export default function LoginForm() {
               </Button>
 
               {/* Forgot Password Link */}
-              <div className="text-center">
+              <div className="text-center py-2">
                 <Button
                   type="button"
                   variant="link"
                   onClick={handleForgotPassword}
-                  className="p-0 h-auto text-xs text-gray-500 hover:text-gray-700 underline-offset-2"
+                  className="p-2 h-auto text-sm text-gray-500 hover:text-gray-700 underline-offset-2 min-h-[44px] touch-target"
                   disabled={isLoading}
+                  aria-label="Reset password"
                 >
                   🤔 Forgot password?
                 </Button>
