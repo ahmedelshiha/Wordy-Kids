@@ -2685,7 +2685,7 @@ export default function Index({ initialProfile }: IndexProps) {
                               Picture Fun!
                             </h3>
                             <p className="text-xs md:text-sm text-gray-600 mb-2 md:mb-3 hidden md:block">
-                              Look at pictures and guess the words! ���
+                              Look at pictures and guess the words! 📸
                             </p>
                             <div className="flex justify-center gap-1 mb-2 md:mb-3">
                               <span className="bg-educational-orange/20 text-educational-orange px-1.5 py-0.5 rounded-full text-xs">
