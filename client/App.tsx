@@ -22,6 +22,8 @@ const App = () => (
     <TooltipProvider>
       <Toaster />
       <Sonner />
+      <WordDatabaseNotifications />
+      <CompactWordDatabaseNotifications />
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<LoginForm />} />
