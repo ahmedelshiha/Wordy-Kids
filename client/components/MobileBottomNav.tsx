@@ -74,7 +74,7 @@ export function MobileBottomNav({
     },
     {
       id: "progress",
-      emoji: "����",
+      emoji: "📊",
       label: userRole === "parent" ? "Reports" : "My Journey",
       icon: Trophy,
       color: "from-yellow-500 to-orange-500",
@@ -131,7 +131,7 @@ export function MobileBottomNav({
   const secondaryMenuItems = [
     {
       id: "parent",
-      emoji: "👨‍👩‍👧‍👦",
+      emoji: "👨‍👩‍����‍👦",
       label: "Parent Zone",
       icon: Users,
       onClick: onParentClick,
