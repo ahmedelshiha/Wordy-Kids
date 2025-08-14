@@ -1000,7 +1000,7 @@ export const EnhancedMobileWordCard: React.FC<EnhancedMobileWordCardProps> = ({
           onAchievementClaim={(achievement) => {
             console.log("Word mastery achievement claimed:", achievement);
           }}
-          autoCloseDelay={5000}
+          autoCloseDelay={3000}
         />
       )}
 
