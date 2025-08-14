@@ -828,8 +828,11 @@ export function InteractiveDashboardWordCard({
       <Card
         className={cn(
           "w-full max-w-3xl mx-auto transition-all duration-500 transform hover:scale-[1.02] relative overflow-hidden",
+          "bg-gradient-to-br from-white via-blue-50/30 to-purple-50/30",
+          "shadow-lg hover:shadow-xl border-0 rounded-2xl sm:rounded-3xl",
+          "backdrop-blur-sm ring-1 ring-black/5",
           celebrationEffect &&
-            "animate-pulse shadow-2xl border-yellow-400 border-4",
+            "animate-pulse shadow-2xl border-yellow-400 border-4 bg-gradient-to-br from-yellow-50 to-orange-50",
         )}
       >
         {/* Celebration Sparkles */}
