@@ -749,7 +749,7 @@ export const CompactMobileSettingsPanel: React.FC<
 
                   {/* Goal Insights */}
                   <div className="mt-2 p-2 bg-gradient-to-br from-yellow-50 to-orange-50 rounded-lg border border-yellow-200">
-                    <p className="text-xs font-medium text-orange-800 mb-1">���� Smart Insight</p>
+                    <p className="text-xs font-medium text-orange-800 mb-1">💡 Smart Insight</p>
                     <p className="text-xs text-orange-700">
                       {currentProgress.accuracy >= 80
                         ? "Great accuracy! Consider increasing your daily goal."
@@ -815,7 +815,7 @@ export const CompactMobileSettingsPanel: React.FC<
         </ScrollArea>
 
         {/* Compact Action Bar */}
-        <div className="border-t bg-slate-50 p-2 rounded-b-2xl">
+        <div className="border-t bg-slate-50 p-2 rounded-b-3xl">
           <div className="flex gap-2">
             <Button
               variant="outline"
