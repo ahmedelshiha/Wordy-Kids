@@ -162,8 +162,49 @@ export default function ListenAndGuessGame({
   const [locked, setLocked] = useState(false); // prevent double taps
   const [showAnswer, setShowAnswer] = useState(false);
   const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
+  const [showCelebration, setShowCelebration] = useState(false);
 
   const { containerRef, fire } = useConfetti();
+
+  // Enhanced word generation using database words with emojis
+  const generateDatabaseWords = useCallback((count: number, category?: string, difficulty?: "easy" | "medium" | "hard"): WordItem[] => {
+    let dbWords: Word[] = [];
+
+    if (category && category !== "all") {
+      dbWords = getWordsByCategory(category);
+    } else {
+      dbWords = getRandomWords(count * 3); // Get more words to have options
+    }
+
+    if (difficulty) {
+      dbWords = dbWords.filter(w => w.difficulty === difficulty);
+    }
+
+    // Convert database words to ListenAndGuessWord format using emojis
+    return dbWords.slice(0, count).map(word => ({
+      id: word.id,
+      word: word.word,
+      imageUrl: word.emoji, // Use emoji instead of external image
+      distractorImages: generateDistractorEmojis(word, dbWords),
+      category: word.category,
+      difficulty: word.difficulty,
+    }));
+  }, []);
+
+  // Generate distractor emojis from the same category or similar words
+  const generateDistractorEmojis = useCallback((targetWord: Word, allWords: Word[]): string[] => {
+    const sameCategory = allWords.filter(w =>
+      w.category === targetWord.category &&
+      w.id !== targetWord.id
+    );
+
+    const otherWords = allWords.filter(w => w.id !== targetWord.id);
+    const distractors = sameCategory.length >= 3 ? sameCategory : otherWords;
+
+    return shuffle(distractors)
+      .slice(0, optionsPerRound - 1)
+      .map(w => w.emoji);
+  }, [optionsPerRound]);
 
   // Generate or use provided words
   const gameWords = useMemo(() => {
