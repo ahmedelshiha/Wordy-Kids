@@ -206,20 +206,39 @@ export function EnhancedAchievementPopup({
   // Auto-close timer management
   useEffect(() => {
     if (achievements.length > 0 && !isClosing && !isPaused && autoCloseDelay > 0) {
-      const timer = setTimeout(() => {
-        if (!isPaused) {
-          setIsClosing(true);
-          setTimeout(onClose, 300);
-        }
-      }, autoCloseDelay);
+      setTimeRemaining(autoCloseDelay);
 
-      setAutoCloseTimer(timer);
+      const startTime = Date.now();
+      const interval = setInterval(() => {
+        const elapsed = Date.now() - startTime;
+        const remaining = Math.max(0, autoCloseDelay - elapsed);
+        setTimeRemaining(remaining);
+
+        if (remaining <= 0) {
+          clearInterval(interval);
+          if (!isPaused) {
+            setIsClosing(true);
+            setTimeout(onClose, 300);
+          }
+        }
+      }, 100); // Update every 100ms for smooth progress
+
+      setAutoCloseTimer(interval as any);
 
       return () => {
-        if (timer) clearTimeout(timer);
+        clearInterval(interval);
       };
     }
   }, [achievements.length, currentIndex, isClosing, isPaused, autoCloseDelay, onClose]);
+
+  // Cleanup timer on unmount
+  useEffect(() => {
+    return () => {
+      if (autoCloseTimer) {
+        clearTimeout(autoCloseTimer);
+      }
+    };
+  }, [autoCloseTimer]);
 
   // Pause auto-close when user hovers or interacts
   const handleMouseEnter = useCallback(() => {
