@@ -290,7 +290,10 @@ export const EnhancedSettingsPanel: React.FC<EnhancedSettingsPanelProps> = ({
           )}
         </CardHeader>
 
-        <div className="flex flex-col md:flex-row h-full">
+        <div className={cn(
+          "flex h-full",
+          deviceInfo.isMobile ? "flex-col" : "md:flex-row"
+        )}>
           {/* Mobile Tabs - Horizontal scrolling on mobile */}
           <div className="md:hidden">
             <ScrollArea className="w-full">
@@ -329,7 +332,7 @@ export const EnhancedSettingsPanel: React.FC<EnhancedSettingsPanelProps> = ({
             <nav className="p-4 space-y-2">
               {[
                 { id: "audio", label: "Audio Settings", icon: Volume2, emoji: "🔊" },
-                { id: "appearance", label: "Appearance", icon: Palette, emoji: "🎨" },
+                { id: "appearance", label: "Appearance", icon: Palette, emoji: "��" },
                 { id: "learning", label: "Learning", icon: Target, emoji: "🎯" },
                 { id: "accessibility", label: "Accessibility", icon: Eye, emoji: "♿" },
                 { id: "notifications", label: "Notifications", icon: Bell, emoji: "🔔" },
