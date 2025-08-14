@@ -25,6 +25,7 @@ interface MobileBottomNavProps {
   showMoreMenu: boolean;
   onMoreToggle: () => void;
   achievementCount?: number;
+  userRole?: "child" | "parent";
 }
 
 export function MobileBottomNav({
