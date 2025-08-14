@@ -186,7 +186,7 @@ export function GameHub({
                 <Brain className="w-8 h-8 text-white" />
               </div>
               <Badge className="bg-educational-purple text-white">
-                6 Quiz Types
+                7 Quiz Types
               </Badge>
             </div>
             <CardTitle className="text-2xl text-educational-purple">
