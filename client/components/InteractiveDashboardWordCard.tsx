@@ -1270,6 +1270,13 @@ export function InteractiveDashboardWordCard({
                   <SkipForward className="w-4 h-4 mr-1" />
                   🤔 Try another word
                 </Button>
+
+                {/* Keyboard shortcuts hint - Desktop only */}
+                <div className="hidden md:block mt-2 text-xs text-gray-400">
+                  💡 Shortcuts: <kbd className="px-1 py-0.5 bg-gray-100 rounded text-xs">1</kbd> or <kbd className="px-1 py-0.5 bg-gray-100 rounded text-xs">F</kbd> for Forgot,
+                  <kbd className="px-1 py-0.5 bg-gray-100 rounded text-xs ml-1">2</kbd> or <kbd className="px-1 py-0.5 bg-gray-100 rounded text-xs">R</kbd> for Remember,
+                  <kbd className="px-1 py-0.5 bg-gray-100 rounded text-xs ml-1">Space</kbd> for Audio
+                </div>
               </div>
 
               {/* Compact Session Progress */}
