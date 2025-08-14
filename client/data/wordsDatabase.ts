@@ -788,7 +788,7 @@ export const wordsDatabase: Word[] = [
     definition: "The part of your body you hear with",
     example: "I listen to music with my ears",
     funFact: "Your ears help you balance!",
-    emoji: "👂",
+    emoji: "��",
     category: "body",
     difficulty: "easy",
   },
@@ -3560,22 +3560,10 @@ export const categories = [
     color: "from-yellow-400 to-pink-400",
   },
   {
-    id: "at-the-zoo",
-    name: "At the Zoo",
-    emoji: "🦁",
-    color: "from-green-400 to-orange-400",
-  },
-  {
     id: "at-the-clothes-shop",
     name: "At the Clothes Shop",
     emoji: "👗",
     color: "from-pink-400 to-purple-400",
-  },
-  {
-    id: "my-favourite-food",
-    name: "My Favourite Food",
-    emoji: "🥗",
-    color: "from-green-400 to-yellow-400",
   },
   {
     id: "at-home",
