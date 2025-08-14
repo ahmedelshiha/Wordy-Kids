@@ -17,6 +17,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
+import { motion, AnimatePresence } from "framer-motion";
 
 /**
  * Word Garden — Listen & Pick Game for Ages 3–5
@@ -51,6 +52,7 @@ export type FetchParams = {
   limit: number;
   difficulty?: "easy" | "medium" | "hard";
   excludeMastered?: boolean;
+  optionsPerRound: number;
 };
 
 export type WordGardenGameProps = {
@@ -150,17 +152,39 @@ function useConfetti() {
   return { ref, burst } as const;
 }
 
-// Garden plant stage visuals (simple emojis; swap with your images if desired)
-const STAGES = ["🌱", "🌿", "🌸"]; // sprout -> leaf -> blossom
+// Multiple plant types with diverse growth sequences - each with unique intermediate stages
+const PLANT_TYPES = [
+  ["🌱", "🌿", "🌻"], // sunflower - leafy to bright sunflower
+  ["🌱", "🌵", "🌺"], // cactus-flower - spiky cactus to hibiscus
+  ["🌱", "🍃", "🌹"], // rose bush - small leaves to red rose
+  ["🌱", "🌾", "🌼"], // daisy field - grain to white daisy
+  ["🌱", "💚", "🌷"], // tulip - green heart to pink tulip
+  ["🌱", "🌳", "🌸"], // cherry tree - tree to cherry blossom
+  ["🌱", "🍀", "🌺"], // clover hibiscus - clover to tropical flower
+  ["🌱", "🎋", "🏵️"], // bamboo rosette - bamboo to decorative flower
+  ["🌱", "🌲", "🍄"], // forest mushroom - pine to mushroom
+  ["🌱", "🪴", "🌻"], // potted sunflower - pot plant to big sunflower
+  ["🌱", "🌿", "💐"], // bouquet garden - leaves to flower bouquet
+  ["🌱", "🎍", "🌸"], // bamboo cherry - bamboo decoration to blossom
+  ["🌱", "🌳", "🍃"], // tree leaves - tree to fresh leaves
+  ["🌱", "🪷", "🌺"], // lotus hibiscus - lotus to hibiscus
+  ["🌱", "🌾", "🌻"], // wheat sunflower - grain field to sunflower
+  ["🌱", "🎄", "🌟"], // christmas tree star - evergreen to star
+  ["🌱", "🌿", "🌈"], // rainbow plant - leaves to rainbow
+  ["🌱", "🍂", "🍁"], // autumn leaves - brown to red maple
+  ["🌱", "🌴", "🥥"], // palm coconut - palm tree to coconut
+  ["🌱", "🌵", "🌵"], // growing cactus - small to big cactus
+] as const;
 
-// Generate emoji-based image using SVG data URI with larger size to match ListenAndGuess
+// Generate emoji-based image using SVG data URI with larger size
 function generateEmojiImage(emoji: string, fallbackText?: string): string {
   if (emoji && emoji !== "") {
-    // Create SVG with larger emoji to match ListenAndGuess game style
+    // Create SVG with large emoji for better visibility
     const svg = `
-      <svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 200 200">
-        <rect width="200" height="200" fill="#f0fdf4" rx="20"/>
-        <text x="100" y="130" font-size="120" text-anchor="middle" font-family="Arial, sans-serif">${emoji}</text>
+      <svg xmlns="http://www.w3.org/2000/svg" width="250" height="250" viewBox="0 0 250 250">
+        <rect width="250" height="250" fill="#f0fdf4" rx="25"/>
+        <circle cx="125" cy="125" r="110" fill="#dcfce7" opacity="0.8"/>
+        <text x="125" y="160" font-size="140" text-anchor="middle" font-family="Arial, sans-serif">${emoji}</text>
       </svg>
     `;
 
@@ -169,66 +193,309 @@ function generateEmojiImage(emoji: string, fallbackText?: string): string {
   }
 
   // Fallback to placeholder if no emoji
-  return `https://via.placeholder.com/200x200/4ade80/ffffff?text=${encodeURIComponent(fallbackText || "Word")}`;
+  return `https://via.placeholder.com/250x250/4ade80/ffffff?text=${encodeURIComponent(fallbackText || "Word")}`;
 }
 
-// Convert existing Word to WordItem format with emoji images
-function convertToWordItem(word: Word, allWords: Word[]): WordItem {
-  // Create distractor images from other words in different categories
-  const distractorWords = allWords
-    .filter((w) => w.category !== word.category && w.id !== word.id)
-    .slice(0, 3);
+// Enhanced word generation using database words with emojis (same as Listen & Guess)
+const generateDatabaseWords = (
+  count: number,
+  optionsPerRound: number,
+  category?: string,
+  difficulty?: "easy" | "medium" | "hard",
+): WordItem[] => {
+  let dbWords: Word[] = [];
 
-  const distractorImages =
-    distractorWords.length >= 3
-      ? distractorWords.map(
-          (w) => w.imageUrl || generateEmojiImage(w.emoji, w.word),
-        )
-      : Array.from({ length: 3 }, (_, i) => {
-          // Get random words for fallback distractors
-          const fallbackWords = allWords
-            .filter((fw) => fw.id !== word.id)
-            .slice(i * 2, i * 2 + 1);
-          const fallbackWord = fallbackWords[0];
-          return fallbackWord
-            ? generateEmojiImage(fallbackWord.emoji, fallbackWord.word)
-            : generateEmojiImage("❓", `Option ${i + 1}`);
-        });
-
-  return {
-    id: word.id,
-    word: word.word,
-    imageUrl: word.imageUrl || generateEmojiImage(word.emoji, word.word),
-    distractorImages,
-    audioUrl: undefined, // Will use Web Speech API
-    category: word.category,
-  };
-}
-
-// Fetch words function adapted to existing word database
-const fetchWords = async (params: FetchParams): Promise<WordItem[]> => {
-  // Use existing word database functions
-  let words: Word[];
-
-  // Get a larger pool for better distractor selection
-  const allWords = getRandomWords(params.limit * 4);
-
-  if (params.difficulty) {
-    // Get words by difficulty and category
-    words = allWords
-      .filter((w) => w.difficulty === params.difficulty)
-      .slice(0, params.limit);
+  if (category && category !== "all") {
+    dbWords = getWordsByCategory(category);
   } else {
-    words = allWords.slice(0, params.limit);
+    dbWords = getRandomWords(count * 3); // Get more words to have options
   }
 
-  // Convert to WordItem format with access to all words for distractors
-  return words.map((word) => convertToWordItem(word, allWords));
+  if (difficulty) {
+    dbWords = dbWords.filter((w) => w.difficulty === difficulty);
+  }
+
+  // Convert database words to WordItem format using emojis (same as Listen & Guess)
+  return dbWords.slice(0, count).map((word) => ({
+    id: word.id,
+    word: word.word,
+    imageUrl: generateEmojiImage(word.emoji, word.word), // Generate large SVG emoji for better garden visuals
+    distractorImages: generateDistractorEmojis(word, dbWords, optionsPerRound),
+    category: word.category,
+    difficulty: word.difficulty,
+  }));
 };
+
+// Generate distractor emojis from the same category or similar words (same as Listen & Guess)
+const generateDistractorEmojis = (
+  targetWord: Word,
+  allWords: Word[],
+  optionsPerRound: number,
+): string[] => {
+  const sameCategory = allWords.filter(
+    (w) => w.category === targetWord.category && w.id !== targetWord.id,
+  );
+
+  const otherWords = allWords.filter((w) => w.id !== targetWord.id);
+  const distractors = sameCategory.length >= 3 ? sameCategory : otherWords;
+
+  return shuffle(distractors)
+    .slice(0, optionsPerRound - 1)
+    .map((w) => generateEmojiImage(w.emoji, w.word)); // Generate large SVG emojis for better garden visuals
+};
+
+// Fetch words function using the same logic as Listen & Guess
+const fetchWords = async (
+  params: FetchParams & { optionsPerRound: number },
+): Promise<WordItem[]> => {
+  // Use database-based word generation with emojis (same approach as Listen & Guess)
+  const difficultyLevel = params.difficulty || "easy";
+  return generateDatabaseWords(
+    params.limit,
+    params.optionsPerRound,
+    undefined,
+    difficultyLevel,
+  );
+};
+
+// Green-themed Garden Achievement Component
+interface GardenAchievementProps {
+  show: boolean;
+  title: string;
+  description: string;
+  onClose: () => void;
+  plantEmoji?: string;
+}
+
+function GardenAchievementPopup({
+  show,
+  title,
+  description,
+  onClose,
+  plantEmoji = "🌱",
+}: GardenAchievementProps) {
+  useEffect(() => {
+    if (show) {
+      const timer = setTimeout(onClose, 2000);
+      return () => clearTimeout(timer);
+    }
+  }, [show, onClose]);
+
+  return (
+    <AnimatePresence>
+      {show && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          className="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-50 p-4"
+        >
+          <motion.div
+            initial={{ scale: 0.8, opacity: 0, y: 20 }}
+            animate={{ scale: 1, opacity: 1, y: 0 }}
+            exit={{ scale: 0.8, opacity: 0, y: -20 }}
+            transition={{ type: "spring", duration: 0.5, damping: 15 }}
+            className="bg-gradient-to-br from-green-400 via-green-500 to-emerald-600 text-white rounded-3xl p-6 max-w-sm mx-4 text-center shadow-2xl border-4 border-green-300"
+          >
+            {/* Floating sparkles */}
+            <div className="absolute inset-0 overflow-hidden rounded-3xl pointer-events-none">
+              {Array.from({ length: 8 }, (_, i) => (
+                <motion.div
+                  key={i}
+                  className="absolute text-yellow-300 text-lg"
+                  initial={{ scale: 0, rotate: 0 }}
+                  animate={{
+                    scale: [0, 1, 0],
+                    rotate: 360,
+                    x: Math.cos((i * Math.PI * 2) / 8) * 60,
+                    y: Math.sin((i * Math.PI * 2) / 8) * 60,
+                  }}
+                  transition={{
+                    duration: 2,
+                    delay: i * 0.1,
+                    repeat: Infinity,
+                    repeatDelay: 3,
+                  }}
+                  style={{
+                    left: "50%",
+                    top: "50%",
+                  }}
+                >
+                  ✨
+                </motion.div>
+              ))}
+            </div>
+
+            {/* Main plant emoji with bounce */}
+            <motion.div
+              className="text-7xl mb-4"
+              initial={{ scale: 0, rotate: -180 }}
+              animate={{ scale: 1, rotate: 0 }}
+              transition={{
+                type: "spring",
+                duration: 0.8,
+                damping: 12,
+                delay: 0.2,
+              }}
+            >
+              {plantEmoji}
+            </motion.div>
+
+            {/* Achievement text */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.4 }}
+            >
+              <h3 className="text-2xl font-bold mb-2 text-yellow-100 drop-shadow-lg">
+                🌟 {title} 🌟
+              </h3>
+              <p className="text-lg text-green-100 mb-4 leading-relaxed drop-shadow">
+                {description}
+              </p>
+            </motion.div>
+
+            {/* Garden celebration icons */}
+            <motion.div
+              className="flex justify-center gap-3 text-2xl"
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: 0.6 }}
+            >
+              <span className="animate-bounce">🌻</span>
+              <span
+                className="animate-bounce"
+                style={{ animationDelay: "0.1s" }}
+              >
+                🌸
+              </span>
+              <span
+                className="animate-bounce"
+                style={{ animationDelay: "0.2s" }}
+              >
+                🌺
+              </span>
+              <span
+                className="animate-bounce"
+                style={{ animationDelay: "0.3s" }}
+              >
+                🌷
+              </span>
+            </motion.div>
+
+            {/* Auto-close indicator */}
+            <motion.div
+              className="mt-4 text-sm text-green-200"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.8 }}
+            >
+              Your garden is growing! 🌱✨
+            </motion.div>
+          </motion.div>
+        </motion.div>
+      )}
+    </AnimatePresence>
+  );
+}
+
+// Game completion dialog
+interface GameCompletionDialogProps {
+  show: boolean;
+  stats: GameFinishStats;
+  onContinue: () => void;
+  onExit: () => void;
+}
+
+function GameCompletionDialog({
+  show,
+  stats,
+  onContinue,
+  onExit,
+}: GameCompletionDialogProps) {
+  const accuracy =
+    stats.totalRounds > 0
+      ? Math.round((stats.correct / stats.totalRounds) * 100)
+      : 0;
+
+  return (
+    <Dialog open={show} onOpenChange={() => {}}>
+      <DialogContent className="sm:max-w-md bg-gradient-to-br from-green-50 to-emerald-100 border-green-300">
+        <DialogHeader className="text-center">
+          <div className="text-8xl mb-4 animate-bounce">🌻</div>
+          <DialogTitle className="text-2xl font-bold text-green-800">
+            🎉 Garden Complete! 🎉
+          </DialogTitle>
+          <DialogDescription className="text-green-700 text-lg">
+            Look at your beautiful garden! You did amazing!
+          </DialogDescription>
+        </DialogHeader>
+
+        {/* Stats display */}
+        <div className="bg-green-100 rounded-xl p-4 border-2 border-green-300">
+          <div className="grid grid-cols-2 gap-4 text-center">
+            <div className="bg-white rounded-lg p-3 border border-green-200">
+              <div className="text-3xl mb-1">🌱</div>
+              <div className="text-2xl font-bold text-green-800">
+                {stats.correct}
+              </div>
+              <div className="text-sm text-green-600">Plants Grown</div>
+            </div>
+            <div className="bg-white rounded-lg p-3 border border-green-200">
+              <div className="text-3xl mb-1">⭐</div>
+              <div className="text-2xl font-bold text-green-800">
+                {stats.bestStreak}
+              </div>
+              <div className="text-sm text-green-600">Best Streak</div>
+            </div>
+          </div>
+          <div className="mt-3 text-center">
+            <div className="text-lg font-bold text-green-800">
+              {accuracy}% Accuracy!
+              {accuracy >= 90 && " 🏆"}
+              {accuracy >= 75 && accuracy < 90 && " 🎓"}
+            </div>
+          </div>
+        </div>
+
+        {/* Garden icons */}
+        <div className="flex justify-center gap-2 text-3xl my-4">
+          {Array.from({ length: Math.min(stats.correct, 8) }, (_, i) => (
+            <span
+              key={i}
+              className="animate-gentle-float"
+              style={{ animationDelay: `${i * 0.1}s` }}
+            >
+              {PLANT_TYPES[i % PLANT_TYPES.length][2]}
+            </span>
+          ))}
+        </div>
+
+        <DialogFooter className="flex flex-col gap-3 mt-6">
+          <Button
+            onClick={onContinue}
+            className="flex-1 bg-green-600 hover:bg-green-700 text-white text-lg py-3 rounded-xl shadow-lg"
+          >
+            <span className="mr-2">🌱</span>
+            Continue Growing Garden!
+          </Button>
+          <Button
+            onClick={onExit}
+            variant="outline"
+            className="flex-1 bg-white hover:bg-green-50 text-green-700 border-green-300 text-lg py-3 rounded-xl"
+          >
+            <span className="mr-2">🏠</span>
+            Back to Games
+          </Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
+  );
+}
 
 // ---------- Component ----------
 export default function WordGardenGame({
-  rounds = 8,
+  rounds = 10,
   optionsPerRound = 3,
   difficulty = "easy",
   category,
@@ -251,9 +518,48 @@ export default function WordGardenGame({
   const [bestStreak, setBestStreak] = useState(0);
   const [locked, setLocked] = useState(false);
   const [attempts, setAttempts] = useState(0); // attempts for current word
+  const [gameComplete, setGameComplete] = useState(false);
 
+  // Achievement popup state
+  const [showAchievement, setShowAchievement] = useState(false);
+  const [achievementData, setAchievementData] = useState({
+    title: "",
+    description: "",
+    plantEmoji: "🌱",
+  });
+
+  // Generate diverse plant types ensuring variety
+  const generateDiversePlantTypes = useCallback((count: number) => {
+    const types: number[] = [];
+    const usedTypes = new Set<number>();
+
+    // First, try to use unique plant types
+    for (let i = 0; i < count; i++) {
+      let plantType;
+      let attempts = 0;
+
+      do {
+        plantType = Math.floor(Math.random() * PLANT_TYPES.length);
+        attempts++;
+      } while (
+        usedTypes.has(plantType) &&
+        attempts < 10 &&
+        usedTypes.size < PLANT_TYPES.length
+      );
+
+      types.push(plantType);
+      usedTypes.add(plantType);
+    }
+
+    return types;
+  }, []);
+
+  // Garden stages with plant types
   const [gardenStages, setGardenStages] = useState<number[]>(
     Array.from({ length: rounds }, () => 0),
+  );
+  const [plantTypes, setPlantTypes] = useState<number[]>(
+    generateDiversePlantTypes(rounds),
   );
   const [recentlyGrown, setRecentlyGrown] = useState<number | null>(null);
 
@@ -265,7 +571,7 @@ export default function WordGardenGame({
     setLoading(true);
     setError(null);
 
-    fetchWords({ limit: rounds, difficulty })
+    fetchWords({ limit: rounds, difficulty, optionsPerRound })
       .then((list) => {
         if (!mounted) return;
         setPool(list);
@@ -281,7 +587,7 @@ export default function WordGardenGame({
     return () => {
       mounted = false;
     };
-  }, [rounds, difficulty]);
+  }, [rounds, difficulty, optionsPerRound]);
 
   const current: WordItem | undefined = pool[roundIdx];
 
@@ -298,7 +604,6 @@ export default function WordGardenGame({
   // Auto play prompt when round changes
   useEffect(() => {
     if (current) {
-      // Use audioService for consistency with other games
       speakWord(current.word, Math.random() < 0.2, current.audioUrl);
     }
   }, [current]);
@@ -311,14 +616,39 @@ export default function WordGardenGame({
 
   const checkAchievements = useCallback(
     (nextCorrectTotal: number, nextStreak: number) => {
-      // Use the EnhancedAchievementTracker static methods directly
+      // Track achievements and show green garden-themed popup
       EnhancedAchievementTracker.trackActivity({
         type: "wordLearning",
         wordsLearned: 1,
-        accuracy: nextStreak > 0 ? 100 : 80, // Assume good accuracy for correct answers
+        accuracy: nextStreak > 0 ? 100 : 80,
         difficulty: difficulty,
         category: category,
       });
+
+      // Show garden-specific achievements
+      if (nextStreak === 3) {
+        setAchievementData({
+          title: "Growing Streak!",
+          description:
+            "3 plants in a row! Your garden is blooming beautifully! 🌸",
+          plantEmoji: "🌸",
+        });
+        setShowAchievement(true);
+      } else if (nextStreak === 5) {
+        setAchievementData({
+          title: "Garden Master!",
+          description: "5 perfect plants! You're a true gardener! 🏆",
+          plantEmoji: "🌻",
+        });
+        setShowAchievement(true);
+      } else if (nextCorrectTotal === 1) {
+        setAchievementData({
+          title: "First Sprout!",
+          description: "Your first plant has sprouted! Keep growing! 🌱",
+          plantEmoji: "🌱",
+        });
+        setShowAchievement(true);
+      }
     },
     [difficulty, category],
   );
@@ -340,9 +670,11 @@ export default function WordGardenGame({
         setBestStreak((b) => Math.max(b, nextStreak));
 
         // Grow plant at this index up one stage (max last stage)
+        const plantTypeIndex = plantTypes[roundIdx];
+        const plantStages = PLANT_TYPES[plantTypeIndex];
         setGardenStages((stages) =>
           stages.map((s, i) =>
-            i === roundIdx ? Math.min(s + 1, STAGES.length - 1) : s,
+            i === roundIdx ? Math.min(s + 1, plantStages.length - 1) : s,
           ),
         );
 
@@ -371,12 +703,7 @@ export default function WordGardenGame({
           if (nextRound < pool.length) {
             setRoundIdx(nextRound);
           } else {
-            onFinish?.({
-              totalRounds: pool.length,
-              correct: nextCorrect,
-              wrong: wrongCount,
-              bestStreak: Math.max(bestStreak, nextStreak),
-            });
+            setGameComplete(true);
           }
         }, 1500);
       } else {
@@ -400,12 +727,49 @@ export default function WordGardenGame({
       roundIdx,
       pool.length,
       burst,
-      onFinish,
       wrongCount,
       bestStreak,
       checkAchievements,
+      plantTypes,
     ],
   );
+
+  // Handle game continuation
+  const handleContinueGarden = useCallback(() => {
+    setGameComplete(false);
+    setRoundIdx(0);
+    setCorrectCount(0);
+    setWrongCount(0);
+    setStreak(0);
+    setAttempts(0);
+    setGardenStages(Array.from({ length: rounds }, () => 0));
+    setPlantTypes(generateDiversePlantTypes(rounds));
+    setRecentlyGrown(null);
+
+    // Fetch new words
+    setLoading(true);
+    fetchWords({ limit: rounds, difficulty, optionsPerRound })
+      .then((list) => {
+        setPool(list);
+        setLoading(false);
+      })
+      .catch((e) => {
+        setError("Failed to load new words");
+        setLoading(false);
+        console.error(e);
+      });
+  }, [rounds, difficulty]);
+
+  // Handle game completion
+  const handleGameFinish = useCallback(() => {
+    const stats: GameFinishStats = {
+      totalRounds: pool.length,
+      correct: correctCount,
+      wrong: wrongCount,
+      bestStreak: bestStreak,
+    };
+    onFinish?.(stats);
+  }, [pool.length, correctCount, wrongCount, bestStreak, onFinish]);
 
   // --------- Render ---------
   if (loading)
@@ -494,11 +858,11 @@ export default function WordGardenGame({
                 animationDelay: `${i * 100}ms`,
               }}
             >
-              <div className="w-full h-full flex items-center justify-center p-3">
+              <div className="w-full h-full flex items-center justify-center p-2">
                 <img
                   src={img}
                   alt="option"
-                  className="w-full h-full object-contain"
+                  className="w-full h-full object-contain rounded-2xl"
                 />
               </div>
               <div className="absolute top-2 left-2">
@@ -530,6 +894,8 @@ export default function WordGardenGame({
           const isCompleted = idx < roundIdx;
           const hasGrown = stage > 0;
           const justGrew = recentlyGrown === idx;
+          const plantTypeIndex = plantTypes[idx];
+          const plantStages = PLANT_TYPES[plantTypeIndex];
 
           return (
             <div
@@ -555,7 +921,7 @@ export default function WordGardenGame({
                         : ""
                 }`}
               >
-                {STAGES[stage]}
+                {plantStages[stage]}
               </span>
             </div>
           );
@@ -565,44 +931,68 @@ export default function WordGardenGame({
       {/* Styles for confetti dots */}
       <style>{`.wg-confetti{position:absolute;top:60%;border-radius:9999px;box-shadow:0 0 0 1px rgba(255,255,255,.15) inset}`}</style>
 
-      {/* Enhanced Exit Confirmation Dialog */}
+      {/* Green Garden Achievement Popup */}
+      <GardenAchievementPopup
+        show={showAchievement}
+        title={achievementData.title}
+        description={achievementData.description}
+        plantEmoji={achievementData.plantEmoji}
+        onClose={() => setShowAchievement(false)}
+      />
+
+      {/* Game Completion Dialog */}
+      <GameCompletionDialog
+        show={gameComplete}
+        stats={{
+          totalRounds: pool.length,
+          correct: correctCount,
+          wrong: wrongCount,
+          bestStreak: bestStreak,
+        }}
+        onContinue={handleContinueGarden}
+        onExit={() => {
+          handleGameFinish();
+          onExit?.();
+        }}
+      />
+
+      {/* Enhanced Exit Confirmation Dialog - Mobile Optimized */}
       <Dialog open={showExitDialog} onOpenChange={onCloseExitDialog}>
-        <DialogContent className="sm:max-w-md">
-          <DialogHeader className="text-center">
-            <div className="text-6xl mb-2">🌱</div>
-            <DialogTitle className="text-xl font-bold text-gray-800">
-              Leave your garden?
+        <DialogContent className="sm:max-w-xs max-w-[90vw] p-4">
+          <DialogHeader className="text-center pb-2">
+            <div className="text-4xl mb-1">🌱</div>
+            <DialogTitle className="text-lg font-bold text-gray-800">
+              Leave garden?
             </DialogTitle>
-            <DialogDescription className="text-gray-600">
-              Your plants will be waiting for you! Are you sure you want to exit
-              Word Garden?
+            <DialogDescription className="text-sm text-gray-600">
+              Your plants are waiting!
             </DialogDescription>
           </DialogHeader>
 
-          <div className="flex flex-col gap-3 mt-4">
-            {/* Garden Progress Summary */}
-            <div className="bg-green-50 rounded-lg p-3 border border-green-200">
-              <div className="text-sm text-green-800 font-medium mb-1">
-                🌱 Garden Progress
+          {/* Compact Garden Progress Summary */}
+          <div className="bg-green-50 rounded-lg p-2 border border-green-200 my-3">
+            <div className="flex items-center justify-between text-sm">
+              <div className="text-green-800">
+                <span className="font-medium">🌱 {correctCount}</span>
+                <span className="text-xs ml-1">grown</span>
               </div>
-              <div className="flex justify-between text-sm text-green-700">
-                <span>Plants grown: {correctCount}</span>
-                <span>Best streak: {bestStreak}</span>
+              <div className="text-green-700">
+                <span className="font-medium">⭐ {bestStreak}</span>
+                <span className="text-xs ml-1">streak</span>
               </div>
-              <div className="text-xs text-green-600 mt-1">
-                Round {roundIdx + 1} of {pool.length}
+              <div className="text-green-600 text-xs">
+                {roundIdx + 1}/{pool.length}
               </div>
             </div>
           </div>
 
-          <DialogFooter className="flex flex-col-reverse sm:flex-row gap-2 mt-6">
+          <DialogFooter className="flex gap-2 pt-2">
             <Button
               variant="outline"
               onClick={() => onCloseExitDialog?.()}
-              className="flex-1 bg-green-50 hover:bg-green-100 text-green-700 border-green-300"
+              className="flex-1 bg-green-50 hover:bg-green-100 text-green-700 border-green-300 text-sm py-2"
             >
-              <span className="mr-2">🌱</span>
-              Keep Growing!
+              🌱 Stay
             </Button>
             <Button
               variant="destructive"
@@ -610,10 +1000,9 @@ export default function WordGardenGame({
                 onCloseExitDialog?.();
                 onExit?.();
               }}
-              className="flex-1 bg-red-500 hover:bg-red-600"
+              className="flex-1 bg-red-500 hover:bg-red-600 text-sm py-2"
             >
-              <span className="mr-2">🚪</span>
-              Exit Garden
+              🚪 Exit
             </Button>
           </DialogFooter>
         </DialogContent>
