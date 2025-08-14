@@ -159,6 +159,7 @@ export default function Index({ initialProfile }: IndexProps) {
   const [showSessionRestoration, setShowSessionRestoration] = useState(false);
   const [sessionRestorationData, setSessionRestorationData] =
     useState<SessionData | null>(null);
+  const [isRestoringSession, setIsRestoringSession] = useState(false);
   const [isSessionInitialized, setIsSessionInitialized] = useState(false);
   const [lastAutoSave, setLastAutoSave] = useState<number>(Date.now());
 
@@ -298,8 +299,22 @@ export default function Index({ initialProfile }: IndexProps) {
             isRecentSession &&
             savedSession.currentProgress?.wordsLearned > 0
           ) {
-            setSessionRestorationData(savedSession);
-            setShowSessionRestoration(true);
+            // Auto-restore session in background without popup
+            console.log("Auto-restoring session in background", {
+              wordsLearned: savedSession.currentProgress?.wordsLearned || 0,
+              sessionAge: Math.round(sessionAge / 1000 / 60), // in minutes
+            });
+            setIsRestoringSession(true);
+            // Small delay to show restoration feedback
+            setTimeout(() => {
+              handleSessionRestore(savedSession);
+              setIsRestoringSession(false);
+              // Update last accessed time for the restored session
+              sessionPersistence.saveSession({
+                lastSaved: Date.now(),
+                sessionStartTime: Date.now(),
+              });
+            }, 800);
           } else {
             // Start fresh but mark session as initialized
             setIsSessionInitialized(true);
@@ -1508,7 +1523,9 @@ export default function Index({ initialProfile }: IndexProps) {
           <div className="text-center">
             <div className="w-8 h-8 border-4 border-blue-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
             <p className="text-gray-600">
-              Initializing your learning session...
+              {isRestoringSession
+                ? "Restoring your previous session..."
+                : "Initializing your learning session..."}
             </p>
           </div>
         </div>
@@ -1691,11 +1708,12 @@ export default function Index({ initialProfile }: IndexProps) {
           {/* Main Content with Sidebar Layout */}
           <main className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 scroll-smooth">
             {userRole === "parent" ? (
-              <div className="w-full p-4 md:p-8">
+              <div className="w-full p-4 md:p-8 pb-20 lg:pb-8 mobile-parent-dashboard max-h-screen">
                 <ParentDashboard
                   children={undefined}
                   sessions={undefined}
                   onNavigateBack={() => setUserRole("child")}
+                  showMobileBackButton={false}
                 />
               </div>
             ) : (
@@ -3276,10 +3294,11 @@ export default function Index({ initialProfile }: IndexProps) {
             />
           )}
 
-          {/* Mobile Bottom Navigation */}
+          {/* Mobile Bottom Navigation - Show for both child and parent modes */}
           <MobileBottomNav
-            activeTab={activeTab}
+            activeTab={userRole === "parent" ? "" : activeTab}
             onTabChange={(tab) => {
+              setUserRole("child");
               setActiveTab(tab);
               setShowMobileMoreMenu(false);
             }}
@@ -3300,6 +3319,7 @@ export default function Index({ initialProfile }: IndexProps) {
               setShowMobileMoreMenu(false);
             }}
             showMoreMenu={showMobileMoreMenu}
+            userRole={userRole}
             onMoreToggle={() => setShowMobileMoreMenu(!showMobileMoreMenu)}
             achievementCount={
               learningStats.badges.filter((b) => b.earned).length

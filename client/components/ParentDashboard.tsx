@@ -150,6 +150,7 @@ interface ParentDashboardProps {
   children?: ChildProfile[];
   sessions?: LearningSession[];
   onNavigateBack?: () => void;
+  showMobileBackButton?: boolean;
 }
 
 const sampleChildren: ChildProfile[] = [
@@ -371,6 +372,7 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
   children: propChildren,
   sessions = [],
   onNavigateBack,
+  showMobileBackButton = true,
 }) => {
   // Load children from localStorage or use empty array
   const [children, setChildren] = useState<ChildProfile[]>(() => {
@@ -2435,7 +2437,7 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
     const emojis: Record<string, string> = {
       Animals: "🦋",
       Science: "🔬",
-      Colors: "🌈",
+      Colors: "���",
       Food: "🍎",
       Transportation: "🚗",
       Nature: "🌲",
@@ -3837,7 +3839,7 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
   );
 
   return (
-    <div className="space-y-4 md:space-y-6">
+    <div className="space-y-4 md:space-y-6 w-full min-h-0">
       {/* Header - Mobile Optimized */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 md:gap-0">
         <div className="flex items-center gap-2 md:gap-4">
@@ -3846,7 +3848,9 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
               variant="outline"
               size="sm"
               onClick={onNavigateBack}
-              className="flex items-center gap-1 md:gap-2 text-xs md:text-sm px-2 md:px-3"
+              className={`flex items-center gap-1 md:gap-2 text-xs md:text-sm px-2 md:px-3 ${
+                showMobileBackButton ? "" : "hidden md:flex"
+              }`}
             >
               <ArrowLeft className="w-3 h-3 md:w-4 md:h-4" />
               <span className="hidden md:inline">Back to Main</span>
@@ -3854,9 +3858,14 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
             </Button>
           )}
           <div>
-            <h1 className="text-xl md:text-3xl font-bold text-slate-800">
-              Parent Dashboard
-            </h1>
+            <div className="flex items-center gap-2">
+              <h1 className="text-xl md:text-3xl font-bold text-slate-800">
+                Parent Dashboard
+              </h1>
+              <div className="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-xs font-medium hidden md:flex items-center gap-1">
+                👨‍👩‍👧‍👦 Parent Mode
+              </div>
+            </div>
             <p className="text-xs md:text-base text-slate-600 hidden md:block">
               Comprehensive learning management for your family
             </p>
@@ -3935,12 +3944,42 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
           </TabsTrigger>
         </TabsList>
 
-        <TabsContent value="overview">{renderOverview()}</TabsContent>
-        <TabsContent value="goals">{renderGoalsManagement()}</TabsContent>
-        <TabsContent value="custom-words">{renderCustomWords()}</TabsContent>
-        <TabsContent value="analytics">{renderDetailedAnalytics()}</TabsContent>
-        <TabsContent value="notifications">{renderNotifications()}</TabsContent>
-        <TabsContent value="reports">{renderDetailedReports()}</TabsContent>
+        <TabsContent
+          value="overview"
+          className="tab-content-mobile overflow-y-auto max-h-[70vh] lg:max-h-none scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100"
+        >
+          {renderOverview()}
+        </TabsContent>
+        <TabsContent
+          value="goals"
+          className="tab-content-mobile overflow-y-auto max-h-[70vh] lg:max-h-none scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100"
+        >
+          {renderGoalsManagement()}
+        </TabsContent>
+        <TabsContent
+          value="custom-words"
+          className="tab-content-mobile overflow-y-auto max-h-[70vh] lg:max-h-none scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100"
+        >
+          {renderCustomWords()}
+        </TabsContent>
+        <TabsContent
+          value="analytics"
+          className="tab-content-mobile overflow-y-auto max-h-[70vh] lg:max-h-none scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100"
+        >
+          {renderDetailedAnalytics()}
+        </TabsContent>
+        <TabsContent
+          value="notifications"
+          className="tab-content-mobile overflow-y-auto max-h-[70vh] lg:max-h-none scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100"
+        >
+          {renderNotifications()}
+        </TabsContent>
+        <TabsContent
+          value="reports"
+          className="tab-content-mobile overflow-y-auto max-h-[70vh] lg:max-h-none scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100"
+        >
+          {renderDetailedReports()}
+        </TabsContent>
       </Tabs>
 
       {/* Add Child Dialog - Compact Mobile Version */}

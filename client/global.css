@@ -628,6 +628,84 @@
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
 }
 
+/* Mobile parent dashboard scrolling optimizations */
+.mobile-parent-dashboard {
+  /* Enable smooth scrolling with momentum on mobile */
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  /* Prevent horizontal overflow */
+  overflow-x: hidden;
+  /* Allow content to be scrolled */
+  overscroll-behavior: contain;
+  /* Optimize for mobile performance */
+  transform: translateZ(0);
+  will-change: scroll-position;
+}
+
+/* Enhanced scrollbar styling for parent dashboard */
+.scrollbar-thin {
+  scrollbar-width: thin;
+}
+
+.scrollbar-thumb-gray-300::-webkit-scrollbar-thumb {
+  background-color: #d1d5db;
+  border-radius: 4px;
+}
+
+.scrollbar-track-gray-100::-webkit-scrollbar-track {
+  background-color: #f3f4f6;
+}
+
+.scrollbar-thin::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+/* Mobile-specific improvements for parent dashboard */
+@media (max-width: 768px) {
+  .mobile-parent-dashboard {
+    /* Ensure content doesn't get cut off by mobile navigation */
+    padding-bottom: 100px;
+    /* Calculate proper height considering mobile navigation */
+    max-height: calc(100vh - 80px);
+    /* Improve scroll performance */
+    scroll-behavior: smooth;
+    /* Better performance on mobile */
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+  }
+
+  /* Hide scrollbars on mobile for cleaner look */
+  .mobile-parent-dashboard::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Better touch scrolling for tab content */
+  .tab-content-mobile {
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+    scroll-behavior: smooth;
+    /* Adjust content height for mobile */
+    max-height: calc(70vh - 60px);
+  }
+
+  /* Safe area handling for iOS devices */
+  .mobile-parent-dashboard {
+    padding-bottom: calc(100px + env(safe-area-inset-bottom));
+  }
+
+  /* Prevent zoom on touch for better scrolling experience */
+  .mobile-parent-dashboard * {
+    touch-action: manipulation;
+  }
+
+  /* Optimize scroll containers */
+  .mobile-parent-dashboard .space-y-4,
+  .mobile-parent-dashboard .space-y-6 {
+    scroll-margin-top: 20px;
+  }
+}
+
 /* Enhanced Settings Panel Mobile Styles */
 .settings-panel-mobile {
   /* Ensure proper mobile viewport handling */

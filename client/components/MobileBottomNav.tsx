@@ -25,6 +25,7 @@ interface MobileBottomNavProps {
   showMoreMenu: boolean;
   onMoreToggle: () => void;
   achievementCount?: number;
+  userRole?: "child" | "parent";
 }
 
 export function MobileBottomNav({
@@ -37,7 +38,53 @@ export function MobileBottomNav({
   showMoreMenu,
   onMoreToggle,
   achievementCount = 0,
+  userRole = "child",
 }: MobileBottomNavProps) {
+  // Dynamic primary tabs based on user role
+  const baseTabs = [
+    {
+      id: "dashboard",
+      emoji: "🏠",
+      label: "Home",
+      icon: Target,
+      color: "from-purple-500 to-pink-500",
+      bgColor: "bg-purple-100",
+      textColor: "text-purple-600",
+      badge: undefined,
+    },
+    {
+      id: "learn",
+      emoji: "📚",
+      label: "Learn",
+      icon: BookOpen,
+      color: "from-green-500 to-emerald-500",
+      bgColor: "bg-green-100",
+      textColor: "text-green-600",
+      badge: undefined,
+    },
+    {
+      id: "quiz",
+      emoji: "🎮",
+      label: "Quiz",
+      icon: Brain,
+      color: "from-pink-500 to-rose-500",
+      bgColor: "bg-pink-100",
+      textColor: "text-pink-600",
+      badge: undefined,
+    },
+    {
+      id: "progress",
+      emoji: "����",
+      label: userRole === "parent" ? "Reports" : "My Journey",
+      icon: Trophy,
+      color: "from-yellow-500 to-orange-500",
+      bgColor: "bg-yellow-100",
+      textColor: "text-yellow-600",
+      badge: undefined,
+    },
+  ];
+
+  // Primary tabs without parent dashboard - moved to More section
   const primaryTabs = [
     {
       id: "dashboard",
@@ -72,7 +119,7 @@ export function MobileBottomNav({
     {
       id: "progress",
       emoji: "🌟",
-      label: "My Journey",
+      label: userRole === "parent" ? "Reports" : "My Journey",
       icon: Trophy,
       color: "from-yellow-500 to-orange-500",
       bgColor: "bg-yellow-100",
