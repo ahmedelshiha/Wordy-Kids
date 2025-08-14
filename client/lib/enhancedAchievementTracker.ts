@@ -212,27 +212,27 @@ export class EnhancedAchievementTracker {
       reward: { type: "sticker", item: "Detective Badge", emoji: "🔍" },
     },
 
-    // 🔥 DIFFICULTY MASTERS - New systematic achievements
+    // 🔥 DIFFICULTY MASTERS - Much more challenging achievements
     {
       id: "easy_peasy_champion",
       name: "Easy Peasy Champion",
-      description: "Master 20 easy words with 85%+ accuracy!",
-      funnyDescription: "🌟 Easy words are your best friends! You're the Easy Peasy Champion!",
+      description: "Master 50 easy words with 90%+ accuracy!",
+      funnyDescription: "🌟 Easy words are your best friends! You're the ULTIMATE Easy Champion!",
       icon: "🌱",
       category: "difficulty",
       difficulty: "silver",
-      requirements: 20,
+      requirements: 50,
       currentProgress: 0,
       unlocked: false,
       criteria: [
         {
           type: "easyWords",
-          target: 20,
+          target: 50,
           operator: ">=",
           additionalRequirements: [
             {
               type: "accuracy",
-              target: 85,
+              target: 90,
               operator: ">=",
             },
           ],
@@ -244,23 +244,23 @@ export class EnhancedAchievementTracker {
     {
       id: "medium_difficulty_hero",
       name: "Medium Difficulty Hero",
-      description: "Conquer 15 medium words with 80%+ accuracy!",
-      funnyDescription: "⚡ You're brave enough to tackle medium words! What a hero!",
+      description: "Conquer 35 medium words with 85%+ accuracy!",
+      funnyDescription: "⚡ You're SUPER brave! Medium words bow down to your powers!",
       icon: "⚡",
       category: "difficulty",
       difficulty: "gold",
-      requirements: 15,
+      requirements: 35,
       currentProgress: 0,
       unlocked: false,
       criteria: [
         {
           type: "mediumWords",
-          target: 15,
+          target: 35,
           operator: ">=",
           additionalRequirements: [
             {
               type: "accuracy",
-              target: 80,
+              target: 85,
               operator: ">=",
             },
           ],
@@ -272,29 +272,72 @@ export class EnhancedAchievementTracker {
     {
       id: "hard_word_ninja",
       name: "Hard Word Ninja",
-      description: "Master 10 hard words with 75%+ accuracy!",
-      funnyDescription: "🥷 NINJA MOVES! Hard words can't hide from you anymore!",
+      description: "Master 20 hard words with 80%+ accuracy!",
+      funnyDescription: "🥷 LEGENDARY NINJA! Hard words tremble before your might!",
       icon: "🥷",
       category: "difficulty",
       difficulty: "diamond",
-      requirements: 10,
+      requirements: 20,
       currentProgress: 0,
       unlocked: false,
       criteria: [
         {
           type: "hardWords",
-          target: 10,
+          target: 20,
           operator: ">=",
           additionalRequirements: [
             {
               type: "accuracy",
-              target: 75,
+              target: 80,
               operator: ">=",
             },
           ],
         },
       ],
       reward: { type: "avatar_accessory", item: "Ninja Mask", emoji: "🎭" },
+    },
+
+    // 🎭 COMEDY ACHIEVEMENTS - Funny special conditions
+    {
+      id: "oops_comeback_king",
+      name: "Oops Comeback King",
+      description: "Get 3 wrong then 5 perfect in same session!",
+      funnyDescription: "😅 HAHA! You turned your oops into AWESOME! What a comeback!",
+      icon: "👑",
+      category: "session",
+      difficulty: "gold",
+      requirements: 1,
+      currentProgress: 0,
+      unlocked: false,
+      criteria: [
+        {
+          type: "perfectSessions",
+          target: 1,
+          operator: ">=",
+        },
+      ],
+      reward: { type: "title", item: "Comeback King", emoji: "👑" },
+    },
+
+    {
+      id: "speed_demon_junior",
+      name: "Speed Demon Junior",
+      description: "Complete 20 words in under 3 minutes with 85%+ accuracy!",
+      funnyDescription: "🏎️ ZOOM ZOOM! You're faster than a rocket ship learning words!",
+      icon: "🏎️",
+      category: "session",
+      difficulty: "diamond",
+      requirements: 1,
+      currentProgress: 0,
+      unlocked: false,
+      criteria: [
+        {
+          type: "speedLearning",
+          target: 1,
+          operator: ">=",
+        },
+      ],
+      reward: { type: "sound_effect", item: "Race Car Sounds", emoji: "🏁" },
     },
 
     // 🚀 SESSION ACHIEVEMENTS - Enhanced for new word card system
