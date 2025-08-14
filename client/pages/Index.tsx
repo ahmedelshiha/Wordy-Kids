@@ -2951,17 +2951,10 @@ export default function Index({ initialProfile }: IndexProps) {
                         </div>
                       ) : gameMode === "word-garden" ? (
                         <div className="space-y-6">
-                          <div className="flex items-center justify-between">
+                          <div className="text-center">
                             <h2 className="text-2xl font-bold text-gray-800">
                               🌱 Word Garden
                             </h2>
-                            <Button
-                              onClick={() => setGameMode(false)}
-                              variant="outline"
-                              size="sm"
-                            >
-                              ← Back to Quiz Time
-                            </Button>
                           </div>
                           <WordGarden
                             rounds={8}
