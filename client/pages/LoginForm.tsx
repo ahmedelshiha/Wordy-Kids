@@ -282,7 +282,8 @@ export default function LoginForm() {
 
   // Enhanced mobile-friendly input styling
   const getInputClassName = (field: keyof ValidationState) => {
-    const baseClass = "h-12 md:h-10 text-base md:text-sm pr-12 transition-all duration-200 touch-target mobile-optimized";
+    const baseClass =
+      "h-12 md:h-10 text-base md:text-sm pr-12 transition-all duration-200 touch-target mobile-optimized";
     const state = validationState[field];
 
     if (state === "valid") {
@@ -311,14 +312,30 @@ export default function LoginForm() {
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 flex flex-col relative overflow-hidden safe-area-padding-top safe-area-padding-bottom">
       {/* Enhanced mobile background pattern */}
       <div className="absolute inset-0 opacity-[0.07] pointer-events-none">
-        <div className="absolute top-[10%] left-[10%] text-4xl md:text-6xl animate-gentle-float">⭐</div>
-        <div className="absolute top-[20%] right-[15%] text-3xl md:text-5xl animate-gentle-float animation-delay-200">📚</div>
-        <div className="absolute bottom-[25%] left-[15%] text-4xl md:text-6xl animate-gentle-float animation-delay-100">🎯</div>
-        <div className="absolute bottom-[15%] right-[20%] text-3xl md:text-5xl animate-gentle-float animation-delay-300">🚀</div>
-        <div className="absolute top-[45%] left-[8%] text-2xl md:text-4xl animate-sparkle">✨</div>
-        <div className="absolute top-[35%] right-[8%] text-3xl md:text-4xl animate-gentle-float animation-delay-200">🎪</div>
-        <div className="absolute bottom-[35%] left-[25%] text-2xl md:text-3xl animate-sparkle animation-delay-100">🌈</div>
-        <div className="absolute top-[25%] right-[25%] text-3xl md:text-4xl animate-gentle-float animation-delay-300">🎨</div>
+        <div className="absolute top-[10%] left-[10%] text-4xl md:text-6xl animate-gentle-float">
+          ⭐
+        </div>
+        <div className="absolute top-[20%] right-[15%] text-3xl md:text-5xl animate-gentle-float animation-delay-200">
+          📚
+        </div>
+        <div className="absolute bottom-[25%] left-[15%] text-4xl md:text-6xl animate-gentle-float animation-delay-100">
+          🎯
+        </div>
+        <div className="absolute bottom-[15%] right-[20%] text-3xl md:text-5xl animate-gentle-float animation-delay-300">
+          🚀
+        </div>
+        <div className="absolute top-[45%] left-[8%] text-2xl md:text-4xl animate-sparkle">
+          ✨
+        </div>
+        <div className="absolute top-[35%] right-[8%] text-3xl md:text-4xl animate-gentle-float animation-delay-200">
+          🎪
+        </div>
+        <div className="absolute bottom-[35%] left-[25%] text-2xl md:text-3xl animate-sparkle animation-delay-100">
+          🌈
+        </div>
+        <div className="absolute top-[25%] right-[25%] text-3xl md:text-4xl animate-gentle-float animation-delay-300">
+          🎨
+        </div>
       </div>
 
       {/* Mobile-optimized navigation */}
@@ -333,11 +350,13 @@ export default function LoginForm() {
           <Home className="w-4 h-4" />
           <span className="hidden sm:inline">Home</span>
         </Button>
-        
+
         <Button
           variant="ghost"
           size="sm"
-          onClick={() => setMessage({ type: "info", text: "Help coming soon!" })}
+          onClick={() =>
+            setMessage({ type: "info", text: "Help coming soon!" })
+          }
           className="touch-target haptic-light flex items-center gap-2 text-gray-600 hover:text-gray-800"
         >
           <HelpCircle className="w-4 h-4" />
@@ -367,7 +386,9 @@ export default function LoginForm() {
             <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent mb-2 text-mobile-friendly">
               Welcome Back!
             </h1>
-            <p className="text-gray-600 text-base md:text-lg">Continue your word adventure</p>
+            <p className="text-gray-600 text-base md:text-lg">
+              Continue your word adventure
+            </p>
           </div>
 
           {/* Enhanced mobile-optimized login card */}
@@ -378,7 +399,7 @@ export default function LoginForm() {
                 Sign In
               </CardTitle>
             </CardHeader>
-            
+
             <CardContent className="space-y-4 md:space-y-6 px-4 md:px-6">
               <form onSubmit={handleLogin} className="space-y-4 md:space-y-5">
                 {/* Mobile-optimized email field */}
@@ -406,7 +427,9 @@ export default function LoginForm() {
                       onKeyDown={(e) => handleKeyDown(e, "password")}
                       disabled={isLoading}
                       className={getInputClassName("email")}
-                      aria-describedby={errors.email ? "email-error" : undefined}
+                      aria-describedby={
+                        errors.email ? "email-error" : undefined
+                      }
                       aria-invalid={!!errors.email}
                     />
                     {validationState.email === "valid" && (
@@ -451,7 +474,9 @@ export default function LoginForm() {
                       onKeyDown={(e) => handleKeyDown(e, "submit")}
                       disabled={isLoading}
                       className={getInputClassName("password")}
-                      aria-describedby={errors.password ? "password-error" : undefined}
+                      aria-describedby={
+                        errors.password ? "password-error" : undefined
+                      }
                       aria-invalid={!!errors.password}
                     />
                     <div className="absolute right-3 top-1/2 transform -translate-y-1/2 flex items-center gap-2">
@@ -466,7 +491,9 @@ export default function LoginForm() {
                         onClick={() => setShowPassword(!showPassword)}
                         className="text-gray-500 hover:text-gray-700 transition-colors touch-target haptic-light p-1"
                         disabled={isLoading}
-                        aria-label={showPassword ? "Hide password" : "Show password"}
+                        aria-label={
+                          showPassword ? "Hide password" : "Show password"
+                        }
                       >
                         {showPassword ? (
                           <EyeOff className="w-5 h-5" />
@@ -566,17 +593,23 @@ export default function LoginForm() {
 
               {/* Mobile-optimized demo credentials section */}
               <div className="border-t pt-4 space-y-3">
-                <p className="text-xs text-gray-500 text-center">Try with demo accounts:</p>
+                <p className="text-xs text-gray-500 text-center">
+                  Try with demo accounts:
+                </p>
                 <div className="grid gap-2">
                   {demoCredentials.map((demo, index) => (
                     <button
                       key={index}
                       type="button"
-                      onClick={() => fillDemoCredentials(demo.email, demo.password)}
+                      onClick={() =>
+                        fillDemoCredentials(demo.email, demo.password)
+                      }
                       disabled={isLoading}
                       className="text-left p-3 rounded-lg bg-gray-50 hover:bg-gray-100 transition-colors touch-target card-mobile text-sm"
                     >
-                      <div className="font-medium text-gray-700">{demo.label}</div>
+                      <div className="font-medium text-gray-700">
+                        {demo.label}
+                      </div>
                       <div className="text-xs text-gray-500">{demo.email}</div>
                     </button>
                   ))}

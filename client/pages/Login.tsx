@@ -1,18 +1,18 @@
 import React, { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { 
-  Sparkles, 
-  BookOpen, 
-  UserPlus, 
-  Users, 
-  Star, 
+import {
+  Sparkles,
+  BookOpen,
+  UserPlus,
+  Users,
+  Star,
   Play,
   Trophy,
   Target,
   Heart,
   Shield,
-  Zap
+  Zap,
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
@@ -37,7 +37,11 @@ export default function Login() {
   const features = [
     { icon: "🎮", text: "Fun Learning Games", color: "text-educational-green" },
     { icon: "🏆", text: "Cool Achievements", color: "text-educational-blue" },
-    { icon: "🎯", text: "Personalized Learning", color: "text-educational-purple" },
+    {
+      icon: "🎯",
+      text: "Personalized Learning",
+      color: "text-educational-purple",
+    },
     { icon: "🚀", text: "Progress Tracking", color: "text-educational-orange" },
   ];
 
@@ -45,22 +49,43 @@ export default function Login() {
     <div className="min-h-screen bg-gradient-to-br from-educational-blue-light via-educational-purple-light to-educational-pink-light flex flex-col relative overflow-hidden safe-area-padding-top safe-area-padding-bottom">
       {/* Enhanced mobile background pattern */}
       <div className="absolute inset-0 opacity-[0.08] pointer-events-none">
-        <div className="absolute top-[8%] left-[8%] text-4xl md:text-6xl animate-kid-float">⭐</div>
-        <div className="absolute top-[15%] right-[12%] text-3xl md:text-5xl animate-kid-float-delayed">📚</div>
-        <div className="absolute bottom-[20%] left-[12%] text-4xl md:text-6xl animate-kid-float animation-delay-100">🎯</div>
-        <div className="absolute bottom-[10%] right-[15%] text-3xl md:text-5xl animate-kid-float-delayed">🚀</div>
-        <div className="absolute top-[45%] left-[5%] text-3xl md:text-4xl animate-sparkle">✨</div>
-        <div className="absolute top-[30%] right-[5%] text-3xl md:text-4xl animate-kid-float">🎪</div>
-        <div className="absolute bottom-[30%] left-[20%] text-2xl md:text-3xl animate-sparkle animation-delay-200">🌈</div>
-        <div className="absolute top-[20%] right-[20%] text-3xl md:text-4xl animate-kid-float-delayed">🎨</div>
-        <div className="absolute bottom-[35%] right-[8%] text-2xl md:text-3xl animate-sparkle animation-delay-100">🎭</div>
-        <div className="absolute top-[60%] left-[25%] text-3xl md:text-4xl animate-kid-float">🎪</div>
+        <div className="absolute top-[8%] left-[8%] text-4xl md:text-6xl animate-kid-float">
+          ⭐
+        </div>
+        <div className="absolute top-[15%] right-[12%] text-3xl md:text-5xl animate-kid-float-delayed">
+          📚
+        </div>
+        <div className="absolute bottom-[20%] left-[12%] text-4xl md:text-6xl animate-kid-float animation-delay-100">
+          🎯
+        </div>
+        <div className="absolute bottom-[10%] right-[15%] text-3xl md:text-5xl animate-kid-float-delayed">
+          🚀
+        </div>
+        <div className="absolute top-[45%] left-[5%] text-3xl md:text-4xl animate-sparkle">
+          ✨
+        </div>
+        <div className="absolute top-[30%] right-[5%] text-3xl md:text-4xl animate-kid-float">
+          🎪
+        </div>
+        <div className="absolute bottom-[30%] left-[20%] text-2xl md:text-3xl animate-sparkle animation-delay-200">
+          🌈
+        </div>
+        <div className="absolute top-[20%] right-[20%] text-3xl md:text-4xl animate-kid-float-delayed">
+          🎨
+        </div>
+        <div className="absolute bottom-[35%] right-[8%] text-2xl md:text-3xl animate-sparkle animation-delay-100">
+          🎭
+        </div>
+        <div className="absolute top-[60%] left-[25%] text-3xl md:text-4xl animate-kid-float">
+          🎪
+        </div>
       </div>
 
       {/* Main content container - mobile optimized */}
       <div className="flex-1 flex items-center justify-center p-4 relative z-10">
-        <div className={`w-full max-w-4xl mx-auto text-center transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
-          
+        <div
+          className={`w-full max-w-4xl mx-auto text-center transition-all duration-1000 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
+        >
           {/* Enhanced mobile header */}
           <div className="mb-8 md:mb-12">
             {/* App icon with mobile optimization */}
@@ -90,11 +115,13 @@ export default function Login() {
             {/* Enhanced mobile feature badges */}
             <div className="grid grid-cols-2 md:flex md:flex-wrap md:justify-center gap-3 md:gap-4 mb-8 md:mb-12 animate-fade-in animation-delay-200">
               {features.map((feature, index) => (
-                <div 
+                <div
                   key={index}
                   className="bg-white/90 backdrop-blur-sm px-3 py-3 md:px-6 md:py-3 rounded-full shadow-lg border border-white/50 card-mobile"
                 >
-                  <span className={`${feature.color} font-semibold flex items-center justify-center gap-2 text-sm md:text-base`}>
+                  <span
+                    className={`${feature.color} font-semibold flex items-center justify-center gap-2 text-sm md:text-base`}
+                  >
                     <span className="text-lg md:text-xl">{feature.icon}</span>
                     <span className="hidden sm:inline">{feature.text}</span>
                   </span>
@@ -105,7 +132,6 @@ export default function Login() {
 
           {/* Enhanced mobile action cards */}
           <div className="grid gap-6 md:gap-8 max-w-4xl mx-auto md:grid-cols-2">
-            
             {/* New User Card - Mobile Optimized */}
             <Card
               className={`cursor-pointer transition-all duration-300 border-4 bg-white/90 backdrop-blur-sm shadow-2xl mobile-optimized touch-target ${
@@ -134,7 +160,8 @@ export default function Login() {
                   I'm New!
                 </h2>
                 <p className="text-lg md:text-xl text-gray-600 mb-4 md:mb-6 leading-relaxed text-mobile-friendly">
-                  Start your amazing vocabulary journey! Create your profile and begin exploring.
+                  Start your amazing vocabulary journey! Create your profile and
+                  begin exploring.
                 </p>
 
                 {/* Mobile-optimized features */}
@@ -195,7 +222,8 @@ export default function Login() {
                   I Have an Account
                 </h2>
                 <p className="text-lg md:text-xl text-gray-600 mb-4 md:mb-6 leading-relaxed text-mobile-friendly">
-                  Welcome back! Continue your vocabulary adventure where you left off.
+                  Welcome back! Continue your vocabulary adventure where you
+                  left off.
                 </p>
 
                 {/* Mobile-optimized features */}
@@ -236,10 +264,12 @@ export default function Login() {
             </p>
             <div className="flex justify-center items-center gap-2 text-educational-orange">
               <Shield className="w-4 h-4 md:w-5 md:h-5" />
-              <span className="font-semibold text-sm md:text-base">Safe • Educational • Fun</span>
+              <span className="font-semibold text-sm md:text-base">
+                Safe • Educational • Fun
+              </span>
               <Sparkles className="w-4 h-4 md:w-5 md:h-5" />
             </div>
-            
+
             {/* Mobile app hint */}
             <div className="mt-6 p-4 bg-white/80 backdrop-blur-sm rounded-2xl shadow-lg border border-white/50 mx-4 md:mx-auto md:max-w-md">
               <p className="text-sm text-gray-600 flex items-center justify-center gap-2">

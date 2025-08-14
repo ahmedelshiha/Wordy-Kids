@@ -127,82 +127,82 @@
   }
 
   /* Enhanced mobile touch improvements */
-@media (max-width: 768px) {
-  /* Increase tap targets for better mobile usability */
-  button,
-  [role="button"],
-  input,
-  select,
-  textarea {
-    min-height: 44px; /* iOS recommended tap target size */
-    min-width: 44px;
-  }
+  @media (max-width: 768px) {
+    /* Increase tap targets for better mobile usability */
+    button,
+    [role="button"],
+    input,
+    select,
+    textarea {
+      min-height: 44px; /* iOS recommended tap target size */
+      min-width: 44px;
+    }
 
-  /* Prevent zoom on input focus and improve mobile typing */
-  input,
-  select,
-  textarea {
-    font-size: 16px;
-    -webkit-appearance: none;
-    border-radius: 8px;
-  }
+    /* Prevent zoom on input focus and improve mobile typing */
+    input,
+    select,
+    textarea {
+      font-size: 16px;
+      -webkit-appearance: none;
+      border-radius: 8px;
+    }
 
-  /* Enhanced smooth scrolling */
-  html {
-    scroll-behavior: smooth;
-    scroll-padding-top: 2rem;
-  }
+    /* Enhanced smooth scrolling */
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: 2rem;
+    }
 
-  /* Prevent horizontal overflow and enable elastic scrolling */
-  body {
-    overflow-x: hidden;
-    -webkit-overflow-scrolling: touch;
-    overscroll-behavior-y: none;
-  }
+    /* Prevent horizontal overflow and enable elastic scrolling */
+    body {
+      overflow-x: hidden;
+      -webkit-overflow-scrolling: touch;
+      overscroll-behavior-y: none;
+    }
 
-  /* Improved text rendering on mobile */
-  body {
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    text-rendering: optimizeLegibility;
-    font-feature-settings: "kern" 1;
-  }
+    /* Improved text rendering on mobile */
+    body {
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      text-rendering: optimizeLegibility;
+      font-feature-settings: "kern" 1;
+    }
 
-  /* Enhanced focus states for mobile accessibility */
-  button:focus-visible,
-  [role="button"]:focus-visible,
-  input:focus-visible,
-  select:focus-visible,
-  textarea:focus-visible {
-    outline: 3px solid #3b82f6;
-    outline-offset: 2px;
-    border-radius: 8px;
-  }
+    /* Enhanced focus states for mobile accessibility */
+    button:focus-visible,
+    [role="button"]:focus-visible,
+    input:focus-visible,
+    select:focus-visible,
+    textarea:focus-visible {
+      outline: 3px solid #3b82f6;
+      outline-offset: 2px;
+      border-radius: 8px;
+    }
 
-  /* Improved button interactions */
-  button,
-  [role="button"] {
-    cursor: pointer;
-    -webkit-tap-highlight-color: transparent;
-    touch-action: manipulation;
-  }
+    /* Improved button interactions */
+    button,
+    [role="button"] {
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
+    }
 
-  /* Enhanced input interactions */
-  input,
-  select,
-  textarea {
-    -webkit-tap-highlight-color: transparent;
-    touch-action: manipulation;
-  }
+    /* Enhanced input interactions */
+    input,
+    select,
+    textarea {
+      -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
+    }
 
-  /* Prevent text selection on interactive elements */
-  button,
-  [role="button"] {
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    user-select: none;
+    /* Prevent text selection on interactive elements */
+    button,
+    [role="button"] {
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      user-select: none;
+    }
   }
-}
 
   /* Touch-friendly scrollbars */
   ::-webkit-scrollbar {
