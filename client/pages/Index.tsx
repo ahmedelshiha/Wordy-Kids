@@ -151,6 +151,7 @@ export default function Index({ initialProfile }: IndexProps) {
     new Set(),
   );
   const [currentDashboardWords, setCurrentDashboardWords] = useState<any[]>([]);
+  const [lastActiveTab, setLastActiveTab] = useState("dashboard");
 
   // Session persistence
   const {
@@ -291,6 +292,13 @@ export default function Index({ initialProfile }: IndexProps) {
       });
     }
   }, [rememberedWords, forgottenWords, currentWordIndex, sessionRestored, saveProgress]);
+
+  // Track active tab changes
+  useEffect(() => {
+    if (activeTab !== "parent" && userRole === "child") {
+      setLastActiveTab(activeTab);
+    }
+  }, [activeTab, userRole]);
 
   // Auto-save learning state changes
   useEffect(() => {
@@ -1251,7 +1259,21 @@ export default function Index({ initialProfile }: IndexProps) {
             <ParentDashboard
               children={undefined}
               sessions={undefined}
-              onNavigateBack={() => setUserRole("child")}
+              onNavigateBack={() => {
+                setUserRole("child");
+                // Return to the last active tab, or dashboard if none
+                setActiveTab(lastActiveTab || "dashboard");
+
+                // Show a brief welcome back message
+                setTimeout(() => {
+                  setFeedback({
+                    type: "encouragement",
+                    title: "Welcome Back! 🎉",
+                    message: `You've returned to your learning journey. Keep up the great work!`,
+                    onContinue: () => setFeedback(null),
+                  });
+                }, 500);
+              }}
             />
           </div>
         ) : (
