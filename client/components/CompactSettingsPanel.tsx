@@ -276,6 +276,7 @@ export const CompactSettingsPanel: React.FC<CompactSettingsPanelProps> = ({
                         max={100}
                         min={0}
                         step={10}
+                        className="compact-slider-mobile"
                       />
                     </div>
                   </SettingRow>
