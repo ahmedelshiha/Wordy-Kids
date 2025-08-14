@@ -868,7 +868,7 @@ export function InteractiveDashboardWordCard({
               {/* Difficulty classification badge */}
               <Badge
                 className={cn(
-                  "text-sm px-3 py-1",
+                  "text-xs sm:text-sm px-2 sm:px-3 py-1",
                   currentWord.difficulty === "easy"
                     ? "bg-green-100 text-green-700 border-green-300"
                     : currentWord.difficulty === "medium"
