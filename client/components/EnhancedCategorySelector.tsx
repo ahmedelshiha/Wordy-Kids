@@ -442,9 +442,7 @@ export function EnhancedCategorySelector({
       sports: "Learn about different sports and activities!",
       greetings: "Learn how to say hello and goodbye!",
       technology: "Explore modern technology and gadgets!",
-      "at-the-zoo": "Meet fascinating animals at the zoo!",
       "at-the-clothes-shop": "Learn about shopping for clothes!",
-      "my-favourite-food": "Discover your favorite foods!",
       "at-home": "Explore things we find at home!",
       default: "Discover amazing new words!",
     };
