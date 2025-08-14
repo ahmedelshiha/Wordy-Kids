@@ -307,6 +307,10 @@ export function EnhancedAchievementPopup({
             exit={{ scale: 0.9, opacity: 0, y: -20 }}
             transition={{ type: "spring", duration: 0.4, damping: 20 }}
             className="relative w-full max-w-xs sm:max-w-sm mx-2 sm:mx-4"
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}
+            onTouchStart={handleMouseEnter}
+            onTouchEnd={handleMouseLeave}
           >
             <Card
               className={`bg-gradient-to-br ${difficultyColor} text-white shadow-xl border-0 overflow-hidden rounded-2xl`}
