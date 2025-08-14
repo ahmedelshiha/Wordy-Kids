@@ -8,6 +8,15 @@ import React, {
 import { Word, getWordsByCategory, getRandomWords } from "@/data/wordsDatabase";
 import { audioService } from "@/lib/audioService";
 import { EnhancedAchievementTracker } from "@/lib/enhancedAchievementTracker";
+import { Button } from "@/components/ui/button";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 
 /**
  * Word Garden — Listen & Pick Game for Ages 3–5
