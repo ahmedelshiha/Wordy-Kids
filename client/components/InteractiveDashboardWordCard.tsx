@@ -546,7 +546,7 @@ export function InteractiveDashboardWordCard({
     return (
       <div className="w-full h-64 flex items-center justify-center bg-gradient-to-br from-gray-100 to-gray-200 rounded-2xl shadow-lg">
         <div className="text-center text-gray-500">
-          <div className="text-4xl mb-2">���️</div>
+          <div className="text-4xl mb-2">🖼️</div>
           <p className="text-lg">Picture coming soon!</p>
         </div>
       </div>
@@ -762,43 +762,41 @@ export function InteractiveDashboardWordCard({
         )}
 
         <CardContent className="p-4 md:p-8 relative z-10">
-          {/* Today's Word Quest - Left Corner of White Container */}
-          <div className="absolute top-3 left-3 md:top-4 md:left-4 z-20">
-            <div className="bg-gradient-to-r from-educational-blue/10 to-educational-purple/10 border border-educational-blue/20 rounded-lg p-2 md:p-3 shadow-sm">
-              <div className="flex items-center gap-1 md:gap-2">
-                <span className="text-base md:text-lg">
-                  {(() => {
-                    const wordsLearned = Math.max(
-                      sessionStats.wordsRemembered,
-                      rememberedWordsCount || 0,
-                    );
-                    const goal = dailyGoal.target;
-                    const percentage = Math.round(
-                      (wordsLearned / goal) * 100,
-                    );
+          {/* Today's Word Quest - Left Corner without container */}
+          <div className="absolute top-2 left-2 md:top-3 md:left-3 z-20">
+            <div className="flex items-center gap-1 md:gap-2">
+              <span className="text-sm md:text-base">
+                {(() => {
+                  const wordsLearned = Math.max(
+                    sessionStats.wordsRemembered,
+                    rememberedWordsCount || 0,
+                  );
+                  const goal = dailyGoal.target;
+                  const percentage = Math.round(
+                    (wordsLearned / goal) * 100,
+                  );
 
-                    if (wordsLearned >= goal) {
-                      if (wordsLearned >= goal * 2) return "⭐";
-                      if (wordsLearned >= goal * 1.5) return "🚀";
-                      return "🏆";
-                    }
-                    if (percentage >= 90) return "⭐";
-                    if (percentage >= 75) return "🎯";
-                    if (percentage >= 50) return "💪";
-                    return "🌟";
-                  })()}
-                </span>
-                <div>
-                  <div className="text-xs font-bold text-slate-800 leading-tight">
-                    Today's Quest
-                  </div>
-                  <div className="text-xs font-semibold text-slate-700">
-                    {Math.max(
-                      sessionStats.wordsRemembered,
-                      rememberedWordsCount || 0,
-                    )}
-                    /{dailyGoal.target}
-                  </div>
+                  if (wordsLearned >= goal) {
+                    if (wordsLearned >= goal * 2) return "⭐";
+                    if (wordsLearned >= goal * 1.5) return "🚀";
+                    return "🏆";
+                  }
+                  if (percentage >= 90) return "⭐";
+                  if (percentage >= 75) return "🎯";
+                  if (percentage >= 50) return "💪";
+                  return "🌟";
+                })()}
+              </span>
+              <div>
+                <div className="text-xs font-bold text-slate-800 leading-tight">
+                  Today's Quest
+                </div>
+                <div className="text-xs font-semibold text-slate-700">
+                  {Math.max(
+                    sessionStats.wordsRemembered,
+                    rememberedWordsCount || 0,
+                  )}
+                  /{dailyGoal.target}
                 </div>
               </div>
             </div>
