@@ -1265,7 +1265,7 @@ export const wordsDatabase: Word[] = [
   {
     id: 80,
     word: "Orange",
-    pronunciation: "/ˈɔːrɪnd��/",
+    pronunciation: "/ˈɔːrɪndʒ/",
     definition: "The color of pumpkins and carrots",
     example: "Halloween pumpkins are orange",
     funFact: "Orange was named after the fruit!",
@@ -2674,7 +2674,7 @@ export const wordsDatabase: Word[] = [
   {
     id: 181,
     word: "Piano",
-    pronunciation: "/piˈ��noʊ/",
+    pronunciation: "/piˈænoʊ/",
     definition: "A musical instrument with black and white keys",
     example: "I play songs on the piano",
     funFact: "A piano has 88 keys!",
