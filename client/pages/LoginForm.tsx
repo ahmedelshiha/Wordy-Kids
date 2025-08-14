@@ -288,7 +288,7 @@ export default function LoginForm() {
     !Object.keys(errors).length && formData.email && formData.password;
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 flex items-center justify-center p-2 md:p-4 relative overflow-hidden">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 flex items-center justify-center p-4 sm:p-6 md:p-8 relative overflow-hidden safe-area-padding-top safe-area-padding-bottom">
       {/* Enhanced Background Pattern */}
       <div className="absolute inset-0 opacity-10">
         <div className="absolute top-10 left-10 text-4xl animate-gentle-float">
@@ -317,16 +317,16 @@ export default function LoginForm() {
         </div>
       </div>
 
-      <div className="w-full max-w-md mx-auto relative z-10">
+      <div className="w-full max-w-md mx-auto relative z-10 px-2 sm:px-0">
         {/* Header Section with Enhanced Design */}
-        <div className="text-center mb-4 md:mb-8 animate-fade-in">
-          <div className="flex justify-center mb-3 md:mb-6">
+        <div className="text-center mb-6 sm:mb-8 animate-fade-in">
+          <div className="flex justify-center mb-4 sm:mb-6">
             <div className="relative">
-              <div className="bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 p-4 md:p-6 rounded-full shadow-2xl animate-gentle-float">
+              <div className="bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 p-3 sm:p-4 md:p-6 rounded-full shadow-2xl animate-gentle-float">
                 <img
                   src="https://cdn.builder.io/api/v1/image/assets%2F783bb0e1cd3e4c73aa9ce79d668738ac%2Fee8d2c4de0ab40c1b0b38ee3c2ef1020?format=webp&width=800"
                   alt="Wordy Logo"
-                  className="w-16 h-16 object-contain"
+                  className="w-12 h-12 sm:w-16 sm:h-16 object-contain"
                 />
               </div>
               <div className="absolute -top-1 -right-1 bg-yellow-400 p-2 rounded-full animate-bounce">
@@ -334,14 +334,14 @@ export default function LoginForm() {
               </div>
             </div>
           </div>
-          <h1 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent mb-2">
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent mb-2">
             Wordy Adventure !
           </h1>
-          <p className="text-gray-600 text-lg">Continue your word adventure</p>
+          <p className="text-gray-600 text-base sm:text-lg">Continue your word adventure</p>
         </div>
 
         {/* Enhanced Login Card */}
-        <Card className="shadow-2xl border-0 bg-white/95 backdrop-blur-sm animate-fade-in animation-delay-100">
+        <Card className="shadow-2xl border-0 bg-white/95 backdrop-blur-sm animate-fade-in animation-delay-100 mx-2 sm:mx-0">
           <CardHeader className="pb-2 md:pb-4">
             <CardTitle className="text-center text-xl text-gray-800 flex items-center justify-center gap-2">
               <UserCheck className="w-5 h-5 text-blue-500" />
