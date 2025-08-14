@@ -3842,16 +3842,25 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 md:gap-0">
         <div className="flex items-center gap-2 md:gap-4">
           {onNavigateBack && (
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={onNavigateBack}
-              className="flex items-center gap-1 md:gap-2 text-xs md:text-sm px-2 md:px-3"
-            >
-              <ArrowLeft className="w-3 h-3 md:w-4 md:h-4" />
-              <span className="hidden md:inline">Back to Main</span>
-              <span className="md:hidden">Back</span>
-            </Button>
+            <div className="flex items-center gap-2">
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={onNavigateBack}
+                className="flex items-center gap-1 md:gap-2 text-xs md:text-sm px-2 md:px-3 hover:bg-educational-blue hover:text-white transition-colors"
+              >
+                <ArrowLeft className="w-3 h-3 md:w-4 md:h-4" />
+                <span className="hidden md:inline">Back to Learning</span>
+                <span className="md:hidden">Back</span>
+              </Button>
+
+              {/* Breadcrumb */}
+              <div className="hidden md:flex items-center gap-2 text-sm text-slate-500">
+                <span>Wordy's Adventure</span>
+                <ChevronRight className="w-4 h-4" />
+                <span className="font-medium text-slate-700">Parent Dashboard</span>
+              </div>
+            </div>
           )}
           <div>
             <h1 className="text-xl md:text-3xl font-bold text-slate-800">
