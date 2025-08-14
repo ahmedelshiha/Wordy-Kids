@@ -74,7 +74,7 @@ export const CompactMobileSettingsPanel: React.FC<CompactMobileSettingsPanelProp
 
   useEffect(() => {
     // Load settings from localStorage
-    setSelectedVoiceType(audioService.getVoiceType());
+    setSelectedVoiceType(enhancedAudioService.getVoiceType());
 
     const loadSettings = () => {
       const backgroundAnimationsSettings = localStorage.getItem(
