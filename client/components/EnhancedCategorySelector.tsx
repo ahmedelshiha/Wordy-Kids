@@ -307,8 +307,6 @@ export function EnhancedCategorySelector({
     const enrichedCategories: Category[] = [];
 
     categoryMap.forEach((data, categoryId) => {
-      const staticCategory = enrichedCategories.find(cat => cat.id === categoryId);
-
       enrichedCategories.push({
         id: categoryId,
         name: categoryId.charAt(0).toUpperCase() + categoryId.slice(1),
