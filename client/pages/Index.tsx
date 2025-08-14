@@ -309,6 +309,11 @@ export default function Index({ initialProfile }: IndexProps) {
             setTimeout(() => {
               handleSessionRestore(savedSession);
               setIsRestoringSession(false);
+              // Update last accessed time for the restored session
+              sessionPersistence.saveSession({
+                lastSaved: Date.now(),
+                sessionStartTime: Date.now()
+              });
             }, 800);
           } else {
             // Start fresh but mark session as initialized
