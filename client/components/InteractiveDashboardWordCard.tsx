@@ -993,17 +993,22 @@ export function InteractiveDashboardWordCard({
 
           {/* Word Name and Details */}
           {showWordName && (
-            <div className="space-y-3 md:space-y-4 mb-6 md:mb-8">
+            <div
+              className="space-y-3 md:space-y-4 mb-6 md:mb-8"
+              role="region"
+              aria-label="Word answer revealed"
+              aria-live="polite"
+            >
               {/* Word Name */}
               <div className="text-center bg-gradient-to-r from-green-50 to-blue-50 p-3 md:p-4 rounded-2xl border-2 border-green-200">
                 <div className="flex items-center justify-center gap-2 md:gap-3 mb-2 md:mb-3">
-                  <div className="text-2xl md:text-3xl">
+                  <div className="text-2xl md:text-3xl" aria-hidden="true">
                     {currentWord.emoji}
                   </div>
-                  <h1 className="text-base md:text-lg lg:text-xl font-bold text-gray-800 tracking-wide">
+                  <h2 className="text-base md:text-lg lg:text-xl font-bold text-gray-800 tracking-wide" id="word-answer">
                     {currentWord.word.toUpperCase()}
-                  </h1>
-                  <div className="text-2xl md:text-3xl">
+                  </h2>
+                  <div className="text-2xl md:text-3xl" aria-hidden="true">
                     {currentWord.emoji}
                   </div>
                 </div>
