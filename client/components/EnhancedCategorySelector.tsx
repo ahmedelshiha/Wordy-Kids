@@ -290,8 +290,8 @@ export function EnhancedCategorySelector({
 
     const categoryMap = new Map<string, any>();
 
-    // Process real-time words to build category data
-    realTimeWords.forEach(word => {
+    // Process words to build category data
+    wordsToUse.forEach(word => {
       if (!categoryMap.has(word.category)) {
         categoryMap.set(word.category, {
           words: [],
