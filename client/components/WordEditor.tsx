@@ -891,7 +891,6 @@ const WordEditor: React.FC<WordEditorProps> = ({
   );
 
   return (
-    <TooltipProvider>
       <Dialog open={open} onOpenChange={onOpenChange}>
         <DialogContent
           className={`${
@@ -2047,7 +2046,6 @@ const WordEditor: React.FC<WordEditorProps> = ({
           </DialogFooter>
         </DialogContent>
       </Dialog>
-    </TooltipProvider>
   );
 };
 
