@@ -2832,6 +2832,7 @@ export default function Index({ initialProfile }: IndexProps) {
       {/* Mobile Bottom Navigation */}
       <MobileBottomNav
         activeTab={activeTab}
+        userRole={userRole}
         onTabChange={(tab) => {
           setActiveTab(tab);
           setShowMobileMoreMenu(false);
@@ -2843,6 +2844,21 @@ export default function Index({ initialProfile }: IndexProps) {
         onParentClick={() => {
           setUserRole("parent");
           setShowMobileMoreMenu(false);
+        }}
+        onBackToChild={() => {
+          setUserRole("child");
+          setActiveTab(lastActiveTab || "dashboard");
+          setShowMobileMoreMenu(false);
+
+          // Show a brief welcome back message
+          setTimeout(() => {
+            setFeedback({
+              type: "encouragement",
+              title: "Welcome Back! 🎉",
+              message: `You've returned to your learning journey. Keep up the great work!`,
+              onContinue: () => setFeedback(null),
+            });
+          }, 500);
         }}
         onAdminClick={() => {
           navigate("/admin");
