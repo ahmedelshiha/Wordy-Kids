@@ -470,8 +470,8 @@ export function EnhancedAddChildProfile({
             {/* Step 3: Interests */}
             {currentStep === 2 && (
               <div className="space-y-4 animate-slide-in-from-right">
-                <div className="text-center mb-6">
-                  <p className="text-sm text-gray-600 mb-4">
+                <div className="text-center mb-4">
+                  <p className="text-sm text-gray-600 mb-3">
                     Select up to 5 things {formData.name} loves most
                   </p>
                   <Badge variant="secondary" className="bg-purple-100 text-purple-700">
