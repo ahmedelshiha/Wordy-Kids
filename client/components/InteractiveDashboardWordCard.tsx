@@ -613,7 +613,11 @@ export function InteractiveDashboardWordCard({
   }
 
   return (
-    <div className={cn("space-y-6", className)}>
+    <div
+      className={cn("space-y-6", className)}
+      role="main"
+      aria-label="Interactive word learning card"
+    >
       {/* Today's Word Quest - Mobile Optimized Top Left */}
       <div className="mb-4 hidden">
         <Card className="bg-gradient-to-r from-educational-blue/10 to-educational-purple/10 border-educational-blue/20 hover:shadow-lg transition-all duration-300">
