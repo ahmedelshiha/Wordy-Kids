@@ -152,6 +152,21 @@ export default function Index({ initialProfile }: IndexProps) {
     new Set(),
   );
 
+  // Session persistence states
+  const [showSessionRestoration, setShowSessionRestoration] = useState(false);
+  const [sessionRestorationData, setSessionRestorationData] = useState<SessionData | null>(null);
+  const [isSessionInitialized, setIsSessionInitialized] = useState(false);
+  const [lastAutoSave, setLastAutoSave] = useState<number>(Date.now());
+
+  // Initialize session persistence
+  const sessionPersistence = useSessionPersistence({
+    autoSaveInterval: 3000, // Save every 3 seconds
+    enableBackgroundSync: true,
+    compressionEnabled: true,
+  });
+
+  const persistenceService = getSessionPersistenceService();
+
   // Learning goals state and progress tracking
   const [learningGoals, setLearningGoals] = useState<any[]>([]);
   const [currentProgress, setCurrentProgress] = useState({
@@ -1560,7 +1575,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                   </div>
                                   <div className="text-xs text-slate-500">
                                     {currentWordIndex + 1}/{displayWords.length}{" "}
-                                    • {rememberedWords.size} ��
+                                    • {rememberedWords.size} ✅
                                   </div>
                                 </div>
 
@@ -2519,7 +2534,7 @@ export default function Index({ initialProfile }: IndexProps) {
                     <div className="space-y-6">
                       <div className="flex items-center justify-between">
                         <h2 className="text-2xl font-bold text-gray-800">
-                          �� Word Matching Game
+                          🧩 Word Matching Game
                         </h2>
                       </div>
                       <WordMatchingGame
