@@ -1057,3 +1057,121 @@
     border-radius: 4px;
   }
 }
+
+/* Compact Settings Panel Mobile Optimizations */
+.compact-settings-mobile {
+  /* Optimized for mobile performance and touch */
+  transform: translateZ(0);
+  will-change: transform;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
+}
+
+@media (max-width: 480px) {
+  .compact-settings-mobile {
+    /* Full width on very small screens */
+    width: calc(100vw - 8px);
+    margin: 4px;
+    max-height: 90vh;
+  }
+
+  .compact-settings-mobile .settings-section {
+    /* Reduce padding on small screens */
+    padding: 12px;
+  }
+
+  .compact-settings-mobile .settings-row {
+    /* Larger touch targets */
+    min-height: 48px;
+    padding: 8px 4px;
+  }
+
+  .compact-settings-mobile .voice-button {
+    /* Voice buttons without text on very small screens */
+    min-width: 40px;
+    padding: 8px 4px;
+  }
+
+  .compact-settings-mobile .voice-button .voice-label {
+    display: none;
+  }
+}
+
+@media (min-width: 481px) and (max-width: 640px) {
+  .compact-settings-mobile {
+    /* Medium mobile screens */
+    width: calc(100vw - 16px);
+    margin: 8px;
+    max-height: 85vh;
+  }
+}
+
+/* Enhanced touch feedback for compact settings */
+.compact-touch-feedback {
+  transition: all 0.15s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  position: relative;
+  overflow: hidden;
+}
+
+.compact-touch-feedback:active {
+  transform: scale(0.98);
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.compact-touch-feedback::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: rgba(59, 130, 246, 0.2);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  transition: width 0.3s, height 0.3s;
+  z-index: 0;
+}
+
+.compact-touch-feedback:active::before {
+  width: 120px;
+  height: 120px;
+}
+
+/* Improved slider for mobile in compact settings */
+.compact-slider-mobile {
+  height: 40px;
+  cursor: pointer;
+  touch-action: pan-x;
+}
+
+.compact-slider-mobile .slider-thumb {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #3b82f6;
+  border: 2px solid white;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* Responsive font sizes for compact settings */
+@media (max-width: 375px) {
+  .compact-settings-mobile {
+    font-size: 14px;
+  }
+
+  .compact-settings-mobile h2 {
+    font-size: 16px;
+  }
+
+  .compact-settings-mobile .section-title {
+    font-size: 14px;
+  }
+
+  .compact-settings-mobile .setting-label {
+    font-size: 13px;
+  }
+
+  .compact-settings-mobile .setting-description {
+    font-size: 11px;
+  }
+}
