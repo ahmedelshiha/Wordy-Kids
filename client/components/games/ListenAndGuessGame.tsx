@@ -167,6 +167,8 @@ export default function ListenAndGuessGame({
   const [showSparkleExplosion, setShowSparkleExplosion] = useState(false);
   const [achievementUnlocked, setAchievementUnlocked] = useState<string | null>(null);
   const [sparkleCount, setSparkleCount] = useState(0);
+  const [showCompletionPopup, setShowCompletionPopup] = useState(false);
+  const [isRestarting, setIsRestarting] = useState(false);
 
   const { containerRef, fire } = useConfetti();
 
