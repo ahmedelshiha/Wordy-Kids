@@ -483,7 +483,7 @@ export function EnhancedCategorySelector({
       return "Choose your favorite topic to start learning! 🌟";
     }
 
-    const matchingCategories = enrichedCategories.filter((cat) =>
+    const matchingCategories = currentEnrichedCategories.filter((cat) =>
       userInterests.some(
         (interest) =>
           cat.id.includes(interest) ||
