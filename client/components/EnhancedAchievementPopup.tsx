@@ -60,6 +60,7 @@ interface EnhancedAchievementPopupProps {
   achievements: Achievement[];
   onClose: () => void;
   onAchievementClaim?: (achievement: Achievement) => void;
+  autoCloseDelay?: number; // Auto-close delay in milliseconds (default: 8000ms = 8 seconds)
 }
 
 const DIFFICULTY_COLORS = {
