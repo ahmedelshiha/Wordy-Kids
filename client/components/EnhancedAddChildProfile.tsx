@@ -333,13 +333,13 @@ export function EnhancedAddChildProfile({
           </div>
 
           {/* Step header */}
-          <div className="text-center mb-6">
-            <div className="mb-4">
-              <div className="w-16 h-16 bg-gradient-to-br from-purple-100 to-pink-100 rounded-full flex items-center justify-center mx-auto mb-3">
-                <currentStepData.icon className="w-8 h-8 text-purple-600" />
+          <div className="text-center mb-4">
+            <div className="mb-3">
+              <div className="w-14 h-14 bg-gradient-to-br from-purple-100 to-pink-100 rounded-full flex items-center justify-center mx-auto mb-2">
+                <currentStepData.icon className="w-7 h-7 text-purple-600" />
               </div>
             </div>
-            <h2 className="text-xl font-bold text-gray-800 mb-2">
+            <h2 className="text-lg font-bold text-gray-800 mb-1">
               {currentStepData.title}
             </h2>
             <p className="text-sm text-gray-600">
