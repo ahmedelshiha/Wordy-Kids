@@ -449,7 +449,7 @@ export function InteractiveDashboardWordCard({
       console.log("Session completed!", {
         stats: newStats,
         achievements: achievements.map((a) => a.title),
-        journeyAchievements: sessionJourneyAchievements.length,
+        journeyAchievements: allSessionAchievements.length,
         totalWordsCompleted,
       });
       return;
@@ -993,7 +993,7 @@ export function InteractiveDashboardWordCard({
 
                 <div>
                   <h3 className="text-lg font-semibold text-gray-700 mb-2">
-                    ���� Example:
+                    💬 Example:
                   </h3>
                   <p className="text-lg text-gray-700 italic leading-relaxed">
                     "{currentWord.example}"
