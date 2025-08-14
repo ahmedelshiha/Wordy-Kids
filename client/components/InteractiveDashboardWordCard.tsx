@@ -546,7 +546,7 @@ export function InteractiveDashboardWordCard({
     return (
       <div className="w-full h-64 flex items-center justify-center bg-gradient-to-br from-gray-100 to-gray-200 rounded-2xl shadow-lg">
         <div className="text-center text-gray-500">
-          <div className="text-4xl mb-2">🖼️</div>
+          <div className="text-4xl mb-2">���️</div>
           <p className="text-lg">Picture coming soon!</p>
         </div>
       </div>
@@ -572,7 +572,7 @@ export function InteractiveDashboardWordCard({
   return (
     <div className={cn("space-y-6", className)}>
       {/* Today's Word Quest - Mobile Optimized Top Left */}
-      <div className="mb-4">
+      <div className="mb-4 hidden">
         <Card className="bg-gradient-to-r from-educational-blue/10 to-educational-purple/10 border-educational-blue/20 hover:shadow-lg transition-all duration-300">
           <CardContent className="p-3 md:p-4">
             <div className="flex items-center justify-between">
