@@ -824,7 +824,7 @@ export function InteractiveDashboardWordCard({
                   }
                   if (percentage >= 90) return "⭐";
                   if (percentage >= 75) return "🎯";
-                  if (percentage >= 50) return "💪";
+                  if (percentage >= 50) return "��";
                   return "🌟";
                 })()}
               </span>
@@ -894,7 +894,7 @@ export function InteractiveDashboardWordCard({
               {/* Hidden: Word progress and Session progress badges */}
               <Badge
                 variant="outline"
-                className="text-sm px-3 py-1 bg-purple-50 text-purple-700 border-purple-300"
+                className="text-xs sm:text-sm px-2 sm:px-3 py-1 bg-purple-50 text-purple-700 border-purple-300"
               >
                 {sessionStats.accuracy}% Accuracy
               </Badge>
