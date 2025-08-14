@@ -1280,13 +1280,16 @@ export function InteractiveDashboardWordCard({
                     🚀 {sessionStats.wordsCompleted}/{SESSION_SIZE}
                   </div>
                   <div className="flex-1 mx-3">
-                    <div className="w-full bg-gradient-to-r from-gray-200 to-gray-300 rounded-full h-2 shadow-inner">
+                    <div className="w-full bg-gradient-to-r from-gray-200 to-gray-300 rounded-full h-2 shadow-inner relative overflow-hidden">
                       <div
-                        className="bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-500 h-2 rounded-full transition-all duration-500 ease-out shadow-sm"
+                        className="bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-500 h-2 rounded-full transition-all duration-700 ease-out shadow-sm relative"
                         style={{
                           width: `${(sessionStats.wordsCompleted / SESSION_SIZE) * 100}%`,
                         }}
-                      ></div>
+                      >
+                        {/* Progress shimmer effect */}
+                        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent transform -skew-x-12 animate-pulse"></div>
+                      </div>
                     </div>
                   </div>
                   <div className="text-xs text-gray-600">
