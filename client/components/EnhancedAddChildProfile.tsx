@@ -373,6 +373,9 @@ export function EnhancedAddChildProfile({
                         : "border-purple-200 focus:border-purple-400 bg-white"
                     )}
                     autoFocus
+                    autoComplete="given-name"
+                    inputMode="text"
+                    enterKeyHint="next"
                     aria-describedby={nameError ? "name-error" : undefined}
                   />
                   {nameError && (
