@@ -657,6 +657,8 @@ export function InteractiveDashboardWordCard({
       className={cn("space-y-6", className)}
       role="main"
       aria-label="Interactive word learning card"
+      tabIndex={0}
+      onKeyDown={handleKeyDown}
     >
       {/* Today's Word Quest - Mobile Optimized Top Left */}
       <div className="mb-4 hidden">
