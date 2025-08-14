@@ -1,7 +1,13 @@
 import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { ArrowLeft, CheckCircle, AlertCircle, Smartphone, Monitor } from "lucide-react";
+import {
+  ArrowLeft,
+  CheckCircle,
+  AlertCircle,
+  Smartphone,
+  Monitor,
+} from "lucide-react";
 import { EnhancedWordCard } from "@/components/EnhancedWordCard";
 import { EnhancedCategorySelector } from "@/components/EnhancedCategorySelector";
 import { wordsDatabase } from "@/data/wordsDatabase";
@@ -12,9 +18,10 @@ export function TestWordLibrary() {
 
   const tests = [
     {
-      id: 'wordcard',
-      name: 'Enhanced Word Card',
-      description: 'Test mobile-optimized word card with swipe gestures and accessibility',
+      id: "wordcard",
+      name: "Enhanced Word Card",
+      description:
+        "Test mobile-optimized word card with swipe gestures and accessibility",
       component: () => (
         <div className="max-w-sm mx-auto">
           <EnhancedWordCard
@@ -22,37 +29,47 @@ export function TestWordLibrary() {
             enableSwipeGestures={true}
             showAccessibilityFeatures={true}
             showVocabularyBuilder={true}
-            onFavorite={(word) => console.log('Favorited:', word.word)}
-            onWordMastered={(id, rating) => console.log('Mastered:', id, rating)}
+            onFavorite={(word) => console.log("Favorited:", word.word)}
+            onWordMastered={(id, rating) =>
+              console.log("Mastered:", id, rating)
+            }
           />
           <div className="mt-4 p-4 bg-blue-50 rounded-lg">
-            <h4 className="font-semibold text-blue-800 mb-2">Test Instructions:</h4>
+            <h4 className="font-semibold text-blue-800 mb-2">
+              Test Instructions:
+            </h4>
             <ul className="text-sm text-blue-700 space-y-1">
               <li>• Tap the card to flip it</li>
-              <li>• On mobile: Swipe left to favorite, right to flip, up to pronounce</li>
+              <li>
+                • On mobile: Swipe left to favorite, right to flip, up to
+                pronounce
+              </li>
               <li>• Test accessibility controls (eye and target icons)</li>
               <li>• Try the pronunciation and rating buttons</li>
             </ul>
           </div>
         </div>
-      )
+      ),
     },
     {
-      id: 'category',
-      name: 'Enhanced Category Selector',
-      description: 'Test mobile-first category selection with search and filters',
+      id: "category",
+      name: "Enhanced Category Selector",
+      description:
+        "Test mobile-first category selection with search and filters",
       component: () => (
         <div>
           <EnhancedCategorySelector
             selectedCategory="animals"
-            onSelectCategory={(cat) => console.log('Selected:', cat)}
-            userInterests={['animals', 'nature']}
+            onSelectCategory={(cat) => console.log("Selected:", cat)}
+            userInterests={["animals", "nature"]}
             enableAccessibility={true}
             showAdvanced={true}
             showGameification={true}
           />
           <div className="mt-4 p-4 bg-green-50 rounded-lg">
-            <h4 className="font-semibold text-green-800 mb-2">Test Instructions:</h4>
+            <h4 className="font-semibold text-green-800 mb-2">
+              Test Instructions:
+            </h4>
             <ul className="text-sm text-green-700 space-y-1">
               <li>• Search for categories using the search bar</li>
               <li>• Filter by difficulty level</li>
@@ -62,12 +79,12 @@ export function TestWordLibrary() {
             </ul>
           </div>
         </div>
-      )
+      ),
     },
     {
-      id: 'responsive',
-      name: 'Responsive Design Test',
-      description: 'Test how components adapt to different screen sizes',
+      id: "responsive",
+      name: "Responsive Design Test",
+      description: "Test how components adapt to different screen sizes",
       component: () => (
         <div className="space-y-6">
           <Card>
@@ -86,7 +103,7 @@ export function TestWordLibrary() {
                     </div>
                   </div>
                 </div>
-                
+
                 <div className="bg-yellow-100 p-4 rounded-lg">
                   <div className="text-center">
                     <Monitor className="w-8 h-8 mx-auto mb-2 text-yellow-600" />
@@ -97,7 +114,7 @@ export function TestWordLibrary() {
                     </div>
                   </div>
                 </div>
-                
+
                 <div className="bg-green-100 p-4 rounded-lg">
                   <div className="text-center">
                     <Monitor className="w-8 h-8 mx-auto mb-2 text-green-600" />
@@ -109,7 +126,7 @@ export function TestWordLibrary() {
                   </div>
                 </div>
               </div>
-              
+
               <div className="mt-6 p-4 bg-gray-50 rounded-lg">
                 <h4 className="font-semibold mb-2">Responsive Features:</h4>
                 <ul className="text-sm space-y-1">
@@ -134,12 +151,12 @@ export function TestWordLibrary() {
             </CardContent>
           </Card>
         </div>
-      )
+      ),
     },
     {
-      id: 'accessibility',
-      name: 'Accessibility Test',
-      description: 'Test accessibility features and keyboard navigation',
+      id: "accessibility",
+      name: "Accessibility Test",
+      description: "Test accessibility features and keyboard navigation",
       component: () => (
         <div className="space-y-6">
           <Card>
@@ -149,29 +166,61 @@ export function TestWordLibrary() {
             <CardContent>
               <div className="space-y-4">
                 <div className="p-4 bg-blue-50 rounded-lg">
-                  <h4 className="font-semibold text-blue-800 mb-2">Keyboard Navigation Test:</h4>
+                  <h4 className="font-semibold text-blue-800 mb-2">
+                    Keyboard Navigation Test:
+                  </h4>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
                       <h5 className="font-medium mb-2">Word Card:</h5>
                       <ul className="text-sm space-y-1">
-                        <li><kbd className="px-2 py-1 bg-gray-200 rounded">Tab</kbd> - Navigate through elements</li>
-                        <li><kbd className="px-2 py-1 bg-gray-200 rounded">Enter</kbd> - Activate buttons</li>
-                        <li><kbd className="px-2 py-1 bg-gray-200 rounded">Space</kbd> - Flip card</li>
+                        <li>
+                          <kbd className="px-2 py-1 bg-gray-200 rounded">
+                            Tab
+                          </kbd>{" "}
+                          - Navigate through elements
+                        </li>
+                        <li>
+                          <kbd className="px-2 py-1 bg-gray-200 rounded">
+                            Enter
+                          </kbd>{" "}
+                          - Activate buttons
+                        </li>
+                        <li>
+                          <kbd className="px-2 py-1 bg-gray-200 rounded">
+                            Space
+                          </kbd>{" "}
+                          - Flip card
+                        </li>
                       </ul>
                     </div>
                     <div>
                       <h5 className="font-medium mb-2">Category Selector:</h5>
                       <ul className="text-sm space-y-1">
-                        <li><kbd className="px-2 py-1 bg-gray-200 rounded">Arrow keys</kbd> - Navigate categories</li>
-                        <li><kbd className="px-2 py-1 bg-gray-200 rounded">Enter</kbd> - Select category</li>
-                        <li><kbd className="px-2 py-1 bg-gray-200 rounded">/</kbd> - Focus search</li>
+                        <li>
+                          <kbd className="px-2 py-1 bg-gray-200 rounded">
+                            Arrow keys
+                          </kbd>{" "}
+                          - Navigate categories
+                        </li>
+                        <li>
+                          <kbd className="px-2 py-1 bg-gray-200 rounded">
+                            Enter
+                          </kbd>{" "}
+                          - Select category
+                        </li>
+                        <li>
+                          <kbd className="px-2 py-1 bg-gray-200 rounded">/</kbd>{" "}
+                          - Focus search
+                        </li>
                       </ul>
                     </div>
                   </div>
                 </div>
-                
+
                 <div className="p-4 bg-green-50 rounded-lg">
-                  <h4 className="font-semibold text-green-800 mb-2">Screen Reader Support:</h4>
+                  <h4 className="font-semibold text-green-800 mb-2">
+                    Screen Reader Support:
+                  </h4>
                   <ul className="text-sm space-y-1">
                     <li className="flex items-center gap-2">
                       <CheckCircle className="w-4 h-4 text-green-500" />
@@ -191,9 +240,11 @@ export function TestWordLibrary() {
                     </li>
                   </ul>
                 </div>
-                
+
                 <div className="p-4 bg-purple-50 rounded-lg">
-                  <h4 className="font-semibold text-purple-800 mb-2">Visual Accessibility:</h4>
+                  <h4 className="font-semibold text-purple-800 mb-2">
+                    Visual Accessibility:
+                  </h4>
                   <ul className="text-sm space-y-1">
                     <li className="flex items-center gap-2">
                       <CheckCircle className="w-4 h-4 text-green-500" />
@@ -217,16 +268,16 @@ export function TestWordLibrary() {
             </CardContent>
           </Card>
         </div>
-      )
-    }
+      ),
+    },
   ];
 
   const markTestResult = (testId: string, passed: boolean) => {
-    setTestResults(prev => ({ ...prev, [testId]: passed }));
+    setTestResults((prev) => ({ ...prev, [testId]: passed }));
   };
 
   if (currentTest) {
-    const test = tests.find(t => t.id === currentTest);
+    const test = tests.find((t) => t.id === currentTest);
     if (!test) return null;
 
     return (
@@ -249,7 +300,7 @@ export function TestWordLibrary() {
 
           <div className="space-y-6">
             <test.component />
-            
+
             <Card>
               <CardContent className="p-6">
                 <h3 className="text-lg font-semibold mb-4">Test Results</h3>
@@ -257,7 +308,9 @@ export function TestWordLibrary() {
                   <Button
                     onClick={() => markTestResult(test.id, true)}
                     className={`flex items-center gap-2 ${
-                      testResults[test.id] === true ? 'bg-green-500' : 'bg-gray-200'
+                      testResults[test.id] === true
+                        ? "bg-green-500"
+                        : "bg-gray-200"
                     }`}
                   >
                     <CheckCircle className="w-4 h-4" />
@@ -267,7 +320,9 @@ export function TestWordLibrary() {
                     onClick={() => markTestResult(test.id, false)}
                     variant="outline"
                     className={`flex items-center gap-2 ${
-                      testResults[test.id] === false ? 'border-red-500 text-red-500' : ''
+                      testResults[test.id] === false
+                        ? "border-red-500 text-red-500"
+                        : ""
                     }`}
                   >
                     <AlertCircle className="w-4 h-4" />
@@ -275,10 +330,12 @@ export function TestWordLibrary() {
                   </Button>
                 </div>
                 {testResults[test.id] !== undefined && (
-                  <p className={`mt-2 text-sm ${
-                    testResults[test.id] ? 'text-green-600' : 'text-red-600'
-                  }`}>
-                    Test marked as {testResults[test.id] ? 'passed' : 'failed'}
+                  <p
+                    className={`mt-2 text-sm ${
+                      testResults[test.id] ? "text-green-600" : "text-red-600"
+                    }`}
+                  >
+                    Test marked as {testResults[test.id] ? "passed" : "failed"}
                   </p>
                 )}
               </CardContent>
@@ -297,7 +354,8 @@ export function TestWordLibrary() {
             Word Library Component Tests
           </h1>
           <p className="text-xl text-slate-600">
-            Test and validate the enhanced mobile experience and accessibility features
+            Test and validate the enhanced mobile experience and accessibility
+            features
           </p>
         </div>
 
@@ -306,8 +364,11 @@ export function TestWordLibrary() {
             <Card
               key={test.id}
               className={`cursor-pointer transition-all duration-300 hover:shadow-lg hover:scale-105 ${
-                testResults[test.id] === true ? 'ring-2 ring-green-500' :
-                testResults[test.id] === false ? 'ring-2 ring-red-500' : ''
+                testResults[test.id] === true
+                  ? "ring-2 ring-green-500"
+                  : testResults[test.id] === false
+                    ? "ring-2 ring-red-500"
+                    : ""
               }`}
               onClick={() => setCurrentTest(test.id)}
             >
@@ -317,9 +378,7 @@ export function TestWordLibrary() {
                     <h3 className="text-lg font-semibold text-slate-800 mb-2">
                       {test.name}
                     </h3>
-                    <p className="text-sm text-slate-600">
-                      {test.description}
-                    </p>
+                    <p className="text-sm text-slate-600">{test.description}</p>
                   </div>
                   <div className="ml-4">
                     {testResults[test.id] === true && (
@@ -330,9 +389,7 @@ export function TestWordLibrary() {
                     )}
                   </div>
                 </div>
-                <Button className="w-full">
-                  Run Test
-                </Button>
+                <Button className="w-full">Run Test</Button>
               </CardContent>
             </Card>
           ))}
@@ -345,7 +402,10 @@ export function TestWordLibrary() {
           <CardContent>
             <div className="space-y-2">
               {tests.map((test) => (
-                <div key={test.id} className="flex items-center justify-between p-2 rounded">
+                <div
+                  key={test.id}
+                  className="flex items-center justify-between p-2 rounded"
+                >
                   <span className="font-medium">{test.name}</span>
                   <div className="flex items-center gap-2">
                     {testResults[test.id] === true && (
@@ -367,12 +427,13 @@ export function TestWordLibrary() {
                 </div>
               ))}
             </div>
-            
+
             {Object.keys(testResults).length > 0 && (
               <div className="mt-4 p-4 bg-blue-50 rounded-lg">
                 <h4 className="font-semibold text-blue-800 mb-2">Summary:</h4>
                 <p className="text-blue-700">
-                  {Object.values(testResults).filter(Boolean).length} of {Object.keys(testResults).length} tests passed
+                  {Object.values(testResults).filter(Boolean).length} of{" "}
+                  {Object.keys(testResults).length} tests passed
                 </p>
               </div>
             )}

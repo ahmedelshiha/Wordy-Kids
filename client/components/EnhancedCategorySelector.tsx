@@ -4,13 +4,13 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { Input } from "@/components/ui/input";
-import { 
-  Sparkles, 
-  Star, 
-  Heart, 
-  Zap, 
-  Crown, 
-  Gift, 
+import {
+  Sparkles,
+  Star,
+  Heart,
+  Zap,
+  Crown,
+  Gift,
   Search,
   Filter,
   ChevronDown,
@@ -20,7 +20,7 @@ import {
   Gamepad2,
   Trophy,
   BookOpen,
-  Target
+  Target,
 } from "lucide-react";
 import { audioService } from "@/lib/audioService";
 import {
@@ -69,9 +69,13 @@ const enrichedCategories: Category[] = [
     difficulty: "beginner",
     estimatedTime: "5-10 min",
     difficultyBreakdown: {
-      easy: getWordsByCategory("animals").filter((w) => w.difficulty === "easy").length,
-      medium: getWordsByCategory("animals").filter((w) => w.difficulty === "medium").length,
-      hard: getWordsByCategory("animals").filter((w) => w.difficulty === "hard").length,
+      easy: getWordsByCategory("animals").filter((w) => w.difficulty === "easy")
+        .length,
+      medium: getWordsByCategory("animals").filter(
+        (w) => w.difficulty === "medium",
+      ).length,
+      hard: getWordsByCategory("animals").filter((w) => w.difficulty === "hard")
+        .length,
     },
   },
   {
@@ -86,9 +90,13 @@ const enrichedCategories: Category[] = [
     difficulty: "beginner",
     estimatedTime: "8-12 min",
     difficultyBreakdown: {
-      easy: getWordsByCategory("nature").filter((w) => w.difficulty === "easy").length,
-      medium: getWordsByCategory("nature").filter((w) => w.difficulty === "medium").length,
-      hard: getWordsByCategory("nature").filter((w) => w.difficulty === "hard").length,
+      easy: getWordsByCategory("nature").filter((w) => w.difficulty === "easy")
+        .length,
+      medium: getWordsByCategory("nature").filter(
+        (w) => w.difficulty === "medium",
+      ).length,
+      hard: getWordsByCategory("nature").filter((w) => w.difficulty === "hard")
+        .length,
     },
   },
   {
@@ -103,9 +111,13 @@ const enrichedCategories: Category[] = [
     difficulty: "beginner",
     estimatedTime: "6-10 min",
     difficultyBreakdown: {
-      easy: getWordsByCategory("food").filter((w) => w.difficulty === "easy").length,
-      medium: getWordsByCategory("food").filter((w) => w.difficulty === "medium").length,
-      hard: getWordsByCategory("food").filter((w) => w.difficulty === "hard").length,
+      easy: getWordsByCategory("food").filter((w) => w.difficulty === "easy")
+        .length,
+      medium: getWordsByCategory("food").filter(
+        (w) => w.difficulty === "medium",
+      ).length,
+      hard: getWordsByCategory("food").filter((w) => w.difficulty === "hard")
+        .length,
     },
   },
   {
@@ -120,9 +132,13 @@ const enrichedCategories: Category[] = [
     difficulty: "intermediate",
     estimatedTime: "10-15 min",
     difficultyBreakdown: {
-      easy: getWordsByCategory("body").filter((w) => w.difficulty === "easy").length,
-      medium: getWordsByCategory("body").filter((w) => w.difficulty === "medium").length,
-      hard: getWordsByCategory("body").filter((w) => w.difficulty === "hard").length,
+      easy: getWordsByCategory("body").filter((w) => w.difficulty === "easy")
+        .length,
+      medium: getWordsByCategory("body").filter(
+        (w) => w.difficulty === "medium",
+      ).length,
+      hard: getWordsByCategory("body").filter((w) => w.difficulty === "hard")
+        .length,
     },
   },
   {
@@ -137,9 +153,13 @@ const enrichedCategories: Category[] = [
     difficulty: "beginner",
     estimatedTime: "5-8 min",
     difficultyBreakdown: {
-      easy: getWordsByCategory("colors").filter((w) => w.difficulty === "easy").length,
-      medium: getWordsByCategory("colors").filter((w) => w.difficulty === "medium").length,
-      hard: getWordsByCategory("colors").filter((w) => w.difficulty === "hard").length,
+      easy: getWordsByCategory("colors").filter((w) => w.difficulty === "easy")
+        .length,
+      medium: getWordsByCategory("colors").filter(
+        (w) => w.difficulty === "medium",
+      ).length,
+      hard: getWordsByCategory("colors").filter((w) => w.difficulty === "hard")
+        .length,
     },
   },
   {
@@ -154,9 +174,13 @@ const enrichedCategories: Category[] = [
     difficulty: "beginner",
     estimatedTime: "8-12 min",
     difficultyBreakdown: {
-      easy: getWordsByCategory("numbers").filter((w) => w.difficulty === "easy").length,
-      medium: getWordsByCategory("numbers").filter((w) => w.difficulty === "medium").length,
-      hard: getWordsByCategory("numbers").filter((w) => w.difficulty === "hard").length,
+      easy: getWordsByCategory("numbers").filter((w) => w.difficulty === "easy")
+        .length,
+      medium: getWordsByCategory("numbers").filter(
+        (w) => w.difficulty === "medium",
+      ).length,
+      hard: getWordsByCategory("numbers").filter((w) => w.difficulty === "hard")
+        .length,
     },
   },
   {
@@ -171,9 +195,13 @@ const enrichedCategories: Category[] = [
     difficulty: "beginner",
     estimatedTime: "5-8 min",
     difficultyBreakdown: {
-      easy: getWordsByCategory("family").filter((w) => w.difficulty === "easy").length,
-      medium: getWordsByCategory("family").filter((w) => w.difficulty === "medium").length,
-      hard: getWordsByCategory("family").filter((w) => w.difficulty === "hard").length,
+      easy: getWordsByCategory("family").filter((w) => w.difficulty === "easy")
+        .length,
+      medium: getWordsByCategory("family").filter(
+        (w) => w.difficulty === "medium",
+      ).length,
+      hard: getWordsByCategory("family").filter((w) => w.difficulty === "hard")
+        .length,
     },
   },
   {
@@ -188,9 +216,15 @@ const enrichedCategories: Category[] = [
     difficulty: "intermediate",
     estimatedTime: "10-15 min",
     difficultyBreakdown: {
-      easy: getWordsByCategory("feelings").filter((w) => w.difficulty === "easy").length,
-      medium: getWordsByCategory("feelings").filter((w) => w.difficulty === "medium").length,
-      hard: getWordsByCategory("feelings").filter((w) => w.difficulty === "hard").length,
+      easy: getWordsByCategory("feelings").filter(
+        (w) => w.difficulty === "easy",
+      ).length,
+      medium: getWordsByCategory("feelings").filter(
+        (w) => w.difficulty === "medium",
+      ).length,
+      hard: getWordsByCategory("feelings").filter(
+        (w) => w.difficulty === "hard",
+      ).length,
     },
   },
   {
@@ -205,9 +239,13 @@ const enrichedCategories: Category[] = [
     difficulty: "beginner",
     estimatedTime: "6-10 min",
     difficultyBreakdown: {
-      easy: getWordsByCategory("clothes").filter((w) => w.difficulty === "easy").length,
-      medium: getWordsByCategory("clothes").filter((w) => w.difficulty === "medium").length,
-      hard: getWordsByCategory("clothes").filter((w) => w.difficulty === "hard").length,
+      easy: getWordsByCategory("clothes").filter((w) => w.difficulty === "easy")
+        .length,
+      medium: getWordsByCategory("clothes").filter(
+        (w) => w.difficulty === "medium",
+      ).length,
+      hard: getWordsByCategory("clothes").filter((w) => w.difficulty === "hard")
+        .length,
     },
   },
 ].filter((category) => category.wordCount > 0);
@@ -221,7 +259,9 @@ export function EnhancedCategorySelector({
   showGameification = true,
 }: EnhancedCategorySelectorProps) {
   const [hoveredCategory, setHoveredCategory] = useState<string | null>(null);
-  const [floatingElements, setFloatingElements] = useState<Array<{ id: string; emoji: string; x: number; y: number }>>([]);
+  const [floatingElements, setFloatingElements] = useState<
+    Array<{ id: string; emoji: string; x: number; y: number }>
+  >([]);
   const [showEncouragement, setShowEncouragement] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [showFilters, setShowFilters] = useState(false);
@@ -259,35 +299,35 @@ export function EnhancedCategorySelector({
   // Enhanced category selection with feedback
   const handleCategoryClick = (categoryId: string) => {
     audioService.playCheerSound();
-    
+
     // Haptic feedback
-    if ('vibrate' in navigator) {
+    if ("vibrate" in navigator) {
       navigator.vibrate([50, 100, 50]);
     }
-    
+
     // Screen reader announcement
-    if (announceSelection && 'speechSynthesis' in window) {
-      const category = enrichedCategories.find(cat => cat.id === categoryId);
+    if (announceSelection && "speechSynthesis" in window) {
+      const category = enrichedCategories.find((cat) => cat.id === categoryId);
       if (category) {
         const utterance = new SpeechSynthesisUtterance(
-          `Selected ${category.name} category with ${category.wordCount} words`
+          `Selected ${category.name} category with ${category.wordCount} words`,
         );
         utterance.volume = 0.5;
         speechSynthesis.speak(utterance);
       }
     }
-    
+
     onSelectCategory(categoryId);
   };
 
   const handleCategoryHover = (categoryId: string) => {
     if (reduceMotion) return;
-    
+
     setHoveredCategory(categoryId);
     audioService.playWhooshSound();
-    
+
     // Subtle haptic feedback on hover (mobile)
-    if ('vibrate' in navigator && window.innerWidth <= 768) {
+    if ("vibrate" in navigator && window.innerWidth <= 768) {
       navigator.vibrate([25]);
     }
   };
@@ -322,29 +362,36 @@ export function EnhancedCategorySelector({
       filtered = filtered.filter(
         (category) =>
           category.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-          category.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
-          category.funFact.toLowerCase().includes(searchTerm.toLowerCase())
+          category.description
+            .toLowerCase()
+            .includes(searchTerm.toLowerCase()) ||
+          category.funFact.toLowerCase().includes(searchTerm.toLowerCase()),
       );
     }
 
     // Difficulty filter
     if (selectedDifficulty !== "all") {
-      filtered = filtered.filter(category => category.difficulty === selectedDifficulty);
+      filtered = filtered.filter(
+        (category) => category.difficulty === selectedDifficulty,
+      );
     }
 
     // Sort by relevance (matching interests first)
-    const withInterests = filtered.filter(cat =>
-      userInterests.some(interest =>
-        cat.id.includes(interest) ||
-        cat.name.toLowerCase().includes(interest.toLowerCase())
-      )
+    const withInterests = filtered.filter((cat) =>
+      userInterests.some(
+        (interest) =>
+          cat.id.includes(interest) ||
+          cat.name.toLowerCase().includes(interest.toLowerCase()),
+      ),
     );
-    
-    const withoutInterests = filtered.filter(cat =>
-      !userInterests.some(interest =>
-        cat.id.includes(interest) ||
-        cat.name.toLowerCase().includes(interest.toLowerCase())
-      )
+
+    const withoutInterests = filtered.filter(
+      (cat) =>
+        !userInterests.some(
+          (interest) =>
+            cat.id.includes(interest) ||
+            cat.name.toLowerCase().includes(interest.toLowerCase()),
+        ),
     );
 
     return [...withInterests, ...withoutInterests];
@@ -354,10 +401,14 @@ export function EnhancedCategorySelector({
 
   const getDifficultyBadgeColor = (difficulty: string) => {
     switch (difficulty) {
-      case "beginner": return "bg-green-500 text-white";
-      case "intermediate": return "bg-orange-500 text-white";
-      case "advanced": return "bg-red-500 text-white";
-      default: return "bg-gray-500 text-white";
+      case "beginner":
+        return "bg-green-500 text-white";
+      case "intermediate":
+        return "bg-orange-500 text-white";
+      case "advanced":
+        return "bg-red-500 text-white";
+      default:
+        return "bg-gray-500 text-white";
     }
   };
 
@@ -420,17 +471,21 @@ export function EnhancedCategorySelector({
 
         {/* Mobile-optimized header */}
         <div className="md:hidden mb-6">
-          <div className={`rounded-xl p-4 border ${
-            highContrastMode 
-              ? 'bg-black text-white border-white' 
-              : 'bg-gradient-to-r from-educational-blue/10 to-educational-purple/10 border-educational-blue/20'
-          }`}>
+          <div
+            className={`rounded-xl p-4 border ${
+              highContrastMode
+                ? "bg-black text-white border-white"
+                : "bg-gradient-to-r from-educational-blue/10 to-educational-purple/10 border-educational-blue/20"
+            }`}
+          >
             <div className="flex items-center justify-between mb-2">
-              <h2 className={`text-lg font-bold ${
-                highContrastMode 
-                  ? 'text-white' 
-                  : 'text-slate-800 bg-gradient-to-r from-educational-blue to-educational-purple bg-clip-text text-transparent'
-              }`}>
+              <h2
+                className={`text-lg font-bold ${
+                  highContrastMode
+                    ? "text-white"
+                    : "text-slate-800 bg-gradient-to-r from-educational-blue to-educational-purple bg-clip-text text-transparent"
+                }`}
+              >
                 🌟 Pick a Topic!
               </h2>
               <div className="flex gap-1">
@@ -442,9 +497,11 @@ export function EnhancedCategorySelector({
                 </Badge>
               </div>
             </div>
-            <p className={`text-sm leading-tight ${
-              highContrastMode ? 'text-white' : 'text-slate-600'
-            }`}>
+            <p
+              className={`text-sm leading-tight ${
+                highContrastMode ? "text-white" : "text-slate-600"
+              }`}
+            >
               {getPersonalizedMessage()}
             </p>
           </div>
@@ -452,19 +509,23 @@ export function EnhancedCategorySelector({
 
         {/* Desktop header */}
         <div className="hidden md:block">
-          <h2 className={`text-3xl font-bold mb-3 ${
-            highContrastMode 
-              ? 'text-white' 
-              : 'text-slate-800 bg-gradient-to-r from-educational-blue to-educational-purple bg-clip-text text-transparent'
-          }`}>
+          <h2
+            className={`text-3xl font-bold mb-3 ${
+              highContrastMode
+                ? "text-white"
+                : "text-slate-800 bg-gradient-to-r from-educational-blue to-educational-purple bg-clip-text text-transparent"
+            }`}
+          >
             🌟 Choose Your Learning Adventure! 🌟
           </h2>
-          <p className={`text-lg max-w-2xl mx-auto mb-4 ${
-            highContrastMode ? 'text-white' : 'text-slate-600'
-          }`}>
+          <p
+            className={`text-lg max-w-2xl mx-auto mb-4 ${
+              highContrastMode ? "text-white" : "text-slate-600"
+            }`}
+          >
             {getPersonalizedMessage()}
           </p>
-          
+
           {showGameification && (
             <div className="flex justify-center gap-3 mb-6 flex-wrap">
               <Badge className="bg-educational-green text-white px-4 py-2 text-sm animate-pulse">
@@ -495,9 +556,9 @@ export function EnhancedCategorySelector({
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             className={`pl-12 pr-12 py-3 rounded-full border-2 focus:ring-2 focus:ring-educational-blue/50 ${
-              highContrastMode 
-                ? 'bg-black text-white border-white' 
-                : 'border-educational-blue/20 focus:border-educational-blue bg-white/80 backdrop-blur-sm'
+              highContrastMode
+                ? "bg-black text-white border-white"
+                : "border-educational-blue/20 focus:border-educational-blue bg-white/80 backdrop-blur-sm"
             }`}
             aria-label="Search categories"
           />
@@ -526,38 +587,54 @@ export function EnhancedCategorySelector({
               size="sm"
               onClick={() => setShowFilters(!showFilters)}
               className={`flex items-center gap-2 ${
-                highContrastMode ? 'border-white text-white hover:bg-white hover:text-black' : ''
+                highContrastMode
+                  ? "border-white text-white hover:bg-white hover:text-black"
+                  : ""
               }`}
             >
               <Filter className="w-4 h-4" />
               Filters
-              <ChevronDown className={`w-4 h-4 transition-transform ${showFilters ? 'rotate-180' : ''}`} />
+              <ChevronDown
+                className={`w-4 h-4 transition-transform ${showFilters ? "rotate-180" : ""}`}
+              />
             </Button>
 
             {showFilters && (
               <div className="flex gap-2 flex-wrap justify-center">
-                {["all", "beginner", "intermediate", "advanced"].map((difficulty) => (
-                  <Button
-                    key={difficulty}
-                    size="sm"
-                    variant={selectedDifficulty === difficulty ? "default" : "outline"}
-                    onClick={() => setSelectedDifficulty(difficulty)}
-                    className={`capitalize ${
-                      selectedDifficulty === difficulty 
-                        ? 'bg-educational-blue text-white' 
-                        : highContrastMode 
-                          ? 'border-white text-white hover:bg-white hover:text-black'
-                          : ''
-                    }`}
-                  >
-                    {difficulty === "all" ? "All Levels" : difficulty}
-                  </Button>
-                ))}
+                {["all", "beginner", "intermediate", "advanced"].map(
+                  (difficulty) => (
+                    <Button
+                      key={difficulty}
+                      size="sm"
+                      variant={
+                        selectedDifficulty === difficulty
+                          ? "default"
+                          : "outline"
+                      }
+                      onClick={() => setSelectedDifficulty(difficulty)}
+                      className={`capitalize ${
+                        selectedDifficulty === difficulty
+                          ? "bg-educational-blue text-white"
+                          : highContrastMode
+                            ? "border-white text-white hover:bg-white hover:text-black"
+                            : ""
+                      }`}
+                    >
+                      {difficulty === "all" ? "All Levels" : difficulty}
+                    </Button>
+                  ),
+                )}
                 <Button
                   size="sm"
                   variant="outline"
-                  onClick={() => setViewMode(viewMode === "grid" ? "list" : "grid")}
-                  className={highContrastMode ? 'border-white text-white hover:bg-white hover:text-black' : ''}
+                  onClick={() =>
+                    setViewMode(viewMode === "grid" ? "list" : "grid")
+                  }
+                  className={
+                    highContrastMode
+                      ? "border-white text-white hover:bg-white hover:text-black"
+                      : ""
+                  }
                   aria-label={`Switch to ${viewMode === "grid" ? "list" : "grid"} view`}
                 >
                   {viewMode === "grid" ? "📋" : "📱"}
@@ -570,7 +647,9 @@ export function EnhancedCategorySelector({
         {/* Search results summary */}
         {searchTerm && (
           <div className="text-center">
-            <p className={`text-sm ${highContrastMode ? 'text-white' : 'text-slate-600'}`}>
+            <p
+              className={`text-sm ${highContrastMode ? "text-white" : "text-slate-600"}`}
+            >
               Found {categories.length} categories matching "{searchTerm}"
               {categories.length === 0 && (
                 <span className="block mt-2">
@@ -585,11 +664,13 @@ export function EnhancedCategorySelector({
       {/* Encouragement popup */}
       {showEncouragement && showGameification && !reduceMotion && (
         <div className="fixed top-20 right-4 z-50 animate-bounce">
-          <Card className={`shadow-2xl ${
-            highContrastMode 
-              ? 'bg-black text-white border-white' 
-              : 'bg-gradient-to-r from-educational-pink to-educational-purple text-white'
-          }`}>
+          <Card
+            className={`shadow-2xl ${
+              highContrastMode
+                ? "bg-black text-white border-white"
+                : "bg-gradient-to-r from-educational-pink to-educational-purple text-white"
+            }`}
+          >
             <CardContent className="p-4 text-center">
               <Heart className="w-6 h-6 mx-auto mb-2 fill-current" />
               <p className="text-sm font-semibold">
@@ -601,11 +682,13 @@ export function EnhancedCategorySelector({
       )}
 
       {/* Enhanced categories display */}
-      <div className={`px-4 md:px-0 ${
-        viewMode === "grid" 
-          ? "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6" 
-          : "space-y-4"
-      }`}>
+      <div
+        className={`px-4 md:px-0 ${
+          viewMode === "grid"
+            ? "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6"
+            : "space-y-4"
+        }`}
+      >
         {categories.map((category, index) => {
           const isRecommended = userInterests.some(
             (interest) =>
@@ -619,20 +702,20 @@ export function EnhancedCategorySelector({
             <Card
               key={category.id}
               className={`cursor-pointer transition-all duration-300 overflow-hidden category-card-mobile ${
-                !reduceMotion ? 'hover:shadow-lg transform hover:scale-102' : ''
+                !reduceMotion ? "hover:shadow-lg transform hover:scale-102" : ""
               } ${
                 isSelected
                   ? `ring-3 shadow-xl scale-102 ${
-                      highContrastMode 
-                        ? 'ring-white bg-black text-white' 
-                        : 'ring-educational-blue bg-gradient-to-br from-blue-50 to-purple-50'
+                      highContrastMode
+                        ? "ring-white bg-black text-white"
+                        : "ring-educational-blue bg-gradient-to-br from-blue-50 to-purple-50"
                     }`
-                  : highContrastMode 
-                    ? 'bg-black text-white border-white hover:bg-gray-900'
-                    : 'hover:shadow-lg'
+                  : highContrastMode
+                    ? "bg-black text-white border-white hover:bg-gray-900"
+                    : "hover:shadow-lg"
               }`}
               style={{
-                animationDelay: !reduceMotion ? `${index * 50}ms` : '0ms',
+                animationDelay: !reduceMotion ? `${index * 50}ms` : "0ms",
               }}
               onClick={() => handleCategoryClick(category.id)}
               onTouchStart={() => handleCategoryHover(category.id)}
@@ -642,7 +725,7 @@ export function EnhancedCategorySelector({
               tabIndex={0}
               aria-label={`Select ${category.name} category with ${category.wordCount} words. Estimated time: ${category.estimatedTime}.`}
               onKeyDown={(e) => {
-                if (e.key === 'Enter' || e.key === ' ') {
+                if (e.key === "Enter" || e.key === " ") {
                   e.preventDefault();
                   handleCategoryClick(category.id);
                 }
@@ -652,7 +735,7 @@ export function EnhancedCategorySelector({
                 {/* Enhanced header with better mobile touch targets */}
                 <div
                   className={`bg-gradient-to-r ${category.gradient} p-4 md:p-6 text-white text-center relative overflow-hidden ${
-                    highContrastMode ? 'bg-gray-800' : ''
+                    highContrastMode ? "bg-gray-800" : ""
                   }`}
                 >
                   {/* Enhanced badges */}
@@ -662,24 +745,28 @@ export function EnhancedCategorySelector({
                         ⭐ For You
                       </Badge>
                     )}
-                    <Badge className={`text-xs px-2 py-1 ${getDifficultyBadgeColor(category.difficulty)}`}>
+                    <Badge
+                      className={`text-xs px-2 py-1 ${getDifficultyBadgeColor(category.difficulty)}`}
+                    >
                       {category.difficulty}
                     </Badge>
                   </div>
 
                   {/* Enhanced selection effects */}
-                  {(hoveredCategory === category.id || isSelected) && !reduceMotion && (
-                    <>
-                      <Sparkles className="absolute top-2 right-2 w-5 h-5 text-yellow-300 animate-spin" />
-                      <Star className="absolute bottom-2 left-2 w-4 h-4 text-yellow-300 animate-pulse" />
-                      <Heart className="absolute bottom-2 right-2 w-4 h-4 text-pink-300 animate-bounce" />
-                    </>
-                  )}
+                  {(hoveredCategory === category.id || isSelected) &&
+                    !reduceMotion && (
+                      <>
+                        <Sparkles className="absolute top-2 right-2 w-5 h-5 text-yellow-300 animate-spin" />
+                        <Star className="absolute bottom-2 left-2 w-4 h-4 text-yellow-300 animate-pulse" />
+                        <Heart className="absolute bottom-2 right-2 w-4 h-4 text-pink-300 animate-bounce" />
+                      </>
+                    )}
 
                   {/* Enhanced icon with better animations */}
                   <div
                     className={`text-4xl md:text-6xl mb-3 transition-transform duration-300 ${
-                      !reduceMotion && (hoveredCategory === category.id || isSelected)
+                      !reduceMotion &&
+                      (hoveredCategory === category.id || isSelected)
                         ? "animate-gentle-bounce scale-110"
                         : ""
                     }`}
@@ -713,26 +800,34 @@ export function EnhancedCategorySelector({
 
                 {/* Enhanced content */}
                 <div className="p-4 md:p-6 space-y-4">
-                  <p className={`text-sm leading-relaxed transition-colors duration-300 ${
-                    isSelected
-                      ? "text-educational-blue font-semibold"
-                      : highContrastMode 
-                        ? "text-white"
-                        : "text-slate-600"
-                  }`}>
+                  <p
+                    className={`text-sm leading-relaxed transition-colors duration-300 ${
+                      isSelected
+                        ? "text-educational-blue font-semibold"
+                        : highContrastMode
+                          ? "text-white"
+                          : "text-slate-600"
+                    }`}
+                  >
                     {category.description}
                   </p>
 
                   {/* Enhanced fun fact display */}
                   {(hoveredCategory === category.id || isSelected) && (
-                    <div className={`rounded-lg p-3 animate-fade-in ${
-                      highContrastMode 
-                        ? 'bg-gray-800 border border-white' 
-                        : 'bg-gradient-to-r from-educational-blue/10 to-educational-purple/10'
-                    }`}>
-                      <p className={`text-sm font-semibold ${
-                        highContrastMode ? 'text-white' : 'text-educational-purple'
-                      }`}>
+                    <div
+                      className={`rounded-lg p-3 animate-fade-in ${
+                        highContrastMode
+                          ? "bg-gray-800 border border-white"
+                          : "bg-gradient-to-r from-educational-blue/10 to-educational-purple/10"
+                      }`}
+                    >
+                      <p
+                        className={`text-sm font-semibold ${
+                          highContrastMode
+                            ? "text-white"
+                            : "text-educational-purple"
+                        }`}
+                      >
                         💡 {category.funFact}
                       </p>
                     </div>
@@ -740,9 +835,11 @@ export function EnhancedCategorySelector({
 
                   {/* Enhanced difficulty visualization */}
                   <div className="space-y-2">
-                    <div className={`flex justify-between text-xs ${
-                      highContrastMode ? 'text-white' : 'text-slate-500'
-                    }`}>
+                    <div
+                      className={`flex justify-between text-xs ${
+                        highContrastMode ? "text-white" : "text-slate-500"
+                      }`}
+                    >
                       <span>Difficulty Mix</span>
                       <span>{category.wordCount} total</span>
                     </div>
@@ -801,11 +898,13 @@ export function EnhancedCategorySelector({
                   {/* Enhanced selection indicator */}
                   {isSelected && (
                     <div className="flex items-center justify-center">
-                      <Badge className={`animate-pulse px-4 py-2 ${
-                        highContrastMode 
-                          ? 'bg-white text-black' 
-                          : 'bg-gradient-to-r from-educational-green to-educational-blue text-white'
-                      }`}>
+                      <Badge
+                        className={`animate-pulse px-4 py-2 ${
+                          highContrastMode
+                            ? "bg-white text-black"
+                            : "bg-gradient-to-r from-educational-green to-educational-blue text-white"
+                        }`}
+                      >
                         <Star className="w-4 h-4 mr-1 animate-spin" />
                         <span className="text-sm">✓ Selected!</span>
                         <Sparkles className="w-4 h-4 ml-1 animate-bounce" />
@@ -816,11 +915,13 @@ export function EnhancedCategorySelector({
                   {/* Enhanced hover encouragement */}
                   {hoveredCategory === category.id && !isSelected && (
                     <div className="flex items-center justify-center">
-                      <Badge className={`animate-pulse text-xs px-3 py-1 ${
-                        highContrastMode 
-                          ? 'bg-gray-700 text-white border border-white' 
-                          : 'bg-educational-purple/20 text-educational-purple border border-educational-purple/30'
-                      }`}>
+                      <Badge
+                        className={`animate-pulse text-xs px-3 py-1 ${
+                          highContrastMode
+                            ? "bg-gray-700 text-white border border-white"
+                            : "bg-educational-purple/20 text-educational-purple border border-educational-purple/30"
+                        }`}
+                      >
                         🎯 Tap to explore!
                       </Badge>
                     </div>
@@ -836,10 +937,14 @@ export function EnhancedCategorySelector({
       {categories.length === 0 && (
         <div className="text-center py-12">
           <div className="text-6xl mb-4">🔍</div>
-          <h3 className={`text-lg font-semibold mb-2 ${highContrastMode ? 'text-white' : ''}`}>
+          <h3
+            className={`text-lg font-semibold mb-2 ${highContrastMode ? "text-white" : ""}`}
+          >
             No categories found
           </h3>
-          <p className={`mb-4 px-4 ${highContrastMode ? 'text-white' : 'text-slate-600'}`}>
+          <p
+            className={`mb-4 px-4 ${highContrastMode ? "text-white" : "text-slate-600"}`}
+          >
             Try searching for something like "animals", "colors", or "food"
           </p>
           <Button
@@ -850,9 +955,9 @@ export function EnhancedCategorySelector({
               searchInputRef.current?.focus();
             }}
             className={`${
-              highContrastMode 
-                ? 'border-white text-white hover:bg-white hover:text-black' 
-                : 'text-educational-blue border-educational-blue hover:bg-educational-blue/10'
+              highContrastMode
+                ? "border-white text-white hover:bg-white hover:text-black"
+                : "text-educational-blue border-educational-blue hover:bg-educational-blue/10"
             }`}
           >
             Clear all filters
@@ -862,23 +967,30 @@ export function EnhancedCategorySelector({
 
       {/* Enhanced mobile stats */}
       <div className="md:hidden px-4">
-        <Card className={`border ${
-          highContrastMode 
-            ? 'bg-black text-white border-white' 
-            : 'bg-gradient-to-r from-educational-blue/5 to-educational-purple/5 border-educational-blue/20'
-        }`}>
+        <Card
+          className={`border ${
+            highContrastMode
+              ? "bg-black text-white border-white"
+              : "bg-gradient-to-r from-educational-blue/5 to-educational-purple/5 border-educational-blue/20"
+          }`}
+        >
           <CardContent className="p-4">
-            <h3 className={`font-semibold mb-3 text-center ${
-              highContrastMode ? 'text-white' : 'text-slate-800'
-            }`}>
+            <h3
+              className={`font-semibold mb-3 text-center ${
+                highContrastMode ? "text-white" : "text-slate-800"
+              }`}
+            >
               📊 Your Learning Stats
             </h3>
             <div className="grid grid-cols-3 gap-4 text-center">
               <div>
                 <div className="text-2xl font-bold text-educational-blue">
-                  {categories.find((c) => c.id === selectedCategory)?.wordCount || 0}
+                  {categories.find((c) => c.id === selectedCategory)
+                    ?.wordCount || 0}
                 </div>
-                <div className={`text-xs ${highContrastMode ? 'text-white' : 'text-slate-600'}`}>
+                <div
+                  className={`text-xs ${highContrastMode ? "text-white" : "text-slate-600"}`}
+                >
                   Words Available
                 </div>
               </div>
@@ -886,15 +998,22 @@ export function EnhancedCategorySelector({
                 <div className="text-2xl font-bold text-educational-green">
                   {categories.length}
                 </div>
-                <div className={`text-xs ${highContrastMode ? 'text-white' : 'text-slate-600'}`}>
+                <div
+                  className={`text-xs ${highContrastMode ? "text-white" : "text-slate-600"}`}
+                >
                   Categories
                 </div>
               </div>
               <div>
                 <div className="text-2xl font-bold text-educational-purple">
-                  {selectedCategory ? categories.find(c => c.id === selectedCategory)?.estimatedTime || "5-15" : "5-15"}
+                  {selectedCategory
+                    ? categories.find((c) => c.id === selectedCategory)
+                        ?.estimatedTime || "5-15"
+                    : "5-15"}
                 </div>
-                <div className={`text-xs ${highContrastMode ? 'text-white' : 'text-slate-600'}`}>
+                <div
+                  className={`text-xs ${highContrastMode ? "text-white" : "text-slate-600"}`}
+                >
                   Minutes
                 </div>
               </div>
@@ -906,15 +1025,19 @@ export function EnhancedCategorySelector({
       {/* Enhanced call to action */}
       <div className="text-center px-4 md:px-0">
         <div className="md:hidden mb-4">
-          <Card className={`border ${
-            highContrastMode 
-              ? 'bg-black text-white border-white' 
-              : 'bg-gradient-to-r from-educational-green/10 to-educational-blue/10 border-educational-blue/20'
-          }`}>
+          <Card
+            className={`border ${
+              highContrastMode
+                ? "bg-black text-white border-white"
+                : "bg-gradient-to-r from-educational-green/10 to-educational-blue/10 border-educational-blue/20"
+            }`}
+          >
             <CardContent className="p-4">
-              <div className={`flex items-center justify-center gap-2 mb-3 ${
-                highContrastMode ? 'text-white' : 'text-educational-blue'
-              }`}>
+              <div
+                className={`flex items-center justify-center gap-2 mb-3 ${
+                  highContrastMode ? "text-white" : "text-educational-blue"
+                }`}
+              >
                 <Heart className="w-5 h-5 fill-current animate-gentle-bounce" />
                 <span className="font-semibold text-sm">
                   Ready to start learning?
@@ -922,13 +1045,17 @@ export function EnhancedCategorySelector({
                 <Heart className="w-5 h-5 fill-current animate-gentle-bounce" />
               </div>
               {selectedCategory && selectedCategory !== "all" && (
-                <div className={`text-xs mb-3 ${
-                  highContrastMode ? 'text-white' : 'text-slate-600'
-                }`}>
+                <div
+                  className={`text-xs mb-3 ${
+                    highContrastMode ? "text-white" : "text-slate-600"
+                  }`}
+                >
                   You selected:{" "}
-                  <span className={`font-semibold ${
-                    highContrastMode ? 'text-white' : 'text-educational-blue'
-                  }`}>
+                  <span
+                    className={`font-semibold ${
+                      highContrastMode ? "text-white" : "text-educational-blue"
+                    }`}
+                  >
                     {categories.find((c) => c.id === selectedCategory)?.name}
                   </span>
                 </div>
@@ -941,20 +1068,24 @@ export function EnhancedCategorySelector({
           size="lg"
           onClick={() => {
             audioService.playCheerSound();
-            if ('vibrate' in navigator) {
+            if ("vibrate" in navigator) {
               navigator.vibrate([100, 50, 100]);
             }
             onSelectCategory(selectedCategory);
           }}
           disabled={!selectedCategory || selectedCategory === ""}
           className={`text-lg md:text-xl px-8 md:px-12 py-3 md:py-4 rounded-full font-bold transform transition-all duration-300 shadow-2xl relative overflow-hidden w-full md:w-auto ${
-            !reduceMotion ? 'md:hover:scale-110' : ''
+            !reduceMotion ? "md:hover:scale-110" : ""
           } ${
-            highContrastMode 
-              ? 'bg-white text-black hover:bg-gray-100' 
-              : 'bg-gradient-to-r from-educational-blue via-educational-purple to-educational-pink text-white hover:from-educational-blue/90 hover:via-educational-purple/90 hover:to-educational-pink/90'
+            highContrastMode
+              ? "bg-white text-black hover:bg-gray-100"
+              : "bg-gradient-to-r from-educational-blue via-educational-purple to-educational-pink text-white hover:from-educational-blue/90 hover:via-educational-purple/90 hover:to-educational-pink/90"
           }`}
-          aria-label={selectedCategory ? `Start learning ${categories.find((c) => c.id === selectedCategory)?.name}` : "Select a category first"}
+          aria-label={
+            selectedCategory
+              ? `Start learning ${categories.find((c) => c.id === selectedCategory)?.name}`
+              : "Select a category first"
+          }
         >
           <span className="relative z-10 flex items-center gap-2">
             {!reduceMotion && <Sparkles className="w-6 h-6 animate-spin" />}
@@ -971,11 +1102,11 @@ export function EnhancedCategorySelector({
           )}
         </Button>
 
-        <p className={`text-xs md:text-sm mt-4 ${
-          !reduceMotion ? 'animate-pulse' : ''
-        } ${
-          highContrastMode ? 'text-white' : 'text-slate-500'
-        }`}>
+        <p
+          className={`text-xs md:text-sm mt-4 ${
+            !reduceMotion ? "animate-pulse" : ""
+          } ${highContrastMode ? "text-white" : "text-slate-500"}`}
+        >
           ✨ Choose a category above to begin your vocabulary journey! ✨
         </p>
       </div>

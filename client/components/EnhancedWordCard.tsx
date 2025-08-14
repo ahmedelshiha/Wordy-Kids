@@ -76,7 +76,9 @@ export const EnhancedWordCard: React.FC<EnhancedWordCardProps> = ({
   const [adventureStatus, setAdventureStatus] =
     useState<WordAdventureStatus | null>(null);
   const [wordAchievements, setWordAchievements] = useState<any[]>([]);
-  const [touchStart, setTouchStart] = useState<{ x: number; y: number } | null>(null);
+  const [touchStart, setTouchStart] = useState<{ x: number; y: number } | null>(
+    null,
+  );
   const [isZoomed, setIsZoomed] = useState(false);
   const [highContrastMode, setHighContrastMode] = useState(false);
   const cardRef = useRef<HTMLDivElement>(null);
@@ -95,7 +97,7 @@ export const EnhancedWordCard: React.FC<EnhancedWordCardProps> = ({
     if (!enableSwipeGestures) return;
     const touch = e.touches[0];
     setTouchStart({ x: touch.clientX, y: touch.clientY });
-    
+
     // Add touch feedback animation
     if (cardRef.current) {
       cardRef.current.classList.add("animate-touch-feedback");
@@ -104,11 +106,11 @@ export const EnhancedWordCard: React.FC<EnhancedWordCardProps> = ({
 
   const handleTouchEnd = (e: React.TouchEvent) => {
     if (!enableSwipeGestures || !touchStart) return;
-    
+
     const touch = e.changedTouches[0];
     const deltaX = touch.clientX - touchStart.x;
     const deltaY = touch.clientY - touchStart.y;
-    
+
     // Remove touch feedback animation
     if (cardRef.current) {
       cardRef.current.classList.remove("animate-touch-feedback");
@@ -132,7 +134,7 @@ export const EnhancedWordCard: React.FC<EnhancedWordCardProps> = ({
         handlePronounce();
       }
     }
-    
+
     setTouchStart(null);
   };
 
@@ -143,7 +145,7 @@ export const EnhancedWordCard: React.FC<EnhancedWordCardProps> = ({
     setShowSparkles(true);
 
     // Enhanced haptic feedback for mobile
-    if ('vibrate' in navigator) {
+    if ("vibrate" in navigator) {
       navigator.vibrate([50, 100, 50]);
     }
 
@@ -191,9 +193,9 @@ export const EnhancedWordCard: React.FC<EnhancedWordCardProps> = ({
       audioService.playCheerSound();
       setShowSparkles(true);
       setTimeout(() => setShowSparkles(false), 1000);
-      
+
       // Enhanced haptic feedback
-      if ('vibrate' in navigator) {
+      if ("vibrate" in navigator) {
         navigator.vibrate([100]);
       }
     } else {
@@ -205,7 +207,7 @@ export const EnhancedWordCard: React.FC<EnhancedWordCardProps> = ({
   const handleCardFlip = () => {
     setIsFlipped(!isFlipped);
     audioService.playWhooshSound();
-    
+
     // Add flip animation class
     if (cardRef.current) {
       cardRef.current.classList.add("animate-card-flip");
@@ -249,7 +251,7 @@ export const EnhancedWordCard: React.FC<EnhancedWordCardProps> = ({
   return (
     <div
       ref={cardRef}
-      className={`relative w-full max-w-xs sm:max-w-sm mx-auto mobile-optimized ${className} ${isZoomed ? 'scale-110 z-50' : ''}`}
+      className={`relative w-full max-w-xs sm:max-w-sm mx-auto mobile-optimized ${className} ${isZoomed ? "scale-110 z-50" : ""}`}
     >
       {/* Accessibility Controls */}
       {showAccessibilityFeatures && (
@@ -284,10 +286,10 @@ export const EnhancedWordCard: React.FC<EnhancedWordCardProps> = ({
             : adventureStatus && adventureStatus.health < 50
               ? "ring-2 ring-orange-400/50 shadow-orange-400/20 shadow-lg"
               : ""
-        } ${highContrastMode ? 'ring-4 ring-black shadow-2xl' : ''}`}
-        style={{ 
+        } ${highContrastMode ? "ring-4 ring-black shadow-2xl" : ""}`}
+        style={{
           transformStyle: "preserve-3d",
-          filter: highContrastMode ? 'contrast(1.5) brightness(1.2)' : 'none'
+          filter: highContrastMode ? "contrast(1.5) brightness(1.2)" : "none",
         }}
         onClick={handleCardFlip}
         onTouchStart={handleTouchStart}
@@ -296,7 +298,7 @@ export const EnhancedWordCard: React.FC<EnhancedWordCardProps> = ({
         tabIndex={0}
         aria-label={`Word card for ${word.word}. Tap to flip or swipe for actions.`}
         onKeyDown={(e) => {
-          if (e.key === 'Enter' || e.key === ' ') {
+          if (e.key === "Enter" || e.key === " ") {
             e.preventDefault();
             handleCardFlip();
           }
@@ -385,7 +387,9 @@ export const EnhancedWordCard: React.FC<EnhancedWordCardProps> = ({
                   e.stopPropagation();
                   handleFavorite();
                 }}
-                aria-label={isFavorited ? "Remove from favorites" : "Add to favorites"}
+                aria-label={
+                  isFavorited ? "Remove from favorites" : "Add to favorites"
+                }
               >
                 <Heart
                   className={`w-4 h-4 transition-all duration-300 ${
@@ -477,7 +481,7 @@ export const EnhancedWordCard: React.FC<EnhancedWordCardProps> = ({
                 {new Date(adventureStatus.last_seen).toLocaleDateString()}
               </p>
             )}
-            
+
             {/* Mobile swipe instructions */}
             <div className="mb-2">
               <p className="text-xs sm:text-sm opacity-75 mb-1 flex items-center justify-center gap-1">
@@ -524,7 +528,7 @@ export const EnhancedWordCard: React.FC<EnhancedWordCardProps> = ({
               onClick={(e) => {
                 e.stopPropagation();
                 // Bookmark functionality
-                if ('vibrate' in navigator) {
+                if ("vibrate" in navigator) {
                   navigator.vibrate([50]);
                 }
               }}
@@ -668,7 +672,7 @@ export const EnhancedWordCard: React.FC<EnhancedWordCardProps> = ({
                     className="flex-1 bg-red-500/20 hover:bg-red-500/30 active:bg-red-500/40 text-red-200 border border-red-500/30 transition-all active:scale-95 min-h-[48px] text-xs touch-optimized"
                     onClick={(e) => {
                       e.stopPropagation();
-                      if ('vibrate' in navigator) {
+                      if ("vibrate" in navigator) {
                         navigator.vibrate([100]);
                       }
                       const updatedStatus =
@@ -690,7 +694,7 @@ export const EnhancedWordCard: React.FC<EnhancedWordCardProps> = ({
                     className="flex-1 bg-yellow-500/20 hover:bg-yellow-500/30 active:bg-yellow-500/40 text-yellow-200 border border-yellow-500/30 transition-all active:scale-95 min-h-[48px] text-xs touch-optimized"
                     onClick={(e) => {
                       e.stopPropagation();
-                      if ('vibrate' in navigator) {
+                      if ("vibrate" in navigator) {
                         navigator.vibrate([50]);
                       }
                       const updatedStatus =
@@ -712,7 +716,7 @@ export const EnhancedWordCard: React.FC<EnhancedWordCardProps> = ({
                     className="flex-1 bg-green-500/20 hover:bg-green-500/30 active:bg-green-500/40 text-green-200 border border-green-500/30 transition-all active:scale-95 min-h-[48px] text-xs touch-optimized"
                     onClick={(e) => {
                       e.stopPropagation();
-                      if ('vibrate' in navigator) {
+                      if ("vibrate" in navigator) {
                         navigator.vibrate([50, 50]);
                       }
                       const updatedStatus =
@@ -745,7 +749,7 @@ export const EnhancedWordCard: React.FC<EnhancedWordCardProps> = ({
                         className="bg-orange-500/20 hover:bg-orange-500/30 active:bg-orange-500/40 text-orange-200 border border-orange-500/30 px-3 py-2 h-auto text-xs min-h-[44px] transition-all active:scale-95 touch-optimized"
                         onClick={(e) => {
                           e.stopPropagation();
-                          if ('vibrate' in navigator) {
+                          if ("vibrate" in navigator) {
                             navigator.vibrate([200]);
                           }
                           console.log(

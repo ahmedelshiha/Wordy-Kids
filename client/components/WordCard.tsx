@@ -69,7 +69,9 @@ export const WordCard: React.FC<WordCardProps> = ({
   const [adventureStatus, setAdventureStatus] =
     useState<WordAdventureStatus | null>(null);
   const [wordAchievements, setWordAchievements] = useState<any[]>([]);
-  const [touchStart, setTouchStart] = useState<{x: number, y: number} | null>(null);
+  const [touchStart, setTouchStart] = useState<{ x: number; y: number } | null>(
+    null,
+  );
   const [isGesturing, setIsGesturing] = useState(false);
 
   // Initialize adventure status for this word
@@ -236,7 +238,10 @@ export const WordCard: React.FC<WordCardProps> = ({
       general: "bg-gradient-to-br from-purple-400 to-purple-600",
       science: "bg-gradient-to-br from-pink-400 to-pink-600",
     };
-    return colors[category as keyof typeof colors] || "bg-gradient-to-br from-blue-400 to-purple-600";
+    return (
+      colors[category as keyof typeof colors] ||
+      "bg-gradient-to-br from-blue-400 to-purple-600"
+    );
   };
 
   return (
@@ -252,10 +257,10 @@ export const WordCard: React.FC<WordCardProps> = ({
             : adventureStatus && adventureStatus.health < 50
               ? "ring-2 ring-orange-400/50 shadow-orange-400/20 shadow-lg"
               : ""
-        } ${isGesturing ? 'scale-[1.02] ring-2 ring-blue-400/50' : ''}`}
+        } ${isGesturing ? "scale-[1.02] ring-2 ring-blue-400/50" : ""}`}
         style={{
           transformStyle: "preserve-3d",
-          touchAction: 'pan-y',
+          touchAction: "pan-y",
         }}
         onClick={() => {
           setIsFlipped(!isFlipped);
@@ -268,9 +273,9 @@ export const WordCard: React.FC<WordCardProps> = ({
         onTouchEnd={handleTouchEnd}
         role="button"
         tabIndex={0}
-        aria-label={`Word card for ${word.word}. ${isFlipped ? 'Showing definition' : 'Showing word'}. Tap to flip or swipe for actions.`}
+        aria-label={`Word card for ${word.word}. ${isFlipped ? "Showing definition" : "Showing word"}. Tap to flip or swipe for actions.`}
         onKeyDown={(e) => {
-          if (e.key === 'Enter' || e.key === ' ') {
+          if (e.key === "Enter" || e.key === " ") {
             e.preventDefault();
             setIsFlipped(!isFlipped);
             audioService.playWhooshSound();
@@ -324,7 +329,9 @@ export const WordCard: React.FC<WordCardProps> = ({
                   ) : (
                     <Flame className="w-2 h-2" />
                   )}
-                  <span className="font-medium text-[8px]">{adventureStatus.health}%</span>
+                  <span className="font-medium text-[8px]">
+                    {adventureStatus.health}%
+                  </span>
                 </Badge>
               )}
             </div>
@@ -761,10 +768,12 @@ export const WordCard: React.FC<WordCardProps> = ({
         className="sr-only"
         role="status"
       >
-        {isFlipped ? `Showing definition for ${word.word}` : `Showing word ${word.word}`}
+        {isFlipped
+          ? `Showing definition for ${word.word}`
+          : `Showing word ${word.word}`}
         {isPlaying && ` Pronouncing ${word.word}`}
         {isFavorited && ` ${word.word} added to favorites`}
-        {isGesturing && ' Gesture detected'}
+        {isGesturing && " Gesture detected"}
       </div>
     </div>
   );

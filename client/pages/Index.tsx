@@ -326,8 +326,8 @@ export default function Index({ initialProfile }: IndexProps) {
 
   // Track navigation history for better back navigation
   useEffect(() => {
-    const currentPath = `${learningMode}-${selectedCategory || 'no-category'}`;
-    setNavigationHistory(prev => {
+    const currentPath = `${learningMode}-${selectedCategory || "no-category"}`;
+    setNavigationHistory((prev) => {
       const newHistory = [...prev, currentPath];
       // Keep only last 5 navigation steps
       return newHistory.slice(-5);
@@ -338,8 +338,11 @@ export default function Index({ initialProfile }: IndexProps) {
   useEffect(() => {
     const handleKeyNavigation = (e: KeyboardEvent) => {
       // Only handle when in cards mode and not in input fields
-      if (learningMode === "cards" && !['INPUT', 'TEXTAREA'].includes((e.target as HTMLElement)?.tagName)) {
-        if (e.key === 'Escape') {
+      if (
+        learningMode === "cards" &&
+        !["INPUT", "TEXTAREA"].includes((e.target as HTMLElement)?.tagName)
+      ) {
+        if (e.key === "Escape") {
           e.preventDefault();
           if (navigator.vibrate) {
             navigator.vibrate([50, 30, 50]);
@@ -351,8 +354,8 @@ export default function Index({ initialProfile }: IndexProps) {
       }
     };
 
-    window.addEventListener('keydown', handleKeyNavigation);
-    return () => window.removeEventListener('keydown', handleKeyNavigation);
+    window.addEventListener("keydown", handleKeyNavigation);
+    return () => window.removeEventListener("keydown", handleKeyNavigation);
   }, [learningMode]);
 
   // Initialize learning session and load child stats
@@ -1491,10 +1494,16 @@ export default function Index({ initialProfile }: IndexProps) {
                                 {/* Center: Category and Progress */}
                                 <div className="flex-1 text-center">
                                   <div className="text-sm font-semibold text-slate-800 truncate px-2">
-                                    {selectedCategory ? selectedCategory.charAt(0).toUpperCase() + selectedCategory.slice(1) : "Category"}
+                                    {selectedCategory
+                                      ? selectedCategory
+                                          .charAt(0)
+                                          .toUpperCase() +
+                                        selectedCategory.slice(1)
+                                      : "Category"}
                                   </div>
                                   <div className="text-xs text-slate-500">
-                                    {currentWordIndex + 1}/{displayWords.length} • {rememberedWords.size} ✅
+                                    {currentWordIndex + 1}/{displayWords.length}{" "}
+                                    • {rememberedWords.size} ✅
                                   </div>
                                 </div>
 
@@ -1528,7 +1537,10 @@ export default function Index({ initialProfile }: IndexProps) {
                                       : "Select a Category"}
                                   </h2>
                                   <div className="flex items-center gap-3 text-xs text-slate-600">
-                                    <span>{currentWordIndex + 1}/{displayWords.length}</span>
+                                    <span>
+                                      {currentWordIndex + 1}/
+                                      {displayWords.length}
+                                    </span>
                                     <span>{rememberedWords.size} learned</span>
                                     <span>{forgottenWords.size} review</span>
                                   </div>
@@ -1585,7 +1597,9 @@ export default function Index({ initialProfile }: IndexProps) {
                                         <div className="w-full bg-slate-200 rounded-full h-1">
                                           <div
                                             className="bg-blue-500 h-1 rounded-full transition-all duration-300 ease-out"
-                                            style={{ width: `${((currentWordIndex + 1) / displayWords.length) * 100}%` }}
+                                            style={{
+                                              width: `${((currentWordIndex + 1) / displayWords.length) * 100}%`,
+                                            }}
                                           ></div>
                                         </div>
                                       </div>
@@ -1914,7 +1928,9 @@ export default function Index({ initialProfile }: IndexProps) {
                                             <Button
                                               onClick={() => {
                                                 if (currentWordIndex > 0) {
-                                                  setCurrentWordIndex(currentWordIndex - 1);
+                                                  setCurrentWordIndex(
+                                                    currentWordIndex - 1,
+                                                  );
                                                   audioService.playClickSound();
                                                   if (navigator.vibrate) {
                                                     navigator.vibrate(25);
@@ -1931,14 +1947,22 @@ export default function Index({ initialProfile }: IndexProps) {
 
                                             {/* Compact Progress */}
                                             <div className="flex-1 flex items-center justify-center gap-2 text-xs text-slate-600">
-                                              <span className="font-medium">{currentWordIndex + 1}/{displayWords.length}</span>
+                                              <span className="font-medium">
+                                                {currentWordIndex + 1}/
+                                                {displayWords.length}
+                                              </span>
                                             </div>
 
                                             {/* Next Button */}
                                             <Button
                                               onClick={() => {
-                                                if (currentWordIndex < displayWords.length - 1) {
-                                                  setCurrentWordIndex(currentWordIndex + 1);
+                                                if (
+                                                  currentWordIndex <
+                                                  displayWords.length - 1
+                                                ) {
+                                                  setCurrentWordIndex(
+                                                    currentWordIndex + 1,
+                                                  );
                                                   audioService.playClickSound();
                                                   if (navigator.vibrate) {
                                                     navigator.vibrate(25);
@@ -1947,13 +1971,20 @@ export default function Index({ initialProfile }: IndexProps) {
                                                   setCelebrationEffect(true);
                                                   setTimeout(() => {
                                                     setCelebrationEffect(false);
-                                                    if (window.confirm('Great job! You\'ve completed all words in this category. Return to library to choose another category?')) {
+                                                    if (
+                                                      window.confirm(
+                                                        "Great job! You've completed all words in this category. Return to library to choose another category?",
+                                                      )
+                                                    ) {
                                                       handleSmartBackNavigation();
                                                     }
                                                   }, 2000);
                                                 }
                                               }}
-                                              disabled={currentWordIndex === displayWords.length - 1}
+                                              disabled={
+                                                currentWordIndex ===
+                                                displayWords.length - 1
+                                              }
                                               variant="ghost"
                                               size="sm"
                                               className="h-8 w-8 rounded-full p-0 disabled:opacity-30 hover:bg-slate-100"
@@ -1967,16 +1998,21 @@ export default function Index({ initialProfile }: IndexProps) {
                                       {/* Minimal Status Indicator */}
                                       <div className="text-center mt-2">
                                         {(() => {
-                                          const currentWord = displayWords[currentWordIndex];
+                                          const currentWord =
+                                            displayWords[currentWordIndex];
                                           if (!currentWord) return null;
 
-                                          if (rememberedWords.has(currentWord.id)) {
+                                          if (
+                                            rememberedWords.has(currentWord.id)
+                                          ) {
                                             return (
                                               <div className="text-xs text-green-600 font-medium">
                                                 ✅ Learned
                                               </div>
                                             );
-                                          } else if (forgottenWords.has(currentWord.id)) {
+                                          } else if (
+                                            forgottenWords.has(currentWord.id)
+                                          ) {
                                             return (
                                               <div className="text-xs text-orange-600 font-medium">
                                                 🤔 Review

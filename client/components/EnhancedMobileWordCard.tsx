@@ -84,14 +84,17 @@ export const EnhancedMobileWordCard: React.FC<EnhancedMobileWordCardProps> = ({
   const [isPlaying, setIsPlaying] = useState(false);
   const [isFavorited, setIsFavorited] = useState(false);
   const [showSparkles, setShowSparkles] = useState(false);
-  const [adventureStatus, setAdventureStatus] = useState<WordAdventureStatus | null>(null);
+  const [adventureStatus, setAdventureStatus] =
+    useState<WordAdventureStatus | null>(null);
   const [wordAchievements, setWordAchievements] = useState<any[]>([]);
-  const [touchStart, setTouchStart] = useState<{x: number, y: number} | null>(null);
+  const [touchStart, setTouchStart] = useState<{ x: number; y: number } | null>(
+    null,
+  );
   const [isGesturing, setIsGesturing] = useState(false);
   const [gestureHint, setGestureHint] = useState<string | null>(null);
   const [isExpanded, setIsExpanded] = useState(false);
   const [showAccessibilityPanel, setShowAccessibilityPanel] = useState(false);
-  
+
   const cardRef = useRef<HTMLDivElement>(null);
   const pronunciationRef = useRef<HTMLButtonElement>(null);
 
@@ -107,7 +110,7 @@ export const EnhancedMobileWordCard: React.FC<EnhancedMobileWordCardProps> = ({
   // Enhanced touch gesture handling
   const handleTouchStart = (e: React.TouchEvent) => {
     if (!enableGestures) return;
-    
+
     const touch = e.touches[0];
     setTouchStart({ x: touch.clientX, y: touch.clientY });
     setIsGesturing(true);
@@ -184,8 +187,10 @@ export const EnhancedMobileWordCard: React.FC<EnhancedMobileWordCardProps> = ({
     }
 
     // Announce to screen readers
-    if (accessibilityMode && 'speechSynthesis' in window) {
-      const message = isFlipped ? `Showing word ${word.word}` : `Showing definition for ${word.word}`;
+    if (accessibilityMode && "speechSynthesis" in window) {
+      const message = isFlipped
+        ? `Showing word ${word.word}`
+        : `Showing definition for ${word.word}`;
       const utterance = new SpeechSynthesisUtterance(message);
       utterance.volume = 0.3;
       speechSynthesis.speak(utterance);
@@ -265,11 +270,11 @@ export const EnhancedMobileWordCard: React.FC<EnhancedMobileWordCardProps> = ({
       try {
         await navigator.share({
           title: `Learn: ${word.word}`,
-          text: `${word.definition}\n\nExample: ${word.example || 'No example available'}`,
+          text: `${word.definition}\n\nExample: ${word.example || "No example available"}`,
           url: window.location.href,
         });
       } catch (error) {
-        console.log('Share cancelled or failed');
+        console.log("Share cancelled or failed");
       }
     } else if (navigator.clipboard) {
       const shareText = `${word.word}: ${word.definition}`;
@@ -283,25 +288,25 @@ export const EnhancedMobileWordCard: React.FC<EnhancedMobileWordCardProps> = ({
     const colors = {
       // Core categories
       food: "from-red-400 to-orange-500",
-      animals: "from-blue-400 to-blue-600", 
+      animals: "from-blue-400 to-blue-600",
       nature: "from-green-400 to-green-600",
       objects: "from-purple-400 to-purple-600",
       body: "from-pink-400 to-pink-600",
-      
+
       // Extended categories
       clothes: "from-indigo-400 to-indigo-600",
       family: "from-yellow-400 to-amber-500",
       feelings: "from-rose-400 to-rose-600",
       colors: "from-violet-400 to-purple-500",
       numbers: "from-cyan-400 to-blue-500",
-      
+
       // Additional categories
       greetings: "from-emerald-400 to-green-500",
       technology: "from-slate-400 to-gray-600",
       actions: "from-orange-400 to-red-500",
       weather: "from-sky-400 to-blue-500",
       transportation: "from-yellow-500 to-orange-500",
-      
+
       // Educational categories
       school: "from-blue-500 to-indigo-600",
       emotions: "from-pink-500 to-rose-500",
@@ -309,7 +314,9 @@ export const EnhancedMobileWordCard: React.FC<EnhancedMobileWordCardProps> = ({
       music: "from-violet-500 to-purple-600",
       sports: "from-green-500 to-emerald-600",
     };
-    return colors[category as keyof typeof colors] || "from-blue-400 to-purple-600";
+    return (
+      colors[category as keyof typeof colors] || "from-blue-400 to-purple-600"
+    );
   };
 
   const getDifficultyColor = (difficulty: string) => {
@@ -329,37 +336,37 @@ export const EnhancedMobileWordCard: React.FC<EnhancedMobileWordCardProps> = ({
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (!accessibilityMode) return;
-      
+
       switch (e.key) {
-        case ' ':
+        case " ":
           e.preventDefault();
           handleCardFlip();
           break;
-        case 'p':
-        case 'P':
+        case "p":
+        case "P":
           e.preventDefault();
           handlePronounce();
           break;
-        case 'f':
-        case 'F':
+        case "f":
+        case "F":
           e.preventDefault();
           handleFavorite();
           break;
-        case 'Enter':
+        case "Enter":
           e.preventDefault();
           handleCardFlip();
           break;
       }
     };
 
-    document.addEventListener('keydown', handleKeyDown);
-    return () => document.removeEventListener('keydown', handleKeyDown);
+    document.addEventListener("keydown", handleKeyDown);
+    return () => document.removeEventListener("keydown", handleKeyDown);
   }, [accessibilityMode]);
 
   return (
-    <div 
+    <div
       ref={cardRef}
-      className={`relative w-full ${fullscreenMode ? 'h-screen' : 'max-w-xs sm:max-w-sm'} mx-auto ${className}`}
+      className={`relative w-full ${fullscreenMode ? "h-screen" : "max-w-xs sm:max-w-sm"} mx-auto ${className}`}
     >
       {/* Accessibility Panel */}
       {showAccessibilityPanel && (
@@ -375,18 +382,28 @@ export const EnhancedMobileWordCard: React.FC<EnhancedMobileWordCardProps> = ({
               <X className="w-4 h-4" />
             </Button>
           </div>
-          
+
           <div className="grid grid-cols-2 gap-2 text-sm">
             <div>
-              <p><kbd className="bg-gray-700 px-2 py-1 rounded">Space</kbd> Flip card</p>
-              <p><kbd className="bg-gray-700 px-2 py-1 rounded">P</kbd> Pronounce</p>
+              <p>
+                <kbd className="bg-gray-700 px-2 py-1 rounded">Space</kbd> Flip
+                card
+              </p>
+              <p>
+                <kbd className="bg-gray-700 px-2 py-1 rounded">P</kbd> Pronounce
+              </p>
             </div>
             <div>
-              <p><kbd className="bg-gray-700 px-2 py-1 rounded">F</kbd> Favorite</p>
-              <p><kbd className="bg-gray-700 px-2 py-1 rounded">Enter</kbd> Activate</p>
+              <p>
+                <kbd className="bg-gray-700 px-2 py-1 rounded">F</kbd> Favorite
+              </p>
+              <p>
+                <kbd className="bg-gray-700 px-2 py-1 rounded">Enter</kbd>{" "}
+                Activate
+              </p>
             </div>
           </div>
-          
+
           {enableGestures && (
             <div className="mt-3 pt-3 border-t border-white/20">
               <p className="text-xs text-white/80">Swipe gestures enabled:</p>
@@ -409,7 +426,7 @@ export const EnhancedMobileWordCard: React.FC<EnhancedMobileWordCardProps> = ({
       )}
 
       <Card
-        className={`${fullscreenMode ? 'h-full' : 'h-[420px] sm:h-[400px] md:h-[380px]'} cursor-pointer transition-all duration-500 transform-gpu ${
+        className={`${fullscreenMode ? "h-full" : "h-[420px] sm:h-[400px] md:h-[380px]"} cursor-pointer transition-all duration-500 transform-gpu ${
           isFlipped ? "[transform:rotateY(180deg)]" : ""
         } ${
           adventureStatus && adventureStatus.health < 30
@@ -417,10 +434,10 @@ export const EnhancedMobileWordCard: React.FC<EnhancedMobileWordCardProps> = ({
             : adventureStatus && adventureStatus.health < 50
               ? "ring-2 ring-orange-400/50 shadow-orange-400/20 shadow-lg"
               : "shadow-xl hover:shadow-2xl"
-        } ${isGesturing ? 'scale-[1.02]' : 'hover:scale-[1.01]'}`}
-        style={{ 
+        } ${isGesturing ? "scale-[1.02]" : "hover:scale-[1.01]"}`}
+        style={{
           transformStyle: "preserve-3d",
-          touchAction: enableGestures ? 'pan-y' : 'auto',
+          touchAction: enableGestures ? "pan-y" : "auto",
         }}
         onClick={handleCardFlip}
         onTouchStart={handleTouchStart}
@@ -428,9 +445,9 @@ export const EnhancedMobileWordCard: React.FC<EnhancedMobileWordCardProps> = ({
         onTouchEnd={handleTouchEnd}
         role="button"
         tabIndex={0}
-        aria-label={`Word card for ${word.word}. ${isFlipped ? 'Showing definition' : 'Showing word'}. Press space to flip.`}
+        aria-label={`Word card for ${word.word}. ${isFlipped ? "Showing definition" : "Showing word"}. Press space to flip.`}
         onKeyDown={(e) => {
-          if (e.key === 'Enter' || e.key === ' ') {
+          if (e.key === "Enter" || e.key === " ") {
             e.preventDefault();
             handleCardFlip();
           }
@@ -444,12 +461,20 @@ export const EnhancedMobileWordCard: React.FC<EnhancedMobileWordCardProps> = ({
           {/* Enhanced Header with Better Mobile Layout */}
           <div className="flex items-start justify-between mb-4">
             <div className="flex flex-wrap gap-2 flex-1">
-              <Badge className={`${getDifficultyColor(word.difficulty)} text-xs font-medium px-3 py-1.5 shadow-lg`}>
-                {word.difficulty === "easy" ? "🌟 Easy" : 
-                 word.difficulty === "medium" ? "⭐ Medium" : "🔥 Hard"}
+              <Badge
+                className={`${getDifficultyColor(word.difficulty)} text-xs font-medium px-3 py-1.5 shadow-lg`}
+              >
+                {word.difficulty === "easy"
+                  ? "🌟 Easy"
+                  : word.difficulty === "medium"
+                    ? "⭐ Medium"
+                    : "🔥 Hard"}
               </Badge>
-              
-              <Badge variant="outline" className="bg-white/20 border-white/40 text-white text-xs px-3 py-1.5 backdrop-blur-sm">
+
+              <Badge
+                variant="outline"
+                className="bg-white/20 border-white/40 text-white text-xs px-3 py-1.5 backdrop-blur-sm"
+              >
                 {word.category}
               </Badge>
 
@@ -467,10 +492,15 @@ export const EnhancedMobileWordCard: React.FC<EnhancedMobileWordCardProps> = ({
                           : "bg-red-500/25 border-red-400/60 text-red-100 animate-pulse"
                   }`}
                 >
-                  {adventureStatus.health >= 80 ? <Crown className="w-3 h-3" /> :
-                   adventureStatus.health >= 50 ? <Shield className="w-3 h-3" /> :
-                   adventureStatus.health >= 30 ? <Target className="w-3 h-3" /> :
-                   <Flame className="w-3 h-3" />}
+                  {adventureStatus.health >= 80 ? (
+                    <Crown className="w-3 h-3" />
+                  ) : adventureStatus.health >= 50 ? (
+                    <Shield className="w-3 h-3" />
+                  ) : adventureStatus.health >= 30 ? (
+                    <Target className="w-3 h-3" />
+                  ) : (
+                    <Flame className="w-3 h-3" />
+                  )}
                   <span className="font-medium">{adventureStatus.health}%</span>
                 </Badge>
               )}
@@ -516,9 +546,15 @@ export const EnhancedMobileWordCard: React.FC<EnhancedMobileWordCardProps> = ({
                   e.stopPropagation();
                   handleFavorite();
                 }}
-                aria-label={isFavorited ? `Remove ${word.word} from favorites` : `Add ${word.word} to favorites`}
+                aria-label={
+                  isFavorited
+                    ? `Remove ${word.word} from favorites`
+                    : `Add ${word.word} to favorites`
+                }
               >
-                <Heart className={`w-4 h-4 transition-all duration-300 ${isFavorited ? "fill-current" : ""}`} />
+                <Heart
+                  className={`w-4 h-4 transition-all duration-300 ${isFavorited ? "fill-current" : ""}`}
+                />
                 {showSparkles && isFavorited && (
                   <Sparkles className="w-3 h-3 absolute -top-1 -right-1 text-yellow-300 animate-spin" />
                 )}
@@ -543,8 +579,9 @@ export const EnhancedMobileWordCard: React.FC<EnhancedMobileWordCardProps> = ({
 
           {/* Enhanced Image/Emoji Container with Better Animations */}
           <div className="relative mx-auto mb-4 group">
-            <div className={`${fullscreenMode ? 'w-40 h-40 sm:w-48 sm:h-48' : 'w-32 h-32 sm:w-36 sm:h-36'} rounded-full bg-gradient-to-br from-white/30 via-white/20 to-white/10 backdrop-blur-md shadow-2xl ring-4 ring-white/30 flex items-center justify-center relative overflow-hidden transition-all duration-500 group-hover:scale-105 group-hover:shadow-3xl`}>
-              
+            <div
+              className={`${fullscreenMode ? "w-40 h-40 sm:w-48 sm:h-48" : "w-32 h-32 sm:w-36 sm:h-36"} rounded-full bg-gradient-to-br from-white/30 via-white/20 to-white/10 backdrop-blur-md shadow-2xl ring-4 ring-white/30 flex items-center justify-center relative overflow-hidden transition-all duration-500 group-hover:scale-105 group-hover:shadow-3xl`}
+            >
               {/* Enhanced decorative elements */}
               <div className="absolute top-2 left-2 w-3 h-3 bg-white/25 rounded-full animate-pulse"></div>
               <div className="absolute bottom-3 right-3 w-2 h-2 bg-white/20 rounded-full animate-bounce delay-300"></div>
@@ -559,14 +596,16 @@ export const EnhancedMobileWordCard: React.FC<EnhancedMobileWordCardProps> = ({
                   loading="lazy"
                 />
               ) : (
-                <span className={`${fullscreenMode ? 'text-7xl sm:text-8xl' : 'text-5xl sm:text-6xl'} relative z-10 drop-shadow-2xl transition-transform duration-500 group-hover:scale-110 select-none`}>
+                <span
+                  className={`${fullscreenMode ? "text-7xl sm:text-8xl" : "text-5xl sm:text-6xl"} relative z-10 drop-shadow-2xl transition-transform duration-500 group-hover:scale-110 select-none`}
+                >
                   {word.emoji || "📚"}
                 </span>
               )}
 
               {/* Enhanced glow effect */}
               <div className="absolute inset-0 rounded-full bg-gradient-to-t from-transparent via-white/5 to-white/15 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-              
+
               {/* Ripple effect for touch feedback */}
               {isGesturing && (
                 <div className="absolute inset-0 rounded-full bg-white/20 animate-ping"></div>
@@ -576,16 +615,20 @@ export const EnhancedMobileWordCard: React.FC<EnhancedMobileWordCardProps> = ({
 
           {/* Enhanced Word and Pronunciation Section */}
           <div className="flex-1 flex flex-col justify-center items-center text-center space-y-4">
-            <h2 className={`${fullscreenMode ? 'text-3xl sm:text-4xl md:text-5xl' : 'text-xl sm:text-2xl md:text-3xl'} font-bold tracking-wide drop-shadow-lg transition-all duration-300`}>
+            <h2
+              className={`${fullscreenMode ? "text-3xl sm:text-4xl md:text-5xl" : "text-xl sm:text-2xl md:text-3xl"} font-bold tracking-wide drop-shadow-lg transition-all duration-300`}
+            >
               {word.word}
             </h2>
 
             {word.pronunciation && (
               <div className="flex flex-col sm:flex-row items-center gap-3 sm:gap-4">
-                <span className={`${fullscreenMode ? 'text-lg sm:text-xl' : 'text-sm sm:text-base'} opacity-90 font-medium drop-shadow-sm`}>
+                <span
+                  className={`${fullscreenMode ? "text-lg sm:text-xl" : "text-sm sm:text-base"} opacity-90 font-medium drop-shadow-sm`}
+                >
                   {word.pronunciation}
                 </span>
-                
+
                 <Button
                   ref={pronunciationRef}
                   size="sm"
@@ -602,14 +645,18 @@ export const EnhancedMobileWordCard: React.FC<EnhancedMobileWordCardProps> = ({
                   }`}
                   aria-label={`Pronounce ${word.word}`}
                 >
-                  <Volume2 className={`w-6 h-6 transition-all duration-300 ${
-                    isPlaying ? "text-yellow-200 animate-pulse scale-110" : "text-white"
-                  }`} />
-                  
+                  <Volume2
+                    className={`w-6 h-6 transition-all duration-300 ${
+                      isPlaying
+                        ? "text-yellow-200 animate-pulse scale-110"
+                        : "text-white"
+                    }`}
+                  />
+
                   {showSparkles && (
                     <Sparkles className="w-4 h-4 absolute -top-1 -right-1 text-yellow-300 animate-spin" />
                   )}
-                  
+
                   {isPlaying && (
                     <>
                       <div className="absolute inset-0 rounded-full border-2 border-yellow-300/60 animate-ping"></div>
@@ -625,16 +672,17 @@ export const EnhancedMobileWordCard: React.FC<EnhancedMobileWordCardProps> = ({
           <div className="text-center space-y-3">
             {adventureStatus && (
               <p className="text-xs opacity-70 font-medium">
-                Last seen: {new Date(adventureStatus.last_seen).toLocaleDateString()}
+                Last seen:{" "}
+                {new Date(adventureStatus.last_seen).toLocaleDateString()}
               </p>
             )}
-            
+
             <div className="space-y-2">
               <p className="text-xs sm:text-sm opacity-80 font-medium flex items-center justify-center gap-2">
                 <RotateCcw className="w-3 h-3 sm:w-4 sm:h-4" />
                 Tap to see definition
               </p>
-              
+
               {enableGestures && !fullscreenMode && (
                 <div className="flex justify-center gap-4 text-xs opacity-70">
                   <span className="flex items-center gap-1">
@@ -649,7 +697,7 @@ export const EnhancedMobileWordCard: React.FC<EnhancedMobileWordCardProps> = ({
                 </div>
               )}
             </div>
-            
+
             {/* Enhanced loading indicators */}
             <div className="flex justify-center gap-2">
               <div className="w-2 h-2 bg-white/60 rounded-full animate-bounce"></div>
@@ -669,10 +717,12 @@ export const EnhancedMobileWordCard: React.FC<EnhancedMobileWordCardProps> = ({
         >
           {/* Enhanced Back Header */}
           <div className="flex items-center justify-between mb-4">
-            <h3 className={`${fullscreenMode ? 'text-xl sm:text-2xl' : 'text-lg sm:text-xl'} font-bold flex items-center gap-2`}>
+            <h3
+              className={`${fullscreenMode ? "text-xl sm:text-2xl" : "text-lg sm:text-xl"} font-bold flex items-center gap-2`}
+            >
               {word.word} {word.emoji}
             </h3>
-            
+
             <div className="flex gap-2">
               <Button
                 size="sm"
@@ -686,7 +736,7 @@ export const EnhancedMobileWordCard: React.FC<EnhancedMobileWordCardProps> = ({
               >
                 <Bookmark className="w-4 h-4" />
               </Button>
-              
+
               <Button
                 size="sm"
                 variant="ghost"
@@ -710,7 +760,9 @@ export const EnhancedMobileWordCard: React.FC<EnhancedMobileWordCardProps> = ({
                   <Brain className="w-4 h-4" />
                   Definition
                 </h4>
-                <p className={`${fullscreenMode ? 'text-base sm:text-lg' : 'text-sm sm:text-base'} leading-relaxed text-blue-100`}>
+                <p
+                  className={`${fullscreenMode ? "text-base sm:text-lg" : "text-sm sm:text-base"} leading-relaxed text-blue-100`}
+                >
                   {word.definition}
                 </p>
               </div>
@@ -721,7 +773,9 @@ export const EnhancedMobileWordCard: React.FC<EnhancedMobileWordCardProps> = ({
                     <Star className="w-4 h-4" />
                     Example
                   </h4>
-                  <p className={`${fullscreenMode ? 'text-base sm:text-lg' : 'text-sm'} italic text-green-100 leading-relaxed`}>
+                  <p
+                    className={`${fullscreenMode ? "text-base sm:text-lg" : "text-sm"} italic text-green-100 leading-relaxed`}
+                  >
                     "{word.example}"
                   </p>
                 </div>
@@ -733,7 +787,9 @@ export const EnhancedMobileWordCard: React.FC<EnhancedMobileWordCardProps> = ({
                     <Sparkles className="w-4 h-4" />
                     Fun Fact
                   </h4>
-                  <p className={`${fullscreenMode ? 'text-sm sm:text-base' : 'text-xs sm:text-sm'} text-purple-100 leading-relaxed`}>
+                  <p
+                    className={`${fullscreenMode ? "text-sm sm:text-base" : "text-xs sm:text-sm"} text-purple-100 leading-relaxed`}
+                  >
                     {word.funFact}
                   </p>
                 </div>
@@ -752,11 +808,17 @@ export const EnhancedMobileWordCard: React.FC<EnhancedMobileWordCardProps> = ({
                     Word Health
                   </h4>
                   <div className="flex items-center gap-2">
-                    <span className={`text-sm font-bold ${
-                      (adventureStatus?.health || 100) >= 80 ? "text-green-300" :
-                      (adventureStatus?.health || 100) >= 50 ? "text-yellow-300" :
-                      (adventureStatus?.health || 100) >= 30 ? "text-orange-300" : "text-red-300"
-                    }`}>
+                    <span
+                      className={`text-sm font-bold ${
+                        (adventureStatus?.health || 100) >= 80
+                          ? "text-green-300"
+                          : (adventureStatus?.health || 100) >= 50
+                            ? "text-yellow-300"
+                            : (adventureStatus?.health || 100) >= 30
+                              ? "text-orange-300"
+                              : "text-red-300"
+                      }`}
+                    >
                       {adventureStatus?.health || 100}%
                     </span>
                     {(adventureStatus?.health || 100) < 50 && (
@@ -764,12 +826,15 @@ export const EnhancedMobileWordCard: React.FC<EnhancedMobileWordCardProps> = ({
                     )}
                   </div>
                 </div>
-                
+
                 <Progress
                   value={adventureStatus?.health || 100}
                   className={`h-3 ${
-                    (adventureStatus?.health || 100) >= 50 ? "bg-green-100/20" :
-                    (adventureStatus?.health || 100) >= 30 ? "bg-orange-100/20" : "bg-red-100/20"
+                    (adventureStatus?.health || 100) >= 50
+                      ? "bg-green-100/20"
+                      : (adventureStatus?.health || 100) >= 30
+                        ? "bg-orange-100/20"
+                        : "bg-red-100/20"
                   }`}
                 />
 
@@ -778,7 +843,9 @@ export const EnhancedMobileWordCard: React.FC<EnhancedMobileWordCardProps> = ({
                     {(adventureStatus?.health || 100) < 30 ? (
                       <>
                         <Flame className="w-4 h-4 text-red-400 animate-pulse" />
-                        <span className="text-red-300 font-medium">Needs Rescue!</span>
+                        <span className="text-red-300 font-medium">
+                          Needs Rescue!
+                        </span>
                       </>
                     ) : (adventureStatus?.health || 100) < 50 ? (
                       <>
@@ -809,7 +876,7 @@ export const EnhancedMobileWordCard: React.FC<EnhancedMobileWordCardProps> = ({
                   <Sword className="w-4 h-4" />
                   Rate Your Knowledge
                 </h4>
-                
+
                 <div className="grid grid-cols-3 gap-2">
                   <Button
                     size="sm"
@@ -817,16 +884,17 @@ export const EnhancedMobileWordCard: React.FC<EnhancedMobileWordCardProps> = ({
                     className="bg-red-500/25 hover:bg-red-500/40 active:bg-red-500/50 text-red-200 border border-red-500/40 transition-all active:scale-95 min-h-[48px] text-xs font-medium"
                     onClick={(e) => {
                       e.stopPropagation();
-                      
+
                       if (navigator.vibrate) {
                         navigator.vibrate([100, 50, 100]);
                       }
-                      
-                      const updatedStatus = adventureService.trackWordInteraction(
-                        word.id.toString(),
-                        false,
-                        false,
-                      );
+
+                      const updatedStatus =
+                        adventureService.trackWordInteraction(
+                          word.id.toString(),
+                          false,
+                          false,
+                        );
                       setAdventureStatus(updatedStatus);
                       onWordMastered?.(word.id, "hard");
                     }}
@@ -834,23 +902,24 @@ export const EnhancedMobileWordCard: React.FC<EnhancedMobileWordCardProps> = ({
                     <ThumbsDown className="w-3 h-3 mb-1" />
                     Forgot
                   </Button>
-                  
+
                   <Button
                     size="sm"
                     variant="ghost"
                     className="bg-yellow-500/25 hover:bg-yellow-500/40 active:bg-yellow-500/50 text-yellow-200 border border-yellow-500/40 transition-all active:scale-95 min-h-[48px] text-xs font-medium"
                     onClick={(e) => {
                       e.stopPropagation();
-                      
+
                       if (navigator.vibrate) {
                         navigator.vibrate([75]);
                       }
-                      
-                      const updatedStatus = adventureService.trackWordInteraction(
-                        word.id.toString(),
-                        true,
-                        true,
-                      );
+
+                      const updatedStatus =
+                        adventureService.trackWordInteraction(
+                          word.id.toString(),
+                          true,
+                          true,
+                        );
                       setAdventureStatus(updatedStatus);
                       onWordMastered?.(word.id, "medium");
                     }}
@@ -858,23 +927,24 @@ export const EnhancedMobileWordCard: React.FC<EnhancedMobileWordCardProps> = ({
                     <Star className="w-3 h-3 mb-1" />
                     Kinda
                   </Button>
-                  
+
                   <Button
                     size="sm"
                     variant="ghost"
                     className="bg-green-500/25 hover:bg-green-500/40 active:bg-green-500/50 text-green-200 border border-green-500/40 transition-all active:scale-95 min-h-[48px] text-xs font-medium"
                     onClick={(e) => {
                       e.stopPropagation();
-                      
+
                       if (navigator.vibrate) {
                         navigator.vibrate([50, 25, 50]);
                       }
-                      
-                      const updatedStatus = adventureService.trackWordInteraction(
-                        word.id.toString(),
-                        true,
-                        false,
-                      );
+
+                      const updatedStatus =
+                        adventureService.trackWordInteraction(
+                          word.id.toString(),
+                          true,
+                          false,
+                        );
                       setAdventureStatus(updatedStatus);
                       onWordMastered?.(word.id, "easy");
                     }}
@@ -899,7 +969,10 @@ export const EnhancedMobileWordCard: React.FC<EnhancedMobileWordCardProps> = ({
                         className="bg-orange-500/30 hover:bg-orange-500/40 active:bg-orange-500/50 text-orange-200 border border-orange-500/40 px-3 py-2 text-xs min-h-[40px] transition-all active:scale-95"
                         onClick={(e) => {
                           e.stopPropagation();
-                          console.log("Opening rescue mission for word:", word.word);
+                          console.log(
+                            "Opening rescue mission for word:",
+                            word.word,
+                          );
                         }}
                       >
                         <Sword className="w-3 h-3 mr-1" />
@@ -927,13 +1000,15 @@ export const EnhancedMobileWordCard: React.FC<EnhancedMobileWordCardProps> = ({
       )}
 
       {/* Screen reader live region */}
-      <div 
-        aria-live="polite" 
-        aria-atomic="true" 
+      <div
+        aria-live="polite"
+        aria-atomic="true"
         className="sr-only"
         role="status"
       >
-        {isFlipped ? `Showing definition for ${word.word}` : `Showing word ${word.word}`}
+        {isFlipped
+          ? `Showing definition for ${word.word}`
+          : `Showing word ${word.word}`}
         {isPlaying && `Pronouncing ${word.word}`}
         {isFavorited && `${word.word} added to favorites`}
       </div>

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { 
+import {
   ArrowLeft,
   Smartphone,
   Monitor,
@@ -17,118 +17,124 @@ import {
   Brain,
   Volume2,
   Eye,
-  Gamepad2
+  Gamepad2,
 } from "lucide-react";
 import { EnhancedWordLibrary } from "@/components/EnhancedWordLibrary";
 
 export function EnhancedWordLibraryDemo() {
   const [showDemo, setShowDemo] = useState(false);
-  const [selectedFeatures, setSelectedFeatures] = useState<Set<string>>(new Set());
-  const [deviceMode, setDeviceMode] = useState<'mobile' | 'desktop'>('mobile');
-  const [userInterests, setUserInterests] = useState<string[]>(['animals', 'nature']);
+  const [selectedFeatures, setSelectedFeatures] = useState<Set<string>>(
+    new Set(),
+  );
+  const [deviceMode, setDeviceMode] = useState<"mobile" | "desktop">("mobile");
+  const [userInterests, setUserInterests] = useState<string[]>([
+    "animals",
+    "nature",
+  ]);
 
   // Simulate mobile/desktop detection
   useEffect(() => {
     const checkDevice = () => {
-      setDeviceMode(window.innerWidth <= 768 ? 'mobile' : 'desktop');
+      setDeviceMode(window.innerWidth <= 768 ? "mobile" : "desktop");
     };
-    
+
     checkDevice();
-    window.addEventListener('resize', checkDevice);
-    return () => window.removeEventListener('resize', checkDevice);
+    window.addEventListener("resize", checkDevice);
+    return () => window.removeEventListener("resize", checkDevice);
   }, []);
 
   const features = [
     {
-      id: 'accessibility',
-      name: 'Enhanced Accessibility',
-      description: 'Screen reader support, keyboard navigation, high contrast mode',
+      id: "accessibility",
+      name: "Enhanced Accessibility",
+      description:
+        "Screen reader support, keyboard navigation, high contrast mode",
       icon: Accessibility,
-      color: 'bg-blue-500',
+      color: "bg-blue-500",
       highlights: [
-        'ARIA labels and landmarks',
-        'Keyboard shortcuts',
-        'High contrast mode',
-        'Large text option',
-        'Screen reader announcements',
-        'Focus management'
-      ]
+        "ARIA labels and landmarks",
+        "Keyboard shortcuts",
+        "High contrast mode",
+        "Large text option",
+        "Screen reader announcements",
+        "Focus management",
+      ],
     },
     {
-      id: 'mobile',
-      name: 'Mobile Optimization',
-      description: 'Touch gestures, haptic feedback, responsive design',
+      id: "mobile",
+      name: "Mobile Optimization",
+      description: "Touch gestures, haptic feedback, responsive design",
       icon: Smartphone,
-      color: 'bg-green-500',
+      color: "bg-green-500",
       highlights: [
-        'Swipe gestures for navigation',
-        'Haptic feedback',
-        'Touch-friendly targets (44px min)',
-        'Mobile-first responsive design',
-        'Hardware acceleration',
-        'Reduced motion options'
-      ]
+        "Swipe gestures for navigation",
+        "Haptic feedback",
+        "Touch-friendly targets (44px min)",
+        "Mobile-first responsive design",
+        "Hardware acceleration",
+        "Reduced motion options",
+      ],
     },
     {
-      id: 'animations',
-      name: 'Enhanced Animations',
-      description: 'Smooth transitions, performance optimized',
+      id: "animations",
+      name: "Enhanced Animations",
+      description: "Smooth transitions, performance optimized",
       icon: Zap,
-      color: 'bg-purple-500',
+      color: "bg-purple-500",
       highlights: [
-        'Hardware-accelerated animations',
-        'Mobile-optimized performance',
-        'Reduced motion respect',
-        'Touch feedback animations',
-        'Loading states',
-        'Micro-interactions'
-      ]
+        "Hardware-accelerated animations",
+        "Mobile-optimized performance",
+        "Reduced motion respect",
+        "Touch feedback animations",
+        "Loading states",
+        "Micro-interactions",
+      ],
     },
     {
-      id: 'vocabulary',
-      name: 'Advanced Vocabulary Builder',
-      description: 'Spaced repetition, progress tracking, gamification',
+      id: "vocabulary",
+      name: "Advanced Vocabulary Builder",
+      description: "Spaced repetition, progress tracking, gamification",
       icon: Brain,
-      color: 'bg-orange-500',
+      color: "bg-orange-500",
       highlights: [
-        'Spaced repetition algorithm',
-        'Progress tracking',
-        'Difficulty adaptation',
-        'Achievement system',
-        'Session management',
-        'Performance analytics'
-      ]
+        "Spaced repetition algorithm",
+        "Progress tracking",
+        "Difficulty adaptation",
+        "Achievement system",
+        "Session management",
+        "Performance analytics",
+      ],
     },
     {
-      id: 'audio',
-      name: 'Audio Features',
-      description: 'Text-to-speech, pronunciation guide',
+      id: "audio",
+      name: "Audio Features",
+      description: "Text-to-speech, pronunciation guide",
       icon: Volume2,
-      color: 'bg-pink-500',
+      color: "bg-pink-500",
       highlights: [
-        'Real speech synthesis',
-        'Pronunciation guides',
-        'Auto-play options',
-        'Audio feedback',
-        'Voice announcements',
-        'Audio cues'
-      ]
+        "Real speech synthesis",
+        "Pronunciation guides",
+        "Auto-play options",
+        "Audio feedback",
+        "Voice announcements",
+        "Audio cues",
+      ],
     },
     {
-      id: 'visual',
-      name: 'Visual Enhancements',
-      description: 'Beautiful design, dark mode, customization',
+      id: "visual",
+      name: "Visual Enhancements",
+      description: "Beautiful design, dark mode, customization",
       icon: Eye,
-      color: 'bg-indigo-500',
+      color: "bg-indigo-500",
       highlights: [
-        'Modern card design',
-        'Educational color palette',
-        'Dark/high contrast modes',
-        'Customizable text sizes',
-        'Visual feedback',
-        'Intuitive iconography'
-      ]
-    }
+        "Modern card design",
+        "Educational color palette",
+        "Dark/high contrast modes",
+        "Customizable text sizes",
+        "Visual feedback",
+        "Intuitive iconography",
+      ],
+    },
   ];
 
   const toggleFeature = (featureId: string) => {
@@ -164,16 +170,17 @@ export function EnhancedWordLibraryDemo() {
               <BookOpen className="w-8 h-8 text-white" />
             </div>
           </div>
-          
+
           <h1 className="text-4xl md:text-6xl font-bold text-slate-800 mb-4">
             Enhanced Word Library
           </h1>
-          
+
           <p className="text-xl text-slate-600 max-w-3xl mx-auto leading-relaxed">
-            Experience the next generation of educational word learning with advanced mobile optimization, 
-            accessibility features, and engaging interactions designed for modern learners.
+            Experience the next generation of educational word learning with
+            advanced mobile optimization, accessibility features, and engaging
+            interactions designed for modern learners.
           </p>
-          
+
           <div className="flex flex-wrap justify-center gap-3 mt-6">
             <Badge className="bg-educational-green text-white px-4 py-2 text-sm">
               <Accessibility className="w-4 h-4 mr-2" />
@@ -197,17 +204,27 @@ export function EnhancedWordLibraryDemo() {
         {/* Device Mode Toggle */}
         <Card className="max-w-md mx-auto">
           <CardContent className="p-6">
-            <h3 className="text-lg font-semibold mb-4 text-center">Current Device Mode</h3>
+            <h3 className="text-lg font-semibold mb-4 text-center">
+              Current Device Mode
+            </h3>
             <div className="flex items-center justify-center gap-4">
-              <div className={`flex items-center gap-2 px-4 py-2 rounded-lg ${
-                deviceMode === 'mobile' ? 'bg-educational-blue text-white' : 'bg-gray-100 text-gray-600'
-              }`}>
+              <div
+                className={`flex items-center gap-2 px-4 py-2 rounded-lg ${
+                  deviceMode === "mobile"
+                    ? "bg-educational-blue text-white"
+                    : "bg-gray-100 text-gray-600"
+                }`}
+              >
                 <Smartphone className="w-5 h-5" />
                 <span>Mobile</span>
               </div>
-              <div className={`flex items-center gap-2 px-4 py-2 rounded-lg ${
-                deviceMode === 'desktop' ? 'bg-educational-blue text-white' : 'bg-gray-100 text-gray-600'
-              }`}>
+              <div
+                className={`flex items-center gap-2 px-4 py-2 rounded-lg ${
+                  deviceMode === "desktop"
+                    ? "bg-educational-blue text-white"
+                    : "bg-gray-100 text-gray-600"
+                }`}
+              >
                 <Monitor className="w-5 h-5" />
                 <span>Desktop</span>
               </div>
@@ -223,47 +240,54 @@ export function EnhancedWordLibraryDemo() {
           <h2 className="text-3xl font-bold text-center text-slate-800">
             🌟 Enhanced Features
           </h2>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {features.map((feature) => {
               const Icon = feature.icon;
               const isSelected = selectedFeatures.has(feature.id);
-              
+
               return (
                 <Card
                   key={feature.id}
                   className={`cursor-pointer transition-all duration-300 hover:shadow-lg transform hover:scale-105 ${
-                    isSelected ? 'ring-2 ring-educational-blue shadow-xl' : ''
+                    isSelected ? "ring-2 ring-educational-blue shadow-xl" : ""
                   }`}
                   onClick={() => toggleFeature(feature.id)}
                 >
                   <CardContent className="p-6">
                     <div className="text-center mb-4">
-                      <div className={`${feature.color} w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-3 shadow-lg`}>
+                      <div
+                        className={`${feature.color} w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-3 shadow-lg`}
+                      >
                         <Icon className="w-8 h-8 text-white" />
                       </div>
-                      
+
                       <h3 className="text-xl font-bold text-slate-800 mb-2">
                         {feature.name}
                       </h3>
-                      
+
                       <p className="text-sm text-slate-600 leading-relaxed">
                         {feature.description}
                       </p>
                     </div>
-                    
+
                     <div className="space-y-2">
-                      <h4 className="font-semibold text-slate-700 text-sm mb-2">Key Features:</h4>
+                      <h4 className="font-semibold text-slate-700 text-sm mb-2">
+                        Key Features:
+                      </h4>
                       <div className="space-y-1">
                         {feature.highlights.map((highlight, index) => (
-                          <div key={index} className="flex items-center gap-2 text-xs text-slate-600">
+                          <div
+                            key={index}
+                            className="flex items-center gap-2 text-xs text-slate-600"
+                          >
                             <CheckCircle className="w-3 h-3 text-green-500 flex-shrink-0" />
                             <span>{highlight}</span>
                           </div>
                         ))}
                       </div>
                     </div>
-                    
+
                     {isSelected && (
                       <div className="mt-4 p-3 bg-educational-blue/10 rounded-lg border border-educational-blue/20">
                         <p className="text-xs text-educational-blue font-medium text-center">
@@ -289,19 +313,27 @@ export function EnhancedWordLibraryDemo() {
           <CardContent>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
               <div>
-                <div className="text-3xl font-bold text-educational-blue">1500+</div>
+                <div className="text-3xl font-bold text-educational-blue">
+                  1500+
+                </div>
                 <div className="text-sm text-slate-600">Words Available</div>
               </div>
               <div>
-                <div className="text-3xl font-bold text-educational-green">15+</div>
+                <div className="text-3xl font-bold text-educational-green">
+                  15+
+                </div>
                 <div className="text-sm text-slate-600">Categories</div>
               </div>
               <div>
-                <div className="text-3xl font-bold text-educational-purple">6</div>
+                <div className="text-3xl font-bold text-educational-purple">
+                  6
+                </div>
                 <div className="text-sm text-slate-600">Enhanced Features</div>
               </div>
               <div>
-                <div className="text-3xl font-bold text-educational-orange">100%</div>
+                <div className="text-3xl font-bold text-educational-orange">
+                  100%
+                </div>
                 <div className="text-sm text-slate-600">Mobile Optimized</div>
               </div>
             </div>
@@ -309,7 +341,7 @@ export function EnhancedWordLibraryDemo() {
         </Card>
 
         {/* Mobile Features Highlight */}
-        {deviceMode === 'mobile' && (
+        {deviceMode === "mobile" && (
           <Card className="bg-gradient-to-r from-educational-blue/10 to-educational-purple/10 border-educational-blue/20">
             <CardContent className="p-6">
               <div className="text-center">
@@ -318,7 +350,8 @@ export function EnhancedWordLibraryDemo() {
                   Mobile-Optimized Experience
                 </h3>
                 <p className="text-slate-600 mb-4">
-                  You're viewing on a mobile device! The demo includes special mobile features:
+                  You're viewing on a mobile device! The demo includes special
+                  mobile features:
                 </p>
                 <div className="grid grid-cols-2 gap-4 text-sm">
                   <div className="flex items-center gap-2">
@@ -351,17 +384,29 @@ export function EnhancedWordLibraryDemo() {
           <CardContent className="p-6">
             <div className="text-center mb-4">
               <p className="text-slate-600 mb-4">
-                Select your interests to see personalized category recommendations:
+                Select your interests to see personalized category
+                recommendations:
               </p>
               <div className="flex flex-wrap justify-center gap-2">
-                {['animals', 'nature', 'food', 'sports', 'science', 'music'].map((interest) => (
+                {[
+                  "animals",
+                  "nature",
+                  "food",
+                  "sports",
+                  "science",
+                  "music",
+                ].map((interest) => (
                   <Button
                     key={interest}
                     size="sm"
-                    variant={userInterests.includes(interest) ? "default" : "outline"}
+                    variant={
+                      userInterests.includes(interest) ? "default" : "outline"
+                    }
                     onClick={() => {
                       if (userInterests.includes(interest)) {
-                        setUserInterests(userInterests.filter(i => i !== interest));
+                        setUserInterests(
+                          userInterests.filter((i) => i !== interest),
+                        );
                       } else {
                         setUserInterests([...userInterests, interest]);
                       }
@@ -374,7 +419,8 @@ export function EnhancedWordLibraryDemo() {
               </div>
               {userInterests.length > 0 && (
                 <p className="text-sm text-educational-blue mt-2">
-                  ✓ Categories matching your interests will be highlighted in the demo
+                  ✓ Categories matching your interests will be highlighted in
+                  the demo
                 </p>
               )}
             </div>
@@ -388,10 +434,11 @@ export function EnhancedWordLibraryDemo() {
               Ready to Experience the Enhanced Word Library?
             </h3>
             <p className="text-slate-600 mb-6 max-w-2xl mx-auto">
-              See all the improvements in action with our interactive demo. 
-              {selectedFeatures.size > 0 && ` Your selected features (${selectedFeatures.size}) will be highlighted.`}
+              See all the improvements in action with our interactive demo.
+              {selectedFeatures.size > 0 &&
+                ` Your selected features (${selectedFeatures.size}) will be highlighted.`}
             </p>
-            
+
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button
                 size="lg"
@@ -401,12 +448,12 @@ export function EnhancedWordLibraryDemo() {
                 <Gamepad2 className="w-6 h-6 mr-2" />
                 🚀 Launch Interactive Demo 🚀
               </Button>
-              
+
               <Button
                 size="lg"
                 variant="outline"
                 onClick={() => {
-                  setSelectedFeatures(new Set(features.map(f => f.id)));
+                  setSelectedFeatures(new Set(features.map((f) => f.id)));
                 }}
                 className="text-lg px-6 py-4 rounded-full"
               >
@@ -414,16 +461,18 @@ export function EnhancedWordLibraryDemo() {
                 Select All Features
               </Button>
             </div>
-            
+
             <div className="mt-6 flex flex-wrap justify-center gap-2">
               {selectedFeatures.size > 0 && (
                 <Badge className="bg-educational-green text-white px-3 py-1">
-                  {selectedFeatures.size} feature{selectedFeatures.size !== 1 ? 's' : ''} selected
+                  {selectedFeatures.size} feature
+                  {selectedFeatures.size !== 1 ? "s" : ""} selected
                 </Badge>
               )}
               {userInterests.length > 0 && (
                 <Badge className="bg-educational-purple text-white px-3 py-1">
-                  {userInterests.length} interest{userInterests.length !== 1 ? 's' : ''} selected
+                  {userInterests.length} interest
+                  {userInterests.length !== 1 ? "s" : ""} selected
                 </Badge>
               )}
               <Badge className="bg-educational-orange text-white px-3 py-1">
@@ -436,7 +485,9 @@ export function EnhancedWordLibraryDemo() {
         {/* Technical Details */}
         <Card className="bg-slate-50">
           <CardHeader>
-            <CardTitle className="text-center">Technical Improvements</CardTitle>
+            <CardTitle className="text-center">
+              Technical Improvements
+            </CardTitle>
           </CardHeader>
           <CardContent className="p-6">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -454,7 +505,7 @@ export function EnhancedWordLibraryDemo() {
                   <li>• Memory usage optimization</li>
                 </ul>
               </div>
-              
+
               <div>
                 <h4 className="font-semibold text-slate-800 mb-3 flex items-center gap-2">
                   <Heart className="w-5 h-5 text-educational-pink" />
