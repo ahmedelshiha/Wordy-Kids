@@ -7,6 +7,7 @@ import { QuizGame } from "../QuizGame";
 import { generateQuizQuestions } from "@/lib/gameGeneration";
 import { VowelRescue } from "./VowelRescue";
 import ListenAndGuessGame from "./ListenAndGuessGame";
+import PictureFunGame from "./PictureFunGame";
 import {
   getSystematicEasyVowelQuestions,
   getSystematicMediumVowelQuestions,
@@ -74,12 +75,12 @@ export function QuizGames({
     },
     {
       id: "picture",
-      title: "Picture Quiz",
-      description: "Visual learning! Match pictures with words.",
+      title: "Picture Fun!",
+      description: "Kid-friendly! See emoji pictures and pick the right word!",
       icon: "📸",
-      difficulty: "Medium",
+      difficulty: "Easy",
       questions: 8,
-      timePerQuestion: "35s",
+      timePerQuestion: "No limit",
       color: "from-educational-orange to-orange-400",
       points: "80-160 pts",
     },
@@ -159,6 +160,22 @@ export function QuizGames({
           rounds={10}
           optionsPerRound={3}
           playerLevel={1} // Could be dynamic based on user progress
+          onFinish={(stats) => {
+            onQuizComplete(stats.correct, stats.totalRounds);
+          }}
+          onExit={handleQuizBack}
+        />
+      );
+    }
+
+    // Handle Picture Fun game
+    if (activeQuiz === "picture") {
+      return (
+        <PictureFunGame
+          category={selectedCategory}
+          difficulty="easy"
+          rounds={8}
+          optionsPerRound={4}
           onFinish={(stats) => {
             onQuizComplete(stats.correct, stats.totalRounds);
           }}

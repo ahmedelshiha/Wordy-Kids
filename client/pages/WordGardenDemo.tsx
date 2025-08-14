@@ -43,7 +43,7 @@ export default function WordGardenDemo() {
         </div>
 
         <WordGarden
-          rounds={6}
+          rounds={10}
           optionsPerRound={3}
           difficulty="easy"
           onFinish={handleFinish}

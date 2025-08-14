@@ -117,7 +117,7 @@ export function AdventureGames({
           </Button>
         </div>
         <WordGarden
-          rounds={8}
+          rounds={10}
           optionsPerRound={3}
           difficulty="easy"
           category={selectedCategory !== "all" ? selectedCategory : undefined}

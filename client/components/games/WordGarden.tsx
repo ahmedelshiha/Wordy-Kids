@@ -18,6 +18,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { motion, AnimatePresence } from "framer-motion";
+import { Sparkles, Star, Crown, Zap } from "lucide-react";
 
 /**
  * Word Garden — Listen & Pick Game for Ages 3–5
@@ -367,7 +368,7 @@ function GardenAchievementPopup({
                 className="animate-bounce"
                 style={{ animationDelay: "0.1s" }}
               >
-                🌸
+                ��
               </span>
               <span
                 className="animate-bounce"
@@ -420,47 +421,47 @@ function GameCompletionDialog({
 
   return (
     <Dialog open={show} onOpenChange={() => {}}>
-      <DialogContent className="sm:max-w-md bg-gradient-to-br from-green-50 to-emerald-100 border-green-300">
-        <DialogHeader className="text-center">
-          <div className="text-8xl mb-4 animate-bounce">🌻</div>
-          <DialogTitle className="text-2xl font-bold text-green-800">
-            🎉 Garden Complete! 🎉
+      <DialogContent className="sm:max-w-xs max-w-[90vw] p-3 bg-gradient-to-br from-green-400 via-green-500 to-emerald-600 border-green-300 border-4">
+        <DialogHeader className="text-center pb-2">
+          <div className="text-5xl mb-2 animate-bounce">🌻</div>
+          <DialogTitle className="text-lg font-bold text-white drop-shadow-lg">
+            🎉 Garden Done! 🎉
           </DialogTitle>
-          <DialogDescription className="text-green-700 text-lg">
-            Look at your beautiful garden! You did amazing!
+          <DialogDescription className="text-green-100 text-sm">
+            Amazing job growing your garden!
           </DialogDescription>
         </DialogHeader>
 
-        {/* Stats display */}
-        <div className="bg-green-100 rounded-xl p-4 border-2 border-green-300">
-          <div className="grid grid-cols-2 gap-4 text-center">
-            <div className="bg-white rounded-lg p-3 border border-green-200">
-              <div className="text-3xl mb-1">🌱</div>
-              <div className="text-2xl font-bold text-green-800">
+        {/* Compact Stats */}
+        <div className="bg-white/20 rounded-lg p-2 border border-green-300/50 backdrop-blur-sm">
+          <div className="flex justify-between items-center text-center">
+            <div className="flex-1">
+              <div className="text-2xl">🌱</div>
+              <div className="text-lg font-bold text-white">
                 {stats.correct}
               </div>
-              <div className="text-sm text-green-600">Plants Grown</div>
+              <div className="text-xs text-green-100">Plants</div>
             </div>
-            <div className="bg-white rounded-lg p-3 border border-green-200">
-              <div className="text-3xl mb-1">⭐</div>
-              <div className="text-2xl font-bold text-green-800">
+            <div className="flex-1">
+              <div className="text-2xl">⭐</div>
+              <div className="text-lg font-bold text-white">
                 {stats.bestStreak}
               </div>
-              <div className="text-sm text-green-600">Best Streak</div>
+              <div className="text-xs text-green-100">Streak</div>
             </div>
-          </div>
-          <div className="mt-3 text-center">
-            <div className="text-lg font-bold text-green-800">
-              {accuracy}% Accuracy!
-              {accuracy >= 90 && " 🏆"}
-              {accuracy >= 75 && accuracy < 90 && " 🎓"}
+            <div className="flex-1">
+              <div className="text-2xl">
+                {accuracy >= 90 ? "🏆" : accuracy >= 75 ? "🎓" : "👍"}
+              </div>
+              <div className="text-lg font-bold text-white">{accuracy}%</div>
+              <div className="text-xs text-green-100">Score</div>
             </div>
           </div>
         </div>
 
-        {/* Garden icons */}
-        <div className="flex justify-center gap-2 text-3xl my-4">
-          {Array.from({ length: Math.min(stats.correct, 8) }, (_, i) => (
+        {/* Compact Garden Preview - Show only first 5 plants */}
+        <div className="flex justify-center gap-1 text-xl my-3">
+          {Array.from({ length: Math.min(stats.correct, 5) }, (_, i) => (
             <span
               key={i}
               className="animate-gentle-float"
@@ -469,23 +470,28 @@ function GameCompletionDialog({
               {PLANT_TYPES[i % PLANT_TYPES.length][2]}
             </span>
           ))}
+          {stats.correct > 5 && (
+            <span className="text-green-200 animate-gentle-float">
+              +{stats.correct - 5} more!
+            </span>
+          )}
         </div>
 
-        <DialogFooter className="flex flex-col gap-3 mt-6">
+        <DialogFooter className="flex gap-2 pt-2">
           <Button
             onClick={onContinue}
-            className="flex-1 bg-green-600 hover:bg-green-700 text-white text-lg py-3 rounded-xl shadow-lg"
+            className="flex-1 bg-white/20 hover:bg-white/30 text-white text-sm py-2 px-3 rounded-lg shadow-lg border border-white/30"
           >
-            <span className="mr-2">🌱</span>
-            Continue Growing Garden!
+            <span className="mr-1">🌱</span>
+            Play Again!
           </Button>
           <Button
             onClick={onExit}
             variant="outline"
-            className="flex-1 bg-white hover:bg-green-50 text-green-700 border-green-300 text-lg py-3 rounded-xl"
+            className="flex-1 bg-white/10 hover:bg-white/20 text-white border-white/30 text-sm py-2 px-3 rounded-lg"
           >
-            <span className="mr-2">🏠</span>
-            Back to Games
+            <span className="mr-1">🏠</span>
+            Home
           </Button>
         </DialogFooter>
       </DialogContent>
@@ -519,6 +525,10 @@ export default function WordGardenGame({
   const [locked, setLocked] = useState(false);
   const [attempts, setAttempts] = useState(0); // attempts for current word
   const [gameComplete, setGameComplete] = useState(false);
+  const [showAnswer, setShowAnswer] = useState(false);
+  const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
+  const [showSparkleExplosion, setShowSparkleExplosion] = useState(false);
+  const [sparkleCount, setSparkleCount] = useState(0);
 
   // Achievement popup state
   const [showAchievement, setShowAchievement] = useState(false);
@@ -625,30 +635,35 @@ export default function WordGardenGame({
         category: category,
       });
 
-      // Show garden-specific achievements
-      if (nextStreak === 3) {
-        setAchievementData({
-          title: "Growing Streak!",
-          description:
-            "3 plants in a row! Your garden is blooming beautifully! 🌸",
-          plantEmoji: "🌸",
-        });
-        setShowAchievement(true);
-      } else if (nextStreak === 5) {
-        setAchievementData({
-          title: "Garden Master!",
-          description: "5 perfect plants! You're a true gardener! 🏆",
-          plantEmoji: "🌻",
-        });
-        setShowAchievement(true);
-      } else if (nextCorrectTotal === 1) {
-        setAchievementData({
-          title: "First Sprout!",
-          description: "Your first plant has sprouted! Keep growing! 🌱",
-          plantEmoji: "🌱",
-        });
-        setShowAchievement(true);
-      }
+      // Show garden-specific achievements - ALL DISABLED
+      // Disabled: Growing Streak popup at 3 correct answers
+      // if (nextStreak === 3) {
+      //   setAchievementData({
+      //     title: "Growing Streak!",
+      //     description:
+      //       "3 plants in a row! Your garden is blooming beautifully! 🌸",
+      //     plantEmoji: "🌸",
+      //   });
+      //   setShowAchievement(true);
+      // } else
+      // Disabled: Garden Master popup at 5 streak
+      // if (nextStreak === 5) {
+      //   setAchievementData({
+      //     title: "Garden Master!",
+      //     description: "5 perfect plants! You're a true gardener! 🏆",
+      //     plantEmoji: "🌻",
+      //   });
+      //   setShowAchievement(true);
+      // } else
+      // Disabled: First Sprout popup at 1 correct
+      // if (nextCorrectTotal === 1) {
+      //   setAchievementData({
+      //     title: "First Sprout!",
+      //     description: "Your first plant has sprouted! Keep growing! 🌱",
+      //     plantEmoji: "🌱",
+      //   });
+      //   setShowAchievement(true);
+      // }
     },
     [difficulty, category],
   );
@@ -658,6 +673,8 @@ export default function WordGardenGame({
       if (!current || locked) return;
       setLocked(true);
       setAttempts((a) => a + 1);
+      setSelectedAnswer(img);
+      setShowAnswer(true);
 
       const isCorrect = img === current.imageUrl;
 
@@ -684,8 +701,13 @@ export default function WordGardenGame({
         // Clear the recently grown state after animation
         setTimeout(() => setRecentlyGrown(null), 1200);
 
-        // Sparkles + confetti
+        // Enhanced celebration effects with sparkles
+        setShowSparkleExplosion(true);
+        setSparkleCount((prev) => prev + 1);
         burst();
+
+        // Auto-hide sparkle explosion after animation
+        setTimeout(() => setShowSparkleExplosion(false), 1500);
 
         checkAchievements(nextCorrect, nextStreak);
 
@@ -699,6 +721,8 @@ export default function WordGardenGame({
         setTimeout(() => {
           setAttempts(0);
           setLocked(false);
+          setShowAnswer(false);
+          setSelectedAnswer(null);
           const nextRound = roundIdx + 1;
           if (nextRound < pool.length) {
             setRoundIdx(nextRound);
@@ -716,7 +740,11 @@ export default function WordGardenGame({
         // gentle buzz
         if (navigator && "vibrate" in navigator)
           (navigator as any).vibrate([40, 60, 40]);
-        setTimeout(() => setLocked(false), 400);
+        setTimeout(() => {
+          setLocked(false);
+          setShowAnswer(false);
+          setSelectedAnswer(null);
+        }, 1200);
       }
     },
     [
@@ -844,32 +872,98 @@ export default function WordGardenGame({
           </button>
         </div>
 
+        {/* Sparkle explosion effect */}
+        {showSparkleExplosion && (
+          <div className="absolute inset-0 pointer-events-none z-30">
+            <div className="absolute top-1/4 left-1/4 animate-ping">
+              <Sparkles className="w-8 h-8 text-yellow-300" />
+            </div>
+            <div className="absolute top-1/3 right-1/4 animate-pulse animation-delay-200">
+              <Star className="w-6 h-6 text-pink-300" />
+            </div>
+            <div className="absolute bottom-1/3 left-1/3 animate-bounce animation-delay-100">
+              <Zap className="w-7 h-7 text-blue-300" />
+            </div>
+            <div className="absolute top-1/2 right-1/3 animate-spin">
+              <Crown className="w-5 h-5 text-purple-300" />
+            </div>
+          </div>
+        )}
+
         {/* Options grid */}
         <div
           className={`grid gap-4 ${optionsPerRound === 4 ? "grid-cols-2" : "grid-cols-3"}`}
         >
-          {options.map((img, i) => (
-            <button
-              key={i}
-              onClick={() => choose(img)}
-              disabled={locked}
-              className="relative aspect-square rounded-3xl bg-white/95 hover:bg-white active:scale-95 transition-all duration-300 shadow-mobile-lg overflow-hidden border-4 border-transparent focus:outline-none focus:ring-4 focus:ring-yellow-300 touch-target mobile-optimized disabled:opacity-50"
-              style={{
-                animationDelay: `${i * 100}ms`,
-              }}
-            >
-              <div className="w-full h-full flex items-center justify-center p-2">
-                <img
-                  src={img}
-                  alt="option"
-                  className="w-full h-full object-contain rounded-2xl"
-                />
-              </div>
-              <div className="absolute top-2 left-2">
-                <span className="text-lg animate-sparkle">✨</span>
-              </div>
-            </button>
-          ))}
+          {options.map((img, i) => {
+            const isCorrect = img === current.imageUrl;
+            const isSelected = img === selectedAnswer;
+            const shouldHighlight = showAnswer && (isCorrect || isSelected);
+
+            return (
+              <button
+                key={i}
+                onClick={() => choose(img)}
+                disabled={locked}
+                className={`relative aspect-square rounded-3xl bg-white/95 hover:bg-white active:scale-95 transition-all duration-300 shadow-mobile-lg overflow-hidden border-4 focus:outline-none focus:ring-4 focus:ring-yellow-300 touch-target mobile-optimized ${
+                  shouldHighlight
+                    ? isCorrect
+                      ? "border-green-400 ring-4 ring-green-300 animate-gentle-bounce border-rainbow"
+                      : "border-red-400 ring-4 ring-red-300 animate-wiggle"
+                    : "border-transparent hover:border-yellow-300 animate-fade-in"
+                } ${locked ? "cursor-not-allowed" : "cursor-pointer hover:shadow-xl hover:scale-105"}`}
+                style={{
+                  animationDelay: `${i * 100}ms`,
+                }}
+              >
+                <div className="w-full h-full flex items-center justify-center p-2">
+                  <img
+                    src={img}
+                    alt="option"
+                    className="w-full h-full object-contain rounded-2xl"
+                  />
+                </div>
+                {/* Enhanced fun corner badge with dynamic sparkles */}
+                <div className="absolute top-2 left-2">
+                  <span className="text-lg animate-sparkle">✨</span>
+                  {sparkleCount > 3 && (
+                    <Sparkles className="w-4 h-4 absolute -top-1 -right-1 text-yellow-400 animate-spin" />
+                  )}
+                </div>
+
+                {/* Answer feedback with enhanced animations */}
+                {showAnswer && isCorrect && (
+                  <div className="absolute inset-0 bg-green-500/30 flex items-center justify-center backdrop-blur-sm">
+                    <div className="text-center">
+                      <span className="text-5xl animate-gentle-bounce">✅</span>
+                      <div className="text-white font-bold text-sm mt-1 text-shadow">
+                        Correct!
+                      </div>
+                    </div>
+                  </div>
+                )}
+                {showAnswer && isSelected && !isCorrect && (
+                  <div className="absolute inset-0 bg-red-500/30 flex items-center justify-center backdrop-blur-sm">
+                    <div className="text-center">
+                      <span className="text-5xl animate-wiggle">❌</span>
+                      <div className="text-white font-bold text-sm mt-1 text-shadow">
+                        Try again!
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                {/* Enhanced sparkle effects for hover and interaction */}
+                <div className="absolute top-1 right-1 opacity-0 hover:opacity-100 transition-opacity">
+                  <span className="text-xs animate-mobile-sparkle">⭐</span>
+                  {showSparkleExplosion && (
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <Sparkles className="w-6 h-6 text-yellow-300 animate-ping" />
+                    </div>
+                  )}
+                </div>
+              </button>
+            );
+          })}
         </div>
 
         {/* Bottom: XP + streak */}
@@ -888,7 +982,7 @@ export default function WordGardenGame({
       </div>
 
       {/* Garden row (visual progress) */}
-      <div className="mt-4 grid grid-cols-4 gap-3">
+      <div className="mt-4 grid grid-cols-5 gap-2">
         {gardenStages.map((stage, idx) => {
           const isActive = idx === roundIdx;
           const isCompleted = idx < roundIdx;
@@ -928,8 +1022,42 @@ export default function WordGardenGame({
         })}
       </div>
 
-      {/* Styles for confetti dots */}
-      <style>{`.wg-confetti{position:absolute;top:60%;border-radius:9999px;box-shadow:0 0 0 1px rgba(255,255,255,.15) inset}`}</style>
+      {/* Enhanced styles for confetti, sparkles, and animations */}
+      <style>{`
+        .wg-confetti{position:absolute;top:60%;border-radius:9999px;box-shadow:0 0 0 1px rgba(255,255,255,.15) inset}
+
+        @keyframes celebrationPulse {
+          0%, 100% { transform: scale(1); }
+          50% { transform: scale(1.05); }
+        }
+
+        @keyframes cardEntrance {
+          0% {
+            opacity: 0;
+            transform: translateY(20px) scale(0.8);
+          }
+          100% {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+          }
+        }
+
+        @keyframes sparkleRotate {
+          0% { transform: rotate(0deg) scale(1); }
+          25% { transform: rotate(90deg) scale(1.2); }
+          50% { transform: rotate(180deg) scale(1); }
+          75% { transform: rotate(270deg) scale(1.2); }
+          100% { transform: rotate(360deg) scale(1); }
+        }
+
+        .celebration-pulse {
+          animation: celebrationPulse 0.8s ease-in-out;
+        }
+
+        .sparkle-rotate {
+          animation: sparkleRotate 2s ease-in-out infinite;
+        }
+      `}</style>
 
       {/* Green Garden Achievement Popup */}
       <GardenAchievementPopup
