@@ -238,6 +238,7 @@ export default function WordGardenGame({
   const [gardenStages, setGardenStages] = useState<number[]>(
     Array.from({ length: rounds }, () => 0),
   );
+  const [recentlyGrown, setRecentlyGrown] = useState<number | null>(null);
 
   const { ref: confettiRef, burst } = useConfetti();
 
