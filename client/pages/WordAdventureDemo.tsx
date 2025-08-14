@@ -4,7 +4,11 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { ArrowLeft, RefreshCw, Shuffle, Grid3X3 } from "lucide-react";
 import { EnhancedWordAdventureCard } from "@/components/EnhancedWordAdventureCard";
-import { wordsDatabase, getWordsByCategory, getAllCategories } from "@/data/wordsDatabase";
+import {
+  wordsDatabase,
+  getWordsByCategory,
+  getAllCategories,
+} from "@/data/wordsDatabase";
 
 export function WordAdventureDemo() {
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
@@ -59,7 +63,10 @@ export function WordAdventureDemo() {
     setFavoriteWords(newFavorites);
   };
 
-  const handleWordMastered = (wordId: number, rating: "easy" | "medium" | "hard") => {
+  const handleWordMastered = (
+    wordId: number,
+    rating: "easy" | "medium" | "hard",
+  ) => {
     console.log(`Word ${wordId} mastered with rating: ${rating}`);
     // In a real app, this would update the user's progress
   };
@@ -114,7 +121,9 @@ export function WordAdventureDemo() {
                   <Button
                     key={category}
                     size="sm"
-                    variant={selectedCategory === category ? "default" : "outline"}
+                    variant={
+                      selectedCategory === category ? "default" : "outline"
+                    }
                     onClick={() => handleCategoryChange(category)}
                     className="capitalize"
                   >
@@ -146,7 +155,7 @@ export function WordAdventureDemo() {
               <Shuffle className="w-4 h-4" />
               Random
             </Button>
-            
+
             <Button
               variant="outline"
               onClick={() => setCurrentWordIndex(0)}
@@ -202,30 +211,66 @@ export function WordAdventureDemo() {
           <CardContent className="space-y-4">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
-                <h4 className="font-semibold text-educational-blue mb-2">Front Card Features:</h4>
+                <h4 className="font-semibold text-educational-blue mb-2">
+                  Front Card Features:
+                </h4>
                 <ul className="space-y-2 text-sm">
-                  <li>• <strong>Large Word Display:</strong> Kid-friendly large text with pronunciation</li>
-                  <li>• <strong>Animated Emoji Buddy:</strong> Floating emoji that represents the word</li>
-                  <li>• <strong>Star Progress Meter:</strong> Earn stars by interacting with the card</li>
-                  <li>• <strong>Voice Buttons:</strong> Normal voice + unlock funny voice by earning stars</li>
-                  <li>• <strong>Touch Gestures:</strong> Swipe left (❤️), up (🔊), right (🎮)</li>
+                  <li>
+                    • <strong>Large Word Display:</strong> Kid-friendly large
+                    text with pronunciation
+                  </li>
+                  <li>
+                    • <strong>Animated Emoji Buddy:</strong> Floating emoji that
+                    represents the word
+                  </li>
+                  <li>
+                    • <strong>Star Progress Meter:</strong> Earn stars by
+                    interacting with the card
+                  </li>
+                  <li>
+                    • <strong>Voice Buttons:</strong> Normal voice + unlock
+                    funny voice by earning stars
+                  </li>
+                  <li>
+                    • <strong>Touch Gestures:</strong> Swipe left (❤️), up (🔊),
+                    right (🎮)
+                  </li>
                 </ul>
               </div>
-              
+
               <div>
-                <h4 className="font-semibold text-educational-green mb-2">Back Card Features:</h4>
+                <h4 className="font-semibold text-educational-green mb-2">
+                  Back Card Features:
+                </h4>
                 <ul className="space-y-2 text-sm">
-                  <li>• <strong>Simple Definition:</strong> Kid-friendly explanations</li>
-                  <li>• <strong>Example Sentence:</strong> Shows word usage in context</li>
-                  <li>• <strong>Fun Fact:</strong> Interesting trivia about the word</li>
-                  <li>• <strong>Mini-Games:</strong> Sound Match, Emoji Builder, Letter Hunt</li>
-                  <li>• <strong>Progress Tracking:</strong> See your adventure progress</li>
+                  <li>
+                    • <strong>Simple Definition:</strong> Kid-friendly
+                    explanations
+                  </li>
+                  <li>
+                    • <strong>Example Sentence:</strong> Shows word usage in
+                    context
+                  </li>
+                  <li>
+                    • <strong>Fun Fact:</strong> Interesting trivia about the
+                    word
+                  </li>
+                  <li>
+                    • <strong>Mini-Games:</strong> Sound Match, Emoji Builder,
+                    Letter Hunt
+                  </li>
+                  <li>
+                    • <strong>Progress Tracking:</strong> See your adventure
+                    progress
+                  </li>
                 </ul>
               </div>
             </div>
 
             <div className="bg-blue-50 rounded-lg p-4">
-              <h4 className="font-semibold text-educational-blue mb-2">🌟 Star System:</h4>
+              <h4 className="font-semibold text-educational-blue mb-2">
+                🌟 Star System:
+              </h4>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
                 <div className="flex items-center gap-2">
                   <span className="text-yellow-500">⭐</span>
@@ -241,18 +286,23 @@ export function WordAdventureDemo() {
                 </div>
               </div>
               <p className="text-xs text-gray-600 mt-2">
-                Get all 3 stars to unlock the funny voice and trigger celebrations! 🎉
+                Get all 3 stars to unlock the funny voice and trigger
+                celebrations! 🎉
               </p>
             </div>
 
             <div className="bg-green-50 rounded-lg p-4">
-              <h4 className="font-semibold text-educational-green mb-2">🎮 Mini-Games:</h4>
+              <h4 className="font-semibold text-educational-green mb-2">
+                🎮 Mini-Games:
+              </h4>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
                 <div>
-                  <strong>🎧 Sound Match:</strong> Listen and pick the correct picture
+                  <strong>🎧 Sound Match:</strong> Listen and pick the correct
+                  picture
                 </div>
                 <div>
-                  <strong>🧩 Emoji Builder:</strong> Place the missing emoji piece
+                  <strong>🧩 Emoji Builder:</strong> Place the missing emoji
+                  piece
                 </div>
                 <div>
                   <strong>🔤 Letter Hunt:</strong> Tap letters in correct order

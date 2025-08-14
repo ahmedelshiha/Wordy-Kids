@@ -48,7 +48,10 @@ export function WordAdventureTest() {
   const currentWord = testWords[currentWordIndex];
 
   const addTestResult = (result: string) => {
-    setTestResults(prev => [...prev, `${new Date().toLocaleTimeString()}: ${result}`]);
+    setTestResults((prev) => [
+      ...prev,
+      `${new Date().toLocaleTimeString()}: ${result}`,
+    ]);
   };
 
   const handleWordFavorite = (word: any) => {
@@ -67,8 +70,11 @@ export function WordAdventureTest() {
     addTestResult(`🔊 Pronounced "${word.word}"`);
   };
 
-  const handleWordMastered = (wordId: number, rating: "easy" | "medium" | "hard") => {
-    const word = testWords.find(w => w.id === wordId);
+  const handleWordMastered = (
+    wordId: number,
+    rating: "easy" | "medium" | "hard",
+  ) => {
+    const word = testWords.find((w) => w.id === wordId);
     addTestResult(`🌟 Mastered "${word?.word}" with rating: ${rating}`);
   };
 
@@ -79,36 +85,43 @@ export function WordAdventureTest() {
   };
 
   const prevWord = () => {
-    const prevIndex = currentWordIndex === 0 ? testWords.length - 1 : currentWordIndex - 1;
+    const prevIndex =
+      currentWordIndex === 0 ? testWords.length - 1 : currentWordIndex - 1;
     setCurrentWordIndex(prevIndex);
     addTestResult(`⬅️ Switched to word: "${testWords[prevIndex].word}"`);
   };
 
   const runAutomatedTest = async () => {
     addTestResult("🤖 Starting automated test sequence...");
-    
+
     // Test 1: Card flip
     addTestResult("Test 1: Card should flip when clicked");
-    
+
     // Test 2: Star progression
     addTestResult("Test 2: Stars should increment with interactions");
-    
+
     // Test 3: Voice buttons
     addTestResult("Test 3: Voice buttons should work and unlock funny voice");
-    
+
     // Test 4: Mini-games
     addTestResult("Test 4: Mini-games should be accessible on back of card");
-    
+
     // Test 5: Strict category filtering
-    addTestResult("Test 5: Category filtering - all test words have correct categories");
-    testWords.forEach(word => {
+    addTestResult(
+      "Test 5: Category filtering - all test words have correct categories",
+    );
+    testWords.forEach((word) => {
       if (word.category === "food" || word.category === "animals") {
-        addTestResult(`✅ "${word.word}" correctly categorized as "${word.category}"`);
+        addTestResult(
+          `✅ "${word.word}" correctly categorized as "${word.category}"`,
+        );
       } else {
-        addTestResult(`❌ "${word.word}" has incorrect category: "${word.category}"`);
+        addTestResult(
+          `❌ "${word.word}" has incorrect category: "${word.category}"`,
+        );
       }
     });
-    
+
     addTestResult("🎉 Automated test sequence completed!");
   };
 
@@ -155,10 +168,13 @@ export function WordAdventureTest() {
 
             <div className="mt-4 text-center">
               <p className="text-sm text-slate-600">
-                Current: {currentWord.word} ({currentWord.category}, {currentWord.difficulty})
+                Current: {currentWord.word} ({currentWord.category},{" "}
+                {currentWord.difficulty})
               </p>
               <p className="text-xs text-slate-500">
-                {favoriteWords.has(currentWord.id) ? "❤️ Favorited" : "🤍 Not favorited"}
+                {favoriteWords.has(currentWord.id)
+                  ? "❤️ Favorited"
+                  : "🤍 Not favorited"}
               </p>
             </div>
           </div>
@@ -173,7 +189,11 @@ export function WordAdventureTest() {
                     <Button size="sm" onClick={runAutomatedTest}>
                       Run Tests
                     </Button>
-                    <Button size="sm" variant="outline" onClick={() => setTestResults([])}>
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      onClick={() => setTestResults([])}
+                    >
                       Clear
                     </Button>
                   </div>
@@ -183,12 +203,16 @@ export function WordAdventureTest() {
                 <div className="bg-slate-50 rounded-lg p-4 h-80 overflow-y-auto">
                   {testResults.length === 0 ? (
                     <p className="text-slate-500 text-sm">
-                      Interact with the card or run automated tests to see results here...
+                      Interact with the card or run automated tests to see
+                      results here...
                     </p>
                   ) : (
                     <div className="space-y-1">
                       {testResults.map((result, index) => (
-                        <p key={index} className="text-xs font-mono text-slate-700">
+                        <p
+                          key={index}
+                          className="text-xs font-mono text-slate-700"
+                        >
                           {result}
                         </p>
                       ))}
@@ -219,11 +243,15 @@ export function WordAdventureTest() {
                   </div>
                   <div className="flex items-center gap-2">
                     <span className="text-green-500">✅</span>
-                    <span>Interactive back with definition, example, fun fact</span>
+                    <span>
+                      Interactive back with definition, example, fun fact
+                    </span>
                   </div>
                   <div className="flex items-center gap-2">
                     <span className="text-green-500">✅</span>
-                    <span>Mini-games: Sound Match, Emoji Builder, Letter Hunt</span>
+                    <span>
+                      Mini-games: Sound Match, Emoji Builder, Letter Hunt
+                    </span>
                   </div>
                   <div className="flex items-center gap-2">
                     <span className="text-green-500">✅</span>
@@ -258,7 +286,10 @@ export function WordAdventureTest() {
                 <div>
                   <strong>Desktop:</strong>
                   <ul className="list-disc list-inside ml-2 space-y-1">
-                    <li>Click the pronunciation buttons (🔊 normal, 😄 funny when unlocked)</li>
+                    <li>
+                      Click the pronunciation buttons (🔊 normal, 😄 funny when
+                      unlocked)
+                    </li>
                     <li>Click anywhere on the card to flip front/back</li>
                     <li>Try the mini-games on the back side</li>
                     <li>Watch the star meter progress as you interact</li>

@@ -73,7 +73,9 @@ type MiniGameType = "sound-match" | "emoji-builder" | "letter-hunt" | null;
 // Voice types
 type VoiceType = "normal" | "funny" | "robot" | "kid";
 
-export const EnhancedWordAdventureCard: React.FC<EnhancedWordAdventureCardProps> = ({
+export const EnhancedWordAdventureCard: React.FC<
+  EnhancedWordAdventureCardProps
+> = ({
   word,
   showDefinition = false,
   onPronounce,
@@ -88,12 +90,15 @@ export const EnhancedWordAdventureCard: React.FC<EnhancedWordAdventureCardProps>
   const [isPlaying, setIsPlaying] = useState(false);
   const [isFavorited, setIsFavorited] = useState(false);
   const [showSparkles, setShowSparkles] = useState(false);
-  const [adventureStatus, setAdventureStatus] = useState<WordAdventureStatus | null>(null);
+  const [adventureStatus, setAdventureStatus] =
+    useState<WordAdventureStatus | null>(null);
   const [wordAchievements, setWordAchievements] = useState<any[]>([]);
-  const [touchStart, setTouchStart] = useState<{ x: number; y: number } | null>(null);
+  const [touchStart, setTouchStart] = useState<{ x: number; y: number } | null>(
+    null,
+  );
   const [isGesturing, setIsGesturing] = useState(false);
   const [swipeDirection, setSwipeDirection] = useState<string | null>(null);
-  
+
   // New adventure features
   const [currentStars, setCurrentStars] = useState(0);
   const [maxStars] = useState(3);
@@ -115,7 +120,7 @@ export const EnhancedWordAdventureCard: React.FC<EnhancedWordAdventureCardProps>
       status = adventureService.initializeWordAdventure(word.id.toString());
     }
     setAdventureStatus(status);
-    
+
     // Auto-play pronunciation if enabled
     if (autoPlay && !hasHeardPronunciation) {
       setTimeout(() => handlePronounce("normal"), 1000);
@@ -135,10 +140,10 @@ export const EnhancedWordAdventureCard: React.FC<EnhancedWordAdventureCardProps>
       setShowSparkles(true);
       enhancedAudioService.playSuccessSound();
       setTimeout(() => setShowSparkles(false), 2000);
-      
+
       // Unlock funny voice as reward
       setFunnyVoiceUnlocked(true);
-      
+
       // Track achievement
       const starAchievements = AchievementTracker.trackActivity({
         type: "wordLearning",
@@ -152,7 +157,14 @@ export const EnhancedWordAdventureCard: React.FC<EnhancedWordAdventureCardProps>
         setTimeout(() => setWordAchievements(starAchievements), 1500);
       }
     }
-  }, [hasHeardPronunciation, hasFlipped, hasPlayedGame, maxStars, showSparkles, word.category]);
+  }, [
+    hasHeardPronunciation,
+    hasFlipped,
+    hasPlayedGame,
+    maxStars,
+    showSparkles,
+    word.category,
+  ]);
 
   const handlePronounce = async (voice: VoiceType = voiceType) => {
     if (isPlaying) return;
@@ -202,7 +214,7 @@ export const EnhancedWordAdventureCard: React.FC<EnhancedWordAdventureCardProps>
   const handleFlip = () => {
     setIsFlipped(!isFlipped);
     audioService.playWhooshSound();
-    
+
     if (!hasFlipped && !isFlipped) {
       setHasFlipped(true);
       playUIInteractionSoundIfEnabled.cheer();
@@ -239,7 +251,7 @@ export const EnhancedWordAdventureCard: React.FC<EnhancedWordAdventureCardProps>
       setHasPlayedGame(true);
       playUIInteractionSoundIfEnabled.cheer();
     }
-    
+
     // Play different sounds for different games
     switch (gameType) {
       case "sound-match":
@@ -424,10 +436,19 @@ export const EnhancedWordAdventureCard: React.FC<EnhancedWordAdventureCardProps>
           {/* Header with Badges and Stars */}
           <div className="flex items-start justify-between mb-3">
             <div className="flex flex-wrap gap-1 max-w-[60%]">
-              <Badge className={`${getDifficultyColor(word.difficulty)} text-xs font-bold px-2 py-1`}>
-                {word.difficulty === "easy" ? "🌟 Easy" : word.difficulty === "medium" ? "⭐ Medium" : "🔥 Hard"}
+              <Badge
+                className={`${getDifficultyColor(word.difficulty)} text-xs font-bold px-2 py-1`}
+              >
+                {word.difficulty === "easy"
+                  ? "🌟 Easy"
+                  : word.difficulty === "medium"
+                    ? "⭐ Medium"
+                    : "🔥 Hard"}
               </Badge>
-              <Badge variant="outline" className="bg-white/20 border-white/30 text-white text-xs px-2 py-1 truncate">
+              <Badge
+                variant="outline"
+                className="bg-white/20 border-white/30 text-white text-xs px-2 py-1 truncate"
+              >
                 {word.category}
               </Badge>
             </div>
@@ -487,7 +508,9 @@ export const EnhancedWordAdventureCard: React.FC<EnhancedWordAdventureCardProps>
                     : "hover:border-white/60"
                 }`}
               >
-                <Volume2 className={`w-6 h-6 transition-all duration-200 ${isPlaying && voiceType === "normal" ? "text-yellow-200 animate-pulse scale-110" : "text-white"}`} />
+                <Volume2
+                  className={`w-6 h-6 transition-all duration-200 ${isPlaying && voiceType === "normal" ? "text-yellow-200 animate-pulse scale-110" : "text-white"}`}
+                />
                 {showSparkles && voiceType === "normal" && (
                   <Sparkles className="w-3 h-3 absolute -top-1 -right-1 text-yellow-300 animate-spin" />
                 )}
@@ -537,9 +560,15 @@ export const EnhancedWordAdventureCard: React.FC<EnhancedWordAdventureCardProps>
           <div className="text-center space-y-2">
             {/* Interactive Progress Indicators */}
             <div className="flex justify-center gap-2 mb-2">
-              <div className={`w-3 h-3 rounded-full transition-all duration-300 ${hasHeardPronunciation ? "bg-yellow-400 animate-pulse" : "bg-white/30"}`}></div>
-              <div className={`w-3 h-3 rounded-full transition-all duration-300 ${hasFlipped ? "bg-green-400 animate-pulse" : "bg-white/30"}`}></div>
-              <div className={`w-3 h-3 rounded-full transition-all duration-300 ${hasPlayedGame ? "bg-blue-400 animate-pulse" : "bg-white/30"}`}></div>
+              <div
+                className={`w-3 h-3 rounded-full transition-all duration-300 ${hasHeardPronunciation ? "bg-yellow-400 animate-pulse" : "bg-white/30"}`}
+              ></div>
+              <div
+                className={`w-3 h-3 rounded-full transition-all duration-300 ${hasFlipped ? "bg-green-400 animate-pulse" : "bg-white/30"}`}
+              ></div>
+              <div
+                className={`w-3 h-3 rounded-full transition-all duration-300 ${hasPlayedGame ? "bg-blue-400 animate-pulse" : "bg-white/30"}`}
+              ></div>
             </div>
 
             {/* Tap to flip hint */}
@@ -554,15 +583,21 @@ export const EnhancedWordAdventureCard: React.FC<EnhancedWordAdventureCardProps>
             {/* Mobile gesture hints */}
             <div className="flex justify-center gap-4 text-xs opacity-80">
               <span className="flex items-center gap-1 bg-white/10 rounded-full px-2 py-1">
-                <span className="w-6 h-4 bg-white/25 rounded-sm flex items-center justify-center text-xs font-bold">←</span>
+                <span className="w-6 h-4 bg-white/25 rounded-sm flex items-center justify-center text-xs font-bold">
+                  ←
+                </span>
                 <span>❤️</span>
               </span>
               <span className="flex items-center gap-1 bg-white/10 rounded-full px-2 py-1">
-                <span className="w-6 h-4 bg-white/25 rounded-sm flex items-center justify-center text-xs font-bold">↑</span>
+                <span className="w-6 h-4 bg-white/25 rounded-sm flex items-center justify-center text-xs font-bold">
+                  ↑
+                </span>
                 <span>🔊</span>
               </span>
               <span className="flex items-center gap-1 bg-white/10 rounded-full px-2 py-1">
-                <span className="w-6 h-4 bg-white/25 rounded-sm flex items-center justify-center text-xs font-bold">→</span>
+                <span className="w-6 h-4 bg-white/25 rounded-sm flex items-center justify-center text-xs font-bold">
+                  →
+                </span>
                 <span>🎮</span>
               </span>
             </div>
@@ -616,7 +651,9 @@ export const EnhancedWordAdventureCard: React.FC<EnhancedWordAdventureCardProps>
                   <MessageCircle className="w-4 h-4" />
                   Use it like this:
                 </h4>
-                <p className="text-sm italic opacity-90 leading-relaxed">"{word.example}"</p>
+                <p className="text-sm italic opacity-90 leading-relaxed">
+                  "{word.example}"
+                </p>
               </div>
             )}
 
@@ -627,7 +664,9 @@ export const EnhancedWordAdventureCard: React.FC<EnhancedWordAdventureCardProps>
                   <PartyPopper className="w-4 h-4" />
                   Cool fact:
                 </h4>
-                <p className="text-sm opacity-90 leading-relaxed">{word.funFact}</p>
+                <p className="text-sm opacity-90 leading-relaxed">
+                  {word.funFact}
+                </p>
               </div>
             )}
           </div>
@@ -639,7 +678,7 @@ export const EnhancedWordAdventureCard: React.FC<EnhancedWordAdventureCardProps>
                 <Gamepad2 className="w-4 h-4" />
                 Fun Games!
               </h4>
-              
+
               <div className="grid grid-cols-3 gap-2">
                 {/* Sound Match Game */}
                 <Button
@@ -651,7 +690,9 @@ export const EnhancedWordAdventureCard: React.FC<EnhancedWordAdventureCardProps>
                   }}
                   disabled={currentMiniGame !== null}
                   className={`bg-blue-500/20 hover:bg-blue-500/30 text-blue-200 border border-blue-500/30 rounded-lg p-3 h-auto flex flex-col items-center gap-1 transition-all active:scale-95 ${
-                    currentMiniGame === "sound-match" ? "animate-pulse bg-blue-500/40" : ""
+                    currentMiniGame === "sound-match"
+                      ? "animate-pulse bg-blue-500/40"
+                      : ""
                   }`}
                 >
                   <Headphones className="w-5 h-5" />
@@ -668,7 +709,9 @@ export const EnhancedWordAdventureCard: React.FC<EnhancedWordAdventureCardProps>
                   }}
                   disabled={currentMiniGame !== null}
                   className={`bg-orange-500/20 hover:bg-orange-500/30 text-orange-200 border border-orange-500/30 rounded-lg p-3 h-auto flex flex-col items-center gap-1 transition-all active:scale-95 ${
-                    currentMiniGame === "emoji-builder" ? "animate-pulse bg-orange-500/40" : ""
+                    currentMiniGame === "emoji-builder"
+                      ? "animate-pulse bg-orange-500/40"
+                      : ""
                   }`}
                 >
                   <Puzzle className="w-5 h-5" />
@@ -685,7 +728,9 @@ export const EnhancedWordAdventureCard: React.FC<EnhancedWordAdventureCardProps>
                   }}
                   disabled={currentMiniGame !== null}
                   className={`bg-green-500/20 hover:bg-green-500/30 text-green-200 border border-green-500/30 rounded-lg p-3 h-auto flex flex-col items-center gap-1 transition-all active:scale-95 ${
-                    currentMiniGame === "letter-hunt" ? "animate-pulse bg-green-500/40" : ""
+                    currentMiniGame === "letter-hunt"
+                      ? "animate-pulse bg-green-500/40"
+                      : ""
                   }`}
                 >
                   <Target className="w-5 h-5" />
@@ -711,21 +756,27 @@ export const EnhancedWordAdventureCard: React.FC<EnhancedWordAdventureCardProps>
           <div className="mt-4 bg-white/10 backdrop-blur-sm border border-white/20 rounded-lg p-3">
             <div className="flex items-center justify-between mb-2">
               <span className="text-sm font-medium">Adventure Progress:</span>
-              <div className="flex items-center gap-1">
-                {getStarDisplay()}
-              </div>
+              <div className="flex items-center gap-1">{getStarDisplay()}</div>
             </div>
-            
+
             <div className="text-xs text-white/70 space-y-1">
-              <div className={`flex items-center gap-2 ${hasHeardPronunciation ? "text-yellow-300" : ""}`}>
+              <div
+                className={`flex items-center gap-2 ${hasHeardPronunciation ? "text-yellow-300" : ""}`}
+              >
                 <Volume2 className="w-3 h-3" />
-                {hasHeardPronunciation ? "✓ Heard pronunciation!" : "Listen to the word"}
+                {hasHeardPronunciation
+                  ? "✓ Heard pronunciation!"
+                  : "Listen to the word"}
               </div>
-              <div className={`flex items-center gap-2 ${hasFlipped ? "text-green-300" : ""}`}>
+              <div
+                className={`flex items-center gap-2 ${hasFlipped ? "text-green-300" : ""}`}
+              >
                 <RotateCcw className="w-3 h-3" />
                 {hasFlipped ? "✓ Explored the back!" : "Flip and explore"}
               </div>
-              <div className={`flex items-center gap-2 ${hasPlayedGame ? "text-blue-300" : ""}`}>
+              <div
+                className={`flex items-center gap-2 ${hasPlayedGame ? "text-blue-300" : ""}`}
+              >
                 <Gamepad2 className="w-3 h-3" />
                 {hasPlayedGame ? "✓ Played a game!" : "Try a mini-game"}
               </div>
@@ -801,10 +852,17 @@ export const EnhancedWordAdventureCard: React.FC<EnhancedWordAdventureCardProps>
                         : ""
               } animate-pulse`}
             >
-              {swipeDirection === "right" && (isFlipped ? <RotateCcw className="w-8 h-8" /> : <Gamepad2 className="w-8 h-8" />)}
+              {swipeDirection === "right" &&
+                (isFlipped ? (
+                  <RotateCcw className="w-8 h-8" />
+                ) : (
+                  <Gamepad2 className="w-8 h-8" />
+                ))}
               {swipeDirection === "left" && <Heart className="w-8 h-8" />}
               {swipeDirection === "up" && <Volume2 className="w-8 h-8" />}
-              {swipeDirection === "down" && isFlipped && <RotateCcw className="w-8 h-8" />}
+              {swipeDirection === "down" && isFlipped && (
+                <RotateCcw className="w-8 h-8" />
+              )}
             </div>
           </div>
         </div>
@@ -822,12 +880,20 @@ export const EnhancedWordAdventureCard: React.FC<EnhancedWordAdventureCardProps>
       )}
 
       {/* Screen reader live region */}
-      <div aria-live="polite" aria-atomic="true" className="sr-only" role="status">
-        {isFlipped ? `Showing games and definition for ${word.word}` : `Showing word ${word.word}`}
+      <div
+        aria-live="polite"
+        aria-atomic="true"
+        className="sr-only"
+        role="status"
+      >
+        {isFlipped
+          ? `Showing games and definition for ${word.word}`
+          : `Showing word ${word.word}`}
         {isPlaying && ` Pronouncing ${word.word}`}
         {isFavorited && ` ${word.word} added to favorites`}
         {currentStars > 0 && ` ${currentStars} out of ${maxStars} stars earned`}
-        {currentMiniGame && ` Playing ${currentMiniGame.replace("-", " ")} game`}
+        {currentMiniGame &&
+          ` Playing ${currentMiniGame.replace("-", " ")} game`}
       </div>
     </div>
   );
