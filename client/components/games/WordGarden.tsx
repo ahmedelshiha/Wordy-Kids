@@ -114,12 +114,24 @@ function useConfetti() {
 // Garden plant stage visuals (simple emojis; swap with your images if desired)
 const STAGES = ["🌱", "🌿", "🌸"]; // sprout -> leaf -> blossom
 
-// Generate placeholder image URLs for demonstration
-function generatePlaceholderImage(text: string): string {
-  return `https://via.placeholder.com/200x200/4ade80/ffffff?text=${encodeURIComponent(text)}`;
+// Generate emoji-based image using SVG data URI
+function generateEmojiImage(emoji: string, fallbackText?: string): string {
+  if (emoji && emoji !== '') {
+    // Create SVG with emoji
+    const svg = `
+      <svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 200 200">
+        <rect width="200" height="200" fill="#f0fdf4" rx="20"/>
+        <text x="100" y="120" font-size="80" text-anchor="middle" font-family="Arial, sans-serif">${emoji}</text>
+      </svg>
+    `;
+    return `data:image/svg+xml;base64,${btoa(svg)}`;
+  }
+
+  // Fallback to placeholder if no emoji
+  return `https://via.placeholder.com/200x200/4ade80/ffffff?text=${encodeURIComponent(fallbackText || 'Word')}`;
 }
 
-// Convert existing Word to WordItem format with placeholder images
+// Convert existing Word to WordItem format with emoji images
 function convertToWordItem(word: Word, allWords: Word[]): WordItem {
   // Create distractor images from other words in different categories
   const distractorWords = allWords
@@ -127,13 +139,18 @@ function convertToWordItem(word: Word, allWords: Word[]): WordItem {
     .slice(0, 3);
 
   const distractorImages = distractorWords.length >= 3
-    ? distractorWords.map(w => w.imageUrl || generatePlaceholderImage(w.word))
-    : Array.from({ length: 3 }, (_, i) => generatePlaceholderImage(`option-${i + 1}`));
+    ? distractorWords.map(w => w.imageUrl || generateEmojiImage(w.emoji, w.word))
+    : Array.from({ length: 3 }, (_, i) => {
+        // Get random words for fallback distractors
+        const fallbackWords = allWords.filter(fw => fw.id !== word.id).slice(i * 2, (i * 2) + 1);
+        const fallbackWord = fallbackWords[0];
+        return fallbackWord ? generateEmojiImage(fallbackWord.emoji, fallbackWord.word) : generateEmojiImage('❓', `Option ${i + 1}`);
+      });
 
   return {
     id: word.id,
     word: word.word,
-    imageUrl: word.imageUrl || generatePlaceholderImage(word.word),
+    imageUrl: word.imageUrl || generateEmojiImage(word.emoji, word.word),
     distractorImages,
     audioUrl: undefined, // Will use Web Speech API
     category: word.category,
