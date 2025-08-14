@@ -104,6 +104,34 @@ export function InteractiveDashboardWordCard({
   onGenerateNewSession,
 }: InteractiveDashboardWordCardProps) {
 
+  // Haptic feedback utility for mobile
+  const triggerHapticFeedback = (type: 'light' | 'medium' | 'heavy' = 'light') => {
+    if ('vibrate' in navigator) {
+      switch (type) {
+        case 'light':
+          navigator.vibrate(10);
+          break;
+        case 'medium':
+          navigator.vibrate(25);
+          break;
+        case 'heavy':
+          navigator.vibrate([50, 30, 50]);
+          break;
+      }
+    }
+  };
+
+  // Touch handlers with haptic feedback
+  const handleTouchStart = (callback?: () => void) => {
+    triggerHapticFeedback('light');
+    if (callback) callback();
+  };
+
+  const handleActionWithFeedback = (action: () => void, feedbackType: 'light' | 'medium' | 'heavy' = 'medium') => {
+    triggerHapticFeedback(feedbackType);
+    action();
+  };
+
   // Keyboard navigation handler
   const handleKeyDown = (event: React.KeyboardEvent) => {
     if (isAnswered) return;
