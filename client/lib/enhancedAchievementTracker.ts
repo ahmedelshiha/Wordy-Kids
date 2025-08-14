@@ -340,22 +340,22 @@ export class EnhancedAchievementTracker {
       reward: { type: "sound_effect", item: "Race Car Sounds", emoji: "🏁" },
     },
 
-    // 🚀 SESSION ACHIEVEMENTS - Enhanced for new word card system
+    // 🚀 SESSION ACHIEVEMENTS - Much more challenging
     {
       id: "perfect_session_superstar",
       name: "Perfect Session Superstar",
-      description: "Complete a session with 100% accuracy!",
-      funnyDescription: "⭐ SUPERSTAR ALERT! Perfect session = you're absolutely amazing!",
+      description: "Complete 3 perfect sessions with 100% accuracy!",
+      funnyDescription: "⭐ TRIPLE SUPERSTAR! 3 perfect sessions = you're absolutely LEGENDARY!",
       icon: "⭐",
       category: "session",
       difficulty: "gold",
-      requirements: 1,
+      requirements: 3,
       currentProgress: 0,
       unlocked: false,
       criteria: [
         {
           type: "perfectSessions",
-          target: 1,
+          target: 3,
           operator: ">=",
         },
       ],
@@ -363,63 +363,42 @@ export class EnhancedAchievementTracker {
     },
 
     {
-      id: "session_speed_demon",
-      name: "Session Speed Demon",
-      description: "Complete a session in under 5 minutes with 80%+ accuracy!",
-      funnyDescription: "🏃‍♂️ ZOOM ZOOM! You're faster than a speeding word!",
-      icon: "🏃‍♂️",
-      category: "session",
-      difficulty: "silver",
-      requirements: 1,
-      currentProgress: 0,
-      unlocked: false,
-      criteria: [
-        {
-          type: "speedLearning",
-          target: 1,
-          operator: ">=",
-        },
-      ],
-      reward: { type: "sound_effect", item: "Whoosh Sound", emoji: "💨" },
-    },
-
-    {
       id: "session_marathon_master",
       name: "Session Marathon Master",
-      description: "Complete 5 perfect sessions in a row!",
-      funnyDescription: "🏃‍♂️ You're unstoppable! 5 perfect sessions = marathon champion!",
+      description: "Complete 10 perfect sessions total!",
+      funnyDescription: "🏃‍♂️ MARATHON LEGEND! 10 perfect sessions = you're UNSTOPPABLE!",
       icon: "🏆",
       category: "session",
       difficulty: "diamond",
-      requirements: 5,
+      requirements: 10,
       currentProgress: 0,
       unlocked: false,
       criteria: [
         {
           type: "perfectSessions",
-          target: 5,
+          target: 10,
           operator: ">=",
         },
       ],
       reward: { type: "title", item: "Marathon Master", emoji: "🏃‍♂️" },
     },
 
-    // 🎯 DAILY GOAL ACHIEVEMENTS
+    // 🎯 DAILY GOAL ACHIEVEMENTS - More challenging
     {
       id: "daily_goal_achiever",
       name: "Daily Goal Achiever",
-      description: "Reach your daily goal for the first time!",
-      funnyDescription: "🎯 BULLSEYE! You hit your daily goal right on target!",
+      description: "Reach your daily goal 5 times!",
+      funnyDescription: "🎯 BULLSEYE MASTER! 5 daily goals hit = you're a target champion!",
       icon: "🎯",
       category: "learning",
       difficulty: "bronze",
-      requirements: 1,
+      requirements: 5,
       currentProgress: 0,
       unlocked: false,
       criteria: [
         {
           type: "dailyGoal",
-          target: 1,
+          target: 5,
           operator: ">=",
         },
       ],
@@ -429,23 +408,45 @@ export class EnhancedAchievementTracker {
     {
       id: "goal_streak_champion",
       name: "Goal Streak Champion",
-      description: "Reach your daily goal 7 days in a row!",
-      funnyDescription: "🔥 ON FIRE! 7 days of crushing your goals = you're UNSTOPPABLE!",
+      description: "Reach your daily goal 14 days in a row!",
+      funnyDescription: "🔥 LEGENDARY FIRE! 2 weeks of crushing goals = you're UNSTOPPABLE!",
       icon: "🔥",
       category: "streak",
       difficulty: "gold",
-      requirements: 7,
+      requirements: 14,
       currentProgress: 0,
       unlocked: false,
       criteria: [
         {
           type: "dailyGoal",
-          target: 7,
+          target: 14,
           operator: ">=",
           timeFrame: "daily",
         },
       ],
       reward: { type: "theme", item: "Fire Theme", emoji: "🔥" },
+    },
+
+    // 🎪 WEEKLY SPECIAL ACHIEVEMENTS
+    {
+      id: "weekend_warrior",
+      name: "Weekend Warrior",
+      description: "Learn 50 words on a weekend!",
+      funnyDescription: "🎊 WEEKEND HERO! 50 words on weekend = you're AMAZING!",
+      icon: "🗡️",
+      category: "streak",
+      difficulty: "gold",
+      requirements: 50,
+      currentProgress: 0,
+      unlocked: false,
+      criteria: [
+        {
+          type: "wordsLearned",
+          target: 50,
+          operator: ">=",
+        },
+      ],
+      reward: { type: "badge", item: "Weekend Warrior Shield", emoji: "🛡️" },
     },
 
     // 🌈 RAINBOW ACHIEVEMENTS - Ultimate kid-friendly goals
