@@ -23,7 +23,7 @@ import {
 import { AchievementTracker } from "@/lib/achievementTracker";
 import { audioService } from "@/lib/audioService";
 import { EnhancedAchievementPopup } from "@/components/EnhancedAchievementPopup";
-import { EnhancedMobileSettingsPanel } from "@/components/EnhancedMobileSettingsPanel";
+import { CompactMobileSettingsPanel } from "@/components/CompactMobileSettingsPanel";
 import { FloatingBubbles } from "@/components/FloatingBubbles";
 import { CelebrationEffect } from "@/components/CelebrationEffect";
 import { DailyChallenge } from "@/components/DailyChallenge";
@@ -1038,7 +1038,7 @@ export default function Index({ initialProfile }: IndexProps) {
               🎯📚✨
             </div>
             <div className="hidden md:block absolute bottom-20 right-10 text-3xl animate-pulse delay-500">
-              🚀
+              ����
             </div>
             <div
               className="hidden md:block absolute top-1/2 left-5 text-2xl animate-spin"
