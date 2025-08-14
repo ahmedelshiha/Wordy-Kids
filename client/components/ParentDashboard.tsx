@@ -150,6 +150,7 @@ interface ParentDashboardProps {
   children?: ChildProfile[];
   sessions?: LearningSession[];
   onNavigateBack?: () => void;
+  showMobileBackButton?: boolean;
 }
 
 const sampleChildren: ChildProfile[] = [
