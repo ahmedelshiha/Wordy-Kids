@@ -14,6 +14,8 @@ export function AchievementTeaser({ className }: AchievementTeaserProps) {
   const [motivationalMessage, setMotivationalMessage] = useState<string>("");
   const [specialMessage, setSpecialMessage] = useState<string | null>(null);
   const [showTeaser, setShowTeaser] = useState(false);
+  const [isPressed, setIsPressed] = useState(false);
+  const [messageIndex, setMessageIndex] = useState(0);
 
   useEffect(() => {
     // Get messages on component mount and periodically
