@@ -1050,10 +1050,10 @@ export function InteractiveDashboardWordCard({
 
             {!showHint && !showWordName && (
               <Button
-                onClick={() => setShowHint(true)}
+                onClick={() => handleActionWithFeedback(() => setShowHint(true), 'light')}
                 variant="outline"
                 size="sm"
-                className="px-3 py-2 text-xs sm:text-sm rounded-xl transition-all duration-300 transform hover:scale-105 active:scale-95 min-h-[44px]"
+                className="px-3 py-2 text-xs sm:text-sm rounded-xl transition-all duration-300 transform hover:scale-105 active:scale-95 min-h-[44px] touch-manipulation"
                 aria-label="Show hint"
               >
                 <Lightbulb className="w-4 h-4 mr-1" />
