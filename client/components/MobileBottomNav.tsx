@@ -40,7 +40,8 @@ export function MobileBottomNav({
   achievementCount = 0,
   userRole = "child",
 }: MobileBottomNavProps) {
-  const primaryTabs = [
+  // Dynamic primary tabs based on user role
+  const baseTabs = [
     {
       id: "dashboard",
       emoji: "🏠",
@@ -74,7 +75,7 @@ export function MobileBottomNav({
     {
       id: "progress",
       emoji: "🌟",
-      label: "My Journey",
+      label: userRole === "parent" ? "Reports" : "My Journey",
       icon: Trophy,
       color: "from-yellow-500 to-orange-500",
       bgColor: "bg-yellow-100",
@@ -82,6 +83,35 @@ export function MobileBottomNav({
       badge: undefined,
     },
   ];
+
+  // Add parent tab when in child mode, or modify for parent mode
+  const primaryTabs = userRole === "parent"
+    ? [
+        {
+          id: "parent",
+          emoji: "👨‍👩‍👧‍👦",
+          label: "Parent Zone",
+          icon: Users,
+          color: "from-blue-500 to-indigo-500",
+          bgColor: "bg-blue-100",
+          textColor: "text-blue-600",
+          badge: undefined,
+        },
+        ...baseTabs.filter(tab => tab.id !== "learn" && tab.id !== "quiz"),
+      ]
+    : [
+        ...baseTabs,
+        {
+          id: "parent",
+          emoji: "👨‍👩‍👧‍👦",
+          label: "Parent",
+          icon: Users,
+          color: "from-blue-500 to-indigo-500",
+          bgColor: "bg-blue-100",
+          textColor: "text-blue-600",
+          badge: undefined,
+        },
+      ];
 
   const secondaryMenuItems = [
     {
