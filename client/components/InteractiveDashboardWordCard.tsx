@@ -914,8 +914,8 @@ export function InteractiveDashboardWordCard({
             </p>
           </div>
 
-          {/* Action Buttons Row - Compact and Kid-Friendly */}
-          <div className="flex justify-center items-center gap-2 mb-3 md:mb-4">
+          {/* Action Buttons Row - Mobile Optimized */}
+          <div className="flex justify-center items-center gap-2 sm:gap-3 mb-3 sm:mb-4 px-2">
             <Button
               onClick={playPronunciation}
               disabled={isPlaying}
