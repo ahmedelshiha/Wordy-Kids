@@ -91,6 +91,8 @@ export const LearningDashboard: React.FC<LearningDashboardProps> = ({
   onSessionProgress,
   dashboardSession,
   onGenerateNewSession,
+  currentProgress = { wordsLearned: 0, wordsRemembered: 0, sessionCount: 0, accuracy: 0 },
+  learningGoals = [],
 }) => {
   const completionPercentage = Math.round(
     (stats.wordsLearned / stats.totalWords) * 100,
