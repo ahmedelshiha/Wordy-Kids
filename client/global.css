@@ -666,8 +666,13 @@
   .mobile-parent-dashboard {
     /* Ensure content doesn't get cut off by mobile navigation */
     padding-bottom: 100px;
+    /* Calculate proper height considering mobile navigation */
+    max-height: calc(100vh - 80px);
     /* Improve scroll performance */
     scroll-behavior: smooth;
+    /* Better performance on mobile */
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
   }
 
   /* Hide scrollbars on mobile for cleaner look */
@@ -680,6 +685,24 @@
     -webkit-overflow-scrolling: touch;
     overscroll-behavior: contain;
     scroll-behavior: smooth;
+    /* Adjust content height for mobile */
+    max-height: calc(70vh - 60px);
+  }
+
+  /* Safe area handling for iOS devices */
+  .mobile-parent-dashboard {
+    padding-bottom: calc(100px + env(safe-area-inset-bottom));
+  }
+
+  /* Prevent zoom on touch for better scrolling experience */
+  .mobile-parent-dashboard * {
+    touch-action: manipulation;
+  }
+
+  /* Optimize scroll containers */
+  .mobile-parent-dashboard .space-y-4,
+  .mobile-parent-dashboard .space-y-6 {
+    scroll-margin-top: 20px;
   }
 }
 
