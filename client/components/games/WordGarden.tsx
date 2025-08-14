@@ -152,16 +152,28 @@ function useConfetti() {
   return { ref, burst } as const;
 }
 
-// Multiple plant types with different growth sequences
+// Multiple plant types with diverse growth sequences - each with unique intermediate stages
 const PLANT_TYPES = [
-  ["🌱", "🌿", "🌻"], // sunflower
-  ["🌱", "🌵", "🌺"], // cactus-flower
-  ["🌱", "🍃", "🌹"], // rose bush
-  ["🌱", "🌿", "🌼"], // daisy
-  ["🌱", "🌿", "🌷"], // tulip
-  ["🌱", "🌿", "🌸"], // cherry blossom
-  ["🌱", "🍀", "🌺"], // hibiscus
-  ["🌱", "🌿", "🏵️"], // rosette
+  ["🌱", "🌿", "🌻"], // sunflower - leafy to bright sunflower
+  ["🌱", "🌵", "🌺"], // cactus-flower - spiky cactus to hibiscus
+  ["🌱", "🍃", "🌹"], // rose bush - small leaves to red rose
+  ["🌱", "🌾", "🌼"], // daisy field - grain to white daisy
+  ["🌱", "💚", "🌷"], // tulip - green heart to pink tulip
+  ["🌱", "🌳", "🌸"], // cherry tree - tree to cherry blossom
+  ["🌱", "🍀", "🌺"], // clover hibiscus - clover to tropical flower
+  ["🌱", "🎋", "🏵️"], // bamboo rosette - bamboo to decorative flower
+  ["🌱", "🌲", "🍄"], // forest mushroom - pine to mushroom
+  ["🌱", "🪴", "🌻"], // potted sunflower - pot plant to big sunflower
+  ["🌱", "🌿", "💐"], // bouquet garden - leaves to flower bouquet
+  ["🌱", "🎍", "🌸"], // bamboo cherry - bamboo decoration to blossom
+  ["🌱", "🌳", "🍃"], // tree leaves - tree to fresh leaves
+  ["🌱", "🪷", "🌺"], // lotus hibiscus - lotus to hibiscus
+  ["🌱", "🌾", "🌻"], // wheat sunflower - grain field to sunflower
+  ["🌱", "🎄", "🌟"], // christmas tree star - evergreen to star
+  ["🌱", "🌿", "🌈"], // rainbow plant - leaves to rainbow
+  ["🌱", "🍂", "🍁"], // autumn leaves - brown to red maple
+  ["🌱", "🌴", "🥥"], // palm coconut - palm tree to coconut
+  ["🌱", "🌵", "🌵"], // growing cactus - small to big cactus
 ] as const;
 
 // Generate emoji-based image using SVG data URI with larger size
