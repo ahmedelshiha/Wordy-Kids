@@ -399,10 +399,8 @@ export default function WordGardenGame({
     [
       current,
       locked,
-      attempts,
       correctCount,
       streak,
-      roundIdx,
       pool.length,
       burst,
       onFinish,
