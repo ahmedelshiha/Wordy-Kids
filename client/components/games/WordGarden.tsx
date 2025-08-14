@@ -490,12 +490,34 @@ export default function WordGardenGame({
     plantEmoji: "🌱"
   });
 
+  // Generate diverse plant types ensuring variety
+  const generateDiversePlantTypes = useCallback((count: number) => {
+    const types: number[] = [];
+    const usedTypes = new Set<number>();
+
+    // First, try to use unique plant types
+    for (let i = 0; i < count; i++) {
+      let plantType;
+      let attempts = 0;
+
+      do {
+        plantType = Math.floor(Math.random() * PLANT_TYPES.length);
+        attempts++;
+      } while (usedTypes.has(plantType) && attempts < 10 && usedTypes.size < PLANT_TYPES.length);
+
+      types.push(plantType);
+      usedTypes.add(plantType);
+    }
+
+    return types;
+  }, []);
+
   // Garden stages with plant types
   const [gardenStages, setGardenStages] = useState<number[]>(
     Array.from({ length: rounds }, () => 0),
   );
   const [plantTypes, setPlantTypes] = useState<number[]>(
-    Array.from({ length: rounds }, () => Math.floor(Math.random() * PLANT_TYPES.length)),
+    generateDiversePlantTypes(rounds),
   );
   const [recentlyGrown, setRecentlyGrown] = useState<number | null>(null);
 
