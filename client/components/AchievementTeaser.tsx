@@ -113,13 +113,16 @@ export function AchievementTeaser({ className }: AchievementTeaserProps) {
           whileTap={{ scale: 0.98 }}
         >
           <Card
-            className={`border-0 shadow-sm transition-all duration-500 hover:shadow-md rounded-xl sm:rounded-2xl backdrop-blur-sm ${
+            className={`border-0 shadow-sm transition-all duration-500 hover:shadow-md active:shadow-lg rounded-xl sm:rounded-2xl backdrop-blur-sm overflow-hidden ${
               isSpecial
-                ? "bg-gradient-to-r from-yellow-100 via-orange-50 to-pink-100 border-yellow-200 shadow-yellow-100/50"
+                ? "bg-gradient-to-r from-yellow-100 via-orange-50 to-pink-100 border-yellow-200 shadow-yellow-100/50 hover:shadow-yellow-200/60"
                 : isTease
-                  ? "bg-gradient-to-r from-blue-100 via-purple-50 to-indigo-100 border-blue-200 shadow-blue-100/50"
-                  : "bg-gradient-to-r from-green-100 via-emerald-50 to-blue-100 border-green-200 shadow-green-100/50"
-            }`}
+                  ? "bg-gradient-to-r from-blue-100 via-purple-50 to-indigo-100 border-blue-200 shadow-blue-100/50 hover:shadow-blue-200/60"
+                  : "bg-gradient-to-r from-green-100 via-emerald-50 to-blue-100 border-green-200 shadow-green-100/50 hover:shadow-green-200/60"
+            } ${isPressed ? 'scale-98 shadow-lg' : ''}`}
+            role="button"
+            tabIndex={0}
+            aria-label="Tap for a new motivational message"
           >
             <CardContent className="p-2 sm:p-3 md:p-4">
               <div className="flex items-center gap-2 sm:gap-3">
