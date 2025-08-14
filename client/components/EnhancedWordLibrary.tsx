@@ -71,6 +71,16 @@ export const EnhancedWordLibrary: React.FC<EnhancedWordLibraryProps> = ({
   enableAdvancedFeatures = true,
   showMobileOptimizations = true,
 }) => {
+  // Real-time word database integration
+  const {
+    words: realTimeWords,
+    categories: realTimeCategories,
+    lastUpdate,
+    isLoading: wordsLoading,
+    refresh: refreshWords,
+    invalidateCaches
+  } = useRealTimeWords();
+
   const [viewMode, setViewMode] = useState<ViewMode>("categories");
   const [wordViewMode, setWordViewMode] = useState<WordViewMode>("grid");
   const [selectedCategory, setSelectedCategory] = useState<string>("all");
@@ -83,6 +93,7 @@ export const EnhancedWordLibrary: React.FC<EnhancedWordLibraryProps> = ({
   const [bookmarkedWords, setBookmarkedWords] = useState<Set<number>>(
     new Set(),
   );
+  const [refreshing, setRefreshing] = useState(false);
 
   // Accessibility and mobile settings
   const [accessibilityMode, setAccessibilityMode] = useState(false);
