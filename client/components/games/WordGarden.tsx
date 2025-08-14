@@ -700,7 +700,7 @@ export default function WordGardenGame({
     setStreak(0);
     setAttempts(0);
     setGardenStages(Array.from({ length: rounds }, () => 0));
-    setPlantTypes(Array.from({ length: rounds }, () => Math.floor(Math.random() * PLANT_TYPES.length)));
+    setPlantTypes(generateDiversePlantTypes(rounds));
     setRecentlyGrown(null);
     
     // Fetch new words
