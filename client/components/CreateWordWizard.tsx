@@ -1552,7 +1552,7 @@ const CreateWordWizard: React.FC<CreateWordWizardProps> = ({
                 }
               >
                 {formData.difficulty === "easy"
-                  ? "🌟"
+                  ? "��"
                   : formData.difficulty === "medium"
                     ? "⭐"
                     : "🔥"}
@@ -1655,7 +1655,6 @@ const CreateWordWizard: React.FC<CreateWordWizardProps> = ({
   };
 
   return (
-    <TooltipProvider>
       <Dialog open={open} onOpenChange={onOpenChange}>
         <DialogContent className="max-w-5xl max-h-[95vh] overflow-hidden flex flex-col">
           <DialogHeader className="pb-4 border-b">
@@ -1742,7 +1741,6 @@ const CreateWordWizard: React.FC<CreateWordWizardProps> = ({
           </DialogFooter>
         </DialogContent>
       </Dialog>
-    </TooltipProvider>
   );
 };
 
