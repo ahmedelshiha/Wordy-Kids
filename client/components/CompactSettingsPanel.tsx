@@ -308,7 +308,7 @@ export const CompactSettingsPanel: React.FC<CompactSettingsPanelProps> = ({
                           size="sm"
                           variant={selectedVoiceType === voice.type ? "default" : "outline"}
                           className={cn(
-                            "flex-1 h-9 text-xs min-h-[36px] touch-target",
+                            "flex-1 h-9 text-xs min-h-[36px] touch-target voice-button",
                             selectedVoiceType === voice.type && "bg-educational-blue"
                           )}
                           onClick={() => handleVoiceTypeChange(voice.type)}
