@@ -40,7 +40,7 @@ import {
   useMobileDevice,
   triggerHapticFeedback,
 } from "@/hooks/use-mobile-device";
-import { EnhancedLearningGoalsPanel } from "@/components/EnhancedLearningGoalsPanel";
+import { MobileLearningGoalsPanel } from "@/components/MobileLearningGoalsPanel";
 
 interface CompactMobileSettingsPanelProps {
   isOpen: boolean;
