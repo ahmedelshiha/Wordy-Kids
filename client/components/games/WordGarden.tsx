@@ -221,6 +221,7 @@ export default function WordGardenGame({
   category,
   className = "",
   onFinish,
+  onExit,
 }: WordGardenGameProps) {
   const sessionId = useMemo(() => uuid(), []);
 
