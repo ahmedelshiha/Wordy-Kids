@@ -338,7 +338,10 @@ export const EnhancedSettingsPanel: React.FC<EnhancedSettingsPanelProps> = ({
                 <Button
                   key={tab.id}
                   variant={activeTab === tab.id ? "default" : "ghost"}
-                  onClick={() => setActiveTab(tab.id)}
+                  onClick={() => {
+                    setActiveTab(tab.id);
+                    if (deviceInfo.hasHaptic) triggerHapticFeedback("light");
+                  }}
                   className={cn(
                     "w-full justify-start gap-3 h-12",
                     activeTab === tab.id && "bg-educational-blue text-white shadow-lg"
