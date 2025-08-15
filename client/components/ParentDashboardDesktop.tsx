@@ -394,6 +394,14 @@ export const ParentDashboardDesktop: React.FC<ParentDashboardDesktopProps> = ({
   const [analyticsExpanded, setAnalyticsExpanded] = useState(false);
   const [selectedTimeRange, setSelectedTimeRange] = useState("30d");
 
+  // Auto-detect state
+  const [showAutoDetectDialog, setShowAutoDetectDialog] = useState(false);
+  const [detectedProgress, setDetectedProgress] = useState<Array<{
+    userId: string;
+    userData: any;
+    progressStats: any;
+  }>>([]);
+
   // New child data
   const [newChildData, setNewChildData] = useState({
     name: "",
