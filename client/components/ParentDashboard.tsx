@@ -717,6 +717,36 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
     };
   };
 
+  // Sync children progress with real learning data
+  const syncChildrenProgress = async () => {
+    if (children.length === 0) return;
+
+    setIsLoadingProgress(true);
+    try {
+      console.log("Syncing children progress...");
+      const updatedChildren = await childProgressSync.syncAndSaveAllProgress(children);
+      setChildren(updatedChildren);
+
+      // Update family stats
+      const stats = childProgressSync.getFamilyStats(updatedChildren);
+      setFamilyStats(stats);
+
+      // Update selected child if needed
+      if (selectedChild) {
+        const updatedSelectedChild = updatedChildren.find(c => c.id === selectedChild.id);
+        if (updatedSelectedChild) {
+          setSelectedChild(updatedSelectedChild);
+        }
+      }
+
+      console.log("Progress sync completed:", { updatedChildren, stats });
+    } catch (error) {
+      console.error("Error syncing children progress:", error);
+    } finally {
+      setIsLoadingProgress(false);
+    }
+  };
+
   const getChildGoals = (childId: string) => {
     return goals.filter((goal) => goal.childId === childId);
   };
