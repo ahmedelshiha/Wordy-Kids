@@ -81,6 +81,7 @@ import { AnimatedCounter } from "@/components/AnimatedCounter";
 import { WordProgressAPI } from "@/lib/wordProgressApi";
 import { ChildWordStats } from "@shared/api";
 import { SmartWordSelector } from "@/lib/smartWordSelection";
+import { childProgressSync } from "@/lib/childProgressSync";
 
 interface LearningGoal {
   id: string;
@@ -860,7 +861,7 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 md:gap-0">
               <div>
                 <h3 className="font-semibold text-base md:text-lg">
-                  Good Morning! 👋
+                  Good Morning! ��
                 </h3>
                 <p className="text-xs md:text-sm text-slate-600">
                   {children.length} active learner
@@ -1485,7 +1486,7 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
                                 {activeLearningGoals}
                               </span>
                               <span>active</span>
-                              <span className="text-slate-400">•</span>
+                              <span className="text-slate-400">���</span>
                               <span className="text-educational-green font-medium">
                                 {completedLearningGoals}
                               </span>
