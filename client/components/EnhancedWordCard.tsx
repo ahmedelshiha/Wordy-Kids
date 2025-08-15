@@ -11,24 +11,7 @@ import {
   Star,
   ThumbsUp,
   ThumbsDown,
-  Brain,
-  Sword,
-  Shield,
-  AlertTriangle,
-  Flame,
   Target,
-  Zap,
-  Crown,
-  Eye,
-  Share,
-  Bookmark,
-  Play,
-  Shuffle,
-  Gamepad2,
-  Volume,
-  VolumeX,
-  Music,
-  Headphones,
 } from "lucide-react";
 import {
   playSoundIfEnabled,
@@ -36,11 +19,6 @@ import {
 } from "@/lib/soundEffects";
 import { audioService } from "@/lib/audioService";
 import { enhancedAudioService } from "@/lib/enhancedAudioService";
-import { adventureService } from "@/lib/adventureService";
-import { WordAdventureStatus } from "@shared/adventure";
-import { AchievementTracker } from "@/lib/achievementTracker";
-import { CategoryCompletionTracker } from "@/lib/categoryCompletionTracker";
-import { EnhancedAchievementPopup } from "@/components/EnhancedAchievementPopup";
 import { useVoiceSettings } from "@/hooks/use-voice-settings";
 import { cn } from "@/lib/utils";
 
@@ -68,8 +46,6 @@ interface EnhancedWordCardProps {
   onWordMastered?: (wordId: number, rating: "easy" | "medium" | "hard") => void;
   showVocabularyBuilder?: boolean;
   className?: string;
-  enableSwipeGestures?: boolean;
-  showAccessibilityFeatures?: boolean;
 }
 
 type MiniGame = "sound-match" | "emoji-builder" | "letter-hunt" | null;
@@ -82,8 +58,6 @@ export const EnhancedWordCard: React.FC<EnhancedWordCardProps> = ({
   onWordMastered,
   showVocabularyBuilder = false,
   className = "",
-  enableSwipeGestures = true,
-  showAccessibilityFeatures = true,
 }) => {
   // Core states
   const [isFlipped, setIsFlipped] = useState(showDefinition);
@@ -573,90 +547,47 @@ export const EnhancedWordCard: React.FC<EnhancedWordCardProps> = ({
                   </div>
                 )}
 
-                {/* Mini-games menu */}
+              {/* Vocabulary Builder section */}
+              {showVocabularyBuilder && (
                 <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-4 border border-white/20">
-                  <h4 className="text-sm font-medium mb-3 text-purple-300 flex items-center gap-1">
-                    <Gamepad2 className="w-4 h-4" />
-                    Fun Games:
+                  <h4 className="text-sm font-medium mb-3 text-orange-300 flex items-center gap-1">
+                    <Target className="w-4 h-4" />
+                    Rate Your Knowledge:
                   </h4>
-                  <div className="grid grid-cols-1 gap-2">
+                  <div className="flex gap-2">
                     <Button
-                      onClick={() => startMiniGame("sound-match")}
-                      className="h-10 bg-blue-500/20 hover:bg-blue-500/30 border border-blue-500/30 text-blue-200 rounded-lg transition-all hover:scale-102"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        onWordMastered?.(word.id, "hard");
+                      }}
+                      className="flex-1 h-10 bg-red-500/20 hover:bg-red-500/30 border border-red-500/30 text-red-200 text-xs"
                     >
-                      🎧 Sound Match
+                      <ThumbsDown className="w-3 h-3 mr-1" />
+                      Forgot
                     </Button>
                     <Button
-                      onClick={() => startMiniGame("emoji-builder")}
-                      className="h-10 bg-purple-500/20 hover:bg-purple-500/30 border border-purple-500/30 text-purple-200 rounded-lg transition-all hover:scale-102"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        onWordMastered?.(word.id, "medium");
+                      }}
+                      className="flex-1 h-10 bg-yellow-500/20 hover:bg-yellow-500/30 border border-yellow-500/30 text-yellow-200 text-xs"
                     >
-                      🧩 Emoji Builder
+                      <Star className="w-3 h-3 mr-1" />
+                      Kinda
                     </Button>
                     <Button
-                      onClick={() => startMiniGame("letter-hunt")}
-                      className="h-10 bg-green-500/20 hover:bg-green-500/30 border border-green-500/30 text-green-200 rounded-lg transition-all hover:scale-102"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        onWordMastered?.(word.id, "easy");
+                      }}
+                      className="flex-1 h-10 bg-green-500/20 hover:bg-green-500/30 border border-green-500/30 text-green-200 text-xs"
                     >
-                      🔤 Letter Hunt
+                      <ThumbsUp className="w-3 h-3 mr-1" />
+                      Easy!
                     </Button>
                   </div>
                 </div>
-
-                {/* Gamification section */}
-                {showVocabularyBuilder && (
-                  <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-4 border border-white/20">
-                    <h4 className="text-sm font-medium mb-3 text-orange-300 flex items-center gap-1">
-                      <Target className="w-4 h-4" />
-                      Rate Your Knowledge:
-                    </h4>
-                    <div className="flex gap-2">
-                      <Button
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          CategoryCompletionTracker.trackWordReview(
-                            word.id,
-                            false,
-                          ); // Mark as incorrect/difficult
-                          onWordMastered?.(word.id, "hard");
-                          triggerCelebration();
-                        }}
-                        className="flex-1 h-10 bg-red-500/20 hover:bg-red-500/30 border border-red-500/30 text-red-200 text-xs"
-                      >
-                        <ThumbsDown className="w-3 h-3 mr-1" />
-                        Forgot
-                      </Button>
-                      <Button
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          CategoryCompletionTracker.trackWordReview(
-                            word.id,
-                            true,
-                          ); // Mark as correct
-                          onWordMastered?.(word.id, "medium");
-                          triggerCelebration();
-                        }}
-                        className="flex-1 h-10 bg-yellow-500/20 hover:bg-yellow-500/30 border border-yellow-500/30 text-yellow-200 text-xs"
-                      >
-                        <Star className="w-3 h-3 mr-1" />
-                        Kinda
-                      </Button>
-                      <Button
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          CategoryCompletionTracker.trackWordReview(
-                            word.id,
-                            true,
-                          ); // Mark as correct
-                          onWordMastered?.(word.id, "easy");
-                          triggerCelebration();
-                        }}
-                        className="flex-1 h-10 bg-green-500/20 hover:bg-green-500/30 border border-green-500/30 text-green-200 text-xs"
-                      >
-                        <ThumbsUp className="w-3 h-3 mr-1" />
-                        Easy!
-                      </Button>
-                    </div>
-                  </div>
-                )}
+              )}
               </div>
             )}
 
