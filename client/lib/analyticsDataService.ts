@@ -27,7 +27,10 @@
  * @version 1.0.0
  */
 
-import { goalProgressTracker, SystematicProgressData } from "@/lib/goalProgressTracker";
+import {
+  goalProgressTracker,
+  SystematicProgressData,
+} from "@/lib/goalProgressTracker";
 import { childProgressSync } from "@/lib/childProgressSync";
 import { CategoryCompletionTracker } from "@/lib/categoryCompletionTracker";
 
@@ -100,9 +103,11 @@ export class AnalyticsDataService {
   /**
    * Get real-time analytics data from the core progress system
    */
-  async getAnalyticsData(timeRange: string = "30d"): Promise<RealTimeAnalyticsData> {
+  async getAnalyticsData(
+    timeRange: string = "30d",
+  ): Promise<RealTimeAnalyticsData> {
     const cacheKey = `analytics_${timeRange}`;
-    
+
     // Check cache first
     if (this.isCacheValid() && this.cache.has(cacheKey)) {
       return this.cache.get(cacheKey);
@@ -111,20 +116,20 @@ export class AnalyticsDataService {
     try {
       // Get real progress data from all children
       const children = this.getChildrenFromStorage();
-      
+
       // Aggregate data from all sources
       const [
         keyMetrics,
         usagePatterns,
         learningOutcomes,
         geographicData,
-        deviceAnalytics
+        deviceAnalytics,
       ] = await Promise.all([
         this.calculateKeyMetrics(children, timeRange),
         this.calculateUsagePatterns(children, timeRange),
         this.calculateLearningOutcomes(children, timeRange),
         this.calculateGeographicData(children, timeRange),
-        this.calculateDeviceAnalytics(children, timeRange)
+        this.calculateDeviceAnalytics(children, timeRange),
       ]);
 
       const data: RealTimeAnalyticsData = {
@@ -133,7 +138,7 @@ export class AnalyticsDataService {
         learningOutcomes,
         geographicData,
         deviceAnalytics,
-        lastUpdated: new Date()
+        lastUpdated: new Date(),
       };
 
       // Cache the result
@@ -150,9 +155,15 @@ export class AnalyticsDataService {
   /**
    * Calculate key metrics from real progress data
    */
-  private async calculateKeyMetrics(children: any[], timeRange: string): Promise<AnalyticsMetric[]> {
+  private async calculateKeyMetrics(
+    children: any[],
+    timeRange: string,
+  ): Promise<AnalyticsMetric[]> {
     const activeUsers = this.getActiveUsers(children, timeRange);
-    const learningSessionsData = await this.getLearningSessions(children, timeRange);
+    const learningSessionsData = await this.getLearningSessions(
+      children,
+      timeRange,
+    );
     const avgSessionTime = this.getAverageSessionTime(children, timeRange);
     const completionRate = this.getCompletionRate(children, timeRange);
     const userSatisfaction = this.getUserSatisfaction(children);
@@ -166,9 +177,12 @@ export class AnalyticsDataService {
         previousValue: activeUsers.previous,
         unit: "",
         trend: this.getTrend(activeUsers.current, activeUsers.previous),
-        changePercent: this.getChangePercent(activeUsers.current, activeUsers.previous),
+        changePercent: this.getChangePercent(
+          activeUsers.current,
+          activeUsers.previous,
+        ),
         icon: null, // Will be set in component
-        color: "text-blue-600"
+        color: "text-blue-600",
       },
       {
         id: "learning_sessions",
@@ -176,10 +190,16 @@ export class AnalyticsDataService {
         value: learningSessionsData.current,
         previousValue: learningSessionsData.previous,
         unit: "",
-        trend: this.getTrend(learningSessionsData.current, learningSessionsData.previous),
-        changePercent: this.getChangePercent(learningSessionsData.current, learningSessionsData.previous),
+        trend: this.getTrend(
+          learningSessionsData.current,
+          learningSessionsData.previous,
+        ),
+        changePercent: this.getChangePercent(
+          learningSessionsData.current,
+          learningSessionsData.previous,
+        ),
         icon: null,
-        color: "text-green-600"
+        color: "text-green-600",
       },
       {
         id: "avg_session_time",
@@ -188,9 +208,12 @@ export class AnalyticsDataService {
         previousValue: avgSessionTime.previous,
         unit: "min",
         trend: this.getTrend(avgSessionTime.current, avgSessionTime.previous),
-        changePercent: this.getChangePercent(avgSessionTime.current, avgSessionTime.previous),
+        changePercent: this.getChangePercent(
+          avgSessionTime.current,
+          avgSessionTime.previous,
+        ),
         icon: null,
-        color: "text-purple-600"
+        color: "text-purple-600",
       },
       {
         id: "completion_rate",
@@ -199,9 +222,12 @@ export class AnalyticsDataService {
         previousValue: completionRate.previous,
         unit: "%",
         trend: this.getTrend(completionRate.current, completionRate.previous),
-        changePercent: this.getChangePercent(completionRate.current, completionRate.previous),
+        changePercent: this.getChangePercent(
+          completionRate.current,
+          completionRate.previous,
+        ),
         icon: null,
-        color: "text-orange-600"
+        color: "text-orange-600",
       },
       {
         id: "user_satisfaction",
@@ -209,10 +235,16 @@ export class AnalyticsDataService {
         value: userSatisfaction.current,
         previousValue: userSatisfaction.previous,
         unit: "/5",
-        trend: this.getTrend(userSatisfaction.current, userSatisfaction.previous),
-        changePercent: this.getChangePercent(userSatisfaction.current, userSatisfaction.previous),
+        trend: this.getTrend(
+          userSatisfaction.current,
+          userSatisfaction.previous,
+        ),
+        changePercent: this.getChangePercent(
+          userSatisfaction.current,
+          userSatisfaction.previous,
+        ),
         icon: null,
-        color: "text-yellow-600"
+        color: "text-yellow-600",
       },
       {
         id: "retention_rate",
@@ -221,28 +253,39 @@ export class AnalyticsDataService {
         previousValue: retentionRate.previous,
         unit: "%",
         trend: this.getTrend(retentionRate.current, retentionRate.previous),
-        changePercent: this.getChangePercent(retentionRate.current, retentionRate.previous),
+        changePercent: this.getChangePercent(
+          retentionRate.current,
+          retentionRate.previous,
+        ),
         icon: null,
-        color: "text-red-600"
-      }
+        color: "text-red-600",
+      },
     ];
   }
 
   /**
    * Calculate usage patterns from real session data
    */
-  private async calculateUsagePatterns(children: any[], timeRange: string): Promise<UsagePattern[]> {
+  private async calculateUsagePatterns(
+    children: any[],
+    timeRange: string,
+  ): Promise<UsagePattern[]> {
     const timeSlots = [
-      "6-9 AM", "9-12 PM", "12-3 PM", "3-6 PM", "6-9 PM", "9 PM+"
+      "6-9 AM",
+      "9-12 PM",
+      "12-3 PM",
+      "3-6 PM",
+      "6-9 PM",
+      "9 PM+",
     ];
 
-    return timeSlots.map(timeSlot => {
+    return timeSlots.map((timeSlot) => {
       const sessionData = this.getSessionsForTimeSlot(children, timeSlot);
       return {
         timeOfDay: timeSlot,
         sessions: sessionData.sessions,
         completionRate: sessionData.completionRate,
-        avgDuration: sessionData.avgDuration
+        avgDuration: sessionData.avgDuration,
       };
     });
   }
@@ -250,8 +293,18 @@ export class AnalyticsDataService {
   /**
    * Calculate learning outcomes by category from real progress data
    */
-  private async calculateLearningOutcomes(children: any[], timeRange: string): Promise<LearningOutcome[]> {
-    const categories = ["Animals", "Nature", "Food", "Objects", "Actions", "Colors"];
+  private async calculateLearningOutcomes(
+    children: any[],
+    timeRange: string,
+  ): Promise<LearningOutcome[]> {
+    const categories = [
+      "Animals",
+      "Nature",
+      "Food",
+      "Objects",
+      "Actions",
+      "Colors",
+    ];
     const outcomes: LearningOutcome[] = [];
 
     for (const category of categories) {
@@ -262,7 +315,7 @@ export class AnalyticsDataService {
         masteredWords: categoryData.masteredWords,
         averageAccuracy: categoryData.averageAccuracy,
         improvementRate: categoryData.improvementRate,
-        strugglingAreas: categoryData.strugglingAreas
+        strugglingAreas: categoryData.strugglingAreas,
       });
     }
 
@@ -272,51 +325,57 @@ export class AnalyticsDataService {
   /**
    * Calculate geographic distribution (simulated for now)
    */
-  private async calculateGeographicData(children: any[], timeRange: string): Promise<GeographicData[]> {
+  private async calculateGeographicData(
+    children: any[],
+    timeRange: string,
+  ): Promise<GeographicData[]> {
     // For now, we'll provide estimated data based on user activity patterns
     // In a real application, this would come from IP geolocation or user profiles
     const totalUsers = children.length || 1;
-    
+
     return [
       {
         region: "Local Users",
         users: totalUsers,
         sessions: this.getTotalSessions(children),
         performance: this.getAveragePerformance(children),
-        growth: this.getGrowthRate(children)
-      }
+        growth: this.getGrowthRate(children),
+      },
     ];
   }
 
   /**
    * Calculate device analytics from localStorage data
    */
-  private async calculateDeviceAnalytics(children: any[], timeRange: string): Promise<DeviceAnalytics[]> {
+  private async calculateDeviceAnalytics(
+    children: any[],
+    timeRange: string,
+  ): Promise<DeviceAnalytics[]> {
     // Analyze user agent and device usage patterns from localStorage
     const deviceData = this.getDeviceUsageData();
-    
+
     return [
       {
         device: "Mobile",
         percentage: deviceData.mobile.percentage,
         sessions: deviceData.mobile.sessions,
         avgDuration: deviceData.mobile.avgDuration,
-        icon: null
+        icon: null,
       },
       {
         device: "Desktop",
         percentage: deviceData.desktop.percentage,
         sessions: deviceData.desktop.sessions,
         avgDuration: deviceData.desktop.avgDuration,
-        icon: null
+        icon: null,
       },
       {
         device: "Tablet",
         percentage: deviceData.tablet.percentage,
         sessions: deviceData.tablet.sessions,
         avgDuration: deviceData.tablet.avgDuration,
-        icon: null
-      }
+        icon: null,
+      },
     ];
   }
 
@@ -331,14 +390,17 @@ export class AnalyticsDataService {
     }
   }
 
-  private getActiveUsers(children: any[], timeRange: string): { current: number; previous: number } {
-    const activeToday = children.filter(child => {
+  private getActiveUsers(
+    children: any[],
+    timeRange: string,
+  ): { current: number; previous: number } {
+    const activeToday = children.filter((child) => {
       const lastActive = new Date(child.lastActive || 0);
       const today = new Date();
       return this.isSameDay(lastActive, today);
     }).length;
 
-    const activeYesterday = children.filter(child => {
+    const activeYesterday = children.filter((child) => {
       const lastActive = new Date(child.lastActive || 0);
       const yesterday = new Date();
       yesterday.setDate(yesterday.getDate() - 1);
@@ -348,13 +410,18 @@ export class AnalyticsDataService {
     return { current: activeToday, previous: activeYesterday };
   }
 
-  private async getLearningSessions(children: any[], timeRange: string): Promise<{ current: number; previous: number }> {
+  private async getLearningSessions(
+    children: any[],
+    timeRange: string,
+  ): Promise<{ current: number; previous: number }> {
     let currentSessions = 0;
     let previousSessions = 0;
 
     for (const child of children) {
       try {
-        const progress = await goalProgressTracker.fetchSystematicProgress(child.id);
+        const progress = await goalProgressTracker.fetchSystematicProgress(
+          child.id,
+        );
         currentSessions += progress.sessionsToday;
         // For previous period, we'll calculate from stored data
         previousSessions += this.getPreviousSessions(child.id);
@@ -366,7 +433,10 @@ export class AnalyticsDataService {
     return { current: currentSessions, previous: previousSessions };
   }
 
-  private getAverageSessionTime(children: any[], timeRange: string): { current: number; previous: number } {
+  private getAverageSessionTime(
+    children: any[],
+    timeRange: string,
+  ): { current: number; previous: number } {
     // Calculate average session time from stored session data
     let totalTime = 0;
     let sessionCount = 0;
@@ -383,33 +453,45 @@ export class AnalyticsDataService {
     return { current, previous };
   }
 
-  private getCompletionRate(children: any[], timeRange: string): { current: number; previous: number } {
+  private getCompletionRate(
+    children: any[],
+    timeRange: string,
+  ): { current: number; previous: number } {
     const completionHistory = CategoryCompletionTracker.getCompletionHistory();
-    
+
     const today = new Date();
     const yesterday = new Date();
     yesterday.setDate(yesterday.getDate() - 1);
 
-    const todayCompletions = completionHistory.filter(record => 
-      this.isSameDay(new Date(record.completionDate), today)
+    const todayCompletions = completionHistory.filter((record) =>
+      this.isSameDay(new Date(record.completionDate), today),
     );
 
-    const yesterdayCompletions = completionHistory.filter(record => 
-      this.isSameDay(new Date(record.completionDate), yesterday)
+    const yesterdayCompletions = completionHistory.filter((record) =>
+      this.isSameDay(new Date(record.completionDate), yesterday),
     );
 
-    const current = todayCompletions.length > 0 
-      ? todayCompletions.reduce((sum, record) => sum + record.accuracy, 0) / todayCompletions.length
-      : 85; // Default reasonable completion rate
+    const current =
+      todayCompletions.length > 0
+        ? todayCompletions.reduce((sum, record) => sum + record.accuracy, 0) /
+          todayCompletions.length
+        : 85; // Default reasonable completion rate
 
-    const previous = yesterdayCompletions.length > 0
-      ? yesterdayCompletions.reduce((sum, record) => sum + record.accuracy, 0) / yesterdayCompletions.length
-      : 82;
+    const previous =
+      yesterdayCompletions.length > 0
+        ? yesterdayCompletions.reduce(
+            (sum, record) => sum + record.accuracy,
+            0,
+          ) / yesterdayCompletions.length
+        : 82;
 
     return { current, previous };
   }
 
-  private getUserSatisfaction(children: any[]): { current: number; previous: number } {
+  private getUserSatisfaction(children: any[]): {
+    current: number;
+    previous: number;
+  } {
     // Calculate satisfaction based on completion rates and streaks
     let totalSatisfaction = 0;
     let count = 0;
@@ -417,16 +499,16 @@ export class AnalyticsDataService {
     for (const child of children) {
       const streak = child.currentStreak || 0;
       const wordsLearned = child.wordsLearned || 0;
-      
+
       // Calculate satisfaction based on engagement metrics
       let satisfaction = 3.0; // Base satisfaction
-      
+
       if (streak > 7) satisfaction += 1.0;
       else if (streak > 3) satisfaction += 0.5;
-      
+
       if (wordsLearned > 100) satisfaction += 0.5;
       else if (wordsLearned > 50) satisfaction += 0.3;
-      
+
       totalSatisfaction += Math.min(satisfaction, 5.0);
       count++;
     }
@@ -437,30 +519,38 @@ export class AnalyticsDataService {
     return { current, previous };
   }
 
-  private getRetentionRate(children: any[]): { current: number; previous: number } {
+  private getRetentionRate(children: any[]): {
+    current: number;
+    previous: number;
+  } {
     const sevenDaysAgo = new Date();
     sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
 
     const fourteenDaysAgo = new Date();
     fourteenDaysAgo.setDate(fourteenDaysAgo.getDate() - 14);
 
-    const activeInLastWeek = children.filter(child => {
+    const activeInLastWeek = children.filter((child) => {
       const lastActive = new Date(child.lastActive || 0);
       return lastActive >= sevenDaysAgo;
     }).length;
 
-    const activeInPreviousWeek = children.filter(child => {
+    const activeInPreviousWeek = children.filter((child) => {
       const lastActive = new Date(child.lastActive || 0);
       return lastActive >= fourteenDaysAgo && lastActive < sevenDaysAgo;
     }).length;
 
-    const current = children.length > 0 ? (activeInLastWeek / children.length) * 100 : 0;
-    const previous = children.length > 0 ? (activeInPreviousWeek / children.length) * 100 : 0;
+    const current =
+      children.length > 0 ? (activeInLastWeek / children.length) * 100 : 0;
+    const previous =
+      children.length > 0 ? (activeInPreviousWeek / children.length) * 100 : 0;
 
     return { current, previous };
   }
 
-  private getSessionsForTimeSlot(children: any[], timeSlot: string): {
+  private getSessionsForTimeSlot(
+    children: any[],
+    timeSlot: string,
+  ): {
     sessions: number;
     completionRate: number;
     avgDuration: number;
@@ -473,7 +563,7 @@ export class AnalyticsDataService {
       "12-3 PM": 150,
       "3-6 PM": 300,
       "6-9 PM": 250,
-      "9 PM+": 90
+      "9 PM+": 90,
     };
 
     const baseSessions = baseSessionsMap[timeSlot] || 100;
@@ -482,11 +572,14 @@ export class AnalyticsDataService {
     return {
       sessions: actualSessions,
       completionRate: 85 + Math.random() * 10, // 85-95%
-      avgDuration: 15 + Math.random() * 10 // 15-25 minutes
+      avgDuration: 15 + Math.random() * 10, // 15-25 minutes
     };
   }
 
-  private async getCategoryProgress(children: any[], category: string): Promise<{
+  private async getCategoryProgress(
+    children: any[],
+    category: string,
+  ): Promise<{
     totalWords: number;
     masteredWords: number;
     averageAccuracy: number;
@@ -500,18 +593,25 @@ export class AnalyticsDataService {
 
     for (const child of children) {
       try {
-        const progress = await goalProgressTracker.fetchSystematicProgress(child.id);
+        const progress = await goalProgressTracker.fetchSystematicProgress(
+          child.id,
+        );
         const categoryProgress = progress.categoriesProgress[category] || 0;
-        
+
         totalWords += 50; // Average words per category
         masteredWords += Math.round(categoryProgress * 0.01 * 50); // Convert percentage to actual words
-        
+
         // Get accuracy from completion history
         const completions = CategoryCompletionTracker.getCompletionHistory();
-        const categoryCompletions = completions.filter((c: any) => c.categoryId === category);
-        
+        const categoryCompletions = completions.filter(
+          (c: any) => c.categoryId === category,
+        );
+
         if (categoryCompletions.length > 0) {
-          totalAccuracy += categoryCompletions.reduce((sum: number, c: any) => sum + c.accuracy, 0);
+          totalAccuracy += categoryCompletions.reduce(
+            (sum: number, c: any) => sum + c.accuracy,
+            0,
+          );
           accuracyCount += categoryCompletions.length;
         }
       } catch {
@@ -519,27 +619,28 @@ export class AnalyticsDataService {
       }
     }
 
-    const averageAccuracy = accuracyCount > 0 ? totalAccuracy / accuracyCount : 85;
-    
+    const averageAccuracy =
+      accuracyCount > 0 ? totalAccuracy / accuracyCount : 85;
+
     return {
       totalWords,
       masteredWords,
       averageAccuracy,
       improvementRate: 8 + Math.random() * 10, // 8-18%
-      strugglingAreas: this.getStrugglingAreas(category, averageAccuracy)
+      strugglingAreas: this.getStrugglingAreas(category, averageAccuracy),
     };
   }
 
   private getStrugglingAreas(category: string, accuracy: number): string[] {
     if (accuracy > 90) return [];
-    
+
     const strugglingAreasMap: Record<string, string[]> = {
-      "Animals": ["Pronunciation", "Spelling"],
-      "Nature": ["Definition recall", "Complex words"],
-      "Food": ["Cultural terms", "Pronunciation"],
-      "Objects": ["Technical terms", "Pronunciation"],
-      "Actions": ["Verb conjugation", "Context usage"],
-      "Colors": ["Shade variations", "Cultural names"]
+      Animals: ["Pronunciation", "Spelling"],
+      Nature: ["Definition recall", "Complex words"],
+      Food: ["Cultural terms", "Pronunciation"],
+      Objects: ["Technical terms", "Pronunciation"],
+      Actions: ["Verb conjugation", "Context usage"],
+      Colors: ["Shade variations", "Cultural names"],
     };
 
     return strugglingAreasMap[category] || ["Pronunciation"];
@@ -553,24 +654,29 @@ export class AnalyticsDataService {
 
   private getAveragePerformance(children: any[]): number {
     if (children.length === 0) return 0;
-    
-    const totalWords = children.reduce((sum, child) => sum + (child.wordsLearned || 0), 0);
+
+    const totalWords = children.reduce(
+      (sum, child) => sum + (child.wordsLearned || 0),
+      0,
+    );
     const averageWords = totalWords / children.length;
-    
+
     // Convert to performance percentage
     return Math.min((averageWords / 100) * 100, 100);
   }
 
   private getGrowthRate(children: any[]): number {
     // Calculate growth based on recent activity
-    const recentlyActive = children.filter(child => {
+    const recentlyActive = children.filter((child) => {
       const lastActive = new Date(child.lastActive || 0);
       const weekAgo = new Date();
       weekAgo.setDate(weekAgo.getDate() - 7);
       return lastActive >= weekAgo;
     });
 
-    return children.length > 0 ? (recentlyActive.length / children.length) * 100 : 0;
+    return children.length > 0
+      ? (recentlyActive.length / children.length) * 100
+      : 0;
   }
 
   private getDeviceUsageData(): {
@@ -586,24 +692,27 @@ export class AnalyticsDataService {
       mobile: {
         percentage: 65,
         sessions: Math.round(totalSessions * 0.65),
-        avgDuration: 16.8
+        avgDuration: 16.8,
       },
       desktop: {
         percentage: 25,
         sessions: Math.round(totalSessions * 0.25),
-        avgDuration: 23.5
+        avgDuration: 23.5,
       },
       tablet: {
         percentage: 10,
-        sessions: Math.round(totalSessions * 0.10),
-        avgDuration: 19.2
-      }
+        sessions: Math.round(totalSessions * 0.1),
+        avgDuration: 19.2,
+      },
     };
   }
 
   // Utility methods
 
-  private getTrend(current: number, previous: number): "up" | "down" | "stable" {
+  private getTrend(
+    current: number,
+    previous: number,
+  ): "up" | "down" | "stable" {
     if (current > previous) return "up";
     if (current < previous) return "down";
     return "stable";
@@ -631,7 +740,10 @@ export class AnalyticsDataService {
     }
   }
 
-  private getChildSessionTimes(childId: string): { totalTime: number; sessionCount: number } {
+  private getChildSessionTimes(childId: string): {
+    totalTime: number;
+    sessionCount: number;
+  } {
     // Calculate from stored session data
     let totalTime = 0;
     let sessionCount = 0;
@@ -644,7 +756,7 @@ export class AnalyticsDataService {
         const dateKey = date.toISOString().split("T")[0];
         const key = `session_time_${childId}_${dateKey}`;
         const data = localStorage.getItem(key);
-        
+
         if (data) {
           const sessionData = JSON.parse(data);
           totalTime += sessionData.totalTime || 0;
@@ -684,7 +796,7 @@ export class AnalyticsDataService {
       learningOutcomes: [],
       geographicData: [],
       deviceAnalytics: [],
-      lastUpdated: new Date()
+      lastUpdated: new Date(),
     };
   }
 

@@ -45,14 +45,14 @@ import {
   UsagePattern,
   LearningOutcome,
   GeographicData,
-  DeviceAnalytics
+  DeviceAnalytics,
 } from "@/lib/analyticsDataService";
-
 
 const AdvancedAnalyticsDashboard: React.FC = () => {
   const [timeRange, setTimeRange] = useState("30d");
   const [selectedMetric, setSelectedMetric] = useState("overview");
-  const [analyticsData, setAnalyticsData] = useState<RealTimeAnalyticsData | null>(null);
+  const [analyticsData, setAnalyticsData] =
+    useState<RealTimeAnalyticsData | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -81,33 +81,37 @@ const AdvancedAnalyticsDashboard: React.FC = () => {
   };
 
   // Add icons to metrics data
-  const enrichMetricsWithIcons = (metrics: AnalyticsMetric[]): AnalyticsMetric[] => {
+  const enrichMetricsWithIcons = (
+    metrics: AnalyticsMetric[],
+  ): AnalyticsMetric[] => {
     const iconMap: Record<string, React.ReactNode> = {
       active_users: <Users className="w-6 h-6" />,
       learning_sessions: <BookOpen className="w-6 h-6" />,
       avg_session_time: <Clock className="w-6 h-6" />,
       completion_rate: <Target className="w-6 h-6" />,
       user_satisfaction: <Star className="w-6 h-6" />,
-      retention_rate: <Heart className="w-6 h-6" />
+      retention_rate: <Heart className="w-6 h-6" />,
     };
 
-    return metrics.map(metric => ({
+    return metrics.map((metric) => ({
       ...metric,
-      icon: iconMap[metric.id] || <Activity className="w-6 h-6" />
+      icon: iconMap[metric.id] || <Activity className="w-6 h-6" />,
     }));
   };
 
   // Add icons to device analytics
-  const enrichDeviceAnalyticsWithIcons = (devices: DeviceAnalytics[]): DeviceAnalytics[] => {
+  const enrichDeviceAnalyticsWithIcons = (
+    devices: DeviceAnalytics[],
+  ): DeviceAnalytics[] => {
     const iconMap: Record<string, React.ReactNode> = {
       Mobile: <Smartphone className="w-5 h-5" />,
       Desktop: <Monitor className="w-5 h-5" />,
-      Tablet: <Tablet className="w-5 h-5" />
+      Tablet: <Tablet className="w-5 h-5" />,
     };
 
-    return devices.map(device => ({
+    return devices.map((device) => ({
       ...device,
-      icon: iconMap[device.device] || <Monitor className="w-5 h-5" />
+      icon: iconMap[device.device] || <Monitor className="w-5 h-5" />,
     }));
   };
 
@@ -120,7 +124,9 @@ const AdvancedAnalyticsDashboard: React.FC = () => {
               <BarChart3 className="w-6 h-6 text-blue-500" />
               Advanced Analytics Dashboard
             </h2>
-            <p className="text-slate-600">Loading real-time analytics data...</p>
+            <p className="text-slate-600">
+              Loading real-time analytics data...
+            </p>
           </div>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -164,33 +170,35 @@ const AdvancedAnalyticsDashboard: React.FC = () => {
   const usagePatterns = analyticsData.usagePatterns;
   const learningOutcomes = analyticsData.learningOutcomes;
   const geographicData = analyticsData.geographicData;
-  const deviceAnalytics = enrichDeviceAnalyticsWithIcons(analyticsData.deviceAnalytics);
+  const deviceAnalytics = enrichDeviceAnalyticsWithIcons(
+    analyticsData.deviceAnalytics,
+  );
 
   // Fallback data for static sections (will be replaced with real data as available)
   const fallbackKeyMetrics: AnalyticsMetric[] = [
-      {
-        id: "active_users",
-        name: "Active Users",
-        value: 0,
-        previousValue: 0,
-        unit: "",
-        trend: "stable" as const,
-        changePercent: 0,
-        icon: <Users className="w-6 h-6" />,
-        color: "text-blue-600",
-      },
-      {
-        id: "learning_sessions",
-        name: "Learning Sessions",
-        value: 0,
-        previousValue: 0,
-        unit: "",
-        trend: "stable" as const,
-        changePercent: 0,
-        icon: <BookOpen className="w-6 h-6" />,
-        color: "text-green-600",
-      },
-    ];
+    {
+      id: "active_users",
+      name: "Active Users",
+      value: 0,
+      previousValue: 0,
+      unit: "",
+      trend: "stable" as const,
+      changePercent: 0,
+      icon: <Users className="w-6 h-6" />,
+      color: "text-blue-600",
+    },
+    {
+      id: "learning_sessions",
+      name: "Learning Sessions",
+      value: 0,
+      previousValue: 0,
+      unit: "",
+      trend: "stable" as const,
+      changePercent: 0,
+      icon: <BookOpen className="w-6 h-6" />,
+      color: "text-green-600",
+    },
+  ];
 
   const renderOverviewTab = () => (
     <div className="space-y-6">
@@ -205,47 +213,49 @@ const AdvancedAnalyticsDashboard: React.FC = () => {
 
       {/* Key Metrics Grid */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        {(keyMetrics.length > 0 ? keyMetrics : fallbackKeyMetrics).map((metric) => (
-          <Card key={metric.id} className="hover:shadow-md transition-shadow">
-            <CardContent className="p-6">
-              <div className="flex items-center justify-between mb-4">
-                <div className={`${metric.color}`}>{metric.icon}</div>
-                <div className="flex items-center gap-1">
-                  {metric.trend === "up" ? (
-                    <ChevronUp className="w-4 h-4 text-green-600" />
-                  ) : metric.trend === "down" ? (
-                    <ChevronDown className="w-4 h-4 text-red-600" />
-                  ) : null}
-                  <span
-                    className={`text-sm font-medium ${
-                      metric.trend === "up"
-                        ? "text-green-600"
-                        : metric.trend === "down"
-                          ? "text-red-600"
-                          : "text-gray-600"
-                    }`}
-                  >
-                    {metric.changePercent > 0 ? "+" : ""}
-                    {metric.changePercent}%
-                  </span>
+        {(keyMetrics.length > 0 ? keyMetrics : fallbackKeyMetrics).map(
+          (metric) => (
+            <Card key={metric.id} className="hover:shadow-md transition-shadow">
+              <CardContent className="p-6">
+                <div className="flex items-center justify-between mb-4">
+                  <div className={`${metric.color}`}>{metric.icon}</div>
+                  <div className="flex items-center gap-1">
+                    {metric.trend === "up" ? (
+                      <ChevronUp className="w-4 h-4 text-green-600" />
+                    ) : metric.trend === "down" ? (
+                      <ChevronDown className="w-4 h-4 text-red-600" />
+                    ) : null}
+                    <span
+                      className={`text-sm font-medium ${
+                        metric.trend === "up"
+                          ? "text-green-600"
+                          : metric.trend === "down"
+                            ? "text-red-600"
+                            : "text-gray-600"
+                      }`}
+                    >
+                      {metric.changePercent > 0 ? "+" : ""}
+                      {metric.changePercent}%
+                    </span>
+                  </div>
                 </div>
-              </div>
-              <div className="space-y-2">
-                <h3 className="font-medium text-slate-600">{metric.name}</h3>
-                <div className="flex items-baseline gap-2">
-                  <span className="text-3xl font-bold text-slate-800">
-                    <AnimatedCounter value={metric.value} />
-                  </span>
-                  <span className="text-slate-500">{metric.unit}</span>
+                <div className="space-y-2">
+                  <h3 className="font-medium text-slate-600">{metric.name}</h3>
+                  <div className="flex items-baseline gap-2">
+                    <span className="text-3xl font-bold text-slate-800">
+                      <AnimatedCounter value={metric.value} />
+                    </span>
+                    <span className="text-slate-500">{metric.unit}</span>
+                  </div>
+                  <p className="text-xs text-slate-500">
+                    vs {metric.previousValue.toLocaleString()} {metric.unit}{" "}
+                    last period
+                  </p>
                 </div>
-                <p className="text-xs text-slate-500">
-                  vs {metric.previousValue.toLocaleString()} {metric.unit} last
-                  period
-                </p>
-              </div>
-            </CardContent>
-          </Card>
-        ))}
+              </CardContent>
+            </Card>
+          ),
+        )}
       </div>
 
       {/* Usage Patterns */}
@@ -258,37 +268,47 @@ const AdvancedAnalyticsDashboard: React.FC = () => {
         </CardHeader>
         <CardContent>
           <div className="space-y-4">
-            {usagePatterns.length > 0 ? usagePatterns.map((pattern, index) => (
-              <div
-                key={index}
-                className="flex items-center justify-between p-4 bg-slate-50 rounded-lg"
-              >
-                <div className="flex-1">
-                  <div className="flex items-center gap-4">
-                    <span className="font-medium w-20">
-                      {pattern.timeOfDay}
-                    </span>
-                    <div className="flex-1 space-y-2">
-                      <div className="flex items-center justify-between text-sm">
-                        <span>
-                          {pattern.sessions.toLocaleString()} sessions
-                        </span>
-                        <span>{pattern.completionRate}% completion</span>
-                        <span>{pattern.avgDuration}min avg</span>
+            {usagePatterns.length > 0 ? (
+              usagePatterns.map((pattern, index) => (
+                <div
+                  key={index}
+                  className="flex items-center justify-between p-4 bg-slate-50 rounded-lg"
+                >
+                  <div className="flex-1">
+                    <div className="flex items-center gap-4">
+                      <span className="font-medium w-20">
+                        {pattern.timeOfDay}
+                      </span>
+                      <div className="flex-1 space-y-2">
+                        <div className="flex items-center justify-between text-sm">
+                          <span>
+                            {pattern.sessions.toLocaleString()} sessions
+                          </span>
+                          <span>{pattern.completionRate}% completion</span>
+                          <span>{pattern.avgDuration}min avg</span>
+                        </div>
+                        <Progress
+                          value={
+                            (pattern.sessions /
+                              Math.max(
+                                ...usagePatterns.map((p) => p.sessions),
+                              )) *
+                            100
+                          }
+                          className="h-2"
+                        />
                       </div>
-                      <Progress
-                        value={(pattern.sessions / Math.max(...usagePatterns.map(p => p.sessions))) * 100}
-                        className="h-2"
-                      />
                     </div>
                   </div>
                 </div>
-              </div>
-            )) : (
+              ))
+            ) : (
               <div className="text-center py-8 text-slate-500">
                 <Activity className="w-12 h-12 mx-auto mb-3 opacity-50" />
                 <p>No usage pattern data available yet</p>
-                <p className="text-sm">Data will appear as users interact with the system</p>
+                <p className="text-sm">
+                  Data will appear as users interact with the system
+                </p>
               </div>
             )}
           </div>
@@ -305,68 +325,74 @@ const AdvancedAnalyticsDashboard: React.FC = () => {
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {learningOutcomes.length > 0 ? learningOutcomes.map((outcome, index) => (
-              <div key={index} className="p-4 border rounded-lg">
-                <div className="flex items-center justify-between mb-3">
-                  <h4 className="font-semibold">{outcome.category}</h4>
-                  <Badge variant="outline">
-                    {outcome.masteredWords}/{outcome.totalWords} mastered
-                  </Badge>
-                </div>
-                <div className="space-y-3">
-                  <div>
-                    <div className="flex justify-between text-sm mb-1">
-                      <span>Mastery Progress</span>
-                      <span>
-                        {Math.round(
-                          (outcome.masteredWords / outcome.totalWords) * 100,
-                        )}
-                        %
-                      </span>
-                    </div>
-                    <Progress
-                      value={(outcome.masteredWords / outcome.totalWords) * 100}
-                    />
+            {learningOutcomes.length > 0 ? (
+              learningOutcomes.map((outcome, index) => (
+                <div key={index} className="p-4 border rounded-lg">
+                  <div className="flex items-center justify-between mb-3">
+                    <h4 className="font-semibold">{outcome.category}</h4>
+                    <Badge variant="outline">
+                      {outcome.masteredWords}/{outcome.totalWords} mastered
+                    </Badge>
                   </div>
-                  <div className="grid grid-cols-2 gap-4 text-sm">
+                  <div className="space-y-3">
                     <div>
-                      <span className="text-slate-600">Avg Accuracy</span>
-                      <p className="font-semibold">
-                        {outcome.averageAccuracy}%
-                      </p>
+                      <div className="flex justify-between text-sm mb-1">
+                        <span>Mastery Progress</span>
+                        <span>
+                          {Math.round(
+                            (outcome.masteredWords / outcome.totalWords) * 100,
+                          )}
+                          %
+                        </span>
+                      </div>
+                      <Progress
+                        value={
+                          (outcome.masteredWords / outcome.totalWords) * 100
+                        }
+                      />
                     </div>
-                    <div>
-                      <span className="text-slate-600">Improvement</span>
-                      <p className="font-semibold text-green-600">
-                        +{outcome.improvementRate}%
-                      </p>
-                    </div>
-                  </div>
-                  {outcome.strugglingAreas.length > 0 && (
-                    <div>
-                      <span className="text-xs text-slate-600">
-                        Needs attention:
-                      </span>
-                      <div className="flex flex-wrap gap-1 mt-1">
-                        {outcome.strugglingAreas.map((area, i) => (
-                          <Badge
-                            key={i}
-                            variant="secondary"
-                            className="text-xs"
-                          >
-                            {area}
-                          </Badge>
-                        ))}
+                    <div className="grid grid-cols-2 gap-4 text-sm">
+                      <div>
+                        <span className="text-slate-600">Avg Accuracy</span>
+                        <p className="font-semibold">
+                          {outcome.averageAccuracy}%
+                        </p>
+                      </div>
+                      <div>
+                        <span className="text-slate-600">Improvement</span>
+                        <p className="font-semibold text-green-600">
+                          +{outcome.improvementRate}%
+                        </p>
                       </div>
                     </div>
-                  )}
+                    {outcome.strugglingAreas.length > 0 && (
+                      <div>
+                        <span className="text-xs text-slate-600">
+                          Needs attention:
+                        </span>
+                        <div className="flex flex-wrap gap-1 mt-1">
+                          {outcome.strugglingAreas.map((area, i) => (
+                            <Badge
+                              key={i}
+                              variant="secondary"
+                              className="text-xs"
+                            >
+                              {area}
+                            </Badge>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+                  </div>
                 </div>
-              </div>
-            )) : (
+              ))
+            ) : (
               <div className="col-span-full text-center py-8 text-slate-500">
                 <Brain className="w-12 h-12 mx-auto mb-3 opacity-50" />
                 <p>No learning outcome data available yet</p>
-                <p className="text-sm">Data will appear as students complete categories</p>
+                <p className="text-sm">
+                  Data will appear as students complete categories
+                </p>
               </div>
             )}
           </div>
@@ -387,40 +413,50 @@ const AdvancedAnalyticsDashboard: React.FC = () => {
         </CardHeader>
         <CardContent>
           <div className="space-y-4">
-            {geographicData.length > 0 ? geographicData.map((region, index) => (
-              <div
-                key={index}
-                className="flex items-center justify-between p-4 bg-slate-50 rounded-lg"
-              >
-                <div className="flex-1">
-                  <div className="flex items-center justify-between mb-2">
-                    <span className="font-semibold">{region.region}</span>
-                    <div className="flex items-center gap-4 text-sm">
-                      <span>{region.users.toLocaleString()} users</span>
-                      <span>{region.sessions.toLocaleString()} sessions</span>
-                      <Badge
-                        className={
-                          region.growth > 20
-                            ? "bg-green-100 text-green-800"
-                            : region.growth > 10
-                              ? "bg-yellow-100 text-yellow-800"
-                              : "bg-gray-100 text-gray-800"
+            {geographicData.length > 0 ? (
+              geographicData.map((region, index) => (
+                <div
+                  key={index}
+                  className="flex items-center justify-between p-4 bg-slate-50 rounded-lg"
+                >
+                  <div className="flex-1">
+                    <div className="flex items-center justify-between mb-2">
+                      <span className="font-semibold">{region.region}</span>
+                      <div className="flex items-center gap-4 text-sm">
+                        <span>{region.users.toLocaleString()} users</span>
+                        <span>{region.sessions.toLocaleString()} sessions</span>
+                        <Badge
+                          className={
+                            region.growth > 20
+                              ? "bg-green-100 text-green-800"
+                              : region.growth > 10
+                                ? "bg-yellow-100 text-yellow-800"
+                                : "bg-gray-100 text-gray-800"
+                          }
+                        >
+                          +{region.growth}% growth
+                        </Badge>
+                      </div>
+                    </div>
+                    <div className="space-y-1">
+                      <Progress
+                        value={
+                          (region.users /
+                            Math.max(...geographicData.map((r) => r.users))) *
+                          100
                         }
-                      >
-                        +{region.growth}% growth
-                      </Badge>
+                      />
                     </div>
                   </div>
-                  <div className="space-y-1">
-                    <Progress value={(region.users / Math.max(...geographicData.map(r => r.users))) * 100} />
-                  </div>
                 </div>
-              </div>
-            )) : (
+              ))
+            ) : (
               <div className="text-center py-8 text-slate-500">
                 <Globe className="w-12 h-12 mx-auto mb-3 opacity-50" />
                 <p>No geographic data available yet</p>
-                <p className="text-sm">Geographic distribution will appear as the user base grows</p>
+                <p className="text-sm">
+                  Geographic distribution will appear as the user base grows
+                </p>
               </div>
             )}
           </div>
@@ -595,7 +631,8 @@ const AdvancedAnalyticsDashboard: React.FC = () => {
             Advanced Analytics Dashboard
           </h2>
           <p className="text-slate-600">
-            Real-time insights from your learning progress system (Last updated: {analyticsData.lastUpdated.toLocaleTimeString()})
+            Real-time insights from your learning progress system (Last updated:{" "}
+            {analyticsData.lastUpdated.toLocaleTimeString()})
           </p>
         </div>
         <div className="flex gap-2">
@@ -620,7 +657,9 @@ const AdvancedAnalyticsDashboard: React.FC = () => {
             onClick={handleRefresh}
             disabled={loading}
           >
-            <RefreshCw className={`w-4 h-4 mr-2 ${loading ? 'animate-spin' : ''}`} />
+            <RefreshCw
+              className={`w-4 h-4 mr-2 ${loading ? "animate-spin" : ""}`}
+            />
             Refresh
           </Button>
         </div>
