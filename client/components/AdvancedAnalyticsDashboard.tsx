@@ -580,7 +580,7 @@ const AdvancedAnalyticsDashboard: React.FC = () => {
                 </div>
                 <div className="space-y-1 text-sm text-slate-600">
                   <p>{device.sessions.toLocaleString()} sessions</p>
-                  <p>{device.avgDuration}min avg duration</p>
+                  <p>{Math.round(device.avgDuration)}min avg duration</p>
                 </div>
                 <div className="mt-3">
                   <Progress value={device.percentage} />
