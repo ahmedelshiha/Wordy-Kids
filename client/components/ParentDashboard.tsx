@@ -1351,43 +1351,49 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
             </Card>
           </div>
 
-          {/* Goals by Child - Mobile optimized */}
+          {/* Comprehensive Goals by Child */}
           <div className="space-y-4">
             {children.map((child) => {
-              const childGoals = getChildGoals(child.id);
-              const activeGoals = childGoals.filter(
-                (g) => g.status === "active",
-              ).length;
-              const completedGoals = childGoals.filter(
-                (g) => g.status === "completed",
-              ).length;
+              const legacyGoals = getChildGoals(child.id);
+              const learningGoals = child.learningGoals || [];
+              const activeLegacyGoals = legacyGoals.filter(g => g.status === "active").length;
+              const completedLegacyGoals = legacyGoals.filter(g => g.status === "completed").length;
+              const activeLearningGoals = learningGoals.filter(g => g.isActive).length;
+              const completedLearningGoals = learningGoals.filter(g => g.current >= g.target).length;
+              const totalGoals = legacyGoals.length + learningGoals.length;
 
               return (
-                <Card key={child.id} className="overflow-hidden">
-                  <CardHeader className="pb-3 bg-gradient-to-r from-slate-50 to-slate-100">
+                <Card key={child.id} className="overflow-hidden border-l-4 border-l-educational-blue">
+                  <CardHeader className="pb-3">
                     <div className="flex items-center justify-between">
-                      <CardTitle className="flex items-center gap-3 text-base md:text-lg">
-                        <span className="text-2xl md:text-3xl">
-                          {child.avatar}
-                        </span>
+                      <div className="flex items-center gap-3">
+                        <span className="text-2xl md:text-3xl">{child.avatar}</span>
                         <div>
-                          <div>{child.name}'s Goals</div>
-                          <p className="text-xs md:text-sm font-normal text-slate-600">
-                            {activeGoals} active 🎯 {completedGoals} completed
-                          </p>
-                        </div>
-                      </CardTitle>
-                      {childGoals.length > 0 && (
-                        <div className="text-right">
-                          <div className="text-lg md:text-xl font-bold text-educational-blue">
-                            {Math.round(
-                              (completedGoals / childGoals.length) * 100,
-                            )}
-                            %
+                          <CardTitle className="text-base md:text-lg">{child.name}'s All Goals</CardTitle>
+                          <div className="text-xs md:text-sm text-slate-600 space-y-1">
+                            <div>Learning Goals: {activeLearningGoals} active • {completedLearningGoals} completed</div>
+                            <div>Legacy Goals: {activeLegacyGoals} active • {completedLegacyGoals} completed</div>
                           </div>
-                          <p className="text-xs text-slate-500">Complete</p>
                         </div>
-                      )}
+                      </div>
+                      <div className="text-right">
+                        <Button
+                          size="sm"
+                          onClick={() => handleOpenLearningGoals(child)}
+                          className="bg-educational-blue mb-2"
+                        >
+                          <Settings className="w-4 h-4 mr-2" />
+                          Manage Goals
+                        </Button>
+                        {totalGoals > 0 && (
+                          <div className="text-lg font-bold text-educational-blue">
+                            {Math.round(
+                              ((completedLegacyGoals + completedLearningGoals) / totalGoals) * 100,
+                            )}%
+                          </div>
+                        )}
+                        <p className="text-xs text-slate-500">Success Rate</p>
+                      </div>
                     </div>
                   </CardHeader>
 
@@ -2639,7 +2645,7 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
       Colors: "🌈",
       Food: "🍎",
       Transportation: "🚗",
-      Nature: "🌲",
+      Nature: "��",
       Sports: "⚽",
       Music: "🎵",
     };
