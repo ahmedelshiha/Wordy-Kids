@@ -83,6 +83,7 @@ import { ChildWordStats } from "@shared/api";
 import { SmartWordSelector } from "@/lib/smartWordSelection";
 import { childProgressSync } from "@/lib/childProgressSync";
 import { toast } from "@/hooks/use-toast";
+import AdvancedAnalyticsDashboard from "@/components/AdvancedAnalyticsDashboard";
 
 interface LearningGoal {
   id: string;
@@ -515,8 +516,8 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
       } catch (error) {
         console.error("Error loading children from localStorage:", error);
       }
-      // Return sample children for demo purposes when none exist (except for guest users)
-      setChildren(isGuest ? [] : sampleChildren);
+      // Always start with empty children array - users need to add their own children
+      setChildren([]);
     };
 
     loadChildren();
@@ -533,9 +534,8 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
     }
   }, [children, selectedChild]);
   const [activeTab, setActiveTab] = useState("overview");
-  const [goals] = useState<ParentGoal[]>(sampleGoals);
-  const [notifications, setNotifications] =
-    useState<ParentNotification[]>(sampleNotifications);
+  const [goals] = useState<ParentGoal[]>([]);
+  const [notifications, setNotifications] = useState<ParentNotification[]>([]);
   const [showAddChildDialog, setShowAddChildDialog] = useState(false);
   const [showAddGoalDialog, setShowAddGoalDialog] = useState(false);
   const [showCustomWordDialog, setShowCustomWordDialog] = useState(false);
@@ -618,11 +618,42 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
   }, []);
 
   const calculateWeeklyStats = useCallback((childId: string) => {
-    return {
-      totalTime: 45,
-      averageAccuracy: 87,
-      sessionsCount: 8,
-    };
+    try {
+      // Get this week's data from localStorage
+      const today = new Date();
+      const startOfYear = new Date(today.getFullYear(), 0, 1);
+      const days = Math.floor(
+        (today.getTime() - startOfYear.getTime()) / (24 * 60 * 60 * 1000),
+      );
+      const weekNumber = Math.ceil((days + startOfYear.getDay() + 1) / 7);
+      const weekKey = `${today.getFullYear()}-${weekNumber.toString().padStart(2, "0")}`;
+
+      const weeklyStatsKey = `weekly_stats_${childId}_${weekKey}`;
+      const weeklyProgressKey = `weekly_progress_${childId}_${weekKey}`;
+
+      const weeklyStats = JSON.parse(
+        localStorage.getItem(weeklyStatsKey) || "{}",
+      );
+      const weeklyProgress = JSON.parse(
+        localStorage.getItem(weeklyProgressKey) ||
+          '{"words": 0, "sessions": 0}',
+      );
+
+      return {
+        totalTime: weeklyStats.totalTime || weeklyProgress.sessions * 5 || 0, // Estimate 5 mins per session
+        averageAccuracy:
+          weeklyStats.averageAccuracy || (weeklyProgress.words > 0 ? 85 : 0),
+        sessionsCount:
+          weeklyStats.sessionsCount || weeklyProgress.sessions || 0,
+      };
+    } catch (error) {
+      console.error("Error calculating weekly stats:", error);
+      return {
+        totalTime: 0,
+        averageAccuracy: 0,
+        sessionsCount: 0,
+      };
+    }
   }, []);
 
   // Debounced save to localStorage
@@ -736,48 +767,10 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
               setTopWords(childStatsResponse.topWords || []);
             }
           } catch (apiError) {
-            // Generate sample practice and top words since API is not available
+            // No API data available - show empty states for real user data
             if (mounted) {
-              setPracticeWords([
-                {
-                  word: "telescope",
-                  category: "Science",
-                  accuracy: 65,
-                  timesReviewed: 3,
-                },
-                {
-                  word: "butterfly",
-                  category: "Nature",
-                  accuracy: 58,
-                  timesReviewed: 4,
-                },
-                {
-                  word: "adventure",
-                  category: "Stories",
-                  accuracy: 72,
-                  timesReviewed: 2,
-                },
-              ]);
-              setTopWords([
-                {
-                  word: "rainbow",
-                  category: "Nature",
-                  accuracy: 95,
-                  timesReviewed: 8,
-                },
-                {
-                  word: "sunshine",
-                  category: "Weather",
-                  accuracy: 92,
-                  timesReviewed: 6,
-                },
-                {
-                  word: "friendship",
-                  category: "Emotions",
-                  accuracy: 89,
-                  timesReviewed: 5,
-                },
-              ]);
+              setPracticeWords([]);
+              setTopWords([]);
             }
           }
         }
@@ -809,16 +802,44 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
   // Memoized helper functions
   const getChildGoals = useCallback(
     (childId: string) => {
-      return goals.filter((goal) => goal.childId === childId);
+      // Get real goals from localStorage + static goals
+      try {
+        const realGoalsKey = `child_goals_${childId}`;
+        const realGoals = JSON.parse(
+          localStorage.getItem(realGoalsKey) || "[]",
+        );
+        const allGoals = [...goals, ...realGoals];
+        return allGoals.filter((goal) => goal.childId === childId);
+      } catch (error) {
+        console.error("Error getting child goals:", error);
+        return goals.filter((goal) => goal.childId === childId);
+      }
     },
     [goals],
   );
 
   const getChildNotifications = useCallback(
     (childId: string) => {
-      return notifications
-        .filter((notif) => notif.childId === childId)
-        .slice(0, 3);
+      // Get real notifications from localStorage + static notifications
+      try {
+        const realNotificationsKey = `child_notifications_${childId}`;
+        const realNotifications = JSON.parse(
+          localStorage.getItem(realNotificationsKey) || "[]",
+        );
+        const allNotifications = [...notifications, ...realNotifications];
+        return allNotifications
+          .filter((notif) => notif.childId === childId)
+          .sort(
+            (a, b) =>
+              new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime(),
+          )
+          .slice(0, 3);
+      } catch (error) {
+        console.error("Error getting child notifications:", error);
+        return notifications
+          .filter((notif) => notif.childId === childId)
+          .slice(0, 3);
+      }
     },
     [notifications],
   );
@@ -1458,16 +1479,30 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
 
         {/* Tabs */}
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-          <TabsList className="grid grid-cols-3 w-full lg:w-auto lg:grid-cols-3">
+          <TabsList className="grid grid-cols-4 w-full lg:w-auto lg:grid-cols-4">
             <TabsTrigger value="overview">Overview</TabsTrigger>
             <TabsTrigger value="goals">Goals</TabsTrigger>
             <TabsTrigger value="analytics">Analytics</TabsTrigger>
+            <TabsTrigger value="advanced">Advanced</TabsTrigger>
           </TabsList>
 
           <div className="mt-6">
             <TabsContent value="overview">{renderOverview()}</TabsContent>
             <TabsContent value="goals">{renderGoalsManagement()}</TabsContent>
             <TabsContent value="analytics">{renderAnalytics()}</TabsContent>
+            <TabsContent value="advanced">
+              <div className="space-y-6">
+                <div className="text-center">
+                  <h2 className="text-2xl font-bold text-slate-800 mb-4">
+                    Advanced Analytics
+                  </h2>
+                  <p className="text-slate-600 mb-6">
+                    Comprehensive learning insights and system-wide analytics
+                  </p>
+                </div>
+                <AdvancedAnalyticsDashboard />
+              </div>
+            </TabsContent>
           </div>
         </Tabs>
       </div>
