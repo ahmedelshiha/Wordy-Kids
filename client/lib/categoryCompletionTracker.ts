@@ -64,6 +64,19 @@ export class CategoryCompletionTracker {
     // Save progress
     this.saveCategoryProgress();
 
+    // Dispatch event for real-time analytics updates
+    window.dispatchEvent(
+      new CustomEvent("wordProgressUpdate", {
+        detail: {
+          categoryId: this.currentSession.categoryId,
+          wordId,
+          wasCorrect,
+          reviewedWords: this.currentSession.reviewedWords.size,
+          totalWords: this.currentSession.totalWords,
+        },
+      }),
+    );
+
     // Check if category is completed
     if (this.isCategoryCompleted()) {
       this.handleCategoryCompletion();
@@ -176,6 +189,13 @@ export class CategoryCompletionTracker {
         console.error("Error in category completion callback:", error);
       }
     });
+
+    // Dispatch event for analytics system to update
+    window.dispatchEvent(
+      new CustomEvent("categoryCompleted", {
+        detail: { categoryId: this.currentSession?.categoryId, stats },
+      }),
+    );
   }
 
   /**
