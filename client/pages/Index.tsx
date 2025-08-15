@@ -1735,7 +1735,7 @@ export default function Index({ initialProfile }: IndexProps) {
             {backgroundAnimationsEnabled && (
               <>
                 <div className="hidden md:block absolute top-10 left-10 text-3xl animate-bounce">
-                  🌟
+                  ���
                 </div>
                 <div className="hidden md:block absolute top-20 right-20 text-2xl animate-pulse">
                   📚
@@ -1791,7 +1791,7 @@ export default function Index({ initialProfile }: IndexProps) {
                     {
                       id: "progress",
                       icon: Trophy,
-                      label: "🌟 My Journey",
+                      label: "���� My Journey",
                       color: "yellow",
                     },
                   ].map(({ id, icon: Icon, label, color }) => (
@@ -1822,6 +1822,7 @@ export default function Index({ initialProfile }: IndexProps) {
                     onClick={() => {
                       setUserRole("parent");
                       setIsMobileMenuOpen(false);
+                      window.scrollTo({ top: 0, behavior: "smooth" });
                     }}
                     className="w-full flex items-center gap-3 p-3 rounded-xl transition-all bg-white text-gray-700 hover:bg-blue-50 border-2 border-transparent"
                   >
@@ -1855,7 +1856,7 @@ export default function Index({ initialProfile }: IndexProps) {
           {/* Main Content with Sidebar Layout */}
           <main className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 scroll-smooth">
             {userRole === "parent" ? (
-              <div className="w-full p-4 md:p-8 pb-20 lg:pb-8 mobile-parent-dashboard max-h-screen">
+              <div className="w-full p-4 md:p-8 pb-20 lg:pb-8 mobile-parent-dashboard min-h-screen overflow-y-auto">
                 <ParentDashboard
                   children={undefined}
                   sessions={undefined}
@@ -1990,7 +1991,10 @@ export default function Index({ initialProfile }: IndexProps) {
                       </button>
 
                       <button
-                        onClick={() => setUserRole("parent")}
+                        onClick={() => {
+                          setUserRole("parent");
+                          window.scrollTo({ top: 0, behavior: "smooth" });
+                        }}
                         className="w-full flex items-center gap-4 p-4 rounded-2xl transition-all bg-white text-gray-700 hover:bg-blue-50 hover:border-blue-200 border-2 border-transparent"
                       >
                         <div className="p-2 rounded-xl bg-blue-100">
@@ -3322,6 +3326,7 @@ export default function Index({ initialProfile }: IndexProps) {
             onParentClick={() => {
               setUserRole("parent");
               setShowMobileMoreMenu(false);
+              window.scrollTo({ top: 0, behavior: "smooth" });
             }}
             onAdminClick={() => {
               navigate("/admin");
