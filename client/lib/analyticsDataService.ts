@@ -1,3 +1,32 @@
+/**
+ * Analytics Data Service - Real Data Integration
+ *
+ * This service integrates the Advanced Analytics Dashboard with the core progress tracking system,
+ * replacing static/sample data with real user learning data from:
+ *
+ * - goalProgressTracker: Systematic progress data (words learned, sessions, streaks)
+ * - childProgressSync: Multi-child progress aggregation and family statistics
+ * - CategoryCompletionTracker: Category-specific completion and accuracy data
+ * - localStorage: Session data, device usage patterns, and historical progress
+ *
+ * Key Features:
+ * - Real-time data aggregation from multiple children
+ * - Caching for performance (1-minute cache duration)
+ * - Fallback handling for missing or corrupted data
+ * - Dynamic calculations for trends and change percentages
+ * - Empty state support for new installations
+ *
+ * Data Sources:
+ * - Active users: Calculated from children's lastActive timestamps
+ * - Learning sessions: Aggregated from daily progress localStorage keys
+ * - Usage patterns: Analyzed from session timing data
+ * - Learning outcomes: Derived from category completion history
+ * - Device analytics: Estimated from user agent and usage patterns
+ *
+ * @author Advanced Analytics Integration
+ * @version 1.0.0
+ */
+
 import { goalProgressTracker, SystematicProgressData } from "@/lib/goalProgressTracker";
 import { childProgressSync } from "@/lib/childProgressSync";
 import { CategoryCompletionTracker } from "@/lib/categoryCompletionTracker";
