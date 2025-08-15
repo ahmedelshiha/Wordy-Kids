@@ -115,6 +115,7 @@ import { DesktopQuickActions } from "@/components/DesktopQuickActions";
 import { cn } from "@/lib/utils";
 import "@/styles/desktop-parent-dashboard.css";
 import "@/styles/parent-dashboard-overflow-fixes.css";
+import "@/styles/parent-dashboard-layout-fixes.css";
 
 interface LearningGoal {
   id: string;
@@ -1232,7 +1233,7 @@ export const ParentDashboardDesktop: React.FC<ParentDashboardDesktopProps> = ({
                                 {topChild.weeklyProgress} words this week
                               </p>
                               <Badge className="bg-yellow-100 text-yellow-800">
-                                🏆 Week's Champion
+                                ��� Week's Champion
                               </Badge>
                             </div>
                           ) : (
