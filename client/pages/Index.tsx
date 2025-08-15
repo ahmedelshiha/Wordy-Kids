@@ -1202,23 +1202,23 @@ export default function Index({ initialProfile }: IndexProps) {
       if (accuracy === 100) {
         achievementTitle = "Perfect Category Mastery! 🏆";
         achievementIcon = "🏆";
-        achievementMessage = `Outstanding! You remembered ALL ${totalWords} words in ${categoryDisplayName}! You're a true champion!\n\n🎁 Perfect Mastery Bonus: 200 points!\n✨ New adventure zone unlocked!\n👑 Master badge earned!`;
+        achievementMessage = `Outstanding! You remembered ALL ${totalWords} words in ${categoryDisplayName}! You're a true champion!\n\n🎁 Perfect Mastery Bonus: 200 points!\n✨ New adventure zone unlocked!`;
       } else if (accuracy >= 90) {
         achievementTitle = "Category Expert! 🎓";
         achievementIcon = "🎓⭐";
-        achievementMessage = `Excellent work! You mastered ${categoryDisplayName} with ${accuracy}% accuracy! Almost perfect!\n\n🎁 Expert Bonus: 150 points!\n⭐ Expert badge earned!`;
+        achievementMessage = `Excellent work! You mastered ${categoryDisplayName} with ${accuracy}% accuracy! Almost perfect!\n\n🎁 Expert Bonus: 150 points!`;
       } else if (accuracy >= 75) {
         achievementTitle = "Category Scholar! 📚✨";
         achievementIcon = "📚";
-        achievementMessage = `Great job! You completed ${categoryDisplayName} with ${accuracy}% accuracy! Keep up the good work!\n\n🎓 Scholar Bonus: 100 points!\n📚 Scholar badge earned!`;
+        achievementMessage = `Great job! You completed ${categoryDisplayName} with ${accuracy}% accuracy! Keep up the good work!\n\n🎓 Scholar Bonus: 100 points!`;
       } else if (accuracy >= 50) {
         achievementTitle = "Category Explorer! 🗺️🌟";
         achievementIcon = "🗺️";
-        achievementMessage = `Good effort! You finished ${categoryDisplayName} with ${accuracy}% accuracy! Practice makes perfect!\n\n🎁 Explorer Bonus: 75 points!\n🎯 Explorer badge earned!`;
+        achievementMessage = `Good effort! You finished ${categoryDisplayName} with ${accuracy}% accuracy! Practice makes perfect!\n\n🎁 Explorer Bonus: 75 points!`;
       } else {
         achievementTitle = "Category Challenger! 💪";
         achievementIcon = "💪";
-        achievementMessage = `Nice try! You completed ${categoryDisplayName} with ${accuracy}% accuracy! Every attempt makes you stronger!\n\n🏆 Challenger Bonus: 50 points!\n🎖️ Challenger badge earned!`;
+        achievementMessage = `Nice try! You completed ${categoryDisplayName} with ${accuracy}% accuracy! Every attempt makes you stronger!\n\n🏆 Challenger Bonus: 50 points!`;
       }
 
       return {
