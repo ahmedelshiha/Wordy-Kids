@@ -305,7 +305,7 @@ export function VowelRescue({
     setTimeout(() => setShowMainCelebration(false), 3000);
 
     // Calculate final accuracy
-    const accuracy = Math.round((score / (questions.length * 10)) * 100);
+    const accuracy = Math.round((score / (gameQuestions.length * 10)) * 100);
 
     // Track vowel rescue completion and check for achievements
     const unlockedAchievements = AchievementTracker.trackActivity({
