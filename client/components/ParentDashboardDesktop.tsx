@@ -560,6 +560,45 @@ export const ParentDashboardDesktop: React.FC<ParentDashboardDesktopProps> = ({
     }
   }, [children, selectedChild]);
 
+  // Quick actions handlers
+  const handleToggleAnalytics = useCallback(() => {
+    setActiveTab("analytics");
+  }, []);
+
+  const handleShowGoals = useCallback(() => {
+    setActiveTab("goals");
+  }, []);
+
+  const handleExportData = useCallback(() => {
+    const exportData = {
+      children,
+      familyStats,
+      exportedAt: new Date().toISOString(),
+    };
+
+    const blob = new Blob([JSON.stringify(exportData, null, 2)], {
+      type: "application/json",
+    });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `parent-dashboard-data-${Date.now()}.json`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+
+    toast({
+      title: "Data Exported",
+      description: "Your dashboard data has been downloaded successfully",
+      duration: 3000,
+    });
+  }, [children, familyStats]);
+
+  const handleOpenSettings = useCallback(() => {
+    setActiveTab("settings");
+  }, []);
+
   // Sidebar navigation items
   const sidebarItems = [
     { id: "overview", label: "Overview", icon: Home, badge: null },
