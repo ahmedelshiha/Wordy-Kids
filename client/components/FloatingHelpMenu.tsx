@@ -84,6 +84,7 @@ export function FloatingHelpMenu({
         icon: <Settings className="w-5 h-5" />,
         action: () => {
           onSettings?.();
+          onHelpAction?.(helpContent.settings);
           setIsOpen(false);
         },
         color: "from-educational-green to-educational-green/80",
@@ -95,6 +96,7 @@ export function FloatingHelpMenu({
         icon: <Trophy className="w-5 h-5" />,
         action: () => {
           onAchievements?.();
+          onHelpAction?.(helpContent.achievements);
           setIsOpen(false);
         },
         color: "from-educational-orange to-educational-orange/80",
@@ -106,6 +108,7 @@ export function FloatingHelpMenu({
         icon: <Volume2 className="w-5 h-5" />,
         action: () => {
           onAccessibility?.();
+          onHelpAction?.(helpContent.accessibility);
           setIsOpen(false);
         },
         color: "from-educational-pink to-educational-pink/80",
@@ -117,6 +120,7 @@ export function FloatingHelpMenu({
         icon: <MessageCircle className="w-5 h-5" />,
         action: () => {
           onContact?.();
+          onHelpAction?.(helpContent.contact);
           setIsOpen(false);
         },
         color: "from-slate-500 to-slate-600",
