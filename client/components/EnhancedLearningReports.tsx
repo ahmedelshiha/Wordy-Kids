@@ -727,17 +727,17 @@ export const EnhancedLearningReports: React.FC<
         </p>
       </div>
 
-      {/* Report Generation Buttons */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      {/* Report Generation Buttons - Enhanced for mobile */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <Card className="hover:shadow-lg transition-shadow cursor-pointer">
-          <CardContent className="p-6">
+          <CardContent className="p-4 sm:p-6">
             <div className="flex items-center gap-3 mb-4">
-              <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
-                <Clock className="w-6 h-6 text-blue-600" />
+              <div className="w-10 h-10 sm:w-12 sm:h-12 bg-blue-100 rounded-lg flex items-center justify-center">
+                <Clock className="w-5 h-5 sm:w-6 sm:h-6 text-blue-600" />
               </div>
               <div>
-                <h3 className="font-semibold text-lg">Weekly Summary</h3>
-                <p className="text-gray-600 text-sm">Quick weekly overview</p>
+                <h3 className="font-semibold text-base sm:text-lg">Weekly Summary</h3>
+                <p className="text-gray-600 text-xs sm:text-sm">Quick weekly overview</p>
               </div>
             </div>
             <Button
@@ -746,23 +746,33 @@ export const EnhancedLearningReports: React.FC<
                 setTimePeriod("Last Week");
                 handleGenerateReport();
               }}
-              className="w-full bg-blue-600 hover:bg-blue-700"
+              className="w-full bg-blue-500 hover:bg-blue-600 text-sm sm:text-base h-10 sm:h-12"
               disabled={isGenerating}
             >
-              {isGenerating ? "Generating..." : "Generate Weekly Report"}
+              {isGenerating ? (
+                <div className="flex items-center gap-2">
+                  <div className="w-3 h-3 sm:w-4 sm:h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                  <span className="text-xs sm:text-sm">Generating...</span>
+                </div>
+              ) : (
+                <span className="flex items-center gap-2">
+                  <Clock className="w-3 h-3 sm:w-4 sm:h-4" />
+                  <span>Weekly Summary</span>
+                </span>
+              )}
             </Button>
           </CardContent>
         </Card>
 
         <Card className="hover:shadow-lg transition-shadow cursor-pointer">
-          <CardContent className="p-6">
+          <CardContent className="p-4 sm:p-6">
             <div className="flex items-center gap-3 mb-4">
-              <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
-                <ChartBar className="w-6 h-6 text-green-600" />
+              <div className="w-10 h-10 sm:w-12 sm:h-12 bg-green-100 rounded-lg flex items-center justify-center">
+                <ChartBar className="w-5 h-5 sm:w-6 sm:h-6 text-green-600" />
               </div>
               <div>
-                <h3 className="font-semibold text-lg">Monthly Report</h3>
-                <p className="text-gray-600 text-sm">
+                <h3 className="font-semibold text-base sm:text-lg">Monthly Report</h3>
+                <p className="text-gray-600 text-xs sm:text-sm">
                   Comprehensive monthly analysis
                 </p>
               </div>
@@ -773,10 +783,20 @@ export const EnhancedLearningReports: React.FC<
                 setTimePeriod("Last Month");
                 handleGenerateReport();
               }}
-              className="w-full bg-green-600 hover:bg-green-700"
+              className="w-full bg-green-500 hover:bg-green-600 text-sm sm:text-base h-10 sm:h-12"
               disabled={isGenerating}
             >
-              {isGenerating ? "Generating..." : "Generate Monthly Report"}
+              {isGenerating ? (
+                <div className="flex items-center gap-2">
+                  <div className="w-3 h-3 sm:w-4 sm:h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                  <span className="text-xs sm:text-sm">Generating...</span>
+                </div>
+              ) : (
+                <span className="flex items-center gap-2">
+                  <TrendingUp className="w-3 h-3 sm:w-4 sm:h-4" />
+                  <span>Monthly Report</span>
+                </span>
+              )}
             </Button>
           </CardContent>
         </Card>
