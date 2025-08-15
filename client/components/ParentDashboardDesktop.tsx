@@ -496,37 +496,6 @@ export const ParentDashboardDesktop: React.FC<ParentDashboardDesktopProps> = ({
     [],
   );
 
-  // Auto-refresh progress data periodically for real-time updates
-  useEffect(() => {
-    let refreshInterval: NodeJS.Timeout;
-
-    const autoRefreshProgress = async () => {
-      if (!isLoadingProgress && children.length > 0 && !document.hidden) {
-        try {
-          await syncChildrenProgress();
-        } catch (error) {
-          console.error("Auto-refresh progress error:", error);
-        }
-      }
-    };
-
-    // Set up periodic refresh every 30 seconds
-    refreshInterval = setInterval(autoRefreshProgress, 30000);
-
-    // Listen for visibility changes to refresh when tab becomes active
-    const handleVisibilityChange = () => {
-      if (!document.hidden) {
-        autoRefreshProgress();
-      }
-    };
-    document.addEventListener("visibilitychange", handleVisibilityChange);
-
-    return () => {
-      clearInterval(refreshInterval);
-      document.removeEventListener("visibilitychange", handleVisibilityChange);
-    };
-  }, [children.length, isLoadingProgress, syncChildrenProgress]);
-
   // Sync children progress
   const syncChildrenProgress = useCallback(async () => {
     if (children.length === 0 || isLoadingProgress) return;
@@ -566,6 +535,37 @@ export const ParentDashboardDesktop: React.FC<ParentDashboardDesktopProps> = ({
       setIsLoadingProgress(false);
     }
   }, [children, isLoadingProgress, selectedChild]);
+
+  // Auto-refresh progress data periodically for real-time updates
+  useEffect(() => {
+    let refreshInterval: NodeJS.Timeout;
+
+    const autoRefreshProgress = async () => {
+      if (!isLoadingProgress && children.length > 0 && !document.hidden) {
+        try {
+          await syncChildrenProgress();
+        } catch (error) {
+          console.error("Auto-refresh progress error:", error);
+        }
+      }
+    };
+
+    // Set up periodic refresh every 30 seconds
+    refreshInterval = setInterval(autoRefreshProgress, 30000);
+
+    // Listen for visibility changes to refresh when tab becomes active
+    const handleVisibilityChange = () => {
+      if (!document.hidden) {
+        autoRefreshProgress();
+      }
+    };
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+
+    return () => {
+      clearInterval(refreshInterval);
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+    };
+  }, [children.length, isLoadingProgress, syncChildrenProgress]);
 
   // Get time ago helper
   const getTimeAgo = useCallback((date: Date | string) => {
