@@ -83,6 +83,7 @@ import { ChildWordStats } from "@shared/api";
 import { SmartWordSelector } from "@/lib/smartWordSelection";
 import { childProgressSync } from "@/lib/childProgressSync";
 import { toast } from "@/hooks/use-toast";
+import AdvancedAnalyticsDashboard from "@/components/AdvancedAnalyticsDashboard";
 
 interface LearningGoal {
   id: string;
