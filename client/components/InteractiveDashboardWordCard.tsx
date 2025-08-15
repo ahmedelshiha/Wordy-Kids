@@ -1499,7 +1499,7 @@ export function InteractiveDashboardWordCard({
             );
             // Could add additional reward logic here
           }}
-          autoCloseDelay={3000} // Auto-close after 3 seconds
+          autoCloseDelay={2000} // Auto-close after 2 seconds for mobile optimization
         />
       )}
     </div>
