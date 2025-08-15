@@ -15,15 +15,20 @@ import {
   CompactWordDatabaseNotifications,
 } from "./components/WordDatabaseNotifications";
 
-// Import essential components
+// Import all page components
 import LoginForm from "./pages/LoginForm";
+import Login from "./pages/Login";
 import SignUp from "./pages/SignUp";
 import AppPage from "./pages/App";
 import NotFound from "./pages/NotFound";
+import AdminPage from "./pages/AdminPage";
+import WordGardenDemo from "./pages/WordGardenDemo";
+import { EnhancedWordCardDemo } from "./components/EnhancedWordCardDemo";
+import { WordAdventureDemo } from "./pages/WordAdventureDemo";
+import { WordAdventureTest } from "./pages/WordAdventureTest";
 
 const queryClient = new QueryClient();
 
-// Test with notification components
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
@@ -36,6 +41,14 @@ const App = () => (
           <Route path="/" element={<LoginForm />} />
           <Route path="/signup" element={<SignUp />} />
           <Route path="/app" element={<AppPage />} />
+          <Route path="/profile" element={<Login />} />
+          <Route path="/admin" element={<AdminPage />} />
+          <Route path="/word-card-demo" element={<EnhancedWordCardDemo />} />
+          <Route path="/word-garden-demo" element={<WordGardenDemo />} />
+          <Route path="/word-adventure-demo" element={<WordAdventureDemo />} />
+          <Route path="/WordAdventureDemo" element={<WordAdventureDemo />} />
+          <Route path="/word-adventure-test" element={<WordAdventureTest />} />
+          <Route path="/WordAdventureTest" element={<WordAdventureTest />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
