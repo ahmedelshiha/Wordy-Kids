@@ -97,22 +97,23 @@ interface EnhancedLearningReportsProps {
   onExport?: (reportId: string) => void;
 }
 
-export const EnhancedLearningReports: React.FC<EnhancedLearningReportsProps> = ({
-  students = [],
-  onExport,
-}) => {
+export const EnhancedLearningReports: React.FC<
+  EnhancedLearningReportsProps
+> = ({ students = [], onExport }) => {
   const [selectedStudent, setSelectedStudent] = useState<string>("");
   const [reportType, setReportType] = useState<string>("Quick Summary");
   const [timePeriod, setTimePeriod] = useState<string>("Last Week");
   const [customStartDate, setCustomStartDate] = useState<string>("");
   const [customEndDate, setCustomEndDate] = useState<string>("");
   const [isGenerating, setIsGenerating] = useState(false);
-  const [generatedReport, setGeneratedReport] = useState<ReportData | null>(null);
+  const [generatedReport, setGeneratedReport] = useState<ReportData | null>(
+    null,
+  );
   const [showCustomDatePicker, setShowCustomDatePicker] = useState(false);
 
   // Sample students if none provided
   const defaultStudents: Student[] = [
-    { id: "demo-child-1", name: "Fahd", age: 8, level: 2 }
+    { id: "demo-child-1", name: "Fahd", age: 8, level: 2 },
   ];
 
   const availableStudents = students.length > 0 ? students : defaultStudents;
@@ -132,10 +133,10 @@ export const EnhancedLearningReports: React.FC<EnhancedLearningReportsProps> = (
 
   // Generate sample report data
   const generateSampleReport = (studentId: string): ReportData => {
-    const student = availableStudents.find(s => s.id === studentId);
+    const student = availableStudents.find((s) => s.id === studentId);
     const now = new Date();
     const oneWeekAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
-    
+
     return {
       report_id: `report-${Date.now()}`,
       student_id: studentId,
@@ -254,10 +255,10 @@ export const EnhancedLearningReports: React.FC<EnhancedLearningReportsProps> = (
     if (!selectedStudent) return;
 
     setIsGenerating(true);
-    
+
     // Simulate API call delay
-    await new Promise(resolve => setTimeout(resolve, 2000));
-    
+    await new Promise((resolve) => setTimeout(resolve, 2000));
+
     const reportData = generateSampleReport(selectedStudent);
     setGeneratedReport(reportData);
     setIsGenerating(false);
@@ -270,10 +271,10 @@ export const EnhancedLearningReports: React.FC<EnhancedLearningReportsProps> = (
     } else {
       // Simulate export
       const blob = new Blob([JSON.stringify(generatedReport, null, 2)], {
-        type: 'application/json'
+        type: "application/json",
       });
       const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
+      const a = document.createElement("a");
       a.href = url;
       a.download = `${generatedReport?.student_name}_learning_report.json`;
       document.body.appendChild(a);
@@ -286,16 +287,36 @@ export const EnhancedLearningReports: React.FC<EnhancedLearningReportsProps> = (
   // Get status color and icon
   const getStatusInfo = (status: string) => {
     switch (status.toLowerCase()) {
-      case 'mastered':
-        return { color: 'text-green-600', icon: CheckCircle, bgColor: 'bg-green-50' };
-      case 'improving':
-        return { color: 'text-blue-600', icon: TrendingUp, bgColor: 'bg-blue-50' };
-      case 'stable':
-        return { color: 'text-yellow-600', icon: Activity, bgColor: 'bg-yellow-50' };
-      case 'needs practice':
-        return { color: 'text-orange-600', icon: AlertTriangle, bgColor: 'bg-orange-50' };
+      case "mastered":
+        return {
+          color: "text-green-600",
+          icon: CheckCircle,
+          bgColor: "bg-green-50",
+        };
+      case "improving":
+        return {
+          color: "text-blue-600",
+          icon: TrendingUp,
+          bgColor: "bg-blue-50",
+        };
+      case "stable":
+        return {
+          color: "text-yellow-600",
+          icon: Activity,
+          bgColor: "bg-yellow-50",
+        };
+      case "needs practice":
+        return {
+          color: "text-orange-600",
+          icon: AlertTriangle,
+          bgColor: "bg-orange-50",
+        };
       default:
-        return { color: 'text-gray-600', icon: Activity, bgColor: 'bg-gray-50' };
+        return {
+          color: "text-gray-600",
+          icon: Activity,
+          bgColor: "bg-gray-50",
+        };
     }
   };
 
@@ -310,7 +331,11 @@ export const EnhancedLearningReports: React.FC<EnhancedLearningReportsProps> = (
               Report Generated Successfully!
             </span>
           </div>
-          <Button onClick={handleExport} variant="outline" className="flex items-center gap-2">
+          <Button
+            onClick={handleExport}
+            variant="outline"
+            className="flex items-center gap-2"
+          >
             <Download className="w-4 h-4" />
             Export Report
           </Button>
@@ -332,7 +357,10 @@ export const EnhancedLearningReports: React.FC<EnhancedLearningReportsProps> = (
             <CardContent className="p-6 text-center">
               <Clock className="w-8 h-8 text-blue-600 mx-auto mb-2" />
               <div className="text-3xl font-bold text-blue-700">
-                <AnimatedCounter value={generatedReport.key_metrics.learning_time_minutes} />m
+                <AnimatedCounter
+                  value={generatedReport.key_metrics.learning_time_minutes}
+                />
+                m
               </div>
               <p className="text-blue-600 font-medium">Learning Time</p>
             </CardContent>
@@ -342,7 +370,9 @@ export const EnhancedLearningReports: React.FC<EnhancedLearningReportsProps> = (
             <CardContent className="p-6 text-center">
               <BookOpen className="w-8 h-8 text-green-600 mx-auto mb-2" />
               <div className="text-3xl font-bold text-green-700">
-                <AnimatedCounter value={generatedReport.key_metrics.words_learned} />
+                <AnimatedCounter
+                  value={generatedReport.key_metrics.words_learned}
+                />
               </div>
               <p className="text-green-600 font-medium">Words Learned</p>
             </CardContent>
@@ -352,7 +382,10 @@ export const EnhancedLearningReports: React.FC<EnhancedLearningReportsProps> = (
             <CardContent className="p-6 text-center">
               <Target className="w-8 h-8 text-purple-600 mx-auto mb-2" />
               <div className="text-3xl font-bold text-purple-700">
-                <AnimatedCounter value={generatedReport.key_metrics.accuracy_percentage} />%
+                <AnimatedCounter
+                  value={generatedReport.key_metrics.accuracy_percentage}
+                />
+                %
               </div>
               <p className="text-purple-600 font-medium">Accuracy</p>
             </CardContent>
@@ -362,7 +395,10 @@ export const EnhancedLearningReports: React.FC<EnhancedLearningReportsProps> = (
             <CardContent className="p-6 text-center">
               <Zap className="w-8 h-8 text-orange-600 mx-auto mb-2" />
               <div className="text-3xl font-bold text-orange-700">
-                <AnimatedCounter value={generatedReport.key_metrics.day_streak} /> Day
+                <AnimatedCounter
+                  value={generatedReport.key_metrics.day_streak}
+                />{" "}
+                Day
               </div>
               <p className="text-orange-600 font-medium">Streak</p>
             </CardContent>
@@ -383,17 +419,25 @@ export const EnhancedLearningReports: React.FC<EnhancedLearningReportsProps> = (
               <div className="flex justify-between items-center mb-2">
                 <span className="font-medium">Overall Performance</span>
                 <span className="text-2xl font-bold">
-                  {generatedReport.quick_overview.overall_performance_percentage}%
+                  {
+                    generatedReport.quick_overview
+                      .overall_performance_percentage
+                  }
+                  %
                 </span>
               </div>
-              <Progress 
-                value={generatedReport.quick_overview.overall_performance_percentage} 
+              <Progress
+                value={
+                  generatedReport.quick_overview.overall_performance_percentage
+                }
                 className="h-3"
               />
             </div>
             <div className="flex justify-between items-center">
               <span className="text-gray-600">Learning Goal</span>
-              <span className="font-semibold">{generatedReport.quick_overview.learning_goal}</span>
+              <span className="font-semibold">
+                {generatedReport.quick_overview.learning_goal}
+              </span>
             </div>
           </CardContent>
         </Card>
@@ -405,36 +449,54 @@ export const EnhancedLearningReports: React.FC<EnhancedLearningReportsProps> = (
               <Star className="w-5 h-5 text-green-600" />
               Strengths & Progress
             </CardTitle>
-            <p className="text-gray-600">Areas where {generatedReport.student_name} excels</p>
+            <p className="text-gray-600">
+              Areas where {generatedReport.student_name} excels
+            </p>
           </CardHeader>
           <CardContent className="space-y-4">
             <div>
               <h4 className="font-semibold mb-2 flex items-center gap-2">
                 <Zap className="w-4 h-4 text-green-600" />
-                Strong Categories ({generatedReport.strengths_progress.strong_categories.length} areas)
+                Strong Categories (
+                {
+                  generatedReport.strengths_progress.strong_categories.length
+                }{" "}
+                areas)
               </h4>
               <div className="flex flex-wrap gap-2">
-                {generatedReport.strengths_progress.strong_categories.map((category, index) => (
-                  <Badge key={index} className="bg-green-100 text-green-800 border-green-300">
-                    <Zap className="w-3 h-3 mr-1" />
-                    {category.name}
-                  </Badge>
-                ))}
+                {generatedReport.strengths_progress.strong_categories.map(
+                  (category, index) => (
+                    <Badge
+                      key={index}
+                      className="bg-green-100 text-green-800 border-green-300"
+                    >
+                      <Zap className="w-3 h-3 mr-1" />
+                      {category.name}
+                    </Badge>
+                  ),
+                )}
               </div>
             </div>
 
             <div>
               <h4 className="font-semibold mb-2 flex items-center gap-2">
                 <BookOpen className="w-4 h-4 text-green-600" />
-                Mastered Words ({generatedReport.strengths_progress.mastered_words.length} words)
+                Mastered Words (
+                {generatedReport.strengths_progress.mastered_words.length}{" "}
+                words)
               </h4>
               <div className="flex flex-wrap gap-2">
-                {generatedReport.strengths_progress.mastered_words.map((word, index) => (
-                  <Badge key={index} className="bg-green-100 text-green-800 border-green-300">
-                    <BookOpen className="w-3 h-3 mr-1" />
-                    {word.word}
-                  </Badge>
-                ))}
+                {generatedReport.strengths_progress.mastered_words.map(
+                  (word, index) => (
+                    <Badge
+                      key={index}
+                      className="bg-green-100 text-green-800 border-green-300"
+                    >
+                      <BookOpen className="w-3 h-3 mr-1" />
+                      {word.word}
+                    </Badge>
+                  ),
+                )}
               </div>
             </div>
           </CardContent>
@@ -453,30 +515,46 @@ export const EnhancedLearningReports: React.FC<EnhancedLearningReportsProps> = (
             <div>
               <h4 className="font-semibold mb-2 flex items-center gap-2">
                 <Target className="w-4 h-4 text-orange-600" />
-                Practice Categories ({generatedReport.areas_for_growth.practice_categories.length} areas)
+                Practice Categories (
+                {
+                  generatedReport.areas_for_growth.practice_categories.length
+                }{" "}
+                areas)
               </h4>
               <div className="flex flex-wrap gap-2">
-                {generatedReport.areas_for_growth.practice_categories.map((category, index) => (
-                  <Badge key={index} className="bg-orange-100 text-orange-800 border-orange-300">
-                    <Target className="w-3 h-3 mr-1" />
-                    {category.name}
-                  </Badge>
-                ))}
+                {generatedReport.areas_for_growth.practice_categories.map(
+                  (category, index) => (
+                    <Badge
+                      key={index}
+                      className="bg-orange-100 text-orange-800 border-orange-300"
+                    >
+                      <Target className="w-3 h-3 mr-1" />
+                      {category.name}
+                    </Badge>
+                  ),
+                )}
               </div>
             </div>
 
             <div>
               <h4 className="font-semibold mb-2 flex items-center gap-2">
                 <BookOpen className="w-4 h-4 text-orange-600" />
-                Words to Practice ({generatedReport.areas_for_growth.words_to_practice.length} words)
+                Words to Practice (
+                {generatedReport.areas_for_growth.words_to_practice.length}{" "}
+                words)
               </h4>
               <div className="flex flex-wrap gap-2">
-                {generatedReport.areas_for_growth.words_to_practice.map((word, index) => (
-                  <Badge key={index} className="bg-orange-100 text-orange-800 border-orange-300">
-                    <BookOpen className="w-3 h-3 mr-1" />
-                    {word.word}
-                  </Badge>
-                ))}
+                {generatedReport.areas_for_growth.words_to_practice.map(
+                  (word, index) => (
+                    <Badge
+                      key={index}
+                      className="bg-orange-100 text-orange-800 border-orange-300"
+                    >
+                      <BookOpen className="w-3 h-3 mr-1" />
+                      {word.word}
+                    </Badge>
+                  ),
+                )}
               </div>
             </div>
           </CardContent>
@@ -492,27 +570,40 @@ export const EnhancedLearningReports: React.FC<EnhancedLearningReportsProps> = (
             <p className="text-gray-600">Learning progress by subject area</p>
           </CardHeader>
           <CardContent className="space-y-4">
-            {generatedReport.category_mastery_progress.map((category, index) => {
-              const statusInfo = getStatusInfo(category.status);
-              const StatusIcon = statusInfo.icon;
-              
-              return (
-                <div key={index} className="space-y-2">
-                  <div className="flex justify-between items-center">
-                    <div className="flex items-center gap-2">
-                      <span className="font-medium">{category.category_name}</span>
-                      <Badge className={`${statusInfo.bgColor} ${statusInfo.color} border-0`}>
-                        <StatusIcon className="w-3 h-3 mr-1" />
-                        {category.status}
-                      </Badge>
+            {generatedReport.category_mastery_progress.map(
+              (category, index) => {
+                const statusInfo = getStatusInfo(category.status);
+                const StatusIcon = statusInfo.icon;
+
+                return (
+                  <div key={index} className="space-y-2">
+                    <div className="flex justify-between items-center">
+                      <div className="flex items-center gap-2">
+                        <span className="font-medium">
+                          {category.category_name}
+                        </span>
+                        <Badge
+                          className={`${statusInfo.bgColor} ${statusInfo.color} border-0`}
+                        >
+                          <StatusIcon className="w-3 h-3 mr-1" />
+                          {category.status}
+                        </Badge>
+                      </div>
+                      <span className="font-semibold">
+                        {category.current_percentage}%
+                      </span>
                     </div>
-                    <span className="font-semibold">{category.current_percentage}%</span>
+                    <Progress
+                      value={category.current_percentage}
+                      className="h-2"
+                    />
+                    <p className="text-sm text-gray-600">
+                      Target: {category.target_percentage}% mastery
+                    </p>
                   </div>
-                  <Progress value={category.current_percentage} className="h-2" />
-                  <p className="text-sm text-gray-600">Target: {category.target_percentage}% mastery</p>
-                </div>
-              );
-            })}
+                );
+              },
+            )}
           </CardContent>
         </Card>
 
@@ -531,12 +622,14 @@ export const EnhancedLearningReports: React.FC<EnhancedLearningReportsProps> = (
                 Key Strengths
               </h4>
               <ul className="space-y-2">
-                {generatedReport.parent_insights_recommendations.key_strengths.map((strength, index) => (
-                  <li key={index} className="flex items-start gap-2">
-                    <CheckCircle className="w-4 h-4 text-green-600 mt-0.5 flex-shrink-0" />
-                    <span className="text-gray-700">{strength}</span>
-                  </li>
-                ))}
+                {generatedReport.parent_insights_recommendations.key_strengths.map(
+                  (strength, index) => (
+                    <li key={index} className="flex items-start gap-2">
+                      <CheckCircle className="w-4 h-4 text-green-600 mt-0.5 flex-shrink-0" />
+                      <span className="text-gray-700">{strength}</span>
+                    </li>
+                  ),
+                )}
               </ul>
             </div>
 
@@ -546,12 +639,14 @@ export const EnhancedLearningReports: React.FC<EnhancedLearningReportsProps> = (
                 Growth Opportunities
               </h4>
               <ul className="space-y-2">
-                {generatedReport.parent_insights_recommendations.growth_opportunities.map((opportunity, index) => (
-                  <li key={index} className="flex items-start gap-2">
-                    <Target className="w-4 h-4 text-orange-600 mt-0.5 flex-shrink-0" />
-                    <span className="text-gray-700">{opportunity}</span>
-                  </li>
-                ))}
+                {generatedReport.parent_insights_recommendations.growth_opportunities.map(
+                  (opportunity, index) => (
+                    <li key={index} className="flex items-start gap-2">
+                      <Target className="w-4 h-4 text-orange-600 mt-0.5 flex-shrink-0" />
+                      <span className="text-gray-700">{opportunity}</span>
+                    </li>
+                  ),
+                )}
               </ul>
             </div>
 
@@ -561,12 +656,14 @@ export const EnhancedLearningReports: React.FC<EnhancedLearningReportsProps> = (
                 Recommended Actions
               </h4>
               <ul className="space-y-2">
-                {generatedReport.parent_insights_recommendations.recommended_actions.map((action, index) => (
-                  <li key={index} className="flex items-start gap-2">
-                    <Heart className="w-4 h-4 text-purple-600 mt-0.5 flex-shrink-0" />
-                    <span className="text-gray-700">{action}</span>
-                  </li>
-                ))}
+                {generatedReport.parent_insights_recommendations.recommended_actions.map(
+                  (action, index) => (
+                    <li key={index} className="flex items-start gap-2">
+                      <Heart className="w-4 h-4 text-purple-600 mt-0.5 flex-shrink-0" />
+                      <span className="text-gray-700">{action}</span>
+                    </li>
+                  ),
+                )}
               </ul>
             </div>
           </CardContent>
@@ -583,12 +680,21 @@ export const EnhancedLearningReports: React.FC<EnhancedLearningReportsProps> = (
           <CardContent>
             <div className="space-y-4">
               {generatedReport.recent_achievements.map((achievement, index) => (
-                <div key={index} className="flex items-start gap-4 p-4 bg-yellow-50 rounded-lg border border-yellow-200">
+                <div
+                  key={index}
+                  className="flex items-start gap-4 p-4 bg-yellow-50 rounded-lg border border-yellow-200"
+                >
                   <Trophy className="w-8 h-8 text-yellow-600 flex-shrink-0" />
                   <div className="flex-1">
-                    <h4 className="font-semibold text-yellow-800">{achievement.title}</h4>
-                    <p className="text-gray-700 mb-1">{achievement.description}</p>
-                    <p className="text-sm text-gray-600">{new Date(achievement.date).toLocaleDateString()}</p>
+                    <h4 className="font-semibold text-yellow-800">
+                      {achievement.title}
+                    </h4>
+                    <p className="text-gray-700 mb-1">
+                      {achievement.description}
+                    </p>
+                    <p className="text-sm text-gray-600">
+                      {new Date(achievement.date).toLocaleDateString()}
+                    </p>
                   </div>
                 </div>
               ))}
@@ -598,8 +704,8 @@ export const EnhancedLearningReports: React.FC<EnhancedLearningReportsProps> = (
 
         {/* Back to Generate New Report */}
         <div className="flex justify-center">
-          <Button 
-            onClick={() => setGeneratedReport(null)} 
+          <Button
+            onClick={() => setGeneratedReport(null)}
             variant="outline"
             className="flex items-center gap-2"
           >
@@ -616,7 +722,9 @@ export const EnhancedLearningReports: React.FC<EnhancedLearningReportsProps> = (
       {/* Learning Reports Header */}
       <div>
         <h2 className="text-2xl font-bold mb-2">Learning Reports</h2>
-        <p className="text-gray-600">Generate detailed progress reports for your children</p>
+        <p className="text-gray-600">
+          Generate detailed progress reports for your children
+        </p>
       </div>
 
       {/* Report Generation Buttons */}
@@ -632,7 +740,7 @@ export const EnhancedLearningReports: React.FC<EnhancedLearningReportsProps> = (
                 <p className="text-gray-600 text-sm">Quick weekly overview</p>
               </div>
             </div>
-            <Button 
+            <Button
               onClick={() => {
                 setReportType("Weekly Summary");
                 setTimePeriod("Last Week");
@@ -654,10 +762,12 @@ export const EnhancedLearningReports: React.FC<EnhancedLearningReportsProps> = (
               </div>
               <div>
                 <h3 className="font-semibold text-lg">Monthly Report</h3>
-                <p className="text-gray-600 text-sm">Comprehensive monthly analysis</p>
+                <p className="text-gray-600 text-sm">
+                  Comprehensive monthly analysis
+                </p>
               </div>
             </div>
-            <Button 
+            <Button
               onClick={() => {
                 setReportType("Monthly Report");
                 setTimePeriod("Last Month");
@@ -690,15 +800,21 @@ export const EnhancedLearningReports: React.FC<EnhancedLearningReportsProps> = (
                   <User className="w-8 h-8 text-blue-600" />
                   <div>
                     <h4 className="font-semibold">
-                      {availableStudents.find(s => s.id === selectedStudent)?.name || "Select Student"}
+                      {availableStudents.find((s) => s.id === selectedStudent)
+                        ?.name || "Select Student"}
                     </h4>
-                    <p className="text-sm text-gray-600">Selected for report generation</p>
+                    <p className="text-sm text-gray-600">
+                      Selected for report generation
+                    </p>
                   </div>
                 </div>
                 {availableStudents.length > 1 && (
                   <div className="mt-4">
                     <Label htmlFor="student-select">Select Student</Label>
-                    <Select value={selectedStudent} onValueChange={setSelectedStudent}>
+                    <Select
+                      value={selectedStudent}
+                      onValueChange={setSelectedStudent}
+                    >
                       <SelectTrigger>
                         <SelectValue placeholder="Choose a student" />
                       </SelectTrigger>
@@ -727,8 +843,12 @@ export const EnhancedLearningReports: React.FC<EnhancedLearningReportsProps> = (
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="Quick Summary">Quick Summary</SelectItem>
-                  <SelectItem value="Detailed Analysis">Detailed Analysis</SelectItem>
-                  <SelectItem value="Progress Over Time">Progress Over Time</SelectItem>
+                  <SelectItem value="Detailed Analysis">
+                    Detailed Analysis
+                  </SelectItem>
+                  <SelectItem value="Progress Over Time">
+                    Progress Over Time
+                  </SelectItem>
                 </SelectContent>
               </Select>
             </div>
@@ -746,7 +866,9 @@ export const EnhancedLearningReports: React.FC<EnhancedLearningReportsProps> = (
                   <SelectItem value="Last 3 Months">Last 3 Months</SelectItem>
                   <SelectItem value="Last 6 Months">Last 6 Months</SelectItem>
                   <SelectItem value="Last Year">Last Year</SelectItem>
-                  <SelectItem value="Custom Date Range">Custom Date Range</SelectItem>
+                  <SelectItem value="Custom Date Range">
+                    Custom Date Range
+                  </SelectItem>
                 </SelectContent>
               </Select>
             </div>
@@ -777,7 +899,7 @@ export const EnhancedLearningReports: React.FC<EnhancedLearningReportsProps> = (
           )}
 
           {/* Generate Report Button */}
-          <Button 
+          <Button
             onClick={handleGenerateReport}
             className="w-full bg-blue-600 hover:bg-blue-700 text-lg py-6"
             disabled={isGenerating || !selectedStudent}
