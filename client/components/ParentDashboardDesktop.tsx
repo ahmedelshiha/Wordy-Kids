@@ -114,6 +114,7 @@ import { ParentLearningAnalyticsDesktop } from "@/components/ParentLearningAnaly
 import { DesktopQuickActions } from "@/components/DesktopQuickActions";
 import { cn } from "@/lib/utils";
 import "@/styles/desktop-parent-dashboard.css";
+import "@/styles/parent-dashboard-overflow-fixes.css";
 
 interface LearningGoal {
   id: string;
@@ -695,7 +696,7 @@ export const ParentDashboardDesktop: React.FC<ParentDashboardDesktopProps> = ({
 
   return (
     <TooltipProvider>
-      <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50">
+      <div className="parent-dashboard-container min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50">
         {/* Desktop Sidebar */}
         <div
           className={cn(
@@ -1693,7 +1694,7 @@ export const ParentDashboardDesktop: React.FC<ParentDashboardDesktopProps> = ({
               <div>
                 <Label htmlFor="avatar">Avatar</Label>
                 <div className="flex gap-2 mt-2">
-                  {["👶", "👧", "👦", "🧒", "👴", "👵"].map((emoji) => (
+                  {["���", "👧", "👦", "🧒", "👴", "👵"].map((emoji) => (
                     <Button
                       key={emoji}
                       variant={
