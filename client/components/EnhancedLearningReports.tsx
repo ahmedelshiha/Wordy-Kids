@@ -922,22 +922,22 @@ export const EnhancedLearningReports: React.FC<
             </div>
           )}
 
-          {/* Generate Report Button */}
+          {/* Generate Report Button - Enhanced for mobile */}
           <Button
             onClick={handleGenerateReport}
-            className="w-full bg-blue-600 hover:bg-blue-700 text-lg py-6"
+            className="w-full bg-blue-500 hover:bg-blue-600 text-base sm:text-lg py-4 sm:py-6 h-12 sm:h-16"
             disabled={isGenerating || !selectedStudent}
           >
             {isGenerating ? (
               <div className="flex items-center gap-2">
                 <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                Generating Report...
+                <span className="text-sm sm:text-base">Generating Report...</span>
               </div>
             ) : (
-              <>
-                <BarChart3 className="w-5 h-5 mr-2" />
-                Generate Report
-              </>
+              <div className="flex items-center gap-2">
+                <BarChart3 className="w-4 h-4 sm:w-5 sm:h-5" />
+                <span>Generate Report</span>
+              </div>
             )}
           </Button>
         </CardContent>
