@@ -362,7 +362,9 @@ export const EnhancedLearningReports: React.FC<
                 />
                 m
               </div>
-              <p className="text-blue-600 font-medium text-xs sm:text-sm">Learning Time</p>
+              <p className="text-blue-600 font-medium text-xs sm:text-sm">
+                Learning Time
+              </p>
             </CardContent>
           </Card>
 
@@ -374,7 +376,9 @@ export const EnhancedLearningReports: React.FC<
                   value={generatedReport.key_metrics.words_learned}
                 />
               </div>
-              <p className="text-green-600 font-medium text-xs sm:text-sm">Words Learned</p>
+              <p className="text-green-600 font-medium text-xs sm:text-sm">
+                Words Learned
+              </p>
             </CardContent>
           </Card>
 
@@ -387,7 +391,9 @@ export const EnhancedLearningReports: React.FC<
                 />
                 %
               </div>
-              <p className="text-purple-600 font-medium text-xs sm:text-sm">Accuracy</p>
+              <p className="text-purple-600 font-medium text-xs sm:text-sm">
+                Accuracy
+              </p>
             </CardContent>
           </Card>
 
@@ -400,7 +406,9 @@ export const EnhancedLearningReports: React.FC<
                 />{" "}
                 <span className="text-sm sm:text-base">Day</span>
               </div>
-              <p className="text-orange-600 font-medium text-xs sm:text-sm">Streak</p>
+              <p className="text-orange-600 font-medium text-xs sm:text-sm">
+                Streak
+              </p>
             </CardContent>
           </Card>
         </div>
@@ -736,8 +744,12 @@ export const EnhancedLearningReports: React.FC<
                 <Clock className="w-5 h-5 sm:w-6 sm:h-6 text-blue-600" />
               </div>
               <div>
-                <h3 className="font-semibold text-base sm:text-lg">Weekly Summary</h3>
-                <p className="text-gray-600 text-xs sm:text-sm">Quick weekly overview</p>
+                <h3 className="font-semibold text-base sm:text-lg">
+                  Weekly Summary
+                </h3>
+                <p className="text-gray-600 text-xs sm:text-sm">
+                  Quick weekly overview
+                </p>
               </div>
             </div>
             <Button
@@ -771,7 +783,9 @@ export const EnhancedLearningReports: React.FC<
                 <ChartBar className="w-5 h-5 sm:w-6 sm:h-6 text-green-600" />
               </div>
               <div>
-                <h3 className="font-semibold text-base sm:text-lg">Monthly Report</h3>
+                <h3 className="font-semibold text-base sm:text-lg">
+                  Monthly Report
+                </h3>
                 <p className="text-gray-600 text-xs sm:text-sm">
                   Comprehensive monthly analysis
                 </p>
@@ -855,7 +869,12 @@ export const EnhancedLearningReports: React.FC<
           {/* Report Configuration - Enhanced for mobile */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
             <div className="space-y-2">
-              <Label htmlFor="report-type" className="text-sm font-medium text-gray-700">Report Type</Label>
+              <Label
+                htmlFor="report-type"
+                className="text-sm font-medium text-gray-700"
+              >
+                Report Type
+              </Label>
               <Select value={reportType} onValueChange={setReportType}>
                 <SelectTrigger className="h-10 sm:h-11">
                   <div className="flex items-center space-x-2">
@@ -876,7 +895,12 @@ export const EnhancedLearningReports: React.FC<
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="time-period" className="text-sm font-medium text-gray-700">Time Period</Label>
+              <Label
+                htmlFor="time-period"
+                className="text-sm font-medium text-gray-700"
+              >
+                Time Period
+              </Label>
               <Select value={timePeriod} onValueChange={handleTimePeriodChange}>
                 <SelectTrigger className="h-10 sm:h-11">
                   <div className="flex items-center space-x-2">
@@ -931,7 +955,9 @@ export const EnhancedLearningReports: React.FC<
             {isGenerating ? (
               <div className="flex items-center gap-2">
                 <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                <span className="text-sm sm:text-base">Generating Report...</span>
+                <span className="text-sm sm:text-base">
+                  Generating Report...
+                </span>
               </div>
             ) : (
               <div className="flex items-center gap-2">

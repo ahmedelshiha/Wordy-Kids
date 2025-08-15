@@ -722,15 +722,15 @@ export const ParentLearningAnalytics: React.FC<
         {/* Enhanced Reports Tab */}
         <TabsContent value="reports" className="space-y-6">
           <EnhancedLearningReports
-            students={analyticsData.children.map(child => ({
+            students={analyticsData.children.map((child) => ({
               id: child.id,
               name: child.name,
               age: child.age,
-              level: child.level
+              level: child.level,
             }))}
             onExport={(reportId) => {
               // Handle report export
-              console.log('Exporting report:', reportId);
+              console.log("Exporting report:", reportId);
             }}
           />
         </TabsContent>
