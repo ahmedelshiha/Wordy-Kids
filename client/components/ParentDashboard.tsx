@@ -477,6 +477,7 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
 }) => {
   // Auth hook for guest mode checking
   const { isGuest, user } = useAuth();
+  const navigate = useNavigate();
 
   // Registration prompt dialog state
   const [showRegistrationPrompt, setShowRegistrationPrompt] = useState(false);
@@ -4303,7 +4304,7 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
                 Choose Avatar
               </Label>
               <div className="grid grid-cols-5 sm:grid-cols-9 gap-1 sm:gap-2">
-                {["👦", "👧", "🧒", "👶", "🦸‍♂️", "🦸‍♀️", "🧑‍🎓", "👨‍🎓", "👩‍🎓"].map(
+                {["��", "👧", "🧒", "👶", "🦸‍♂️", "🦸‍♀️", "🧑‍🎓", "👨‍🎓", "👩‍🎓"].map(
                   (emoji) => (
                     <Button
                       key={emoji}
