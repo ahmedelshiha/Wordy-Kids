@@ -316,6 +316,13 @@ export function AchievementSystem({
         setRealStats(realLearningStats);
         setRealAchievements(achievements);
 
+        console.log('Journey component loaded real data:', {
+          totalWords: realLearningStats.totalWordsLearned,
+          weeklyProgress: realLearningStats.weeklyProgress,
+          achievementsCount: achievements.length,
+          unlockedCount: achievements.filter(a => a.unlocked).length
+        });
+
       } catch (error) {
         console.error('Error loading real data:', error);
         // Fallback to basic data if loading fails
