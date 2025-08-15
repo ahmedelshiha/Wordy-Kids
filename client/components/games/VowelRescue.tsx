@@ -183,6 +183,10 @@ export function VowelRescue({
       // Play encouraging speech for wrong vowel
       audioService.playEncouragementSound();
 
+      // Haptic feedback for wrong answer
+      if (navigator && "vibrate" in navigator)
+        (navigator as any).vibrate([40, 60, 40]);
+
       setTimeout(() => {
         // Clear the wrong vowel and allow trying again
         const clearedVowels = { ...newSelectedVowels };
@@ -192,6 +196,9 @@ export function VowelRescue({
       }, 1500);
       return;
     }
+
+    // Gentle vibration for correct vowel
+    if (navigator && "vibrate" in navigator) (navigator as any).vibrate(30);
 
     // Check if all missing positions are filled with correct vowels
     const allFilled = currentQuestion.missingIndex.every(
@@ -723,7 +730,7 @@ export function VowelRescue({
                     {attempts >= 5 && (
                       <div className="space-y-2">
                         <div className="text-educational-purple text-sm sm:text-base">
-                          Let's see the answer together! ��
+                          Let's see the answer together! 📖
                         </div>
                         <Button
                           onClick={handleShowHint}
