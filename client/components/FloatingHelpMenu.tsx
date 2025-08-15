@@ -33,7 +33,8 @@ interface FloatingHelpMenuProps {
   onContact?: () => void;
   onAccessibility?: () => void;
   onAchievements?: () => void;
-  currentPage?: "home" | "games" | "library" | "progress" | "admin";
+  currentPage?: ContextualPage;
+  onHelpAction?: (helpContent: { title: string; message: string }) => void;
 }
 
 export function FloatingHelpMenu({
@@ -43,10 +44,12 @@ export function FloatingHelpMenu({
   onContact,
   onAccessibility,
   onAchievements,
+  onHelpAction,
   currentPage = "home",
 }: FloatingHelpMenuProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [showEncouragement, setShowEncouragement] = useState(false);
+  const helpContent = useContextualHelp(currentPage);
 
   const getContextualHelpOptions = (): HelpOption[] => {
     const baseOptions: HelpOption[] = [
