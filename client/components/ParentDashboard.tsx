@@ -4343,7 +4343,7 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
             <Button
               onClick={() => {
                 setShowRegistrationPrompt(false);
-                navigate("/");
+                navigate("/signup");
               }}
               className="w-full sm:w-auto bg-educational-blue hover:bg-educational-blue/90"
             >
