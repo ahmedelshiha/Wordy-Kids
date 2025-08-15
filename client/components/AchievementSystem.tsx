@@ -341,6 +341,62 @@ export function AchievementSystem({
     loadRealData();
   }, [user?.id]);
 
+  // Refresh function to reload data
+  const refreshData = () => {
+    setIsLoading(true);
+    // Re-run the data loading
+    const userId = user?.id || 'guest';
+
+    const loadData = async () => {
+      try {
+        // Get real achievement data - try enhanced tracker first
+        let achievements, journeyProgress;
+        try {
+          achievements = EnhancedAchievementTracker.getAchievements();
+          journeyProgress = EnhancedAchievementTracker.getJourneyProgress();
+        } catch (error) {
+          // Fallback to basic achievement tracker
+          achievements = AchievementTracker.getAchievements();
+          journeyProgress = AchievementTracker.getJourneyProgress();
+        }
+
+        setRealAchievements(achievements);
+
+        // Re-calculate stats with fresh data
+        const weeklyWords = getWeeklyProgressData(userId);
+        const totalWeeklyWords = weeklyWords.reduce((sum, count) => sum + count, 0);
+        const avgWordsPerDay = totalWeeklyWords / 7;
+        const learningSpeed = avgWordsPerDay * 2;
+
+        const realLearningStats: LearningStats = {
+          totalWordsLearned: journeyProgress.wordsLearned,
+          weeklyProgress: weeklyWords,
+          categoryBreakdown: [],
+          difficultyProgress: [
+            { difficulty: "easy", completed: journeyProgress.difficultyStats?.easy?.completed || 0, total: 50 },
+            { difficulty: "medium", completed: journeyProgress.difficultyStats?.medium?.completed || 0, total: 50 },
+            { difficulty: "hard", completed: journeyProgress.difficultyStats?.hard?.completed || 0, total: 30 }
+          ],
+          streakData: getStreakData(userId),
+          learningSpeed: Math.max(learningSpeed, 1),
+          currentAccuracy: journeyProgress.totalAccuracy || 85
+        };
+
+        setRealStats(realLearningStats);
+
+        if (onRefresh) {
+          onRefresh();
+        }
+      } catch (error) {
+        console.error('Error refreshing data:', error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    loadData();
+  };
+
   // Use real data or loading state
   const stats = realStats;
   const achievements = realAchievements;
