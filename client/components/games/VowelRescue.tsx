@@ -228,11 +228,15 @@ export function VowelRescue({
       setScore(score + points);
       setShowReward(true);
 
-      // Play celebration effects like main dashboard
+      // Enhanced celebration effects with sparkles like Listen & Guess
       setShowMainCelebration(true);
+      setShowSparkleExplosion(true);
+      setSparkleCount((prev) => prev + 1);
       audioService.playSuccessSound();
 
+      // Auto-hide sparkle explosion after animation
       setTimeout(() => {
+        setShowSparkleExplosion(false);
         setShowReward(false);
         setShowMainCelebration(false);
       }, 1500);
