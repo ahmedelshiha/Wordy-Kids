@@ -167,209 +167,29 @@ const AdvancedAnalyticsDashboard: React.FC = () => {
 
   // Fallback data for static sections (will be replaced with real data as available)
   const fallbackKeyMetrics: AnalyticsMetric[] = [
-    {
-      id: "active_users",
-      name: "Active Users",
-      value: 15420,
-      previousValue: 13200,
-      unit: "",
-      trend: "up",
-      changePercent: 16.8,
-      icon: <Users className="w-6 h-6" />,
-      color: "text-blue-600",
-    },
-    {
-      id: "learning_sessions",
-      name: "Learning Sessions",
-      value: 98750,
-      previousValue: 87300,
-      unit: "",
-      trend: "up",
-      changePercent: 13.1,
-      icon: <BookOpen className="w-6 h-6" />,
-      color: "text-green-600",
-    },
-    {
-      id: "avg_session_time",
-      name: "Avg Session Time",
-      value: 18.5,
-      previousValue: 16.2,
-      unit: "min",
-      trend: "up",
-      changePercent: 14.2,
-      icon: <Clock className="w-6 h-6" />,
-      color: "text-purple-600",
-    },
-    {
-      id: "completion_rate",
-      name: "Completion Rate",
-      value: 87.3,
-      previousValue: 84.1,
-      unit: "%",
-      trend: "up",
-      changePercent: 3.8,
-      icon: <Target className="w-6 h-6" />,
-      color: "text-orange-600",
-    },
-    {
-      id: "user_satisfaction",
-      name: "User Satisfaction",
-      value: 4.7,
-      previousValue: 4.5,
-      unit: "/5",
-      trend: "up",
-      changePercent: 4.4,
-      icon: <Star className="w-6 h-6" />,
-      color: "text-yellow-600",
-    },
-    {
-      id: "retention_rate",
-      name: "7-Day Retention",
-      value: 73.2,
-      previousValue: 71.8,
-      unit: "%",
-      trend: "up",
-      changePercent: 1.9,
-      icon: <Heart className="w-6 h-6" />,
-      color: "text-red-600",
-    },
-  ];
-
-  const usagePatterns: UsagePattern[] = [
-    {
-      timeOfDay: "6-9 AM",
-      sessions: 2840,
-      completionRate: 89,
-      avgDuration: 15.2,
-    },
-    {
-      timeOfDay: "9-12 PM",
-      sessions: 1420,
-      completionRate: 92,
-      avgDuration: 22.1,
-    },
-    {
-      timeOfDay: "12-3 PM",
-      sessions: 3200,
-      completionRate: 85,
-      avgDuration: 18.7,
-    },
-    {
-      timeOfDay: "3-6 PM",
-      sessions: 8750,
-      completionRate: 88,
-      avgDuration: 19.3,
-    },
-    {
-      timeOfDay: "6-9 PM",
-      sessions: 12300,
-      completionRate: 91,
-      avgDuration: 21.5,
-    },
-    {
-      timeOfDay: "9 PM+",
-      sessions: 1890,
-      completionRate: 78,
-      avgDuration: 16.8,
-    },
-  ];
-
-  const learningOutcomes: LearningOutcome[] = [
-    {
-      category: "Animals",
-      totalWords: 145,
-      masteredWords: 127,
-      averageAccuracy: 89.3,
-      improvementRate: 12.5,
-      strugglingAreas: ["Pronunciation", "Spelling"],
-    },
-    {
-      category: "Nature",
-      totalWords: 98,
-      masteredWords: 82,
-      averageAccuracy: 85.7,
-      improvementRate: 8.9,
-      strugglingAreas: ["Definition recall"],
-    },
-    {
-      category: "Food",
-      totalWords: 167,
-      masteredWords: 142,
-      averageAccuracy: 91.2,
-      improvementRate: 15.3,
-      strugglingAreas: ["Complex words"],
-    },
-    {
-      category: "Objects",
-      totalWords: 203,
-      masteredWords: 165,
-      averageAccuracy: 87.1,
-      improvementRate: 10.7,
-      strugglingAreas: ["Technical terms", "Pronunciation"],
-    },
-  ];
-
-  const geographicData: GeographicData[] = [
-    {
-      region: "North America",
-      users: 8420,
-      sessions: 45200,
-      performance: 88.5,
-      growth: 12.3,
-    },
-    {
-      region: "Europe",
-      users: 4320,
-      sessions: 23800,
-      performance: 91.2,
-      growth: 18.7,
-    },
-    {
-      region: "Asia Pacific",
-      users: 2180,
-      sessions: 12400,
-      performance: 85.9,
-      growth: 25.4,
-    },
-    {
-      region: "Latin America",
-      users: 520,
-      sessions: 2890,
-      performance: 83.7,
-      growth: 31.2,
-    },
-    {
-      region: "Others",
-      users: 80,
-      sessions: 420,
-      performance: 79.2,
-      growth: 8.9,
-    },
-  ];
-
-  const deviceAnalytics: DeviceAnalytics[] = [
-    {
-      device: "Mobile",
-      percentage: 64.2,
-      sessions: 63420,
-      avgDuration: 16.8,
-      icon: <Smartphone className="w-5 h-5" />,
-    },
-    {
-      device: "Desktop",
-      percentage: 24.7,
-      sessions: 24390,
-      avgDuration: 23.5,
-      icon: <Monitor className="w-5 h-5" />,
-    },
-    {
-      device: "Tablet",
-      percentage: 11.1,
-      sessions: 10940,
-      avgDuration: 19.2,
-      icon: <Tablet className="w-5 h-5" />,
-    },
-  ];
+      {
+        id: "active_users",
+        name: "Active Users",
+        value: 0,
+        previousValue: 0,
+        unit: "",
+        trend: "stable" as const,
+        changePercent: 0,
+        icon: <Users className="w-6 h-6" />,
+        color: "text-blue-600",
+      },
+      {
+        id: "learning_sessions",
+        name: "Learning Sessions",
+        value: 0,
+        previousValue: 0,
+        unit: "",
+        trend: "stable" as const,
+        changePercent: 0,
+        icon: <BookOpen className="w-6 h-6" />,
+        color: "text-green-600",
+      },
+    ];
 
   const renderOverviewTab = () => (
     <div className="space-y-6">
