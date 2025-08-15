@@ -53,13 +53,6 @@ export const CompactMobileSettingsPanel: React.FC<
 > = ({
   isOpen,
   onClose,
-  currentProgress = {
-    wordsLearned: 0,
-    wordsRemembered: 0,
-    sessionCount: 0,
-    accuracy: 0,
-  },
-  onGoalUpdate,
 }) => {
   // Essential settings only
   const [soundOn, setSoundOn] = useState(isSoundEnabled());
