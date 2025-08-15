@@ -3146,11 +3146,6 @@ export default function Index({ initialProfile }: IndexProps) {
           <CompactMobileSettingsPanel
             isOpen={showSettings}
             onClose={() => setShowSettings(false)}
-            currentProgress={currentProgress}
-            onGoalUpdate={(goals) => {
-              setLearningGoals(goals);
-              console.log("Learning goals updated:", goals);
-            }}
           />
 
           {/* Word Creator */}
