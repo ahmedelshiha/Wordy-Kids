@@ -1,5 +1,16 @@
 /* Desktop Parent Dashboard Optimizations */
 
+/* Base responsive fixes for all screen sizes */
+.dashboard-header-container {
+  overflow-x: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.dashboard-header-container::-webkit-scrollbar {
+  display: none;
+}
+
 /* Desktop-specific layout optimizations */
 @media (min-width: 1024px) {
   /* Main dashboard layout */
@@ -74,6 +85,49 @@
     position: sticky;
     top: 0;
     z-index: 30;
+  }
+
+  /* Header responsive layout improvements */
+  .dashboard-header .flex {
+    flex-wrap: nowrap;
+    overflow: hidden;
+  }
+
+  .dashboard-header .min-w-0 {
+    min-width: 0;
+    flex: 1;
+  }
+
+  .dashboard-header .shrink-0 {
+    flex-shrink: 0;
+  }
+
+  /* Ensure buttons don't overflow */
+  .dashboard-header button {
+    white-space: nowrap;
+    overflow: hidden;
+  }
+
+  /* Responsive text sizing */
+  @media (max-width: 1024px) {
+    .dashboard-header h1 {
+      font-size: 1.25rem;
+    }
+
+    .dashboard-header .space-x-3 {
+      gap: 0.5rem;
+    }
+  }
+
+  /* Ensure action buttons stay visible */
+  .dashboard-header .gap-2 {
+    gap: 0.25rem;
+  }
+
+  @media (min-width: 1024px) {
+    .dashboard-header .gap-2 {
+      gap: 0.5rem;
+    }
   }
 
   /* Card hover effects and animations */
@@ -418,6 +472,15 @@
     .stats-card {
       padding: 24px;
     }
+
+    /* More space for header elements on larger screens */
+    .dashboard-header .gap-2 {
+      gap: 0.75rem;
+    }
+
+    .dashboard-header .space-x-3 {
+      gap: 1rem;
+    }
   }
 
   @media (min-width: 1920px) {
@@ -428,6 +491,39 @@
     .dashboard-content {
       max-width: 1600px;
       margin: 0 auto;
+    }
+
+    /* Ultra-wide screen header improvements */
+    .dashboard-header .gap-2 {
+      gap: 1rem;
+    }
+  }
+
+  /* Medium desktop screens - ensure no overflow */
+  @media (min-width: 1024px) and (max-width: 1280px) {
+    .dashboard-header {
+      padding-left: 1rem;
+      padding-right: 1rem;
+    }
+
+    .dashboard-header button {
+      padding-left: 0.5rem;
+      padding-right: 0.5rem;
+    }
+
+    .dashboard-header .space-x-3 {
+      gap: 0.5rem;
+    }
+  }
+
+  /* Compact desktop layout for smaller desktop screens */
+  @media (min-width: 1024px) and (max-width: 1200px) {
+    .dashboard-header h1 {
+      font-size: 1.5rem;
+    }
+
+    .dashboard-header .gap-2 {
+      gap: 0.25rem;
     }
   }
 
@@ -531,6 +627,21 @@
 
   .skip-nav:focus {
     top: 6px;
+  }
+
+  /* Prevent horizontal overflow on all screen sizes */
+  .dashboard-header,
+  .dashboard-header * {
+    box-sizing: border-box;
+  }
+
+  .dashboard-header .flex {
+    min-width: 0;
+  }
+
+  /* Ensure dropdowns don't cause layout shift */
+  .dashboard-header [data-radix-popper-content-wrapper] {
+    z-index: 50;
   }
 }
 
