@@ -65,15 +65,17 @@ export class CategoryCompletionTracker {
     this.saveCategoryProgress();
 
     // Dispatch event for real-time analytics updates
-    window.dispatchEvent(new CustomEvent('wordProgressUpdate', {
-      detail: {
-        categoryId: this.currentSession.categoryId,
-        wordId,
-        wasCorrect,
-        reviewedWords: this.currentSession.reviewedWords.size,
-        totalWords: this.currentSession.totalWords
-      }
-    }));
+    window.dispatchEvent(
+      new CustomEvent("wordProgressUpdate", {
+        detail: {
+          categoryId: this.currentSession.categoryId,
+          wordId,
+          wasCorrect,
+          reviewedWords: this.currentSession.reviewedWords.size,
+          totalWords: this.currentSession.totalWords,
+        },
+      }),
+    );
 
     // Check if category is completed
     if (this.isCategoryCompleted()) {
@@ -189,9 +191,11 @@ export class CategoryCompletionTracker {
     });
 
     // Dispatch event for analytics system to update
-    window.dispatchEvent(new CustomEvent('categoryCompleted', {
-      detail: { categoryId: this.currentSession?.categoryId, stats }
-    }));
+    window.dispatchEvent(
+      new CustomEvent("categoryCompleted", {
+        detail: { categoryId: this.currentSession?.categoryId, stats },
+      }),
+    );
   }
 
   /**

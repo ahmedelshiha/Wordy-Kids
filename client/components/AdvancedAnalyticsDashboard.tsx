@@ -76,15 +76,16 @@ const AdvancedAnalyticsDashboard: React.FC = () => {
 
     const handleStorageChange = (event: StorageEvent) => {
       // Refresh when relevant storage keys change
-      if (event.key && (
-        event.key.includes('daily_progress_') ||
-        event.key.includes('weekly_progress_') ||
-        event.key.includes('monthly_progress_') ||
-        event.key.includes('streak_data_') ||
-        event.key.includes('categoryProgress') ||
-        event.key.includes('parentDashboardChildren') ||
-        event.key.includes('systematic_progress_')
-      )) {
+      if (
+        event.key &&
+        (event.key.includes("daily_progress_") ||
+          event.key.includes("weekly_progress_") ||
+          event.key.includes("monthly_progress_") ||
+          event.key.includes("streak_data_") ||
+          event.key.includes("categoryProgress") ||
+          event.key.includes("parentDashboardChildren") ||
+          event.key.includes("systematic_progress_"))
+      ) {
         handleProgressUpdate();
       }
     };
@@ -110,27 +111,33 @@ const AdvancedAnalyticsDashboard: React.FC = () => {
     };
 
     // Listen for all progress-related events
-    window.addEventListener('goalCompleted', handleGoalCompletion);
-    window.addEventListener('wordDatabaseUpdate', handleWordDatabaseUpdate);
-    window.addEventListener('categoryCompleted', handleCategoryCompletion);
-    window.addEventListener('wordProgressUpdate', handleWordProgress);
-    window.addEventListener('storage', handleStorageChange);
+    window.addEventListener("goalCompleted", handleGoalCompletion);
+    window.addEventListener("wordDatabaseUpdate", handleWordDatabaseUpdate);
+    window.addEventListener("categoryCompleted", handleCategoryCompletion);
+    window.addEventListener("wordProgressUpdate", handleWordProgress);
+    window.addEventListener("storage", handleStorageChange);
 
     // Auto-refresh every 5 minutes for real-time feel
-    const autoRefreshInterval = setInterval(() => {
-      if (!loading) {
-        analyticsDataService.refreshData();
-        loadAnalyticsData();
-      }
-    }, 5 * 60 * 1000); // 5 minutes
+    const autoRefreshInterval = setInterval(
+      () => {
+        if (!loading) {
+          analyticsDataService.refreshData();
+          loadAnalyticsData();
+        }
+      },
+      5 * 60 * 1000,
+    ); // 5 minutes
 
     return () => {
       clearTimeout(updateTimeout);
-      window.removeEventListener('goalCompleted', handleGoalCompletion);
-      window.removeEventListener('wordDatabaseUpdate', handleWordDatabaseUpdate);
-      window.removeEventListener('categoryCompleted', handleCategoryCompletion);
-      window.removeEventListener('wordProgressUpdate', handleWordProgress);
-      window.removeEventListener('storage', handleStorageChange);
+      window.removeEventListener("goalCompleted", handleGoalCompletion);
+      window.removeEventListener(
+        "wordDatabaseUpdate",
+        handleWordDatabaseUpdate,
+      );
+      window.removeEventListener("categoryCompleted", handleCategoryCompletion);
+      window.removeEventListener("wordProgressUpdate", handleWordProgress);
+      window.removeEventListener("storage", handleStorageChange);
       clearInterval(autoRefreshInterval);
     };
   }, [loading]);
@@ -291,7 +298,8 @@ const AdvancedAnalyticsDashboard: React.FC = () => {
             )}
           </div>
           <div className="text-xs text-green-600">
-            Auto-refreshes every 5 minutes • Last updated: {analyticsData?.lastUpdated.toLocaleTimeString()}
+            Auto-refreshes every 5 minutes • Last updated:{" "}
+            {analyticsData?.lastUpdated.toLocaleTimeString()}
           </div>
         </div>
       </div>

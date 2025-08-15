@@ -818,23 +818,24 @@ export class AnalyticsDataService {
     };
 
     const handleStorageEvent = (event: StorageEvent) => {
-      if (event.key && (
-        event.key.includes('daily_progress_') ||
-        event.key.includes('weekly_progress_') ||
-        event.key.includes('monthly_progress_') ||
-        event.key.includes('streak_data_') ||
-        event.key.includes('categoryProgress') ||
-        event.key.includes('parentDashboardChildren') ||
-        event.key.includes('systematic_progress_')
-      )) {
+      if (
+        event.key &&
+        (event.key.includes("daily_progress_") ||
+          event.key.includes("weekly_progress_") ||
+          event.key.includes("monthly_progress_") ||
+          event.key.includes("streak_data_") ||
+          event.key.includes("categoryProgress") ||
+          event.key.includes("parentDashboardChildren") ||
+          event.key.includes("systematic_progress_"))
+      ) {
         this.refreshData();
       }
     };
 
     // Listen for progress-related events
-    window.addEventListener('goalCompleted', handleProgressEvent);
-    window.addEventListener('wordDatabaseUpdate', handleProgressEvent);
-    window.addEventListener('storage', handleStorageEvent);
+    window.addEventListener("goalCompleted", handleProgressEvent);
+    window.addEventListener("wordDatabaseUpdate", handleProgressEvent);
+    window.addEventListener("storage", handleStorageEvent);
   }
 
   /**
@@ -844,23 +845,23 @@ export class AnalyticsDataService {
     isMonitoring: boolean;
     lastUpdate: number;
     cacheSize: number;
-    dataFreshness: 'fresh' | 'stale' | 'expired';
+    dataFreshness: "fresh" | "stale" | "expired";
   } {
     const now = Date.now();
     const timeSinceUpdate = now - this.lastCacheUpdate;
 
-    let dataFreshness: 'fresh' | 'stale' | 'expired' = 'fresh';
+    let dataFreshness: "fresh" | "stale" | "expired" = "fresh";
     if (timeSinceUpdate > this.CACHE_DURATION) {
-      dataFreshness = 'expired';
+      dataFreshness = "expired";
     } else if (timeSinceUpdate > this.CACHE_DURATION / 2) {
-      dataFreshness = 'stale';
+      dataFreshness = "stale";
     }
 
     return {
       isMonitoring: true,
       lastUpdate: this.lastCacheUpdate,
       cacheSize: this.cache.size,
-      dataFreshness
+      dataFreshness,
     };
   }
 }
