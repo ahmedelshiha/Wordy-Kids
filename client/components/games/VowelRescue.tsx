@@ -59,6 +59,9 @@ export function VowelRescue({
   const [gameComplete, setGameComplete] = useState(false);
   const [newAchievements, setNewAchievements] = useState<any[]>([]);
   const [showMainCelebration, setShowMainCelebration] = useState(false);
+  const [showSparkleExplosion, setShowSparkleExplosion] = useState(false);
+  const [sparkleCount, setSparkleCount] = useState(0);
+  const [isRestarting, setIsRestarting] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
   const currentQuestion = questions[currentIndex];
