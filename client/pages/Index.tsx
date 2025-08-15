@@ -1822,6 +1822,7 @@ export default function Index({ initialProfile }: IndexProps) {
                     onClick={() => {
                       setUserRole("parent");
                       setIsMobileMenuOpen(false);
+                      window.scrollTo({ top: 0, behavior: "smooth" });
                     }}
                     className="w-full flex items-center gap-3 p-3 rounded-xl transition-all bg-white text-gray-700 hover:bg-blue-50 border-2 border-transparent"
                   >
