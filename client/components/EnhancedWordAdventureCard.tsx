@@ -818,7 +818,7 @@ export const EnhancedWordAdventureCard: React.FC<
           onAchievementClaim={(achievement) => {
             console.log("Word adventure achievement claimed:", achievement);
           }}
-          autoCloseDelay={4000}
+          autoCloseDelay={2000}
         />
       )}
 

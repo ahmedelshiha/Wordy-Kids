@@ -313,7 +313,7 @@ export class EnhancedAchievementTracker {
           ],
         },
       ],
-      reward: { type: "avatar_accessory", item: "Ninja Mask", emoji: "🎭" },
+      reward: { type: "avatar_accessory", item: "Ninja Mask", emoji: "��" },
     },
 
     // 🎭 COMEDY ACHIEVEMENTS - Funny special conditions
@@ -1108,6 +1108,75 @@ export class EnhancedAchievementTracker {
   }
 
   /**
+   * Get short mobile-friendly motivational message
+   */
+  static getShortMotivationalMessage(): string {
+    const hour = new Date().getHours();
+
+    const morningShort = [
+      "🌅 Good morning! Ready to learn?",
+      "☀️ Rise and shine! Word time!",
+      "🌈 Morning sunshine! Let's go!",
+      "🦋 Flutter into word fun!",
+      "🌸 Fresh morning learning!",
+      "🐝 Buzzing for words!",
+      "🎈 Morning word balloon!",
+      "⭐ Wake up, superstar!",
+      "🚀 Blast off to learning!",
+      "🎨 Paint with words!",
+      "🦄 Magical word time!",
+      "🌟 Sparkly learning ahead!",
+      "🍀 Lucky word hunt!",
+      "🎪 Word circus time!",
+      "🎵 Sing with new words!",
+    ];
+
+    const afternoonShort = [
+      "🌞 Afternoon power! Let's learn!",
+      "⚡ Energy boost time!",
+      "🎯 Target practice!",
+      "🌻 Sunny word vibes!",
+      "🦋 Afternoon flutter!",
+      "🎪 Word carnival!",
+      "🏖️ Surf word waves!",
+      "🍎 Brain snack time!",
+      "🎨 Afternoon art class!",
+      "🚂 All aboard word train!",
+      "🎵 Music with words!",
+      "🏃‍♂️ Word marathon time!",
+      "🌈 Rainbow bridge!",
+      "🎭 You're the star!",
+      "🏆 Claim victories!",
+    ];
+
+    const eveningShort = [
+      "🌙 Evening magic time!",
+      "⭐ Star-powered learning!",
+      "🦉 Wise owl hours!",
+      "🌃 City lights sparkle!",
+      "🌛 Crescent moon smiles!",
+      "✨ Twilight twinkles!",
+      "🎆 Evening fireworks!",
+      "🌟 Star wishes!",
+      "🦇 Evening adventure!",
+      "🌒 Moon magic!",
+      "🕯️ Cozy word time!",
+      "🎭 Tonight's show!",
+      "🌊 Ocean wave learning!",
+      "🎪 Evening circus!",
+      "🍕 Evening word treat!",
+    ];
+
+    let selectedMessages = morningShort;
+    if (hour >= 12 && hour < 18) selectedMessages = afternoonShort;
+    else if (hour >= 18) selectedMessages = eveningShort;
+
+    return selectedMessages[
+      Math.floor(Math.random() * selectedMessages.length)
+    ];
+  }
+
+  /**
    * Get fun motivational message based on progress
    */
   static getMotivationalMessage(): string {
@@ -1270,6 +1339,40 @@ export class EnhancedAchievementTracker {
       return `👀 Almost there! "${nextAchievement.name}" is ${progressPercent}% done!`;
     } else if (progressPercent >= 50) {
       return `💪 Keep going! "${nextAchievement.name}" is halfway there!`;
+    }
+
+    return null;
+  }
+
+  /**
+   * Get short achievement tease for mobile
+   */
+  static getShortAchievementTease(): string | null {
+    const nextAchievement = this.achievements
+      .filter((a) => !a.unlocked)
+      .sort(
+        (a, b) =>
+          b.currentProgress / b.requirements -
+          a.currentProgress / a.requirements,
+      )[0];
+
+    if (!nextAchievement) return null;
+
+    const progressPercent = Math.round(
+      (nextAchievement.currentProgress / nextAchievement.requirements) * 100,
+    );
+
+    const shortName =
+      nextAchievement.name.length > 15
+        ? nextAchievement.name.slice(0, 15) + "..."
+        : nextAchievement.name;
+
+    if (progressPercent >= 90) {
+      return `🔥 Almost! ${shortName} ${progressPercent}%`;
+    } else if (progressPercent >= 75) {
+      return `👀 Close! ${shortName} ${progressPercent}%`;
+    } else if (progressPercent >= 50) {
+      return `💪 Keep going! ${shortName} ${progressPercent}%`;
     }
 
     return null;

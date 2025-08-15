@@ -3243,7 +3243,7 @@ export default function Index({ initialProfile }: IndexProps) {
                 console.log("Achievement claimed:", achievement);
                 // Could add additional reward logic here like updating user points
               }}
-              autoCloseDelay={6000} // Auto-close after 6 seconds
+              autoCloseDelay={2000} // Auto-close after 2 seconds for mobile optimization
             />
           )}
         </>

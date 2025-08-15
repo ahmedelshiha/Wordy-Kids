@@ -20,11 +20,18 @@ export function AchievementTeaser({ className }: AchievementTeaserProps) {
   useEffect(() => {
     // Get messages on component mount and periodically
     const updateMessages = () => {
+      const isMobile = window.innerWidth < 768;
       setMotivationalMessage(
-        EnhancedAchievementTracker.getMotivationalMessage(),
+        isMobile
+          ? EnhancedAchievementTracker.getShortMotivationalMessage()
+          : EnhancedAchievementTracker.getMotivationalMessage(),
       );
       setSpecialMessage(EnhancedAchievementTracker.getTodaySpecialMessage());
-      setCurrentTease(EnhancedAchievementTracker.getNextAchievementTease());
+      setCurrentTease(
+        isMobile
+          ? EnhancedAchievementTracker.getShortAchievementTease()
+          : EnhancedAchievementTracker.getNextAchievementTease(),
+      );
     };
 
     updateMessages();
@@ -44,17 +51,24 @@ export function AchievementTeaser({ className }: AchievementTeaserProps) {
   // Cycle through messages every 8 seconds (longer for mobile to read)
   useEffect(() => {
     const isMobile = window.innerWidth < 768;
-    const rotationInterval = isMobile ? 10000 : 8000; // 10s on mobile, 8s on desktop
+    const rotationInterval = isMobile ? 6000 : 8000; // 6s on mobile, 8s on desktop
 
     const messageRotation = setInterval(() => {
       setShowTeaser(false);
       setTimeout(() => {
         // Update all messages for variety
+        const isMobile = window.innerWidth < 768;
         setMotivationalMessage(
-          EnhancedAchievementTracker.getMotivationalMessage(),
+          isMobile
+            ? EnhancedAchievementTracker.getShortMotivationalMessage()
+            : EnhancedAchievementTracker.getMotivationalMessage(),
         );
         setSpecialMessage(EnhancedAchievementTracker.getTodaySpecialMessage());
-        setCurrentTease(EnhancedAchievementTracker.getNextAchievementTease());
+        setCurrentTease(
+          isMobile
+            ? EnhancedAchievementTracker.getShortAchievementTease()
+            : EnhancedAchievementTracker.getNextAchievementTease(),
+        );
         setMessageIndex((prev) => prev + 1);
         setShowTeaser(true);
       }, 300);
@@ -101,11 +115,18 @@ export function AchievementTeaser({ className }: AchievementTeaserProps) {
     // Cycle to next message on tap (mobile-friendly)
     setShowTeaser(false);
     setTimeout(() => {
+      const isMobile = window.innerWidth < 768;
       setMotivationalMessage(
-        EnhancedAchievementTracker.getMotivationalMessage(),
+        isMobile
+          ? EnhancedAchievementTracker.getShortMotivationalMessage()
+          : EnhancedAchievementTracker.getMotivationalMessage(),
       );
       setSpecialMessage(EnhancedAchievementTracker.getTodaySpecialMessage());
-      setCurrentTease(EnhancedAchievementTracker.getNextAchievementTease());
+      setCurrentTease(
+        isMobile
+          ? EnhancedAchievementTracker.getShortAchievementTease()
+          : EnhancedAchievementTracker.getNextAchievementTease(),
+      );
       setMessageIndex((prev) => prev + 1);
       setShowTeaser(true);
     }, 200);
