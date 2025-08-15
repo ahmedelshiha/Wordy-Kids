@@ -104,11 +104,26 @@ export class AudioService {
 
   private loadVoices() {
     try {
-      this.voices = this.speechSynthesis.getVoices();
-      console.log(`Loaded ${this.voices.length} voices`);
+      if (!this.speechSynthesis) {
+        this.voices = [];
+        return;
+      }
+
+      const availableVoices = this.speechSynthesis.getVoices();
+      this.voices = availableVoices;
+
+      if (this.voices.length > 0) {
+        this.voicesLoaded = true;
+        console.log(`Loaded ${this.voices.length} voices:`,
+          this.voices.map(v => `${v.name} (${v.lang})`).slice(0, 5)
+        );
+      } else {
+        console.log("No voices loaded yet, voices may still be loading...");
+      }
     } catch (error) {
       console.error("Error loading voices:", error);
       this.voices = [];
+      this.voicesLoaded = false;
     }
   }
 
