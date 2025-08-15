@@ -26,7 +26,11 @@ interface VowelQuestion {
 }
 
 interface VowelRescueProps {
-  questions: VowelQuestion[];
+  questions?: VowelQuestion[]; // Now optional - will generate from database if not provided
+  rounds?: number; // default 8
+  difficulty?: "easy" | "medium" | "hard"; // default "easy"
+  category?: string; // word category to focus on
+  playerLevel?: number; // for progressive difficulty
   onComplete: (score: number, total: number) => void;
   onExit: () => void;
   gameMode?: "easy" | "challenge" | "timed";
