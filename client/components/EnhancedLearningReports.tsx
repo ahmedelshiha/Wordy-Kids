@@ -351,56 +351,64 @@ export const EnhancedLearningReports: React.FC<
           </CardHeader>
         </Card>
 
-        {/* Key Metrics Cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        {/* Key Metrics Cards - Enhanced for mobile */}
+        <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
           <Card className="bg-blue-50 border-blue-200">
-            <CardContent className="p-6 text-center">
-              <Clock className="w-8 h-8 text-blue-600 mx-auto mb-2" />
-              <div className="text-3xl font-bold text-blue-700">
+            <CardContent className="p-3 sm:p-4 text-center">
+              <Clock className="w-6 h-6 sm:w-8 sm:h-8 text-blue-600 mx-auto mb-1 sm:mb-2" />
+              <div className="text-xl sm:text-2xl lg:text-3xl font-bold text-blue-700">
                 <AnimatedCounter
                   value={generatedReport.key_metrics.learning_time_minutes}
                 />
                 m
               </div>
-              <p className="text-blue-600 font-medium">Learning Time</p>
+              <p className="text-blue-600 font-medium text-xs sm:text-sm">
+                Learning Time
+              </p>
             </CardContent>
           </Card>
 
           <Card className="bg-green-50 border-green-200">
-            <CardContent className="p-6 text-center">
-              <BookOpen className="w-8 h-8 text-green-600 mx-auto mb-2" />
-              <div className="text-3xl font-bold text-green-700">
+            <CardContent className="p-3 sm:p-4 text-center">
+              <BookOpen className="w-6 h-6 sm:w-8 sm:h-8 text-green-600 mx-auto mb-1 sm:mb-2" />
+              <div className="text-xl sm:text-2xl lg:text-3xl font-bold text-green-700">
                 <AnimatedCounter
                   value={generatedReport.key_metrics.words_learned}
                 />
               </div>
-              <p className="text-green-600 font-medium">Words Learned</p>
+              <p className="text-green-600 font-medium text-xs sm:text-sm">
+                Words Learned
+              </p>
             </CardContent>
           </Card>
 
           <Card className="bg-purple-50 border-purple-200">
-            <CardContent className="p-6 text-center">
-              <Target className="w-8 h-8 text-purple-600 mx-auto mb-2" />
-              <div className="text-3xl font-bold text-purple-700">
+            <CardContent className="p-3 sm:p-4 text-center">
+              <Target className="w-6 h-6 sm:w-8 sm:h-8 text-purple-600 mx-auto mb-1 sm:mb-2" />
+              <div className="text-xl sm:text-2xl lg:text-3xl font-bold text-purple-700">
                 <AnimatedCounter
                   value={generatedReport.key_metrics.accuracy_percentage}
                 />
                 %
               </div>
-              <p className="text-purple-600 font-medium">Accuracy</p>
+              <p className="text-purple-600 font-medium text-xs sm:text-sm">
+                Accuracy
+              </p>
             </CardContent>
           </Card>
 
           <Card className="bg-orange-50 border-orange-200">
-            <CardContent className="p-6 text-center">
-              <Zap className="w-8 h-8 text-orange-600 mx-auto mb-2" />
-              <div className="text-3xl font-bold text-orange-700">
+            <CardContent className="p-3 sm:p-4 text-center">
+              <Zap className="w-6 h-6 sm:w-8 sm:h-8 text-orange-600 mx-auto mb-1 sm:mb-2" />
+              <div className="text-xl sm:text-2xl lg:text-3xl font-bold text-orange-700">
                 <AnimatedCounter
                   value={generatedReport.key_metrics.day_streak}
                 />{" "}
-                Day
+                <span className="text-sm sm:text-base">Day</span>
               </div>
-              <p className="text-orange-600 font-medium">Streak</p>
+              <p className="text-orange-600 font-medium text-xs sm:text-sm">
+                Streak
+              </p>
             </CardContent>
           </Card>
         </div>
@@ -727,17 +735,21 @@ export const EnhancedLearningReports: React.FC<
         </p>
       </div>
 
-      {/* Report Generation Buttons */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      {/* Report Generation Buttons - Enhanced for mobile */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <Card className="hover:shadow-lg transition-shadow cursor-pointer">
-          <CardContent className="p-6">
+          <CardContent className="p-4 sm:p-6">
             <div className="flex items-center gap-3 mb-4">
-              <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
-                <Clock className="w-6 h-6 text-blue-600" />
+              <div className="w-10 h-10 sm:w-12 sm:h-12 bg-blue-100 rounded-lg flex items-center justify-center">
+                <Clock className="w-5 h-5 sm:w-6 sm:h-6 text-blue-600" />
               </div>
               <div>
-                <h3 className="font-semibold text-lg">Weekly Summary</h3>
-                <p className="text-gray-600 text-sm">Quick weekly overview</p>
+                <h3 className="font-semibold text-base sm:text-lg">
+                  Weekly Summary
+                </h3>
+                <p className="text-gray-600 text-xs sm:text-sm">
+                  Quick weekly overview
+                </p>
               </div>
             </div>
             <Button
@@ -746,23 +758,35 @@ export const EnhancedLearningReports: React.FC<
                 setTimePeriod("Last Week");
                 handleGenerateReport();
               }}
-              className="w-full bg-blue-600 hover:bg-blue-700"
+              className="w-full bg-blue-500 hover:bg-blue-600 text-sm sm:text-base h-10 sm:h-12"
               disabled={isGenerating}
             >
-              {isGenerating ? "Generating..." : "Generate Weekly Report"}
+              {isGenerating ? (
+                <div className="flex items-center gap-2">
+                  <div className="w-3 h-3 sm:w-4 sm:h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                  <span className="text-xs sm:text-sm">Generating...</span>
+                </div>
+              ) : (
+                <span className="flex items-center gap-2">
+                  <Clock className="w-3 h-3 sm:w-4 sm:h-4" />
+                  <span>Weekly Summary</span>
+                </span>
+              )}
             </Button>
           </CardContent>
         </Card>
 
         <Card className="hover:shadow-lg transition-shadow cursor-pointer">
-          <CardContent className="p-6">
+          <CardContent className="p-4 sm:p-6">
             <div className="flex items-center gap-3 mb-4">
-              <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
-                <ChartBar className="w-6 h-6 text-green-600" />
+              <div className="w-10 h-10 sm:w-12 sm:h-12 bg-green-100 rounded-lg flex items-center justify-center">
+                <ChartBar className="w-5 h-5 sm:w-6 sm:h-6 text-green-600" />
               </div>
               <div>
-                <h3 className="font-semibold text-lg">Monthly Report</h3>
-                <p className="text-gray-600 text-sm">
+                <h3 className="font-semibold text-base sm:text-lg">
+                  Monthly Report
+                </h3>
+                <p className="text-gray-600 text-xs sm:text-sm">
                   Comprehensive monthly analysis
                 </p>
               </div>
@@ -773,10 +797,20 @@ export const EnhancedLearningReports: React.FC<
                 setTimePeriod("Last Month");
                 handleGenerateReport();
               }}
-              className="w-full bg-green-600 hover:bg-green-700"
+              className="w-full bg-green-500 hover:bg-green-600 text-sm sm:text-base h-10 sm:h-12"
               disabled={isGenerating}
             >
-              {isGenerating ? "Generating..." : "Generate Monthly Report"}
+              {isGenerating ? (
+                <div className="flex items-center gap-2">
+                  <div className="w-3 h-3 sm:w-4 sm:h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                  <span className="text-xs sm:text-sm">Generating...</span>
+                </div>
+              ) : (
+                <span className="flex items-center gap-2">
+                  <TrendingUp className="w-3 h-3 sm:w-4 sm:h-4" />
+                  <span>Monthly Report</span>
+                </span>
+              )}
             </Button>
           </CardContent>
         </Card>
@@ -832,14 +866,21 @@ export const EnhancedLearningReports: React.FC<
             </Card>
           )}
 
-          {/* Report Configuration */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {/* Report Configuration - Enhanced for mobile */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
             <div className="space-y-2">
-              <Label htmlFor="report-type">Report Type</Label>
+              <Label
+                htmlFor="report-type"
+                className="text-sm font-medium text-gray-700"
+              >
+                Report Type
+              </Label>
               <Select value={reportType} onValueChange={setReportType}>
-                <SelectTrigger>
-                  <ChartBar className="w-4 h-4 mr-2" />
-                  <SelectValue />
+                <SelectTrigger className="h-10 sm:h-11">
+                  <div className="flex items-center space-x-2">
+                    <ChartBar className="w-4 h-4 text-gray-500" />
+                    <SelectValue />
+                  </div>
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="Quick Summary">Quick Summary</SelectItem>
@@ -854,11 +895,18 @@ export const EnhancedLearningReports: React.FC<
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="time-period">Time Period</Label>
+              <Label
+                htmlFor="time-period"
+                className="text-sm font-medium text-gray-700"
+              >
+                Time Period
+              </Label>
               <Select value={timePeriod} onValueChange={handleTimePeriodChange}>
-                <SelectTrigger>
-                  <Calendar className="w-4 h-4 mr-2" />
-                  <SelectValue />
+                <SelectTrigger className="h-10 sm:h-11">
+                  <div className="flex items-center space-x-2">
+                    <Calendar className="w-4 h-4 text-gray-500" />
+                    <SelectValue />
+                  </div>
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="Last Week">Last Week</SelectItem>
@@ -898,22 +946,24 @@ export const EnhancedLearningReports: React.FC<
             </div>
           )}
 
-          {/* Generate Report Button */}
+          {/* Generate Report Button - Enhanced for mobile */}
           <Button
             onClick={handleGenerateReport}
-            className="w-full bg-blue-600 hover:bg-blue-700 text-lg py-6"
+            className="w-full bg-blue-500 hover:bg-blue-600 text-base sm:text-lg py-4 sm:py-6 h-12 sm:h-16"
             disabled={isGenerating || !selectedStudent}
           >
             {isGenerating ? (
               <div className="flex items-center gap-2">
                 <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                Generating Report...
+                <span className="text-sm sm:text-base">
+                  Generating Report...
+                </span>
               </div>
             ) : (
-              <>
-                <BarChart3 className="w-5 h-5 mr-2" />
-                Generate Report
-              </>
+              <div className="flex items-center gap-2">
+                <BarChart3 className="w-4 h-4 sm:w-5 sm:h-5" />
+                <span>Generate Report</span>
+              </div>
             )}
           </Button>
         </CardContent>
