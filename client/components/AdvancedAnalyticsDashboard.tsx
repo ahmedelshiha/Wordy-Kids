@@ -329,7 +329,7 @@ const AdvancedAnalyticsDashboard: React.FC = () => {
                     >
                       {metric.changePercent > 0 ? "+" : ""}
                       {isFinite(metric.changePercent)
-                        ? metric.changePercent
+                        ? Math.round(metric.changePercent * 10) / 10
                         : 0}
                       %
                     </span>
@@ -461,7 +461,7 @@ const AdvancedAnalyticsDashboard: React.FC = () => {
                       <div>
                         <span className="text-slate-600">Improvement</span>
                         <p className="font-semibold text-green-600">
-                          +{outcome.improvementRate}%
+                          +{Math.round(outcome.improvementRate * 10) / 10}%
                         </p>
                       </div>
                     </div>
