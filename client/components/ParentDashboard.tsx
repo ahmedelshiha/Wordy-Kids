@@ -937,7 +937,7 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
             <CardContent className="p-3 md:p-4">
               <div className="space-y-2">
                 <h3 className="font-semibold text-base md:text-lg">
-                  Good Morning! 👋
+                  Good Morning! ���
                 </h3>
                 <p className="text-xs md:text-sm text-slate-600">
                   {children.length} active learner
@@ -2262,9 +2262,6 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
   );
 
   const renderDetailedAnalytics = () => {
-    console.log("Rendering analytics - selectedChild:", selectedChild);
-    console.log("Children array length:", children.length);
-
     if (!selectedChild) {
       return (
         <div className="space-y-4 md:space-y-6">
