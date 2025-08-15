@@ -364,9 +364,9 @@ export const ParentDashboardDesktop: React.FC<ParentDashboardDesktopProps> = ({
 }) => {
   // Add body class for dashboard layout
   useEffect(() => {
-    document.body.classList.add('parent-dashboard-active');
+    document.body.classList.add("parent-dashboard-active");
     return () => {
-      document.body.classList.remove('parent-dashboard-active');
+      document.body.classList.remove("parent-dashboard-active");
     };
   }, []);
   const { isGuest, user } = useAuth();

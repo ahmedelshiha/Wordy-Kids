@@ -78,7 +78,7 @@
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 1rem;
   }
-  
+
   .dashboard-content {
     padding: 1rem;
   }
@@ -151,7 +151,9 @@ body.parent-dashboard-active {
 
 /* Animation improvements */
 .dashboard-card {
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
 .dashboard-card:hover {
