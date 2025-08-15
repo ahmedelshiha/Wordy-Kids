@@ -100,10 +100,12 @@ const getWeeklyProgressData = (userId: string): number[] => {
   for (let i = 6; i >= 0; i--) {
     const date = new Date(today);
     date.setDate(date.getDate() - i);
-    const dateKey = date.toISOString().split('T')[0];
+    const dateKey = date.toISOString().split("T")[0];
 
     try {
-      const dailyData = localStorage.getItem(`daily_progress_${userId}_${dateKey}`);
+      const dailyData = localStorage.getItem(
+        `daily_progress_${userId}_${dateKey}`,
+      );
       if (dailyData) {
         const parsed = JSON.parse(dailyData);
         weeklyData.push(parsed.words || 0);
@@ -119,36 +121,44 @@ const getWeeklyProgressData = (userId: string): number[] => {
 };
 
 // Helper function to get streak data from localStorage
-const getStreakData = (userId: string): Array<{date: string; active: boolean; wordsLearned: number}> => {
-  const streakData: Array<{date: string; active: boolean; wordsLearned: number}> = [];
+const getStreakData = (
+  userId: string,
+): Array<{ date: string; active: boolean; wordsLearned: number }> => {
+  const streakData: Array<{
+    date: string;
+    active: boolean;
+    wordsLearned: number;
+  }> = [];
   const today = new Date();
 
   for (let i = 29; i >= 0; i--) {
     const date = new Date(today);
     date.setDate(date.getDate() - i);
-    const dateKey = date.toISOString().split('T')[0];
+    const dateKey = date.toISOString().split("T")[0];
 
     try {
-      const dailyData = localStorage.getItem(`daily_progress_${userId}_${dateKey}`);
+      const dailyData = localStorage.getItem(
+        `daily_progress_${userId}_${dateKey}`,
+      );
       if (dailyData) {
         const parsed = JSON.parse(dailyData);
         streakData.push({
           date: dateKey,
           active: (parsed.words || 0) > 0,
-          wordsLearned: parsed.words || 0
+          wordsLearned: parsed.words || 0,
         });
       } else {
         streakData.push({
           date: dateKey,
           active: false,
-          wordsLearned: 0
+          wordsLearned: 0,
         });
       }
     } catch (error) {
       streakData.push({
         date: dateKey,
         active: false,
-        wordsLearned: 0
+        wordsLearned: 0,
       });
     }
   }
@@ -250,7 +260,7 @@ export function AchievementSystem({
     const loadRealData = async () => {
       try {
         setIsLoading(true);
-        const userId = user?.id || 'guest';
+        const userId = user?.id || "guest";
 
         // Get real achievement data - try enhanced tracker first
         let achievements, journeyProgress;
@@ -264,35 +274,43 @@ export function AchievementSystem({
         }
 
         // Get category completion data
-        const categoryStats = CategoryCompletionTracker.getCurrentCategoryStats();
-        const completionHistory = CategoryCompletionTracker.getCompletionHistory();
+        const categoryStats =
+          CategoryCompletionTracker.getCurrentCategoryStats();
+        const completionHistory =
+          CategoryCompletionTracker.getCompletionHistory();
 
         // Build category breakdown from real data
-        const categoryBreakdown = Object.entries(categoryStats).map(([category, data]) => ({
-          category: category.charAt(0).toUpperCase() + category.slice(1),
-          wordsLearned: data.wordsReviewed || 0,
-          accuracy: data.averageAccuracy || 0,
-          timeSpent: data.timeSpent || 0
-        }));
+        const categoryBreakdown = Object.entries(categoryStats).map(
+          ([category, data]) => ({
+            category: category.charAt(0).toUpperCase() + category.slice(1),
+            wordsLearned: data.wordsReviewed || 0,
+            accuracy: data.averageAccuracy || 0,
+            timeSpent: data.timeSpent || 0,
+          }),
+        );
 
         // Get progress data from GoalProgressTracker
         let progressData;
         try {
-          progressData = await goalProgressTracker.fetchSystematicProgress(userId);
+          progressData =
+            await goalProgressTracker.fetchSystematicProgress(userId);
         } catch (error) {
-          console.warn('Could not fetch systematic progress:', error);
+          console.warn("Could not fetch systematic progress:", error);
           progressData = {
             totalWordsLearned: journeyProgress.wordsLearned,
             currentStreak: journeyProgress.streakDays,
             wordsLearnedToday: 0,
             wordsLearnedThisWeek: 0,
-            categoriesProgress: {}
+            categoriesProgress: {},
           };
         }
 
         // Calculate learning speed (words per hour estimation)
         const weeklyWords = getWeeklyProgressData(userId);
-        const totalWeeklyWords = weeklyWords.reduce((sum, count) => sum + count, 0);
+        const totalWeeklyWords = weeklyWords.reduce(
+          (sum, count) => sum + count,
+          0,
+        );
         const avgWordsPerDay = totalWeeklyWords / 7;
         const learningSpeed = avgWordsPerDay * 2; // Rough estimation: 2 hours average daily study
 
@@ -300,31 +318,44 @@ export function AchievementSystem({
         const currentAccuracy = journeyProgress.totalAccuracy || 85;
 
         const realLearningStats: LearningStats = {
-          totalWordsLearned: progressData.totalWordsLearned || journeyProgress.wordsLearned,
+          totalWordsLearned:
+            progressData.totalWordsLearned || journeyProgress.wordsLearned,
           weeklyProgress: weeklyWords,
           categoryBreakdown,
           difficultyProgress: [
-            { difficulty: "easy", completed: journeyProgress.difficultyStats?.easy?.completed || 0, total: 50 },
-            { difficulty: "medium", completed: journeyProgress.difficultyStats?.medium?.completed || 0, total: 50 },
-            { difficulty: "hard", completed: journeyProgress.difficultyStats?.hard?.completed || 0, total: 30 }
+            {
+              difficulty: "easy",
+              completed: journeyProgress.difficultyStats?.easy?.completed || 0,
+              total: 50,
+            },
+            {
+              difficulty: "medium",
+              completed:
+                journeyProgress.difficultyStats?.medium?.completed || 0,
+              total: 50,
+            },
+            {
+              difficulty: "hard",
+              completed: journeyProgress.difficultyStats?.hard?.completed || 0,
+              total: 30,
+            },
           ],
           streakData: getStreakData(userId),
           learningSpeed: Math.max(learningSpeed, 1),
-          currentAccuracy
+          currentAccuracy,
         };
 
         setRealStats(realLearningStats);
         setRealAchievements(achievements);
 
-        console.log('Journey component loaded real data:', {
+        console.log("Journey component loaded real data:", {
           totalWords: realLearningStats.totalWordsLearned,
           weeklyProgress: realLearningStats.weeklyProgress,
           achievementsCount: achievements.length,
-          unlockedCount: achievements.filter(a => a.unlocked).length
+          unlockedCount: achievements.filter((a) => a.unlocked).length,
         });
-
       } catch (error) {
-        console.error('Error loading real data:', error);
+        console.error("Error loading real data:", error);
         // Fallback to basic data if loading fails
         setRealStats({
           totalWordsLearned: 0,
@@ -333,11 +364,11 @@ export function AchievementSystem({
           difficultyProgress: [
             { difficulty: "easy", completed: 0, total: 50 },
             { difficulty: "medium", completed: 0, total: 50 },
-            { difficulty: "hard", completed: 0, total: 30 }
+            { difficulty: "hard", completed: 0, total: 30 },
           ],
           streakData: [],
           learningSpeed: 1,
-          currentAccuracy: 0
+          currentAccuracy: 0,
         });
         setRealAchievements([]);
       } finally {
@@ -352,7 +383,7 @@ export function AchievementSystem({
   const refreshData = () => {
     setIsLoading(true);
     // Re-run the data loading
-    const userId = user?.id || 'guest';
+    const userId = user?.id || "guest";
 
     const loadData = async () => {
       try {
@@ -371,7 +402,10 @@ export function AchievementSystem({
 
         // Re-calculate stats with fresh data
         const weeklyWords = getWeeklyProgressData(userId);
-        const totalWeeklyWords = weeklyWords.reduce((sum, count) => sum + count, 0);
+        const totalWeeklyWords = weeklyWords.reduce(
+          (sum, count) => sum + count,
+          0,
+        );
         const avgWordsPerDay = totalWeeklyWords / 7;
         const learningSpeed = avgWordsPerDay * 2;
 
@@ -380,13 +414,26 @@ export function AchievementSystem({
           weeklyProgress: weeklyWords,
           categoryBreakdown: [],
           difficultyProgress: [
-            { difficulty: "easy", completed: journeyProgress.difficultyStats?.easy?.completed || 0, total: 50 },
-            { difficulty: "medium", completed: journeyProgress.difficultyStats?.medium?.completed || 0, total: 50 },
-            { difficulty: "hard", completed: journeyProgress.difficultyStats?.hard?.completed || 0, total: 30 }
+            {
+              difficulty: "easy",
+              completed: journeyProgress.difficultyStats?.easy?.completed || 0,
+              total: 50,
+            },
+            {
+              difficulty: "medium",
+              completed:
+                journeyProgress.difficultyStats?.medium?.completed || 0,
+              total: 50,
+            },
+            {
+              difficulty: "hard",
+              completed: journeyProgress.difficultyStats?.hard?.completed || 0,
+              total: 30,
+            },
           ],
           streakData: getStreakData(userId),
           learningSpeed: Math.max(learningSpeed, 1),
-          currentAccuracy: journeyProgress.totalAccuracy || 85
+          currentAccuracy: journeyProgress.totalAccuracy || 85,
         };
 
         setRealStats(realLearningStats);
@@ -395,7 +442,7 @@ export function AchievementSystem({
           onRefresh();
         }
       } catch (error) {
-        console.error('Error refreshing data:', error);
+        console.error("Error refreshing data:", error);
       } finally {
         setIsLoading(false);
       }
