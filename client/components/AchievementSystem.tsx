@@ -230,6 +230,7 @@ const getDifficultyIcon = (difficulty: string) => {
 interface AchievementSystemProps {
   onUnlock?: (achievement: Achievement) => void;
   stats?: LearningStats;
+  onRefresh?: () => void;
 }
 
 export function AchievementSystem({
@@ -843,7 +844,7 @@ export function AchievementSystem({
                                 />
                                 {isComplete && (
                                   <Badge className="bg-educational-green text-white text-xs px-1 py-0.5">
-                                    Ready! 🎉
+                                    Ready! ��
                                   </Badge>
                                 )}
                               </div>
