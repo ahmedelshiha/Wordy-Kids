@@ -456,8 +456,8 @@ export function AchievementSystem({
         <CardContent className="px-3 md:px-6">
           <div className="grid grid-cols-7 gap-1 md:gap-2 h-24 md:h-32 mb-4">
             {stats.weeklyProgress.map((value, index) => {
-              const maxValue = Math.max(...stats.weeklyProgress);
-              const height = (value / maxValue) * 100;
+              const maxValue = Math.max(...stats.weeklyProgress) || 1; // Prevent division by zero
+              const height = maxValue > 0 ? (value / maxValue) * 100 : 0;
               const days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
               const emojis = ["🌟", "⭐", "✨", "🎯", "🔥", "🎉", "🚀"];
 
