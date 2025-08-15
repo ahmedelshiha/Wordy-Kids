@@ -115,6 +115,7 @@ import { DesktopQuickActions } from "@/components/DesktopQuickActions";
 import { cn } from "@/lib/utils";
 import "@/styles/desktop-parent-dashboard.css";
 import "@/styles/parent-dashboard-overflow-fixes.css";
+import "@/styles/parent-dashboard-layout-fixes.css";
 
 interface LearningGoal {
   id: string;
@@ -361,6 +362,13 @@ export const ParentDashboardDesktop: React.FC<ParentDashboardDesktopProps> = ({
   sessions = [],
   onNavigateBack,
 }) => {
+  // Add body class for dashboard layout
+  useEffect(() => {
+    document.body.classList.add("parent-dashboard-active");
+    return () => {
+      document.body.classList.remove("parent-dashboard-active");
+    };
+  }, []);
   const { isGuest, user } = useAuth();
   const navigate = useNavigate();
 
@@ -696,11 +704,11 @@ export const ParentDashboardDesktop: React.FC<ParentDashboardDesktopProps> = ({
 
   return (
     <TooltipProvider>
-      <div className="parent-dashboard-container min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50">
+      <div className="parent-dashboard-container min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 flex">
         {/* Desktop Sidebar */}
         <div
           className={cn(
-            "dashboard-sidebar fixed left-0 top-0 h-full bg-white border-r border-slate-200 transition-all duration-300 z-40 flex flex-col",
+            "dashboard-sidebar bg-white border-r border-slate-200 transition-all duration-300 z-40 flex flex-col shrink-0",
             sidebarCollapsed
               ? "w-16 sidebar-collapsed"
               : "w-64 sidebar-expanded",
@@ -830,12 +838,7 @@ export const ParentDashboardDesktop: React.FC<ParentDashboardDesktopProps> = ({
         </div>
 
         {/* Main Content */}
-        <div
-          className={cn(
-            "dashboard-main-content transition-all duration-300 min-w-0",
-            sidebarCollapsed ? "ml-16" : "ml-64",
-          )}
-        >
+        <div className="dashboard-main-content flex-1 min-w-0 flex flex-col">
           {/* Header */}
           <div className="dashboard-header bg-white border-b border-slate-200 px-4 lg:px-6 py-4">
             <div className="flex items-center justify-between gap-4">
@@ -1047,7 +1050,7 @@ export const ParentDashboardDesktop: React.FC<ParentDashboardDesktopProps> = ({
           </div>
 
           {/* Content Area */}
-          <div className="dashboard-content p-4 lg:p-6 min-w-0">
+          <div className="dashboard-content flex-1 p-4 lg:p-6 min-w-0 overflow-y-auto">
             {activeTab === "overview" && (
               <div className="space-y-6">
                 {/* Family Overview Cards */}
@@ -1232,7 +1235,7 @@ export const ParentDashboardDesktop: React.FC<ParentDashboardDesktopProps> = ({
                                 {topChild.weeklyProgress} words this week
                               </p>
                               <Badge className="bg-yellow-100 text-yellow-800">
-                                🏆 Week's Champion
+                                ��� Week's Champion
                               </Badge>
                             </div>
                           ) : (

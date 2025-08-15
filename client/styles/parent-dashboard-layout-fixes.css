@@ -1,0 +1,169 @@
+/* Parent Dashboard Layout Fixes */
+
+/* Wrapper for desktop dashboard to ensure proper layout */
+.parent-dashboard-desktop-wrapper {
+  min-height: 100vh;
+  width: 100%;
+  overflow-x: hidden;
+}
+
+/* Ensure the main dashboard container takes full height */
+.parent-dashboard-container {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  max-height: 100vh;
+  display: flex;
+  overflow: hidden;
+}
+
+/* Sidebar layout fixes */
+.dashboard-sidebar {
+  height: 100%;
+  background: white;
+  border-right: 1px solid #e2e8f0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+/* Main content area layout */
+.dashboard-main-content {
+  flex: 1;
+  height: 100%;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Header styling */
+.dashboard-header {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(148, 163, 184, 0.2);
+  position: sticky;
+  top: 0;
+  z-index: 30;
+  padding: 1rem 1.5rem;
+}
+
+/* Content area */
+.dashboard-content {
+  padding: 1.5rem;
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+/* Grid layouts */
+.children-grid-view {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 1.5rem;
+  margin-top: 1.5rem;
+}
+
+/* Ensure cards don't overflow */
+.dashboard-card {
+  width: 100%;
+  overflow: hidden;
+  word-wrap: break-word;
+  box-sizing: border-box;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1280px) {
+  .children-grid-view {
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1rem;
+  }
+
+  .dashboard-content {
+    padding: 1rem;
+  }
+}
+
+@media (max-width: 1024px) {
+  .parent-dashboard-desktop-wrapper {
+    display: none; /* Hide desktop version on smaller screens */
+  }
+}
+
+/* Fix for any overflow issues */
+body.parent-dashboard-active {
+  overflow-x: hidden;
+}
+
+/* Prevent horizontal scrolling */
+.parent-dashboard-container,
+.parent-dashboard-container * {
+  box-sizing: border-box;
+}
+
+/* Quick stats section in sidebar */
+.dashboard-sidebar .border-t {
+  border-top: 1px solid #e2e8f0;
+  margin-top: auto;
+  padding-top: 1rem;
+}
+
+/* Navigation items */
+.sidebar-nav-item {
+  display: flex;
+  align-items: center;
+  padding: 0.5rem 1rem;
+  margin: 0.125rem 0.5rem;
+  border-radius: 0.5rem;
+  color: #64748b;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.sidebar-nav-item:hover {
+  background: #f1f5f9;
+  color: #1e293b;
+}
+
+.sidebar-nav-item.active {
+  background: #3b82f6;
+  color: white;
+}
+
+/* Collapsed sidebar adjustments */
+.sidebar-collapsed .sidebar-nav-item {
+  justify-content: center;
+  padding: 0.5rem;
+}
+
+.sidebar-collapsed .sidebar-nav-item span {
+  display: none;
+}
+
+/* Loading states */
+.dashboard-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 200px;
+}
+
+/* Animation improvements */
+.dashboard-card {
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.dashboard-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+}
+
+/* Focus management */
+.dashboard-card:focus,
+.sidebar-nav-item:focus {
+  outline: 2px solid #3b82f6;
+  outline-offset: 2px;
+}
