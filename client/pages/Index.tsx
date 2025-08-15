@@ -1371,6 +1371,64 @@ export default function Index({ initialProfile }: IndexProps) {
         setDailySessionCount((prev) => prev + 1);
       }
 
+      // Update systematic progress tracking for goals
+      if (status === "remembered") {
+        try {
+          // Get current user (assuming parent mode for goal tracking)
+          const currentUser = JSON.parse(localStorage.getItem("wordAdventureCurrentUser") || "{}");
+          if (currentUser && currentUser.id) {
+            // Track progress update
+            await goalProgressTracker.updateGoalProgress(
+              currentUser.id,
+              learningGoals,
+              {
+                type: 'word_learned',
+                value: 1,
+                category: word.category,
+                childId: currentUser.id,
+                timestamp: new Date()
+              }
+            );
+
+            // Update progress data in localStorage for persistence
+            const todayKey = new Date().toISOString().split('T')[0];
+            const dailyProgressKey = `daily_progress_${currentUser.id}_${todayKey}`;
+            const currentDailyData = JSON.parse(localStorage.getItem(dailyProgressKey) || '{"words": 0, "sessions": 0}');
+            localStorage.setItem(dailyProgressKey, JSON.stringify({
+              ...currentDailyData,
+              words: currentDailyData.words + 1
+            }));
+
+            // Update weekly progress
+            const weekKey = getWeekKey();
+            const weeklyProgressKey = `weekly_progress_${currentUser.id}_${weekKey}`;
+            const currentWeeklyData = JSON.parse(localStorage.getItem(weeklyProgressKey) || '{"words": 0, "sessions": 0}');
+            localStorage.setItem(weeklyProgressKey, JSON.stringify({
+              ...currentWeeklyData,
+              words: currentWeeklyData.words + 1
+            }));
+
+            // Update streak if this is first word today
+            const streakKey = `streak_data_${currentUser.id}`;
+            const streakData = JSON.parse(localStorage.getItem(streakKey) || '{"currentStreak": 0, "lastActivity": null}');
+            const lastActivity = streakData.lastActivity ? new Date(streakData.lastActivity) : null;
+            const today = new Date();
+
+            if (!lastActivity || lastActivity.toDateString() !== today.toDateString()) {
+              const newStreak = lastActivity && isConsecutiveDay(lastActivity, today)
+                ? streakData.currentStreak + 1
+                : 1;
+              localStorage.setItem(streakKey, JSON.stringify({
+                currentStreak: newStreak,
+                lastActivity: today.toISOString()
+              }));
+            }
+          }
+        } catch (error) {
+          console.error('Error updating systematic progress:', error);
+        }
+      }
+
       // Check daily goal completion
       const updatedWordsLearned =
         status === "remembered"
