@@ -218,9 +218,7 @@ self.addEventListener("push", (event) => {
     ],
   };
 
-  event.waitUntil(
-    self.registration.showNotification("Wordy Kids", options),
-  );
+  event.waitUntil(self.registration.showNotification("Wordy Kids", options));
 });
 
 // Handle notification clicks
