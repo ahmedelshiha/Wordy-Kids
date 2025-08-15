@@ -156,7 +156,7 @@ export const ChildLearningGoalsPanel: React.FC<ChildLearningGoalsPanelProps> = (
     };
     onUpdateChild(updatedChild);
     setHasUnsavedChanges(false);
-    triggerHapticFeedback("success");
+    triggerHapticFeedback("medium");
   };
 
   const handleAddGoal = () => {
@@ -185,7 +185,7 @@ export const ChildLearningGoalsPanel: React.FC<ChildLearningGoalsPanelProps> = (
         description: "",
         reward: "",
       });
-      triggerHapticFeedback("success");
+      triggerHapticFeedback("medium");
     }
   };
 
