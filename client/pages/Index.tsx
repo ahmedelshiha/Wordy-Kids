@@ -2551,16 +2551,6 @@ export default function Index({ initialProfile }: IndexProps) {
                                               if (!currentWord) return null;
 
                                               if (
-                                                rememberedWords.has(
-                                                  currentWord.id,
-                                                )
-                                              ) {
-                                                return (
-                                                  <div className="text-xs text-green-600 font-medium">
-                                                    ✅ Learned
-                                                  </div>
-                                                );
-                                              } else if (
                                                 forgottenWords.has(
                                                   currentWord.id,
                                                 )
