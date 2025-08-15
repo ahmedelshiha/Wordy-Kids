@@ -1158,7 +1158,14 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
                   {/* Weekly Goal Progress - Mobile Optimized */}
                   <div>
                     <div className="flex justify-between text-xs md:text-sm mb-2">
-                      <span>Weekly Goal</span>
+                      <div className="flex items-center gap-2">
+                        <span>Weekly Goal</span>
+                        {child.currentStreak > 0 && (
+                          <Badge variant="outline" className="text-xs px-1 bg-orange-50 text-orange-600 border-orange-200">
+                            🔥 {child.currentStreak}
+                          </Badge>
+                        )}
+                      </div>
                       <span>
                         {child.weeklyProgress}/{child.weeklyGoal} words
                       </span>
@@ -1167,9 +1174,21 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
                       value={progressPercentage}
                       className="h-1.5 md:h-2"
                     />
-                    <p className="text-xs text-slate-500 mt-1">
-                      {Math.round(progressPercentage)}% complete
-                    </p>
+                    <div className="flex justify-between items-center mt-1">
+                      <p className="text-xs text-slate-500">
+                        {Math.round(progressPercentage)}% complete
+                      </p>
+                      <p className="text-xs text-green-600 font-medium">
+                        +{(() => {
+                          const todayKey = new Date().toISOString().split("T")[0];
+                          const dailyProgressKey = `daily_progress_${child.id}_${todayKey}`;
+                          const dailyData = JSON.parse(
+                            localStorage.getItem(dailyProgressKey) || '{"words": 0}'
+                          );
+                          return dailyData.words || 0;
+                        })()} today
+                      </p>
+                    </div>
                   </div>
 
                   {/* Quick Stats */}
