@@ -305,7 +305,7 @@ const AdvancedAnalyticsDashboard: React.FC = () => {
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {learningOutcomes.map((outcome, index) => (
+            {learningOutcomes.length > 0 ? learningOutcomes.map((outcome, index) => (
               <div key={index} className="p-4 border rounded-lg">
                 <div className="flex items-center justify-between mb-3">
                   <h4 className="font-semibold">{outcome.category}</h4>
@@ -362,7 +362,13 @@ const AdvancedAnalyticsDashboard: React.FC = () => {
                   )}
                 </div>
               </div>
-            ))}
+            )) : (
+              <div className="col-span-full text-center py-8 text-slate-500">
+                <Brain className="w-12 h-12 mx-auto mb-3 opacity-50" />
+                <p>No learning outcome data available yet</p>
+                <p className="text-sm">Data will appear as students complete categories</p>
+              </div>
+            )}
           </div>
         </CardContent>
       </Card>
