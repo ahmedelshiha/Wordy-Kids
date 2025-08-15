@@ -584,14 +584,18 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
         await syncChildrenProgress();
 
         // Try to load additional data from API if available (optional)
+        // This is completely optional and the app works fine without it
         try {
           const response = await WordProgressAPI.getAllChildrenProgress();
           if (response.success) {
             setChildrenWordStats(response.childrenStats);
+            console.log("Successfully loaded API data");
           }
         } catch (apiError) {
-          console.log("API not available, using localStorage data only");
-          // This is expected in a frontend-only setup, so we just log and continue
+          // This is expected and normal - the app works perfectly with localStorage only
+          console.log("API not available, continuing with localStorage data (this is normal)");
+          // Set default/empty stats since API is not available
+          setChildrenWordStats({});
         }
 
         // Load detailed stats for selected child (optional)
