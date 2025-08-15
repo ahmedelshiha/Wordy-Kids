@@ -2669,7 +2669,7 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
                     variant="outline"
                     className="border-green-300 text-green-700 hover:bg-green-50 h-auto py-3 flex flex-col items-center gap-2"
                     onClick={() => {
-                      console.log("Adding new words challenge");
+                      // Add new words challenge for high-performing child
                     }}
                   >
                     <BookOpen className="w-5 h-5" />
