@@ -865,7 +865,7 @@ export const ParentDashboardDesktop: React.FC<ParentDashboardDesktopProps> = ({
               <div className="space-y-6">
                 {/* Family Overview Cards */}
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                  <Card className="bg-gradient-to-r from-blue-50 to-blue-100 border-blue-200">
+                  <Card className="bg-gradient-to-r from-blue-50 to-blue-100 border-blue-200 hover:shadow-lg transition-shadow">
                     <CardContent className="p-6">
                       <div className="flex items-center justify-between">
                         <div>
@@ -873,13 +873,16 @@ export const ParentDashboardDesktop: React.FC<ParentDashboardDesktopProps> = ({
                           <div className="text-3xl font-bold text-blue-700">
                             <AnimatedCounter value={children.length} />
                           </div>
+                          <p className="text-xs text-blue-500 mt-1">
+                            {children.filter(c => new Date().getTime() - new Date(c.lastActive).getTime() < 24 * 60 * 60 * 1000).length} active today
+                          </p>
                         </div>
                         <Users className="h-8 w-8 text-blue-500" />
                       </div>
                     </CardContent>
                   </Card>
 
-                  <Card className="bg-gradient-to-r from-green-50 to-green-100 border-green-200">
+                  <Card className="bg-gradient-to-r from-green-50 to-green-100 border-green-200 hover:shadow-lg transition-shadow">
                     <CardContent className="p-6">
                       <div className="flex items-center justify-between">
                         <div>
@@ -887,13 +890,16 @@ export const ParentDashboardDesktop: React.FC<ParentDashboardDesktopProps> = ({
                           <div className="text-3xl font-bold text-green-700">
                             <AnimatedCounter value={familyStats.totalWordsLearned} />
                           </div>
+                          <p className="text-xs text-green-500 mt-1">
+                            +{familyStats.todayActivity} today
+                          </p>
                         </div>
                         <BookOpen className="h-8 w-8 text-green-500" />
                       </div>
                     </CardContent>
                   </Card>
 
-                  <Card className="bg-gradient-to-r from-orange-50 to-orange-100 border-orange-200">
+                  <Card className="bg-gradient-to-r from-orange-50 to-orange-100 border-orange-200 hover:shadow-lg transition-shadow">
                     <CardContent className="p-6">
                       <div className="flex items-center justify-between">
                         <div>
@@ -901,13 +907,16 @@ export const ParentDashboardDesktop: React.FC<ParentDashboardDesktopProps> = ({
                           <div className="text-3xl font-bold text-orange-700">
                             <AnimatedCounter value={familyStats.longestStreak} />
                           </div>
+                          <p className="text-xs text-orange-500 mt-1">
+                            days in a row
+                          </p>
                         </div>
                         <Zap className="h-8 w-8 text-orange-500" />
                       </div>
                     </CardContent>
                   </Card>
 
-                  <Card className="bg-gradient-to-r from-purple-50 to-purple-100 border-purple-200">
+                  <Card className="bg-gradient-to-r from-purple-50 to-purple-100 border-purple-200 hover:shadow-lg transition-shadow">
                     <CardContent className="p-6">
                       <div className="flex items-center justify-between">
                         <div>
@@ -915,12 +924,87 @@ export const ParentDashboardDesktop: React.FC<ParentDashboardDesktopProps> = ({
                           <div className="text-3xl font-bold text-purple-700">
                             <AnimatedCounter value={familyStats.todayActivity} />
                           </div>
+                          <p className="text-xs text-purple-500 mt-1">
+                            words learned
+                          </p>
                         </div>
                         <Activity className="h-8 w-8 text-purple-500" />
                       </div>
                     </CardContent>
                   </Card>
                 </div>
+
+                {/* Quick Insights Row for Desktop */}
+                {children.length > 0 && (
+                  <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    {/* Weekly Summary */}
+                    <Card className="lg:col-span-2">
+                      <CardHeader>
+                        <CardTitle className="flex items-center gap-2">
+                          <Calendar className="h-5 w-5 text-blue-600" />
+                          This Week's Highlights
+                        </CardTitle>
+                      </CardHeader>
+                      <CardContent>
+                        <div className="grid grid-cols-3 gap-4">
+                          <div className="text-center p-4 bg-blue-50 rounded-lg">
+                            <div className="text-2xl font-bold text-blue-600 mb-1">
+                              {children.reduce((sum, child) => sum + child.weeklyProgress, 0)}
+                            </div>
+                            <p className="text-sm text-blue-700">Words This Week</p>
+                          </div>
+                          <div className="text-center p-4 bg-green-50 rounded-lg">
+                            <div className="text-2xl font-bold text-green-600 mb-1">
+                              {children.length > 0 ? Math.round(children.reduce((sum, child) => sum + (child.weeklyProgress / child.weeklyGoal * 100), 0) / children.length) : 0}%
+                            </div>
+                            <p className="text-sm text-green-700">Avg Goal Progress</p>
+                          </div>
+                          <div className="text-center p-4 bg-orange-50 rounded-lg">
+                            <div className="text-2xl font-bold text-orange-600 mb-1">
+                              {children.reduce((sum, child) => sum + child.currentStreak, 0)}
+                            </div>
+                            <p className="text-sm text-orange-700">Combined Streak</p>
+                          </div>
+                        </div>
+                      </CardContent>
+                    </Card>
+
+                    {/* Top Performer */}
+                    <Card>
+                      <CardHeader>
+                        <CardTitle className="flex items-center gap-2">
+                          <Trophy className="h-5 w-5 text-yellow-600" />
+                          Top Performer
+                        </CardTitle>
+                      </CardHeader>
+                      <CardContent>
+                        {(() => {
+                          const topChild = children.reduce((top, child) =>
+                            child.weeklyProgress > (top?.weeklyProgress || 0) ? child : top
+                          , null);
+
+                          return topChild ? (
+                            <div className="text-center">
+                              <div className="text-4xl mb-2">{topChild.avatar}</div>
+                              <h3 className="font-semibold text-lg">{topChild.name}</h3>
+                              <p className="text-sm text-gray-600 mb-3">
+                                {topChild.weeklyProgress} words this week
+                              </p>
+                              <Badge className="bg-yellow-100 text-yellow-800">
+                                🏆 Week's Champion
+                              </Badge>
+                            </div>
+                          ) : (
+                            <div className="text-center text-gray-500">
+                              <Trophy className="h-12 w-12 mx-auto mb-2 opacity-50" />
+                              <p className="text-sm">Start learning to see top performers!</p>
+                            </div>
+                          );
+                        })()}
+                      </CardContent>
+                    </Card>
+                  </div>
+                )}
 
                 {/* Children Grid/List View */}
                 {children.length === 0 ? (
