@@ -20,11 +20,18 @@ export function AchievementTeaser({ className }: AchievementTeaserProps) {
   useEffect(() => {
     // Get messages on component mount and periodically
     const updateMessages = () => {
+      const isMobile = window.innerWidth < 768;
       setMotivationalMessage(
-        EnhancedAchievementTracker.getMotivationalMessage(),
+        isMobile
+          ? EnhancedAchievementTracker.getShortMotivationalMessage()
+          : EnhancedAchievementTracker.getMotivationalMessage(),
       );
       setSpecialMessage(EnhancedAchievementTracker.getTodaySpecialMessage());
-      setCurrentTease(EnhancedAchievementTracker.getNextAchievementTease());
+      setCurrentTease(
+        isMobile
+          ? EnhancedAchievementTracker.getShortAchievementTease()
+          : EnhancedAchievementTracker.getNextAchievementTease()
+      );
     };
 
     updateMessages();
