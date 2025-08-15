@@ -88,15 +88,24 @@ export class WordProgressAPI {
     success: boolean;
     childrenStats: Record<string, any>;
   }> {
-    const response = await fetch(`${API_BASE}/children/progress`);
+    try {
+      console.log(`Fetching all children progress from ${API_BASE}/children/progress`);
+      const response = await fetch(`${API_BASE}/children/progress`);
 
-    if (!response.ok) {
-      throw new Error(
-        `Failed to get children progress: ${response.statusText}`,
-      );
+      if (!response.ok) {
+        console.error(`API response not OK: ${response.status} ${response.statusText}`);
+        throw new Error(
+          `Failed to get children progress: ${response.statusText}`,
+        );
+      }
+
+      const data = await response.json();
+      console.log("All children progress API response:", data);
+      return data;
+    } catch (error) {
+      console.error("Error in getAllChildrenProgress:", error);
+      throw error;
     }
-
-    return response.json();
   }
 
   static async getPersonalizedRecommendations(childId: string): Promise<{
