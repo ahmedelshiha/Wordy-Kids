@@ -163,7 +163,8 @@ export const EnhancedWordCard: React.FC<EnhancedWordCardProps> = ({
 
         // Track time spent
         if (reviewStartTime) {
-          const timeSpent = (new Date().getTime() - reviewStartTime.getTime()) / (1000 * 60); // in minutes
+          const timeSpent =
+            (new Date().getTime() - reviewStartTime.getTime()) / (1000 * 60); // in minutes
           CategoryCompletionTracker.trackTimeSpent(Math.max(0.1, timeSpent)); // minimum 0.1 minutes
         }
       }, 3000); // Consider word "reviewed" after 3 seconds
@@ -500,11 +501,13 @@ export const EnhancedWordCard: React.FC<EnhancedWordCardProps> = ({
   };
 
   return (
-    <div className={cn(
-      "relative w-full max-w-[380px] mx-auto",
-      hasBeenReviewed && "ring-2 ring-green-200 ring-opacity-50", // Subtle indicator for reviewed words
-      className
-    )}>
+    <div
+      className={cn(
+        "relative w-full max-w-[380px] mx-auto",
+        hasBeenReviewed && "ring-2 ring-green-200 ring-opacity-50", // Subtle indicator for reviewed words
+        className,
+      )}
+    >
       {/* 3D Card Container with smooth flip */}
       <div
         ref={cardRef}
@@ -914,11 +917,14 @@ export const EnhancedWordCard: React.FC<EnhancedWordCardProps> = ({
                     <div className="flex gap-2">
                       <Button
                         onClick={(e) => {
-          e.stopPropagation();
-          CategoryCompletionTracker.trackWordReview(word.id, false); // Mark as incorrect/difficult
-          onWordMastered?.(word.id, "hard");
-          triggerCelebration();
-        }}
+                          e.stopPropagation();
+                          CategoryCompletionTracker.trackWordReview(
+                            word.id,
+                            false,
+                          ); // Mark as incorrect/difficult
+                          onWordMastered?.(word.id, "hard");
+                          triggerCelebration();
+                        }}
                         className="flex-1 h-10 bg-red-500/20 hover:bg-red-500/30 border border-red-500/30 text-red-200 text-xs"
                       >
                         <ThumbsDown className="w-3 h-3 mr-1" />
@@ -926,11 +932,14 @@ export const EnhancedWordCard: React.FC<EnhancedWordCardProps> = ({
                       </Button>
                       <Button
                         onClick={(e) => {
-          e.stopPropagation();
-          CategoryCompletionTracker.trackWordReview(word.id, true); // Mark as correct
-          onWordMastered?.(word.id, "medium");
-          triggerCelebration();
-        }}
+                          e.stopPropagation();
+                          CategoryCompletionTracker.trackWordReview(
+                            word.id,
+                            true,
+                          ); // Mark as correct
+                          onWordMastered?.(word.id, "medium");
+                          triggerCelebration();
+                        }}
                         className="flex-1 h-10 bg-yellow-500/20 hover:bg-yellow-500/30 border border-yellow-500/30 text-yellow-200 text-xs"
                       >
                         <Star className="w-3 h-3 mr-1" />
@@ -938,11 +947,14 @@ export const EnhancedWordCard: React.FC<EnhancedWordCardProps> = ({
                       </Button>
                       <Button
                         onClick={(e) => {
-          e.stopPropagation();
-          CategoryCompletionTracker.trackWordReview(word.id, true); // Mark as correct
-          onWordMastered?.(word.id, "easy");
-          triggerCelebration();
-        }}
+                          e.stopPropagation();
+                          CategoryCompletionTracker.trackWordReview(
+                            word.id,
+                            true,
+                          ); // Mark as correct
+                          onWordMastered?.(word.id, "easy");
+                          triggerCelebration();
+                        }}
                         className="flex-1 h-10 bg-green-500/20 hover:bg-green-500/30 border border-green-500/30 text-green-200 text-xs"
                       >
                         <ThumbsUp className="w-3 h-3 mr-1" />

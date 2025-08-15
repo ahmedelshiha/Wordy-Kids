@@ -41,7 +41,9 @@ interface CategoryCompletionPopupProps {
   showConfetti?: boolean;
 }
 
-export const CategoryCompletionPopup: React.FC<CategoryCompletionPopupProps> = ({
+export const CategoryCompletionPopup: React.FC<
+  CategoryCompletionPopupProps
+> = ({
   isOpen,
   categoryName,
   categoryEmoji,
@@ -58,7 +60,7 @@ export const CategoryCompletionPopup: React.FC<CategoryCompletionPopupProps> = (
   useEffect(() => {
     if (isOpen) {
       setShowCelebration(true);
-      
+
       // Haptic feedback for completion
       if (navigator.vibrate) {
         navigator.vibrate([200, 100, 200, 100, 300]);
@@ -71,11 +73,16 @@ export const CategoryCompletionPopup: React.FC<CategoryCompletionPopupProps> = (
   if (!isOpen) return null;
 
   const getAccuracyGrade = (accuracy: number) => {
-    if (accuracy >= 95) return { grade: "A+", color: "text-green-600", emoji: "🌟" };
-    if (accuracy >= 90) return { grade: "A", color: "text-green-600", emoji: "⭐" };
-    if (accuracy >= 85) return { grade: "B+", color: "text-blue-600", emoji: "👍" };
-    if (accuracy >= 80) return { grade: "B", color: "text-blue-600", emoji: "👌" };
-    if (accuracy >= 75) return { grade: "C+", color: "text-orange-600", emoji: "🎯" };
+    if (accuracy >= 95)
+      return { grade: "A+", color: "text-green-600", emoji: "🌟" };
+    if (accuracy >= 90)
+      return { grade: "A", color: "text-green-600", emoji: "⭐" };
+    if (accuracy >= 85)
+      return { grade: "B+", color: "text-blue-600", emoji: "👍" };
+    if (accuracy >= 80)
+      return { grade: "B", color: "text-blue-600", emoji: "👌" };
+    if (accuracy >= 75)
+      return { grade: "C+", color: "text-orange-600", emoji: "🎯" };
     return { grade: "C", color: "text-orange-600", emoji: "💪" };
   };
 
@@ -112,7 +119,11 @@ export const CategoryCompletionPopup: React.FC<CategoryCompletionPopupProps> = (
                 }}
               >
                 <span className="text-2xl">
-                  {["🎉", "🎊", "⭐", "🌟", "✨", "🏆", "🎁", "🌈"][Math.floor(Math.random() * 8)]}
+                  {
+                    ["🎉", "🎊", "⭐", "🌟", "✨", "🏆", "🎁", "🌈"][
+                      Math.floor(Math.random() * 8)
+                    ]
+                  }
                 </span>
               </div>
             ))}
@@ -184,7 +195,12 @@ export const CategoryCompletionPopup: React.FC<CategoryCompletionPopupProps> = (
                 <Zap className="w-4 h-4 text-orange-600" />
                 <span className="text-sm font-medium">Grade</span>
               </div>
-              <Badge className={cn("text-white", accuracyInfo.color.replace('text', 'bg'))}>
+              <Badge
+                className={cn(
+                  "text-white",
+                  accuracyInfo.color.replace("text", "bg"),
+                )}
+              >
                 {accuracyInfo.grade}
               </Badge>
             </div>
@@ -205,8 +221,12 @@ export const CategoryCompletionPopup: React.FC<CategoryCompletionPopupProps> = (
           {/* Progress Bar */}
           <div className="space-y-2">
             <div className="flex items-center justify-between">
-              <span className="text-sm font-medium text-slate-600">Category Progress</span>
-              <span className="text-sm font-bold text-green-600">100% Complete!</span>
+              <span className="text-sm font-medium text-slate-600">
+                Category Progress
+              </span>
+              <span className="text-sm font-bold text-green-600">
+                100% Complete!
+              </span>
             </div>
             <Progress value={100} className="h-3 bg-green-100">
               <div className="h-full bg-gradient-to-r from-green-400 to-green-600 rounded-full animate-pulse" />
@@ -271,10 +291,9 @@ export const CategoryCompletionPopup: React.FC<CategoryCompletionPopupProps> = (
           <div className="text-center p-4 bg-gradient-to-r from-purple-100 to-pink-100 rounded-xl border border-purple-200">
             <Sparkles className="w-5 h-5 mx-auto mb-2 text-purple-600" />
             <p className="text-sm font-medium text-purple-700">
-              {stats.accuracy >= 90 
+              {stats.accuracy >= 90
                 ? "Excellent work! You're ready for the next challenge! 🚀"
-                : "Great progress! Keep practicing to improve your score! 💪"
-              }
+                : "Great progress! Keep practicing to improve your score! 💪"}
             </p>
           </div>
         </CardContent>

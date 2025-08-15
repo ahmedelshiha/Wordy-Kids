@@ -56,8 +56,8 @@ export const CategoryLockWarning: React.FC<CategoryLockWarningProps> = ({
           </CardTitle>
 
           <p className="text-sm text-slate-600 max-w-xs mx-auto">
-            You're currently learning the <strong>{currentCategoryName}</strong> category. 
-            Complete it to unlock other categories!
+            You're currently learning the <strong>{currentCategoryName}</strong>{" "}
+            category. Complete it to unlock other categories!
           </p>
         </CardHeader>
 
@@ -76,7 +76,9 @@ export const CategoryLockWarning: React.FC<CategoryLockWarningProps> = ({
           {/* Progress Section */}
           <div className="space-y-4">
             <div className="text-center">
-              <h4 className="text-md font-semibold text-slate-700 mb-3">Your Progress</h4>
+              <h4 className="text-md font-semibold text-slate-700 mb-3">
+                Your Progress
+              </h4>
             </div>
 
             <div className="grid grid-cols-2 gap-4">
@@ -100,20 +102,23 @@ export const CategoryLockWarning: React.FC<CategoryLockWarningProps> = ({
             {/* Progress Bar */}
             <div className="space-y-2">
               <div className="flex items-center justify-between">
-                <span className="text-sm font-medium text-slate-600">Category Progress</span>
-                <span className="text-sm font-bold text-blue-600">{Math.round(progressPercentage)}%</span>
+                <span className="text-sm font-medium text-slate-600">
+                  Category Progress
+                </span>
+                <span className="text-sm font-bold text-blue-600">
+                  {Math.round(progressPercentage)}%
+                </span>
               </div>
               <Progress value={progressPercentage} className="h-3">
-                <div 
+                <div
                   className="h-full bg-gradient-to-r from-blue-400 to-purple-500 rounded-full transition-all duration-300"
                   style={{ width: `${progressPercentage}%` }}
                 />
               </Progress>
               <div className="text-xs text-slate-500 text-center">
-                {remainingWords === 0 
+                {remainingWords === 0
                   ? "Almost there! Just a few more to complete! 🎯"
-                  : `${remainingWords} more word${remainingWords !== 1 ? 's' : ''} to go!`
-                }
+                  : `${remainingWords} more word${remainingWords !== 1 ? "s" : ""} to go!`}
               </div>
             </div>
           </div>
@@ -184,7 +189,8 @@ export const CategoryLockWarning: React.FC<CategoryLockWarningProps> = ({
           {/* Encouraging Message */}
           <div className="text-center p-3 bg-yellow-50 rounded-lg border border-yellow-200">
             <p className="text-sm font-medium text-yellow-700">
-              💪 You're closer than you think! Just {remainingWords} more word{remainingWords !== 1 ? 's' : ''} to victory!
+              💪 You're closer than you think! Just {remainingWords} more word
+              {remainingWords !== 1 ? "s" : ""} to victory!
             </p>
           </div>
         </CardContent>

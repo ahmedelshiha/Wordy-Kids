@@ -104,7 +104,9 @@ export const EnhancedWordLibrary: React.FC<EnhancedWordLibraryProps> = ({
   const [showCompletionPopup, setShowCompletionPopup] = useState(false);
   const [showLockWarning, setShowLockWarning] = useState(false);
   const [completionStats, setCompletionStats] = useState<any>(null);
-  const [pendingCategorySwitch, setPendingCategorySwitch] = useState<string | null>(null);
+  const [pendingCategorySwitch, setPendingCategorySwitch] = useState<
+    string | null
+  >(null);
 
   // Accessibility and mobile settings
   const [accessibilityMode, setAccessibilityMode] = useState(false);
@@ -142,7 +144,10 @@ export const EnhancedWordLibrary: React.FC<EnhancedWordLibraryProps> = ({
       setViewMode("words");
 
       // Start category session tracking
-      CategoryCompletionTracker.startCategorySession(selectedCategory, categoryWords.length);
+      CategoryCompletionTracker.startCategorySession(
+        selectedCategory,
+        categoryWords.length,
+      );
     } else if (selectedCategory === "all") {
       setCurrentWords(wordsToUse);
       setViewMode("words");
@@ -159,7 +164,10 @@ export const EnhancedWordLibrary: React.FC<EnhancedWordLibraryProps> = ({
         ...stats,
         categoryName: selectedCategory,
         categoryEmoji: getCategoryEmoji(selectedCategory),
-        completionCount: CategoryCompletionTracker.getCategoryCompletionCount(selectedCategory),
+        completionCount:
+          CategoryCompletionTracker.getCategoryCompletionCount(
+            selectedCategory,
+          ),
       });
       setShowCompletionPopup(true);
     };
@@ -167,7 +175,9 @@ export const EnhancedWordLibrary: React.FC<EnhancedWordLibraryProps> = ({
     CategoryCompletionTracker.onCategoryCompletion(handleCategoryCompletion);
 
     return () => {
-      CategoryCompletionTracker.removeCompletionCallback(handleCategoryCompletion);
+      CategoryCompletionTracker.removeCompletionCallback(
+        handleCategoryCompletion,
+      );
     };
   }, [selectedCategory]);
 
@@ -273,7 +283,10 @@ export const EnhancedWordLibrary: React.FC<EnhancedWordLibraryProps> = ({
 
     // Track word review if moving to a new word
     if (newIndex !== oldIndex && filteredWords[oldIndex]) {
-      CategoryCompletionTracker.trackWordReview(filteredWords[oldIndex].id, true);
+      CategoryCompletionTracker.trackWordReview(
+        filteredWords[oldIndex].id,
+        true,
+      );
     }
 
     audioService.playWhooshSound();
@@ -693,7 +706,10 @@ export const EnhancedWordLibrary: React.FC<EnhancedWordLibraryProps> = ({
                     onFavorite={() => handleWordFavorite(word)}
                     onWordMastered={(wordId, rating) => {
                       // Track word completion
-                      CategoryCompletionTracker.trackWordReview(wordId, rating !== "hard");
+                      CategoryCompletionTracker.trackWordReview(
+                        wordId,
+                        rating !== "hard",
+                      );
                       CategoryCompletionTracker.trackTimeSpent(0.5); // 30 seconds per word
                     }}
                     showVocabularyBuilder={true}
@@ -811,7 +827,10 @@ export const EnhancedWordLibrary: React.FC<EnhancedWordLibraryProps> = ({
                     onFavorite={() => handleWordFavorite(currentWord)}
                     onWordMastered={(wordId, rating) => {
                       // Track word completion
-                      CategoryCompletionTracker.trackWordReview(wordId, rating !== "hard");
+                      CategoryCompletionTracker.trackWordReview(
+                        wordId,
+                        rating !== "hard",
+                      );
                       CategoryCompletionTracker.trackTimeSpent(0.5); // 30 seconds per word
                     }}
                     showVocabularyBuilder={true}
@@ -1026,10 +1045,19 @@ export const EnhancedWordLibrary: React.FC<EnhancedWordLibraryProps> = ({
       {showLockWarning && (
         <CategoryLockWarning
           isOpen={showLockWarning}
-          currentCategoryName={CategoryCompletionTracker.getLockedCategory() || ""}
-          currentCategoryEmoji={getCategoryEmoji(CategoryCompletionTracker.getLockedCategory() || "")}
-          wordsReviewed={CategoryCompletionTracker.getCurrentCategoryStats()?.wordsReviewed || 0}
-          totalWords={CategoryCompletionTracker.getCurrentCategoryStats()?.totalWords || 0}
+          currentCategoryName={
+            CategoryCompletionTracker.getLockedCategory() || ""
+          }
+          currentCategoryEmoji={getCategoryEmoji(
+            CategoryCompletionTracker.getLockedCategory() || "",
+          )}
+          wordsReviewed={
+            CategoryCompletionTracker.getCurrentCategoryStats()
+              ?.wordsReviewed || 0
+          }
+          totalWords={
+            CategoryCompletionTracker.getCurrentCategoryStats()?.totalWords || 0
+          }
           progressPercentage={CategoryCompletionTracker.getCategoryProgress()}
           onContinueCategory={() => {
             setShowLockWarning(false);

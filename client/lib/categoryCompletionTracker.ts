@@ -20,14 +20,16 @@ interface CategoryCompletionStats {
 export class CategoryCompletionTracker {
   private static STORAGE_KEY = "categoryProgress";
   private static currentSession: CategoryProgress | null = null;
-  private static completionCallbacks: Array<(stats: CategoryCompletionStats) => void> = [];
+  private static completionCallbacks: Array<
+    (stats: CategoryCompletionStats) => void
+  > = [];
 
   /**
    * Start tracking a category session
    */
   static startCategorySession(categoryId: string, totalWords: number): void {
     const existing = this.getCategoryProgress(categoryId);
-    
+
     this.currentSession = {
       categoryId,
       totalWords,
@@ -46,17 +48,18 @@ export class CategoryCompletionTracker {
     if (!this.currentSession) return;
 
     this.currentSession.reviewedWords.add(wordId);
-    
+
     if (wasCorrect) {
       this.currentSession.completedWords.add(wordId);
     }
 
     this.currentSession.lastReviewed = new Date();
-    
+
     // Update accuracy
     const totalReviewed = this.currentSession.reviewedWords.size;
     const totalCorrect = this.currentSession.completedWords.size;
-    this.currentSession.accuracy = totalReviewed > 0 ? (totalCorrect / totalReviewed) * 100 : 0;
+    this.currentSession.accuracy =
+      totalReviewed > 0 ? (totalCorrect / totalReviewed) * 100 : 0;
 
     // Save progress
     this.saveCategoryProgress();
@@ -72,7 +75,7 @@ export class CategoryCompletionTracker {
    */
   static trackTimeSpent(minutes: number): void {
     if (!this.currentSession) return;
-    
+
     this.currentSession.timeSpent += minutes;
     this.saveCategoryProgress();
   }
@@ -82,10 +85,10 @@ export class CategoryCompletionTracker {
    */
   static isCategoryCompleted(): boolean {
     if (!this.currentSession) return false;
-    
+
     const reviewedCount = this.currentSession.reviewedWords.size;
     const totalWords = this.currentSession.totalWords;
-    
+
     return reviewedCount >= totalWords;
   }
 
@@ -124,24 +127,28 @@ export class CategoryCompletionTracker {
    */
   static getCategoryProgress(): number {
     if (!this.currentSession) return 0;
-    
+
     const reviewed = this.currentSession.reviewedWords.size;
     const total = this.currentSession.totalWords;
-    
+
     return total > 0 ? (reviewed / total) * 100 : 0;
   }
 
   /**
    * Register callback for category completion
    */
-  static onCategoryCompletion(callback: (stats: CategoryCompletionStats) => void): void {
+  static onCategoryCompletion(
+    callback: (stats: CategoryCompletionStats) => void,
+  ): void {
     this.completionCallbacks.push(callback);
   }
 
   /**
    * Remove completion callback
    */
-  static removeCompletionCallback(callback: (stats: CategoryCompletionStats) => void): void {
+  static removeCompletionCallback(
+    callback: (stats: CategoryCompletionStats) => void,
+  ): void {
     const index = this.completionCallbacks.indexOf(callback);
     if (index > -1) {
       this.completionCallbacks.splice(index, 1);
@@ -157,12 +164,12 @@ export class CategoryCompletionTracker {
 
     // Mark completion date
     stats.completionDate = new Date();
-    
+
     // Save completion to storage
     this.saveCompletionRecord(stats);
 
     // Notify all callbacks
-    this.completionCallbacks.forEach(callback => {
+    this.completionCallbacks.forEach((callback) => {
       try {
         callback(stats);
       } catch (error) {
@@ -193,11 +200,11 @@ export class CategoryCompletionTracker {
    */
   static shouldPreventCategorySwitch(): boolean {
     if (!this.currentSession) return false;
-    
+
     // Prevent switching if category has been started but not completed
     const hasStarted = this.currentSession.reviewedWords.size > 0;
     const isCompleted = this.isCategoryCompleted();
-    
+
     return hasStarted && !isCompleted;
   }
 
@@ -205,7 +212,9 @@ export class CategoryCompletionTracker {
    * Get category that should be locked/continued
    */
   static getLockedCategory(): string | null {
-    return this.shouldPreventCategorySwitch() ? this.currentSession?.categoryId || null : null;
+    return this.shouldPreventCategorySwitch()
+      ? this.currentSession?.categoryId || null
+      : null;
   }
 
   /**
@@ -241,11 +250,13 @@ export class CategoryCompletionTracker {
   /**
    * Get category progress from localStorage
    */
-  private static getCategoryProgress(categoryId: string): CategoryProgress | null {
+  private static getCategoryProgress(
+    categoryId: string,
+  ): CategoryProgress | null {
     try {
       const allProgress = this.getAllCategoryProgress();
       const saved = allProgress[categoryId];
-      
+
       if (saved) {
         return {
           ...saved,
@@ -257,7 +268,7 @@ export class CategoryCompletionTracker {
     } catch (error) {
       console.error("Failed to load category progress:", error);
     }
-    
+
     return null;
   }
 
@@ -287,7 +298,7 @@ export class CategoryCompletionTracker {
         completionDate: stats.completionDate,
         ...stats,
       };
-      
+
       completions.push(record);
       localStorage.setItem("categoryCompletions", JSON.stringify(completions));
     } catch (error) {
@@ -321,7 +332,8 @@ export class CategoryCompletionTracker {
    */
   static getCategoryCompletionCount(categoryId: string): number {
     const history = this.getCompletionHistory();
-    return history.filter((record: any) => record.categoryId === categoryId).length;
+    return history.filter((record: any) => record.categoryId === categoryId)
+      .length;
   }
 
   /**

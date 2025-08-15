@@ -961,7 +961,8 @@ export function EnhancedCategorySelector({
                   ? "opacity-50 cursor-not-allowed"
                   : "cursor-pointer"
               } ${
-                !reduceMotion && (!lockedCategory || lockedCategory === category.id)
+                !reduceMotion &&
+                (!lockedCategory || lockedCategory === category.id)
                   ? "hover:shadow-lg transform hover:scale-102"
                   : ""
               } ${
