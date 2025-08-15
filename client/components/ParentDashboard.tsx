@@ -2768,7 +2768,7 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
 
   const getTrendEmoji = (trend: string) => {
     const emojis: Record<string, string> = {
-      improving: "����",
+      improving: "📈",
       stable: "➡️",
       mastered: "🏆",
       needs_focus: "🎯",
@@ -4205,14 +4205,6 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
             <Users className="w-3 h-3 md:w-4 md:h-4" />
             <span className="hidden md:inline">Overview</span>
             <span className="md:hidden">Home</span>
-          </TabsTrigger>
-          <TabsTrigger
-            value="goals"
-            className="flex flex-col md:flex-row items-center gap-1 md:gap-2 text-xs md:text-sm py-2 md:py-3 px-1 md:px-3"
-          >
-            <Target className="w-3 h-3 md:w-4 md:h-4" />
-            <span className="hidden md:inline">Goals</span>
-            <span className="md:hidden">Goals</span>
           </TabsTrigger>
           <TabsTrigger
             value="custom-words"
