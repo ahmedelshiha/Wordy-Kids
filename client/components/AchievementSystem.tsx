@@ -28,6 +28,11 @@ import {
 } from "lucide-react";
 import { audioService } from "@/lib/audioService";
 import { AnimatedCounter } from "@/components/AnimatedCounter";
+import { AchievementTracker } from "@/lib/achievementTracker";
+import { EnhancedAchievementTracker } from "@/lib/enhancedAchievementTracker";
+import { goalProgressTracker } from "@/lib/goalProgressTracker";
+import { CategoryCompletionTracker } from "@/lib/categoryCompletionTracker";
+import { useAuth } from "@/hooks/useAuth";
 
 interface Achievement {
   id: string;
@@ -87,131 +92,81 @@ interface LearningStats {
   currentAccuracy: number;
 }
 
-const learningStats: LearningStats = {
-  totalWordsLearned: 127,
-  weeklyProgress: [5, 8, 12, 7, 15, 10, 18],
-  categoryBreakdown: [
-    { category: "Animals", wordsLearned: 28, accuracy: 92, timeSpent: 45 },
-    { category: "Nature", wordsLearned: 24, accuracy: 88, timeSpent: 38 },
-    { category: "Science", wordsLearned: 21, accuracy: 85, timeSpent: 52 },
-    { category: "Food", wordsLearned: 19, accuracy: 94, timeSpent: 31 },
-    { category: "General", wordsLearned: 18, accuracy: 87, timeSpent: 42 },
-    { category: "Sports", wordsLearned: 17, accuracy: 90, timeSpent: 28 },
-  ],
-  difficultyProgress: [
-    { difficulty: "easy", completed: 68, total: 80 },
-    { difficulty: "medium", completed: 42, total: 70 },
-    { difficulty: "hard", completed: 17, total: 50 },
-  ],
-  streakData: Array.from({ length: 30 }, (_, i) => ({
-    date: new Date(Date.now() - (29 - i) * 24 * 60 * 60 * 1000)
-      .toISOString()
-      .split("T")[0],
-    active: Math.random() > 0.3,
-    wordsLearned: Math.floor(Math.random() * 12) + 1,
-  })),
-  learningSpeed: 5.2,
-  currentAccuracy: 91,
+// Helper function to calculate weekly progress from localStorage
+const getWeeklyProgressData = (userId: string): number[] => {
+  const weeklyData: number[] = [];
+  const today = new Date();
+
+  for (let i = 6; i >= 0; i--) {
+    const date = new Date(today);
+    date.setDate(date.getDate() - i);
+    const dateKey = date.toISOString().split("T")[0];
+
+    try {
+      const dailyData = localStorage.getItem(
+        `daily_progress_${userId}_${dateKey}`,
+      );
+      if (dailyData) {
+        const parsed = JSON.parse(dailyData);
+        weeklyData.push(parsed.words || 0);
+      } else {
+        weeklyData.push(0);
+      }
+    } catch (error) {
+      weeklyData.push(0);
+    }
+  }
+
+  return weeklyData;
 };
 
-const achievements: Achievement[] = [
-  {
-    id: "first_steps",
-    name: "First Steps",
-    description: "Learn your first 10 words!",
-    icon: "🎯",
-    category: "learning",
-    difficulty: "bronze",
-    requirements: 10,
-    currentProgress: 7,
-    unlocked: false,
-    reward: { type: "avatar_accessory", item: "Beginner Badge" },
-  },
-  {
-    id: "word_collector",
-    name: "Word Collector",
-    description: "Learn 20 words and build your vocabulary!",
-    icon: "📚",
-    category: "learning",
-    difficulty: "silver",
-    requirements: 20,
-    currentProgress: 7,
-    unlocked: false,
-    reward: { type: "title", item: "Word Collector" },
-  },
-  {
-    id: "vocabulary_master",
-    name: "Vocabulary Master",
-    description: "Amazing! You've learned 50 words!",
-    icon: "🏆",
-    category: "learning",
-    difficulty: "gold",
-    requirements: 50,
-    currentProgress: 7,
-    unlocked: false,
-    reward: { type: "theme", item: "Golden Theme" },
-  },
-  {
-    id: "streak_starter",
-    name: "Streak Starter",
-    description: "Keep learning for 3 days in a row!",
-    icon: "🔥",
-    category: "streak",
-    difficulty: "bronze",
-    requirements: 3,
-    currentProgress: 2,
-    unlocked: false,
-    reward: { type: "sound_effect", item: "Fire Trail" },
-  },
-  {
-    id: "dedication_champion",
-    name: "Dedication Champion",
-    description: "Incredible! 30 days of learning!",
-    icon: "👑",
-    category: "streak",
-    difficulty: "diamond",
-    requirements: 30,
-    currentProgress: 2,
-    unlocked: false,
-    reward: { type: "title", item: "Learning Champion" },
-  },
-  {
-    id: "quiz_ace",
-    name: "Quiz Ace",
-    description: "Score 100% on 5 quizzes!",
-    icon: "🧠",
-    category: "quiz",
-    difficulty: "silver",
-    requirements: 5,
-    currentProgress: 2,
-    unlocked: false,
-    reward: { type: "sound_effect", item: "Success Fanfare" },
-  },
-  {
-    id: "category_explorer",
-    name: "Category Explorer",
-    description: "Explore 5 different word categories!",
-    icon: "🗺️",
-    category: "exploration",
-    difficulty: "silver",
-    requirements: 5,
-    currentProgress: 3,
-    unlocked: false,
-    reward: { type: "avatar_accessory", item: "Explorer Badge" },
-  },
-  {
-    id: "pronunciation_pro",
-    name: "Pronunciation Pro",
-    description: "Listen to 25 word pronunciations!",
-    icon: "🔊",
-    category: "learning",
-    difficulty: "bronze",
-    requirements: 25,
-    currentProgress: 12,
-    unlocked: false,
-    reward: { type: "sound_effect", item: "Robot Voice Pack" },
-  },
-];
+// Helper function to get streak data from localStorage
+const getStreakData = (
+  userId: string,
+): Array<{ date: string; active: boolean; wordsLearned: number }> => {
+  const streakData: Array<{
+    date: string;
+    active: boolean;
+    wordsLearned: number;
+  }> = [];
+  const today = new Date();
+
+  for (let i = 29; i >= 0; i--) {
+    const date = new Date(today);
+    date.setDate(date.getDate() - i);
+    const dateKey = date.toISOString().split("T")[0];
+
+    try {
+      const dailyData = localStorage.getItem(
+        `daily_progress_${userId}_${dateKey}`,
+      );
+      if (dailyData) {
+        const parsed = JSON.parse(dailyData);
+        streakData.push({
+          date: dateKey,
+          active: (parsed.words || 0) > 0,
+          wordsLearned: parsed.words || 0,
+        });
+      } else {
+        streakData.push({
+          date: dateKey,
+          active: false,
+          wordsLearned: 0,
+        });
+      }
+    } catch (error) {
+      streakData.push({
+        date: dateKey,
+        active: false,
+        wordsLearned: 0,
+      });
+    }
+  }
+
+  return streakData;
+};
+
+// Real achievements will be loaded from AchievementTracker
 
 const unlockableContent: UnlockableContent[] = [
   {
@@ -285,18 +240,232 @@ const getDifficultyIcon = (difficulty: string) => {
 interface AchievementSystemProps {
   onUnlock?: (achievement: Achievement) => void;
   stats?: LearningStats;
+  onRefresh?: () => void;
 }
 
 export function AchievementSystem({
   onUnlock,
-  stats = learningStats,
+  onRefresh,
 }: AchievementSystemProps) {
+  const { user } = useAuth();
   const [selectedCategory, setSelectedCategory] = useState<string>("all");
   const [showUnlockables, setShowUnlockables] = useState(false);
-  // OLD ACHIEVEMENT CELEBRATION SYSTEM REMOVED
-  // const [celebratingAchievement, setCelebratingAchievement] =
-  //   useState<Achievement | null>(null);
   const [activeTab, setActiveTab] = useState("achievements");
+  const [isLoading, setIsLoading] = useState(true);
+  const [realStats, setRealStats] = useState<LearningStats | null>(null);
+  const [realAchievements, setRealAchievements] = useState<Achievement[]>([]);
+
+  // Load real data on component mount
+  useEffect(() => {
+    const loadRealData = async () => {
+      try {
+        setIsLoading(true);
+        const userId = user?.id || "guest";
+
+        // Get real achievement data - try enhanced tracker first
+        let achievements, journeyProgress;
+        try {
+          achievements = EnhancedAchievementTracker.getAchievements();
+          journeyProgress = EnhancedAchievementTracker.getJourneyProgress();
+        } catch (error) {
+          // Fallback to basic achievement tracker
+          achievements = AchievementTracker.getAchievements();
+          journeyProgress = AchievementTracker.getJourneyProgress();
+        }
+
+        // Get category completion data
+        const categoryStats =
+          CategoryCompletionTracker.getCurrentCategoryStats();
+        const completionHistory =
+          CategoryCompletionTracker.getCompletionHistory();
+
+        // Build category breakdown from real data
+        const categoryBreakdown = Object.entries(categoryStats).map(
+          ([category, data]) => ({
+            category: category.charAt(0).toUpperCase() + category.slice(1),
+            wordsLearned: data.wordsReviewed || 0,
+            accuracy: data.averageAccuracy || 0,
+            timeSpent: data.timeSpent || 0,
+          }),
+        );
+
+        // Get progress data from GoalProgressTracker
+        let progressData;
+        try {
+          progressData =
+            await goalProgressTracker.fetchSystematicProgress(userId);
+        } catch (error) {
+          console.warn("Could not fetch systematic progress:", error);
+          progressData = {
+            totalWordsLearned: journeyProgress.wordsLearned,
+            currentStreak: journeyProgress.streakDays,
+            wordsLearnedToday: 0,
+            wordsLearnedThisWeek: 0,
+            categoriesProgress: {},
+          };
+        }
+
+        // Calculate learning speed (words per hour estimation)
+        const weeklyWords = getWeeklyProgressData(userId);
+        const totalWeeklyWords = weeklyWords.reduce(
+          (sum, count) => sum + count,
+          0,
+        );
+        const avgWordsPerDay = totalWeeklyWords / 7;
+        const learningSpeed = avgWordsPerDay * 2; // Rough estimation: 2 hours average daily study
+
+        // Calculate current accuracy from journey progress
+        const currentAccuracy = journeyProgress.totalAccuracy || 85;
+
+        const realLearningStats: LearningStats = {
+          totalWordsLearned:
+            progressData.totalWordsLearned || journeyProgress.wordsLearned,
+          weeklyProgress: weeklyWords,
+          categoryBreakdown,
+          difficultyProgress: [
+            {
+              difficulty: "easy",
+              completed: journeyProgress.difficultyStats?.easy?.completed || 0,
+              total: 50,
+            },
+            {
+              difficulty: "medium",
+              completed:
+                journeyProgress.difficultyStats?.medium?.completed || 0,
+              total: 50,
+            },
+            {
+              difficulty: "hard",
+              completed: journeyProgress.difficultyStats?.hard?.completed || 0,
+              total: 30,
+            },
+          ],
+          streakData: getStreakData(userId),
+          learningSpeed: Math.max(learningSpeed, 1),
+          currentAccuracy,
+        };
+
+        setRealStats(realLearningStats);
+        setRealAchievements(achievements);
+
+        console.log("Journey component loaded real data:", {
+          totalWords: realLearningStats.totalWordsLearned,
+          weeklyProgress: realLearningStats.weeklyProgress,
+          achievementsCount: achievements.length,
+          unlockedCount: achievements.filter((a) => a.unlocked).length,
+        });
+      } catch (error) {
+        console.error("Error loading real data:", error);
+        // Fallback to basic data if loading fails
+        setRealStats({
+          totalWordsLearned: 0,
+          weeklyProgress: [0, 0, 0, 0, 0, 0, 0],
+          categoryBreakdown: [],
+          difficultyProgress: [
+            { difficulty: "easy", completed: 0, total: 50 },
+            { difficulty: "medium", completed: 0, total: 50 },
+            { difficulty: "hard", completed: 0, total: 30 },
+          ],
+          streakData: [],
+          learningSpeed: 1,
+          currentAccuracy: 0,
+        });
+        setRealAchievements([]);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    loadRealData();
+  }, [user?.id]);
+
+  // Refresh function to reload data
+  const refreshData = () => {
+    setIsLoading(true);
+    // Re-run the data loading
+    const userId = user?.id || "guest";
+
+    const loadData = async () => {
+      try {
+        // Get real achievement data - try enhanced tracker first
+        let achievements, journeyProgress;
+        try {
+          achievements = EnhancedAchievementTracker.getAchievements();
+          journeyProgress = EnhancedAchievementTracker.getJourneyProgress();
+        } catch (error) {
+          // Fallback to basic achievement tracker
+          achievements = AchievementTracker.getAchievements();
+          journeyProgress = AchievementTracker.getJourneyProgress();
+        }
+
+        setRealAchievements(achievements);
+
+        // Re-calculate stats with fresh data
+        const weeklyWords = getWeeklyProgressData(userId);
+        const totalWeeklyWords = weeklyWords.reduce(
+          (sum, count) => sum + count,
+          0,
+        );
+        const avgWordsPerDay = totalWeeklyWords / 7;
+        const learningSpeed = avgWordsPerDay * 2;
+
+        const realLearningStats: LearningStats = {
+          totalWordsLearned: journeyProgress.wordsLearned,
+          weeklyProgress: weeklyWords,
+          categoryBreakdown: [],
+          difficultyProgress: [
+            {
+              difficulty: "easy",
+              completed: journeyProgress.difficultyStats?.easy?.completed || 0,
+              total: 50,
+            },
+            {
+              difficulty: "medium",
+              completed:
+                journeyProgress.difficultyStats?.medium?.completed || 0,
+              total: 50,
+            },
+            {
+              difficulty: "hard",
+              completed: journeyProgress.difficultyStats?.hard?.completed || 0,
+              total: 30,
+            },
+          ],
+          streakData: getStreakData(userId),
+          learningSpeed: Math.max(learningSpeed, 1),
+          currentAccuracy: journeyProgress.totalAccuracy || 85,
+        };
+
+        setRealStats(realLearningStats);
+
+        if (onRefresh) {
+          onRefresh();
+        }
+      } catch (error) {
+        console.error("Error refreshing data:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    loadData();
+  };
+
+  // Use real data or loading state
+  const stats = realStats;
+  const achievements = realAchievements;
+
+  // Show loading state
+  if (isLoading || !stats) {
+    return (
+      <div className="flex items-center justify-center min-h-[400px]">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-educational-blue mx-auto mb-4"></div>
+          <p className="text-slate-600">Loading your learning journey...</p>
+        </div>
+      </div>
+    );
+  }
 
   const categories = [
     { id: "all", name: "All", icon: "🏆" },
@@ -399,8 +568,8 @@ export function AchievementSystem({
         <CardContent className="px-3 md:px-6">
           <div className="grid grid-cols-7 gap-1 md:gap-2 h-24 md:h-32 mb-4">
             {stats.weeklyProgress.map((value, index) => {
-              const maxValue = Math.max(...stats.weeklyProgress);
-              const height = (value / maxValue) * 100;
+              const maxValue = Math.max(...stats.weeklyProgress) || 1; // Prevent division by zero
+              const height = maxValue > 0 ? (value / maxValue) * 100 : 0;
               const days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
               const emojis = ["🌟", "⭐", "✨", "🎯", "🔥", "🎉", "🚀"];
 
