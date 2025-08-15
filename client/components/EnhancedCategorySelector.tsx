@@ -359,7 +359,7 @@ export function EnhancedCategorySelector({
       greetings: "👋",
       technology: "📱",
       emotions: "😊",
-      "at-the-clothes-shop": "👗",
+      "at-the-clothes-shop": "���",
       "at-home": "🏠",
       default: "📚",
     };
@@ -539,6 +539,11 @@ export function EnhancedCategorySelector({
 
   // Enhanced category selection with feedback
   const handleCategoryClick = (categoryId: string) => {
+    // Prevent clicking locked categories
+    if (lockedCategory && lockedCategory !== categoryId) {
+      return;
+    }
+
     audioService.playCheerSound();
 
     // Haptic feedback
