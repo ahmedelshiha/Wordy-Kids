@@ -60,6 +60,8 @@ export const EnhancedWordCard: React.FC<EnhancedWordCardProps> = ({
   const [isPlaying, setIsPlaying] = useState(false);
   const [showSparkles, setShowSparkles] = useState(false);
   const [isPressed, setIsPressed] = useState(false);
+  const [ratedAs, setRatedAs] = useState<"easy" | "medium" | "hard" | null>(null);
+  const [showCelebration, setShowCelebration] = useState(false);
 
   const cardRef = useRef<HTMLDivElement>(null);
   const voiceSettings = useVoiceSettings();
@@ -384,59 +386,94 @@ export const EnhancedWordCard: React.FC<EnhancedWordCardProps> = ({
                 </div>
               )}
 
-              {/* Enhanced rating buttons with better mobile touch */}
+              {/* Kid-Friendly Rating Buttons */}
               {showVocabularyBuilder && (
-                <div className="bg-white/10 backdrop-blur-sm rounded-xl p-2 sm:p-3 border border-white/20 game-surface-dark">
-                  <h4 className="text-xs sm:text-sm font-medium mb-3 text-orange-300 flex items-center gap-1">
-                    <Target className="w-3 h-3" />
-                    🎯 How was this word?
-                  </h4>
-                  <div className="space-y-2">
-                    <Button
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        playUIInteractionSoundIfEnabled();
-                        onWordMastered?.(word.id, "hard");
-                        if (navigator.vibrate) {
-                          navigator.vibrate(50);
-                        }
-                      }}
-                      className="w-full h-12 bg-red-500/20 hover:bg-red-500/40 active:bg-red-500/50 border border-red-500/40 hover:border-red-500/60 text-red-100 font-medium mobile-safe-text touch-target-large haptic-medium transition-all duration-200 flex items-center justify-center gap-2"
-                      aria-label="Mark word as hard"
-                    >
-                      <ThumbsDown className="w-4 h-4 flex-shrink-0" />
-                      <span className="text-sm">😅 Hard</span>
-                    </Button>
-                    <Button
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        playUIInteractionSoundIfEnabled();
-                        onWordMastered?.(word.id, "medium");
-                        if (navigator.vibrate) {
-                          navigator.vibrate(30);
-                        }
-                      }}
-                      className="w-full h-12 bg-yellow-500/20 hover:bg-yellow-500/40 active:bg-yellow-500/50 border border-yellow-500/40 hover:border-yellow-500/60 text-yellow-100 font-medium mobile-safe-text touch-target-large haptic-medium transition-all duration-200 flex items-center justify-center gap-2"
-                      aria-label="Mark word as okay"
-                    >
-                      <Star className="w-4 h-4 flex-shrink-0" />
-                      <span className="text-sm">🤔 OK</span>
-                    </Button>
-                    <Button
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        playUIInteractionSoundIfEnabled();
-                        onWordMastered?.(word.id, "easy");
-                        if (navigator.vibrate) {
-                          navigator.vibrate([30, 10, 30]);
-                        }
-                      }}
-                      className="w-full h-12 bg-green-500/20 hover:bg-green-500/40 active:bg-green-500/50 border border-green-500/40 hover:border-green-500/60 text-green-100 font-medium mobile-safe-text touch-target-large haptic-heavy transition-all duration-200 flex items-center justify-center gap-2"
-                      aria-label="Mark word as easy"
-                    >
-                      <ThumbsUp className="w-4 h-4 flex-shrink-0" />
-                      <span className="text-sm">🎉 Easy</span>
-                    </Button>
+                <div className="bg-gradient-to-br from-purple-500/20 to-pink-500/20 backdrop-blur-md rounded-2xl p-3 sm:p-4 border-2 border-white/30 game-surface-dark animate-gentle-float">
+                  <div className="text-center mb-4">
+                    <div className="inline-flex items-center gap-2 bg-white/20 backdrop-blur-sm rounded-full px-4 py-2 border border-white/30">
+                      <span className="text-2xl animate-bounce">⭐</span>
+                      <h4 className="text-sm sm:text-base font-bold text-white mobile-safe-text">
+                        How was this word?
+                      </h4>
+                      <span className="text-2xl animate-bounce animation-delay-200">⭐</span>
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-3 gap-2 sm:gap-3">
+                    {/* Hard Button */}
+                    <div className="flex flex-col items-center space-y-2">
+                      <Button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          playUIInteractionSoundIfEnabled();
+                          onWordMastered?.(word.id, "hard");
+                          if (navigator.vibrate) {
+                            navigator.vibrate([100, 50, 100]);
+                          }
+                        }}
+                        className="w-full h-16 sm:h-18 bg-gradient-to-b from-red-400/30 to-red-600/30 hover:from-red-400/50 hover:to-red-600/50 active:from-red-400/60 active:to-red-600/60 border-2 border-red-400/50 hover:border-red-400/70 text-white font-bold mobile-safe-text touch-target-large haptic-medium transition-all duration-300 flex flex-col items-center justify-center gap-1 rounded-xl shadow-lg hover:shadow-xl transform hover:scale-105 active:scale-95 rating-button-enhanced"
+                        aria-label="Mark word as hard - I need more practice"
+                      >
+                        <span className="text-2xl sm:text-3xl animate-wiggle">😅</span>
+                        <span className="text-xs sm:text-sm font-bold leading-tight">Hard</span>
+                      </Button>
+                      <p className="text-xs text-white/80 text-center leading-tight mobile-safe-text">
+                        Need practice!
+                      </p>
+                    </div>
+
+                    {/* OK Button */}
+                    <div className="flex flex-col items-center space-y-2">
+                      <Button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          playUIInteractionSoundIfEnabled();
+                          onWordMastered?.(word.id, "medium");
+                          if (navigator.vibrate) {
+                            navigator.vibrate([60, 30, 60]);
+                          }
+                        }}
+                        className="w-full h-16 sm:h-18 bg-gradient-to-b from-yellow-400/30 to-orange-500/30 hover:from-yellow-400/50 hover:to-orange-500/50 active:from-yellow-400/60 active:to-orange-500/60 border-2 border-yellow-400/50 hover:border-yellow-400/70 text-white font-bold mobile-safe-text touch-target-large haptic-medium transition-all duration-300 flex flex-col items-center justify-center gap-1 rounded-xl shadow-lg hover:shadow-xl transform hover:scale-105 active:scale-95 rating-button-enhanced"
+                        aria-label="Mark word as okay - I know it a little"
+                      >
+                        <span className="text-2xl sm:text-3xl animate-gentle-bounce">🤔</span>
+                        <span className="text-xs sm:text-sm font-bold leading-tight">OK</span>
+                      </Button>
+                      <p className="text-xs text-white/80 text-center leading-tight mobile-safe-text">
+                        Getting there!
+                      </p>
+                    </div>
+
+                    {/* Easy Button */}
+                    <div className="flex flex-col items-center space-y-2">
+                      <Button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          playUIInteractionSoundIfEnabled();
+                          onWordMastered?.(word.id, "easy");
+                          if (navigator.vibrate) {
+                            navigator.vibrate([30, 10, 30, 10, 30]);
+                          }
+                        }}
+                        className="w-full h-16 sm:h-18 bg-gradient-to-b from-green-400/30 to-emerald-600/30 hover:from-green-400/50 hover:to-emerald-600/50 active:from-green-400/60 active:to-emerald-600/60 border-2 border-green-400/50 hover:border-green-400/70 text-white font-bold mobile-safe-text touch-target-large haptic-heavy transition-all duration-300 flex flex-col items-center justify-center gap-1 rounded-xl shadow-lg hover:shadow-xl transform hover:scale-105 active:scale-95 rating-button-enhanced"
+                        aria-label="Mark word as easy - I know it well"
+                      >
+                        <span className="text-2xl sm:text-3xl animate-celebration-sparkles">🎉</span>
+                        <span className="text-xs sm:text-sm font-bold leading-tight">Easy</span>
+                      </Button>
+                      <p className="text-xs text-white/80 text-center leading-tight mobile-safe-text">
+                        I know it!
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Encouragement text */}
+                  <div className="mt-4 text-center">
+                    <div className="bg-white/10 backdrop-blur-sm rounded-full px-3 py-2 border border-white/20">
+                      <p className="text-xs text-white/90 mobile-safe-text animate-fade-in">
+                        <span className="animate-sparkle">✨</span> Choose how you feel about this word! <span className="animate-sparkle animation-delay-100">✨</span>
+                      </p>
+                    </div>
                   </div>
                 </div>
               )}
