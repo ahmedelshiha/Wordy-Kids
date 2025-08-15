@@ -522,9 +522,16 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
     loadChildren();
   }, [isGuest]);
 
-  const [selectedChild, setSelectedChild] = useState<ChildProfile | null>(
-    children[0] || null,
-  );
+  const [selectedChild, setSelectedChild] = useState<ChildProfile | null>(null);
+
+  // Update selected child when children array changes
+  useEffect(() => {
+    if (children.length > 0 && !selectedChild) {
+      setSelectedChild(children[0]);
+    } else if (children.length === 0) {
+      setSelectedChild(null);
+    }
+  }, [children, selectedChild]);
   const [activeTab, setActiveTab] = useState("overview");
   const [goals] = useState<ParentGoal[]>(sampleGoals);
   const [notifications, setNotifications] =
