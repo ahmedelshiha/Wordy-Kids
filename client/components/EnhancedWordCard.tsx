@@ -154,7 +154,7 @@ export const EnhancedWordCard: React.FC<EnhancedWordCardProps> = ({
         ref={cardRef}
         className={cn(
           "relative w-full transition-all duration-700 transform-gpu preserve-3d",
-          "h-[450px] sm:h-[420px] md:h-[450px]",
+          "h-[400px] sm:h-[380px] md:h-[420px]",
           "touch-target-large mobile-optimized",
           isFlipped && "rotate-y-180",
         )}
@@ -288,7 +288,7 @@ export const EnhancedWordCard: React.FC<EnhancedWordCardProps> = ({
           </CardContent>
         </Card>
 
-        {/* BACK CARD - Interactive Back Design */}
+        {/* BACK CARD - Compact Mobile Design */}
         <Card
           className={cn(
             "absolute inset-0 w-full h-full backface-hidden rotate-y-180",
@@ -296,105 +296,102 @@ export const EnhancedWordCard: React.FC<EnhancedWordCardProps> = ({
             isFlipped && "z-10",
           )}
         >
-          <CardContent className="p-3 sm:p-4 h-full flex flex-col text-white relative overflow-y-auto mobile-parent-dashboard">
-            {/* Mobile-optimized back header */}
-            <div className="flex items-center gap-2 mb-3 touch-optimized">
-              <span className="text-xl sm:text-2xl animate-gentle-bounce">
+          <CardContent className="p-2 sm:p-3 h-full flex flex-col text-white relative overflow-y-auto mobile-parent-dashboard">
+            {/* Compact mobile header */}
+            <div className="flex items-center gap-2 mb-2 touch-optimized">
+              <span className="text-lg sm:text-xl animate-gentle-bounce">
                 {word.emoji}
               </span>
-              <h3 className="text-lg sm:text-xl font-bold mobile-safe-text">
+              <h3 className="text-base sm:text-lg font-bold mobile-safe-text">
                 {word.word}
               </h3>
             </div>
 
-            {/* Mobile-optimized content */}
-            <div className="flex-1 space-y-3 sm:space-y-4">
-              {/* Kid-friendly definition bubble */}
-              <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-3 sm:p-4 border border-white/20 relative game-surface-dark animate-mobile-slide-in">
-                <div className="absolute -top-2 left-6 w-4 h-4 bg-white/10 border-l border-t border-white/20 transform rotate-45"></div>
-                <h4 className="text-sm sm:text-base font-medium mb-2 text-yellow-300 flex items-center gap-1">
-                  💡 What it means:
+            {/* Compact mobile content */}
+            <div className="flex-1 space-y-2 sm:space-y-3">
+              {/* Compact definition */}
+              <div className="bg-white/10 backdrop-blur-sm rounded-xl p-2 sm:p-3 border border-white/20 relative game-surface-dark animate-mobile-slide-in">
+                <h4 className="text-xs sm:text-sm font-medium mb-1 text-yellow-300 flex items-center gap-1">
+                  💡 Meaning:
                 </h4>
-                <p className="text-sm sm:text-base leading-relaxed mobile-safe-text">
+                <p className="text-xs sm:text-sm leading-snug mobile-safe-text">
                   {word.definition}
                 </p>
               </div>
 
-              {/* Kid-friendly example */}
+              {/* Compact example */}
               {word.example && (
-                <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-3 sm:p-4 border border-white/20 game-surface-dark animate-mobile-slide-in">
-                  <h4 className="text-sm sm:text-base font-medium mb-2 text-green-300 flex items-center gap-1">
+                <div className="bg-white/10 backdrop-blur-sm rounded-xl p-2 sm:p-3 border border-white/20 game-surface-dark animate-mobile-slide-in">
+                  <h4 className="text-xs sm:text-sm font-medium mb-1 text-green-300 flex items-center gap-1">
                     📝 Example:
                   </h4>
-                  <p className="text-sm sm:text-base italic leading-relaxed mobile-safe-text">
+                  <p className="text-xs sm:text-sm italic leading-snug mobile-safe-text">
                     "{word.example}"
                   </p>
                 </div>
               )}
 
-              {/* Exciting fun fact bubble */}
+              {/* Compact fun fact */}
               {word.funFact && (
-                <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-3 sm:p-4 border border-white/20 relative game-surface-dark animate-mobile-slide-in">
-                  <div className="absolute -top-2 right-6 w-4 h-4 bg-white/10 border-r border-t border-white/20 transform -rotate-45"></div>
-                  <h4 className="text-sm sm:text-base font-medium mb-2 text-pink-300 flex items-center gap-1">
-                    <Sparkles className="w-4 h-4 animate-sparkle" />
-                    🎈 Fun Fact:
+                <div className="bg-white/10 backdrop-blur-sm rounded-xl p-2 sm:p-3 border border-white/20 relative game-surface-dark animate-mobile-slide-in">
+                  <h4 className="text-xs sm:text-sm font-medium mb-1 text-pink-300 flex items-center gap-1">
+                    <Sparkles className="w-3 h-3 animate-sparkle" />
+                    🎈 Fun:
                   </h4>
-                  <p className="text-sm sm:text-base leading-relaxed mobile-safe-text">
+                  <p className="text-xs sm:text-sm leading-snug mobile-safe-text">
                     {word.funFact}
                   </p>
                 </div>
               )}
 
-              {/* Kid-friendly knowledge rating */}
+              {/* Compact rating buttons */}
               {showVocabularyBuilder && (
-                <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-3 sm:p-4 border border-white/20 game-surface-dark">
-                  <h4 className="text-sm sm:text-base font-medium mb-3 text-orange-300 flex items-center gap-1">
-                    <Target className="w-4 h-4" />
-                    🎯 How did you do?
+                <div className="bg-white/10 backdrop-blur-sm rounded-xl p-2 sm:p-3 border border-white/20 game-surface-dark">
+                  <h4 className="text-xs sm:text-sm font-medium mb-2 text-orange-300 flex items-center gap-1">
+                    <Target className="w-3 h-3" />
+                    🎯 Rate it:
                   </h4>
-                  <div className="flex flex-col sm:flex-row gap-2">
+                  <div className="flex gap-1.5">
                     <Button
                       onClick={(e) => {
                         e.stopPropagation();
                         onWordMastered?.(word.id, "hard");
                       }}
-                      className="flex-1 h-12 sm:h-10 bg-red-500/20 hover:bg-red-500/30 border border-red-500/30 text-red-200 text-sm mobile-safe-text touch-target haptic-light"
+                      className="flex-1 h-10 sm:h-9 bg-red-500/20 hover:bg-red-500/30 border border-red-500/30 text-red-200 text-xs mobile-safe-text touch-target haptic-light"
                     >
-                      <ThumbsDown className="w-4 h-4 mr-1" />
-                      😅 Need help
+                      <ThumbsDown className="w-3 h-3 mr-1" />
+                      😅 Hard
                     </Button>
                     <Button
                       onClick={(e) => {
                         e.stopPropagation();
                         onWordMastered?.(word.id, "medium");
                       }}
-                      className="flex-1 h-12 sm:h-10 bg-yellow-500/20 hover:bg-yellow-500/30 border border-yellow-500/30 text-yellow-200 text-sm mobile-safe-text touch-target haptic-light"
+                      className="flex-1 h-10 sm:h-9 bg-yellow-500/20 hover:bg-yellow-500/30 border border-yellow-500/30 text-yellow-200 text-xs mobile-safe-text touch-target haptic-light"
                     >
-                      <Star className="w-4 h-4 mr-1" />
-                      🤔 Getting it
+                      <Star className="w-3 h-3 mr-1" />
+                      🤔 OK
                     </Button>
                     <Button
                       onClick={(e) => {
                         e.stopPropagation();
                         onWordMastered?.(word.id, "easy");
                       }}
-                      className="flex-1 h-12 sm:h-10 bg-green-500/20 hover:bg-green-500/30 border border-green-500/30 text-green-200 text-sm mobile-safe-text touch-target haptic-medium"
+                      className="flex-1 h-10 sm:h-9 bg-green-500/20 hover:bg-green-500/30 border border-green-500/30 text-green-200 text-xs mobile-safe-text touch-target haptic-medium"
                     >
-                      <ThumbsUp className="w-4 h-4 mr-1" />
-                      🎉 Got it!
+                      <ThumbsUp className="w-3 h-3 mr-1" />
+                      🎉 Easy
                     </Button>
                   </div>
                 </div>
               )}
             </div>
 
-            {/* Kid-friendly back navigation */}
-            <div className="mt-3 sm:mt-4 text-center safe-area-padding-bottom">
-              <div className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-full px-3 py-2 sm:px-4 sm:py-2 mx-auto w-fit animate-gentle-bounce">
-                <p className="text-xs sm:text-sm text-white/80 mobile-safe-text">
-                  <span className="animate-pulse">👆</span> Tap anywhere to flip
-                  back! 🔄
+            {/* Compact navigation hint */}
+            <div className="mt-2 text-center safe-area-padding-bottom">
+              <div className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-full px-2 py-1 sm:px-3 sm:py-1.5 mx-auto w-fit animate-gentle-bounce">
+                <p className="text-xs text-white/80 mobile-safe-text">
+                  <span className="animate-pulse">👆</span> Tap to flip 🔄
                 </p>
               </div>
             </div>
