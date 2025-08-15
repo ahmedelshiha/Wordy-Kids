@@ -535,8 +535,7 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
   }, [children, selectedChild]);
   const [activeTab, setActiveTab] = useState("overview");
   const [goals] = useState<ParentGoal[]>([]);
-  const [notifications, setNotifications] =
-    useState<ParentNotification[]>([]);
+  const [notifications, setNotifications] = useState<ParentNotification[]>([]);
   const [showAddChildDialog, setShowAddChildDialog] = useState(false);
   const [showAddGoalDialog, setShowAddGoalDialog] = useState(false);
   const [showCustomWordDialog, setShowCustomWordDialog] = useState(false);
@@ -623,23 +622,32 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
       // Get this week's data from localStorage
       const today = new Date();
       const startOfYear = new Date(today.getFullYear(), 0, 1);
-      const days = Math.floor((today.getTime() - startOfYear.getTime()) / (24 * 60 * 60 * 1000));
+      const days = Math.floor(
+        (today.getTime() - startOfYear.getTime()) / (24 * 60 * 60 * 1000),
+      );
       const weekNumber = Math.ceil((days + startOfYear.getDay() + 1) / 7);
-      const weekKey = `${today.getFullYear()}-${weekNumber.toString().padStart(2, '0')}`;
+      const weekKey = `${today.getFullYear()}-${weekNumber.toString().padStart(2, "0")}`;
 
       const weeklyStatsKey = `weekly_stats_${childId}_${weekKey}`;
       const weeklyProgressKey = `weekly_progress_${childId}_${weekKey}`;
 
-      const weeklyStats = JSON.parse(localStorage.getItem(weeklyStatsKey) || '{}');
-      const weeklyProgress = JSON.parse(localStorage.getItem(weeklyProgressKey) || '{"words": 0, "sessions": 0}');
+      const weeklyStats = JSON.parse(
+        localStorage.getItem(weeklyStatsKey) || "{}",
+      );
+      const weeklyProgress = JSON.parse(
+        localStorage.getItem(weeklyProgressKey) ||
+          '{"words": 0, "sessions": 0}',
+      );
 
       return {
         totalTime: weeklyStats.totalTime || weeklyProgress.sessions * 5 || 0, // Estimate 5 mins per session
-        averageAccuracy: weeklyStats.averageAccuracy || (weeklyProgress.words > 0 ? 85 : 0),
-        sessionsCount: weeklyStats.sessionsCount || weeklyProgress.sessions || 0,
+        averageAccuracy:
+          weeklyStats.averageAccuracy || (weeklyProgress.words > 0 ? 85 : 0),
+        sessionsCount:
+          weeklyStats.sessionsCount || weeklyProgress.sessions || 0,
       };
     } catch (error) {
-      console.error('Error calculating weekly stats:', error);
+      console.error("Error calculating weekly stats:", error);
       return {
         totalTime: 0,
         averageAccuracy: 0,
@@ -797,11 +805,13 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
       // Get real goals from localStorage + static goals
       try {
         const realGoalsKey = `child_goals_${childId}`;
-        const realGoals = JSON.parse(localStorage.getItem(realGoalsKey) || '[]');
+        const realGoals = JSON.parse(
+          localStorage.getItem(realGoalsKey) || "[]",
+        );
         const allGoals = [...goals, ...realGoals];
         return allGoals.filter((goal) => goal.childId === childId);
       } catch (error) {
-        console.error('Error getting child goals:', error);
+        console.error("Error getting child goals:", error);
         return goals.filter((goal) => goal.childId === childId);
       }
     },
@@ -813,14 +823,19 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
       // Get real notifications from localStorage + static notifications
       try {
         const realNotificationsKey = `child_notifications_${childId}`;
-        const realNotifications = JSON.parse(localStorage.getItem(realNotificationsKey) || '[]');
+        const realNotifications = JSON.parse(
+          localStorage.getItem(realNotificationsKey) || "[]",
+        );
         const allNotifications = [...notifications, ...realNotifications];
         return allNotifications
           .filter((notif) => notif.childId === childId)
-          .sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime())
+          .sort(
+            (a, b) =>
+              new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime(),
+          )
           .slice(0, 3);
       } catch (error) {
-        console.error('Error getting child notifications:', error);
+        console.error("Error getting child notifications:", error);
         return notifications
           .filter((notif) => notif.childId === childId)
           .slice(0, 3);
