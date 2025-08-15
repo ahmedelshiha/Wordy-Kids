@@ -311,10 +311,10 @@ export class AnalyticsDataService {
       const categoryData = await this.getCategoryProgress(children, category);
       outcomes.push({
         category,
-        totalWords: categoryData.totalWords,
-        masteredWords: categoryData.masteredWords,
-        averageAccuracy: categoryData.averageAccuracy,
-        improvementRate: categoryData.improvementRate,
+        totalWords: this.validateNumber(categoryData.totalWords),
+        masteredWords: this.validateNumber(categoryData.masteredWords),
+        averageAccuracy: this.validateNumber(categoryData.averageAccuracy),
+        improvementRate: this.validateNumber(categoryData.improvementRate),
         strugglingAreas: categoryData.strugglingAreas,
       });
     }
