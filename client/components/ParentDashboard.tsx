@@ -540,6 +540,13 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
     Record<string, ChildWordStats>
   >({});
   const [loadingWordStats, setLoadingWordStats] = useState(false);
+  const [isLoadingProgress, setIsLoadingProgress] = useState(false);
+  const [familyStats, setFamilyStats] = useState({
+    totalWordsLearned: 0,
+    longestStreak: 0,
+    activeChildren: 0,
+    todayActivity: 0,
+  });
   const [practiceWords, setPracticeWords] = useState<
     Array<{
       word: string;
