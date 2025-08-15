@@ -576,7 +576,7 @@ const AdvancedAnalyticsDashboard: React.FC = () => {
                 <div className="flex justify-center mb-4">{device.icon}</div>
                 <h3 className="font-semibold mb-2">{device.device}</h3>
                 <div className="text-3xl font-bold text-blue-600 mb-2">
-                  {device.percentage}%
+                  {Math.round(device.percentage)}%
                 </div>
                 <div className="space-y-1 text-sm text-slate-600">
                   <p>{device.sessions.toLocaleString()} sessions</p>
