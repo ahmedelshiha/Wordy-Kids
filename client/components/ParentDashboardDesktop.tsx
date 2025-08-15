@@ -1388,6 +1388,20 @@ export const ParentDashboardDesktop: React.FC<ParentDashboardDesktopProps> = ({
           </div>
         )}
 
+        {/* Quick Actions Panel */}
+        <DesktopQuickActions
+          onAddChild={handleAddChildClick}
+          onRefreshData={syncChildrenProgress}
+          onToggleAnalytics={handleToggleAnalytics}
+          onShowGoals={handleShowGoals}
+          onExportData={handleExportData}
+          onOpenSettings={handleOpenSettings}
+          isVisible={quickActionsVisible}
+          onToggleVisibility={() => setQuickActionsVisible(!quickActionsVisible)}
+          isLoading={isLoadingProgress}
+          notifications={notificationCount}
+        />
+
         {/* Registration Prompt */}
         {showRegistrationPrompt && (
           <AlertDialog open={showRegistrationPrompt} onOpenChange={setShowRegistrationPrompt}>
@@ -1395,7 +1409,7 @@ export const ParentDashboardDesktop: React.FC<ParentDashboardDesktopProps> = ({
               <AlertDialogHeader>
                 <AlertDialogTitle>Registration Required</AlertDialogTitle>
                 <AlertDialogDescription>
-                  To add children and track their progress, please create a free account. 
+                  To add children and track their progress, please create a free account.
                   This will save all your data securely.
                 </AlertDialogDescription>
               </AlertDialogHeader>
