@@ -72,6 +72,7 @@ export function FloatingHelpMenu({
         icon: <Gamepad2 className="w-5 h-5" />,
         action: () => {
           onGameHelp?.();
+          onHelpAction?.(helpContent.gameHelp);
           setIsOpen(false);
         },
         color: "from-educational-purple to-educational-purple/80",
