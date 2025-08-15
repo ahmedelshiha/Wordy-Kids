@@ -1343,6 +1343,39 @@ export class EnhancedAchievementTracker {
   }
 
   /**
+   * Get short achievement tease for mobile
+   */
+  static getShortAchievementTease(): string | null {
+    const nextAchievement = this.achievements
+      .filter((a) => !a.unlocked)
+      .sort(
+        (a, b) =>
+          b.currentProgress / b.requirements -
+          a.currentProgress / a.requirements,
+      )[0];
+
+    if (!nextAchievement) return null;
+
+    const progressPercent = Math.round(
+      (nextAchievement.currentProgress / nextAchievement.requirements) * 100,
+    );
+
+    const shortName = nextAchievement.name.length > 15
+      ? nextAchievement.name.slice(0, 15) + "..."
+      : nextAchievement.name;
+
+    if (progressPercent >= 90) {
+      return `🔥 Almost! ${shortName} ${progressPercent}%`;
+    } else if (progressPercent >= 75) {
+      return `👀 Close! ${shortName} ${progressPercent}%`;
+    } else if (progressPercent >= 50) {
+      return `💪 Keep going! ${shortName} ${progressPercent}%`;
+    }
+
+    return null;
+  }
+
+  /**
    * Check if today is a special achievement day
    */
   static getTodaySpecialMessage(): string | null {
