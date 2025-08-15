@@ -2650,10 +2650,6 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
                 <Button
                   className="bg-orange-500 hover:bg-orange-600 text-white h-auto py-3 flex flex-col items-center gap-2"
                   onClick={() => {
-                    console.log(
-                      "Starting targeted practice:",
-                      practiceWords.slice(0, 5).map((w) => w.word),
-                    );
                     // This would navigate to the main learning component with specific words
                   }}
                 >
