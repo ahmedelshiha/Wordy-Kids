@@ -40,6 +40,7 @@ import { enhancedAudioService } from "@/lib/enhancedAudioService";
 import { adventureService } from "@/lib/adventureService";
 import { WordAdventureStatus } from "@shared/adventure";
 import { AchievementTracker } from "@/lib/achievementTracker";
+import { CategoryCompletionTracker } from "@/lib/categoryCompletionTracker";
 import { EnhancedAchievementPopup } from "@/components/EnhancedAchievementPopup";
 import { useVoiceSettings } from "@/hooks/use-voice-settings";
 import { cn } from "@/lib/utils";
@@ -124,6 +125,10 @@ export const EnhancedWordCard: React.FC<EnhancedWordCardProps> = ({
   const [highContrastMode, setHighContrastMode] = useState(false);
   const [largeTextMode, setLargeTextMode] = useState(false);
 
+  // Word review tracking
+  const [hasBeenReviewed, setHasBeenReviewed] = useState(false);
+  const [reviewStartTime, setReviewStartTime] = useState<Date | null>(null);
+
   const cardRef = useRef<HTMLDivElement>(null);
   const voiceSettings = useVoiceSettings();
 
@@ -141,7 +146,32 @@ export const EnhancedWordCard: React.FC<EnhancedWordCardProps> = ({
 
     // Initialize letter sequence for letter hunt game
     setLetterSequence(word.word.split(""));
+
+    // Start tracking review time
+    setReviewStartTime(new Date());
+
+    // Check if word has been reviewed
+    setHasBeenReviewed(CategoryCompletionTracker.isWordReviewed(word.id));
   }, [word.id, word.word]);
+
+  // Track when word card becomes visible (reviewed)
+  useEffect(() => {
+    if (!hasBeenReviewed) {
+      const timer = setTimeout(() => {
+        CategoryCompletionTracker.trackWordReview(word.id, true);
+        setHasBeenReviewed(true);
+
+        // Track time spent
+        if (reviewStartTime) {
+          const timeSpent =
+            (new Date().getTime() - reviewStartTime.getTime()) / (1000 * 60); // in minutes
+          CategoryCompletionTracker.trackTimeSpent(Math.max(0.1, timeSpent)); // minimum 0.1 minutes
+        }
+      }, 3000); // Consider word "reviewed" after 3 seconds
+
+      return () => clearTimeout(timer);
+    }
+  }, [word.id, hasBeenReviewed, reviewStartTime]);
 
   // Star progress calculation
   useEffect(() => {
@@ -471,7 +501,13 @@ export const EnhancedWordCard: React.FC<EnhancedWordCardProps> = ({
   };
 
   return (
-    <div className={cn("relative w-full max-w-[380px] mx-auto", className)}>
+    <div
+      className={cn(
+        "relative w-full max-w-[380px] mx-auto",
+        hasBeenReviewed && "ring-2 ring-green-200 ring-opacity-50", // Subtle indicator for reviewed words
+        className,
+      )}
+    >
       {/* 3D Card Container with smooth flip */}
       <div
         ref={cardRef}
@@ -526,6 +562,11 @@ export const EnhancedWordCard: React.FC<EnhancedWordCardProps> = ({
 
               {/* Star Progress Meter */}
               <div className="flex items-center gap-1">
+                {hasBeenReviewed && (
+                  <div className="mr-1 text-green-300" title="Word reviewed">
+                    ✓
+                  </div>
+                )}
                 {[1, 2, 3].map((star) => (
                   <Star
                     key={star}
@@ -877,6 +918,10 @@ export const EnhancedWordCard: React.FC<EnhancedWordCardProps> = ({
                       <Button
                         onClick={(e) => {
                           e.stopPropagation();
+                          CategoryCompletionTracker.trackWordReview(
+                            word.id,
+                            false,
+                          ); // Mark as incorrect/difficult
                           onWordMastered?.(word.id, "hard");
                           triggerCelebration();
                         }}
@@ -888,6 +933,10 @@ export const EnhancedWordCard: React.FC<EnhancedWordCardProps> = ({
                       <Button
                         onClick={(e) => {
                           e.stopPropagation();
+                          CategoryCompletionTracker.trackWordReview(
+                            word.id,
+                            true,
+                          ); // Mark as correct
                           onWordMastered?.(word.id, "medium");
                           triggerCelebration();
                         }}
@@ -899,6 +948,10 @@ export const EnhancedWordCard: React.FC<EnhancedWordCardProps> = ({
                       <Button
                         onClick={(e) => {
                           e.stopPropagation();
+                          CategoryCompletionTracker.trackWordReview(
+                            word.id,
+                            true,
+                          ); // Mark as correct
                           onWordMastered?.(word.id, "easy");
                           triggerCelebration();
                         }}

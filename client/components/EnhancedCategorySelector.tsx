@@ -21,6 +21,8 @@ import {
   Trophy,
   BookOpen,
   Target,
+  Lock,
+  AlertTriangle,
 } from "lucide-react";
 import { audioService } from "@/lib/audioService";
 import {
@@ -55,6 +57,7 @@ interface EnhancedCategorySelectorProps {
   showAdvanced?: boolean;
   enableAccessibility?: boolean;
   showGameification?: boolean;
+  lockedCategory?: string | null;
 }
 
 const enrichedCategories: Category[] = [
@@ -258,6 +261,7 @@ export function EnhancedCategorySelector({
   showAdvanced = true,
   enableAccessibility = true,
   showGameification = true,
+  lockedCategory = null,
 }: EnhancedCategorySelectorProps) {
   // Real-time word database integration
   const {
@@ -355,7 +359,7 @@ export function EnhancedCategorySelector({
       greetings: "👋",
       technology: "📱",
       emotions: "😊",
-      "at-the-clothes-shop": "👗",
+      "at-the-clothes-shop": "���",
       "at-home": "🏠",
       default: "📚",
     };
@@ -535,6 +539,11 @@ export function EnhancedCategorySelector({
 
   // Enhanced category selection with feedback
   const handleCategoryClick = (categoryId: string) => {
+    // Prevent clicking locked categories
+    if (lockedCategory && lockedCategory !== categoryId) {
+      return;
+    }
+
     audioService.playCheerSound();
 
     // Haptic feedback
@@ -947,8 +956,15 @@ export function EnhancedCategorySelector({
           return (
             <Card
               key={category.id}
-              className={`cursor-pointer transition-all duration-300 overflow-hidden category-card-mobile ${
-                !reduceMotion ? "hover:shadow-lg transform hover:scale-102" : ""
+              className={`transition-all duration-300 overflow-hidden category-card-mobile ${
+                lockedCategory && lockedCategory !== category.id
+                  ? "opacity-50 cursor-not-allowed"
+                  : "cursor-pointer"
+              } ${
+                !reduceMotion &&
+                (!lockedCategory || lockedCategory === category.id)
+                  ? "hover:shadow-lg transform hover:scale-102"
+                  : ""
               } ${
                 isSelected
                   ? `ring-3 shadow-xl scale-102 ${
@@ -956,20 +972,36 @@ export function EnhancedCategorySelector({
                         ? "ring-white bg-black text-white"
                         : "ring-educational-blue bg-gradient-to-br from-blue-50 to-purple-50"
                     }`
-                  : highContrastMode
-                    ? "bg-black text-white border-white hover:bg-gray-900"
-                    : "hover:shadow-lg"
+                  : lockedCategory && lockedCategory !== category.id
+                    ? "bg-gray-100 border-gray-200"
+                    : highContrastMode
+                      ? "bg-black text-white border-white hover:bg-gray-900"
+                      : "hover:shadow-lg"
               }`}
               style={{
                 animationDelay: !reduceMotion ? `${index * 50}ms` : "0ms",
               }}
               onClick={() => handleCategoryClick(category.id)}
-              onTouchStart={() => handleCategoryHover(category.id)}
-              onMouseEnter={() => handleCategoryHover(category.id)}
+              onTouchStart={() => {
+                if (!lockedCategory || lockedCategory === category.id) {
+                  handleCategoryHover(category.id);
+                }
+              }}
+              onMouseEnter={() => {
+                if (!lockedCategory || lockedCategory === category.id) {
+                  handleCategoryHover(category.id);
+                }
+              }}
               onMouseLeave={() => setHoveredCategory(null)}
               role="button"
               tabIndex={0}
-              aria-label={`Select ${category.name} category with ${category.wordCount} words. Estimated time: ${category.estimatedTime}.`}
+              aria-label={`${
+                lockedCategory && lockedCategory !== category.id
+                  ? `${category.name} category is locked. Complete current category first.`
+                  : lockedCategory === category.id
+                    ? `${category.name} category is in progress. Continue learning.`
+                    : `Select ${category.name} category with ${category.wordCount} words. Estimated time: ${category.estimatedTime}.`
+              }`}
               onKeyDown={(e) => {
                 if (e.key === "Enter" || e.key === " ") {
                   e.preventDefault();
@@ -986,7 +1018,19 @@ export function EnhancedCategorySelector({
                 >
                   {/* Enhanced badges */}
                   <div className="absolute top-2 left-2 flex flex-col gap-1">
-                    {isRecommended && (
+                    {lockedCategory === category.id && (
+                      <Badge className="bg-orange-400 text-orange-900 text-xs px-2 py-1 animate-pulse flex items-center gap-1">
+                        <AlertTriangle className="w-3 h-3" />
+                        In Progress
+                      </Badge>
+                    )}
+                    {lockedCategory && lockedCategory !== category.id && (
+                      <Badge className="bg-gray-400 text-gray-700 text-xs px-2 py-1 flex items-center gap-1">
+                        <Lock className="w-3 h-3" />
+                        Locked
+                      </Badge>
+                    )}
+                    {isRecommended && !lockedCategory && (
                       <Badge className="bg-yellow-400 text-yellow-900 text-xs px-2 py-1 animate-pulse">
                         ⭐ For You
                       </Badge>
