@@ -277,31 +277,31 @@ export const ChildLearningGoalsPanel: React.FC<
   return (
     <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-2 md:p-4 z-50">
       <Card className="w-full max-w-2xl max-h-[95vh] md:max-h-[90vh] flex flex-col">
-        <CardHeader className="flex-shrink-0 p-4 md:p-6">
-          <div className="flex flex-col md:flex-row md:items-center justify-between gap-3">
-            <div className="flex items-center gap-3">
-              <div className="text-xl md:text-2xl">{child.avatar}</div>
+        <CardHeader className="flex-shrink-0 p-3 md:p-6 border-b">
+          <div className="flex flex-col space-y-3 md:space-y-0 md:flex-row md:items-center justify-between">
+            <div className="flex items-center gap-2 md:gap-3 min-w-0 flex-1">
+              <div className="text-xl md:text-2xl flex-shrink-0">{child.avatar}</div>
               <div className="flex-1 min-w-0">
-                <CardTitle className="text-base md:text-lg truncate">
-                  {child.name}'s Learning Goals
+                <CardTitle className="text-sm md:text-lg truncate">
+                  {child.name}'s Goals
                 </CardTitle>
-                <p className="text-xs md:text-sm text-muted-foreground">
+                <p className="text-xs text-muted-foreground hidden md:block">
                   Manage learning objectives and preferences
                 </p>
               </div>
             </div>
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 flex-shrink-0">
               {hasUnsavedChanges && (
                 <Button
                   size="sm"
                   onClick={handleSaveChanges}
-                  className="text-xs md:text-sm"
+                  className="text-xs px-2 md:px-3"
                 >
-                  <Save className="w-3 h-3 md:w-4 md:h-4 mr-1 md:mr-2" />
-                  Save
+                  <Save className="w-3 h-3 md:w-4 md:h-4 mr-1" />
+                  <span className="hidden md:inline">Save</span>
                 </Button>
               )}
-              <Button variant="ghost" size="sm" onClick={onClose}>
+              <Button variant="ghost" size="sm" onClick={onClose} className="p-1 md:p-2">
                 <X className="w-4 h-4" />
               </Button>
             </div>
