@@ -808,7 +808,7 @@ export const ParentDashboardDesktop: React.FC<ParentDashboardDesktopProps> = ({
         {/* Main Content */}
         <div
           className={cn(
-            "transition-all duration-300",
+            "dashboard-main-content transition-all duration-300 min-w-0",
             sidebarCollapsed ? "ml-16" : "ml-64",
           )}
         >
@@ -989,7 +989,7 @@ export const ParentDashboardDesktop: React.FC<ParentDashboardDesktopProps> = ({
           </div>
 
           {/* Content Area */}
-          <div className="p-6">
+          <div className="dashboard-content p-4 lg:p-6 min-w-0">
             {activeTab === "overview" && (
               <div className="space-y-6">
                 {/* Family Overview Cards */}
