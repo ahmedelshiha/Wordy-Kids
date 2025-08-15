@@ -83,7 +83,7 @@ import { ChildWordStats } from "@shared/api";
 import { SmartWordSelector } from "@/lib/smartWordSelection";
 import { childProgressSync } from "@/lib/childProgressSync";
 import { toast } from "@/hooks/use-toast";
-import AdvancedAnalyticsDashboard from "@/components/AdvancedAnalyticsDashboard";
+import { ParentLearningAnalytics } from "@/components/ParentLearningAnalytics";
 
 interface LearningGoal {
   id: string;
@@ -1475,104 +1475,6 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
     [selectedChild, handleOpenLearningGoals, handleAddChildClick, children],
   );
 
-  const renderAnalytics = useCallback(
-    () => (
-      <div className="space-y-6">
-        <div className="text-center">
-          <h2 className="text-2xl font-bold text-slate-800 mb-4">
-            Learning Analytics
-          </h2>
-          <p className="text-slate-600 mb-6">
-            Detailed insights into your children's learning progress
-          </p>
-        </div>
-
-        {/* Practice Words Section */}
-        <Card>
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <AlertCircle className="w-5 h-5 text-orange-500" />
-              Words Needing Practice
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            {practiceWords.length > 0 ? (
-              <div className="grid gap-3">
-                {practiceWords.map((word, index) => (
-                  <div
-                    key={index}
-                    className="flex items-center justify-between p-3 bg-orange-50 rounded-lg"
-                  >
-                    <div>
-                      <div className="font-medium">{word.word}</div>
-                      <div className="text-sm text-slate-600">
-                        {word.category}
-                      </div>
-                    </div>
-                    <div className="text-right">
-                      <div className="text-sm font-medium text-orange-600">
-                        {word.accuracy}% accuracy
-                      </div>
-                      <div className="text-xs text-slate-500">
-                        {word.timesReviewed} attempts
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            ) : (
-              <p className="text-center text-slate-500 py-8">
-                No words need practice right now! Great job! 🎉
-              </p>
-            )}
-          </CardContent>
-        </Card>
-
-        {/* Top Words Section */}
-        <Card>
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <CheckCircle className="w-5 h-5 text-green-500" />
-              Best Mastered Words
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            {topWords.length > 0 ? (
-              <div className="grid gap-3">
-                {topWords.map((word, index) => (
-                  <div
-                    key={index}
-                    className="flex items-center justify-between p-3 bg-green-50 rounded-lg"
-                  >
-                    <div>
-                      <div className="font-medium">{word.word}</div>
-                      <div className="text-sm text-slate-600">
-                        {word.category}
-                      </div>
-                    </div>
-                    <div className="text-right">
-                      <div className="text-sm font-medium text-green-600">
-                        {word.accuracy}% accuracy
-                      </div>
-                      <div className="text-xs text-slate-500">
-                        {word.timesReviewed} attempts
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            ) : (
-              <p className="text-center text-slate-500 py-8">
-                Keep learning to see your best words here! 📚
-              </p>
-            )}
-          </CardContent>
-        </Card>
-      </div>
-    ),
-    [practiceWords, topWords],
-  );
-
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50">
       {/* Back Button */}
@@ -1619,29 +1521,17 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
 
         {/* Tabs */}
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-          <TabsList className="grid grid-cols-4 w-full lg:w-auto lg:grid-cols-4">
+          <TabsList className="grid grid-cols-3 w-full lg:w-auto lg:grid-cols-3">
             <TabsTrigger value="overview">Overview</TabsTrigger>
             <TabsTrigger value="goals">Goals</TabsTrigger>
             <TabsTrigger value="analytics">Analytics</TabsTrigger>
-            <TabsTrigger value="advanced">Advanced</TabsTrigger>
           </TabsList>
 
           <div className="mt-6">
             <TabsContent value="overview">{renderOverview()}</TabsContent>
             <TabsContent value="goals">{renderGoalsManagement()}</TabsContent>
-            <TabsContent value="analytics">{renderAnalytics()}</TabsContent>
-            <TabsContent value="advanced">
-              <div className="space-y-6">
-                <div className="text-center">
-                  <h2 className="text-2xl font-bold text-slate-800 mb-4">
-                    Advanced Analytics
-                  </h2>
-                  <p className="text-slate-600 mb-6">
-                    Comprehensive learning insights and system-wide analytics
-                  </p>
-                </div>
-                <AdvancedAnalyticsDashboard />
-              </div>
+            <TabsContent value="analytics">
+              <ParentLearningAnalytics children={children} />
             </TabsContent>
           </div>
         </Tabs>
