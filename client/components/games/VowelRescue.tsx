@@ -14,12 +14,13 @@ import { Word, getWordsByCategory, getRandomWords } from "@/data/wordsDatabase";
 const vowelOptions = ["A", "E", "I", "O", "U"];
 
 interface VowelQuestion {
+  id: string | number;
   word: string;
   missingIndex: number[];
   image?: string;
   audio?: string;
   difficulty?: "easy" | "medium" | "hard";
-  originalWord?: any; // Reference to the original word object
+  originalWord?: Word; // Reference to the original word object from database
   category?: string;
   emoji?: string;
 }
