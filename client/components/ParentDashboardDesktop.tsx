@@ -699,7 +699,7 @@ export const ParentDashboardDesktop: React.FC<ParentDashboardDesktopProps> = ({
         {/* Desktop Sidebar */}
         <div
           className={cn(
-            "dashboard-sidebar fixed left-0 top-0 h-full bg-white border-r border-slate-200 transition-all duration-300 z-40",
+            "dashboard-sidebar fixed left-0 top-0 h-full bg-white border-r border-slate-200 transition-all duration-300 z-40 flex flex-col",
             sidebarCollapsed ? "w-16 sidebar-collapsed" : "w-64 sidebar-expanded",
           )}
         >
@@ -726,65 +726,79 @@ export const ParentDashboardDesktop: React.FC<ParentDashboardDesktopProps> = ({
           </div>
 
           {/* Sidebar Navigation */}
-          <div className="p-2">
-            {sidebarItems.map((item) => (
-              <Tooltip key={item.id} delayDuration={0}>
-                <TooltipTrigger asChild>
-                  <Button
-                    variant={activeTab === item.id ? "default" : "ghost"}
-                    className={cn(
-                      "sidebar-nav-item w-full justify-start mb-1 h-10",
-                      sidebarCollapsed && "px-2 justify-center",
-                      activeTab === item.id && "active",
-                    )}
-                    onClick={() => setActiveTab(item.id)}
-                  >
-                    <item.icon
-                      className={cn("h-4 w-4", !sidebarCollapsed && "mr-3")}
-                    />
-                    {!sidebarCollapsed && (
-                      <>
-                        <span className="flex-1 text-left">{item.label}</span>
-                        {item.badge && item.badge > 0 && (
-                          <Badge variant="secondary" className="ml-auto">
-                            {item.badge}
-                          </Badge>
-                        )}
-                      </>
-                    )}
-                  </Button>
-                </TooltipTrigger>
-                {sidebarCollapsed && (
-                  <TooltipContent side="right">
-                    <p>{item.label}</p>
-                  </TooltipContent>
-                )}
-              </Tooltip>
-            ))}
+          <div className="p-2 flex-1 overflow-y-auto">
+            <nav className="space-y-1" role="navigation" aria-label="Dashboard navigation">
+              {sidebarItems.map((item) => (
+                <Tooltip key={item.id} delayDuration={0}>
+                  <TooltipTrigger asChild>
+                    <Button
+                      variant={activeTab === item.id ? "default" : "ghost"}
+                      className={cn(
+                        "sidebar-nav-item w-full justify-start mb-1 h-10 relative",
+                        sidebarCollapsed && "px-2 justify-center",
+                        activeTab === item.id && "active",
+                      )}
+                      onClick={() => setActiveTab(item.id)}
+                      aria-current={activeTab === item.id ? "page" : undefined}
+                    >
+                      <item.icon
+                        className={cn("h-4 w-4 shrink-0", !sidebarCollapsed && "mr-3")}
+                      />
+                      {!sidebarCollapsed && (
+                        <>
+                          <span className="flex-1 text-left truncate">{item.label}</span>
+                          {item.badge && item.badge > 0 && (
+                            <Badge variant="secondary" className="ml-auto shrink-0 text-xs px-1.5 py-0.5">
+                              {item.badge > 99 ? "99+" : item.badge}
+                            </Badge>
+                          )}
+                        </>
+                      )}
+                      {sidebarCollapsed && item.badge && item.badge > 0 && (
+                        <div className="notification-badge absolute">
+                          {item.badge > 9 ? "9+" : item.badge}
+                        </div>
+                      )}
+                    </Button>
+                  </TooltipTrigger>
+                  {sidebarCollapsed && (
+                    <TooltipContent side="right">
+                      <p>{item.label}</p>
+                      {item.badge && item.badge > 0 && (
+                        <p className="text-xs opacity-75">{item.badge} active</p>
+                      )}
+                    </TooltipContent>
+                  )}
+                </Tooltip>
+              ))}
+            </nav>
           </div>
 
           {/* Quick Stats in Sidebar */}
           {!sidebarCollapsed && (
-            <div className="p-4 mt-4 border-t border-slate-200">
-              <h3 className="font-medium text-sm text-slate-700 mb-3">
+            <div className="p-4 mt-auto border-t border-slate-200 shrink-0">
+              <h3 className="font-medium text-sm text-slate-700 mb-3 truncate">
                 Quick Stats
               </h3>
               <div className="space-y-2">
-                <div className="flex justify-between items-center">
-                  <span className="text-xs text-slate-600">
+                <div className="flex justify-between items-center gap-2">
+                  <span className="text-xs text-slate-600 truncate">
                     Active Children
                   </span>
-                  <Badge variant="outline">{children.length}</Badge>
+                  <Badge variant="outline" className="shrink-0">{children.length}</Badge>
                 </div>
-                <div className="flex justify-between items-center">
-                  <span className="text-xs text-slate-600">Total Words</span>
-                  <Badge variant="outline">
-                    {familyStats.totalWordsLearned}
+                <div className="flex justify-between items-center gap-2">
+                  <span className="text-xs text-slate-600 truncate">Total Words</span>
+                  <Badge variant="outline" className="shrink-0">
+                    {familyStats.totalWordsLearned > 999 ?
+                      `${Math.floor(familyStats.totalWordsLearned / 1000)}k` :
+                      familyStats.totalWordsLearned
+                    }
                   </Badge>
                 </div>
-                <div className="flex justify-between items-center">
-                  <span className="text-xs text-slate-600">Best Streak</span>
-                  <Badge variant="outline">{familyStats.longestStreak}</Badge>
+                <div className="flex justify-between items-center gap-2">
+                  <span className="text-xs text-slate-600 truncate">Best Streak</span>
+                  <Badge variant="outline" className="shrink-0">{familyStats.longestStreak}</Badge>
                 </div>
               </div>
             </div>
