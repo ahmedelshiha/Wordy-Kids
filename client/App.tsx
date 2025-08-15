@@ -64,6 +64,10 @@ const App = () => (
                 path="/WordAdventureTest"
                 element={<WordAdventureTest />}
               />
+              <Route
+                path="/speech-diagnostics"
+                element={<SpeechDiagnostics />}
+              />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
             </Routes>
