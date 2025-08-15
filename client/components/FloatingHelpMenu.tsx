@@ -60,6 +60,7 @@ export function FloatingHelpMenu({
         icon: <BookOpen className="w-5 h-5" />,
         action: () => {
           onTutorial?.();
+          onHelpAction?.(helpContent.tutorial);
           setIsOpen(false);
         },
         color: "from-educational-blue to-educational-blue/80",
