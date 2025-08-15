@@ -1563,7 +1563,9 @@
   background: rgba(255, 255, 255, 0.2);
   border-radius: 50%;
   transform: translate(-50%, -50%);
-  transition: width 0.3s ease-out, height 0.3s ease-out;
+  transition:
+    width 0.3s ease-out,
+    height 0.3s ease-out;
   z-index: 0;
 }
 
@@ -1612,7 +1614,8 @@
 
 /* Kid-friendly rating button animations */
 @keyframes kidRatingBounce {
-  0%, 100% {
+  0%,
+  100% {
     transform: scale(1) translateY(0);
   }
   25% {
@@ -1650,7 +1653,8 @@
 }
 
 @keyframes emojiDance {
-  0%, 100% {
+  0%,
+  100% {
     transform: rotate(0deg) scale(1);
   }
   25% {
@@ -1665,11 +1669,14 @@
 }
 
 @keyframes ratingGlow {
-  0%, 100% {
+  0%,
+  100% {
     box-shadow: 0 0 5px rgba(255, 255, 255, 0.3);
   }
   50% {
-    box-shadow: 0 0 20px rgba(255, 255, 255, 0.6), 0 0 30px rgba(255, 255, 255, 0.4);
+    box-shadow:
+      0 0 20px rgba(255, 255, 255, 0.6),
+      0 0 30px rgba(255, 255, 255, 0.4);
   }
 }
 
@@ -1717,7 +1724,13 @@
   left: -10px;
   right: -10px;
   bottom: -10px;
-  background: radial-gradient(circle, transparent 40%, rgba(255, 255, 255, 0.1) 41%, rgba(255, 255, 255, 0.1) 42%, transparent 43%);
+  background: radial-gradient(
+    circle,
+    transparent 40%,
+    rgba(255, 255, 255, 0.1) 41%,
+    rgba(255, 255, 255, 0.1) 42%,
+    transparent 43%
+  );
   animation: ratingSparkle 1s ease-out;
   pointer-events: none;
   border-radius: inherit;

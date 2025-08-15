@@ -60,7 +60,9 @@ export const EnhancedWordCard: React.FC<EnhancedWordCardProps> = ({
   const [isPlaying, setIsPlaying] = useState(false);
   const [showSparkles, setShowSparkles] = useState(false);
   const [isPressed, setIsPressed] = useState(false);
-  const [ratedAs, setRatedAs] = useState<"easy" | "medium" | "hard" | null>(null);
+  const [ratedAs, setRatedAs] = useState<"easy" | "medium" | "hard" | null>(
+    null,
+  );
   const [showCelebration, setShowCelebration] = useState(false);
 
   const cardRef = useRef<HTMLDivElement>(null);
@@ -217,7 +219,7 @@ export const EnhancedWordCard: React.FC<EnhancedWordCardProps> = ({
         tabIndex={0}
         aria-label={`Word card for ${word.word}. ${isFlipped ? "Showing definition" : "Showing word"}. Tap to flip.`}
         onKeyDown={(e) => {
-          if (e.key === 'Enter' || e.key === ' ') {
+          if (e.key === "Enter" || e.key === " ") {
             e.preventDefault();
             handleFlip();
           }
@@ -424,7 +426,9 @@ export const EnhancedWordCard: React.FC<EnhancedWordCardProps> = ({
                         <h4 className="text-xs sm:text-sm font-bold text-white mobile-safe-text">
                           How was this word?
                         </h4>
-                        <span className="text-lg animate-bounce animation-delay-200">⭐</span>
+                        <span className="text-lg animate-bounce animation-delay-200">
+                          ⭐
+                        </span>
                       </div>
                     </div>
 
@@ -441,16 +445,27 @@ export const EnhancedWordCard: React.FC<EnhancedWordCardProps> = ({
                           }}
                           className={cn(
                             "w-full h-12 sm:h-14 bg-gradient-to-b from-red-400/30 to-red-600/30 hover:from-red-400/50 hover:to-red-600/50 active:from-red-400/60 active:to-red-600/60 border border-red-400/50 hover:border-red-400/70 text-white font-bold mobile-safe-text touch-target-large haptic-medium transition-all duration-300 flex flex-col items-center justify-center gap-0.5 rounded-lg shadow-lg hover:shadow-xl transform hover:scale-105 active:scale-95 rating-button-enhanced",
-                            ratedAs === "hard" && "ring-2 ring-red-300 ring-opacity-75 scale-105 from-red-400/70 to-red-600/70 border-red-300",
-                            showCelebration && ratedAs === "hard" && "rating-glow rating-celebration"
+                            ratedAs === "hard" &&
+                              "ring-2 ring-red-300 ring-opacity-75 scale-105 from-red-400/70 to-red-600/70 border-red-300",
+                            showCelebration &&
+                              ratedAs === "hard" &&
+                              "rating-glow rating-celebration",
                           )}
                           aria-label="Mark word as hard - I need more practice"
                         >
-                          <span className={cn(
-                            "text-lg sm:text-xl",
-                            ratedAs === "hard" && showCelebration ? "rating-emoji-dance" : "animate-wiggle"
-                          )}>😅</span>
-                          <span className="text-xs font-bold leading-tight">Hard</span>
+                          <span
+                            className={cn(
+                              "text-lg sm:text-xl",
+                              ratedAs === "hard" && showCelebration
+                                ? "rating-emoji-dance"
+                                : "animate-wiggle",
+                            )}
+                          >
+                            😅
+                          </span>
+                          <span className="text-xs font-bold leading-tight">
+                            Hard
+                          </span>
                         </Button>
                         <p className="text-xs text-white/80 text-center leading-tight mobile-safe-text hidden sm:block">
                           Need practice!
@@ -469,16 +484,27 @@ export const EnhancedWordCard: React.FC<EnhancedWordCardProps> = ({
                           }}
                           className={cn(
                             "w-full h-12 sm:h-14 bg-gradient-to-b from-yellow-400/30 to-orange-500/30 hover:from-yellow-400/50 hover:to-orange-500/50 active:from-yellow-400/60 active:to-orange-500/60 border border-yellow-400/50 hover:border-yellow-400/70 text-white font-bold mobile-safe-text touch-target-large haptic-medium transition-all duration-300 flex flex-col items-center justify-center gap-0.5 rounded-lg shadow-lg hover:shadow-xl transform hover:scale-105 active:scale-95 rating-button-enhanced",
-                            ratedAs === "medium" && "ring-2 ring-yellow-300 ring-opacity-75 scale-105 from-yellow-400/70 to-orange-500/70 border-yellow-300",
-                            showCelebration && ratedAs === "medium" && "rating-glow rating-celebration"
+                            ratedAs === "medium" &&
+                              "ring-2 ring-yellow-300 ring-opacity-75 scale-105 from-yellow-400/70 to-orange-500/70 border-yellow-300",
+                            showCelebration &&
+                              ratedAs === "medium" &&
+                              "rating-glow rating-celebration",
                           )}
                           aria-label="Mark word as okay - I know it a little"
                         >
-                          <span className={cn(
-                            "text-lg sm:text-xl",
-                            ratedAs === "medium" && showCelebration ? "rating-emoji-dance" : "animate-gentle-bounce"
-                          )}>🤔</span>
-                          <span className="text-xs font-bold leading-tight">OK</span>
+                          <span
+                            className={cn(
+                              "text-lg sm:text-xl",
+                              ratedAs === "medium" && showCelebration
+                                ? "rating-emoji-dance"
+                                : "animate-gentle-bounce",
+                            )}
+                          >
+                            🤔
+                          </span>
+                          <span className="text-xs font-bold leading-tight">
+                            OK
+                          </span>
                         </Button>
                         <p className="text-xs text-white/80 text-center leading-tight mobile-safe-text hidden sm:block">
                           Getting there!
@@ -497,16 +523,27 @@ export const EnhancedWordCard: React.FC<EnhancedWordCardProps> = ({
                           }}
                           className={cn(
                             "w-full h-12 sm:h-14 bg-gradient-to-b from-green-400/30 to-emerald-600/30 hover:from-green-400/50 hover:to-emerald-600/50 active:from-green-400/60 active:to-emerald-600/60 border border-green-400/50 hover:border-green-400/70 text-white font-bold mobile-safe-text touch-target-large haptic-heavy transition-all duration-300 flex flex-col items-center justify-center gap-0.5 rounded-lg shadow-lg hover:shadow-xl transform hover:scale-105 active:scale-95 rating-button-enhanced",
-                            ratedAs === "easy" && "ring-2 ring-green-300 ring-opacity-75 scale-105 from-green-400/70 to-emerald-600/70 border-green-300",
-                            showCelebration && ratedAs === "easy" && "rating-glow rating-celebration"
+                            ratedAs === "easy" &&
+                              "ring-2 ring-green-300 ring-opacity-75 scale-105 from-green-400/70 to-emerald-600/70 border-green-300",
+                            showCelebration &&
+                              ratedAs === "easy" &&
+                              "rating-glow rating-celebration",
                           )}
                           aria-label="Mark word as easy - I know it well"
                         >
-                          <span className={cn(
-                            "text-lg sm:text-xl",
-                            ratedAs === "easy" && showCelebration ? "rating-emoji-dance" : "animate-celebration-sparkles"
-                          )}>🎉</span>
-                          <span className="text-xs font-bold leading-tight">Easy</span>
+                          <span
+                            className={cn(
+                              "text-lg sm:text-xl",
+                              ratedAs === "easy" && showCelebration
+                                ? "rating-emoji-dance"
+                                : "animate-celebration-sparkles",
+                            )}
+                          >
+                            🎉
+                          </span>
+                          <span className="text-xs font-bold leading-tight">
+                            Easy
+                          </span>
                         </Button>
                         <p className="text-xs text-white/80 text-center leading-tight mobile-safe-text hidden sm:block">
                           I know it!
@@ -518,7 +555,11 @@ export const EnhancedWordCard: React.FC<EnhancedWordCardProps> = ({
                     <div className="mt-2 text-center">
                       <div className="bg-white/10 backdrop-blur-sm rounded-full px-2 py-1 border border-white/20">
                         <p className="text-xs text-white/90 mobile-safe-text animate-fade-in">
-                          <span className="animate-sparkle">✨</span> Choose how you feel! <span className="animate-sparkle animation-delay-100">✨</span>
+                          <span className="animate-sparkle">✨</span> Choose how
+                          you feel!{" "}
+                          <span className="animate-sparkle animation-delay-100">
+                            ✨
+                          </span>
                         </p>
                       </div>
                     </div>
@@ -540,7 +581,10 @@ export const EnhancedWordCard: React.FC<EnhancedWordCardProps> = ({
                 aria-label="Flip to front of card"
               >
                 <p className="text-xs text-white/90 mobile-safe-text flex items-center justify-center gap-1">
-                  <RotateCcw className="w-3 h-3 animate-spin" style={{ animationDuration: '3s' }} />
+                  <RotateCcw
+                    className="w-3 h-3 animate-spin"
+                    style={{ animationDuration: "3s" }}
+                  />
                   Tap to flip back
                 </p>
               </div>
