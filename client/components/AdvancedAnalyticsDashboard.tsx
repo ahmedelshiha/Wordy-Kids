@@ -51,9 +51,122 @@ import {
 const AdvancedAnalyticsDashboard: React.FC = () => {
   const [timeRange, setTimeRange] = useState("30d");
   const [selectedMetric, setSelectedMetric] = useState("overview");
+  const [analyticsData, setAnalyticsData] = useState<RealTimeAnalyticsData | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
-  // Sample data - in production this would come from APIs
-  const keyMetrics: AnalyticsMetric[] = [
+  // Fetch real analytics data
+  useEffect(() => {
+    loadAnalyticsData();
+  }, [timeRange]);
+
+  const loadAnalyticsData = async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      const data = await analyticsDataService.getAnalyticsData(timeRange);
+      setAnalyticsData(data);
+    } catch (err) {
+      setError("Failed to load analytics data");
+      console.error("Analytics data loading error:", err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleRefresh = () => {
+    analyticsDataService.refreshData();
+    loadAnalyticsData();
+  };
+
+  // Add icons to metrics data
+  const enrichMetricsWithIcons = (metrics: AnalyticsMetric[]): AnalyticsMetric[] => {
+    const iconMap: Record<string, React.ReactNode> = {
+      active_users: <Users className="w-6 h-6" />,
+      learning_sessions: <BookOpen className="w-6 h-6" />,
+      avg_session_time: <Clock className="w-6 h-6" />,
+      completion_rate: <Target className="w-6 h-6" />,
+      user_satisfaction: <Star className="w-6 h-6" />,
+      retention_rate: <Heart className="w-6 h-6" />
+    };
+
+    return metrics.map(metric => ({
+      ...metric,
+      icon: iconMap[metric.id] || <Activity className="w-6 h-6" />
+    }));
+  };
+
+  // Add icons to device analytics
+  const enrichDeviceAnalyticsWithIcons = (devices: DeviceAnalytics[]): DeviceAnalytics[] => {
+    const iconMap: Record<string, React.ReactNode> = {
+      Mobile: <Smartphone className="w-5 h-5" />,
+      Desktop: <Monitor className="w-5 h-5" />,
+      Tablet: <Tablet className="w-5 h-5" />
+    };
+
+    return devices.map(device => ({
+      ...device,
+      icon: iconMap[device.device] || <Monitor className="w-5 h-5" />
+    }));
+  };
+
+  if (loading) {
+    return (
+      <div className="space-y-6">
+        <div className="flex items-center justify-between">
+          <div>
+            <h2 className="text-2xl font-bold flex items-center gap-2">
+              <BarChart3 className="w-6 h-6 text-blue-500" />
+              Advanced Analytics Dashboard
+            </h2>
+            <p className="text-slate-600">Loading real-time analytics data...</p>
+          </div>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {[1, 2, 3, 4, 5, 6].map((i) => (
+            <Card key={i} className="animate-pulse">
+              <CardContent className="p-6">
+                <div className="h-20 bg-slate-200 rounded"></div>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="space-y-6">
+        <div className="flex items-center justify-between">
+          <div>
+            <h2 className="text-2xl font-bold flex items-center gap-2">
+              <BarChart3 className="w-6 h-6 text-blue-500" />
+              Advanced Analytics Dashboard
+            </h2>
+            <p className="text-slate-600 text-red-600">{error}</p>
+          </div>
+          <Button onClick={handleRefresh} variant="outline" size="sm">
+            <RefreshCw className="w-4 h-4 mr-2" />
+            Retry
+          </Button>
+        </div>
+      </div>
+    );
+  }
+
+  if (!analyticsData) {
+    return null;
+  }
+
+  const keyMetrics = enrichMetricsWithIcons(analyticsData.keyMetrics);
+  const usagePatterns = analyticsData.usagePatterns;
+  const learningOutcomes = analyticsData.learningOutcomes;
+  const geographicData = analyticsData.geographicData;
+  const deviceAnalytics = enrichDeviceAnalyticsWithIcons(analyticsData.deviceAnalytics);
+
+  // Fallback data for static sections (will be replaced with real data as available)
+  const fallbackKeyMetrics: AnalyticsMetric[] = [
     {
       id: "active_users",
       name: "Active Users",
