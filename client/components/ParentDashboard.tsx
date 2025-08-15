@@ -866,7 +866,7 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
                 <Button
                   size="sm"
                   variant="outline"
-                  onClick={() => setShowAddChildDialog(true)}
+                  onClick={handleAddChildClick}
                   className="text-xs md:text-sm px-2 md:px-3"
                 >
                   <UserPlus className="w-3 h-3 md:w-4 md:h-4 mr-1 md:mr-2" />
@@ -2774,7 +2774,7 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
         }
 
         .header::before {
-            content: '✨📚📖🌟';
+            content: '✨📚����🌟';
             position: absolute;
             top: 15px;
             left: 40px;
@@ -3219,7 +3219,7 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
                             <div class="achievement-content">
                                 <h4>${achievement.title}</h4>
                                 <p>${achievement.description}</p>
-                                <div class="achievement-date">��� ${achievement.earnedAt.toLocaleDateString()}</div>
+                                <div class="achievement-date">📅 ${achievement.earnedAt.toLocaleDateString()}</div>
                             </div>
                         </div>
                     `,
@@ -4302,7 +4302,7 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
                 Choose Avatar
               </Label>
               <div className="grid grid-cols-5 sm:grid-cols-9 gap-1 sm:gap-2">
-                {["👦", "👧", "🧒", "👶", "🦸‍♂️", "🦸‍♀️", "🧑‍🎓", "👨‍🎓", "👩‍🎓"].map(
+                {["👦", "👧", "🧒", "👶", "🦸‍♂️", "🦸‍♀️", "🧑���🎓", "👨‍🎓", "👩‍🎓"].map(
                   (emoji) => (
                     <Button
                       key={emoji}
