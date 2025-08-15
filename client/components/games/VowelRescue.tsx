@@ -64,7 +64,81 @@ export function VowelRescue({
   const [isRestarting, setIsRestarting] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
-  const currentQuestion = questions[currentIndex];
+  // Enhanced word generation using database words with sophisticated selection (same as Listen & Guess)
+  const generateDatabaseWords = useCallback(
+    (
+      count: number,
+      category?: string,
+      difficulty?: "easy" | "medium" | "hard",
+    ): VowelQuestion[] => {
+      let dbWords: Word[] = [];
+
+      if (category && category !== "all") {
+        dbWords = getWordsByCategory(category);
+      } else {
+        dbWords = getRandomWords(count * 3); // Get 3x more words for better selection options
+      }
+
+      if (difficulty) {
+        dbWords = dbWords.filter((w) => w.difficulty === difficulty);
+      }
+
+      // Convert database words to VowelQuestion format using emojis
+      return dbWords.slice(0, count).map((word) => ({
+        id: word.id,
+        word: word.word,
+        missingIndex: generateMissingVowelIndices(word.word),
+        emoji: word.emoji,
+        category: word.category,
+        difficulty: word.difficulty,
+        originalWord: word,
+      }));
+    },
+    [],
+  );
+
+  // Generate missing vowel indices intelligently
+  const generateMissingVowelIndices = useCallback((word: string): number[] => {
+    const vowels = ['a', 'e', 'i', 'o', 'u'];
+    const vowelIndices = word
+      .split('')
+      .map((char, index) => ({ char: char.toLowerCase(), index }))
+      .filter(({ char }) => vowels.includes(char))
+      .map(({ index }) => index);
+
+    // For variety, remove 1-3 vowels based on word length and difficulty
+    const numToRemove = Math.min(
+      vowelIndices.length,
+      word.length <= 4 ? 1 : word.length <= 6 ? 2 : 3
+    );
+
+    // Shuffle and take the first N vowel positions
+    const shuffled = [...vowelIndices].sort(() => Math.random() - 0.5);
+    return shuffled.slice(0, numToRemove).sort((a, b) => a - b);
+  }, []);
+
+  // Generate or use provided questions - Enhanced with database words
+  const gameQuestions = useMemo(() => {
+    if (questions && questions.length > 0) {
+      return questions;
+    }
+
+    // Use database-based word generation with sophisticated selection
+    const difficultyLevel =
+      difficulty ||
+      (playerLevel <= 3 ? "easy" : playerLevel <= 7 ? "medium" : "hard");
+    return generateDatabaseWords(rounds, category, difficultyLevel);
+  }, [
+    questions,
+    rounds,
+    category,
+    difficulty,
+    playerLevel,
+    generateDatabaseWords,
+    isRestarting,
+  ]);
+
+  const currentQuestion = gameQuestions[currentIndex];
   const isTimedMode = gameMode === "timed";
 
   // Timer for timed mode
@@ -649,7 +723,7 @@ export function VowelRescue({
                     {attempts >= 5 && (
                       <div className="space-y-2">
                         <div className="text-educational-purple text-sm sm:text-base">
-                          Let's see the answer together! 📖
+                          Let's see the answer together! ��
                         </div>
                         <Button
                           onClick={handleShowHint}
