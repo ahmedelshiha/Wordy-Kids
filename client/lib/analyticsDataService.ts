@@ -709,6 +709,13 @@ export class AnalyticsDataService {
 
   // Utility methods
 
+  /**
+   * Ensure a value is a valid finite number, return fallback if not
+   */
+  private validateNumber(value: number, fallback: number = 0): number {
+    return isFinite(value) && !isNaN(value) ? value : fallback;
+  }
+
   private getTrend(
     current: number,
     previous: number,
