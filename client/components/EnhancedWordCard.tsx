@@ -27,7 +27,6 @@ import {
   Gamepad2,
   Volume,
   VolumeX,
-  Smile,
   Music,
   Headphones,
 } from "lucide-react";
