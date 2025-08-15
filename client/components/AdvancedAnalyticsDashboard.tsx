@@ -336,8 +336,8 @@ const AdvancedAnalyticsDashboard: React.FC = () => {
                   <h3 className="font-medium text-slate-600">{metric.name}</h3>
                   <div className="flex items-baseline gap-2">
                     <span className="text-3xl font-bold text-slate-800">
-                      <AnimatedCounter value={metric.value} />
-                    </span>
+                    <AnimatedCounter value={isFinite(metric.value) ? metric.value : 0} />
+                  </span>
                     <span className="text-slate-500">{metric.unit}</span>
                   </div>
                   <p className="text-xs text-slate-500">
