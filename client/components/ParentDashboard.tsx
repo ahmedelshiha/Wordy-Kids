@@ -1275,7 +1275,7 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
 
                   {/* Progress Update Indicator */}
                   <div className="flex items-center justify-between text-xs text-slate-500">
-                    <span>Last updated: {formatTime(child.lastActive)}</span>
+                    <span>Last updated: {getTimeAgo(child.lastActive)}</span>
                     {isLoadingProgress && (
                       <div className="flex items-center gap-1">
                         <div className="w-3 h-3 border border-blue-500 border-t-transparent rounded-full animate-spin"></div>
