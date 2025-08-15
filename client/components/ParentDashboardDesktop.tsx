@@ -1212,40 +1212,40 @@ export const ParentDashboardDesktop: React.FC<ParentDashboardDesktopProps> = ({
                 ) : (
                   <div
                     className={cn(
-                      "gap-6",
+                      "gap-4 lg:gap-6 min-w-0",
                       viewMode === "grid"
-                        ? "grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3"
-                        : "space-y-4",
+                        ? "children-grid-view grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4"
+                        : "children-list-view space-y-4",
                     )}
                   >
                     {children.map((child) => (
                       <Card
                         key={child.id}
                         className={cn(
-                          "cursor-pointer hover:shadow-lg transition-all duration-200 border-l-4 border-l-blue-500",
+                          "dashboard-card cursor-pointer hover:shadow-lg transition-all duration-200 border-l-4 border-l-blue-500 min-w-0",
                           selectedChild?.id === child.id &&
-                            "ring-2 ring-blue-500 ring-opacity-50",
+                            "selected ring-2 ring-blue-500 ring-opacity-50",
                         )}
                         onClick={() => setSelectedChild(child)}
                       >
                         <CardHeader className="pb-4">
                           <div className="flex items-center justify-between">
-                            <div className="flex items-center space-x-3">
-                              <div className="text-3xl">{child.avatar}</div>
-                              <div>
-                                <CardTitle className="text-lg">
+                            <div className="flex items-center space-x-3 min-w-0">
+                              <div className="text-3xl shrink-0">{child.avatar}</div>
+                              <div className="min-w-0 flex-1">
+                                <CardTitle className="text-lg truncate">
                                   {child.name}
                                 </CardTitle>
-                                <p className="text-sm text-slate-600">
+                                <p className="text-sm text-slate-600 truncate">
                                   {child.age} years old • Level {child.level}
                                 </p>
                               </div>
                             </div>
-                            <div className="text-right">
-                              <Badge variant="outline" className="mb-1">
+                            <div className="text-right shrink-0">
+                              <Badge variant="outline" className="mb-1 text-xs">
                                 {getTimeAgo(child.lastActive)}
                               </Badge>
-                              <p className="text-xs text-slate-500">
+                              <p className="text-xs text-slate-500 whitespace-nowrap">
                                 Last active
                               </p>
                             </div>
@@ -1296,27 +1296,27 @@ export const ParentDashboardDesktop: React.FC<ParentDashboardDesktopProps> = ({
                             <Button
                               variant="outline"
                               size="sm"
-                              className="flex-1"
+                              className="flex-1 min-w-0"
                               onClick={(e) => {
                                 e.stopPropagation();
                                 handleOpenLearningGoals(child);
                               }}
                             >
-                              <Target className="h-4 w-4 mr-1" />
-                              Goals
+                              <Target className="h-4 w-4 shrink-0 mr-1" />
+                              <span className="truncate">Goals</span>
                             </Button>
                             <Button
                               variant="outline"
                               size="sm"
-                              className="flex-1"
+                              className="flex-1 min-w-0"
                               onClick={(e) => {
                                 e.stopPropagation();
                                 setActiveTab("analytics");
                                 setSelectedChild(child);
                               }}
                             >
-                              <BarChart3 className="h-4 w-4 mr-1" />
-                              Analytics
+                              <BarChart3 className="h-4 w-4 shrink-0 mr-1" />
+                              <span className="truncate">Analytics</span>
                             </Button>
                           </div>
                         </CardContent>
