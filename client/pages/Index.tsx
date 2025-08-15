@@ -2545,7 +2545,6 @@ export default function Index({ initialProfile }: IndexProps) {
                                             </div>
                                           </div>
 
-                                          {/* Minimal Status Indicator */}
                                           <div className="text-center mt-2">
                                             {(() => {
                                               const currentWord =
