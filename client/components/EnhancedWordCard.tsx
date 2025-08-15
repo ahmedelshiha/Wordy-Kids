@@ -4,7 +4,6 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import {
   Volume2,
-  Heart,
   RotateCcw,
   Sparkles,
   Star,
@@ -41,7 +40,6 @@ interface EnhancedWordCardProps {
   word: Word;
   showDefinition?: boolean;
   onPronounce?: (word: Word) => void;
-  onFavorite?: (word: Word) => void;
   onWordMastered?: (wordId: number, rating: "easy" | "medium" | "hard") => void;
   showVocabularyBuilder?: boolean;
   className?: string;
@@ -51,7 +49,6 @@ export const EnhancedWordCard: React.FC<EnhancedWordCardProps> = ({
   word,
   showDefinition = false,
   onPronounce,
-  onFavorite,
   onWordMastered,
   showVocabularyBuilder = false,
   className = "",
@@ -61,28 +58,13 @@ export const EnhancedWordCard: React.FC<EnhancedWordCardProps> = ({
 
   // Audio and interaction states
   const [isPlaying, setIsPlaying] = useState(false);
-  const [isFavorited, setIsFavorited] = useState(false);
   const [showSparkles, setShowSparkles] = useState(false);
 
-  // Progress states
-  const [starProgress, setStarProgress] = useState(0);
 
   const cardRef = useRef<HTMLDivElement>(null);
   const voiceSettings = useVoiceSettings();
 
-  // Initialize favorites from localStorage
-  useEffect(() => {
-    const favorites = JSON.parse(localStorage.getItem("favoriteWords") || "[]");
-    setIsFavorited(favorites.includes(word.id));
-  }, [word.id]);
 
-  // Star progress calculation
-  useEffect(() => {
-    let progress = 0;
-    if (isPlaying) progress += 1; // heard pronunciation
-    if (isFlipped) progress += 1; // viewed back
-    setStarProgress(progress);
-  }, [isPlaying, isFlipped]);
 
   // Enhanced pronunciation with normal voice
   const handlePronounce = async () => {
@@ -119,37 +101,6 @@ export const EnhancedWordCard: React.FC<EnhancedWordCardProps> = ({
     playSoundIfEnabled.pronunciation();
   };
 
-  // Enhanced favorite handling with sparkles
-  const handleFavorite = () => {
-    const newFavorited = !isFavorited;
-    setIsFavorited(newFavorited);
-
-    // Save to localStorage
-    const favorites = JSON.parse(localStorage.getItem("favoriteWords") || "[]");
-    if (newFavorited) {
-      favorites.push(word.id);
-      enhancedAudioService.playSuccessSound();
-      setShowSparkles(true);
-      setTimeout(() => setShowSparkles(false), 1000);
-
-      // Enhanced haptic feedback
-      if (navigator.vibrate) {
-        navigator.vibrate([100, 50, 100]);
-      }
-    } else {
-      const index = favorites.indexOf(word.id);
-      if (index > -1) {
-        favorites.splice(index, 1);
-      }
-      playUIInteractionSoundIfEnabled.click();
-      if (navigator.vibrate) {
-        navigator.vibrate(50);
-      }
-    }
-
-    localStorage.setItem("favoriteWords", JSON.stringify(favorites));
-    onFavorite?.(word);
-  };
 
   // Smooth 3D flip
   const handleFlip = () => {
@@ -222,8 +173,8 @@ export const EnhancedWordCard: React.FC<EnhancedWordCardProps> = ({
           )}
         >
           <CardContent className="p-4 h-full flex flex-col text-white relative">
-            {/* Header with badges and star meter */}
-            <div className="flex items-start justify-between mb-3">
+            {/* Header with badges */}
+            <div className="flex items-start mb-3">
               <div className="flex flex-wrap gap-1">
                 <Badge
                   className={getDifficultyColor(word.difficulty)}
@@ -241,21 +192,6 @@ export const EnhancedWordCard: React.FC<EnhancedWordCardProps> = ({
                 >
                   {word.category}
                 </Badge>
-              </div>
-
-              {/* Star Progress Meter */}
-              <div className="flex items-center gap-1">
-                {[1, 2].map((star) => (
-                  <Star
-                    key={star}
-                    className={cn(
-                      "w-5 h-5 transition-all duration-300",
-                      star <= starProgress
-                        ? "text-yellow-300 fill-yellow-300 animate-pulse"
-                        : "text-white/30",
-                    )}
-                  />
-                ))}
               </div>
             </div>
 
@@ -296,51 +232,28 @@ export const EnhancedWordCard: React.FC<EnhancedWordCardProps> = ({
                 </div>
               </div>
 
-              {/* Large word with pronunciation and heart buttons */}
+              {/* Large word with pronunciation button */}
               <div className="text-center space-y-3">
                 <div className="flex items-center justify-center gap-3">
-                  <h2 className="text-4xl font-bold tracking-wide drop-shadow-md leading-tight animate-fade-in">
+                  <h2 className="text-3xl font-bold tracking-wide drop-shadow-md leading-tight animate-fade-in">
                     {word.word}
                   </h2>
-                  <div className="flex items-center gap-2">
-                    <Button
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        handlePronounce();
-                      }}
-                      disabled={isPlaying}
-                      className={cn(
-                        "h-12 w-12 rounded-full transition-all duration-200 flex-shrink-0",
-                        "bg-white/20 hover:bg-white/30 border-2 border-white/40",
-                        "text-white hover:scale-105 active:scale-95",
-                        isPlaying &&
-                          "bg-yellow-400/30 border-yellow-300/60 animate-pulse",
-                      )}
-                    >
-                      <Volume2 className="w-6 h-6" />
-                    </Button>
-                    <Button
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        handleFavorite();
-                      }}
-                      className={cn(
-                        "h-12 w-12 rounded-full transition-all duration-200 flex-shrink-0",
-                        "bg-white/20 hover:bg-white/30 border-2 border-white/40",
-                        "hover:scale-110 active:scale-95",
-                        isFavorited && "bg-red-500/30 border-red-400/60",
-                      )}
-                    >
-                      <Heart
-                        className={cn(
-                          "w-5 h-5",
-                          isFavorited
-                            ? "fill-red-400 text-red-400"
-                            : "text-white",
-                        )}
-                      />
-                    </Button>
-                  </div>
+                  <Button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handlePronounce();
+                    }}
+                    disabled={isPlaying}
+                    className={cn(
+                      "h-12 w-12 rounded-full transition-all duration-200 flex-shrink-0",
+                      "bg-white/20 hover:bg-white/30 border-2 border-white/40",
+                      "text-white hover:scale-105 active:scale-95",
+                      isPlaying &&
+                        "bg-yellow-400/30 border-yellow-300/60 animate-pulse",
+                    )}
+                  >
+                    <Volume2 className="w-6 h-6" />
+                  </Button>
                 </div>
 
                 {word.pronunciation && (
@@ -480,8 +393,6 @@ export const EnhancedWordCard: React.FC<EnhancedWordCardProps> = ({
           ? `Showing definition for ${word.word}`
           : `Showing word ${word.word}`}
         {isPlaying && ` Pronouncing ${word.word}`}
-        {isFavorited && ` ${word.word} added to favorites`}
-        {starProgress > 0 && ` Earned ${starProgress} stars`}
       </div>
     </div>
   );
