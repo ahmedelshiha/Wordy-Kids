@@ -25,6 +25,7 @@ import { EnhancedAchievementPopup } from "@/components/EnhancedAchievementPopup"
 import { audioService } from "@/lib/audioService";
 import { playSoundIfEnabled } from "@/lib/soundEffects";
 import { CelebrationEffect } from "@/components/CelebrationEffect";
+import { FloatingHelpMenu } from "@/components/FloatingHelpMenu";
 import { Word, getWordsByCategory, getRandomWords } from "@/data/wordsDatabase";
 
 const vowelOptions = ["A", "E", "I", "O", "U"];
