@@ -119,6 +119,8 @@ export const ParentLearningAnalytics: React.FC<
     start: "",
     end: "",
   });
+  const [isLoading, setIsLoading] = useState(false);
+  const [showCelebration, setShowCelebration] = useState(false);
 
   // Get analytics data based on localStorage and prop children
   const analyticsData = useMemo((): LearningAnalyticsData => {
@@ -328,37 +330,43 @@ export const ParentLearningAnalytics: React.FC<
     <div className="space-y-6">
       {/* Header with Controls */}
       <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4">
-        <div>
-          <h2 className="text-2xl lg:text-3xl font-bold text-gray-800">
-            Learning Analytics
+        <div className="text-center sm:text-left">
+          <h2 className="text-2xl lg:text-3xl font-bold text-gray-800 flex items-center justify-center sm:justify-start gap-2">
+            📊 Learning Analytics ✨
           </h2>
-          <p className="text-gray-600">
-            Comprehensive overview of your children's learning progress
+          <p className="text-gray-600 text-sm sm:text-base">
+            🌟 Your children's amazing learning journey! 🎯
           </p>
         </div>
 
-        <div className="flex flex-col sm:flex-row gap-3">
+        <div className="flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
           <Select value={timeRange} onValueChange={setTimeRange}>
-            <SelectTrigger className="w-40">
-              <SelectValue />
+            <SelectTrigger className="w-full sm:w-40 h-12 text-sm">
+              <div className="flex items-center gap-2">
+                <Calendar className="w-4 h-4" />
+                <SelectValue />
+              </div>
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="7d">Last 7 days</SelectItem>
-              <SelectItem value="30d">Last 30 days</SelectItem>
-              <SelectItem value="90d">Last 3 months</SelectItem>
-              <SelectItem value="1y">Last year</SelectItem>
+              <SelectItem value="7d">📅 Last 7 days</SelectItem>
+              <SelectItem value="30d">🗓️ Last 30 days</SelectItem>
+              <SelectItem value="90d">📆 Last 3 months</SelectItem>
+              <SelectItem value="1y">🗂️ Last year</SelectItem>
             </SelectContent>
           </Select>
 
           <Select value={selectedChild} onValueChange={setSelectedChild}>
-            <SelectTrigger className="w-48">
-              <SelectValue />
+            <SelectTrigger className="w-full sm:w-48 h-12 text-sm">
+              <div className="flex items-center gap-2">
+                <Users className="w-4 h-4" />
+                <SelectValue />
+              </div>
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="all">All Children</SelectItem>
+              <SelectItem value="all">👨‍👩‍👧‍👦 All Children</SelectItem>
               {analyticsData.children.map((child) => (
                 <SelectItem key={child.id} value={child.id}>
-                  {child.name}
+                  👧 {child.name}
                 </SelectItem>
               ))}
             </SelectContent>
@@ -366,101 +374,131 @@ export const ParentLearningAnalytics: React.FC<
 
           <Button
             onClick={() => setShowReportDialog(true)}
-            className="flex items-center gap-2"
+            className="flex items-center gap-2 h-12 px-4 bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-sm font-medium"
           >
             <Download className="w-4 h-4" />
-            Generate Report
+            📋 Generate Report
           </Button>
         </div>
       </div>
 
       <Tabs defaultValue="overview" className="space-y-6">
-        <TabsList className="grid w-full grid-cols-4">
-          <TabsTrigger value="overview">Overview</TabsTrigger>
-          <TabsTrigger value="categories">Categories</TabsTrigger>
-          <TabsTrigger value="children">Individual</TabsTrigger>
-          <TabsTrigger value="reports">Reports</TabsTrigger>
+        <TabsList className="grid w-full grid-cols-2 sm:grid-cols-4 h-12 sm:h-10">
+          <TabsTrigger value="overview" className="text-xs sm:text-sm font-medium">
+            <div className="flex items-center gap-1">
+              <Eye className="w-3 h-3 sm:w-4 sm:h-4" />
+              <span className="hidden sm:inline">Overview</span>
+              <span className="sm:hidden">📊</span>
+            </div>
+          </TabsTrigger>
+          <TabsTrigger value="categories" className="text-xs sm:text-sm font-medium">
+            <div className="flex items-center gap-1">
+              <BookOpen className="w-3 h-3 sm:w-4 sm:h-4" />
+              <span className="hidden sm:inline">Categories</span>
+              <span className="sm:hidden">📚</span>
+            </div>
+          </TabsTrigger>
+          <TabsTrigger value="children" className="text-xs sm:text-sm font-medium">
+            <div className="flex items-center gap-1">
+              <Users className="w-3 h-3 sm:w-4 sm:h-4" />
+              <span className="hidden sm:inline">Individual</span>
+              <span className="sm:hidden">👧</span>
+            </div>
+          </TabsTrigger>
+          <TabsTrigger value="reports" className="text-xs sm:text-sm font-medium">
+            <div className="flex items-center gap-1">
+              <FileText className="w-3 h-3 sm:w-4 sm:h-4" />
+              <span className="hidden sm:inline">Reports</span>
+              <span className="sm:hidden">📋</span>
+            </div>
+          </TabsTrigger>
         </TabsList>
 
         {/* Overview Tab */}
         <TabsContent value="overview" className="space-y-6">
-          {/* Key Metrics Grid */}
-          <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
-            <Card className="bg-gradient-to-br from-blue-50 to-blue-100 border-blue-200">
-              <CardContent className="p-4 text-center">
-                <div className="text-2xl lg:text-3xl font-bold text-blue-600 mb-1">
+          {/* Key Metrics Grid - Mobile Optimized */}
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 sm:gap-4">
+            <Card className="bg-gradient-to-br from-blue-50 to-blue-100 border-blue-200 hover:shadow-lg transition-all duration-300 hover:scale-105">
+              <CardContent className="p-3 sm:p-4 text-center">
+                <div className="text-xl sm:text-2xl lg:text-3xl font-bold text-blue-600 mb-1 flex items-center justify-center gap-1">
+                  🎯
                   <AnimatedCounter
                     value={analyticsData.overview.totalWordsMastered}
                   />
                 </div>
-                <p className="text-sm text-blue-700 font-medium">
+                <p className="text-xs sm:text-sm text-blue-700 font-medium">
                   Words Mastered
                 </p>
               </CardContent>
             </Card>
 
-            <Card className="bg-gradient-to-br from-orange-50 to-orange-100 border-orange-200">
-              <CardContent className="p-4 text-center">
-                <div className="text-2xl lg:text-3xl font-bold text-orange-600 mb-1">
+            <Card className="bg-gradient-to-br from-orange-50 to-orange-100 border-orange-200 hover:shadow-lg transition-all duration-300 hover:scale-105">
+              <CardContent className="p-3 sm:p-4 text-center">
+                <div className="text-xl sm:text-2xl lg:text-3xl font-bold text-orange-600 mb-1 flex items-center justify-center gap-1">
+                  💪
                   <AnimatedCounter
                     value={analyticsData.overview.wordsNeedPractice}
                   />
                 </div>
-                <p className="text-sm text-orange-700 font-medium">
+                <p className="text-xs sm:text-sm text-orange-700 font-medium">
                   Need Practice
                 </p>
               </CardContent>
             </Card>
 
-            <Card className="bg-gradient-to-br from-green-50 to-green-100 border-green-200">
-              <CardContent className="p-4 text-center">
-                <div className="text-2xl lg:text-3xl font-bold text-green-600 mb-1">
+            <Card className="bg-gradient-to-br from-green-50 to-green-100 border-green-200 hover:shadow-lg transition-all duration-300 hover:scale-105">
+              <CardContent className="p-3 sm:p-4 text-center">
+                <div className="text-xl sm:text-2xl lg:text-3xl font-bold text-green-600 mb-1 flex items-center justify-center gap-1">
+                  🌟
                   <AnimatedCounter
                     value={analyticsData.overview.overallAccuracy}
                   />
                   %
                 </div>
-                <p className="text-sm text-green-700 font-medium">
+                <p className="text-xs sm:text-sm text-green-700 font-medium">
                   Accuracy Rate
                 </p>
               </CardContent>
             </Card>
 
-            <Card className="bg-gradient-to-br from-purple-50 to-purple-100 border-purple-200">
-              <CardContent className="p-4 text-center">
-                <div className="text-2xl lg:text-3xl font-bold text-purple-600 mb-1">
+            <Card className="bg-gradient-to-br from-purple-50 to-purple-100 border-purple-200 hover:shadow-lg transition-all duration-300 hover:scale-105">
+              <CardContent className="p-3 sm:p-4 text-center">
+                <div className="text-xl sm:text-2xl lg:text-3xl font-bold text-purple-600 mb-1 flex items-center justify-center gap-1">
+                  📚
                   <AnimatedCounter
                     value={analyticsData.overview.totalWordsLearned}
                   />
                 </div>
-                <p className="text-sm text-purple-700 font-medium">
+                <p className="text-xs sm:text-sm text-purple-700 font-medium">
                   Total Learned
                 </p>
               </CardContent>
             </Card>
 
-            <Card className="bg-gradient-to-br from-indigo-50 to-indigo-100 border-indigo-200">
-              <CardContent className="p-4 text-center">
-                <div className="text-2xl lg:text-3xl font-bold text-indigo-600 mb-1">
+            <Card className="bg-gradient-to-br from-indigo-50 to-indigo-100 border-indigo-200 hover:shadow-lg transition-all duration-300 hover:scale-105">
+              <CardContent className="p-3 sm:p-4 text-center">
+                <div className="text-xl sm:text-2xl lg:text-3xl font-bold text-indigo-600 mb-1 flex items-center justify-center gap-1">
+                  ⏰
                   <AnimatedCounter
                     value={analyticsData.overview.totalLearningTime}
                   />
                   m
                 </div>
-                <p className="text-sm text-indigo-700 font-medium">
+                <p className="text-xs sm:text-sm text-indigo-700 font-medium">
                   Learning Time
                 </p>
               </CardContent>
             </Card>
 
-            <Card className="bg-gradient-to-br from-pink-50 to-pink-100 border-pink-200">
-              <CardContent className="p-4 text-center">
-                <div className="text-2xl lg:text-3xl font-bold text-pink-600 mb-1">
+            <Card className="bg-gradient-to-br from-pink-50 to-pink-100 border-pink-200 hover:shadow-lg transition-all duration-300 hover:scale-105">
+              <CardContent className="p-3 sm:p-4 text-center">
+                <div className="text-xl sm:text-2xl lg:text-3xl font-bold text-pink-600 mb-1 flex items-center justify-center gap-1">
+                  🔥
                   <AnimatedCounter
                     value={analyticsData.overview.activeLearningStreak}
                   />
                 </div>
-                <p className="text-sm text-pink-700 font-medium">Day Streak</p>
+                <p className="text-xs sm:text-sm text-pink-700 font-medium">Day Streak</p>
               </CardContent>
             </Card>
           </div>
