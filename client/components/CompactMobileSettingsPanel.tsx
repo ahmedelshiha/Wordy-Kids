@@ -700,26 +700,6 @@ export const CompactMobileSettingsPanel: React.FC<
               )}
             </div>
 
-            {/* Goals & Analytics Section */}
-            <div className="border rounded-lg">
-              <CompactSectionHeader
-                title="Learning Goals"
-                emoji="🎯"
-                isExpanded={expandedSections.goals}
-                onToggle={() => toggleSection("goals")}
-              />
-              {expandedSections.goals && (
-                <div className="p-2">
-                  <QuickGoalsWidget
-                    currentProgress={currentProgress}
-                    onExpandClick={() => {
-                      setShowGoalsPanel(true);
-                      if (deviceInfo.hasHaptic) triggerHapticFeedback("medium");
-                    }}
-                  />
-                </div>
-              )}
-            </div>
 
             {/* Other Section */}
             <div className="border rounded-lg">
