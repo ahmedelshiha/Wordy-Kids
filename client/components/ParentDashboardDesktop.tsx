@@ -697,11 +697,11 @@ export const ParentDashboardDesktop: React.FC<ParentDashboardDesktopProps> = ({
 
   return (
     <TooltipProvider>
-      <div className="parent-dashboard-container min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50">
+      <div className="parent-dashboard-container min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 flex">
         {/* Desktop Sidebar */}
         <div
           className={cn(
-            "dashboard-sidebar fixed left-0 top-0 h-full bg-white border-r border-slate-200 transition-all duration-300 z-40 flex flex-col",
+            "dashboard-sidebar bg-white border-r border-slate-200 transition-all duration-300 z-40 flex flex-col shrink-0",
             sidebarCollapsed
               ? "w-16 sidebar-collapsed"
               : "w-64 sidebar-expanded",
