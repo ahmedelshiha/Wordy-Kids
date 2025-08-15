@@ -1475,7 +1475,6 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
     [selectedChild, handleOpenLearningGoals, handleAddChildClick, children],
   );
 
-
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50">
       {/* Back Button */}
