@@ -415,10 +415,10 @@ export function VowelRescue({
                 ))}
               </div>
               <p className="text-xs sm:text-sm text-gray-500 px-2">
-                {isTimedMode
-                  ? `You have 60 seconds to complete as many words as possible!`
-                  : `${questions.length} words to complete`}
-              </p>
+              {isTimedMode
+                ? `You have 60 seconds to complete as many words as possible!`
+                : `${gameQuestions.length} words to complete`}
+            </p>
             </div>
             <div className="space-y-3">
               <Button
