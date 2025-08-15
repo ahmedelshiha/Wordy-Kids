@@ -256,7 +256,9 @@ const sampleChildren: ChildProfile[] = [
         isActive: true,
         streak: 5,
         bestStreak: 7,
-        startDate: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString(),
+        startDate: new Date(
+          Date.now() - 30 * 24 * 60 * 60 * 1000,
+        ).toISOString(),
         description: "Learn 5 animal words daily",
         reward: "Extra playtime",
       },
@@ -344,7 +346,9 @@ const sampleChildren: ChildProfile[] = [
         isActive: true,
         streak: 3,
         bestStreak: 5,
-        startDate: new Date(Date.now() - 14 * 24 * 60 * 60 * 1000).toISOString(),
+        startDate: new Date(
+          Date.now() - 14 * 24 * 60 * 60 * 1000,
+        ).toISOString(),
         description: "Learn 3 nature words daily",
         reward: "Nature walk",
       },
@@ -512,7 +516,8 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
   const [showAddGoalDialog, setShowAddGoalDialog] = useState(false);
   const [showCustomWordDialog, setShowCustomWordDialog] = useState(false);
   const [showLearningGoalsPanel, setShowLearningGoalsPanel] = useState(false);
-  const [learningGoalsChild, setLearningGoalsChild] = useState<ChildProfile | null>(null);
+  const [learningGoalsChild, setLearningGoalsChild] =
+    useState<ChildProfile | null>(null);
   const [newChildData, setNewChildData] = useState({
     name: "",
     age: 6,
@@ -781,15 +786,18 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
   };
 
   const handleUpdateChild = (updatedChild: ChildProfile) => {
-    const updatedChildren = children.map(child =>
-      child.id === updatedChild.id ? updatedChild : child
+    const updatedChildren = children.map((child) =>
+      child.id === updatedChild.id ? updatedChild : child,
     );
     setChildren(updatedChildren);
     if (selectedChild?.id === updatedChild.id) {
       setSelectedChild(updatedChild);
     }
     // Save to localStorage
-    localStorage.setItem("parentDashboardChildren", JSON.stringify(updatedChildren));
+    localStorage.setItem(
+      "parentDashboardChildren",
+      JSON.stringify(updatedChildren),
+    );
   };
 
   const handleOpenLearningGoals = (child: ChildProfile) => {
@@ -1214,7 +1222,9 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-2">
                         <Target className="w-4 h-4 text-educational-blue" />
-                        <span className="font-medium text-sm">Learning Goals</span>
+                        <span className="font-medium text-sm">
+                          Learning Goals
+                        </span>
                         <Badge variant="secondary" className="text-xs">
                           {child.learningGoals?.length || 0}
                         </Badge>
@@ -1225,10 +1235,14 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
                     </div>
                     {child.learningGoals && child.learningGoals.length > 0 && (
                       <div className="mt-2 text-xs text-slate-600">
-                        Active: {child.learningGoals.filter(g => g.isActive).length} |{" "}
-                        Completed: {child.learningGoals.filter(g =>
-                          g.current >= g.target
-                        ).length}
+                        Active:{" "}
+                        {child.learningGoals.filter((g) => g.isActive).length} |{" "}
+                        Completed:{" "}
+                        {
+                          child.learningGoals.filter(
+                            (g) => g.current >= g.target,
+                          ).length
+                        }
                       </div>
                     )}
                   </div>
@@ -1265,7 +1279,9 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
             </Button>
           )}
           <Button
-            onClick={() => selectedChild && handleOpenLearningGoals(selectedChild)}
+            onClick={() =>
+              selectedChild && handleOpenLearningGoals(selectedChild)
+            }
             variant="outline"
             className="w-full md:w-auto text-sm md:text-base py-3 md:py-2"
             disabled={children.length === 0 || !selectedChild}
@@ -1308,7 +1324,8 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
                       Comprehensive Learning Goals Available!
                     </h3>
                     <p className="text-sm text-slate-600">
-                      Manage detailed daily/weekly/monthly goals with streaks, categories, and rewards
+                      Manage detailed daily/weekly/monthly goals with streaks,
+                      categories, and rewards
                     </p>
                   </div>
                 </div>
@@ -1330,8 +1347,12 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
             <Card>
               <CardContent className="p-4 text-center">
                 <div className="text-2xl font-bold text-educational-blue">
-                  {children.reduce((total, child) =>
-                    total + (child.learningGoals?.filter(g => g.isActive).length || 0), 0
+                  {children.reduce(
+                    (total, child) =>
+                      total +
+                      (child.learningGoals?.filter((g) => g.isActive).length ||
+                        0),
+                    0,
                   )}
                 </div>
                 <p className="text-sm text-slate-600">Learning Goals</p>
@@ -1340,8 +1361,12 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
             <Card>
               <CardContent className="p-4 text-center">
                 <div className="text-2xl font-bold text-educational-green">
-                  {children.reduce((total, child) =>
-                    total + (child.learningGoals?.filter(g => g.current >= g.target).length || 0), 0
+                  {children.reduce(
+                    (total, child) =>
+                      total +
+                      (child.learningGoals?.filter((g) => g.current >= g.target)
+                        .length || 0),
+                    0,
                   )}
                 </div>
                 <p className="text-sm text-slate-600">Completed</p>
@@ -1350,8 +1375,14 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
             <Card>
               <CardContent className="p-4 text-center">
                 <div className="text-2xl font-bold text-educational-orange">
-                  {children.reduce((total, child) =>
-                    total + (child.learningGoals?.reduce((sum, g) => sum + g.streak, 0) || 0), 0
+                  {children.reduce(
+                    (total, child) =>
+                      total +
+                      (child.learningGoals?.reduce(
+                        (sum, g) => sum + g.streak,
+                        0,
+                      ) || 0),
+                    0,
                   )}
                 </div>
                 <p className="text-sm text-slate-600">Streaks</p>
@@ -1360,8 +1391,13 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
             <Card>
               <CardContent className="p-4 text-center">
                 <div className="text-2xl font-bold text-educational-purple">
-                  {children.reduce((total, child) =>
-                    total + getChildGoals(child.id).filter(g => g.status === "active").length, 0
+                  {children.reduce(
+                    (total, child) =>
+                      total +
+                      getChildGoals(child.id).filter(
+                        (g) => g.status === "active",
+                      ).length,
+                    0,
                   )}
                 </div>
                 <p className="text-sm text-slate-600">Legacy Goals</p>
@@ -1402,23 +1438,44 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
             {children.map((child) => {
               const legacyGoals = getChildGoals(child.id);
               const learningGoals = child.learningGoals || [];
-              const activeLegacyGoals = legacyGoals.filter(g => g.status === "active").length;
-              const completedLegacyGoals = legacyGoals.filter(g => g.status === "completed").length;
-              const activeLearningGoals = learningGoals.filter(g => g.isActive).length;
-              const completedLearningGoals = learningGoals.filter(g => g.current >= g.target).length;
+              const activeLegacyGoals = legacyGoals.filter(
+                (g) => g.status === "active",
+              ).length;
+              const completedLegacyGoals = legacyGoals.filter(
+                (g) => g.status === "completed",
+              ).length;
+              const activeLearningGoals = learningGoals.filter(
+                (g) => g.isActive,
+              ).length;
+              const completedLearningGoals = learningGoals.filter(
+                (g) => g.current >= g.target,
+              ).length;
               const totalGoals = legacyGoals.length + learningGoals.length;
 
               return (
-                <Card key={child.id} className="overflow-hidden border-l-4 border-l-educational-blue">
+                <Card
+                  key={child.id}
+                  className="overflow-hidden border-l-4 border-l-educational-blue"
+                >
                   <CardHeader className="pb-3">
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-3">
-                        <span className="text-2xl md:text-3xl">{child.avatar}</span>
+                        <span className="text-2xl md:text-3xl">
+                          {child.avatar}
+                        </span>
                         <div>
-                          <CardTitle className="text-base md:text-lg">{child.name}'s All Goals</CardTitle>
+                          <CardTitle className="text-base md:text-lg">
+                            {child.name}'s All Goals
+                          </CardTitle>
                           <div className="text-xs md:text-sm text-slate-600 space-y-1">
-                            <div>Learning Goals: {activeLearningGoals} active • {completedLearningGoals} completed</div>
-                            <div>Legacy Goals: {activeLegacyGoals} active • {completedLegacyGoals} completed</div>
+                            <div>
+                              Learning Goals: {activeLearningGoals} active •{" "}
+                              {completedLearningGoals} completed
+                            </div>
+                            <div>
+                              Legacy Goals: {activeLegacyGoals} active •{" "}
+                              {completedLegacyGoals} completed
+                            </div>
                           </div>
                         </div>
                       </div>
@@ -1434,8 +1491,11 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
                         {totalGoals > 0 && (
                           <div className="text-lg font-bold text-educational-blue">
                             {Math.round(
-                              ((completedLegacyGoals + completedLearningGoals) / totalGoals) * 100,
-                            )}%
+                              ((completedLegacyGoals + completedLearningGoals) /
+                                totalGoals) *
+                                100,
+                            )}
+                            %
                           </div>
                         )}
                         <p className="text-xs text-slate-500">Success Rate</p>
@@ -4242,15 +4302,18 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
       </Tabs>
 
       {/* Registration Prompt Dialog for Guest Users */}
-      <Dialog open={showRegistrationPrompt} onOpenChange={setShowRegistrationPrompt}>
+      <Dialog
+        open={showRegistrationPrompt}
+        onOpenChange={setShowRegistrationPrompt}
+      >
         <DialogContent className="sm:max-w-md max-w-[90vw] p-4 sm:p-6 gap-4">
           <DialogHeader className="text-center">
             <DialogTitle className="text-xl font-bold text-educational-blue">
               👨‍👩‍👧‍👦 Create an Account
             </DialogTitle>
             <DialogDescription className="text-sm text-gray-600 mt-2">
-              To add and manage children's profiles, you'll need to create an account.
-              This helps us save your family's learning progress!
+              To add and manage children's profiles, you'll need to create an
+              account. This helps us save your family's learning progress!
             </DialogDescription>
           </DialogHeader>
 
@@ -4280,7 +4343,7 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
             <Button
               onClick={() => {
                 setShowRegistrationPrompt(false);
-                navigate('/');
+                navigate("/");
               }}
               className="w-full sm:w-auto bg-educational-blue hover:bg-educational-blue/90"
             >
