@@ -637,7 +637,9 @@ export const EnhancedWordCard: React.FC<EnhancedWordCardProps> = ({
                       <Heart
                         className={cn(
                           "w-5 h-5",
-                          isFavorited ? "fill-red-400 text-red-400" : "text-white",
+                          isFavorited
+                            ? "fill-red-400 text-red-400"
+                            : "text-white",
                         )}
                       />
                     </Button>
@@ -944,7 +946,6 @@ export const EnhancedWordCard: React.FC<EnhancedWordCardProps> = ({
           </CardContent>
         </Card>
       </div>
-
 
       {/* Swipe direction feedback */}
       {isGesturing && swipeDirection && (

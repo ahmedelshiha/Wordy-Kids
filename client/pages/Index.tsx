@@ -2541,7 +2541,6 @@ export default function Index({ initialProfile }: IndexProps) {
                                                   </span>
                                                 </div>
                                               </div>
-
                                             </div>
                                           </div>
 
