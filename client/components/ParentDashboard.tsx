@@ -574,6 +574,15 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
     }
   }, [children, selectedChild]);
 
+  // Initialize sample children in localStorage if needed
+  useEffect(() => {
+    const savedChildren = localStorage.getItem("parentDashboardChildren");
+    if (!savedChildren) {
+      console.log("Initializing sample children for demo");
+      localStorage.setItem("parentDashboardChildren", JSON.stringify(sampleChildren));
+    }
+  }, []);
+
   // Load children's word progress data and sync real progress
   useEffect(() => {
     const loadChildrenWordStats = async () => {
