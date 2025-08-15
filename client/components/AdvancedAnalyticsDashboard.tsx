@@ -569,7 +569,7 @@ const AdvancedAnalyticsDashboard: React.FC = () => {
             Advanced Analytics Dashboard
           </h2>
           <p className="text-slate-600">
-            Comprehensive insights into platform performance and user behavior
+            Real-time insights from your learning progress system (Last updated: {analyticsData.lastUpdated.toLocaleTimeString()})
           </p>
         </div>
         <div className="flex gap-2">
