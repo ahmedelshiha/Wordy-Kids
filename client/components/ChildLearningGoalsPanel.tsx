@@ -471,14 +471,15 @@ export const ChildLearningGoalsPanel: React.FC<
                 )}
               </TabsContent>
 
-              <TabsContent value="progress" className="space-y-4">
-                <div className="flex items-center justify-between">
-                  <h3 className="font-semibold">Learning Analytics</h3>
+              <TabsContent value="progress" className="space-y-3 md:space-y-4">
+                <div className="flex flex-col md:flex-row md:items-center justify-between gap-2">
+                  <h3 className="font-semibold text-sm md:text-base">Learning Analytics</h3>
                   <Button
                     size="sm"
                     variant="outline"
                     onClick={async () => {
                       setIsLoadingProgress(true);
+                      triggerHapticFeedback("light");
                       try {
                         const progress =
                           await goalProgressTracker.fetchSystematicProgress(
@@ -492,14 +493,15 @@ export const ChildLearningGoalsPanel: React.FC<
                       }
                     }}
                     disabled={isLoadingProgress}
+                    className="w-full md:w-auto"
                   >
                     <RefreshCw
                       className={cn(
-                        "w-4 h-4 mr-2",
+                        "w-3 h-3 md:w-4 md:h-4 mr-1 md:mr-2",
                         isLoadingProgress && "animate-spin",
                       )}
                     />
-                    Refresh
+                    <span className="text-xs md:text-sm">Refresh</span>
                   </Button>
                 </div>
 
