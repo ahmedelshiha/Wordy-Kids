@@ -35,6 +35,7 @@ interface ValidationState {
 
 export default function LoginForm() {
   const navigate = useNavigate();
+  const { loginAsGuest, login } = useAuth();
   const emailInputRef = useRef<HTMLInputElement>(null);
 
   const [formData, setFormData] = useState({
