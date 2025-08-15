@@ -550,7 +550,7 @@ export function ChildFriendlyCategorySelector({
             <CardContent className="p-4 text-center">
               <Heart className="w-6 h-6 mx-auto mb-2 fill-current" />
               <p className="text-sm font-semibold">
-                You're doing great! Keep exploring! 🌟
+                You're doing great! Keep exploring! ���
               </p>
             </CardContent>
           </Card>
@@ -891,7 +891,7 @@ export function ChildFriendlyCategorySelector({
             <div className="flex items-center gap-2 text-educational-blue">
               <Heart className="w-5 h-5 fill-current animate-gentle-bounce" />
               <span className="font-semibold">
-                Ready for your Wordy's Adventure?
+                Ready for your learning adventure?
               </span>
               <Heart className="w-5 h-5 fill-current animate-gentle-bounce" />
             </div>
