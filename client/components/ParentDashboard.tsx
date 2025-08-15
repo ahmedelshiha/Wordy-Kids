@@ -832,7 +832,7 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
                 Add your first child to start tracking their learning progress
               </p>
               <Button
-                onClick={() => setShowAddChildDialog(true)}
+                onClick={handleAddChildClick}
                 className="bg-educational-blue text-xs md:text-sm w-full"
                 size="sm"
               >
@@ -3219,7 +3219,7 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
                             <div class="achievement-content">
                                 <h4>${achievement.title}</h4>
                                 <p>${achievement.description}</p>
-                                <div class="achievement-date">📅 ${achievement.earnedAt.toLocaleDateString()}</div>
+                                <div class="achievement-date">��� ${achievement.earnedAt.toLocaleDateString()}</div>
                             </div>
                         </div>
                     `,
