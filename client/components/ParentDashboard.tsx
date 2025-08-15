@@ -1279,6 +1279,50 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
         </Card>
       ) : (
         <>
+          {/* Comprehensive Goals Overview */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+            <Card>
+              <CardContent className="p-4 text-center">
+                <div className="text-2xl font-bold text-educational-blue">
+                  {children.reduce((total, child) =>
+                    total + (child.learningGoals?.filter(g => g.isActive).length || 0), 0
+                  )}
+                </div>
+                <p className="text-sm text-slate-600">Active Learning Goals</p>
+              </CardContent>
+            </Card>
+            <Card>
+              <CardContent className="p-4 text-center">
+                <div className="text-2xl font-bold text-educational-green">
+                  {children.reduce((total, child) =>
+                    total + (child.learningGoals?.filter(g => g.current >= g.target).length || 0), 0
+                  )}
+                </div>
+                <p className="text-sm text-slate-600">Completed Goals</p>
+              </CardContent>
+            </Card>
+            <Card>
+              <CardContent className="p-4 text-center">
+                <div className="text-2xl font-bold text-educational-orange">
+                  {children.reduce((total, child) =>
+                    total + (child.learningGoals?.reduce((sum, g) => sum + g.streak, 0) || 0), 0
+                  )}
+                </div>
+                <p className="text-sm text-slate-600">Total Streaks</p>
+              </CardContent>
+            </Card>
+            <Card>
+              <CardContent className="p-4 text-center">
+                <div className="text-2xl font-bold text-educational-purple">
+                  {children.reduce((total, child) =>
+                    total + getChildGoals(child.id).filter(g => g.status === "active").length, 0
+                  )}
+                </div>
+                <p className="text-sm text-slate-600">Legacy Goals</p>
+              </CardContent>
+            </Card>
+          </div>
+
           {/* Goals summary card for mobile */}
           <div className="md:hidden">
             <Card className="bg-gradient-to-r from-educational-blue/10 to-educational-purple/10 border-educational-blue/20">
