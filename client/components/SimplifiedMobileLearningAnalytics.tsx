@@ -179,7 +179,9 @@ export const SimplifiedMobileLearningAnalytics: React.FC<
           <CardContent className="p-4 text-center">
             <div className="text-3xl mb-2 mobile-emoji">🎯</div>
             <div className="text-2xl font-bold text-blue-700 mb-1 mobile-counter">
-              <AnimatedCounter value={analyticsData.overview.totalWordsMastered} />
+              <AnimatedCounter
+                value={analyticsData.overview.totalWordsMastered}
+              />
             </div>
             <p className="text-xs text-blue-600 font-medium">Words I Know!</p>
           </CardContent>
@@ -191,7 +193,8 @@ export const SimplifiedMobileLearningAnalytics: React.FC<
               {getAccuracyEmoji(analyticsData.overview.overallAccuracy)}
             </div>
             <div className="text-2xl font-bold text-green-700 mb-1 mobile-counter">
-              <AnimatedCounter value={analyticsData.overview.overallAccuracy} />%
+              <AnimatedCounter value={analyticsData.overview.overallAccuracy} />
+              %
             </div>
             <p className="text-xs text-green-600 font-medium">How Good I Am!</p>
           </CardContent>
@@ -201,7 +204,9 @@ export const SimplifiedMobileLearningAnalytics: React.FC<
           <CardContent className="p-4 text-center">
             <div className="text-3xl mb-2 mobile-emoji">💪</div>
             <div className="text-2xl font-bold text-orange-700 mb-1 mobile-counter">
-              <AnimatedCounter value={analyticsData.overview.wordsNeedPractice} />
+              <AnimatedCounter
+                value={analyticsData.overview.wordsNeedPractice}
+              />
             </div>
             <p className="text-xs text-orange-600 font-medium">Need Practice</p>
           </CardContent>
@@ -211,15 +216,23 @@ export const SimplifiedMobileLearningAnalytics: React.FC<
           <CardContent className="p-4 text-center">
             <div className="text-3xl mb-2 mobile-emoji">🔥</div>
             <div className="text-2xl font-bold text-purple-700 mb-1 mobile-counter">
-              <AnimatedCounter value={analyticsData.overview.activeLearningStreak} />
+              <AnimatedCounter
+                value={analyticsData.overview.activeLearningStreak}
+              />
             </div>
-            <p className="text-xs text-purple-600 font-medium">Days in a Row!</p>
+            <p className="text-xs text-purple-600 font-medium">
+              Days in a Row!
+            </p>
           </CardContent>
         </Card>
       </div>
 
       {/* Simple Tabs */}
-      <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-4">
+      <Tabs
+        value={activeTab}
+        onValueChange={setActiveTab}
+        className="space-y-4"
+      >
         <TabsList className="mobile-tabs-list grid w-full grid-cols-2 h-12">
           <TabsTrigger
             value="progress"
@@ -253,7 +266,9 @@ export const SimplifiedMobileLearningAnalytics: React.FC<
             <CardContent>
               <div className="text-center">
                 <div className="text-3xl font-bold mb-2 mobile-counter">
-                  <AnimatedCounter value={analyticsData.overview.totalLearningTime} />
+                  <AnimatedCounter
+                    value={analyticsData.overview.totalLearningTime}
+                  />
                   <span className="text-lg"> minutes</span>
                 </div>
                 <p className="text-sm opacity-90">
@@ -355,26 +370,28 @@ export const SimplifiedMobileLearningAnalytics: React.FC<
                         <span>Progress</span>
                         <span className="font-bold">
                           {Math.round(
-                            (category.masteredWords / category.totalWords) * 100,
-                          )}%
+                            (category.masteredWords / category.totalWords) *
+                              100,
+                          )}
+                          %
                         </span>
                       </div>
                       <div className="mobile-progress-bar">
                         <div
                           className="mobile-progress-fill"
-                          style={{ width: `${(category.masteredWords / category.totalWords) * 100}%` }}
+                          style={{
+                            width: `${(category.masteredWords / category.totalWords) * 100}%`,
+                          }}
                         />
                       </div>
                       <div className="text-xs text-gray-500 text-center">
-                        {category.masteredWords} out of {category.totalWords} words
+                        {category.masteredWords} out of {category.totalWords}{" "}
+                        words
                       </div>
                     </div>
 
                     <div className="text-center">
-                      <Button
-                        size="sm"
-                        className="action-button-mobile"
-                      >
+                      <Button size="sm" className="action-button-mobile">
                         <span className="mr-1">🎮</span>
                         Practice {category.category}!
                       </Button>
