@@ -619,18 +619,23 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
 
   const calculateWeeklyStats = useCallback((childId: string) => {
     try {
-      // Get real weekly stats from localStorage or progress sync
-      const realProgress = childProgressSync.getInstance().getRealProgressData?.(childId);
+      // Get this week's data from localStorage
+      const today = new Date();
+      const startOfYear = new Date(today.getFullYear(), 0, 1);
+      const days = Math.floor((today.getTime() - startOfYear.getTime()) / (24 * 60 * 60 * 1000));
+      const weekNumber = Math.ceil((days + startOfYear.getDay() + 1) / 7);
+      const weekKey = `${today.getFullYear()}-${weekNumber.toString().padStart(2, '0')}`;
 
-      // Get weekly session data
-      const weekKey = childProgressSync.getInstance().getWeekKey?.() || new Date().toISOString().split('T')[0];
       const weeklyStatsKey = `weekly_stats_${childId}_${weekKey}`;
+      const weeklyProgressKey = `weekly_progress_${childId}_${weekKey}`;
+
       const weeklyStats = JSON.parse(localStorage.getItem(weeklyStatsKey) || '{}');
+      const weeklyProgress = JSON.parse(localStorage.getItem(weeklyProgressKey) || '{"words": 0, "sessions": 0}');
 
       return {
-        totalTime: weeklyStats.totalTime || 0,
-        averageAccuracy: weeklyStats.averageAccuracy || (realProgress?.weeklyProgress > 0 ? 85 : 0),
-        sessionsCount: weeklyStats.sessionsCount || 0,
+        totalTime: weeklyStats.totalTime || weeklyProgress.sessions * 5 || 0, // Estimate 5 mins per session
+        averageAccuracy: weeklyStats.averageAccuracy || (weeklyProgress.words > 0 ? 85 : 0),
+        sessionsCount: weeklyStats.sessionsCount || weeklyProgress.sessions || 0,
       };
     } catch (error) {
       console.error('Error calculating weekly stats:', error);
