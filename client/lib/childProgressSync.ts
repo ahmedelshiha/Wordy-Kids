@@ -27,12 +27,15 @@ export class ChildProgressSync {
     todayProgress: number;
   } {
     try {
+      console.log(`Getting progress data for child: ${childId}`);
+
       // Get today's progress
       const todayKey = new Date().toISOString().split("T")[0];
       const dailyProgressKey = `daily_progress_${childId}_${todayKey}`;
       const dailyData = JSON.parse(
         localStorage.getItem(dailyProgressKey) || '{"words": 0, "sessions": 0}',
       );
+      console.log(`Daily data for ${childId}:`, dailyData, `Key: ${dailyProgressKey}`);
 
       // Get this week's progress
       const weekKey = this.getWeekKey();
@@ -41,6 +44,7 @@ export class ChildProgressSync {
         localStorage.getItem(weeklyProgressKey) ||
           '{"words": 0, "sessions": 0}',
       );
+      console.log(`Weekly data for ${childId}:`, weeklyData, `Key: ${weeklyProgressKey}`);
 
       // Get streak data
       const streakKey = `streak_data_${childId}`;
@@ -48,16 +52,21 @@ export class ChildProgressSync {
         localStorage.getItem(streakKey) ||
           '{"currentStreak": 0, "lastActivity": null}',
       );
+      console.log(`Streak data for ${childId}:`, streakData, `Key: ${streakKey}`);
 
       // Calculate total words learned by scanning all daily progress entries
       const totalWordsLearned = this.calculateTotalWordsLearned(childId);
+      console.log(`Total words learned for ${childId}:`, totalWordsLearned);
 
-      return {
+      const result = {
         totalWordsLearned,
         currentStreak: streakData.currentStreak,
         weeklyProgress: weeklyData.words,
         todayProgress: dailyData.words,
       };
+
+      console.log(`Final progress data for ${childId}:`, result);
+      return result;
     } catch (error) {
       console.error("Error getting real progress data:", error);
       return {
