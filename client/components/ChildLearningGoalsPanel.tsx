@@ -288,15 +288,15 @@ export const ChildLearningGoalsPanel: React.FC<ChildLearningGoalsPanelProps> = (
           </div>
         </CardHeader>
 
-        <CardContent className="flex-1 overflow-hidden">
+        <CardContent className="flex-1 overflow-hidden p-3 md:p-6">
           <Tabs value={activeTab} onValueChange={setActiveTab} className="h-full">
-            <TabsList className="grid w-full grid-cols-3">
-              <TabsTrigger value="goals">Goals</TabsTrigger>
-              <TabsTrigger value="progress">Progress</TabsTrigger>
-              <TabsTrigger value="preferences">Settings</TabsTrigger>
+            <TabsList className="grid w-full grid-cols-3 h-9 md:h-10">
+              <TabsTrigger value="goals" className="text-xs md:text-sm">Goals</TabsTrigger>
+              <TabsTrigger value="progress" className="text-xs md:text-sm">Progress</TabsTrigger>
+              <TabsTrigger value="preferences" className="text-xs md:text-sm">Settings</TabsTrigger>
             </TabsList>
 
-            <ScrollArea className="h-[50vh] mt-4">
+            <ScrollArea className="h-[45vh] md:h-[50vh] mt-3 md:mt-4">
               <TabsContent value="goals" className="space-y-4">
                 <div className="flex items-center justify-between">
                   <h3 className="font-semibold">Active Goals</h3>
