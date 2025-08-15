@@ -19,6 +19,7 @@ import { EnhancedChildLogin } from "@/components/EnhancedChildLogin";
 import { AvatarCustomization } from "@/components/AvatarCustomization";
 import { AchievementSystem } from "@/components/AchievementSystem";
 import { EncouragingFeedback } from "@/components/EncouragingFeedback";
+import { DynamicAuthButton } from "@/components/DynamicAuthButton";
 import { GameLikeLearning } from "@/components/GameLikeLearning";
 import { WordMatchingGame } from "@/components/WordMatchingGame";
 import { GameHub } from "@/components/games/GameHub";
@@ -1428,10 +1429,6 @@ export default function Index({ initialProfile }: IndexProps) {
     }
   };
 
-  const handleSignOut = () => {
-    navigate("/");
-  };
-
   const getPracticeWords = () => {
     // Use smart word selector for practice words
     const practiceWords = SmartWordSelector.getPracticeWords(
@@ -1703,15 +1700,10 @@ export default function Index({ initialProfile }: IndexProps) {
                     <span className="font-semibold text-sm">Settings</span>
                   </button>
 
-                  <button
-                    onClick={handleSignOut}
-                    className="w-full flex items-center gap-3 p-3 rounded-xl bg-white text-gray-700 hover:bg-red-50 transition-all border border-red-200"
-                  >
-                    <div className="p-2 rounded-lg bg-red-100">
-                      <LogOut className="w-4 h-4 text-red-600" />
-                    </div>
-                    <span className="font-semibold text-sm">Sign Out</span>
-                  </button>
+                  <DynamicAuthButton
+                    variant="mobile"
+                    onAction={() => setIsMobileMenuOpen(false)}
+                  />
                 </nav>
               </aside>
             </div>
@@ -1886,15 +1878,7 @@ export default function Index({ initialProfile }: IndexProps) {
                         <span className="font-semibold">Settings</span>
                       </button>
 
-                      <button
-                        onClick={handleSignOut}
-                        className="w-full flex items-center gap-4 p-4 rounded-2xl bg-white text-gray-700 hover:bg-red-50 transition-all border border-red-200"
-                      >
-                        <div className="p-2 rounded-xl bg-red-100">
-                          <LogOut className="w-5 h-5 text-red-600" />
-                        </div>
-                        <span className="font-semibold">Sign Out</span>
-                      </button>
+                      <DynamicAuthButton variant="sidebar" />
                     </nav>
                   </div>
                 </aside>
@@ -3203,10 +3187,6 @@ export default function Index({ initialProfile }: IndexProps) {
             }}
             onAdminClick={() => {
               navigate("/admin");
-              setShowMobileMoreMenu(false);
-            }}
-            onSignOut={() => {
-              handleSignOut();
               setShowMobileMoreMenu(false);
             }}
             showMoreMenu={showMobileMoreMenu}

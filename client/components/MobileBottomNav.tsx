@@ -1,6 +1,8 @@
 import React from "react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { useAuth } from "@/hooks/useAuth";
+import { useNavigate } from "react-router-dom";
 import {
   Target,
   BookOpen,
@@ -21,7 +23,6 @@ interface MobileBottomNavProps {
   onSettingsClick: () => void;
   onParentClick: () => void;
   onAdminClick: () => void;
-  onSignOut: () => void;
   showMoreMenu: boolean;
   onMoreToggle: () => void;
   achievementCount?: number;
@@ -34,12 +35,13 @@ export function MobileBottomNav({
   onSettingsClick,
   onParentClick,
   onAdminClick,
-  onSignOut,
   showMoreMenu,
   onMoreToggle,
   achievementCount = 0,
   userRole = "child",
 }: MobileBottomNavProps) {
+  const { isGuest, logout } = useAuth();
+  const navigate = useNavigate();
   // Dynamic primary tabs based on user role
   const baseTabs = [
     {
@@ -148,11 +150,18 @@ export function MobileBottomNav({
       onClick: onSettingsClick,
     },
     {
-      id: "signout",
-      emoji: "👋",
-      label: "Sign Out",
-      icon: LogOut,
-      onClick: onSignOut,
+      id: "auth",
+      emoji: isGuest ? "📝" : "👋",
+      label: isGuest ? "Sign Up" : "Sign Out",
+      icon: isGuest ? Users : LogOut,
+      onClick: () => {
+        if (isGuest) {
+          navigate("/signup");
+        } else {
+          logout();
+        }
+        onMoreToggle();
+      },
     },
   ];
 

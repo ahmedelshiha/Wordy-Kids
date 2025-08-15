@@ -20,6 +20,7 @@ import {
   Heart,
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "@/hooks/useAuth";
 
 interface FormErrors {
   email?: string;
@@ -34,6 +35,7 @@ interface ValidationState {
 
 export default function LoginForm() {
   const navigate = useNavigate();
+  const { loginAsGuest, login } = useAuth();
   const emailInputRef = useRef<HTMLInputElement>(null);
 
   const [formData, setFormData] = useState({
@@ -214,6 +216,18 @@ export default function LoginForm() {
           localStorage.removeItem("rememberedEmail");
         }
 
+        // Create user profile for auth context
+        const userProfile = {
+          id: user?.id || `demo-${email.split("@")[0]}`,
+          name: user?.name || email.split("@")[0],
+          email: email,
+          type: "parent" as const,
+          isGuest: false,
+        };
+
+        // Login using auth context
+        login(userProfile);
+
         setMessage({
           type: "success",
           text: "Welcome back! Taking you to your dashboard...",
@@ -254,6 +268,9 @@ export default function LoginForm() {
     setMessage(null);
     setTouched({ email: false, password: false });
     setValidationState({ email: "neutral", password: "neutral" });
+
+    // Login as guest using auth context
+    loginAsGuest();
     navigate("/app");
   };
 

@@ -1,3 +1,4 @@
+import React from "react";
 import "./global.css";
 
 import { Toaster } from "@/components/ui/toaster";
@@ -6,6 +7,7 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { AuthProvider } from "./hooks/useAuth";
 import Login from "./pages/Login";
 import LoginForm from "./pages/LoginForm";
 import SignUp from "./pages/SignUp";
@@ -31,21 +33,29 @@ const App = () => (
       <WordDatabaseNotifications />
       <CompactWordDatabaseNotifications />
       <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<LoginForm />} />
-          <Route path="/signup" element={<SignUp />} />
-          <Route path="/app" element={<AppPage />} />
-          <Route path="/profile" element={<Login />} />
-          <Route path="/admin" element={<AdminPage />} />
-          <Route path="/word-card-demo" element={<EnhancedWordCardDemo />} />
-          <Route path="/word-garden-demo" element={<WordGardenDemo />} />
-          <Route path="/word-adventure-demo" element={<WordAdventureDemo />} />
-          <Route path="/WordAdventureDemo" element={<WordAdventureDemo />} />
-          <Route path="/word-adventure-test" element={<WordAdventureTest />} />
-          <Route path="/WordAdventureTest" element={<WordAdventureTest />} />
-          {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-          <Route path="*" element={<NotFound />} />
-        </Routes>
+        <AuthProvider>
+          <Routes>
+            <Route path="/" element={<LoginForm />} />
+            <Route path="/signup" element={<SignUp />} />
+            <Route path="/app" element={<AppPage />} />
+            <Route path="/profile" element={<Login />} />
+            <Route path="/admin" element={<AdminPage />} />
+            <Route path="/word-card-demo" element={<EnhancedWordCardDemo />} />
+            <Route path="/word-garden-demo" element={<WordGardenDemo />} />
+            <Route
+              path="/word-adventure-demo"
+              element={<WordAdventureDemo />}
+            />
+            <Route path="/WordAdventureDemo" element={<WordAdventureDemo />} />
+            <Route
+              path="/word-adventure-test"
+              element={<WordAdventureTest />}
+            />
+            <Route path="/WordAdventureTest" element={<WordAdventureTest />} />
+            {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </AuthProvider>
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>
