@@ -9,8 +9,13 @@ import Index from "./Index";
 export default function App() {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
-  const { user, login, isAuthenticated } = useAuth();
+  const { user, login, isAuthenticated, isGuest } = useAuth();
   const mode = searchParams.get("mode");
+
+  // Debug logging
+  console.log('App.tsx - User:', user);
+  console.log('App.tsx - IsAuthenticated:', isAuthenticated);
+  console.log('App.tsx - IsGuest:', isGuest);
 
   const [currentProfile, setCurrentProfile] = useState<any>(null);
   const [showProfileCreation, setShowProfileCreation] = useState(false);
