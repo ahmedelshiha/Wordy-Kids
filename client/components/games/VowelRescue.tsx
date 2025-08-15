@@ -465,6 +465,28 @@ export function VowelRescue({
             <p className="text-sm sm:text-base text-gray-600 mb-6 px-2">
               You rescued {Math.floor(score / 5)} vowels! Great job! 🌟
             </p>
+
+            {/* Enhanced completion stats */}
+            <div className="flex justify-center gap-4 mb-4 text-sm">
+              <div className="bg-educational-green/20 rounded-lg p-2 text-center">
+                <div className="text-lg font-bold text-educational-green">
+                  {Math.round((score / (gameQuestions.length * 10)) * 100)}%
+                </div>
+                <div className="text-xs text-gray-600">Accuracy</div>
+              </div>
+              <div className="bg-educational-blue/20 rounded-lg p-2 text-center">
+                <div className="text-lg font-bold text-educational-blue">
+                  {gameQuestions.length}
+                </div>
+                <div className="text-xs text-gray-600">Words</div>
+              </div>
+              <div className="bg-educational-purple/20 rounded-lg p-2 text-center">
+                <div className="text-lg font-bold text-educational-purple">
+                  {Math.floor(score / 5)}
+                </div>
+                <div className="text-xs text-gray-600">Rescued</div>
+              </div>
+            </div>
             <div className="flex flex-col sm:flex-row gap-2">
               <Button
                 onClick={onExit}
