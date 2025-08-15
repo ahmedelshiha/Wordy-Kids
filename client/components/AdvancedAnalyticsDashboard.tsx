@@ -382,8 +382,8 @@ const AdvancedAnalyticsDashboard: React.FC = () => {
                           <span>
                             {pattern.sessions.toLocaleString()} sessions
                           </span>
-                          <span>{pattern.completionRate}% completion</span>
-                          <span>{pattern.avgDuration}min avg</span>
+                          <span>{Math.round(pattern.completionRate)}% completion</span>
+                          <span>{Math.round(pattern.avgDuration)}min avg</span>
                         </div>
                         <Progress
                           value={
