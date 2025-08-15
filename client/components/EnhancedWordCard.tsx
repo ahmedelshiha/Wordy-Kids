@@ -618,20 +618,12 @@ export const EnhancedWordCard: React.FC<EnhancedWordCardProps> = ({
                 </div>
               </div>
 
-              {/* Large word with pronunciation buttons */}
+              {/* Large word with pronunciation button */}
               <div className="text-center space-y-3">
-                <h2 className="text-4xl font-bold tracking-wide drop-shadow-md leading-tight animate-fade-in">
-                  {word.word}
-                </h2>
-
-                {word.pronunciation && (
-                  <p className="text-lg opacity-90 font-medium leading-tight">
-                    {word.pronunciation}
-                  </p>
-                )}
-
-                {/* Enhanced voice buttons */}
                 <div className="flex items-center justify-center gap-3">
+                  <h2 className="text-4xl font-bold tracking-wide drop-shadow-md leading-tight animate-fade-in">
+                    {word.word}
+                  </h2>
                   <Button
                     onClick={(e) => {
                       e.stopPropagation();
@@ -639,38 +631,21 @@ export const EnhancedWordCard: React.FC<EnhancedWordCardProps> = ({
                     }}
                     disabled={isPlaying}
                     className={cn(
-                      "h-12 px-6 rounded-full transition-all duration-200",
+                      "h-10 w-10 rounded-full transition-all duration-200 flex-shrink-0",
                       "bg-white/20 hover:bg-white/30 border-2 border-white/40",
                       "text-white hover:scale-105 active:scale-95",
-                      isPlaying &&
-                        voiceMode === "normal" &&
-                        "bg-yellow-400/30 border-yellow-300/60 animate-pulse",
+                      isPlaying && "bg-yellow-400/30 border-yellow-300/60 animate-pulse",
                     )}
                   >
-                    <Volume2 className="w-5 h-5 mr-2" />
-                    Normal Voice
-                  </Button>
-
-                  <Button
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      setVoiceMode("funny");
-                      handlePronounce("funny");
-                    }}
-                    disabled={isPlaying}
-                    className={cn(
-                      "h-12 px-6 rounded-full transition-all duration-200",
-                      "bg-white/20 hover:bg-white/30 border-2 border-white/40",
-                      "text-white hover:scale-105 active:scale-95",
-                      isPlaying &&
-                        voiceMode === "funny" &&
-                        "bg-purple-400/30 border-purple-300/60 animate-pulse",
-                    )}
-                  >
-                    <Smile className="w-5 h-5 mr-2" />
-                    Funny Voice
+                    <Volume2 className="w-4 h-4" />
                   </Button>
                 </div>
+
+                {word.pronunciation && (
+                  <p className="text-lg opacity-90 font-medium leading-tight">
+                    {word.pronunciation}
+                  </p>
+                )}
               </div>
             </div>
 
@@ -709,22 +684,10 @@ export const EnhancedWordCard: React.FC<EnhancedWordCardProps> = ({
           )}
         >
           <CardContent className="p-4 h-full flex flex-col text-white relative overflow-y-auto">
-            {/* Back header with navigation */}
-            <div className="flex items-center justify-between mb-3">
-              <div className="flex items-center gap-2">
-                <span className="text-2xl">{word.emoji}</span>
-                <h3 className="text-xl font-bold">{word.word}</h3>
-              </div>
-
-              <Button
-                onClick={(e) => {
-                  e.stopPropagation();
-                  handleFlip();
-                }}
-                className="h-10 w-10 rounded-full bg-white/20 hover:bg-white/30 border border-white/30 p-0"
-              >
-                <RotateCcw className="w-5 h-5" />
-              </Button>
+            {/* Back header */}
+            <div className="flex items-center gap-2 mb-3">
+              <span className="text-2xl">{word.emoji}</span>
+              <h3 className="text-xl font-bold">{word.word}</h3>
             </div>
 
             {/* Mini-game or content view */}
