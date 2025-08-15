@@ -1960,7 +1960,7 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
               )}
               {children.length === 0 && (
                 <Button
-                  onClick={() => setShowAddChildDialog(true)}
+                  onClick={handleAddChildClick}
                   className="bg-educational-blue"
                 >
                   <UserPlus className="w-4 h-4 mr-2" />
@@ -2774,7 +2774,7 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
         }
 
         .header::before {
-            content: '✨📚����🌟';
+            content: '✨📚📖🌟';
             position: absolute;
             top: 15px;
             left: 40px;
@@ -4302,7 +4302,7 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
                 Choose Avatar
               </Label>
               <div className="grid grid-cols-5 sm:grid-cols-9 gap-1 sm:gap-2">
-                {["👦", "👧", "🧒", "👶", "🦸‍♂️", "🦸‍♀️", "🧑���🎓", "👨‍🎓", "👩‍🎓"].map(
+                {["👦", "👧", "🧒", "👶", "🦸‍♂️", "🦸‍♀️", "🧑‍🎓", "👨‍🎓", "👩‍🎓"].map(
                   (emoji) => (
                     <Button
                       key={emoji}
