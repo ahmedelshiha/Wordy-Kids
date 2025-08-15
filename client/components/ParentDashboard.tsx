@@ -2686,7 +2686,7 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
                 variant="outline"
                 className="border-blue-300 text-blue-700 hover:bg-blue-50 h-auto py-3 flex flex-col items-center gap-2"
                 onClick={() => {
-                  console.log("Generating progress report");
+                  // Generate progress report for sharing
                 }}
               >
                 <FileText className="w-5 h-5" />
