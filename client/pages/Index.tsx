@@ -1735,7 +1735,7 @@ export default function Index({ initialProfile }: IndexProps) {
             {backgroundAnimationsEnabled && (
               <>
                 <div className="hidden md:block absolute top-10 left-10 text-3xl animate-bounce">
-                  🌟
+                  ���
                 </div>
                 <div className="hidden md:block absolute top-20 right-20 text-2xl animate-pulse">
                   📚
@@ -1990,7 +1990,10 @@ export default function Index({ initialProfile }: IndexProps) {
                       </button>
 
                       <button
-                        onClick={() => setUserRole("parent")}
+                        onClick={() => {
+                          setUserRole("parent");
+                          window.scrollTo({ top: 0, behavior: "smooth" });
+                        }}
                         className="w-full flex items-center gap-4 p-4 rounded-2xl transition-all bg-white text-gray-700 hover:bg-blue-50 hover:border-blue-200 border-2 border-transparent"
                       >
                         <div className="p-2 rounded-xl bg-blue-100">
