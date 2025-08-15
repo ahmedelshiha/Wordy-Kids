@@ -1397,18 +1397,26 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
                     </div>
                   </CardHeader>
 
-                  {childGoals.length === 0 ? (
+                  {totalGoals === 0 ? (
                     <CardContent className="py-8 text-center">
                       <div className="text-3xl mb-2">📝</div>
                       <p className="text-slate-600 text-sm">No goals set yet</p>
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        className="mt-3"
-                        onClick={() => setShowAddGoalDialog(true)}
-                      >
-                        Create First Goal
-                      </Button>
+                      <div className="flex flex-col gap-2 mt-3">
+                        <Button
+                          size="sm"
+                          onClick={() => handleOpenLearningGoals(child)}
+                          className="bg-educational-blue"
+                        >
+                          Create Learning Goals
+                        </Button>
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          onClick={() => setShowAddGoalDialog(true)}
+                        >
+                          Create Basic Goal
+                        </Button>
+                      </div>
                     </CardContent>
                   ) : (
                     <CardContent className="p-3 md:p-6">
