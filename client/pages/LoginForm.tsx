@@ -215,9 +215,9 @@ export default function LoginForm() {
       );
 
       const isDemoUser =
-        (email === "demo@example.com" && password === "demo123") ||
-        (email === "alex@example.com" && password === "alex123") ||
-        (email === "sam@example.com" && password === "sam123");
+        (email === "demo@example.com" && password === "Demo123") ||
+        (email === "alex@example.com" && password === "Alex123") ||
+        (email === "sam@example.com" && password === "Sam123");
 
       if (user || isDemoUser) {
         // Handle remember me

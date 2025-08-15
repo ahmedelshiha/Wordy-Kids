@@ -23,6 +23,7 @@ import {
 import { WordAdventureDemo } from "./pages/WordAdventureDemo";
 import { WordAdventureTest } from "./pages/WordAdventureTest";
 import { NavigationGuard } from "./components/NavigationGuard";
+import SpeechDiagnostics from "./components/SpeechDiagnostics";
 
 const queryClient = new QueryClient();
 
@@ -62,6 +63,10 @@ const App = () => (
               <Route
                 path="/WordAdventureTest"
                 element={<WordAdventureTest />}
+              />
+              <Route
+                path="/speech-diagnostics"
+                element={<SpeechDiagnostics />}
               />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />

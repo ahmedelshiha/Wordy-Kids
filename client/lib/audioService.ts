@@ -10,8 +10,19 @@ export class AudioService {
   private voices: SpeechSynthesisVoice[] = [];
   private isEnabled: boolean = true;
   private selectedVoiceType: VoiceType = "woman";
+  private isSupported: boolean = false;
+  private voicesLoaded: boolean = false;
 
   private constructor() {
+    // Check if speech synthesis is supported
+    this.isSupported = this.checkBrowserSupport();
+
+    if (!this.isSupported) {
+      console.warn("Speech Synthesis API not supported in this browser");
+      this.isEnabled = false;
+      return;
+    }
+
     this.speechSynthesis = window.speechSynthesis;
     this.loadVoices();
 
@@ -23,10 +34,67 @@ export class AudioService {
       this.selectedVoiceType = savedVoiceType;
     }
 
-    // Listen for voices changed event
+    // Listen for voices changed event with error handling
     this.speechSynthesis.onvoiceschanged = () => {
-      this.loadVoices();
+      try {
+        this.loadVoices();
+      } catch (error) {
+        console.error("Error loading voices:", error);
+      }
     };
+
+    // Wait for voices to load if they're not immediately available
+    this.waitForVoices();
+  }
+
+  private checkBrowserSupport(): boolean {
+    // Check for basic speech synthesis support
+    if (!("speechSynthesis" in window)) {
+      return false;
+    }
+
+    // Check for SpeechSynthesisUtterance support
+    if (!("SpeechSynthesisUtterance" in window)) {
+      return false;
+    }
+
+    // Additional checks for known problematic environments
+    const userAgent = navigator.userAgent.toLowerCase();
+
+    // Check if running in certain environments that might have issues
+    if (userAgent.includes("jsdom") || userAgent.includes("node")) {
+      return false;
+    }
+
+    return true;
+  }
+
+  private async waitForVoices(): Promise<void> {
+    let attempts = 0;
+    const maxAttempts = 10;
+    const delay = 100;
+
+    const checkVoices = () => {
+      this.loadVoices();
+      if (this.voices.length > 0) {
+        this.voicesLoaded = true;
+        console.log(
+          `Voices loaded successfully: ${this.voices.length} voices available`,
+        );
+        return;
+      }
+
+      attempts++;
+      if (attempts < maxAttempts) {
+        setTimeout(checkVoices, delay * attempts); // Increasing delay
+      } else {
+        console.warn("No voices loaded after maximum attempts");
+        this.voicesLoaded = false;
+      }
+    };
+
+    // Start checking immediately and then with delays
+    checkVoices();
   }
 
   public static getInstance(): AudioService {
@@ -37,7 +105,29 @@ export class AudioService {
   }
 
   private loadVoices() {
-    this.voices = this.speechSynthesis.getVoices();
+    try {
+      if (!this.speechSynthesis) {
+        this.voices = [];
+        return;
+      }
+
+      const availableVoices = this.speechSynthesis.getVoices();
+      this.voices = availableVoices;
+
+      if (this.voices.length > 0) {
+        this.voicesLoaded = true;
+        console.log(
+          `Loaded ${this.voices.length} voices:`,
+          this.voices.map((v) => `${v.name} (${v.lang})`).slice(0, 5),
+        );
+      } else {
+        console.log("No voices loaded yet, voices may still be loading...");
+      }
+    } catch (error) {
+      console.error("Error loading voices:", error);
+      this.voices = [];
+      this.voicesLoaded = false;
+    }
   }
 
   private getVoiceByType(voiceType: VoiceType): SpeechSynthesisVoice | null {
@@ -236,54 +326,197 @@ export class AudioService {
       onError?: () => void;
     } = {},
   ): void {
-    if (!this.isEnabled) return;
+    if (!this.isEnabled || !word?.trim()) return;
 
-    // Get voice-type specific defaults
-    const voiceDefaults = this.getVoiceDefaults(this.selectedVoiceType);
-
-    const {
-      rate = voiceDefaults.rate,
-      pitch = voiceDefaults.pitch,
-      volume = 1.0,
-      onStart,
-      onEnd,
-      onError,
-    } = options;
-
-    // Cancel any ongoing speech
-    this.speechSynthesis.cancel();
-
-    const utterance = new SpeechSynthesisUtterance(word);
-
-    // Set voice properties
-    utterance.rate = rate;
-    utterance.pitch = pitch;
-    utterance.volume = volume;
-
-    // Use child-friendly voice if available
-    const voice = this.getChildFriendlyVoice();
-    if (voice) {
-      utterance.voice = voice;
+    // Check if speech synthesis is supported and available
+    if (!this.isSupported || !this.speechSynthesis) {
+      console.warn("Speech synthesis not supported or available");
+      options.onError?.();
+      return;
     }
 
-    // Set event handlers
-    utterance.onstart = () => {
-      console.log(`Starting pronunciation: ${word}`);
-      onStart?.();
-    };
+    // Check if voices are loaded, wait if necessary
+    if (!this.voicesLoaded && this.voices.length === 0) {
+      console.log("Voices not loaded yet, attempting to load...");
+      this.waitForVoices().then(() => {
+        // Retry after voices are loaded
+        if (this.voicesLoaded || this.voices.length > 0) {
+          this.pronounceWord(word, options);
+        } else {
+          console.warn(
+            "Could not load voices, proceeding without voice selection",
+          );
+          this.pronounceWordWithoutVoiceSelection(word, options);
+        }
+      });
+      return;
+    }
 
-    utterance.onend = () => {
-      console.log(`Finished pronunciation: ${word}`);
-      onEnd?.();
-    };
+    try {
+      // Get voice-type specific defaults
+      const voiceDefaults = this.getVoiceDefaults(this.selectedVoiceType);
 
-    utterance.onerror = (event) => {
-      console.error("Speech synthesis error:", event);
-      onError?.();
-    };
+      // Validate and clamp parameters to safe ranges
+      const rate = Math.max(
+        0.1,
+        Math.min(10, options.rate ?? voiceDefaults.rate),
+      );
+      const pitch = Math.max(
+        0,
+        Math.min(2, options.pitch ?? voiceDefaults.pitch),
+      );
+      const volume = Math.max(0, Math.min(1, options.volume ?? 1.0));
 
-    // Speak the word
-    this.speechSynthesis.speak(utterance);
+      const { onStart, onEnd, onError } = options;
+
+      // Cancel any ongoing speech safely
+      try {
+        this.speechSynthesis.cancel();
+      } catch (cancelError) {
+        console.warn("Error canceling previous speech:", cancelError);
+      }
+
+      // Ensure voices are loaded
+      if (this.voices.length === 0) {
+        this.loadVoices();
+      }
+
+      const utterance = new SpeechSynthesisUtterance(word.trim());
+
+      // Set voice properties with validation
+      utterance.rate = rate;
+      utterance.pitch = pitch;
+      utterance.volume = volume;
+
+      // Use child-friendly voice if available
+      const voice = this.getChildFriendlyVoice();
+      if (voice) {
+        utterance.voice = voice;
+      }
+
+      // Set event handlers with error protection
+      utterance.onstart = () => {
+        console.log(`Starting pronunciation: ${word}`);
+        try {
+          onStart?.();
+        } catch (error) {
+          console.error("Error in onStart callback:", error);
+        }
+      };
+
+      utterance.onend = () => {
+        console.log(`Finished pronunciation: ${word}`);
+        try {
+          onEnd?.();
+        } catch (error) {
+          console.error("Error in onEnd callback:", error);
+        }
+      };
+
+      utterance.onerror = (event) => {
+        console.error("Speech synthesis error:", event);
+        console.error("Error details:", {
+          error: event.error,
+          message: event.message,
+          word: word,
+          voice: voice?.name,
+          rate,
+          pitch,
+          volume,
+        });
+        try {
+          onError?.();
+        } catch (error) {
+          console.error("Error in onError callback:", error);
+        }
+      };
+
+      // Additional error handling for browser-specific issues
+      utterance.onboundary = (event) => {
+        // This can help detect if speech is actually working
+        console.log(
+          `Speech boundary event: ${event.name} at ${event.charIndex}`,
+        );
+      };
+
+      // Speak the word with additional error handling
+      try {
+        this.speechSynthesis.speak(utterance);
+      } catch (speakError) {
+        console.error("Error calling speak:", speakError);
+        onError?.();
+      }
+    } catch (error) {
+      console.error("Error in pronounceWord:", error);
+      options.onError?.();
+    }
+  }
+
+  private pronounceWordWithoutVoiceSelection(
+    word: string,
+    options: {
+      rate?: number;
+      pitch?: number;
+      volume?: number;
+      onStart?: () => void;
+      onEnd?: () => void;
+      onError?: () => void;
+    } = {},
+  ): void {
+    try {
+      const voiceDefaults = this.getVoiceDefaults(this.selectedVoiceType);
+
+      // Validate and clamp parameters to safe ranges
+      const rate = Math.max(
+        0.1,
+        Math.min(10, options.rate ?? voiceDefaults.rate),
+      );
+      const pitch = Math.max(
+        0,
+        Math.min(2, options.pitch ?? voiceDefaults.pitch),
+      );
+      const volume = Math.max(0, Math.min(1, options.volume ?? 1.0));
+
+      const utterance = new SpeechSynthesisUtterance(word.trim());
+      utterance.rate = rate;
+      utterance.pitch = pitch;
+      utterance.volume = volume;
+
+      // Don't set a specific voice, let the browser use default
+      console.log("Using default browser voice for speech synthesis");
+
+      utterance.onstart = () => {
+        console.log(`Starting pronunciation (default voice): ${word}`);
+        try {
+          options.onStart?.();
+        } catch (error) {
+          console.error("Error in onStart callback:", error);
+        }
+      };
+
+      utterance.onend = () => {
+        console.log(`Finished pronunciation (default voice): ${word}`);
+        try {
+          options.onEnd?.();
+        } catch (error) {
+          console.error("Error in onEnd callback:", error);
+        }
+      };
+
+      utterance.onerror = (event) => {
+        console.error("Speech synthesis error (default voice):", event);
+        try {
+          options.onError?.();
+        } catch (error) {
+          console.error("Error in onError callback:", error);
+        }
+      };
+
+      this.speechSynthesis.speak(utterance);
+    } catch (error) {
+      console.error("Error in fallback pronunciation:", error);
+      options.onError?.();
+    }
   }
 
   public pronounceDefinition(
@@ -399,6 +632,27 @@ export class AudioService {
     return this.isEnabled;
   }
 
+  public isSupported(): boolean {
+    return this.isSupported;
+  }
+
+  public areVoicesLoaded(): boolean {
+    return this.voicesLoaded;
+  }
+
+  public getVoiceCount(): number {
+    return this.voices.length;
+  }
+
+  public async ensureVoicesLoaded(): Promise<boolean> {
+    if (this.voicesLoaded) {
+      return true;
+    }
+
+    await this.waitForVoices();
+    return this.voicesLoaded;
+  }
+
   public stop(): void {
     this.speechSynthesis.cancel();
   }
@@ -498,6 +752,64 @@ export class AudioService {
       console.log(
         `${type}: ${voice ? `${voice.name} (${voice.lang})` : "None found"}`,
       );
+    });
+  }
+
+  // Comprehensive diagnostic method for troubleshooting
+  public diagnostics(): void {
+    console.log("=== Speech Synthesis Diagnostics ===");
+
+    // Browser support
+    console.log("Browser Support:");
+    console.log("- speechSynthesis:", "speechSynthesis" in window);
+    console.log(
+      "- SpeechSynthesisUtterance:",
+      "SpeechSynthesisUtterance" in window,
+    );
+    console.log("- isSupported:", this.isSupported);
+    console.log("- userAgent:", navigator.userAgent);
+
+    // Service state
+    console.log("\nService State:");
+    console.log("- isEnabled:", this.isEnabled);
+    console.log("- voicesLoaded:", this.voicesLoaded);
+    console.log("- selectedVoiceType:", this.selectedVoiceType);
+    console.log("- voices count:", this.voices.length);
+
+    // Voice availability by type
+    console.log("\nVoice Availability:");
+    ["woman", "man", "kid"].forEach((type) => {
+      const voice = this.getVoiceByType(type as VoiceType);
+      console.log(
+        `- ${type}:`,
+        voice ? `${voice.name} (${voice.lang})` : "❌ None found",
+      );
+    });
+
+    // Speech synthesis state
+    if (this.speechSynthesis) {
+      console.log("\nSpeech Synthesis State:");
+      console.log("- speaking:", this.speechSynthesis.speaking);
+      console.log("- pending:", this.speechSynthesis.pending);
+      console.log("- paused:", this.speechSynthesis.paused);
+    }
+
+    // Test pronunciation
+    console.log("\n=== Running Test ===");
+    this.testPronunciation();
+  }
+
+  private testPronunciation(): void {
+    if (!this.isSupported) {
+      console.log("❌ Cannot test: Speech synthesis not supported");
+      return;
+    }
+
+    console.log("🔊 Testing pronunciation with 'hello'...");
+    this.pronounceWord("hello", {
+      onStart: () => console.log("✅ Test: Speech started successfully"),
+      onEnd: () => console.log("✅ Test: Speech completed successfully"),
+      onError: () => console.log("❌ Test: Speech failed"),
     });
   }
 
