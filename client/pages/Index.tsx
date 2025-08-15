@@ -1429,9 +1429,6 @@ export default function Index({ initialProfile }: IndexProps) {
     }
   };
 
-  const handleSignOut = () => {
-    navigate("/");
-  };
 
   const getPracticeWords = () => {
     // Use smart word selector for practice words
