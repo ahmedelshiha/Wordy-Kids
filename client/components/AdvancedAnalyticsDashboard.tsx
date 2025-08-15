@@ -61,6 +61,60 @@ const AdvancedAnalyticsDashboard: React.FC = () => {
     loadAnalyticsData();
   }, [timeRange]);
 
+  // Add real-time update listeners for automatic data refresh
+  useEffect(() => {
+    const handleProgressUpdate = () => {
+      // Invalidate cache and refresh data when progress updates
+      analyticsDataService.refreshData();
+      loadAnalyticsData();
+    };
+
+    const handleStorageChange = (event: StorageEvent) => {
+      // Refresh when relevant storage keys change
+      if (event.key && (
+        event.key.includes('daily_progress_') ||
+        event.key.includes('weekly_progress_') ||
+        event.key.includes('monthly_progress_') ||
+        event.key.includes('streak_data_') ||
+        event.key.includes('categoryProgress') ||
+        event.key.includes('parentDashboardChildren') ||
+        event.key.includes('systematic_progress_')
+      )) {
+        handleProgressUpdate();
+      }
+    };
+
+    const handleGoalCompletion = () => {
+      // Refresh when goals are completed
+      handleProgressUpdate();
+    };
+
+    const handleWordDatabaseUpdate = () => {
+      // Refresh when word database is updated
+      handleProgressUpdate();
+    };
+
+    // Listen for progress-related events
+    window.addEventListener('goalCompleted', handleGoalCompletion);
+    window.addEventListener('wordDatabaseUpdate', handleWordDatabaseUpdate);
+    window.addEventListener('storage', handleStorageChange);
+
+    // Auto-refresh every 5 minutes for real-time feel
+    const autoRefreshInterval = setInterval(() => {
+      if (!loading) {
+        analyticsDataService.refreshData();
+        loadAnalyticsData();
+      }
+    }, 5 * 60 * 1000); // 5 minutes
+
+    return () => {
+      window.removeEventListener('goalCompleted', handleGoalCompletion);
+      window.removeEventListener('wordDatabaseUpdate', handleWordDatabaseUpdate);
+      window.removeEventListener('storage', handleStorageChange);
+      clearInterval(autoRefreshInterval);
+    };
+  }, [loading]);
+
   const loadAnalyticsData = async () => {
     setLoading(true);
     setError(null);
