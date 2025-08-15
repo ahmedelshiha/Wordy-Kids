@@ -852,14 +852,16 @@ export const EnhancedLearningReports: React.FC<
             </Card>
           )}
 
-          {/* Report Configuration */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {/* Report Configuration - Enhanced for mobile */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
             <div className="space-y-2">
-              <Label htmlFor="report-type">Report Type</Label>
+              <Label htmlFor="report-type" className="text-sm font-medium text-gray-700">Report Type</Label>
               <Select value={reportType} onValueChange={setReportType}>
-                <SelectTrigger>
-                  <ChartBar className="w-4 h-4 mr-2" />
-                  <SelectValue />
+                <SelectTrigger className="h-10 sm:h-11">
+                  <div className="flex items-center space-x-2">
+                    <ChartBar className="w-4 h-4 text-gray-500" />
+                    <SelectValue />
+                  </div>
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="Quick Summary">Quick Summary</SelectItem>
@@ -874,11 +876,13 @@ export const EnhancedLearningReports: React.FC<
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="time-period">Time Period</Label>
+              <Label htmlFor="time-period" className="text-sm font-medium text-gray-700">Time Period</Label>
               <Select value={timePeriod} onValueChange={handleTimePeriodChange}>
-                <SelectTrigger>
-                  <Calendar className="w-4 h-4 mr-2" />
-                  <SelectValue />
+                <SelectTrigger className="h-10 sm:h-11">
+                  <div className="flex items-center space-x-2">
+                    <Calendar className="w-4 h-4 text-gray-500" />
+                    <SelectValue />
+                  </div>
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="Last Week">Last Week</SelectItem>
