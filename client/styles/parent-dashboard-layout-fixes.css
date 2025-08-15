@@ -19,7 +19,7 @@
 
 /* Sidebar layout fixes */
 .dashboard-sidebar {
-  height: 100vh;
+  height: 100%;
   background: white;
   border-right: 1px solid #e2e8f0;
   display: flex;
@@ -31,8 +31,8 @@
 /* Main content area layout */
 .dashboard-main-content {
   flex: 1;
-  min-height: 100vh;
-  overflow-x: hidden;
+  height: 100%;
+  overflow: hidden;
   display: flex;
   flex-direction: column;
 }
