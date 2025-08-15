@@ -428,8 +428,7 @@ export const EnhancedWordCard: React.FC<EnhancedWordCardProps> = ({
                       <Button
                         onClick={(e) => {
                           e.stopPropagation();
-                          playUIInteractionSoundIfEnabled();
-                          onWordMastered?.(word.id, "hard");
+                          handleRating("hard");
                           if (navigator.vibrate) {
                             navigator.vibrate([100, 50, 100]);
                           }
@@ -450,8 +449,7 @@ export const EnhancedWordCard: React.FC<EnhancedWordCardProps> = ({
                       <Button
                         onClick={(e) => {
                           e.stopPropagation();
-                          playUIInteractionSoundIfEnabled();
-                          onWordMastered?.(word.id, "medium");
+                          handleRating("medium");
                           if (navigator.vibrate) {
                             navigator.vibrate([60, 30, 60]);
                           }
@@ -472,8 +470,7 @@ export const EnhancedWordCard: React.FC<EnhancedWordCardProps> = ({
                       <Button
                         onClick={(e) => {
                           e.stopPropagation();
-                          playUIInteractionSoundIfEnabled();
-                          onWordMastered?.(word.id, "easy");
+                          handleRating("easy");
                           if (navigator.vibrate) {
                             navigator.vibrate([30, 10, 30, 10, 30]);
                           }
@@ -494,7 +491,7 @@ export const EnhancedWordCard: React.FC<EnhancedWordCardProps> = ({
                   <div className="mt-4 text-center">
                     <div className="bg-white/10 backdrop-blur-sm rounded-full px-3 py-2 border border-white/20">
                       <p className="text-xs text-white/90 mobile-safe-text animate-fade-in">
-                        <span className="animate-sparkle">���</span> Choose how you feel about this word! <span className="animate-sparkle animation-delay-100">✨</span>
+                        <span className="animate-sparkle">✨</span> Choose how you feel about this word! <span className="animate-sparkle animation-delay-100">✨</span>
                       </p>
                     </div>
                   </div>
