@@ -4199,6 +4199,28 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
                     learningStrengths: [],
                     areasForImprovement: [],
                     motivationalRewards: [],
+                    learningGoals: [
+                      {
+                        id: `daily-words-${Date.now()}`,
+                        type: "daily",
+                        target: 3,
+                        current: 0,
+                        isActive: true,
+                        streak: 0,
+                        bestStreak: 0,
+                        startDate: new Date().toISOString(),
+                        description: "Learn new words daily",
+                        reward: "Extra playtime",
+                      },
+                    ],
+                    learningPreferences: {
+                      autoAdjustGoals: true,
+                      adaptiveDifficulty: true,
+                      preferredCategories: ["Animals"],
+                      focusAreas: [],
+                      reminderTimes: ["16:00"],
+                      motivationStyle: "encouraging",
+                    },
                   };
 
                   const updatedChildren = [...children, newChild];
