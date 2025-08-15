@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useAuth } from "@/hooks/useAuth";
 import { useNavigate } from "react-router-dom";
+import "@/styles/mobile-goals-optimization.css";
 import { ChildLearningGoalsPanel } from "@/components/ChildLearningGoalsPanel";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -1216,36 +1217,6 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
                       )}
                     </div>
                   )}
-
-                  {/* Learning Goals Summary - View Only */}
-                  <div className="bg-blue-50 p-3 rounded-lg">
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-2">
-                        <Target className="w-4 h-4 text-educational-blue" />
-                        <span className="font-medium text-sm">
-                          Learning Goals
-                        </span>
-                        <Badge variant="secondary" className="text-xs">
-                          {child.learningGoals?.length || 0}
-                        </Badge>
-                      </div>
-                      <div className="text-xs text-educational-blue font-medium">
-                        View in Goals Tab →
-                      </div>
-                    </div>
-                    {child.learningGoals && child.learningGoals.length > 0 && (
-                      <div className="mt-2 text-xs text-slate-600">
-                        Active:{" "}
-                        {child.learningGoals.filter((g) => g.isActive).length} |{" "}
-                        Completed:{" "}
-                        {
-                          child.learningGoals.filter(
-                            (g) => g.current >= g.target,
-                          ).length
-                        }
-                      </div>
-                    )}
-                  </div>
                 </CardContent>
               </Card>
             );
@@ -1256,18 +1227,46 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
   );
 
   const renderGoalsManagement = () => (
-    <div className="space-y-4 md:space-y-6 p-2 md:p-0">
-      {/* Enhanced comprehensive header */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-3">
+    <div className="space-y-3 md:space-y-6 p-2 md:p-0">
+      {/* Mobile-optimized comprehensive header */}
+      <div className="space-y-3 md:space-y-0">
         <div className="text-center md:text-left">
-          <h2 className="text-xl md:text-2xl font-bold text-slate-800">
+          <h2 className="text-lg md:text-2xl font-bold text-slate-800">
             Learning Goals
           </h2>
-          <p className="text-sm md:text-base text-slate-600">
-            Comprehensive goal management and tracking for all children
+          <p className="text-xs md:text-base text-slate-600 px-2 md:px-0">
+            Comprehensive goal management and tracking
           </p>
         </div>
-        <div className="flex flex-col md:flex-row gap-2">
+
+        {/* Mobile-first action buttons */}
+        <div className="flex flex-col gap-2 md:hidden">
+          {selectedChild && (
+            <Button
+              onClick={() => handleOpenLearningGoals(selectedChild)}
+              className="bg-educational-blue hover:bg-educational-blue/90 w-full"
+              size="sm"
+            >
+              <Target className="w-4 h-4 mr-2" />
+              Manage {selectedChild.name}'s Goals
+            </Button>
+          )}
+          <Button
+            onClick={() =>
+              selectedChild && handleOpenLearningGoals(selectedChild)
+            }
+            variant="outline"
+            className="w-full"
+            disabled={children.length === 0 || !selectedChild}
+            size="sm"
+          >
+            <Plus className="w-4 h-4 mr-2" />
+            Create Learning Goals
+          </Button>
+        </div>
+
+        {/* Desktop action buttons */}
+        <div className="hidden md:flex flex-row gap-2 justify-end">
           {selectedChild && (
             <Button
               onClick={() => handleOpenLearningGoals(selectedChild)}
@@ -1283,7 +1282,6 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
               selectedChild && handleOpenLearningGoals(selectedChild)
             }
             variant="outline"
-            className="w-full md:w-auto text-sm md:text-base py-3 md:py-2"
             disabled={children.length === 0 || !selectedChild}
           >
             <Plus className="w-4 h-4 mr-2" />
@@ -1313,40 +1311,43 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
         </Card>
       ) : (
         <>
-          {/* Comprehensive Goals Notice */}
-          <Card className="bg-gradient-to-r from-educational-blue/10 to-educational-purple/10 border-educational-blue/20 mb-6">
-            <CardContent className="p-4">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-3">
-                  <div className="text-2xl">🎯</div>
-                  <div>
-                    <h3 className="font-semibold text-educational-blue">
+          {/* Mobile-optimized Goals Notice */}
+          <Card className="bg-gradient-to-r from-educational-blue/10 to-educational-purple/10 border-educational-blue/20 mb-3 md:mb-6">
+            <CardContent className="p-3 md:p-4">
+              <div className="flex flex-col md:flex-row md:items-center gap-3">
+                <div className="flex items-start gap-3 flex-1">
+                  <div className="text-lg md:text-2xl">🎯</div>
+                  <div className="flex-1 min-w-0">
+                    <h3 className="font-semibold text-educational-blue text-sm md:text-base">
                       Comprehensive Learning Goals Available!
                     </h3>
-                    <p className="text-sm text-slate-600">
-                      Manage detailed daily/weekly/monthly goals with streaks,
-                      categories, and rewards
+                    <p className="text-xs md:text-sm text-slate-600 mt-1">
+                      Manage detailed goals with streaks, categories, and
+                      rewards
                     </p>
                   </div>
                 </div>
                 {selectedChild && (
                   <Button
                     onClick={() => handleOpenLearningGoals(selectedChild)}
-                    className="bg-educational-blue hover:bg-educational-blue/90"
+                    className="bg-educational-blue hover:bg-educational-blue/90 w-full md:w-auto"
+                    size="sm"
                   >
-                    <Target className="w-4 h-4 mr-2" />
-                    Manage {selectedChild.name}'s Goals
+                    <Target className="w-3 h-3 md:w-4 md:h-4 mr-2" />
+                    <span className="text-xs md:text-sm">
+                      Manage {selectedChild.name}'s Goals
+                    </span>
                   </Button>
                 )}
               </div>
             </CardContent>
           </Card>
 
-          {/* Goals Overview */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
-            <Card>
-              <CardContent className="p-4 text-center">
-                <div className="text-2xl font-bold text-educational-blue">
+          {/* Mobile-optimized Goals Overview */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-2 md:gap-4 mb-4 md:mb-6">
+            <Card className="hover:shadow-md transition-shadow">
+              <CardContent className="p-3 md:p-4 text-center">
+                <div className="text-lg md:text-2xl font-bold text-educational-blue">
                   {children.reduce(
                     (total, child) =>
                       total +
@@ -1355,12 +1356,14 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
                     0,
                   )}
                 </div>
-                <p className="text-sm text-slate-600">Learning Goals</p>
+                <p className="text-xs md:text-sm text-slate-600 leading-tight">
+                  Learning Goals
+                </p>
               </CardContent>
             </Card>
-            <Card>
-              <CardContent className="p-4 text-center">
-                <div className="text-2xl font-bold text-educational-green">
+            <Card className="hover:shadow-md transition-shadow">
+              <CardContent className="p-3 md:p-4 text-center">
+                <div className="text-lg md:text-2xl font-bold text-educational-green">
                   {children.reduce(
                     (total, child) =>
                       total +
@@ -1369,12 +1372,14 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
                     0,
                   )}
                 </div>
-                <p className="text-sm text-slate-600">Completed</p>
+                <p className="text-xs md:text-sm text-slate-600 leading-tight">
+                  Completed
+                </p>
               </CardContent>
             </Card>
-            <Card>
-              <CardContent className="p-4 text-center">
-                <div className="text-2xl font-bold text-educational-orange">
+            <Card className="hover:shadow-md transition-shadow">
+              <CardContent className="p-3 md:p-4 text-center">
+                <div className="text-lg md:text-2xl font-bold text-educational-orange">
                   {children.reduce(
                     (total, child) =>
                       total +
@@ -1385,12 +1390,14 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
                     0,
                   )}
                 </div>
-                <p className="text-sm text-slate-600">Streaks</p>
+                <p className="text-xs md:text-sm text-slate-600 leading-tight">
+                  Streaks
+                </p>
               </CardContent>
             </Card>
-            <Card>
-              <CardContent className="p-4 text-center">
-                <div className="text-2xl font-bold text-educational-purple">
+            <Card className="hover:shadow-md transition-shadow">
+              <CardContent className="p-3 md:p-4 text-center">
+                <div className="text-lg md:text-2xl font-bold text-educational-purple">
                   {children.reduce(
                     (total, child) =>
                       total +
@@ -1400,29 +1407,33 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
                     0,
                   )}
                 </div>
-                <p className="text-sm text-slate-600">Legacy Goals</p>
+                <p className="text-xs md:text-sm text-slate-600 leading-tight">
+                  Legacy Goals
+                </p>
               </CardContent>
             </Card>
           </div>
 
-          {/* Goals summary card for mobile */}
-          <div className="md:hidden">
+          {/* Enhanced mobile summary card */}
+          <div className="md:hidden mb-4">
             <Card className="bg-gradient-to-r from-educational-blue/10 to-educational-purple/10 border-educational-blue/20">
-              <CardContent className="p-4">
+              <CardContent className="p-3">
                 <div className="flex items-center justify-between">
-                  <div>
-                    <h3 className="font-semibold text-slate-800">
-                      Active Goals
+                  <div className="flex-1">
+                    <h3 className="font-semibold text-slate-800 text-sm">
+                      Quick Overview
                     </h3>
                     <p className="text-xs text-slate-600">
-                      Across all children
+                      Tap a child card below to manage goals
                     </p>
                   </div>
                   <div className="text-right">
-                    <div className="text-2xl font-bold text-educational-blue">
+                    <div className="text-lg font-bold text-educational-blue">
                       {children.reduce(
                         (total, child) =>
-                          total + getChildGoals(child.id).length,
+                          total +
+                          (child.learningGoals?.length || 0) +
+                          getChildGoals(child.id).length,
                         0,
                       )}
                     </div>
@@ -1455,72 +1466,108 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
               return (
                 <Card
                   key={child.id}
-                  className="overflow-hidden border-l-4 border-l-educational-blue"
+                  className="overflow-hidden border-l-4 border-l-educational-blue hover:shadow-lg transition-all duration-200 cursor-pointer"
+                  onClick={() => handleOpenLearningGoals(child)}
                 >
-                  <CardHeader className="pb-3">
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-3">
-                        <span className="text-2xl md:text-3xl">
+                  <CardHeader className="pb-2 md:pb-3">
+                    <div className="flex flex-col md:flex-row md:items-center gap-3">
+                      <div className="flex items-center gap-3 flex-1">
+                        <span className="text-xl md:text-3xl flex-shrink-0">
                           {child.avatar}
                         </span>
-                        <div>
-                          <CardTitle className="text-base md:text-lg">
-                            {child.name}'s All Goals
+                        <div className="flex-1 min-w-0">
+                          <CardTitle className="text-sm md:text-lg truncate">
+                            {child.name}'s Goals
                           </CardTitle>
-                          <div className="text-xs md:text-sm text-slate-600 space-y-1">
-                            <div>
-                              Learning Goals: {activeLearningGoals} active •{" "}
-                              {completedLearningGoals} completed
+                          <div className="text-xs md:text-sm text-slate-600 space-y-0.5">
+                            <div className="flex items-center gap-1">
+                              <span className="text-educational-blue font-medium">
+                                {activeLearningGoals}
+                              </span>
+                              <span>active</span>
+                              <span className="text-slate-400">•</span>
+                              <span className="text-educational-green font-medium">
+                                {completedLearningGoals}
+                              </span>
+                              <span>done</span>
                             </div>
-                            <div>
-                              Legacy Goals: {activeLegacyGoals} active •{" "}
-                              {completedLegacyGoals} completed
-                            </div>
+                            {activeLegacyGoals > 0 && (
+                              <div className="text-xs text-slate-500">
+                                Legacy: {activeLegacyGoals} active •{" "}
+                                {completedLegacyGoals} done
+                              </div>
+                            )}
                           </div>
                         </div>
                       </div>
-                      <div className="text-right">
+
+                      {/* Mobile-optimized action area */}
+                      <div className="flex items-center justify-between md:flex-col md:items-end gap-2">
+                        <div className="flex items-center gap-2 md:order-2">
+                          {totalGoals > 0 && (
+                            <div className="text-center">
+                              <div className="text-sm md:text-lg font-bold text-educational-blue">
+                                {Math.round(
+                                  ((completedLegacyGoals +
+                                    completedLearningGoals) /
+                                    totalGoals) *
+                                    100,
+                                )}
+                                %
+                              </div>
+                              <p className="text-xs text-slate-500">Success</p>
+                            </div>
+                          )}
+                        </div>
+
                         <Button
                           size="sm"
-                          onClick={() => handleOpenLearningGoals(child)}
-                          className="bg-educational-blue mb-2"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleOpenLearningGoals(child);
+                          }}
+                          className="bg-educational-blue hover:bg-educational-blue/90 md:order-1"
                         >
-                          <Settings className="w-4 h-4 mr-2" />
-                          Manage Goals
+                          <Settings className="w-3 h-3 md:w-4 md:h-4 mr-1 md:mr-2" />
+                          <span className="text-xs md:text-sm">Manage</span>
                         </Button>
-                        {totalGoals > 0 && (
-                          <div className="text-lg font-bold text-educational-blue">
-                            {Math.round(
-                              ((completedLegacyGoals + completedLearningGoals) /
-                                totalGoals) *
-                                100,
-                            )}
-                            %
-                          </div>
-                        )}
-                        <p className="text-xs text-slate-500">Success Rate</p>
                       </div>
                     </div>
                   </CardHeader>
 
                   {totalGoals === 0 ? (
-                    <CardContent className="py-8 text-center">
-                      <div className="text-3xl mb-2">📝</div>
-                      <p className="text-slate-600 text-sm">No goals set yet</p>
-                      <div className="flex flex-col gap-2 mt-3">
+                    <CardContent className="py-6 md:py-8 text-center">
+                      <div className="text-2xl md:text-3xl mb-2">📝</div>
+                      <p className="text-slate-600 text-xs md:text-sm mb-3">
+                        No goals set yet
+                      </p>
+                      <div className="flex flex-col gap-2">
                         <Button
                           size="sm"
-                          onClick={() => handleOpenLearningGoals(child)}
-                          className="bg-educational-blue"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleOpenLearningGoals(child);
+                          }}
+                          className="bg-educational-blue w-full"
                         >
-                          Create Learning Goals
+                          <Plus className="w-3 h-3 mr-2" />
+                          <span className="text-xs md:text-sm">
+                            Create Learning Goals
+                          </span>
                         </Button>
                         <Button
                           variant="outline"
                           size="sm"
-                          onClick={() => setShowAddGoalDialog(true)}
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setShowAddGoalDialog(true);
+                          }}
+                          className="w-full"
                         >
-                          Create Basic Goal
+                          <Target className="w-3 h-3 mr-2" />
+                          <span className="text-xs md:text-sm">
+                            Create Basic Goal
+                          </span>
                         </Button>
                       </div>
                     </CardContent>
@@ -1667,15 +1714,25 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
             })}
           </div>
 
-          {/* Quick action buttons for mobile */}
-          <div className="md:hidden fixed bottom-20 right-4 z-40">
+          {/* Enhanced mobile floating action button */}
+          <div className="md:hidden fixed bottom-20 right-3 z-40">
             <div className="flex flex-col gap-2">
+              {selectedChild && (
+                <Button
+                  onClick={() => handleOpenLearningGoals(selectedChild)}
+                  className="w-12 h-12 rounded-full bg-educational-purple hover:bg-educational-purple/90 shadow-lg"
+                  title="Manage Goals"
+                >
+                  <Target className="w-5 h-5" />
+                </Button>
+              )}
               <Button
                 onClick={() => setShowAddGoalDialog(true)}
-                className="w-14 h-14 rounded-full bg-educational-blue hover:bg-educational-blue/90 shadow-lg"
+                className="w-12 h-12 rounded-full bg-educational-blue hover:bg-educational-blue/90 shadow-lg"
                 disabled={children.length === 0}
+                title="Add Goal"
               >
-                <Plus className="w-6 h-6" />
+                <Plus className="w-5 h-5" />
               </Button>
             </div>
           </div>
@@ -4182,7 +4239,7 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
                 Parent Dashboard
               </h1>
               <div className="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-xs font-medium hidden md:flex items-center gap-1">
-                👨‍👩‍👧‍👦 Parent Mode
+                👨‍👩‍👧���👦 Parent Mode
               </div>
             </div>
             <p className="text-xs md:text-base text-slate-600 hidden md:block">
@@ -4242,7 +4299,7 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
           </TabsTrigger>
           <TabsTrigger
             value="notifications"
-            className="flex flex-col md:flex-row items-center gap-1 md:gap-2 text-xs md:text-sm py-2 md:py-3 px-1 md:px-3"
+            className="relative flex flex-col md:flex-row items-center gap-1 md:gap-2 text-xs md:text-sm py-2 md:py-3 px-1 md:px-3"
           >
             <Bell className="w-3 h-3 md:w-4 md:h-4" />
             <span className="hidden md:inline">Alerts</span>
@@ -4343,7 +4400,7 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
             <Button
               onClick={() => {
                 setShowRegistrationPrompt(false);
-                navigate("/");
+                navigate("/signup");
               }}
               className="w-full sm:w-auto bg-educational-blue hover:bg-educational-blue/90"
             >
