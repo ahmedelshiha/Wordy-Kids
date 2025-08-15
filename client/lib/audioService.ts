@@ -56,7 +56,13 @@ export class AudioService {
   }
 
   private loadVoices() {
-    this.voices = this.speechSynthesis.getVoices();
+    try {
+      this.voices = this.speechSynthesis.getVoices();
+      console.log(`Loaded ${this.voices.length} voices`);
+    } catch (error) {
+      console.error("Error loading voices:", error);
+      this.voices = [];
+    }
   }
 
   private getVoiceByType(voiceType: VoiceType): SpeechSynthesisVoice | null {
