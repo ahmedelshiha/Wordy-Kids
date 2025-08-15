@@ -698,7 +698,6 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
           setTopWords(response.topWords || []);
         }
       } catch (error) {
-        console.log("Child stats API not available, using fallback data");
         // Set fallback data for demo
         setPracticeWords([
           {
@@ -3870,7 +3869,7 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
           {/* No child selected state */}
           {!selectedChild && children.length > 0 && (
             <div className="text-center py-8">
-              <div className="text-4xl mb-3">👨‍👩‍👧‍👦</div>
+              <div className="text-4xl mb-3">👨‍���‍👧‍👦</div>
               <h3 className="font-semibold text-slate-700 mb-2">
                 Select a Child
               </h3>
