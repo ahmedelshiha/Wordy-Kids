@@ -52,15 +52,12 @@ export class ChildProgressSync {
       // Calculate total words learned by scanning all daily progress entries
       const totalWordsLearned = this.calculateTotalWordsLearned(childId);
 
-      const result = {
+      return {
         totalWordsLearned,
         currentStreak: streakData.currentStreak,
         weeklyProgress: weeklyData.words,
         todayProgress: dailyData.words,
       };
-
-      console.log(`Progress for ${childId}:`, result);
-      return result;
     } catch (error) {
       console.error("Error getting real progress data:", error);
       return {
