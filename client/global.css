@@ -1527,3 +1527,85 @@
     font-size: 11px;
   }
 }
+
+/* Enhanced word card mobile optimizations */
+.scale-98 {
+  transform: scale(0.98);
+}
+
+.active\:scale-98:active {
+  transform: scale(0.98);
+}
+
+.hover\:scale-\[1\.02\]:hover {
+  transform: scale(1.02);
+}
+
+/* Enhanced rating button styles for word cards */
+.rating-button-enhanced {
+  transition: all 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  position: relative;
+  overflow: hidden;
+  backdrop-filter: blur(8px);
+}
+
+.rating-button-enhanced:active {
+  transform: scale(0.95);
+}
+
+.rating-button-enhanced::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  transition: width 0.3s ease-out, height 0.3s ease-out;
+  z-index: 0;
+}
+
+.rating-button-enhanced:active::before {
+  width: 150px;
+  height: 150px;
+}
+
+.rating-button-enhanced > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* Word card flip enhancements */
+.word-card-enhanced {
+  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.word-card-enhanced:active {
+  transform: scale(0.98);
+}
+
+/* Flip button specific styles */
+.flip-button-back {
+  transition: all 0.2s ease-out;
+  backdrop-filter: blur(4px);
+}
+
+.flip-button-back:hover {
+  transform: scale(1.1);
+  background: rgba(255, 255, 255, 0.25);
+}
+
+.flip-button-back:active {
+  transform: scale(0.95);
+}
+
+/* Enhanced touch target for word card rating buttons */
+.touch-target-large {
+  min-height: 48px;
+  min-width: 48px;
+  touch-action: manipulation;
+}
