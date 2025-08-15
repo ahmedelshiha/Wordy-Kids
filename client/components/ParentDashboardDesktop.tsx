@@ -701,7 +701,9 @@ export const ParentDashboardDesktop: React.FC<ParentDashboardDesktopProps> = ({
         <div
           className={cn(
             "dashboard-sidebar fixed left-0 top-0 h-full bg-white border-r border-slate-200 transition-all duration-300 z-40 flex flex-col",
-            sidebarCollapsed ? "w-16 sidebar-collapsed" : "w-64 sidebar-expanded",
+            sidebarCollapsed
+              ? "w-16 sidebar-collapsed"
+              : "w-64 sidebar-expanded",
           )}
         >
           {/* Sidebar Header */}
@@ -728,7 +730,11 @@ export const ParentDashboardDesktop: React.FC<ParentDashboardDesktopProps> = ({
 
           {/* Sidebar Navigation */}
           <div className="p-2 flex-1 overflow-y-auto">
-            <nav className="space-y-1" role="navigation" aria-label="Dashboard navigation">
+            <nav
+              className="space-y-1"
+              role="navigation"
+              aria-label="Dashboard navigation"
+            >
               {sidebarItems.map((item) => (
                 <Tooltip key={item.id} delayDuration={0}>
                   <TooltipTrigger asChild>
@@ -743,13 +749,21 @@ export const ParentDashboardDesktop: React.FC<ParentDashboardDesktopProps> = ({
                       aria-current={activeTab === item.id ? "page" : undefined}
                     >
                       <item.icon
-                        className={cn("h-4 w-4 shrink-0", !sidebarCollapsed && "mr-3")}
+                        className={cn(
+                          "h-4 w-4 shrink-0",
+                          !sidebarCollapsed && "mr-3",
+                        )}
                       />
                       {!sidebarCollapsed && (
                         <>
-                          <span className="flex-1 text-left truncate">{item.label}</span>
+                          <span className="flex-1 text-left truncate">
+                            {item.label}
+                          </span>
                           {item.badge && item.badge > 0 && (
-                            <Badge variant="secondary" className="ml-auto shrink-0 text-xs px-1.5 py-0.5">
+                            <Badge
+                              variant="secondary"
+                              className="ml-auto shrink-0 text-xs px-1.5 py-0.5"
+                            >
                               {item.badge > 99 ? "99+" : item.badge}
                             </Badge>
                           )}
@@ -766,7 +780,9 @@ export const ParentDashboardDesktop: React.FC<ParentDashboardDesktopProps> = ({
                     <TooltipContent side="right">
                       <p>{item.label}</p>
                       {item.badge && item.badge > 0 && (
-                        <p className="text-xs opacity-75">{item.badge} active</p>
+                        <p className="text-xs opacity-75">
+                          {item.badge} active
+                        </p>
                       )}
                     </TooltipContent>
                   )}
@@ -786,20 +802,27 @@ export const ParentDashboardDesktop: React.FC<ParentDashboardDesktopProps> = ({
                   <span className="text-xs text-slate-600 truncate">
                     Active Children
                   </span>
-                  <Badge variant="outline" className="shrink-0">{children.length}</Badge>
-                </div>
-                <div className="flex justify-between items-center gap-2">
-                  <span className="text-xs text-slate-600 truncate">Total Words</span>
                   <Badge variant="outline" className="shrink-0">
-                    {familyStats.totalWordsLearned > 999 ?
-                      `${Math.floor(familyStats.totalWordsLearned / 1000)}k` :
-                      familyStats.totalWordsLearned
-                    }
+                    {children.length}
                   </Badge>
                 </div>
                 <div className="flex justify-between items-center gap-2">
-                  <span className="text-xs text-slate-600 truncate">Best Streak</span>
-                  <Badge variant="outline" className="shrink-0">{familyStats.longestStreak}</Badge>
+                  <span className="text-xs text-slate-600 truncate">
+                    Total Words
+                  </span>
+                  <Badge variant="outline" className="shrink-0">
+                    {familyStats.totalWordsLearned > 999
+                      ? `${Math.floor(familyStats.totalWordsLearned / 1000)}k`
+                      : familyStats.totalWordsLearned}
+                  </Badge>
+                </div>
+                <div className="flex justify-between items-center gap-2">
+                  <span className="text-xs text-slate-600 truncate">
+                    Best Streak
+                  </span>
+                  <Badge variant="outline" className="shrink-0">
+                    {familyStats.longestStreak}
+                  </Badge>
                 </div>
               </div>
             </div>
@@ -818,7 +841,12 @@ export const ParentDashboardDesktop: React.FC<ParentDashboardDesktopProps> = ({
             <div className="flex items-center justify-between gap-4">
               <div className="flex items-center space-x-3 min-w-0">
                 {onNavigateBack && (
-                  <Button variant="ghost" size="sm" onClick={onNavigateBack} className="shrink-0">
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={onNavigateBack}
+                    className="shrink-0"
+                  >
                     <ArrowLeft className="h-4 w-4 mr-2" />
                     <span className="hidden sm:inline">Back to Learning</span>
                     <span className="sm:hidden">Back</span>
@@ -900,7 +928,10 @@ export const ParentDashboardDesktop: React.FC<ParentDashboardDesktopProps> = ({
                   {/* Add Child Button */}
                   <Tooltip>
                     <TooltipTrigger asChild>
-                      <Button onClick={handleAddChildClick} className="shrink-0">
+                      <Button
+                        onClick={handleAddChildClick}
+                        className="shrink-0"
+                      >
                         <UserPlus className="h-4 w-4 lg:mr-2" />
                         <span className="hidden lg:inline">Add Child</span>
                       </Button>
@@ -913,21 +944,37 @@ export const ParentDashboardDesktop: React.FC<ParentDashboardDesktopProps> = ({
                   {/* More Actions Dropdown for smaller screens */}
                   <DropdownMenu>
                     <DropdownMenuTrigger asChild>
-                      <Button variant="outline" size="sm" className="lg:hidden shrink-0">
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        className="lg:hidden shrink-0"
+                      >
                         <MoreHorizontal className="h-4 w-4" />
                       </Button>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent align="end">
-                      <DropdownMenuItem onClick={() => setViewMode(viewMode === "grid" ? "list" : "grid")}>
-                        {viewMode === "grid" ? <List className="mr-2 h-4 w-4" /> : <Grid3x3 className="mr-2 h-4 w-4" />}
-                        <span>{viewMode === "grid" ? "List View" : "Grid View"}</span>
+                      <DropdownMenuItem
+                        onClick={() =>
+                          setViewMode(viewMode === "grid" ? "list" : "grid")
+                        }
+                      >
+                        {viewMode === "grid" ? (
+                          <List className="mr-2 h-4 w-4" />
+                        ) : (
+                          <Grid3x3 className="mr-2 h-4 w-4" />
+                        )}
+                        <span>
+                          {viewMode === "grid" ? "List View" : "Grid View"}
+                        </span>
                       </DropdownMenuItem>
                       <DropdownMenuItem>
                         <CalendarIcon className="mr-2 h-4 w-4" />
                         <span>Time Range</span>
                       </DropdownMenuItem>
                       <DropdownMenuSeparator />
-                      <DropdownMenuItem onClick={() => setActiveTab("settings")}>
+                      <DropdownMenuItem
+                        onClick={() => setActiveTab("settings")}
+                      >
                         <Settings className="mr-2 h-4 w-4" />
                         <span>Settings</span>
                       </DropdownMenuItem>
@@ -950,7 +997,11 @@ export const ParentDashboardDesktop: React.FC<ParentDashboardDesktopProps> = ({
                         </div>
                       </Button>
                     </DropdownMenuTrigger>
-                    <DropdownMenuContent className="w-56" align="end" forceMount>
+                    <DropdownMenuContent
+                      className="w-56"
+                      align="end"
+                      forceMount
+                    >
                       <DropdownMenuLabel className="font-normal">
                         <div className="flex flex-col space-y-1">
                           <p className="text-sm font-medium leading-none">
@@ -962,11 +1013,17 @@ export const ParentDashboardDesktop: React.FC<ParentDashboardDesktopProps> = ({
                         </div>
                       </DropdownMenuLabel>
                       <DropdownMenuSeparator />
-                      <DropdownMenuItem onClick={() => setActiveTab("settings")} className="hidden lg:flex">
+                      <DropdownMenuItem
+                        onClick={() => setActiveTab("settings")}
+                        className="hidden lg:flex"
+                      >
                         <Settings className="mr-2 h-4 w-4" />
                         <span>Settings</span>
                       </DropdownMenuItem>
-                      <DropdownMenuItem onClick={handleExportData} className="hidden lg:flex">
+                      <DropdownMenuItem
+                        onClick={handleExportData}
+                        className="hidden lg:flex"
+                      >
                         <Download className="mr-2 h-4 w-4" />
                         <span>Export Data</span>
                       </DropdownMenuItem>
@@ -1232,7 +1289,9 @@ export const ParentDashboardDesktop: React.FC<ParentDashboardDesktopProps> = ({
                         <CardHeader className="pb-4">
                           <div className="flex items-center justify-between">
                             <div className="flex items-center space-x-3 min-w-0">
-                              <div className="text-3xl shrink-0">{child.avatar}</div>
+                              <div className="text-3xl shrink-0">
+                                {child.avatar}
+                              </div>
                               <div className="min-w-0 flex-1">
                                 <CardTitle className="text-lg truncate">
                                   {child.name}
