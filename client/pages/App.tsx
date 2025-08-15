@@ -17,34 +17,32 @@ export default function App() {
   const [showLevelSelection, setShowLevelSelection] = useState(false);
 
   useEffect(() => {
-    // Always create a default profile and auto-login to the dashboard
-    const defaultProfile = {
-      id: "default-user",
-      name: "Word Explorer",
-      level: 3,
-      levelName: "Story Builder",
-      skillLevel: 3,
-      avatar: { emoji: "🌟", name: "Star Learner" },
-      theme: { gradient: "from-educational-blue to-educational-purple" },
-      wordsLearned: 45,
-      points: 1850,
-      streak: 12,
-      totalQuizzes: 8,
-      accuracy: 87,
-      favoriteCategory: "Adventure",
-      joinedDate: new Date().toLocaleDateString(),
-      lastActive: "Today",
-    };
-
-    if (!currentProfile) {
+    // Create a default profile if user is authenticated
+    if (isAuthenticated && user && !currentProfile) {
+      const defaultProfile = {
+        id: user.id,
+        name: user.name,
+        level: 3,
+        levelName: "Story Builder",
+        skillLevel: 3,
+        avatar: { emoji: "🌟", name: "Star Learner" },
+        theme: { gradient: "from-educational-blue to-educational-purple" },
+        wordsLearned: 45,
+        points: 1850,
+        streak: 12,
+        totalQuizzes: 8,
+        accuracy: 87,
+        favoriteCategory: "Adventure",
+        joinedDate: new Date().toLocaleDateString(),
+        lastActive: "Today",
+      };
       setCurrentProfile(defaultProfile);
-      setIsLoggedIn(true);
     }
 
     if (mode === "create") {
       setShowProfileCreation(true);
     }
-  }, [mode, currentProfile]);
+  }, [mode, currentProfile, isAuthenticated, user]);
 
   const handleLogin = (profile: any) => {
     setCurrentProfile(profile);
