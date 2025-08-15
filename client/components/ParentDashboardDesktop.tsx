@@ -639,7 +639,33 @@ export const ParentDashboardDesktop: React.FC<ParentDashboardDesktopProps> = ({
       if (currentUser) {
         const user = JSON.parse(currentUser);
         if (user.id) {
-          const progressData = childProgressSync.getRealProgressData?.(user.id) || {};
+          // Get basic progress stats manually since the method is private
+          const progressData = {
+            totalWordsLearned: 0,
+            currentStreak: 0,
+            weeklyProgress: 0,
+            todayProgress: 0,
+          };
+
+          try {
+            // Try to get today's progress
+            const todayKey = new Date().toISOString().split('T')[0];
+            const dailyData = localStorage.getItem(`daily_progress_${user.id}_${todayKey}`);
+            if (dailyData) {
+              const parsed = JSON.parse(dailyData);
+              progressData.todayProgress = parsed.words || 0;
+            }
+
+            // Try to get streak data
+            const streakData = localStorage.getItem(`streak_data_${user.id}`);
+            if (streakData) {
+              const parsed = JSON.parse(streakData);
+              progressData.currentStreak = parsed.currentStreak || 0;
+            }
+          } catch (error) {
+            console.error('Error parsing progress data:', error);
+          }
+
           detected.push({
             userId: user.id,
             userData: user,
