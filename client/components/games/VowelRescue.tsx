@@ -529,11 +529,11 @@ export function VowelRescue({
                 return (
                   <motion.button
                     key={vowel}
-                    className={`w-11 h-11 sm:w-12 sm:h-12 md:w-16 md:h-16 rounded-full font-bold text-lg sm:text-lg md:text-xl text-white transition-all min-h-[44px] min-w-[44px] touch-manipulation select-none
+                    className={`w-12 h-12 sm:w-13 sm:h-13 md:w-16 md:h-16 rounded-full font-bold text-base sm:text-lg md:text-xl text-white transition-all min-h-[48px] min-w-[48px] touch-manipulation select-none shadow-mobile
                       ${
                         isDisabled
-                          ? "bg-gray-400 cursor-not-allowed"
-                          : "bg-educational-blue hover:bg-educational-blue/90 hover:scale-110 active:scale-95 shadow-lg active:shadow-md"
+                          ? "bg-gray-400 cursor-not-allowed opacity-60"
+                          : "bg-educational-blue hover:bg-educational-blue/90 hover:scale-110 active:scale-95 shadow-mobile-lg active:shadow-md"
                       }
                     `}
                     whileTap={{ scale: 0.9 }}
