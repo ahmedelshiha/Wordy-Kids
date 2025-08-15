@@ -779,16 +779,21 @@ export const ChildLearningGoalsPanel: React.FC<
             </div>
           </div>
 
-          <DialogFooter>
+          <DialogFooter className="flex flex-col md:flex-row gap-2 md:gap-0">
             <Button
               variant="outline"
               onClick={() => setShowAddGoalDialog(false)}
+              className="w-full md:w-auto order-2 md:order-1"
             >
               Cancel
             </Button>
             <Button
-              onClick={handleAddGoal}
+              onClick={() => {
+                handleAddGoal();
+                triggerHapticFeedback("medium");
+              }}
               disabled={!newGoal.description.trim()}
+              className="w-full md:w-auto bg-educational-blue hover:bg-educational-blue/90 order-1 md:order-2"
             >
               Add Goal
             </Button>
