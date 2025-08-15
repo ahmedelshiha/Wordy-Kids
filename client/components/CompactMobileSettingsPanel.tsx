@@ -653,33 +653,6 @@ export const CompactMobileSettingsPanel: React.FC<
                     </div>
                   </div>
 
-                  {/* Quick Progress Summary */}
-                  <div className="mt-3 p-3 bg-gradient-to-r from-blue-50 to-purple-50 rounded-lg border border-blue-200">
-                    <div className="flex items-center justify-between mb-2">
-                      <span className="text-xs font-medium text-blue-800">
-                        Today's Progress
-                      </span>
-                      <span className="text-xs text-blue-600">
-                        {currentProgress.wordsLearned}/{dailyGoal[0]} words
-                      </span>
-                    </div>
-                    <div className="w-full bg-blue-200 rounded-full h-1.5">
-                      <div
-                        className="bg-blue-600 h-1.5 rounded-full transition-all duration-300"
-                        style={{
-                          width: `${Math.min((currentProgress.wordsLearned / dailyGoal[0]) * 100, 100)}%`,
-                        }}
-                      />
-                    </div>
-                    <div className="flex justify-between mt-2 text-xs">
-                      <span className="text-green-600">
-                        {currentProgress.wordsRemembered} remembered
-                      </span>
-                      <span className="text-purple-600">
-                        {currentProgress.accuracy}% accuracy
-                      </span>
-                    </div>
-                  </div>
 
                 </div>
               )}
