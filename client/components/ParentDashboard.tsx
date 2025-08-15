@@ -941,10 +941,25 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
       {/* Family Summary - Mobile Optimized */}
       <Card>
         <CardHeader className="pb-3 md:pb-6">
-          <CardTitle className="flex items-center gap-2 text-base md:text-lg">
-            <Users className="w-5 h-5 md:w-6 md:h-6 text-educational-blue" />
-            <span className="hidden md:inline">Family Learning Summary</span>
-            <span className="md:hidden">Family Summary</span>
+          <CardTitle className="flex items-center justify-between text-base md:text-lg">
+            <div className="flex items-center gap-2">
+              <Users className="w-5 h-5 md:w-6 md:h-6 text-educational-blue" />
+              <span className="hidden md:inline">Family Learning Summary</span>
+              <span className="md:hidden">Family Summary</span>
+              {isLoadingProgress && (
+                <div className="w-4 h-4 border-2 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
+              )}
+            </div>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={syncChildrenProgress}
+              disabled={isLoadingProgress}
+              className="text-xs"
+            >
+              <TrendingUp className="w-3 h-3 mr-1" />
+              Refresh
+            </Button>
           </CardTitle>
         </CardHeader>
         <CardContent className="px-3 md:px-6">
@@ -3239,7 +3254,7 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
             <!-- Learning Path Analysis -->
             <div class="section">
                 <h2 class="section-title">
-                    🛤️ Learning Path Analysis
+                    🛤��� Learning Path Analysis
                 </h2>
                 <div class="category-grid">
                     <div class="category-section">
