@@ -63,10 +63,15 @@ const AdvancedAnalyticsDashboard: React.FC = () => {
 
   // Add real-time update listeners for automatic data refresh
   useEffect(() => {
+    let updateTimeout: NodeJS.Timeout;
+
     const handleProgressUpdate = () => {
-      // Invalidate cache and refresh data when progress updates
-      analyticsDataService.refreshData();
-      loadAnalyticsData();
+      // Debounce updates to prevent excessive refreshing
+      clearTimeout(updateTimeout);
+      updateTimeout = setTimeout(() => {
+        analyticsDataService.refreshData();
+        loadAnalyticsData();
+      }, 1000); // 1 second debounce
     };
 
     const handleStorageChange = (event: StorageEvent) => {
