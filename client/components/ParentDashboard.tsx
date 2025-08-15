@@ -241,7 +241,7 @@ const sampleChildren: ChildProfile[] = [
         id: "streak-5",
         title: "Streak Master",
         description: "5-day learning streak",
-        icon: "🔥",
+        icon: "���",
         earnedAt: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000),
       },
       {
@@ -502,14 +502,11 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
   onNavigateBack,
   showMobileBackButton = true,
 }) => {
-  // Check if we're on desktop
+  // Check if we're on desktop FIRST, before any other hooks
   const isDesktop = useIsDesktop();
 
-  // Auth hook for guest mode checking
-  const { isGuest, user } = useAuth();
-  const navigate = useNavigate();
-
   // If we're on desktop, render the enhanced desktop version
+  // This must be done before any other hooks to avoid hooks violation
   if (isDesktop) {
     return (
       <ParentDashboardDesktop
@@ -519,6 +516,10 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
       />
     );
   }
+
+  // Auth hook for guest mode checking
+  const { isGuest, user } = useAuth();
+  const navigate = useNavigate();
 
   // Registration prompt dialog state
   const [showRegistrationPrompt, setShowRegistrationPrompt] = useState(false);
