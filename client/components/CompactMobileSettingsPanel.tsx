@@ -22,10 +22,6 @@ import {
   Vibrate,
   ChevronDown,
   ChevronUp,
-  BarChart3,
-  TrendingUp,
-  Award,
-  Calendar,
 } from "lucide-react";
 import {
   setSoundEnabled,
