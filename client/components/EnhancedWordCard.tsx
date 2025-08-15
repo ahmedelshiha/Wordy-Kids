@@ -105,7 +105,7 @@ export const EnhancedWordCard: React.FC<EnhancedWordCardProps> = ({
   const handleFlip = () => {
     setIsFlipped(!isFlipped);
     audioService.playWhooshSound();
-    playUIInteractionSoundIfEnabled();
+    playUIInteractionSoundIfEnabled.whoosh();
 
     // Enhanced haptic feedback
     if (navigator.vibrate) {
@@ -133,7 +133,7 @@ export const EnhancedWordCard: React.FC<EnhancedWordCardProps> = ({
     }
 
     // UI interaction sound
-    playUIInteractionSoundIfEnabled();
+    playUIInteractionSoundIfEnabled.click();
 
     // Call the original handler
     onWordMastered?.(word.id, rating);
