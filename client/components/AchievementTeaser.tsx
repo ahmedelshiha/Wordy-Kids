@@ -115,11 +115,18 @@ export function AchievementTeaser({ className }: AchievementTeaserProps) {
     // Cycle to next message on tap (mobile-friendly)
     setShowTeaser(false);
     setTimeout(() => {
+      const isMobile = window.innerWidth < 768;
       setMotivationalMessage(
-        EnhancedAchievementTracker.getMotivationalMessage(),
+        isMobile
+          ? EnhancedAchievementTracker.getShortMotivationalMessage()
+          : EnhancedAchievementTracker.getMotivationalMessage(),
       );
       setSpecialMessage(EnhancedAchievementTracker.getTodaySpecialMessage());
-      setCurrentTease(EnhancedAchievementTracker.getNextAchievementTease());
+      setCurrentTease(
+        isMobile
+          ? EnhancedAchievementTracker.getShortAchievementTease()
+          : EnhancedAchievementTracker.getNextAchievementTease()
+      );
       setMessageIndex((prev) => prev + 1);
       setShowTeaser(true);
     }, 200);
