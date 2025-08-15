@@ -1609,3 +1609,142 @@
   min-width: 48px;
   touch-action: manipulation;
 }
+
+/* Kid-friendly rating button animations */
+@keyframes kidRatingBounce {
+  0%, 100% {
+    transform: scale(1) translateY(0);
+  }
+  25% {
+    transform: scale(1.05) translateY(-2px);
+  }
+  50% {
+    transform: scale(1.1) translateY(-4px);
+  }
+  75% {
+    transform: scale(1.05) translateY(-2px);
+  }
+}
+
+@keyframes ratingCelebration {
+  0% {
+    transform: scale(1) rotate(0deg);
+    box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.4);
+  }
+  25% {
+    transform: scale(1.2) rotate(5deg);
+    box-shadow: 0 0 0 10px rgba(255, 255, 255, 0.2);
+  }
+  50% {
+    transform: scale(1.1) rotate(-3deg);
+    box-shadow: 0 0 0 20px rgba(255, 255, 255, 0.1);
+  }
+  75% {
+    transform: scale(1.15) rotate(2deg);
+    box-shadow: 0 0 0 15px rgba(255, 255, 255, 0.15);
+  }
+  100% {
+    transform: scale(1) rotate(0deg);
+    box-shadow: 0 0 0 0 rgba(255, 255, 255, 0);
+  }
+}
+
+@keyframes emojiDance {
+  0%, 100% {
+    transform: rotate(0deg) scale(1);
+  }
+  25% {
+    transform: rotate(-10deg) scale(1.1);
+  }
+  50% {
+    transform: rotate(10deg) scale(1.2);
+  }
+  75% {
+    transform: rotate(-5deg) scale(1.1);
+  }
+}
+
+@keyframes ratingGlow {
+  0%, 100% {
+    box-shadow: 0 0 5px rgba(255, 255, 255, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.6), 0 0 30px rgba(255, 255, 255, 0.4);
+  }
+}
+
+/* Enhanced rating button classes */
+.rating-button-hard {
+  animation: kidRatingBounce 0.6s ease-out;
+}
+
+.rating-button-medium {
+  animation: kidRatingBounce 0.6s ease-out;
+}
+
+.rating-button-easy {
+  animation: ratingCelebration 0.8s ease-out;
+}
+
+.rating-emoji-dance {
+  animation: emojiDance 1s ease-in-out;
+}
+
+.rating-glow {
+  animation: ratingGlow 1.5s ease-in-out infinite;
+}
+
+/* Kid-friendly gradient button effects */
+.rating-button-enhanced:hover {
+  transform: translateY(-2px) scale(1.05);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+}
+
+.rating-button-enhanced:active {
+  transform: translateY(0) scale(0.98);
+}
+
+/* Celebration sparkles for rating */
+.rating-celebration {
+  position: relative;
+  overflow: visible;
+}
+
+.rating-celebration::after {
+  content: "";
+  position: absolute;
+  top: -10px;
+  left: -10px;
+  right: -10px;
+  bottom: -10px;
+  background: radial-gradient(circle, transparent 40%, rgba(255, 255, 255, 0.1) 41%, rgba(255, 255, 255, 0.1) 42%, transparent 43%);
+  animation: ratingSparkle 1s ease-out;
+  pointer-events: none;
+  border-radius: inherit;
+}
+
+@keyframes ratingSparkle {
+  0% {
+    opacity: 0;
+    transform: scale(0.8) rotate(0deg);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.2) rotate(180deg);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1.5) rotate(360deg);
+  }
+}
+
+/* Mobile-specific rating enhancements */
+@media (max-width: 768px) {
+  .rating-button-enhanced {
+    min-height: 64px;
+  }
+
+  .rating-button-enhanced:active {
+    transform: scale(0.95);
+  }
+}
