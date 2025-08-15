@@ -862,12 +862,7 @@ export const EnhancedMobileWordCard: React.FC<EnhancedMobileWordCardProps> = ({
                         <Shield className="w-4 h-4 text-yellow-400" />
                         <span className="text-yellow-300">Good Progress</span>
                       </>
-                    ) : (
-                      <>
-                        <Crown className="w-4 h-4 text-green-400" />
-                        <span className="text-green-300">Mastered!</span>
-                      </>
-                    )}
+                    ) : null}
                   </div>
                   <span className="text-white/60">
                     Missed {adventureStatus?.forget_count || 0}x
