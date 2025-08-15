@@ -94,9 +94,21 @@ const AdvancedAnalyticsDashboard: React.FC = () => {
       handleProgressUpdate();
     };
 
-    // Listen for progress-related events
+    const handleCategoryCompletion = () => {
+      // Refresh when categories are completed
+      handleProgressUpdate();
+    };
+
+    const handleWordProgress = () => {
+      // Refresh when individual words are reviewed
+      handleProgressUpdate();
+    };
+
+    // Listen for all progress-related events
     window.addEventListener('goalCompleted', handleGoalCompletion);
     window.addEventListener('wordDatabaseUpdate', handleWordDatabaseUpdate);
+    window.addEventListener('categoryCompleted', handleCategoryCompletion);
+    window.addEventListener('wordProgressUpdate', handleWordProgress);
     window.addEventListener('storage', handleStorageChange);
 
     // Auto-refresh every 5 minutes for real-time feel
