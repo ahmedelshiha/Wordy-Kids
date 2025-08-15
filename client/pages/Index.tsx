@@ -1429,7 +1429,6 @@ export default function Index({ initialProfile }: IndexProps) {
     }
   };
 
-
   const getPracticeWords = () => {
     // Use smart word selector for practice words
     const practiceWords = SmartWordSelector.getPracticeWords(

@@ -218,10 +218,10 @@ export default function LoginForm() {
 
         // Create user profile for auth context
         const userProfile = {
-          id: user?.id || `demo-${email.split('@')[0]}`,
-          name: user?.name || email.split('@')[0],
+          id: user?.id || `demo-${email.split("@")[0]}`,
+          name: user?.name || email.split("@")[0],
           email: email,
-          type: 'parent' as const,
+          type: "parent" as const,
           isGuest: false,
         };
 

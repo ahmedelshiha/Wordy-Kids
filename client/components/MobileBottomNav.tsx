@@ -156,7 +156,7 @@ export function MobileBottomNav({
       icon: isGuest ? Users : LogOut,
       onClick: () => {
         if (isGuest) {
-          navigate('/signup');
+          navigate("/signup");
         } else {
           logout();
         }

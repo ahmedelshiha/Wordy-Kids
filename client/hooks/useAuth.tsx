@@ -1,12 +1,18 @@
-import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, {
+  createContext,
+  useContext,
+  useState,
+  useEffect,
+  ReactNode,
+} from "react";
+import { useNavigate } from "react-router-dom";
 
 export interface UserProfile {
   id: string;
   name: string;
   email?: string;
   avatar?: string;
-  type: 'child' | 'parent' | 'guest';
+  type: "child" | "parent" | "guest";
   isGuest: boolean;
   createdAt?: string;
 }
@@ -27,7 +33,7 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 export const useAuth = () => {
   const context = useContext(AuthContext);
   if (!context) {
-    throw new Error('useAuth must be used within an AuthProvider');
+    throw new Error("useAuth must be used within an AuthProvider");
   }
   return context;
 };
@@ -49,12 +55,12 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     const checkExistingSession = () => {
       try {
         // Check for guest session
-        const guestSession = localStorage.getItem('wordAdventureGuestSession');
-        if (guestSession === 'active') {
+        const guestSession = localStorage.getItem("wordAdventureGuestSession");
+        if (guestSession === "active") {
           setUser({
-            id: 'guest-user',
-            name: 'Guest Explorer',
-            type: 'guest',
+            id: "guest-user",
+            name: "Guest Explorer",
+            type: "guest",
             isGuest: true,
           });
           setIsLoading(false);
@@ -62,7 +68,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         }
 
         // Check for logged in user session
-        const currentUser = localStorage.getItem('wordAdventureCurrentUser');
+        const currentUser = localStorage.getItem("wordAdventureCurrentUser");
         if (currentUser) {
           const userData = JSON.parse(currentUser);
           setUser({
@@ -71,7 +77,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
           });
         }
       } catch (error) {
-        console.error('Error checking existing session:', error);
+        console.error("Error checking existing session:", error);
       } finally {
         setIsLoading(false);
       }
@@ -86,42 +92,45 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       isGuest: false,
     };
     setUser(userProfile);
-    localStorage.setItem('wordAdventureCurrentUser', JSON.stringify(userProfile));
-    localStorage.removeItem('wordAdventureGuestSession');
+    localStorage.setItem(
+      "wordAdventureCurrentUser",
+      JSON.stringify(userProfile),
+    );
+    localStorage.removeItem("wordAdventureGuestSession");
   };
 
   const loginAsGuest = () => {
     const guestProfile: UserProfile = {
-      id: 'guest-user',
-      name: 'Guest Explorer',
-      type: 'guest',
+      id: "guest-user",
+      name: "Guest Explorer",
+      type: "guest",
       isGuest: true,
     };
     setUser(guestProfile);
-    localStorage.setItem('wordAdventureGuestSession', 'active');
-    localStorage.removeItem('wordAdventureCurrentUser');
+    localStorage.setItem("wordAdventureGuestSession", "active");
+    localStorage.removeItem("wordAdventureCurrentUser");
   };
 
   const clearSession = () => {
     // Clear all authentication-related localStorage
-    localStorage.removeItem('wordAdventureCurrentUser');
-    localStorage.removeItem('wordAdventureGuestSession');
-    localStorage.removeItem('rememberedEmail');
-    
+    localStorage.removeItem("wordAdventureCurrentUser");
+    localStorage.removeItem("wordAdventureGuestSession");
+    localStorage.removeItem("rememberedEmail");
+
     // Clear user learning progress for guests (keep for registered users)
     if (user?.isGuest) {
-      localStorage.removeItem('wordAdventureProgress');
-      localStorage.removeItem('wordAdventureSession');
-      localStorage.removeItem('childStats');
-      localStorage.removeItem('learningStats');
+      localStorage.removeItem("wordAdventureProgress");
+      localStorage.removeItem("wordAdventureSession");
+      localStorage.removeItem("childStats");
+      localStorage.removeItem("learningStats");
     }
   };
 
   const logout = () => {
     clearSession();
     setUser(null);
-    if (navigate && typeof navigate === 'function') {
-      navigate('/');
+    if (navigate && typeof navigate === "function") {
+      navigate("/");
     }
   };
 
@@ -136,11 +145,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     clearSession,
   };
 
-  return (
-    <AuthContext.Provider value={value}>
-      {children}
-    </AuthContext.Provider>
-  );
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
 
 export { AuthContext };

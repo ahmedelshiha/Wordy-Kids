@@ -50,7 +50,7 @@ export default function App() {
       id: profile.id,
       name: profile.name,
       email: profile.email,
-      type: 'child' as const,
+      type: "child" as const,
       isGuest: false,
     };
 
@@ -80,7 +80,11 @@ export default function App() {
 
   // Show loading state while auth is initializing
   if (isLoading) {
-    return <div className="flex items-center justify-center min-h-screen">Loading...</div>;
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        Loading...
+      </div>
+    );
   }
 
   // If authenticated, show the main app
