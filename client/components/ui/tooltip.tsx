@@ -8,11 +8,7 @@ const TooltipProvider = React.forwardRef<
   React.ElementRef<typeof TooltipPrimitive.Provider>,
   React.ComponentPropsWithoutRef<typeof TooltipPrimitive.Provider>
 >(({ children, delayDuration = 300, ...props }, ref) => (
-  <TooltipPrimitive.Provider
-    ref={ref}
-    delayDuration={delayDuration}
-    {...props}
-  >
+  <TooltipPrimitive.Provider ref={ref} delayDuration={delayDuration} {...props}>
     {children}
   </TooltipPrimitive.Provider>
 ));

@@ -294,7 +294,11 @@ export class EnhancedWordSelector {
     // Be more conservative with cross-category for specific category selections
     if (selectedCategory === "all" && exhaustionLevel >= 0.8) {
       return "cross_category";
-    } else if (selectedCategory !== "all" && exhaustionLevel >= 0.95 && availableWords === 0) {
+    } else if (
+      selectedCategory !== "all" &&
+      exhaustionLevel >= 0.95 &&
+      availableWords === 0
+    ) {
       // Only use cross-category for specific categories when completely exhausted
       return "cross_category";
     }

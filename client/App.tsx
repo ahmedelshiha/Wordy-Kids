@@ -89,9 +89,15 @@ const App = () => (
             <Route path="/admin" element={<AdminPage />} />
             <Route path="/word-card-demo" element={<EnhancedWordCardDemo />} />
             <Route path="/word-garden-demo" element={<WordGardenDemo />} />
-            <Route path="/word-adventure-demo" element={<WordAdventureDemo />} />
+            <Route
+              path="/word-adventure-demo"
+              element={<WordAdventureDemo />}
+            />
             <Route path="/WordAdventureDemo" element={<WordAdventureDemo />} />
-            <Route path="/word-adventure-test" element={<WordAdventureTest />} />
+            <Route
+              path="/word-adventure-test"
+              element={<WordAdventureTest />}
+            />
             <Route path="/WordAdventureTest" element={<WordAdventureTest />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
