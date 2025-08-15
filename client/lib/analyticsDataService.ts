@@ -187,8 +187,8 @@ export class AnalyticsDataService {
       {
         id: "learning_sessions",
         name: "Learning Sessions",
-        value: learningSessionsData.current,
-        previousValue: learningSessionsData.previous,
+        value: this.validateNumber(learningSessionsData.current),
+        previousValue: this.validateNumber(learningSessionsData.previous),
         unit: "",
         trend: this.getTrend(
           learningSessionsData.current,
