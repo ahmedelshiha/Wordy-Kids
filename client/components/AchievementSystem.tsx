@@ -28,6 +28,10 @@ import {
 } from "lucide-react";
 import { audioService } from "@/lib/audioService";
 import { AnimatedCounter } from "@/components/AnimatedCounter";
+import { AchievementTracker } from "@/lib/achievementTracker";
+import { GoalProgressTracker } from "@/lib/goalProgressTracker";
+import { CategoryCompletionTracker } from "@/lib/categoryCompletionTracker";
+import { useAuth } from "@/hooks/useAuth";
 
 interface Achievement {
   id: string;
