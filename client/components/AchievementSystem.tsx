@@ -235,6 +235,7 @@ interface AchievementSystemProps {
 
 export function AchievementSystem({
   onUnlock,
+  onRefresh,
 }: AchievementSystemProps) {
   const { user } = useAuth();
   const [selectedCategory, setSelectedCategory] = useState<string>("all");
@@ -844,7 +845,7 @@ export function AchievementSystem({
                                 />
                                 {isComplete && (
                                   <Badge className="bg-educational-green text-white text-xs px-1 py-0.5">
-                                    Ready! ��
+                                    Ready! 🎉
                                   </Badge>
                                 )}
                               </div>
