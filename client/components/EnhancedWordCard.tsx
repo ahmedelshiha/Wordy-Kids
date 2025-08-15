@@ -615,7 +615,8 @@ export const EnhancedWordCard: React.FC<EnhancedWordCardProps> = ({
                       "h-10 w-10 rounded-full transition-all duration-200 flex-shrink-0",
                       "bg-white/20 hover:bg-white/30 border-2 border-white/40",
                       "text-white hover:scale-105 active:scale-95",
-                      isPlaying && "bg-yellow-400/30 border-yellow-300/60 animate-pulse",
+                      isPlaying &&
+                        "bg-yellow-400/30 border-yellow-300/60 animate-pulse",
                     )}
                   >
                     <Volume2 className="w-4 h-4" />
