@@ -619,9 +619,6 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
               setTopWords(childStatsResponse.topWords || []);
             }
           } catch (apiError) {
-            console.log(
-              "Child stats API not available, using fallback data (this is normal)",
-            );
             // Generate sample practice and top words since API is not available
             setPracticeWords([
               {
