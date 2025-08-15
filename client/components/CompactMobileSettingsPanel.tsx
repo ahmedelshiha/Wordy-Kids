@@ -22,10 +22,6 @@ import {
   Vibrate,
   ChevronDown,
   ChevronUp,
-  BarChart3,
-  TrendingUp,
-  Award,
-  Calendar,
 } from "lucide-react";
 import {
   setSoundEnabled,
@@ -42,19 +38,10 @@ import {
   useMobileDevice,
   triggerHapticFeedback,
 } from "@/hooks/use-mobile-device";
-import { MobileLearningGoalsPanel } from "@/components/MobileLearningGoalsPanel";
-import { QuickGoalsWidget } from "@/components/QuickGoalsWidget";
 
 interface CompactMobileSettingsPanelProps {
   isOpen: boolean;
   onClose: () => void;
-  currentProgress?: {
-    wordsLearned: number;
-    wordsRemembered: number;
-    sessionCount: number;
-    accuracy: number;
-  };
-  onGoalUpdate?: (goals: any[]) => void;
 }
 
 export const CompactMobileSettingsPanel: React.FC<
@@ -62,13 +49,6 @@ export const CompactMobileSettingsPanel: React.FC<
 > = ({
   isOpen,
   onClose,
-  currentProgress = {
-    wordsLearned: 0,
-    wordsRemembered: 0,
-    sessionCount: 0,
-    accuracy: 0,
-  },
-  onGoalUpdate,
 }) => {
   // Essential settings only
   const [soundOn, setSoundOn] = useState(isSoundEnabled());
@@ -85,7 +65,6 @@ export const CompactMobileSettingsPanel: React.FC<
   const [dailyReminders, setDailyReminders] = useState(true);
   const [largeText, setLargeText] = useState(false);
   const [autoPlay, setAutoPlay] = useState(true);
-  const [showGoalsPanel, setShowGoalsPanel] = useState(false);
 
   // Collapsible sections
   const [expandedSections, setExpandedSections] = useState<
@@ -94,7 +73,6 @@ export const CompactMobileSettingsPanel: React.FC<
     audio: true,
     appearance: false,
     learning: true,
-    goals: false,
     other: false,
   });
 
@@ -671,74 +649,11 @@ export const CompactMobileSettingsPanel: React.FC<
                     </div>
                   </div>
 
-                  {/* Quick Progress Summary */}
-                  <div className="mt-3 p-3 bg-gradient-to-r from-blue-50 to-purple-50 rounded-lg border border-blue-200">
-                    <div className="flex items-center justify-between mb-2">
-                      <span className="text-xs font-medium text-blue-800">
-                        Today's Progress
-                      </span>
-                      <span className="text-xs text-blue-600">
-                        {currentProgress.wordsLearned}/{dailyGoal[0]} words
-                      </span>
-                    </div>
-                    <div className="w-full bg-blue-200 rounded-full h-1.5">
-                      <div
-                        className="bg-blue-600 h-1.5 rounded-full transition-all duration-300"
-                        style={{
-                          width: `${Math.min((currentProgress.wordsLearned / dailyGoal[0]) * 100, 100)}%`,
-                        }}
-                      />
-                    </div>
-                    <div className="flex justify-between mt-2 text-xs">
-                      <span className="text-green-600">
-                        {currentProgress.wordsRemembered} remembered
-                      </span>
-                      <span className="text-purple-600">
-                        {currentProgress.accuracy}% accuracy
-                      </span>
-                    </div>
-                  </div>
 
-                  {/* Advanced Goals Button */}
-                  <button
-                    onClick={() => {
-                      setShowGoalsPanel(true);
-                      if (deviceInfo.hasHaptic) triggerHapticFeedback("medium");
-                    }}
-                    className="w-full mt-2 p-3 bg-gradient-to-r from-educational-blue to-educational-purple text-white rounded-lg hover:shadow-lg transition-all duration-200 flex items-center justify-between"
-                  >
-                    <div className="flex items-center gap-2">
-                      <BarChart3 className="w-4 h-4" />
-                      <span className="text-sm font-medium">
-                        Learning Goals
-                      </span>
-                    </div>
-                    <ChevronRight className="w-4 h-4" />
-                  </button>
                 </div>
               )}
             </div>
 
-            {/* Goals & Analytics Section */}
-            <div className="border rounded-lg">
-              <CompactSectionHeader
-                title="Learning Goals"
-                emoji="🎯"
-                isExpanded={expandedSections.goals}
-                onToggle={() => toggleSection("goals")}
-              />
-              {expandedSections.goals && (
-                <div className="p-2">
-                  <QuickGoalsWidget
-                    currentProgress={currentProgress}
-                    onExpandClick={() => {
-                      setShowGoalsPanel(true);
-                      if (deviceInfo.hasHaptic) triggerHapticFeedback("medium");
-                    }}
-                  />
-                </div>
-              )}
-            </div>
 
             {/* Other Section */}
             <div className="border rounded-lg">
@@ -814,15 +729,6 @@ export const CompactMobileSettingsPanel: React.FC<
         </div>
       </Card>
 
-      {/* Mobile Learning Goals Panel */}
-      {showGoalsPanel && (
-        <MobileLearningGoalsPanel
-          isOpen={showGoalsPanel}
-          onClose={() => setShowGoalsPanel(false)}
-          currentProgress={currentProgress}
-          onGoalUpdate={onGoalUpdate}
-        />
-      )}
     </div>
   );
 };
