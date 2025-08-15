@@ -275,9 +275,9 @@ export function VowelRescue({
 
   if (!gameStarted) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-educational-blue/20 to-educational-purple/20 flex items-center justify-center p-4">
-        <Card className="w-full max-w-md mx-4">
-          <CardContent className="p-6 sm:p-8 text-center relative">
+    <div className="min-h-screen bg-gradient-to-br from-educational-blue/20 to-educational-purple/20 flex items-center justify-center p-2 sm:p-4 safe-area-padding-bottom">
+      <Card className="w-full max-w-md mx-2 sm:mx-4 mobile-optimized">
+        <CardContent className="p-4 sm:p-6 md:p-8 text-center relative">
             {/* Close button - Mobile Optimized */}
             <Button
               onClick={onExit}
