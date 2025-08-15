@@ -365,7 +365,7 @@ export const ChildLearningGoalsPanel: React.FC<
                       return (
                         <Card
                           key={goal.id}
-                          className="border-l-4 border-l-educational-blue"
+                          className="border-l-4 border-l-educational-blue hover:shadow-md transition-all duration-200"
                         >
                           <CardContent className="p-3 md:p-4">
                             <div className="flex flex-col md:flex-row md:items-start justify-between gap-2 md:gap-3 mb-3">
