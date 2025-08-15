@@ -4270,6 +4270,12 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
           {renderOverview()}
         </TabsContent>
         <TabsContent
+          value="goals"
+          className="tab-content-mobile overflow-y-auto max-h-[70vh] lg:max-h-none scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100"
+        >
+          {renderGoalsManagement()}
+        </TabsContent>
+        <TabsContent
           value="custom-words"
           className="tab-content-mobile overflow-y-auto max-h-[70vh] lg:max-h-none scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100"
         >
