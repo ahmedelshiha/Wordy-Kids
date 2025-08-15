@@ -15,7 +15,9 @@ export class AudioService {
 
   private constructor() {
     // Check if speech synthesis is supported
-    if (!window.speechSynthesis) {
+    this.isSupported = this.checkBrowserSupport();
+
+    if (!this.isSupported) {
       console.warn("Speech Synthesis API not supported in this browser");
       this.isEnabled = false;
       return;
@@ -42,12 +44,55 @@ export class AudioService {
     };
 
     // Wait for voices to load if they're not immediately available
-    if (this.voices.length === 0) {
-      // Try loading voices after a short delay
-      setTimeout(() => {
-        this.loadVoices();
-      }, 100);
+    this.waitForVoices();
+  }
+
+  private checkBrowserSupport(): boolean {
+    // Check for basic speech synthesis support
+    if (!('speechSynthesis' in window)) {
+      return false;
     }
+
+    // Check for SpeechSynthesisUtterance support
+    if (!('SpeechSynthesisUtterance' in window)) {
+      return false;
+    }
+
+    // Additional checks for known problematic environments
+    const userAgent = navigator.userAgent.toLowerCase();
+
+    // Check if running in certain environments that might have issues
+    if (userAgent.includes('jsdom') || userAgent.includes('node')) {
+      return false;
+    }
+
+    return true;
+  }
+
+  private async waitForVoices(): Promise<void> {
+    let attempts = 0;
+    const maxAttempts = 10;
+    const delay = 100;
+
+    const checkVoices = () => {
+      this.loadVoices();
+      if (this.voices.length > 0) {
+        this.voicesLoaded = true;
+        console.log(`Voices loaded successfully: ${this.voices.length} voices available`);
+        return;
+      }
+
+      attempts++;
+      if (attempts < maxAttempts) {
+        setTimeout(checkVoices, delay * attempts); // Increasing delay
+      } else {
+        console.warn("No voices loaded after maximum attempts");
+        this.voicesLoaded = false;
+      }
+    };
+
+    // Start checking immediately and then with delays
+    checkVoices();
   }
 
   public static getInstance(): AudioService {
