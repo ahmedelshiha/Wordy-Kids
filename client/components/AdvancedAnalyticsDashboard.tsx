@@ -320,16 +320,16 @@ const AdvancedAnalyticsDashboard: React.FC = () => {
                     ) : null}
                     <span
                       className={`text-sm font-medium ${
-                        metric.trend === "up"
-                          ? "text-green-600"
-                          : metric.trend === "down"
-                            ? "text-red-600"
-                            : "text-gray-600"
-                      }`}
-                    >
-                      {metric.changePercent > 0 ? "+" : ""}
-                      {metric.changePercent}%
-                    </span>
+                      metric.trend === "up"
+                        ? "text-green-600"
+                        : metric.trend === "down"
+                          ? "text-red-600"
+                          : "text-gray-600"
+                    }`}
+                  >
+                    {metric.changePercent > 0 ? "+" : ""}
+                    {isFinite(metric.changePercent) ? metric.changePercent : 0}%
+                  </span>
                   </div>
                 </div>
                 <div className="space-y-2">
