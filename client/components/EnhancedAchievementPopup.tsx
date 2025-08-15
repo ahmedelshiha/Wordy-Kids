@@ -459,11 +459,6 @@ export function EnhancedAchievementPopup({
                               ✨ Sticker added! ✨
                             </div>
                           )}
-                          {currentAchievement.reward.type === "badge" && (
-                            <div className="text-xs text-white/90 animate-pulse mt-1">
-                              🏅 Badge earned! 🏅
-                            </div>
-                          )}
                           {currentAchievement.reward.value && (
                             <div className="text-xs text-white/90 mt-1">
                               +{currentAchievement.reward.value} points!
