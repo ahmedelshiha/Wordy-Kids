@@ -5,6 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { Brain, Gamepad2, Trophy, Zap, ArrowLeft } from "lucide-react";
 import { AdventureGames } from "./AdventureGames";
 import { QuizGames } from "./QuizGames";
+import { FloatingHelpMenu } from "@/components/FloatingHelpMenu";
 
 interface GameHubProps {
   selectedCategory: string;
@@ -276,6 +277,22 @@ export function GameHub({
           </CardContent>
         </Card>
       </div>
+
+      {/* Floating Help Menu for Game Hub */}
+      <FloatingHelpMenu
+        currentPage="games"
+        onHelpAction={(helpContent) => {
+          // Use speech synthesis for game hub help
+          if ("speechSynthesis" in window) {
+            const utterance = new SpeechSynthesisUtterance(
+              `${helpContent.title}. ${helpContent.message.replace(/\n/g, ". ").replace(/•/g, "")}`,
+            );
+            utterance.rate = 0.8;
+            utterance.pitch = 1.1;
+            speechSynthesis.speak(utterance);
+          }
+        }}
+      />
     </div>
   );
 }

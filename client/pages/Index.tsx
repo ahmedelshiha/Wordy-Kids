@@ -37,6 +37,7 @@ import { EnhancedAchievementPopup } from "@/components/EnhancedAchievementPopup"
 import { CompactMobileSettingsPanel } from "@/components/CompactMobileSettingsPanel";
 import { FloatingBubbles } from "@/components/FloatingBubbles";
 import { CelebrationEffect } from "@/components/CelebrationEffect";
+import { FloatingHelpMenu } from "@/components/FloatingHelpMenu";
 import { SessionRestoration } from "@/components/SessionRestoration";
 import {
   useSessionPersistence,
@@ -3216,23 +3217,26 @@ export default function Index({ initialProfile }: IndexProps) {
             }
           />
 
-          {/* Mobile-Optimized Floating Helper */}
-          <div className="fixed bottom-24 sm:bottom-20 lg:bottom-6 right-3 sm:right-4 md:right-6 z-40">
-            <div
-              className="bg-gradient-to-r from-educational-purple to-educational-pink p-3 md:p-4 rounded-full shadow-2xl cursor-pointer transition-all duration-300 min-w-[48px] min-h-[48px] flex items-center justify-center active:scale-95"
-              onClick={() =>
-                setFeedback({
-                  type: "encouragement",
-                  title: "Need Help? 🤗",
-                  message:
-                    "You're doing amazing! Keep learning and exploring new words!",
-                  onContinue: () => setFeedback(null),
-                })
-              }
-            >
-              <Heart className="w-5 md:w-6 h-5 md:h-6 text-white fill-current animate-pulse" />
-            </div>
-          </div>
+          {/* Enhanced Floating Help Menu */}
+          <FloatingHelpMenu
+            currentPage="home"
+            onHelpAction={(helpContent) =>
+              setFeedback({
+                type: "info",
+                title: helpContent.title,
+                message: helpContent.message,
+                onContinue: () => setFeedback(null),
+              })
+            }
+            onSettings={() => {
+              setActivePanel("settings");
+              setShowMobileMoreMenu(false);
+            }}
+            onAchievements={() => {
+              setActivePanel("progress");
+              setShowMobileMoreMenu(false);
+            }}
+          />
 
           {/* Enhanced Achievement Popup */}
           {achievementPopup.length > 0 && (

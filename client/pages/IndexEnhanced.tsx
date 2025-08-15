@@ -17,6 +17,7 @@ import { VocabularyBuilder } from "@/components/VocabularyBuilder";
 import { CompactMobileSettingsPanel } from "@/components/CompactMobileSettingsPanel";
 import { FloatingBubbles } from "@/components/FloatingBubbles";
 import { CelebrationEffect } from "@/components/CelebrationEffect";
+import { FloatingHelpMenu } from "@/components/FloatingHelpMenu";
 import { DailyChallenge } from "@/components/DailyChallenge";
 import { ReadingComprehension } from "@/components/ReadingComprehension";
 import { ParentDashboard } from "@/components/ParentDashboard";
@@ -845,23 +846,18 @@ export default function IndexEnhanced() {
         />
       )}
 
-      {/* Floating Helper */}
-      <div className="fixed bottom-6 right-6 z-40">
-        <div
-          className="bg-gradient-to-r from-educational-purple to-educational-pink p-4 rounded-full shadow-2xl cursor-pointer hover:scale-110 transition-all duration-300"
-          onClick={() =>
-            setFeedback({
-              type: "encouragement",
-              title: "Need Help? 🤗",
-              message:
-                "You're doing amazing! Keep learning and exploring new words!",
-              onContinue: () => setFeedback(null),
-            })
-          }
-        >
-          <Heart className="w-6 h-6 text-white fill-current animate-pulse" />
-        </div>
-      </div>
+      {/* Enhanced Floating Help Menu */}
+      <FloatingHelpMenu
+        currentPage="home"
+        onHelpAction={(helpContent) =>
+          setFeedback({
+            type: "info",
+            title: helpContent.title,
+            message: helpContent.message,
+            onContinue: () => setFeedback(null),
+          })
+        }
+      />
     </div>
   );
 }
