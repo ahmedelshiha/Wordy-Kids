@@ -1190,6 +1190,38 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
                       )}
                     </div>
                   )}
+
+                  {/* Learning Goals Quick Actions */}
+                  <div className="bg-blue-50 p-3 rounded-lg">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-2">
+                        <Target className="w-4 h-4 text-educational-blue" />
+                        <span className="font-medium text-sm">Learning Goals</span>
+                        <Badge variant="secondary" className="text-xs">
+                          {child.learningGoals?.length || 0}
+                        </Badge>
+                      </div>
+                      <Button
+                        size="sm"
+                        variant="outline"
+                        className="text-xs px-2 py-1 h-6"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleOpenLearningGoals(child);
+                        }}
+                      >
+                        Manage
+                      </Button>
+                    </div>
+                    {child.learningGoals && child.learningGoals.length > 0 && (
+                      <div className="mt-2 text-xs text-slate-600">
+                        Active: {child.learningGoals.filter(g => g.isActive).length} |{" "}
+                        Completed: {child.learningGoals.filter(g =>
+                          g.current >= g.target
+                        ).length}
+                      </div>
+                    )}
+                  </div>
                 </CardContent>
               </Card>
             );
@@ -1452,7 +1484,7 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
                                   variant="ghost"
                                   className="px-3"
                                 >
-                                  <div className="w-4 h-4">⋯</div>
+                                  <div className="w-4 h-4">��</div>
                                 </Button>
                               </div>
                             </div>
