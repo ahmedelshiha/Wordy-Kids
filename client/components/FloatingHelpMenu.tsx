@@ -15,6 +15,7 @@ import {
   X,
   ChevronRight,
 } from "lucide-react";
+import { useContextualHelp, type ContextualPage } from "@/hooks/use-contextual-help";
 
 interface HelpOption {
   id: string;
