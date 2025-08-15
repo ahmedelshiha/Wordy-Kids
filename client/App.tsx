@@ -23,6 +23,7 @@ import {
 import { WordAdventureDemo } from "./pages/WordAdventureDemo";
 import { WordAdventureTest } from "./pages/WordAdventureTest";
 import { NavigationGuard } from "./components/NavigationGuard";
+import SpeechDiagnostics from "./components/SpeechDiagnostics";
 
 const queryClient = new QueryClient();
 
