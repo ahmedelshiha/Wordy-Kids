@@ -439,7 +439,7 @@ export const CompactMobileSettingsPanel: React.FC<
                         },
                         {
                           type: "kid" as VoiceType,
-                          emoji: "🧒",
+                          emoji: "���",
                           label: "Kid",
                           description: "Higher pitched voice",
                         },
@@ -775,15 +775,6 @@ export const CompactMobileSettingsPanel: React.FC<
         </div>
       </Card>
 
-      {/* Mobile Learning Goals Panel */}
-      {showGoalsPanel && (
-        <MobileLearningGoalsPanel
-          isOpen={showGoalsPanel}
-          onClose={() => setShowGoalsPanel(false)}
-          currentProgress={currentProgress}
-          onGoalUpdate={onGoalUpdate}
-        />
-      )}
     </div>
   );
 };
