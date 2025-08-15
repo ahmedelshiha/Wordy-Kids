@@ -117,6 +117,29 @@ export const EnhancedWordCard: React.FC<EnhancedWordCardProps> = ({
     setTimeout(() => setIsPressed(false), 150);
   };
 
+  // Enhanced rating handler with celebration
+  const handleRating = (rating: "easy" | "medium" | "hard") => {
+    setRatedAs(rating);
+    setShowCelebration(true);
+
+    // Different sounds for different ratings
+    if (rating === "easy") {
+      playSoundIfEnabled.success();
+    } else if (rating === "medium") {
+      playSoundIfEnabled.achievement();
+    } else {
+      playSoundIfEnabled.encouragement();
+    }
+
+    // Call the original handler
+    onWordMastered?.(word.id, rating);
+
+    // Reset celebration after animation
+    setTimeout(() => {
+      setShowCelebration(false);
+    }, 2000);
+  };
+
   // Handle touch start for visual feedback
   const handleTouchStart = () => {
     setIsPressed(true);
@@ -471,7 +494,7 @@ export const EnhancedWordCard: React.FC<EnhancedWordCardProps> = ({
                   <div className="mt-4 text-center">
                     <div className="bg-white/10 backdrop-blur-sm rounded-full px-3 py-2 border border-white/20">
                       <p className="text-xs text-white/90 mobile-safe-text animate-fade-in">
-                        <span className="animate-sparkle">✨</span> Choose how you feel about this word! <span className="animate-sparkle animation-delay-100">✨</span>
+                        <span className="animate-sparkle">���</span> Choose how you feel about this word! <span className="animate-sparkle animation-delay-100">✨</span>
                       </p>
                     </div>
                   </div>
