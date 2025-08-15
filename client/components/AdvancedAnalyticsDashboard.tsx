@@ -47,49 +47,6 @@ import {
   DeviceAnalytics
 } from "@/lib/analyticsDataService";
 
-interface AnalyticsMetric {
-  id: string;
-  name: string;
-  value: number;
-  previousValue: number;
-  unit: string;
-  trend: "up" | "down" | "stable";
-  changePercent: number;
-  icon: React.ReactNode;
-  color: string;
-}
-
-interface UsagePattern {
-  timeOfDay: string;
-  sessions: number;
-  completionRate: number;
-  avgDuration: number;
-}
-
-interface LearningOutcome {
-  category: string;
-  totalWords: number;
-  masteredWords: number;
-  averageAccuracy: number;
-  improvementRate: number;
-  strugglingAreas: string[];
-}
-
-interface GeographicData {
-  region: string;
-  users: number;
-  sessions: number;
-  performance: number;
-  growth: number;
-}
-
-interface DeviceAnalytics {
-  device: string;
-  percentage: number;
-  sessions: number;
-  avgDuration: number;
-  icon: React.ReactNode;
-}
 
 const AdvancedAnalyticsDashboard: React.FC = () => {
   const [timeRange, setTimeRange] = useState("30d");
