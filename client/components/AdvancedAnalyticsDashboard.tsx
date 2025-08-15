@@ -35,6 +35,7 @@ import {
   Zap,
   Brain,
   Heart,
+  CheckCircle,
 } from "lucide-react";
 import { AnimatedCounter } from "@/components/AnimatedCounter";
 import {
