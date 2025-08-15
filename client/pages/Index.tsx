@@ -111,6 +111,8 @@ import {
 import { useNavigate } from "react-router-dom";
 import { WordProgressAPI } from "@/lib/wordProgressApi";
 import { ChildWordStats } from "@shared/api";
+import { useBrowserBackButton } from "@/hooks/useBrowserBackButton";
+import { useNavigationHistory } from "@/hooks/useNavigationHistory";
 
 interface IndexProps {
   initialProfile?: any;
@@ -118,6 +120,40 @@ interface IndexProps {
 
 export default function Index({ initialProfile }: IndexProps) {
   const navigate = useNavigate();
+
+  // Navigation history for back button functionality
+  const { canGoBack, goBack, previousPath } = useNavigationHistory({
+    excludePaths: ["/", "/login", "/signup"],
+  });
+
+  // Back button handling
+  const { handleBack, addHistoryEntry } = useBrowserBackButton({
+    fallbackRoute: "/",
+    onBackAttempt: () => {
+      console.log("Back button pressed in main app");
+    },
+    customBackHandler: () => {
+      // Handle back navigation based on current state
+      if (showQuiz) {
+        setShowQuiz(false);
+        return true;
+      }
+      if (showMatchingGame) {
+        setShowMatchingGame(false);
+        return true;
+      }
+      if (showWordCreator) {
+        setShowWordCreator(false);
+        return true;
+      }
+      if (activeTab !== "dashboard") {
+        setActiveTab("dashboard");
+        return true;
+      }
+      return false; // Allow default back behavior
+    },
+  });
+
   const [activeTab, setActiveTab] = useState("dashboard");
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
   const [forgottenWords, setForgottenWords] = useState<Set<number>>(new Set());

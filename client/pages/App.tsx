@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
+import { useBrowserBackButton } from "@/hooks/useBrowserBackButton";
 import { EnhancedChildLogin } from "@/components/EnhancedChildLogin";
 import { AvatarCustomization } from "@/components/AvatarCustomization";
 import { LevelSelection } from "@/components/LevelSelection";
@@ -15,6 +16,27 @@ export default function App() {
   const [currentProfile, setCurrentProfile] = useState<any>(null);
   const [showProfileCreation, setShowProfileCreation] = useState(false);
   const [showLevelSelection, setShowLevelSelection] = useState(false);
+
+  // Initialize back button handling for the app
+  const { handleBack, addHistoryEntry } = useBrowserBackButton({
+    fallbackRoute: "/",
+    onBackAttempt: () => {
+      console.log("Back button pressed in app");
+    },
+    customBackHandler: () => {
+      // Custom back handling based on current state
+      if (showLevelSelection) {
+        setShowLevelSelection(false);
+        setShowProfileCreation(true);
+        return true; // Prevent default back behavior
+      }
+      if (showProfileCreation) {
+        navigate("/");
+        return true; // Prevent default back behavior
+      }
+      return false; // Allow default back behavior
+    },
+  });
 
   useEffect(() => {
     // Create a default profile if user is authenticated
@@ -37,12 +59,14 @@ export default function App() {
         lastActive: "Today",
       };
       setCurrentProfile(defaultProfile);
+      // Add history entry when user successfully accesses the app
+      addHistoryEntry();
     }
 
     if (mode === "create") {
       setShowProfileCreation(true);
     }
-  }, [mode, currentProfile, isAuthenticated, user]);
+  }, [mode, currentProfile, isAuthenticated, user, addHistoryEntry]);
 
   const handleLogin = (profile: any) => {
     // Create user profile for auth context

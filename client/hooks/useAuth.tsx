@@ -5,7 +5,7 @@ import React, {
   useEffect,
   ReactNode,
 } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 export interface UserProfile {
   id: string;
@@ -42,12 +42,15 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<UserProfile | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   let navigate: any;
+  let location: any;
 
   try {
     navigate = useNavigate();
+    location = useLocation();
   } catch (error) {
     // useNavigate might not be available during SSR or initial render
     navigate = () => {};
+    location = { pathname: "/" };
   }
 
   // Check for existing session on mount
@@ -124,13 +127,30 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       localStorage.removeItem("childStats");
       localStorage.removeItem("learningStats");
     }
+
+    // Clear navigation history only when explicitly logging out
+    localStorage.removeItem("wordAdventure_navigationHistory");
   };
 
   const logout = () => {
+    // Store current path before logout to avoid redirecting authenticated users back to app
+    const currentPath = location?.pathname || "/";
+    const isAppRoute = [
+      "/app",
+      "/admin",
+      "/profile",
+      "/word-card-demo",
+      "/word-garden-demo",
+    ].includes(currentPath);
+
     clearSession();
     setUser(null);
+
     if (navigate && typeof navigate === "function") {
-      navigate("/");
+      // If user was on an app route, redirect to login, otherwise stay on current page
+      if (isAppRoute) {
+        navigate("/", { replace: true });
+      }
     }
   };
 
