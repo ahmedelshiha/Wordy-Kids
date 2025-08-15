@@ -1303,7 +1303,28 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
             Set and track learning goals for your children
           </p>
 
-          {selectedChild ? (
+          {children.length === 0 ? (
+            <div className="max-w-md mx-auto">
+              <Card className="bg-gradient-to-r from-green-50 to-blue-50">
+                <CardContent className="p-6 text-center">
+                  <div className="text-4xl mb-4">👶</div>
+                  <h3 className="text-lg font-semibold mb-2">
+                    No Children Added Yet
+                  </h3>
+                  <p className="text-gray-600 mb-4">
+                    Add your first child to start setting learning goals and tracking their progress
+                  </p>
+                  <Button
+                    onClick={handleAddChildClick}
+                    className="bg-educational-blue"
+                  >
+                    <UserPlus className="w-4 h-4 mr-2" />
+                    Add Your First Child
+                  </Button>
+                </CardContent>
+              </Card>
+            </div>
+          ) : selectedChild ? (
             <Button
               onClick={() => handleOpenLearningGoals(selectedChild)}
               className="bg-educational-blue hover:bg-educational-blue/90"
