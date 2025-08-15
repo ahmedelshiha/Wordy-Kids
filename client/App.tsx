@@ -9,6 +9,12 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 
+// Import notification components
+import {
+  WordDatabaseNotifications,
+  CompactWordDatabaseNotifications,
+} from "./components/WordDatabaseNotifications";
+
 // Import essential components
 import LoginForm from "./pages/LoginForm";
 import SignUp from "./pages/SignUp";
@@ -17,12 +23,14 @@ import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
 
-// Test with Toasters
+// Test with notification components
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
       <Toaster />
       <Sonner />
+      <WordDatabaseNotifications />
+      <CompactWordDatabaseNotifications />
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<LoginForm />} />
