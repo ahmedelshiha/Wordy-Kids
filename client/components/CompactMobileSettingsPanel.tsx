@@ -46,13 +46,6 @@ import {
 interface CompactMobileSettingsPanelProps {
   isOpen: boolean;
   onClose: () => void;
-  currentProgress?: {
-    wordsLearned: number;
-    wordsRemembered: number;
-    sessionCount: number;
-    accuracy: number;
-  };
-  onGoalUpdate?: (goals: any[]) => void;
 }
 
 export const CompactMobileSettingsPanel: React.FC<
@@ -439,7 +432,7 @@ export const CompactMobileSettingsPanel: React.FC<
                         },
                         {
                           type: "kid" as VoiceType,
-                          emoji: "���",
+                          emoji: "🧒",
                           label: "Kid",
                           description: "Higher pitched voice",
                         },
