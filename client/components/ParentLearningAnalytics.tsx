@@ -1,1 +1,1 @@
-export { ParentLearningAnalyticsEnhanced as ParentLearningAnalytics } from "./ParentLearningAnalyticsEnhanced";
+export { SimplifiedMobileLearningAnalytics as ParentLearningAnalytics } from "./SimplifiedMobileLearningAnalytics";
