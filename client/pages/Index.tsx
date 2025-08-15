@@ -1554,13 +1554,13 @@ export default function Index({ initialProfile }: IndexProps) {
                   <div className="bg-white/20 backdrop-blur-sm rounded-full p-1">
                     <img
                       src="https://cdn.builder.io/api/v1/image/assets%2Fa33f74a2f97141a4a1ef43d9448f9bda%2F2a4b7e4c3c38485b966cfd2cff50da9e?format=webp&width=800"
-                      alt="Wordy Logo"
+                      alt="Wordy Kids Logo"
                       className="w-5 h-5 rounded-full"
                     />
                   </div>
                   <div>
                     <h1 className="text-sm font-bold leading-tight">
-                      Wordy's Adventure!
+                      Wordy Kids!
                     </h1>
                     <p className="text-xs text-educational-yellow-light opacity-90">
                       Let's Learn! 🦉
@@ -1576,13 +1576,13 @@ export default function Index({ initialProfile }: IndexProps) {
                   <div className="bg-white/20 backdrop-blur-sm rounded-full p-3">
                     <img
                       src="https://cdn.builder.io/api/v1/image/assets%2Fa33f74a2f97141a4a1ef43d9448f9bda%2F2a4b7e4c3c38485b966cfd2cff50da9e?format=webp&width=800"
-                      alt="Wordy Logo"
+                      alt="Wordy Kids Logo"
                       className="w-16 h-16 rounded-full"
                     />
                   </div>
                 </div>
                 <h1 className="text-2xl md:text-3xl font-bold mb-1">
-                  🌟 Wordy's Adventure!
+                  🌟 Wordy Kids!
                 </h1>
                 <p className="text-lg font-semibold text-educational-yellow-light mb-2">
                   Fun vocabulary learning for kids! 🌟
@@ -1737,13 +1737,13 @@ export default function Index({ initialProfile }: IndexProps) {
                       <div className="w-8 h-8 lg:w-10 lg:h-10 bg-white rounded-xl flex items-center justify-center p-1">
                         <img
                           src="https://cdn.builder.io/api/v1/image/assets%2Fa33f74a2f97141a4a1ef43d9448f9bda%2F2a4b7e4c3c38485b966cfd2cff50da9e?format=webp&width=800"
-                          alt="Wordy Logo"
+                          alt="Wordy Kids Logo"
                           className="w-full h-full rounded-lg"
                         />
                       </div>
                       <div>
                         <h1 className="text-lg lg:text-xl font-bold text-gray-800">
-                          Wordy's Adventure!
+                          Wordy Kids!
                         </h1>
                         <p className="text-xs lg:text-sm text-gray-600">
                           Fun Learning Games

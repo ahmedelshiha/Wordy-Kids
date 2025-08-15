@@ -104,7 +104,7 @@ export function ChildLogin({ onLogin, onCreateProfile }: ChildLoginProps) {
             </div>
           </div>
           <h1 className="text-4xl font-bold text-gray-800 mb-2">
-            Welcome to Wordy's Adventure! 🌟
+            Welcome to Wordy Kids! 🌟
           </h1>
           <p className="text-lg text-gray-600">
             Choose your learning buddy to start your vocabulary journey!

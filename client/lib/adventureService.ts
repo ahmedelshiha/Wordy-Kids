@@ -15,7 +15,7 @@ import {
 } from "@shared/adventure";
 
 class AdventureService {
-  private storageKey = "wordys_adventure_data";
+  private storageKey = "wordy_kids_data";
   private heroKey = "wordys_hero_data";
 
   // Initialize adventure data for a word

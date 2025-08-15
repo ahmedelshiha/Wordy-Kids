@@ -326,7 +326,7 @@ export default function LoginForm() {
               <div className="bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 p-2 sm:p-3 md:p-4 rounded-full shadow-lg sm:shadow-2xl animate-gentle-float">
                 <img
                   src="https://cdn.builder.io/api/v1/image/assets%2F783bb0e1cd3e4c73aa9ce79d668738ac%2Fee8d2c4de0ab40c1b0b38ee3c2ef1020?format=webp&width=800"
-                  alt="Wordy Logo"
+                  alt="Wordy Kids Logo"
                   className="w-10 h-10 sm:w-12 sm:h-12 md:w-16 md:h-16 object-contain"
                 />
               </div>
@@ -336,10 +336,10 @@ export default function LoginForm() {
             </div>
           </div>
           <h1 className="text-xl sm:text-2xl md:text-3xl font-bold bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent mb-1">
-            Wordy Adventure !
+            Wordy Kids !
           </h1>
           <p className="text-gray-600 text-sm sm:text-base">
-            Continue your word adventure
+            Continue your learning journey
           </p>
         </div>
 

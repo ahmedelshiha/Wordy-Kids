@@ -144,7 +144,7 @@ const AdminLogin: React.FC<AdminLoginProps> = ({ onLogin }) => {
               🛡️ Administrator Access
             </CardTitle>
             <p className="text-slate-400 text-sm md:text-base">
-              Secure portal to Wordy's Adventure management system
+              Secure portal to Wordy Kids management system
             </p>
 
             {/* Device & Security Info */}

@@ -1,6 +1,6 @@
 {
-  "name": "Wordy's Adventure!",
-  "short_name": "Wordy's Adventure",
+  "name": "Wordy Kids!",
+  "short_name": "Wordy Kids",
   "description": "Fun English learning games for kids through interactive activities and adventures with Wordy the Owl",
   "start_url": "/",
   "display": "standalone",
@@ -10,7 +10,7 @@
   "categories": ["education", "games", "kids"],
   "lang": "en",
   "scope": "/",
-  "id": "wordy-adventure-app",
+  "id": "wordy-kids-app",
   "icons": [
     {
       "src": "https://cdn.builder.io/api/v1/image/assets%2Fbebe97bf37d04293b70e6f9372d99db4%2F6a9f823070a947fe81ec12398fd564c5?format=webp&width=192",
@@ -37,7 +37,7 @@
       "sizes": "1280x720",
       "type": "image/png",
       "form_factor": "wide",
-      "label": "Wordy's Adventure Dashboard"
+      "label": "Wordy Kids Dashboard"
     },
     {
       "src": "/images/screenshot-narrow.png",

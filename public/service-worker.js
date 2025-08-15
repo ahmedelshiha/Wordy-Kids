@@ -1,5 +1,5 @@
-// Wordy's Adventure Service Worker
-const CACHE_NAME = "wordy-adventure-v1";
+// Wordy Kids Service Worker
+const CACHE_NAME = "wordy-kids-v1";
 const CACHE_VERSION = "1.0.0";
 
 // Assets to cache for offline functionality
@@ -12,7 +12,7 @@ const STATIC_ASSETS = [
 ];
 
 // Network-first cache strategy for dynamic content
-const DYNAMIC_CACHE = "wordy-adventure-dynamic-v1";
+const DYNAMIC_CACHE = "wordy-kids-dynamic-v1";
 
 // Install event - cache static assets
 self.addEventListener("install", (event) => {
@@ -218,9 +218,7 @@ self.addEventListener("push", (event) => {
     ],
   };
 
-  event.waitUntil(
-    self.registration.showNotification("Wordy's Adventure", options),
-  );
+  event.waitUntil(self.registration.showNotification("Wordy Kids", options));
 });
 
 // Handle notification clicks

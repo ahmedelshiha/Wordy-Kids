@@ -197,7 +197,7 @@ export const LearningDashboard: React.FC<LearningDashboardProps> = ({
             Welcome back, {userName}!
           </h1>
           <p className="text-slate-600 mb-6">
-            Ready to continue your Wordy's Adventure?
+            Ready to continue your learning journey?
           </p>
 
           {/* Practice Words Card - Fallback */}

@@ -237,7 +237,7 @@ export function EnhancedChildLogin({
           </div>
         </div>
         <h1 className="text-5xl font-bold bg-gradient-to-r from-educational-blue to-educational-purple bg-clip-text text-transparent mb-4">
-          🌟 Welcome to Wordy's Adventure! 🌟
+          🌟 Welcome to Wordy Kids! 🌟
         </h1>
         <p className="text-xl text-gray-600 mb-6">
           Choose your learning buddy to start your amazing vocabulary journey!

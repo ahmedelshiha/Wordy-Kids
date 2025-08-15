@@ -84,7 +84,7 @@ export function MobileBottomNav({
     },
   ];
 
-  // Primary tabs without parent dashboard - moved to More section
+  // Primary tabs without My Journey - moved to More section
   const primaryTabs = [
     {
       id: "dashboard",
@@ -116,19 +116,16 @@ export function MobileBottomNav({
       textColor: "text-pink-600",
       badge: undefined,
     },
+  ];
+
+  const secondaryMenuItems = [
     {
       id: "progress",
       emoji: "🌟",
       label: userRole === "parent" ? "Reports" : "My Journey",
       icon: Trophy,
-      color: "from-yellow-500 to-orange-500",
-      bgColor: "bg-yellow-100",
-      textColor: "text-yellow-600",
-      badge: undefined,
+      onClick: () => onTabChange("progress"),
     },
-  ];
-
-  const secondaryMenuItems = [
     {
       id: "parent",
       emoji: "👨‍👩‍👧‍👦",
