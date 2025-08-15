@@ -531,17 +531,17 @@ export function VowelRescue({
           {/* Progress Information - Mobile Optimized */}
           <div className="flex items-center justify-between text-xs sm:text-sm text-gray-600 mb-2">
             <span className="font-medium">
-              Q{currentIndex + 1}/{questions.length}
+              Q{currentIndex + 1}/{gameQuestions.length}
             </span>
             <span className="font-medium">
-              {Math.round(((currentIndex + 1) / questions.length) * 100)}%
+              {Math.round(((currentIndex + 1) / gameQuestions.length) * 100)}%
               Complete
             </span>
           </div>
 
           {/* Progress Bar */}
           <Progress
-            value={((currentIndex + 1) / questions.length) * 100}
+            value={((currentIndex + 1) / gameQuestions.length) * 100}
             className="h-2"
           />
         </div>
