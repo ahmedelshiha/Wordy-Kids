@@ -176,6 +176,11 @@ export class CategoryCompletionTracker {
         console.error("Error in category completion callback:", error);
       }
     });
+
+    // Dispatch event for analytics system to update
+    window.dispatchEvent(new CustomEvent('categoryCompleted', {
+      detail: { categoryId: this.currentSession?.categoryId, stats }
+    }));
   }
 
   /**
