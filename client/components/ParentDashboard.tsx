@@ -481,15 +481,26 @@ const sampleNotifications: ParentNotification[] = [
 
 // Hook to detect if we're on desktop
 const useIsDesktop = () => {
-  const [isDesktop, setIsDesktop] = useState(false);
+  const [isDesktop, setIsDesktop] = useState(() => {
+    // Initialize with correct value on first render to avoid hydration issues
+    if (typeof window !== "undefined") {
+      return window.innerWidth >= 1024;
+    }
+    return false;
+  });
 
   useEffect(() => {
     const checkIsDesktop = () => {
-      setIsDesktop(window.innerWidth >= 1024);
+      const newIsDesktop = window.innerWidth >= 1024;
+      setIsDesktop(newIsDesktop);
     };
 
+    // Set initial value on mount
     checkIsDesktop();
+
+    // Listen for resize events
     window.addEventListener("resize", checkIsDesktop);
+
     return () => window.removeEventListener("resize", checkIsDesktop);
   }, []);
 
@@ -1501,11 +1512,13 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
   // This check is done after all hooks to avoid hooks violation
   if (isDesktop) {
     return (
-      <ParentDashboardDesktop
-        children={propChildren}
-        sessions={sessions}
-        onNavigateBack={onNavigateBack}
-      />
+      <div className="parent-dashboard-desktop-wrapper">
+        <ParentDashboardDesktop
+          children={propChildren}
+          sessions={sessions}
+          onNavigateBack={onNavigateBack}
+        />
+      </div>
     );
   }
 
