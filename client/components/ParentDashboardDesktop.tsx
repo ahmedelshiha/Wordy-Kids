@@ -394,6 +394,17 @@ export const ParentDashboardDesktop: React.FC<ParentDashboardDesktopProps> = ({
   const [analyticsExpanded, setAnalyticsExpanded] = useState(false);
   const [selectedTimeRange, setSelectedTimeRange] = useState("30d");
 
+  // Auto-detect state
+  const [showAutoDetectDialog, setShowAutoDetectDialog] = useState(false);
+  const [detectedProgress, setDetectedProgress] = useState<
+    Array<{
+      userId: string;
+      userData: any;
+      progressStats: any;
+    }>
+  >([]);
+  const [childNames, setChildNames] = useState<Record<string, string>>({});
+
   // New child data
   const [newChildData, setNewChildData] = useState({
     name: "",
@@ -411,9 +422,9 @@ export const ParentDashboardDesktop: React.FC<ParentDashboardDesktopProps> = ({
     todayActivity: 0,
   });
 
-  // Initialize children data
+  // Initialize children data and sync with real progress immediately
   useEffect(() => {
-    const loadChildren = () => {
+    const loadChildrenAndSync = async () => {
       try {
         const savedChildren = localStorage.getItem("parentDashboardChildren");
         if (savedChildren) {
@@ -427,7 +438,29 @@ export const ParentDashboardDesktop: React.FC<ParentDashboardDesktopProps> = ({
                 earnedAt: new Date(achievement.earnedAt),
               })) || [],
           }));
+
           setChildren(loadedChildren);
+
+          // Immediately sync with real progress data after loading children
+          if (loadedChildren.length > 0) {
+            try {
+              const syncedChildren =
+                await childProgressSync.syncAndSaveAllProgress(loadedChildren);
+              setChildren(syncedChildren);
+
+              // Update family stats with real data
+              const stats = childProgressSync.getFamilyStats(syncedChildren);
+              setFamilyStats(stats);
+
+              toast({
+                title: "Progress Synced",
+                description: `Real-time data loaded for ${syncedChildren.length} children`,
+                duration: 2000,
+              });
+            } catch (syncError) {
+              console.error("Error syncing progress on load:", syncError);
+            }
+          }
           return;
         }
       } catch (error) {
@@ -436,7 +469,7 @@ export const ParentDashboardDesktop: React.FC<ParentDashboardDesktopProps> = ({
       setChildren([]);
     };
 
-    loadChildren();
+    loadChildrenAndSync();
   }, [isGuest]);
 
   // Update selected child when children array changes
@@ -463,15 +496,36 @@ export const ParentDashboardDesktop: React.FC<ParentDashboardDesktopProps> = ({
     [],
   );
 
-  // Save children whenever they change
+  // Auto-refresh progress data periodically for real-time updates
   useEffect(() => {
-    if (children.length > 0) {
-      const timeoutId = setTimeout(() => {
-        saveChildrenToStorage(children);
-      }, 500);
-      return () => clearTimeout(timeoutId);
-    }
-  }, [children, saveChildrenToStorage]);
+    let refreshInterval: NodeJS.Timeout;
+
+    const autoRefreshProgress = async () => {
+      if (!isLoadingProgress && children.length > 0 && !document.hidden) {
+        try {
+          await syncChildrenProgress();
+        } catch (error) {
+          console.error("Auto-refresh progress error:", error);
+        }
+      }
+    };
+
+    // Set up periodic refresh every 30 seconds
+    refreshInterval = setInterval(autoRefreshProgress, 30000);
+
+    // Listen for visibility changes to refresh when tab becomes active
+    const handleVisibilityChange = () => {
+      if (!document.hidden) {
+        autoRefreshProgress();
+      }
+    };
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+
+    return () => {
+      clearInterval(refreshInterval);
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+    };
+  }, [children.length, isLoadingProgress, syncChildrenProgress]);
 
   // Sync children progress
   const syncChildrenProgress = useCallback(async () => {
@@ -537,20 +591,245 @@ export const ParentDashboardDesktop: React.FC<ParentDashboardDesktopProps> = ({
     }
   }, [isGuest]);
 
+  // Helper function to detect existing learning progress for a child
+  const detectExistingProgress = (
+    childName: string,
+  ): {
+    hasProgress: boolean;
+    userId?: string;
+    progressData?: any;
+  } => {
+    try {
+      // Check for current user that might match
+      const currentUser = localStorage.getItem("wordAdventureCurrentUser");
+      if (currentUser) {
+        const user = JSON.parse(currentUser);
+        if (
+          user.username &&
+          user.username.toLowerCase().includes(childName.toLowerCase())
+        ) {
+          return {
+            hasProgress: true,
+            userId: user.id,
+            progressData: user,
+          };
+        }
+      }
+
+      // Check for progress data by scanning localStorage keys
+      const keys = Object.keys(localStorage);
+      for (const key of keys) {
+        if (
+          key.startsWith("daily_progress_") ||
+          key.startsWith("weekly_progress_")
+        ) {
+          return {
+            hasProgress: true,
+            userId: key.split("_")[2], // Extract user ID from key
+          };
+        }
+      }
+    } catch (error) {
+      console.error("Error detecting existing progress:", error);
+    }
+
+    return { hasProgress: false };
+  };
+
+  // Function to scan for all existing learning progress
+  const scanForExistingProgress = useCallback(() => {
+    try {
+      const detected: Array<{
+        userId: string;
+        userData: any;
+        progressStats: any;
+      }> = [];
+
+      // Check current user
+      const currentUser = localStorage.getItem("wordAdventureCurrentUser");
+      if (currentUser) {
+        const user = JSON.parse(currentUser);
+        if (user.id) {
+          // Get basic progress stats manually since the method is private
+          const progressData = {
+            totalWordsLearned: 0,
+            currentStreak: 0,
+            weeklyProgress: 0,
+            todayProgress: 0,
+          };
+
+          try {
+            // Try to get today's progress
+            const todayKey = new Date().toISOString().split("T")[0];
+            const dailyData = localStorage.getItem(
+              `daily_progress_${user.id}_${todayKey}`,
+            );
+            if (dailyData) {
+              const parsed = JSON.parse(dailyData);
+              progressData.todayProgress = parsed.words || 0;
+            }
+
+            // Try to get streak data
+            const streakData = localStorage.getItem(`streak_data_${user.id}`);
+            if (streakData) {
+              const parsed = JSON.parse(streakData);
+              progressData.currentStreak = parsed.currentStreak || 0;
+            }
+          } catch (error) {
+            console.error("Error parsing progress data:", error);
+          }
+
+          detected.push({
+            userId: user.id,
+            userData: user,
+            progressStats: progressData,
+          });
+        }
+      }
+
+      // Scan localStorage for progress data patterns
+      const keys = Object.keys(localStorage);
+      const progressKeys = keys.filter(
+        (key) =>
+          key.startsWith("daily_progress_") ||
+          key.startsWith("weekly_progress_") ||
+          key.startsWith("systematic_progress_"),
+      );
+
+      const userIds = new Set<string>();
+      progressKeys.forEach((key) => {
+        const parts = key.split("_");
+        if (parts.length >= 3) {
+          userIds.add(parts[2]);
+        }
+      });
+
+      userIds.forEach((userId) => {
+        if (!detected.find((d) => d.userId === userId)) {
+          try {
+            const progressData = {
+              totalWordsLearned: 0,
+              currentStreak: 0,
+              weeklyProgress: 0,
+              todayProgress: 0,
+            };
+
+            // Try to get some basic stats
+            const dailyKey = `daily_progress_${userId}_${new Date().toISOString().split("T")[0]}`;
+            const dailyData = localStorage.getItem(dailyKey);
+            if (dailyData) {
+              const parsed = JSON.parse(dailyData);
+              progressData.todayProgress = parsed.words || 0;
+            }
+
+            detected.push({
+              userId,
+              userData: { id: userId, username: `User_${userId}` },
+              progressStats: progressData,
+            });
+          } catch (error) {
+            console.error("Error processing user progress:", error);
+          }
+        }
+      });
+
+      setDetectedProgress(detected);
+
+      if (detected.length > 0) {
+        setShowAutoDetectDialog(true);
+        toast({
+          title: "Learning Progress Found!",
+          description: `Found progress data for ${detected.length} learner(s)`,
+          duration: 4000,
+        });
+      } else {
+        toast({
+          title: "No Progress Found",
+          description: "No existing learning progress detected",
+          duration: 3000,
+        });
+      }
+    } catch (error) {
+      console.error("Error scanning for progress:", error);
+      toast({
+        title: "Scan Error",
+        description: "Error scanning for existing progress",
+        variant: "destructive",
+        duration: 3000,
+      });
+    }
+  }, []);
+
+  // Handle connecting detected progress to new child
+  const connectDetectedProgress = useCallback(
+    (progressData: any, childName: string) => {
+      const newChild: ChildProfile = {
+        id: progressData.userId,
+        name: childName,
+        age: 8, // Default age
+        avatar: "🧒",
+        level: progressData.userData?.level || 1,
+        totalPoints: progressData.userData?.points || 0,
+        wordsLearned: progressData.progressStats?.totalWordsLearned || 0,
+        currentStreak: progressData.progressStats?.currentStreak || 0,
+        weeklyGoal: 15,
+        weeklyProgress: progressData.progressStats?.weeklyProgress || 0,
+        favoriteCategory: "Animals",
+        lastActive: new Date(),
+        preferredLearningTime: "After school",
+        difficultyPreference: "medium",
+        parentNotes: "Connected from existing learning progress",
+        customWords: [],
+        weeklyTarget: 15,
+        monthlyTarget: 60,
+        recentAchievements: [],
+        learningStrengths: [],
+        areasForImprovement: [],
+        motivationalRewards: [],
+        learningGoals: [],
+        learningPreferences: {
+          autoAdjustGoals: true,
+          adaptiveDifficulty: true,
+          preferredCategories: ["Animals"],
+          focusAreas: [],
+          reminderTimes: ["16:00"],
+          motivationStyle: "encouraging",
+        },
+      };
+
+      setChildren((prev) => [...prev, newChild]);
+      setSelectedChild(newChild);
+      setShowAutoDetectDialog(false);
+
+      toast({
+        title: "Child Connected!",
+        description: `${childName} has been connected with their learning progress`,
+        duration: 4000,
+      });
+    },
+    [],
+  );
+
   // Handle add child form
   const addChild = useCallback(() => {
     if (newChildData.name.trim()) {
+      // Check for existing progress data
+      const existingProgress = detectExistingProgress(newChildData.name.trim());
+
+      // Use detected user ID or generate new one
+      const childId = existingProgress.userId || Date.now().toString();
+
       const newChild: ChildProfile = {
-        id: Date.now().toString(),
+        id: childId,
         name: newChildData.name.trim(),
         age: newChildData.age,
         avatar: newChildData.avatar,
-        level: 1,
-        totalPoints: 0,
-        wordsLearned: 0,
-        currentStreak: 0,
+        level: existingProgress.progressData?.level || 1,
+        totalPoints: existingProgress.progressData?.points || 0,
+        wordsLearned: 0, // Will be synced from real data
+        currentStreak: 0, // Will be synced from real data
         weeklyGoal: 10,
-        weeklyProgress: 0,
+        weeklyProgress: 0, // Will be synced from real data
         favoriteCategory: "Animals",
         lastActive: new Date(),
         preferredLearningTime: newChildData.preferredLearningTime,
@@ -585,13 +864,37 @@ export const ParentDashboardDesktop: React.FC<ParentDashboardDesktopProps> = ({
       });
       setShowAddChildDialog(false);
 
-      toast({
-        title: "Child Added",
-        description: `${newChild.name} has been added to your dashboard`,
-        duration: 3000,
-      });
+      // If existing progress was detected, immediately sync it
+      if (existingProgress.hasProgress) {
+        setTimeout(async () => {
+          try {
+            const syncedChildren =
+              await childProgressSync.syncAndSaveAllProgress([
+                ...children,
+                newChild,
+              ]);
+            setChildren(syncedChildren);
+            const stats = childProgressSync.getFamilyStats(syncedChildren);
+            setFamilyStats(stats);
+
+            toast({
+              title: "Progress Connected!",
+              description: `${newChild.name} added and connected to existing learning progress`,
+              duration: 4000,
+            });
+          } catch (error) {
+            console.error("Error syncing new child progress:", error);
+          }
+        }, 500);
+      } else {
+        toast({
+          title: "Child Added",
+          description: `${newChild.name} has been added to your dashboard`,
+          duration: 3000,
+        });
+      }
     }
-  }, [newChildData]);
+  }, [newChildData, children]);
 
   // Handle learning goals
   const handleOpenLearningGoals = useCallback((child: ChildProfile) => {
@@ -927,6 +1230,27 @@ export const ParentDashboardDesktop: React.FC<ParentDashboardDesktopProps> = ({
                       <p>Refresh Data (Ctrl+R)</p>
                     </TooltipContent>
                   </Tooltip>
+
+                  {/* Auto-Detect Button */}
+                  {children.length === 0 && (
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <Button
+                          variant="outline"
+                          onClick={scanForExistingProgress}
+                          className="shrink-0"
+                        >
+                          <Search className="h-4 w-4 lg:mr-2" />
+                          <span className="hidden lg:inline">
+                            Detect Progress
+                          </span>
+                        </Button>
+                      </TooltipTrigger>
+                      <TooltipContent>
+                        <p>Scan for Existing Learning Progress</p>
+                      </TooltipContent>
+                    </Tooltip>
+                  )}
 
                   {/* Add Child Button */}
                   <Tooltip>
@@ -1873,6 +2197,106 @@ export const ParentDashboardDesktop: React.FC<ParentDashboardDesktopProps> = ({
             </AlertDialogContent>
           </AlertDialog>
         )}
+
+        {/* Auto-Detect Progress Dialog */}
+        <Dialog
+          open={showAutoDetectDialog}
+          onOpenChange={setShowAutoDetectDialog}
+        >
+          <DialogContent className="sm:max-w-2xl">
+            <DialogHeader>
+              <DialogTitle className="flex items-center gap-2">
+                <Search className="h-5 w-5" />
+                Found Learning Progress!
+              </DialogTitle>
+              <DialogDescription>
+                We found existing learning progress data. Connect these learners
+                to your parent dashboard:
+              </DialogDescription>
+            </DialogHeader>
+
+            <div className="space-y-4 max-h-96 overflow-y-auto">
+              {detectedProgress.map((progress, index) => {
+                const childName =
+                  childNames[progress.userId] || `Learner ${index + 1}`;
+
+                return (
+                  <Card key={progress.userId} className="p-4">
+                    <div className="flex items-center justify-between">
+                      <div className="space-y-2 flex-1">
+                        <div className="flex items-center gap-3">
+                          <div className="text-2xl">🧒</div>
+                          <div>
+                            <Input
+                              placeholder="Enter child's name"
+                              value={childName}
+                              onChange={(e) =>
+                                setChildNames((prev) => ({
+                                  ...prev,
+                                  [progress.userId]: e.target.value,
+                                }))
+                              }
+                              className="text-sm"
+                            />
+                            <p className="text-xs text-muted-foreground mt-1">
+                              User ID: {progress.userId}
+                            </p>
+                          </div>
+                        </div>
+
+                        <div className="grid grid-cols-3 gap-4 text-sm">
+                          <div className="text-center p-2 bg-blue-50 rounded">
+                            <div className="font-semibold text-blue-600">
+                              {progress.progressStats?.totalWordsLearned || 0}
+                            </div>
+                            <div className="text-xs text-blue-700">
+                              Words Learned
+                            </div>
+                          </div>
+                          <div className="text-center p-2 bg-green-50 rounded">
+                            <div className="font-semibold text-green-600">
+                              {progress.progressStats?.currentStreak || 0}
+                            </div>
+                            <div className="text-xs text-green-700">
+                              Current Streak
+                            </div>
+                          </div>
+                          <div className="text-center p-2 bg-orange-50 rounded">
+                            <div className="font-semibold text-orange-600">
+                              {progress.progressStats?.todayProgress || 0}
+                            </div>
+                            <div className="text-xs text-orange-700">
+                              Today's Words
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <Button
+                        onClick={() =>
+                          connectDetectedProgress(progress, childName)
+                        }
+                        disabled={!childName.trim()}
+                        className="ml-4"
+                      >
+                        Connect
+                      </Button>
+                    </div>
+                  </Card>
+                );
+              })}
+            </div>
+
+            <DialogFooter>
+              <Button
+                variant="outline"
+                onClick={() => setShowAutoDetectDialog(false)}
+              >
+                Skip for Now
+              </Button>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
       </div>
     </TooltipProvider>
   );

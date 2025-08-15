@@ -526,9 +526,9 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
   // Load children from localStorage
   const [children, setChildren] = useState<ChildProfile[]>([]);
 
-  // Initialize children data based on guest mode
+  // Initialize children data and sync with real progress immediately
   useEffect(() => {
-    const loadChildren = () => {
+    const loadChildrenAndSync = async () => {
       try {
         const savedChildren = localStorage.getItem("parentDashboardChildren");
         if (savedChildren) {
@@ -543,7 +543,29 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
                 earnedAt: new Date(achievement.earnedAt),
               })) || [],
           }));
+
           setChildren(loadedChildren);
+
+          // Immediately sync with real progress data after loading children
+          if (loadedChildren.length > 0) {
+            try {
+              const syncedChildren =
+                await childProgressSync.syncAndSaveAllProgress(loadedChildren);
+              setChildren(syncedChildren);
+
+              // Update family stats with real data
+              const stats = childProgressSync.getFamilyStats(syncedChildren);
+              setFamilyStats(stats);
+
+              toast({
+                title: "Progress Synced",
+                description: `Real-time data loaded for ${syncedChildren.length} children`,
+                duration: 2000,
+              });
+            } catch (syncError) {
+              console.error("Error syncing progress on load:", syncError);
+            }
+          }
           return;
         }
       } catch (error) {
@@ -553,7 +575,7 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
       setChildren([]);
     };
 
-    loadChildren();
+    loadChildrenAndSync();
   }, [isGuest]);
 
   const [selectedChild, setSelectedChild] = useState<ChildProfile | null>(null);
@@ -762,17 +784,18 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
     }
   }, [children, isLoadingProgress, selectedChild]);
 
-  // Optimized data loading - only run once on mount and when dependencies change
+  // Auto-sync progress data when component mounts and periodically
   useEffect(() => {
     let mounted = true;
+    let refreshInterval: NodeJS.Timeout;
 
-    const loadChildrenWordStats = async () => {
-      if (children.length === 0 || loadingWordStats) return;
+    const loadAndSyncProgress = async () => {
+      if (loadingWordStats || isLoadingProgress) return;
 
       setLoadingWordStats(true);
       try {
-        // First sync the real progress data from localStorage
-        if (mounted) {
+        // Always sync real progress data from localStorage first
+        if (mounted && children.length > 0) {
           await syncChildrenProgress();
         }
 
@@ -808,7 +831,7 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
           }
         }
       } catch (error) {
-        console.error("Error in loadChildrenWordStats:", error);
+        console.error("Error in loadAndSyncProgress:", error);
       } finally {
         if (mounted) {
           setLoadingWordStats(false);
@@ -816,21 +839,31 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
       }
     };
 
-    // Initial load
-    loadChildrenWordStats();
+    // Initial load and sync
+    loadAndSyncProgress();
 
-    // Set up periodic refresh (reduced frequency)
-    const refreshInterval = setInterval(() => {
-      if (mounted) {
-        loadChildrenWordStats();
+    // Set up periodic refresh every 30 seconds for real-time updates
+    refreshInterval = setInterval(() => {
+      if (mounted && !document.hidden) {
+        // Only refresh when tab is visible
+        loadAndSyncProgress();
       }
-    }, 60000); // Increased to 60 seconds to reduce load
+    }, 30000);
+
+    // Listen for browser visibility changes to sync when tab becomes active
+    const handleVisibilityChange = () => {
+      if (!document.hidden && mounted) {
+        loadAndSyncProgress();
+      }
+    };
+    document.addEventListener("visibilitychange", handleVisibilityChange);
 
     return () => {
       mounted = false;
       clearInterval(refreshInterval);
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
     };
-  }, [children.length, selectedChild?.id]); // Removed complex dependencies
+  }, [children.length, selectedChild?.id, isLoadingProgress]); // Added isLoadingProgress dependency
 
   // Memoized helper functions
   const getChildGoals = useCallback(
