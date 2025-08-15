@@ -4241,6 +4241,55 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
         </TabsContent>
       </Tabs>
 
+      {/* Registration Prompt Dialog for Guest Users */}
+      <Dialog open={showRegistrationPrompt} onOpenChange={setShowRegistrationPrompt}>
+        <DialogContent className="sm:max-w-md max-w-[90vw] p-4 sm:p-6 gap-4">
+          <DialogHeader className="text-center">
+            <DialogTitle className="text-xl font-bold text-educational-blue">
+              👨‍👩‍👧‍👦 Create an Account
+            </DialogTitle>
+            <DialogDescription className="text-sm text-gray-600 mt-2">
+              To add and manage children's profiles, you'll need to create an account.
+              This helps us save your family's learning progress!
+            </DialogDescription>
+          </DialogHeader>
+
+          <div className="space-y-4 text-center">
+            <div className="bg-educational-blue/10 p-4 rounded-lg">
+              <h4 className="font-semibold text-educational-blue mb-2">
+                ✨ Why create an account?
+              </h4>
+              <ul className="text-sm text-gray-600 space-y-1 text-left">
+                <li>• Save multiple children's learning progress</li>
+                <li>• Track achievements and milestones</li>
+                <li>• Customize learning goals for each child</li>
+                <li>• Access detailed progress reports</li>
+                <li>• Sync across all your devices</li>
+              </ul>
+            </div>
+          </div>
+
+          <DialogFooter className="flex-col gap-2 sm:flex-row">
+            <Button
+              variant="outline"
+              onClick={() => setShowRegistrationPrompt(false)}
+              className="w-full sm:w-auto"
+            >
+              Continue as Guest
+            </Button>
+            <Button
+              onClick={() => {
+                setShowRegistrationPrompt(false);
+                navigate('/');
+              }}
+              className="w-full sm:w-auto bg-educational-blue hover:bg-educational-blue/90"
+            >
+              Create Account
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
       {/* Add Child Dialog - Compact Mobile Version */}
       <Dialog open={showAddChildDialog} onOpenChange={setShowAddChildDialog}>
         <DialogContent className="sm:max-w-md max-w-[90vw] p-4 sm:p-6 gap-3 sm:gap-4">
@@ -4304,7 +4353,7 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
                 Choose Avatar
               </Label>
               <div className="grid grid-cols-5 sm:grid-cols-9 gap-1 sm:gap-2">
-                {["��", "👧", "🧒", "👶", "🦸‍♂️", "🦸‍♀️", "🧑‍🎓", "👨‍🎓", "👩‍🎓"].map(
+                {["👦", "👧", "🧒", "👶", "🦸‍♂️", "🦸‍♀️", "🧑‍🎓", "👨‍🎓", "👩‍🎓"].map(
                   (emoji) => (
                     <Button
                       key={emoji}
