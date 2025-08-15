@@ -2191,28 +2191,45 @@ export default function Index({ initialProfile }: IndexProps) {
                                                 ></div>
                                               </div>
                                               {(() => {
-                                                const currentWord = displayWords[currentWordIndex];
+                                                const currentWord =
+                                                  displayWords[
+                                                    currentWordIndex
+                                                  ];
                                                 if (!currentWord) return null;
 
-                                                if (rememberedWords.has(currentWord.id)) {
+                                                if (
+                                                  rememberedWords.has(
+                                                    currentWord.id,
+                                                  )
+                                                ) {
                                                   return (
                                                     <div className="text-xs text-green-600 font-medium flex items-center gap-1">
                                                       <span>✅</span>
-                                                      <span className="hidden sm:inline">Learned</span>
+                                                      <span className="hidden sm:inline">
+                                                        Learned
+                                                      </span>
                                                     </div>
                                                   );
-                                                } else if (forgottenWords.has(currentWord.id)) {
+                                                } else if (
+                                                  forgottenWords.has(
+                                                    currentWord.id,
+                                                  )
+                                                ) {
                                                   return (
                                                     <div className="text-xs text-orange-600 font-medium flex items-center gap-1">
                                                       <span>🤔</span>
-                                                      <span className="hidden sm:inline">Review</span>
+                                                      <span className="hidden sm:inline">
+                                                        Review
+                                                      </span>
                                                     </div>
                                                   );
                                                 } else {
                                                   return (
                                                     <div className="text-xs text-blue-600 font-medium flex items-center gap-1">
                                                       <span>🆕</span>
-                                                      <span className="hidden sm:inline">New</span>
+                                                      <span className="hidden sm:inline">
+                                                        New
+                                                      </span>
                                                     </div>
                                                   );
                                                 }
