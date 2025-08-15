@@ -1560,7 +1560,7 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
             </AlertDialogHeader>
             <AlertDialogFooter>
               <AlertDialogCancel>Maybe Later</AlertDialogCancel>
-              <AlertDialogAction onClick={() => navigate("/login")}>
+              <AlertDialogAction onClick={() => navigate("/signup")}>
                 Create Account
               </AlertDialogAction>
             </AlertDialogFooter>
