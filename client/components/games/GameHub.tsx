@@ -5,6 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { Brain, Gamepad2, Trophy, Zap, ArrowLeft } from "lucide-react";
 import { AdventureGames } from "./AdventureGames";
 import { QuizGames } from "./QuizGames";
+import { FloatingHelpMenu } from "@/components/FloatingHelpMenu";
 
 interface GameHubProps {
   selectedCategory: string;
