@@ -280,7 +280,9 @@ export const ChildLearningGoalsPanel: React.FC<
         <CardHeader className="flex-shrink-0 p-3 md:p-6 border-b">
           <div className="flex flex-col space-y-3 md:space-y-0 md:flex-row md:items-center justify-between">
             <div className="flex items-center gap-2 md:gap-3 min-w-0 flex-1">
-              <div className="text-xl md:text-2xl flex-shrink-0">{child.avatar}</div>
+              <div className="text-xl md:text-2xl flex-shrink-0">
+                {child.avatar}
+              </div>
               <div className="flex-1 min-w-0">
                 <CardTitle className="text-sm md:text-lg truncate">
                   {child.name}'s Goals
@@ -301,7 +303,12 @@ export const ChildLearningGoalsPanel: React.FC<
                   <span className="hidden md:inline">Save</span>
                 </Button>
               )}
-              <Button variant="ghost" size="sm" onClick={onClose} className="p-1 md:p-2">
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={onClose}
+                className="p-1 md:p-2"
+              >
                 <X className="w-4 h-4" />
               </Button>
             </div>
@@ -315,13 +322,22 @@ export const ChildLearningGoalsPanel: React.FC<
             className="h-full"
           >
             <TabsList className="grid w-full grid-cols-3 h-8 md:h-10 mb-2 md:mb-0">
-              <TabsTrigger value="goals" className="text-xs md:text-sm px-1 md:px-3">
+              <TabsTrigger
+                value="goals"
+                className="text-xs md:text-sm px-1 md:px-3"
+              >
                 Goals
               </TabsTrigger>
-              <TabsTrigger value="progress" className="text-xs md:text-sm px-1 md:px-3">
+              <TabsTrigger
+                value="progress"
+                className="text-xs md:text-sm px-1 md:px-3"
+              >
                 Progress
               </TabsTrigger>
-              <TabsTrigger value="preferences" className="text-xs md:text-sm px-1 md:px-3">
+              <TabsTrigger
+                value="preferences"
+                className="text-xs md:text-sm px-1 md:px-3"
+              >
                 Settings
               </TabsTrigger>
             </TabsList>
@@ -473,7 +489,9 @@ export const ChildLearningGoalsPanel: React.FC<
 
               <TabsContent value="progress" className="space-y-3 md:space-y-4">
                 <div className="flex flex-col md:flex-row md:items-center justify-between gap-2">
-                  <h3 className="font-semibold text-sm md:text-base">Learning Analytics</h3>
+                  <h3 className="font-semibold text-sm md:text-base">
+                    Learning Analytics
+                  </h3>
                   <Button
                     size="sm"
                     variant="outline"
@@ -546,7 +564,9 @@ export const ChildLearningGoalsPanel: React.FC<
                           <div className="text-lg md:text-2xl font-bold text-educational-green">
                             {systematicProgress?.wordsLearnedToday || 0}
                           </div>
-                          <p className="text-xs md:text-sm text-muted-foreground">Today</p>
+                          <p className="text-xs md:text-sm text-muted-foreground">
+                            Today
+                          </p>
                         </CardContent>
                       </Card>
 
@@ -697,7 +717,9 @@ export const ChildLearningGoalsPanel: React.FC<
       <Dialog open={showAddGoalDialog} onOpenChange={setShowAddGoalDialog}>
         <DialogContent className="max-w-[95vw] md:max-w-lg max-h-[90vh] overflow-y-auto">
           <DialogHeader className="space-y-1 md:space-y-2">
-            <DialogTitle className="text-base md:text-lg">Add Learning Goal</DialogTitle>
+            <DialogTitle className="text-base md:text-lg">
+              Add Learning Goal
+            </DialogTitle>
             <DialogDescription className="text-xs md:text-sm">
               Create a new learning objective for {child.name}
             </DialogDescription>

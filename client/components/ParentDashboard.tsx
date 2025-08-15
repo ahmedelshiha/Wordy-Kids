@@ -1308,12 +1308,15 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
             <div className="max-w-md mx-auto">
               <Card className="bg-gradient-to-r from-green-50 to-blue-50 mobile-goals-empty">
                 <CardContent className="p-4 md:p-6 text-center">
-                  <div className="text-3xl md:text-4xl mb-3 md:mb-4 emoji">👶</div>
+                  <div className="text-3xl md:text-4xl mb-3 md:mb-4 emoji">
+                    👶
+                  </div>
                   <h3 className="text-base md:text-lg font-semibold mb-2">
                     No Children Added Yet
                   </h3>
                   <p className="text-gray-600 mb-3 md:mb-4 text-sm md:text-base">
-                    Add your first child to start setting learning goals and tracking their progress
+                    Add your first child to start setting learning goals and
+                    tracking their progress
                   </p>
                   <Button
                     onClick={handleAddChildClick}
@@ -1332,14 +1335,23 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
               <div className="mobile-goals-stats">
                 <Card className="stat-card">
                   <div className="stat-number text-educational-blue">
-                    {children.reduce((total, child) => total + (child.learningGoals?.filter(g => g.isActive).length || 0), 0)}
+                    {children.reduce(
+                      (total, child) =>
+                        total +
+                        (child.learningGoals?.filter((g) => g.isActive)
+                          .length || 0),
+                      0,
+                    )}
                   </div>
                   <div className="stat-label">Active Goals</div>
                 </Card>
                 <Card className="stat-card">
                   <div className="stat-number text-educational-green">
                     {children.reduce((total, child) => {
-                      const completedGoals = child.learningGoals?.filter(g => g.current >= g.target).length || 0;
+                      const completedGoals =
+                        child.learningGoals?.filter(
+                          (g) => g.current >= g.target,
+                        ).length || 0;
                       return total + completedGoals;
                     }, 0)}
                   </div>
@@ -1350,8 +1362,11 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
               {/* Children Goal Cards */}
               <div className="space-y-3 md:space-y-4">
                 {children.map((child, index) => {
-                  const activeGoals = child.learningGoals?.filter(g => g.isActive) || [];
-                  const completedGoals = child.learningGoals?.filter(g => g.current >= g.target) || [];
+                  const activeGoals =
+                    child.learningGoals?.filter((g) => g.isActive) || [];
+                  const completedGoals =
+                    child.learningGoals?.filter((g) => g.current >= g.target) ||
+                    [];
 
                   return (
                     <Card
@@ -1362,11 +1377,16 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
                       <CardContent className="p-3 md:p-4">
                         <div className="flex items-center justify-between mb-3">
                           <div className="flex items-center gap-2 md:gap-3">
-                            <div className="text-2xl md:text-3xl">{child.avatar}</div>
+                            <div className="text-2xl md:text-3xl">
+                              {child.avatar}
+                            </div>
                             <div>
-                              <h4 className="font-semibold text-sm md:text-base">{child.name}</h4>
+                              <h4 className="font-semibold text-sm md:text-base">
+                                {child.name}
+                              </h4>
                               <p className="text-xs text-slate-600">
-                                {activeGoals.length} active • {completedGoals.length} completed
+                                {activeGoals.length} active •{" "}
+                                {completedGoals.length} completed
                               </p>
                             </div>
                           </div>
@@ -1376,7 +1396,9 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
                             size="sm"
                           >
                             <Target className="w-3 h-3 md:w-4 md:h-4 mr-1 md:mr-2" />
-                            <span className="hidden md:inline">Manage Goals</span>
+                            <span className="hidden md:inline">
+                              Manage Goals
+                            </span>
                             <span className="md:hidden">Goals</span>
                           </Button>
                         </div>
@@ -1385,15 +1407,22 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
                         {activeGoals.length > 0 && (
                           <div className="space-y-2">
                             {activeGoals.slice(0, 2).map((goal) => {
-                              const progress = Math.min((goal.current / goal.target) * 100, 100);
+                              const progress = Math.min(
+                                (goal.current / goal.target) * 100,
+                                100,
+                              );
                               return (
-                                <div key={goal.id} className="mobile-goal-summary">
+                                <div
+                                  key={goal.id}
+                                  className="mobile-goal-summary"
+                                >
                                   <div>
                                     <div className="text-xs md:text-sm font-medium truncate">
                                       {goal.description}
                                     </div>
                                     <div className="text-xs text-slate-500">
-                                      {goal.current}/{goal.target} • {Math.round(progress)}%
+                                      {goal.current}/{goal.target} •{" "}
+                                      {Math.round(progress)}%
                                     </div>
                                   </div>
                                   <Badge
@@ -1443,12 +1472,7 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
         </div>
       </div>
     ),
-    [
-      selectedChild,
-      handleOpenLearningGoals,
-      handleAddChildClick,
-      children,
-    ],
+    [selectedChild, handleOpenLearningGoals, handleAddChildClick, children],
   );
 
   const renderAnalytics = useCallback(
