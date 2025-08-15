@@ -507,14 +507,18 @@ export default function PictureFunGame({
             <div className="text-xs sm:text-sm uppercase tracking-wide opacity-90">
               Picture Fun
             </div>
-            <div className="font-bold text-sm sm:text-base">Which word matches this picture?</div>
+            <div className="font-bold text-sm sm:text-base">
+              Which word matches this picture?
+            </div>
           </div>
         </div>
 
         {/* Big Picture Display - Mobile Responsive */}
         <div className="text-center mb-4 sm:mb-6">
           <div className="inline-block bg-white/10 backdrop-blur-sm rounded-2xl sm:rounded-3xl p-4 sm:p-6 border-3 sm:border-4 border-white/20 touch-optimized">
-            <div className="text-6xl sm:text-7xl md:text-8xl animate-gentle-float">{current.emoji}</div>
+            <div className="text-6xl sm:text-7xl md:text-8xl animate-gentle-float">
+              {current.emoji}
+            </div>
           </div>
         </div>
 
@@ -562,7 +566,9 @@ export default function PictureFunGame({
                 }}
               >
                 <div className="text-center">
-                  <div className="text-base sm:text-lg font-bold text-gray-800 leading-tight">{word}</div>
+                  <div className="text-base sm:text-lg font-bold text-gray-800 leading-tight">
+                    {word}
+                  </div>
                 </div>
 
                 {/* Enhanced fun corner badge with dynamic sparkles */}
@@ -740,7 +746,9 @@ function Wrapper({
   className?: string;
 }) {
   return (
-    <div className={`relative w-full max-w-md mx-auto p-2 sm:p-4 safe-area-padding-bottom ${className}`}>
+    <div
+      className={`relative w-full max-w-md mx-auto p-2 sm:p-4 safe-area-padding-bottom ${className}`}
+    >
       {children}
     </div>
   );

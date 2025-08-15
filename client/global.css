@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 /* Import mobile games optimization */
-@import './styles/mobile-games-optimization.css';
+@import "./styles/mobile-games-optimization.css";
 
 @layer base {
   /**

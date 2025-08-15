@@ -275,16 +275,16 @@ export function VowelRescue({
 
   if (!gameStarted) {
     return (
-    <div className="min-h-screen bg-gradient-to-br from-educational-blue/20 to-educational-purple/20 flex items-center justify-center p-2 sm:p-4 safe-area-padding-bottom">
-      <Card className="w-full max-w-md mx-2 sm:mx-4 mobile-optimized">
-        <CardContent className="p-4 sm:p-6 md:p-8 text-center relative">
+      <div className="min-h-screen bg-gradient-to-br from-educational-blue/20 to-educational-purple/20 flex items-center justify-center p-2 sm:p-4 safe-area-padding-bottom">
+        <Card className="w-full max-w-md mx-2 sm:mx-4 mobile-optimized">
+          <CardContent className="p-4 sm:p-6 md:p-8 text-center relative">
             {/* Close button - Enhanced Mobile */}
-          <Button
-            onClick={onExit}
-            variant="outline"
-            size="sm"
-            className="absolute top-2 right-2 sm:top-3 sm:right-3 md:top-4 md:right-4 rounded-full hover:bg-red-50 hover:text-red-600 border-red-200 min-h-[44px] min-w-[44px] touch-target"
-          >
+            <Button
+              onClick={onExit}
+              variant="outline"
+              size="sm"
+              className="absolute top-2 right-2 sm:top-3 sm:right-3 md:top-4 md:right-4 rounded-full hover:bg-red-50 hover:text-red-600 border-red-200 min-h-[44px] min-w-[44px] touch-target"
+            >
               <ArrowLeft className="w-4 h-4" />
             </Button>
 
