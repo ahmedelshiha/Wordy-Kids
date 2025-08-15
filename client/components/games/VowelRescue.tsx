@@ -390,8 +390,8 @@ export function VowelRescue({
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-educational-yellow/20 to-educational-orange/20 p-2 sm:p-4 touch-manipulation">
-      <div className="max-w-2xl mx-auto">
+    <div className="min-h-screen bg-gradient-to-br from-educational-yellow/20 to-educational-orange/20 p-2 sm:p-4 touch-manipulation safe-area-padding-bottom">
+      <div className="max-w-2xl mx-auto mobile-optimized">
         {/* Enhanced Header with Close Function - Mobile Optimized */}
         <div className="bg-white/90 backdrop-blur-sm rounded-xl p-3 sm:p-4 mb-4 sm:mb-6 shadow-lg">
           <div className="flex items-center justify-between mb-2 sm:mb-3">
