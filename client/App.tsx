@@ -22,6 +22,7 @@ import {
 } from "./components/WordDatabaseNotifications";
 import { WordAdventureDemo } from "./pages/WordAdventureDemo";
 import { WordAdventureTest } from "./pages/WordAdventureTest";
+import { NavigationGuard } from "./components/NavigationGuard";
 
 const queryClient = new QueryClient();
 
@@ -34,7 +35,8 @@ const App = () => (
       <CompactWordDatabaseNotifications />
       <BrowserRouter>
         <AuthProvider>
-          <Routes>
+          <NavigationGuard>
+            <Routes>
             <Route path="/" element={<LoginForm />} />
             <Route path="/signup" element={<SignUp />} />
             <Route path="/app" element={<AppPage />} />
@@ -55,6 +57,7 @@ const App = () => (
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
+          </NavigationGuard>
         </AuthProvider>
       </BrowserRouter>
     </TooltipProvider>
