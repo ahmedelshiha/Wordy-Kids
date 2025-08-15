@@ -21,6 +21,8 @@ import {
   Trophy,
   BookOpen,
   Target,
+  Lock,
+  AlertTriangle,
 } from "lucide-react";
 import { audioService } from "@/lib/audioService";
 import {
@@ -55,6 +57,7 @@ interface EnhancedCategorySelectorProps {
   showAdvanced?: boolean;
   enableAccessibility?: boolean;
   showGameification?: boolean;
+  lockedCategory?: string | null;
 }
 
 const enrichedCategories: Category[] = [
@@ -258,6 +261,7 @@ export function EnhancedCategorySelector({
   showAdvanced = true,
   enableAccessibility = true,
   showGameification = true,
+  lockedCategory = null,
 }: EnhancedCategorySelectorProps) {
   // Real-time word database integration
   const {
