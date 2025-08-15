@@ -489,7 +489,7 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
   // Registration prompt dialog state
   const [showRegistrationPrompt, setShowRegistrationPrompt] = useState(false);
 
-  // Load children from localStorage or use empty array
+  // Load children from localStorage or use sample children for demo
   const [children, setChildren] = useState<ChildProfile[]>(() => {
     const savedChildren = localStorage.getItem("parentDashboardChildren");
     if (savedChildren) {
@@ -505,7 +505,8 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
           })) || [],
       }));
     }
-    return [];
+    // Return sample children for demo purposes when none exist
+    return sampleChildren;
   });
 
   const [selectedChild, setSelectedChild] = useState<ChildProfile | null>(
