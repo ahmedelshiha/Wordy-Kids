@@ -121,9 +121,7 @@ export class ChildProgressSync {
           child.id,
         );
       } catch (error) {
-        console.log(
-          "Could not fetch systematic progress, using localStorage data",
-        );
+        // Could not fetch systematic progress, using localStorage data
       }
 
       const updatedChild: ChildProfile = {
