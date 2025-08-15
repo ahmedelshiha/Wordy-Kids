@@ -162,7 +162,7 @@ export const SimplifiedMobileLearningAnalytics: React.FC<
   };
 
   return (
-    <div className="mobile-game-container space-y-4 px-4 py-2">
+    <div className="mobile-analytics-container space-y-4 px-4 py-2">
       {/* Simple Header */}
       <div className="text-center mb-6">
         <h1 className="text-2xl font-bold text-gray-800 mb-2">
