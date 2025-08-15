@@ -1183,6 +1183,25 @@ export const ParentDashboardDesktop: React.FC<ParentDashboardDesktopProps> = ({
                     </TooltipContent>
                   </Tooltip>
 
+                  {/* Auto-Detect Button */}
+                  {children.length === 0 && (
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <Button
+                          variant="outline"
+                          onClick={scanForExistingProgress}
+                          className="shrink-0"
+                        >
+                          <Search className="h-4 w-4 lg:mr-2" />
+                          <span className="hidden lg:inline">Detect Progress</span>
+                        </Button>
+                      </TooltipTrigger>
+                      <TooltipContent>
+                        <p>Scan for Existing Learning Progress</p>
+                      </TooltipContent>
+                    </Tooltip>
+                  )}
+
                   {/* Add Child Button */}
                   <Tooltip>
                     <TooltipTrigger asChild>
