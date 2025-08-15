@@ -696,22 +696,6 @@ export const CompactMobileSettingsPanel: React.FC<
                     </div>
                   </div>
 
-                  {/* Advanced Goals Button */}
-                  <button
-                    onClick={() => {
-                      setShowGoalsPanel(true);
-                      if (deviceInfo.hasHaptic) triggerHapticFeedback("medium");
-                    }}
-                    className="w-full mt-2 p-3 bg-gradient-to-r from-educational-blue to-educational-purple text-white rounded-lg hover:shadow-lg transition-all duration-200 flex items-center justify-between"
-                  >
-                    <div className="flex items-center gap-2">
-                      <BarChart3 className="w-4 h-4" />
-                      <span className="text-sm font-medium">
-                        Learning Goals
-                      </span>
-                    </div>
-                    <ChevronRight className="w-4 h-4" />
-                  </button>
                 </div>
               )}
             </div>
