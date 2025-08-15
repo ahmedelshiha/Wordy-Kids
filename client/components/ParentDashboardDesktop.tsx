@@ -411,9 +411,9 @@ export const ParentDashboardDesktop: React.FC<ParentDashboardDesktopProps> = ({
     todayActivity: 0,
   });
 
-  // Initialize children data
+  // Initialize children data and sync with real progress immediately
   useEffect(() => {
-    const loadChildren = () => {
+    const loadChildrenAndSync = async () => {
       try {
         const savedChildren = localStorage.getItem("parentDashboardChildren");
         if (savedChildren) {
@@ -427,7 +427,28 @@ export const ParentDashboardDesktop: React.FC<ParentDashboardDesktopProps> = ({
                 earnedAt: new Date(achievement.earnedAt),
               })) || [],
           }));
+
           setChildren(loadedChildren);
+
+          // Immediately sync with real progress data after loading children
+          if (loadedChildren.length > 0) {
+            try {
+              const syncedChildren = await childProgressSync.syncAndSaveAllProgress(loadedChildren);
+              setChildren(syncedChildren);
+
+              // Update family stats with real data
+              const stats = childProgressSync.getFamilyStats(syncedChildren);
+              setFamilyStats(stats);
+
+              toast({
+                title: "Progress Synced",
+                description: `Real-time data loaded for ${syncedChildren.length} children`,
+                duration: 2000,
+              });
+            } catch (syncError) {
+              console.error("Error syncing progress on load:", syncError);
+            }
+          }
           return;
         }
       } catch (error) {
@@ -436,7 +457,7 @@ export const ParentDashboardDesktop: React.FC<ParentDashboardDesktopProps> = ({
       setChildren([]);
     };
 
-    loadChildren();
+    loadChildrenAndSync();
   }, [isGuest]);
 
   // Update selected child when children array changes
@@ -463,15 +484,6 @@ export const ParentDashboardDesktop: React.FC<ParentDashboardDesktopProps> = ({
     [],
   );
 
-  // Save children whenever they change
-  useEffect(() => {
-    if (children.length > 0) {
-      const timeoutId = setTimeout(() => {
-        saveChildrenToStorage(children);
-      }, 500);
-      return () => clearTimeout(timeoutId);
-    }
-  }, [children, saveChildrenToStorage]);
 
   // Sync children progress
   const syncChildrenProgress = useCallback(async () => {
