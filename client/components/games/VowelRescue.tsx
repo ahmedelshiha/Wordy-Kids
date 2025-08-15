@@ -1,9 +1,25 @@
-import React, { useState, useRef, useEffect, useMemo, useCallback } from "react";
+import React, {
+  useState,
+  useRef,
+  useEffect,
+  useMemo,
+  useCallback,
+} from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
-import { Volume2, Star, Trophy, ArrowLeft, Play, Clock, Sparkles, Crown, Zap } from "lucide-react";
+import {
+  Volume2,
+  Star,
+  Trophy,
+  ArrowLeft,
+  Play,
+  Clock,
+  Sparkles,
+  Crown,
+  Zap,
+} from "lucide-react";
 import { AchievementTracker } from "@/lib/achievementTracker";
 import { EnhancedAchievementPopup } from "@/components/EnhancedAchievementPopup";
 import { audioService } from "@/lib/audioService";
@@ -99,9 +115,9 @@ export function VowelRescue({
 
   // Generate missing vowel indices intelligently
   const generateMissingVowelIndices = useCallback((word: string): number[] => {
-    const vowels = ['a', 'e', 'i', 'o', 'u'];
+    const vowels = ["a", "e", "i", "o", "u"];
     const vowelIndices = word
-      .split('')
+      .split("")
       .map((char, index) => ({ char: char.toLowerCase(), index }))
       .filter(({ char }) => vowels.includes(char))
       .map(({ index }) => index);
@@ -109,7 +125,7 @@ export function VowelRescue({
     // For variety, remove 1-3 vowels based on word length and difficulty
     const numToRemove = Math.min(
       vowelIndices.length,
-      word.length <= 4 ? 1 : word.length <= 6 ? 2 : 3
+      word.length <= 4 ? 1 : word.length <= 6 ? 2 : 3,
     );
 
     // Shuffle and take the first N vowel positions
@@ -415,10 +431,10 @@ export function VowelRescue({
                 ))}
               </div>
               <p className="text-xs sm:text-sm text-gray-500 px-2">
-              {isTimedMode
-                ? `You have 60 seconds to complete as many words as possible!`
-                : `${gameQuestions.length} words to complete`}
-            </p>
+                {isTimedMode
+                  ? `You have 60 seconds to complete as many words as possible!`
+                  : `${gameQuestions.length} words to complete`}
+              </p>
             </div>
             <div className="space-y-3">
               <Button
