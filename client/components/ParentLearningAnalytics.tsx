@@ -503,95 +503,99 @@ export const ParentLearningAnalytics: React.FC<
             </Card>
           </div>
 
-          {/* Additional Stats */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <Card>
-              <CardHeader className="pb-3">
-                <CardTitle className="text-lg flex items-center gap-2">
-                  <Timer className="w-5 h-5 text-blue-600" />
-                  Daily Average
+          {/* Additional Stats - Mobile Optimized */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 sm:gap-4">
+            <Card className="hover:shadow-lg transition-all duration-300 border-2 border-blue-100">
+              <CardHeader className="pb-2 sm:pb-3">
+                <CardTitle className="text-base sm:text-lg flex items-center gap-2">
+                  🕰️ Daily Average
                 </CardTitle>
               </CardHeader>
-              <CardContent>
-                <div className="text-3xl font-bold text-blue-600 mb-2">
+              <CardContent className="pt-0">
+                <div className="text-2xl sm:text-3xl font-bold text-blue-600 mb-2">
                   <AnimatedCounter
                     value={analyticsData.overview.averageDailyTime}
                   />
                   min
                 </div>
-                <p className="text-sm text-gray-600">
-                  Time spent learning per day
+                <p className="text-xs sm:text-sm text-gray-600">
+                  🕒 Time spent learning per day
                 </p>
               </CardContent>
             </Card>
 
-            <Card>
-              <CardHeader className="pb-3">
-                <CardTitle className="text-lg flex items-center gap-2">
-                  <Activity className="w-5 h-5 text-green-600" />
-                  Total Sessions
+            <Card className="hover:shadow-lg transition-all duration-300 border-2 border-green-100">
+              <CardHeader className="pb-2 sm:pb-3">
+                <CardTitle className="text-base sm:text-lg flex items-center gap-2">
+                  🎮 Total Sessions
                 </CardTitle>
               </CardHeader>
-              <CardContent>
-                <div className="text-3xl font-bold text-green-600 mb-2">
+              <CardContent className="pt-0">
+                <div className="text-2xl sm:text-3xl font-bold text-green-600 mb-2">
                   <AnimatedCounter
                     value={analyticsData.overview.totalSessions}
                   />
                 </div>
-                <p className="text-sm text-gray-600">
-                  Learning sessions completed
+                <p className="text-xs sm:text-sm text-gray-600">
+                  🎆 Learning sessions completed
                 </p>
               </CardContent>
             </Card>
 
-            <Card>
-              <CardHeader className="pb-3">
-                <CardTitle className="text-lg flex items-center gap-2">
-                  <Users className="w-5 h-5 text-purple-600" />
-                  Active Children
+            <Card className="hover:shadow-lg transition-all duration-300 border-2 border-purple-100">
+              <CardHeader className="pb-2 sm:pb-3">
+                <CardTitle className="text-base sm:text-lg flex items-center gap-2">
+                  👧👦 Active Children
                 </CardTitle>
               </CardHeader>
-              <CardContent>
-                <div className="text-3xl font-bold text-purple-600 mb-2">
+              <CardContent className="pt-0">
+                <div className="text-2xl sm:text-3xl font-bold text-purple-600 mb-2">
                   <AnimatedCounter value={analyticsData.children.length} />
                 </div>
-                <p className="text-sm text-gray-600">
-                  Children actively learning
+                <p className="text-xs sm:text-sm text-gray-600">
+                  🌱 Children actively learning
                 </p>
               </CardContent>
             </Card>
           </div>
 
-          {/* Weekly Progress Chart */}
-          <Card>
+          {/* Weekly Progress Chart - Enhanced */}
+          <Card className="border-2 border-gradient-to-r from-blue-200 to-purple-200">
             <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <TrendingUp className="w-5 h-5 text-blue-600" />
-                Weekly Learning Progress
+              <CardTitle className="flex items-center gap-2 text-lg sm:text-xl">
+                📈 Weekly Learning Progress 🎆
               </CardTitle>
+              <p className="text-sm text-gray-600">
+                🎉 Amazing progress this week!
+              </p>
             </CardHeader>
             <CardContent>
-              <div className="space-y-4">
+              <div className="space-y-3 sm:space-y-4">
                 {analyticsData.weeklyProgress.map((week, index) => (
-                  <div key={index} className="space-y-2">
-                    <div className="flex justify-between items-center">
-                      <span className="font-medium">{week.week}</span>
-                      <div className="flex items-center gap-4 text-sm">
-                        <span className="text-blue-600">
-                          {week.wordsLearned} words
+                  <div key={index} className="space-y-2 p-3 rounded-lg bg-gradient-to-r from-blue-50 to-purple-50 border border-blue-200">
+                    <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2">
+                      <span className="font-medium text-gray-800 flex items-center gap-1">
+                        📅 {week.week}
+                      </span>
+                      <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-4 text-xs sm:text-sm">
+                        <span className="text-blue-600 font-medium">
+                          📚 {week.wordsLearned} words
                         </span>
-                        <span className="text-green-600">
-                          {week.accuracy}% accuracy
+                        <span className="text-green-600 font-medium">
+                          🎯 {week.accuracy}% accuracy
                         </span>
-                        <span className="text-purple-600">
-                          {week.timeSpent}min
+                        <span className="text-purple-600 font-medium">
+                          ⏱️ {week.timeSpent}min
                         </span>
                       </div>
                     </div>
                     <Progress
                       value={(week.wordsLearned / 70) * 100}
-                      className="h-2"
+                      className="h-3 rounded-full bg-gray-200"
                     />
+                    <div className="text-xs text-gray-500 text-right">
+                      {Math.round((week.wordsLearned / 70) * 100)}% of weekly goal
+                    </div>
                   </div>
                 ))}
               </div>
@@ -599,44 +603,60 @@ export const ParentLearningAnalytics: React.FC<
           </Card>
         </TabsContent>
 
-        {/* Categories Tab */}
-        <TabsContent value="categories" className="space-y-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {/* Categories Tab - Mobile Enhanced */}
+        <TabsContent value="categories" className="space-y-4 sm:space-y-6">
+          <div className="text-center mb-4">
+            <h3 className="text-lg sm:text-xl font-bold text-gray-800 flex items-center justify-center gap-2">
+              📚 Learning Categories 🌟
+            </h3>
+            <p className="text-sm text-gray-600">
+              🎨 Explore different subjects and topics!
+            </p>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
             {analyticsData.categoryProgress.map((category, index) => (
-              <Card key={index} className="hover:shadow-lg transition-shadow">
+              <Card key={index} className="hover:shadow-xl transition-all duration-300 hover:scale-105 border-2 border-gray-100">
                 <CardHeader className="pb-3">
                   <div className="flex justify-between items-center">
-                    <CardTitle className="text-lg">
-                      {category.category}
+                    <CardTitle className="text-base sm:text-lg flex items-center gap-2">
+                      {getCategoryEmoji(category.category)} {category.category}
                     </CardTitle>
                     <Badge className={getDifficultyColor(category.difficulty)}>
-                      {category.difficulty}
+                      {getDifficultyEmoji(category.difficulty)} {category.difficulty}
                     </Badge>
                   </div>
                 </CardHeader>
                 <CardContent className="space-y-4">
-                  <div className="grid grid-cols-2 gap-4 text-sm">
-                    <div>
-                      <p className="text-gray-600">Mastered</p>
-                      <p className="text-xl font-bold text-green-600">
+                  <div className="grid grid-cols-2 gap-3 sm:gap-4 text-sm">
+                    <div className="bg-green-50 p-3 rounded-lg border border-green-200">
+                      <p className="text-gray-600 text-xs flex items-center gap-1">
+                        🎯 Mastered
+                      </p>
+                      <p className="text-lg sm:text-xl font-bold text-green-600">
                         {category.masteredWords}
                       </p>
                     </div>
-                    <div>
-                      <p className="text-gray-600">Need Practice</p>
-                      <p className="text-xl font-bold text-orange-600">
+                    <div className="bg-orange-50 p-3 rounded-lg border border-orange-200">
+                      <p className="text-gray-600 text-xs flex items-center gap-1">
+                        💪 Need Practice
+                      </p>
+                      <p className="text-lg sm:text-xl font-bold text-orange-600">
                         {category.practiceWords}
                       </p>
                     </div>
-                    <div>
-                      <p className="text-gray-600">Accuracy</p>
-                      <p className="text-xl font-bold text-blue-600">
+                    <div className="bg-blue-50 p-3 rounded-lg border border-blue-200">
+                      <p className="text-gray-600 text-xs flex items-center gap-1">
+                        🎆 Accuracy
+                      </p>
+                      <p className="text-lg sm:text-xl font-bold text-blue-600">
                         {category.accuracy}%
                       </p>
                     </div>
-                    <div>
-                      <p className="text-gray-600">Time Spent</p>
-                      <p className="text-xl font-bold text-purple-600">
+                    <div className="bg-purple-50 p-3 rounded-lg border border-purple-200">
+                      <p className="text-gray-600 text-xs flex items-center gap-1">
+                        ⏰ Time Spent
+                      </p>
+                      <p className="text-lg sm:text-xl font-bold text-purple-600">
                         {category.timeSpent}min
                       </p>
                     </div>
@@ -644,8 +664,10 @@ export const ParentLearningAnalytics: React.FC<
 
                   <div className="space-y-2">
                     <div className="flex justify-between text-sm">
-                      <span>Progress</span>
-                      <span>
+                      <span className="flex items-center gap-1">
+                        📈 Progress
+                      </span>
+                      <span className="font-semibold text-gray-700">
                         {Math.round(
                           (category.masteredWords / category.totalWords) * 100,
                         )}
@@ -656,8 +678,11 @@ export const ParentLearningAnalytics: React.FC<
                       value={
                         (category.masteredWords / category.totalWords) * 100
                       }
-                      className="h-3"
+                      className="h-3 rounded-full bg-gray-200"
                     />
+                    <div className="text-xs text-gray-500 text-center">
+                      {category.masteredWords} of {category.totalWords} words
+                    </div>
                   </div>
                 </CardContent>
               </Card>
