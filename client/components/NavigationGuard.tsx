@@ -11,14 +11,22 @@ interface NavigationGuardProps {
  * NavigationGuard component that provides consistent back button handling
  * and navigation history management across the app
  */
-export const NavigationGuard: React.FC<NavigationGuardProps> = ({ children }) => {
+export const NavigationGuard: React.FC<NavigationGuardProps> = ({
+  children,
+}) => {
   const { isAuthenticated, isGuest } = useAuth();
   const { clearHistory } = useNavigationHistory();
 
   // Initialize back button handling
   useBrowserBackButton({
     fallbackRoute: isAuthenticated ? "/app" : "/",
-    enabledRoutes: ["/app", "/admin", "/profile", "/word-card-demo", "/word-garden-demo"],
+    enabledRoutes: [
+      "/app",
+      "/admin",
+      "/profile",
+      "/word-card-demo",
+      "/word-garden-demo",
+    ],
     onBackAttempt: () => {
       console.log("Global back button handler activated");
     },

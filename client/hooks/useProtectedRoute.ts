@@ -9,11 +9,7 @@ interface ProtectedRouteOptions {
 }
 
 export const useProtectedRoute = (options: ProtectedRouteOptions = {}) => {
-  const {
-    requireAuth = true,
-    redirectTo = "/",
-    allowGuest = true,
-  } = options;
+  const { requireAuth = true, redirectTo = "/", allowGuest = true } = options;
 
   const { isAuthenticated, isGuest, isLoading } = useAuth();
   const navigate = useNavigate();
@@ -28,15 +24,17 @@ export const useProtectedRoute = (options: ProtectedRouteOptions = {}) => {
       // Store current location to return to after login
       const currentPath = location.pathname + location.search;
       const searchParams = new URLSearchParams();
-      
+
       if (currentPath !== "/" && currentPath !== redirectTo) {
         searchParams.set("returnTo", currentPath);
       }
 
-      const redirectUrl = redirectTo + (searchParams.toString() ? `?${searchParams.toString()}` : "");
-      navigate(redirectUrl, { 
+      const redirectUrl =
+        redirectTo +
+        (searchParams.toString() ? `?${searchParams.toString()}` : "");
+      navigate(redirectUrl, {
         replace: true,
-        state: { from: currentPath }
+        state: { from: currentPath },
       });
       return;
     }
@@ -46,7 +44,16 @@ export const useProtectedRoute = (options: ProtectedRouteOptions = {}) => {
       navigate(redirectTo, { replace: true });
       return;
     }
-  }, [isAuthenticated, isGuest, isLoading, requireAuth, allowGuest, redirectTo, navigate, location]);
+  }, [
+    isAuthenticated,
+    isGuest,
+    isLoading,
+    requireAuth,
+    allowGuest,
+    redirectTo,
+    navigate,
+    location,
+  ]);
 
   return {
     isAuthenticated,
@@ -64,15 +71,16 @@ export const useLoginRedirect = () => {
   const redirectToLogin = (returnTo?: string) => {
     const currentPath = returnTo || location.pathname + location.search;
     const searchParams = new URLSearchParams();
-    
+
     if (currentPath !== "/" && currentPath !== "/login") {
       searchParams.set("returnTo", currentPath);
     }
 
-    const redirectUrl = "/" + (searchParams.toString() ? `?${searchParams.toString()}` : "");
+    const redirectUrl =
+      "/" + (searchParams.toString() ? `?${searchParams.toString()}` : "");
     navigate(redirectUrl, {
       replace: true,
-      state: { from: currentPath }
+      state: { from: currentPath },
     });
   };
 

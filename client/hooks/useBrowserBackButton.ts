@@ -17,20 +17,26 @@ interface BackButtonReturn {
 }
 
 export const useBrowserBackButton = (
-  options: BackButtonOptions = {}
+  options: BackButtonOptions = {},
 ): BackButtonReturn => {
   const {
     preventDefaultBack = true,
     fallbackRoute = "/app",
     onBackAttempt,
-    enabledRoutes = ["/app", "/admin", "/profile", "/word-card-demo", "/word-garden-demo"],
+    enabledRoutes = [
+      "/app",
+      "/admin",
+      "/profile",
+      "/word-card-demo",
+      "/word-garden-demo",
+    ],
     customBackHandler,
   } = options;
 
   const navigate = useNavigate();
   const location = useLocation();
   const { canGoBack, goBack, previousPath } = useNavigationHistory();
-  
+
   const hasHandledInitialEntry = useRef(false);
   const currentRoute = location.pathname;
   const isEnabledRoute = enabledRoutes.includes(currentRoute);
@@ -66,7 +72,15 @@ export const useBrowserBackButton = (
     // Fallback to default route
     console.log("No navigation history, falling back to:", fallbackRoute);
     navigate(fallbackRoute, { replace: true });
-  }, [customBackHandler, onBackAttempt, canGoBack, previousPath, goBack, navigate, fallbackRoute]);
+  }, [
+    customBackHandler,
+    onBackAttempt,
+    canGoBack,
+    previousPath,
+    goBack,
+    navigate,
+    fallbackRoute,
+  ]);
 
   // Listen for browser back button on enabled routes
   useEffect(() => {
@@ -76,10 +90,10 @@ export const useBrowserBackButton = (
       if (preventDefaultBack) {
         // Prevent the browser's default back behavior
         event.preventDefault();
-        
+
         // Push a new state to counteract the back navigation
         window.history.pushState({ navigatedFromApp: true }, "");
-        
+
         // Handle the back action with our custom logic
         handleBack();
       }

@@ -246,8 +246,10 @@ export default function LoginForm() {
 
         setTimeout(() => {
           // Check if there's a returnTo parameter or state
-          const returnTo = new URLSearchParams(location.search).get('returnTo') || location.state?.from;
-          const targetRoute = returnTo && returnTo !== '/' ? returnTo : '/app';
+          const returnTo =
+            new URLSearchParams(location.search).get("returnTo") ||
+            location.state?.from;
+          const targetRoute = returnTo && returnTo !== "/" ? returnTo : "/app";
 
           navigate(targetRoute, {
             state: {
@@ -289,8 +291,8 @@ export default function LoginForm() {
     loginAsGuest();
 
     // Check if there's a returnTo parameter
-    const returnTo = new URLSearchParams(location.search).get('returnTo');
-    const targetRoute = returnTo && returnTo !== '/' ? returnTo : '/app';
+    const returnTo = new URLSearchParams(location.search).get("returnTo");
+    const targetRoute = returnTo && returnTo !== "/" ? returnTo : "/app";
 
     navigate(targetRoute, { replace: true });
   };

@@ -135,7 +135,13 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const logout = () => {
     // Store current path before logout to avoid redirecting authenticated users back to app
     const currentPath = location?.pathname || "/";
-    const isAppRoute = ['/app', '/admin', '/profile', '/word-card-demo', '/word-garden-demo'].includes(currentPath);
+    const isAppRoute = [
+      "/app",
+      "/admin",
+      "/profile",
+      "/word-card-demo",
+      "/word-garden-demo",
+    ].includes(currentPath);
 
     clearSession();
     setUser(null);

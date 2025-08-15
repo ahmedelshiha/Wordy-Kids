@@ -29,7 +29,7 @@ const STORAGE_KEY = "wordAdventure_navigationHistory";
 const MAX_HISTORY_SIZE = 10;
 
 export const useNavigationHistory = (
-  options: NavigationHistoryOptions = {}
+  options: NavigationHistoryOptions = {},
 ): NavigationHistoryReturn => {
   const {
     maxHistorySize = MAX_HISTORY_SIZE,
@@ -74,7 +74,7 @@ export const useNavigationHistory = (
   // Track location changes
   useEffect(() => {
     const currentPath = location.pathname + location.search;
-    
+
     // Skip initial load to avoid duplicating the first entry
     if (isInitialLoad.current) {
       isInitialLoad.current = false;
@@ -103,7 +103,7 @@ export const useNavigationHistory = (
     setHistory((prevHistory) => {
       // Remove any existing entry for this path to avoid duplicates
       const filteredHistory = prevHistory.filter(
-        (entry) => entry.pathname + entry.search !== currentPath
+        (entry) => entry.pathname + entry.search !== currentPath,
       );
 
       // Add new entry and keep within size limit
@@ -116,10 +116,12 @@ export const useNavigationHistory = (
   }, [location, excludePaths, maxHistorySize]);
 
   const canGoBack = history.length > 0;
-  
-  const previousPath = history.length > 0 
-    ? history[history.length - 1].pathname + history[history.length - 1].search
-    : null;
+
+  const previousPath =
+    history.length > 0
+      ? history[history.length - 1].pathname +
+        history[history.length - 1].search
+      : null;
 
   const goBack = useCallback(() => {
     if (history.length === 0) {
@@ -130,7 +132,7 @@ export const useNavigationHistory = (
 
     // Get the most recent entry
     const lastEntry = history[history.length - 1];
-    
+
     // Remove the last entry from history
     setHistory((prevHistory) => prevHistory.slice(0, -1));
 
