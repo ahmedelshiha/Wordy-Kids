@@ -719,8 +719,17 @@ export class AnalyticsDataService {
   }
 
   private getChangePercent(current: number, previous: number): number {
+    // Validate inputs and handle edge cases
+    if (!isFinite(current) || !isFinite(previous)) return 0;
     if (previous === 0) return current > 0 ? 100 : 0;
-    return ((current - previous) / previous) * 100;
+
+    const changePercent = ((current - previous) / previous) * 100;
+
+    // Ensure result is finite and reasonable
+    if (!isFinite(changePercent)) return 0;
+
+    // Cap extreme values to prevent display issues
+    return Math.max(-999, Math.min(999, Math.round(changePercent * 10) / 10));
   }
 
   private isSameDay(date1: Date, date2: Date): boolean {
