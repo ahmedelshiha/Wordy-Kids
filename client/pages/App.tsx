@@ -78,8 +78,8 @@ export default function App() {
     setIsLoggedIn(true);
   };
 
-  // If logged in, show the main app
-  if (isLoggedIn && currentProfile) {
+  // If authenticated, show the main app
+  if (isAuthenticated && currentProfile) {
     return <Index initialProfile={currentProfile} />;
   }
 
