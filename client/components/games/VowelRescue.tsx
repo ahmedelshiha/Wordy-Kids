@@ -583,6 +583,24 @@ export function VowelRescue({
           />
         </div>
 
+        {/* Sparkle explosion effect */}
+        {showSparkleExplosion && (
+          <div className="absolute inset-0 pointer-events-none z-30">
+            <div className="absolute top-1/4 left-1/4 animate-ping">
+              <Sparkles className="w-8 h-8 text-yellow-300" />
+            </div>
+            <div className="absolute top-1/3 right-1/4 animate-pulse animation-delay-200">
+              <Star className="w-6 h-6 text-pink-300" />
+            </div>
+            <div className="absolute bottom-1/3 left-1/3 animate-bounce animation-delay-100">
+              <Zap className="w-7 h-7 text-blue-300" />
+            </div>
+            <div className="absolute top-1/2 right-1/3 animate-spin">
+              <Crown className="w-5 h-5 text-purple-300" />
+            </div>
+          </div>
+        )}
+
         {/* Game Card - Mobile Optimized */}
         <Card className="overflow-hidden">
           <CardContent className="p-4 sm:p-6 md:p-8">
