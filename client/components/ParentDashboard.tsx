@@ -505,18 +505,6 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
   // Check if we're on desktop FIRST, before any other hooks
   const isDesktop = useIsDesktop();
 
-  // If we're on desktop, render the enhanced desktop version
-  // This must be done before any other hooks to avoid hooks violation
-  if (isDesktop) {
-    return (
-      <ParentDashboardDesktop
-        children={propChildren}
-        sessions={sessions}
-        onNavigateBack={onNavigateBack}
-      />
-    );
-  }
-
   // Auth hook for guest mode checking
   const { isGuest, user } = useAuth();
   const navigate = useNavigate();
@@ -1014,7 +1002,7 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
               <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 md:gap-0">
                 <div>
                   <h3 className="font-semibold text-base md:text-lg">
-                    Good Morning! 🌅
+                    Good Morning! ��
                   </h3>
                   <p className="text-xs md:text-sm text-slate-600">
                     {children.length} active learner
@@ -1508,6 +1496,18 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
     ),
     [selectedChild, handleOpenLearningGoals, handleAddChildClick, children],
   );
+
+  // If we're on desktop, render the enhanced desktop version
+  // This check is done after all hooks to avoid hooks violation
+  if (isDesktop) {
+    return (
+      <ParentDashboardDesktop
+        children={propChildren}
+        sessions={sessions}
+        onNavigateBack={onNavigateBack}
+      />
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50">
