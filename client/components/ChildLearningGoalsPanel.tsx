@@ -151,6 +151,40 @@ export const ChildLearningGoalsPanel: React.FC<ChildLearningGoalsPanelProps> = (
     });
   }, [child]);
 
+  // Fetch systematic progress data when panel opens
+  useEffect(() => {
+    if (isOpen && child.id) {
+      setIsLoadingProgress(true);
+      goalProgressTracker.fetchSystematicProgress(child.id)
+        .then(progress => {
+          setSystematicProgress(progress);
+          setIsLoadingProgress(false);
+        })
+        .catch(error => {
+          console.error('Error fetching systematic progress:', error);
+          setIsLoadingProgress(false);
+        });
+    }
+  }, [isOpen, child.id]);
+
+  // Auto-refresh progress data every 30 seconds when panel is open
+  useEffect(() => {
+    if (!isOpen) return;
+
+    const interval = setInterval(async () => {
+      if (child.id) {
+        try {
+          const progress = await goalProgressTracker.fetchSystematicProgress(child.id);
+          setSystematicProgress(progress);
+        } catch (error) {
+          console.error('Error refreshing progress:', error);
+        }
+      }
+    }, 30000); // 30 seconds
+
+    return () => clearInterval(interval);
+  }, [isOpen, child.id]);
+
   const handleSaveChanges = () => {
     const updatedChild = {
       ...child,
