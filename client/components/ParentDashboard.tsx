@@ -489,7 +489,7 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
   // Registration prompt dialog state
   const [showRegistrationPrompt, setShowRegistrationPrompt] = useState(false);
 
-  // Load children from localStorage or use sample children for demo
+  // Load children from localStorage or use sample children for demo (not in guest mode)
   const [children, setChildren] = useState<ChildProfile[]>(() => {
     try {
       const savedChildren = localStorage.getItem("parentDashboardChildren");
@@ -509,8 +509,8 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
     } catch (error) {
       console.error("Error loading children from localStorage:", error);
     }
-    // Return sample children for demo purposes when none exist
-    return sampleChildren;
+    // Return sample children for demo purposes when none exist (except for guest users)
+    return isGuest ? [] : sampleChildren;
   });
 
   const [selectedChild, setSelectedChild] = useState<ChildProfile | null>(
