@@ -515,8 +515,8 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
       } catch (error) {
         console.error("Error loading children from localStorage:", error);
       }
-      // Return sample children for demo purposes when none exist (except for guest users)
-      setChildren(isGuest ? [] : sampleChildren);
+      // Always start with empty children array - users need to add their own children
+      setChildren([]);
     };
 
     loadChildren();
@@ -533,9 +533,9 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
     }
   }, [children, selectedChild]);
   const [activeTab, setActiveTab] = useState("overview");
-  const [goals] = useState<ParentGoal[]>(sampleGoals);
+  const [goals] = useState<ParentGoal[]>([]);
   const [notifications, setNotifications] =
-    useState<ParentNotification[]>(sampleNotifications);
+    useState<ParentNotification[]>([]);
   const [showAddChildDialog, setShowAddChildDialog] = useState(false);
   const [showAddGoalDialog, setShowAddGoalDialog] = useState(false);
   const [showCustomWordDialog, setShowCustomWordDialog] = useState(false);
@@ -736,48 +736,10 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
               setTopWords(childStatsResponse.topWords || []);
             }
           } catch (apiError) {
-            // Generate sample practice and top words since API is not available
+            // No API data available - show empty states for real user data
             if (mounted) {
-              setPracticeWords([
-                {
-                  word: "telescope",
-                  category: "Science",
-                  accuracy: 65,
-                  timesReviewed: 3,
-                },
-                {
-                  word: "butterfly",
-                  category: "Nature",
-                  accuracy: 58,
-                  timesReviewed: 4,
-                },
-                {
-                  word: "adventure",
-                  category: "Stories",
-                  accuracy: 72,
-                  timesReviewed: 2,
-                },
-              ]);
-              setTopWords([
-                {
-                  word: "rainbow",
-                  category: "Nature",
-                  accuracy: 95,
-                  timesReviewed: 8,
-                },
-                {
-                  word: "sunshine",
-                  category: "Weather",
-                  accuracy: 92,
-                  timesReviewed: 6,
-                },
-                {
-                  word: "friendship",
-                  category: "Emotions",
-                  accuracy: 89,
-                  timesReviewed: 5,
-                },
-              ]);
+              setPracticeWords([]);
+              setTopWords([]);
             }
           }
         }
