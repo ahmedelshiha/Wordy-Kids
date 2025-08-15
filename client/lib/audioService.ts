@@ -10,6 +10,8 @@ export class AudioService {
   private voices: SpeechSynthesisVoice[] = [];
   private isEnabled: boolean = true;
   private selectedVoiceType: VoiceType = "woman";
+  private isSupported: boolean = false;
+  private voicesLoaded: boolean = false;
 
   private constructor() {
     // Check if speech synthesis is supported
