@@ -35,7 +35,14 @@ export const useAuth = () => {
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<UserProfile | null>(null);
   const [isLoading, setIsLoading] = useState(true);
-  const navigate = useNavigate();
+  let navigate: any;
+
+  try {
+    navigate = useNavigate();
+  } catch (error) {
+    // useNavigate might not be available during SSR or initial render
+    navigate = () => {};
+  }
 
   // Check for existing session on mount
   useEffect(() => {
