@@ -2,7 +2,6 @@ import React, { useState, useRef, useEffect } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Progress } from "@/components/ui/progress";
 import {
   Volume2,
   Heart,
@@ -11,24 +10,7 @@ import {
   Star,
   ThumbsUp,
   ThumbsDown,
-  Brain,
-  Sword,
-  Shield,
-  AlertTriangle,
-  Flame,
   Target,
-  Zap,
-  Crown,
-  Eye,
-  Share,
-  Bookmark,
-  Play,
-  Shuffle,
-  Gamepad2,
-  Volume,
-  VolumeX,
-  Music,
-  Headphones,
 } from "lucide-react";
 import {
   playSoundIfEnabled,
@@ -36,11 +18,6 @@ import {
 } from "@/lib/soundEffects";
 import { audioService } from "@/lib/audioService";
 import { enhancedAudioService } from "@/lib/enhancedAudioService";
-import { adventureService } from "@/lib/adventureService";
-import { WordAdventureStatus } from "@shared/adventure";
-import { AchievementTracker } from "@/lib/achievementTracker";
-import { CategoryCompletionTracker } from "@/lib/categoryCompletionTracker";
-import { EnhancedAchievementPopup } from "@/components/EnhancedAchievementPopup";
 import { useVoiceSettings } from "@/hooks/use-voice-settings";
 import { cn } from "@/lib/utils";
 
@@ -68,11 +45,7 @@ interface EnhancedWordCardProps {
   onWordMastered?: (wordId: number, rating: "easy" | "medium" | "hard") => void;
   showVocabularyBuilder?: boolean;
   className?: string;
-  enableSwipeGestures?: boolean;
-  showAccessibilityFeatures?: boolean;
 }
-
-type MiniGame = "sound-match" | "emoji-builder" | "letter-hunt" | null;
 
 export const EnhancedWordCard: React.FC<EnhancedWordCardProps> = ({
   word,
@@ -82,103 +55,34 @@ export const EnhancedWordCard: React.FC<EnhancedWordCardProps> = ({
   onWordMastered,
   showVocabularyBuilder = false,
   className = "",
-  enableSwipeGestures = true,
-  showAccessibilityFeatures = true,
 }) => {
   // Core states
   const [isFlipped, setIsFlipped] = useState(showDefinition);
-  const [currentWordIndex, setCurrentWordIndex] = useState(0);
 
   // Audio and interaction states
   const [isPlaying, setIsPlaying] = useState(false);
   const [isFavorited, setIsFavorited] = useState(false);
   const [showSparkles, setShowSparkles] = useState(false);
 
-  // Adventure and progress states
-  const [adventureStatus, setAdventureStatus] =
-    useState<WordAdventureStatus | null>(null);
-  const [wordAchievements, setWordAchievements] = useState<any[]>([]);
+  // Progress states
   const [starProgress, setStarProgress] = useState(0);
-
-  // Gesture and interaction states
-  const [touchStart, setTouchStart] = useState<{ x: number; y: number } | null>(
-    null,
-  );
-  const [isGesturing, setIsGesturing] = useState(false);
-  const [swipeDirection, setSwipeDirection] = useState<string | null>(null);
-
-  // Mini-game states
-  const [activeMiniGame, setActiveMiniGame] = useState<MiniGame>(null);
-  const [miniGameProgress, setMiniGameProgress] = useState(0);
-  const [emojiPieces, setEmojiPieces] = useState<boolean[]>([
-    false,
-    false,
-    false,
-    false,
-  ]);
-  const [letterSequence, setLetterSequence] = useState<string[]>([]);
-  const [currentLetterIndex, setCurrentLetterIndex] = useState(0);
-
-  // Accessibility states
-  const [highContrastMode, setHighContrastMode] = useState(false);
-  const [largeTextMode, setLargeTextMode] = useState(false);
-
-  // Word review tracking
-  const [hasBeenReviewed, setHasBeenReviewed] = useState(false);
-  const [reviewStartTime, setReviewStartTime] = useState<Date | null>(null);
 
   const cardRef = useRef<HTMLDivElement>(null);
   const voiceSettings = useVoiceSettings();
 
-  // Initialize adventure status and load saved progress
+  // Initialize favorites from localStorage
   useEffect(() => {
-    let status = adventureService.getWordAdventureStatus(word.id.toString());
-    if (!status) {
-      status = adventureService.initializeWordAdventure(word.id.toString());
-    }
-    setAdventureStatus(status);
-
-    // Load favorites from localStorage
     const favorites = JSON.parse(localStorage.getItem("favoriteWords") || "[]");
     setIsFavorited(favorites.includes(word.id));
-
-    // Initialize letter sequence for letter hunt game
-    setLetterSequence(word.word.split(""));
-
-    // Start tracking review time
-    setReviewStartTime(new Date());
-
-    // Check if word has been reviewed
-    setHasBeenReviewed(CategoryCompletionTracker.isWordReviewed(word.id));
-  }, [word.id, word.word]);
-
-  // Track when word card becomes visible (reviewed)
-  useEffect(() => {
-    if (!hasBeenReviewed) {
-      const timer = setTimeout(() => {
-        CategoryCompletionTracker.trackWordReview(word.id, true);
-        setHasBeenReviewed(true);
-
-        // Track time spent
-        if (reviewStartTime) {
-          const timeSpent =
-            (new Date().getTime() - reviewStartTime.getTime()) / (1000 * 60); // in minutes
-          CategoryCompletionTracker.trackTimeSpent(Math.max(0.1, timeSpent)); // minimum 0.1 minutes
-        }
-      }, 3000); // Consider word "reviewed" after 3 seconds
-
-      return () => clearTimeout(timer);
-    }
-  }, [word.id, hasBeenReviewed, reviewStartTime]);
+  }, [word.id]);
 
   // Star progress calculation
   useEffect(() => {
     let progress = 0;
     if (isPlaying) progress += 1; // heard pronunciation
     if (isFlipped) progress += 1; // viewed back
-    if (activeMiniGame) progress += 1; // played mini-game
     setStarProgress(progress);
-  }, [isPlaying, isFlipped, activeMiniGame]);
+  }, [isPlaying, isFlipped]);
 
   // Enhanced pronunciation with normal voice
   const handlePronounce = async () => {
@@ -186,10 +90,6 @@ export const EnhancedWordCard: React.FC<EnhancedWordCardProps> = ({
 
     setIsPlaying(true);
     setShowSparkles(true);
-
-    // Trigger star progress
-    const newProgress = Math.min(starProgress + 1, 3);
-    setStarProgress(newProgress);
 
     try {
       // Normal voice
@@ -199,7 +99,6 @@ export const EnhancedWordCard: React.FC<EnhancedWordCardProps> = ({
           setIsPlaying(false);
           setShowSparkles(false);
           onPronounce?.(word);
-          trackPronunciationActivity();
         },
         onError: () => handlePronunciationError(),
       });
@@ -218,21 +117,6 @@ export const EnhancedWordCard: React.FC<EnhancedWordCardProps> = ({
     setIsPlaying(false);
     setShowSparkles(false);
     playSoundIfEnabled.pronunciation();
-  };
-
-  const trackPronunciationActivity = () => {
-    const achievements = AchievementTracker.trackActivity({
-      type: "wordLearning",
-      wordsLearned: 0,
-      category: word.category,
-      timeSpent: 0.1,
-    });
-
-    if (achievements.length > 0) {
-      setTimeout(() => {
-        setWordAchievements(achievements);
-      }, 1000);
-    }
   };
 
   // Enhanced favorite handling with sparkles
@@ -267,185 +151,13 @@ export const EnhancedWordCard: React.FC<EnhancedWordCardProps> = ({
     onFavorite?.(word);
   };
 
-  // Smooth 3D flip with state preservation
+  // Smooth 3D flip
   const handleFlip = () => {
     setIsFlipped(!isFlipped);
     audioService.playWhooshSound();
 
-    // Trigger star progress for viewing back
-    if (!isFlipped) {
-      const newProgress = Math.min(starProgress + 1, 3);
-      setStarProgress(newProgress);
-    }
-
     if (navigator.vibrate) {
       navigator.vibrate([30, 20, 30]);
-    }
-  };
-
-  // Enhanced touch gesture handling
-  const handleTouchStart = (e: React.TouchEvent) => {
-    if (!enableSwipeGestures) return;
-
-    const touch = e.touches[0];
-    setTouchStart({ x: touch.clientX, y: touch.clientY });
-    setIsGesturing(true);
-    setSwipeDirection(null);
-
-    if (navigator.vibrate) {
-      navigator.vibrate(25);
-    }
-  };
-
-  const handleTouchMove = (e: React.TouchEvent) => {
-    if (!touchStart || !enableSwipeGestures) return;
-
-    const touch = e.touches[0];
-    const deltaX = touch.clientX - touchStart.x;
-    const deltaY = touch.clientY - touchStart.y;
-    const threshold = 20;
-
-    if (Math.abs(deltaX) > threshold || Math.abs(deltaY) > threshold) {
-      if (Math.abs(deltaX) > Math.abs(deltaY)) {
-        setSwipeDirection(deltaX > threshold ? "right" : "left");
-      } else {
-        setSwipeDirection(deltaY < -threshold ? "up" : "down");
-      }
-    }
-  };
-
-  const handleTouchEnd = (e: React.TouchEvent) => {
-    if (!touchStart || !enableSwipeGestures) return;
-
-    const touch = e.changedTouches[0];
-    const deltaX = touch.clientX - touchStart.x;
-    const deltaY = touch.clientY - touchStart.y;
-    const threshold = 40;
-
-    setIsGesturing(false);
-    setSwipeDirection(null);
-
-    if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > threshold) {
-      if (deltaX > 0) {
-        if (isFlipped) {
-          handleFlip(); // Go back to front
-        } else {
-          handleFlip(); // Go to back
-        }
-      } else {
-        handleFavorite(); // Swipe left to favorite
-      }
-    } else if (deltaY < -threshold) {
-      handlePronounce(); // Swipe up to pronounce
-    } else if (deltaY > threshold && isFlipped) {
-      handleFlip(); // Swipe down to go back
-    } else if (Math.abs(deltaX) < 20 && Math.abs(deltaY) < 20) {
-      if (isFlipped) {
-        handleFlip(); // Tap to go back
-      }
-    }
-
-    setTouchStart(null);
-  };
-
-  // Mini-game handlers
-  const startMiniGame = (game: MiniGame) => {
-    setActiveMiniGame(game);
-    setMiniGameProgress(0);
-
-    // Trigger star progress for playing mini-game
-    const newProgress = Math.min(starProgress + 1, 3);
-    setStarProgress(newProgress);
-
-    if (game === "emoji-builder") {
-      setEmojiPieces([false, false, false, false]);
-    } else if (game === "letter-hunt") {
-      setCurrentLetterIndex(0);
-    }
-
-    audioService.playClickSound();
-  };
-
-  const handleSoundMatch = () => {
-    // Simple sound match game - just play the word and show success
-    handlePronounce();
-    setMiniGameProgress(100);
-    setTimeout(() => {
-      setActiveMiniGame(null);
-      triggerCelebration();
-    }, 2000);
-  };
-
-  const handleEmojiPieceClick = (index: number) => {
-    const newPieces = [...emojiPieces];
-    newPieces[index] = true;
-    setEmojiPieces(newPieces);
-
-    const progress = (newPieces.filter(Boolean).length / 4) * 100;
-    setMiniGameProgress(progress);
-
-    audioService.playClickSound();
-
-    if (progress === 100) {
-      setTimeout(() => {
-        setActiveMiniGame(null);
-        triggerCelebration();
-      }, 1000);
-    }
-  };
-
-  const handleLetterClick = (letter: string, index: number) => {
-    if (
-      index === currentLetterIndex &&
-      letter === letterSequence[currentLetterIndex]
-    ) {
-      const newIndex = currentLetterIndex + 1;
-      setCurrentLetterIndex(newIndex);
-
-      const progress = (newIndex / letterSequence.length) * 100;
-      setMiniGameProgress(progress);
-
-      audioService.playClickSound();
-
-      if (newIndex === letterSequence.length) {
-        setTimeout(() => {
-          setActiveMiniGame(null);
-          triggerCelebration();
-        }, 1000);
-      }
-    } else {
-      // Wrong letter - shake effect and reset
-      if (navigator.vibrate) {
-        navigator.vibrate([100, 50, 100]);
-      }
-      setCurrentLetterIndex(0);
-      setMiniGameProgress(0);
-    }
-  };
-
-  const triggerCelebration = () => {
-    setShowSparkles(true);
-    enhancedAudioService.playSuccessSound();
-
-    if (navigator.vibrate) {
-      navigator.vibrate([200, 100, 200, 100, 200]);
-    }
-
-    setTimeout(() => setShowSparkles(false), 2000);
-
-    // Track achievement
-    const achievements = AchievementTracker.trackActivity({
-      type: "wordLearning",
-      wordsLearned: 1,
-      accuracy: 100,
-      category: word.category,
-      timeSpent: 2,
-    });
-
-    if (achievements.length > 0) {
-      setTimeout(() => {
-        setWordAchievements(achievements);
-      }, 500);
     }
   };
 
@@ -482,29 +194,19 @@ export const EnhancedWordCard: React.FC<EnhancedWordCardProps> = ({
   };
 
   return (
-    <div
-      className={cn(
-        "relative w-full max-w-[380px] mx-auto",
-        hasBeenReviewed && "ring-2 ring-green-200 ring-opacity-50", // Subtle indicator for reviewed words
-        className,
-      )}
-    >
+    <div className={cn("relative w-full max-w-[380px] mx-auto", className)}>
       {/* 3D Card Container with smooth flip */}
       <div
         ref={cardRef}
         className={cn(
           "relative w-full h-[420px] transition-all duration-700 transform-gpu preserve-3d",
           isFlipped && "rotate-y-180",
-          isGesturing && "scale-105",
         )}
         style={{
           transformStyle: "preserve-3d",
           perspective: "1000px",
         }}
-        onTouchStart={handleTouchStart}
-        onTouchMove={handleTouchMove}
-        onTouchEnd={handleTouchEnd}
-        onClick={!activeMiniGame ? handleFlip : undefined}
+        onClick={handleFlip}
         role="button"
         tabIndex={0}
         aria-label={`Word card for ${word.word}. ${isFlipped ? "Showing definition" : "Showing word"}. Tap to flip or swipe for actions.`}
@@ -543,12 +245,7 @@ export const EnhancedWordCard: React.FC<EnhancedWordCardProps> = ({
 
               {/* Star Progress Meter */}
               <div className="flex items-center gap-1">
-                {hasBeenReviewed && (
-                  <div className="mr-1 text-green-300" title="Word reviewed">
-                    ✓
-                  </div>
-                )}
-                {[1, 2, 3].map((star) => (
+                {[1, 2].map((star) => (
                   <Star
                     key={star}
                     className={cn(
@@ -654,20 +351,6 @@ export const EnhancedWordCard: React.FC<EnhancedWordCardProps> = ({
               </div>
             </div>
 
-            {/* Quick Sound Match Preview */}
-            <div className="mt-4">
-              <Button
-                onClick={(e) => {
-                  e.stopPropagation();
-                  startMiniGame("sound-match");
-                }}
-                className="w-full h-12 bg-white/20 hover:bg-white/30 border-2 border-white/40 text-white rounded-xl font-semibold transition-all duration-200 hover:scale-102"
-              >
-                <Headphones className="w-5 h-5 mr-2" />
-                Quick Sound Match 🎯
-              </Button>
-            </div>
-
             {/* Gesture hints */}
             <div className="mt-3 text-center">
               <div className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-full px-4 py-2 mx-auto w-fit">
@@ -695,244 +378,83 @@ export const EnhancedWordCard: React.FC<EnhancedWordCardProps> = ({
               <h3 className="text-xl font-bold">{word.word}</h3>
             </div>
 
-            {/* Mini-game or content view */}
-            {activeMiniGame ? (
-              <div className="flex-1 flex flex-col">
-                {/* Mini-game header */}
-                <div className="mb-4">
-                  <div className="flex items-center justify-between mb-2">
-                    <h4 className="text-lg font-semibold">
-                      {activeMiniGame === "sound-match" && "🎧 Sound Match"}
-                      {activeMiniGame === "emoji-builder" && "🧩 Emoji Builder"}
-                      {activeMiniGame === "letter-hunt" && "🔤 Letter Hunt"}
-                    </h4>
-                    <Button
-                      onClick={() => setActiveMiniGame(null)}
-                      className="h-8 w-8 rounded-full bg-white/20 hover:bg-white/30 p-0"
-                    >
-                      ✕
-                    </Button>
-                  </div>
-                  <Progress value={miniGameProgress} className="h-2" />
-                </div>
-
-                {/* Sound Match Game */}
-                {activeMiniGame === "sound-match" && (
-                  <div className="flex-1 flex flex-col items-center justify-center space-y-4">
-                    <div className="text-center">
-                      <p className="text-lg mb-4">
-                        Listen and match the sound!
-                      </p>
-                      <Button
-                        onClick={handleSoundMatch}
-                        className="h-16 w-16 rounded-full bg-blue-500/30 hover:bg-blue-500/50 text-3xl"
-                      >
-                        🔊
-                      </Button>
-                    </div>
-                  </div>
-                )}
-
-                {/* Emoji Builder Game */}
-                {activeMiniGame === "emoji-builder" && (
-                  <div className="flex-1 flex flex-col items-center justify-center space-y-4">
-                    <div className="text-center">
-                      <p className="text-lg mb-4">
-                        Build the emoji by clicking the pieces!
-                      </p>
-                      <div className="text-6xl mb-4">
-                        {emojiPieces.every(Boolean) ? word.emoji : "❓"}
-                      </div>
-                      <div className="grid grid-cols-2 gap-2">
-                        {emojiPieces.map((filled, index) => (
-                          <Button
-                            key={index}
-                            onClick={() => handleEmojiPieceClick(index)}
-                            className={cn(
-                              "h-12 w-12 rounded-lg",
-                              filled
-                                ? "bg-green-500/50 border-green-400"
-                                : "bg-white/20 hover:bg-white/30 border-white/40",
-                            )}
-                            disabled={filled}
-                          >
-                            {filled ? "✓" : "🧩"}
-                          </Button>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-                )}
-
-                {/* Letter Hunt Game */}
-                {activeMiniGame === "letter-hunt" && (
-                  <div className="flex-1 flex flex-col items-center justify-center space-y-4">
-                    <div className="text-center">
-                      <p className="text-lg mb-4">
-                        Tap letters in order to spell "{word.word}"
-                      </p>
-                      <div className="text-2xl mb-4">
-                        {letterSequence.map((letter, index) => (
-                          <span
-                            key={index}
-                            className={cn(
-                              "inline-block w-8 h-8 mx-1 text-center border-2 rounded",
-                              index < currentLetterIndex
-                                ? "bg-green-500/50 border-green-400 text-green-100"
-                                : index === currentLetterIndex
-                                  ? "bg-yellow-500/50 border-yellow-400 text-yellow-100 animate-pulse"
-                                  : "border-white/40",
-                            )}
-                          >
-                            {index < currentLetterIndex ? letter : "_"}
-                          </span>
-                        ))}
-                      </div>
-                      <div className="grid grid-cols-3 gap-2 max-w-48">
-                        {word.word
-                          .split("")
-                          .sort(() => Math.random() - 0.5)
-                          .map((letter, index) => (
-                            <Button
-                              key={index}
-                              onClick={() =>
-                                handleLetterClick(
-                                  letter,
-                                  letterSequence.indexOf(letter),
-                                )
-                              }
-                              className="h-12 w-12 rounded-lg bg-white/20 hover:bg-white/30 border border-white/40 text-lg font-bold"
-                            >
-                              {letter.toUpperCase()}
-                            </Button>
-                          ))}
-                      </div>
-                    </div>
-                  </div>
-                )}
+            {/* Content */}
+            <div className="flex-1 space-y-4">
+              {/* Definition in comic bubble style */}
+              <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-4 border border-white/20 relative">
+                <div className="absolute -top-2 left-6 w-4 h-4 bg-white/10 border-l border-t border-white/20 transform rotate-45"></div>
+                <h4 className="text-sm font-medium mb-2 text-yellow-300">
+                  What it means:
+                </h4>
+                <p className="text-base leading-relaxed">{word.definition}</p>
               </div>
-            ) : (
-              /* Regular back content */
-              <div className="flex-1 space-y-4">
-                {/* Definition in comic bubble style */}
-                <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-4 border border-white/20 relative">
-                  <div className="absolute -top-2 left-6 w-4 h-4 bg-white/10 border-l border-t border-white/20 transform rotate-45"></div>
-                  <h4 className="text-sm font-medium mb-2 text-yellow-300">
-                    What it means:
-                  </h4>
-                  <p className="text-base leading-relaxed">{word.definition}</p>
-                </div>
 
-                {/* Example sentence */}
-                {word.example && (
-                  <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-4 border border-white/20">
-                    <h4 className="text-sm font-medium mb-2 text-green-300">
-                      Example:
-                    </h4>
-                    <p className="text-base italic leading-relaxed">
-                      "{word.example}"
-                    </p>
-                  </div>
-                )}
-
-                {/* Fun fact in comic bubble */}
-                {word.funFact && (
-                  <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-4 border border-white/20 relative">
-                    <div className="absolute -top-2 right-6 w-4 h-4 bg-white/10 border-r border-t border-white/20 transform -rotate-45"></div>
-                    <h4 className="text-sm font-medium mb-2 text-pink-300 flex items-center gap-1">
-                      <Sparkles className="w-4 h-4" />
-                      Fun Fact:
-                    </h4>
-                    <p className="text-sm leading-relaxed">{word.funFact}</p>
-                  </div>
-                )}
-
-                {/* Mini-games menu */}
+              {/* Example sentence */}
+              {word.example && (
                 <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-4 border border-white/20">
-                  <h4 className="text-sm font-medium mb-3 text-purple-300 flex items-center gap-1">
-                    <Gamepad2 className="w-4 h-4" />
-                    Fun Games:
+                  <h4 className="text-sm font-medium mb-2 text-green-300">
+                    Example:
                   </h4>
-                  <div className="grid grid-cols-1 gap-2">
+                  <p className="text-base italic leading-relaxed">
+                    "{word.example}"
+                  </p>
+                </div>
+              )}
+
+              {/* Fun fact in comic bubble */}
+              {word.funFact && (
+                <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-4 border border-white/20 relative">
+                  <div className="absolute -top-2 right-6 w-4 h-4 bg-white/10 border-r border-t border-white/20 transform -rotate-45"></div>
+                  <h4 className="text-sm font-medium mb-2 text-pink-300 flex items-center gap-1">
+                    <Sparkles className="w-4 h-4" />
+                    Fun Fact:
+                  </h4>
+                  <p className="text-sm leading-relaxed">{word.funFact}</p>
+                </div>
+              )}
+
+              {/* Vocabulary Builder section */}
+              {showVocabularyBuilder && (
+                <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-4 border border-white/20">
+                  <h4 className="text-sm font-medium mb-3 text-orange-300 flex items-center gap-1">
+                    <Target className="w-4 h-4" />
+                    Rate Your Knowledge:
+                  </h4>
+                  <div className="flex gap-2">
                     <Button
-                      onClick={() => startMiniGame("sound-match")}
-                      className="h-10 bg-blue-500/20 hover:bg-blue-500/30 border border-blue-500/30 text-blue-200 rounded-lg transition-all hover:scale-102"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        onWordMastered?.(word.id, "hard");
+                      }}
+                      className="flex-1 h-10 bg-red-500/20 hover:bg-red-500/30 border border-red-500/30 text-red-200 text-xs"
                     >
-                      🎧 Sound Match
+                      <ThumbsDown className="w-3 h-3 mr-1" />
+                      Forgot
                     </Button>
                     <Button
-                      onClick={() => startMiniGame("emoji-builder")}
-                      className="h-10 bg-purple-500/20 hover:bg-purple-500/30 border border-purple-500/30 text-purple-200 rounded-lg transition-all hover:scale-102"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        onWordMastered?.(word.id, "medium");
+                      }}
+                      className="flex-1 h-10 bg-yellow-500/20 hover:bg-yellow-500/30 border border-yellow-500/30 text-yellow-200 text-xs"
                     >
-                      🧩 Emoji Builder
+                      <Star className="w-3 h-3 mr-1" />
+                      Kinda
                     </Button>
                     <Button
-                      onClick={() => startMiniGame("letter-hunt")}
-                      className="h-10 bg-green-500/20 hover:bg-green-500/30 border border-green-500/30 text-green-200 rounded-lg transition-all hover:scale-102"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        onWordMastered?.(word.id, "easy");
+                      }}
+                      className="flex-1 h-10 bg-green-500/20 hover:bg-green-500/30 border border-green-500/30 text-green-200 text-xs"
                     >
-                      🔤 Letter Hunt
+                      <ThumbsUp className="w-3 h-3 mr-1" />
+                      Easy!
                     </Button>
                   </div>
                 </div>
-
-                {/* Gamification section */}
-                {showVocabularyBuilder && (
-                  <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-4 border border-white/20">
-                    <h4 className="text-sm font-medium mb-3 text-orange-300 flex items-center gap-1">
-                      <Target className="w-4 h-4" />
-                      Rate Your Knowledge:
-                    </h4>
-                    <div className="flex gap-2">
-                      <Button
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          CategoryCompletionTracker.trackWordReview(
-                            word.id,
-                            false,
-                          ); // Mark as incorrect/difficult
-                          onWordMastered?.(word.id, "hard");
-                          triggerCelebration();
-                        }}
-                        className="flex-1 h-10 bg-red-500/20 hover:bg-red-500/30 border border-red-500/30 text-red-200 text-xs"
-                      >
-                        <ThumbsDown className="w-3 h-3 mr-1" />
-                        Forgot
-                      </Button>
-                      <Button
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          CategoryCompletionTracker.trackWordReview(
-                            word.id,
-                            true,
-                          ); // Mark as correct
-                          onWordMastered?.(word.id, "medium");
-                          triggerCelebration();
-                        }}
-                        className="flex-1 h-10 bg-yellow-500/20 hover:bg-yellow-500/30 border border-yellow-500/30 text-yellow-200 text-xs"
-                      >
-                        <Star className="w-3 h-3 mr-1" />
-                        Kinda
-                      </Button>
-                      <Button
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          CategoryCompletionTracker.trackWordReview(
-                            word.id,
-                            true,
-                          ); // Mark as correct
-                          onWordMastered?.(word.id, "easy");
-                          triggerCelebration();
-                        }}
-                        className="flex-1 h-10 bg-green-500/20 hover:bg-green-500/30 border border-green-500/30 text-green-200 text-xs"
-                      >
-                        <ThumbsUp className="w-3 h-3 mr-1" />
-                        Easy!
-                      </Button>
-                    </div>
-                  </div>
-                )}
-              </div>
-            )}
+              )}
+            </div>
 
             {/* Back navigation hint */}
             <div className="mt-4 text-center">
@@ -947,37 +469,6 @@ export const EnhancedWordCard: React.FC<EnhancedWordCardProps> = ({
         </Card>
       </div>
 
-      {/* Swipe direction feedback */}
-      {isGesturing && swipeDirection && (
-        <div className="absolute inset-0 pointer-events-none z-30 rounded-xl overflow-hidden">
-          <div
-            className={cn(
-              "absolute inset-0 transition-opacity duration-200",
-              swipeDirection === "right" &&
-                "bg-gradient-to-r from-green-400/20 via-green-400/10 to-transparent",
-              swipeDirection === "left" &&
-                "bg-gradient-to-l from-red-400/20 via-red-400/10 to-transparent",
-              swipeDirection === "up" &&
-                "bg-gradient-to-t from-blue-400/20 via-blue-400/10 to-transparent",
-              swipeDirection === "down" &&
-                "bg-gradient-to-b from-purple-400/20 via-purple-400/10 to-transparent",
-            )}
-          />
-        </div>
-      )}
-
-      {/* Achievement popup */}
-      {wordAchievements.length > 0 && (
-        <EnhancedAchievementPopup
-          achievements={wordAchievements}
-          onClose={() => setWordAchievements([])}
-          onAchievementClaim={(achievement) => {
-            console.log("Achievement claimed:", achievement);
-          }}
-          autoCloseDelay={3000}
-        />
-      )}
-
       {/* Screen reader announcements */}
       <div
         aria-live="polite"
@@ -990,7 +481,6 @@ export const EnhancedWordCard: React.FC<EnhancedWordCardProps> = ({
           : `Showing word ${word.word}`}
         {isPlaying && ` Pronouncing ${word.word}`}
         {isFavorited && ` ${word.word} added to favorites`}
-        {activeMiniGame && ` Playing ${activeMiniGame} game`}
         {starProgress > 0 && ` Earned ${starProgress} stars`}
       </div>
     </div>

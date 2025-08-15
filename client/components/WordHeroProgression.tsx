@@ -139,7 +139,9 @@ export const WordHeroProgression: React.FC<WordHeroProgressionProps> = ({
                 <Trophy className="w-12 h-12 text-white" />
               </div>
 
-              <h2 className="text-3xl font-bold mb-4">Badge Earned! 🏆</h2>
+              <h2 className="text-3xl font-bold mb-4">
+                Achievement Unlocked! 🏆
+              </h2>
 
               <div className="space-y-4 mb-8">
                 <div className="text-6xl mb-4">{currentBadge.icon}</div>
