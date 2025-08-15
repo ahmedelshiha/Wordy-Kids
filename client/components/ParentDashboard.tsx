@@ -789,14 +789,10 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
 
   // Sync children progress with real learning data
   const syncChildrenProgress = async () => {
-    if (children.length === 0) {
-      console.log("No children to sync");
-      return;
-    }
+    if (children.length === 0) return;
 
     setIsLoadingProgress(true);
     try {
-      console.log("Syncing progress for", children.length, "children");
       const updatedChildren =
         await childProgressSync.syncAndSaveAllProgress(children);
       setChildren(updatedChildren);
@@ -3869,7 +3865,7 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
           {/* No child selected state */}
           {!selectedChild && children.length > 0 && (
             <div className="text-center py-8">
-              <div className="text-4xl mb-3">👨‍���‍👧‍👦</div>
+              <div className="text-4xl mb-3">👨‍👩‍👧‍👦</div>
               <h3 className="font-semibold text-slate-700 mb-2">
                 Select a Child
               </h3>
