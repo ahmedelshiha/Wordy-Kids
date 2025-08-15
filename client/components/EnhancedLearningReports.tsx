@@ -351,56 +351,56 @@ export const EnhancedLearningReports: React.FC<
           </CardHeader>
         </Card>
 
-        {/* Key Metrics Cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        {/* Key Metrics Cards - Enhanced for mobile */}
+        <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
           <Card className="bg-blue-50 border-blue-200">
-            <CardContent className="p-6 text-center">
-              <Clock className="w-8 h-8 text-blue-600 mx-auto mb-2" />
-              <div className="text-3xl font-bold text-blue-700">
+            <CardContent className="p-3 sm:p-4 text-center">
+              <Clock className="w-6 h-6 sm:w-8 sm:h-8 text-blue-600 mx-auto mb-1 sm:mb-2" />
+              <div className="text-xl sm:text-2xl lg:text-3xl font-bold text-blue-700">
                 <AnimatedCounter
                   value={generatedReport.key_metrics.learning_time_minutes}
                 />
                 m
               </div>
-              <p className="text-blue-600 font-medium">Learning Time</p>
+              <p className="text-blue-600 font-medium text-xs sm:text-sm">Learning Time</p>
             </CardContent>
           </Card>
 
           <Card className="bg-green-50 border-green-200">
-            <CardContent className="p-6 text-center">
-              <BookOpen className="w-8 h-8 text-green-600 mx-auto mb-2" />
-              <div className="text-3xl font-bold text-green-700">
+            <CardContent className="p-3 sm:p-4 text-center">
+              <BookOpen className="w-6 h-6 sm:w-8 sm:h-8 text-green-600 mx-auto mb-1 sm:mb-2" />
+              <div className="text-xl sm:text-2xl lg:text-3xl font-bold text-green-700">
                 <AnimatedCounter
                   value={generatedReport.key_metrics.words_learned}
                 />
               </div>
-              <p className="text-green-600 font-medium">Words Learned</p>
+              <p className="text-green-600 font-medium text-xs sm:text-sm">Words Learned</p>
             </CardContent>
           </Card>
 
           <Card className="bg-purple-50 border-purple-200">
-            <CardContent className="p-6 text-center">
-              <Target className="w-8 h-8 text-purple-600 mx-auto mb-2" />
-              <div className="text-3xl font-bold text-purple-700">
+            <CardContent className="p-3 sm:p-4 text-center">
+              <Target className="w-6 h-6 sm:w-8 sm:h-8 text-purple-600 mx-auto mb-1 sm:mb-2" />
+              <div className="text-xl sm:text-2xl lg:text-3xl font-bold text-purple-700">
                 <AnimatedCounter
                   value={generatedReport.key_metrics.accuracy_percentage}
                 />
                 %
               </div>
-              <p className="text-purple-600 font-medium">Accuracy</p>
+              <p className="text-purple-600 font-medium text-xs sm:text-sm">Accuracy</p>
             </CardContent>
           </Card>
 
           <Card className="bg-orange-50 border-orange-200">
-            <CardContent className="p-6 text-center">
-              <Zap className="w-8 h-8 text-orange-600 mx-auto mb-2" />
-              <div className="text-3xl font-bold text-orange-700">
+            <CardContent className="p-3 sm:p-4 text-center">
+              <Zap className="w-6 h-6 sm:w-8 sm:h-8 text-orange-600 mx-auto mb-1 sm:mb-2" />
+              <div className="text-xl sm:text-2xl lg:text-3xl font-bold text-orange-700">
                 <AnimatedCounter
                   value={generatedReport.key_metrics.day_streak}
                 />{" "}
-                Day
+                <span className="text-sm sm:text-base">Day</span>
               </div>
-              <p className="text-orange-600 font-medium">Streak</p>
+              <p className="text-orange-600 font-medium text-xs sm:text-sm">Streak</p>
             </CardContent>
           </Card>
         </div>
