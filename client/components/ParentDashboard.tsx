@@ -751,8 +751,21 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
       }
 
       console.log("Progress sync completed:", { updatedChildren, stats });
+
+      // Show success toast
+      toast({
+        title: "Progress Updated",
+        description: `Updated data for ${updatedChildren.length} children`,
+        duration: 2000,
+      });
     } catch (error) {
       console.error("Error syncing children progress:", error);
+      toast({
+        title: "Sync Error",
+        description: "Failed to update progress data",
+        variant: "destructive",
+        duration: 3000,
+      });
     } finally {
       setIsLoadingProgress(false);
     }
