@@ -624,6 +624,148 @@ export const ParentDashboardDesktop: React.FC<ParentDashboardDesktopProps> = ({
     return { hasProgress: false };
   };
 
+  // Function to scan for all existing learning progress
+  const scanForExistingProgress = useCallback(() => {
+    try {
+      const detected: Array<{
+        userId: string;
+        userData: any;
+        progressStats: any;
+      }> = [];
+
+      // Check current user
+      const currentUser = localStorage.getItem("wordAdventureCurrentUser");
+      if (currentUser) {
+        const user = JSON.parse(currentUser);
+        if (user.id) {
+          const progressData = childProgressSync.getRealProgressData?.(user.id) || {};
+          detected.push({
+            userId: user.id,
+            userData: user,
+            progressStats: progressData,
+          });
+        }
+      }
+
+      // Scan localStorage for progress data patterns
+      const keys = Object.keys(localStorage);
+      const progressKeys = keys.filter(key =>
+        key.startsWith('daily_progress_') ||
+        key.startsWith('weekly_progress_') ||
+        key.startsWith('systematic_progress_')
+      );
+
+      const userIds = new Set<string>();
+      progressKeys.forEach(key => {
+        const parts = key.split('_');
+        if (parts.length >= 3) {
+          userIds.add(parts[2]);
+        }
+      });
+
+      userIds.forEach(userId => {
+        if (!detected.find(d => d.userId === userId)) {
+          try {
+            const progressData = {
+              totalWordsLearned: 0,
+              currentStreak: 0,
+              weeklyProgress: 0,
+              todayProgress: 0,
+            };
+
+            // Try to get some basic stats
+            const dailyKey = `daily_progress_${userId}_${new Date().toISOString().split('T')[0]}`;
+            const dailyData = localStorage.getItem(dailyKey);
+            if (dailyData) {
+              const parsed = JSON.parse(dailyData);
+              progressData.todayProgress = parsed.words || 0;
+            }
+
+            detected.push({
+              userId,
+              userData: { id: userId, username: `User_${userId}` },
+              progressStats: progressData,
+            });
+          } catch (error) {
+            console.error('Error processing user progress:', error);
+          }
+        }
+      });
+
+      setDetectedProgress(detected);
+
+      if (detected.length > 0) {
+        setShowAutoDetectDialog(true);
+        toast({
+          title: "Learning Progress Found!",
+          description: `Found progress data for ${detected.length} learner(s)`,
+          duration: 4000,
+        });
+      } else {
+        toast({
+          title: "No Progress Found",
+          description: "No existing learning progress detected",
+          duration: 3000,
+        });
+      }
+    } catch (error) {
+      console.error('Error scanning for progress:', error);
+      toast({
+        title: "Scan Error",
+        description: "Error scanning for existing progress",
+        variant: "destructive",
+        duration: 3000,
+      });
+    }
+  }, []);
+
+  // Handle connecting detected progress to new child
+  const connectDetectedProgress = useCallback((progressData: any, childName: string) => {
+    const newChild: ChildProfile = {
+      id: progressData.userId,
+      name: childName,
+      age: 8, // Default age
+      avatar: "🧒",
+      level: progressData.userData?.level || 1,
+      totalPoints: progressData.userData?.points || 0,
+      wordsLearned: progressData.progressStats?.totalWordsLearned || 0,
+      currentStreak: progressData.progressStats?.currentStreak || 0,
+      weeklyGoal: 15,
+      weeklyProgress: progressData.progressStats?.weeklyProgress || 0,
+      favoriteCategory: "Animals",
+      lastActive: new Date(),
+      preferredLearningTime: "After school",
+      difficultyPreference: "medium",
+      parentNotes: "Connected from existing learning progress",
+      customWords: [],
+      weeklyTarget: 15,
+      monthlyTarget: 60,
+      recentAchievements: [],
+      learningStrengths: [],
+      areasForImprovement: [],
+      motivationalRewards: [],
+      learningGoals: [],
+      learningPreferences: {
+        autoAdjustGoals: true,
+        adaptiveDifficulty: true,
+        preferredCategories: ["Animals"],
+        focusAreas: [],
+        reminderTimes: ["16:00"],
+        motivationStyle: "encouraging",
+      },
+    };
+
+    setChildren(prev => [...prev, newChild]);
+    setSelectedChild(newChild);
+    setShowAutoDetectDialog(false);
+
+    toast({
+      title: "Child Connected!",
+      description: `${childName} has been connected with their learning progress`,
+      duration: 4000,
+    });
+  }, []);
+
   // Handle add child form
   const addChild = useCallback(() => {
     if (newChildData.name.trim()) {
