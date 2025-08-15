@@ -233,14 +233,108 @@ interface AchievementSystemProps {
 
 export function AchievementSystem({
   onUnlock,
-  stats = learningStats,
 }: AchievementSystemProps) {
+  const { user } = useAuth();
   const [selectedCategory, setSelectedCategory] = useState<string>("all");
   const [showUnlockables, setShowUnlockables] = useState(false);
-  // OLD ACHIEVEMENT CELEBRATION SYSTEM REMOVED
-  // const [celebratingAchievement, setCelebratingAchievement] =
-  //   useState<Achievement | null>(null);
   const [activeTab, setActiveTab] = useState("achievements");
+  const [isLoading, setIsLoading] = useState(true);
+  const [realStats, setRealStats] = useState<LearningStats | null>(null);
+  const [realAchievements, setRealAchievements] = useState<Achievement[]>([]);
+
+  // Load real data on component mount
+  useEffect(() => {
+    const loadRealData = async () => {
+      try {
+        setIsLoading(true);
+        const userId = user?.id || 'guest';
+
+        // Get real achievement data
+        const achievements = AchievementTracker.getAchievements();
+        const journeyProgress = AchievementTracker.getJourneyProgress();
+
+        // Get category completion data
+        const categoryStats = CategoryCompletionTracker.getCurrentCategoryStats();
+        const completionHistory = CategoryCompletionTracker.getCompletionHistory();
+
+        // Build category breakdown from real data
+        const categoryBreakdown = Object.entries(categoryStats).map(([category, data]) => ({
+          category: category.charAt(0).toUpperCase() + category.slice(1),
+          wordsLearned: data.wordsReviewed || 0,
+          accuracy: data.averageAccuracy || 0,
+          timeSpent: data.timeSpent || 0
+        }));
+
+        // Get progress data from GoalProgressTracker
+        let progressData;
+        try {
+          const goalTracker = GoalProgressTracker.getInstance();
+          progressData = await goalTracker.fetchSystematicProgress(userId);
+        } catch (error) {
+          console.warn('Could not fetch systematic progress:', error);
+          progressData = {
+            totalWordsLearned: journeyProgress.wordsLearned,
+            currentStreak: journeyProgress.streakDays,
+            wordsLearnedToday: 0,
+            wordsLearnedThisWeek: 0,
+            categoriesProgress: {}
+          };
+        }
+
+        // Calculate learning speed (words per hour estimation)
+        const weeklyWords = getWeeklyProgressData(userId);
+        const totalWeeklyWords = weeklyWords.reduce((sum, count) => sum + count, 0);
+        const avgWordsPerDay = totalWeeklyWords / 7;
+        const learningSpeed = avgWordsPerDay * 2; // Rough estimation: 2 hours average daily study
+
+        // Calculate current accuracy from journey progress
+        const currentAccuracy = journeyProgress.totalAccuracy || 85;
+
+        const realLearningStats: LearningStats = {
+          totalWordsLearned: progressData.totalWordsLearned || journeyProgress.wordsLearned,
+          weeklyProgress: weeklyWords,
+          categoryBreakdown,
+          difficultyProgress: [
+            { difficulty: "easy", completed: journeyProgress.difficultyStats?.easy?.completed || 0, total: 50 },
+            { difficulty: "medium", completed: journeyProgress.difficultyStats?.medium?.completed || 0, total: 50 },
+            { difficulty: "hard", completed: journeyProgress.difficultyStats?.hard?.completed || 0, total: 30 }
+          ],
+          streakData: getStreakData(userId),
+          learningSpeed: Math.max(learningSpeed, 1),
+          currentAccuracy
+        };
+
+        setRealStats(realLearningStats);
+        setRealAchievements(achievements);
+
+      } catch (error) {
+        console.error('Error loading real data:', error);
+        // Fallback to basic data if loading fails
+        setRealStats({
+          totalWordsLearned: 0,
+          weeklyProgress: [0, 0, 0, 0, 0, 0, 0],
+          categoryBreakdown: [],
+          difficultyProgress: [
+            { difficulty: "easy", completed: 0, total: 50 },
+            { difficulty: "medium", completed: 0, total: 50 },
+            { difficulty: "hard", completed: 0, total: 30 }
+          ],
+          streakData: [],
+          learningSpeed: 1,
+          currentAccuracy: 0
+        });
+        setRealAchievements([]);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    loadRealData();
+  }, [user?.id]);
+
+  // Use real data or loading state
+  const stats = realStats;
+  const achievements = realAchievements;
 
   const categories = [
     { id: "all", name: "All", icon: "🏆" },
