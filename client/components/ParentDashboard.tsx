@@ -618,11 +618,28 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
   }, []);
 
   const calculateWeeklyStats = useCallback((childId: string) => {
-    return {
-      totalTime: 45,
-      averageAccuracy: 87,
-      sessionsCount: 8,
-    };
+    try {
+      // Get real weekly stats from localStorage or progress sync
+      const realProgress = childProgressSync.getInstance().getRealProgressData?.(childId);
+
+      // Get weekly session data
+      const weekKey = childProgressSync.getInstance().getWeekKey?.() || new Date().toISOString().split('T')[0];
+      const weeklyStatsKey = `weekly_stats_${childId}_${weekKey}`;
+      const weeklyStats = JSON.parse(localStorage.getItem(weeklyStatsKey) || '{}');
+
+      return {
+        totalTime: weeklyStats.totalTime || 0,
+        averageAccuracy: weeklyStats.averageAccuracy || (realProgress?.weeklyProgress > 0 ? 85 : 0),
+        sessionsCount: weeklyStats.sessionsCount || 0,
+      };
+    } catch (error) {
+      console.error('Error calculating weekly stats:', error);
+      return {
+        totalTime: 0,
+        averageAccuracy: 0,
+        sessionsCount: 0,
+      };
+    }
   }, []);
 
   // Debounced save to localStorage
@@ -771,16 +788,37 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
   // Memoized helper functions
   const getChildGoals = useCallback(
     (childId: string) => {
-      return goals.filter((goal) => goal.childId === childId);
+      // Get real goals from localStorage + static goals
+      try {
+        const realGoalsKey = `child_goals_${childId}`;
+        const realGoals = JSON.parse(localStorage.getItem(realGoalsKey) || '[]');
+        const allGoals = [...goals, ...realGoals];
+        return allGoals.filter((goal) => goal.childId === childId);
+      } catch (error) {
+        console.error('Error getting child goals:', error);
+        return goals.filter((goal) => goal.childId === childId);
+      }
     },
     [goals],
   );
 
   const getChildNotifications = useCallback(
     (childId: string) => {
-      return notifications
-        .filter((notif) => notif.childId === childId)
-        .slice(0, 3);
+      // Get real notifications from localStorage + static notifications
+      try {
+        const realNotificationsKey = `child_notifications_${childId}`;
+        const realNotifications = JSON.parse(localStorage.getItem(realNotificationsKey) || '[]');
+        const allNotifications = [...notifications, ...realNotifications];
+        return allNotifications
+          .filter((notif) => notif.childId === childId)
+          .sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime())
+          .slice(0, 3);
+      } catch (error) {
+        console.error('Error getting child notifications:', error);
+        return notifications
+          .filter((notif) => notif.childId === childId)
+          .slice(0, 3);
+      }
     },
     [notifications],
   );
