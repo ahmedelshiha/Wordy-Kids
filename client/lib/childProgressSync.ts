@@ -243,15 +243,12 @@ export class ChildProgressSync {
         }
       }
 
-      const result = {
+      return {
         totalWordsLearned: totalWords,
         longestStreak,
         activeChildren,
         todayActivity,
       };
-
-      console.log("Family stats:", result);
-      return result;
     } catch (error) {
       console.error("Error calculating family stats:", error);
       return {
