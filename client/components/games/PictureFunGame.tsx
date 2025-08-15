@@ -187,7 +187,7 @@ function GameCompletionDialog({
 
   return (
     <Dialog open={show} onOpenChange={() => {}}>
-      <DialogContent className="sm:max-w-xs max-w-[90vw] p-3 bg-gradient-to-br from-orange-400 via-orange-500 to-red-500 border-orange-300 border-4">
+      <DialogContent className="sm:max-w-xs max-w-[95vw] p-4 bg-gradient-to-br from-orange-400 via-orange-500 to-red-500 border-orange-300 border-4">
         <DialogHeader className="text-center pb-2">
           <div className="text-5xl mb-2 animate-bounce">📸</div>
           <DialogTitle className="text-lg font-bold text-white drop-shadow-lg">
@@ -243,10 +243,10 @@ function GameCompletionDialog({
           )}
         </div>
 
-        <DialogFooter className="flex gap-2 pt-2">
+        <DialogFooter className="flex gap-3 pt-3">
           <Button
             onClick={onContinue}
-            className="flex-1 bg-white/20 hover:bg-white/30 text-white text-sm py-2 px-3 rounded-lg shadow-lg border border-white/30"
+            className="flex-1 bg-white/20 hover:bg-white/30 text-white text-sm sm:text-base py-3 px-4 rounded-lg shadow-lg border border-white/30 min-h-[48px] touch-target"
           >
             <span className="mr-1">📸</span>
             Play Again!
@@ -254,7 +254,7 @@ function GameCompletionDialog({
           <Button
             onClick={onExit}
             variant="outline"
-            className="flex-1 bg-white/10 hover:bg-white/20 text-white border-white/30 text-sm py-2 px-3 rounded-lg"
+            className="flex-1 bg-white/10 hover:bg-white/20 text-white border-white/30 text-sm sm:text-base py-3 px-4 rounded-lg min-h-[48px] touch-target"
           >
             <span className="mr-1">🏠</span>
             Home
@@ -483,14 +483,14 @@ export default function PictureFunGame({
         className="pointer-events-none absolute inset-0 overflow-hidden"
       />
 
-      <div className="relative rounded-3xl shadow-xl p-4 md:p-6 bg-gradient-to-b from-orange-600 to-red-700 text-white">
-        {/* Top bar */}
-        <div className="mb-3">
-          <div className="flex items-center justify-between text-sm opacity-90">
-            <span>
+      <div className="relative rounded-3xl shadow-xl p-3 sm:p-4 md:p-6 bg-gradient-to-b from-orange-600 to-red-700 text-white safe-area-padding-bottom mobile-optimized">
+        {/* Top bar - Mobile Optimized */}
+        <div className="mb-3 sm:mb-4">
+          <div className="flex items-center justify-between text-xs sm:text-sm opacity-90">
+            <span className="font-medium">
               Picture {roundIdx + 1} / {pool.length}
             </span>
-            <span>Best Streak: {bestStreak}</span>
+            <span className="font-medium">Best Streak: {bestStreak}</span>
           </div>
           <div className="mt-2 h-3 rounded-full bg-white/20 overflow-hidden">
             <div
@@ -500,23 +500,21 @@ export default function PictureFunGame({
           </div>
         </div>
 
-        {/* Mascot + Picture */}
-        <div className="flex items-center justify-between gap-3 mb-4">
-          <div className="flex items-center gap-2">
-            <span className="text-4xl animate-gentle-float">📸</span>
-            <div className="leading-tight">
-              <div className="text-xs uppercase tracking-wide opacity-90">
-                Picture Fun
-              </div>
-              <div className="font-bold">Which word matches this picture?</div>
+        {/* Mascot + Picture - Mobile Responsive */}
+        <div className="flex items-center justify-center gap-2 sm:gap-3 mb-4 text-center">
+          <span className="text-3xl sm:text-4xl animate-gentle-float">📸</span>
+          <div className="leading-tight">
+            <div className="text-xs sm:text-sm uppercase tracking-wide opacity-90">
+              Picture Fun
             </div>
+            <div className="font-bold text-sm sm:text-base">Which word matches this picture?</div>
           </div>
         </div>
 
-        {/* Big Picture Display */}
-        <div className="text-center mb-6">
-          <div className="inline-block bg-white/10 backdrop-blur-sm rounded-3xl p-6 border-4 border-white/20">
-            <div className="text-8xl animate-gentle-float">{current.emoji}</div>
+        {/* Big Picture Display - Mobile Responsive */}
+        <div className="text-center mb-4 sm:mb-6">
+          <div className="inline-block bg-white/10 backdrop-blur-sm rounded-2xl sm:rounded-3xl p-4 sm:p-6 border-3 sm:border-4 border-white/20 touch-optimized">
+            <div className="text-6xl sm:text-7xl md:text-8xl animate-gentle-float">{current.emoji}</div>
           </div>
         </div>
 
@@ -538,9 +536,9 @@ export default function PictureFunGame({
           </div>
         )}
 
-        {/* Options grid */}
+        {/* Options grid - Mobile Optimized */}
         <div
-          className={`grid gap-3 ${optionsPerRound === 4 ? "grid-cols-2" : "grid-cols-3"}`}
+          className={`grid gap-2 sm:gap-3 px-1 ${optionsPerRound === 4 ? "grid-cols-2" : "grid-cols-1 sm:grid-cols-3"}`}
         >
           {options.map((word, i) => {
             const isCorrect = word === current.word;
@@ -552,7 +550,7 @@ export default function PictureFunGame({
                 key={i}
                 onClick={() => choose(word)}
                 disabled={locked}
-                className={`relative py-4 px-3 rounded-2xl bg-white/95 hover:bg-white active:scale-95 transition-all duration-300 shadow-mobile-lg border-4 focus:outline-none focus:ring-4 focus:ring-yellow-300 touch-target mobile-optimized ${
+                className={`relative py-4 sm:py-5 px-3 sm:px-4 rounded-xl sm:rounded-2xl bg-white/95 hover:bg-white active:scale-95 transition-all duration-300 shadow-mobile-lg border-3 sm:border-4 focus:outline-none focus:ring-4 focus:ring-yellow-300 touch-target mobile-optimized min-h-[56px] sm:min-h-[64px] ${
                   shouldHighlight
                     ? isCorrect
                       ? "border-green-400 ring-4 ring-green-300 animate-gentle-bounce border-rainbow"
@@ -564,7 +562,7 @@ export default function PictureFunGame({
                 }}
               >
                 <div className="text-center">
-                  <div className="text-lg font-bold text-gray-800">{word}</div>
+                  <div className="text-base sm:text-lg font-bold text-gray-800 leading-tight">{word}</div>
                 </div>
 
                 {/* Enhanced fun corner badge with dynamic sparkles */}
@@ -611,11 +609,11 @@ export default function PictureFunGame({
           })}
         </div>
 
-        {/* Bottom: XP + streak */}
-        <div className="mt-5">
-          <div className="text-sm flex items-center justify-between">
-            <span>Picture XP</span>
-            <span>Streak: {streak}</span>
+        {/* Bottom: XP + streak - Mobile Optimized */}
+        <div className="mt-4 sm:mt-5">
+          <div className="text-xs sm:text-sm flex items-center justify-between">
+            <span className="font-medium">Picture XP</span>
+            <span className="font-medium">Streak: {streak}</span>
           </div>
           <div className="mt-2 h-3 rounded-full bg-white/20 overflow-hidden">
             <div
@@ -681,7 +679,7 @@ export default function PictureFunGame({
 
       {/* Enhanced Exit Confirmation Dialog - Mobile Optimized */}
       <Dialog open={showExitDialog} onOpenChange={onCloseExitDialog}>
-        <DialogContent className="sm:max-w-xs max-w-[90vw] p-4">
+        <DialogContent className="sm:max-w-xs max-w-[95vw] p-4 sm:p-5">
           <DialogHeader className="text-center pb-2">
             <div className="text-4xl mb-1">📸</div>
             <DialogTitle className="text-lg font-bold text-gray-800">
@@ -709,11 +707,11 @@ export default function PictureFunGame({
             </div>
           </div>
 
-          <DialogFooter className="flex gap-2 pt-2">
+          <DialogFooter className="flex gap-3 pt-3">
             <Button
               variant="outline"
               onClick={() => onCloseExitDialog?.()}
-              className="flex-1 bg-orange-50 hover:bg-orange-100 text-orange-700 border-orange-300 text-sm py-2"
+              className="flex-1 bg-orange-50 hover:bg-orange-100 text-orange-700 border-orange-300 text-sm sm:text-base py-3 min-h-[48px] touch-target"
             >
               📸 Stay
             </Button>
@@ -723,7 +721,7 @@ export default function PictureFunGame({
                 onCloseExitDialog?.();
                 onExit?.();
               }}
-              className="flex-1 bg-red-500 hover:bg-red-600 text-sm py-2"
+              className="flex-1 bg-red-500 hover:bg-red-600 text-sm sm:text-base py-3 min-h-[48px] touch-target"
             >
               🚪 Exit
             </Button>
@@ -742,7 +740,7 @@ function Wrapper({
   className?: string;
 }) {
   return (
-    <div className={`relative w-full max-w-md mx-auto p-4 ${className}`}>
+    <div className={`relative w-full max-w-md mx-auto p-2 sm:p-4 safe-area-padding-bottom ${className}`}>
       {children}
     </div>
   );
