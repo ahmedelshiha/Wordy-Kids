@@ -1,30 +1,52 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, {
+  useState,
+  useRef,
+  useEffect,
+  useMemo,
+  useCallback,
+} from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
-import { Volume2, Star, Trophy, ArrowLeft, Play, Clock } from "lucide-react";
+import {
+  Volume2,
+  Star,
+  Trophy,
+  ArrowLeft,
+  Play,
+  Clock,
+  Sparkles,
+  Crown,
+  Zap,
+} from "lucide-react";
 import { AchievementTracker } from "@/lib/achievementTracker";
 import { EnhancedAchievementPopup } from "@/components/EnhancedAchievementPopup";
 import { audioService } from "@/lib/audioService";
 import { playSoundIfEnabled } from "@/lib/soundEffects";
 import { CelebrationEffect } from "@/components/CelebrationEffect";
+import { Word, getWordsByCategory, getRandomWords } from "@/data/wordsDatabase";
 
 const vowelOptions = ["A", "E", "I", "O", "U"];
 
 interface VowelQuestion {
+  id: string | number;
   word: string;
   missingIndex: number[];
   image?: string;
   audio?: string;
   difficulty?: "easy" | "medium" | "hard";
-  originalWord?: any; // Reference to the original word object
+  originalWord?: Word; // Reference to the original word object from database
   category?: string;
   emoji?: string;
 }
 
 interface VowelRescueProps {
-  questions: VowelQuestion[];
+  questions?: VowelQuestion[]; // Now optional - will generate from database if not provided
+  rounds?: number; // default 8
+  difficulty?: "easy" | "medium" | "hard"; // default "easy"
+  category?: string; // word category to focus on
+  playerLevel?: number; // for progressive difficulty
   onComplete: (score: number, total: number) => void;
   onExit: () => void;
   gameMode?: "easy" | "challenge" | "timed";
@@ -32,6 +54,10 @@ interface VowelRescueProps {
 
 export function VowelRescue({
   questions,
+  rounds = 8,
+  difficulty = "easy",
+  category,
+  playerLevel = 1,
   onComplete,
   onExit,
   gameMode = "easy",
@@ -49,9 +75,86 @@ export function VowelRescue({
   const [gameComplete, setGameComplete] = useState(false);
   const [newAchievements, setNewAchievements] = useState<any[]>([]);
   const [showMainCelebration, setShowMainCelebration] = useState(false);
+  const [showSparkleExplosion, setShowSparkleExplosion] = useState(false);
+  const [sparkleCount, setSparkleCount] = useState(0);
+  const [isRestarting, setIsRestarting] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
-  const currentQuestion = questions[currentIndex];
+  // Enhanced word generation using database words with sophisticated selection (same as Listen & Guess)
+  const generateDatabaseWords = useCallback(
+    (
+      count: number,
+      category?: string,
+      difficulty?: "easy" | "medium" | "hard",
+    ): VowelQuestion[] => {
+      let dbWords: Word[] = [];
+
+      if (category && category !== "all") {
+        dbWords = getWordsByCategory(category);
+      } else {
+        dbWords = getRandomWords(count * 3); // Get 3x more words for better selection options
+      }
+
+      if (difficulty) {
+        dbWords = dbWords.filter((w) => w.difficulty === difficulty);
+      }
+
+      // Convert database words to VowelQuestion format using emojis
+      return dbWords.slice(0, count).map((word) => ({
+        id: word.id,
+        word: word.word,
+        missingIndex: generateMissingVowelIndices(word.word),
+        emoji: word.emoji,
+        category: word.category,
+        difficulty: word.difficulty,
+        originalWord: word,
+      }));
+    },
+    [],
+  );
+
+  // Generate missing vowel indices intelligently
+  const generateMissingVowelIndices = useCallback((word: string): number[] => {
+    const vowels = ["a", "e", "i", "o", "u"];
+    const vowelIndices = word
+      .split("")
+      .map((char, index) => ({ char: char.toLowerCase(), index }))
+      .filter(({ char }) => vowels.includes(char))
+      .map(({ index }) => index);
+
+    // For variety, remove 1-3 vowels based on word length and difficulty
+    const numToRemove = Math.min(
+      vowelIndices.length,
+      word.length <= 4 ? 1 : word.length <= 6 ? 2 : 3,
+    );
+
+    // Shuffle and take the first N vowel positions
+    const shuffled = [...vowelIndices].sort(() => Math.random() - 0.5);
+    return shuffled.slice(0, numToRemove).sort((a, b) => a - b);
+  }, []);
+
+  // Generate or use provided questions - Enhanced with database words
+  const gameQuestions = useMemo(() => {
+    if (questions && questions.length > 0) {
+      return questions;
+    }
+
+    // Use database-based word generation with sophisticated selection
+    const difficultyLevel =
+      difficulty ||
+      (playerLevel <= 3 ? "easy" : playerLevel <= 7 ? "medium" : "hard");
+    return generateDatabaseWords(rounds, category, difficultyLevel);
+  }, [
+    questions,
+    rounds,
+    category,
+    difficulty,
+    playerLevel,
+    generateDatabaseWords,
+    isRestarting,
+  ]);
+
+  const currentQuestion = gameQuestions[currentIndex];
   const isTimedMode = gameMode === "timed";
 
   // Timer for timed mode
@@ -96,6 +199,10 @@ export function VowelRescue({
       // Play encouraging speech for wrong vowel
       audioService.playEncouragementSound();
 
+      // Haptic feedback for wrong answer
+      if (navigator && "vibrate" in navigator)
+        (navigator as any).vibrate([40, 60, 40]);
+
       setTimeout(() => {
         // Clear the wrong vowel and allow trying again
         const clearedVowels = { ...newSelectedVowels };
@@ -105,6 +212,9 @@ export function VowelRescue({
       }, 1500);
       return;
     }
+
+    // Gentle vibration for correct vowel
+    if (navigator && "vibrate" in navigator) (navigator as any).vibrate(30);
 
     // Check if all missing positions are filled with correct vowels
     const allFilled = currentQuestion.missingIndex.every(
@@ -134,11 +244,15 @@ export function VowelRescue({
       setScore(score + points);
       setShowReward(true);
 
-      // Play celebration effects like main dashboard
+      // Enhanced celebration effects with sparkles like Listen & Guess
       setShowMainCelebration(true);
+      setShowSparkleExplosion(true);
+      setSparkleCount((prev) => prev + 1);
       audioService.playSuccessSound();
 
+      // Auto-hide sparkle explosion after animation
       setTimeout(() => {
+        setShowSparkleExplosion(false);
         setShowReward(false);
         setShowMainCelebration(false);
       }, 1500);
@@ -191,7 +305,7 @@ export function VowelRescue({
     setSelectedVowels({});
     setAttempts(0);
 
-    if (currentIndex < questions.length - 1) {
+    if (currentIndex < gameQuestions.length - 1) {
       setCurrentIndex(currentIndex + 1);
     } else {
       handleGameComplete();
@@ -207,7 +321,7 @@ export function VowelRescue({
     setTimeout(() => setShowMainCelebration(false), 3000);
 
     // Calculate final accuracy
-    const accuracy = Math.round((score / (questions.length * 10)) * 100);
+    const accuracy = Math.round((score / (gameQuestions.length * 10)) * 100);
 
     // Track vowel rescue completion and check for achievements
     const unlockedAchievements = AchievementTracker.trackActivity({
@@ -222,7 +336,7 @@ export function VowelRescue({
     }
 
     setTimeout(() => {
-      onComplete(score, questions.length * 10);
+      onComplete(score, gameQuestions.length * 10);
     }, 2000);
   };
 
@@ -319,7 +433,7 @@ export function VowelRescue({
               <p className="text-xs sm:text-sm text-gray-500 px-2">
                 {isTimedMode
                   ? `You have 60 seconds to complete as many words as possible!`
-                  : `${questions.length} words to complete`}
+                  : `${gameQuestions.length} words to complete`}
               </p>
             </div>
             <div className="space-y-3">
@@ -367,6 +481,28 @@ export function VowelRescue({
             <p className="text-sm sm:text-base text-gray-600 mb-6 px-2">
               You rescued {Math.floor(score / 5)} vowels! Great job! 🌟
             </p>
+
+            {/* Enhanced completion stats */}
+            <div className="flex justify-center gap-4 mb-4 text-sm">
+              <div className="bg-educational-green/20 rounded-lg p-2 text-center">
+                <div className="text-lg font-bold text-educational-green">
+                  {Math.round((score / (gameQuestions.length * 10)) * 100)}%
+                </div>
+                <div className="text-xs text-gray-600">Accuracy</div>
+              </div>
+              <div className="bg-educational-blue/20 rounded-lg p-2 text-center">
+                <div className="text-lg font-bold text-educational-blue">
+                  {gameQuestions.length}
+                </div>
+                <div className="text-xs text-gray-600">Words</div>
+              </div>
+              <div className="bg-educational-purple/20 rounded-lg p-2 text-center">
+                <div className="text-lg font-bold text-educational-purple">
+                  {Math.floor(score / 5)}
+                </div>
+                <div className="text-xs text-gray-600">Rescued</div>
+              </div>
+            </div>
             <div className="flex flex-col sm:flex-row gap-2">
               <Button
                 onClick={onExit}
@@ -377,9 +513,24 @@ export function VowelRescue({
                 Back to Games
               </Button>
               <Button
-                onClick={() => window.location.reload()}
+                onClick={() => {
+                  // Reset game state for restart with new words
+                  setCurrentIndex(0);
+                  setScore(0);
+                  setSelectedVowels({});
+                  setGameStarted(false);
+                  setGameComplete(false);
+                  setAttempts(0);
+                  setTimeLeft(60);
+                  setShowFeedback(false);
+                  setShowReward(false);
+                  setSparkleCount(0);
+                  setShowSparkleExplosion(false);
+                  setIsRestarting((prev) => !prev); // Trigger new word generation
+                }}
                 className="flex-1 bg-educational-blue hover:bg-educational-blue/90 min-h-[44px]"
               >
+                <Sparkles className="w-4 h-4 mr-2" />
                 Play Again
               </Button>
             </div>
@@ -424,7 +575,7 @@ export function VowelRescue({
               <div className="flex items-center gap-1 bg-educational-orange/10 px-1.5 sm:px-2 py-1 rounded-full">
                 <Star className="w-3 h-3 text-educational-orange" />
                 <span className="font-bold text-educational-orange text-xs sm:text-sm">
-                  {score}/{questions.length * 10}
+                  {score}/{gameQuestions.length * 10}
                 </span>
               </div>
             </div>
@@ -433,20 +584,38 @@ export function VowelRescue({
           {/* Progress Information - Mobile Optimized */}
           <div className="flex items-center justify-between text-xs sm:text-sm text-gray-600 mb-2">
             <span className="font-medium">
-              Q{currentIndex + 1}/{questions.length}
+              Q{currentIndex + 1}/{gameQuestions.length}
             </span>
             <span className="font-medium">
-              {Math.round(((currentIndex + 1) / questions.length) * 100)}%
+              {Math.round(((currentIndex + 1) / gameQuestions.length) * 100)}%
               Complete
             </span>
           </div>
 
           {/* Progress Bar */}
           <Progress
-            value={((currentIndex + 1) / questions.length) * 100}
+            value={((currentIndex + 1) / gameQuestions.length) * 100}
             className="h-2"
           />
         </div>
+
+        {/* Sparkle explosion effect */}
+        {showSparkleExplosion && (
+          <div className="absolute inset-0 pointer-events-none z-30">
+            <div className="absolute top-1/4 left-1/4 animate-ping">
+              <Sparkles className="w-8 h-8 text-yellow-300" />
+            </div>
+            <div className="absolute top-1/3 right-1/4 animate-pulse animation-delay-200">
+              <Star className="w-6 h-6 text-pink-300" />
+            </div>
+            <div className="absolute bottom-1/3 left-1/3 animate-bounce animation-delay-100">
+              <Zap className="w-7 h-7 text-blue-300" />
+            </div>
+            <div className="absolute top-1/2 right-1/3 animate-spin">
+              <Crown className="w-5 h-5 text-purple-300" />
+            </div>
+          </div>
+        )}
 
         {/* Game Card - Mobile Optimized */}
         <Card className="overflow-hidden">
