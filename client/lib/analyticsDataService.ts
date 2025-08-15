@@ -571,8 +571,8 @@ export class AnalyticsDataService {
 
     return {
       sessions: actualSessions,
-      completionRate: 85 + Math.random() * 10, // 85-95%
-      avgDuration: 15 + Math.random() * 10, // 15-25 minutes
+      completionRate: Math.round(85 + Math.random() * 10), // 85-95%
+      avgDuration: Math.round(15 + Math.random() * 10), // 15-25 minutes
     };
   }
 
@@ -692,17 +692,17 @@ export class AnalyticsDataService {
       mobile: {
         percentage: 65,
         sessions: Math.round(totalSessions * 0.65),
-        avgDuration: 16.8,
+        avgDuration: 17,
       },
       desktop: {
         percentage: 25,
         sessions: Math.round(totalSessions * 0.25),
-        avgDuration: 23.5,
+        avgDuration: 24,
       },
       tablet: {
         percentage: 10,
         sessions: Math.round(totalSessions * 0.1),
-        avgDuration: 19.2,
+        avgDuration: 19,
       },
     };
   }
