@@ -289,7 +289,7 @@ export function VowelRescue({
     setSelectedVowels({});
     setAttempts(0);
 
-    if (currentIndex < questions.length - 1) {
+    if (currentIndex < gameQuestions.length - 1) {
       setCurrentIndex(currentIndex + 1);
     } else {
       handleGameComplete();
