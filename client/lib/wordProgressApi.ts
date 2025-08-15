@@ -10,9 +10,6 @@ import {
 
 const API_BASE = "/api/learning";
 
-// Debug logging
-console.log("WordProgressAPI initialized with API_BASE:", API_BASE);
-
 export class WordProgressAPI {
   static async startSession(
     request: StartLearningSessionRequest,
