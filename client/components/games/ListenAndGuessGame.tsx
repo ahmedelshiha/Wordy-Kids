@@ -429,7 +429,7 @@ export default function ListenAndGuessGame({
               setTimeout(() => {
                 setAchievementUnlocked(null);
                 setShowSparkleExplosion(false);
-              }, 3000);
+              }, 2000); // 2 seconds for mobile optimization
 
               newAchievements.forEach((achievement) => {
                 console.log(
