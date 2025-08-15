@@ -17,6 +17,7 @@ import { VocabularyBuilder } from "@/components/VocabularyBuilder";
 import { CompactMobileSettingsPanel } from "@/components/CompactMobileSettingsPanel";
 import { FloatingBubbles } from "@/components/FloatingBubbles";
 import { CelebrationEffect } from "@/components/CelebrationEffect";
+import { FloatingHelpMenu } from "@/components/FloatingHelpMenu";
 import { DailyChallenge } from "@/components/DailyChallenge";
 import { ReadingComprehension } from "@/components/ReadingComprehension";
 import { ParentDashboard } from "@/components/ParentDashboard";
