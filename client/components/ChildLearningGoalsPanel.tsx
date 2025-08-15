@@ -297,34 +297,34 @@ export const ChildLearningGoalsPanel: React.FC<ChildLearningGoalsPanelProps> = (
             </TabsList>
 
             <ScrollArea className="h-[45vh] md:h-[50vh] mt-3 md:mt-4">
-              <TabsContent value="goals" className="space-y-4">
-                <div className="flex items-center justify-between">
-                  <h3 className="font-semibold">Active Goals</h3>
-                  <Button size="sm" onClick={() => setShowAddGoalDialog(true)}>
-                    <Plus className="w-4 h-4 mr-2" />
-                    Add Goal
+              <TabsContent value="goals" className="space-y-3 md:space-y-4">
+                <div className="flex flex-col md:flex-row md:items-center justify-between gap-2">
+                  <h3 className="font-semibold text-sm md:text-base">Active Goals</h3>
+                  <Button size="sm" onClick={() => setShowAddGoalDialog(true)} className="w-full md:w-auto">
+                    <Plus className="w-3 h-3 md:w-4 md:h-4 mr-2" />
+                    <span className="text-xs md:text-sm">Add Goal</span>
                   </Button>
                 </div>
 
                 {goals.length === 0 ? (
-                  <div className="text-center py-8 text-muted-foreground">
-                    <Target className="w-12 h-12 mx-auto mb-3 opacity-50" />
-                    <p>No learning goals set yet</p>
-                    <p className="text-sm">Add your first goal to get started!</p>
+                  <div className="text-center py-6 md:py-8 text-muted-foreground">
+                    <Target className="w-10 h-10 md:w-12 md:h-12 mx-auto mb-3 opacity-50" />
+                    <p className="text-sm md:text-base">No learning goals set yet</p>
+                    <p className="text-xs md:text-sm">Add your first goal to get started!</p>
                   </div>
                 ) : (
-                  <div className="space-y-3">
+                  <div className="space-y-2 md:space-y-3">
                     {goals.map((goal) => {
                       const progress = Math.min((goal.current / goal.target) * 100, 100);
                       return (
                         <Card key={goal.id} className="border-l-4 border-l-educational-blue">
-                          <CardContent className="p-4">
-                            <div className="flex items-start justify-between mb-3">
-                              <div className="flex items-start gap-3 flex-1">
-                                <div className="mt-1">{getGoalIcon(goal.type)}</div>
-                                <div className="flex-1">
-                                  <h4 className="font-medium">{goal.description}</h4>
-                                  <div className="flex items-center gap-2 mt-1">
+                          <CardContent className="p-3 md:p-4">
+                            <div className="flex flex-col md:flex-row md:items-start justify-between gap-2 md:gap-3 mb-3">
+                              <div className="flex items-start gap-2 md:gap-3 flex-1">
+                                <div className="mt-0.5">{getGoalIcon(goal.type)}</div>
+                                <div className="flex-1 min-w-0">
+                                  <h4 className="font-medium text-sm md:text-base leading-tight">{goal.description}</h4>
+                                  <div className="flex flex-wrap items-center gap-1 md:gap-2 mt-1">
                                     <Badge variant="outline" className="text-xs">
                                       {goal.type}
                                     </Badge>
@@ -349,11 +349,11 @@ export const ChildLearningGoalsPanel: React.FC<ChildLearningGoalsPanelProps> = (
                             </div>
 
                             <div className="space-y-2">
-                              <div className="flex justify-between text-sm">
+                              <div className="flex justify-between text-xs md:text-sm">
                                 <span>Progress</span>
-                                <span>{goal.current}/{goal.target}</span>
+                                <span className="font-medium">{goal.current}/{goal.target}</span>
                               </div>
-                              <Progress value={progress} className="h-2" />
+                              <Progress value={progress} className="h-2 md:h-2" />
                               {goal.reward && (
                                 <p className="text-xs text-muted-foreground">
                                   🎁 Reward: {goal.reward}
@@ -362,12 +362,13 @@ export const ChildLearningGoalsPanel: React.FC<ChildLearningGoalsPanelProps> = (
                             </div>
 
                             {goal.isActive && (
-                              <div className="flex gap-2 mt-3">
+                              <div className="flex gap-1 md:gap-2 mt-3">
                                 <Button
                                   size="sm"
                                   variant="outline"
                                   onClick={() => handleUpdateGoalProgress(goal.id, goal.current - 1)}
                                   disabled={goal.current <= 0}
+                                  className="flex-1 text-xs md:text-sm h-8 md:h-9"
                                 >
                                   -1
                                 </Button>
@@ -376,6 +377,7 @@ export const ChildLearningGoalsPanel: React.FC<ChildLearningGoalsPanelProps> = (
                                   variant="outline"
                                   onClick={() => handleUpdateGoalProgress(goal.id, goal.current + 1)}
                                   disabled={goal.current >= goal.target}
+                                  className="flex-1 text-xs md:text-sm h-8 md:h-9"
                                 >
                                   +1
                                 </Button>
