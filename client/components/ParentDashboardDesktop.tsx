@@ -2164,7 +2164,7 @@ export const ParentDashboardDesktop: React.FC<ParentDashboardDesktopProps> = ({
 
             <div className="space-y-4 max-h-96 overflow-y-auto">
               {detectedProgress.map((progress, index) => {
-                const [childName, setChildName] = useState(`Learner ${index + 1}`);
+                const childName = childNames[progress.userId] || `Learner ${index + 1}`;
 
                 return (
                   <Card key={progress.userId} className="p-4">
