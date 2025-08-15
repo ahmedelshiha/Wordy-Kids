@@ -2,6 +2,8 @@ import React, { useState, useEffect, useCallback, useMemo } from "react";
 import { useAuth } from "@/hooks/useAuth";
 import { useNavigate } from "react-router-dom";
 import "@/styles/mobile-goals-optimization.css";
+import "@/styles/desktop-parent-dashboard.css";
+import { ParentDashboardDesktop } from "@/components/ParentDashboardDesktop";
 import { ChildLearningGoalsPanel } from "@/components/ChildLearningGoalsPanel";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -477,15 +479,46 @@ const sampleNotifications: ParentNotification[] = [
   },
 ];
 
+// Hook to detect if we're on desktop
+const useIsDesktop = () => {
+  const [isDesktop, setIsDesktop] = useState(false);
+
+  useEffect(() => {
+    const checkIsDesktop = () => {
+      setIsDesktop(window.innerWidth >= 1024);
+    };
+
+    checkIsDesktop();
+    window.addEventListener("resize", checkIsDesktop);
+    return () => window.removeEventListener("resize", checkIsDesktop);
+  }, []);
+
+  return isDesktop;
+};
+
 export const ParentDashboard: React.FC<ParentDashboardProps> = ({
   children: propChildren,
   sessions = [],
   onNavigateBack,
   showMobileBackButton = true,
 }) => {
+  // Check if we're on desktop
+  const isDesktop = useIsDesktop();
+
   // Auth hook for guest mode checking
   const { isGuest, user } = useAuth();
   const navigate = useNavigate();
+
+  // If we're on desktop, render the enhanced desktop version
+  if (isDesktop) {
+    return (
+      <ParentDashboardDesktop
+        children={propChildren}
+        sessions={sessions}
+        onNavigateBack={onNavigateBack}
+      />
+    );
+  }
 
   // Registration prompt dialog state
   const [showRegistrationPrompt, setShowRegistrationPrompt] = useState(false);
