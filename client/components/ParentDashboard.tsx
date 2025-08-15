@@ -951,20 +951,15 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
           <div className="grid grid-cols-2 md:grid-cols-4 gap-2 md:gap-4">
             <div className="text-center p-2 md:p-4 bg-educational-blue/5 rounded-lg">
               <div className="text-xl md:text-2xl font-bold text-educational-blue">
-                <AnimatedCounter value={children.length} />
+                <AnimatedCounter value={familyStats.activeChildren} />
               </div>
               <p className="text-xs md:text-sm text-slate-600">
-                Active Learners
+                Active Today
               </p>
             </div>
             <div className="text-center p-2 md:p-4 bg-educational-green/5 rounded-lg">
               <div className="text-xl md:text-2xl font-bold text-educational-green">
-                <AnimatedCounter
-                  value={children.reduce(
-                    (sum, child) => sum + child.wordsLearned,
-                    0,
-                  )}
-                />
+                <AnimatedCounter value={familyStats.totalWordsLearned} />
               </div>
               <p className="text-xs md:text-sm text-slate-600">
                 Total Words Learned
@@ -972,24 +967,15 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
             </div>
             <div className="text-center p-2 md:p-4 bg-educational-orange/5 rounded-lg">
               <div className="text-xl md:text-2xl font-bold text-educational-orange">
-                <AnimatedCounter
-                  value={children.reduce(
-                    (sum, child) => sum + child.totalPoints,
-                    0,
-                  )}
-                />
+                <AnimatedCounter value={familyStats.todayActivity} />
               </div>
               <p className="text-xs md:text-sm text-slate-600">
-                Total Points Earned
+                Words Today
               </p>
             </div>
             <div className="text-center p-2 md:p-4 bg-educational-purple/5 rounded-lg">
               <div className="text-xl md:text-2xl font-bold text-educational-purple">
-                <AnimatedCounter
-                  value={Math.max(
-                    ...children.map((child) => child.currentStreak),
-                  )}
-                />
+                <AnimatedCounter value={familyStats.longestStreak} />
               </div>
               <p className="text-xs md:text-sm text-slate-600">
                 Longest Streak
