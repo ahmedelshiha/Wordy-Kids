@@ -269,6 +269,7 @@ export class EnhancedWordSelector {
     exhaustionLevel: number,
     childStats: ChildWordStats | null | undefined,
     availableWords: number,
+    selectedCategory: string = "all",
   ): string {
     const accuracy = childStats?.averageAccuracy || 0;
     const sessions = childStats?.totalReviewSessions || 0;
@@ -288,8 +289,12 @@ export class EnhancedWordSelector {
       return "targeted_review";
     }
 
-    // Cross-category - need variety when single category is exhausted
-    if (exhaustionLevel >= 0.8) {
+    // Cross-category - only for "all" categories or when truly exhausted
+    // Be more conservative with cross-category for specific category selections
+    if (selectedCategory === "all" && exhaustionLevel >= 0.8) {
+      return "cross_category";
+    } else if (selectedCategory !== "all" && exhaustionLevel >= 0.95 && availableWords === 0) {
+      // Only use cross-category for specific categories when completely exhausted
       return "cross_category";
     }
 
