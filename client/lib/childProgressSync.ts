@@ -74,7 +74,8 @@ export class ChildProgressSync {
       );
 
       // Calculate total words learned efficiently
-      const totalWordsLearned = this.calculateTotalWordsLearnedOptimized(childId);
+      const totalWordsLearned =
+        this.calculateTotalWordsLearnedOptimized(childId);
 
       const progressData = {
         totalWordsLearned,
@@ -85,7 +86,7 @@ export class ChildProgressSync {
 
       // Cache the result
       this.progressCache.set(cacheKey, progressData);
-      
+
       return progressData;
     } catch (error) {
       console.error("Error getting real progress data:", error);
@@ -118,7 +119,7 @@ export class ChildProgressSync {
         date.setDate(date.getDate() - i);
         const dateKey = date.toISOString().split("T")[0];
         const dailyProgressKey = `daily_progress_${childId}_${dateKey}`;
-        
+
         const data = localStorage.getItem(dailyProgressKey);
         if (data) {
           try {
@@ -133,7 +134,7 @@ export class ChildProgressSync {
 
       // Cache the result
       this.progressCache.set(cacheKey, total);
-      
+
       return total;
     } catch (error) {
       console.error("Error calculating total words learned:", error);
@@ -164,12 +165,17 @@ export class ChildProgressSync {
       // Try to get systematic progress data as well (with timeout)
       let systematicProgress: SystematicProgressData | null = null;
       try {
-        const progressPromise = goalProgressTracker.fetchSystematicProgress(child.id);
-        const timeoutPromise = new Promise((_, reject) => 
-          setTimeout(() => reject(new Error('Timeout')), 5000)
+        const progressPromise = goalProgressTracker.fetchSystematicProgress(
+          child.id,
         );
-        
-        systematicProgress = await Promise.race([progressPromise, timeoutPromise]) as SystematicProgressData;
+        const timeoutPromise = new Promise((_, reject) =>
+          setTimeout(() => reject(new Error("Timeout")), 5000),
+        );
+
+        systematicProgress = (await Promise.race([
+          progressPromise,
+          timeoutPromise,
+        ])) as SystematicProgressData;
       } catch (error) {
         // Could not fetch systematic progress, using localStorage data
         console.log("Using localStorage data for child progress");
@@ -203,14 +209,16 @@ export class ChildProgressSync {
     children: ChildProfile[],
   ): Promise<ChildProfile[]> {
     // Process children in parallel for better performance
-    const updatePromises = children.map(child => this.updateChildProgress(child));
-    
+    const updatePromises = children.map((child) =>
+      this.updateChildProgress(child),
+    );
+
     try {
       const updatedChildren = await Promise.all(updatePromises);
-      
+
       // Update cache timestamp
       this.lastCacheUpdate = Date.now();
-      
+
       return updatedChildren;
     } catch (error) {
       console.error("Error updating all children progress:", error);
@@ -237,7 +245,7 @@ export class ChildProgressSync {
         date.setDate(date.getDate() - i);
         const dateKey = date.toISOString().split("T")[0];
         const dailyProgressKey = `daily_progress_${childId}_${dateKey}`;
-        
+
         const data = localStorage.getItem(dailyProgressKey);
         if (data) {
           try {
@@ -254,7 +262,7 @@ export class ChildProgressSync {
 
       // Cache the result
       this.progressCache.set(cacheKey, lastActiveDate);
-      
+
       return lastActiveDate;
     } catch (error) {
       console.error("Error getting last active date:", error);
@@ -273,9 +281,15 @@ export class ChildProgressSync {
       // Try to free up space and retry
       try {
         this.clearCache();
-        localStorage.setItem("parentDashboardChildren", JSON.stringify(children));
+        localStorage.setItem(
+          "parentDashboardChildren",
+          JSON.stringify(children),
+        );
       } catch (retryError) {
-        console.error("Failed to save children data even after cache clear:", retryError);
+        console.error(
+          "Failed to save children data even after cache clear:",
+          retryError,
+        );
       }
     }
   }
@@ -337,7 +351,7 @@ export class ChildProgressSync {
 
       // Cache the result
       this.progressCache.set(cacheKey, stats);
-      
+
       return stats;
     } catch (error) {
       console.error("Error calculating family stats:", error);

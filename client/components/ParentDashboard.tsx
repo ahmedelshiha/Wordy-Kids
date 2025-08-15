@@ -573,12 +573,12 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
   // Memoize expensive calculations
   const unreadNotifications = useMemo(
     () => notifications.filter((n) => !n.read).length,
-    [notifications]
+    [notifications],
   );
 
   const highPriorityNotifications = useMemo(
     () => notifications.filter((n) => n.priority === "high" && !n.read).length,
-    [notifications]
+    [notifications],
   );
 
   // Memoized function to prevent re-creation on every render
@@ -610,13 +610,19 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
   }, []);
 
   // Debounced save to localStorage
-  const saveChildrenToStorage = useCallback((updatedChildren: ChildProfile[]) => {
-    try {
-      localStorage.setItem("parentDashboardChildren", JSON.stringify(updatedChildren));
-    } catch (error) {
-      console.error("Error saving children to localStorage:", error);
-    }
-  }, []);
+  const saveChildrenToStorage = useCallback(
+    (updatedChildren: ChildProfile[]) => {
+      try {
+        localStorage.setItem(
+          "parentDashboardChildren",
+          JSON.stringify(updatedChildren),
+        );
+      } catch (error) {
+        console.error("Error saving children to localStorage:", error);
+      }
+    },
+    [],
+  );
 
   // Save children to localStorage whenever children state changes (debounced)
   useEffect(() => {
@@ -624,11 +630,11 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
       const timeoutId = setTimeout(() => {
         saveChildrenToStorage(children);
       }, 500);
-      
+
       if (!selectedChild) {
         setSelectedChild(children[0]);
       }
-      
+
       return () => clearTimeout(timeoutId);
     }
   }, [children, selectedChild, saveChildrenToStorage]);
@@ -639,7 +645,8 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
 
     setIsLoadingProgress(true);
     try {
-      const updatedChildren = await childProgressSync.syncAndSaveAllProgress(children);
+      const updatedChildren =
+        await childProgressSync.syncAndSaveAllProgress(children);
       setChildren(updatedChildren);
 
       // Update family stats
@@ -678,7 +685,7 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
   // Optimized data loading - only run once on mount and when dependencies change
   useEffect(() => {
     let mounted = true;
-    
+
     const loadChildrenWordStats = async () => {
       if (children.length === 0 || loadingWordStats) return;
 
@@ -784,15 +791,21 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
   }, [children.length, selectedChild?.id]); // Removed complex dependencies
 
   // Memoized helper functions
-  const getChildGoals = useCallback((childId: string) => {
-    return goals.filter((goal) => goal.childId === childId);
-  }, [goals]);
+  const getChildGoals = useCallback(
+    (childId: string) => {
+      return goals.filter((goal) => goal.childId === childId);
+    },
+    [goals],
+  );
 
-  const getChildNotifications = useCallback((childId: string) => {
-    return notifications
-      .filter((notif) => notif.childId === childId)
-      .slice(0, 3);
-  }, [notifications]);
+  const getChildNotifications = useCallback(
+    (childId: string) => {
+      return notifications
+        .filter((notif) => notif.childId === childId)
+        .slice(0, 3);
+    },
+    [notifications],
+  );
 
   const markNotificationAsRead = useCallback((notificationId: string) => {
     setNotifications((prev) =>
@@ -814,15 +827,18 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
     }
   }, [selectedChild, customWordInput]);
 
-  const removeCustomWord = useCallback((word: string) => {
-    if (selectedChild) {
-      const updatedChild = {
-        ...selectedChild,
-        customWords: selectedChild.customWords.filter((w) => w !== word),
-      };
-      setSelectedChild(updatedChild);
-    }
-  }, [selectedChild]);
+  const removeCustomWord = useCallback(
+    (word: string) => {
+      if (selectedChild) {
+        const updatedChild = {
+          ...selectedChild,
+          customWords: selectedChild.customWords.filter((w) => w !== word),
+        };
+        setSelectedChild(updatedChild);
+      }
+    },
+    [selectedChild],
+  );
 
   // Handle add child button click with guest mode check
   const handleAddChildClick = useCallback(() => {
@@ -841,7 +857,7 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
         description: `"${newGoalData.title}" goal created for ${selectedChild.name}`,
         duration: 3000,
       });
-      
+
       setNewGoalData({
         title: "",
         description: "",
@@ -854,479 +870,531 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
     }
   }, [selectedChild, newGoalData]);
 
-  const handleUpdateChild = useCallback((updatedChild: ChildProfile) => {
-    const updatedChildren = children.map((child) =>
-      child.id === updatedChild.id ? updatedChild : child,
-    );
-    setChildren(updatedChildren);
-    if (selectedChild?.id === updatedChild.id) {
-      setSelectedChild(updatedChild);
-    }
-  }, [children, selectedChild]);
+  const handleUpdateChild = useCallback(
+    (updatedChild: ChildProfile) => {
+      const updatedChildren = children.map((child) =>
+        child.id === updatedChild.id ? updatedChild : child,
+      );
+      setChildren(updatedChildren);
+      if (selectedChild?.id === updatedChild.id) {
+        setSelectedChild(updatedChild);
+      }
+    },
+    [children, selectedChild],
+  );
 
   const handleOpenLearningGoals = useCallback((child: ChildProfile) => {
     setLearningGoalsChild(child);
     setShowLearningGoalsPanel(true);
   }, []);
 
-  const renderOverview = useCallback(() => (
-    <div className="space-y-4 md:space-y-6">
-      {/* Welcome Section - Combined Layout */}
-      {children.length === 0 ? (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {/* Good Morning Section */}
+  const renderOverview = useCallback(
+    () => (
+      <div className="space-y-4 md:space-y-6">
+        {/* Welcome Section - Combined Layout */}
+        {children.length === 0 ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {/* Good Morning Section */}
+            <Card className="bg-gradient-to-r from-educational-blue/10 to-educational-purple/10">
+              <CardContent className="p-3 md:p-4">
+                <div className="space-y-2">
+                  <h3 className="font-semibold text-base md:text-lg">
+                    Good Morning! 🌅
+                  </h3>
+                  <p className="text-xs md:text-sm text-slate-600">
+                    {children.length} active learner
+                    {children.length !== 1 ? "s" : ""} • {unreadNotifications}{" "}
+                    new notification{unreadNotifications !== 1 ? "s" : ""}
+                    {highPriorityNotifications > 0 && (
+                      <span className="ml-2 text-red-600 font-medium">
+                        {highPriorityNotifications} urgent
+                      </span>
+                    )}
+                  </p>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* No Children Section */}
+            <Card className="bg-gradient-to-r from-green-50 to-blue-50">
+              <CardContent className="p-3 md:p-4 text-center">
+                <div className="text-3xl md:text-4xl mb-2">👶</div>
+                <h3 className="text-sm md:text-base font-semibold mb-1">
+                  No Children Added Yet
+                </h3>
+                <p className="text-gray-600 mb-3 text-xs md:text-sm">
+                  Add your first child to start tracking their learning progress
+                </p>
+                <Button
+                  onClick={handleAddChildClick}
+                  className="bg-educational-blue text-xs md:text-sm w-full"
+                  size="sm"
+                >
+                  <UserPlus className="w-3 h-3 md:w-4 md:h-4 mr-1 md:mr-2" />
+                  <span className="hidden md:inline">Add Your First Child</span>
+                  <span className="md:hidden">Add Child</span>
+                </Button>
+              </CardContent>
+            </Card>
+          </div>
+        ) : (
           <Card className="bg-gradient-to-r from-educational-blue/10 to-educational-purple/10">
             <CardContent className="p-3 md:p-4">
-              <div className="space-y-2">
-                <h3 className="font-semibold text-base md:text-lg">
-                  Good Morning! 🌅
-                </h3>
-                <p className="text-xs md:text-sm text-slate-600">
-                  {children.length} active learner
-                  {children.length !== 1 ? "s" : ""} • {unreadNotifications} new
-                  notification{unreadNotifications !== 1 ? "s" : ""}
-                  {highPriorityNotifications > 0 && (
-                    <span className="ml-2 text-red-600 font-medium">
-                      {highPriorityNotifications} urgent
-                    </span>
-                  )}
-                </p>
+              <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 md:gap-0">
+                <div>
+                  <h3 className="font-semibold text-base md:text-lg">
+                    Good Morning! 🌅
+                  </h3>
+                  <p className="text-xs md:text-sm text-slate-600">
+                    {children.length} active learner
+                    {children.length !== 1 ? "s" : ""} • {unreadNotifications}{" "}
+                    new notification{unreadNotifications !== 1 ? "s" : ""}
+                    {highPriorityNotifications > 0 && (
+                      <span className="ml-2 text-red-600 font-medium">
+                        {highPriorityNotifications} urgent
+                      </span>
+                    )}
+                  </p>
+                </div>
+                <div className="flex gap-2">
+                  <Button
+                    size="sm"
+                    variant="outline"
+                    onClick={handleAddChildClick}
+                    className="text-xs md:text-sm px-2 md:px-3"
+                  >
+                    <UserPlus className="w-3 h-3 md:w-4 md:h-4 mr-1 md:mr-2" />
+                    <span className="hidden md:inline">Add Child</span>
+                    <span className="md:hidden">Add</span>
+                  </Button>
+                </div>
               </div>
             </CardContent>
           </Card>
+        )}
 
-          {/* No Children Section */}
-          <Card className="bg-gradient-to-r from-green-50 to-blue-50">
-            <CardContent className="p-3 md:p-4 text-center">
-              <div className="text-3xl md:text-4xl mb-2">👶</div>
-              <h3 className="text-sm md:text-base font-semibold mb-1">
-                No Children Added Yet
-              </h3>
-              <p className="text-gray-600 mb-3 text-xs md:text-sm">
-                Add your first child to start tracking their learning progress
-              </p>
-              <Button
-                onClick={handleAddChildClick}
-                className="bg-educational-blue text-xs md:text-sm w-full"
-                size="sm"
-              >
-                <UserPlus className="w-3 h-3 md:w-4 md:h-4 mr-1 md:mr-2" />
-                <span className="hidden md:inline">Add Your First Child</span>
-                <span className="md:hidden">Add Child</span>
-              </Button>
-            </CardContent>
-          </Card>
-        </div>
-      ) : (
-        <Card className="bg-gradient-to-r from-educational-blue/10 to-educational-purple/10">
-          <CardContent className="p-3 md:p-4">
-            <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 md:gap-0">
-              <div>
-                <h3 className="font-semibold text-base md:text-lg">
-                  Good Morning! 🌅
-                </h3>
-                <p className="text-xs md:text-sm text-slate-600">
-                  {children.length} active learner
-                  {children.length !== 1 ? "s" : ""} • {unreadNotifications} new
-                  notification{unreadNotifications !== 1 ? "s" : ""}
-                  {highPriorityNotifications > 0 && (
-                    <span className="ml-2 text-red-600 font-medium">
-                      {highPriorityNotifications} urgent
-                    </span>
-                  )}
-                </p>
+        {/* Family Summary - Mobile Optimized */}
+        <Card>
+          <CardHeader className="pb-3 md:pb-6">
+            <CardTitle className="flex items-center justify-between text-base md:text-lg">
+              <div className="flex items-center gap-2">
+                <Users className="w-5 h-5 md:w-6 md:h-6 text-educational-blue" />
+                <span className="hidden md:inline">
+                  Family Learning Summary
+                </span>
+                <span className="md:hidden">Family Summary</span>
+                {isLoadingProgress && (
+                  <div className="w-4 h-4 border-2 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
+                )}
               </div>
               <div className="flex gap-2">
                 <Button
-                  size="sm"
                   variant="outline"
-                  onClick={handleAddChildClick}
-                  className="text-xs md:text-sm px-2 md:px-3"
+                  size="sm"
+                  onClick={syncChildrenProgress}
+                  disabled={isLoadingProgress}
+                  className="text-xs"
                 >
-                  <UserPlus className="w-3 h-3 md:w-4 md:h-4 mr-1 md:mr-2" />
-                  <span className="hidden md:inline">Add Child</span>
-                  <span className="md:hidden">Add</span>
+                  <TrendingUp className="w-3 h-3 mr-1" />
+                  Refresh
                 </Button>
+              </div>
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="px-3 md:px-6">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-2 md:gap-4">
+              <div className="text-center p-2 md:p-4 bg-educational-blue/5 rounded-lg">
+                <div className="text-xl md:text-2xl font-bold text-educational-blue">
+                  <AnimatedCounter value={familyStats.activeChildren} />
+                </div>
+                <p className="text-xs md:text-sm text-slate-600">
+                  Active Today
+                </p>
+              </div>
+              <div className="text-center p-2 md:p-4 bg-educational-green/5 rounded-lg">
+                <div className="text-xl md:text-2xl font-bold text-educational-green">
+                  <AnimatedCounter value={familyStats.totalWordsLearned} />
+                </div>
+                <p className="text-xs md:text-sm text-slate-600">
+                  Total Words Learned
+                </p>
+              </div>
+              <div className="text-center p-2 md:p-4 bg-educational-orange/5 rounded-lg">
+                <div className="text-xl md:text-2xl font-bold text-educational-orange">
+                  <AnimatedCounter value={familyStats.todayActivity} />
+                </div>
+                <p className="text-xs md:text-sm text-slate-600">Words Today</p>
+              </div>
+              <div className="text-center p-2 md:p-4 bg-educational-purple/5 rounded-lg">
+                <div className="text-xl md:text-2xl font-bold text-educational-purple">
+                  <AnimatedCounter value={familyStats.longestStreak} />
+                </div>
+                <p className="text-xs md:text-sm text-slate-600">
+                  Longest Streak
+                </p>
               </div>
             </div>
           </CardContent>
         </Card>
-      )}
 
-      {/* Family Summary - Mobile Optimized */}
-      <Card>
-        <CardHeader className="pb-3 md:pb-6">
-          <CardTitle className="flex items-center justify-between text-base md:text-lg">
-            <div className="flex items-center gap-2">
-              <Users className="w-5 h-5 md:w-6 md:h-6 text-educational-blue" />
-              <span className="hidden md:inline">Family Learning Summary</span>
-              <span className="md:hidden">Family Summary</span>
-              {isLoadingProgress && (
-                <div className="w-4 h-4 border-2 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
-              )}
-            </div>
-            <div className="flex gap-2">
+        {/* Quick Actions - Mobile Optimized */}
+        <Card>
+          <CardHeader className="pb-3 md:pb-6">
+            <CardTitle className="flex items-center gap-2 text-base md:text-lg">
+              <Zap className="w-5 h-5 md:w-6 md:h-6 text-purple-500" />
+              Quick Actions
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="px-3 md:px-6">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-3 md:gap-4">
               <Button
+                onClick={() => setActiveTab("analytics")}
                 variant="outline"
-                size="sm"
-                onClick={syncChildrenProgress}
-                disabled={isLoadingProgress}
-                className="text-xs"
+                className="h-16 md:h-20 flex flex-col items-center gap-1 md:gap-2 border-orange-200 hover:border-orange-300 hover:bg-orange-50 relative text-xs md:text-sm"
               >
-                <TrendingUp className="w-3 h-3 mr-1" />
-                Refresh
+                <AlertCircle className="w-5 h-5 md:w-6 md:h-6 text-orange-500" />
+                <div className="text-center">
+                  <div className="font-semibold text-orange-700">
+                    Practice Words
+                  </div>
+                  <div className="text-xs text-orange-600 hidden md:block">
+                    View words that need help
+                  </div>
+                  <div className="text-xs text-orange-600 md:hidden">
+                    Need help
+                  </div>
+                </div>
+              </Button>
+
+              <Button
+                onClick={() => setActiveTab("analytics")}
+                variant="outline"
+                className="h-16 md:h-20 flex flex-col items-center gap-1 md:gap-2 border-green-200 hover:border-green-300 hover:bg-green-50 text-xs md:text-sm"
+              >
+                <CheckCircle className="w-5 h-5 md:w-6 md:h-6 text-green-500" />
+                <div className="text-center">
+                  <div className="font-semibold text-green-700">
+                    Mastered Words
+                  </div>
+                  <div className="text-xs text-green-600 hidden md:block">
+                    See progress & achievements
+                  </div>
+                  <div className="text-xs text-green-600 md:hidden">
+                    Progress
+                  </div>
+                </div>
+              </Button>
+
+              <Button
+                onClick={() => setActiveTab("goals")}
+                variant="outline"
+                className="h-16 md:h-20 flex flex-col items-center gap-1 md:gap-2 border-blue-200 hover:border-blue-300 hover:bg-blue-50 text-xs md:text-sm"
+              >
+                <Target className="w-5 h-5 md:w-6 md:h-6 text-blue-500" />
+                <div className="text-center">
+                  <div className="font-semibold text-blue-700">Set Goals</div>
+                  <div className="text-xs text-blue-600 hidden md:block">
+                    Create learning objectives
+                  </div>
+                  <div className="text-xs text-blue-600 md:hidden">
+                    Objectives
+                  </div>
+                </div>
               </Button>
             </div>
-          </CardTitle>
-        </CardHeader>
-        <CardContent className="px-3 md:px-6">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-2 md:gap-4">
-            <div className="text-center p-2 md:p-4 bg-educational-blue/5 rounded-lg">
-              <div className="text-xl md:text-2xl font-bold text-educational-blue">
-                <AnimatedCounter value={familyStats.activeChildren} />
-              </div>
-              <p className="text-xs md:text-sm text-slate-600">Active Today</p>
-            </div>
-            <div className="text-center p-2 md:p-4 bg-educational-green/5 rounded-lg">
-              <div className="text-xl md:text-2xl font-bold text-educational-green">
-                <AnimatedCounter value={familyStats.totalWordsLearned} />
-              </div>
-              <p className="text-xs md:text-sm text-slate-600">
-                Total Words Learned
-              </p>
-            </div>
-            <div className="text-center p-2 md:p-4 bg-educational-orange/5 rounded-lg">
-              <div className="text-xl md:text-2xl font-bold text-educational-orange">
-                <AnimatedCounter value={familyStats.todayActivity} />
-              </div>
-              <p className="text-xs md:text-sm text-slate-600">Words Today</p>
-            </div>
-            <div className="text-center p-2 md:p-4 bg-educational-purple/5 rounded-lg">
-              <div className="text-xl md:text-2xl font-bold text-educational-purple">
-                <AnimatedCounter value={familyStats.longestStreak} />
-              </div>
-              <p className="text-xs md:text-sm text-slate-600">
-                Longest Streak
-              </p>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
+          </CardContent>
+        </Card>
 
-      {/* Quick Actions - Mobile Optimized */}
-      <Card>
-        <CardHeader className="pb-3 md:pb-6">
-          <CardTitle className="flex items-center gap-2 text-base md:text-lg">
-            <Zap className="w-5 h-5 md:w-6 md:h-6 text-purple-500" />
-            Quick Actions
-          </CardTitle>
-        </CardHeader>
-        <CardContent className="px-3 md:px-6">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-3 md:gap-4">
-            <Button
-              onClick={() => setActiveTab("analytics")}
-              variant="outline"
-              className="h-16 md:h-20 flex flex-col items-center gap-1 md:gap-2 border-orange-200 hover:border-orange-300 hover:bg-orange-50 relative text-xs md:text-sm"
-            >
-              <AlertCircle className="w-5 h-5 md:w-6 md:h-6 text-orange-500" />
-              <div className="text-center">
-                <div className="font-semibold text-orange-700">
-                  Practice Words
-                </div>
-                <div className="text-xs text-orange-600 hidden md:block">
-                  View words that need help
-                </div>
-                <div className="text-xs text-orange-600 md:hidden">
-                  Need help
-                </div>
-              </div>
-            </Button>
+        {/* Children Cards - Simplified for Performance */}
+        {children.length > 0 && (
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 md:gap-6">
+            {children.map((child) => {
+              const weeklyStats = calculateWeeklyStats(child.id);
+              const progressPercentage =
+                (child.weeklyProgress / child.weeklyGoal) * 100;
+              const childGoals = getChildGoals(child.id);
+              const activeGoals = childGoals.filter(
+                (g) => g.status === "active",
+              );
+              const childNotifications = getChildNotifications(child.id);
 
-            <Button
-              onClick={() => setActiveTab("analytics")}
-              variant="outline"
-              className="h-16 md:h-20 flex flex-col items-center gap-1 md:gap-2 border-green-200 hover:border-green-300 hover:bg-green-50 text-xs md:text-sm"
-            >
-              <CheckCircle className="w-5 h-5 md:w-6 md:h-6 text-green-500" />
-              <div className="text-center">
-                <div className="font-semibold text-green-700">
-                  Mastered Words
-                </div>
-                <div className="text-xs text-green-600 hidden md:block">
-                  See progress & achievements
-                </div>
-                <div className="text-xs text-green-600 md:hidden">Progress</div>
-              </div>
-            </Button>
-
-            <Button
-              onClick={() => setActiveTab("goals")}
-              variant="outline"
-              className="h-16 md:h-20 flex flex-col items-center gap-1 md:gap-2 border-blue-200 hover:border-blue-300 hover:bg-blue-50 text-xs md:text-sm"
-            >
-              <Target className="w-5 h-5 md:w-6 md:h-6 text-blue-500" />
-              <div className="text-center">
-                <div className="font-semibold text-blue-700">Set Goals</div>
-                <div className="text-xs text-blue-600 hidden md:block">
-                  Create learning objectives
-                </div>
-                <div className="text-xs text-blue-600 md:hidden">
-                  Objectives
-                </div>
-              </div>
-            </Button>
-          </div>
-        </CardContent>
-      </Card>
-
-      {/* Children Cards - Simplified for Performance */}
-      {children.length > 0 && (
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 md:gap-6">
-          {children.map((child) => {
-            const weeklyStats = calculateWeeklyStats(child.id);
-            const progressPercentage =
-              (child.weeklyProgress / child.weeklyGoal) * 100;
-            const childGoals = getChildGoals(child.id);
-            const activeGoals = childGoals.filter((g) => g.status === "active");
-            const childNotifications = getChildNotifications(child.id);
-
-            return (
-              <Card
-                key={child.id}
-                className="cursor-pointer hover:shadow-lg transition-all duration-300 border-l-4 border-l-educational-blue"
-                onClick={() => setSelectedChild(child)}
-              >
-                <CardHeader className="pb-3 md:pb-6">
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-2 md:gap-3">
-                      <div className="text-3xl md:text-4xl">{child.avatar}</div>
-                      <div>
-                        <CardTitle className="text-lg md:text-xl">
-                          {child.name}
-                        </CardTitle>
-                        <p className="text-xs md:text-sm text-slate-600">
-                          {child.age} years old • Level {child.level}
-                        </p>
-                        <Badge variant="outline" className="text-xs mt-1">
-                          {child.preferredLearningTime}
-                        </Badge>
+              return (
+                <Card
+                  key={child.id}
+                  className="cursor-pointer hover:shadow-lg transition-all duration-300 border-l-4 border-l-educational-blue"
+                  onClick={() => setSelectedChild(child)}
+                >
+                  <CardHeader className="pb-3 md:pb-6">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-2 md:gap-3">
+                        <div className="text-3xl md:text-4xl">
+                          {child.avatar}
+                        </div>
+                        <div>
+                          <CardTitle className="text-lg md:text-xl">
+                            {child.name}
+                          </CardTitle>
+                          <p className="text-xs md:text-sm text-slate-600">
+                            {child.age} years old • Level {child.level}
+                          </p>
+                          <Badge variant="outline" className="text-xs mt-1">
+                            {child.preferredLearningTime}
+                          </Badge>
+                        </div>
                       </div>
-                    </div>
-                    <div className="flex flex-col items-end gap-1">
-                      <Badge variant="outline" className="text-xs px-1">
-                        {getTimeAgo(child.lastActive)}
-                      </Badge>
-                      <p className="text-xs text-slate-500 hidden md:block">
-                        Last active
-                      </p>
-                      <p className="text-xs text-slate-500 md:hidden">Last</p>
-                      {activeGoals.length > 0 && (
-                        <Badge className="bg-educational-purple text-white text-xs mt-1 px-1">
-                          {activeGoals.length} goal
-                          {activeGoals.length !== 1 ? "s" : ""}
+                      <div className="flex flex-col items-end gap-1">
+                        <Badge variant="outline" className="text-xs px-1">
+                          {getTimeAgo(child.lastActive)}
                         </Badge>
-                      )}
-                    </div>
-                  </div>
-                </CardHeader>
-                <CardContent className="space-y-3 md:space-y-4 px-3 md:px-6">
-                  {/* Weekly Goal Progress */}
-                  <div>
-                    <div className="flex justify-between text-xs md:text-sm mb-2">
-                      <div className="flex items-center gap-2">
-                        <span>Weekly Goal</span>
-                        {child.currentStreak > 0 && (
-                          <Badge
-                            variant="outline"
-                            className="text-xs px-1 bg-orange-50 text-orange-600 border-orange-200"
-                          >
-                            🔥 {child.currentStreak}
+                        <p className="text-xs text-slate-500 hidden md:block">
+                          Last active
+                        </p>
+                        <p className="text-xs text-slate-500 md:hidden">Last</p>
+                        {activeGoals.length > 0 && (
+                          <Badge className="bg-educational-purple text-white text-xs mt-1 px-1">
+                            {activeGoals.length} goal
+                            {activeGoals.length !== 1 ? "s" : ""}
                           </Badge>
                         )}
                       </div>
-                      <span>
-                        {child.weeklyProgress}/{child.weeklyGoal} words
-                      </span>
                     </div>
-                    <Progress
-                      value={progressPercentage}
-                      className="h-1.5 md:h-2"
-                    />
-                    <div className="flex justify-between items-center mt-1">
-                      <p className="text-xs text-slate-500">
-                        {Math.round(progressPercentage)}% complete
-                      </p>
-                    </div>
-                  </div>
-
-                  {/* Quick Stats */}
-                  <div className="grid grid-cols-3 gap-4 text-center">
+                  </CardHeader>
+                  <CardContent className="space-y-3 md:space-y-4 px-3 md:px-6">
+                    {/* Weekly Goal Progress */}
                     <div>
-                      <div className="text-lg font-bold text-educational-blue">
-                        <AnimatedCounter value={child.wordsLearned} />
-                      </div>
-                      <p className="text-xs text-slate-600">Words</p>
-                    </div>
-                    <div>
-                      <div className="text-lg font-bold text-educational-orange">
-                        <AnimatedCounter value={child.currentStreak} />
-                      </div>
-                      <p className="text-xs text-slate-600">Streak</p>
-                    </div>
-                    <div>
-                      <div className="text-lg font-bold text-educational-green">
-                        <AnimatedCounter value={weeklyStats.averageAccuracy} />%
-                      </div>
-                      <p className="text-xs text-slate-600">Accuracy</p>
-                    </div>
-                  </div>
-
-                  {/* Recent Achievement - Simplified */}
-                  {child.recentAchievements.length > 0 && (
-                    <div className="bg-yellow-50 p-3 rounded-lg">
-                      <div className="flex items-center gap-2">
-                        <span className="text-lg">
-                          {child.recentAchievements[0].icon}
+                      <div className="flex justify-between text-xs md:text-sm mb-2">
+                        <div className="flex items-center gap-2">
+                          <span>Weekly Goal</span>
+                          {child.currentStreak > 0 && (
+                            <Badge
+                              variant="outline"
+                              className="text-xs px-1 bg-orange-50 text-orange-600 border-orange-200"
+                            >
+                              🔥 {child.currentStreak}
+                            </Badge>
+                          )}
+                        </div>
+                        <span>
+                          {child.weeklyProgress}/{child.weeklyGoal} words
                         </span>
-                        <div>
-                          <p className="font-medium text-sm">
-                            {child.recentAchievements[0].title}
-                          </p>
-                          <p className="text-xs text-slate-600">
-                            {getTimeAgo(child.recentAchievements[0].earnedAt)}
-                          </p>
+                      </div>
+                      <Progress
+                        value={progressPercentage}
+                        className="h-1.5 md:h-2"
+                      />
+                      <div className="flex justify-between items-center mt-1">
+                        <p className="text-xs text-slate-500">
+                          {Math.round(progressPercentage)}% complete
+                        </p>
+                      </div>
+                    </div>
+
+                    {/* Quick Stats */}
+                    <div className="grid grid-cols-3 gap-4 text-center">
+                      <div>
+                        <div className="text-lg font-bold text-educational-blue">
+                          <AnimatedCounter value={child.wordsLearned} />
+                        </div>
+                        <p className="text-xs text-slate-600">Words</p>
+                      </div>
+                      <div>
+                        <div className="text-lg font-bold text-educational-orange">
+                          <AnimatedCounter value={child.currentStreak} />
+                        </div>
+                        <p className="text-xs text-slate-600">Streak</p>
+                      </div>
+                      <div>
+                        <div className="text-lg font-bold text-educational-green">
+                          <AnimatedCounter
+                            value={weeklyStats.averageAccuracy}
+                          />
+                          %
+                        </div>
+                        <p className="text-xs text-slate-600">Accuracy</p>
+                      </div>
+                    </div>
+
+                    {/* Recent Achievement - Simplified */}
+                    {child.recentAchievements.length > 0 && (
+                      <div className="bg-yellow-50 p-3 rounded-lg">
+                        <div className="flex items-center gap-2">
+                          <span className="text-lg">
+                            {child.recentAchievements[0].icon}
+                          </span>
+                          <div>
+                            <p className="font-medium text-sm">
+                              {child.recentAchievements[0].title}
+                            </p>
+                            <p className="text-xs text-slate-600">
+                              {getTimeAgo(child.recentAchievements[0].earnedAt)}
+                            </p>
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  )}
-                </CardContent>
-              </Card>
-            );
-          })}
-        </div>
-      )}
-    </div>
-  ), [children, unreadNotifications, highPriorityNotifications, handleAddChildClick, isLoadingProgress, familyStats, syncChildrenProgress, calculateWeeklyStats, getChildGoals, getChildNotifications, getTimeAgo]);
-
-  const renderGoalsManagement = useCallback(() => (
-    <div className="space-y-6">
-      <div className="text-center">
-        <h2 className="text-2xl font-bold text-slate-800 mb-4">
-          Learning Goals Management
-        </h2>
-        <p className="text-slate-600 mb-6">
-          Set and track learning goals for your children
-        </p>
-        
-        {selectedChild ? (
-          <Button
-            onClick={() => handleOpenLearningGoals(selectedChild)}
-            className="bg-educational-blue hover:bg-educational-blue/90"
-          >
-            <Target className="w-4 h-4 mr-2" />
-            Manage {selectedChild.name}'s Goals
-          </Button>
-        ) : (
-          <div className="text-center py-8">
-            <p className="text-slate-500 mb-4">Please select a child first</p>
-            <Button
-              onClick={handleAddChildClick}
-              variant="outline"
-              disabled={children.length === 0}
-            >
-              <Plus className="w-4 h-4 mr-2" />
-              Add Child
-            </Button>
+                    )}
+                  </CardContent>
+                </Card>
+              );
+            })}
           </div>
         )}
       </div>
-    </div>
-  ), [selectedChild, handleOpenLearningGoals, handleAddChildClick, children.length]);
+    ),
+    [
+      children,
+      unreadNotifications,
+      highPriorityNotifications,
+      handleAddChildClick,
+      isLoadingProgress,
+      familyStats,
+      syncChildrenProgress,
+      calculateWeeklyStats,
+      getChildGoals,
+      getChildNotifications,
+      getTimeAgo,
+    ],
+  );
 
-  const renderAnalytics = useCallback(() => (
-    <div className="space-y-6">
-      <div className="text-center">
-        <h2 className="text-2xl font-bold text-slate-800 mb-4">
-          Learning Analytics
-        </h2>
-        <p className="text-slate-600 mb-6">
-          Detailed insights into your children's learning progress
-        </p>
+  const renderGoalsManagement = useCallback(
+    () => (
+      <div className="space-y-6">
+        <div className="text-center">
+          <h2 className="text-2xl font-bold text-slate-800 mb-4">
+            Learning Goals Management
+          </h2>
+          <p className="text-slate-600 mb-6">
+            Set and track learning goals for your children
+          </p>
+
+          {selectedChild ? (
+            <Button
+              onClick={() => handleOpenLearningGoals(selectedChild)}
+              className="bg-educational-blue hover:bg-educational-blue/90"
+            >
+              <Target className="w-4 h-4 mr-2" />
+              Manage {selectedChild.name}'s Goals
+            </Button>
+          ) : (
+            <div className="text-center py-8">
+              <p className="text-slate-500 mb-4">Please select a child first</p>
+              <Button
+                onClick={handleAddChildClick}
+                variant="outline"
+                disabled={children.length === 0}
+              >
+                <Plus className="w-4 h-4 mr-2" />
+                Add Child
+              </Button>
+            </div>
+          )}
+        </div>
       </div>
+    ),
+    [
+      selectedChild,
+      handleOpenLearningGoals,
+      handleAddChildClick,
+      children.length,
+    ],
+  );
 
-      {/* Practice Words Section */}
-      <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <AlertCircle className="w-5 h-5 text-orange-500" />
-            Words Needing Practice
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          {practiceWords.length > 0 ? (
-            <div className="grid gap-3">
-              {practiceWords.map((word, index) => (
-                <div key={index} className="flex items-center justify-between p-3 bg-orange-50 rounded-lg">
-                  <div>
-                    <div className="font-medium">{word.word}</div>
-                    <div className="text-sm text-slate-600">{word.category}</div>
-                  </div>
-                  <div className="text-right">
-                    <div className="text-sm font-medium text-orange-600">
-                      {word.accuracy}% accuracy
-                    </div>
-                    <div className="text-xs text-slate-500">
-                      {word.timesReviewed} attempts
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          ) : (
-            <p className="text-center text-slate-500 py-8">
-              No words need practice right now! Great job! 🎉
-            </p>
-          )}
-        </CardContent>
-      </Card>
+  const renderAnalytics = useCallback(
+    () => (
+      <div className="space-y-6">
+        <div className="text-center">
+          <h2 className="text-2xl font-bold text-slate-800 mb-4">
+            Learning Analytics
+          </h2>
+          <p className="text-slate-600 mb-6">
+            Detailed insights into your children's learning progress
+          </p>
+        </div>
 
-      {/* Top Words Section */}
-      <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <CheckCircle className="w-5 h-5 text-green-500" />
-            Best Mastered Words
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          {topWords.length > 0 ? (
-            <div className="grid gap-3">
-              {topWords.map((word, index) => (
-                <div key={index} className="flex items-center justify-between p-3 bg-green-50 rounded-lg">
-                  <div>
-                    <div className="font-medium">{word.word}</div>
-                    <div className="text-sm text-slate-600">{word.category}</div>
-                  </div>
-                  <div className="text-right">
-                    <div className="text-sm font-medium text-green-600">
-                      {word.accuracy}% accuracy
+        {/* Practice Words Section */}
+        <Card>
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              <AlertCircle className="w-5 h-5 text-orange-500" />
+              Words Needing Practice
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            {practiceWords.length > 0 ? (
+              <div className="grid gap-3">
+                {practiceWords.map((word, index) => (
+                  <div
+                    key={index}
+                    className="flex items-center justify-between p-3 bg-orange-50 rounded-lg"
+                  >
+                    <div>
+                      <div className="font-medium">{word.word}</div>
+                      <div className="text-sm text-slate-600">
+                        {word.category}
+                      </div>
                     </div>
-                    <div className="text-xs text-slate-500">
-                      {word.timesReviewed} attempts
+                    <div className="text-right">
+                      <div className="text-sm font-medium text-orange-600">
+                        {word.accuracy}% accuracy
+                      </div>
+                      <div className="text-xs text-slate-500">
+                        {word.timesReviewed} attempts
+                      </div>
                     </div>
                   </div>
-                </div>
-              ))}
-            </div>
-          ) : (
-            <p className="text-center text-slate-500 py-8">
-              Keep learning to see your best words here! 📚
-            </p>
-          )}
-        </CardContent>
-      </Card>
-    </div>
-  ), [practiceWords, topWords]);
+                ))}
+              </div>
+            ) : (
+              <p className="text-center text-slate-500 py-8">
+                No words need practice right now! Great job! 🎉
+              </p>
+            )}
+          </CardContent>
+        </Card>
+
+        {/* Top Words Section */}
+        <Card>
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              <CheckCircle className="w-5 h-5 text-green-500" />
+              Best Mastered Words
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            {topWords.length > 0 ? (
+              <div className="grid gap-3">
+                {topWords.map((word, index) => (
+                  <div
+                    key={index}
+                    className="flex items-center justify-between p-3 bg-green-50 rounded-lg"
+                  >
+                    <div>
+                      <div className="font-medium">{word.word}</div>
+                      <div className="text-sm text-slate-600">
+                        {word.category}
+                      </div>
+                    </div>
+                    <div className="text-right">
+                      <div className="text-sm font-medium text-green-600">
+                        {word.accuracy}% accuracy
+                      </div>
+                      <div className="text-xs text-slate-500">
+                        {word.timesReviewed} attempts
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <p className="text-center text-slate-500 py-8">
+                Keep learning to see your best words here! 📚
+              </p>
+            )}
+          </CardContent>
+        </Card>
+      </div>
+    ),
+    [practiceWords, topWords],
+  );
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50">
@@ -1356,7 +1424,7 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
               Track your children's learning progress and achievements
             </p>
           </div>
-          
+
           {/* Desktop Back Button */}
           {showMobileBackButton && onNavigateBack && (
             <div className="hidden lg:block">
@@ -1406,13 +1474,16 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
 
       {/* Registration Prompt */}
       {showRegistrationPrompt && (
-        <AlertDialog open={showRegistrationPrompt} onOpenChange={setShowRegistrationPrompt}>
+        <AlertDialog
+          open={showRegistrationPrompt}
+          onOpenChange={setShowRegistrationPrompt}
+        >
           <AlertDialogContent>
             <AlertDialogHeader>
               <AlertDialogTitle>Registration Required</AlertDialogTitle>
               <AlertDialogDescription>
-                To add children and track their progress, please create a free account. 
-                This will save all your data securely.
+                To add children and track their progress, please create a free
+                account. This will save all your data securely.
               </AlertDialogDescription>
             </AlertDialogHeader>
             <AlertDialogFooter>
