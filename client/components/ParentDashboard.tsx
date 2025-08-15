@@ -1148,24 +1148,44 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
 
                   {/* Quick Stats */}
                   <div className="grid grid-cols-3 gap-4 text-center">
-                    <div>
+                    <div className="relative">
                       <div className="text-lg font-bold text-educational-blue">
-                        {child.wordsLearned}
+                        <AnimatedCounter value={child.wordsLearned} />
                       </div>
                       <p className="text-xs text-slate-600">Words</p>
+                      {isLoadingProgress && (
+                        <div className="absolute -top-1 -right-1 w-2 h-2 bg-blue-500 rounded-full animate-pulse"></div>
+                      )}
                     </div>
-                    <div>
+                    <div className="relative">
                       <div className="text-lg font-bold text-educational-orange">
-                        {child.currentStreak}
+                        <AnimatedCounter value={child.currentStreak} />
                       </div>
                       <p className="text-xs text-slate-600">Streak</p>
+                      {isLoadingProgress && (
+                        <div className="absolute -top-1 -right-1 w-2 h-2 bg-orange-500 rounded-full animate-pulse"></div>
+                      )}
                     </div>
-                    <div>
+                    <div className="relative">
                       <div className="text-lg font-bold text-educational-green">
-                        {weeklyStats.averageAccuracy}%
+                        <AnimatedCounter value={weeklyStats.averageAccuracy} />%
                       </div>
                       <p className="text-xs text-slate-600">Accuracy</p>
+                      {isLoadingProgress && (
+                        <div className="absolute -top-1 -right-1 w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+                      )}
                     </div>
+                  </div>
+
+                  {/* Progress Update Indicator */}
+                  <div className="flex items-center justify-between text-xs text-slate-500">
+                    <span>Last updated: {formatTime(child.lastActive)}</span>
+                    {isLoadingProgress && (
+                      <div className="flex items-center gap-1">
+                        <div className="w-3 h-3 border border-blue-500 border-t-transparent rounded-full animate-spin"></div>
+                        <span>Updating...</span>
+                      </div>
+                    )}
                   </div>
 
                   {/* Recent Notifications */}
