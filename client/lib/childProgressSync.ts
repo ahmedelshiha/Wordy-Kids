@@ -9,6 +9,9 @@ import {
  */
 export class ChildProgressSync {
   private static instance: ChildProgressSync;
+  private progressCache: Map<string, any> = new Map();
+  private lastCacheUpdate: number = 0;
+  private readonly CACHE_DURATION = 30000; // 30 seconds
 
   static getInstance(): ChildProgressSync {
     if (!ChildProgressSync.instance) {
@@ -18,7 +21,22 @@ export class ChildProgressSync {
   }
 
   /**
-   * Get real progress data for a child from localStorage
+   * Clear the progress cache to force fresh data retrieval
+   */
+  clearCache(): void {
+    this.progressCache.clear();
+    this.lastCacheUpdate = 0;
+  }
+
+  /**
+   * Check if cache is still valid
+   */
+  private isCacheValid(): boolean {
+    return Date.now() - this.lastCacheUpdate < this.CACHE_DURATION;
+  }
+
+  /**
+   * Get real progress data for a child from localStorage with caching
    */
   private getRealProgressData(childId: string): {
     totalWordsLearned: number;
@@ -26,6 +44,12 @@ export class ChildProgressSync {
     weeklyProgress: number;
     todayProgress: number;
   } {
+    // Check cache first
+    const cacheKey = `progress_${childId}`;
+    if (this.isCacheValid() && this.progressCache.has(cacheKey)) {
+      return this.progressCache.get(cacheKey);
+    }
+
     try {
       // Get today's progress
       const todayKey = new Date().toISOString().split("T")[0];
@@ -49,15 +73,20 @@ export class ChildProgressSync {
           '{"currentStreak": 0, "lastActivity": null}',
       );
 
-      // Calculate total words learned by scanning all daily progress entries
-      const totalWordsLearned = this.calculateTotalWordsLearned(childId);
+      // Calculate total words learned efficiently
+      const totalWordsLearned = this.calculateTotalWordsLearnedOptimized(childId);
 
-      return {
+      const progressData = {
         totalWordsLearned,
         currentStreak: streakData.currentStreak,
         weeklyProgress: weeklyData.words,
         todayProgress: dailyData.words,
       };
+
+      // Cache the result
+      this.progressCache.set(cacheKey, progressData);
+      
+      return progressData;
     } catch (error) {
       console.error("Error getting real progress data:", error);
       return {
@@ -70,23 +99,41 @@ export class ChildProgressSync {
   }
 
   /**
-   * Calculate total words learned by scanning all daily progress entries
+   * Optimized version that uses a more targeted approach
    */
-  private calculateTotalWordsLearned(childId: string): number {
+  private calculateTotalWordsLearnedOptimized(childId: string): number {
+    const cacheKey = `total_words_${childId}`;
+    if (this.isCacheValid() && this.progressCache.has(cacheKey)) {
+      return this.progressCache.get(cacheKey);
+    }
+
     try {
       let total = 0;
-      const keys = Object.keys(localStorage);
 
-      // Find all daily progress keys for this child
-      const dailyProgressKeys = keys.filter((key) =>
-        key.startsWith(`daily_progress_${childId}_`),
-      );
-
-      for (const key of dailyProgressKeys) {
-        const data = JSON.parse(localStorage.getItem(key) || '{"words": 0}');
-        total += data.words || 0;
+      // Instead of scanning all localStorage keys, use a more targeted approach
+      // Check for recent data first (last 30 days)
+      const today = new Date();
+      for (let i = 0; i < 30; i++) {
+        const date = new Date(today);
+        date.setDate(date.getDate() - i);
+        const dateKey = date.toISOString().split("T")[0];
+        const dailyProgressKey = `daily_progress_${childId}_${dateKey}`;
+        
+        const data = localStorage.getItem(dailyProgressKey);
+        if (data) {
+          try {
+            const parsed = JSON.parse(data);
+            total += parsed.words || 0;
+          } catch (parseError) {
+            // Skip invalid entries
+            continue;
+          }
+        }
       }
 
+      // Cache the result
+      this.progressCache.set(cacheKey, total);
+      
       return total;
     } catch (error) {
       console.error("Error calculating total words learned:", error);
@@ -114,14 +161,18 @@ export class ChildProgressSync {
     try {
       const realProgress = this.getRealProgressData(child.id);
 
-      // Try to get systematic progress data as well
+      // Try to get systematic progress data as well (with timeout)
       let systematicProgress: SystematicProgressData | null = null;
       try {
-        systematicProgress = await goalProgressTracker.fetchSystematicProgress(
-          child.id,
+        const progressPromise = goalProgressTracker.fetchSystematicProgress(child.id);
+        const timeoutPromise = new Promise((_, reject) => 
+          setTimeout(() => reject(new Error('Timeout')), 5000)
         );
+        
+        systematicProgress = await Promise.race([progressPromise, timeoutPromise]) as SystematicProgressData;
       } catch (error) {
         // Could not fetch systematic progress, using localStorage data
+        console.log("Using localStorage data for child progress");
       }
 
       const updatedChild: ChildProfile = {
@@ -151,42 +202,59 @@ export class ChildProgressSync {
   async updateAllChildrenProgress(
     children: ChildProfile[],
   ): Promise<ChildProfile[]> {
-    const updatedChildren: ChildProfile[] = [];
-
-    for (const child of children) {
-      const updatedChild = await this.updateChildProgress(child);
-      updatedChildren.push(updatedChild);
+    // Process children in parallel for better performance
+    const updatePromises = children.map(child => this.updateChildProgress(child));
+    
+    try {
+      const updatedChildren = await Promise.all(updatePromises);
+      
+      // Update cache timestamp
+      this.lastCacheUpdate = Date.now();
+      
+      return updatedChildren;
+    } catch (error) {
+      console.error("Error updating all children progress:", error);
+      return children;
     }
-
-    return updatedChildren;
   }
 
   /**
-   * Get the last active date for a child based on their learning activity
+   * Get the last active date for a child based on their learning activity (optimized)
    */
   private getLastActiveDate(childId: string): Date {
-    try {
-      const keys = Object.keys(localStorage);
-      const dailyProgressKeys = keys.filter((key) =>
-        key.startsWith(`daily_progress_${childId}_`),
-      );
+    const cacheKey = `last_active_${childId}`;
+    if (this.isCacheValid() && this.progressCache.has(cacheKey)) {
+      return this.progressCache.get(cacheKey);
+    }
 
+    try {
       let lastActiveDate = new Date(2024, 0, 1); // Default to start of 2024
 
-      for (const key of dailyProgressKeys) {
-        const data = JSON.parse(localStorage.getItem(key) || '{"words": 0}');
-        if (data.words > 0) {
-          // Extract date from key format: daily_progress_${childId}_YYYY-MM-DD
-          const dateStr = key.split("_").pop();
-          if (dateStr) {
-            const date = new Date(dateStr);
-            if (date > lastActiveDate) {
+      // Check recent dates first (last 7 days)
+      const today = new Date();
+      for (let i = 0; i < 7; i++) {
+        const date = new Date(today);
+        date.setDate(date.getDate() - i);
+        const dateKey = date.toISOString().split("T")[0];
+        const dailyProgressKey = `daily_progress_${childId}_${dateKey}`;
+        
+        const data = localStorage.getItem(dailyProgressKey);
+        if (data) {
+          try {
+            const parsed = JSON.parse(data);
+            if (parsed.words > 0) {
               lastActiveDate = date;
+              break; // Found most recent activity
             }
+          } catch (parseError) {
+            continue;
           }
         }
       }
 
+      // Cache the result
+      this.progressCache.set(cacheKey, lastActiveDate);
+      
       return lastActiveDate;
     } catch (error) {
       console.error("Error getting last active date:", error);
@@ -195,13 +263,20 @@ export class ChildProgressSync {
   }
 
   /**
-   * Save updated children data back to localStorage
+   * Save updated children data back to localStorage (with error handling)
    */
   saveUpdatedChildren(children: ChildProfile[]): void {
     try {
       localStorage.setItem("parentDashboardChildren", JSON.stringify(children));
     } catch (error) {
       console.error("Error saving updated children:", error);
+      // Try to free up space and retry
+      try {
+        this.clearCache();
+        localStorage.setItem("parentDashboardChildren", JSON.stringify(children));
+      } catch (retryError) {
+        console.error("Failed to save children data even after cache clear:", retryError);
+      }
     }
   }
 
@@ -211,13 +286,18 @@ export class ChildProgressSync {
   async syncAndSaveAllProgress(
     children: ChildProfile[],
   ): Promise<ChildProfile[]> {
-    const updatedChildren = await this.updateAllChildrenProgress(children);
-    this.saveUpdatedChildren(updatedChildren);
-    return updatedChildren;
+    try {
+      const updatedChildren = await this.updateAllChildrenProgress(children);
+      this.saveUpdatedChildren(updatedChildren);
+      return updatedChildren;
+    } catch (error) {
+      console.error("Error in syncAndSaveAllProgress:", error);
+      return children;
+    }
   }
 
   /**
-   * Get real-time statistics for the parent dashboard summary
+   * Get real-time statistics for the parent dashboard summary (optimized)
    */
   getFamilyStats(children: ChildProfile[]): {
     totalWordsLearned: number;
@@ -225,6 +305,11 @@ export class ChildProgressSync {
     activeChildren: number;
     todayActivity: number;
   } {
+    const cacheKey = "family_stats";
+    if (this.isCacheValid() && this.progressCache.has(cacheKey)) {
+      return this.progressCache.get(cacheKey);
+    }
+
     try {
       let totalWords = 0;
       let longestStreak = 0;
@@ -243,12 +328,17 @@ export class ChildProgressSync {
         }
       }
 
-      return {
+      const stats = {
         totalWordsLearned: totalWords,
         longestStreak,
         activeChildren,
         todayActivity,
       };
+
+      // Cache the result
+      this.progressCache.set(cacheKey, stats);
+      
+      return stats;
     } catch (error) {
       console.error("Error calculating family stats:", error);
       return {
