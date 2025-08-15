@@ -17,6 +17,10 @@ export const DynamicAuthButton: React.FC<DynamicAuthButtonProps> = ({
   const { user, isGuest, logout } = useAuth();
   const navigate = useNavigate();
 
+  // Debug logging
+  console.log('DynamicAuthButton - User:', user);
+  console.log('DynamicAuthButton - IsGuest:', isGuest);
+
   const handleClick = () => {
     if (onAction) onAction();
 
