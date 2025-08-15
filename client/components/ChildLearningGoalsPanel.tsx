@@ -126,6 +126,8 @@ export const ChildLearningGoalsPanel: React.FC<ChildLearningGoalsPanelProps> = (
   const [showAddGoalDialog, setShowAddGoalDialog] = useState(false);
   const [expandedGoal, setExpandedGoal] = useState<string | null>(null);
   const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false);
+  const [systematicProgress, setSystematicProgress] = useState<SystematicProgressData | null>(null);
+  const [isLoadingProgress, setIsLoadingProgress] = useState(false);
   const [newGoal, setNewGoal] = useState({
     type: "daily" as const,
     target: 5,
