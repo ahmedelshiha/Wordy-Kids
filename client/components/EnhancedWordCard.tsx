@@ -94,7 +94,6 @@ export const EnhancedWordCard: React.FC<EnhancedWordCardProps> = ({
   const [isPlaying, setIsPlaying] = useState(false);
   const [isFavorited, setIsFavorited] = useState(false);
   const [showSparkles, setShowSparkles] = useState(false);
-  const [voiceMode, setVoiceMode] = useState<"normal" | "funny">("normal");
 
   // Adventure and progress states
   const [adventureStatus, setAdventureStatus] =
@@ -182,8 +181,8 @@ export const EnhancedWordCard: React.FC<EnhancedWordCardProps> = ({
     setStarProgress(progress);
   }, [isPlaying, isFlipped, activeMiniGame]);
 
-  // Enhanced pronunciation with normal and funny voices
-  const handlePronounce = async (mode: "normal" | "funny" = voiceMode) => {
+  // Enhanced pronunciation with normal voice
+  const handlePronounce = async () => {
     if (isPlaying) return;
 
     setIsPlaying(true);
@@ -194,34 +193,17 @@ export const EnhancedWordCard: React.FC<EnhancedWordCardProps> = ({
     setStarProgress(newProgress);
 
     try {
-      if (mode === "funny") {
-        // Funny voice: higher pitch, slower rate
-        enhancedAudioService.pronounceWord(word.word, {
-          rate: 0.7,
-          pitch: 1.5,
-          voice: "funny",
-          onStart: () => console.log("Started funny pronunciation"),
-          onEnd: () => {
-            setIsPlaying(false);
-            setShowSparkles(false);
-            onPronounce?.(word);
-            trackPronunciationActivity();
-          },
-          onError: () => handlePronunciationError(),
-        });
-      } else {
-        // Normal voice
-        enhancedAudioService.pronounceWord(word.word, {
-          onStart: () => console.log("Started normal pronunciation"),
-          onEnd: () => {
-            setIsPlaying(false);
-            setShowSparkles(false);
-            onPronounce?.(word);
-            trackPronunciationActivity();
-          },
-          onError: () => handlePronunciationError(),
-        });
-      }
+      // Normal voice
+      enhancedAudioService.pronounceWord(word.word, {
+        onStart: () => console.log("Started pronunciation"),
+        onEnd: () => {
+          setIsPlaying(false);
+          setShowSparkles(false);
+          onPronounce?.(word);
+          trackPronunciationActivity();
+        },
+        onError: () => handlePronunciationError(),
+      });
     } catch (error) {
       handlePronunciationError();
     }
