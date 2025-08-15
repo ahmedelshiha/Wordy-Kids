@@ -618,6 +618,13 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
     return () => clearInterval(refreshInterval);
   }, [children.length, selectedChild]);
 
+  // Initial progress sync on mount and periodic updates
+  useEffect(() => {
+    if (children.length > 0) {
+      syncChildrenProgress();
+    }
+  }, []);
+
   // Load detailed stats when selected child changes
   useEffect(() => {
     const loadSelectedChildStats = async () => {
