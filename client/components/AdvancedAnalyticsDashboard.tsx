@@ -258,7 +258,7 @@ const AdvancedAnalyticsDashboard: React.FC = () => {
         </CardHeader>
         <CardContent>
           <div className="space-y-4">
-            {usagePatterns.map((pattern, index) => (
+            {usagePatterns.length > 0 ? usagePatterns.map((pattern, index) => (
               <div
                 key={index}
                 className="flex items-center justify-between p-4 bg-slate-50 rounded-lg"
@@ -277,15 +277,20 @@ const AdvancedAnalyticsDashboard: React.FC = () => {
                         <span>{pattern.avgDuration}min avg</span>
                       </div>
                       <Progress
-                        value={usagePatterns.length > 0 ?
-                          (pattern.sessions / Math.max(...usagePatterns.map(p => p.sessions))) * 100 : 0}
+                        value={(pattern.sessions / Math.max(...usagePatterns.map(p => p.sessions))) * 100}
                         className="h-2"
                       />
                     </div>
                   </div>
                 </div>
               </div>
-            ))}
+            )) : (
+              <div className="text-center py-8 text-slate-500">
+                <Activity className="w-12 h-12 mx-auto mb-3 opacity-50" />
+                <p>No usage pattern data available yet</p>
+                <p className="text-sm">Data will appear as users interact with the system</p>
+              </div>
+            )}
           </div>
         </CardContent>
       </Card>
