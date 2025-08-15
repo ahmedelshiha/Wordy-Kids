@@ -2147,6 +2147,85 @@ export const ParentDashboardDesktop: React.FC<ParentDashboardDesktopProps> = ({
             </AlertDialogContent>
           </AlertDialog>
         )}
+
+        {/* Auto-Detect Progress Dialog */}
+        <Dialog open={showAutoDetectDialog} onOpenChange={setShowAutoDetectDialog}>
+          <DialogContent className="sm:max-w-2xl">
+            <DialogHeader>
+              <DialogTitle className="flex items-center gap-2">
+                <Search className="h-5 w-5" />
+                Found Learning Progress!
+              </DialogTitle>
+              <DialogDescription>
+                We found existing learning progress data. Connect these learners to your parent dashboard:
+              </DialogDescription>
+            </DialogHeader>
+
+            <div className="space-y-4 max-h-96 overflow-y-auto">
+              {detectedProgress.map((progress, index) => {
+                const [childName, setChildName] = useState(`Learner ${index + 1}`);
+
+                return (
+                  <Card key={progress.userId} className="p-4">
+                    <div className="flex items-center justify-between">
+                      <div className="space-y-2 flex-1">
+                        <div className="flex items-center gap-3">
+                          <div className="text-2xl">🧒</div>
+                          <div>
+                            <Input
+                              placeholder="Enter child's name"
+                              value={childName}
+                              onChange={(e) => setChildName(e.target.value)}
+                              className="text-sm"
+                            />
+                            <p className="text-xs text-muted-foreground mt-1">
+                              User ID: {progress.userId}
+                            </p>
+                          </div>
+                        </div>
+
+                        <div className="grid grid-cols-3 gap-4 text-sm">
+                          <div className="text-center p-2 bg-blue-50 rounded">
+                            <div className="font-semibold text-blue-600">
+                              {progress.progressStats?.totalWordsLearned || 0}
+                            </div>
+                            <div className="text-xs text-blue-700">Words Learned</div>
+                          </div>
+                          <div className="text-center p-2 bg-green-50 rounded">
+                            <div className="font-semibold text-green-600">
+                              {progress.progressStats?.currentStreak || 0}
+                            </div>
+                            <div className="text-xs text-green-700">Current Streak</div>
+                          </div>
+                          <div className="text-center p-2 bg-orange-50 rounded">
+                            <div className="font-semibold text-orange-600">
+                              {progress.progressStats?.todayProgress || 0}
+                            </div>
+                            <div className="text-xs text-orange-700">Today's Words</div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <Button
+                        onClick={() => connectDetectedProgress(progress, childName)}
+                        disabled={!childName.trim()}
+                        className="ml-4"
+                      >
+                        Connect
+                      </Button>
+                    </div>
+                  </Card>
+                );
+              })}
+            </div>
+
+            <DialogFooter>
+              <Button variant="outline" onClick={() => setShowAutoDetectDialog(false)}>
+                Skip for Now
+              </Button>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
       </div>
     </TooltipProvider>
   );
