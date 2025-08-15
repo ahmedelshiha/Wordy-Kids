@@ -4197,7 +4197,7 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
 
       {/* Enhanced Navigation */}
       <Tabs value={activeTab} onValueChange={setActiveTab}>
-        <TabsList className="grid w-full grid-cols-3 md:grid-cols-5 gap-1 md:gap-0 h-auto p-1">
+        <TabsList className="grid w-full grid-cols-3 md:grid-cols-6 gap-1 md:gap-0 h-auto p-1">
           <TabsTrigger
             value="overview"
             className="flex flex-col md:flex-row items-center gap-1 md:gap-2 text-xs md:text-sm py-2 md:py-3 px-1 md:px-3"
