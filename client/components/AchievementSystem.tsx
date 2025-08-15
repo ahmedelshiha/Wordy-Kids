@@ -336,6 +336,18 @@ export function AchievementSystem({
   const stats = realStats;
   const achievements = realAchievements;
 
+  // Show loading state
+  if (isLoading || !stats) {
+    return (
+      <div className="flex items-center justify-center min-h-[400px]">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-educational-blue mx-auto mb-4"></div>
+          <p className="text-slate-600">Loading your learning journey...</p>
+        </div>
+      </div>
+    );
+  }
+
   const categories = [
     { id: "all", name: "All", icon: "🏆" },
     { id: "learning", name: "Learning", icon: "📚" },
