@@ -91,31 +91,68 @@ interface LearningStats {
   currentAccuracy: number;
 }
 
-const learningStats: LearningStats = {
-  totalWordsLearned: 127,
-  weeklyProgress: [5, 8, 12, 7, 15, 10, 18],
-  categoryBreakdown: [
-    { category: "Animals", wordsLearned: 28, accuracy: 92, timeSpent: 45 },
-    { category: "Nature", wordsLearned: 24, accuracy: 88, timeSpent: 38 },
-    { category: "Science", wordsLearned: 21, accuracy: 85, timeSpent: 52 },
-    { category: "Food", wordsLearned: 19, accuracy: 94, timeSpent: 31 },
-    { category: "General", wordsLearned: 18, accuracy: 87, timeSpent: 42 },
-    { category: "Sports", wordsLearned: 17, accuracy: 90, timeSpent: 28 },
-  ],
-  difficultyProgress: [
-    { difficulty: "easy", completed: 68, total: 80 },
-    { difficulty: "medium", completed: 42, total: 70 },
-    { difficulty: "hard", completed: 17, total: 50 },
-  ],
-  streakData: Array.from({ length: 30 }, (_, i) => ({
-    date: new Date(Date.now() - (29 - i) * 24 * 60 * 60 * 1000)
-      .toISOString()
-      .split("T")[0],
-    active: Math.random() > 0.3,
-    wordsLearned: Math.floor(Math.random() * 12) + 1,
-  })),
-  learningSpeed: 5.2,
-  currentAccuracy: 91,
+// Helper function to calculate weekly progress from localStorage
+const getWeeklyProgressData = (userId: string): number[] => {
+  const weeklyData: number[] = [];
+  const today = new Date();
+
+  for (let i = 6; i >= 0; i--) {
+    const date = new Date(today);
+    date.setDate(date.getDate() - i);
+    const dateKey = date.toISOString().split('T')[0];
+
+    try {
+      const dailyData = localStorage.getItem(`daily_progress_${userId}_${dateKey}`);
+      if (dailyData) {
+        const parsed = JSON.parse(dailyData);
+        weeklyData.push(parsed.words || 0);
+      } else {
+        weeklyData.push(0);
+      }
+    } catch (error) {
+      weeklyData.push(0);
+    }
+  }
+
+  return weeklyData;
+};
+
+// Helper function to get streak data from localStorage
+const getStreakData = (userId: string): Array<{date: string; active: boolean; wordsLearned: number}> => {
+  const streakData: Array<{date: string; active: boolean; wordsLearned: number}> = [];
+  const today = new Date();
+
+  for (let i = 29; i >= 0; i--) {
+    const date = new Date(today);
+    date.setDate(date.getDate() - i);
+    const dateKey = date.toISOString().split('T')[0];
+
+    try {
+      const dailyData = localStorage.getItem(`daily_progress_${userId}_${dateKey}`);
+      if (dailyData) {
+        const parsed = JSON.parse(dailyData);
+        streakData.push({
+          date: dateKey,
+          active: (parsed.words || 0) > 0,
+          wordsLearned: parsed.words || 0
+        });
+      } else {
+        streakData.push({
+          date: dateKey,
+          active: false,
+          wordsLearned: 0
+        });
+      }
+    } catch (error) {
+      streakData.push({
+        date: dateKey,
+        active: false,
+        wordsLearned: 0
+      });
+    }
+  }
+
+  return streakData;
 };
 
 const achievements: Achievement[] = [
