@@ -173,8 +173,8 @@ export class AnalyticsDataService {
       {
         id: "active_users",
         name: "Active Users",
-        value: activeUsers.current,
-        previousValue: activeUsers.previous,
+        value: this.validateNumber(activeUsers.current),
+        previousValue: this.validateNumber(activeUsers.previous),
         unit: "",
         trend: this.getTrend(activeUsers.current, activeUsers.previous),
         changePercent: this.getChangePercent(
