@@ -275,15 +275,15 @@ export function VowelRescue({
 
   if (!gameStarted) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-educational-blue/20 to-educational-purple/20 flex items-center justify-center p-4">
-        <Card className="w-full max-w-md mx-4">
-          <CardContent className="p-6 sm:p-8 text-center relative">
-            {/* Close button - Mobile Optimized */}
+      <div className="min-h-screen bg-gradient-to-br from-educational-blue/20 to-educational-purple/20 flex items-center justify-center p-2 sm:p-4 safe-area-padding-bottom">
+        <Card className="w-full max-w-md mx-2 sm:mx-4 mobile-optimized">
+          <CardContent className="p-4 sm:p-6 md:p-8 text-center relative">
+            {/* Close button - Enhanced Mobile */}
             <Button
               onClick={onExit}
               variant="outline"
               size="sm"
-              className="absolute top-3 right-3 sm:top-4 sm:right-4 rounded-full hover:bg-red-50 hover:text-red-600 border-red-200 min-h-[40px] min-w-[40px]"
+              className="absolute top-2 right-2 sm:top-3 sm:right-3 md:top-4 md:right-4 rounded-full hover:bg-red-50 hover:text-red-600 border-red-200 min-h-[44px] min-w-[44px] touch-target"
             >
               <ArrowLeft className="w-4 h-4" />
             </Button>
@@ -390,8 +390,8 @@ export function VowelRescue({
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-educational-yellow/20 to-educational-orange/20 p-2 sm:p-4 touch-manipulation">
-      <div className="max-w-2xl mx-auto">
+    <div className="min-h-screen bg-gradient-to-br from-educational-yellow/20 to-educational-orange/20 p-2 sm:p-4 touch-manipulation safe-area-padding-bottom">
+      <div className="max-w-2xl mx-auto mobile-optimized">
         {/* Enhanced Header with Close Function - Mobile Optimized */}
         <div className="bg-white/90 backdrop-blur-sm rounded-xl p-3 sm:p-4 mb-4 sm:mb-6 shadow-lg">
           <div className="flex items-center justify-between mb-2 sm:mb-3">
@@ -529,11 +529,11 @@ export function VowelRescue({
                 return (
                   <motion.button
                     key={vowel}
-                    className={`w-11 h-11 sm:w-12 sm:h-12 md:w-16 md:h-16 rounded-full font-bold text-lg sm:text-lg md:text-xl text-white transition-all min-h-[44px] min-w-[44px] touch-manipulation select-none
+                    className={`w-12 h-12 sm:w-13 sm:h-13 md:w-16 md:h-16 rounded-full font-bold text-base sm:text-lg md:text-xl text-white transition-all min-h-[48px] min-w-[48px] touch-manipulation select-none shadow-mobile
                       ${
                         isDisabled
-                          ? "bg-gray-400 cursor-not-allowed"
-                          : "bg-educational-blue hover:bg-educational-blue/90 hover:scale-110 active:scale-95 shadow-lg active:shadow-md"
+                          ? "bg-gray-400 cursor-not-allowed opacity-60"
+                          : "bg-educational-blue hover:bg-educational-blue/90 hover:scale-110 active:scale-95 shadow-mobile-lg active:shadow-md"
                       }
                     `}
                     whileTap={{ scale: 0.9 }}
