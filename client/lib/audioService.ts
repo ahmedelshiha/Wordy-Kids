@@ -12,6 +12,13 @@ export class AudioService {
   private selectedVoiceType: VoiceType = "woman";
 
   private constructor() {
+    // Check if speech synthesis is supported
+    if (!window.speechSynthesis) {
+      console.warn("Speech Synthesis API not supported in this browser");
+      this.isEnabled = false;
+      return;
+    }
+
     this.speechSynthesis = window.speechSynthesis;
     this.loadVoices();
 
@@ -23,10 +30,22 @@ export class AudioService {
       this.selectedVoiceType = savedVoiceType;
     }
 
-    // Listen for voices changed event
+    // Listen for voices changed event with error handling
     this.speechSynthesis.onvoiceschanged = () => {
-      this.loadVoices();
+      try {
+        this.loadVoices();
+      } catch (error) {
+        console.error("Error loading voices:", error);
+      }
     };
+
+    // Wait for voices to load if they're not immediately available
+    if (this.voices.length === 0) {
+      // Try loading voices after a short delay
+      setTimeout(() => {
+        this.loadVoices();
+      }, 100);
+    }
   }
 
   public static getInstance(): AudioService {
