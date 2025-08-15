@@ -83,7 +83,7 @@ import { ChildWordStats } from "@shared/api";
 import { SmartWordSelector } from "@/lib/smartWordSelection";
 import { childProgressSync } from "@/lib/childProgressSync";
 import { toast } from "@/hooks/use-toast";
-import AdvancedAnalyticsDashboard from "@/components/AdvancedAnalyticsDashboard";
+import { ParentLearningAnalytics } from "@/components/ParentLearningAnalytics";
 
 interface LearningGoal {
   id: string;
@@ -1619,29 +1619,17 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
 
         {/* Tabs */}
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-          <TabsList className="grid grid-cols-4 w-full lg:w-auto lg:grid-cols-4">
+          <TabsList className="grid grid-cols-3 w-full lg:w-auto lg:grid-cols-3">
             <TabsTrigger value="overview">Overview</TabsTrigger>
             <TabsTrigger value="goals">Goals</TabsTrigger>
             <TabsTrigger value="analytics">Analytics</TabsTrigger>
-            <TabsTrigger value="advanced">Advanced</TabsTrigger>
           </TabsList>
 
           <div className="mt-6">
             <TabsContent value="overview">{renderOverview()}</TabsContent>
             <TabsContent value="goals">{renderGoalsManagement()}</TabsContent>
-            <TabsContent value="analytics">{renderAnalytics()}</TabsContent>
-            <TabsContent value="advanced">
-              <div className="space-y-6">
-                <div className="text-center">
-                  <h2 className="text-2xl font-bold text-slate-800 mb-4">
-                    Advanced Analytics
-                  </h2>
-                  <p className="text-slate-600 mb-6">
-                    Comprehensive learning insights and system-wide analytics
-                  </p>
-                </div>
-                <AdvancedAnalyticsDashboard />
-              </div>
+            <TabsContent value="analytics">
+              <ParentLearningAnalytics children={children} />
             </TabsContent>
           </div>
         </Tabs>
