@@ -268,8 +268,7 @@ export function AchievementSystem({
         // Get progress data from GoalProgressTracker
         let progressData;
         try {
-          const goalTracker = GoalProgressTracker.getInstance();
-          progressData = await goalTracker.fetchSystematicProgress(userId);
+          progressData = await goalProgressTracker.fetchSystematicProgress(userId);
         } catch (error) {
           console.warn('Could not fetch systematic progress:', error);
           progressData = {
