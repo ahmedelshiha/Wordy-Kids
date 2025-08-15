@@ -15,7 +15,10 @@ import {
   X,
   ChevronRight,
 } from "lucide-react";
-import { useContextualHelp, type ContextualPage } from "@/hooks/use-contextual-help";
+import {
+  useContextualHelp,
+  type ContextualPage,
+} from "@/hooks/use-contextual-help";
 
 interface HelpOption {
   id: string;
@@ -164,7 +167,6 @@ export function FloatingHelpMenu({
         >
           <Heart className="w-5 md:w-6 h-5 md:h-6 text-white fill-current animate-pulse" />
         </motion.div>
-
       </div>
 
       {/* Help Menu Overlay */}

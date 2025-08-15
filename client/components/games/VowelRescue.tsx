@@ -653,7 +653,9 @@ export function VowelRescue({
                         className="w-full h-full object-contain rounded-2xl"
                       />
                     ) : (
-                      <span className="text-6xl sm:text-7xl md:text-9xl lg:text-[10rem] animate-gentle-bounce">🎯</span>
+                      <span className="text-6xl sm:text-7xl md:text-9xl lg:text-[10rem] animate-gentle-bounce">
+                        🎯
+                      </span>
                     )}
                   </div>
 
@@ -882,7 +884,7 @@ export function VowelRescue({
             // Show help via audio service announcement
             if ("speechSynthesis" in window) {
               const utterance = new SpeechSynthesisUtterance(
-                `${helpContent.title}. ${helpContent.message.replace(/\n/g, '. ').replace(/•/g, '')}`
+                `${helpContent.title}. ${helpContent.message.replace(/\n/g, ". ").replace(/•/g, "")}`,
               );
               utterance.rate = 0.8;
               utterance.pitch = 1.1;

@@ -285,7 +285,7 @@ export function GameHub({
           // Use speech synthesis for game hub help
           if ("speechSynthesis" in window) {
             const utterance = new SpeechSynthesisUtterance(
-              `${helpContent.title}. ${helpContent.message.replace(/\n/g, '. ').replace(/•/g, '')}`
+              `${helpContent.title}. ${helpContent.message.replace(/\n/g, ". ").replace(/•/g, "")}`,
             );
             utterance.rate = 0.8;
             utterance.pitch = 1.1;
