@@ -737,6 +737,58 @@ export class AudioService {
     });
   }
 
+  // Comprehensive diagnostic method for troubleshooting
+  public diagnostics(): void {
+    console.log("=== Speech Synthesis Diagnostics ===");
+
+    // Browser support
+    console.log("Browser Support:");
+    console.log("- speechSynthesis:", 'speechSynthesis' in window);
+    console.log("- SpeechSynthesisUtterance:", 'SpeechSynthesisUtterance' in window);
+    console.log("- isSupported:", this.isSupported);
+    console.log("- userAgent:", navigator.userAgent);
+
+    // Service state
+    console.log("\nService State:");
+    console.log("- isEnabled:", this.isEnabled);
+    console.log("- voicesLoaded:", this.voicesLoaded);
+    console.log("- selectedVoiceType:", this.selectedVoiceType);
+    console.log("- voices count:", this.voices.length);
+
+    // Voice availability by type
+    console.log("\nVoice Availability:");
+    ["woman", "man", "kid"].forEach((type) => {
+      const voice = this.getVoiceByType(type as VoiceType);
+      console.log(`- ${type}:`, voice ? `${voice.name} (${voice.lang})` : "❌ None found");
+    });
+
+    // Speech synthesis state
+    if (this.speechSynthesis) {
+      console.log("\nSpeech Synthesis State:");
+      console.log("- speaking:", this.speechSynthesis.speaking);
+      console.log("- pending:", this.speechSynthesis.pending);
+      console.log("- paused:", this.speechSynthesis.paused);
+    }
+
+    // Test pronunciation
+    console.log("\n=== Running Test ===");
+    this.testPronunciation();
+  }
+
+  private testPronunciation(): void {
+    if (!this.isSupported) {
+      console.log("❌ Cannot test: Speech synthesis not supported");
+      return;
+    }
+
+    console.log("🔊 Testing pronunciation with 'hello'...");
+    this.pronounceWord("hello", {
+      onStart: () => console.log("✅ Test: Speech started successfully"),
+      onEnd: () => console.log("✅ Test: Speech completed successfully"),
+      onError: () => console.log("❌ Test: Speech failed")
+    });
+  }
+
   // Get detailed voice information for settings panel
   public getVoiceInfo(voiceType: VoiceType): {
     name: string;
