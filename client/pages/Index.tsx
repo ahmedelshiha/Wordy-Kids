@@ -3217,23 +3217,54 @@ export default function Index({ initialProfile }: IndexProps) {
             }
           />
 
-          {/* Mobile-Optimized Floating Helper */}
-          <div className="fixed bottom-24 sm:bottom-20 lg:bottom-6 right-3 sm:right-4 md:right-6 z-40">
-            <div
-              className="bg-gradient-to-r from-educational-purple to-educational-pink p-3 md:p-4 rounded-full shadow-2xl cursor-pointer transition-all duration-300 min-w-[48px] min-h-[48px] flex items-center justify-center active:scale-95"
-              onClick={() =>
-                setFeedback({
-                  type: "encouragement",
-                  title: "Need Help? 🤗",
-                  message:
-                    "You're doing amazing! Keep learning and exploring new words!",
-                  onContinue: () => setFeedback(null),
-                })
-              }
-            >
-              <Heart className="w-5 md:w-6 h-5 md:h-6 text-white fill-current animate-pulse" />
-            </div>
-          </div>
+          {/* Enhanced Floating Help Menu */}
+          <FloatingHelpMenu
+            currentPage="home"
+            onTutorial={() =>
+              setFeedback({
+                type: "info",
+                title: "How to Play 📚",
+                message:
+                  "Welcome! Tap games to play, browse the word library, and track your progress. Use voice commands by saying words out loud!",
+                onContinue: () => setFeedback(null),
+              })
+            }
+            onGameHelp={() =>
+              setFeedback({
+                type: "info",
+                title: "Game Tips 🎮",
+                message:
+                  "• Vowel Rescue: Listen and fill in missing vowels\n• Word Garden: Grow words by spelling correctly\n• Flashcard Duel: Quick vocabulary challenges\n• Adventure Mode: Complete learning quests",
+                onContinue: () => setFeedback(null),
+              })
+            }
+            onSettings={() => {
+              setActivePanel("settings");
+              setShowMobileMoreMenu(false);
+            }}
+            onContact={() =>
+              setFeedback({
+                type: "info",
+                title: "Get Support 💬",
+                message:
+                  "Need help? Check the settings for volume controls, or ask a grown-up to help you with the games!",
+                onContinue: () => setFeedback(null),
+              })
+            }
+            onAccessibility={() =>
+              setFeedback({
+                type: "info",
+                title: "Accessibility Features 🔊",
+                message:
+                  "• Voice pronunciation for all words\n• Large touch targets\n• High contrast mode\n• Adjustable volume and sounds\n• Screen reader support",
+                onContinue: () => setFeedback(null),
+              })
+            }
+            onAchievements={() => {
+              setActivePanel("progress");
+              setShowMobileMoreMenu(false);
+            }}
+          />
 
           {/* Enhanced Achievement Popup */}
           {achievementPopup.length > 0 && (
