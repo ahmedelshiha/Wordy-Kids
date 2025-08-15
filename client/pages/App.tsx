@@ -9,9 +9,9 @@ import Index from "./Index";
 export default function App() {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
+  const { user, login, isAuthenticated } = useAuth();
   const mode = searchParams.get("mode");
 
-  const [isLoggedIn, setIsLoggedIn] = useState(true); // Auto-login enabled
   const [currentProfile, setCurrentProfile] = useState<any>(null);
   const [showProfileCreation, setShowProfileCreation] = useState(false);
   const [showLevelSelection, setShowLevelSelection] = useState(false);
