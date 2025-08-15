@@ -23,7 +23,6 @@ interface MobileBottomNavProps {
   onSettingsClick: () => void;
   onParentClick: () => void;
   onAdminClick: () => void;
-  onSignOut: () => void;
   showMoreMenu: boolean;
   onMoreToggle: () => void;
   achievementCount?: number;
