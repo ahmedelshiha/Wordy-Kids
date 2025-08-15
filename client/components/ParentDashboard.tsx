@@ -1279,7 +1279,35 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
         </Card>
       ) : (
         <>
-          {/* Comprehensive Goals Overview */}
+          {/* Comprehensive Goals Notice */}
+          <Card className="bg-gradient-to-r from-educational-blue/10 to-educational-purple/10 border-educational-blue/20 mb-6">
+            <CardContent className="p-4">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                  <div className="text-2xl">🎯</div>
+                  <div>
+                    <h3 className="font-semibold text-educational-blue">
+                      Comprehensive Learning Goals Available!
+                    </h3>
+                    <p className="text-sm text-slate-600">
+                      Manage detailed daily/weekly/monthly goals with streaks, categories, and rewards
+                    </p>
+                  </div>
+                </div>
+                {selectedChild && (
+                  <Button
+                    onClick={() => handleOpenLearningGoals(selectedChild)}
+                    className="bg-educational-blue hover:bg-educational-blue/90"
+                  >
+                    <Target className="w-4 h-4 mr-2" />
+                    Manage {selectedChild.name}'s Goals
+                  </Button>
+                )}
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* Goals Overview */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
             <Card>
               <CardContent className="p-4 text-center">
@@ -1288,7 +1316,7 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
                     total + (child.learningGoals?.filter(g => g.isActive).length || 0), 0
                   )}
                 </div>
-                <p className="text-sm text-slate-600">Active Learning Goals</p>
+                <p className="text-sm text-slate-600">Learning Goals</p>
               </CardContent>
             </Card>
             <Card>
@@ -1298,7 +1326,7 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
                     total + (child.learningGoals?.filter(g => g.current >= g.target).length || 0), 0
                   )}
                 </div>
-                <p className="text-sm text-slate-600">Completed Goals</p>
+                <p className="text-sm text-slate-600">Completed</p>
               </CardContent>
             </Card>
             <Card>
@@ -1308,7 +1336,7 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
                     total + (child.learningGoals?.reduce((sum, g) => sum + g.streak, 0) || 0), 0
                   )}
                 </div>
-                <p className="text-sm text-slate-600">Total Streaks</p>
+                <p className="text-sm text-slate-600">Streaks</p>
               </CardContent>
             </Card>
             <Card>
