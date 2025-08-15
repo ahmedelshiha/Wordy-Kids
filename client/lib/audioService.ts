@@ -261,54 +261,106 @@ export class AudioService {
       onError?: () => void;
     } = {},
   ): void {
-    if (!this.isEnabled) return;
+    if (!this.isEnabled || !word?.trim()) return;
 
-    // Get voice-type specific defaults
-    const voiceDefaults = this.getVoiceDefaults(this.selectedVoiceType);
-
-    const {
-      rate = voiceDefaults.rate,
-      pitch = voiceDefaults.pitch,
-      volume = 1.0,
-      onStart,
-      onEnd,
-      onError,
-    } = options;
-
-    // Cancel any ongoing speech
-    this.speechSynthesis.cancel();
-
-    const utterance = new SpeechSynthesisUtterance(word);
-
-    // Set voice properties
-    utterance.rate = rate;
-    utterance.pitch = pitch;
-    utterance.volume = volume;
-
-    // Use child-friendly voice if available
-    const voice = this.getChildFriendlyVoice();
-    if (voice) {
-      utterance.voice = voice;
+    // Check if speech synthesis is available
+    if (!this.speechSynthesis) {
+      console.warn("Speech synthesis not available");
+      options.onError?.();
+      return;
     }
 
-    // Set event handlers
-    utterance.onstart = () => {
-      console.log(`Starting pronunciation: ${word}`);
-      onStart?.();
-    };
+    try {
+      // Get voice-type specific defaults
+      const voiceDefaults = this.getVoiceDefaults(this.selectedVoiceType);
 
-    utterance.onend = () => {
-      console.log(`Finished pronunciation: ${word}`);
-      onEnd?.();
-    };
+      // Validate and clamp parameters to safe ranges
+      const rate = Math.max(0.1, Math.min(10, options.rate ?? voiceDefaults.rate));
+      const pitch = Math.max(0, Math.min(2, options.pitch ?? voiceDefaults.pitch));
+      const volume = Math.max(0, Math.min(1, options.volume ?? 1.0));
 
-    utterance.onerror = (event) => {
-      console.error("Speech synthesis error:", event);
-      onError?.();
-    };
+      const { onStart, onEnd, onError } = options;
 
-    // Speak the word
-    this.speechSynthesis.speak(utterance);
+      // Cancel any ongoing speech safely
+      try {
+        this.speechSynthesis.cancel();
+      } catch (cancelError) {
+        console.warn("Error canceling previous speech:", cancelError);
+      }
+
+      // Ensure voices are loaded
+      if (this.voices.length === 0) {
+        this.loadVoices();
+      }
+
+      const utterance = new SpeechSynthesisUtterance(word.trim());
+
+      // Set voice properties with validation
+      utterance.rate = rate;
+      utterance.pitch = pitch;
+      utterance.volume = volume;
+
+      // Use child-friendly voice if available
+      const voice = this.getChildFriendlyVoice();
+      if (voice) {
+        utterance.voice = voice;
+      }
+
+      // Set event handlers with error protection
+      utterance.onstart = () => {
+        console.log(`Starting pronunciation: ${word}`);
+        try {
+          onStart?.();
+        } catch (error) {
+          console.error("Error in onStart callback:", error);
+        }
+      };
+
+      utterance.onend = () => {
+        console.log(`Finished pronunciation: ${word}`);
+        try {
+          onEnd?.();
+        } catch (error) {
+          console.error("Error in onEnd callback:", error);
+        }
+      };
+
+      utterance.onerror = (event) => {
+        console.error("Speech synthesis error:", event);
+        console.error("Error details:", {
+          error: event.error,
+          message: event.message,
+          word: word,
+          voice: voice?.name,
+          rate,
+          pitch,
+          volume
+        });
+        try {
+          onError?.();
+        } catch (error) {
+          console.error("Error in onError callback:", error);
+        }
+      };
+
+      // Additional error handling for browser-specific issues
+      utterance.onboundary = (event) => {
+        // This can help detect if speech is actually working
+        console.log(`Speech boundary event: ${event.name} at ${event.charIndex}`);
+      };
+
+      // Speak the word with additional error handling
+      try {
+        this.speechSynthesis.speak(utterance);
+      } catch (speakError) {
+        console.error("Error calling speak:", speakError);
+        onError?.();
+      }
+
+    } catch (error) {
+      console.error("Error in pronounceWord:", error);
+      options.onError?.();
+    }
   }
 
   public pronounceDefinition(
