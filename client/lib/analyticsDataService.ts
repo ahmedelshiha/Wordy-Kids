@@ -807,6 +807,62 @@ export class AnalyticsDataService {
     this.cache.clear();
     this.lastCacheUpdate = 0;
   }
+
+  /**
+   * Enable real-time monitoring of progress events
+   * Automatically invalidates cache when progress data changes
+   */
+  enableRealTimeMonitoring(): void {
+    const handleProgressEvent = () => {
+      this.refreshData();
+    };
+
+    const handleStorageEvent = (event: StorageEvent) => {
+      if (event.key && (
+        event.key.includes('daily_progress_') ||
+        event.key.includes('weekly_progress_') ||
+        event.key.includes('monthly_progress_') ||
+        event.key.includes('streak_data_') ||
+        event.key.includes('categoryProgress') ||
+        event.key.includes('parentDashboardChildren') ||
+        event.key.includes('systematic_progress_')
+      )) {
+        this.refreshData();
+      }
+    };
+
+    // Listen for progress-related events
+    window.addEventListener('goalCompleted', handleProgressEvent);
+    window.addEventListener('wordDatabaseUpdate', handleProgressEvent);
+    window.addEventListener('storage', handleStorageEvent);
+  }
+
+  /**
+   * Get real-time status information
+   */
+  getRealTimeStatus(): {
+    isMonitoring: boolean;
+    lastUpdate: number;
+    cacheSize: number;
+    dataFreshness: 'fresh' | 'stale' | 'expired';
+  } {
+    const now = Date.now();
+    const timeSinceUpdate = now - this.lastCacheUpdate;
+
+    let dataFreshness: 'fresh' | 'stale' | 'expired' = 'fresh';
+    if (timeSinceUpdate > this.CACHE_DURATION) {
+      dataFreshness = 'expired';
+    } else if (timeSinceUpdate > this.CACHE_DURATION / 2) {
+      dataFreshness = 'stale';
+    }
+
+    return {
+      isMonitoring: true,
+      lastUpdate: this.lastCacheUpdate,
+      cacheSize: this.cache.size,
+      dataFreshness
+    };
+  }
 }
 
 export const analyticsDataService = AnalyticsDataService.getInstance();
