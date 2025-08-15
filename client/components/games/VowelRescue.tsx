@@ -522,7 +522,7 @@ export function VowelRescue({
               <div className="flex items-center gap-1 bg-educational-orange/10 px-1.5 sm:px-2 py-1 rounded-full">
                 <Star className="w-3 h-3 text-educational-orange" />
                 <span className="font-bold text-educational-orange text-xs sm:text-sm">
-                  {score}/{questions.length * 10}
+                  {score}/{gameQuestions.length * 10}
                 </span>
               </div>
             </div>
