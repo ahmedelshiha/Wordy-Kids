@@ -2477,10 +2477,7 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
                                 className="text-xs px-2 py-1 h-auto"
                                 onClick={(e) => {
                                   e.stopPropagation();
-                                  console.log(
-                                    "Starting practice for:",
-                                    wordData.word,
-                                  );
+                                  // Start practice session with this word
                                 }}
                               >
                                 Practice
