@@ -719,132 +719,20 @@ export const ParentLearningAnalytics: React.FC<
           )}
         </TabsContent>
 
-        {/* Reports Tab */}
+        {/* Enhanced Reports Tab */}
         <TabsContent value="reports" className="space-y-6">
-          {/* Quick Overview */}
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <Eye className="w-5 h-5 text-blue-600" />
-                Quick Overview
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div className="text-center p-4 bg-blue-50 rounded-lg">
-                  <h4 className="font-semibold text-blue-800 mb-2">
-                    Today's Learning
-                  </h4>
-                  <div className="text-2xl font-bold text-blue-600 mb-1">
-                    <AnimatedCounter value={23} />
-                  </div>
-                  <p className="text-sm text-blue-700">Words practiced today</p>
-                </div>
-                <div className="text-center p-4 bg-green-50 rounded-lg">
-                  <h4 className="font-semibold text-green-800 mb-2">
-                    This Week
-                  </h4>
-                  <div className="text-2xl font-bold text-green-600 mb-1">
-                    <AnimatedCounter value={67} />
-                  </div>
-                  <p className="text-sm text-green-700">
-                    Words learned this week
-                  </p>
-                </div>
-                <div className="text-center p-4 bg-purple-50 rounded-lg">
-                  <h4 className="font-semibold text-purple-800 mb-2">
-                    Monthly Achievements
-                  </h4>
-                  <div className="text-2xl font-bold text-purple-600 mb-1">
-                    <AnimatedCounter value={8} />
-                  </div>
-                  <p className="text-sm text-purple-700">
-                    New achievements unlocked
-                  </p>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Report Generation */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <Card className="hover:shadow-lg transition-shadow cursor-pointer">
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <Calendar className="w-5 h-5 text-blue-600" />
-                  Weekly Summary
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-gray-600 mb-4">
-                  Comprehensive weekly progress report with learning highlights
-                  and areas for improvement.
-                </p>
-                <Button
-                  onClick={() => {
-                    setReportType("weekly");
-                    setShowReportDialog(true);
-                  }}
-                  className="w-full"
-                >
-                  <Download className="w-4 h-4 mr-2" />
-                  Generate Weekly Report
-                </Button>
-              </CardContent>
-            </Card>
-
-            <Card className="hover:shadow-lg transition-shadow cursor-pointer">
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <BarChart3 className="w-5 h-5 text-green-600" />
-                  Monthly Report
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-gray-600 mb-4">
-                  Detailed monthly analysis with learning velocity trends and
-                  achievement tracking.
-                </p>
-                <Button
-                  onClick={() => {
-                    setReportType("monthly");
-                    setShowReportDialog(true);
-                  }}
-                  className="w-full"
-                  variant="outline"
-                >
-                  <Download className="w-4 h-4 mr-2" />
-                  Generate Monthly Report
-                </Button>
-              </CardContent>
-            </Card>
-
-            <Card className="hover:shadow-lg transition-shadow cursor-pointer">
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <FileText className="w-5 h-5 text-purple-600" />
-                  Custom Report
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-gray-600 mb-4">
-                  Create custom reports with specific date ranges and focus
-                  areas tailored to your needs.
-                </p>
-                <Button
-                  onClick={() => {
-                    setReportType("custom");
-                    setShowReportDialog(true);
-                  }}
-                  className="w-full"
-                  variant="outline"
-                >
-                  <Download className="w-4 h-4 mr-2" />
-                  Create Custom Report
-                </Button>
-              </CardContent>
-            </Card>
-          </div>
+          <EnhancedLearningReports
+            students={analyticsData.children.map(child => ({
+              id: child.id,
+              name: child.name,
+              age: child.age,
+              level: child.level
+            }))}
+            onExport={(reportId) => {
+              // Handle report export
+              console.log('Exporting report:', reportId);
+            }}
+          />
         </TabsContent>
       </Tabs>
 
