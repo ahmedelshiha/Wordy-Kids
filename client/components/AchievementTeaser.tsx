@@ -57,11 +57,18 @@ export function AchievementTeaser({ className }: AchievementTeaserProps) {
       setShowTeaser(false);
       setTimeout(() => {
         // Update all messages for variety
+        const isMobile = window.innerWidth < 768;
         setMotivationalMessage(
-          EnhancedAchievementTracker.getMotivationalMessage(),
+          isMobile
+            ? EnhancedAchievementTracker.getShortMotivationalMessage()
+            : EnhancedAchievementTracker.getMotivationalMessage(),
         );
         setSpecialMessage(EnhancedAchievementTracker.getTodaySpecialMessage());
-        setCurrentTease(EnhancedAchievementTracker.getNextAchievementTease());
+        setCurrentTease(
+          isMobile
+            ? EnhancedAchievementTracker.getShortAchievementTease()
+            : EnhancedAchievementTracker.getNextAchievementTease()
+        );
         setMessageIndex((prev) => prev + 1);
         setShowTeaser(true);
       }, 300);
