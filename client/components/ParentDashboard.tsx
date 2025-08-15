@@ -1247,13 +1247,13 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
             </Button>
           )}
           <Button
-            onClick={() => setShowAddGoalDialog(true)}
+            onClick={() => selectedChild && handleOpenLearningGoals(selectedChild)}
             variant="outline"
             className="w-full md:w-auto text-sm md:text-base py-3 md:py-2"
-            disabled={children.length === 0}
+            disabled={children.length === 0 || !selectedChild}
           >
             <Plus className="w-4 h-4 mr-2" />
-            Create Basic Goal
+            Create Learning Goals
           </Button>
         </div>
       </div>
