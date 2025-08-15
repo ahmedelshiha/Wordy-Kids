@@ -90,6 +90,9 @@ export const DynamicAuthButton: React.FC<DynamicAuthButtonProps> = ({
             Create your account to save progress
           </span>
         )}
+        <span className="text-xs text-blue-500 block">
+          Debug: {isGuest ? 'Guest' : 'Authenticated'} - {user?.name || 'No user'}
+        </span>
       </div>
     </button>
   );
