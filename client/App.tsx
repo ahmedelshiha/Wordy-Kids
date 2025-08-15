@@ -39,6 +39,7 @@ const App = () => (
           <NavigationGuard>
             <Routes>
               <Route path="/" element={<LoginForm />} />
+              <Route path="/login" element={<LoginForm />} />
               <Route path="/signup" element={<SignUp />} />
               <Route path="/app" element={<AppPage />} />
               <Route path="/profile" element={<Login />} />
