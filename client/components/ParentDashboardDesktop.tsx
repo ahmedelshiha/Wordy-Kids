@@ -579,20 +579,63 @@ export const ParentDashboardDesktop: React.FC<ParentDashboardDesktopProps> = ({
     }
   }, [isGuest]);
 
+  // Helper function to detect existing learning progress for a child
+  const detectExistingProgress = (childName: string): {
+    hasProgress: boolean;
+    userId?: string;
+    progressData?: any;
+  } => {
+    try {
+      // Check for current user that might match
+      const currentUser = localStorage.getItem("wordAdventureCurrentUser");
+      if (currentUser) {
+        const user = JSON.parse(currentUser);
+        if (user.username && user.username.toLowerCase().includes(childName.toLowerCase())) {
+          return {
+            hasProgress: true,
+            userId: user.id,
+            progressData: user,
+          };
+        }
+      }
+
+      // Check for progress data by scanning localStorage keys
+      const keys = Object.keys(localStorage);
+      for (const key of keys) {
+        if (key.startsWith('daily_progress_') || key.startsWith('weekly_progress_')) {
+          return {
+            hasProgress: true,
+            userId: key.split('_')[2], // Extract user ID from key
+          };
+        }
+      }
+    } catch (error) {
+      console.error('Error detecting existing progress:', error);
+    }
+
+    return { hasProgress: false };
+  };
+
   // Handle add child form
   const addChild = useCallback(() => {
     if (newChildData.name.trim()) {
+      // Check for existing progress data
+      const existingProgress = detectExistingProgress(newChildData.name.trim());
+
+      // Use detected user ID or generate new one
+      const childId = existingProgress.userId || Date.now().toString();
+
       const newChild: ChildProfile = {
-        id: Date.now().toString(),
+        id: childId,
         name: newChildData.name.trim(),
         age: newChildData.age,
         avatar: newChildData.avatar,
-        level: 1,
-        totalPoints: 0,
-        wordsLearned: 0,
-        currentStreak: 0,
+        level: existingProgress.progressData?.level || 1,
+        totalPoints: existingProgress.progressData?.points || 0,
+        wordsLearned: 0, // Will be synced from real data
+        currentStreak: 0, // Will be synced from real data
         weeklyGoal: 10,
-        weeklyProgress: 0,
+        weeklyProgress: 0, // Will be synced from real data
         favoriteCategory: "Animals",
         lastActive: new Date(),
         preferredLearningTime: newChildData.preferredLearningTime,
@@ -627,13 +670,33 @@ export const ParentDashboardDesktop: React.FC<ParentDashboardDesktopProps> = ({
       });
       setShowAddChildDialog(false);
 
-      toast({
-        title: "Child Added",
-        description: `${newChild.name} has been added to your dashboard`,
-        duration: 3000,
-      });
+      // If existing progress was detected, immediately sync it
+      if (existingProgress.hasProgress) {
+        setTimeout(async () => {
+          try {
+            const syncedChildren = await childProgressSync.syncAndSaveAllProgress([...children, newChild]);
+            setChildren(syncedChildren);
+            const stats = childProgressSync.getFamilyStats(syncedChildren);
+            setFamilyStats(stats);
+
+            toast({
+              title: "Progress Connected!",
+              description: `${newChild.name} added and connected to existing learning progress`,
+              duration: 4000,
+            });
+          } catch (error) {
+            console.error('Error syncing new child progress:', error);
+          }
+        }, 500);
+      } else {
+        toast({
+          title: "Child Added",
+          description: `${newChild.name} has been added to your dashboard`,
+          duration: 3000,
+        });
+      }
     }
-  }, [newChildData]);
+  }, [newChildData, children]);
 
   // Handle learning goals
   const handleOpenLearningGoals = useCallback((child: ChildProfile) => {
