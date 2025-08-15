@@ -192,7 +192,7 @@ const sampleChildren: ChildProfile[] = [
     id: "1",
     name: "Alex",
     age: 8,
-    avatar: "👦",
+    avatar: "���",
     level: 3,
     totalPoints: 1250,
     wordsLearned: 47,
@@ -489,29 +489,38 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
   // Registration prompt dialog state
   const [showRegistrationPrompt, setShowRegistrationPrompt] = useState(false);
 
-  // Load children from localStorage or use sample children for demo (not in guest mode)
-  const [children, setChildren] = useState<ChildProfile[]>(() => {
-    try {
-      const savedChildren = localStorage.getItem("parentDashboardChildren");
-      if (savedChildren) {
-        const parsed = JSON.parse(savedChildren);
-        // Convert date strings back to Date objects
-        return parsed.map((child: any) => ({
-          ...child,
-          lastActive: new Date(child.lastActive),
-          recentAchievements:
-            child.recentAchievements?.map((achievement: any) => ({
-              ...achievement,
-              earnedAt: new Date(achievement.earnedAt),
-            })) || [],
-        }));
+  // Load children from localStorage
+  const [children, setChildren] = useState<ChildProfile[]>([]);
+
+  // Initialize children data based on guest mode
+  useEffect(() => {
+    const loadChildren = () => {
+      try {
+        const savedChildren = localStorage.getItem("parentDashboardChildren");
+        if (savedChildren) {
+          const parsed = JSON.parse(savedChildren);
+          // Convert date strings back to Date objects
+          const loadedChildren = parsed.map((child: any) => ({
+            ...child,
+            lastActive: new Date(child.lastActive),
+            recentAchievements:
+              child.recentAchievements?.map((achievement: any) => ({
+                ...achievement,
+                earnedAt: new Date(achievement.earnedAt),
+              })) || [],
+          }));
+          setChildren(loadedChildren);
+          return;
+        }
+      } catch (error) {
+        console.error("Error loading children from localStorage:", error);
       }
-    } catch (error) {
-      console.error("Error loading children from localStorage:", error);
-    }
-    // Return sample children for demo purposes when none exist (except for guest users)
-    return isGuest ? [] : sampleChildren;
-  });
+      // Return sample children for demo purposes when none exist (except for guest users)
+      setChildren(isGuest ? [] : sampleChildren);
+    };
+
+    loadChildren();
+  }, [isGuest]);
 
   const [selectedChild, setSelectedChild] = useState<ChildProfile | null>(
     children[0] || null,
