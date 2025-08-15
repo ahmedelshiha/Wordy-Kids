@@ -1475,6 +1475,19 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
             <TabsContent value="overview">{renderOverview()}</TabsContent>
             <TabsContent value="goals">{renderGoalsManagement()}</TabsContent>
             <TabsContent value="analytics">{renderAnalytics()}</TabsContent>
+            <TabsContent value="advanced">
+              <div className="space-y-6">
+                <div className="text-center">
+                  <h2 className="text-2xl font-bold text-slate-800 mb-4">
+                    Advanced Analytics
+                  </h2>
+                  <p className="text-slate-600 mb-6">
+                    Comprehensive learning insights and system-wide analytics
+                  </p>
+                </div>
+                <AdvancedAnalyticsDashboard />
+              </div>
+            </TabsContent>
           </div>
         </Tabs>
       </div>
