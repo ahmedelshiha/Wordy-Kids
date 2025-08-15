@@ -35,7 +35,6 @@ export function MobileBottomNav({
   onSettingsClick,
   onParentClick,
   onAdminClick,
-  onSignOut,
   showMoreMenu,
   onMoreToggle,
   achievementCount = 0,
