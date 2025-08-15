@@ -237,6 +237,8 @@ export class ChildProgressSync {
     todayActivity: number;
   } {
     try {
+      console.log("Calculating family stats for children:", children.map(c => ({id: c.id, name: c.name})));
+
       let totalWords = 0;
       let longestStreak = 0;
       let activeChildren = 0;
@@ -245,6 +247,7 @@ export class ChildProgressSync {
       const today = new Date().toISOString().split("T")[0];
 
       for (const child of children) {
+        console.log(`Processing child: ${child.name} (ID: ${child.id})`);
         const realProgress = this.getRealProgressData(child.id);
 
         totalWords += realProgress.totalWordsLearned;
@@ -254,14 +257,23 @@ export class ChildProgressSync {
           activeChildren++;
           todayActivity += realProgress.todayProgress;
         }
+
+        console.log(`Child ${child.name} contributed:`, {
+          words: realProgress.totalWordsLearned,
+          streak: realProgress.currentStreak,
+          todayWords: realProgress.todayProgress
+        });
       }
 
-      return {
+      const result = {
         totalWordsLearned: totalWords,
         longestStreak,
         activeChildren,
         todayActivity,
       };
+
+      console.log("Final family stats:", result);
+      return result;
     } catch (error) {
       console.error("Error calculating family stats:", error);
       return {
