@@ -1527,3 +1527,353 @@
     font-size: 11px;
   }
 }
+
+/* Enhanced word card mobile optimizations */
+.scale-98 {
+  transform: scale(0.98);
+}
+
+.active\:scale-98:active {
+  transform: scale(0.98);
+}
+
+.hover\:scale-\[1\.02\]:hover {
+  transform: scale(1.02);
+}
+
+/* Enhanced rating button styles for word cards */
+.rating-button-enhanced {
+  transition: all 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  position: relative;
+  overflow: hidden;
+  backdrop-filter: blur(8px);
+}
+
+.rating-button-enhanced:active {
+  transform: scale(0.95);
+}
+
+.rating-button-enhanced::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  transition:
+    width 0.3s ease-out,
+    height 0.3s ease-out;
+  z-index: 0;
+}
+
+.rating-button-enhanced:active::before {
+  width: 150px;
+  height: 150px;
+}
+
+.rating-button-enhanced > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* Word card flip enhancements */
+.word-card-enhanced {
+  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.word-card-enhanced:active {
+  transform: scale(0.98);
+}
+
+/* Flip button specific styles */
+.flip-button-back {
+  transition: all 0.2s ease-out;
+  backdrop-filter: blur(4px);
+}
+
+.flip-button-back:hover {
+  transform: scale(1.1);
+  background: rgba(255, 255, 255, 0.25);
+}
+
+.flip-button-back:active {
+  transform: scale(0.95);
+}
+
+/* Enhanced touch target for word card rating buttons */
+.touch-target-large {
+  min-height: 48px;
+  min-width: 48px;
+  touch-action: manipulation;
+}
+
+/* Kid-friendly rating button animations */
+@keyframes kidRatingBounce {
+  0%,
+  100% {
+    transform: scale(1) translateY(0);
+  }
+  25% {
+    transform: scale(1.05) translateY(-2px);
+  }
+  50% {
+    transform: scale(1.1) translateY(-4px);
+  }
+  75% {
+    transform: scale(1.05) translateY(-2px);
+  }
+}
+
+@keyframes ratingCelebration {
+  0% {
+    transform: scale(1) rotate(0deg);
+    box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.4);
+  }
+  25% {
+    transform: scale(1.2) rotate(5deg);
+    box-shadow: 0 0 0 10px rgba(255, 255, 255, 0.2);
+  }
+  50% {
+    transform: scale(1.1) rotate(-3deg);
+    box-shadow: 0 0 0 20px rgba(255, 255, 255, 0.1);
+  }
+  75% {
+    transform: scale(1.15) rotate(2deg);
+    box-shadow: 0 0 0 15px rgba(255, 255, 255, 0.15);
+  }
+  100% {
+    transform: scale(1) rotate(0deg);
+    box-shadow: 0 0 0 0 rgba(255, 255, 255, 0);
+  }
+}
+
+@keyframes emojiDance {
+  0%,
+  100% {
+    transform: rotate(0deg) scale(1);
+  }
+  25% {
+    transform: rotate(-10deg) scale(1.1);
+  }
+  50% {
+    transform: rotate(10deg) scale(1.2);
+  }
+  75% {
+    transform: rotate(-5deg) scale(1.1);
+  }
+}
+
+@keyframes ratingGlow {
+  0%,
+  100% {
+    box-shadow: 0 0 5px rgba(255, 255, 255, 0.3);
+  }
+  50% {
+    box-shadow:
+      0 0 20px rgba(255, 255, 255, 0.6),
+      0 0 30px rgba(255, 255, 255, 0.4);
+  }
+}
+
+/* Enhanced rating button classes */
+.rating-button-hard {
+  animation: kidRatingBounce 0.6s ease-out;
+}
+
+.rating-button-medium {
+  animation: kidRatingBounce 0.6s ease-out;
+}
+
+.rating-button-easy {
+  animation: ratingCelebration 0.8s ease-out;
+}
+
+.rating-emoji-dance {
+  animation: emojiDance 1s ease-in-out;
+}
+
+.rating-glow {
+  animation: ratingGlow 1.5s ease-in-out infinite;
+}
+
+/* Kid-friendly gradient button effects */
+.rating-button-enhanced:hover {
+  transform: translateY(-2px) scale(1.05);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+}
+
+.rating-button-enhanced:active {
+  transform: translateY(0) scale(0.98);
+}
+
+/* Celebration sparkles for rating */
+.rating-celebration {
+  position: relative;
+  overflow: visible;
+}
+
+.rating-celebration::after {
+  content: "";
+  position: absolute;
+  top: -10px;
+  left: -10px;
+  right: -10px;
+  bottom: -10px;
+  background: radial-gradient(
+    circle,
+    transparent 40%,
+    rgba(255, 255, 255, 0.1) 41%,
+    rgba(255, 255, 255, 0.1) 42%,
+    transparent 43%
+  );
+  animation: ratingSparkle 1s ease-out;
+  pointer-events: none;
+  border-radius: inherit;
+}
+
+@keyframes ratingSparkle {
+  0% {
+    opacity: 0;
+    transform: scale(0.8) rotate(0deg);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.2) rotate(180deg);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1.5) rotate(360deg);
+  }
+}
+
+/* Mobile-specific rating enhancements */
+@media (max-width: 768px) {
+  .rating-button-enhanced {
+    min-height: 48px;
+  }
+
+  .rating-button-enhanced:active {
+    transform: scale(0.95);
+  }
+
+  /* Enhanced word card back mobile optimizations */
+  .word-card-back-mobile {
+    max-height: 100%;
+    overflow: hidden;
+  }
+
+  .word-card-back-content {
+    max-height: calc(100vh - 200px);
+    overflow-y: auto;
+    overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
+    scroll-behavior: smooth;
+  }
+
+  /* Better content spacing on mobile */
+  .mobile-content-spacing {
+    padding: 8px;
+  }
+
+  .mobile-content-spacing > * + * {
+    margin-top: 8px;
+  }
+
+  /* Ensure text doesn't overflow */
+  .mobile-text-wrap {
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    hyphens: auto;
+  }
+
+  /* Rating buttons mobile adjustments */
+  .mobile-rating-compact {
+    padding: 4px 8px;
+    font-size: 12px;
+    line-height: 1.2;
+  }
+
+  /* Hide description text on very small screens */
+  @media (max-width: 320px) {
+    .rating-description {
+      display: none;
+    }
+  }
+}
+
+/* Enhanced scrollbar for word card content */
+.scrollbar-thin {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(156, 163, 175, 0.5) transparent;
+}
+
+.scrollbar-thin::-webkit-scrollbar {
+  width: 4px;
+}
+
+.scrollbar-thin::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb {
+  background: rgba(156, 163, 175, 0.5);
+  border-radius: 2px;
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb:hover {
+  background: rgba(156, 163, 175, 0.7);
+}
+
+/* Word card content container optimizations */
+.word-card-content-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  max-height: 100%;
+  overflow: hidden;
+}
+
+.word-card-scrollable-content {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  min-height: 0;
+}
+
+/* Better text rendering for mobile */
+.mobile-text-optimized {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  word-spacing: normal;
+  letter-spacing: normal;
+}
+
+/* Safe area handling for word cards */
+.word-card-safe-area {
+  padding-bottom: env(safe-area-inset-bottom, 16px);
+}
+
+/* Enhanced mobile touch zones */
+.mobile-touch-zone {
+  min-height: 44px;
+  min-width: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  touch-action: manipulation;
+}
+
+/* Content section spacing */
+.content-section-mobile {
+  margin-bottom: 12px;
+}
+
+.content-section-mobile:last-child {
+  margin-bottom: 0;
+}
