@@ -695,10 +695,10 @@ export const ChildLearningGoalsPanel: React.FC<
 
       {/* Add Goal Dialog */}
       <Dialog open={showAddGoalDialog} onOpenChange={setShowAddGoalDialog}>
-        <DialogContent>
-          <DialogHeader>
-            <DialogTitle>Add Learning Goal</DialogTitle>
-            <DialogDescription>
+        <DialogContent className="max-w-[95vw] md:max-w-lg max-h-[90vh] overflow-y-auto">
+          <DialogHeader className="space-y-1 md:space-y-2">
+            <DialogTitle className="text-base md:text-lg">Add Learning Goal</DialogTitle>
+            <DialogDescription className="text-xs md:text-sm">
               Create a new learning objective for {child.name}
             </DialogDescription>
           </DialogHeader>
