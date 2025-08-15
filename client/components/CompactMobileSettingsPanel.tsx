@@ -83,7 +83,6 @@ export const CompactMobileSettingsPanel: React.FC<
   const [dailyReminders, setDailyReminders] = useState(true);
   const [largeText, setLargeText] = useState(false);
   const [autoPlay, setAutoPlay] = useState(true);
-  const [showGoalsPanel, setShowGoalsPanel] = useState(false);
 
   // Collapsible sections
   const [expandedSections, setExpandedSections] = useState<
