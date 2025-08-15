@@ -572,13 +572,16 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
     }
   }, [children, selectedChild]);
 
-  // Load children's word progress data
+  // Load children's word progress data and sync real progress
   useEffect(() => {
     const loadChildrenWordStats = async () => {
       if (children.length === 0) return;
 
       setLoadingWordStats(true);
       try {
+        // First sync the real progress data
+        await syncChildrenProgress();
+
         const response = await WordProgressAPI.getAllChildrenProgress();
         if (response.success) {
           setChildrenWordStats(response.childrenStats);
