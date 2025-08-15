@@ -29,7 +29,7 @@ interface CompactAchievementToastProps {
 
 const DIFFICULTY_COLORS = {
   bronze: "from-orange-400 to-amber-500",
-  silver: "from-gray-300 to-gray-500", 
+  silver: "from-gray-300 to-gray-500",
   gold: "from-yellow-400 to-yellow-500",
   diamond: "from-blue-400 to-purple-500",
   rainbow: "from-pink-400 via-purple-400 to-blue-400",
@@ -75,16 +75,23 @@ export function CompactAchievementToast({
   };
 
   const DifficultyIcon = DIFFICULTY_ICONS[achievement.difficulty] || Trophy;
-  const difficultyColor = DIFFICULTY_COLORS[achievement.difficulty] || DIFFICULTY_COLORS.bronze;
+  const difficultyColor =
+    DIFFICULTY_COLORS[achievement.difficulty] || DIFFICULTY_COLORS.bronze;
 
   const getDifficultyEmoji = (difficulty: string): string => {
     switch (difficulty) {
-      case "rainbow": return "🌈";
-      case "diamond": return "💎";
-      case "gold": return "🏆";
-      case "silver": return "⭐";
-      case "bronze": return "🎯";
-      default: return "🎯";
+      case "rainbow":
+        return "🌈";
+      case "diamond":
+        return "💎";
+      case "gold":
+        return "🏆";
+      case "silver":
+        return "⭐";
+      case "bronze":
+        return "🎯";
+      default:
+        return "🎯";
     }
   };
 
@@ -153,7 +160,8 @@ export function CompactAchievementToast({
 
                 {/* Compact badge */}
                 <Badge className="bg-white/25 text-white border-0 text-xs px-2 py-0.5 rounded-full mb-2">
-                  {getDifficultyEmoji(achievement.difficulty)} {achievement.difficulty.toUpperCase()}
+                  {getDifficultyEmoji(achievement.difficulty)}{" "}
+                  {achievement.difficulty.toUpperCase()}
                 </Badge>
 
                 {/* Reward preview */}
@@ -165,7 +173,8 @@ export function CompactAchievementToast({
                     className="bg-white/20 rounded-lg p-1.5 mb-2"
                   >
                     <div className="text-xs font-bold text-yellow-200">
-                      🎁 {achievement.reward.emoji || "🎁"} {achievement.reward.item.slice(0, 20)}
+                      🎁 {achievement.reward.emoji || "🎁"}{" "}
+                      {achievement.reward.item.slice(0, 20)}
                       {achievement.reward.item.length > 20 ? "..." : ""}
                     </div>
                     {achievement.reward.value && (
@@ -183,7 +192,10 @@ export function CompactAchievementToast({
                       className="w-full bg-white/20 rounded-full h-1"
                       initial={{ width: "100%" }}
                       animate={{ width: "0%" }}
-                      transition={{ duration: autoCloseDelay / 1000, ease: "linear" }}
+                      transition={{
+                        duration: autoCloseDelay / 1000,
+                        ease: "linear",
+                      }}
                     />
                     <div className="text-xs text-white/60 mt-1">
                       Auto-closing...

@@ -52,7 +52,8 @@ const DIFFICULTY_COLORS = {
   silver: "from-gray-300 to-gray-500",
   gold: "from-yellow-400 to-yellow-500",
   diamond: "from-blue-400 to-purple-500",
-  rainbow: "from-pink-400 via-purple-400 via-blue-400 via-green-400 to-yellow-400",
+  rainbow:
+    "from-pink-400 via-purple-400 via-blue-400 via-green-400 to-yellow-400",
 } as const;
 
 const DIFFICULTY_ICONS = {
@@ -178,32 +179,43 @@ export function CompactAchievementPopup({
     if (achievement.funnyDescription) {
       // Extract the first sentence/phrase before punctuation
       const match = achievement.funnyDescription.match(/^[^!.?]*[!.?]?/);
-      return match ? match[0].trim() : achievement.funnyDescription.slice(0, 50) + "...";
+      return match
+        ? match[0].trim()
+        : achievement.funnyDescription.slice(0, 50) + "...";
     }
-    
+
     // Shorten the regular description
     if (achievement.description.length > 40) {
       return achievement.description.slice(0, 40) + "...";
     }
-    
+
     return achievement.description;
   };
 
   const getDifficultyEmoji = (difficulty: string): string => {
     switch (difficulty) {
-      case "rainbow": return "🌈";
-      case "diamond": return "💎";
-      case "gold": return "🏆";
-      case "silver": return "⭐";
-      case "bronze": return "🎯";
-      default: return "🎯";
+      case "rainbow":
+        return "🌈";
+      case "diamond":
+        return "💎";
+      case "gold":
+        return "🏆";
+      case "silver":
+        return "⭐";
+      case "bronze":
+        return "🎯";
+      default:
+        return "🎯";
     }
   };
 
   if (achievements.length === 0) return null;
 
-  const difficultyColor = DIFFICULTY_COLORS[currentAchievement?.difficulty] || DIFFICULTY_COLORS.bronze;
-  const DifficultyIcon = DIFFICULTY_ICONS[currentAchievement?.difficulty] || Trophy;
+  const difficultyColor =
+    DIFFICULTY_COLORS[currentAchievement?.difficulty] ||
+    DIFFICULTY_COLORS.bronze;
+  const DifficultyIcon =
+    DIFFICULTY_ICONS[currentAchievement?.difficulty] || Trophy;
 
   return (
     <AnimatePresence>
@@ -274,7 +286,8 @@ export function CompactAchievementPopup({
 
                   {/* Minimal Badge */}
                   <Badge className="bg-white/25 text-white border-0 text-xs px-2 py-0.5 rounded-full mb-2">
-                    {getDifficultyEmoji(currentAchievement.difficulty)} {currentAchievement.difficulty.toUpperCase()}
+                    {getDifficultyEmoji(currentAchievement.difficulty)}{" "}
+                    {currentAchievement.difficulty.toUpperCase()}
                   </Badge>
 
                   {/* Compact Reward Display */}
@@ -290,10 +303,9 @@ export function CompactAchievementPopup({
                       </div>
                       <div className="text-sm">
                         {currentAchievement.reward.emoji || "🎁"}{" "}
-                        {currentAchievement.reward.item.length > 15 
+                        {currentAchievement.reward.item.length > 15
                           ? currentAchievement.reward.item.slice(0, 15) + "..."
-                          : currentAchievement.reward.item
-                        }
+                          : currentAchievement.reward.item}
                       </div>
                       {currentAchievement.reward.value && (
                         <div className="text-xs text-white/90">

@@ -30,7 +30,7 @@ export interface AchievementNotificationOptions {
 }
 
 export function useAchievementNotifications(
-  options: AchievementNotificationOptions = {}
+  options: AchievementNotificationOptions = {},
 ) {
   const {
     maxVisible = 1,
@@ -39,60 +39,68 @@ export function useAchievementNotifications(
     showToast = false,
   } = options;
 
-  const [notifications, setNotifications] = useState<AchievementNotification[]>([]);
+  const [notifications, setNotifications] = useState<AchievementNotification[]>(
+    [],
+  );
   const [activePopup, setActivePopup] = useState<Achievement[]>([]);
   const notificationIdRef = useRef(0);
 
   // Add new achievement notification
-  const addAchievementNotification = useCallback((achievement: Achievement) => {
-    const notificationId = `achievement-${notificationIdRef.current++}`;
-    
-    if (showToast) {
-      // Add to toast notifications
-      setNotifications(prev => {
-        const newNotification: AchievementNotification = {
-          id: notificationId,
-          achievement,
-          timestamp: Date.now(),
-        };
-        
-        // Limit the number of visible notifications
-        const updated = [...prev, newNotification];
-        return updated.slice(-maxVisible);
-      });
+  const addAchievementNotification = useCallback(
+    (achievement: Achievement) => {
+      const notificationId = `achievement-${notificationIdRef.current++}`;
 
-      // Auto-remove toast notification
-      setTimeout(() => {
-        removeNotification(notificationId);
-      }, autoCloseDelay);
-    } else {
-      // Add to popup system
-      setActivePopup(prev => {
-        const updated = [...prev, achievement];
-        return updated.slice(-maxVisible);
-      });
-    }
-  }, [showToast, maxVisible, autoCloseDelay]);
+      if (showToast) {
+        // Add to toast notifications
+        setNotifications((prev) => {
+          const newNotification: AchievementNotification = {
+            id: notificationId,
+            achievement,
+            timestamp: Date.now(),
+          };
+
+          // Limit the number of visible notifications
+          const updated = [...prev, newNotification];
+          return updated.slice(-maxVisible);
+        });
+
+        // Auto-remove toast notification
+        setTimeout(() => {
+          removeNotification(notificationId);
+        }, autoCloseDelay);
+      } else {
+        // Add to popup system
+        setActivePopup((prev) => {
+          const updated = [...prev, achievement];
+          return updated.slice(-maxVisible);
+        });
+      }
+    },
+    [showToast, maxVisible, autoCloseDelay],
+  );
 
   // Add multiple achievements at once
-  const addMultipleAchievements = useCallback((achievements: Achievement[]) => {
-    if (showToast) {
-      // For toasts, show them one by one with delays
-      achievements.forEach((achievement, index) => {
-        setTimeout(() => {
-          addAchievementNotification(achievement);
-        }, index * 500); // 500ms delay between toasts
-      });
-    } else {
-      // For popups, show all at once
-      setActivePopup(prev => [...prev, ...achievements]);
-    }
-  }, [showToast, addAchievementNotification]);
+  const addMultipleAchievements = useCallback(
+    (achievements: Achievement[]) => {
+      if (showToast) {
+        // For toasts, show them one by one with delays
+        achievements.forEach((achievement, index) => {
+          setTimeout(() => {
+            addAchievementNotification(achievement);
+          }, index * 500); // 500ms delay between toasts
+        });
+      } else {
+        // For popups, show all at once
+        setActivePopup((prev) => [...prev, ...achievements]);
+      }
+    },
+    [showToast, addAchievementNotification],
+  );
 
   // Remove specific notification
   const removeNotification = useCallback((notificationId: string) => {
-    setNotifications(prev => 
-      prev.filter(notification => notification.id !== notificationId)
+    setNotifications((prev) =>
+      prev.filter((notification) => notification.id !== notificationId),
     );
   }, []);
 
@@ -109,7 +117,7 @@ export function useAchievementNotifications(
 
   // Remove achievement from popup by index
   const removePopupAchievement = useCallback((index: number) => {
-    setActivePopup(prev => prev.filter((_, i) => i !== index));
+    setActivePopup((prev) => prev.filter((_, i) => i !== index));
   }, []);
 
   // Get the next achievement in popup queue
@@ -118,7 +126,8 @@ export function useAchievementNotifications(
   }, [activePopup]);
 
   // Check if there are any active notifications
-  const hasActiveNotifications = notifications.length > 0 || activePopup.length > 0;
+  const hasActiveNotifications =
+    notifications.length > 0 || activePopup.length > 0;
 
   // Get all active notifications for rendering
   const getActiveNotifications = useCallback(() => {
@@ -134,7 +143,7 @@ export function useAchievementNotifications(
     notifications,
     activePopup,
     hasActiveNotifications,
-    
+
     // Actions
     addAchievementNotification,
     addMultipleAchievements,
@@ -144,7 +153,7 @@ export function useAchievementNotifications(
     removePopupAchievement,
     getNextPopupAchievement,
     getActiveNotifications,
-    
+
     // Configuration
     options: {
       maxVisible,
@@ -161,7 +170,11 @@ export function getOptimalNotificationType(context: {
   isInGame?: boolean;
   userPreference?: "popup" | "toast" | "auto";
 }): "popup" | "toast" {
-  const { isMobile = false, isInGame = false, userPreference = "auto" } = context;
+  const {
+    isMobile = false,
+    isInGame = false,
+    userPreference = "auto",
+  } = context;
 
   if (userPreference !== "auto") {
     return userPreference;

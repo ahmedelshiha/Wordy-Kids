@@ -1171,7 +1171,9 @@ export class EnhancedAchievementTracker {
     if (hour >= 12 && hour < 18) selectedMessages = afternoonShort;
     else if (hour >= 18) selectedMessages = eveningShort;
 
-    return selectedMessages[Math.floor(Math.random() * selectedMessages.length)];
+    return selectedMessages[
+      Math.floor(Math.random() * selectedMessages.length)
+    ];
   }
 
   /**
@@ -1360,9 +1362,10 @@ export class EnhancedAchievementTracker {
       (nextAchievement.currentProgress / nextAchievement.requirements) * 100,
     );
 
-    const shortName = nextAchievement.name.length > 15
-      ? nextAchievement.name.slice(0, 15) + "..."
-      : nextAchievement.name;
+    const shortName =
+      nextAchievement.name.length > 15
+        ? nextAchievement.name.slice(0, 15) + "..."
+        : nextAchievement.name;
 
     if (progressPercent >= 90) {
       return `🔥 Almost! ${shortName} ${progressPercent}%`;

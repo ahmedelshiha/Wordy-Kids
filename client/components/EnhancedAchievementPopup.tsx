@@ -342,7 +342,8 @@ export function EnhancedAchievementPopup({
 
   // Get short description for mobile
   const getShortDescription = (achievement: Achievement): string => {
-    const fullDescription = achievement.funnyDescription ||
+    const fullDescription =
+      achievement.funnyDescription ||
       EnhancedAchievementTracker.getKidFriendlyDescription(achievement.id) ||
       achievement.description;
 
@@ -470,7 +471,8 @@ export function EnhancedAchievementPopup({
                           <div className="text-sm font-bold">
                             {currentAchievement.reward.emoji || "🎁"}{" "}
                             {currentAchievement.reward.item.length > 15
-                              ? currentAchievement.reward.item.slice(0, 15) + "..."
+                              ? currentAchievement.reward.item.slice(0, 15) +
+                                "..."
                               : currentAchievement.reward.item}
                           </div>
                           {currentAchievement.reward.type === "sticker" && (

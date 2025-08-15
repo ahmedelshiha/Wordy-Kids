@@ -30,7 +30,7 @@ export function AchievementTeaser({ className }: AchievementTeaserProps) {
       setCurrentTease(
         isMobile
           ? EnhancedAchievementTracker.getShortAchievementTease()
-          : EnhancedAchievementTracker.getNextAchievementTease()
+          : EnhancedAchievementTracker.getNextAchievementTease(),
       );
     };
 
@@ -67,7 +67,7 @@ export function AchievementTeaser({ className }: AchievementTeaserProps) {
         setCurrentTease(
           isMobile
             ? EnhancedAchievementTracker.getShortAchievementTease()
-            : EnhancedAchievementTracker.getNextAchievementTease()
+            : EnhancedAchievementTracker.getNextAchievementTease(),
         );
         setMessageIndex((prev) => prev + 1);
         setShowTeaser(true);
@@ -125,7 +125,7 @@ export function AchievementTeaser({ className }: AchievementTeaserProps) {
       setCurrentTease(
         isMobile
           ? EnhancedAchievementTracker.getShortAchievementTease()
-          : EnhancedAchievementTracker.getNextAchievementTease()
+          : EnhancedAchievementTracker.getNextAchievementTease(),
       );
       setMessageIndex((prev) => prev + 1);
       setShowTeaser(true);

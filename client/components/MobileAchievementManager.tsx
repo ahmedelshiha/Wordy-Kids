@@ -41,7 +41,7 @@ export function MobileAchievementManager({
   context = {},
 }: MobileAchievementManagerProps) {
   const { isMobile = true, isInGame = false, isMinimized = false } = context;
-  
+
   const [activeToasts, setActiveToasts] = useState<Achievement[]>([]);
   const [activePopup, setActivePopup] = useState<Achievement[]>([]);
   const [currentToastIndex, setCurrentToastIndex] = useState(0);
@@ -49,12 +49,12 @@ export function MobileAchievementManager({
   // Determine the best notification type
   const getNotificationType = useCallback(() => {
     if (notificationType !== "auto") return notificationType;
-    
+
     // Use toasts for mobile, in-game, or minimized contexts
     if (isMobile || isInGame || isMinimized) {
       return "toast";
     }
-    
+
     // Use popups for desktop and focused app experiences
     return "popup";
   }, [notificationType, isMobile, isInGame, isMinimized]);
@@ -64,7 +64,7 @@ export function MobileAchievementManager({
     if (achievements.length === 0) return;
 
     const selectedType = getNotificationType();
-    
+
     if (selectedType === "toast") {
       // For toasts, show them one by one
       setActiveToasts(achievements);
@@ -79,7 +79,7 @@ export function MobileAchievementManager({
   const handleToastClose = useCallback(() => {
     if (currentToastIndex < activeToasts.length - 1) {
       // Move to next toast
-      setCurrentToastIndex(prev => prev + 1);
+      setCurrentToastIndex((prev) => prev + 1);
     } else {
       // All toasts shown, close manager
       setActiveToasts([]);
@@ -95,9 +95,12 @@ export function MobileAchievementManager({
   }, [onClose]);
 
   // Handle achievement claim
-  const handleAchievementClaim = useCallback((achievement: Achievement) => {
-    onAchievementClaim?.(achievement);
-  }, [onAchievementClaim]);
+  const handleAchievementClaim = useCallback(
+    (achievement: Achievement) => {
+      onAchievementClaim?.(achievement);
+    },
+    [onAchievementClaim],
+  );
 
   // Get appropriate auto-close delay based on context
   const getAutoCloseDelay = useCallback(() => {
@@ -115,16 +118,16 @@ export function MobileAchievementManager({
   return (
     <>
       {/* Toast Notifications */}
-      {selectedType === "toast" && 
-       activeToasts.length > 0 && 
-       currentToastIndex < activeToasts.length && (
-        <CompactAchievementToast
-          achievement={activeToasts[currentToastIndex]}
-          onClose={handleToastClose}
-          autoClose={true}
-          autoCloseDelay={currentAutoCloseDelay}
-        />
-      )}
+      {selectedType === "toast" &&
+        activeToasts.length > 0 &&
+        currentToastIndex < activeToasts.length && (
+          <CompactAchievementToast
+            achievement={activeToasts[currentToastIndex]}
+            onClose={handleToastClose}
+            autoClose={true}
+            autoCloseDelay={currentAutoCloseDelay}
+          />
+        )}
 
       {/* Popup Notifications */}
       {selectedType === "popup" && activePopup.length > 0 && (
@@ -152,7 +155,7 @@ export function QuickAchievementNotification({
   type = "toast",
 }: QuickAchievementNotificationProps) {
   const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
-  
+
   return (
     <MobileAchievementManager
       achievements={[achievement]}
@@ -171,24 +174,31 @@ export function QuickAchievementNotification({
 // Hook for easier integration
 export function useMobileAchievementManager() {
   const [achievements, setAchievements] = useState<Achievement[]>([]);
-  
-  const showAchievement = useCallback((achievement: Achievement | Achievement[]) => {
-    const achievementArray = Array.isArray(achievement) ? achievement : [achievement];
-    setAchievements(achievementArray);
-  }, []);
-  
+
+  const showAchievement = useCallback(
+    (achievement: Achievement | Achievement[]) => {
+      const achievementArray = Array.isArray(achievement)
+        ? achievement
+        : [achievement];
+      setAchievements(achievementArray);
+    },
+    [],
+  );
+
   const clearAchievements = useCallback(() => {
     setAchievements([]);
   }, []);
-  
+
   const hasActiveAchievements = achievements.length > 0;
-  
+
   return {
     achievements,
     showAchievement,
     clearAchievements,
     hasActiveAchievements,
-    AchievementManager: (props: Omit<MobileAchievementManagerProps, 'achievements' | 'onClose'>) => (
+    AchievementManager: (
+      props: Omit<MobileAchievementManagerProps, "achievements" | "onClose">,
+    ) => (
       <MobileAchievementManager
         achievements={achievements}
         onClose={clearAchievements}
