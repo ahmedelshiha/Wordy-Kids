@@ -391,14 +391,8 @@ const AdvancedAnalyticsDashboard: React.FC = () => {
                     </div>
                   </div>
                   <div className="space-y-1">
-                    <div className="flex justify-between text-xs text-slate-600">
-                      <span>Performance: {region.performance}%</span>
-                      <span>
-                        {Math.round((region.users / 15520) * 100)}% of total
-                        users
-                      </span>
-                    </div>
-                    <Progress value={(region.users / 15520) * 100} />
+                    <Progress value={geographicData.length > 0 ?
+                      (region.users / Math.max(...geographicData.map(r => r.users))) * 100 : 0} />
                   </div>
                 </div>
               </div>
