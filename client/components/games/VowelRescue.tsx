@@ -867,30 +867,39 @@ export function VowelRescue({
 
         {/* Game-Specific Floating Help Menu */}
         <FloatingHelpMenu
-          currentPage="games"
-          onTutorial={() =>
-            setShowFeedback(true) &&
-            setTimeout(() => {
-              // Show tutorial overlay for vowel rescue
-            }, 100)
-          }
-          onGameHelp={() => {
+          currentPage="vowel-rescue"
+          onHelpAction={(helpContent) => {
+            // Create a temporary feedback state for the help content
+            const tempFeedback = {
+              type: "info" as const,
+              title: helpContent.title,
+              message: helpContent.message,
+              onContinue: () => {
+                // Clear the help feedback
+              },
+            };
+
+            // Show help via audio service announcement
+            if ("speechSynthesis" in window) {
+              const utterance = new SpeechSynthesisUtterance(
+                `${helpContent.title}. ${helpContent.message.replace(/\n/g, '. ').replace(/•/g, '')}`
+              );
+              utterance.rate = 0.8;
+              utterance.pitch = 1.1;
+              speechSynthesis.speak(utterance);
+            }
+
+            // Show visual feedback briefly
             setShowFeedback(true);
-            setTimeout(() => setShowFeedback(false), 5000);
+            setTimeout(() => setShowFeedback(false), 6000);
           }}
           onSettings={() => {
-            // Could open a game settings modal
-          }}
-          onContact={() => {
-            setShowFeedback(true);
-            setTimeout(() => setShowFeedback(false), 4000);
-          }}
-          onAccessibility={() => {
-            setShowFeedback(true);
-            setTimeout(() => setShowFeedback(false), 4000);
+            // Could trigger game settings overlay
+            playSoundIfEnabled("click");
           }}
           onAchievements={() => {
-            // Could show progress in this specific game
+            // Could show game-specific achievements
+            playSoundIfEnabled("success");
           }}
         />
       </div>
