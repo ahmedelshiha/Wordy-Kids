@@ -277,56 +277,72 @@ export const ChildLearningGoalsPanel: React.FC<
   return (
     <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-2 md:p-4 z-50">
       <Card className="w-full max-w-2xl max-h-[95vh] md:max-h-[90vh] flex flex-col">
-        <CardHeader className="flex-shrink-0 p-4 md:p-6">
-          <div className="flex flex-col md:flex-row md:items-center justify-between gap-3">
-            <div className="flex items-center gap-3">
-              <div className="text-xl md:text-2xl">{child.avatar}</div>
+        <CardHeader className="flex-shrink-0 p-3 md:p-6 border-b">
+          <div className="flex flex-col space-y-3 md:space-y-0 md:flex-row md:items-center justify-between">
+            <div className="flex items-center gap-2 md:gap-3 min-w-0 flex-1">
+              <div className="text-xl md:text-2xl flex-shrink-0">
+                {child.avatar}
+              </div>
               <div className="flex-1 min-w-0">
-                <CardTitle className="text-base md:text-lg truncate">
-                  {child.name}'s Learning Goals
+                <CardTitle className="text-sm md:text-lg truncate">
+                  {child.name}'s Goals
                 </CardTitle>
-                <p className="text-xs md:text-sm text-muted-foreground">
+                <p className="text-xs text-muted-foreground hidden md:block">
                   Manage learning objectives and preferences
                 </p>
               </div>
             </div>
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 flex-shrink-0">
               {hasUnsavedChanges && (
                 <Button
                   size="sm"
                   onClick={handleSaveChanges}
-                  className="text-xs md:text-sm"
+                  className="text-xs px-2 md:px-3"
                 >
-                  <Save className="w-3 h-3 md:w-4 md:h-4 mr-1 md:mr-2" />
-                  Save
+                  <Save className="w-3 h-3 md:w-4 md:h-4 mr-1" />
+                  <span className="hidden md:inline">Save</span>
                 </Button>
               )}
-              <Button variant="ghost" size="sm" onClick={onClose}>
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={onClose}
+                className="p-1 md:p-2"
+              >
                 <X className="w-4 h-4" />
               </Button>
             </div>
           </div>
         </CardHeader>
 
-        <CardContent className="flex-1 overflow-hidden p-3 md:p-6">
+        <CardContent className="flex-1 overflow-hidden p-2 md:p-6">
           <Tabs
             value={activeTab}
             onValueChange={setActiveTab}
             className="h-full"
           >
-            <TabsList className="grid w-full grid-cols-3 h-9 md:h-10">
-              <TabsTrigger value="goals" className="text-xs md:text-sm">
+            <TabsList className="grid w-full grid-cols-3 h-8 md:h-10 mb-2 md:mb-0">
+              <TabsTrigger
+                value="goals"
+                className="text-xs md:text-sm px-1 md:px-3"
+              >
                 Goals
               </TabsTrigger>
-              <TabsTrigger value="progress" className="text-xs md:text-sm">
+              <TabsTrigger
+                value="progress"
+                className="text-xs md:text-sm px-1 md:px-3"
+              >
                 Progress
               </TabsTrigger>
-              <TabsTrigger value="preferences" className="text-xs md:text-sm">
+              <TabsTrigger
+                value="preferences"
+                className="text-xs md:text-sm px-1 md:px-3"
+              >
                 Settings
               </TabsTrigger>
             </TabsList>
 
-            <ScrollArea className="h-[45vh] md:h-[50vh] mt-3 md:mt-4">
+            <ScrollArea className="h-[50vh] md:h-[55vh] mt-2 md:mt-4">
               <TabsContent value="goals" className="space-y-3 md:space-y-4">
                 <div className="flex flex-col md:flex-row md:items-center justify-between gap-2">
                   <h3 className="font-semibold text-sm md:text-base">
@@ -334,11 +350,14 @@ export const ChildLearningGoalsPanel: React.FC<
                   </h3>
                   <Button
                     size="sm"
-                    onClick={() => setShowAddGoalDialog(true)}
-                    className="w-full md:w-auto"
+                    onClick={() => {
+                      setShowAddGoalDialog(true);
+                      triggerHapticFeedback("light");
+                    }}
+                    className="w-full md:w-auto bg-educational-blue hover:bg-educational-blue/90 text-xs md:text-sm"
                   >
-                    <Plus className="w-3 h-3 md:w-4 md:h-4 mr-2" />
-                    <span className="text-xs md:text-sm">Add Goal</span>
+                    <Plus className="w-3 h-3 md:w-4 md:h-4 mr-1 md:mr-2" />
+                    <span>Add Goal</span>
                   </Button>
                 </div>
 
@@ -362,7 +381,7 @@ export const ChildLearningGoalsPanel: React.FC<
                       return (
                         <Card
                           key={goal.id}
-                          className="border-l-4 border-l-educational-blue"
+                          className="border-l-4 border-l-educational-blue hover:shadow-md transition-all duration-200"
                         >
                           <CardContent className="p-3 md:p-4">
                             <div className="flex flex-col md:flex-row md:items-start justify-between gap-2 md:gap-3 mb-3">
@@ -427,32 +446,34 @@ export const ChildLearningGoalsPanel: React.FC<
                             </div>
 
                             {goal.isActive && (
-                              <div className="flex gap-1 md:gap-2 mt-3">
+                              <div className="flex gap-2 mt-3">
                                 <Button
                                   size="sm"
                                   variant="outline"
-                                  onClick={() =>
+                                  onClick={() => {
                                     handleUpdateGoalProgress(
                                       goal.id,
                                       goal.current - 1,
-                                    )
-                                  }
+                                    );
+                                    triggerHapticFeedback("light");
+                                  }}
                                   disabled={goal.current <= 0}
-                                  className="flex-1 text-xs md:text-sm h-8 md:h-9"
+                                  className="flex-1 text-xs md:text-sm h-9 md:h-10 min-w-[44px] hover:bg-red-50 border-red-200 hover:border-red-300 disabled:opacity-50"
                                 >
                                   -1
                                 </Button>
                                 <Button
                                   size="sm"
                                   variant="outline"
-                                  onClick={() =>
+                                  onClick={() => {
                                     handleUpdateGoalProgress(
                                       goal.id,
                                       goal.current + 1,
-                                    )
-                                  }
+                                    );
+                                    triggerHapticFeedback("medium");
+                                  }}
                                   disabled={goal.current >= goal.target}
-                                  className="flex-1 text-xs md:text-sm h-8 md:h-9"
+                                  className="flex-1 text-xs md:text-sm h-9 md:h-10 min-w-[44px] hover:bg-green-50 border-green-200 hover:border-green-300 disabled:opacity-50"
                                 >
                                   +1
                                 </Button>
@@ -466,14 +487,17 @@ export const ChildLearningGoalsPanel: React.FC<
                 )}
               </TabsContent>
 
-              <TabsContent value="progress" className="space-y-4">
-                <div className="flex items-center justify-between">
-                  <h3 className="font-semibold">Learning Analytics</h3>
+              <TabsContent value="progress" className="space-y-3 md:space-y-4">
+                <div className="flex flex-col md:flex-row md:items-center justify-between gap-2">
+                  <h3 className="font-semibold text-sm md:text-base">
+                    Learning Analytics
+                  </h3>
                   <Button
                     size="sm"
                     variant="outline"
                     onClick={async () => {
                       setIsLoadingProgress(true);
+                      triggerHapticFeedback("light");
                       try {
                         const progress =
                           await goalProgressTracker.fetchSystematicProgress(
@@ -487,14 +511,15 @@ export const ChildLearningGoalsPanel: React.FC<
                       }
                     }}
                     disabled={isLoadingProgress}
+                    className="w-full md:w-auto"
                   >
                     <RefreshCw
                       className={cn(
-                        "w-4 h-4 mr-2",
+                        "w-3 h-3 md:w-4 md:h-4 mr-1 md:mr-2",
                         isLoadingProgress && "animate-spin",
                       )}
                     />
-                    Refresh
+                    <span className="text-xs md:text-sm">Refresh</span>
                   </Button>
                 </div>
 
@@ -507,48 +532,50 @@ export const ChildLearningGoalsPanel: React.FC<
                   </div>
                 ) : (
                   <>
-                    <div className="grid grid-cols-2 gap-4">
+                    <div className="grid grid-cols-2 gap-2 md:gap-4">
                       <Card>
-                        <CardContent className="p-4 text-center">
-                          <div className="text-2xl font-bold text-educational-blue">
+                        <CardContent className="p-3 md:p-4 text-center">
+                          <div className="text-lg md:text-2xl font-bold text-educational-blue">
                             {systematicProgress?.totalWordsLearned ||
                               child.wordsLearned ||
                               0}
                           </div>
-                          <p className="text-sm text-muted-foreground">
+                          <p className="text-xs md:text-sm text-muted-foreground">
                             Total Words
                           </p>
                         </CardContent>
                       </Card>
 
                       <Card>
-                        <CardContent className="p-4 text-center">
-                          <div className="text-2xl font-bold text-educational-orange">
+                        <CardContent className="p-3 md:p-4 text-center">
+                          <div className="text-lg md:text-2xl font-bold text-educational-orange">
                             {systematicProgress?.currentStreak ||
                               child.currentStreak ||
                               0}
                           </div>
-                          <p className="text-sm text-muted-foreground">
+                          <p className="text-xs md:text-sm text-muted-foreground">
                             Day Streak
                           </p>
                         </CardContent>
                       </Card>
 
                       <Card>
-                        <CardContent className="p-4 text-center">
-                          <div className="text-2xl font-bold text-educational-green">
+                        <CardContent className="p-3 md:p-4 text-center">
+                          <div className="text-lg md:text-2xl font-bold text-educational-green">
                             {systematicProgress?.wordsLearnedToday || 0}
                           </div>
-                          <p className="text-sm text-muted-foreground">Today</p>
+                          <p className="text-xs md:text-sm text-muted-foreground">
+                            Today
+                          </p>
                         </CardContent>
                       </Card>
 
                       <Card>
-                        <CardContent className="p-4 text-center">
-                          <div className="text-2xl font-bold text-educational-purple">
+                        <CardContent className="p-3 md:p-4 text-center">
+                          <div className="text-lg md:text-2xl font-bold text-educational-purple">
                             {systematicProgress?.wordsLearnedThisWeek || 0}
                           </div>
-                          <p className="text-sm text-muted-foreground">
+                          <p className="text-xs md:text-sm text-muted-foreground">
                             This Week
                           </p>
                         </CardContent>
@@ -688,24 +715,26 @@ export const ChildLearningGoalsPanel: React.FC<
 
       {/* Add Goal Dialog */}
       <Dialog open={showAddGoalDialog} onOpenChange={setShowAddGoalDialog}>
-        <DialogContent>
-          <DialogHeader>
-            <DialogTitle>Add Learning Goal</DialogTitle>
-            <DialogDescription>
+        <DialogContent className="max-w-[95vw] md:max-w-lg max-h-[90vh] overflow-y-auto">
+          <DialogHeader className="space-y-1 md:space-y-2">
+            <DialogTitle className="text-base md:text-lg">
+              Add Learning Goal
+            </DialogTitle>
+            <DialogDescription className="text-xs md:text-sm">
               Create a new learning objective for {child.name}
             </DialogDescription>
           </DialogHeader>
 
-          <div className="space-y-4">
+          <div className="space-y-3 md:space-y-4">
             <div>
-              <Label>Goal Type</Label>
+              <Label className="text-xs md:text-sm">Goal Type</Label>
               <Select
                 value={newGoal.type}
                 onValueChange={(value: "daily" | "weekly" | "monthly") =>
                   setNewGoal((prev) => ({ ...prev, type: value }))
                 }
               >
-                <SelectTrigger className="mt-2">
+                <SelectTrigger className="mt-1 md:mt-2 h-9 md:h-10">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
@@ -717,7 +746,7 @@ export const ChildLearningGoalsPanel: React.FC<
             </div>
 
             <div>
-              <Label>Target</Label>
+              <Label className="text-xs md:text-sm">Target</Label>
               <Input
                 type="number"
                 value={newGoal.target}
@@ -728,12 +757,12 @@ export const ChildLearningGoalsPanel: React.FC<
                   }))
                 }
                 min="1"
-                className="mt-2"
+                className="mt-1 md:mt-2 h-9 md:h-10"
               />
             </div>
 
             <div>
-              <Label>Description</Label>
+              <Label className="text-xs md:text-sm">Description</Label>
               <Textarea
                 value={newGoal.description}
                 onChange={(e) =>
@@ -743,45 +772,50 @@ export const ChildLearningGoalsPanel: React.FC<
                   }))
                 }
                 placeholder="Describe the learning goal..."
-                className="mt-2"
+                className="mt-1 md:mt-2 min-h-[60px] md:min-h-[80px] text-sm"
               />
             </div>
 
             <div>
-              <Label>Category (Optional)</Label>
+              <Label className="text-xs md:text-sm">Category (Optional)</Label>
               <Input
                 value={newGoal.category}
                 onChange={(e) =>
                   setNewGoal((prev) => ({ ...prev, category: e.target.value }))
                 }
                 placeholder="e.g., Animals, Math, Reading"
-                className="mt-2"
+                className="mt-1 md:mt-2 h-9 md:h-10"
               />
             </div>
 
             <div>
-              <Label>Reward (Optional)</Label>
+              <Label className="text-xs md:text-sm">Reward (Optional)</Label>
               <Input
                 value={newGoal.reward}
                 onChange={(e) =>
                   setNewGoal((prev) => ({ ...prev, reward: e.target.value }))
                 }
                 placeholder="e.g., Extra playtime, Stickers"
-                className="mt-2"
+                className="mt-1 md:mt-2 h-9 md:h-10"
               />
             </div>
           </div>
 
-          <DialogFooter>
+          <DialogFooter className="flex flex-col md:flex-row gap-2 md:gap-0">
             <Button
               variant="outline"
               onClick={() => setShowAddGoalDialog(false)}
+              className="w-full md:w-auto order-2 md:order-1"
             >
               Cancel
             </Button>
             <Button
-              onClick={handleAddGoal}
+              onClick={() => {
+                handleAddGoal();
+                triggerHapticFeedback("medium");
+              }}
               disabled={!newGoal.description.trim()}
+              className="w-full md:w-auto bg-educational-blue hover:bg-educational-blue/90 order-1 md:order-2"
             >
               Add Goal
             </Button>
