@@ -45,8 +45,18 @@ export default function App() {
   }, [mode, currentProfile, isAuthenticated, user]);
 
   const handleLogin = (profile: any) => {
+    // Create user profile for auth context
+    const userProfile = {
+      id: profile.id,
+      name: profile.name,
+      email: profile.email,
+      type: 'child' as const,
+      isGuest: false,
+    };
+
+    // Login using auth context
+    login(userProfile);
     setCurrentProfile(profile);
-    setIsLoggedIn(true);
   };
 
   const handleProfileCreation = (newProfile: any) => {
