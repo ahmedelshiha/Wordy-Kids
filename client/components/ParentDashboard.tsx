@@ -1217,35 +1217,6 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
                     </div>
                   )}
 
-                  {/* Learning Goals Summary - View Only */}
-                  <div className="bg-blue-50 p-3 rounded-lg">
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-2">
-                        <Target className="w-4 h-4 text-educational-blue" />
-                        <span className="font-medium text-sm">
-                          Learning Goals
-                        </span>
-                        <Badge variant="secondary" className="text-xs">
-                          {child.learningGoals?.length || 0}
-                        </Badge>
-                      </div>
-                      <div className="text-xs text-educational-blue font-medium">
-                        View in Goals Tab →
-                      </div>
-                    </div>
-                    {child.learningGoals && child.learningGoals.length > 0 && (
-                      <div className="mt-2 text-xs text-slate-600">
-                        Active:{" "}
-                        {child.learningGoals.filter((g) => g.isActive).length} |{" "}
-                        Completed:{" "}
-                        {
-                          child.learningGoals.filter(
-                            (g) => g.current >= g.target,
-                          ).length
-                        }
-                      </div>
-                    )}
-                  </div>
                 </CardContent>
               </Card>
             );
