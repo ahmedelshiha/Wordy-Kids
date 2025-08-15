@@ -2176,7 +2176,10 @@ export const ParentDashboardDesktop: React.FC<ParentDashboardDesktopProps> = ({
                             <Input
                               placeholder="Enter child's name"
                               value={childName}
-                              onChange={(e) => setChildName(e.target.value)}
+                              onChange={(e) => setChildNames(prev => ({
+                                ...prev,
+                                [progress.userId]: e.target.value
+                              }))}
                               className="text-sm"
                             />
                             <p className="text-xs text-muted-foreground mt-1">
