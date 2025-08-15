@@ -785,8 +785,12 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
 
   // Sync children progress with real learning data
   const syncChildrenProgress = async () => {
-    if (children.length === 0) return;
+    if (children.length === 0) {
+      console.log("No children to sync");
+      return;
+    }
 
+    console.log("Starting sync for children:", children.map(c => ({id: c.id, name: c.name})));
     setIsLoadingProgress(true);
     try {
       console.log("Syncing children progress...");
