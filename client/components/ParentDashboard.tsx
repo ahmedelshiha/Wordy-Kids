@@ -1449,7 +1449,7 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
                   ) : (
                     <CardContent className="p-3 md:p-6">
                       <div className="space-y-3 md:space-y-4">
-                        {childGoals.map((goal) => {
+                        {legacyGoals.map((goal) => {
                           const progressPercentage = Math.min(
                             (goal.currentValue / goal.targetValue) * 100,
                             100,
