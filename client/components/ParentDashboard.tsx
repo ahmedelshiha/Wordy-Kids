@@ -2058,7 +2058,7 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
                     </div>
                     <div className="mt-3 pt-3 border-t flex flex-col md:flex-row justify-between items-center gap-2">
                       <span className="text-xs md:text-sm text-orange-600 font-medium">
-                        🎯{" "}
+                        ��{" "}
                         {childrenWordStats[selectedChild.id]
                           ?.wordsNeedingPractice || 0}{" "}
                         words need focused practice
@@ -4436,6 +4436,19 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
           </DialogFooter>
         </DialogContent>
       </Dialog>
+
+      {/* Child Learning Goals Panel */}
+      {learningGoalsChild && (
+        <ChildLearningGoalsPanel
+          isOpen={showLearningGoalsPanel}
+          onClose={() => {
+            setShowLearningGoalsPanel(false);
+            setLearningGoalsChild(null);
+          }}
+          child={learningGoalsChild}
+          onUpdateChild={handleUpdateChild}
+        />
+      )}
     </div>
   );
 };
