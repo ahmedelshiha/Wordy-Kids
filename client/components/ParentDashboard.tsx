@@ -1217,7 +1217,6 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
                       )}
                     </div>
                   )}
-
                 </CardContent>
               </Card>
             );
@@ -1323,7 +1322,8 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
                       Comprehensive Learning Goals Available!
                     </h3>
                     <p className="text-xs md:text-sm text-slate-600 mt-1">
-                      Manage detailed goals with streaks, categories, and rewards
+                      Manage detailed goals with streaks, categories, and
+                      rewards
                     </p>
                   </div>
                 </div>
@@ -1334,7 +1334,9 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
                     size="sm"
                   >
                     <Target className="w-3 h-3 md:w-4 md:h-4 mr-2" />
-                    <span className="text-xs md:text-sm">Manage {selectedChild.name}'s Goals</span>
+                    <span className="text-xs md:text-sm">
+                      Manage {selectedChild.name}'s Goals
+                    </span>
                   </Button>
                 )}
               </div>
@@ -1354,7 +1356,9 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
                     0,
                   )}
                 </div>
-                <p className="text-xs md:text-sm text-slate-600 leading-tight">Learning Goals</p>
+                <p className="text-xs md:text-sm text-slate-600 leading-tight">
+                  Learning Goals
+                </p>
               </CardContent>
             </Card>
             <Card className="hover:shadow-md transition-shadow">
@@ -1368,7 +1372,9 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
                     0,
                   )}
                 </div>
-                <p className="text-xs md:text-sm text-slate-600 leading-tight">Completed</p>
+                <p className="text-xs md:text-sm text-slate-600 leading-tight">
+                  Completed
+                </p>
               </CardContent>
             </Card>
             <Card className="hover:shadow-md transition-shadow">
@@ -1384,7 +1390,9 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
                     0,
                   )}
                 </div>
-                <p className="text-xs md:text-sm text-slate-600 leading-tight">Streaks</p>
+                <p className="text-xs md:text-sm text-slate-600 leading-tight">
+                  Streaks
+                </p>
               </CardContent>
             </Card>
             <Card className="hover:shadow-md transition-shadow">
@@ -1399,7 +1407,9 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
                     0,
                   )}
                 </div>
-                <p className="text-xs md:text-sm text-slate-600 leading-tight">Legacy Goals</p>
+                <p className="text-xs md:text-sm text-slate-600 leading-tight">
+                  Legacy Goals
+                </p>
               </CardContent>
             </Card>
           </div>
@@ -1421,7 +1431,9 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
                     <div className="text-lg font-bold text-educational-blue">
                       {children.reduce(
                         (total, child) =>
-                          total + (child.learningGoals?.length || 0) + getChildGoals(child.id).length,
+                          total +
+                          (child.learningGoals?.length || 0) +
+                          getChildGoals(child.id).length,
                         0,
                       )}
                     </div>
@@ -1469,15 +1481,20 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
                           </CardTitle>
                           <div className="text-xs md:text-sm text-slate-600 space-y-0.5">
                             <div className="flex items-center gap-1">
-                              <span className="text-educational-blue font-medium">{activeLearningGoals}</span>
+                              <span className="text-educational-blue font-medium">
+                                {activeLearningGoals}
+                              </span>
                               <span>active</span>
                               <span className="text-slate-400">•</span>
-                              <span className="text-educational-green font-medium">{completedLearningGoals}</span>
+                              <span className="text-educational-green font-medium">
+                                {completedLearningGoals}
+                              </span>
                               <span>done</span>
                             </div>
                             {activeLegacyGoals > 0 && (
                               <div className="text-xs text-slate-500">
-                                Legacy: {activeLegacyGoals} active • {completedLegacyGoals} done
+                                Legacy: {activeLegacyGoals} active •{" "}
+                                {completedLegacyGoals} done
                               </div>
                             )}
                           </div>
@@ -1491,7 +1508,8 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
                             <div className="text-center">
                               <div className="text-sm md:text-lg font-bold text-educational-blue">
                                 {Math.round(
-                                  ((completedLegacyGoals + completedLearningGoals) /
+                                  ((completedLegacyGoals +
+                                    completedLearningGoals) /
                                     totalGoals) *
                                     100,
                                 )}
@@ -1520,7 +1538,9 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
                   {totalGoals === 0 ? (
                     <CardContent className="py-6 md:py-8 text-center">
                       <div className="text-2xl md:text-3xl mb-2">📝</div>
-                      <p className="text-slate-600 text-xs md:text-sm mb-3">No goals set yet</p>
+                      <p className="text-slate-600 text-xs md:text-sm mb-3">
+                        No goals set yet
+                      </p>
                       <div className="flex flex-col gap-2">
                         <Button
                           size="sm"
@@ -1531,7 +1551,9 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
                           className="bg-educational-blue w-full"
                         >
                           <Plus className="w-3 h-3 mr-2" />
-                          <span className="text-xs md:text-sm">Create Learning Goals</span>
+                          <span className="text-xs md:text-sm">
+                            Create Learning Goals
+                          </span>
                         </Button>
                         <Button
                           variant="outline"
@@ -1543,7 +1565,9 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
                           className="w-full"
                         >
                           <Target className="w-3 h-3 mr-2" />
-                          <span className="text-xs md:text-sm">Create Basic Goal</span>
+                          <span className="text-xs md:text-sm">
+                            Create Basic Goal
+                          </span>
                         </Button>
                       </div>
                     </CardContent>

@@ -1,7 +1,11 @@
 import { ChildProfile, LearningGoal } from "@/components/ParentDashboard";
 
 export interface ProgressUpdate {
-  type: 'word_learned' | 'session_completed' | 'category_mastered' | 'streak_achieved';
+  type:
+    | "word_learned"
+    | "session_completed"
+    | "category_mastered"
+    | "streak_achieved";
   value: number;
   category?: string;
   childId: string;
@@ -34,7 +38,9 @@ class GoalProgressTracker {
   /**
    * Systematically fetch all progress data for a child
    */
-  async fetchSystematicProgress(childId: string): Promise<SystematicProgressData> {
+  async fetchSystematicProgress(
+    childId: string,
+  ): Promise<SystematicProgressData> {
     try {
       // Check cache first
       const cached = this.progressCache.get(childId);
@@ -50,7 +56,7 @@ class GoalProgressTracker {
         monthlyProgress,
         streakData,
         sessionData,
-        categoryData
+        categoryData,
       ] = await Promise.all([
         this.fetchOverallProgress(childId),
         this.fetchDailyProgress(childId),
@@ -58,7 +64,7 @@ class GoalProgressTracker {
         this.fetchMonthlyProgress(childId),
         this.fetchStreakProgress(childId),
         this.fetchSessionProgress(childId),
-        this.fetchCategoryProgress(childId)
+        this.fetchCategoryProgress(childId),
       ]);
 
       const systematicData: SystematicProgressData = {
@@ -70,18 +76,18 @@ class GoalProgressTracker {
         sessionsToday: sessionData.todaySessions,
         sessionsThisWeek: sessionData.weekSessions,
         categoriesProgress: categoryData,
-        lastUpdated: new Date()
+        lastUpdated: new Date(),
       };
 
       // Cache the result
       this.progressCache.set(childId, systematicData);
-      
+
       // Save to localStorage for persistence
       this.saveProgressToStorage(childId, systematicData);
 
       return systematicData;
     } catch (error) {
-      console.error('Error fetching systematic progress:', error);
+      console.error("Error fetching systematic progress:", error);
       // Fallback to localStorage or default values
       return this.getProgressFromStorage(childId) || this.getDefaultProgress();
     }
@@ -91,9 +97,9 @@ class GoalProgressTracker {
    * Update goal progress based on learning activity
    */
   async updateGoalProgress(
-    childId: string, 
-    goals: LearningGoal[], 
-    progressUpdate: ProgressUpdate
+    childId: string,
+    goals: LearningGoal[],
+    progressUpdate: ProgressUpdate,
   ): Promise<LearningGoal[]> {
     try {
       const currentProgress = await this.fetchSystematicProgress(childId);
@@ -107,21 +113,21 @@ class GoalProgressTracker {
         let incrementValue = 0;
 
         switch (goal.type) {
-          case 'daily':
+          case "daily":
             if (this.isToday(goal.createdAt || new Date())) {
               shouldUpdate = this.shouldUpdateForDaily(goal, progressUpdate);
               incrementValue = this.getIncrementValue(goal, progressUpdate);
             }
             break;
 
-          case 'weekly':
+          case "weekly":
             if (this.isThisWeek(goal.createdAt || new Date())) {
               shouldUpdate = this.shouldUpdateForWeekly(goal, progressUpdate);
               incrementValue = this.getIncrementValue(goal, progressUpdate);
             }
             break;
 
-          case 'monthly':
+          case "monthly":
             if (this.isThisMonth(goal.createdAt || new Date())) {
               shouldUpdate = this.shouldUpdateForMonthly(goal, progressUpdate);
               incrementValue = this.getIncrementValue(goal, progressUpdate);
@@ -135,11 +141,17 @@ class GoalProgressTracker {
             current: Math.min(goal.current + incrementValue, goal.target),
             lastUpdated: new Date(),
             // Update streak if goal completed
-            streak: goal.current + incrementValue >= goal.target ? goal.streak + 1 : goal.streak
+            streak:
+              goal.current + incrementValue >= goal.target
+                ? goal.streak + 1
+                : goal.streak,
           };
 
           // Trigger goal completion celebration if target reached
-          if (updatedGoals[i].current >= goal.target && goal.current < goal.target) {
+          if (
+            updatedGoals[i].current >= goal.target &&
+            goal.current < goal.target
+          ) {
             this.triggerGoalCompletion(goal, childId);
           }
         }
@@ -150,7 +162,7 @@ class GoalProgressTracker {
 
       return updatedGoals;
     } catch (error) {
-      console.error('Error updating goal progress:', error);
+      console.error("Error updating goal progress:", error);
       return goals;
     }
   }
@@ -169,7 +181,7 @@ class GoalProgressTracker {
       wordsLearned: progress.totalWordsLearned,
       sessionsCompleted: progress.sessionsToday,
       currentStreak: progress.currentStreak,
-      weeklyProgress: progress.wordsLearnedThisWeek
+      weeklyProgress: progress.wordsLearnedThisWeek,
     };
   }
 
@@ -181,40 +193,52 @@ class GoalProgressTracker {
 
   private async fetchDailyProgress(childId: string) {
     const todayKey = this.getTodayKey();
-    const dailyData = localStorage.getItem(`daily_progress_${childId}_${todayKey}`);
+    const dailyData = localStorage.getItem(
+      `daily_progress_${childId}_${todayKey}`,
+    );
     return dailyData ? JSON.parse(dailyData) : { words: 0, sessions: 0 };
   }
 
   private async fetchWeeklyProgress(childId: string) {
     const weekKey = this.getWeekKey();
-    const weeklyData = localStorage.getItem(`weekly_progress_${childId}_${weekKey}`);
+    const weeklyData = localStorage.getItem(
+      `weekly_progress_${childId}_${weekKey}`,
+    );
     return weeklyData ? JSON.parse(weeklyData) : { words: 0, sessions: 0 };
   }
 
   private async fetchMonthlyProgress(childId: string) {
     const monthKey = this.getMonthKey();
-    const monthlyData = localStorage.getItem(`monthly_progress_${childId}_${monthKey}`);
+    const monthlyData = localStorage.getItem(
+      `monthly_progress_${childId}_${monthKey}`,
+    );
     return monthlyData ? JSON.parse(monthlyData) : { words: 0, sessions: 0 };
   }
 
   private async fetchStreakProgress(childId: string) {
     const streakData = localStorage.getItem(`streak_data_${childId}`);
-    return streakData ? JSON.parse(streakData) : { currentStreak: 0, lastActivity: null };
+    return streakData
+      ? JSON.parse(streakData)
+      : { currentStreak: 0, lastActivity: null };
   }
 
   private async fetchSessionProgress(childId: string) {
     const todayKey = this.getTodayKey();
     const weekKey = this.getWeekKey();
-    const todaySessions = localStorage.getItem(`sessions_${childId}_${todayKey}`) || '0';
-    const weekSessions = localStorage.getItem(`sessions_${childId}_${weekKey}`) || '0';
-    
+    const todaySessions =
+      localStorage.getItem(`sessions_${childId}_${todayKey}`) || "0";
+    const weekSessions =
+      localStorage.getItem(`sessions_${childId}_${weekKey}`) || "0";
+
     return {
       todaySessions: parseInt(todaySessions),
-      weekSessions: parseInt(weekSessions)
+      weekSessions: parseInt(weekSessions),
     };
   }
 
-  private async fetchCategoryProgress(childId: string): Promise<Record<string, number>> {
+  private async fetchCategoryProgress(
+    childId: string,
+  ): Promise<Record<string, number>> {
     const categoryData = localStorage.getItem(`category_progress_${childId}`);
     return categoryData ? JSON.parse(categoryData) : {};
   }
@@ -224,33 +248,48 @@ class GoalProgressTracker {
     return data ? new Set(JSON.parse(data)) : new Set();
   }
 
-  private shouldUpdateForDaily(goal: LearningGoal, update: ProgressUpdate): boolean {
+  private shouldUpdateForDaily(
+    goal: LearningGoal,
+    update: ProgressUpdate,
+  ): boolean {
     if (goal.category && update.category && goal.category !== update.category) {
       return false;
     }
-    
-    return update.type === 'word_learned' || 
-           (update.type === 'session_completed' && goal.description?.includes('session'));
+
+    return (
+      update.type === "word_learned" ||
+      (update.type === "session_completed" &&
+        goal.description?.includes("session"))
+    );
   }
 
-  private shouldUpdateForWeekly(goal: LearningGoal, update: ProgressUpdate): boolean {
+  private shouldUpdateForWeekly(
+    goal: LearningGoal,
+    update: ProgressUpdate,
+  ): boolean {
     return this.shouldUpdateForDaily(goal, update);
   }
 
-  private shouldUpdateForMonthly(goal: LearningGoal, update: ProgressUpdate): boolean {
+  private shouldUpdateForMonthly(
+    goal: LearningGoal,
+    update: ProgressUpdate,
+  ): boolean {
     return this.shouldUpdateForDaily(goal, update);
   }
 
-  private getIncrementValue(goal: LearningGoal, update: ProgressUpdate): number {
-    if (update.type === 'word_learned') return 1;
-    if (update.type === 'session_completed') return 1;
+  private getIncrementValue(
+    goal: LearningGoal,
+    update: ProgressUpdate,
+  ): number {
+    if (update.type === "word_learned") return 1;
+    if (update.type === "session_completed") return 1;
     return update.value || 0;
   }
 
   private triggerGoalCompletion(goal: LearningGoal, childId: string) {
     // Dispatch custom event for goal completion celebration
-    const event = new CustomEvent('goalCompleted', {
-      detail: { goal, childId }
+    const event = new CustomEvent("goalCompleted", {
+      detail: { goal, childId },
     });
     window.dispatchEvent(event);
   }
@@ -273,11 +312,14 @@ class GoalProgressTracker {
 
   private isThisMonth(date: Date): boolean {
     const today = new Date();
-    return date.getMonth() === today.getMonth() && date.getFullYear() === today.getFullYear();
+    return (
+      date.getMonth() === today.getMonth() &&
+      date.getFullYear() === today.getFullYear()
+    );
   }
 
   private getTodayKey(): string {
-    return new Date().toISOString().split('T')[0];
+    return new Date().toISOString().split("T")[0];
   }
 
   private getWeekKey(): string {
@@ -297,14 +339,19 @@ class GoalProgressTracker {
     d.setHours(0, 0, 0, 0);
     d.setDate(d.getDate() + 4 - (d.getDay() || 7));
     const yearStart = new Date(d.getFullYear(), 0, 1);
-    return Math.ceil((((d.getTime() - yearStart.getTime()) / 86400000) + 1) / 7);
+    return Math.ceil(((d.getTime() - yearStart.getTime()) / 86400000 + 1) / 7);
   }
 
   private saveProgressToStorage(childId: string, data: SystematicProgressData) {
-    localStorage.setItem(`systematic_progress_${childId}`, JSON.stringify(data));
+    localStorage.setItem(
+      `systematic_progress_${childId}`,
+      JSON.stringify(data),
+    );
   }
 
-  private getProgressFromStorage(childId: string): SystematicProgressData | null {
+  private getProgressFromStorage(
+    childId: string,
+  ): SystematicProgressData | null {
     const data = localStorage.getItem(`systematic_progress_${childId}`);
     if (data) {
       const parsed = JSON.parse(data);
@@ -324,7 +371,7 @@ class GoalProgressTracker {
       sessionsToday: 0,
       sessionsThisWeek: 0,
       categoriesProgress: {},
-      lastUpdated: new Date()
+      lastUpdated: new Date(),
     };
   }
 }

@@ -58,7 +58,10 @@ import {
   useMobileDevice,
   triggerHapticFeedback,
 } from "@/hooks/use-mobile-device";
-import { goalProgressTracker, SystematicProgressData } from "@/lib/goalProgressTracker";
+import {
+  goalProgressTracker,
+  SystematicProgressData,
+} from "@/lib/goalProgressTracker";
 
 interface LearningGoal {
   id: string;
@@ -105,12 +108,9 @@ interface ChildLearningGoalsPanelProps {
   onUpdateChild: (updatedChild: ChildProfile) => void;
 }
 
-export const ChildLearningGoalsPanel: React.FC<ChildLearningGoalsPanelProps> = ({
-  isOpen,
-  onClose,
-  child,
-  onUpdateChild,
-}) => {
+export const ChildLearningGoalsPanel: React.FC<
+  ChildLearningGoalsPanelProps
+> = ({ isOpen, onClose, child, onUpdateChild }) => {
   const [goals, setGoals] = useState<LearningGoal[]>(child.learningGoals || []);
   const [preferences, setPreferences] = useState<LearningPreferences>(
     child.learningPreferences || {
@@ -120,13 +120,14 @@ export const ChildLearningGoalsPanel: React.FC<ChildLearningGoalsPanelProps> = (
       focusAreas: [],
       reminderTimes: [],
       motivationStyle: "encouraging",
-    }
+    },
   );
   const [activeTab, setActiveTab] = useState("goals");
   const [showAddGoalDialog, setShowAddGoalDialog] = useState(false);
   const [expandedGoal, setExpandedGoal] = useState<string | null>(null);
   const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false);
-  const [systematicProgress, setSystematicProgress] = useState<SystematicProgressData | null>(null);
+  const [systematicProgress, setSystematicProgress] =
+    useState<SystematicProgressData | null>(null);
   const [isLoadingProgress, setIsLoadingProgress] = useState(false);
   const [newGoal, setNewGoal] = useState({
     type: "daily" as const,
@@ -141,27 +142,30 @@ export const ChildLearningGoalsPanel: React.FC<ChildLearningGoalsPanelProps> = (
   // Update local state when child prop changes
   useEffect(() => {
     setGoals(child.learningGoals || []);
-    setPreferences(child.learningPreferences || {
-      autoAdjustGoals: true,
-      adaptiveDifficulty: true,
-      preferredCategories: [],
-      focusAreas: [],
-      reminderTimes: [],
-      motivationStyle: "encouraging",
-    });
+    setPreferences(
+      child.learningPreferences || {
+        autoAdjustGoals: true,
+        adaptiveDifficulty: true,
+        preferredCategories: [],
+        focusAreas: [],
+        reminderTimes: [],
+        motivationStyle: "encouraging",
+      },
+    );
   }, [child]);
 
   // Fetch systematic progress data when panel opens
   useEffect(() => {
     if (isOpen && child.id) {
       setIsLoadingProgress(true);
-      goalProgressTracker.fetchSystematicProgress(child.id)
-        .then(progress => {
+      goalProgressTracker
+        .fetchSystematicProgress(child.id)
+        .then((progress) => {
           setSystematicProgress(progress);
           setIsLoadingProgress(false);
         })
-        .catch(error => {
-          console.error('Error fetching systematic progress:', error);
+        .catch((error) => {
+          console.error("Error fetching systematic progress:", error);
           setIsLoadingProgress(false);
         });
     }
@@ -174,10 +178,12 @@ export const ChildLearningGoalsPanel: React.FC<ChildLearningGoalsPanelProps> = (
     const interval = setInterval(async () => {
       if (child.id) {
         try {
-          const progress = await goalProgressTracker.fetchSystematicProgress(child.id);
+          const progress = await goalProgressTracker.fetchSystematicProgress(
+            child.id,
+          );
           setSystematicProgress(progress);
         } catch (error) {
-          console.error('Error refreshing progress:', error);
+          console.error("Error refreshing progress:", error);
         }
       }
     }, 30000); // 30 seconds
@@ -212,7 +218,7 @@ export const ChildLearningGoalsPanel: React.FC<ChildLearningGoalsPanelProps> = (
         reward: newGoal.reward || undefined,
       };
 
-      setGoals(prev => [...prev, goal]);
+      setGoals((prev) => [...prev, goal]);
       setHasUnsavedChanges(true);
       setShowAddGoalDialog(false);
       setNewGoal({
@@ -227,25 +233,35 @@ export const ChildLearningGoalsPanel: React.FC<ChildLearningGoalsPanelProps> = (
   };
 
   const handleToggleGoal = (goalId: string) => {
-    setGoals(prev => prev.map(goal => 
-      goal.id === goalId ? { ...goal, isActive: !goal.isActive } : goal
-    ));
+    setGoals((prev) =>
+      prev.map((goal) =>
+        goal.id === goalId ? { ...goal, isActive: !goal.isActive } : goal,
+      ),
+    );
     setHasUnsavedChanges(true);
   };
 
   const handleUpdateGoalProgress = (goalId: string, newCurrent: number) => {
-    setGoals(prev => prev.map(goal => 
-      goal.id === goalId ? { ...goal, current: Math.max(0, newCurrent) } : goal
-    ));
+    setGoals((prev) =>
+      prev.map((goal) =>
+        goal.id === goalId
+          ? { ...goal, current: Math.max(0, newCurrent) }
+          : goal,
+      ),
+    );
     setHasUnsavedChanges(true);
   };
 
   const getGoalIcon = (type: string) => {
     switch (type) {
-      case "daily": return <Target className="w-4 h-4" />;
-      case "weekly": return <Calendar className="w-4 h-4" />;
-      case "monthly": return <Trophy className="w-4 h-4" />;
-      default: return <Target className="w-4 h-4" />;
+      case "daily":
+        return <Target className="w-4 h-4" />;
+      case "weekly":
+        return <Calendar className="w-4 h-4" />;
+      case "monthly":
+        return <Trophy className="w-4 h-4" />;
+      default:
+        return <Target className="w-4 h-4" />;
     }
   };
 
@@ -276,7 +292,11 @@ export const ChildLearningGoalsPanel: React.FC<ChildLearningGoalsPanelProps> = (
             </div>
             <div className="flex items-center gap-2">
               {hasUnsavedChanges && (
-                <Button size="sm" onClick={handleSaveChanges} className="text-xs md:text-sm">
+                <Button
+                  size="sm"
+                  onClick={handleSaveChanges}
+                  className="text-xs md:text-sm"
+                >
                   <Save className="w-3 h-3 md:w-4 md:h-4 mr-1 md:mr-2" />
                   Save
                 </Button>
@@ -289,18 +309,34 @@ export const ChildLearningGoalsPanel: React.FC<ChildLearningGoalsPanelProps> = (
         </CardHeader>
 
         <CardContent className="flex-1 overflow-hidden p-3 md:p-6">
-          <Tabs value={activeTab} onValueChange={setActiveTab} className="h-full">
+          <Tabs
+            value={activeTab}
+            onValueChange={setActiveTab}
+            className="h-full"
+          >
             <TabsList className="grid w-full grid-cols-3 h-9 md:h-10">
-              <TabsTrigger value="goals" className="text-xs md:text-sm">Goals</TabsTrigger>
-              <TabsTrigger value="progress" className="text-xs md:text-sm">Progress</TabsTrigger>
-              <TabsTrigger value="preferences" className="text-xs md:text-sm">Settings</TabsTrigger>
+              <TabsTrigger value="goals" className="text-xs md:text-sm">
+                Goals
+              </TabsTrigger>
+              <TabsTrigger value="progress" className="text-xs md:text-sm">
+                Progress
+              </TabsTrigger>
+              <TabsTrigger value="preferences" className="text-xs md:text-sm">
+                Settings
+              </TabsTrigger>
             </TabsList>
 
             <ScrollArea className="h-[45vh] md:h-[50vh] mt-3 md:mt-4">
               <TabsContent value="goals" className="space-y-3 md:space-y-4">
                 <div className="flex flex-col md:flex-row md:items-center justify-between gap-2">
-                  <h3 className="font-semibold text-sm md:text-base">Active Goals</h3>
-                  <Button size="sm" onClick={() => setShowAddGoalDialog(true)} className="w-full md:w-auto">
+                  <h3 className="font-semibold text-sm md:text-base">
+                    Active Goals
+                  </h3>
+                  <Button
+                    size="sm"
+                    onClick={() => setShowAddGoalDialog(true)}
+                    className="w-full md:w-auto"
+                  >
                     <Plus className="w-3 h-3 md:w-4 md:h-4 mr-2" />
                     <span className="text-xs md:text-sm">Add Goal</span>
                   </Button>
@@ -309,34 +345,56 @@ export const ChildLearningGoalsPanel: React.FC<ChildLearningGoalsPanelProps> = (
                 {goals.length === 0 ? (
                   <div className="text-center py-6 md:py-8 text-muted-foreground">
                     <Target className="w-10 h-10 md:w-12 md:h-12 mx-auto mb-3 opacity-50" />
-                    <p className="text-sm md:text-base">No learning goals set yet</p>
-                    <p className="text-xs md:text-sm">Add your first goal to get started!</p>
+                    <p className="text-sm md:text-base">
+                      No learning goals set yet
+                    </p>
+                    <p className="text-xs md:text-sm">
+                      Add your first goal to get started!
+                    </p>
                   </div>
                 ) : (
                   <div className="space-y-2 md:space-y-3">
                     {goals.map((goal) => {
-                      const progress = Math.min((goal.current / goal.target) * 100, 100);
+                      const progress = Math.min(
+                        (goal.current / goal.target) * 100,
+                        100,
+                      );
                       return (
-                        <Card key={goal.id} className="border-l-4 border-l-educational-blue">
+                        <Card
+                          key={goal.id}
+                          className="border-l-4 border-l-educational-blue"
+                        >
                           <CardContent className="p-3 md:p-4">
                             <div className="flex flex-col md:flex-row md:items-start justify-between gap-2 md:gap-3 mb-3">
                               <div className="flex items-start gap-2 md:gap-3 flex-1">
-                                <div className="mt-0.5">{getGoalIcon(goal.type)}</div>
+                                <div className="mt-0.5">
+                                  {getGoalIcon(goal.type)}
+                                </div>
                                 <div className="flex-1 min-w-0">
-                                  <h4 className="font-medium text-sm md:text-base leading-tight">{goal.description}</h4>
+                                  <h4 className="font-medium text-sm md:text-base leading-tight">
+                                    {goal.description}
+                                  </h4>
                                   <div className="flex flex-wrap items-center gap-1 md:gap-2 mt-1">
-                                    <Badge variant="outline" className="text-xs">
+                                    <Badge
+                                      variant="outline"
+                                      className="text-xs"
+                                    >
                                       {goal.type}
                                     </Badge>
                                     {goal.category && (
-                                      <Badge variant="secondary" className="text-xs">
+                                      <Badge
+                                        variant="secondary"
+                                        className="text-xs"
+                                      >
                                         {goal.category}
                                       </Badge>
                                     )}
                                     {goal.streak > 0 && (
                                       <div className="flex items-center gap-1 text-orange-600">
                                         <Flame className="w-3 h-3" />
-                                        <span className="text-xs font-medium">{goal.streak}</span>
+                                        <span className="text-xs font-medium">
+                                          {goal.streak}
+                                        </span>
                                       </div>
                                     )}
                                   </div>
@@ -344,16 +402,23 @@ export const ChildLearningGoalsPanel: React.FC<ChildLearningGoalsPanelProps> = (
                               </div>
                               <CompactMobileSwitch
                                 checked={goal.isActive}
-                                onCheckedChange={() => handleToggleGoal(goal.id)}
+                                onCheckedChange={() =>
+                                  handleToggleGoal(goal.id)
+                                }
                               />
                             </div>
 
                             <div className="space-y-2">
                               <div className="flex justify-between text-xs md:text-sm">
                                 <span>Progress</span>
-                                <span className="font-medium">{goal.current}/{goal.target}</span>
+                                <span className="font-medium">
+                                  {goal.current}/{goal.target}
+                                </span>
                               </div>
-                              <Progress value={progress} className="h-2 md:h-2" />
+                              <Progress
+                                value={progress}
+                                className="h-2 md:h-2"
+                              />
                               {goal.reward && (
                                 <p className="text-xs text-muted-foreground">
                                   🎁 Reward: {goal.reward}
@@ -366,7 +431,12 @@ export const ChildLearningGoalsPanel: React.FC<ChildLearningGoalsPanelProps> = (
                                 <Button
                                   size="sm"
                                   variant="outline"
-                                  onClick={() => handleUpdateGoalProgress(goal.id, goal.current - 1)}
+                                  onClick={() =>
+                                    handleUpdateGoalProgress(
+                                      goal.id,
+                                      goal.current - 1,
+                                    )
+                                  }
                                   disabled={goal.current <= 0}
                                   className="flex-1 text-xs md:text-sm h-8 md:h-9"
                                 >
@@ -375,7 +445,12 @@ export const ChildLearningGoalsPanel: React.FC<ChildLearningGoalsPanelProps> = (
                                 <Button
                                   size="sm"
                                   variant="outline"
-                                  onClick={() => handleUpdateGoalProgress(goal.id, goal.current + 1)}
+                                  onClick={() =>
+                                    handleUpdateGoalProgress(
+                                      goal.id,
+                                      goal.current + 1,
+                                    )
+                                  }
                                   disabled={goal.current >= goal.target}
                                   className="flex-1 text-xs md:text-sm h-8 md:h-9"
                                 >
@@ -400,17 +475,25 @@ export const ChildLearningGoalsPanel: React.FC<ChildLearningGoalsPanelProps> = (
                     onClick={async () => {
                       setIsLoadingProgress(true);
                       try {
-                        const progress = await goalProgressTracker.fetchSystematicProgress(child.id);
+                        const progress =
+                          await goalProgressTracker.fetchSystematicProgress(
+                            child.id,
+                          );
                         setSystematicProgress(progress);
                       } catch (error) {
-                        console.error('Error refreshing progress:', error);
+                        console.error("Error refreshing progress:", error);
                       } finally {
                         setIsLoadingProgress(false);
                       }
                     }}
                     disabled={isLoadingProgress}
                   >
-                    <RefreshCw className={cn("w-4 h-4 mr-2", isLoadingProgress && "animate-spin")} />
+                    <RefreshCw
+                      className={cn(
+                        "w-4 h-4 mr-2",
+                        isLoadingProgress && "animate-spin",
+                      )}
+                    />
                     Refresh
                   </Button>
                 </div>
@@ -418,7 +501,9 @@ export const ChildLearningGoalsPanel: React.FC<ChildLearningGoalsPanelProps> = (
                 {isLoadingProgress ? (
                   <div className="text-center py-8">
                     <RefreshCw className="w-8 h-8 animate-spin mx-auto mb-2 text-educational-blue" />
-                    <p className="text-sm text-muted-foreground">Loading progress data...</p>
+                    <p className="text-sm text-muted-foreground">
+                      Loading progress data...
+                    </p>
                   </div>
                 ) : (
                   <>
@@ -426,18 +511,26 @@ export const ChildLearningGoalsPanel: React.FC<ChildLearningGoalsPanelProps> = (
                       <Card>
                         <CardContent className="p-4 text-center">
                           <div className="text-2xl font-bold text-educational-blue">
-                            {systematicProgress?.totalWordsLearned || child.wordsLearned || 0}
+                            {systematicProgress?.totalWordsLearned ||
+                              child.wordsLearned ||
+                              0}
                           </div>
-                          <p className="text-sm text-muted-foreground">Total Words</p>
+                          <p className="text-sm text-muted-foreground">
+                            Total Words
+                          </p>
                         </CardContent>
                       </Card>
 
                       <Card>
                         <CardContent className="p-4 text-center">
                           <div className="text-2xl font-bold text-educational-orange">
-                            {systematicProgress?.currentStreak || child.currentStreak || 0}
+                            {systematicProgress?.currentStreak ||
+                              child.currentStreak ||
+                              0}
                           </div>
-                          <p className="text-sm text-muted-foreground">Day Streak</p>
+                          <p className="text-sm text-muted-foreground">
+                            Day Streak
+                          </p>
                         </CardContent>
                       </Card>
 
@@ -455,7 +548,9 @@ export const ChildLearningGoalsPanel: React.FC<ChildLearningGoalsPanelProps> = (
                           <div className="text-2xl font-bold text-educational-purple">
                             {systematicProgress?.wordsLearnedThisWeek || 0}
                           </div>
-                          <p className="text-sm text-muted-foreground">This Week</p>
+                          <p className="text-sm text-muted-foreground">
+                            This Week
+                          </p>
                         </CardContent>
                       </Card>
                     </div>
@@ -468,13 +563,17 @@ export const ChildLearningGoalsPanel: React.FC<ChildLearningGoalsPanelProps> = (
                             <div className="text-lg font-bold text-educational-blue">
                               {systematicProgress?.sessionsToday || 0}
                             </div>
-                            <p className="text-xs text-muted-foreground">Sessions Today</p>
+                            <p className="text-xs text-muted-foreground">
+                              Sessions Today
+                            </p>
                           </div>
                           <div className="text-center">
                             <div className="text-lg font-bold text-educational-purple">
                               {systematicProgress?.sessionsThisWeek || 0}
                             </div>
-                            <p className="text-xs text-muted-foreground">Sessions This Week</p>
+                            <p className="text-xs text-muted-foreground">
+                              Sessions This Week
+                            </p>
                           </div>
                         </div>
                       </CardContent>
@@ -482,10 +581,15 @@ export const ChildLearningGoalsPanel: React.FC<ChildLearningGoalsPanelProps> = (
 
                     <Card>
                       <CardContent className="p-4">
-                        <h4 className="font-medium mb-3">Goal Completion Rate</h4>
+                        <h4 className="font-medium mb-3">
+                          Goal Completion Rate
+                        </h4>
                         <div className="space-y-2">
                           {goals.map((goal) => {
-                            const progress = Math.min((goal.current / goal.target) * 100, 100);
+                            const progress = Math.min(
+                              (goal.current / goal.target) * 100,
+                              100,
+                            );
                             return (
                               <div key={goal.id} className="space-y-1">
                                 <div className="flex justify-between text-sm">
@@ -505,7 +609,7 @@ export const ChildLearningGoalsPanel: React.FC<ChildLearningGoalsPanelProps> = (
 
               <TabsContent value="preferences" className="space-y-4">
                 <h3 className="font-semibold">Learning Preferences</h3>
-                
+
                 <Card>
                   <CardContent className="p-4 space-y-4">
                     <div className="flex items-center justify-between">
@@ -518,7 +622,10 @@ export const ChildLearningGoalsPanel: React.FC<ChildLearningGoalsPanelProps> = (
                       <CompactMobileSwitch
                         checked={preferences.autoAdjustGoals}
                         onCheckedChange={(checked) => {
-                          setPreferences(prev => ({ ...prev, autoAdjustGoals: checked }));
+                          setPreferences((prev) => ({
+                            ...prev,
+                            autoAdjustGoals: checked,
+                          }));
                           setHasUnsavedChanges(true);
                         }}
                       />
@@ -534,7 +641,10 @@ export const ChildLearningGoalsPanel: React.FC<ChildLearningGoalsPanelProps> = (
                       <CompactMobileSwitch
                         checked={preferences.adaptiveDifficulty}
                         onCheckedChange={(checked) => {
-                          setPreferences(prev => ({ ...prev, adaptiveDifficulty: checked }));
+                          setPreferences((prev) => ({
+                            ...prev,
+                            adaptiveDifficulty: checked,
+                          }));
                           setHasUnsavedChanges(true);
                         }}
                       />
@@ -544,8 +654,13 @@ export const ChildLearningGoalsPanel: React.FC<ChildLearningGoalsPanelProps> = (
                       <Label>Motivation Style</Label>
                       <Select
                         value={preferences.motivationStyle}
-                        onValueChange={(value: "encouraging" | "challenging" | "balanced") => {
-                          setPreferences(prev => ({ ...prev, motivationStyle: value }));
+                        onValueChange={(
+                          value: "encouraging" | "challenging" | "balanced",
+                        ) => {
+                          setPreferences((prev) => ({
+                            ...prev,
+                            motivationStyle: value,
+                          }));
                           setHasUnsavedChanges(true);
                         }}
                       >
@@ -553,9 +668,13 @@ export const ChildLearningGoalsPanel: React.FC<ChildLearningGoalsPanelProps> = (
                           <SelectValue />
                         </SelectTrigger>
                         <SelectContent>
-                          <SelectItem value="encouraging">Encouraging</SelectItem>
+                          <SelectItem value="encouraging">
+                            Encouraging
+                          </SelectItem>
                           <SelectItem value="balanced">Balanced</SelectItem>
-                          <SelectItem value="challenging">Challenging</SelectItem>
+                          <SelectItem value="challenging">
+                            Challenging
+                          </SelectItem>
                         </SelectContent>
                       </Select>
                     </div>
@@ -576,14 +695,14 @@ export const ChildLearningGoalsPanel: React.FC<ChildLearningGoalsPanelProps> = (
               Create a new learning objective for {child.name}
             </DialogDescription>
           </DialogHeader>
-          
+
           <div className="space-y-4">
             <div>
               <Label>Goal Type</Label>
               <Select
                 value={newGoal.type}
                 onValueChange={(value: "daily" | "weekly" | "monthly") =>
-                  setNewGoal(prev => ({ ...prev, type: value }))
+                  setNewGoal((prev) => ({ ...prev, type: value }))
                 }
               >
                 <SelectTrigger className="mt-2">
@@ -603,7 +722,10 @@ export const ChildLearningGoalsPanel: React.FC<ChildLearningGoalsPanelProps> = (
                 type="number"
                 value={newGoal.target}
                 onChange={(e) =>
-                  setNewGoal(prev => ({ ...prev, target: parseInt(e.target.value) || 1 }))
+                  setNewGoal((prev) => ({
+                    ...prev,
+                    target: parseInt(e.target.value) || 1,
+                  }))
                 }
                 min="1"
                 className="mt-2"
@@ -615,7 +737,10 @@ export const ChildLearningGoalsPanel: React.FC<ChildLearningGoalsPanelProps> = (
               <Textarea
                 value={newGoal.description}
                 onChange={(e) =>
-                  setNewGoal(prev => ({ ...prev, description: e.target.value }))
+                  setNewGoal((prev) => ({
+                    ...prev,
+                    description: e.target.value,
+                  }))
                 }
                 placeholder="Describe the learning goal..."
                 className="mt-2"
@@ -627,7 +752,7 @@ export const ChildLearningGoalsPanel: React.FC<ChildLearningGoalsPanelProps> = (
               <Input
                 value={newGoal.category}
                 onChange={(e) =>
-                  setNewGoal(prev => ({ ...prev, category: e.target.value }))
+                  setNewGoal((prev) => ({ ...prev, category: e.target.value }))
                 }
                 placeholder="e.g., Animals, Math, Reading"
                 className="mt-2"
@@ -639,7 +764,7 @@ export const ChildLearningGoalsPanel: React.FC<ChildLearningGoalsPanelProps> = (
               <Input
                 value={newGoal.reward}
                 onChange={(e) =>
-                  setNewGoal(prev => ({ ...prev, reward: e.target.value }))
+                  setNewGoal((prev) => ({ ...prev, reward: e.target.value }))
                 }
                 placeholder="e.g., Extra playtime, Stickers"
                 className="mt-2"
@@ -648,10 +773,16 @@ export const ChildLearningGoalsPanel: React.FC<ChildLearningGoalsPanelProps> = (
           </div>
 
           <DialogFooter>
-            <Button variant="outline" onClick={() => setShowAddGoalDialog(false)}>
+            <Button
+              variant="outline"
+              onClick={() => setShowAddGoalDialog(false)}
+            >
               Cancel
             </Button>
-            <Button onClick={handleAddGoal} disabled={!newGoal.description.trim()}>
+            <Button
+              onClick={handleAddGoal}
+              disabled={!newGoal.description.trim()}
+            >
               Add Goal
             </Button>
           </DialogFooter>
