@@ -200,7 +200,7 @@ export const EnhancedWordCard: React.FC<EnhancedWordCardProps> = ({
         ref={cardRef}
         className={cn(
           "relative w-full transition-all duration-700 transform-gpu preserve-3d",
-          "h-[400px] sm:h-[380px] md:h-[420px]",
+          "h-[380px] xs:h-[400px] sm:h-[380px] md:h-[420px] lg:h-[440px]",
           "touch-target-large mobile-optimized",
           "active:scale-98 hover:scale-[1.02] transition-transform",
           isFlipped && "rotate-y-180",
