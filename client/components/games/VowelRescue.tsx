@@ -630,7 +630,7 @@ export function VowelRescue({
               >
                 <div className="relative">
                   <div
-                    className="w-24 h-24 sm:w-32 sm:h-32 md:w-48 md:h-48 bg-gradient-to-br from-educational-blue/20 to-educational-purple/20 rounded-2xl flex items-center justify-center text-4xl sm:text-6xl md:text-8xl cursor-pointer hover:scale-105 transition-transform active:scale-95 touch-manipulation select-none"
+                    className="w-32 h-32 sm:w-40 sm:h-40 md:w-56 md:h-56 lg:w-64 lg:h-64 bg-gradient-to-br from-educational-blue/20 to-educational-purple/20 rounded-2xl flex items-center justify-center cursor-pointer hover:scale-105 transition-transform active:scale-95 touch-manipulation select-none"
                     onClick={playAudio}
                     style={{
                       WebkitTapHighlightColor: "transparent",
@@ -640,7 +640,7 @@ export function VowelRescue({
                     {currentQuestion.originalWord?.emoji ||
                     currentQuestion.image ? (
                       // Display emoji from word database or fallback
-                      <span className="text-4xl sm:text-6xl md:text-8xl animate-gentle-bounce">
+                      <span className="text-6xl sm:text-7xl md:text-9xl lg:text-[10rem] animate-gentle-bounce">
                         {currentQuestion.originalWord?.emoji ||
                           currentQuestion.image}
                       </span>
@@ -652,7 +652,7 @@ export function VowelRescue({
                         className="w-full h-full object-contain rounded-2xl"
                       />
                     ) : (
-                      "🎯"
+                      <span className="text-6xl sm:text-7xl md:text-9xl lg:text-[10rem] animate-gentle-bounce">🎯</span>
                     )}
                   </div>
 
