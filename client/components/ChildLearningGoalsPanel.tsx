@@ -703,16 +703,16 @@ export const ChildLearningGoalsPanel: React.FC<
             </DialogDescription>
           </DialogHeader>
 
-          <div className="space-y-4">
+          <div className="space-y-3 md:space-y-4">
             <div>
-              <Label>Goal Type</Label>
+              <Label className="text-xs md:text-sm">Goal Type</Label>
               <Select
                 value={newGoal.type}
                 onValueChange={(value: "daily" | "weekly" | "monthly") =>
                   setNewGoal((prev) => ({ ...prev, type: value }))
                 }
               >
-                <SelectTrigger className="mt-2">
+                <SelectTrigger className="mt-1 md:mt-2 h-9 md:h-10">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
@@ -724,7 +724,7 @@ export const ChildLearningGoalsPanel: React.FC<
             </div>
 
             <div>
-              <Label>Target</Label>
+              <Label className="text-xs md:text-sm">Target</Label>
               <Input
                 type="number"
                 value={newGoal.target}
@@ -735,12 +735,12 @@ export const ChildLearningGoalsPanel: React.FC<
                   }))
                 }
                 min="1"
-                className="mt-2"
+                className="mt-1 md:mt-2 h-9 md:h-10"
               />
             </div>
 
             <div>
-              <Label>Description</Label>
+              <Label className="text-xs md:text-sm">Description</Label>
               <Textarea
                 value={newGoal.description}
                 onChange={(e) =>
@@ -750,31 +750,31 @@ export const ChildLearningGoalsPanel: React.FC<
                   }))
                 }
                 placeholder="Describe the learning goal..."
-                className="mt-2"
+                className="mt-1 md:mt-2 min-h-[60px] md:min-h-[80px] text-sm"
               />
             </div>
 
             <div>
-              <Label>Category (Optional)</Label>
+              <Label className="text-xs md:text-sm">Category (Optional)</Label>
               <Input
                 value={newGoal.category}
                 onChange={(e) =>
                   setNewGoal((prev) => ({ ...prev, category: e.target.value }))
                 }
                 placeholder="e.g., Animals, Math, Reading"
-                className="mt-2"
+                className="mt-1 md:mt-2 h-9 md:h-10"
               />
             </div>
 
             <div>
-              <Label>Reward (Optional)</Label>
+              <Label className="text-xs md:text-sm">Reward (Optional)</Label>
               <Input
                 value={newGoal.reward}
                 onChange={(e) =>
                   setNewGoal((prev) => ({ ...prev, reward: e.target.value }))
                 }
                 placeholder="e.g., Extra playtime, Stickers"
-                className="mt-2"
+                className="mt-1 md:mt-2 h-9 md:h-10"
               />
             </div>
           </div>
