@@ -2541,91 +2541,9 @@ export default function Index({ initialProfile }: IndexProps) {
                                                   </span>
                                                 </div>
                                               </div>
-
-                                              {/* Compact Navigation Controls */}
-                                              <div className="flex justify-center items-center gap-2 mt-3 max-w-xs sm:max-w-sm md:max-w-md mx-auto">
-                                                {/* Previous Button */}
-                                                <Button
-                                                  onClick={() => {
-                                                    if (currentWordIndex > 0) {
-                                                      setCurrentWordIndex(
-                                                        currentWordIndex - 1,
-                                                      );
-                                                      audioService.playClickSound();
-                                                      if (navigator.vibrate) {
-                                                        navigator.vibrate(25);
-                                                      }
-                                                    }
-                                                  }}
-                                                  disabled={
-                                                    currentWordIndex === 0
-                                                  }
-                                                  variant="ghost"
-                                                  size="sm"
-                                                  className="h-8 w-8 rounded-full p-0 disabled:opacity-30 hover:bg-slate-100"
-                                                >
-                                                  <span className="text-lg">
-                                                    ←
-                                                  </span>
-                                                </Button>
-
-                                                {/* Compact Progress */}
-                                                <div className="flex-1 flex items-center justify-center gap-2 text-xs text-slate-600">
-                                                  <span className="font-medium">
-                                                    {currentWordIndex + 1}/
-                                                    {displayWords.length}
-                                                  </span>
-                                                </div>
-
-                                                {/* Next Button */}
-                                                <Button
-                                                  onClick={() => {
-                                                    if (
-                                                      currentWordIndex <
-                                                      displayWords.length - 1
-                                                    ) {
-                                                      setCurrentWordIndex(
-                                                        currentWordIndex + 1,
-                                                      );
-                                                      audioService.playClickSound();
-                                                      if (navigator.vibrate) {
-                                                        navigator.vibrate(25);
-                                                      }
-                                                    } else {
-                                                      setCelebrationEffect(
-                                                        true,
-                                                      );
-                                                      setTimeout(() => {
-                                                        setCelebrationEffect(
-                                                          false,
-                                                        );
-                                                        if (
-                                                          window.confirm(
-                                                            "Great job! You've completed all words in this category. Return to library to choose another category?",
-                                                          )
-                                                        ) {
-                                                          handleSmartBackNavigation();
-                                                        }
-                                                      }, 2000);
-                                                    }
-                                                  }}
-                                                  disabled={
-                                                    currentWordIndex ===
-                                                    displayWords.length - 1
-                                                  }
-                                                  variant="ghost"
-                                                  size="sm"
-                                                  className="h-8 w-8 rounded-full p-0 disabled:opacity-30 hover:bg-slate-100"
-                                                >
-                                                  <span className="text-lg">
-                                                    →
-                                                  </span>
-                                                </Button>
-                                              </div>
                                             </div>
                                           </div>
 
-                                          {/* Minimal Status Indicator */}
                                           <div className="text-center mt-2">
                                             {(() => {
                                               const currentWord =
@@ -2737,7 +2655,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                 </p>
                                 <div className="flex justify-center gap-1 mb-2 md:mb-3">
                                   <span className="bg-educational-pink/20 text-educational-pink px-1.5 py-0.5 rounded-full text-xs">
-                                    🎯 Audio!
+                                    ���� Audio!
                                   </span>
                                 </div>
                                 <Button

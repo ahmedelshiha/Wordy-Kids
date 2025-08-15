@@ -599,28 +599,51 @@ export const EnhancedWordCard: React.FC<EnhancedWordCardProps> = ({
                 </div>
               </div>
 
-              {/* Large word with pronunciation button */}
+              {/* Large word with pronunciation and heart buttons */}
               <div className="text-center space-y-3">
                 <div className="flex items-center justify-center gap-3">
                   <h2 className="text-4xl font-bold tracking-wide drop-shadow-md leading-tight animate-fade-in">
                     {word.word}
                   </h2>
-                  <Button
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      handlePronounce();
-                    }}
-                    disabled={isPlaying}
-                    className={cn(
-                      "h-10 w-10 rounded-full transition-all duration-200 flex-shrink-0",
-                      "bg-white/20 hover:bg-white/30 border-2 border-white/40",
-                      "text-white hover:scale-105 active:scale-95",
-                      isPlaying &&
-                        "bg-yellow-400/30 border-yellow-300/60 animate-pulse",
-                    )}
-                  >
-                    <Volume2 className="w-4 h-4" />
-                  </Button>
+                  <div className="flex items-center gap-2">
+                    <Button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handlePronounce();
+                      }}
+                      disabled={isPlaying}
+                      className={cn(
+                        "h-12 w-12 rounded-full transition-all duration-200 flex-shrink-0",
+                        "bg-white/20 hover:bg-white/30 border-2 border-white/40",
+                        "text-white hover:scale-105 active:scale-95",
+                        isPlaying &&
+                          "bg-yellow-400/30 border-yellow-300/60 animate-pulse",
+                      )}
+                    >
+                      <Volume2 className="w-6 h-6" />
+                    </Button>
+                    <Button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleFavorite();
+                      }}
+                      className={cn(
+                        "h-12 w-12 rounded-full transition-all duration-200 flex-shrink-0",
+                        "bg-white/20 hover:bg-white/30 border-2 border-white/40",
+                        "hover:scale-110 active:scale-95",
+                        isFavorited && "bg-red-500/30 border-red-400/60",
+                      )}
+                    >
+                      <Heart
+                        className={cn(
+                          "w-5 h-5",
+                          isFavorited
+                            ? "fill-red-400 text-red-400"
+                            : "text-white",
+                        )}
+                      />
+                    </Button>
+                  </div>
                 </div>
 
                 {word.pronunciation && (
@@ -923,27 +946,6 @@ export const EnhancedWordCard: React.FC<EnhancedWordCardProps> = ({
           </CardContent>
         </Card>
       </div>
-
-      {/* Floating heart for favorites */}
-      <Button
-        onClick={(e) => {
-          e.stopPropagation();
-          handleFavorite();
-        }}
-        className={cn(
-          "absolute top-4 right-4 h-12 w-12 rounded-full z-20 transition-all duration-200",
-          "bg-white/20 hover:bg-white/30 border-2 border-white/40",
-          "hover:scale-110 active:scale-95",
-          isFavorited && "bg-red-500/30 border-red-400/60",
-        )}
-      >
-        <Heart
-          className={cn(
-            "w-5 h-5",
-            isFavorited ? "fill-red-400 text-red-400" : "text-white",
-          )}
-        />
-      </Button>
 
       {/* Swipe direction feedback */}
       {isGesturing && swipeDirection && (
