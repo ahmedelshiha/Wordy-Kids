@@ -762,6 +762,23 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
     }
   };
 
+  const handleUpdateChild = (updatedChild: ChildProfile) => {
+    const updatedChildren = children.map(child =>
+      child.id === updatedChild.id ? updatedChild : child
+    );
+    setChildren(updatedChildren);
+    if (selectedChild?.id === updatedChild.id) {
+      setSelectedChild(updatedChild);
+    }
+    // Save to localStorage
+    localStorage.setItem("parentDashboardChildren", JSON.stringify(updatedChildren));
+  };
+
+  const handleOpenLearningGoals = (child: ChildProfile) => {
+    setLearningGoalsChild(child);
+    setShowLearningGoalsPanel(true);
+  };
+
   const renderOverview = () => (
     <div className="space-y-4 md:space-y-6">
       {/* Welcome Section - Combined Layout */}
@@ -3318,7 +3335,7 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
                     <SelectItem value="week">📅 Last Week</SelectItem>
                     <SelectItem value="month">📆 Last Month</SelectItem>
                     <SelectItem value="quarter">🗓️ Last 3 Months</SelectItem>
-                    <SelectItem value="year">📈 Last Year</SelectItem>
+                    <SelectItem value="year">��� Last Year</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
