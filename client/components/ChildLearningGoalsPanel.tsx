@@ -58,6 +58,7 @@ import {
   useMobileDevice,
   triggerHapticFeedback,
 } from "@/hooks/use-mobile-device";
+import { goalProgressTracker, SystematicProgressData } from "@/lib/goalProgressTracker";
 
 interface LearningGoal {
   id: string;
