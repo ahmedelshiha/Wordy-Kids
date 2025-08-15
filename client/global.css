@@ -1741,10 +1741,126 @@
 /* Mobile-specific rating enhancements */
 @media (max-width: 768px) {
   .rating-button-enhanced {
-    min-height: 64px;
+    min-height: 48px;
   }
 
   .rating-button-enhanced:active {
     transform: scale(0.95);
   }
+
+  /* Enhanced word card back mobile optimizations */
+  .word-card-back-mobile {
+    max-height: 100%;
+    overflow: hidden;
+  }
+
+  .word-card-back-content {
+    max-height: calc(100vh - 200px);
+    overflow-y: auto;
+    overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
+    scroll-behavior: smooth;
+  }
+
+  /* Better content spacing on mobile */
+  .mobile-content-spacing {
+    padding: 8px;
+  }
+
+  .mobile-content-spacing > * + * {
+    margin-top: 8px;
+  }
+
+  /* Ensure text doesn't overflow */
+  .mobile-text-wrap {
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    hyphens: auto;
+  }
+
+  /* Rating buttons mobile adjustments */
+  .mobile-rating-compact {
+    padding: 4px 8px;
+    font-size: 12px;
+    line-height: 1.2;
+  }
+
+  /* Hide description text on very small screens */
+  @media (max-width: 320px) {
+    .rating-description {
+      display: none;
+    }
+  }
+}
+
+/* Enhanced scrollbar for word card content */
+.scrollbar-thin {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(156, 163, 175, 0.5) transparent;
+}
+
+.scrollbar-thin::-webkit-scrollbar {
+  width: 4px;
+}
+
+.scrollbar-thin::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb {
+  background: rgba(156, 163, 175, 0.5);
+  border-radius: 2px;
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb:hover {
+  background: rgba(156, 163, 175, 0.7);
+}
+
+/* Word card content container optimizations */
+.word-card-content-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  max-height: 100%;
+  overflow: hidden;
+}
+
+.word-card-scrollable-content {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  min-height: 0;
+}
+
+/* Better text rendering for mobile */
+.mobile-text-optimized {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  word-spacing: normal;
+  letter-spacing: normal;
+}
+
+/* Safe area handling for word cards */
+.word-card-safe-area {
+  padding-bottom: env(safe-area-inset-bottom, 16px);
+}
+
+/* Enhanced mobile touch zones */
+.mobile-touch-zone {
+  min-height: 44px;
+  min-width: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  touch-action: manipulation;
+}
+
+/* Content section spacing */
+.content-section-mobile {
+  margin-bottom: 12px;
+}
+
+.content-section-mobile:last-child {
+  margin-bottom: 0;
 }
