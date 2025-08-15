@@ -125,11 +125,15 @@ export const EnhancedWordCard: React.FC<EnhancedWordCardProps> = ({
     // Different sounds for different ratings
     if (rating === "easy") {
       playSoundIfEnabled.success();
+      playSoundIfEnabled.levelUp();
     } else if (rating === "medium") {
-      playSoundIfEnabled.achievement();
+      playSoundIfEnabled.click();
     } else {
-      playSoundIfEnabled.encouragement();
+      playSoundIfEnabled.hover();
     }
+
+    // UI interaction sound
+    playUIInteractionSoundIfEnabled();
 
     // Call the original handler
     onWordMastered?.(word.id, rating);
