@@ -626,7 +626,7 @@ export class AnalyticsDataService {
       totalWords,
       masteredWords,
       averageAccuracy,
-      improvementRate: 8 + Math.random() * 10, // 8-18%
+      improvementRate: Math.round((8 + Math.random() * 10) * 10) / 10, // 8-18% rounded to 1 decimal
       strugglingAreas: this.getStrugglingAreas(category, averageAccuracy),
     };
   }
