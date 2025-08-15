@@ -59,6 +59,7 @@ export const EnhancedWordCard: React.FC<EnhancedWordCardProps> = ({
   // Audio and interaction states
   const [isPlaying, setIsPlaying] = useState(false);
   const [showSparkles, setShowSparkles] = useState(false);
+  const [isPressed, setIsPressed] = useState(false);
 
   const cardRef = useRef<HTMLDivElement>(null);
   const voiceSettings = useVoiceSettings();
@@ -98,14 +99,30 @@ export const EnhancedWordCard: React.FC<EnhancedWordCardProps> = ({
     playSoundIfEnabled.pronunciation();
   };
 
-  // Smooth 3D flip
+  // Enhanced smooth 3D flip with better feedback
   const handleFlip = () => {
     setIsFlipped(!isFlipped);
     audioService.playWhooshSound();
+    playUIInteractionSoundIfEnabled();
 
+    // Enhanced haptic feedback
     if (navigator.vibrate) {
-      navigator.vibrate([30, 20, 30]);
+      navigator.vibrate([40, 10, 40]);
     }
+
+    // Visual feedback
+    setIsPressed(true);
+    setTimeout(() => setIsPressed(false), 150);
+  };
+
+  // Handle touch start for visual feedback
+  const handleTouchStart = () => {
+    setIsPressed(true);
+  };
+
+  // Handle touch end
+  const handleTouchEnd = () => {
+    setTimeout(() => setIsPressed(false), 100);
   };
 
   // Get category colors
@@ -156,16 +173,26 @@ export const EnhancedWordCard: React.FC<EnhancedWordCardProps> = ({
           "relative w-full transition-all duration-700 transform-gpu preserve-3d",
           "h-[400px] sm:h-[380px] md:h-[420px]",
           "touch-target-large mobile-optimized",
+          "active:scale-98 hover:scale-[1.02] transition-transform",
           isFlipped && "rotate-y-180",
+          isPressed && "scale-98",
         )}
         style={{
           transformStyle: "preserve-3d",
           perspective: "1000px",
         }}
         onClick={handleFlip}
+        onTouchStart={handleTouchStart}
+        onTouchEnd={handleTouchEnd}
         role="button"
         tabIndex={0}
-        aria-label={`Word card for ${word.word}. ${isFlipped ? "Showing definition" : "Showing word"}. Tap to flip or swipe for actions.`}
+        aria-label={`Word card for ${word.word}. ${isFlipped ? "Showing definition" : "Showing word"}. Tap to flip.`}
+        onKeyDown={(e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            handleFlip();
+          }
+        }}
       >
         {/* FRONT CARD - Kid-Friendly Design */}
         <Card
