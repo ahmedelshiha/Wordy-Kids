@@ -243,6 +243,41 @@ const sampleChildren: ChildProfile[] = [
         earnedAt: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000),
       },
     ],
+    learningGoals: [
+      {
+        id: "daily-words-alex",
+        type: "daily",
+        target: 5,
+        current: 3,
+        category: "Animals",
+        isActive: true,
+        streak: 5,
+        bestStreak: 7,
+        startDate: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString(),
+        description: "Learn 5 animal words daily",
+        reward: "Extra playtime",
+      },
+      {
+        id: "weekly-accuracy-alex",
+        type: "weekly",
+        target: 85,
+        current: 78,
+        isActive: true,
+        streak: 2,
+        bestStreak: 4,
+        startDate: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString(),
+        description: "Maintain 85% accuracy",
+        reward: "Choose weekend activity",
+      },
+    ],
+    learningPreferences: {
+      autoAdjustGoals: true,
+      adaptiveDifficulty: true,
+      preferredCategories: ["Animals", "Nature", "Science"],
+      focusAreas: ["Spelling", "Comprehension"],
+      reminderTimes: ["16:00", "19:00"],
+      motivationStyle: "encouraging",
+    },
   },
   {
     id: "2",
@@ -1701,7 +1736,7 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
         <div className="space-y-4 md:space-y-6">
           <Card className="text-center py-12">
             <CardContent>
-              <div className="text-6xl mb-4">📊</div>
+              <div className="text-6xl mb-4">��</div>
               <h3 className="text-xl font-semibold mb-2 text-slate-600">
                 No Child Selected
               </h3>
