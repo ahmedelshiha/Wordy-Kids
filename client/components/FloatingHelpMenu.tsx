@@ -165,16 +165,6 @@ export function FloatingHelpMenu({
           <Heart className="w-5 md:w-6 h-5 md:h-6 text-white fill-current animate-pulse" />
         </motion.div>
 
-        {/* Quick Encouragement Button */}
-        <motion.div
-          className="absolute -top-2 -left-2 bg-educational-yellow p-2 rounded-full shadow-lg cursor-pointer"
-          whileHover={{ scale: 1.1 }}
-          whileTap={{ scale: 0.95 }}
-          onClick={handleEncouragement}
-          title="Need encouragement? Click me! 🌟"
-        >
-          <span className="text-lg animate-bounce">🌟</span>
-        </motion.div>
       </div>
 
       {/* Help Menu Overlay */}
