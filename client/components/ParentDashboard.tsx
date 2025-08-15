@@ -609,15 +609,17 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
               setTopWords(childStatsResponse.topWords || []);
             }
           } catch (apiError) {
-            console.log("Child stats API not available, using local data");
-            // Generate mock practice words from localStorage data
+            console.log("Child stats API not available, using fallback data (this is normal)");
+            // Generate sample practice and top words since API is not available
             setPracticeWords([
-              { word: "example", category: "practice", accuracy: 60, timesReviewed: 3 },
-              { word: "challenge", category: "practice", accuracy: 55, timesReviewed: 5 },
+              { word: "telescope", category: "Science", accuracy: 65, timesReviewed: 3 },
+              { word: "butterfly", category: "Nature", accuracy: 58, timesReviewed: 4 },
+              { word: "adventure", category: "Stories", accuracy: 72, timesReviewed: 2 },
             ]);
             setTopWords([
-              { word: "success", category: "achievement", accuracy: 95, timesReviewed: 8 },
-              { word: "excellent", category: "achievement", accuracy: 92, timesReviewed: 6 },
+              { word: "rainbow", category: "Nature", accuracy: 95, timesReviewed: 8 },
+              { word: "sunshine", category: "Weather", accuracy: 92, timesReviewed: 6 },
+              { word: "friendship", category: "Emotions", accuracy: 89, timesReviewed: 5 },
             ]);
           }
         }
