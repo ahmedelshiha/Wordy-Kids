@@ -1294,55 +1294,150 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
 
   const renderGoalsManagement = useCallback(
     () => (
-      <div className="space-y-6">
-        <div className="text-center">
-          <h2 className="text-2xl font-bold text-slate-800 mb-4">
+      <div className="space-y-4 md:space-y-6">
+        {/* Mobile-optimized header */}
+        <div className="text-center mobile-goals-header">
+          <h2 className="text-xl md:text-2xl font-bold text-slate-800 mb-2 md:mb-4">
             Learning Goals Management
           </h2>
-          <p className="text-slate-600 mb-6">
+          <p className="text-sm md:text-base text-slate-600 mb-4 md:mb-6">
             Set and track learning goals for your children
           </p>
 
           {children.length === 0 ? (
             <div className="max-w-md mx-auto">
-              <Card className="bg-gradient-to-r from-green-50 to-blue-50">
-                <CardContent className="p-6 text-center">
-                  <div className="text-4xl mb-4">👶</div>
-                  <h3 className="text-lg font-semibold mb-2">
+              <Card className="bg-gradient-to-r from-green-50 to-blue-50 mobile-goals-empty">
+                <CardContent className="p-4 md:p-6 text-center">
+                  <div className="text-3xl md:text-4xl mb-3 md:mb-4 emoji">👶</div>
+                  <h3 className="text-base md:text-lg font-semibold mb-2">
                     No Children Added Yet
                   </h3>
-                  <p className="text-gray-600 mb-4">
+                  <p className="text-gray-600 mb-3 md:mb-4 text-sm md:text-base">
                     Add your first child to start setting learning goals and tracking their progress
                   </p>
                   <Button
                     onClick={handleAddChildClick}
-                    className="bg-educational-blue"
+                    className="bg-educational-blue mobile-goal-buttons w-full md:w-auto"
+                    size="sm"
                   >
-                    <UserPlus className="w-4 h-4 mr-2" />
+                    <UserPlus className="w-3 h-3 md:w-4 md:h-4 mr-2" />
                     Add Your First Child
                   </Button>
                 </CardContent>
               </Card>
             </div>
-          ) : selectedChild ? (
-            <Button
-              onClick={() => handleOpenLearningGoals(selectedChild)}
-              className="bg-educational-blue hover:bg-educational-blue/90"
-            >
-              <Target className="w-4 h-4 mr-2" />
-              Manage {selectedChild.name}'s Goals
-            </Button>
           ) : (
-            <div className="text-center py-8">
-              <p className="text-slate-500 mb-4">Please select a child first</p>
-              <Button
-                onClick={handleAddChildClick}
-                variant="outline"
-                disabled={children.length === 0}
-              >
-                <Plus className="w-4 h-4 mr-2" />
-                Add Child
-              </Button>
+            <div className="space-y-4">
+              {/* Quick Goals Stats - Mobile Optimized */}
+              <div className="mobile-goals-stats">
+                <Card className="stat-card">
+                  <div className="stat-number text-educational-blue">
+                    {children.reduce((total, child) => total + (child.learningGoals?.filter(g => g.isActive).length || 0), 0)}
+                  </div>
+                  <div className="stat-label">Active Goals</div>
+                </Card>
+                <Card className="stat-card">
+                  <div className="stat-number text-educational-green">
+                    {children.reduce((total, child) => {
+                      const completedGoals = child.learningGoals?.filter(g => g.current >= g.target).length || 0;
+                      return total + completedGoals;
+                    }, 0)}
+                  </div>
+                  <div className="stat-label">Completed</div>
+                </Card>
+              </div>
+
+              {/* Children Goal Cards */}
+              <div className="space-y-3 md:space-y-4">
+                {children.map((child, index) => {
+                  const activeGoals = child.learningGoals?.filter(g => g.isActive) || [];
+                  const completedGoals = child.learningGoals?.filter(g => g.current >= g.target) || [];
+
+                  return (
+                    <Card
+                      key={child.id}
+                      className="mobile-child-goal-card border-l-4 border-l-educational-blue hover:shadow-md transition-all duration-200"
+                      style={{ animationDelay: `${index * 100}ms` }}
+                    >
+                      <CardContent className="p-3 md:p-4">
+                        <div className="flex items-center justify-between mb-3">
+                          <div className="flex items-center gap-2 md:gap-3">
+                            <div className="text-2xl md:text-3xl">{child.avatar}</div>
+                            <div>
+                              <h4 className="font-semibold text-sm md:text-base">{child.name}</h4>
+                              <p className="text-xs text-slate-600">
+                                {activeGoals.length} active • {completedGoals.length} completed
+                              </p>
+                            </div>
+                          </div>
+                          <Button
+                            onClick={() => handleOpenLearningGoals(child)}
+                            className="bg-educational-blue hover:bg-educational-blue/90 mobile-goal-buttons"
+                            size="sm"
+                          >
+                            <Target className="w-3 h-3 md:w-4 md:h-4 mr-1 md:mr-2" />
+                            <span className="hidden md:inline">Manage Goals</span>
+                            <span className="md:hidden">Goals</span>
+                          </Button>
+                        </div>
+
+                        {/* Goal Progress Summary */}
+                        {activeGoals.length > 0 && (
+                          <div className="space-y-2">
+                            {activeGoals.slice(0, 2).map((goal) => {
+                              const progress = Math.min((goal.current / goal.target) * 100, 100);
+                              return (
+                                <div key={goal.id} className="mobile-goal-summary">
+                                  <div>
+                                    <div className="text-xs md:text-sm font-medium truncate">
+                                      {goal.description}
+                                    </div>
+                                    <div className="text-xs text-slate-500">
+                                      {goal.current}/{goal.target} • {Math.round(progress)}%
+                                    </div>
+                                  </div>
+                                  <Badge
+                                    variant="outline"
+                                    className="mobile-goal-badge text-xs"
+                                  >
+                                    {goal.type}
+                                  </Badge>
+                                </div>
+                              );
+                            })}
+                            {activeGoals.length > 2 && (
+                              <p className="text-xs text-slate-500 text-center">
+                                +{activeGoals.length - 2} more goals
+                              </p>
+                            )}
+                          </div>
+                        )}
+
+                        {activeGoals.length === 0 && (
+                          <div className="text-center py-2 text-xs text-slate-500">
+                            No active goals yet
+                          </div>
+                        )}
+                      </CardContent>
+                    </Card>
+                  );
+                })}
+              </div>
+
+              {/* Quick Add Goal for Selected Child */}
+              {selectedChild && (
+                <div className="text-center pt-2">
+                  <Button
+                    onClick={() => handleOpenLearningGoals(selectedChild)}
+                    variant="outline"
+                    className="mobile-goal-buttons"
+                    size="sm"
+                  >
+                    <Plus className="w-3 h-3 md:w-4 md:h-4 mr-2" />
+                    Quick Add Goal for {selectedChild.name}
+                  </Button>
+                </div>
+              )}
             </div>
           )}
         </div>
@@ -1352,7 +1447,7 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
       selectedChild,
       handleOpenLearningGoals,
       handleAddChildClick,
-      children.length,
+      children,
     ],
   );
 
