@@ -60,11 +60,8 @@ export const EnhancedWordCard: React.FC<EnhancedWordCardProps> = ({
   const [isPlaying, setIsPlaying] = useState(false);
   const [showSparkles, setShowSparkles] = useState(false);
 
-
   const cardRef = useRef<HTMLDivElement>(null);
   const voiceSettings = useVoiceSettings();
-
-
 
   // Enhanced pronunciation with normal voice
   const handlePronounce = async () => {
@@ -100,7 +97,6 @@ export const EnhancedWordCard: React.FC<EnhancedWordCardProps> = ({
     setShowSparkles(false);
     playSoundIfEnabled.pronunciation();
   };
-
 
   // Smooth 3D flip
   const handleFlip = () => {
@@ -145,12 +141,14 @@ export const EnhancedWordCard: React.FC<EnhancedWordCardProps> = ({
   };
 
   return (
-    <div className={cn(
-      "relative w-full mx-auto",
-      "max-w-[380px] sm:max-w-[340px] md:max-w-[380px]",
-      "px-2 sm:px-0",
-      className
-    )}>
+    <div
+      className={cn(
+        "relative w-full mx-auto",
+        "max-w-[380px] sm:max-w-[340px] md:max-w-[380px]",
+        "px-2 sm:px-0",
+        className,
+      )}
+    >
       {/* 3D Card Container with smooth flip */}
       <div
         ref={cardRef}
@@ -187,7 +185,7 @@ export const EnhancedWordCard: React.FC<EnhancedWordCardProps> = ({
                   className={cn(
                     getDifficultyColor(word.difficulty),
                     "text-xs sm:text-sm font-semibold px-2 py-1 sm:px-3 sm:py-1.5",
-                    "touch-target mobile-safe-text"
+                    "touch-target mobile-safe-text",
                   )}
                   variant="secondary"
                 >
@@ -301,8 +299,12 @@ export const EnhancedWordCard: React.FC<EnhancedWordCardProps> = ({
           <CardContent className="p-3 sm:p-4 h-full flex flex-col text-white relative overflow-y-auto mobile-parent-dashboard">
             {/* Mobile-optimized back header */}
             <div className="flex items-center gap-2 mb-3 touch-optimized">
-              <span className="text-xl sm:text-2xl animate-gentle-bounce">{word.emoji}</span>
-              <h3 className="text-lg sm:text-xl font-bold mobile-safe-text">{word.word}</h3>
+              <span className="text-xl sm:text-2xl animate-gentle-bounce">
+                {word.emoji}
+              </span>
+              <h3 className="text-lg sm:text-xl font-bold mobile-safe-text">
+                {word.word}
+              </h3>
             </div>
 
             {/* Mobile-optimized content */}
@@ -313,7 +315,9 @@ export const EnhancedWordCard: React.FC<EnhancedWordCardProps> = ({
                 <h4 className="text-sm sm:text-base font-medium mb-2 text-yellow-300 flex items-center gap-1">
                   💡 What it means:
                 </h4>
-                <p className="text-sm sm:text-base leading-relaxed mobile-safe-text">{word.definition}</p>
+                <p className="text-sm sm:text-base leading-relaxed mobile-safe-text">
+                  {word.definition}
+                </p>
               </div>
 
               {/* Kid-friendly example */}
@@ -336,7 +340,9 @@ export const EnhancedWordCard: React.FC<EnhancedWordCardProps> = ({
                     <Sparkles className="w-4 h-4 animate-sparkle" />
                     🎈 Fun Fact:
                   </h4>
-                  <p className="text-sm sm:text-base leading-relaxed mobile-safe-text">{word.funFact}</p>
+                  <p className="text-sm sm:text-base leading-relaxed mobile-safe-text">
+                    {word.funFact}
+                  </p>
                 </div>
               )}
 
@@ -387,7 +393,8 @@ export const EnhancedWordCard: React.FC<EnhancedWordCardProps> = ({
             <div className="mt-3 sm:mt-4 text-center safe-area-padding-bottom">
               <div className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-full px-3 py-2 sm:px-4 sm:py-2 mx-auto w-fit animate-gentle-bounce">
                 <p className="text-xs sm:text-sm text-white/80 mobile-safe-text">
-                  <span className="animate-pulse">👆</span> Tap anywhere to flip back! 🔄
+                  <span className="animate-pulse">👆</span> Tap anywhere to flip
+                  back! 🔄
                 </p>
               </div>
             </div>
