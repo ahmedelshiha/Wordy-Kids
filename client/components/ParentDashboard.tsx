@@ -601,13 +601,9 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
           const response = await WordProgressAPI.getAllChildrenProgress();
           if (response.success) {
             setChildrenWordStats(response.childrenStats);
-            console.log("Successfully loaded API data");
           }
         } catch (apiError) {
           // This is expected and normal - the app works perfectly with localStorage only
-          console.log(
-            "API not available, continuing with localStorage data (this is normal)",
-          );
           // Set default/empty stats since API is not available
           setChildrenWordStats({});
         }
