@@ -3220,21 +3220,11 @@ export default function Index({ initialProfile }: IndexProps) {
           {/* Enhanced Floating Help Menu */}
           <FloatingHelpMenu
             currentPage="home"
-            onTutorial={() =>
+            onHelpAction={(helpContent) =>
               setFeedback({
                 type: "info",
-                title: "How to Play 📚",
-                message:
-                  "Welcome! Tap games to play, browse the word library, and track your progress. Use voice commands by saying words out loud!",
-                onContinue: () => setFeedback(null),
-              })
-            }
-            onGameHelp={() =>
-              setFeedback({
-                type: "info",
-                title: "Game Tips 🎮",
-                message:
-                  "• Vowel Rescue: Listen and fill in missing vowels\n• Word Garden: Grow words by spelling correctly\n• Flashcard Duel: Quick vocabulary challenges\n• Adventure Mode: Complete learning quests",
+                title: helpContent.title,
+                message: helpContent.message,
                 onContinue: () => setFeedback(null),
               })
             }
@@ -3242,24 +3232,6 @@ export default function Index({ initialProfile }: IndexProps) {
               setActivePanel("settings");
               setShowMobileMoreMenu(false);
             }}
-            onContact={() =>
-              setFeedback({
-                type: "info",
-                title: "Get Support 💬",
-                message:
-                  "Need help? Check the settings for volume controls, or ask a grown-up to help you with the games!",
-                onContinue: () => setFeedback(null),
-              })
-            }
-            onAccessibility={() =>
-              setFeedback({
-                type: "info",
-                title: "Accessibility Features 🔊",
-                message:
-                  "• Voice pronunciation for all words\n• Large touch targets\n• High contrast mode\n• Adjustable volume and sounds\n• Screen reader support",
-                onContinue: () => setFeedback(null),
-              })
-            }
             onAchievements={() => {
               setActivePanel("progress");
               setShowMobileMoreMenu(false);
