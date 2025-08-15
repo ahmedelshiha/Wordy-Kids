@@ -120,7 +120,9 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const logout = () => {
     clearSession();
     setUser(null);
-    navigate('/');
+    if (navigate && typeof navigate === 'function') {
+      navigate('/');
+    }
   };
 
   const value: AuthContextType = {
