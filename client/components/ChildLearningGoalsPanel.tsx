@@ -514,48 +514,48 @@ export const ChildLearningGoalsPanel: React.FC<
                   </div>
                 ) : (
                   <>
-                    <div className="grid grid-cols-2 gap-4">
+                    <div className="grid grid-cols-2 gap-2 md:gap-4">
                       <Card>
-                        <CardContent className="p-4 text-center">
-                          <div className="text-2xl font-bold text-educational-blue">
+                        <CardContent className="p-3 md:p-4 text-center">
+                          <div className="text-lg md:text-2xl font-bold text-educational-blue">
                             {systematicProgress?.totalWordsLearned ||
                               child.wordsLearned ||
                               0}
                           </div>
-                          <p className="text-sm text-muted-foreground">
+                          <p className="text-xs md:text-sm text-muted-foreground">
                             Total Words
                           </p>
                         </CardContent>
                       </Card>
 
                       <Card>
-                        <CardContent className="p-4 text-center">
-                          <div className="text-2xl font-bold text-educational-orange">
+                        <CardContent className="p-3 md:p-4 text-center">
+                          <div className="text-lg md:text-2xl font-bold text-educational-orange">
                             {systematicProgress?.currentStreak ||
                               child.currentStreak ||
                               0}
                           </div>
-                          <p className="text-sm text-muted-foreground">
+                          <p className="text-xs md:text-sm text-muted-foreground">
                             Day Streak
                           </p>
                         </CardContent>
                       </Card>
 
                       <Card>
-                        <CardContent className="p-4 text-center">
-                          <div className="text-2xl font-bold text-educational-green">
+                        <CardContent className="p-3 md:p-4 text-center">
+                          <div className="text-lg md:text-2xl font-bold text-educational-green">
                             {systematicProgress?.wordsLearnedToday || 0}
                           </div>
-                          <p className="text-sm text-muted-foreground">Today</p>
+                          <p className="text-xs md:text-sm text-muted-foreground">Today</p>
                         </CardContent>
                       </Card>
 
                       <Card>
-                        <CardContent className="p-4 text-center">
-                          <div className="text-2xl font-bold text-educational-purple">
+                        <CardContent className="p-3 md:p-4 text-center">
+                          <div className="text-lg md:text-2xl font-bold text-educational-purple">
                             {systematicProgress?.wordsLearnedThisWeek || 0}
                           </div>
-                          <p className="text-sm text-muted-foreground">
+                          <p className="text-xs md:text-sm text-muted-foreground">
                             This Week
                           </p>
                         </CardContent>
