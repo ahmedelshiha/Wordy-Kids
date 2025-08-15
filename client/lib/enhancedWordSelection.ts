@@ -94,6 +94,12 @@ export class EnhancedWordSelector {
         console.log(
           `Overriding cross_category strategy to ${sessionStrategy} to respect category selection: ${selectedCategory}`,
         );
+      } else if (selectedCategory !== "all" && categoryWords.length === 0) {
+        // If no words available in selected category, fall back to fresh_exploration with broader criteria
+        sessionStrategy = "fresh_exploration";
+        console.log(
+          `No words available in category ${selectedCategory}, falling back to fresh_exploration`,
+        );
       }
     }
 
