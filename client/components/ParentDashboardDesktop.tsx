@@ -113,6 +113,7 @@ import { ParentLearningAnalytics } from "@/components/ParentLearningAnalytics";
 import { ParentLearningAnalyticsDesktop } from "@/components/ParentLearningAnalyticsDesktop";
 import { DesktopQuickActions } from "@/components/DesktopQuickActions";
 import { cn } from "@/lib/utils";
+import "@/styles/desktop-parent-dashboard.css";
 
 interface LearningGoal {
   id: string;
@@ -698,8 +699,8 @@ export const ParentDashboardDesktop: React.FC<ParentDashboardDesktopProps> = ({
         {/* Desktop Sidebar */}
         <div
           className={cn(
-            "fixed left-0 top-0 h-full bg-white border-r border-slate-200 transition-all duration-300 z-40",
-            sidebarCollapsed ? "w-16" : "w-64",
+            "dashboard-sidebar fixed left-0 top-0 h-full bg-white border-r border-slate-200 transition-all duration-300 z-40",
+            sidebarCollapsed ? "w-16 sidebar-collapsed" : "w-64 sidebar-expanded",
           )}
         >
           {/* Sidebar Header */}
@@ -732,8 +733,9 @@ export const ParentDashboardDesktop: React.FC<ParentDashboardDesktopProps> = ({
                   <Button
                     variant={activeTab === item.id ? "default" : "ghost"}
                     className={cn(
-                      "w-full justify-start mb-1 h-10",
+                      "sidebar-nav-item w-full justify-start mb-1 h-10",
                       sidebarCollapsed && "px-2 justify-center",
+                      activeTab === item.id && "active",
                     )}
                     onClick={() => setActiveTab(item.id)}
                   >
@@ -797,7 +799,7 @@ export const ParentDashboardDesktop: React.FC<ParentDashboardDesktopProps> = ({
           )}
         >
           {/* Header */}
-          <div className="bg-white border-b border-slate-200 px-4 lg:px-6 py-4">
+          <div className="dashboard-header bg-white border-b border-slate-200 px-4 lg:px-6 py-4">
             <div className="flex items-center justify-between gap-4">
               <div className="flex items-center space-x-3 min-w-0">
                 {onNavigateBack && (
