@@ -111,6 +111,7 @@ import { childProgressSync } from "@/lib/childProgressSync";
 import { toast } from "@/hooks/use-toast";
 import { ParentLearningAnalytics } from "@/components/ParentLearningAnalytics";
 import { ParentLearningAnalyticsDesktop } from "@/components/ParentLearningAnalyticsDesktop";
+import { DesktopQuickActions } from "@/components/DesktopQuickActions";
 import { cn } from "@/lib/utils";
 
 interface LearningGoal {
@@ -1289,7 +1290,7 @@ export const ParentDashboardDesktop: React.FC<ParentDashboardDesktopProps> = ({
               <div>
                 <Label htmlFor="avatar">Avatar</Label>
                 <div className="flex gap-2 mt-2">
-                  {["👶", "👧", "👦", "🧒", "👴", "����"].map(emoji => (
+                  {["👶", "👧", "👦", "🧒", "👴", "👵"].map(emoji => (
                     <Button
                       key={emoji}
                       variant={newChildData.avatar === emoji ? "default" : "outline"}
