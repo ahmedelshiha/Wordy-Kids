@@ -110,6 +110,7 @@ import { SmartWordSelector } from "@/lib/smartWordSelection";
 import { childProgressSync } from "@/lib/childProgressSync";
 import { toast } from "@/hooks/use-toast";
 import { ParentLearningAnalytics } from "@/components/ParentLearningAnalytics";
+import { ParentLearningAnalyticsDesktop } from "@/components/ParentLearningAnalyticsDesktop";
 import { cn } from "@/lib/utils";
 
 interface LearningGoal {
