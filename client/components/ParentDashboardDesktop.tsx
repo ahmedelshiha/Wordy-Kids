@@ -396,11 +396,13 @@ export const ParentDashboardDesktop: React.FC<ParentDashboardDesktopProps> = ({
 
   // Auto-detect state
   const [showAutoDetectDialog, setShowAutoDetectDialog] = useState(false);
-  const [detectedProgress, setDetectedProgress] = useState<Array<{
-    userId: string;
-    userData: any;
-    progressStats: any;
-  }>>([]);
+  const [detectedProgress, setDetectedProgress] = useState<
+    Array<{
+      userId: string;
+      userData: any;
+      progressStats: any;
+    }>
+  >([]);
   const [childNames, setChildNames] = useState<Record<string, string>>({});
 
   // New child data
@@ -442,7 +444,8 @@ export const ParentDashboardDesktop: React.FC<ParentDashboardDesktopProps> = ({
           // Immediately sync with real progress data after loading children
           if (loadedChildren.length > 0) {
             try {
-              const syncedChildren = await childProgressSync.syncAndSaveAllProgress(loadedChildren);
+              const syncedChildren =
+                await childProgressSync.syncAndSaveAllProgress(loadedChildren);
               setChildren(syncedChildren);
 
               // Update family stats with real data
@@ -516,11 +519,11 @@ export const ParentDashboardDesktop: React.FC<ParentDashboardDesktopProps> = ({
         autoRefreshProgress();
       }
     };
-    document.addEventListener('visibilitychange', handleVisibilityChange);
+    document.addEventListener("visibilitychange", handleVisibilityChange);
 
     return () => {
       clearInterval(refreshInterval);
-      document.removeEventListener('visibilitychange', handleVisibilityChange);
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
     };
   }, [children.length, isLoadingProgress, syncChildrenProgress]);
 
@@ -589,7 +592,9 @@ export const ParentDashboardDesktop: React.FC<ParentDashboardDesktopProps> = ({
   }, [isGuest]);
 
   // Helper function to detect existing learning progress for a child
-  const detectExistingProgress = (childName: string): {
+  const detectExistingProgress = (
+    childName: string,
+  ): {
     hasProgress: boolean;
     userId?: string;
     progressData?: any;
@@ -599,7 +604,10 @@ export const ParentDashboardDesktop: React.FC<ParentDashboardDesktopProps> = ({
       const currentUser = localStorage.getItem("wordAdventureCurrentUser");
       if (currentUser) {
         const user = JSON.parse(currentUser);
-        if (user.username && user.username.toLowerCase().includes(childName.toLowerCase())) {
+        if (
+          user.username &&
+          user.username.toLowerCase().includes(childName.toLowerCase())
+        ) {
           return {
             hasProgress: true,
             userId: user.id,
@@ -611,15 +619,18 @@ export const ParentDashboardDesktop: React.FC<ParentDashboardDesktopProps> = ({
       // Check for progress data by scanning localStorage keys
       const keys = Object.keys(localStorage);
       for (const key of keys) {
-        if (key.startsWith('daily_progress_') || key.startsWith('weekly_progress_')) {
+        if (
+          key.startsWith("daily_progress_") ||
+          key.startsWith("weekly_progress_")
+        ) {
           return {
             hasProgress: true,
-            userId: key.split('_')[2], // Extract user ID from key
+            userId: key.split("_")[2], // Extract user ID from key
           };
         }
       }
     } catch (error) {
-      console.error('Error detecting existing progress:', error);
+      console.error("Error detecting existing progress:", error);
     }
 
     return { hasProgress: false };
@@ -649,8 +660,10 @@ export const ParentDashboardDesktop: React.FC<ParentDashboardDesktopProps> = ({
 
           try {
             // Try to get today's progress
-            const todayKey = new Date().toISOString().split('T')[0];
-            const dailyData = localStorage.getItem(`daily_progress_${user.id}_${todayKey}`);
+            const todayKey = new Date().toISOString().split("T")[0];
+            const dailyData = localStorage.getItem(
+              `daily_progress_${user.id}_${todayKey}`,
+            );
             if (dailyData) {
               const parsed = JSON.parse(dailyData);
               progressData.todayProgress = parsed.words || 0;
@@ -663,7 +676,7 @@ export const ParentDashboardDesktop: React.FC<ParentDashboardDesktopProps> = ({
               progressData.currentStreak = parsed.currentStreak || 0;
             }
           } catch (error) {
-            console.error('Error parsing progress data:', error);
+            console.error("Error parsing progress data:", error);
           }
 
           detected.push({
@@ -676,22 +689,23 @@ export const ParentDashboardDesktop: React.FC<ParentDashboardDesktopProps> = ({
 
       // Scan localStorage for progress data patterns
       const keys = Object.keys(localStorage);
-      const progressKeys = keys.filter(key =>
-        key.startsWith('daily_progress_') ||
-        key.startsWith('weekly_progress_') ||
-        key.startsWith('systematic_progress_')
+      const progressKeys = keys.filter(
+        (key) =>
+          key.startsWith("daily_progress_") ||
+          key.startsWith("weekly_progress_") ||
+          key.startsWith("systematic_progress_"),
       );
 
       const userIds = new Set<string>();
-      progressKeys.forEach(key => {
-        const parts = key.split('_');
+      progressKeys.forEach((key) => {
+        const parts = key.split("_");
         if (parts.length >= 3) {
           userIds.add(parts[2]);
         }
       });
 
-      userIds.forEach(userId => {
-        if (!detected.find(d => d.userId === userId)) {
+      userIds.forEach((userId) => {
+        if (!detected.find((d) => d.userId === userId)) {
           try {
             const progressData = {
               totalWordsLearned: 0,
@@ -701,7 +715,7 @@ export const ParentDashboardDesktop: React.FC<ParentDashboardDesktopProps> = ({
             };
 
             // Try to get some basic stats
-            const dailyKey = `daily_progress_${userId}_${new Date().toISOString().split('T')[0]}`;
+            const dailyKey = `daily_progress_${userId}_${new Date().toISOString().split("T")[0]}`;
             const dailyData = localStorage.getItem(dailyKey);
             if (dailyData) {
               const parsed = JSON.parse(dailyData);
@@ -714,7 +728,7 @@ export const ParentDashboardDesktop: React.FC<ParentDashboardDesktopProps> = ({
               progressStats: progressData,
             });
           } catch (error) {
-            console.error('Error processing user progress:', error);
+            console.error("Error processing user progress:", error);
           }
         }
       });
@@ -736,7 +750,7 @@ export const ParentDashboardDesktop: React.FC<ParentDashboardDesktopProps> = ({
         });
       }
     } catch (error) {
-      console.error('Error scanning for progress:', error);
+      console.error("Error scanning for progress:", error);
       toast({
         title: "Scan Error",
         description: "Error scanning for existing progress",
@@ -747,51 +761,54 @@ export const ParentDashboardDesktop: React.FC<ParentDashboardDesktopProps> = ({
   }, []);
 
   // Handle connecting detected progress to new child
-  const connectDetectedProgress = useCallback((progressData: any, childName: string) => {
-    const newChild: ChildProfile = {
-      id: progressData.userId,
-      name: childName,
-      age: 8, // Default age
-      avatar: "🧒",
-      level: progressData.userData?.level || 1,
-      totalPoints: progressData.userData?.points || 0,
-      wordsLearned: progressData.progressStats?.totalWordsLearned || 0,
-      currentStreak: progressData.progressStats?.currentStreak || 0,
-      weeklyGoal: 15,
-      weeklyProgress: progressData.progressStats?.weeklyProgress || 0,
-      favoriteCategory: "Animals",
-      lastActive: new Date(),
-      preferredLearningTime: "After school",
-      difficultyPreference: "medium",
-      parentNotes: "Connected from existing learning progress",
-      customWords: [],
-      weeklyTarget: 15,
-      monthlyTarget: 60,
-      recentAchievements: [],
-      learningStrengths: [],
-      areasForImprovement: [],
-      motivationalRewards: [],
-      learningGoals: [],
-      learningPreferences: {
-        autoAdjustGoals: true,
-        adaptiveDifficulty: true,
-        preferredCategories: ["Animals"],
-        focusAreas: [],
-        reminderTimes: ["16:00"],
-        motivationStyle: "encouraging",
-      },
-    };
+  const connectDetectedProgress = useCallback(
+    (progressData: any, childName: string) => {
+      const newChild: ChildProfile = {
+        id: progressData.userId,
+        name: childName,
+        age: 8, // Default age
+        avatar: "🧒",
+        level: progressData.userData?.level || 1,
+        totalPoints: progressData.userData?.points || 0,
+        wordsLearned: progressData.progressStats?.totalWordsLearned || 0,
+        currentStreak: progressData.progressStats?.currentStreak || 0,
+        weeklyGoal: 15,
+        weeklyProgress: progressData.progressStats?.weeklyProgress || 0,
+        favoriteCategory: "Animals",
+        lastActive: new Date(),
+        preferredLearningTime: "After school",
+        difficultyPreference: "medium",
+        parentNotes: "Connected from existing learning progress",
+        customWords: [],
+        weeklyTarget: 15,
+        monthlyTarget: 60,
+        recentAchievements: [],
+        learningStrengths: [],
+        areasForImprovement: [],
+        motivationalRewards: [],
+        learningGoals: [],
+        learningPreferences: {
+          autoAdjustGoals: true,
+          adaptiveDifficulty: true,
+          preferredCategories: ["Animals"],
+          focusAreas: [],
+          reminderTimes: ["16:00"],
+          motivationStyle: "encouraging",
+        },
+      };
 
-    setChildren(prev => [...prev, newChild]);
-    setSelectedChild(newChild);
-    setShowAutoDetectDialog(false);
+      setChildren((prev) => [...prev, newChild]);
+      setSelectedChild(newChild);
+      setShowAutoDetectDialog(false);
 
-    toast({
-      title: "Child Connected!",
-      description: `${childName} has been connected with their learning progress`,
-      duration: 4000,
-    });
-  }, []);
+      toast({
+        title: "Child Connected!",
+        description: `${childName} has been connected with their learning progress`,
+        duration: 4000,
+      });
+    },
+    [],
+  );
 
   // Handle add child form
   const addChild = useCallback(() => {
@@ -851,7 +868,11 @@ export const ParentDashboardDesktop: React.FC<ParentDashboardDesktopProps> = ({
       if (existingProgress.hasProgress) {
         setTimeout(async () => {
           try {
-            const syncedChildren = await childProgressSync.syncAndSaveAllProgress([...children, newChild]);
+            const syncedChildren =
+              await childProgressSync.syncAndSaveAllProgress([
+                ...children,
+                newChild,
+              ]);
             setChildren(syncedChildren);
             const stats = childProgressSync.getFamilyStats(syncedChildren);
             setFamilyStats(stats);
@@ -862,7 +883,7 @@ export const ParentDashboardDesktop: React.FC<ParentDashboardDesktopProps> = ({
               duration: 4000,
             });
           } catch (error) {
-            console.error('Error syncing new child progress:', error);
+            console.error("Error syncing new child progress:", error);
           }
         }, 500);
       } else {
@@ -1220,7 +1241,9 @@ export const ParentDashboardDesktop: React.FC<ParentDashboardDesktopProps> = ({
                           className="shrink-0"
                         >
                           <Search className="h-4 w-4 lg:mr-2" />
-                          <span className="hidden lg:inline">Detect Progress</span>
+                          <span className="hidden lg:inline">
+                            Detect Progress
+                          </span>
                         </Button>
                       </TooltipTrigger>
                       <TooltipContent>
@@ -2176,7 +2199,10 @@ export const ParentDashboardDesktop: React.FC<ParentDashboardDesktopProps> = ({
         )}
 
         {/* Auto-Detect Progress Dialog */}
-        <Dialog open={showAutoDetectDialog} onOpenChange={setShowAutoDetectDialog}>
+        <Dialog
+          open={showAutoDetectDialog}
+          onOpenChange={setShowAutoDetectDialog}
+        >
           <DialogContent className="sm:max-w-2xl">
             <DialogHeader>
               <DialogTitle className="flex items-center gap-2">
@@ -2184,13 +2210,15 @@ export const ParentDashboardDesktop: React.FC<ParentDashboardDesktopProps> = ({
                 Found Learning Progress!
               </DialogTitle>
               <DialogDescription>
-                We found existing learning progress data. Connect these learners to your parent dashboard:
+                We found existing learning progress data. Connect these learners
+                to your parent dashboard:
               </DialogDescription>
             </DialogHeader>
 
             <div className="space-y-4 max-h-96 overflow-y-auto">
               {detectedProgress.map((progress, index) => {
-                const childName = childNames[progress.userId] || `Learner ${index + 1}`;
+                const childName =
+                  childNames[progress.userId] || `Learner ${index + 1}`;
 
                 return (
                   <Card key={progress.userId} className="p-4">
@@ -2202,10 +2230,12 @@ export const ParentDashboardDesktop: React.FC<ParentDashboardDesktopProps> = ({
                             <Input
                               placeholder="Enter child's name"
                               value={childName}
-                              onChange={(e) => setChildNames(prev => ({
-                                ...prev,
-                                [progress.userId]: e.target.value
-                              }))}
+                              onChange={(e) =>
+                                setChildNames((prev) => ({
+                                  ...prev,
+                                  [progress.userId]: e.target.value,
+                                }))
+                              }
                               className="text-sm"
                             />
                             <p className="text-xs text-muted-foreground mt-1">
@@ -2219,25 +2249,33 @@ export const ParentDashboardDesktop: React.FC<ParentDashboardDesktopProps> = ({
                             <div className="font-semibold text-blue-600">
                               {progress.progressStats?.totalWordsLearned || 0}
                             </div>
-                            <div className="text-xs text-blue-700">Words Learned</div>
+                            <div className="text-xs text-blue-700">
+                              Words Learned
+                            </div>
                           </div>
                           <div className="text-center p-2 bg-green-50 rounded">
                             <div className="font-semibold text-green-600">
                               {progress.progressStats?.currentStreak || 0}
                             </div>
-                            <div className="text-xs text-green-700">Current Streak</div>
+                            <div className="text-xs text-green-700">
+                              Current Streak
+                            </div>
                           </div>
                           <div className="text-center p-2 bg-orange-50 rounded">
                             <div className="font-semibold text-orange-600">
                               {progress.progressStats?.todayProgress || 0}
                             </div>
-                            <div className="text-xs text-orange-700">Today's Words</div>
+                            <div className="text-xs text-orange-700">
+                              Today's Words
+                            </div>
                           </div>
                         </div>
                       </div>
 
                       <Button
-                        onClick={() => connectDetectedProgress(progress, childName)}
+                        onClick={() =>
+                          connectDetectedProgress(progress, childName)
+                        }
                         disabled={!childName.trim()}
                         className="ml-4"
                       >
@@ -2250,7 +2288,10 @@ export const ParentDashboardDesktop: React.FC<ParentDashboardDesktopProps> = ({
             </div>
 
             <DialogFooter>
-              <Button variant="outline" onClick={() => setShowAutoDetectDialog(false)}>
+              <Button
+                variant="outline"
+                onClick={() => setShowAutoDetectDialog(false)}
+              >
                 Skip for Now
               </Button>
             </DialogFooter>

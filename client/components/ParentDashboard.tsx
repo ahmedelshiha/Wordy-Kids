@@ -549,7 +549,8 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
           // Immediately sync with real progress data after loading children
           if (loadedChildren.length > 0) {
             try {
-              const syncedChildren = await childProgressSync.syncAndSaveAllProgress(loadedChildren);
+              const syncedChildren =
+                await childProgressSync.syncAndSaveAllProgress(loadedChildren);
               setChildren(syncedChildren);
 
               // Update family stats with real data
@@ -843,7 +844,8 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
 
     // Set up periodic refresh every 30 seconds for real-time updates
     refreshInterval = setInterval(() => {
-      if (mounted && !document.hidden) { // Only refresh when tab is visible
+      if (mounted && !document.hidden) {
+        // Only refresh when tab is visible
         loadAndSyncProgress();
       }
     }, 30000);
@@ -854,12 +856,12 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
         loadAndSyncProgress();
       }
     };
-    document.addEventListener('visibilitychange', handleVisibilityChange);
+    document.addEventListener("visibilitychange", handleVisibilityChange);
 
     return () => {
       mounted = false;
       clearInterval(refreshInterval);
-      document.removeEventListener('visibilitychange', handleVisibilityChange);
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
     };
   }, [children.length, selectedChild?.id, isLoadingProgress]); // Added isLoadingProgress dependency
 
