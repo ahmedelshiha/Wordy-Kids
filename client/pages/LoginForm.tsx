@@ -216,6 +216,18 @@ export default function LoginForm() {
           localStorage.removeItem("rememberedEmail");
         }
 
+        // Create user profile for auth context
+        const userProfile = {
+          id: user?.id || `demo-${email.split('@')[0]}`,
+          name: user?.name || email.split('@')[0],
+          email: email,
+          type: 'parent' as const,
+          isGuest: false,
+        };
+
+        // Login using auth context
+        login(userProfile);
+
         setMessage({
           type: "success",
           text: "Welcome back! Taking you to your dashboard...",
