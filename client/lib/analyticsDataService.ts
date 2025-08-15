@@ -204,8 +204,8 @@ export class AnalyticsDataService {
       {
         id: "avg_session_time",
         name: "Avg Session Time",
-        value: avgSessionTime.current,
-        previousValue: avgSessionTime.previous,
+        value: this.validateNumber(avgSessionTime.current),
+        previousValue: this.validateNumber(avgSessionTime.previous),
         unit: "min",
         trend: this.getTrend(avgSessionTime.current, avgSessionTime.previous),
         changePercent: this.getChangePercent(
@@ -218,8 +218,8 @@ export class AnalyticsDataService {
       {
         id: "completion_rate",
         name: "Completion Rate",
-        value: completionRate.current,
-        previousValue: completionRate.previous,
+        value: this.validateNumber(completionRate.current),
+        previousValue: this.validateNumber(completionRate.previous),
         unit: "%",
         trend: this.getTrend(completionRate.current, completionRate.previous),
         changePercent: this.getChangePercent(
@@ -232,8 +232,8 @@ export class AnalyticsDataService {
       {
         id: "user_satisfaction",
         name: "User Satisfaction",
-        value: userSatisfaction.current,
-        previousValue: userSatisfaction.previous,
+        value: this.validateNumber(userSatisfaction.current),
+        previousValue: this.validateNumber(userSatisfaction.previous),
         unit: "/5",
         trend: this.getTrend(
           userSatisfaction.current,
@@ -249,8 +249,8 @@ export class AnalyticsDataService {
       {
         id: "retention_rate",
         name: "7-Day Retention",
-        value: retentionRate.current,
-        previousValue: retentionRate.previous,
+        value: this.validateNumber(retentionRate.current),
+        previousValue: this.validateNumber(retentionRate.previous),
         unit: "%",
         trend: this.getTrend(retentionRate.current, retentionRate.previous),
         changePercent: this.getChangePercent(
