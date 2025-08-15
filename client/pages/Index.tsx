@@ -52,6 +52,7 @@ import { WordCreator } from "@/components/WordCreator";
 import { AdventureDashboard } from "@/components/AdventureDashboard";
 import { MobileBottomNav } from "@/components/MobileBottomNav";
 import { adventureService } from "@/lib/adventureService";
+import { goalProgressTracker } from "@/lib/goalProgressTracker";
 import {
   wordsDatabase,
   getWordsByCategory,
