@@ -113,6 +113,8 @@ import { ParentLearningAnalytics } from "@/components/ParentLearningAnalytics";
 import { ParentLearningAnalyticsDesktop } from "@/components/ParentLearningAnalyticsDesktop";
 import { DesktopQuickActions } from "@/components/DesktopQuickActions";
 import { cn } from "@/lib/utils";
+import "@/styles/desktop-parent-dashboard.css";
+import "@/styles/parent-dashboard-overflow-fixes.css";
 
 interface LearningGoal {
   id: string;
@@ -694,12 +696,14 @@ export const ParentDashboardDesktop: React.FC<ParentDashboardDesktopProps> = ({
 
   return (
     <TooltipProvider>
-      <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50">
+      <div className="parent-dashboard-container min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50">
         {/* Desktop Sidebar */}
         <div
           className={cn(
-            "fixed left-0 top-0 h-full bg-white border-r border-slate-200 transition-all duration-300 z-40",
-            sidebarCollapsed ? "w-16" : "w-64",
+            "dashboard-sidebar fixed left-0 top-0 h-full bg-white border-r border-slate-200 transition-all duration-300 z-40 flex flex-col",
+            sidebarCollapsed
+              ? "w-16 sidebar-collapsed"
+              : "w-64 sidebar-expanded",
           )}
         >
           {/* Sidebar Header */}
@@ -725,64 +729,100 @@ export const ParentDashboardDesktop: React.FC<ParentDashboardDesktopProps> = ({
           </div>
 
           {/* Sidebar Navigation */}
-          <div className="p-2">
-            {sidebarItems.map((item) => (
-              <Tooltip key={item.id} delayDuration={0}>
-                <TooltipTrigger asChild>
-                  <Button
-                    variant={activeTab === item.id ? "default" : "ghost"}
-                    className={cn(
-                      "w-full justify-start mb-1 h-10",
-                      sidebarCollapsed && "px-2 justify-center",
-                    )}
-                    onClick={() => setActiveTab(item.id)}
-                  >
-                    <item.icon
-                      className={cn("h-4 w-4", !sidebarCollapsed && "mr-3")}
-                    />
-                    {!sidebarCollapsed && (
-                      <>
-                        <span className="flex-1 text-left">{item.label}</span>
-                        {item.badge && item.badge > 0 && (
-                          <Badge variant="secondary" className="ml-auto">
-                            {item.badge}
-                          </Badge>
+          <div className="p-2 flex-1 overflow-y-auto">
+            <nav
+              className="space-y-1"
+              role="navigation"
+              aria-label="Dashboard navigation"
+            >
+              {sidebarItems.map((item) => (
+                <Tooltip key={item.id} delayDuration={0}>
+                  <TooltipTrigger asChild>
+                    <Button
+                      variant={activeTab === item.id ? "default" : "ghost"}
+                      className={cn(
+                        "sidebar-nav-item w-full justify-start mb-1 h-10 relative",
+                        sidebarCollapsed && "px-2 justify-center",
+                        activeTab === item.id && "active",
+                      )}
+                      onClick={() => setActiveTab(item.id)}
+                      aria-current={activeTab === item.id ? "page" : undefined}
+                    >
+                      <item.icon
+                        className={cn(
+                          "h-4 w-4 shrink-0",
+                          !sidebarCollapsed && "mr-3",
                         )}
-                      </>
-                    )}
-                  </Button>
-                </TooltipTrigger>
-                {sidebarCollapsed && (
-                  <TooltipContent side="right">
-                    <p>{item.label}</p>
-                  </TooltipContent>
-                )}
-              </Tooltip>
-            ))}
+                      />
+                      {!sidebarCollapsed && (
+                        <>
+                          <span className="flex-1 text-left truncate">
+                            {item.label}
+                          </span>
+                          {item.badge && item.badge > 0 && (
+                            <Badge
+                              variant="secondary"
+                              className="ml-auto shrink-0 text-xs px-1.5 py-0.5"
+                            >
+                              {item.badge > 99 ? "99+" : item.badge}
+                            </Badge>
+                          )}
+                        </>
+                      )}
+                      {sidebarCollapsed && item.badge && item.badge > 0 && (
+                        <div className="notification-badge absolute">
+                          {item.badge > 9 ? "9+" : item.badge}
+                        </div>
+                      )}
+                    </Button>
+                  </TooltipTrigger>
+                  {sidebarCollapsed && (
+                    <TooltipContent side="right">
+                      <p>{item.label}</p>
+                      {item.badge && item.badge > 0 && (
+                        <p className="text-xs opacity-75">
+                          {item.badge} active
+                        </p>
+                      )}
+                    </TooltipContent>
+                  )}
+                </Tooltip>
+              ))}
+            </nav>
           </div>
 
           {/* Quick Stats in Sidebar */}
           {!sidebarCollapsed && (
-            <div className="p-4 mt-4 border-t border-slate-200">
-              <h3 className="font-medium text-sm text-slate-700 mb-3">
+            <div className="p-4 mt-auto border-t border-slate-200 shrink-0">
+              <h3 className="font-medium text-sm text-slate-700 mb-3 truncate">
                 Quick Stats
               </h3>
               <div className="space-y-2">
-                <div className="flex justify-between items-center">
-                  <span className="text-xs text-slate-600">
+                <div className="flex justify-between items-center gap-2">
+                  <span className="text-xs text-slate-600 truncate">
                     Active Children
                   </span>
-                  <Badge variant="outline">{children.length}</Badge>
-                </div>
-                <div className="flex justify-between items-center">
-                  <span className="text-xs text-slate-600">Total Words</span>
-                  <Badge variant="outline">
-                    {familyStats.totalWordsLearned}
+                  <Badge variant="outline" className="shrink-0">
+                    {children.length}
                   </Badge>
                 </div>
-                <div className="flex justify-between items-center">
-                  <span className="text-xs text-slate-600">Best Streak</span>
-                  <Badge variant="outline">{familyStats.longestStreak}</Badge>
+                <div className="flex justify-between items-center gap-2">
+                  <span className="text-xs text-slate-600 truncate">
+                    Total Words
+                  </span>
+                  <Badge variant="outline" className="shrink-0">
+                    {familyStats.totalWordsLearned > 999
+                      ? `${Math.floor(familyStats.totalWordsLearned / 1000)}k`
+                      : familyStats.totalWordsLearned}
+                  </Badge>
+                </div>
+                <div className="flex justify-between items-center gap-2">
+                  <span className="text-xs text-slate-600 truncate">
+                    Best Streak
+                  </span>
+                  <Badge variant="outline" className="shrink-0">
+                    {familyStats.longestStreak}
+                  </Badge>
                 </div>
               </div>
             </div>
@@ -792,39 +832,45 @@ export const ParentDashboardDesktop: React.FC<ParentDashboardDesktopProps> = ({
         {/* Main Content */}
         <div
           className={cn(
-            "transition-all duration-300",
+            "dashboard-main-content transition-all duration-300 min-w-0",
             sidebarCollapsed ? "ml-16" : "ml-64",
           )}
         >
           {/* Header */}
-          <div className="bg-white border-b border-slate-200 px-6 py-4">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center space-x-4">
+          <div className="dashboard-header bg-white border-b border-slate-200 px-4 lg:px-6 py-4">
+            <div className="flex items-center justify-between gap-4">
+              <div className="flex items-center space-x-3 min-w-0">
                 {onNavigateBack && (
-                  <Button variant="ghost" size="sm" onClick={onNavigateBack}>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={onNavigateBack}
+                    className="shrink-0"
+                  >
                     <ArrowLeft className="h-4 w-4 mr-2" />
-                    Back to Learning
+                    <span className="hidden sm:inline">Back to Learning</span>
+                    <span className="sm:hidden">Back</span>
                   </Button>
                 )}
-                <div>
-                  <h1 className="text-2xl font-bold text-slate-800">
+                <div className="min-w-0">
+                  <h1 className="text-xl lg:text-2xl font-bold text-slate-800 truncate">
                     {sidebarItems.find((item) => item.id === activeTab)
                       ?.label || "Dashboard"}
                   </h1>
-                  <p className="text-slate-600">
+                  <p className="text-sm text-slate-600 truncate">
                     {children.length} active learner
                     {children.length !== 1 ? "s" : ""}
                   </p>
                 </div>
               </div>
 
-              <div className="flex items-center space-x-3">
-                {/* Time Range Selector */}
+              <div className="flex items-center gap-2 shrink-0">
+                {/* Time Range Selector - Hidden on smaller screens */}
                 <Select
                   value={selectedTimeRange}
                   onValueChange={setSelectedTimeRange}
                 >
-                  <SelectTrigger className="w-32">
+                  <SelectTrigger className="w-24 lg:w-32 hidden md:flex">
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
@@ -834,8 +880,8 @@ export const ParentDashboardDesktop: React.FC<ParentDashboardDesktopProps> = ({
                   </SelectContent>
                 </Select>
 
-                {/* View Mode Toggle */}
-                <div className="flex items-center border rounded-lg">
+                {/* View Mode Toggle - Hidden on mobile */}
+                <div className="hidden lg:flex items-center border rounded-lg shrink-0">
                   <Button
                     variant={viewMode === "grid" ? "default" : "ghost"}
                     size="sm"
@@ -854,93 +900,154 @@ export const ParentDashboardDesktop: React.FC<ParentDashboardDesktopProps> = ({
                   </Button>
                 </div>
 
-                {/* Refresh Button */}
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      onClick={syncChildrenProgress}
-                      disabled={isLoadingProgress}
-                    >
-                      <RefreshCw
-                        className={cn(
-                          "h-4 w-4",
-                          isLoadingProgress && "animate-spin",
+                {/* Action Buttons Group */}
+                <div className="flex items-center gap-2 shrink-0">
+                  {/* Refresh Button */}
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={syncChildrenProgress}
+                        disabled={isLoadingProgress}
+                        className="shrink-0"
+                      >
+                        <RefreshCw
+                          className={cn(
+                            "h-4 w-4",
+                            isLoadingProgress && "animate-spin",
+                          )}
+                        />
+                      </Button>
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      <p>Refresh Data (Ctrl+R)</p>
+                    </TooltipContent>
+                  </Tooltip>
+
+                  {/* Add Child Button */}
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <Button
+                        onClick={handleAddChildClick}
+                        className="shrink-0"
+                      >
+                        <UserPlus className="h-4 w-4 lg:mr-2" />
+                        <span className="hidden lg:inline">Add Child</span>
+                      </Button>
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      <p>Add New Child (Ctrl+N)</p>
+                    </TooltipContent>
+                  </Tooltip>
+
+                  {/* More Actions Dropdown for smaller screens */}
+                  <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        className="lg:hidden shrink-0"
+                      >
+                        <MoreHorizontal className="h-4 w-4" />
+                      </Button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent align="end">
+                      <DropdownMenuItem
+                        onClick={() =>
+                          setViewMode(viewMode === "grid" ? "list" : "grid")
+                        }
+                      >
+                        {viewMode === "grid" ? (
+                          <List className="mr-2 h-4 w-4" />
+                        ) : (
+                          <Grid3x3 className="mr-2 h-4 w-4" />
                         )}
-                      />
-                    </Button>
-                  </TooltipTrigger>
-                  <TooltipContent>
-                    <p>Refresh Data (Ctrl+R)</p>
-                  </TooltipContent>
-                </Tooltip>
-
-                {/* Add Child Button */}
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <Button onClick={handleAddChildClick}>
-                      <UserPlus className="h-4 w-4 mr-2" />
-                      Add Child
-                    </Button>
-                  </TooltipTrigger>
-                  <TooltipContent>
-                    <p>Add New Child (Ctrl+N)</p>
-                  </TooltipContent>
-                </Tooltip>
-
-                {/* User Menu */}
-                <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <Button
-                      variant="ghost"
-                      className="relative h-8 w-8 rounded-full"
-                    >
-                      <div className="h-8 w-8 rounded-full bg-gradient-to-r from-blue-500 to-purple-600 flex items-center justify-center text-white text-sm font-medium">
-                        {user?.email?.[0]?.toUpperCase() || "P"}
-                      </div>
-                    </Button>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent className="w-56" align="end" forceMount>
-                    <DropdownMenuLabel className="font-normal">
-                      <div className="flex flex-col space-y-1">
-                        <p className="text-sm font-medium leading-none">
-                          Parent Dashboard
-                        </p>
-                        <p className="text-xs leading-none text-muted-foreground">
-                          {user?.email || "Guest User"}
-                        </p>
-                      </div>
-                    </DropdownMenuLabel>
-                    <DropdownMenuSeparator />
-                    <DropdownMenuItem onClick={() => setActiveTab("settings")}>
-                      <Settings className="mr-2 h-4 w-4" />
-                      <span>Settings</span>
-                    </DropdownMenuItem>
-                    <DropdownMenuItem>
-                      <Download className="mr-2 h-4 w-4" />
-                      <span>Export Data</span>
-                    </DropdownMenuItem>
-                    <DropdownMenuSeparator />
-                    {isGuest ? (
-                      <DropdownMenuItem onClick={() => navigate("/signup")}>
-                        <UserPlus className="mr-2 h-4 w-4" />
-                        <span>Create Account</span>
+                        <span>
+                          {viewMode === "grid" ? "List View" : "Grid View"}
+                        </span>
                       </DropdownMenuItem>
-                    ) : (
                       <DropdownMenuItem>
-                        <ArrowLeft className="mr-2 h-4 w-4" />
-                        <span>Sign Out</span>
+                        <CalendarIcon className="mr-2 h-4 w-4" />
+                        <span>Time Range</span>
                       </DropdownMenuItem>
-                    )}
-                  </DropdownMenuContent>
-                </DropdownMenu>
+                      <DropdownMenuSeparator />
+                      <DropdownMenuItem
+                        onClick={() => setActiveTab("settings")}
+                      >
+                        <Settings className="mr-2 h-4 w-4" />
+                        <span>Settings</span>
+                      </DropdownMenuItem>
+                      <DropdownMenuItem onClick={handleExportData}>
+                        <Download className="mr-2 h-4 w-4" />
+                        <span>Export Data</span>
+                      </DropdownMenuItem>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
+
+                  {/* User Menu */}
+                  <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                      <Button
+                        variant="ghost"
+                        className="relative h-8 w-8 rounded-full shrink-0"
+                      >
+                        <div className="h-8 w-8 rounded-full bg-gradient-to-r from-blue-500 to-purple-600 flex items-center justify-center text-white text-sm font-medium">
+                          {user?.email?.[0]?.toUpperCase() || "P"}
+                        </div>
+                      </Button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent
+                      className="w-56"
+                      align="end"
+                      forceMount
+                    >
+                      <DropdownMenuLabel className="font-normal">
+                        <div className="flex flex-col space-y-1">
+                          <p className="text-sm font-medium leading-none">
+                            Parent Dashboard
+                          </p>
+                          <p className="text-xs leading-none text-muted-foreground">
+                            {user?.email || "Guest User"}
+                          </p>
+                        </div>
+                      </DropdownMenuLabel>
+                      <DropdownMenuSeparator />
+                      <DropdownMenuItem
+                        onClick={() => setActiveTab("settings")}
+                        className="hidden lg:flex"
+                      >
+                        <Settings className="mr-2 h-4 w-4" />
+                        <span>Settings</span>
+                      </DropdownMenuItem>
+                      <DropdownMenuItem
+                        onClick={handleExportData}
+                        className="hidden lg:flex"
+                      >
+                        <Download className="mr-2 h-4 w-4" />
+                        <span>Export Data</span>
+                      </DropdownMenuItem>
+                      <DropdownMenuSeparator className="hidden lg:block" />
+                      {isGuest ? (
+                        <DropdownMenuItem onClick={() => navigate("/signup")}>
+                          <UserPlus className="mr-2 h-4 w-4" />
+                          <span>Create Account</span>
+                        </DropdownMenuItem>
+                      ) : (
+                        <DropdownMenuItem>
+                          <ArrowLeft className="mr-2 h-4 w-4" />
+                          <span>Sign Out</span>
+                        </DropdownMenuItem>
+                      )}
+                    </DropdownMenuContent>
+                  </DropdownMenu>
+                </div>
               </div>
             </div>
           </div>
 
           {/* Content Area */}
-          <div className="p-6">
+          <div className="dashboard-content p-4 lg:p-6 min-w-0">
             {activeTab === "overview" && (
               <div className="space-y-6">
                 {/* Family Overview Cards */}
@@ -1163,40 +1270,42 @@ export const ParentDashboardDesktop: React.FC<ParentDashboardDesktopProps> = ({
                 ) : (
                   <div
                     className={cn(
-                      "gap-6",
+                      "gap-4 lg:gap-6 min-w-0",
                       viewMode === "grid"
-                        ? "grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3"
-                        : "space-y-4",
+                        ? "children-grid-view grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4"
+                        : "children-list-view space-y-4",
                     )}
                   >
                     {children.map((child) => (
                       <Card
                         key={child.id}
                         className={cn(
-                          "cursor-pointer hover:shadow-lg transition-all duration-200 border-l-4 border-l-blue-500",
+                          "dashboard-card cursor-pointer hover:shadow-lg transition-all duration-200 border-l-4 border-l-blue-500 min-w-0",
                           selectedChild?.id === child.id &&
-                            "ring-2 ring-blue-500 ring-opacity-50",
+                            "selected ring-2 ring-blue-500 ring-opacity-50",
                         )}
                         onClick={() => setSelectedChild(child)}
                       >
                         <CardHeader className="pb-4">
                           <div className="flex items-center justify-between">
-                            <div className="flex items-center space-x-3">
-                              <div className="text-3xl">{child.avatar}</div>
-                              <div>
-                                <CardTitle className="text-lg">
+                            <div className="flex items-center space-x-3 min-w-0">
+                              <div className="text-3xl shrink-0">
+                                {child.avatar}
+                              </div>
+                              <div className="min-w-0 flex-1">
+                                <CardTitle className="text-lg truncate">
                                   {child.name}
                                 </CardTitle>
-                                <p className="text-sm text-slate-600">
+                                <p className="text-sm text-slate-600 truncate">
                                   {child.age} years old • Level {child.level}
                                 </p>
                               </div>
                             </div>
-                            <div className="text-right">
-                              <Badge variant="outline" className="mb-1">
+                            <div className="text-right shrink-0">
+                              <Badge variant="outline" className="mb-1 text-xs">
                                 {getTimeAgo(child.lastActive)}
                               </Badge>
-                              <p className="text-xs text-slate-500">
+                              <p className="text-xs text-slate-500 whitespace-nowrap">
                                 Last active
                               </p>
                             </div>
@@ -1247,27 +1356,27 @@ export const ParentDashboardDesktop: React.FC<ParentDashboardDesktopProps> = ({
                             <Button
                               variant="outline"
                               size="sm"
-                              className="flex-1"
+                              className="flex-1 min-w-0"
                               onClick={(e) => {
                                 e.stopPropagation();
                                 handleOpenLearningGoals(child);
                               }}
                             >
-                              <Target className="h-4 w-4 mr-1" />
-                              Goals
+                              <Target className="h-4 w-4 shrink-0 mr-1" />
+                              <span className="truncate">Goals</span>
                             </Button>
                             <Button
                               variant="outline"
                               size="sm"
-                              className="flex-1"
+                              className="flex-1 min-w-0"
                               onClick={(e) => {
                                 e.stopPropagation();
                                 setActiveTab("analytics");
                                 setSelectedChild(child);
                               }}
                             >
-                              <BarChart3 className="h-4 w-4 mr-1" />
-                              Analytics
+                              <BarChart3 className="h-4 w-4 shrink-0 mr-1" />
+                              <span className="truncate">Analytics</span>
                             </Button>
                           </div>
                         </CardContent>
@@ -1644,7 +1753,7 @@ export const ParentDashboardDesktop: React.FC<ParentDashboardDesktopProps> = ({
               <div>
                 <Label htmlFor="avatar">Avatar</Label>
                 <div className="flex gap-2 mt-2">
-                  {["👶", "👧", "👦", "🧒", "👴", "👵"].map((emoji) => (
+                  {["���", "👧", "👦", "🧒", "👴", "👵"].map((emoji) => (
                     <Button
                       key={emoji}
                       variant={
