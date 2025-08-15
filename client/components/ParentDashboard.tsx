@@ -800,10 +800,9 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
       return;
     }
 
-    console.log("Starting sync for children:", children.map(c => ({id: c.id, name: c.name})));
     setIsLoadingProgress(true);
     try {
-      console.log("Syncing children progress...");
+      console.log("Syncing progress for", children.length, "children");
       const updatedChildren =
         await childProgressSync.syncAndSaveAllProgress(children);
       setChildren(updatedChildren);
