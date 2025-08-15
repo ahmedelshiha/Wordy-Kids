@@ -17,31 +17,22 @@
 
 /* Sidebar layout fixes */
 .dashboard-sidebar {
-  position: fixed;
-  left: 0;
-  top: 0;
   height: 100vh;
-  z-index: 40;
   background: white;
   border-right: 1px solid #e2e8f0;
   display: flex;
   flex-direction: column;
   overflow: hidden;
+  flex-shrink: 0;
 }
 
 /* Main content area layout */
 .dashboard-main-content {
   flex: 1;
-  margin-left: 256px; /* Default expanded sidebar width */
   min-height: 100vh;
-  width: calc(100% - 256px);
   overflow-x: hidden;
-}
-
-/* Adjust main content when sidebar is collapsed */
-.sidebar-collapsed + .dashboard-main-content {
-  margin-left: 64px;
-  width: calc(100% - 64px);
+  display: flex;
+  flex-direction: column;
 }
 
 /* Header styling */
