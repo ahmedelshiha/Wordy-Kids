@@ -502,6 +502,8 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
   const [showAddChildDialog, setShowAddChildDialog] = useState(false);
   const [showAddGoalDialog, setShowAddGoalDialog] = useState(false);
   const [showCustomWordDialog, setShowCustomWordDialog] = useState(false);
+  const [showLearningGoalsPanel, setShowLearningGoalsPanel] = useState(false);
+  const [learningGoalsChild, setLearningGoalsChild] = useState<ChildProfile | null>(null);
   const [newChildData, setNewChildData] = useState({
     name: "",
     age: 6,
