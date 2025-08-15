@@ -320,24 +320,29 @@ const AdvancedAnalyticsDashboard: React.FC = () => {
                     ) : null}
                     <span
                       className={`text-sm font-medium ${
-                      metric.trend === "up"
-                        ? "text-green-600"
-                        : metric.trend === "down"
-                          ? "text-red-600"
-                          : "text-gray-600"
-                    }`}
-                  >
-                    {metric.changePercent > 0 ? "+" : ""}
-                    {isFinite(metric.changePercent) ? metric.changePercent : 0}%
-                  </span>
+                        metric.trend === "up"
+                          ? "text-green-600"
+                          : metric.trend === "down"
+                            ? "text-red-600"
+                            : "text-gray-600"
+                      }`}
+                    >
+                      {metric.changePercent > 0 ? "+" : ""}
+                      {isFinite(metric.changePercent)
+                        ? metric.changePercent
+                        : 0}
+                      %
+                    </span>
                   </div>
                 </div>
                 <div className="space-y-2">
                   <h3 className="font-medium text-slate-600">{metric.name}</h3>
                   <div className="flex items-baseline gap-2">
                     <span className="text-3xl font-bold text-slate-800">
-                    <AnimatedCounter value={isFinite(metric.value) ? metric.value : 0} />
-                  </span>
+                      <AnimatedCounter
+                        value={isFinite(metric.value) ? metric.value : 0}
+                      />
+                    </span>
                     <span className="text-slate-500">{metric.unit}</span>
                   </div>
                   <p className="text-xs text-slate-500">
