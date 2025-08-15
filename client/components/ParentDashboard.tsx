@@ -1464,10 +1464,11 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
 
         {/* Tabs */}
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-          <TabsList className="grid grid-cols-3 w-full lg:w-auto lg:grid-cols-3">
+          <TabsList className="grid grid-cols-4 w-full lg:w-auto lg:grid-cols-4">
             <TabsTrigger value="overview">Overview</TabsTrigger>
             <TabsTrigger value="goals">Goals</TabsTrigger>
             <TabsTrigger value="analytics">Analytics</TabsTrigger>
+            <TabsTrigger value="advanced">Advanced</TabsTrigger>
           </TabsList>
 
           <div className="mt-6">
