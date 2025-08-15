@@ -349,8 +349,9 @@ export const ParentDashboardDesktop: React.FC<ParentDashboardDesktopProps> = ({
   const [isLoadingProgress, setIsLoadingProgress] = useState(false);
   
   // Quick actions state
-  const [quickActionsVisible, setQuickActionsVisible] = useState(true);
+  const [quickActionsVisible, setQuickActionsVisible] = useState(false);
   const [notificationsOpen, setNotificationsOpen] = useState(false);
+  const [notificationCount, setNotificationCount] = useState(0);
   
   // Analytics state
   const [analyticsExpanded, setAnalyticsExpanded] = useState(false);
