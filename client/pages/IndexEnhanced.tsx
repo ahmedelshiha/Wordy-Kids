@@ -846,23 +846,64 @@ export default function IndexEnhanced() {
         />
       )}
 
-      {/* Floating Helper */}
-      <div className="fixed bottom-6 right-6 z-40">
-        <div
-          className="bg-gradient-to-r from-educational-purple to-educational-pink p-4 rounded-full shadow-2xl cursor-pointer hover:scale-110 transition-all duration-300"
-          onClick={() =>
-            setFeedback({
-              type: "encouragement",
-              title: "Need Help? 🤗",
-              message:
-                "You're doing amazing! Keep learning and exploring new words!",
-              onContinue: () => setFeedback(null),
-            })
-          }
-        >
-          <Heart className="w-6 h-6 text-white fill-current animate-pulse" />
-        </div>
-      </div>
+      {/* Enhanced Floating Help Menu */}
+      <FloatingHelpMenu
+        currentPage="home"
+        onTutorial={() =>
+          setFeedback({
+            type: "info",
+            title: "How to Play 📚",
+            message:
+              "Welcome! This is an enhanced learning experience with advanced features and personalized learning paths.",
+            onContinue: () => setFeedback(null),
+          })
+        }
+        onGameHelp={() =>
+          setFeedback({
+            type: "info",
+            title: "Advanced Game Features 🎮",
+            message:
+              "• Progressive difficulty scaling\n• Adaptive learning algorithms\n• Performance analytics\n• Multi-modal learning approaches",
+            onContinue: () => setFeedback(null),
+          })
+        }
+        onSettings={() =>
+          setFeedback({
+            type: "info",
+            title: "Enhanced Settings ⚙️",
+            message:
+              "Access advanced customization options, learning preferences, and detailed progress tracking.",
+            onContinue: () => setFeedback(null),
+          })
+        }
+        onContact={() =>
+          setFeedback({
+            type: "info",
+            title: "Get Support 💬",
+            message:
+              "Enhanced support with detailed analytics and personalized recommendations available.",
+            onContinue: () => setFeedback(null),
+          })
+        }
+        onAccessibility={() =>
+          setFeedback({
+            type: "info",
+            title: "Enhanced Accessibility 🔊",
+            message:
+              "• Advanced voice recognition\n• Customizable UI scaling\n• Learning disabilities support\n• Multi-language support\n• Cognitive load optimization",
+            onContinue: () => setFeedback(null),
+          })
+        }
+        onAchievements={() =>
+          setFeedback({
+            type: "info",
+            title: "Enhanced Progress Tracking 🏆",
+            message:
+              "View detailed analytics, learning patterns, and personalized achievement recommendations.",
+            onContinue: () => setFeedback(null),
+          })
+        }
+      />
     </div>
   );
 }
