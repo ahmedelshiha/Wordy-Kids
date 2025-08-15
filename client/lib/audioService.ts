@@ -325,10 +325,25 @@ export class AudioService {
   ): void {
     if (!this.isEnabled || !word?.trim()) return;
 
-    // Check if speech synthesis is available
-    if (!this.speechSynthesis) {
-      console.warn("Speech synthesis not available");
+    // Check if speech synthesis is supported and available
+    if (!this.isSupported || !this.speechSynthesis) {
+      console.warn("Speech synthesis not supported or available");
       options.onError?.();
+      return;
+    }
+
+    // Check if voices are loaded, wait if necessary
+    if (!this.voicesLoaded && this.voices.length === 0) {
+      console.log("Voices not loaded yet, attempting to load...");
+      this.waitForVoices().then(() => {
+        // Retry after voices are loaded
+        if (this.voicesLoaded || this.voices.length > 0) {
+          this.pronounceWord(word, options);
+        } else {
+          console.warn("Could not load voices, proceeding without voice selection");
+          this.pronounceWordWithoutVoiceSelection(word, options);
+        }
+      });
       return;
     }
 
