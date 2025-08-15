@@ -401,6 +401,7 @@ export const ParentDashboardDesktop: React.FC<ParentDashboardDesktopProps> = ({
     userData: any;
     progressStats: any;
   }>>([]);
+  const [childNames, setChildNames] = useState<Record<string, string>>({});
 
   // New child data
   const [newChildData, setNewChildData] = useState({
