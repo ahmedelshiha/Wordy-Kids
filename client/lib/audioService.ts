@@ -614,6 +614,27 @@ export class AudioService {
     return this.isEnabled;
   }
 
+  public isSupported(): boolean {
+    return this.isSupported;
+  }
+
+  public areVoicesLoaded(): boolean {
+    return this.voicesLoaded;
+  }
+
+  public getVoiceCount(): number {
+    return this.voices.length;
+  }
+
+  public async ensureVoicesLoaded(): Promise<boolean> {
+    if (this.voicesLoaded) {
+      return true;
+    }
+
+    await this.waitForVoices();
+    return this.voicesLoaded;
+  }
+
   public stop(): void {
     this.speechSynthesis.cancel();
   }
