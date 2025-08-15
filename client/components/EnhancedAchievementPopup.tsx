@@ -163,7 +163,7 @@ export function EnhancedAchievementPopup({
   achievements,
   onClose,
   onAchievementClaim,
-  autoCloseDelay = 3000, // Default 3 seconds
+  autoCloseDelay = 2000, // Default 2 seconds for mobile
 }: EnhancedAchievementPopupProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [showReward, setShowReward] = useState(false);
@@ -340,6 +340,25 @@ export function EnhancedAchievementPopup({
     setTimeout(onClose, 300);
   }, [onClose]);
 
+  // Get short description for mobile
+  const getShortDescription = (achievement: Achievement): string => {
+    const fullDescription = achievement.funnyDescription ||
+      EnhancedAchievementTracker.getKidFriendlyDescription(achievement.id) ||
+      achievement.description;
+
+    // For mobile, keep it very short
+    if (fullDescription.length > 60) {
+      // Try to find a natural break point
+      const match = fullDescription.match(/^[^!.?]*[!.?]?/);
+      if (match && match[0].length <= 60) {
+        return match[0].trim();
+      }
+      return fullDescription.slice(0, 60) + "...";
+    }
+
+    return fullDescription;
+  };
+
   if (achievements.length === 0) return null;
 
   return (
@@ -359,7 +378,7 @@ export function EnhancedAchievementPopup({
             animate={{ scale: 1, opacity: 1, y: 0 }}
             exit={{ scale: 0.9, opacity: 0, y: -20 }}
             transition={{ type: "spring", duration: 0.4, damping: 20 }}
-            className="relative w-full max-w-xs sm:max-w-sm mx-2 sm:mx-4"
+            className="relative w-full max-w-[280px] sm:max-w-[320px] mx-2 sm:mx-4"
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
             onTouchStart={handleMouseEnter}
@@ -405,15 +424,13 @@ export function EnhancedAchievementPopup({
                   </div>
 
                   <h4 className="text-sm sm:text-base mb-2 font-bold text-yellow-200">
-                    {currentAchievement.name}
+                    {currentAchievement.name.length > 20
+                      ? currentAchievement.name.slice(0, 20) + "..."
+                      : currentAchievement.name}
                   </h4>
 
                   <p className="text-white/90 mb-3 text-xs sm:text-sm leading-tight px-1">
-                    {currentAchievement.funnyDescription ||
-                      EnhancedAchievementTracker.getKidFriendlyDescription(
-                        currentAchievement.id,
-                      ) ||
-                      currentAchievement.description}
+                    {getShortDescription(currentAchievement)}
                   </p>
 
                   {/* Simplified Badges for mobile */}
@@ -452,7 +469,9 @@ export function EnhancedAchievementPopup({
                           </div>
                           <div className="text-sm font-bold">
                             {currentAchievement.reward.emoji || "🎁"}{" "}
-                            {currentAchievement.reward.item}
+                            {currentAchievement.reward.item.length > 15
+                              ? currentAchievement.reward.item.slice(0, 15) + "..."
+                              : currentAchievement.reward.item}
                           </div>
                           {currentAchievement.reward.type === "sticker" && (
                             <div className="text-xs text-white/90 animate-bounce mt-1">
@@ -498,7 +517,7 @@ export function EnhancedAchievementPopup({
                             className="w-full bg-white text-gray-800 hover:bg-white/90 font-bold py-2 px-3 rounded-lg shadow-lg transition-colors text-sm"
                           >
                             <Zap className="w-3 h-3 mr-1" />
-                            🎉 GET IT! 🎉
+                            🎉 CLAIM! 🎉
                           </Button>
                         </motion.div>
                       )}
