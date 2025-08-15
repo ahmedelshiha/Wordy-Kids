@@ -811,8 +811,6 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
         }
       }
 
-      console.log("Progress sync completed:", { updatedChildren, stats });
-
       // Show success toast
       toast({
         title: "Progress Updated",
