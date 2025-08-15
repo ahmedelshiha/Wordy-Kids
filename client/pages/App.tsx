@@ -9,7 +9,7 @@ import Index from "./Index";
 export default function App() {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
-  const { user, login, isAuthenticated, isGuest } = useAuth();
+  const { user, login, isAuthenticated, isGuest, isLoading } = useAuth();
   const mode = searchParams.get("mode");
 
   const [currentProfile, setCurrentProfile] = useState<any>(null);
