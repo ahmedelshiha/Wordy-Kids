@@ -742,6 +742,15 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
     }
   };
 
+  // Handle add child button click with guest mode check
+  const handleAddChildClick = () => {
+    if (isGuest) {
+      setShowRegistrationPrompt(true);
+    } else {
+      setShowAddChildDialog(true);
+    }
+  };
+
   const createGoal = () => {
     if (selectedChild && newGoalData.title && newGoalData.description) {
       const newGoal: ParentGoal = {
