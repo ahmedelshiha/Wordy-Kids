@@ -831,12 +831,7 @@ export const ParentDashboardDesktop: React.FC<ParentDashboardDesktopProps> = ({
         </div>
 
         {/* Main Content */}
-        <div
-          className={cn(
-            "dashboard-main-content transition-all duration-300 min-w-0",
-            sidebarCollapsed ? "ml-16" : "ml-64",
-          )}
-        >
+        <div className="dashboard-main-content flex-1 min-w-0 flex flex-col">
           {/* Header */}
           <div className="dashboard-header bg-white border-b border-slate-200 px-4 lg:px-6 py-4">
             <div className="flex items-center justify-between gap-4">
