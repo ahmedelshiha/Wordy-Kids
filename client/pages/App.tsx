@@ -78,6 +78,11 @@ export default function App() {
     setIsLoggedIn(true);
   };
 
+  // Show loading state while auth is initializing
+  if (isLoading) {
+    return <div className="flex items-center justify-center min-h-screen">Loading...</div>;
+  }
+
   // If authenticated, show the main app
   if (isAuthenticated && currentProfile) {
     return <Index initialProfile={currentProfile} />;
