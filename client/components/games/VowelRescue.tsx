@@ -1,14 +1,15 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useMemo, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
-import { Volume2, Star, Trophy, ArrowLeft, Play, Clock } from "lucide-react";
+import { Volume2, Star, Trophy, ArrowLeft, Play, Clock, Sparkles, Crown, Zap } from "lucide-react";
 import { AchievementTracker } from "@/lib/achievementTracker";
 import { EnhancedAchievementPopup } from "@/components/EnhancedAchievementPopup";
 import { audioService } from "@/lib/audioService";
 import { playSoundIfEnabled } from "@/lib/soundEffects";
 import { CelebrationEffect } from "@/components/CelebrationEffect";
+import { Word, getWordsByCategory, getRandomWords } from "@/data/wordsDatabase";
 
 const vowelOptions = ["A", "E", "I", "O", "U"];
 
