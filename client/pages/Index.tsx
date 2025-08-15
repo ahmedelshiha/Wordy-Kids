@@ -2571,11 +2571,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                                   </div>
                                                 );
                                               } else {
-                                                return (
-                                                  <div className="text-xs text-blue-600 font-medium">
-                                                    🆕 New
-                                                  </div>
-                                                );
+                                                return null;
                                               }
                                             })()}
                                           </div>
