@@ -1,7 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { AudioLines, Volume2, VolumeX, AlertCircle, CheckCircle } from "lucide-react";
+import {
+  AudioLines,
+  Volume2,
+  VolumeX,
+  AlertCircle,
+  CheckCircle,
+} from "lucide-react";
 import { audioService } from "@/lib/audioService";
 
 export default function SpeechDiagnostics() {
@@ -17,7 +23,7 @@ export default function SpeechDiagnostics() {
     // Capture console.log output
     const originalLog = console.log;
     const logs: string[] = [];
-    
+
     console.log = (...args) => {
       logs.push(args.join(" "));
       originalLog(...args);
@@ -28,19 +34,19 @@ export default function SpeechDiagnostics() {
 
     // Restore console.log
     console.log = originalLog;
-    
+
     setDiagnosticInfo(logs.join("\n"));
   };
 
   const testPronunciation = async (word: string) => {
     setIsTestRunning(true);
     setTestResults([]);
-    
+
     const results: string[] = [];
-    
+
     try {
       await audioService.ensureVoicesLoaded();
-      
+
       audioService.pronounceWord(word, {
         onStart: () => {
           results.push(`✅ Speech started for: ${word}`);
@@ -55,9 +61,9 @@ export default function SpeechDiagnostics() {
           results.push(`❌ Speech failed for: ${word}`);
           setTestResults([...results]);
           setIsTestRunning(false);
-        }
+        },
       });
-      
+
       // Timeout fallback
       setTimeout(() => {
         if (isTestRunning) {
@@ -66,7 +72,6 @@ export default function SpeechDiagnostics() {
           setIsTestRunning(false);
         }
       }, 5000);
-      
     } catch (error) {
       results.push(`❌ Error testing pronunciation: ${error}`);
       setTestResults([...results]);
@@ -101,7 +106,7 @@ export default function SpeechDiagnostics() {
                 Browser Support: {audioService.isSupported() ? "Yes" : "No"}
               </span>
             </div>
-            
+
             <div className="flex items-center gap-2 p-3 bg-gray-50 rounded-lg">
               {audioService.areVoicesLoaded() ? (
                 <CheckCircle className="w-5 h-5 text-green-500" />
@@ -109,10 +114,11 @@ export default function SpeechDiagnostics() {
                 <AlertCircle className="w-5 h-5 text-orange-500" />
               )}
               <span className="text-sm font-medium">
-                Voices Loaded: {audioService.areVoicesLoaded() ? "Yes" : "No"} ({audioService.getVoiceCount()})
+                Voices Loaded: {audioService.areVoicesLoaded() ? "Yes" : "No"} (
+                {audioService.getVoiceCount()})
               </span>
             </div>
-            
+
             <div className="flex items-center gap-2 p-3 bg-gray-50 rounded-lg">
               {audioService.isAudioEnabled() ? (
                 <Volume2 className="w-5 h-5 text-green-500" />
@@ -133,22 +139,22 @@ export default function SpeechDiagnostics() {
             <Button onClick={toggleAudio} variant="outline">
               {audioService.isAudioEnabled() ? "Disable Audio" : "Enable Audio"}
             </Button>
-            <Button 
-              onClick={() => testPronunciation("hello")} 
+            <Button
+              onClick={() => testPronunciation("hello")}
               disabled={isTestRunning}
               variant="outline"
             >
               {isTestRunning ? "Testing..." : "Test 'Hello'"}
             </Button>
-            <Button 
-              onClick={() => testPronunciation("test")} 
+            <Button
+              onClick={() => testPronunciation("test")}
               disabled={isTestRunning}
               variant="outline"
             >
               {isTestRunning ? "Testing..." : "Test 'Test'"}
             </Button>
-            <Button 
-              onClick={() => testPronunciation("pronunciation")} 
+            <Button
+              onClick={() => testPronunciation("pronunciation")}
               disabled={isTestRunning}
               variant="outline"
             >

@@ -49,12 +49,12 @@ export class AudioService {
 
   private checkBrowserSupport(): boolean {
     // Check for basic speech synthesis support
-    if (!('speechSynthesis' in window)) {
+    if (!("speechSynthesis" in window)) {
       return false;
     }
 
     // Check for SpeechSynthesisUtterance support
-    if (!('SpeechSynthesisUtterance' in window)) {
+    if (!("SpeechSynthesisUtterance" in window)) {
       return false;
     }
 
@@ -62,7 +62,7 @@ export class AudioService {
     const userAgent = navigator.userAgent.toLowerCase();
 
     // Check if running in certain environments that might have issues
-    if (userAgent.includes('jsdom') || userAgent.includes('node')) {
+    if (userAgent.includes("jsdom") || userAgent.includes("node")) {
       return false;
     }
 
@@ -78,7 +78,9 @@ export class AudioService {
       this.loadVoices();
       if (this.voices.length > 0) {
         this.voicesLoaded = true;
-        console.log(`Voices loaded successfully: ${this.voices.length} voices available`);
+        console.log(
+          `Voices loaded successfully: ${this.voices.length} voices available`,
+        );
         return;
       }
 
@@ -114,8 +116,9 @@ export class AudioService {
 
       if (this.voices.length > 0) {
         this.voicesLoaded = true;
-        console.log(`Loaded ${this.voices.length} voices:`,
-          this.voices.map(v => `${v.name} (${v.lang})`).slice(0, 5)
+        console.log(
+          `Loaded ${this.voices.length} voices:`,
+          this.voices.map((v) => `${v.name} (${v.lang})`).slice(0, 5),
         );
       } else {
         console.log("No voices loaded yet, voices may still be loading...");
@@ -340,7 +343,9 @@ export class AudioService {
         if (this.voicesLoaded || this.voices.length > 0) {
           this.pronounceWord(word, options);
         } else {
-          console.warn("Could not load voices, proceeding without voice selection");
+          console.warn(
+            "Could not load voices, proceeding without voice selection",
+          );
           this.pronounceWordWithoutVoiceSelection(word, options);
         }
       });
@@ -352,8 +357,14 @@ export class AudioService {
       const voiceDefaults = this.getVoiceDefaults(this.selectedVoiceType);
 
       // Validate and clamp parameters to safe ranges
-      const rate = Math.max(0.1, Math.min(10, options.rate ?? voiceDefaults.rate));
-      const pitch = Math.max(0, Math.min(2, options.pitch ?? voiceDefaults.pitch));
+      const rate = Math.max(
+        0.1,
+        Math.min(10, options.rate ?? voiceDefaults.rate),
+      );
+      const pitch = Math.max(
+        0,
+        Math.min(2, options.pitch ?? voiceDefaults.pitch),
+      );
       const volume = Math.max(0, Math.min(1, options.volume ?? 1.0));
 
       const { onStart, onEnd, onError } = options;
@@ -411,7 +422,7 @@ export class AudioService {
           voice: voice?.name,
           rate,
           pitch,
-          volume
+          volume,
         });
         try {
           onError?.();
@@ -423,7 +434,9 @@ export class AudioService {
       // Additional error handling for browser-specific issues
       utterance.onboundary = (event) => {
         // This can help detect if speech is actually working
-        console.log(`Speech boundary event: ${event.name} at ${event.charIndex}`);
+        console.log(
+          `Speech boundary event: ${event.name} at ${event.charIndex}`,
+        );
       };
 
       // Speak the word with additional error handling
@@ -433,7 +446,6 @@ export class AudioService {
         console.error("Error calling speak:", speakError);
         onError?.();
       }
-
     } catch (error) {
       console.error("Error in pronounceWord:", error);
       options.onError?.();
@@ -455,8 +467,14 @@ export class AudioService {
       const voiceDefaults = this.getVoiceDefaults(this.selectedVoiceType);
 
       // Validate and clamp parameters to safe ranges
-      const rate = Math.max(0.1, Math.min(10, options.rate ?? voiceDefaults.rate));
-      const pitch = Math.max(0, Math.min(2, options.pitch ?? voiceDefaults.pitch));
+      const rate = Math.max(
+        0.1,
+        Math.min(10, options.rate ?? voiceDefaults.rate),
+      );
+      const pitch = Math.max(
+        0,
+        Math.min(2, options.pitch ?? voiceDefaults.pitch),
+      );
       const volume = Math.max(0, Math.min(1, options.volume ?? 1.0));
 
       const utterance = new SpeechSynthesisUtterance(word.trim());
@@ -743,8 +761,11 @@ export class AudioService {
 
     // Browser support
     console.log("Browser Support:");
-    console.log("- speechSynthesis:", 'speechSynthesis' in window);
-    console.log("- SpeechSynthesisUtterance:", 'SpeechSynthesisUtterance' in window);
+    console.log("- speechSynthesis:", "speechSynthesis" in window);
+    console.log(
+      "- SpeechSynthesisUtterance:",
+      "SpeechSynthesisUtterance" in window,
+    );
     console.log("- isSupported:", this.isSupported);
     console.log("- userAgent:", navigator.userAgent);
 
@@ -759,7 +780,10 @@ export class AudioService {
     console.log("\nVoice Availability:");
     ["woman", "man", "kid"].forEach((type) => {
       const voice = this.getVoiceByType(type as VoiceType);
-      console.log(`- ${type}:`, voice ? `${voice.name} (${voice.lang})` : "❌ None found");
+      console.log(
+        `- ${type}:`,
+        voice ? `${voice.name} (${voice.lang})` : "❌ None found",
+      );
     });
 
     // Speech synthesis state
@@ -785,7 +809,7 @@ export class AudioService {
     this.pronounceWord("hello", {
       onStart: () => console.log("✅ Test: Speech started successfully"),
       onEnd: () => console.log("✅ Test: Speech completed successfully"),
-      onError: () => console.log("❌ Test: Speech failed")
+      onError: () => console.log("❌ Test: Speech failed"),
     });
   }
 

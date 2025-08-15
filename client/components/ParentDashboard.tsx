@@ -735,7 +735,8 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
     setIsLoadingProgress(true);
     try {
       console.log("Syncing children progress...");
-      const updatedChildren = await childProgressSync.syncAndSaveAllProgress(children);
+      const updatedChildren =
+        await childProgressSync.syncAndSaveAllProgress(children);
       setChildren(updatedChildren);
 
       // Update family stats
@@ -744,7 +745,9 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
 
       // Update selected child if needed
       if (selectedChild) {
-        const updatedSelectedChild = updatedChildren.find(c => c.id === selectedChild.id);
+        const updatedSelectedChild = updatedChildren.find(
+          (c) => c.id === selectedChild.id,
+        );
         if (updatedSelectedChild) {
           setSelectedChild(updatedSelectedChild);
         }
@@ -975,27 +978,29 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
                     const todayKey = new Date().toISOString().split("T")[0];
                     const dailyProgressKey = `daily_progress_${firstChild.id}_${todayKey}`;
                     const currentData = JSON.parse(
-                      localStorage.getItem(dailyProgressKey) || '{"words": 0, "sessions": 0}'
+                      localStorage.getItem(dailyProgressKey) ||
+                        '{"words": 0, "sessions": 0}',
                     );
                     localStorage.setItem(
                       dailyProgressKey,
                       JSON.stringify({
                         ...currentData,
                         words: currentData.words + 1,
-                      })
+                      }),
                     );
 
                     // Update streak
                     const streakKey = `streak_data_${firstChild.id}`;
                     const streakData = JSON.parse(
-                      localStorage.getItem(streakKey) || '{"currentStreak": 0, "lastActivity": null}'
+                      localStorage.getItem(streakKey) ||
+                        '{"currentStreak": 0, "lastActivity": null}',
                     );
                     localStorage.setItem(
                       streakKey,
                       JSON.stringify({
                         currentStreak: streakData.currentStreak + 1,
                         lastActivity: new Date().toISOString(),
-                      })
+                      }),
                     );
 
                     syncChildrenProgress();
@@ -1024,9 +1029,7 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
               <div className="text-xl md:text-2xl font-bold text-educational-blue">
                 <AnimatedCounter value={familyStats.activeChildren} />
               </div>
-              <p className="text-xs md:text-sm text-slate-600">
-                Active Today
-              </p>
+              <p className="text-xs md:text-sm text-slate-600">Active Today</p>
             </div>
             <div className="text-center p-2 md:p-4 bg-educational-green/5 rounded-lg">
               <div className="text-xl md:text-2xl font-bold text-educational-green">
@@ -1040,9 +1043,7 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
               <div className="text-xl md:text-2xl font-bold text-educational-orange">
                 <AnimatedCounter value={familyStats.todayActivity} />
               </div>
-              <p className="text-xs md:text-sm text-slate-600">
-                Words Today
-              </p>
+              <p className="text-xs md:text-sm text-slate-600">Words Today</p>
             </div>
             <div className="text-center p-2 md:p-4 bg-educational-purple/5 rounded-lg">
               <div className="text-xl md:text-2xl font-bold text-educational-purple">
@@ -1203,7 +1204,10 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
                       <div className="flex items-center gap-2">
                         <span>Weekly Goal</span>
                         {child.currentStreak > 0 && (
-                          <Badge variant="outline" className="text-xs px-1 bg-orange-50 text-orange-600 border-orange-200">
+                          <Badge
+                            variant="outline"
+                            className="text-xs px-1 bg-orange-50 text-orange-600 border-orange-200"
+                          >
                             🔥 {child.currentStreak}
                           </Badge>
                         )}
@@ -1221,14 +1225,19 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
                         {Math.round(progressPercentage)}% complete
                       </p>
                       <p className="text-xs text-green-600 font-medium">
-                        +{(() => {
-                          const todayKey = new Date().toISOString().split("T")[0];
+                        +
+                        {(() => {
+                          const todayKey = new Date()
+                            .toISOString()
+                            .split("T")[0];
                           const dailyProgressKey = `daily_progress_${child.id}_${todayKey}`;
                           const dailyData = JSON.parse(
-                            localStorage.getItem(dailyProgressKey) || '{"words": 0}'
+                            localStorage.getItem(dailyProgressKey) ||
+                              '{"words": 0}',
                           );
                           return dailyData.words || 0;
-                        })()} today
+                        })()}{" "}
+                        today
                       </p>
                     </div>
                   </div>

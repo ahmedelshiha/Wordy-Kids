@@ -1,5 +1,8 @@
 import { ChildProfile } from "@/components/ParentDashboard";
-import { goalProgressTracker, SystematicProgressData } from "@/lib/goalProgressTracker";
+import {
+  goalProgressTracker,
+  SystematicProgressData,
+} from "@/lib/goalProgressTracker";
 
 /**
  * Utility to sync real learning progress data with ParentDashboard child profiles
@@ -28,20 +31,22 @@ export class ChildProgressSync {
       const todayKey = new Date().toISOString().split("T")[0];
       const dailyProgressKey = `daily_progress_${childId}_${todayKey}`;
       const dailyData = JSON.parse(
-        localStorage.getItem(dailyProgressKey) || '{"words": 0, "sessions": 0}'
+        localStorage.getItem(dailyProgressKey) || '{"words": 0, "sessions": 0}',
       );
 
       // Get this week's progress
       const weekKey = this.getWeekKey();
       const weeklyProgressKey = `weekly_progress_${childId}_${weekKey}`;
       const weeklyData = JSON.parse(
-        localStorage.getItem(weeklyProgressKey) || '{"words": 0, "sessions": 0}'
+        localStorage.getItem(weeklyProgressKey) ||
+          '{"words": 0, "sessions": 0}',
       );
 
       // Get streak data
       const streakKey = `streak_data_${childId}`;
       const streakData = JSON.parse(
-        localStorage.getItem(streakKey) || '{"currentStreak": 0, "lastActivity": null}'
+        localStorage.getItem(streakKey) ||
+          '{"currentStreak": 0, "lastActivity": null}',
       );
 
       // Calculate total words learned by scanning all daily progress entries
@@ -71,10 +76,10 @@ export class ChildProgressSync {
     try {
       let total = 0;
       const keys = Object.keys(localStorage);
-      
+
       // Find all daily progress keys for this child
-      const dailyProgressKeys = keys.filter(key => 
-        key.startsWith(`daily_progress_${childId}_`)
+      const dailyProgressKeys = keys.filter((key) =>
+        key.startsWith(`daily_progress_${childId}_`),
       );
 
       for (const key of dailyProgressKeys) {
@@ -95,9 +100,11 @@ export class ChildProgressSync {
   private getWeekKey(): string {
     const date = new Date();
     const startOfYear = new Date(date.getFullYear(), 0, 1);
-    const days = Math.floor((date.getTime() - startOfYear.getTime()) / (24 * 60 * 60 * 1000));
+    const days = Math.floor(
+      (date.getTime() - startOfYear.getTime()) / (24 * 60 * 60 * 1000),
+    );
     const weekNumber = Math.ceil((days + startOfYear.getDay() + 1) / 7);
-    return `${date.getFullYear()}-${weekNumber.toString().padStart(2, '0')}`;
+    return `${date.getFullYear()}-${weekNumber.toString().padStart(2, "0")}`;
   }
 
   /**
@@ -106,20 +113,29 @@ export class ChildProgressSync {
   async updateChildProgress(child: ChildProfile): Promise<ChildProfile> {
     try {
       const realProgress = this.getRealProgressData(child.id);
-      
+
       // Try to get systematic progress data as well
       let systematicProgress: SystematicProgressData | null = null;
       try {
-        systematicProgress = await goalProgressTracker.fetchSystematicProgress(child.id);
+        systematicProgress = await goalProgressTracker.fetchSystematicProgress(
+          child.id,
+        );
       } catch (error) {
-        console.log("Could not fetch systematic progress, using localStorage data");
+        console.log(
+          "Could not fetch systematic progress, using localStorage data",
+        );
       }
 
       const updatedChild: ChildProfile = {
         ...child,
-        wordsLearned: systematicProgress?.totalWordsLearned || realProgress.totalWordsLearned,
-        currentStreak: systematicProgress?.currentStreak || realProgress.currentStreak,
-        weeklyProgress: systematicProgress?.wordsLearnedThisWeek || realProgress.weeklyProgress,
+        wordsLearned:
+          systematicProgress?.totalWordsLearned ||
+          realProgress.totalWordsLearned,
+        currentStreak:
+          systematicProgress?.currentStreak || realProgress.currentStreak,
+        weeklyProgress:
+          systematicProgress?.wordsLearnedThisWeek ||
+          realProgress.weeklyProgress,
         // Update last active based on learning activity
         lastActive: this.getLastActiveDate(child.id),
       };
@@ -134,9 +150,11 @@ export class ChildProgressSync {
   /**
    * Update all children's progress data with real learning data
    */
-  async updateAllChildrenProgress(children: ChildProfile[]): Promise<ChildProfile[]> {
+  async updateAllChildrenProgress(
+    children: ChildProfile[],
+  ): Promise<ChildProfile[]> {
     const updatedChildren: ChildProfile[] = [];
-    
+
     for (const child of children) {
       const updatedChild = await this.updateChildProgress(child);
       updatedChildren.push(updatedChild);
@@ -151,8 +169,8 @@ export class ChildProgressSync {
   private getLastActiveDate(childId: string): Date {
     try {
       const keys = Object.keys(localStorage);
-      const dailyProgressKeys = keys.filter(key => 
-        key.startsWith(`daily_progress_${childId}_`)
+      const dailyProgressKeys = keys.filter((key) =>
+        key.startsWith(`daily_progress_${childId}_`),
       );
 
       let lastActiveDate = new Date(2024, 0, 1); // Default to start of 2024
@@ -161,7 +179,7 @@ export class ChildProgressSync {
         const data = JSON.parse(localStorage.getItem(key) || '{"words": 0}');
         if (data.words > 0) {
           // Extract date from key format: daily_progress_${childId}_YYYY-MM-DD
-          const dateStr = key.split('_').pop();
+          const dateStr = key.split("_").pop();
           if (dateStr) {
             const date = new Date(dateStr);
             if (date > lastActiveDate) {
@@ -192,7 +210,9 @@ export class ChildProgressSync {
   /**
    * Sync all children progress and save to localStorage
    */
-  async syncAndSaveAllProgress(children: ChildProfile[]): Promise<ChildProfile[]> {
+  async syncAndSaveAllProgress(
+    children: ChildProfile[],
+  ): Promise<ChildProfile[]> {
     const updatedChildren = await this.updateAllChildrenProgress(children);
     this.saveUpdatedChildren(updatedChildren);
     return updatedChildren;
@@ -217,10 +237,10 @@ export class ChildProgressSync {
 
       for (const child of children) {
         const realProgress = this.getRealProgressData(child.id);
-        
+
         totalWords += realProgress.totalWordsLearned;
         longestStreak = Math.max(longestStreak, realProgress.currentStreak);
-        
+
         if (realProgress.todayProgress > 0) {
           activeChildren++;
           todayActivity += realProgress.todayProgress;
