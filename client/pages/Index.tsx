@@ -2114,37 +2114,11 @@ export default function Index({ initialProfile }: IndexProps) {
                                 <div className="hidden sm:block">
                                   <div className="flex items-center justify-between gap-4 mb-2">
                                     <div className="text-left flex-1 min-w-0">
-                                      <div className="flex items-center gap-3 mb-1">
-                                        <h2 className="text-base md:text-lg font-bold text-slate-800 truncate">
-                                          {selectedCategory
-                                            ? `${selectedCategory.charAt(0).toUpperCase() + selectedCategory.slice(1)} Words`
-                                            : "Select a Category"}
-                                        </h2>
-                                        {(() => {
-                                          const currentWord = displayWords[currentWordIndex];
-                                          if (!currentWord) return null;
-
-                                          if (rememberedWords.has(currentWord.id)) {
-                                            return (
-                                              <div className="text-xs text-green-600 font-medium bg-green-50 px-2 py-1 rounded-full">
-                                                🏆 Learned
-                                              </div>
-                                            );
-                                          } else if (forgottenWords.has(currentWord.id)) {
-                                            return (
-                                              <div className="text-xs text-orange-600 font-medium bg-orange-50 px-2 py-1 rounded-full">
-                                                🤔 Review
-                                              </div>
-                                            );
-                                          } else {
-                                            return (
-                                              <div className="text-xs text-blue-600 font-medium bg-blue-50 px-2 py-1 rounded-full">
-                                                🆕 New
-                                              </div>
-                                            );
-                                          }
-                                        })()}
-                                      </div>
+                                      <h2 className="text-base md:text-lg font-bold text-slate-800 truncate">
+                                        {selectedCategory
+                                          ? `${selectedCategory.charAt(0).toUpperCase() + selectedCategory.slice(1)} Words`
+                                          : "Select a Category"}
+                                      </h2>
                                       <div className="flex items-center gap-3 text-xs text-slate-600">
                                         <span>
                                           {currentWordIndex + 1}/
@@ -2682,7 +2656,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                 </p>
                                 <div className="flex justify-center gap-1 mb-2 md:mb-3">
                                   <span className="bg-educational-pink/20 text-educational-pink px-1.5 py-0.5 rounded-full text-xs">
-                                    🎯 Audio!
+                                    ���� Audio!
                                   </span>
                                 </div>
                                 <Button
