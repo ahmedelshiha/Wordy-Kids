@@ -1,6 +1,9 @@
 /* Import mobile games optimization */
 @import "./styles/mobile-games-optimization.css";
 
+/* Import accessibility enhancements */
+@import "./styles/accessibility-enhancements.css";
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;

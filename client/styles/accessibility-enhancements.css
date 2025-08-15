@@ -1,0 +1,399 @@
+/* Accessibility Enhancements for Kid-Friendly Analytics */
+
+/* High Contrast Mode */
+.high-contrast-mode {
+  --background: 0 0% 100%;
+  --foreground: 0 0% 0%;
+  --card: 0 0% 100%;
+  --card-foreground: 0 0% 0%;
+  --border: 0 0% 0%;
+  --input: 0 0% 100%;
+  --primary: 220 100% 25%;
+  --primary-foreground: 0 0% 100%;
+  --secondary: 0 0% 90%;
+  --secondary-foreground: 0 0% 0%;
+}
+
+.high-contrast-mode .game-card-mobile,
+.high-contrast-mode .game-button-mobile {
+  border: 3px solid #000;
+  background: #fff;
+  color: #000;
+}
+
+.high-contrast-mode .game-button-mobile:hover {
+  background: #000;
+  color: #fff;
+}
+
+.high-contrast-mode .bg-gradient-to-br {
+  background: #fff !important;
+  border: 3px solid #000 !important;
+}
+
+/* Large Text Mode */
+.large-text {
+  font-size: 1.125rem;
+}
+
+.large-text .text-xs {
+  font-size: 0.875rem;
+}
+
+.large-text .text-sm {
+  font-size: 1rem;
+}
+
+.large-text .text-base {
+  font-size: 1.25rem;
+}
+
+.large-text .text-lg {
+  font-size: 1.5rem;
+}
+
+.large-text .text-xl {
+  font-size: 1.875rem;
+}
+
+.large-text .text-2xl {
+  font-size: 2.25rem;
+}
+
+.large-text .text-3xl {
+  font-size: 3rem;
+}
+
+/* Reduced Motion */
+.reduce-motion *,
+.reduce-motion *::before,
+.reduce-motion *::after {
+  animation-duration: 0.01ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.01ms !important;
+  scroll-behavior: auto !important;
+}
+
+.reduce-motion .game-button-mobile:hover,
+.reduce-motion .game-card-mobile:hover {
+  transform: none !important;
+}
+
+/* Keyboard Navigation */
+.keyboard-navigation .game-button-mobile:focus,
+.keyboard-navigation .game-card-mobile:focus {
+  outline: 4px solid #3b82f6;
+  outline-offset: 2px;
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.5);
+}
+
+.keyboard-navigation .game-option-mobile:focus {
+  outline: 4px solid #10b981;
+  outline-offset: 2px;
+  box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.5);
+}
+
+/* Kid-Friendly Focus Indicators */
+.kid-focus {
+  position: relative;
+  outline: none !important;
+}
+
+.kid-focus::after {
+  content: "";
+  position: absolute;
+  top: -4px;
+  left: -4px;
+  right: -4px;
+  bottom: -4px;
+  border: 3px solid #fbbf24;
+  border-radius: 12px;
+  background: rgba(251, 191, 36, 0.1);
+  animation: kid-focus-pulse 1.5s infinite;
+  pointer-events: none;
+}
+
+@keyframes kid-focus-pulse {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.05);
+    opacity: 0.8;
+  }
+}
+
+/* Skip Links for Screen Readers */
+.skip-link {
+  position: absolute;
+  top: -40px;
+  left: 6px;
+  background: #000;
+  color: #fff;
+  padding: 8px;
+  text-decoration: none;
+  border-radius: 4px;
+  z-index: 9999;
+  font-weight: bold;
+}
+
+.skip-link:focus {
+  top: 6px;
+}
+
+/* Screen Reader Only Content */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.sr-only-focusable:focus {
+  position: static;
+  width: auto;
+  height: auto;
+  padding: inherit;
+  margin: inherit;
+  overflow: visible;
+  clip: auto;
+  white-space: normal;
+}
+
+/* Improved Touch Targets for Children */
+.kid-touch-target {
+  min-height: 44px;
+  min-width: 44px;
+  padding: 12px;
+  margin: 4px;
+}
+
+/* Button states for better feedback */
+.game-button-mobile[aria-pressed="true"] {
+  background: linear-gradient(135deg, #10b981, #059669);
+  color: white;
+  transform: scale(0.95);
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.game-button-mobile[aria-expanded="true"]::after {
+  content: " 🔽";
+}
+
+.game-button-mobile[aria-expanded="false"]::after {
+  content: " 👉";
+}
+
+/* Loading states */
+.loading-shimmer {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+/* Error states */
+.error-state {
+  border: 2px solid #ef4444;
+  background: #fef2f2;
+  color: #dc2626;
+}
+
+.error-state .error-icon {
+  color: #ef4444;
+  animation: error-shake 0.5s ease-in-out;
+}
+
+@keyframes error-shake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-5px);
+  }
+  75% {
+    transform: translateX(5px);
+  }
+}
+
+/* Success states */
+.success-state {
+  border: 2px solid #10b981;
+  background: #f0fdf4;
+  color: #065f46;
+}
+
+.success-state .success-icon {
+  color: #10b981;
+  animation: success-bounce 0.6s ease-in-out;
+}
+
+@keyframes success-bounce {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+}
+
+/* Progress indicators */
+.progress-mobile {
+  position: relative;
+  overflow: hidden;
+}
+
+.progress-mobile::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.4),
+    transparent
+  );
+  animation: progress-shine 2s infinite;
+}
+
+@keyframes progress-shine {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+/* Tooltip enhancements for kids */
+.kid-tooltip {
+  background: linear-gradient(135deg, #fbbf24, #f59e0b);
+  color: #78350f;
+  border: 2px solid #d97706;
+  border-radius: 12px;
+  padding: 8px 12px;
+  font-size: 14px;
+  font-weight: 600;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  position: relative;
+}
+
+.kid-tooltip::before {
+  content: "";
+  position: absolute;
+  bottom: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 8px solid transparent;
+  border-top-color: #d97706;
+}
+
+/* Voice feedback visual indicator */
+.voice-feedback-active {
+  animation: voice-pulse 1s infinite;
+  border: 2px solid #3b82f6;
+}
+
+@keyframes voice-pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.7);
+  }
+  50% {
+    box-shadow: 0 0 0 10px rgba(59, 130, 246, 0);
+  }
+}
+
+/* Mobile-specific accessibility improvements */
+@media (max-width: 768px) {
+  .kid-focus::after {
+    border-width: 4px;
+    border-radius: 16px;
+  }
+
+  .game-button-mobile:focus {
+    outline: 6px solid #3b82f6;
+    outline-offset: 3px;
+  }
+
+  .kid-touch-target {
+    min-height: 56px;
+    min-width: 56px;
+    padding: 16px;
+    margin: 6px;
+  }
+}
+
+/* Dark mode accessibility */
+@media (prefers-color-scheme: dark) {
+  .kid-focus::after {
+    border-color: #fbbf24;
+    background: rgba(251, 191, 36, 0.2);
+  }
+
+  .skip-link {
+    background: #1f2937;
+    color: #f9fafb;
+  }
+
+  .loading-shimmer {
+    background: linear-gradient(90deg, #374151 25%, #4b5563 50%, #374151 75%);
+  }
+}
+
+/* Print styles for reports */
+@media print {
+  .game-button-mobile,
+  .skip-link {
+    display: none !important;
+  }
+
+  .game-card-mobile {
+    break-inside: avoid;
+    border: 1px solid #000 !important;
+    background: #fff !important;
+    color: #000 !important;
+  }
+
+  .progress-mobile {
+    border: 1px solid #000;
+    height: 20px !important;
+  }
+
+  .progress-mobile .progress-fill {
+    background: #000 !important;
+  }
+}
+
+/* Focus visible for modern browsers */
+.game-button-mobile:focus-visible,
+.game-card-mobile:focus-visible {
+  outline: 3px solid #3b82f6;
+  outline-offset: 2px;
+}
+
+/* Remove default focus for mouse users */
+.game-button-mobile:focus:not(:focus-visible),
+.game-card-mobile:focus:not(:focus-visible) {
+  outline: none;
+}
