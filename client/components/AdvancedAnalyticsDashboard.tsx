@@ -267,7 +267,8 @@ const AdvancedAnalyticsDashboard: React.FC = () => {
                         <span>{pattern.avgDuration}min avg</span>
                       </div>
                       <Progress
-                        value={(pattern.sessions / 12300) * 100}
+                        value={usagePatterns.length > 0 ?
+                          (pattern.sessions / Math.max(...usagePatterns.map(p => p.sessions))) * 100 : 0}
                         className="h-2"
                       />
                     </div>
