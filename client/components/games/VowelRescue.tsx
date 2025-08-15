@@ -38,6 +38,10 @@ interface VowelRescueProps {
 
 export function VowelRescue({
   questions,
+  rounds = 8,
+  difficulty = "easy",
+  category,
+  playerLevel = 1,
   onComplete,
   onExit,
   gameMode = "easy",
