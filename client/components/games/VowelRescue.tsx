@@ -320,7 +320,7 @@ export function VowelRescue({
     }
 
     setTimeout(() => {
-      onComplete(score, questions.length * 10);
+      onComplete(score, gameQuestions.length * 10);
     }, 2000);
   };
 
