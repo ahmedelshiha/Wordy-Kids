@@ -42,6 +42,8 @@ export function MobileBottomNav({
   achievementCount = 0,
   userRole = "child",
 }: MobileBottomNavProps) {
+  const { isGuest, logout } = useAuth();
+  const navigate = useNavigate();
   // Dynamic primary tabs based on user role
   const baseTabs = [
     {
