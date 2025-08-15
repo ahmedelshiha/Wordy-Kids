@@ -497,9 +497,24 @@ export function VowelRescue({
                 Back to Games
               </Button>
               <Button
-                onClick={() => window.location.reload()}
+                onClick={() => {
+                  // Reset game state for restart with new words
+                  setCurrentIndex(0);
+                  setScore(0);
+                  setSelectedVowels({});
+                  setGameStarted(false);
+                  setGameComplete(false);
+                  setAttempts(0);
+                  setTimeLeft(60);
+                  setShowFeedback(false);
+                  setShowReward(false);
+                  setSparkleCount(0);
+                  setShowSparkleExplosion(false);
+                  setIsRestarting((prev) => !prev); // Trigger new word generation
+                }}
                 className="flex-1 bg-educational-blue hover:bg-educational-blue/90 min-h-[44px]"
               >
+                <Sparkles className="w-4 h-4 mr-2" />
                 Play Again
               </Button>
             </div>
