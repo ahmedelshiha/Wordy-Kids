@@ -440,6 +440,67 @@ export class AudioService {
     }
   }
 
+  private pronounceWordWithoutVoiceSelection(
+    word: string,
+    options: {
+      rate?: number;
+      pitch?: number;
+      volume?: number;
+      onStart?: () => void;
+      onEnd?: () => void;
+      onError?: () => void;
+    } = {},
+  ): void {
+    try {
+      const voiceDefaults = this.getVoiceDefaults(this.selectedVoiceType);
+
+      // Validate and clamp parameters to safe ranges
+      const rate = Math.max(0.1, Math.min(10, options.rate ?? voiceDefaults.rate));
+      const pitch = Math.max(0, Math.min(2, options.pitch ?? voiceDefaults.pitch));
+      const volume = Math.max(0, Math.min(1, options.volume ?? 1.0));
+
+      const utterance = new SpeechSynthesisUtterance(word.trim());
+      utterance.rate = rate;
+      utterance.pitch = pitch;
+      utterance.volume = volume;
+
+      // Don't set a specific voice, let the browser use default
+      console.log("Using default browser voice for speech synthesis");
+
+      utterance.onstart = () => {
+        console.log(`Starting pronunciation (default voice): ${word}`);
+        try {
+          options.onStart?.();
+        } catch (error) {
+          console.error("Error in onStart callback:", error);
+        }
+      };
+
+      utterance.onend = () => {
+        console.log(`Finished pronunciation (default voice): ${word}`);
+        try {
+          options.onEnd?.();
+        } catch (error) {
+          console.error("Error in onEnd callback:", error);
+        }
+      };
+
+      utterance.onerror = (event) => {
+        console.error("Speech synthesis error (default voice):", event);
+        try {
+          options.onError?.();
+        } catch (error) {
+          console.error("Error in onError callback:", error);
+        }
+      };
+
+      this.speechSynthesis.speak(utterance);
+    } catch (error) {
+      console.error("Error in fallback pronunciation:", error);
+      options.onError?.();
+    }
+  }
+
   public pronounceDefinition(
     definition: string,
     options: {
