@@ -47,6 +47,7 @@ import {
   Trophy,
 } from "lucide-react";
 import { AnimatedCounter } from "@/components/AnimatedCounter";
+import { EnhancedLearningReports } from "@/components/EnhancedLearningReports";
 
 interface ChildProfile {
   id: string;
