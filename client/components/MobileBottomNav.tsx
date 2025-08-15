@@ -152,11 +152,18 @@ export function MobileBottomNav({
       onClick: onSettingsClick,
     },
     {
-      id: "signout",
-      emoji: "👋",
-      label: "Sign Out",
-      icon: LogOut,
-      onClick: onSignOut,
+      id: "auth",
+      emoji: isGuest ? "📝" : "👋",
+      label: isGuest ? "Sign Up" : "Sign Out",
+      icon: isGuest ? Users : LogOut,
+      onClick: () => {
+        if (isGuest) {
+          navigate('/signup');
+        } else {
+          logout();
+        }
+        onMoreToggle();
+      },
     },
   ];
 
