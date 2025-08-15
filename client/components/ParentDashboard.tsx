@@ -78,6 +78,31 @@ import { WordProgressAPI } from "@/lib/wordProgressApi";
 import { ChildWordStats } from "@shared/api";
 import { SmartWordSelector } from "@/lib/smartWordSelection";
 
+interface LearningGoal {
+  id: string;
+  type: "daily" | "weekly" | "monthly";
+  target: number;
+  current: number;
+  category?: string;
+  difficulty?: "easy" | "medium" | "hard";
+  isActive: boolean;
+  streak: number;
+  bestStreak: number;
+  startDate: string;
+  endDate?: string;
+  description: string;
+  reward?: string;
+}
+
+interface LearningPreferences {
+  autoAdjustGoals: boolean;
+  adaptiveDifficulty: boolean;
+  preferredCategories: string[];
+  focusAreas: string[];
+  reminderTimes: string[];
+  motivationStyle: "encouraging" | "challenging" | "balanced";
+}
+
 interface ChildProfile {
   id: string;
   name: string;
@@ -107,6 +132,9 @@ interface ChildProfile {
   learningStrengths: string[];
   areasForImprovement: string[];
   motivationalRewards: string[];
+  // Enhanced learning goals integration
+  learningGoals: LearningGoal[];
+  learningPreferences: LearningPreferences;
 }
 
 interface LearningSession {
