@@ -66,13 +66,22 @@ export class WordProgressAPI {
   }
 
   static async getChildStats(childId: string): Promise<GetChildStatsResponse> {
-    const response = await fetch(`${API_BASE}/child/${childId}/stats`);
+    try {
+      console.log(`Fetching child stats for ${childId} from ${API_BASE}/child/${childId}/stats`);
+      const response = await fetch(`${API_BASE}/child/${childId}/stats`);
 
-    if (!response.ok) {
-      throw new Error(`Failed to get stats: ${response.statusText}`);
+      if (!response.ok) {
+        console.error(`API response not OK: ${response.status} ${response.statusText}`);
+        throw new Error(`Failed to get stats: ${response.statusText}`);
+      }
+
+      const data = await response.json();
+      console.log("Child stats API response:", data);
+      return data;
+    } catch (error) {
+      console.error("Error in getChildStats:", error);
+      throw error;
     }
-
-    return response.json();
   }
 
   static async getAllChildrenProgress(): Promise<{
