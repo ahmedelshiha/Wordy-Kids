@@ -19,6 +19,7 @@ import { EnhancedChildLogin } from "@/components/EnhancedChildLogin";
 import { AvatarCustomization } from "@/components/AvatarCustomization";
 import { AchievementSystem } from "@/components/AchievementSystem";
 import { EncouragingFeedback } from "@/components/EncouragingFeedback";
+import { DynamicAuthButton } from "@/components/DynamicAuthButton";
 import { GameLikeLearning } from "@/components/GameLikeLearning";
 import { WordMatchingGame } from "@/components/WordMatchingGame";
 import { GameHub } from "@/components/games/GameHub";
