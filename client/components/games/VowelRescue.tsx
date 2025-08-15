@@ -864,6 +864,35 @@ export function VowelRescue({
           type="stars"
           onComplete={() => setShowMainCelebration(false)}
         />
+
+        {/* Game-Specific Floating Help Menu */}
+        <FloatingHelpMenu
+          currentPage="games"
+          onTutorial={() =>
+            setShowFeedback(true) &&
+            setTimeout(() => {
+              // Show tutorial overlay for vowel rescue
+            }, 100)
+          }
+          onGameHelp={() => {
+            setShowFeedback(true);
+            setTimeout(() => setShowFeedback(false), 5000);
+          }}
+          onSettings={() => {
+            // Could open a game settings modal
+          }}
+          onContact={() => {
+            setShowFeedback(true);
+            setTimeout(() => setShowFeedback(false), 4000);
+          }}
+          onAccessibility={() => {
+            setShowFeedback(true);
+            setTimeout(() => setShowFeedback(false), 4000);
+          }}
+          onAchievements={() => {
+            // Could show progress in this specific game
+          }}
+        />
       </div>
     </div>
   );
