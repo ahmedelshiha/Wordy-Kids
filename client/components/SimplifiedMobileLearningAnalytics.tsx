@@ -244,19 +244,19 @@ export const SimplifiedMobileLearningAnalytics: React.FC<
         {/* Progress Tab */}
         <TabsContent value="progress" className="space-y-4">
           {/* Learning Time Card */}
-          <Card className="bg-gradient-to-r from-indigo-50 to-purple-50 border-indigo-200 game-card-mobile">
+          <Card className="learning-time-mobile border-indigo-200">
             <CardHeader className="pb-3">
               <CardTitle className="text-lg flex items-center gap-2">
-                ⏰ Time I Spent Learning
+                <span className="mobile-emoji">⏰</span> Time I Spent Learning
               </CardTitle>
             </CardHeader>
             <CardContent>
               <div className="text-center">
-                <div className="text-3xl font-bold text-indigo-600 mb-2">
+                <div className="text-3xl font-bold mb-2 mobile-counter">
                   <AnimatedCounter value={analyticsData.overview.totalLearningTime} />
                   <span className="text-lg"> minutes</span>
                 </div>
-                <p className="text-sm text-gray-600">
+                <p className="text-sm opacity-90">
                   That's amazing! 🎉 Keep it up!
                 </p>
               </div>
@@ -264,38 +264,38 @@ export const SimplifiedMobileLearningAnalytics: React.FC<
           </Card>
 
           {/* Weekly Progress */}
-          <Card className="bg-gradient-to-r from-pink-50 to-rose-50 border-pink-200 game-card-mobile">
+          <Card className="bg-gradient-to-r from-pink-50 to-rose-50 border-pink-200 subject-card-mobile">
             <CardHeader className="pb-3">
               <CardTitle className="text-lg flex items-center gap-2">
-                📅 This Week's Journey
+                <span className="mobile-emoji">📅</span> This Week's Journey
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-3">
-              <div className="flex justify-between items-center">
+              <div className="week-day-mobile">
                 <span className="text-sm text-gray-600">Monday</span>
                 <div className="flex items-center gap-1">
-                  <span className="text-lg">✅</span>
+                  <span className="text-lg mobile-emoji">✅</span>
                   <span className="text-xs text-green-600">12 words</span>
                 </div>
               </div>
-              <div className="flex justify-between items-center">
+              <div className="week-day-mobile">
                 <span className="text-sm text-gray-600">Tuesday</span>
                 <div className="flex items-center gap-1">
-                  <span className="text-lg">✅</span>
+                  <span className="text-lg mobile-emoji">✅</span>
                   <span className="text-xs text-green-600">8 words</span>
                 </div>
               </div>
-              <div className="flex justify-between items-center">
+              <div className="week-day-mobile">
                 <span className="text-sm text-gray-600">Wednesday</span>
                 <div className="flex items-center gap-1">
-                  <span className="text-lg">✅</span>
+                  <span className="text-lg mobile-emoji">✅</span>
                   <span className="text-xs text-green-600">15 words</span>
                 </div>
               </div>
-              <div className="flex justify-between items-center">
+              <div className="week-day-mobile">
                 <span className="text-sm text-gray-600">Today</span>
                 <div className="flex items-center gap-1">
-                  <span className="text-lg">🎯</span>
+                  <span className="text-lg mobile-emoji">🎯</span>
                   <span className="text-xs text-blue-600">Let's learn!</span>
                 </div>
               </div>
@@ -309,7 +309,7 @@ export const SimplifiedMobileLearningAnalytics: React.FC<
             {analyticsData.categoryProgress.map((category, index) => (
               <Card
                 key={index}
-                className="bg-white border-2 border-gray-100 hover:border-blue-200 transition-all duration-300 game-card-mobile"
+                className="subject-card-mobile bg-white border-2 border-gray-100 hover:border-blue-200 transition-all duration-300"
               >
                 <CardContent className="p-4">
                   <div className="flex items-center justify-between mb-3">
@@ -322,7 +322,7 @@ export const SimplifiedMobileLearningAnalytics: React.FC<
                       </h3>
                     </div>
                     <Badge
-                      className={`text-xs ${
+                      className={`achievement-badge-mobile text-xs ${
                         category.accuracy >= 90
                           ? "bg-green-100 text-green-800"
                           : category.accuracy >= 80
@@ -359,10 +359,12 @@ export const SimplifiedMobileLearningAnalytics: React.FC<
                           )}%
                         </span>
                       </div>
-                      <Progress
-                        value={(category.masteredWords / category.totalWords) * 100}
-                        className="h-3 rounded-full progress-mobile"
-                      />
+                      <div className="mobile-progress-bar">
+                        <div
+                          className="mobile-progress-fill"
+                          style={{ width: `${(category.masteredWords / category.totalWords) * 100}%` }}
+                        />
+                      </div>
                       <div className="text-xs text-gray-500 text-center">
                         {category.masteredWords} out of {category.totalWords} words
                       </div>
@@ -371,7 +373,7 @@ export const SimplifiedMobileLearningAnalytics: React.FC<
                     <div className="text-center">
                       <Button
                         size="sm"
-                        className="w-full bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white font-medium game-button-mobile"
+                        className="action-button-mobile"
                       >
                         <span className="mr-1">🎮</span>
                         Practice {category.category}!
@@ -386,9 +388,9 @@ export const SimplifiedMobileLearningAnalytics: React.FC<
       </Tabs>
 
       {/* Encouragement Message */}
-      <Card className="bg-gradient-to-r from-yellow-50 to-orange-50 border-yellow-200 game-card-mobile">
+      <Card className="encouragement-mobile">
         <CardContent className="p-4 text-center">
-          <div className="text-3xl mb-2">🌟</div>
+          <div className="text-3xl mb-2 mobile-emoji">🌟</div>
           <h3 className="font-bold text-orange-800 mb-1">Great Job!</h3>
           <p className="text-sm text-orange-700">
             You're doing amazing! Keep learning and having fun! 🎉
