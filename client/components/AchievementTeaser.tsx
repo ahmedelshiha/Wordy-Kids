@@ -44,7 +44,7 @@ export function AchievementTeaser({ className }: AchievementTeaserProps) {
   // Cycle through messages every 8 seconds (longer for mobile to read)
   useEffect(() => {
     const isMobile = window.innerWidth < 768;
-    const rotationInterval = isMobile ? 10000 : 8000; // 10s on mobile, 8s on desktop
+    const rotationInterval = isMobile ? 6000 : 8000; // 6s on mobile, 8s on desktop
 
     const messageRotation = setInterval(() => {
       setShowTeaser(false);
