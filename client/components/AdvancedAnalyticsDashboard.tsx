@@ -387,7 +387,7 @@ const AdvancedAnalyticsDashboard: React.FC = () => {
         </CardHeader>
         <CardContent>
           <div className="space-y-4">
-            {geographicData.map((region, index) => (
+            {geographicData.length > 0 ? geographicData.map((region, index) => (
               <div
                 key={index}
                 className="flex items-center justify-between p-4 bg-slate-50 rounded-lg"
@@ -412,12 +412,17 @@ const AdvancedAnalyticsDashboard: React.FC = () => {
                     </div>
                   </div>
                   <div className="space-y-1">
-                    <Progress value={geographicData.length > 0 ?
-                      (region.users / Math.max(...geographicData.map(r => r.users))) * 100 : 0} />
+                    <Progress value={(region.users / Math.max(...geographicData.map(r => r.users))) * 100} />
                   </div>
                 </div>
               </div>
-            ))}
+            )) : (
+              <div className="text-center py-8 text-slate-500">
+                <Globe className="w-12 h-12 mx-auto mb-3 opacity-50" />
+                <p>No geographic data available yet</p>
+                <p className="text-sm">Geographic distribution will appear as the user base grows</p>
+              </div>
+            )}
           </div>
         </CardContent>
       </Card>
