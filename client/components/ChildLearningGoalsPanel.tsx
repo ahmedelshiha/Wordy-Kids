@@ -430,32 +430,34 @@ export const ChildLearningGoalsPanel: React.FC<
                             </div>
 
                             {goal.isActive && (
-                              <div className="flex gap-1 md:gap-2 mt-3">
+                              <div className="flex gap-2 mt-3">
                                 <Button
                                   size="sm"
                                   variant="outline"
-                                  onClick={() =>
+                                  onClick={() => {
                                     handleUpdateGoalProgress(
                                       goal.id,
                                       goal.current - 1,
-                                    )
-                                  }
+                                    );
+                                    triggerHapticFeedback("light");
+                                  }}
                                   disabled={goal.current <= 0}
-                                  className="flex-1 text-xs md:text-sm h-8 md:h-9"
+                                  className="flex-1 text-xs md:text-sm h-9 md:h-10 min-w-[44px] hover:bg-red-50 border-red-200 hover:border-red-300 disabled:opacity-50"
                                 >
                                   -1
                                 </Button>
                                 <Button
                                   size="sm"
                                   variant="outline"
-                                  onClick={() =>
+                                  onClick={() => {
                                     handleUpdateGoalProgress(
                                       goal.id,
                                       goal.current + 1,
-                                    )
-                                  }
+                                    );
+                                    triggerHapticFeedback("medium");
+                                  }}
                                   disabled={goal.current >= goal.target}
-                                  className="flex-1 text-xs md:text-sm h-8 md:h-9"
+                                  className="flex-1 text-xs md:text-sm h-9 md:h-10 min-w-[44px] hover:bg-green-50 border-green-200 hover:border-green-300 disabled:opacity-50"
                                 >
                                   +1
                                 </Button>
