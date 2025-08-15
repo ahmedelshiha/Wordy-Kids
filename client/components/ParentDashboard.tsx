@@ -593,7 +593,9 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
           }
         } catch (apiError) {
           // This is expected and normal - the app works perfectly with localStorage only
-          console.log("API not available, continuing with localStorage data (this is normal)");
+          console.log(
+            "API not available, continuing with localStorage data (this is normal)",
+          );
           // Set default/empty stats since API is not available
           setChildrenWordStats({});
         }
@@ -609,17 +611,49 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
               setTopWords(childStatsResponse.topWords || []);
             }
           } catch (apiError) {
-            console.log("Child stats API not available, using fallback data (this is normal)");
+            console.log(
+              "Child stats API not available, using fallback data (this is normal)",
+            );
             // Generate sample practice and top words since API is not available
             setPracticeWords([
-              { word: "telescope", category: "Science", accuracy: 65, timesReviewed: 3 },
-              { word: "butterfly", category: "Nature", accuracy: 58, timesReviewed: 4 },
-              { word: "adventure", category: "Stories", accuracy: 72, timesReviewed: 2 },
+              {
+                word: "telescope",
+                category: "Science",
+                accuracy: 65,
+                timesReviewed: 3,
+              },
+              {
+                word: "butterfly",
+                category: "Nature",
+                accuracy: 58,
+                timesReviewed: 4,
+              },
+              {
+                word: "adventure",
+                category: "Stories",
+                accuracy: 72,
+                timesReviewed: 2,
+              },
             ]);
             setTopWords([
-              { word: "rainbow", category: "Nature", accuracy: 95, timesReviewed: 8 },
-              { word: "sunshine", category: "Weather", accuracy: 92, timesReviewed: 6 },
-              { word: "friendship", category: "Emotions", accuracy: 89, timesReviewed: 5 },
+              {
+                word: "rainbow",
+                category: "Nature",
+                accuracy: 95,
+                timesReviewed: 8,
+              },
+              {
+                word: "sunshine",
+                category: "Weather",
+                accuracy: 92,
+                timesReviewed: 6,
+              },
+              {
+                word: "friendship",
+                category: "Emotions",
+                accuracy: 89,
+                timesReviewed: 5,
+              },
             ]);
           }
         }
