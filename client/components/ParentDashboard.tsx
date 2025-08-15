@@ -1533,6 +1533,7 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
         <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
           <div className="bg-white rounded-xl shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-hidden">
             <ChildLearningGoalsPanel
+              isOpen={showLearningGoalsPanel}
               child={learningGoalsChild}
               onClose={() => {
                 setShowLearningGoalsPanel(false);
