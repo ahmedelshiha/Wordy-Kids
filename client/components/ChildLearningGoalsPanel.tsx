@@ -390,47 +390,115 @@ export const ChildLearningGoalsPanel: React.FC<ChildLearningGoalsPanelProps> = (
               </TabsContent>
 
               <TabsContent value="progress" className="space-y-4">
-                <h3 className="font-semibold">Learning Analytics</h3>
-                
-                <div className="grid grid-cols-2 gap-4">
-                  <Card>
-                    <CardContent className="p-4 text-center">
-                      <div className="text-2xl font-bold text-educational-blue">
-                        {child.wordsLearned}
-                      </div>
-                      <p className="text-sm text-muted-foreground">Words Learned</p>
-                    </CardContent>
-                  </Card>
-                  
-                  <Card>
-                    <CardContent className="p-4 text-center">
-                      <div className="text-2xl font-bold text-educational-orange">
-                        {child.currentStreak}
-                      </div>
-                      <p className="text-sm text-muted-foreground">Day Streak</p>
-                    </CardContent>
-                  </Card>
+                <div className="flex items-center justify-between">
+                  <h3 className="font-semibold">Learning Analytics</h3>
+                  <Button
+                    size="sm"
+                    variant="outline"
+                    onClick={async () => {
+                      setIsLoadingProgress(true);
+                      try {
+                        const progress = await goalProgressTracker.fetchSystematicProgress(child.id);
+                        setSystematicProgress(progress);
+                      } catch (error) {
+                        console.error('Error refreshing progress:', error);
+                      } finally {
+                        setIsLoadingProgress(false);
+                      }
+                    }}
+                    disabled={isLoadingProgress}
+                  >
+                    <RefreshCw className={cn("w-4 h-4 mr-2", isLoadingProgress && "animate-spin")} />
+                    Refresh
+                  </Button>
                 </div>
 
-                <Card>
-                  <CardContent className="p-4">
-                    <h4 className="font-medium mb-3">Goal Completion Rate</h4>
-                    <div className="space-y-2">
-                      {goals.map((goal) => {
-                        const progress = Math.min((goal.current / goal.target) * 100, 100);
-                        return (
-                          <div key={goal.id} className="space-y-1">
-                            <div className="flex justify-between text-sm">
-                              <span>{goal.description}</span>
-                              <span>{Math.round(progress)}%</span>
-                            </div>
-                            <Progress value={progress} className="h-1" />
+                {isLoadingProgress ? (
+                  <div className="text-center py-8">
+                    <RefreshCw className="w-8 h-8 animate-spin mx-auto mb-2 text-educational-blue" />
+                    <p className="text-sm text-muted-foreground">Loading progress data...</p>
+                  </div>
+                ) : (
+                  <>
+                    <div className="grid grid-cols-2 gap-4">
+                      <Card>
+                        <CardContent className="p-4 text-center">
+                          <div className="text-2xl font-bold text-educational-blue">
+                            {systematicProgress?.totalWordsLearned || child.wordsLearned || 0}
                           </div>
-                        );
-                      })}
+                          <p className="text-sm text-muted-foreground">Total Words</p>
+                        </CardContent>
+                      </Card>
+
+                      <Card>
+                        <CardContent className="p-4 text-center">
+                          <div className="text-2xl font-bold text-educational-orange">
+                            {systematicProgress?.currentStreak || child.currentStreak || 0}
+                          </div>
+                          <p className="text-sm text-muted-foreground">Day Streak</p>
+                        </CardContent>
+                      </Card>
+
+                      <Card>
+                        <CardContent className="p-4 text-center">
+                          <div className="text-2xl font-bold text-educational-green">
+                            {systematicProgress?.wordsLearnedToday || 0}
+                          </div>
+                          <p className="text-sm text-muted-foreground">Today</p>
+                        </CardContent>
+                      </Card>
+
+                      <Card>
+                        <CardContent className="p-4 text-center">
+                          <div className="text-2xl font-bold text-educational-purple">
+                            {systematicProgress?.wordsLearnedThisWeek || 0}
+                          </div>
+                          <p className="text-sm text-muted-foreground">This Week</p>
+                        </CardContent>
+                      </Card>
                     </div>
-                  </CardContent>
-                </Card>
+
+                    <Card>
+                      <CardContent className="p-4">
+                        <h4 className="font-medium mb-3">Session Activity</h4>
+                        <div className="grid grid-cols-2 gap-4">
+                          <div className="text-center">
+                            <div className="text-lg font-bold text-educational-blue">
+                              {systematicProgress?.sessionsToday || 0}
+                            </div>
+                            <p className="text-xs text-muted-foreground">Sessions Today</p>
+                          </div>
+                          <div className="text-center">
+                            <div className="text-lg font-bold text-educational-purple">
+                              {systematicProgress?.sessionsThisWeek || 0}
+                            </div>
+                            <p className="text-xs text-muted-foreground">Sessions This Week</p>
+                          </div>
+                        </div>
+                      </CardContent>
+                    </Card>
+
+                    <Card>
+                      <CardContent className="p-4">
+                        <h4 className="font-medium mb-3">Goal Completion Rate</h4>
+                        <div className="space-y-2">
+                          {goals.map((goal) => {
+                            const progress = Math.min((goal.current / goal.target) * 100, 100);
+                            return (
+                              <div key={goal.id} className="space-y-1">
+                                <div className="flex justify-between text-sm">
+                                  <span>{goal.description}</span>
+                                  <span>{Math.round(progress)}%</span>
+                                </div>
+                                <Progress value={progress} className="h-1" />
+                              </div>
+                            );
+                          })}
+                        </div>
+                      </CardContent>
+                    </Card>
+                  </>
+                )}
               </TabsContent>
 
               <TabsContent value="preferences" className="space-y-4">
