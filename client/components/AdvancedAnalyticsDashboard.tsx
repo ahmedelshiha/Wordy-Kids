@@ -125,6 +125,7 @@ const AdvancedAnalyticsDashboard: React.FC = () => {
     }, 5 * 60 * 1000); // 5 minutes
 
     return () => {
+      clearTimeout(updateTimeout);
       window.removeEventListener('goalCompleted', handleGoalCompletion);
       window.removeEventListener('wordDatabaseUpdate', handleWordDatabaseUpdate);
       window.removeEventListener('categoryCompleted', handleCategoryCompletion);
