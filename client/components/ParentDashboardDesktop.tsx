@@ -1043,7 +1043,7 @@ export const ParentDashboardDesktop: React.FC<ParentDashboardDesktopProps> = ({
           </div>
 
           {/* Content Area */}
-          <div className="dashboard-content p-4 lg:p-6 min-w-0">
+          <div className="dashboard-content flex-1 p-4 lg:p-6 min-w-0 overflow-y-auto">
             {activeTab === "overview" && (
               <div className="space-y-6">
                 {/* Family Overview Cards */}
