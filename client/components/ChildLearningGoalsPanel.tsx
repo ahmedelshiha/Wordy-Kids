@@ -334,11 +334,14 @@ export const ChildLearningGoalsPanel: React.FC<
                   </h3>
                   <Button
                     size="sm"
-                    onClick={() => setShowAddGoalDialog(true)}
-                    className="w-full md:w-auto"
+                    onClick={() => {
+                      setShowAddGoalDialog(true);
+                      triggerHapticFeedback("light");
+                    }}
+                    className="w-full md:w-auto bg-educational-blue hover:bg-educational-blue/90 text-xs md:text-sm"
                   >
-                    <Plus className="w-3 h-3 md:w-4 md:h-4 mr-2" />
-                    <span className="text-xs md:text-sm">Add Goal</span>
+                    <Plus className="w-3 h-3 md:w-4 md:h-4 mr-1 md:mr-2" />
+                    <span>Add Goal</span>
                   </Button>
                 </div>
 
