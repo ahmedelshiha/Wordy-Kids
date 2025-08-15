@@ -298,7 +298,7 @@ export function WordAdventureTest() {
                 <div>
                   <strong>Mobile (if available):</strong>
                   <ul className="list-disc list-inside ml-2 space-y-1">
-                    <li>Swipe left to favorite ❤��</li>
+                    <li>Swipe left to favorite ❤️</li>
                     <li>Swipe up to pronounce 🔊</li>
                     <li>Swipe right to flip 🔄</li>
                     <li>Tap to flip between front/back</li>

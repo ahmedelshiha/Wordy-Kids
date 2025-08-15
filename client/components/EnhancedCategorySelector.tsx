@@ -359,7 +359,7 @@ export function EnhancedCategorySelector({
       greetings: "👋",
       technology: "📱",
       emotions: "😊",
-      "at-the-clothes-shop": "���",
+      "at-the-clothes-shop": "👕",
       "at-home": "🏠",
       default: "📚",
     };
