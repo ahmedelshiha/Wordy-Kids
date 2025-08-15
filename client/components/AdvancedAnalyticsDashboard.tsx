@@ -122,6 +122,8 @@ const AdvancedAnalyticsDashboard: React.FC = () => {
     return () => {
       window.removeEventListener('goalCompleted', handleGoalCompletion);
       window.removeEventListener('wordDatabaseUpdate', handleWordDatabaseUpdate);
+      window.removeEventListener('categoryCompleted', handleCategoryCompletion);
+      window.removeEventListener('wordProgressUpdate', handleWordProgress);
       window.removeEventListener('storage', handleStorageChange);
       clearInterval(autoRefreshInterval);
     };
