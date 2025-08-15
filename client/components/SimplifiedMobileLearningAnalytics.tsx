@@ -174,43 +174,43 @@ export const SimplifiedMobileLearningAnalytics: React.FC<
       </div>
 
       {/* Big Achievement Cards - Mobile First */}
-      <div className="grid grid-cols-2 gap-3 mb-6">
-        <Card className="bg-gradient-to-br from-blue-100 to-blue-200 border-blue-300 game-card-mobile">
+      <div className="metrics-grid-mobile mb-6">
+        <Card className="bg-gradient-to-br from-blue-100 to-blue-200 border-blue-300 achievement-card-mobile">
           <CardContent className="p-4 text-center">
-            <div className="text-3xl mb-2">🎯</div>
-            <div className="text-2xl font-bold text-blue-700 mb-1">
+            <div className="text-3xl mb-2 mobile-emoji">🎯</div>
+            <div className="text-2xl font-bold text-blue-700 mb-1 mobile-counter">
               <AnimatedCounter value={analyticsData.overview.totalWordsMastered} />
             </div>
             <p className="text-xs text-blue-600 font-medium">Words I Know!</p>
           </CardContent>
         </Card>
 
-        <Card className="bg-gradient-to-br from-green-100 to-green-200 border-green-300 game-card-mobile">
+        <Card className="bg-gradient-to-br from-green-100 to-green-200 border-green-300 achievement-card-mobile">
           <CardContent className="p-4 text-center">
-            <div className="text-3xl mb-2">
+            <div className="text-3xl mb-2 mobile-emoji">
               {getAccuracyEmoji(analyticsData.overview.overallAccuracy)}
             </div>
-            <div className="text-2xl font-bold text-green-700 mb-1">
+            <div className="text-2xl font-bold text-green-700 mb-1 mobile-counter">
               <AnimatedCounter value={analyticsData.overview.overallAccuracy} />%
             </div>
             <p className="text-xs text-green-600 font-medium">How Good I Am!</p>
           </CardContent>
         </Card>
 
-        <Card className="bg-gradient-to-br from-orange-100 to-orange-200 border-orange-300 game-card-mobile">
+        <Card className="bg-gradient-to-br from-orange-100 to-orange-200 border-orange-300 achievement-card-mobile">
           <CardContent className="p-4 text-center">
-            <div className="text-3xl mb-2">💪</div>
-            <div className="text-2xl font-bold text-orange-700 mb-1">
+            <div className="text-3xl mb-2 mobile-emoji">💪</div>
+            <div className="text-2xl font-bold text-orange-700 mb-1 mobile-counter">
               <AnimatedCounter value={analyticsData.overview.wordsNeedPractice} />
             </div>
             <p className="text-xs text-orange-600 font-medium">Need Practice</p>
           </CardContent>
         </Card>
 
-        <Card className="bg-gradient-to-br from-purple-100 to-purple-200 border-purple-300 game-card-mobile">
+        <Card className="bg-gradient-to-br from-purple-100 to-purple-200 border-purple-300 achievement-card-mobile">
           <CardContent className="p-4 text-center">
-            <div className="text-3xl mb-2">🔥</div>
-            <div className="text-2xl font-bold text-purple-700 mb-1">
+            <div className="text-3xl mb-2 mobile-emoji">🔥</div>
+            <div className="text-2xl font-bold text-purple-700 mb-1 mobile-counter">
               <AnimatedCounter value={analyticsData.overview.activeLearningStreak} />
             </div>
             <p className="text-xs text-purple-600 font-medium">Days in a Row!</p>
@@ -220,10 +220,10 @@ export const SimplifiedMobileLearningAnalytics: React.FC<
 
       {/* Simple Tabs */}
       <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-4">
-        <TabsList className="grid w-full grid-cols-2 h-12 bg-gray-100 rounded-xl">
+        <TabsList className="mobile-tabs-list grid w-full grid-cols-2 h-12">
           <TabsTrigger
             value="progress"
-            className="text-sm font-medium game-button-mobile rounded-lg"
+            className="mobile-tab-trigger text-sm font-medium rounded-lg"
           >
             <div className="flex items-center gap-2">
               <span className="text-lg">📊</span>
@@ -232,7 +232,7 @@ export const SimplifiedMobileLearningAnalytics: React.FC<
           </TabsTrigger>
           <TabsTrigger
             value="subjects"
-            className="text-sm font-medium game-button-mobile rounded-lg"
+            className="mobile-tab-trigger text-sm font-medium rounded-lg"
           >
             <div className="flex items-center gap-2">
               <span className="text-lg">📚</span>
