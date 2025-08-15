@@ -3190,10 +3190,6 @@ export default function Index({ initialProfile }: IndexProps) {
               navigate("/admin");
               setShowMobileMoreMenu(false);
             }}
-            onSignOut={() => {
-              handleSignOut();
-              setShowMobileMoreMenu(false);
-            }}
             showMoreMenu={showMobileMoreMenu}
             userRole={userRole}
             onMoreToggle={() => setShowMobileMoreMenu(!showMobileMoreMenu)}
