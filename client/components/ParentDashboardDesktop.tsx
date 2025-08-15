@@ -797,34 +797,35 @@ export const ParentDashboardDesktop: React.FC<ParentDashboardDesktopProps> = ({
           )}
         >
           {/* Header */}
-          <div className="bg-white border-b border-slate-200 px-6 py-4">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center space-x-4">
+          <div className="bg-white border-b border-slate-200 px-4 lg:px-6 py-4">
+            <div className="flex items-center justify-between gap-4">
+              <div className="flex items-center space-x-3 min-w-0">
                 {onNavigateBack && (
-                  <Button variant="ghost" size="sm" onClick={onNavigateBack}>
+                  <Button variant="ghost" size="sm" onClick={onNavigateBack} className="shrink-0">
                     <ArrowLeft className="h-4 w-4 mr-2" />
-                    Back to Learning
+                    <span className="hidden sm:inline">Back to Learning</span>
+                    <span className="sm:hidden">Back</span>
                   </Button>
                 )}
-                <div>
-                  <h1 className="text-2xl font-bold text-slate-800">
+                <div className="min-w-0">
+                  <h1 className="text-xl lg:text-2xl font-bold text-slate-800 truncate">
                     {sidebarItems.find((item) => item.id === activeTab)
                       ?.label || "Dashboard"}
                   </h1>
-                  <p className="text-slate-600">
+                  <p className="text-sm text-slate-600 truncate">
                     {children.length} active learner
                     {children.length !== 1 ? "s" : ""}
                   </p>
                 </div>
               </div>
 
-              <div className="flex items-center space-x-3">
-                {/* Time Range Selector */}
+              <div className="flex items-center gap-2 shrink-0">
+                {/* Time Range Selector - Hidden on smaller screens */}
                 <Select
                   value={selectedTimeRange}
                   onValueChange={setSelectedTimeRange}
                 >
-                  <SelectTrigger className="w-32">
+                  <SelectTrigger className="w-24 lg:w-32 hidden md:flex">
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
@@ -834,8 +835,8 @@ export const ParentDashboardDesktop: React.FC<ParentDashboardDesktopProps> = ({
                   </SelectContent>
                 </Select>
 
-                {/* View Mode Toggle */}
-                <div className="flex items-center border rounded-lg">
+                {/* View Mode Toggle - Hidden on mobile */}
+                <div className="hidden lg:flex items-center border rounded-lg shrink-0">
                   <Button
                     variant={viewMode === "grid" ? "default" : "ghost"}
                     size="sm"
@@ -854,87 +855,119 @@ export const ParentDashboardDesktop: React.FC<ParentDashboardDesktopProps> = ({
                   </Button>
                 </div>
 
-                {/* Refresh Button */}
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      onClick={syncChildrenProgress}
-                      disabled={isLoadingProgress}
-                    >
-                      <RefreshCw
-                        className={cn(
-                          "h-4 w-4",
-                          isLoadingProgress && "animate-spin",
-                        )}
-                      />
-                    </Button>
-                  </TooltipTrigger>
-                  <TooltipContent>
-                    <p>Refresh Data (Ctrl+R)</p>
-                  </TooltipContent>
-                </Tooltip>
+                {/* Action Buttons Group */}
+                <div className="flex items-center gap-2 shrink-0">
+                  {/* Refresh Button */}
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={syncChildrenProgress}
+                        disabled={isLoadingProgress}
+                        className="shrink-0"
+                      >
+                        <RefreshCw
+                          className={cn(
+                            "h-4 w-4",
+                            isLoadingProgress && "animate-spin",
+                          )}
+                        />
+                      </Button>
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      <p>Refresh Data (Ctrl+R)</p>
+                    </TooltipContent>
+                  </Tooltip>
 
-                {/* Add Child Button */}
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <Button onClick={handleAddChildClick}>
-                      <UserPlus className="h-4 w-4 mr-2" />
-                      Add Child
-                    </Button>
-                  </TooltipTrigger>
-                  <TooltipContent>
-                    <p>Add New Child (Ctrl+N)</p>
-                  </TooltipContent>
-                </Tooltip>
+                  {/* Add Child Button */}
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <Button onClick={handleAddChildClick} className="shrink-0">
+                        <UserPlus className="h-4 w-4 lg:mr-2" />
+                        <span className="hidden lg:inline">Add Child</span>
+                      </Button>
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      <p>Add New Child (Ctrl+N)</p>
+                    </TooltipContent>
+                  </Tooltip>
 
-                {/* User Menu */}
-                <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <Button
-                      variant="ghost"
-                      className="relative h-8 w-8 rounded-full"
-                    >
-                      <div className="h-8 w-8 rounded-full bg-gradient-to-r from-blue-500 to-purple-600 flex items-center justify-center text-white text-sm font-medium">
-                        {user?.email?.[0]?.toUpperCase() || "P"}
-                      </div>
-                    </Button>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent className="w-56" align="end" forceMount>
-                    <DropdownMenuLabel className="font-normal">
-                      <div className="flex flex-col space-y-1">
-                        <p className="text-sm font-medium leading-none">
-                          Parent Dashboard
-                        </p>
-                        <p className="text-xs leading-none text-muted-foreground">
-                          {user?.email || "Guest User"}
-                        </p>
-                      </div>
-                    </DropdownMenuLabel>
-                    <DropdownMenuSeparator />
-                    <DropdownMenuItem onClick={() => setActiveTab("settings")}>
-                      <Settings className="mr-2 h-4 w-4" />
-                      <span>Settings</span>
-                    </DropdownMenuItem>
-                    <DropdownMenuItem>
-                      <Download className="mr-2 h-4 w-4" />
-                      <span>Export Data</span>
-                    </DropdownMenuItem>
-                    <DropdownMenuSeparator />
-                    {isGuest ? (
-                      <DropdownMenuItem onClick={() => navigate("/signup")}>
-                        <UserPlus className="mr-2 h-4 w-4" />
-                        <span>Create Account</span>
+                  {/* More Actions Dropdown for smaller screens */}
+                  <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                      <Button variant="outline" size="sm" className="lg:hidden shrink-0">
+                        <MoreHorizontal className="h-4 w-4" />
+                      </Button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent align="end">
+                      <DropdownMenuItem onClick={() => setViewMode(viewMode === "grid" ? "list" : "grid")}>
+                        {viewMode === "grid" ? <List className="mr-2 h-4 w-4" /> : <Grid3x3 className="mr-2 h-4 w-4" />}
+                        <span>{viewMode === "grid" ? "List View" : "Grid View"}</span>
                       </DropdownMenuItem>
-                    ) : (
                       <DropdownMenuItem>
-                        <ArrowLeft className="mr-2 h-4 w-4" />
-                        <span>Sign Out</span>
+                        <CalendarIcon className="mr-2 h-4 w-4" />
+                        <span>Time Range</span>
                       </DropdownMenuItem>
-                    )}
-                  </DropdownMenuContent>
-                </DropdownMenu>
+                      <DropdownMenuSeparator />
+                      <DropdownMenuItem onClick={() => setActiveTab("settings")}>
+                        <Settings className="mr-2 h-4 w-4" />
+                        <span>Settings</span>
+                      </DropdownMenuItem>
+                      <DropdownMenuItem onClick={handleExportData}>
+                        <Download className="mr-2 h-4 w-4" />
+                        <span>Export Data</span>
+                      </DropdownMenuItem>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
+
+                  {/* User Menu */}
+                  <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                      <Button
+                        variant="ghost"
+                        className="relative h-8 w-8 rounded-full shrink-0"
+                      >
+                        <div className="h-8 w-8 rounded-full bg-gradient-to-r from-blue-500 to-purple-600 flex items-center justify-center text-white text-sm font-medium">
+                          {user?.email?.[0]?.toUpperCase() || "P"}
+                        </div>
+                      </Button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent className="w-56" align="end" forceMount>
+                      <DropdownMenuLabel className="font-normal">
+                        <div className="flex flex-col space-y-1">
+                          <p className="text-sm font-medium leading-none">
+                            Parent Dashboard
+                          </p>
+                          <p className="text-xs leading-none text-muted-foreground">
+                            {user?.email || "Guest User"}
+                          </p>
+                        </div>
+                      </DropdownMenuLabel>
+                      <DropdownMenuSeparator />
+                      <DropdownMenuItem onClick={() => setActiveTab("settings")} className="hidden lg:flex">
+                        <Settings className="mr-2 h-4 w-4" />
+                        <span>Settings</span>
+                      </DropdownMenuItem>
+                      <DropdownMenuItem onClick={handleExportData} className="hidden lg:flex">
+                        <Download className="mr-2 h-4 w-4" />
+                        <span>Export Data</span>
+                      </DropdownMenuItem>
+                      <DropdownMenuSeparator className="hidden lg:block" />
+                      {isGuest ? (
+                        <DropdownMenuItem onClick={() => navigate("/signup")}>
+                          <UserPlus className="mr-2 h-4 w-4" />
+                          <span>Create Account</span>
+                        </DropdownMenuItem>
+                      ) : (
+                        <DropdownMenuItem>
+                          <ArrowLeft className="mr-2 h-4 w-4" />
+                          <span>Sign Out</span>
+                        </DropdownMenuItem>
+                      )}
+                    </DropdownMenuContent>
+                  </DropdownMenu>
+                </div>
               </div>
             </div>
           </div>
