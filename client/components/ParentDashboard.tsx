@@ -2,6 +2,8 @@ import React, { useState, useEffect, useCallback, useMemo } from "react";
 import { useAuth } from "@/hooks/useAuth";
 import { useNavigate } from "react-router-dom";
 import "@/styles/mobile-goals-optimization.css";
+import "@/styles/desktop-parent-dashboard.css";
+import { ParentDashboardDesktop } from "@/components/ParentDashboardDesktop";
 import { ChildLearningGoalsPanel } from "@/components/ChildLearningGoalsPanel";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
