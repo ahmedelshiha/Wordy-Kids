@@ -82,6 +82,7 @@ import { WordProgressAPI } from "@/lib/wordProgressApi";
 import { ChildWordStats } from "@shared/api";
 import { SmartWordSelector } from "@/lib/smartWordSelection";
 import { childProgressSync } from "@/lib/childProgressSync";
+import { toast } from "@/hooks/use-toast";
 
 interface LearningGoal {
   id: string;
@@ -3352,7 +3353,7 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
 
                 <div style="margin-bottom: 30px;">
                     <h3 style="color: #059669; margin-bottom: 15px; display: flex; align-items: center; gap: 8px;">
-                        �� Key Strengths
+                        ⭐ Key Strengths
                     </h3>
                     <ul class="insights-list">
                         ${reportData.parentInsights.keyStrengths
@@ -3415,7 +3416,7 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
                       .map(
                         (achievement) => `
                         <div class="achievement-card">
-                            <div class="achievement-icon">����</div>
+                            <div class="achievement-icon">🏆</div>
                             <div class="achievement-content">
                                 <h4>${achievement.title}</h4>
                                 <p>${achievement.description}</p>
