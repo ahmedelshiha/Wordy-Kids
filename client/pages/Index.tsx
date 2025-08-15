@@ -119,6 +119,28 @@ interface IndexProps {
   initialProfile?: any;
 }
 
+// Helper functions for progress tracking
+const getWeekKey = (): string => {
+  const date = new Date();
+  const year = date.getFullYear();
+  const week = getWeekNumber(date);
+  return `${year}-W${week}`;
+};
+
+const getWeekNumber = (date: Date): number => {
+  const d = new Date(date);
+  d.setHours(0, 0, 0, 0);
+  d.setDate(d.getDate() + 4 - (d.getDay() || 7));
+  const yearStart = new Date(d.getFullYear(), 0, 1);
+  return Math.ceil((((d.getTime() - yearStart.getTime()) / 86400000) + 1) / 7);
+};
+
+const isConsecutiveDay = (lastActivity: Date, today: Date): boolean => {
+  const yesterday = new Date(today);
+  yesterday.setDate(yesterday.getDate() - 1);
+  return lastActivity.toDateString() === yesterday.toDateString();
+};
+
 export default function Index({ initialProfile }: IndexProps) {
   const navigate = useNavigate();
 
@@ -1600,7 +1622,7 @@ export default function Index({ initialProfile }: IndexProps) {
     setFeedback({
       type: "celebration",
       title: "Practice Complete! 🏆",
-      message: `Great job practicing your tricky words!\n\n✅ Remembered: ${results.correctWords.length} words\n🎯 Accuracy: ${results.accuracy}%\n\nKeep practicing to master all your words!`,
+      message: `Great job practicing your tricky words!\n\n✅ Remembered: ${results.correctWords.length} words\n�� Accuracy: ${results.accuracy}%\n\nKeep practicing to master all your words!`,
       points: results.correctWords.length * 15,
       onContinue: () => setFeedback(null),
     });
