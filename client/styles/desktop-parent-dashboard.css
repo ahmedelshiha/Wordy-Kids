@@ -47,7 +47,7 @@
   }
 
   .sidebar-nav-item.active::before {
-    content: '';
+    content: "";
     position: absolute;
     left: -8px;
     top: 50%;
@@ -127,13 +127,17 @@
   }
 
   .stats-card::before {
-    content: '';
+    content: "";
     position: absolute;
     top: 0;
     left: 0;
     right: 0;
     height: 3px;
-    background: linear-gradient(90deg, var(--stat-color, #3b82f6) 0%, var(--stat-color-light, #60a5fa) 100%);
+    background: linear-gradient(
+      90deg,
+      var(--stat-color, #3b82f6) 0%,
+      var(--stat-color-light, #60a5fa) 100%
+    );
   }
 
   .stats-card.blue {
@@ -195,20 +199,38 @@
     animation: fadeInScale 0.4s ease-out;
   }
 
-  .dashboard-card:nth-child(1) { animation-delay: 0ms; }
-  .dashboard-card:nth-child(2) { animation-delay: 100ms; }
-  .dashboard-card:nth-child(3) { animation-delay: 200ms; }
-  .dashboard-card:nth-child(4) { animation-delay: 300ms; }
+  .dashboard-card:nth-child(1) {
+    animation-delay: 0ms;
+  }
+  .dashboard-card:nth-child(2) {
+    animation-delay: 100ms;
+  }
+  .dashboard-card:nth-child(3) {
+    animation-delay: 200ms;
+  }
+  .dashboard-card:nth-child(4) {
+    animation-delay: 300ms;
+  }
 
   .sidebar-nav-item {
     animation: slideInRight 0.3s ease-out;
   }
 
-  .sidebar-nav-item:nth-child(1) { animation-delay: 0ms; }
-  .sidebar-nav-item:nth-child(2) { animation-delay: 50ms; }
-  .sidebar-nav-item:nth-child(3) { animation-delay: 100ms; }
-  .sidebar-nav-item:nth-child(4) { animation-delay: 150ms; }
-  .sidebar-nav-item:nth-child(5) { animation-delay: 200ms; }
+  .sidebar-nav-item:nth-child(1) {
+    animation-delay: 0ms;
+  }
+  .sidebar-nav-item:nth-child(2) {
+    animation-delay: 50ms;
+  }
+  .sidebar-nav-item:nth-child(3) {
+    animation-delay: 100ms;
+  }
+  .sidebar-nav-item:nth-child(4) {
+    animation-delay: 150ms;
+  }
+  .sidebar-nav-item:nth-child(5) {
+    animation-delay: 200ms;
+  }
 
   /* Progress bars and indicators */
   .progress-bar-enhanced {
@@ -219,19 +241,32 @@
   }
 
   .progress-bar-enhanced::before {
-    content: '';
+    content: "";
     position: absolute;
     top: 0;
     left: 0;
     height: 100%;
-    background: linear-gradient(45deg, rgba(255, 255, 255, 0.2) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.2) 50%, rgba(255, 255, 255, 0.2) 75%, transparent 75%, transparent);
+    background: linear-gradient(
+      45deg,
+      rgba(255, 255, 255, 0.2) 25%,
+      transparent 25%,
+      transparent 50%,
+      rgba(255, 255, 255, 0.2) 50%,
+      rgba(255, 255, 255, 0.2) 75%,
+      transparent 75%,
+      transparent
+    );
     background-size: 12px 12px;
     animation: progressShine 2s linear infinite;
   }
 
   @keyframes progressShine {
-    0% { transform: translateX(-100%); }
-    100% { transform: translateX(100%); }
+    0% {
+      transform: translateX(-100%);
+    }
+    100% {
+      transform: translateX(100%);
+    }
   }
 
   /* Tooltip enhancements */
@@ -344,8 +379,13 @@
   }
 
   @keyframes notificationPulse {
-    0%, 100% { transform: scale(1); }
-    50% { transform: scale(1.1); }
+    0%,
+    100% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.1);
+    }
   }
 
   /* Loading states */
@@ -359,7 +399,9 @@
   }
 
   @keyframes spin {
-    to { transform: rotate(360deg); }
+    to {
+      transform: rotate(360deg);
+    }
   }
 
   /* Responsive adjustments for larger screens */

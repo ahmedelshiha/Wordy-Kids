@@ -264,54 +264,120 @@ export const ParentLearningAnalyticsDesktop: React.FC<
 
       // Monthly trends with additional metrics
       const monthlyTrends: MonthlyData[] = [
-        { month: "Jan", wordsLearned: 156, accuracy: 82, timeSpent: 480, streakDays: 15, achievements: 3 },
-        { month: "Feb", wordsLearned: 189, accuracy: 85, timeSpent: 620, streakDays: 22, achievements: 5 },
-        { month: "Mar", wordsLearned: 223, accuracy: 87, timeSpent: 580, streakDays: 28, achievements: 4 },
-        { month: "Apr", wordsLearned: 267, accuracy: 89, timeSpent: 720, streakDays: 25, achievements: 6 },
-        { month: "May", wordsLearned: 302, accuracy: 88, timeSpent: 650, streakDays: 30, achievements: 7 },
-        { month: "Jun", wordsLearned: 345, accuracy: 91, timeSpent: 810, streakDays: 28, achievements: 8 },
+        {
+          month: "Jan",
+          wordsLearned: 156,
+          accuracy: 82,
+          timeSpent: 480,
+          streakDays: 15,
+          achievements: 3,
+        },
+        {
+          month: "Feb",
+          wordsLearned: 189,
+          accuracy: 85,
+          timeSpent: 620,
+          streakDays: 22,
+          achievements: 5,
+        },
+        {
+          month: "Mar",
+          wordsLearned: 223,
+          accuracy: 87,
+          timeSpent: 580,
+          streakDays: 28,
+          achievements: 4,
+        },
+        {
+          month: "Apr",
+          wordsLearned: 267,
+          accuracy: 89,
+          timeSpent: 720,
+          streakDays: 25,
+          achievements: 6,
+        },
+        {
+          month: "May",
+          wordsLearned: 302,
+          accuracy: 88,
+          timeSpent: 650,
+          streakDays: 30,
+          achievements: 7,
+        },
+        {
+          month: "Jun",
+          wordsLearned: 345,
+          accuracy: 91,
+          timeSpent: 810,
+          streakDays: 28,
+          achievements: 8,
+        },
       ];
 
       // Calculate enhanced overview metrics
-      const totalWordsMastered = categoryProgress.reduce((sum, cat) => sum + cat.masteredWords, 0);
-      const wordsNeedPractice = categoryProgress.reduce((sum, cat) => sum + cat.practiceWords, 0);
-      const totalWordsLearned = categoryProgress.reduce((sum, cat) => sum + cat.masteredWords + cat.practiceWords, 0);
-      const totalTimeSpent = categoryProgress.reduce((sum, cat) => sum + cat.timeSpent, 0);
+      const totalWordsMastered = categoryProgress.reduce(
+        (sum, cat) => sum + cat.masteredWords,
+        0,
+      );
+      const wordsNeedPractice = categoryProgress.reduce(
+        (sum, cat) => sum + cat.practiceWords,
+        0,
+      );
+      const totalWordsLearned = categoryProgress.reduce(
+        (sum, cat) => sum + cat.masteredWords + cat.practiceWords,
+        0,
+      );
+      const totalTimeSpent = categoryProgress.reduce(
+        (sum, cat) => sum + cat.timeSpent,
+        0,
+      );
       const overallAccuracy = Math.round(
-        categoryProgress.reduce((sum, cat) => sum + cat.accuracy, 0) / categoryProgress.length
+        categoryProgress.reduce((sum, cat) => sum + cat.accuracy, 0) /
+          categoryProgress.length,
       );
 
       // Calculate improvement rate (trend analysis)
       const recentWeeks = weeklyProgress.slice(-2);
-      const improvementRate = recentWeeks.length === 2 
-        ? Math.round(((recentWeeks[1].wordsLearned - recentWeeks[0].wordsLearned) / recentWeeks[0].wordsLearned) * 100)
-        : 0;
+      const improvementRate =
+        recentWeeks.length === 2
+          ? Math.round(
+              ((recentWeeks[1].wordsLearned - recentWeeks[0].wordsLearned) /
+                recentWeeks[0].wordsLearned) *
+                100,
+            )
+          : 0;
 
       // Calculate engagement score based on multiple factors
-      const avgActiveDays = weeklyProgress.reduce((sum, week) => sum + week.activeDays, 0) / weeklyProgress.length;
-      const avgAccuracy = weeklyProgress.reduce((sum, week) => sum + week.accuracy, 0) / weeklyProgress.length;
-      const engagementScore = Math.round((avgActiveDays / 7) * 40 + (avgAccuracy / 100) * 60);
+      const avgActiveDays =
+        weeklyProgress.reduce((sum, week) => sum + week.activeDays, 0) /
+        weeklyProgress.length;
+      const avgAccuracy =
+        weeklyProgress.reduce((sum, week) => sum + week.accuracy, 0) /
+        weeklyProgress.length;
+      const engagementScore = Math.round(
+        (avgActiveDays / 7) * 40 + (avgAccuracy / 100) * 60,
+      );
 
       // Generate AI-like insights
       const insights = [
-        `Your children are showing strong improvement in ${categoryProgress.find(c => c.trend === "up")?.category || "learning"} with a ${improvementRate > 0 ? improvementRate : 15}% increase this week.`,
+        `Your children are showing strong improvement in ${categoryProgress.find((c) => c.trend === "up")?.category || "learning"} with a ${improvementRate > 0 ? improvementRate : 15}% increase this week.`,
         `The overall engagement score of ${engagementScore}% indicates excellent learning consistency.`,
         `Most productive learning happens during ${totalTimeSpent > 500 ? "longer" : "shorter"} sessions with an average accuracy of ${overallAccuracy}%.`,
-        `${categoryProgress.filter(c => c.accuracy > 90).length} categories have achieved mastery level (90%+ accuracy).`,
+        `${categoryProgress.filter((c) => c.accuracy > 90).length} categories have achieved mastery level (90%+ accuracy).`,
       ];
 
       // Generate personalized recommendations
       const recommendations = [
-        wordsNeedPractice > 20 
+        wordsNeedPractice > 20
           ? `Focus on reviewing ${wordsNeedPractice} words that need practice to improve retention.`
           : "Great job! Very few words need additional practice.",
-        engagementScore < 70 
+        engagementScore < 70
           ? "Consider varying learning activities to boost engagement and maintain interest."
           : "Excellent engagement! Continue with the current learning approach.",
-        overallAccuracy < 85 
+        overallAccuracy < 85
           ? "Try shorter, more frequent sessions to improve accuracy and reduce fatigue."
           : "Outstanding accuracy! Ready for more challenging content.",
-        `Consider exploring ${categoryProgress.find(c => c.masteredWords < 50)?.category || "new"} category for broader vocabulary development.`,
+        `Consider exploring ${categoryProgress.find((c) => c.masteredWords < 50)?.category || "new"} category for broader vocabulary development.`,
       ];
 
       return {
@@ -394,31 +460,46 @@ export const ParentLearningAnalyticsDesktop: React.FC<
 
   const getDifficultyColor = (difficulty: string) => {
     switch (difficulty) {
-      case "easy": return "text-green-600 bg-green-50 border-green-200";
-      case "medium": return "text-yellow-600 bg-yellow-50 border-yellow-200";
-      case "hard": return "text-red-600 bg-red-50 border-red-200";
-      default: return "text-gray-600 bg-gray-50 border-gray-200";
+      case "easy":
+        return "text-green-600 bg-green-50 border-green-200";
+      case "medium":
+        return "text-yellow-600 bg-yellow-50 border-yellow-200";
+      case "hard":
+        return "text-red-600 bg-red-50 border-red-200";
+      default:
+        return "text-gray-600 bg-gray-50 border-gray-200";
     }
   };
 
   const getTrendIcon = (trend: string) => {
     switch (trend) {
-      case "up": return <TrendingUp className="h-4 w-4 text-green-500" />;
-      case "down": return <TrendingUp className="h-4 w-4 text-red-500 rotate-180" />;
-      default: return <div className="h-4 w-4 rounded-full bg-gray-400" />;
+      case "up":
+        return <TrendingUp className="h-4 w-4 text-green-500" />;
+      case "down":
+        return <TrendingUp className="h-4 w-4 text-red-500 rotate-180" />;
+      default:
+        return <div className="h-4 w-4 rounded-full bg-gray-400" />;
     }
   };
 
   const getCategoryEmoji = (category: string) => {
     switch (category.toLowerCase()) {
-      case "animals": return "🐶";
-      case "colors": return "🎨";
-      case "numbers": return "🔢";
-      case "school": return "🏫";
-      case "family": return "👨‍👩‍👧‍👦";
-      case "science": return "🔬";
-      case "food": return "🍎";
-      default: return "📚";
+      case "animals":
+        return "🐶";
+      case "colors":
+        return "🎨";
+      case "numbers":
+        return "🔢";
+      case "school":
+        return "🏫";
+      case "family":
+        return "👨‍👩‍👧‍👦";
+      case "science":
+        return "🔬";
+      case "food":
+        return "🍎";
+      default:
+        return "📚";
     }
   };
 
@@ -499,70 +580,70 @@ export const ParentLearningAnalyticsDesktop: React.FC<
         {/* Enhanced Key Metrics */}
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
           {[
-            { 
-              key: "totalWordsMastered", 
-              label: "Words Mastered", 
-              value: analyticsData.overview.totalWordsMastered, 
-              icon: Trophy, 
+            {
+              key: "totalWordsMastered",
+              label: "Words Mastered",
+              value: analyticsData.overview.totalWordsMastered,
+              icon: Trophy,
               color: "blue",
               suffix: "",
             },
-            { 
-              key: "wordsNeedPractice", 
-              label: "Need Practice", 
-              value: analyticsData.overview.wordsNeedPractice, 
-              icon: Target, 
+            {
+              key: "wordsNeedPractice",
+              label: "Need Practice",
+              value: analyticsData.overview.wordsNeedPractice,
+              icon: Target,
               color: "orange",
               suffix: "",
             },
-            { 
-              key: "overallAccuracy", 
-              label: "Accuracy Rate", 
-              value: analyticsData.overview.overallAccuracy, 
-              icon: Star, 
+            {
+              key: "overallAccuracy",
+              label: "Accuracy Rate",
+              value: analyticsData.overview.overallAccuracy,
+              icon: Star,
               color: "green",
               suffix: "%",
             },
-            { 
-              key: "improvementRate", 
-              label: "Improvement", 
-              value: analyticsData.overview.improvementRate, 
-              icon: TrendingUp, 
+            {
+              key: "improvementRate",
+              label: "Improvement",
+              value: analyticsData.overview.improvementRate,
+              icon: TrendingUp,
               color: "purple",
               suffix: "%",
             },
-            { 
-              key: "engagementScore", 
-              label: "Engagement", 
-              value: analyticsData.overview.engagementScore, 
-              icon: Heart, 
+            {
+              key: "engagementScore",
+              label: "Engagement",
+              value: analyticsData.overview.engagementScore,
+              icon: Heart,
               color: "pink",
               suffix: "%",
             },
           ].map((metric) => (
             <Tooltip key={metric.key}>
               <TooltipTrigger asChild>
-                <Card 
+                <Card
                   className={cn(
                     "cursor-pointer transition-all duration-200 hover:shadow-md hover:scale-105",
-                    selectedMetric === metric.key && "ring-2 ring-blue-500 ring-opacity-50"
+                    selectedMetric === metric.key &&
+                      "ring-2 ring-blue-500 ring-opacity-50",
                   )}
                   onClick={() => setSelectedMetric(metric.key)}
                 >
                   <CardContent className="p-4">
                     <div className="flex items-center justify-between mb-2">
-                      <metric.icon className={cn(
-                        "h-5 w-5",
-                        {
+                      <metric.icon
+                        className={cn("h-5 w-5", {
                           "text-blue-600": metric.color === "blue",
                           "text-orange-600": metric.color === "orange",
                           "text-green-600": metric.color === "green",
                           "text-purple-600": metric.color === "purple",
                           "text-pink-600": metric.color === "pink",
-                        }
-                      )} />
+                        })}
+                      />
                       {metric.key === "improvementRate" && (
-                        <Badge 
+                        <Badge
                           variant={metric.value > 0 ? "default" : "secondary"}
                           className="text-xs"
                         >
@@ -570,25 +651,28 @@ export const ParentLearningAnalyticsDesktop: React.FC<
                         </Badge>
                       )}
                     </div>
-                    <div className={cn(
-                      "text-2xl font-bold mb-1",
-                      {
+                    <div
+                      className={cn("text-2xl font-bold mb-1", {
                         "text-blue-700": metric.color === "blue",
                         "text-orange-700": metric.color === "orange",
                         "text-green-700": metric.color === "green",
                         "text-purple-700": metric.color === "purple",
                         "text-pink-700": metric.color === "pink",
-                      }
-                    )}>
+                      })}
+                    >
                       <AnimatedCounter value={metric.value} />
                       {metric.suffix}
                     </div>
-                    <p className="text-xs text-gray-600 font-medium">{metric.label}</p>
+                    <p className="text-xs text-gray-600 font-medium">
+                      {metric.label}
+                    </p>
                   </CardContent>
                 </Card>
               </TooltipTrigger>
               <TooltipContent>
-                <p>Click to view detailed {metric.label.toLowerCase()} analysis</p>
+                <p>
+                  Click to view detailed {metric.label.toLowerCase()} analysis
+                </p>
               </TooltipContent>
             </Tooltip>
           ))}
@@ -606,7 +690,10 @@ export const ParentLearningAnalyticsDesktop: React.FC<
             <CardContent>
               <div className="space-y-3">
                 {analyticsData.insights.map((insight, index) => (
-                  <div key={index} className="flex items-start gap-3 p-3 bg-blue-50 rounded-lg">
+                  <div
+                    key={index}
+                    className="flex items-start gap-3 p-3 bg-blue-50 rounded-lg"
+                  >
                     <div className="h-2 w-2 rounded-full bg-blue-500 mt-2 flex-shrink-0" />
                     <p className="text-sm text-gray-700">{insight}</p>
                   </div>
@@ -625,7 +712,10 @@ export const ParentLearningAnalyticsDesktop: React.FC<
             <CardContent>
               <div className="space-y-3">
                 {analyticsData.recommendations.map((rec, index) => (
-                  <div key={index} className="flex items-start gap-3 p-3 bg-green-50 rounded-lg">
+                  <div
+                    key={index}
+                    className="flex items-start gap-3 p-3 bg-green-50 rounded-lg"
+                  >
                     <div className="h-2 w-2 rounded-full bg-green-500 mt-2 flex-shrink-0" />
                     <p className="text-sm text-gray-700">{rec}</p>
                   </div>
@@ -659,19 +749,22 @@ export const ParentLearningAnalyticsDesktop: React.FC<
           <TabsContent value="categories" className="space-y-4">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {analyticsData.categoryProgress.map((category, index) => (
-                <Card 
-                  key={index} 
+                <Card
+                  key={index}
                   className="hover:shadow-lg transition-all duration-300 cursor-pointer"
                   onClick={() => toggleCardExpansion(`category-${index}`)}
                 >
                   <CardHeader className="pb-3">
                     <div className="flex justify-between items-center">
                       <CardTitle className="text-lg flex items-center gap-2">
-                        {getCategoryEmoji(category.category)} {category.category}
+                        {getCategoryEmoji(category.category)}{" "}
+                        {category.category}
                       </CardTitle>
                       <div className="flex items-center gap-2">
                         {getTrendIcon(category.trend)}
-                        <Badge className={getDifficultyColor(category.difficulty)}>
+                        <Badge
+                          className={getDifficultyColor(category.difficulty)}
+                        >
                           {category.difficulty}
                         </Badge>
                         <Button
@@ -683,15 +776,16 @@ export const ParentLearningAnalyticsDesktop: React.FC<
                             toggleCardExpansion(`category-${index}`);
                           }}
                         >
-                          {expandedCards.has(`category-${index}`) ? 
-                            <Minimize2 className="h-4 w-4" /> : 
+                          {expandedCards.has(`category-${index}`) ? (
+                            <Minimize2 className="h-4 w-4" />
+                          ) : (
                             <Maximize2 className="h-4 w-4" />
-                          }
+                          )}
                         </Button>
                       </div>
                     </div>
                   </CardHeader>
-                  
+
                   <CardContent className="space-y-4">
                     <div className="grid grid-cols-2 gap-4">
                       <div className="bg-green-50 p-3 rounded-lg text-center">
@@ -712,11 +806,17 @@ export const ParentLearningAnalyticsDesktop: React.FC<
                       <div className="flex justify-between text-sm">
                         <span>Progress</span>
                         <span className="font-semibold">
-                          {Math.round((category.masteredWords / category.totalWords) * 100)}%
+                          {Math.round(
+                            (category.masteredWords / category.totalWords) *
+                              100,
+                          )}
+                          %
                         </span>
                       </div>
-                      <Progress 
-                        value={(category.masteredWords / category.totalWords) * 100} 
+                      <Progress
+                        value={
+                          (category.masteredWords / category.totalWords) * 100
+                        }
                         className="h-3"
                       />
                     </div>
@@ -771,9 +871,7 @@ export const ParentLearningAnalyticsDesktop: React.FC<
                         <Calendar className="h-5 w-5 text-blue-600" />
                         {week.week}
                       </span>
-                      <Badge variant="outline">
-                        {week.activeDays}/7 days
-                      </Badge>
+                      <Badge variant="outline">{week.activeDays}/7 days</Badge>
                     </CardTitle>
                   </CardHeader>
                   <CardContent>
@@ -791,7 +889,7 @@ export const ParentLearningAnalyticsDesktop: React.FC<
                         <p className="text-xs text-green-700">Accuracy</p>
                       </div>
                     </div>
-                    
+
                     <div className="space-y-3">
                       <div className="flex justify-between items-center text-sm">
                         <span className="flex items-center gap-2">
@@ -805,14 +903,18 @@ export const ParentLearningAnalyticsDesktop: React.FC<
                           <Activity className="h-4 w-4 text-gray-500" />
                           Sessions
                         </span>
-                        <span className="font-medium">{week.sessionsCompleted}</span>
+                        <span className="font-medium">
+                          {week.sessionsCompleted}
+                        </span>
                       </div>
                       <div className="flex justify-between items-center text-sm">
                         <span className="flex items-center gap-2">
                           <Timer className="h-4 w-4 text-gray-500" />
                           Avg Session
                         </span>
-                        <span className="font-medium">{week.averageSessionTime}min</span>
+                        <span className="font-medium">
+                          {week.averageSessionTime}min
+                        </span>
                       </div>
                     </div>
                   </CardContent>
@@ -835,7 +937,9 @@ export const ParentLearningAnalyticsDesktop: React.FC<
                   {analyticsData.monthlyTrends.map((month, index) => (
                     <div key={index} className="space-y-3">
                       <div className="flex justify-between items-center">
-                        <span className="font-medium text-lg">{month.month}</span>
+                        <span className="font-medium text-lg">
+                          {month.month}
+                        </span>
                         <div className="flex items-center gap-4 text-sm">
                           <span className="flex items-center gap-1">
                             <Award className="h-4 w-4 text-yellow-500" />
@@ -847,7 +951,7 @@ export const ParentLearningAnalyticsDesktop: React.FC<
                           </span>
                         </div>
                       </div>
-                      
+
                       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                         <div className="bg-blue-50 p-4 rounded-lg">
                           <div className="text-2xl font-bold text-blue-600 mb-1">
@@ -855,35 +959,41 @@ export const ParentLearningAnalyticsDesktop: React.FC<
                           </div>
                           <p className="text-sm text-blue-700">Words Learned</p>
                           <div className="mt-2 h-2 bg-blue-200 rounded-full overflow-hidden">
-                            <div 
+                            <div
                               className="h-full bg-blue-600 transition-all duration-1000"
-                              style={{ width: `${(month.wordsLearned / 400) * 100}%` }}
+                              style={{
+                                width: `${(month.wordsLearned / 400) * 100}%`,
+                              }}
                             />
                           </div>
                         </div>
-                        
+
                         <div className="bg-green-50 p-4 rounded-lg">
                           <div className="text-2xl font-bold text-green-600 mb-1">
                             <AnimatedCounter value={month.accuracy} />%
                           </div>
-                          <p className="text-sm text-green-700">Accuracy Rate</p>
+                          <p className="text-sm text-green-700">
+                            Accuracy Rate
+                          </p>
                           <div className="mt-2 h-2 bg-green-200 rounded-full overflow-hidden">
-                            <div 
+                            <div
                               className="h-full bg-green-600 transition-all duration-1000"
                               style={{ width: `${month.accuracy}%` }}
                             />
                           </div>
                         </div>
-                        
+
                         <div className="bg-purple-50 p-4 rounded-lg">
                           <div className="text-2xl font-bold text-purple-600 mb-1">
                             <AnimatedCounter value={month.timeSpent} />m
                           </div>
                           <p className="text-sm text-purple-700">Time Spent</p>
                           <div className="mt-2 h-2 bg-purple-200 rounded-full overflow-hidden">
-                            <div 
+                            <div
                               className="h-full bg-purple-600 transition-all duration-1000"
-                              style={{ width: `${(month.timeSpent / 1000) * 100}%` }}
+                              style={{
+                                width: `${(month.timeSpent / 1000) * 100}%`,
+                              }}
                             />
                           </div>
                         </div>
@@ -912,7 +1022,10 @@ export const ParentLearningAnalyticsDesktop: React.FC<
             ) : (
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 {analyticsData.children.map((child) => (
-                  <Card key={child.id} className="hover:shadow-lg transition-shadow">
+                  <Card
+                    key={child.id}
+                    className="hover:shadow-lg transition-shadow"
+                  >
                     <CardHeader>
                       <div className="flex justify-between items-center">
                         <CardTitle className="text-xl flex items-center gap-3">
@@ -921,15 +1034,19 @@ export const ParentLearningAnalyticsDesktop: React.FC<
                           </div>
                           {child.name}
                         </CardTitle>
-                        <Badge variant="secondary" className="bg-blue-100 text-blue-800">
+                        <Badge
+                          variant="secondary"
+                          className="bg-blue-100 text-blue-800"
+                        >
                           Level {child.level}
                         </Badge>
                       </div>
                       <p className="text-sm text-gray-600">
-                        {child.age} years old • {child.achievements.length} achievements
+                        {child.age} years old • {child.achievements.length}{" "}
+                        achievements
                       </p>
                     </CardHeader>
-                    
+
                     <CardContent className="space-y-6">
                       <div className="grid grid-cols-2 gap-4">
                         <div className="text-center p-4 bg-blue-50 rounded-lg">
@@ -950,11 +1067,14 @@ export const ParentLearningAnalyticsDesktop: React.FC<
                         <div className="flex justify-between text-sm">
                           <span>Weekly Goal Progress</span>
                           <span className="font-semibold">
-                            {Math.round((child.wordsLearned / child.weeklyGoal) * 100)}%
+                            {Math.round(
+                              (child.wordsLearned / child.weeklyGoal) * 100,
+                            )}
+                            %
                           </span>
                         </div>
-                        <Progress 
-                          value={(child.wordsLearned / child.weeklyGoal) * 100} 
+                        <Progress
+                          value={(child.wordsLearned / child.weeklyGoal) * 100}
                           className="h-3"
                         />
                       </div>
@@ -965,21 +1085,27 @@ export const ParentLearningAnalyticsDesktop: React.FC<
                             <Zap className="h-4 w-4 text-orange-500" />
                             Current Streak
                           </span>
-                          <span className="font-medium">{child.currentStreak} days</span>
+                          <span className="font-medium">
+                            {child.currentStreak} days
+                          </span>
                         </div>
                         <div className="flex justify-between items-center text-sm">
                           <span className="flex items-center gap-2">
                             <Heart className="h-4 w-4 text-pink-500" />
                             Favorite Category
                           </span>
-                          <span className="font-medium">{child.favoriteCategory}</span>
+                          <span className="font-medium">
+                            {child.favoriteCategory}
+                          </span>
                         </div>
                         <div className="flex justify-between items-center text-sm">
                           <span className="flex items-center gap-2">
                             <Clock className="h-4 w-4 text-gray-500" />
                             Total Time
                           </span>
-                          <span className="font-medium">{child.totalLearningTime}min</span>
+                          <span className="font-medium">
+                            {child.totalLearningTime}min
+                          </span>
                         </div>
                       </div>
                     </CardContent>
@@ -1011,10 +1137,14 @@ export const ParentLearningAnalyticsDesktop: React.FC<
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="comprehensive">Comprehensive Report</SelectItem>
+                    <SelectItem value="comprehensive">
+                      Comprehensive Report
+                    </SelectItem>
                     <SelectItem value="summary">Executive Summary</SelectItem>
                     <SelectItem value="trends">Trends Analysis</SelectItem>
-                    <SelectItem value="individual">Individual Progress</SelectItem>
+                    <SelectItem value="individual">
+                      Individual Progress
+                    </SelectItem>
                   </SelectContent>
                 </Select>
               </div>
@@ -1036,7 +1166,10 @@ export const ParentLearningAnalyticsDesktop: React.FC<
             </div>
 
             <DialogFooter>
-              <Button variant="outline" onClick={() => setShowReportDialog(false)}>
+              <Button
+                variant="outline"
+                onClick={() => setShowReportDialog(false)}
+              >
                 Cancel
               </Button>
               <Button onClick={generateReport}>

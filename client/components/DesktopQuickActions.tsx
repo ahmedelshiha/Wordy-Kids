@@ -107,14 +107,14 @@ export const DesktopQuickActions: React.FC<DesktopQuickActionsProps> = ({
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       // Quick actions panel toggle
-      if (e.altKey && e.key === 'q') {
+      if (e.altKey && e.key === "q") {
         e.preventDefault();
         onToggleVisibility();
         return;
       }
 
       // Help shortcuts
-      if (e.altKey && e.key === 'h') {
+      if (e.altKey && e.key === "h") {
         e.preventDefault();
         setShowShortcuts(true);
         return;
@@ -123,11 +123,11 @@ export const DesktopQuickActions: React.FC<DesktopQuickActionsProps> = ({
       // Quick access shortcuts
       if (e.altKey) {
         switch (e.key) {
-          case 'g':
+          case "g":
             e.preventDefault();
             onShowGoals();
             break;
-          case 'a':
+          case "a":
             e.preventDefault();
             onToggleAnalytics();
             break;
@@ -135,72 +135,72 @@ export const DesktopQuickActions: React.FC<DesktopQuickActionsProps> = ({
       }
 
       // Escape to close dialogs
-      if (e.key === 'Escape') {
+      if (e.key === "Escape") {
         setShowShortcuts(false);
       }
     };
 
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
   }, [onToggleVisibility, onShowGoals, onToggleAnalytics]);
 
   const quickActions = [
     {
-      id: 'add-child',
+      id: "add-child",
       icon: Plus,
-      label: 'Add Child',
+      label: "Add Child",
       onClick: onAddChild,
-      shortcut: 'Ctrl+N',
-      color: 'bg-blue-500 hover:bg-blue-600',
+      shortcut: "Ctrl+N",
+      color: "bg-blue-500 hover:bg-blue-600",
     },
     {
-      id: 'refresh',
+      id: "refresh",
       icon: RefreshCw,
-      label: 'Refresh',
+      label: "Refresh",
       onClick: onRefreshData,
-      shortcut: 'Ctrl+R',
-      color: 'bg-green-500 hover:bg-green-600',
+      shortcut: "Ctrl+R",
+      color: "bg-green-500 hover:bg-green-600",
       loading: isLoading,
     },
     {
-      id: 'analytics',
+      id: "analytics",
       icon: BarChart3,
-      label: 'Analytics',
+      label: "Analytics",
       onClick: onToggleAnalytics,
-      shortcut: 'Ctrl+2',
-      color: 'bg-purple-500 hover:bg-purple-600',
+      shortcut: "Ctrl+2",
+      color: "bg-purple-500 hover:bg-purple-600",
     },
     {
-      id: 'goals',
+      id: "goals",
       icon: Target,
-      label: 'Goals',
+      label: "Goals",
       onClick: onShowGoals,
-      shortcut: 'Ctrl+3',
-      color: 'bg-orange-500 hover:bg-orange-600',
+      shortcut: "Ctrl+3",
+      color: "bg-orange-500 hover:bg-orange-600",
     },
     {
-      id: 'export',
+      id: "export",
       icon: Download,
-      label: 'Export',
+      label: "Export",
       onClick: onExportData,
-      shortcut: 'Ctrl+E',
-      color: 'bg-indigo-500 hover:bg-indigo-600',
+      shortcut: "Ctrl+E",
+      color: "bg-indigo-500 hover:bg-indigo-600",
     },
     {
-      id: 'settings',
+      id: "settings",
       icon: Settings,
-      label: 'Settings',
+      label: "Settings",
       onClick: onOpenSettings,
-      shortcut: 'Ctrl+5',
-      color: 'bg-gray-500 hover:bg-gray-600',
+      shortcut: "Ctrl+5",
+      color: "bg-gray-500 hover:bg-gray-600",
     },
     {
-      id: 'help',
+      id: "help",
       icon: HelpCircle,
-      label: 'Help',
+      label: "Help",
       onClick: () => setShowShortcuts(true),
-      shortcut: 'Alt+H',
-      color: 'bg-cyan-500 hover:bg-cyan-600',
+      shortcut: "Alt+H",
+      color: "bg-cyan-500 hover:bg-cyan-600",
     },
   ];
 
@@ -217,7 +217,7 @@ export const DesktopQuickActions: React.FC<DesktopQuickActionsProps> = ({
               <Zap className="h-5 w-5" />
               {notifications > 0 && (
                 <Badge className="absolute -top-2 -right-2 h-5 w-5 rounded-full p-0 flex items-center justify-center bg-red-500 text-white text-xs">
-                  {notifications > 9 ? '9+' : notifications}
+                  {notifications > 9 ? "9+" : notifications}
                 </Badge>
               )}
             </Button>
@@ -260,30 +260,34 @@ export const DesktopQuickActions: React.FC<DesktopQuickActionsProps> = ({
                     className={cn(
                       "w-full justify-start gap-3 text-white transition-all duration-200",
                       action.color,
-                      hoveredAction === action.id && "scale-105 shadow-md"
+                      hoveredAction === action.id && "scale-105 shadow-md",
                     )}
                     size="sm"
                     disabled={action.loading}
                     onMouseEnter={() => setHoveredAction(action.id)}
                     onMouseLeave={() => setHoveredAction(null)}
                   >
-                    <action.icon 
+                    <action.icon
                       className={cn(
                         "h-4 w-4",
-                        action.loading && "animate-spin"
-                      )} 
+                        action.loading && "animate-spin",
+                      )}
                     />
                     <span className="flex-1 text-left">{action.label}</span>
                     <kbd className="hidden sm:inline-block px-2 py-1 text-xs bg-white/20 rounded border">
-                      {action.shortcut.includes('Ctrl') 
-                        ? action.shortcut.replace('Ctrl', navigator.platform.includes('Mac') ? '⌘' : 'Ctrl')
-                        : action.shortcut
-                      }
+                      {action.shortcut.includes("Ctrl")
+                        ? action.shortcut.replace(
+                            "Ctrl",
+                            navigator.platform.includes("Mac") ? "⌘" : "Ctrl",
+                          )
+                        : action.shortcut}
                     </kbd>
                   </Button>
                 </TooltipTrigger>
                 <TooltipContent side="left">
-                  <p>{action.label} ({action.shortcut})</p>
+                  <p>
+                    {action.label} ({action.shortcut})
+                  </p>
                 </TooltipContent>
               </Tooltip>
             ))}
@@ -318,7 +322,8 @@ export const DesktopQuickActions: React.FC<DesktopQuickActionsProps> = ({
               Keyboard Shortcuts
             </DialogTitle>
             <DialogDescription>
-              Learn keyboard shortcuts to navigate the parent dashboard more efficiently.
+              Learn keyboard shortcuts to navigate the parent dashboard more
+              efficiently.
             </DialogDescription>
           </DialogHeader>
 
@@ -343,10 +348,12 @@ export const DesktopQuickActions: React.FC<DesktopQuickActionsProps> = ({
                         </span>
                       </div>
                       <kbd className="px-2 py-1 text-xs font-mono bg-gray-100 border border-gray-300 rounded">
-                        {shortcut.key.includes('Ctrl') 
-                          ? shortcut.key.replace('Ctrl', navigator.platform.includes('Mac') ? '⌘' : 'Ctrl')
-                          : shortcut.key
-                        }
+                        {shortcut.key.includes("Ctrl")
+                          ? shortcut.key.replace(
+                              "Ctrl",
+                              navigator.platform.includes("Mac") ? "⌘" : "Ctrl",
+                            )
+                          : shortcut.key}
                       </kbd>
                     </div>
                   ))}
@@ -363,8 +370,12 @@ export const DesktopQuickActions: React.FC<DesktopQuickActionsProps> = ({
               <div>
                 <h4 className="font-medium text-blue-900 mb-1">Pro Tip</h4>
                 <p className="text-sm text-blue-700">
-                  Press <kbd className="px-1 py-0.5 bg-blue-200 rounded text-xs">Alt + Q</kbd> to 
-                  quickly toggle the Quick Actions panel from anywhere in the dashboard.
+                  Press{" "}
+                  <kbd className="px-1 py-0.5 bg-blue-200 rounded text-xs">
+                    Alt + Q
+                  </kbd>{" "}
+                  to quickly toggle the Quick Actions panel from anywhere in the
+                  dashboard.
                 </p>
               </div>
             </div>
