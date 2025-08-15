@@ -1111,8 +1111,20 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
                         </Badge>
                       </div>
                     </div>
-                    <div className="text-right">
-                      <Badge variant="outline" className="mb-1 text-xs px-1">
+                    <div className="flex flex-col items-end gap-1">
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          syncChildrenProgress();
+                        }}
+                        className="p-1 h-6 w-6"
+                        disabled={isLoadingProgress}
+                      >
+                        <TrendingUp className="w-3 h-3" />
+                      </Button>
+                      <Badge variant="outline" className="text-xs px-1">
                         {getTimeAgo(child.lastActive)}
                       </Badge>
                       <p className="text-xs text-slate-500 hidden md:block">
@@ -3340,7 +3352,7 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
 
                 <div style="margin-bottom: 30px;">
                     <h3 style="color: #059669; margin-bottom: 15px; display: flex; align-items: center; gap: 8px;">
-                        ⭐ Key Strengths
+                        �� Key Strengths
                     </h3>
                     <ul class="insights-list">
                         ${reportData.parentInsights.keyStrengths
@@ -3403,7 +3415,7 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
                       .map(
                         (achievement) => `
                         <div class="achievement-card">
-                            <div class="achievement-icon">🏆</div>
+                            <div class="achievement-icon">����</div>
                             <div class="achievement-content">
                                 <h4>${achievement.title}</h4>
                                 <p>${achievement.description}</p>
