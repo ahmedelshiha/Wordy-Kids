@@ -308,25 +308,25 @@ export const ChildLearningGoalsPanel: React.FC<
           </div>
         </CardHeader>
 
-        <CardContent className="flex-1 overflow-hidden p-3 md:p-6">
+        <CardContent className="flex-1 overflow-hidden p-2 md:p-6">
           <Tabs
             value={activeTab}
             onValueChange={setActiveTab}
             className="h-full"
           >
-            <TabsList className="grid w-full grid-cols-3 h-9 md:h-10">
-              <TabsTrigger value="goals" className="text-xs md:text-sm">
+            <TabsList className="grid w-full grid-cols-3 h-8 md:h-10 mb-2 md:mb-0">
+              <TabsTrigger value="goals" className="text-xs md:text-sm px-1 md:px-3">
                 Goals
               </TabsTrigger>
-              <TabsTrigger value="progress" className="text-xs md:text-sm">
+              <TabsTrigger value="progress" className="text-xs md:text-sm px-1 md:px-3">
                 Progress
               </TabsTrigger>
-              <TabsTrigger value="preferences" className="text-xs md:text-sm">
+              <TabsTrigger value="preferences" className="text-xs md:text-sm px-1 md:px-3">
                 Settings
               </TabsTrigger>
             </TabsList>
 
-            <ScrollArea className="h-[45vh] md:h-[50vh] mt-3 md:mt-4">
+            <ScrollArea className="h-[50vh] md:h-[55vh] mt-2 md:mt-4">
               <TabsContent value="goals" className="space-y-3 md:space-y-4">
                 <div className="flex flex-col md:flex-row md:items-center justify-between gap-2">
                   <h3 className="font-semibold text-sm md:text-base">
