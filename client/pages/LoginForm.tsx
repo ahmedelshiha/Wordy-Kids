@@ -256,6 +256,9 @@ export default function LoginForm() {
     setMessage(null);
     setTouched({ email: false, password: false });
     setValidationState({ email: "neutral", password: "neutral" });
+
+    // Login as guest using auth context
+    loginAsGuest();
     navigate("/app");
   };
 
