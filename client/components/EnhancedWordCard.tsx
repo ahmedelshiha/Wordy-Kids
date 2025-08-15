@@ -297,14 +297,27 @@ export const EnhancedWordCard: React.FC<EnhancedWordCardProps> = ({
           )}
         >
           <CardContent className="p-2 sm:p-3 h-full flex flex-col text-white relative overflow-y-auto mobile-parent-dashboard">
-            {/* Compact mobile header */}
-            <div className="flex items-center gap-2 mb-2 touch-optimized">
-              <span className="text-lg sm:text-xl animate-gentle-bounce">
-                {word.emoji}
-              </span>
-              <h3 className="text-base sm:text-lg font-bold mobile-safe-text">
-                {word.word}
-              </h3>
+            {/* Enhanced mobile header with flip button */}
+            <div className="flex items-center justify-between gap-2 mb-2 touch-optimized">
+              <div className="flex items-center gap-2">
+                <span className="text-lg sm:text-xl animate-gentle-bounce">
+                  {word.emoji}
+                </span>
+                <h3 className="text-base sm:text-lg font-bold mobile-safe-text">
+                  {word.word}
+                </h3>
+              </div>
+              {/* Dedicated flip back button */}
+              <Button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleFlip();
+                }}
+                className="h-8 w-8 sm:h-9 sm:w-9 rounded-full bg-white/20 hover:bg-white/30 border border-white/30 text-white flex-shrink-0 touch-target haptic-light"
+                aria-label="Flip back to word"
+              >
+                <RotateCcw className="w-4 h-4" />
+              </Button>
             </div>
 
             {/* Compact mobile content */}
@@ -344,54 +357,79 @@ export const EnhancedWordCard: React.FC<EnhancedWordCardProps> = ({
                 </div>
               )}
 
-              {/* Compact rating buttons */}
+              {/* Enhanced rating buttons with better mobile touch */}
               {showVocabularyBuilder && (
                 <div className="bg-white/10 backdrop-blur-sm rounded-xl p-2 sm:p-3 border border-white/20 game-surface-dark">
-                  <h4 className="text-xs sm:text-sm font-medium mb-2 text-orange-300 flex items-center gap-1">
+                  <h4 className="text-xs sm:text-sm font-medium mb-3 text-orange-300 flex items-center gap-1">
                     <Target className="w-3 h-3" />
-                    🎯 Rate it:
+                    🎯 How was this word?
                   </h4>
-                  <div className="flex gap-1.5">
+                  <div className="space-y-2">
                     <Button
                       onClick={(e) => {
                         e.stopPropagation();
+                        playUIInteractionSoundIfEnabled();
                         onWordMastered?.(word.id, "hard");
+                        if (navigator.vibrate) {
+                          navigator.vibrate(50);
+                        }
                       }}
-                      className="flex-1 h-10 sm:h-9 bg-red-500/20 hover:bg-red-500/30 border border-red-500/30 text-red-200 text-xs mobile-safe-text touch-target haptic-light"
+                      className="w-full h-12 bg-red-500/20 hover:bg-red-500/40 active:bg-red-500/50 border border-red-500/40 hover:border-red-500/60 text-red-100 font-medium mobile-safe-text touch-target-large haptic-medium transition-all duration-200 flex items-center justify-center gap-2"
+                      aria-label="Mark word as hard"
                     >
-                      <ThumbsDown className="w-3 h-3 mr-1" />
-                      😅 Hard
+                      <ThumbsDown className="w-4 h-4 flex-shrink-0" />
+                      <span className="text-sm">😅 Hard</span>
                     </Button>
                     <Button
                       onClick={(e) => {
                         e.stopPropagation();
+                        playUIInteractionSoundIfEnabled();
                         onWordMastered?.(word.id, "medium");
+                        if (navigator.vibrate) {
+                          navigator.vibrate(30);
+                        }
                       }}
-                      className="flex-1 h-10 sm:h-9 bg-yellow-500/20 hover:bg-yellow-500/30 border border-yellow-500/30 text-yellow-200 text-xs mobile-safe-text touch-target haptic-light"
+                      className="w-full h-12 bg-yellow-500/20 hover:bg-yellow-500/40 active:bg-yellow-500/50 border border-yellow-500/40 hover:border-yellow-500/60 text-yellow-100 font-medium mobile-safe-text touch-target-large haptic-medium transition-all duration-200 flex items-center justify-center gap-2"
+                      aria-label="Mark word as okay"
                     >
-                      <Star className="w-3 h-3 mr-1" />
-                      🤔 OK
+                      <Star className="w-4 h-4 flex-shrink-0" />
+                      <span className="text-sm">🤔 OK</span>
                     </Button>
                     <Button
                       onClick={(e) => {
                         e.stopPropagation();
+                        playUIInteractionSoundIfEnabled();
                         onWordMastered?.(word.id, "easy");
+                        if (navigator.vibrate) {
+                          navigator.vibrate([30, 10, 30]);
+                        }
                       }}
-                      className="flex-1 h-10 sm:h-9 bg-green-500/20 hover:bg-green-500/30 border border-green-500/30 text-green-200 text-xs mobile-safe-text touch-target haptic-medium"
+                      className="w-full h-12 bg-green-500/20 hover:bg-green-500/40 active:bg-green-500/50 border border-green-500/40 hover:border-green-500/60 text-green-100 font-medium mobile-safe-text touch-target-large haptic-heavy transition-all duration-200 flex items-center justify-center gap-2"
+                      aria-label="Mark word as easy"
                     >
-                      <ThumbsUp className="w-3 h-3 mr-1" />
-                      🎉 Easy
+                      <ThumbsUp className="w-4 h-4 flex-shrink-0" />
+                      <span className="text-sm">🎉 Easy</span>
                     </Button>
                   </div>
                 </div>
               )}
             </div>
 
-            {/* Compact navigation hint */}
+            {/* Enhanced navigation hint */}
             <div className="mt-2 text-center safe-area-padding-bottom">
-              <div className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-full px-2 py-1 sm:px-3 sm:py-1.5 mx-auto w-fit animate-gentle-bounce">
-                <p className="text-xs text-white/80 mobile-safe-text">
-                  <span className="animate-pulse">👆</span> Tap to flip 🔄
+              <div
+                className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl px-3 py-2 mx-auto w-fit animate-gentle-bounce cursor-pointer hover:bg-white/20 transition-colors touch-target"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleFlip();
+                }}
+                role="button"
+                tabIndex={0}
+                aria-label="Flip to front of card"
+              >
+                <p className="text-xs text-white/90 mobile-safe-text flex items-center justify-center gap-1">
+                  <RotateCcw className="w-3 h-3 animate-spin" style={{ animationDuration: '3s' }} />
+                  Tap anywhere to flip back
                 </p>
               </div>
             </div>
