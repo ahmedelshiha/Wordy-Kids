@@ -713,6 +713,9 @@ export class AnalyticsDataService {
     current: number,
     previous: number,
   ): "up" | "down" | "stable" {
+    // Validate inputs
+    if (!isFinite(current) || !isFinite(previous)) return "stable";
+
     if (current > previous) return "up";
     if (current < previous) return "down";
     return "stable";
