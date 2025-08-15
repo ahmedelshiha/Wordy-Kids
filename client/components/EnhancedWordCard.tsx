@@ -608,7 +608,7 @@ export const EnhancedWordCard: React.FC<EnhancedWordCardProps> = ({
                   <Button
                     onClick={(e) => {
                       e.stopPropagation();
-                      handlePronounce("normal");
+                      handlePronounce();
                     }}
                     disabled={isPlaying}
                     className={cn(
