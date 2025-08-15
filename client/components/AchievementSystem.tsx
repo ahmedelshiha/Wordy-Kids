@@ -250,9 +250,16 @@ export function AchievementSystem({
         setIsLoading(true);
         const userId = user?.id || 'guest';
 
-        // Get real achievement data
-        const achievements = AchievementTracker.getAchievements();
-        const journeyProgress = AchievementTracker.getJourneyProgress();
+        // Get real achievement data - try enhanced tracker first
+        let achievements, journeyProgress;
+        try {
+          achievements = EnhancedAchievementTracker.getAchievements();
+          journeyProgress = EnhancedAchievementTracker.getJourneyProgress();
+        } catch (error) {
+          // Fallback to basic achievement tracker
+          achievements = AchievementTracker.getAchievements();
+          journeyProgress = AchievementTracker.getJourneyProgress();
+        }
 
         // Get category completion data
         const categoryStats = CategoryCompletionTracker.getCurrentCategoryStats();
