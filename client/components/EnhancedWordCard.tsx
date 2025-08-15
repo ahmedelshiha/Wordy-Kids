@@ -2,7 +2,6 @@ import React, { useState, useRef, useEffect } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Progress } from "@/components/ui/progress";
 import {
   Volume2,
   Heart,
@@ -48,8 +47,6 @@ interface EnhancedWordCardProps {
   className?: string;
 }
 
-type MiniGame = "sound-match" | "emoji-builder" | "letter-hunt" | null;
-
 export const EnhancedWordCard: React.FC<EnhancedWordCardProps> = ({
   word,
   showDefinition = false,
@@ -61,7 +58,6 @@ export const EnhancedWordCard: React.FC<EnhancedWordCardProps> = ({
 }) => {
   // Core states
   const [isFlipped, setIsFlipped] = useState(showDefinition);
-  const [currentWordIndex, setCurrentWordIndex] = useState(0);
 
   // Audio and interaction states
   const [isPlaying, setIsPlaying] = useState(false);
@@ -71,10 +67,6 @@ export const EnhancedWordCard: React.FC<EnhancedWordCardProps> = ({
   // Progress states
   const [starProgress, setStarProgress] = useState(0);
 
-
-
-
-
   const cardRef = useRef<HTMLDivElement>(null);
   const voiceSettings = useVoiceSettings();
 
@@ -83,7 +75,6 @@ export const EnhancedWordCard: React.FC<EnhancedWordCardProps> = ({
     const favorites = JSON.parse(localStorage.getItem("favoriteWords") || "[]");
     setIsFavorited(favorites.includes(word.id));
   }, [word.id]);
-
 
   // Star progress calculation
   useEffect(() => {
@@ -99,10 +90,6 @@ export const EnhancedWordCard: React.FC<EnhancedWordCardProps> = ({
 
     setIsPlaying(true);
     setShowSparkles(true);
-
-    // Trigger star progress
-    const newProgress = Math.min(starProgress + 1, 3);
-    setStarProgress(newProgress);
 
     try {
       // Normal voice
@@ -131,7 +118,6 @@ export const EnhancedWordCard: React.FC<EnhancedWordCardProps> = ({
     setShowSparkles(false);
     playSoundIfEnabled.pronunciation();
   };
-
 
   // Enhanced favorite handling with sparkles
   const handleFavorite = () => {
@@ -174,8 +160,6 @@ export const EnhancedWordCard: React.FC<EnhancedWordCardProps> = ({
       navigator.vibrate([30, 20, 30]);
     }
   };
-
-
 
   // Get category colors
   const getCategoryColor = (category: string) => {
@@ -367,7 +351,6 @@ export const EnhancedWordCard: React.FC<EnhancedWordCardProps> = ({
               </div>
             </div>
 
-
             {/* Gesture hints */}
             <div className="mt-3 text-center">
               <div className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-full px-4 py-2 mx-auto w-fit">
@@ -395,157 +378,40 @@ export const EnhancedWordCard: React.FC<EnhancedWordCardProps> = ({
               <h3 className="text-xl font-bold">{word.word}</h3>
             </div>
 
-            {/* Mini-game or content view */}
-            {activeMiniGame ? (
-              <div className="flex-1 flex flex-col">
-                {/* Mini-game header */}
-                <div className="mb-4">
-                  <div className="flex items-center justify-between mb-2">
-                    <h4 className="text-lg font-semibold">
-                      {activeMiniGame === "sound-match" && "🎧 Sound Match"}
-                      {activeMiniGame === "emoji-builder" && "🧩 Emoji Builder"}
-                      {activeMiniGame === "letter-hunt" && "🔤 Letter Hunt"}
-                    </h4>
-                    <Button
-                      onClick={() => setActiveMiniGame(null)}
-                      className="h-8 w-8 rounded-full bg-white/20 hover:bg-white/30 p-0"
-                    >
-                      ✕
-                    </Button>
-                  </div>
-                  <Progress value={miniGameProgress} className="h-2" />
-                </div>
-
-                {/* Sound Match Game */}
-                {activeMiniGame === "sound-match" && (
-                  <div className="flex-1 flex flex-col items-center justify-center space-y-4">
-                    <div className="text-center">
-                      <p className="text-lg mb-4">
-                        Listen and match the sound!
-                      </p>
-                      <Button
-                        onClick={handleSoundMatch}
-                        className="h-16 w-16 rounded-full bg-blue-500/30 hover:bg-blue-500/50 text-3xl"
-                      >
-                        🔊
-                      </Button>
-                    </div>
-                  </div>
-                )}
-
-                {/* Emoji Builder Game */}
-                {activeMiniGame === "emoji-builder" && (
-                  <div className="flex-1 flex flex-col items-center justify-center space-y-4">
-                    <div className="text-center">
-                      <p className="text-lg mb-4">
-                        Build the emoji by clicking the pieces!
-                      </p>
-                      <div className="text-6xl mb-4">
-                        {emojiPieces.every(Boolean) ? word.emoji : "❓"}
-                      </div>
-                      <div className="grid grid-cols-2 gap-2">
-                        {emojiPieces.map((filled, index) => (
-                          <Button
-                            key={index}
-                            onClick={() => handleEmojiPieceClick(index)}
-                            className={cn(
-                              "h-12 w-12 rounded-lg",
-                              filled
-                                ? "bg-green-500/50 border-green-400"
-                                : "bg-white/20 hover:bg-white/30 border-white/40",
-                            )}
-                            disabled={filled}
-                          >
-                            {filled ? "✓" : "🧩"}
-                          </Button>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-                )}
-
-                {/* Letter Hunt Game */}
-                {activeMiniGame === "letter-hunt" && (
-                  <div className="flex-1 flex flex-col items-center justify-center space-y-4">
-                    <div className="text-center">
-                      <p className="text-lg mb-4">
-                        Tap letters in order to spell "{word.word}"
-                      </p>
-                      <div className="text-2xl mb-4">
-                        {letterSequence.map((letter, index) => (
-                          <span
-                            key={index}
-                            className={cn(
-                              "inline-block w-8 h-8 mx-1 text-center border-2 rounded",
-                              index < currentLetterIndex
-                                ? "bg-green-500/50 border-green-400 text-green-100"
-                                : index === currentLetterIndex
-                                  ? "bg-yellow-500/50 border-yellow-400 text-yellow-100 animate-pulse"
-                                  : "border-white/40",
-                            )}
-                          >
-                            {index < currentLetterIndex ? letter : "_"}
-                          </span>
-                        ))}
-                      </div>
-                      <div className="grid grid-cols-3 gap-2 max-w-48">
-                        {word.word
-                          .split("")
-                          .sort(() => Math.random() - 0.5)
-                          .map((letter, index) => (
-                            <Button
-                              key={index}
-                              onClick={() =>
-                                handleLetterClick(
-                                  letter,
-                                  letterSequence.indexOf(letter),
-                                )
-                              }
-                              className="h-12 w-12 rounded-lg bg-white/20 hover:bg-white/30 border border-white/40 text-lg font-bold"
-                            >
-                              {letter.toUpperCase()}
-                            </Button>
-                          ))}
-                      </div>
-                    </div>
-                  </div>
-                )}
+            {/* Content */}
+            <div className="flex-1 space-y-4">
+              {/* Definition in comic bubble style */}
+              <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-4 border border-white/20 relative">
+                <div className="absolute -top-2 left-6 w-4 h-4 bg-white/10 border-l border-t border-white/20 transform rotate-45"></div>
+                <h4 className="text-sm font-medium mb-2 text-yellow-300">
+                  What it means:
+                </h4>
+                <p className="text-base leading-relaxed">{word.definition}</p>
               </div>
-            ) : (
-              /* Regular back content */
-              <div className="flex-1 space-y-4">
-                {/* Definition in comic bubble style */}
-                <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-4 border border-white/20 relative">
-                  <div className="absolute -top-2 left-6 w-4 h-4 bg-white/10 border-l border-t border-white/20 transform rotate-45"></div>
-                  <h4 className="text-sm font-medium mb-2 text-yellow-300">
-                    What it means:
+
+              {/* Example sentence */}
+              {word.example && (
+                <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-4 border border-white/20">
+                  <h4 className="text-sm font-medium mb-2 text-green-300">
+                    Example:
                   </h4>
-                  <p className="text-base leading-relaxed">{word.definition}</p>
+                  <p className="text-base italic leading-relaxed">
+                    "{word.example}"
+                  </p>
                 </div>
+              )}
 
-                {/* Example sentence */}
-                {word.example && (
-                  <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-4 border border-white/20">
-                    <h4 className="text-sm font-medium mb-2 text-green-300">
-                      Example:
-                    </h4>
-                    <p className="text-base italic leading-relaxed">
-                      "{word.example}"
-                    </p>
-                  </div>
-                )}
-
-                {/* Fun fact in comic bubble */}
-                {word.funFact && (
-                  <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-4 border border-white/20 relative">
-                    <div className="absolute -top-2 right-6 w-4 h-4 bg-white/10 border-r border-t border-white/20 transform -rotate-45"></div>
-                    <h4 className="text-sm font-medium mb-2 text-pink-300 flex items-center gap-1">
-                      <Sparkles className="w-4 h-4" />
-                      Fun Fact:
-                    </h4>
-                    <p className="text-sm leading-relaxed">{word.funFact}</p>
-                  </div>
-                )}
+              {/* Fun fact in comic bubble */}
+              {word.funFact && (
+                <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-4 border border-white/20 relative">
+                  <div className="absolute -top-2 right-6 w-4 h-4 bg-white/10 border-r border-t border-white/20 transform -rotate-45"></div>
+                  <h4 className="text-sm font-medium mb-2 text-pink-300 flex items-center gap-1">
+                    <Sparkles className="w-4 h-4" />
+                    Fun Fact:
+                  </h4>
+                  <p className="text-sm leading-relaxed">{word.funFact}</p>
+                </div>
+              )}
 
               {/* Vocabulary Builder section */}
               {showVocabularyBuilder && (
@@ -588,8 +454,7 @@ export const EnhancedWordCard: React.FC<EnhancedWordCardProps> = ({
                   </div>
                 </div>
               )}
-              </div>
-            )}
+            </div>
 
             {/* Back navigation hint */}
             <div className="mt-4 text-center">
@@ -604,37 +469,6 @@ export const EnhancedWordCard: React.FC<EnhancedWordCardProps> = ({
         </Card>
       </div>
 
-      {/* Swipe direction feedback */}
-      {isGesturing && swipeDirection && (
-        <div className="absolute inset-0 pointer-events-none z-30 rounded-xl overflow-hidden">
-          <div
-            className={cn(
-              "absolute inset-0 transition-opacity duration-200",
-              swipeDirection === "right" &&
-                "bg-gradient-to-r from-green-400/20 via-green-400/10 to-transparent",
-              swipeDirection === "left" &&
-                "bg-gradient-to-l from-red-400/20 via-red-400/10 to-transparent",
-              swipeDirection === "up" &&
-                "bg-gradient-to-t from-blue-400/20 via-blue-400/10 to-transparent",
-              swipeDirection === "down" &&
-                "bg-gradient-to-b from-purple-400/20 via-purple-400/10 to-transparent",
-            )}
-          />
-        </div>
-      )}
-
-      {/* Achievement popup */}
-      {wordAchievements.length > 0 && (
-        <EnhancedAchievementPopup
-          achievements={wordAchievements}
-          onClose={() => setWordAchievements([])}
-          onAchievementClaim={(achievement) => {
-            console.log("Achievement claimed:", achievement);
-          }}
-          autoCloseDelay={3000}
-        />
-      )}
-
       {/* Screen reader announcements */}
       <div
         aria-live="polite"
@@ -647,7 +481,6 @@ export const EnhancedWordCard: React.FC<EnhancedWordCardProps> = ({
           : `Showing word ${word.word}`}
         {isPlaying && ` Pronouncing ${word.word}`}
         {isFavorited && ` ${word.word} added to favorites`}
-        {activeMiniGame && ` Playing ${activeMiniGame} game`}
         {starProgress > 0 && ` Earned ${starProgress} stars`}
       </div>
     </div>
