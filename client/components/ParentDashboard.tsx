@@ -1225,24 +1225,37 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
 
   const renderGoalsManagement = () => (
     <div className="space-y-4 md:space-y-6 p-2 md:p-0">
-      {/* Mobile-optimized header */}
+      {/* Enhanced comprehensive header */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-3">
         <div className="text-center md:text-left">
           <h2 className="text-xl md:text-2xl font-bold text-slate-800">
-            Goal Management
+            Learning Goals
           </h2>
           <p className="text-sm md:text-base text-slate-600">
-            Set and track learning objectives for your children
+            Comprehensive goal management and tracking for all children
           </p>
         </div>
-        <Button
-          onClick={() => setShowAddGoalDialog(true)}
-          className="bg-educational-blue hover:bg-educational-blue/90 w-full md:w-auto text-sm md:text-base py-3 md:py-2"
-          disabled={children.length === 0}
-        >
-          <Plus className="w-4 h-4 mr-2" />
-          Create Goal
-        </Button>
+        <div className="flex flex-col md:flex-row gap-2">
+          {selectedChild && (
+            <Button
+              onClick={() => handleOpenLearningGoals(selectedChild)}
+              className="bg-educational-blue hover:bg-educational-blue/90"
+              size="sm"
+            >
+              <Target className="w-4 h-4 mr-2" />
+              Manage {selectedChild.name}'s Goals
+            </Button>
+          )}
+          <Button
+            onClick={() => setShowAddGoalDialog(true)}
+            variant="outline"
+            className="w-full md:w-auto text-sm md:text-base py-3 md:py-2"
+            disabled={children.length === 0}
+          >
+            <Plus className="w-4 h-4 mr-2" />
+            Create Basic Goal
+          </Button>
+        </div>
       </div>
 
       {/* No goals state - enhanced for mobile */}
