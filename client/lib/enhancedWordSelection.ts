@@ -82,6 +82,7 @@ export class EnhancedWordSelector {
       exhaustionLevel,
       childStats,
       categoryWords.length,
+      selectedCategory,
     );
 
     // Override cross_category strategy if user selected a specific category
