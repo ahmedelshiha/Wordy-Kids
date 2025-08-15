@@ -283,9 +283,9 @@ export class AnalyticsDataService {
       const sessionData = this.getSessionsForTimeSlot(children, timeSlot);
       return {
         timeOfDay: timeSlot,
-        sessions: sessionData.sessions,
-        completionRate: sessionData.completionRate,
-        avgDuration: sessionData.avgDuration,
+        sessions: this.validateNumber(sessionData.sessions),
+        completionRate: this.validateNumber(sessionData.completionRate),
+        avgDuration: this.validateNumber(sessionData.avgDuration),
       };
     });
   }
