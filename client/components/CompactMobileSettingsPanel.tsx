@@ -77,7 +77,6 @@ export const CompactMobileSettingsPanel: React.FC<
     audio: true,
     appearance: false,
     learning: true,
-    goals: false,
     other: false,
   });
 
