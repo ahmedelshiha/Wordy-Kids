@@ -2075,13 +2075,39 @@ export default function Index({ initialProfile }: IndexProps) {
 
                                     {/* Center: Category and Progress */}
                                     <div className="flex-1 text-center">
-                                      <div className="text-sm font-semibold text-slate-800 truncate px-2">
-                                        {selectedCategory
-                                          ? selectedCategory
-                                              .charAt(0)
-                                              .toUpperCase() +
-                                            selectedCategory.slice(1)
-                                          : "Category"}
+                                      <div className="flex items-center justify-center gap-2 px-2">
+                                        <div className="text-sm font-semibold text-slate-800 truncate">
+                                          {selectedCategory
+                                            ? selectedCategory
+                                                .charAt(0)
+                                                .toUpperCase() +
+                                              selectedCategory.slice(1)
+                                            : "Category"}
+                                        </div>
+                                        {(() => {
+                                          const currentWord = displayWords[currentWordIndex];
+                                          if (!currentWord) return null;
+
+                                          if (rememberedWords.has(currentWord.id)) {
+                                            return (
+                                              <div className="text-xs text-green-600 font-medium bg-green-50 px-2 py-0.5 rounded-full">
+                                                🏆 Learned
+                                              </div>
+                                            );
+                                          } else if (forgottenWords.has(currentWord.id)) {
+                                            return (
+                                              <div className="text-xs text-orange-600 font-medium bg-orange-50 px-2 py-0.5 rounded-full">
+                                                🤔 Review
+                                              </div>
+                                            );
+                                          } else {
+                                            return (
+                                              <div className="text-xs text-blue-600 font-medium bg-blue-50 px-2 py-0.5 rounded-full">
+                                                🆕 New
+                                              </div>
+                                            );
+                                          }
+                                        })()}
                                       </div>
                                       <div className="text-xs text-slate-500">
                                         {currentWordIndex + 1}/
