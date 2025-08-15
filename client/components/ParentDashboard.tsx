@@ -474,6 +474,12 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
   onNavigateBack,
   showMobileBackButton = true,
 }) => {
+  // Auth hook for guest mode checking
+  const { isGuest, user } = useAuth();
+
+  // Registration prompt dialog state
+  const [showRegistrationPrompt, setShowRegistrationPrompt] = useState(false);
+
   // Load children from localStorage or use empty array
   const [children, setChildren] = useState<ChildProfile[]>(() => {
     const savedChildren = localStorage.getItem("parentDashboardChildren");
@@ -1666,7 +1672,7 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
       {!selectedChild ? (
         <Card className="text-center py-12 mx-auto max-w-md">
           <CardContent className="space-y-4">
-            <div className="text-6xl animate-gentle-bounce">📚</div>
+            <div className="text-6xl animate-gentle-bounce">���</div>
             <h3 className="text-lg md:text-xl font-semibold text-slate-700">
               Select a Child
             </h3>
@@ -2236,7 +2242,7 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
                     </div>
                     <div className="mt-3 pt-3 border-t text-center">
                       <span className="text-xs md:text-sm text-green-600 font-medium">
-                        🎉{" "}
+                        ��{" "}
                         {childrenWordStats[selectedChild.id]?.wordsRemembered ||
                           0}{" "}
                         words mastered total!
@@ -3457,7 +3463,7 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
                   </SelectTrigger>
                   <SelectContent>
                     <SelectItem value="week">📅 Last Week</SelectItem>
-                    <SelectItem value="month">📆 Last Month</SelectItem>
+                    <SelectItem value="month">���� Last Month</SelectItem>
                     <SelectItem value="quarter">🗓️ Last 3 Months</SelectItem>
                     <SelectItem value="year">��� Last Year</SelectItem>
                   </SelectContent>
@@ -3714,7 +3720,7 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
                           key={category}
                           className="bg-green-100 text-green-800 hover:bg-green-200 transition-colors justify-center py-2 md:py-1"
                         >
-                          ✨ {category}
+                          �� {category}
                         </Badge>
                       ),
                     )}
