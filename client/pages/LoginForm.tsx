@@ -19,8 +19,9 @@ import {
   Sparkles,
   Heart,
 } from "lucide-react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
+import { useNavigationHistory } from "@/hooks/useNavigationHistory";
 
 interface FormErrors {
   email?: string;
@@ -35,8 +36,18 @@ interface ValidationState {
 
 export default function LoginForm() {
   const navigate = useNavigate();
+  const location = useLocation();
   const { loginAsGuest, login } = useAuth();
   const emailInputRef = useRef<HTMLInputElement>(null);
+
+  // Clear navigation history when on login page (fresh start)
+  const { clearHistory } = useNavigationHistory();
+
+  useEffect(() => {
+    // Clear navigation history when user comes to login page
+    // This ensures a fresh start and prevents loops
+    clearHistory();
+  }, [clearHistory]);
 
   const [formData, setFormData] = useState({
     email: "",
@@ -234,11 +245,16 @@ export default function LoginForm() {
         });
 
         setTimeout(() => {
-          navigate("/app", {
+          // Check if there's a returnTo parameter or state
+          const returnTo = new URLSearchParams(location.search).get('returnTo') || location.state?.from;
+          const targetRoute = returnTo && returnTo !== '/' ? returnTo : '/app';
+
+          navigate(targetRoute, {
             state: {
               loginSuccess: true,
               userEmail: email,
             },
+            replace: true, // Replace to avoid back button going to login
           });
         }, 1000);
       } else {
@@ -271,7 +287,12 @@ export default function LoginForm() {
 
     // Login as guest using auth context
     loginAsGuest();
-    navigate("/app");
+
+    // Check if there's a returnTo parameter
+    const returnTo = new URLSearchParams(location.search).get('returnTo');
+    const targetRoute = returnTo && returnTo !== '/' ? returnTo : '/app';
+
+    navigate(targetRoute, { replace: true });
   };
 
   const handleForgotPassword = () => {
