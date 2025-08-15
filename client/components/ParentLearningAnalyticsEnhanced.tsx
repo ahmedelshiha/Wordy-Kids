@@ -408,28 +408,40 @@ export const ParentLearningAnalyticsEnhanced: React.FC<
 
       <Tabs defaultValue="overview" className="space-y-4 sm:space-y-6">
         <TabsList className="grid w-full grid-cols-2 sm:grid-cols-4 h-12 sm:h-10">
-          <TabsTrigger value="overview" className="text-xs sm:text-sm font-medium game-button-mobile">
+          <TabsTrigger
+            value="overview"
+            className="text-xs sm:text-sm font-medium game-button-mobile"
+          >
             <div className="flex items-center gap-1">
               <Eye className="w-3 h-3 sm:w-4 sm:h-4" />
               <span className="hidden sm:inline">Overview</span>
               <span className="sm:hidden">📊</span>
             </div>
           </TabsTrigger>
-          <TabsTrigger value="categories" className="text-xs sm:text-sm font-medium game-button-mobile">
+          <TabsTrigger
+            value="categories"
+            className="text-xs sm:text-sm font-medium game-button-mobile"
+          >
             <div className="flex items-center gap-1">
               <BookOpen className="w-3 h-3 sm:w-4 sm:h-4" />
               <span className="hidden sm:inline">Categories</span>
               <span className="sm:hidden">📚</span>
             </div>
           </TabsTrigger>
-          <TabsTrigger value="children" className="text-xs sm:text-sm font-medium game-button-mobile">
+          <TabsTrigger
+            value="children"
+            className="text-xs sm:text-sm font-medium game-button-mobile"
+          >
             <div className="flex items-center gap-1">
               <Users className="w-3 h-3 sm:w-4 sm:h-4" />
               <span className="hidden sm:inline">Individual</span>
               <span className="sm:hidden">👧</span>
             </div>
           </TabsTrigger>
-          <TabsTrigger value="reports" className="text-xs sm:text-sm font-medium game-button-mobile">
+          <TabsTrigger
+            value="reports"
+            className="text-xs sm:text-sm font-medium game-button-mobile"
+          >
             <div className="flex items-center gap-1">
               <FileText className="w-3 h-3 sm:w-4 sm:h-4" />
               <span className="hidden sm:inline">Reports</span>
@@ -522,7 +534,9 @@ export const ParentLearningAnalyticsEnhanced: React.FC<
                     value={analyticsData.overview.activeLearningStreak}
                   />
                 </div>
-                <p className="text-xs sm:text-sm text-pink-700 font-medium">Day Streak</p>
+                <p className="text-xs sm:text-sm text-pink-700 font-medium">
+                  Day Streak
+                </p>
               </CardContent>
             </Card>
           </div>
@@ -596,7 +610,10 @@ export const ParentLearningAnalyticsEnhanced: React.FC<
             <CardContent>
               <div className="space-y-3 sm:space-y-4">
                 {analyticsData.weeklyProgress.map((week, index) => (
-                  <div key={index} className="space-y-2 p-3 rounded-lg bg-gradient-to-r from-blue-50 to-purple-50 border border-blue-200 game-card-mobile">
+                  <div
+                    key={index}
+                    className="space-y-2 p-3 rounded-lg bg-gradient-to-r from-blue-50 to-purple-50 border border-blue-200 game-card-mobile"
+                  >
                     <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2">
                       <span className="font-medium text-gray-800 flex items-center gap-1">
                         📅 {week.week}
@@ -618,7 +635,8 @@ export const ParentLearningAnalyticsEnhanced: React.FC<
                       className="h-3 rounded-full bg-gray-200 progress-mobile"
                     />
                     <div className="text-xs text-gray-500 text-right">
-                      {Math.round((week.wordsLearned / 70) * 100)}% of weekly goal
+                      {Math.round((week.wordsLearned / 70) * 100)}% of weekly
+                      goal
                     </div>
                   </div>
                 ))}
@@ -639,14 +657,18 @@ export const ParentLearningAnalyticsEnhanced: React.FC<
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
             {analyticsData.categoryProgress.map((category, index) => (
-              <Card key={index} className="hover:shadow-xl transition-all duration-300 hover:scale-105 border-2 border-gray-100 game-card-mobile">
+              <Card
+                key={index}
+                className="hover:shadow-xl transition-all duration-300 hover:scale-105 border-2 border-gray-100 game-card-mobile"
+              >
                 <CardHeader className="pb-3">
                   <div className="flex justify-between items-center">
                     <CardTitle className="text-base sm:text-lg flex items-center gap-2">
                       {getCategoryEmoji(category.category)} {category.category}
                     </CardTitle>
                     <Badge className={getDifficultyColor(category.difficulty)}>
-                      {getDifficultyEmoji(category.difficulty)} {category.difficulty}
+                      {getDifficultyEmoji(category.difficulty)}{" "}
+                      {category.difficulty}
                     </Badge>
                   </div>
                 </CardHeader>
@@ -749,7 +771,10 @@ export const ParentLearningAnalyticsEnhanced: React.FC<
                         <CardTitle className="text-lg sm:text-xl flex items-center gap-2">
                           👧 {child.name}
                         </CardTitle>
-                        <Badge variant="secondary" className="bg-blue-100 text-blue-800">
+                        <Badge
+                          variant="secondary"
+                          className="bg-blue-100 text-blue-800"
+                        >
                           {child.age} years old
                         </Badge>
                       </div>
@@ -763,25 +788,34 @@ export const ParentLearningAnalyticsEnhanced: React.FC<
                           <div className="text-lg sm:text-2xl font-bold text-blue-600 flex items-center justify-center gap-1">
                             📚 <AnimatedCounter value={child.wordsLearned} />
                           </div>
-                          <p className="text-xs sm:text-sm text-blue-700">Words Learned</p>
+                          <p className="text-xs sm:text-sm text-blue-700">
+                            Words Learned
+                          </p>
                         </div>
                         <div className="text-center p-3 bg-green-50 rounded-lg border border-green-200 hover:bg-green-100 transition-colors game-card-mobile">
                           <div className="text-lg sm:text-2xl font-bold text-green-600 flex items-center justify-center gap-1">
                             🎯 <AnimatedCounter value={child.accuracy} />%
                           </div>
-                          <p className="text-xs sm:text-sm text-green-700">Accuracy</p>
+                          <p className="text-xs sm:text-sm text-green-700">
+                            Accuracy
+                          </p>
                         </div>
                         <div className="text-center p-3 bg-orange-50 rounded-lg border border-orange-200 hover:bg-orange-100 transition-colors game-card-mobile">
                           <div className="text-lg sm:text-2xl font-bold text-orange-600 flex items-center justify-center gap-1">
                             🔥 <AnimatedCounter value={child.currentStreak} />
                           </div>
-                          <p className="text-xs sm:text-sm text-orange-700">Day Streak</p>
+                          <p className="text-xs sm:text-sm text-orange-700">
+                            Day Streak
+                          </p>
                         </div>
                         <div className="text-center p-3 bg-purple-50 rounded-lg border border-purple-200 hover:bg-purple-100 transition-colors game-card-mobile">
                           <div className="text-lg sm:text-2xl font-bold text-purple-600 flex items-center justify-center gap-1">
-                            ⏰ <AnimatedCounter value={child.totalLearningTime} />m
+                            ⏰{" "}
+                            <AnimatedCounter value={child.totalLearningTime} />m
                           </div>
-                          <p className="text-xs sm:text-sm text-purple-700">Total Time</p>
+                          <p className="text-xs sm:text-sm text-purple-700">
+                            Total Time
+                          </p>
                         </div>
                       </div>
 
@@ -802,22 +836,30 @@ export const ParentLearningAnalyticsEnhanced: React.FC<
                           className="h-3 rounded-full bg-gray-200 progress-mobile"
                         />
                         <div className="text-xs text-gray-500 text-center">
-                          {child.wordsLearned} of {child.weeklyGoal} words this week
+                          {child.wordsLearned} of {child.weeklyGoal} words this
+                          week
                         </div>
                       </div>
 
                       <div className="text-sm text-gray-600 space-y-1 bg-gray-50 p-3 rounded-lg">
                         <p className="flex items-center gap-1">
                           <strong>🎆 Favorite Category:</strong>
-                          <span className="text-purple-600">{getCategoryEmoji(child.favoriteCategory)} {child.favoriteCategory}</span>
+                          <span className="text-purple-600">
+                            {getCategoryEmoji(child.favoriteCategory)}{" "}
+                            {child.favoriteCategory}
+                          </span>
                         </p>
                         <p className="flex items-center gap-1">
                           <strong>🕰️ Last Active:</strong>
-                          <span className="text-green-600">{child.lastActive}</span>
+                          <span className="text-green-600">
+                            {child.lastActive}
+                          </span>
                         </p>
                         <p className="flex items-center gap-1">
                           <strong>🏆 Achievements:</strong>
-                          <span className="text-yellow-600">{child.achievements.length} earned ✨</span>
+                          <span className="text-yellow-600">
+                            {child.achievements.length} earned ✨
+                          </span>
                         </p>
                       </div>
                     </CardContent>

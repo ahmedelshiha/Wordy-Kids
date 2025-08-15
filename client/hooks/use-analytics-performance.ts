@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback, useMemo } from 'react';
+import { useState, useEffect, useCallback, useMemo } from "react";
 
 // Performance monitoring hook
 export const useAnalyticsPerformance = () => {
@@ -14,34 +14,40 @@ export const useAnalyticsPerformance = () => {
     const checkPerformance = () => {
       // Check device capabilities
       const connection = (navigator as any).connection;
-      const isSlowConnection = connection && connection.effectiveType && 
-        ['slow-2g', '2g'].includes(connection.effectiveType);
-      
+      const isSlowConnection =
+        connection &&
+        connection.effectiveType &&
+        ["slow-2g", "2g"].includes(connection.effectiveType);
+
       // Check device memory (if available)
       const deviceMemory = (navigator as any).deviceMemory;
       const isLowMemory = deviceMemory && deviceMemory < 4;
-      
+
       // Check CPU cores
       const cpuCores = navigator.hardwareConcurrency;
       const isLowCPU = cpuCores && cpuCores < 4;
 
-      const shouldUseLowPerformanceMode = isSlowConnection || isLowMemory || isLowCPU;
-      
+      const shouldUseLowPerformanceMode =
+        isSlowConnection || isLowMemory || isLowCPU;
+
       if (shouldUseLowPerformanceMode) {
         setIsLowPerformanceMode(true);
-        document.body.classList.add('low-performance-mode');
+        document.body.classList.add("low-performance-mode");
       }
     };
 
     checkPerformance();
   }, []);
 
-  const setLoadingState = useCallback((key: keyof typeof loadingStates, value: boolean) => {
-    setLoadingStates(prev => ({ ...prev, [key]: value }));
-  }, []);
+  const setLoadingState = useCallback(
+    (key: keyof typeof loadingStates, value: boolean) => {
+      setLoadingStates((prev) => ({ ...prev, [key]: value }));
+    },
+    [],
+  );
 
   const measurePerformance = useCallback((name: string, fn: () => void) => {
-    if (typeof window !== 'undefined' && window.performance) {
+    if (typeof window !== "undefined" && window.performance) {
       const start = performance.now();
       fn();
       const end = performance.now();

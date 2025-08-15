@@ -1,4 +1,4 @@
-export { ParentLearningAnalyticsEnhanced as ParentLearningAnalytics } from './ParentLearningAnalyticsEnhanced';
+export { ParentLearningAnalyticsEnhanced as ParentLearningAnalytics } from "./ParentLearningAnalyticsEnhanced";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -384,28 +384,40 @@ export const ParentLearningAnalytics: React.FC<
 
       <Tabs defaultValue="overview" className="space-y-6">
         <TabsList className="grid w-full grid-cols-2 sm:grid-cols-4 h-12 sm:h-10">
-          <TabsTrigger value="overview" className="text-xs sm:text-sm font-medium">
+          <TabsTrigger
+            value="overview"
+            className="text-xs sm:text-sm font-medium"
+          >
             <div className="flex items-center gap-1">
               <Eye className="w-3 h-3 sm:w-4 sm:h-4" />
               <span className="hidden sm:inline">Overview</span>
               <span className="sm:hidden">📊</span>
             </div>
           </TabsTrigger>
-          <TabsTrigger value="categories" className="text-xs sm:text-sm font-medium">
+          <TabsTrigger
+            value="categories"
+            className="text-xs sm:text-sm font-medium"
+          >
             <div className="flex items-center gap-1">
               <BookOpen className="w-3 h-3 sm:w-4 sm:h-4" />
               <span className="hidden sm:inline">Categories</span>
               <span className="sm:hidden">📚</span>
             </div>
           </TabsTrigger>
-          <TabsTrigger value="children" className="text-xs sm:text-sm font-medium">
+          <TabsTrigger
+            value="children"
+            className="text-xs sm:text-sm font-medium"
+          >
             <div className="flex items-center gap-1">
               <Users className="w-3 h-3 sm:w-4 sm:h-4" />
               <span className="hidden sm:inline">Individual</span>
               <span className="sm:hidden">👧</span>
             </div>
           </TabsTrigger>
-          <TabsTrigger value="reports" className="text-xs sm:text-sm font-medium">
+          <TabsTrigger
+            value="reports"
+            className="text-xs sm:text-sm font-medium"
+          >
             <div className="flex items-center gap-1">
               <FileText className="w-3 h-3 sm:w-4 sm:h-4" />
               <span className="hidden sm:inline">Reports</span>
@@ -498,7 +510,9 @@ export const ParentLearningAnalytics: React.FC<
                     value={analyticsData.overview.activeLearningStreak}
                   />
                 </div>
-                <p className="text-xs sm:text-sm text-pink-700 font-medium">Day Streak</p>
+                <p className="text-xs sm:text-sm text-pink-700 font-medium">
+                  Day Streak
+                </p>
               </CardContent>
             </Card>
           </div>
@@ -572,7 +586,10 @@ export const ParentLearningAnalytics: React.FC<
             <CardContent>
               <div className="space-y-3 sm:space-y-4">
                 {analyticsData.weeklyProgress.map((week, index) => (
-                  <div key={index} className="space-y-2 p-3 rounded-lg bg-gradient-to-r from-blue-50 to-purple-50 border border-blue-200">
+                  <div
+                    key={index}
+                    className="space-y-2 p-3 rounded-lg bg-gradient-to-r from-blue-50 to-purple-50 border border-blue-200"
+                  >
                     <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2">
                       <span className="font-medium text-gray-800 flex items-center gap-1">
                         📅 {week.week}
@@ -594,7 +611,8 @@ export const ParentLearningAnalytics: React.FC<
                       className="h-3 rounded-full bg-gray-200"
                     />
                     <div className="text-xs text-gray-500 text-right">
-                      {Math.round((week.wordsLearned / 70) * 100)}% of weekly goal
+                      {Math.round((week.wordsLearned / 70) * 100)}% of weekly
+                      goal
                     </div>
                   </div>
                 ))}
@@ -615,14 +633,18 @@ export const ParentLearningAnalytics: React.FC<
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
             {analyticsData.categoryProgress.map((category, index) => (
-              <Card key={index} className="hover:shadow-xl transition-all duration-300 hover:scale-105 border-2 border-gray-100">
+              <Card
+                key={index}
+                className="hover:shadow-xl transition-all duration-300 hover:scale-105 border-2 border-gray-100"
+              >
                 <CardHeader className="pb-3">
                   <div className="flex justify-between items-center">
                     <CardTitle className="text-base sm:text-lg flex items-center gap-2">
                       {getCategoryEmoji(category.category)} {category.category}
                     </CardTitle>
                     <Badge className={getDifficultyColor(category.difficulty)}>
-                      {getDifficultyEmoji(category.difficulty)} {category.difficulty}
+                      {getDifficultyEmoji(category.difficulty)}{" "}
+                      {category.difficulty}
                     </Badge>
                   </div>
                 </CardHeader>
