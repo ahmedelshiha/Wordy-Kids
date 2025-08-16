@@ -243,6 +243,7 @@ export function QuizGames({
       return (
         <BalloonRescueVowelAdventure
           totalQuestions={10}
+          category={selectedCategory}
           onFinish={(result) => {
             onQuizComplete(result.correctAnswers, result.totalQuestions);
           }}
