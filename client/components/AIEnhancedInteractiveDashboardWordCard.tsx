@@ -1676,112 +1676,85 @@ export function AIEnhancedInteractiveDashboardWordCard({
               <div
                 className={cn(
                   "flex justify-center gap-3 sm:gap-4 mb-4",
-                  aiState.isSessionActive ? "flex-row" : "flex-col sm:flex-row",
+                  "flex-row", // Always use flex-row for consistent layout
                 )}
               >
-                {/* Conditionally order buttons - I Remember on right when AI active */}
-                {aiState.isSessionActive ? (
-                  <>
-                    {/* I Forgot button (left side when AI active) */}
-                    <motion.div
-                      whileHover={{ scale: 1.05, y: -2 }}
-                      whileTap={{ scale: 0.95, y: 0 }}
-                      transition={{
-                        type: "spring",
-                        stiffness: 400,
-                        damping: 17,
-                      }}
-                      className="flex-1 sm:flex-initial"
-                    >
-                      <Button
-                        onClick={() => handleWordAction("needs_practice")}
-                        disabled={isAnswered}
-                        size="lg"
-                        variant="outline"
-                        className="w-full sm:w-auto bg-gradient-to-r from-orange-50 to-red-50 hover:from-orange-100 hover:to-red-100 text-orange-700 hover:text-red-700 font-bold py-3 px-6 rounded-2xl transition-all duration-300 transform hover:scale-105 active:scale-95 shadow-lg hover:shadow-xl min-h-[60px] touch-manipulation group relative overflow-hidden border-2 border-orange-300 hover:border-red-300"
-                        aria-label="I forgot this word"
-                      >
-                        <div className="absolute inset-0 bg-gradient-to-r from-orange-200/0 via-orange-200/30 to-orange-200/0 transform -skew-x-12 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-600 ease-out" />
-                        <XCircle className="w-5 h-5 mr-2 group-hover:animate-pulse text-orange-600" />
-                        <span className="relative z-10">🤔 I Forgot</span>
-                      </Button>
-                    </motion.div>
+                {/* Consistent button order: I Forgot on left, I Remember on right */}
+                <motion.div
+                  whileHover={{ scale: 1.05, y: -2 }}
+                  whileTap={{ scale: 0.95, y: 0 }}
+                  transition={{
+                    type: "spring",
+                    stiffness: 400,
+                    damping: 17,
+                  }}
+                  className="flex-1 sm:flex-initial"
+                >
+                  <Button
+                    onClick={() => handleWordAction("needs_practice")}
+                    disabled={isAnswered}
+                    size="lg"
+                    variant="outline"
+                    className="w-full sm:w-auto bg-gradient-to-r from-orange-50 to-red-50 hover:from-orange-100 hover:to-red-100 text-orange-700 hover:text-red-700 font-bold py-3 px-6 rounded-2xl transition-all duration-300 transform hover:scale-105 active:scale-95 shadow-lg hover:shadow-xl min-h-[60px] touch-manipulation group relative overflow-hidden border-2 border-orange-300 hover:border-red-300"
+                    aria-label="I forgot this word"
+                  >
+                    <div className="absolute inset-0 bg-gradient-to-r from-orange-200/0 via-orange-200/30 to-orange-200/0 transform -skew-x-12 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-600 ease-out" />
+                    <XCircle className="w-5 h-5 mr-2 group-hover:animate-pulse text-orange-600" />
+                    <span className="relative z-10">🤔 I Forgot</span>
+                  </Button>
+                </motion.div>
 
-                    {/* I Remember button (right side when AI active) */}
-                    <motion.div
-                      whileHover={{ scale: 1.05, y: -2 }}
-                      whileTap={{ scale: 0.95, y: 0 }}
-                      transition={{
-                        type: "spring",
-                        stiffness: 400,
-                        damping: 17,
-                      }}
-                      className="flex-1 sm:flex-initial"
-                    >
-                      <Button
-                        onClick={() => handleWordAction("remembered")}
-                        disabled={isAnswered}
-                        size="lg"
-                        className="w-full sm:w-auto bg-gradient-to-r from-green-500 via-emerald-500 to-green-600 hover:from-green-600 hover:via-emerald-600 hover:to-green-700 text-white font-bold py-3 px-6 rounded-2xl transition-all duration-300 transform hover:scale-105 active:scale-95 shadow-xl hover:shadow-2xl min-h-[60px] touch-manipulation group relative overflow-hidden border-2 border-green-300/50 hover:border-green-200"
-                        aria-label="I remember this word"
-                      >
-                        <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/20 to-white/0 transform -skew-x-12 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-600 ease-out" />
-                        <CheckCircle className="w-5 h-5 mr-2 group-hover:animate-bounce" />
-                        <span className="relative z-10">😊 I Remember</span>
-                      </Button>
-                    </motion.div>
-                  </>
-                ) : (
-                  <>
-                    {/* Default order when AI not active - I Remember on left */}
-                    <motion.div
-                      whileHover={{ scale: 1.05, y: -2 }}
-                      whileTap={{ scale: 0.95, y: 0 }}
-                      transition={{
-                        type: "spring",
-                        stiffness: 400,
-                        damping: 17,
-                      }}
-                      className="flex-1 sm:flex-initial"
-                    >
-                      <Button
-                        onClick={() => handleWordAction("remembered")}
-                        disabled={isAnswered}
-                        size="lg"
-                        className="w-full sm:w-auto bg-gradient-to-r from-green-500 via-emerald-500 to-green-600 hover:from-green-600 hover:via-emerald-600 hover:to-green-700 text-white font-bold py-3 px-6 rounded-2xl transition-all duration-300 transform hover:scale-105 active:scale-95 shadow-xl hover:shadow-2xl min-h-[60px] touch-manipulation group relative overflow-hidden border-2 border-green-300/50 hover:border-green-200"
-                        aria-label="I remember this word"
-                      >
-                        <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/20 to-white/0 transform -skew-x-12 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-600 ease-out" />
-                        <CheckCircle className="w-5 h-5 mr-2 group-hover:animate-bounce" />
-                        <span className="relative z-10">😊 I Remember</span>
-                      </Button>
-                    </motion.div>
+                {/* I Remember button (always on right side) */}
+                <motion.div
+                  whileHover={{ scale: 1.05, y: -2 }}
+                  whileTap={{ scale: 0.95, y: 0 }}
+                  transition={{
+                    type: "spring",
+                    stiffness: 400,
+                    damping: 17,
+                  }}
+                  className="flex-1 sm:flex-initial"
+                >
+                  <Button
+                    onClick={() => handleWordAction("remembered")}
+                    disabled={isAnswered}
+                    size="lg"
+                    className="w-full sm:w-auto bg-gradient-to-r from-green-500 via-emerald-500 to-green-600 hover:from-green-600 hover:via-emerald-600 hover:to-green-700 text-white font-bold py-3 px-6 rounded-2xl transition-all duration-300 transform hover:scale-105 active:scale-95 shadow-xl hover:shadow-2xl min-h-[60px] touch-manipulation group relative overflow-hidden border-2 border-green-300/50 hover:border-green-200"
+                    aria-label="I remember this word"
+                  >
+                    <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/20 to-white/0 transform -skew-x-12 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-600 ease-out" />
+                    <CheckCircle className="w-5 h-5 mr-2 group-hover:animate-bounce" />
+                    <span className="relative z-10">😊 I Remember</span>
+                  </Button>
+                </motion.div>
+              </div>
+            )}
 
-                    <motion.div
-                      whileHover={{ scale: 1.05, y: -2 }}
-                      whileTap={{ scale: 0.95, y: 0 }}
-                      transition={{
-                        type: "spring",
-                        stiffness: 400,
-                        damping: 17,
-                      }}
-                      className="flex-1 sm:flex-initial"
-                    >
-                      <Button
-                        onClick={() => handleWordAction("needs_practice")}
-                        disabled={isAnswered}
-                        size="lg"
-                        variant="outline"
-                        className="w-full sm:w-auto bg-gradient-to-r from-orange-50 to-red-50 hover:from-orange-100 hover:to-red-100 text-orange-700 hover:text-red-700 font-bold py-3 px-6 rounded-2xl transition-all duration-300 transform hover:scale-105 active:scale-95 shadow-lg hover:shadow-xl min-h-[60px] touch-manipulation group relative overflow-hidden border-2 border-orange-300 hover:border-red-300"
-                        aria-label="I forgot this word"
-                      >
-                        <div className="absolute inset-0 bg-gradient-to-r from-orange-200/0 via-orange-200/30 to-orange-200/0 transform -skew-x-12 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-600 ease-out" />
-                        <XCircle className="w-5 h-5 mr-2 group-hover:animate-pulse text-orange-600" />
-                        <span className="relative z-10">🤔 I Forgot</span>
-                      </Button>
-                    </motion.div>
-                  </>
-                )}
+            {/* Progress Bar - Always visible when not AI active */}
+            {!aiState.isSessionActive && !showWordName && (
+              <div className="mb-4">
+                <div className="w-full bg-gray-200 rounded-full h-2 sm:h-3 mb-2 relative overflow-hidden">
+                  <div
+                    className="bg-gradient-to-r from-green-400 to-blue-500 h-2 sm:h-3 rounded-full transition-all duration-500 ease-out relative"
+                    style={{ width: `${sessionProgress}%` }}
+                  >
+                    {/* Simple sparkle effect */}
+                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent rounded-full" />
+                  </div>
+                  {/* Simple progress indicator */}
+                  {sessionProgress > 10 && (
+                    <div className="absolute right-1 top-1/2 transform -translate-y-1/2">
+                      <span className="text-xs">🎆</span>
+                    </div>
+                  )}
+                </div>
+                {/* Simple progress text */}
+                <div className="text-xs sm:text-sm text-gray-600 text-center">
+                  <span className="font-medium">
+                    {currentWordIndex + 1} of {SESSION_SIZE} words
+                  </span>
+                  {sessionProgress >= 100 && <span className="ml-2">🎉</span>}
+                </div>
               </div>
             )}
 
@@ -1868,37 +1841,8 @@ export function AIEnhancedInteractiveDashboardWordCard({
                   </div>
 
                   {/* Action Buttons */}
-                  <div
-                    className={cn(
-                      "flex justify-center gap-3 sm:gap-4",
-                      aiState.isSessionActive
-                        ? "flex-row"
-                        : "flex-col sm:flex-row",
-                    )}
-                  >
-                    <motion.div
-                      whileHover={{ scale: 1.05, y: -2 }}
-                      whileTap={{ scale: 0.95, y: 0 }}
-                      transition={{
-                        type: "spring",
-                        stiffness: 400,
-                        damping: 17,
-                      }}
-                      className="flex-1 sm:flex-initial"
-                    >
-                      <Button
-                        onClick={() => handleWordAction("remembered")}
-                        disabled={isAnswered}
-                        size="lg"
-                        className="w-full sm:w-auto bg-gradient-to-r from-green-500 via-emerald-500 to-green-600 hover:from-green-600 hover:via-emerald-600 hover:to-green-700 text-white font-bold py-3 px-6 rounded-2xl transition-all duration-300 transform hover:scale-105 active:scale-95 shadow-xl hover:shadow-2xl min-h-[60px] touch-manipulation group relative overflow-hidden border-2 border-green-300/50 hover:border-green-200"
-                        aria-label="I know this word"
-                      >
-                        <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/20 to-white/0 transform -skew-x-12 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-600 ease-out" />
-                        <CheckCircle className="w-5 h-5 mr-2 group-hover:animate-bounce" />
-                        <span className="relative z-10">😊 I know this!</span>
-                      </Button>
-                    </motion.div>
-
+                  <div className="flex justify-center gap-3 sm:gap-4 flex-row">
+                    {/* I Forgot button (left side) */}
                     <motion.div
                       whileHover={{ scale: 1.05, y: -2 }}
                       whileTap={{ scale: 0.95, y: 0 }}
@@ -1920,6 +1864,30 @@ export function AIEnhancedInteractiveDashboardWordCard({
                         <div className="absolute inset-0 bg-gradient-to-r from-orange-200/0 via-orange-200/30 to-orange-200/0 transform -skew-x-12 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-600 ease-out" />
                         <XCircle className="w-5 h-5 mr-2 group-hover:animate-pulse text-orange-600" />
                         <span className="relative z-10">🤔 Need practice</span>
+                      </Button>
+                    </motion.div>
+
+                    {/* I Remember button (right side) */}
+                    <motion.div
+                      whileHover={{ scale: 1.05, y: -2 }}
+                      whileTap={{ scale: 0.95, y: 0 }}
+                      transition={{
+                        type: "spring",
+                        stiffness: 400,
+                        damping: 17,
+                      }}
+                      className="flex-1 sm:flex-initial"
+                    >
+                      <Button
+                        onClick={() => handleWordAction("remembered")}
+                        disabled={isAnswered}
+                        size="lg"
+                        className="w-full sm:w-auto bg-gradient-to-r from-green-500 via-emerald-500 to-green-600 hover:from-green-600 hover:via-emerald-600 hover:to-green-700 text-white font-bold py-3 px-6 rounded-2xl transition-all duration-300 transform hover:scale-105 active:scale-95 shadow-xl hover:shadow-2xl min-h-[60px] touch-manipulation group relative overflow-hidden border-2 border-green-300/50 hover:border-green-200"
+                        aria-label="I know this word"
+                      >
+                        <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/20 to-white/0 transform -skew-x-12 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-600 ease-out" />
+                        <CheckCircle className="w-5 h-5 mr-2 group-hover:animate-bounce" />
+                        <span className="relative z-10">😊 I know this!</span>
                       </Button>
                     </motion.div>
                   </div>
