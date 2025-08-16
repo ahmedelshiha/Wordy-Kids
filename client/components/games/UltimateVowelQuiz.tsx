@@ -87,9 +87,12 @@ export function UltimateVowelQuiz({
 }: UltimateVowelQuizProps) {
   // Core game state
   const [gameMode, setGameMode] = useState<GameMode>(initialGameMode);
-  const [difficulty, setDifficulty] = useState<DifficultyLevel>(initialDifficulty);
+  const [difficulty, setDifficulty] =
+    useState<DifficultyLevel>(initialDifficulty);
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [selectedVowels, setSelectedVowels] = useState<{ [key: number]: string }>({});
+  const [selectedVowels, setSelectedVowels] = useState<{
+    [key: number]: string;
+  }>({});
 
   // Game progression state
   const [gameStarted, setGameStarted] = useState(false);
@@ -102,7 +105,11 @@ export function UltimateVowelQuiz({
   const [score, setScore] = useState(0);
   const [streak, setStreak] = useState(0);
   const [maxStreak, setMaxStreak] = useState(0);
-  const [powerUps, setPowerUps] = useState({ hints: 3, skips: 1, timeBoost: 1 });
+  const [powerUps, setPowerUps] = useState({
+    hints: 3,
+    skips: 1,
+    timeBoost: 1,
+  });
   const [isUsingHint, setIsUsingHint] = useState(false);
 
   // Feedback and UI state
@@ -115,7 +122,9 @@ export function UltimateVowelQuiz({
 
   // Timer and attempts
   const [timeLeft, setTimeLeft] = useState(timeLimit);
-  const [questionStartTime, setQuestionStartTime] = useState<number | null>(null);
+  const [questionStartTime, setQuestionStartTime] = useState<number | null>(
+    null,
+  );
   const [totalTimeSpent, setTotalTimeSpent] = useState(0);
   const [attempts, setAttempts] = useState<{ [key: number]: number }>({});
   const [questionTimes, setQuestionTimes] = useState<number[]>([]);
@@ -129,7 +138,7 @@ export function UltimateVowelQuiz({
     if (customQuestions) return customQuestions;
 
     const questionsCount = gameMode === "rush" ? 30 : rounds;
-    
+
     if (gameMode === "rescue") {
       return VowelQuizGenerator.getSystematicVowelQuestions({
         category,
@@ -156,10 +165,11 @@ export function UltimateVowelQuiz({
         category,
         count: questionsCount,
         difficulty,
-        maxMissingVowels: difficulty === "easy" ? 1 : difficulty === "medium" ? 2 : 3,
+        maxMissingVowels:
+          difficulty === "easy" ? 1 : difficulty === "medium" ? 2 : 3,
       });
     }
-    
+
     return VowelQuizGenerator.getSystematicVowelQuestions({
       category,
       count: questionsCount,
@@ -183,7 +193,8 @@ export function UltimateVowelQuiz({
       lives: 3,
       timeLimit: null,
       scoringMultiplier: 1,
-      description: "Perfect for beginners! Single missing vowels with helpful hints.",
+      description:
+        "Perfect for beginners! Single missing vowels with helpful hints.",
     },
     challenge: {
       title: "Vowel Challenge",
@@ -196,7 +207,8 @@ export function UltimateVowelQuiz({
       lives: 2,
       timeLimit: null,
       scoringMultiplier: 2,
-      description: "Medium difficulty with multiple missing vowels and strategic thinking.",
+      description:
+        "Medium difficulty with multiple missing vowels and strategic thinking.",
     },
     rush: {
       title: "Vowel Rush",
@@ -209,7 +221,8 @@ export function UltimateVowelQuiz({
       lives: 1,
       timeLimit: 60,
       scoringMultiplier: 3,
-      description: "Fast-paced action! Race against time to maximize your score.",
+      description:
+        "Fast-paced action! Race against time to maximize your score.",
     },
     adventure: {
       title: "Vowel Adventure",
@@ -222,7 +235,8 @@ export function UltimateVowelQuiz({
       lives: 5,
       timeLimit: null,
       scoringMultiplier: 4,
-      description: "Complete adventure mode with progressive difficulty and bonus rewards.",
+      description:
+        "Complete adventure mode with progressive difficulty and bonus rewards.",
     },
     custom: {
       title: "Custom Quest",
@@ -291,7 +305,7 @@ export function UltimateVowelQuiz({
 
       // Check if all vowels are selected
       const allSelected = currentQuestion.missingVowelIndices.every(
-        (index) => newSelectedVowels[index]
+        (index) => newSelectedVowels[index],
       );
 
       if (allSelected) {
@@ -301,23 +315,27 @@ export function UltimateVowelQuiz({
         }, 300);
       }
     },
-    [currentQuestion, selectedVowels, gameComplete]
+    [currentQuestion, selectedVowels, gameComplete],
   );
 
-  const calculateScore = (isCorrect: boolean, timeSpent: number, isFirstAttempt: boolean) => {
+  const calculateScore = (
+    isCorrect: boolean,
+    timeSpent: number,
+    isFirstAttempt: boolean,
+  ) => {
     if (!isCorrect) return 0;
-    
+
     let baseScore = 100 * currentConfig.scoringMultiplier;
-    
+
     // Bonus for speed (max 50% bonus)
     const speedBonus = Math.max(0, Math.floor((30 - timeSpent) * 2));
-    
+
     // Bonus for first attempt
     const attemptBonus = isFirstAttempt ? 50 : 0;
-    
+
     // Streak bonus
     const streakBonus = Math.min(streak * 10, 100);
-    
+
     return baseScore + speedBonus + attemptBonus + streakBonus;
   };
 
@@ -328,25 +346,30 @@ export function UltimateVowelQuiz({
       const questionTime = questionStartTimeRef.current
         ? (Date.now() - questionStartTimeRef.current) / 1000
         : 0;
-      
+
       const currentAttempts = attempts[currentIndex] || 0;
       const newAttempts = currentAttempts + 1;
       setAttempts({ ...attempts, [currentIndex]: newAttempts });
 
       // Check if answer is correct
       const isCorrect = currentQuestion.missingVowelIndices.every(
-        (index) => vowelSelections[index] === currentQuestion.correctVowels[index]
+        (index) =>
+          vowelSelections[index] === currentQuestion.correctVowels[index],
       );
 
       if (isCorrect) {
-        const pointsEarned = calculateScore(isCorrect, questionTime, newAttempts === 1);
-        setScore(prev => prev + pointsEarned);
-        setStreak(prev => {
+        const pointsEarned = calculateScore(
+          isCorrect,
+          questionTime,
+          newAttempts === 1,
+        );
+        setScore((prev) => prev + pointsEarned);
+        setStreak((prev) => {
           const newStreak = prev + 1;
-          setMaxStreak(max => Math.max(max, newStreak));
+          setMaxStreak((max) => Math.max(max, newStreak));
           return newStreak;
         });
-        
+
         playSoundIfEnabled("success");
         setShowReward(true);
         setSparkleCount((prev) => prev + (newAttempts === 1 ? 3 : 1));
@@ -377,9 +400,13 @@ export function UltimateVowelQuiz({
       } else {
         setStreak(0);
         playSoundIfEnabled("error");
-        
-        if (gameMode === "rescue" || gameMode === "challenge" || gameMode === "adventure") {
-          setLives(prev => {
+
+        if (
+          gameMode === "rescue" ||
+          gameMode === "challenge" ||
+          gameMode === "adventure"
+        ) {
+          setLives((prev) => {
             const newLives = prev - 1;
             if (newLives <= 0) {
               setTimeout(() => handleGameComplete(), 1000);
@@ -395,7 +422,7 @@ export function UltimateVowelQuiz({
           if (lives > 1) {
             // Reset selections for retry
             const resetSelections = { ...selectedVowels };
-            currentQuestion.missingVowelIndices.forEach(index => {
+            currentQuestion.missingVowelIndices.forEach((index) => {
               delete resetSelections[index];
             });
             setSelectedVowels(resetSelections);
@@ -403,7 +430,16 @@ export function UltimateVowelQuiz({
         }, 2000);
       }
     },
-    [currentQuestion, selectedVowels, currentIndex, attempts, lives, score, streak, gameMode]
+    [
+      currentQuestion,
+      selectedVowels,
+      currentIndex,
+      attempts,
+      lives,
+      score,
+      streak,
+      gameMode,
+    ],
   );
 
   const nextQuestion = () => {
@@ -419,23 +455,23 @@ export function UltimateVowelQuiz({
 
   const useHint = () => {
     if (powerUps.hints > 0 && !isUsingHint) {
-      setPowerUps(prev => ({ ...prev, hints: prev.hints - 1 }));
+      setPowerUps((prev) => ({ ...prev, hints: prev.hints - 1 }));
       setIsUsingHint(true);
       playSoundIfEnabled("powerup");
-      
+
       // Show one correct vowel
       const firstMissingIndex = currentQuestion.missingVowelIndices[0];
       const correctVowel = currentQuestion.correctVowels[firstMissingIndex];
-      setSelectedVowels(prev => ({
+      setSelectedVowels((prev) => ({
         ...prev,
-        [firstMissingIndex]: correctVowel
+        [firstMissingIndex]: correctVowel,
       }));
     }
   };
 
   const skipQuestion = () => {
     if (powerUps.skips > 0) {
-      setPowerUps(prev => ({ ...prev, skips: prev.skips - 1 }));
+      setPowerUps((prev) => ({ ...prev, skips: prev.skips - 1 }));
       playSoundIfEnabled("powerup");
       nextQuestion();
     }
@@ -443,8 +479,8 @@ export function UltimateVowelQuiz({
 
   const addTimeBoost = () => {
     if (powerUps.timeBoost > 0 && gameMode === "rush") {
-      setPowerUps(prev => ({ ...prev, timeBoost: prev.timeBoost - 1 }));
-      setTimeLeft(prev => prev + 15);
+      setPowerUps((prev) => ({ ...prev, timeBoost: prev.timeBoost - 1 }));
+      setTimeLeft((prev) => prev + 15);
       playSoundIfEnabled("powerup");
     }
   };
@@ -454,14 +490,24 @@ export function UltimateVowelQuiz({
       clearInterval(intervalRef.current);
     }
 
-    const correctAnswers = questions.slice(0, currentIndex + 1).filter(
-      (_, index) => attempts[index] === 1 || (attempts[index] > 1 && selectedVowels[questions[index].missingVowelIndices[0]])
-    ).length;
+    const correctAnswers = questions
+      .slice(0, currentIndex + 1)
+      .filter(
+        (_, index) =>
+          attempts[index] === 1 ||
+          (attempts[index] > 1 &&
+            selectedVowels[questions[index].missingVowelIndices[0]]),
+      ).length;
 
-    const totalAttempts = Object.values(attempts).reduce((sum, att) => sum + att, 0);
-    const averageTime = questionTimes.length > 0 
-      ? questionTimes.reduce((sum, time) => sum + time, 0) / questionTimes.length 
-      : 0;
+    const totalAttempts = Object.values(attempts).reduce(
+      (sum, att) => sum + att,
+      0,
+    );
+    const averageTime =
+      questionTimes.length > 0
+        ? questionTimes.reduce((sum, time) => sum + time, 0) /
+          questionTimes.length
+        : 0;
 
     const finalStats: GameStats = {
       totalQuestions: gameMode === "rush" ? currentIndex + 1 : questions.length,
@@ -471,7 +517,7 @@ export function UltimateVowelQuiz({
       averageTime,
       timeSpent: totalTimeSpent,
       hintsUsed: 3 - powerUps.hints,
-      perfectAnswers: Object.values(attempts).filter(att => att === 1).length,
+      perfectAnswers: Object.values(attempts).filter((att) => att === 1).length,
       mode: gameMode,
       difficulty,
       score,
@@ -502,7 +548,7 @@ export function UltimateVowelQuiz({
 
   const resetGame = () => {
     setIsRestarting(true);
-    
+
     setTimeout(() => {
       setCurrentIndex(0);
       setSelectedVowels({});
@@ -541,19 +587,22 @@ export function UltimateVowelQuiz({
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back
             </Button>
-            
+
             <div className="text-6xl mb-4">🎯</div>
             <h1 className="text-3xl sm:text-4xl font-bold bg-gradient-to-r from-educational-blue via-educational-purple to-educational-pink bg-clip-text text-transparent mb-4">
               Ultimate Vowel Quiz
             </h1>
             <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-              Choose your adventure! Four exciting modes to test your vowel mastery.
+              Choose your adventure! Four exciting modes to test your vowel
+              mastery.
             </p>
           </div>
 
           {/* Game Mode Selection */}
           <div className="space-y-6 mb-8">
-            <h3 className="text-2xl font-bold text-center mb-6">Choose Your Adventure</h3>
+            <h3 className="text-2xl font-bold text-center mb-6">
+              Choose Your Adventure
+            </h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {Object.entries(gameModeConfig).map(([modeId, config]) => (
                 <Card
@@ -569,10 +618,14 @@ export function UltimateVowelQuiz({
                     <div className="flex items-start space-x-4">
                       <div className="text-4xl">{config.icon}</div>
                       <div className="flex-1">
-                        <h4 className="text-xl font-bold mb-2">{config.title}</h4>
+                        <h4 className="text-xl font-bold mb-2">
+                          {config.title}
+                        </h4>
                         <p className="text-gray-600 mb-3">{config.subtitle}</p>
-                        <p className="text-sm text-gray-500 mb-4">{config.description}</p>
-                        
+                        <p className="text-sm text-gray-500 mb-4">
+                          {config.description}
+                        </p>
+
                         <div className="flex flex-wrap gap-2">
                           <Badge variant="secondary" className="text-xs">
                             <Heart className="w-3 h-3 mr-1" />
@@ -600,13 +653,35 @@ export function UltimateVowelQuiz({
           {/* Difficulty Selection (not for rush mode) */}
           {gameMode !== "rush" && (
             <div className="space-y-4 mb-8">
-              <h3 className="text-xl font-semibold text-center">Choose Difficulty</h3>
+              <h3 className="text-xl font-semibold text-center">
+                Choose Difficulty
+              </h3>
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
                 {[
-                  { id: "easy", title: "Easy", icon: "😊", desc: "1 missing vowel" },
-                  { id: "medium", title: "Medium", icon: "🤔", desc: "2 missing vowels" },
-                  { id: "hard", title: "Hard", icon: "😤", desc: "3+ missing vowels" },
-                  { id: "mixed", title: "Mixed", icon: "🎲", desc: "Random difficulty" },
+                  {
+                    id: "easy",
+                    title: "Easy",
+                    icon: "😊",
+                    desc: "1 missing vowel",
+                  },
+                  {
+                    id: "medium",
+                    title: "Medium",
+                    icon: "🤔",
+                    desc: "2 missing vowels",
+                  },
+                  {
+                    id: "hard",
+                    title: "Hard",
+                    icon: "😤",
+                    desc: "3+ missing vowels",
+                  },
+                  {
+                    id: "mixed",
+                    title: "Mixed",
+                    icon: "🎲",
+                    desc: "Random difficulty",
+                  },
                 ].map((diff) => (
                   <Card
                     key={diff.id}
@@ -651,7 +726,9 @@ export function UltimateVowelQuiz({
   if (!gameStarted || !currentQuestion) return null;
 
   return (
-    <div className={`min-h-screen bg-gradient-to-br ${currentConfig.bgGradient} p-4 relative`}>
+    <div
+      className={`min-h-screen bg-gradient-to-br ${currentConfig.bgGradient} p-4 relative`}
+    >
       {/* Achievement Popups */}
       <AnimatePresence>
         {newAchievements.map((achievement, index) => (
@@ -659,9 +736,7 @@ export function UltimateVowelQuiz({
             key={`${achievement.id}-${index}`}
             achievement={achievement}
             onClose={() => {
-              setNewAchievements((prev) =>
-                prev.filter((_, i) => i !== index)
-              );
+              setNewAchievements((prev) => prev.filter((_, i) => i !== index));
             }}
           />
         ))}
@@ -690,9 +765,11 @@ export function UltimateVowelQuiz({
             <ArrowLeft className="w-4 h-4 mr-2" />
             Exit
           </Button>
-          
+
           <div className="text-center">
-            <h1 className="text-2xl font-bold text-gray-800">{currentConfig.title}</h1>
+            <h1 className="text-2xl font-bold text-gray-800">
+              {currentConfig.title}
+            </h1>
             <p className="text-sm text-gray-600">{currentConfig.subtitle}</p>
           </div>
 
@@ -705,12 +782,16 @@ export function UltimateVowelQuiz({
         {/* Game Stats Bar */}
         <div className="grid grid-cols-2 sm:grid-cols-5 gap-4 mb-6">
           <Card className="p-3 text-center">
-            <div className="text-lg font-bold text-educational-blue">{score}</div>
+            <div className="text-lg font-bold text-educational-blue">
+              {score}
+            </div>
             <div className="text-xs text-gray-600">Score</div>
           </Card>
-          
+
           <Card className="p-3 text-center">
-            <div className="text-lg font-bold text-educational-purple">{streak}</div>
+            <div className="text-lg font-bold text-educational-purple">
+              {streak}
+            </div>
             <div className="text-xs text-gray-600">Streak</div>
           </Card>
 
@@ -730,7 +811,9 @@ export function UltimateVowelQuiz({
 
           {gameMode === "rush" && (
             <Card className="p-3 text-center">
-              <div className="text-lg font-bold text-educational-orange">{timeLeft}</div>
+              <div className="text-lg font-bold text-educational-orange">
+                {timeLeft}
+              </div>
               <div className="text-xs text-gray-600">Time</div>
             </Card>
           )}
@@ -746,8 +829,8 @@ export function UltimateVowelQuiz({
         {/* Progress Bar */}
         {gameMode !== "rush" && (
           <div className="mb-6">
-            <Progress 
-              value={(currentIndex / questions.length) * 100} 
+            <Progress
+              value={(currentIndex / questions.length) * 100}
               className="h-3"
             />
           </div>
@@ -765,7 +848,7 @@ export function UltimateVowelQuiz({
             <Lightbulb className="w-4 h-4 mb-1" />
             <span className="text-xs">{powerUps.hints}</span>
           </Button>
-          
+
           <Button
             onClick={skipQuestion}
             disabled={powerUps.skips === 0}
@@ -792,19 +875,22 @@ export function UltimateVowelQuiz({
         </div>
 
         {/* Question Card */}
-        <Card className={`mx-auto max-w-2xl border-4 ${currentConfig.borderColor} bg-white/90 backdrop-blur-sm shadow-xl`}>
+        <Card
+          className={`mx-auto max-w-2xl border-4 ${currentConfig.borderColor} bg-white/90 backdrop-blur-sm shadow-xl`}
+        >
           <CardContent className="p-8">
             {/* Question */}
             <div className="text-center mb-8">
               <div className="text-4xl mb-4">{currentConfig.icon}</div>
               <h2 className="text-2xl font-bold mb-4">Complete the word:</h2>
-              
+
               {/* Word Display */}
               <div className="flex justify-center items-center flex-wrap gap-2 mb-6">
                 {currentQuestion.displayWord.split("").map((char, index) => {
-                  const isMissing = currentQuestion.missingVowelIndices.includes(index);
+                  const isMissing =
+                    currentQuestion.missingVowelIndices.includes(index);
                   const selectedVowel = selectedVowels[index];
-                  
+
                   return (
                     <div
                       key={index}
@@ -844,9 +930,10 @@ export function UltimateVowelQuiz({
                 <Button
                   key={vowel}
                   onClick={() => {
-                    const nextMissingIndex = currentQuestion.missingVowelIndices.find(
-                      (index) => !selectedVowels[index]
-                    );
+                    const nextMissingIndex =
+                      currentQuestion.missingVowelIndices.find(
+                        (index) => !selectedVowels[index],
+                      );
                     if (nextMissingIndex !== undefined) {
                       handleVowelSelect(nextMissingIndex, vowel);
                     }
@@ -915,7 +1002,7 @@ export function UltimateVowelQuiz({
                 <h3 className="text-2xl font-bold mb-4">
                   {currentConfig.title} Complete!
                 </h3>
-                
+
                 <div className="space-y-3 mb-6">
                   <div className="flex justify-between">
                     <span>Final Score:</span>
@@ -928,13 +1015,24 @@ export function UltimateVowelQuiz({
                   <div className="flex justify-between">
                     <span>Questions:</span>
                     <span className="font-bold">
-                      {gameMode === "rush" ? currentIndex + 1 : questions.length}
+                      {gameMode === "rush"
+                        ? currentIndex + 1
+                        : questions.length}
                     </span>
                   </div>
                   <div className="flex justify-between">
                     <span>Accuracy:</span>
                     <span className="font-bold">
-                      {Math.round(((currentIndex + 1 - (Object.keys(attempts).length - Object.values(attempts).filter(a => a === 1).length)) / (currentIndex + 1)) * 100)}%
+                      {Math.round(
+                        ((currentIndex +
+                          1 -
+                          (Object.keys(attempts).length -
+                            Object.values(attempts).filter((a) => a === 1)
+                              .length)) /
+                          (currentIndex + 1)) *
+                          100,
+                      )}
+                      %
                     </span>
                   </div>
                 </div>
@@ -961,7 +1059,7 @@ export function UltimateVowelQuiz({
         onHelpAction={(helpContent) => {
           if ("speechSynthesis" in window) {
             const utterance = new SpeechSynthesisUtterance(
-              `${helpContent.title}. ${helpContent.message.replace(/\n/g, ". ").replace(/•/g, "")}`
+              `${helpContent.title}. ${helpContent.message.replace(/\n/g, ". ").replace(/•/g, "")}`,
             );
             utterance.rate = 0.8;
             utterance.pitch = 1.1;

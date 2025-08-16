@@ -2978,7 +2978,8 @@ export default function Index({ initialProfile }: IndexProps) {
                                   Ultimate Vowel Quiz
                                 </h3>
                                 <p className="text-sm md:text-base text-gray-600 mb-3 md:mb-4">
-                                  Four exciting modes: Rescue, Challenge, Rush & Adventure! 🚀
+                                  Four exciting modes: Rescue, Challenge, Rush &
+                                  Adventure! 🚀
                                 </p>
                                 <div className="flex justify-center gap-2 mb-3 md:mb-4 flex-wrap">
                                   <span className="bg-educational-green/20 text-educational-green px-2 py-1 rounded-full text-xs">
@@ -2995,7 +2996,8 @@ export default function Index({ initialProfile }: IndexProps) {
                                   </span>
                                 </div>
                                 <div className="text-xs md:text-sm text-gray-500 mb-4">
-                                  ✨ Lives system • ⏰ Timed modes • 🎯 Power-ups • 🏆 Achievements
+                                  ✨ Lives system • ⏰ Timed modes • 🎯
+                                  Power-ups • 🏆 Achievements
                                 </div>
                                 <Button
                                   onClick={() => {
@@ -3029,7 +3031,9 @@ export default function Index({ initialProfile }: IndexProps) {
                                 </div>
                                 <Button
                                   onClick={() => {
-                                    console.log("Deprecated: Use Ultimate Vowel Quiz instead");
+                                    console.log(
+                                      "Deprecated: Use Ultimate Vowel Quiz instead",
+                                    );
                                   }}
                                   className="w-full bg-educational-purple text-white hover:bg-educational-purple/90 py-1.5 md:py-2 text-xs md:text-sm rounded-xl"
                                   size="sm"
@@ -3059,7 +3063,9 @@ export default function Index({ initialProfile }: IndexProps) {
                                 </div>
                                 <Button
                                   onClick={() => {
-                                    console.log("Deprecated: Use Ultimate Vowel Quiz instead");
+                                    console.log(
+                                      "Deprecated: Use Ultimate Vowel Quiz instead",
+                                    );
                                   }}
                                   className="w-full bg-educational-orange text-white hover:bg-educational-orange/90 py-1.5 md:py-2 text-xs md:text-sm rounded-xl animate-bounce"
                                   size="sm"
