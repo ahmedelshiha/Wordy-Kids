@@ -729,6 +729,7 @@ export function InteractiveDashboardWordCard({
 
         return (
           <motion.div
+            key={`feedback-${currentWordIndex}-${feedbackType}`}
             initial={{ scale: 0.8, opacity: 0, rotate: -5 }}
             animate={{ scale: 1, opacity: 1, rotate: 0 }}
             transition={{
@@ -742,6 +743,7 @@ export function InteractiveDashboardWordCard({
             {/* Celebration background effect */}
             {feedbackType === "remembered" && (
               <motion.div
+                key={`feedback-bg-${currentWordIndex}`}
                 initial={{ scale: 0, opacity: 0.8 }}
                 animate={{ scale: 2, opacity: 0 }}
                 transition={{ duration: 1, ease: "easeOut" }}
@@ -750,6 +752,7 @@ export function InteractiveDashboardWordCard({
             )}
 
             <motion.div
+              key={`feedback-emoji-${currentWordIndex}-${feedbackType}`}
               animate={{
                 y: [0, -10, 0],
                 rotate:
@@ -769,6 +772,7 @@ export function InteractiveDashboardWordCard({
             </motion.div>
 
             <motion.div
+              key={`feedback-message-${currentWordIndex}-${feedbackType}`}
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3, duration: 0.4 }}
@@ -781,6 +785,7 @@ export function InteractiveDashboardWordCard({
             {feedbackType === "remembered" && (
               <>
                 <motion.div
+                  key={`feedback-sparkle-1-${currentWordIndex}`}
                   initial={{ opacity: 0, scale: 0, x: -20, y: -10 }}
                   animate={{
                     opacity: [0, 1, 0],
@@ -799,6 +804,7 @@ export function InteractiveDashboardWordCard({
                   ✨
                 </motion.div>
                 <motion.div
+                  key={`feedback-sparkle-2-${currentWordIndex}`}
                   initial={{ opacity: 0, scale: 0, x: 20, y: -10 }}
                   animate={{
                     opacity: [0, 1, 0],
@@ -824,7 +830,7 @@ export function InteractiveDashboardWordCard({
 
       return (
         <motion.div
-          key={`emoji-${currentWordIndex}`}
+          key={`emoji-normal-${currentWordIndex}`}
           initial={{ scale: 0.8, opacity: 0, rotateY: -15 }}
           animate={{ scale: 1, opacity: 1, rotateY: 0 }}
           exit={{ scale: 0.9, opacity: 0, rotateY: 15 }}
@@ -851,6 +857,7 @@ export function InteractiveDashboardWordCard({
 
           {/* Main emoji with enhanced animation */}
           <motion.div
+            key={`emoji-inner-${currentWordIndex}`}
             animate={{
               y: [0, -8, 0],
               rotate: [0, 2, -2, 0],
@@ -874,6 +881,7 @@ export function InteractiveDashboardWordCard({
             {/* Sparkle effects on hover */}
             <AnimatePresence>
               <motion.div
+                key={`sparkle-1-${currentWordIndex}`}
                 initial={{ opacity: 0, scale: 0 }}
                 animate={{ opacity: [0, 1, 0], scale: [0, 1, 0] }}
                 transition={{
@@ -887,6 +895,7 @@ export function InteractiveDashboardWordCard({
                 ✨
               </motion.div>
               <motion.div
+                key={`sparkle-2-${currentWordIndex}`}
                 initial={{ opacity: 0, scale: 0 }}
                 animate={{ opacity: [0, 1, 0], scale: [0, 1, 0] }}
                 transition={{
@@ -1173,7 +1182,7 @@ export function InteractiveDashboardWordCard({
                     }
                     if (percentage >= 90) return "⭐";
                     if (percentage >= 75) return "🎯";
-                    if (percentage >= 50) return "💪";
+                    if (percentage >= 50) return "����";
                     return "🌟";
                   })()}
                 </span>
