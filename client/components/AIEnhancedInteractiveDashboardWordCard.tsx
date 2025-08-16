@@ -38,6 +38,7 @@ import {
   usePersonalizedEncouragement,
 } from "@/hooks/use-ai-word-recommendations";
 import { SessionContext } from "@/lib/aiWordRecommendationService";
+import { isAIEnabled, setAISettings } from "@/lib/aiSettings";
 import { useVoiceSettings } from "@/hooks/use-voice-settings";
 import { ChildWordStats } from "@shared/api";
 
@@ -153,6 +154,22 @@ export function AIEnhancedInteractiveDashboardWordCard({
     [],
   );
   const [journeyAchievements, setJourneyAchievements] = useState<any[]>([]);
+
+  // Global AI settings state
+  const [globalAIEnabled, setGlobalAIEnabled] = useState(isAIEnabled());
+
+  // Helper function to toggle global AI settings
+  const toggleGlobalAI = () => {
+    const newValue = !globalAIEnabled;
+    setGlobalAIEnabled(newValue);
+    setAISettings({ aiEnhancementEnabled: newValue });
+    onToggleAIEnhancement?.(newValue);
+
+    // If disabling AI globally, end any active session
+    if (!newValue && aiState.isSessionActive) {
+      aiActions.endSession({ completed: false });
+    }
+  };
 
   // UI States
   const [showWordName, setShowWordName] = useState(false);
@@ -951,6 +968,30 @@ export function AIEnhancedInteractiveDashboardWordCard({
     );
   }
 
+  // Show AI disabled message if globally disabled
+  if (!globalAIEnabled) {
+    return (
+      <Card className="w-full max-w-4xl mx-auto">
+        <CardContent className="p-6 text-center">
+          <Brain className="w-12 h-12 mx-auto mb-4 text-gray-400" />
+          <h3 className="text-xl font-bold text-gray-600 mb-2">
+            AI Enhancement Disabled
+          </h3>
+          <p className="text-gray-500 mb-4">
+            AI features are currently disabled. Enable AI in settings to use
+            smart learning features.
+          </p>
+          <Button
+            onClick={toggleGlobalAI}
+            className="bg-green-500 hover:bg-green-600 text-white"
+          >
+            Enable AI Enhancement
+          </Button>
+        </CardContent>
+      </Card>
+    );
+  }
+
   if (!currentWord) {
     return (
       <Card className={cn("w-full max-w-2xl mx-auto", className)}>
@@ -1201,26 +1242,45 @@ export function AIEnhancedInteractiveDashboardWordCard({
                     </span>
                   </div>
 
-                  {/* Right: AI Enhancement Toggle */}
-                  <Button
-                    onClick={() => {
-                      if (aiState.isSessionActive) {
-                        aiActions.endSession({ completed: false });
-                      } else {
-                        // Toggle AI enhancement completely
-                        onToggleAIEnhancement?.(false);
-                      }
-                    }}
-                    size="sm"
-                    className={cn(
-                      "px-3 py-1 text-xs font-medium rounded-full h-7",
-                      aiState.isSessionActive
-                        ? "bg-white/20 hover:bg-white/30 text-white border border-white/30"
-                        : "bg-green-500 hover:bg-green-600 text-white",
-                    )}
-                  >
-                    {aiState.isSessionActive ? "AI Enabled" : "Disable AI"}
-                  </Button>
+                  {/* Right: AI Enhancement Toggles */}
+                  <div className="flex items-center gap-1">
+                    <Button
+                      onClick={() => {
+                        if (aiState.isSessionActive) {
+                          // End current AI session
+                          aiActions.endSession({ completed: false });
+                        } else {
+                          // Start AI session with current words
+                          aiActions.startSession({
+                            words: words.slice(0, 10),
+                            confidence: 0.8,
+                            reasoning: ["Starting new AI session"],
+                            expectedOutcomes: {
+                              learningVelocity: 0.7,
+                              retentionPrediction: 0.8,
+                              engagementScore: 0.85,
+                              difficultyFit: 0.75,
+                            },
+                            alternativeStrategies: ["adaptive"],
+                            adaptiveInstructions: {
+                              encouragementFrequency: 0.6,
+                              hintStrategy: "moderate",
+                              errorHandling: "immediate",
+                            },
+                          });
+                        }
+                      }}
+                      size="sm"
+                      className={cn(
+                        "px-3 py-1 text-xs font-medium rounded-full h-7",
+                        aiState.isSessionActive
+                          ? "bg-white/20 hover:bg-white/30 text-white border border-white/30"
+                          : "bg-green-500 hover:bg-green-600 text-white",
+                      )}
+                    >
+                      {aiState.isSessionActive ? "Pause AI" : "Start AI"}
+                    </Button>
+                  </div>
                 </div>
 
                 {/* Mobile Progress: Only show if session active */}
@@ -1260,10 +1320,27 @@ export function AIEnhancedInteractiveDashboardWordCard({
                         <Button
                           onClick={() => {
                             if (aiState.isSessionActive) {
+                              // End current AI session
                               aiActions.endSession({ completed: false });
                             } else {
-                              // Toggle AI enhancement completely
-                              onToggleAIEnhancement?.(false);
+                              // Start AI session with current words
+                              aiActions.startSession({
+                                words: words.slice(0, 10),
+                                confidence: 0.8,
+                                reasoning: ["Starting new AI session"],
+                                expectedOutcomes: {
+                                  learningVelocity: 0.7,
+                                  retentionPrediction: 0.8,
+                                  engagementScore: 0.85,
+                                  difficultyFit: 0.75,
+                                },
+                                alternativeStrategies: ["adaptive"],
+                                adaptiveInstructions: {
+                                  encouragementFrequency: 0.6,
+                                  hintStrategy: "moderate",
+                                  errorHandling: "immediate",
+                                },
+                              });
                             }
                           }}
                           size="sm"
@@ -1274,9 +1351,7 @@ export function AIEnhancedInteractiveDashboardWordCard({
                               : "bg-green-500 hover:bg-green-600 text-white",
                           )}
                         >
-                          {aiState.isSessionActive
-                            ? "AI Enabled"
-                            : "Disable AI"}
+                          {aiState.isSessionActive ? "Pause AI" : "Start AI"}
                         </Button>
                       </div>
                       <div className="flex items-center gap-3 text-sm opacity-90">

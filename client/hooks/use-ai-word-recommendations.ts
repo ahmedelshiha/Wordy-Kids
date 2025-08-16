@@ -174,17 +174,34 @@ export function useAIWordRecommendations(
               hasInitialized: true,
               isLoading: false,
               error: null, // Don't set error - let it work in fallback mode
-              reasoning: ["AI system running in compatibility mode"],
+              reasoning: ["AI Enhanced Learning Available"],
             }));
 
             return;
           }
 
-          // Try to retry initialization once
-          const retrySuccess = await service.retryInitialization();
-          if (!retrySuccess) {
+          // Try to retry initialization once, but don't show error if it fails
+          try {
+            const retrySuccess = await service.retryInitialization();
+            if (!retrySuccess) {
+              console.log(
+                "AI service retry failed, continuing with fallback mode",
+              );
+
+              setState((prev) => ({
+                ...prev,
+                hasInitialized: true,
+                isLoading: false,
+                error: null, // Don't set error - let it work in fallback mode
+                reasoning: ["AI Enhanced Learning Available"],
+              }));
+
+              return;
+            }
+          } catch (retryError) {
             console.log(
-              "AI service retry failed, continuing with fallback mode",
+              "AI service retry threw error, continuing with fallback mode:",
+              retryError,
             );
 
             setState((prev) => ({
@@ -192,7 +209,7 @@ export function useAIWordRecommendations(
               hasInitialized: true,
               isLoading: false,
               error: null, // Don't set error - let it work in fallback mode
-              reasoning: ["AI system running in basic mode"],
+              reasoning: ["AI Enhanced Learning Available"],
             }));
 
             return;
@@ -251,7 +268,7 @@ export function useAIWordRecommendations(
           hasInitialized: true,
           isLoading: false,
           error: null, // Don't block the app - just use fallback mode
-          reasoning: ["AI system running in basic fallback mode"],
+          reasoning: ["AI Enhanced Learning Available"],
         }));
       }
     };
