@@ -281,6 +281,110 @@ export default function Index({ initialProfile }: IndexProps) {
     return categoryWords.slice(0, 20);
   }, [currentDashboardWords, selectedCategory]);
 
+  // Helper functions to provide real data to ParentDashboard
+  const getRealChildrenData = () => {
+    try {
+      // Get children from localStorage (parent dashboard data)
+      const storedChildren = localStorage.getItem("parentDashboardChildren");
+      if (storedChildren) {
+        return JSON.parse(storedChildren);
+      }
+
+      // Fallback: create child profile from current user data
+      const currentUser = JSON.parse(
+        localStorage.getItem("wordAdventureCurrentUser") || "{}"
+      );
+
+      if (currentUser.id) {
+        return [{
+          id: currentUser.id,
+          name: currentUser.name || "Alex",
+          age: currentUser.age || 8,
+          avatar: currentUser.avatar || "👦",
+          level: currentUser.level || 1,
+          totalPoints: currentUser.totalPoints || 0,
+          wordsLearned: rememberedWords.size,
+          currentStreak: learningStats.currentStreak || 0,
+          weeklyGoal: currentUser.weeklyGoal || 25,
+          accuracy: learningStats.accuracy || 0,
+          totalLearningTime: Math.round(learningStats.sessionCount * 15), // Estimate 15 min per session
+          favoriteCategory: selectedCategory || "Animals",
+          achievements: currentUser.achievements || [],
+          lastActive: new Date().toISOString(),
+          progressHistory: {},
+          strongAreas: [],
+          improvementAreas: [],
+          parentNotes: ""
+        }];
+      }
+
+      return [];
+    } catch (error) {
+      console.error("Error getting real children data:", error);
+      return [];
+    }
+  };
+
+  const getRealSessionsData = () => {
+    try {
+      // Get session data from various localStorage sources
+      const sessions: any[] = [];
+      const currentUser = JSON.parse(
+        localStorage.getItem("wordAdventureCurrentUser") || "{}"
+      );
+
+      if (currentUser.id) {
+        // Get recent session data from localStorage
+        for (let i = 0; i < 7; i++) {
+          const date = new Date();
+          date.setDate(date.getDate() - i);
+          const dateKey = date.toISOString().split("T")[0];
+
+          // Check for daily progress data
+          const dailyProgressKey = `daily_progress_${currentUser.id}_${dateKey}`;
+          const dailyData = localStorage.getItem(dailyProgressKey);
+
+          if (dailyData) {
+            const progress = JSON.parse(dailyData);
+            sessions.push({
+              id: `session_${dateKey}`,
+              childId: currentUser.id,
+              activity: "Word Learning",
+              duration: progress.timeSpent || 15, // Default 15 minutes
+              wordsLearned: progress.words || 0,
+              accuracy: progress.accuracy || learningStats.accuracy || 85,
+              completedAt: date,
+              category: selectedCategory || "Mixed",
+              difficulty: "Medium",
+              mistakePatterns: []
+            });
+          }
+        }
+
+        // If no stored sessions, create a sample based on current stats
+        if (sessions.length === 0 && rememberedWords.size > 0) {
+          sessions.push({
+            id: "current_session",
+            childId: currentUser.id,
+            activity: "Word Learning",
+            duration: 15,
+            wordsLearned: rememberedWords.size,
+            accuracy: learningStats.accuracy || 85,
+            completedAt: new Date(),
+            category: selectedCategory || "Mixed",
+            difficulty: "Medium",
+            mistakePatterns: []
+          });
+        }
+      }
+
+      return sessions;
+    } catch (error) {
+      console.error("Error getting real sessions data:", error);
+      return [];
+    }
+  };
+
   // Initialize dashboard words when category changes or component mounts
   useEffect(() => {
     const initializeWords = () => {
