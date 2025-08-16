@@ -1467,58 +1467,64 @@ export function AIEnhancedInteractiveDashboardWordCard({
                     )}
                   </div>
 
-                  {/* Action Buttons */}
-                  <div className="flex flex-col sm:flex-row justify-center gap-3 sm:gap-4">
-                    <motion.div
-                      whileHover={{ scale: 1.05, y: -2 }}
-                      whileTap={{ scale: 0.95, y: 0 }}
-                      transition={{
-                        type: "spring",
-                        stiffness: 400,
-                        damping: 17,
-                      }}
-                      className="flex-1 sm:flex-initial"
-                    >
-                      <Button
-                        onClick={() => handleWordAction("remembered")}
-                        disabled={isAnswered}
-                        size="lg"
-                        className="w-full sm:w-auto bg-gradient-to-r from-green-500 via-emerald-500 to-green-600 hover:from-green-600 hover:via-emerald-600 hover:to-green-700 text-white font-bold py-3 px-6 rounded-2xl transition-all duration-300 transform hover:scale-105 active:scale-95 shadow-xl hover:shadow-2xl min-h-[60px] touch-manipulation group relative overflow-hidden border-2 border-green-300/50 hover:border-green-200"
-                        aria-label="I know this word"
-                      >
-                        <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/20 to-white/0 transform -skew-x-12 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-600 ease-out" />
-                        <CheckCircle className="w-5 h-5 mr-2 group-hover:animate-bounce" />
-                        <span className="relative z-10">😊 I know this!</span>
-                      </Button>
-                    </motion.div>
-
-                    <motion.div
-                      whileHover={{ scale: 1.05, y: -2 }}
-                      whileTap={{ scale: 0.95, y: 0 }}
-                      transition={{
-                        type: "spring",
-                        stiffness: 400,
-                        damping: 17,
-                      }}
-                      className="flex-1 sm:flex-initial"
-                    >
-                      <Button
-                        onClick={() => handleWordAction("needs_practice")}
-                        disabled={isAnswered}
-                        size="lg"
-                        variant="outline"
-                        className="w-full sm:w-auto bg-gradient-to-r from-orange-50 to-red-50 hover:from-orange-100 hover:to-red-100 text-orange-700 hover:text-red-700 font-bold py-3 px-6 rounded-2xl transition-all duration-300 transform hover:scale-105 active:scale-95 shadow-lg hover:shadow-xl min-h-[60px] touch-manipulation group relative overflow-hidden border-2 border-orange-300 hover:border-red-300"
-                        aria-label="I need more practice"
-                      >
-                        <div className="absolute inset-0 bg-gradient-to-r from-orange-200/0 via-orange-200/30 to-orange-200/0 transform -skew-x-12 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-600 ease-out" />
-                        <XCircle className="w-5 h-5 mr-2 group-hover:animate-pulse text-orange-600" />
-                        <span className="relative z-10">🤔 Need practice</span>
-                      </Button>
-                    </motion.div>
-                  </div>
                 </motion.div>
               )}
             </AnimatePresence>
+
+            {/* Action Buttons - Always visible when not answered */}
+            {!isAnswered && (
+              <div
+                className="space-y-3 sm:space-y-4 px-2 sm:px-0 mb-4"
+                role="group"
+                aria-label="AI-enhanced word learning choices"
+              >
+                <div className="grid grid-cols-2 gap-2 sm:gap-3">
+                  <Button
+                    onClick={() => handleWordAction("needs_practice")}
+                    disabled={isAnswered}
+                    className="w-full bg-gradient-to-r from-red-400 to-pink-500 hover:from-red-500 hover:to-pink-600 active:from-red-600 active:to-pink-700 text-white font-bold border-0 rounded-lg sm:rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 active:scale-95 py-2 sm:py-3 md:py-4 px-2 sm:px-3 min-h-[48px] sm:min-h-[56px] md:min-h-[64px] relative overflow-hidden disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none touch-manipulation"
+                    aria-label="Mark word as forgotten"
+                  >
+                    <div className="absolute inset-0 bg-white/20 rounded-xl opacity-0 hover:opacity-100 transition-opacity duration-300"></div>
+                    <div className="relative z-10 flex items-center justify-center">
+                      <span className="text-base sm:text-lg mr-1 sm:mr-2 animate-wiggle">
+                        😔
+                      </span>
+                      <div className="text-center">
+                        <div className="font-bold text-xs sm:text-sm md:text-base">
+                          I Forgot
+                        </div>
+                        <div className="text-xs opacity-90 mt-0.5 hidden sm:block">
+                          Need practice! 💪
+                        </div>
+                      </div>
+                    </div>
+                  </Button>
+
+                  <Button
+                    onClick={() => handleWordAction("remembered")}
+                    disabled={isAnswered}
+                    className="w-full bg-gradient-to-r from-green-400 to-emerald-500 hover:from-green-500 hover:to-emerald-600 active:from-green-600 active:to-emerald-700 text-white font-bold border-0 rounded-lg sm:rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 active:scale-95 py-2 sm:py-3 md:py-4 px-2 sm:px-3 min-h-[48px] sm:min-h-[56px] md:min-h-[64px] relative overflow-hidden disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none touch-manipulation"
+                    aria-label="Mark word as remembered"
+                  >
+                    <div className="absolute inset-0 bg-white/20 rounded-xl opacity-0 hover:opacity-100 transition-opacity duration-300"></div>
+                    <div className="relative z-10 flex items-center justify-center">
+                      <span className="text-base sm:text-lg mr-1 sm:mr-2 animate-bounce">
+                        😊
+                      </span>
+                      <div className="text-center">
+                        <div className="font-bold text-xs sm:text-sm md:text-base">
+                          I Remember
+                        </div>
+                        <div className="text-xs opacity-90 mt-0.5 hidden sm:block">
+                          Awesome! ⭐
+                        </div>
+                      </div>
+                    </div>
+                  </Button>
+                </div>
+              </div>
+            )}
 
             {/* Real-time AI encouragement */}
             {realTimeEncouragement && !showWordName && (
