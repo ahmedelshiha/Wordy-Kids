@@ -119,6 +119,8 @@ export const LearningDashboard: React.FC<LearningDashboardProps> = ({
   userProgress,
   onSessionComplete,
 }) => {
+  const [useAIEnhancement, setUseAIEnhancement] = React.useState(enableAIEnhancement);
+
   const completionPercentage = Math.round(
     (stats.wordsLearned / stats.totalWords) * 100,
   );
