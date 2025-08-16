@@ -2886,7 +2886,7 @@ export default function Index({ initialProfile }: IndexProps) {
                             <Card className="cursor-pointer hover:shadow-lg transition-all duration-300 hover:scale-105 border-2 border-emerald-400/30 animate-kid-float">
                               <CardContent className="p-3 md:p-4 text-center">
                                 <div className="text-3xl md:text-5xl mb-2 md:mb-3 animate-gentle-bounce">
-                                  🌱
+                                  ����
                                 </div>
                                 <h3 className="text-sm md:text-lg font-bold text-emerald-600 mb-1 md:mb-2">
                                   Word Garden
@@ -3181,46 +3181,12 @@ export default function Index({ initialProfile }: IndexProps) {
                           playerLevel={1}
                           rounds={10}
                         />
-                      ) : selectedQuizType?.startsWith("vowel-") ? (
-                        <VowelRescue
-                          questions={(() => {
-                            switch (selectedQuizType) {
-                              case "vowel-easy":
-                                return getSystematicEasyVowelQuestions(
-                                  10,
-                                  selectedCategory,
-                                  currentProfile,
-                                );
-                              case "vowel-challenge":
-                                return getSystematicMediumVowelQuestions(
-                                  8,
-                                  selectedCategory,
-                                  currentProfile,
-                                );
-                              case "vowel-timed":
-                                return getSystematicTimedVowelQuestions(
-                                  selectedCategory,
-                                  currentProfile,
-                                );
-                              default:
-                                return getSystematicEasyVowelQuestions(
-                                  10,
-                                  selectedCategory,
-                                  currentProfile,
-                                );
-                            }
-                          })()}
+                      ) : selectedQuizType === "unified-vowel" ? (
+                        <UnifiedVowelGame
                           onComplete={handleQuizComplete}
                           onExit={handleQuizExit}
-                          gameMode={
-                            selectedQuizType === "vowel-easy"
-                              ? "easy"
-                              : selectedQuizType === "vowel-challenge"
-                                ? "challenge"
-                                : selectedQuizType === "vowel-timed"
-                                  ? "timed"
-                                  : "easy"
-                          }
+                          selectedCategory={selectedCategory}
+                          currentProfile={currentProfile}
                         />
                       ) : (
                         <QuizGame
