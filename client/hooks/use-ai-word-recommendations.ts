@@ -581,12 +581,22 @@ export function useAIWordRecommendations(
     }));
   }, []);
 
-  const reset = useCallback(() => {
+  const reset = useCallback(async () => {
+    // Try to reinitialize the service
+    const service = aiWordRecommendationService;
+    let serviceReady = false;
+
+    try {
+      serviceReady = await service.retryInitialization();
+    } catch (error) {
+      console.warn('Service reinitialization failed during reset:', error);
+    }
+
     setState({
       currentRecommendation: null,
       words: [],
       confidence: 0,
-      reasoning: [],
+      reasoning: serviceReady ? [] : ["AI system running in compatibility mode"],
 
       isSessionActive: false,
       sessionProgress: {
