@@ -1375,7 +1375,7 @@ export default function Index({ initialProfile }: IndexProps) {
         achievementMessage = `Great job! You completed ${categoryDisplayName} with ${accuracy}% accuracy! Keep up the good work!\n\n🎓 Scholar Bonus: 100 points!`;
       } else if (accuracy >= 50) {
         achievementTitle = "Category Explorer! 🗺️🌟";
-        achievementIcon = "🗺️";
+        achievementIcon = "����️";
         achievementMessage = `Good effort! You finished ${categoryDisplayName} with ${accuracy}% accuracy! Practice makes perfect!\n\n🎁 Explorer Bonus: 75 points!`;
       } else {
         achievementTitle = "Category Challenger! 💪";
@@ -3232,37 +3232,9 @@ export default function Index({ initialProfile }: IndexProps) {
                           rounds={10}
                         />
                       ) : selectedQuizType?.startsWith("vowel-") ? (
-                        <VowelRescue
-                          questions={(() => {
-                            switch (selectedQuizType) {
-                              case "vowel-easy":
-                                return getSystematicEasyVowelQuestions(
-                                  10,
-                                  selectedCategory,
-                                  currentProfile,
-                                );
-                              case "vowel-challenge":
-                                return getSystematicMediumVowelQuestions(
-                                  8,
-                                  selectedCategory,
-                                  currentProfile,
-                                );
-                              case "vowel-timed":
-                                return getSystematicTimedVowelQuestions(
-                                  selectedCategory,
-                                  currentProfile,
-                                );
-                              default:
-                                return getSystematicEasyVowelQuestions(
-                                  10,
-                                  selectedCategory,
-                                  currentProfile,
-                                );
-                            }
-                          })()}
-                          onComplete={handleQuizComplete}
-                          onExit={handleQuizExit}
-                          gameMode={
+                        <EnhancedVowelQuiz
+                          category={selectedCategory}
+                          initialGameMode={
                             selectedQuizType === "vowel-easy"
                               ? "easy"
                               : selectedQuizType === "vowel-challenge"
@@ -3271,6 +3243,27 @@ export default function Index({ initialProfile }: IndexProps) {
                                   ? "timed"
                                   : "easy"
                           }
+                          initialDifficulty={
+                            selectedQuizType === "vowel-easy"
+                              ? "easy"
+                              : selectedQuizType === "vowel-challenge"
+                                ? "medium"
+                                : "mixed"
+                          }
+                          rounds={
+                            selectedQuizType === "vowel-easy"
+                              ? 10
+                              : selectedQuizType === "vowel-challenge"
+                                ? 8
+                                : 15
+                          }
+                          timeLimit={selectedQuizType === "vowel-timed" ? 60 : undefined}
+                          onComplete={(stats) => {
+                            // Convert enhanced stats to simple score format for compatibility
+                            handleQuizComplete(stats.correctAnswers, stats.totalQuestions);
+                          }}
+                          onExit={handleQuizExit}
+                          playerLevel={currentProfile?.level || 1}
                         />
                       ) : (
                         <QuizGame
