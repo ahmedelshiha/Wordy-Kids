@@ -24,6 +24,7 @@ import { WordAdventureDemo } from "./pages/WordAdventureDemo";
 import { WordAdventureTest } from "./pages/WordAdventureTest";
 import AIIntegrationDemo from "./pages/AIIntegrationDemo";
 import AIWordRecommendationDemo from "./pages/AIWordRecommendationDemo";
+import AISystemTest from "./pages/AISystemTest";
 import { NavigationGuard } from "./components/NavigationGuard";
 import SpeechDiagnostics from "./components/SpeechDiagnostics";
 
