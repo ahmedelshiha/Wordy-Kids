@@ -1181,10 +1181,10 @@ export function AIEnhancedInteractiveDashboardWordCard({
                   <div className="relative">
                     <Brain className={cn(
                       "w-8 h-8 sm:w-10 sm:h-10 drop-shadow-lg transition-all duration-300",
-                      aiState.isSessionActive ? "text-white animate-bounce" : "text-blue-600"
+                      aiState.isSessionActive ? "text-white" : "text-blue-600"
                     )} />
                     {aiState.isSessionActive && (
-                      <div className="absolute -top-1 -right-1 w-4 h-4 bg-green-400 rounded-full animate-ping shadow-lg" />
+                      <div className="absolute -top-1 -right-1 w-4 h-4 bg-green-400 rounded-full shadow-lg" />
                     )}
                   </div>
                   <div className="flex-1 min-w-0">
@@ -1424,7 +1424,7 @@ export function AIEnhancedInteractiveDashboardWordCard({
                   >
                     <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/20 to-white/0 transform -skew-x-12 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-600 ease-out" />
                     <Eye className="w-4 h-4 mr-1 group-hover:animate-bounce" />
-                    <span className="relative z-10 font-semibold">���️ Show</span>
+                    <span className="relative z-10 font-semibold">👁️ Show</span>
                   </Button>
                 </motion.div>
               )}
