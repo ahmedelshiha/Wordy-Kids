@@ -1192,9 +1192,19 @@ export function AIEnhancedInteractiveDashboardWordCard({
                       <span className="text-base sm:text-lg font-bold">
                         🤖 {aiState.isSessionActive ? "AI LEARNING ACTIVE!" : "AI Smart Selection"}
                       </span>
-                      {aiState.isSessionActive && (
-                        <div className="w-2 h-2 bg-green-300 rounded-full animate-ping" />
-                      )}
+                      <Button
+                        onClick={() => aiState.isSessionActive ? aiActions.endSession({ completed: false }) : aiActions.reset()}
+                        size="sm"
+                        variant={aiState.isSessionActive ? "secondary" : "default"}
+                        className={cn(
+                          "ml-2 px-3 py-1 text-xs font-semibold rounded-full transition-all duration-300",
+                          aiState.isSessionActive
+                            ? "bg-white/20 hover:bg-white/30 text-white border border-white/30"
+                            : "bg-green-500 hover:bg-green-600 text-white"
+                        )}
+                      >
+                        {aiState.isSessionActive ? "AI ON" : "Enable AI"}
+                      </Button>
                     </div>
                     <div className="flex items-center gap-3 text-xs sm:text-sm opacity-90">
                       <span className="font-medium">
