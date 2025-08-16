@@ -2918,6 +2918,19 @@ export default function Index({ initialProfile }: IndexProps) {
                             <p className="text-sm md:text-lg text-gray-600 mb-4 md:mb-6 px-4">
                               Test your vocabulary with super fun quizzes! 🌟
                             </p>
+
+                            {/* AI Quiz Enhancement Notice */}
+                            <div className="bg-gradient-to-r from-green-50 to-blue-50 border border-green-200 rounded-xl p-3 mb-4 mx-4">
+                              <div className="flex items-center justify-center gap-2">
+                                <Zap className="w-4 h-4 text-green-600" />
+                                <span className="text-sm font-semibold text-green-800">
+                                  🤖 AI-Powered Questions
+                                </span>
+                              </div>
+                              <p className="text-xs text-green-700 mt-1">
+                                Questions are personalized based on your learning progress!
+                              </p>
+                            </div>
                           </div>
 
                           {/* Kid-Friendly Quiz Cards - Mobile Optimized */}
