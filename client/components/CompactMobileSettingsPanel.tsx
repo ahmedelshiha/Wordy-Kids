@@ -60,6 +60,11 @@ export const CompactMobileSettingsPanel: React.FC<
   const [selectedVoiceType, setSelectedVoiceType] =
     useState<VoiceType>("woman");
   const [volume, setVolume] = useState([80]);
+
+  // AI Settings
+  const [aiEnhancementEnabled, setAiEnhancementEnabled] = useState(true);
+  const [aiAdaptiveDifficulty, setAiAdaptiveDifficulty] = useState(true);
+  const [aiPersonalizedHints, setAiPersonalizedHints] = useState(true);
   const [darkMode, setDarkMode] = useState(false);
   const [backgroundAnimations, setBackgroundAnimations] = useState(false);
   const [dailyGoal, setDailyGoal] = useState([10]);
