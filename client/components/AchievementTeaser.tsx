@@ -4,6 +4,7 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { Trophy, Star, Sparkles, Target, Zap } from "lucide-react";
 import { EnhancedAchievementTracker } from "@/lib/enhancedAchievementTracker";
+import { getRandomEmoji, SAFE_EMOJIS } from "@/lib/emojiUtils";
 
 interface AchievementTeaserProps {
   className?: string;
@@ -83,26 +84,9 @@ export function AchievementTeaser({ className }: AchievementTeaserProps) {
     return <IconComponent className="w-3 h-3 sm:w-4 sm:h-4" />;
   };
 
-  const getRandomEmoji = () => {
-    const emojis = [
-      "🌟",
-      "⭐",
-      "✨",
-      "🎯",
-      "🚀",
-      "💫",
-      "🌈",
-      "🎊",
-      "🦋",
-      "🌺",
-      "🎪",
-      "🦄",
-      "🎵",
-      "����",
-      "🎨",
-      "🏰",
-    ];
-    return emojis[Math.floor(Math.random() * emojis.length)];
+  const getRandomEmojiSafe = () => {
+    // Use the safe emoji utility instead of local array
+    return getRandomEmoji('learning');
   };
 
   // Touch handlers for mobile interactivity
