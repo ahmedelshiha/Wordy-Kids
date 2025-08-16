@@ -319,6 +319,16 @@ export function AchievementSystem({
             accuracy: Math.round(cat.accuracy),
             timeSpent: cat.timeSpent,
           }));
+
+          // If no categories found, provide a default empty state
+          if (categoryBreakdown.length === 0) {
+            categoryBreakdown = [{
+              category: "Getting Started",
+              wordsLearned: 0,
+              accuracy: 0,
+              timeSpent: 0,
+            }];
+          }
         }
 
         // Get progress data from GoalProgressTracker
