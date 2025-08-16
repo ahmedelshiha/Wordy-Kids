@@ -196,10 +196,9 @@ export function EnhancedAchievementPopup({
     [currentAchievement?.category],
   );
 
-  // Initialize sound and reward animation
+  // Initialize reward animation (removed automatic sound)
   useEffect(() => {
     if (achievements.length > 0 && !isClosing) {
-      audioService.playSuccessSound();
       const timer = setTimeout(() => setShowReward(true), 800);
       return () => clearTimeout(timer);
     }

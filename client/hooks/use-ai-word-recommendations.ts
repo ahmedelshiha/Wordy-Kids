@@ -298,10 +298,7 @@ export function useAIWordRecommendations(
         difficultyAdjustment: null,
       }));
 
-      // Play session start sound
-      if (config.enableMotivationalBoosts) {
-        audioService.playSuccessSound();
-      }
+      // Session start (removed automatic motivational sound)
     },
     [config.enableMotivationalBoosts],
   );
@@ -354,10 +351,7 @@ export function useAIWordRecommendations(
           });
         }
 
-        // Play completion sound
-        if (config.enableMotivationalBoosts && outcome.completed) {
-          audioService.playAchievementSound();
-        }
+        // Session completion (removed automatic completion sound)
 
         return sessionResult;
       } catch (error) {

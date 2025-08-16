@@ -289,13 +289,13 @@ export function AIEnhancedInteractiveDashboardWordCard({
       case "f":
       case "F":
         event.preventDefault();
-        handleWordAction("needs_practice");
+        handleWordAction("needs_practice", false); // No celebration sound for keyboard shortcuts
         break;
       case "2":
       case "r":
       case "R":
         event.preventDefault();
-        handleWordAction("remembered");
+        handleWordAction("remembered", false); // No celebration sound for keyboard shortcuts
         break;
       case "h":
       case "H":
@@ -438,6 +438,7 @@ export function AIEnhancedInteractiveDashboardWordCard({
 
   const handleWordAction = async (
     status: "remembered" | "needs_practice" | "skipped",
+    isExplicitUserAction: boolean = true,
   ) => {
     if (!currentWord || isAnswered) return;
 
@@ -503,10 +504,16 @@ export function AIEnhancedInteractiveDashboardWordCard({
     // Show celebration effect for successful interactions
     if (status === "remembered") {
       setCelebrationEffect(true);
-      enhancedAudioService.playSuccessSound();
+      // Only play celebration sound if user explicitly clicked "I know this!" button
+      if (isExplicitUserAction) {
+        enhancedAudioService.playSuccessSound();
+      }
       setTimeout(() => setCelebrationEffect(false), 2000);
     } else if (status === "needs_practice") {
-      enhancedAudioService.playEncouragementSound();
+      // Only play encouragement for explicit user actions, not auto-progression
+      if (isExplicitUserAction) {
+        enhancedAudioService.playEncouragementSound();
+      }
     }
 
     try {
@@ -966,24 +973,25 @@ export function AIEnhancedInteractiveDashboardWordCard({
       tabIndex={0}
       onKeyDown={handleKeyDown}
     >
-      {/* AI Insights Panel */}
+      {/* AI Insights Panel - Mobile Optimized */}
       {showAIInsights && (
         <Card className="bg-gradient-to-r from-blue-50 to-purple-50 border-blue-200">
-          <CardContent className="p-4">
-            <div className="flex items-center justify-between mb-3">
-              <h3 className="font-semibold flex items-center gap-2">
-                <Brain className="w-4 h-4 text-blue-600" />
-                AI Learning Insights
+          <CardContent className="p-2 sm:p-4">
+            <div className="flex items-center justify-between mb-2">
+              <h3 className="text-sm font-semibold flex items-center gap-1">
+                <Brain className="w-3 h-3 sm:w-4 sm:h-4 text-blue-600" />
+                🤖 AI Stats
               </h3>
               <Button
                 onClick={() => setShowAIInsights(false)}
                 variant="ghost"
                 size="sm"
+                className="p-1"
               >
                 ×
               </Button>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
+            <div className="grid grid-cols-3 gap-2 sm:gap-4 text-xs sm:text-sm">
               <div className="text-center">
                 <div className="text-lg font-bold text-blue-600">
                   {Math.round(confidenceLevel * 100)}%
@@ -1031,12 +1039,12 @@ export function AIEnhancedInteractiveDashboardWordCard({
               AI Session Complete!
             </h2>
 
-            {/* AI Enhancement Badge */}
-            <div className="bg-gradient-to-r from-blue-100 to-purple-100 rounded-lg p-2 mb-4">
-              <div className="flex items-center justify-center gap-2 text-sm">
-                <Brain className="w-4 h-4 text-blue-600" />
+            {/* AI Enhancement Badge - Mobile Optimized */}
+            <div className="bg-gradient-to-r from-blue-100 to-purple-100 rounded-lg p-1.5 sm:p-2 mb-2 sm:mb-4">
+              <div className="flex items-center justify-center gap-1 sm:gap-2 text-xs sm:text-sm">
+                <Brain className="w-3 h-3 sm:w-4 sm:h-4 text-blue-600" />
                 <span className="font-medium text-blue-800">
-                  AI Confidence: {Math.round(confidenceLevel * 100)}%
+                  🤖 {Math.round(confidenceLevel * 100)}%
                 </span>
               </div>
             </div>
@@ -1158,47 +1166,46 @@ export function AIEnhancedInteractiveDashboardWordCard({
             </div>
           )}
 
-          <CardContent className="p-3 sm:p-4 md:p-6 lg:p-8 relative z-10">
-            {/* AI Enhancement Header */}
-            <div className="flex items-center justify-between mb-4">
-              <div className="flex items-center gap-2">
-                <div className="bg-gradient-to-r from-blue-500 to-purple-500 p-2 rounded-full">
-                  <Brain className="w-4 h-4 text-white" />
+          <CardContent className="p-2 sm:p-4 md:p-6 lg:p-8 relative z-10">
+            {/* AI Enhancement Header - Mobile Optimized */}
+            <div className="flex items-center justify-between mb-2 sm:mb-4 gap-1">
+              <div className="flex items-center gap-1 sm:gap-2">
+                <div className="bg-gradient-to-r from-blue-500 to-purple-500 p-1 sm:p-1.5 rounded-full">
+                  <Brain className="w-3 h-3 text-white" />
                 </div>
-                <div>
-                  <div className="text-sm font-bold text-gray-800">
-                    AI Enhanced Learning
-                  </div>
-                  <div className="text-xs text-gray-600">
-                    Confidence: {Math.round(confidenceLevel * 100)}% | Progress:{" "}
-                    {currentWordIndex + 1}/{SESSION_SIZE}
-                  </div>
+                <div className="text-xs font-bold text-gray-800">
+                  🤖 {Math.round(confidenceLevel * 100)}% |{" "}
+                  {currentWordIndex + 1}/{SESSION_SIZE}
                 </div>
               </div>
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-1">
+                {difficultyAdjustment !== "maintain" && (
+                  <Badge variant="outline" className="text-xs px-1 py-0">
+                    {difficultyAdjustment === "increase"
+                      ? "⬆️"
+                      : difficultyAdjustment === "decrease"
+                        ? "⬇️"
+                        : ""}
+                  </Badge>
+                )}
                 <Button
                   onClick={() => setShowAIInsights(!showAIInsights)}
                   variant="ghost"
                   size="sm"
-                  className="text-blue-600 hover:text-blue-800"
+                  className="text-blue-600 hover:text-blue-800 p-1"
                 >
-                  <BarChart3 className="w-4 h-4" />
+                  <BarChart3 className="w-3 h-3" />
                 </Button>
-                {difficultyAdjustment !== "maintain" && (
-                  <Badge variant="outline" className="text-xs">
-                    AI suggests: {difficultyAdjustment} difficulty
-                  </Badge>
-                )}
               </div>
             </div>
 
-            {/* Achievement Teaser */}
+            {/* Achievement Teaser - Mobile Optimized */}
             <div aria-live="polite" aria-label="Motivational messages">
-              <AchievementTeaser className="mb-3" />
+              <AchievementTeaser className="mb-2 sm:mb-3" />
             </div>
 
             {/* Category and Progress Header */}
-            <div className="text-center mb-4 sm:mb-6 md:mb-8 mt-4 sm:mt-6 md:mt-8">
+            <div className="text-center mb-3 sm:mb-6 md:mb-8 mt-2 sm:mt-6 md:mt-8">
               <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-3 md:gap-4 mb-3 sm:mb-4">
                 <Badge
                   className={cn(
@@ -1227,15 +1234,15 @@ export function AIEnhancedInteractiveDashboardWordCard({
                 </Badge>
               </div>
 
-              {/* Progress Bar */}
+              {/* Progress Bar - Keep large for kids */}
               <div className="w-full bg-gray-200 rounded-full h-2 mb-2">
                 <div
                   className="bg-gradient-to-r from-blue-500 to-purple-500 h-2 rounded-full transition-all duration-300"
                   style={{ width: `${sessionProgress}%` }}
                 />
               </div>
-              <div className="text-xs text-gray-600">
-                Session Progress: {currentWordIndex + 1} of {SESSION_SIZE} words
+              <div className="text-xs sm:text-sm text-gray-600">
+                {currentWordIndex + 1} of {SESSION_SIZE} words
               </div>
             </div>
 
@@ -1279,8 +1286,8 @@ export function AIEnhancedInteractiveDashboardWordCard({
               </motion.div>
             </AnimatePresence>
 
-            {/* Game Instructions */}
-            <header className="text-center mb-3 sm:mb-4 md:mb-5" role="banner">
+            {/* Game Instructions - Mobile Optimized */}
+            <header className="text-center mb-2 sm:mb-4 md:mb-5" role="banner">
               <motion.h1
                 key={`prompt-${currentWordIndex}`}
                 initial={{ opacity: 0, y: -10, scale: 0.95 }}
@@ -1295,10 +1302,10 @@ export function AIEnhancedInteractiveDashboardWordCard({
                 initial={{ opacity: 0, y: 5 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.4, delay: 0.1 }}
-                className="text-xs sm:text-sm md:text-base text-gray-600 px-2"
+                className="text-xs sm:text-sm text-gray-600 px-2"
                 id="game-instructions"
               >
-                AI has selected this word specially for you!
+                🤖 AI picked this for you!
               </motion.p>
             </header>
 
@@ -1384,6 +1391,58 @@ export function AIEnhancedInteractiveDashboardWordCard({
                 )}
               </Button>
             </div>
+
+            {/* Primary Action Buttons - Always visible for quick decisions */}
+            {!showWordName && (
+              <div className="flex flex-col sm:flex-row justify-center gap-3 sm:gap-4 mb-4">
+                <motion.div
+                  whileHover={{ scale: 1.05, y: -2 }}
+                  whileTap={{ scale: 0.95, y: 0 }}
+                  transition={{
+                    type: "spring",
+                    stiffness: 400,
+                    damping: 17,
+                  }}
+                  className="flex-1 sm:flex-initial"
+                >
+                  <Button
+                    onClick={() => handleWordAction("remembered")}
+                    disabled={isAnswered}
+                    size="lg"
+                    className="w-full sm:w-auto bg-gradient-to-r from-green-500 via-emerald-500 to-green-600 hover:from-green-600 hover:via-emerald-600 hover:to-green-700 text-white font-bold py-3 px-6 rounded-2xl transition-all duration-300 transform hover:scale-105 active:scale-95 shadow-xl hover:shadow-2xl min-h-[60px] touch-manipulation group relative overflow-hidden border-2 border-green-300/50 hover:border-green-200"
+                    aria-label="I remember this word"
+                  >
+                    <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/20 to-white/0 transform -skew-x-12 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-600 ease-out" />
+                    <CheckCircle className="w-5 h-5 mr-2 group-hover:animate-bounce" />
+                    <span className="relative z-10">😊 I Remember</span>
+                  </Button>
+                </motion.div>
+
+                <motion.div
+                  whileHover={{ scale: 1.05, y: -2 }}
+                  whileTap={{ scale: 0.95, y: 0 }}
+                  transition={{
+                    type: "spring",
+                    stiffness: 400,
+                    damping: 17,
+                  }}
+                  className="flex-1 sm:flex-initial"
+                >
+                  <Button
+                    onClick={() => handleWordAction("needs_practice")}
+                    disabled={isAnswered}
+                    size="lg"
+                    variant="outline"
+                    className="w-full sm:w-auto bg-gradient-to-r from-orange-50 to-red-50 hover:from-orange-100 hover:to-red-100 text-orange-700 hover:text-red-700 font-bold py-3 px-6 rounded-2xl transition-all duration-300 transform hover:scale-105 active:scale-95 shadow-lg hover:shadow-xl min-h-[60px] touch-manipulation group relative overflow-hidden border-2 border-orange-300 hover:border-red-300"
+                    aria-label="I forgot this word"
+                  >
+                    <div className="absolute inset-0 bg-gradient-to-r from-orange-200/0 via-orange-200/30 to-orange-200/0 transform -skew-x-12 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-600 ease-out" />
+                    <XCircle className="w-5 h-5 mr-2 group-hover:animate-pulse text-orange-600" />
+                    <span className="relative z-10">🤔 I Forgot</span>
+                  </Button>
+                </motion.div>
+              </div>
+            )}
 
             {/* AI Hint Display */}
             <AnimatePresence>
