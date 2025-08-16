@@ -1414,87 +1414,79 @@ export function AIEnhancedInteractiveDashboardWordCard({
               )}
             </header>
 
-            {/* Action Buttons Row */}
-            <div
-              className="flex justify-center items-center gap-2 sm:gap-3 mb-3 sm:mb-4 px-2"
-              role="toolbar"
-              aria-label="AI-enhanced word learning controls"
-              aria-describedby="game-instructions"
-            >
-              {!showHint && !showWordName && (
-                <motion.div
-                  whileHover={{ scale: 1.05, y: -2 }}
-                  whileTap={{ scale: 0.95, y: 0 }}
-                  transition={{ type: "spring", stiffness: 400, damping: 17 }}
-                >
+            {/* Action Buttons Row - Mobile Optimized */}
+            <div className="flex justify-center items-center gap-2 mb-3 px-2" role="toolbar" aria-label="Word learning controls">
+              {/* Mobile: Compact Layout */}
+              <div className="md:hidden flex items-center gap-2">
+                {!showHint && !showWordName && (
                   <Button
-                    onClick={() =>
-                      handleActionWithFeedback(handleRequestHint, "light")
-                    }
+                    onClick={() => handleActionWithFeedback(handleRequestHint, "light")}
                     variant="outline"
                     size="sm"
-                    className="px-3 py-2 text-xs sm:text-sm rounded-xl transition-all duration-300 min-h-[44px] touch-manipulation group relative overflow-hidden bg-gradient-to-r from-yellow-50 to-orange-50 hover:from-yellow-100 hover:to-orange-100 border-2 border-yellow-200 hover:border-yellow-300 shadow-md hover:shadow-lg"
-                    aria-label="Get AI hint"
+                    className="px-2 py-1 text-xs rounded-lg bg-yellow-50 border-yellow-200 text-yellow-700 min-h-[36px]"
                   >
-                    <div className="absolute inset-0 bg-gradient-to-r from-yellow-200/0 via-yellow-200/50 to-yellow-200/0 transform -skew-x-12 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 ease-out" />
-                    <Lightbulb className="w-4 h-4 mr-1 group-hover:animate-pulse text-yellow-600" />
-                    <span className="relative z-10 font-semibold text-yellow-700">
-                      🤖 AI Hint {hintsUsed > 0 && `(${hintsUsed})`}
-                    </span>
+                    💡 Hint
                   </Button>
-                </motion.div>
-              )}
+                )}
 
-              {!showWordName && (
-                <motion.div
-                  whileHover={{ scale: 1.05, y: -2 }}
-                  whileTap={{ scale: 0.95, y: 0 }}
-                  transition={{ type: "spring", stiffness: 400, damping: 17 }}
-                >
+                {!showWordName && (
                   <Button
-                    onClick={() =>
-                      handleActionWithFeedback(
-                        () => setShowWordName(true),
-                        "medium",
-                      )
-                    }
+                    onClick={() => handleActionWithFeedback(() => setShowWordName(true), "medium")}
                     size="sm"
-                    className="bg-gradient-to-r from-educational-purple via-purple-500 to-purple-600 hover:from-purple-500 hover:via-purple-600 hover:to-purple-700 text-white px-3 py-2 text-xs sm:text-sm rounded-xl min-h-[44px] touch-manipulation group relative overflow-hidden shadow-lg hover:shadow-xl border-2 border-purple-300/50 hover:border-purple-200"
-                    aria-label="Show word answer"
+                    className="px-2 py-1 text-xs rounded-lg bg-purple-500 text-white min-h-[36px]"
                   >
-                    <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/20 to-white/0 transform -skew-x-12 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-600 ease-out" />
-                    <Eye className="w-4 h-4 mr-1 group-hover:animate-bounce" />
-                    <span className="relative z-10 font-semibold">👁️ Show</span>
+                    👁️ Show
                   </Button>
-                </motion.div>
-              )}
+                )}
 
-              <Button
-                onClick={playPronunciation}
-                disabled={isPlaying}
-                size="lg"
-                className={cn(
-                  "bg-gradient-to-br from-educational-blue via-blue-500 to-blue-600 hover:from-blue-500 hover:via-blue-600 hover:to-blue-700 text-white p-4 sm:p-5 md:p-6 rounded-2xl transition-all duration-300 transform hover:scale-110 active:scale-95 shadow-xl hover:shadow-2xl border-2 border-blue-300/50 hover:border-blue-200",
-                  "min-w-[60px] min-h-[60px] sm:min-w-[70px] sm:min-h-[70px] md:min-w-[80px] md:min-h-[80px]",
-                  "ring-4 ring-blue-200/30 hover:ring-blue-300/50",
-                  "backdrop-blur-sm",
-                  isPlaying &&
-                    "animate-pulse ring-yellow-400/60 shadow-yellow-400/30",
-                  "disabled:opacity-50 disabled:transform-none disabled:hover:scale-100",
-                )}
-                aria-label="🔊 Play pronunciation - AI-enhanced audio!"
-              >
-                <Volume2
+                <Button
+                  onClick={playPronunciation}
+                  disabled={isPlaying}
                   className={cn(
-                    "w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 lg:w-8 lg:h-8",
-                    "drop-shadow-lg",
-                    isPlaying && "animate-bounce text-yellow-100 scale-110",
+                    "bg-blue-500 hover:bg-blue-600 text-white p-3 rounded-full",
+                    "min-w-[48px] min-h-[48px]",
+                    isPlaying && "animate-pulse bg-yellow-500"
                   )}
-                />
-                {isPlaying && (
-                  <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-yellow-400/20 to-orange-400/20 animate-pulse" />
+                >
+                  <Volume2 className={cn("w-5 h-5", isPlaying && "animate-bounce")} />
+                </Button>
+              </div>
+
+              {/* Desktop: Full Layout */}
+              <div className="hidden md:flex items-center gap-3">
+                {!showHint && !showWordName && (
+                  <Button
+                    onClick={() => handleActionWithFeedback(handleRequestHint, "light")}
+                    variant="outline"
+                    className="px-4 py-2 text-sm rounded-xl bg-yellow-50 border-yellow-200 text-yellow-700 hover:bg-yellow-100"
+                  >
+                    <Lightbulb className="w-4 h-4 mr-2" />
+                    💡 Get Hint {hintsUsed > 0 && `(${hintsUsed})`}
+                  </Button>
                 )}
-              </Button>
+
+                {!showWordName && (
+                  <Button
+                    onClick={() => handleActionWithFeedback(() => setShowWordName(true), "medium")}
+                    className="px-4 py-2 text-sm rounded-xl bg-purple-500 hover:bg-purple-600 text-white"
+                  >
+                    <Eye className="w-4 h-4 mr-2" />
+                    👁️ Show Answer
+                  </Button>
+                )}
+
+                <Button
+                  onClick={playPronunciation}
+                  disabled={isPlaying}
+                  className={cn(
+                    "bg-blue-500 hover:bg-blue-600 text-white p-4 rounded-2xl",
+                    "min-w-[64px] min-h-[64px]",
+                    isPlaying && "animate-pulse bg-yellow-500"
+                  )}
+                >
+                  <Volume2 className={cn("w-6 h-6", isPlaying && "animate-bounce")} />
+                </Button>
+              </div>
             </div>
 
             {/* Primary Action Buttons - Always visible for quick decisions */}
