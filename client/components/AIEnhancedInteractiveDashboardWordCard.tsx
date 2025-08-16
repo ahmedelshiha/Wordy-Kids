@@ -1361,7 +1361,7 @@ export function AIEnhancedInteractiveDashboardWordCard({
               </Button>
             </div>
 
-            {/* AI Hint Display */}
+            {/* AI Hint Display - Mobile Optimized */}
             <AnimatePresence>
               {showHint && !showWordName && (
                 <motion.div
@@ -1373,27 +1373,27 @@ export function AIEnhancedInteractiveDashboardWordCard({
                     type: "spring",
                     damping: 20,
                   }}
-                  className="bg-gradient-to-br from-yellow-50 via-orange-50/50 to-amber-50 border border-yellow-200/60 rounded-2xl p-4 mb-4 text-center shadow-lg backdrop-blur-sm ring-1 ring-yellow-200/20 will-change-transform"
+                  className="bg-gradient-to-br from-yellow-50 to-amber-50 border border-yellow-200/60 rounded-lg sm:rounded-2xl p-2 sm:p-3 mb-2 sm:mb-4 text-center shadow-md will-change-transform"
                   role="region"
                   aria-label="AI-generated word hint"
                   aria-live="polite"
                 >
-                  <div className="flex items-center justify-center gap-2 mb-1">
-                    <Brain className="w-4 h-4 text-blue-600" />
-                    <Lightbulb className="w-4 h-4 text-yellow-600" />
-                    <h2 className="text-sm font-semibold text-yellow-800">
+                  <div className="flex items-center justify-center gap-1 sm:gap-2 mb-1">
+                    <Brain className="w-3 h-3 sm:w-4 sm:h-4 text-blue-600" />
+                    <Lightbulb className="w-3 h-3 sm:w-4 sm:h-4 text-yellow-600" />
+                    <h2 className="text-xs sm:text-sm font-semibold text-yellow-800">
                       🤖 AI Hint:
                     </h2>
                   </div>
-                  <p className="text-yellow-700 text-sm mb-2" id="hint-text">
+                  <p className="text-yellow-700 text-xs sm:text-sm mb-1 sm:mb-2" id="hint-text">
                     "{currentWord.definition}"
                   </p>
 
-                  {/* AI adaptive hints */}
+                  {/* AI adaptive hints - Compact for mobile */}
                   {adaptiveHints.length > 0 && (
-                    <div className="mt-3 p-2 bg-white/60 rounded-lg">
-                      <div className="text-xs font-medium text-blue-700 mb-1">
-                        💡 Personalized tip:
+                    <div className="mt-2 p-1.5 sm:p-2 bg-white/60 rounded">
+                      <div className="text-xs font-medium text-blue-700 mb-0.5 sm:mb-1">
+                        💡 AI Tip:
                       </div>
                       <p className="text-xs text-blue-600">
                         {adaptiveHints[adaptiveHints.length - 1]}
