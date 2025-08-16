@@ -2,12 +2,14 @@ import React from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import { AnimatedCounter } from "@/components/AnimatedCounter";
 import { PracticeWordsCard } from "@/components/PracticeWordsCard";
 import {
   InteractiveDashboardWordCard,
   SessionStats,
 } from "@/components/InteractiveDashboardWordCard";
+import { AIEnhancedInteractiveDashboardWordCard } from "@/components/AIEnhancedInteractiveDashboardWordCard";
 import { ChildWordStats } from "@shared/api";
 import {
   Trophy,
