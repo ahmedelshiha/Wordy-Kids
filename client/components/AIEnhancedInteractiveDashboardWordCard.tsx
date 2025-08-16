@@ -189,6 +189,7 @@ export function AIEnhancedInteractiveDashboardWordCard({
   const [imageError, setImageError] = useState(false);
   const [isTransitioning, setIsTransitioning] = useState(false);
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
 
   // Initialize AI recommendations when component mounts
   useEffect(() => {
@@ -966,53 +967,63 @@ export function AIEnhancedInteractiveDashboardWordCard({
       tabIndex={0}
       onKeyDown={handleKeyDown}
     >
-      {/* AI Insights Panel */}
+      {/* AI Insights Panel - Mobile Optimized */}
       {showAIInsights && (
-        <Card className="bg-gradient-to-r from-blue-50 to-purple-50 border-blue-200">
-          <CardContent className="p-4">
-            <div className="flex items-center justify-between mb-3">
-              <h3 className="font-semibold flex items-center gap-2">
-                <Brain className="w-4 h-4 text-blue-600" />
-                AI Learning Insights
+        <Card className="bg-gradient-to-r from-blue-50 to-purple-50 border-blue-200 mx-1 sm:mx-0">
+          <CardContent className="p-2 sm:p-4">
+            <div className="flex items-center justify-between mb-2 sm:mb-3">
+              <h3 className="font-semibold flex items-center gap-1 sm:gap-2 text-sm sm:text-base">
+                <Brain className="w-3 h-3 sm:w-4 sm:h-4 text-blue-600" />
+                <span className="hidden sm:inline">AI Learning Insights</span>
+                <span className="sm:hidden">🤖 Insights</span>
               </h3>
               <Button
                 onClick={() => setShowAIInsights(false)}
                 variant="ghost"
                 size="sm"
+                className="p-1 sm:p-2"
               >
                 ×
               </Button>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
+            <div className="grid grid-cols-3 gap-2 sm:gap-4 text-xs sm:text-sm">
               <div className="text-center">
-                <div className="text-lg font-bold text-blue-600">
+                <div className="text-sm sm:text-lg font-bold text-blue-600">
                   {Math.round(confidenceLevel * 100)}%
                 </div>
-                <div className="text-gray-600">AI Confidence</div>
+                <div className="text-gray-600 text-xs">AI Confidence</div>
               </div>
               <div className="text-center">
-                <div className="text-lg font-bold text-purple-600">
+                <div className="text-sm sm:text-lg font-bold text-purple-600">
                   {learningVelocity.toFixed(1)}
                 </div>
-                <div className="text-gray-600">Words/Min</div>
+                <div className="text-gray-600 text-xs">Words/Min</div>
               </div>
               <div className="text-center">
-                <div className="text-lg font-bold text-green-600">
+                <div className="text-sm sm:text-lg font-bold text-green-600">
                   {sessionStats.accuracy}%
                 </div>
-                <div className="text-gray-600">Accuracy</div>
+                <div className="text-gray-600 text-xs">Accuracy</div>
               </div>
             </div>
             {aiState.reasoning.length > 0 && (
-              <div className="mt-3 p-3 bg-white/60 rounded-lg">
+              <div className="mt-2 sm:mt-3 p-2 sm:p-3 bg-white/60 rounded-lg">
                 <div className="text-xs font-medium text-gray-700 mb-1">
-                  Why AI selected these words:
+                  <span className="hidden sm:inline">
+                    Why AI selected these words:
+                  </span>
+                  <span className="sm:hidden">🤖 Reasoning:</span>
                 </div>
-                <ul className="text-xs text-gray-600 space-y-1">
+                <ul className="text-xs text-gray-600 space-y-0.5 sm:space-y-1">
                   {aiState.reasoning.slice(-2).map((reason, index) => (
                     <li key={index} className="flex items-start gap-1">
                       <span className="text-blue-500">•</span>
-                      {reason}
+                      <span className="sm:hidden">
+                        {reason.length > 50
+                          ? reason.slice(0, 50) + "..."
+                          : reason}
+                      </span>
+                      <span className="hidden sm:inline">{reason}</span>
                     </li>
                   ))}
                 </ul>
@@ -1022,89 +1033,106 @@ export function AIEnhancedInteractiveDashboardWordCard({
         </Card>
       )}
 
-      {/* Session Completion Modal */}
+      {/* Session Completion Modal - Mobile Optimized */}
       {showSessionComplete && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-1 sm:p-4">
-          <div className="bg-white rounded-xl sm:rounded-3xl p-2 sm:p-8 max-w-xs sm:max-w-md w-full text-center shadow-2xl animate-in zoom-in-95 duration-300">
-            <div className="text-3xl sm:text-6xl mb-1 sm:mb-4">🤖🎉</div>
-            <h2 className="text-lg sm:text-3xl font-bold text-gray-800 mb-2 sm:mb-4">
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-2 sm:p-4">
+          <div className="bg-white rounded-lg sm:rounded-3xl p-3 sm:p-8 max-w-[90vw] sm:max-w-md w-full text-center shadow-2xl animate-in zoom-in-95 duration-300 max-h-[90vh] overflow-y-auto">
+            <div className="text-2xl sm:text-6xl mb-2 sm:mb-4">🤖���</div>
+            <h2 className="text-base sm:text-3xl font-bold text-gray-800 mb-2 sm:mb-4">
               AI Session Complete!
             </h2>
 
-            {/* AI Enhancement Badge */}
-            <div className="bg-gradient-to-r from-blue-100 to-purple-100 rounded-lg p-2 mb-4">
-              <div className="flex items-center justify-center gap-2 text-sm">
-                <Brain className="w-4 h-4 text-blue-600" />
+            {/* Compact AI Enhancement Badge */}
+            <div className="bg-gradient-to-r from-blue-100 to-purple-100 rounded-lg p-1.5 sm:p-2 mb-2 sm:mb-4">
+              <div className="flex items-center justify-center gap-1 sm:gap-2 text-xs sm:text-sm">
+                <Brain className="w-3 h-3 sm:w-4 sm:h-4 text-blue-600" />
                 <span className="font-medium text-blue-800">
-                  AI Confidence: {Math.round(confidenceLevel * 100)}%
+                  🤖 {Math.round(confidenceLevel * 100)}%
                 </span>
               </div>
             </div>
 
-            {/* Session Stats */}
-            <div className="bg-gradient-to-r from-blue-50 to-purple-50 rounded-lg sm:rounded-2xl p-2 sm:p-4 mb-2 sm:mb-6">
+            {/* Compact Session Stats */}
+            <div className="bg-gradient-to-r from-blue-50 to-purple-50 rounded-lg p-2 sm:p-4 mb-2 sm:mb-6">
               <div className="grid grid-cols-3 gap-1 sm:gap-4 text-center">
                 <div>
                   <div className="text-sm sm:text-2xl font-bold text-green-600">
                     {sessionStats.wordsRemembered}
                   </div>
-                  <div className="text-xs sm:text-sm text-gray-600">
-                    Mastered
+                  <div className="text-xs text-gray-600">
+                    <span className="hidden sm:inline">Mastered</span>
+                    <span className="sm:hidden">😊</span>
                   </div>
                 </div>
                 <div>
                   <div className="text-sm sm:text-2xl font-bold text-orange-600">
                     {sessionStats.wordsForgotten}
                   </div>
-                  <div className="text-xs sm:text-sm text-gray-600">
-                    To Practice
+                  <div className="text-xs text-gray-600">
+                    <span className="hidden sm:inline">To Practice</span>
+                    <span className="sm:hidden">💪</span>
                   </div>
                 </div>
                 <div>
                   <div className="text-sm sm:text-2xl font-bold text-purple-600">
                     {sessionStats.accuracy}%
                   </div>
-                  <div className="text-xs sm:text-sm text-gray-600">
-                    Accuracy
+                  <div className="text-xs text-gray-600">
+                    <span className="hidden sm:inline">Accuracy</span>
+                    <span className="sm:hidden">🎯</span>
                   </div>
                 </div>
               </div>
             </div>
 
-            {/* AI Achievements */}
+            {/* Compact AI Achievements */}
             {sessionAchievements.map((achievement, index) => (
               <div
                 key={achievement.id}
-                className="mb-2 sm:mb-4 p-2 sm:p-4 bg-gradient-to-r from-yellow-100 to-orange-100 rounded-lg sm:rounded-2xl border border-yellow-300"
+                className="mb-1.5 sm:mb-4 p-2 sm:p-4 bg-gradient-to-r from-yellow-100 to-orange-100 rounded-lg border border-yellow-300"
               >
-                <div className="text-xl sm:text-3xl mb-0.5 sm:mb-2">
+                <div className="text-lg sm:text-3xl mb-0.5 sm:mb-2">
                   {achievement.emoji}
                 </div>
                 <div className="font-bold text-xs sm:text-lg text-gray-800">
                   {achievement.title}
                 </div>
-                <div className="text-xs sm:text-sm text-gray-600 leading-tight">
-                  {achievement.description}
+                <div className="text-xs text-gray-600 leading-tight px-1">
+                  <span className="sm:hidden">
+                    {achievement.description.length > 60
+                      ? achievement.description.slice(0, 60) + "..."
+                      : achievement.description}
+                  </span>
+                  <span className="hidden sm:inline">
+                    {achievement.description}
+                  </span>
                 </div>
               </div>
             ))}
 
-            {/* Real-time encouragement */}
+            {/* Compact Real-time encouragement */}
             {realTimeEncouragement && (
-              <div className="mb-4 p-3 bg-gradient-to-r from-green-100 to-blue-100 rounded-lg border border-green-200">
-                <div className="text-sm font-medium text-green-800 flex items-center gap-2">
-                  <Sparkles className="w-4 h-4" />
-                  {realTimeEncouragement}
+              <div className="mb-2 sm:mb-4 p-2 sm:p-3 bg-gradient-to-r from-green-100 to-blue-100 rounded-lg border border-green-200">
+                <div className="text-xs sm:text-sm font-medium text-green-800 flex items-center gap-1 sm:gap-2">
+                  <Sparkles className="w-3 h-3 sm:w-4 sm:h-4" />
+                  <span className="sm:hidden">
+                    {realTimeEncouragement.length > 40
+                      ? realTimeEncouragement.slice(0, 40) + "..."
+                      : realTimeEncouragement}
+                  </span>
+                  <span className="hidden sm:inline">
+                    {realTimeEncouragement}
+                  </span>
                 </div>
               </div>
             )}
 
-            {/* Continue Button */}
+            {/* Compact Continue Button */}
             <button
               onClick={startNewSession}
-              className="w-full bg-gradient-to-r from-green-500 to-blue-500 text-white font-bold py-2 sm:py-4 px-3 sm:px-6 text-xs sm:text-base rounded-lg sm:rounded-2xl hover:from-green-600 hover:to-blue-600 transition-all duration-300 transform hover:scale-105 shadow-lg"
+              className="w-full bg-gradient-to-r from-green-500 to-blue-500 text-white font-bold py-2.5 sm:py-4 px-4 sm:px-6 text-sm sm:text-base rounded-lg sm:rounded-2xl hover:from-green-600 hover:to-blue-600 transition-all duration-300 transform active:scale-95 sm:hover:scale-105 shadow-lg touch-manipulation"
             >
-              🤖 Start New AI Session
+              🤖 New AI Session
             </button>
           </div>
         </div>
@@ -1134,10 +1162,10 @@ export function AIEnhancedInteractiveDashboardWordCard({
           className={cn(
             "w-full max-w-3xl mx-auto relative overflow-hidden",
             "bg-gradient-to-br from-white via-blue-50/30 to-purple-50/30",
-            "shadow-lg hover:shadow-xl border-0 rounded-2xl sm:rounded-3xl",
-            "backdrop-blur-sm ring-1 ring-black/5",
+            "shadow-md sm:shadow-lg hover:shadow-lg sm:hover:shadow-xl border-0 rounded-xl sm:rounded-3xl",
+            "ring-1 ring-black/5",
             celebrationEffect &&
-              "animate-pulse shadow-2xl border-yellow-400 border-4 bg-gradient-to-br from-yellow-50 to-orange-50",
+              "animate-pulse shadow-xl sm:shadow-2xl border-yellow-400 border-2 sm:border-4 bg-gradient-to-br from-yellow-50 to-orange-50",
           )}
         >
           {/* Celebration Sparkles */}
@@ -1158,35 +1186,38 @@ export function AIEnhancedInteractiveDashboardWordCard({
             </div>
           )}
 
-          <CardContent className="p-3 sm:p-4 md:p-6 lg:p-8 relative z-10">
-            {/* AI Enhancement Header */}
-            <div className="flex items-center justify-between mb-4">
-              <div className="flex items-center gap-2">
-                <div className="bg-gradient-to-r from-blue-500 to-purple-500 p-2 rounded-full">
-                  <Brain className="w-4 h-4 text-white" />
+          <CardContent className="p-2 sm:p-3 md:p-4 lg:p-6 relative z-10">
+            {/* Compact AI Enhancement Header - Mobile Optimized */}
+            <div className="flex items-center justify-between mb-2 sm:mb-3">
+              <div className="flex items-center gap-1 sm:gap-2">
+                <div className="bg-gradient-to-r from-blue-500 to-purple-500 p-1 sm:p-1.5 rounded-full">
+                  <Brain className="w-3 h-3 sm:w-4 sm:h-4 text-white" />
                 </div>
                 <div>
-                  <div className="text-sm font-bold text-gray-800">
-                    AI Enhanced Learning
+                  <div className="text-xs sm:text-sm font-bold text-gray-800">
+                    🤖 AI Learning
                   </div>
-                  <div className="text-xs text-gray-600">
-                    Confidence: {Math.round(confidenceLevel * 100)}% | Progress:{" "}
+                  <div className="text-xs text-gray-600 hidden sm:block">
+                    {Math.round(confidenceLevel * 100)}% |{" "}
                     {currentWordIndex + 1}/{SESSION_SIZE}
                   </div>
                 </div>
               </div>
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-1">
                 <Button
                   onClick={() => setShowAIInsights(!showAIInsights)}
                   variant="ghost"
                   size="sm"
-                  className="text-blue-600 hover:text-blue-800"
+                  className="text-blue-600 hover:text-blue-800 p-1 sm:p-2"
                 >
-                  <BarChart3 className="w-4 h-4" />
+                  <BarChart3 className="w-3 h-3 sm:w-4 sm:h-4" />
                 </Button>
                 {difficultyAdjustment !== "maintain" && (
-                  <Badge variant="outline" className="text-xs">
-                    AI suggests: {difficultyAdjustment} difficulty
+                  <Badge
+                    variant="outline"
+                    className="text-xs hidden sm:inline-flex"
+                  >
+                    {difficultyAdjustment}
                   </Badge>
                 )}
               </div>
@@ -1197,45 +1228,44 @@ export function AIEnhancedInteractiveDashboardWordCard({
               <AchievementTeaser className="mb-3" />
             </div>
 
-            {/* Category and Progress Header */}
-            <div className="text-center mb-4 sm:mb-6 md:mb-8 mt-4 sm:mt-6 md:mt-8">
-              <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-3 md:gap-4 mb-3 sm:mb-4">
+            {/* Compact Category and Progress Header - Mobile Optimized */}
+            <div className="text-center mb-2 sm:mb-4 mt-2 sm:mt-4">
+              <div className="flex flex-wrap items-center justify-center gap-1 sm:gap-2 mb-2">
                 <Badge
                   className={cn(
-                    "text-xs sm:text-sm px-2 sm:px-3 py-1",
+                    "text-xs px-1 sm:px-2 py-0.5 sm:py-1",
                     getDifficultyColor(currentWord.difficulty),
                   )}
                 >
-                  {currentWord.difficulty
-                    ? currentWord.difficulty.charAt(0).toUpperCase() +
-                      currentWord.difficulty.slice(1)
-                    : "Medium"}
+                  {currentWord.difficulty?.[0]?.toUpperCase() || "M"}
                 </Badge>
                 <Badge
                   className={cn(
-                    "text-xs sm:text-sm px-2 sm:px-3 py-1",
+                    "text-xs px-1 sm:px-2 py-0.5 sm:py-1",
                     getDifficultyColor(currentWord.difficulty),
                   )}
                 >
-                  {currentWord.category}
+                  {currentWord.category.length > 8
+                    ? currentWord.category.substring(0, 6) + "..."
+                    : currentWord.category}
                 </Badge>
                 <Badge
                   variant="outline"
-                  className="text-xs sm:text-sm px-2 sm:px-3 py-1 bg-purple-50 text-purple-700 border-purple-300"
+                  className="text-xs px-1 sm:px-2 py-0.5 sm:py-1 bg-purple-50 text-purple-700 border-purple-300"
                 >
-                  {sessionStats.accuracy}% Accuracy
+                  {sessionStats.accuracy}%
                 </Badge>
               </div>
 
-              {/* Progress Bar */}
-              <div className="w-full bg-gray-200 rounded-full h-2 mb-2">
+              {/* Compact Progress Bar */}
+              <div className="w-full bg-gray-200 rounded-full h-1 sm:h-2 mb-1">
                 <div
-                  className="bg-gradient-to-r from-blue-500 to-purple-500 h-2 rounded-full transition-all duration-300"
+                  className="bg-gradient-to-r from-blue-500 to-purple-500 h-1 sm:h-2 rounded-full transition-all duration-300"
                   style={{ width: `${sessionProgress}%` }}
                 />
               </div>
               <div className="text-xs text-gray-600">
-                Session Progress: {currentWordIndex + 1} of {SESSION_SIZE} words
+                {currentWordIndex + 1}/{SESSION_SIZE}
               </div>
             </div>
 
@@ -1252,7 +1282,7 @@ export function AIEnhancedInteractiveDashboardWordCard({
                   stiffness: 200,
                   damping: 20,
                 }}
-                className="mb-4 md:mb-6"
+                className="mb-2 sm:mb-4"
                 role="img"
                 aria-label={`Picture showing ${currentWord.emoji} ${currentWord.word}`}
               >
@@ -1279,14 +1309,14 @@ export function AIEnhancedInteractiveDashboardWordCard({
               </motion.div>
             </AnimatePresence>
 
-            {/* Game Instructions */}
-            <header className="text-center mb-3 sm:mb-4 md:mb-5" role="banner">
+            {/* Compact Game Instructions - Mobile Optimized */}
+            <header className="text-center mb-2 sm:mb-3" role="banner">
               <motion.h1
                 key={`prompt-${currentWordIndex}`}
                 initial={{ opacity: 0, y: -10, scale: 0.95 }}
                 animate={{ opacity: 1, y: 0, scale: 1 }}
                 transition={{ duration: 0.4, type: "spring", damping: 20 }}
-                className="text-base sm:text-lg md:text-xl lg:text-2xl font-bold text-gray-800 mb-1 sm:mb-2"
+                className="text-sm sm:text-base md:text-lg font-bold text-gray-800 mb-1"
               >
                 🤔 What is this?
               </motion.h1>
@@ -1295,97 +1325,75 @@ export function AIEnhancedInteractiveDashboardWordCard({
                 initial={{ opacity: 0, y: 5 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.4, delay: 0.1 }}
-                className="text-xs sm:text-sm md:text-base text-gray-600 px-2"
+                className="text-xs text-gray-600 px-2 hidden sm:block"
                 id="game-instructions"
               >
-                AI has selected this word specially for you!
+                🤖 AI-selected word
               </motion.p>
             </header>
 
-            {/* Action Buttons Row */}
+            {/* Compact Action Buttons Row - Mobile Optimized */}
             <div
-              className="flex justify-center items-center gap-2 sm:gap-3 mb-3 sm:mb-4 px-2"
+              className="flex justify-center items-center gap-1 sm:gap-2 mb-2 sm:mb-3 px-1"
               role="toolbar"
               aria-label="AI-enhanced word learning controls"
               aria-describedby="game-instructions"
             >
               {!showHint && !showWordName && (
-                <motion.div
-                  whileHover={{ scale: 1.05, y: -2 }}
-                  whileTap={{ scale: 0.95, y: 0 }}
-                  transition={{ type: "spring", stiffness: 400, damping: 17 }}
+                <Button
+                  onClick={() =>
+                    handleActionWithFeedback(handleRequestHint, "light")
+                  }
+                  variant="outline"
+                  size="sm"
+                  className="px-2 py-1 text-xs rounded-lg min-h-[36px] sm:min-h-[44px] touch-manipulation bg-yellow-50 hover:bg-yellow-100 border border-yellow-200 text-yellow-700"
+                  aria-label="Get AI hint"
                 >
-                  <Button
-                    onClick={() =>
-                      handleActionWithFeedback(handleRequestHint, "light")
-                    }
-                    variant="outline"
-                    size="sm"
-                    className="px-3 py-2 text-xs sm:text-sm rounded-xl transition-all duration-300 min-h-[44px] touch-manipulation group relative overflow-hidden bg-gradient-to-r from-yellow-50 to-orange-50 hover:from-yellow-100 hover:to-orange-100 border-2 border-yellow-200 hover:border-yellow-300 shadow-md hover:shadow-lg"
-                    aria-label="Get AI hint"
-                  >
-                    <div className="absolute inset-0 bg-gradient-to-r from-yellow-200/0 via-yellow-200/50 to-yellow-200/0 transform -skew-x-12 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 ease-out" />
-                    <Lightbulb className="w-4 h-4 mr-1 group-hover:animate-pulse text-yellow-600" />
-                    <span className="relative z-10 font-semibold text-yellow-700">
-                      🤖 AI Hint {hintsUsed > 0 && `(${hintsUsed})`}
-                    </span>
-                  </Button>
-                </motion.div>
+                  <Lightbulb className="w-3 h-3 sm:w-4 sm:h-4 mr-0.5 sm:mr-1" />
+                  <span className="font-medium">
+                    💡 {hintsUsed > 0 && `(${hintsUsed})`}
+                  </span>
+                </Button>
               )}
 
               {!showWordName && (
-                <motion.div
-                  whileHover={{ scale: 1.05, y: -2 }}
-                  whileTap={{ scale: 0.95, y: 0 }}
-                  transition={{ type: "spring", stiffness: 400, damping: 17 }}
+                <Button
+                  onClick={() =>
+                    handleActionWithFeedback(
+                      () => setShowWordName(true),
+                      "medium",
+                    )
+                  }
+                  size="sm"
+                  className="bg-purple-500 hover:bg-purple-600 text-white px-2 py-1 text-xs rounded-lg min-h-[36px] sm:min-h-[44px] touch-manipulation shadow-md"
+                  aria-label="Show word answer"
                 >
-                  <Button
-                    onClick={() =>
-                      handleActionWithFeedback(
-                        () => setShowWordName(true),
-                        "medium",
-                      )
-                    }
-                    size="sm"
-                    className="bg-gradient-to-r from-educational-purple via-purple-500 to-purple-600 hover:from-purple-500 hover:via-purple-600 hover:to-purple-700 text-white px-3 py-2 text-xs sm:text-sm rounded-xl min-h-[44px] touch-manipulation group relative overflow-hidden shadow-lg hover:shadow-xl border-2 border-purple-300/50 hover:border-purple-200"
-                    aria-label="Show word answer"
-                  >
-                    <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/20 to-white/0 transform -skew-x-12 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-600 ease-out" />
-                    <Eye className="w-4 h-4 mr-1 group-hover:animate-bounce" />
-                    <span className="relative z-10 font-semibold">👁️ Show</span>
-                  </Button>
-                </motion.div>
+                  <Eye className="w-3 h-3 sm:w-4 sm:h-4 mr-0.5 sm:mr-1" />
+                  <span className="font-medium">👁️</span>
+                </Button>
               )}
 
               <Button
                 onClick={playPronunciation}
                 disabled={isPlaying}
-                size="lg"
                 className={cn(
-                  "bg-gradient-to-br from-educational-blue via-blue-500 to-blue-600 hover:from-blue-500 hover:via-blue-600 hover:to-blue-700 text-white p-4 sm:p-5 md:p-6 rounded-2xl transition-all duration-300 transform hover:scale-110 active:scale-95 shadow-xl hover:shadow-2xl border-2 border-blue-300/50 hover:border-blue-200",
-                  "min-w-[60px] min-h-[60px] sm:min-w-[70px] sm:min-h-[70px] md:min-w-[80px] md:min-h-[80px]",
-                  "ring-4 ring-blue-200/30 hover:ring-blue-300/50",
-                  "backdrop-blur-sm",
-                  isPlaying &&
-                    "animate-pulse ring-yellow-400/60 shadow-yellow-400/30",
-                  "disabled:opacity-50 disabled:transform-none disabled:hover:scale-100",
+                  "bg-gradient-to-br from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white p-2 sm:p-3 rounded-xl transition-all duration-300 transform hover:scale-105 active:scale-95 shadow-lg",
+                  "min-w-[44px] min-h-[44px] sm:min-w-[56px] sm:min-h-[56px]",
+                  isPlaying && "animate-pulse",
+                  "disabled:opacity-50",
                 )}
-                aria-label="🔊 Play pronunciation - AI-enhanced audio!"
+                aria-label="🔊 Play pronunciation"
               >
                 <Volume2
                   className={cn(
-                    "w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 lg:w-8 lg:h-8",
-                    "drop-shadow-lg",
-                    isPlaying && "animate-bounce text-yellow-100 scale-110",
+                    "w-4 h-4 sm:w-5 sm:h-5",
+                    isPlaying && "animate-bounce text-yellow-100",
                   )}
                 />
-                {isPlaying && (
-                  <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-yellow-400/20 to-orange-400/20 animate-pulse" />
-                )}
               </Button>
             </div>
 
-            {/* AI Hint Display */}
+            {/* AI Hint Display - Mobile Optimized */}
             <AnimatePresence>
               {showHint && !showWordName && (
                 <motion.div
@@ -1397,27 +1405,30 @@ export function AIEnhancedInteractiveDashboardWordCard({
                     type: "spring",
                     damping: 20,
                   }}
-                  className="bg-gradient-to-br from-yellow-50 via-orange-50/50 to-amber-50 border border-yellow-200/60 rounded-2xl p-4 mb-4 text-center shadow-lg backdrop-blur-sm ring-1 ring-yellow-200/20 will-change-transform"
+                  className="bg-gradient-to-br from-yellow-50 to-amber-50 border border-yellow-200/60 rounded-lg sm:rounded-2xl p-2 sm:p-3 mb-2 sm:mb-4 text-center shadow-md will-change-transform"
                   role="region"
                   aria-label="AI-generated word hint"
                   aria-live="polite"
                 >
-                  <div className="flex items-center justify-center gap-2 mb-1">
-                    <Brain className="w-4 h-4 text-blue-600" />
-                    <Lightbulb className="w-4 h-4 text-yellow-600" />
-                    <h2 className="text-sm font-semibold text-yellow-800">
+                  <div className="flex items-center justify-center gap-1 sm:gap-2 mb-1">
+                    <Brain className="w-3 h-3 sm:w-4 sm:h-4 text-blue-600" />
+                    <Lightbulb className="w-3 h-3 sm:w-4 sm:h-4 text-yellow-600" />
+                    <h2 className="text-xs sm:text-sm font-semibold text-yellow-800">
                       🤖 AI Hint:
                     </h2>
                   </div>
-                  <p className="text-yellow-700 text-sm mb-2" id="hint-text">
+                  <p
+                    className="text-yellow-700 text-xs sm:text-sm mb-1 sm:mb-2"
+                    id="hint-text"
+                  >
                     "{currentWord.definition}"
                   </p>
 
-                  {/* AI adaptive hints */}
+                  {/* AI adaptive hints - Compact for mobile */}
                   {adaptiveHints.length > 0 && (
-                    <div className="mt-3 p-2 bg-white/60 rounded-lg">
-                      <div className="text-xs font-medium text-blue-700 mb-1">
-                        💡 Personalized tip:
+                    <div className="mt-2 p-1.5 sm:p-2 bg-white/60 rounded">
+                      <div className="text-xs font-medium text-blue-700 mb-0.5 sm:mb-1">
+                        💡 AI Tip:
                       </div>
                       <p className="text-xs text-blue-600">
                         {adaptiveHints[adaptiveHints.length - 1]}
@@ -1446,94 +1457,211 @@ export function AIEnhancedInteractiveDashboardWordCard({
                   aria-label="Word answer revealed by AI"
                   aria-live="polite"
                 >
-                  {/* Word Name with AI enhancement badge */}
-                  <div className="text-center bg-gradient-to-br from-blue-50 to-purple-50 rounded-2xl p-4 shadow-lg border border-blue-200/50">
-                    <div className="flex items-center justify-center gap-2 mb-2">
-                      <Brain className="w-4 h-4 text-blue-600" />
+                  {/* Word Name with AI enhancement badge - Mobile Optimized */}
+                  <div className="text-center bg-gradient-to-br from-blue-50 to-purple-50 rounded-lg sm:rounded-2xl p-3 sm:p-4 shadow-md sm:shadow-lg border border-blue-200/50">
+                    <div className="flex items-center justify-center gap-1 sm:gap-2 mb-1 sm:mb-2">
+                      <Brain className="w-3 h-3 sm:w-4 sm:h-4 text-blue-600" />
                       <span className="text-xs font-medium text-blue-700">
-                        AI Selected Word
+                        🤖 AI Word
                       </span>
                     </div>
-                    <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-800 mb-2">
+                    <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-800 mb-1 sm:mb-2">
                       {currentWord.word}
                     </h2>
-                    <p className="text-sm md:text-base text-gray-600 italic">
+                    <p className="text-xs sm:text-sm text-gray-600 italic px-1">
                       "{currentWord.definition}"
                     </p>
                     {currentWord.example && (
-                      <p className="text-xs md:text-sm text-gray-500 mt-2">
+                      <p className="text-xs text-gray-500 mt-1 sm:mt-2 px-1">
                         Example: {currentWord.example}
                       </p>
                     )}
-                  </div>
-
-                  {/* Action Buttons */}
-                  <div className="flex flex-col sm:flex-row justify-center gap-3 sm:gap-4">
-                    <motion.div
-                      whileHover={{ scale: 1.05, y: -2 }}
-                      whileTap={{ scale: 0.95, y: 0 }}
-                      transition={{
-                        type: "spring",
-                        stiffness: 400,
-                        damping: 17,
-                      }}
-                      className="flex-1 sm:flex-initial"
-                    >
-                      <Button
-                        onClick={() => handleWordAction("remembered")}
-                        disabled={isAnswered}
-                        size="lg"
-                        className="w-full sm:w-auto bg-gradient-to-r from-green-500 via-emerald-500 to-green-600 hover:from-green-600 hover:via-emerald-600 hover:to-green-700 text-white font-bold py-3 px-6 rounded-2xl transition-all duration-300 transform hover:scale-105 active:scale-95 shadow-xl hover:shadow-2xl min-h-[60px] touch-manipulation group relative overflow-hidden border-2 border-green-300/50 hover:border-green-200"
-                        aria-label="I know this word"
-                      >
-                        <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/20 to-white/0 transform -skew-x-12 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-600 ease-out" />
-                        <CheckCircle className="w-5 h-5 mr-2 group-hover:animate-bounce" />
-                        <span className="relative z-10">😊 I know this!</span>
-                      </Button>
-                    </motion.div>
-
-                    <motion.div
-                      whileHover={{ scale: 1.05, y: -2 }}
-                      whileTap={{ scale: 0.95, y: 0 }}
-                      transition={{
-                        type: "spring",
-                        stiffness: 400,
-                        damping: 17,
-                      }}
-                      className="flex-1 sm:flex-initial"
-                    >
-                      <Button
-                        onClick={() => handleWordAction("needs_practice")}
-                        disabled={isAnswered}
-                        size="lg"
-                        variant="outline"
-                        className="w-full sm:w-auto bg-gradient-to-r from-orange-50 to-red-50 hover:from-orange-100 hover:to-red-100 text-orange-700 hover:text-red-700 font-bold py-3 px-6 rounded-2xl transition-all duration-300 transform hover:scale-105 active:scale-95 shadow-lg hover:shadow-xl min-h-[60px] touch-manipulation group relative overflow-hidden border-2 border-orange-300 hover:border-red-300"
-                        aria-label="I need more practice"
-                      >
-                        <div className="absolute inset-0 bg-gradient-to-r from-orange-200/0 via-orange-200/30 to-orange-200/0 transform -skew-x-12 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-600 ease-out" />
-                        <XCircle className="w-5 h-5 mr-2 group-hover:animate-pulse text-orange-600" />
-                        <span className="relative z-10">🤔 Need practice</span>
-                      </Button>
-                    </motion.div>
                   </div>
                 </motion.div>
               )}
             </AnimatePresence>
 
-            {/* Real-time AI encouragement */}
+            {/* Action Buttons - Always visible when not answered */}
+            {!isAnswered && (
+              <div
+                className="space-y-3 sm:space-y-4 px-2 sm:px-0 mb-4"
+                role="group"
+                aria-label="AI-enhanced word learning choices"
+              >
+                <div className="grid grid-cols-2 gap-2 sm:gap-3">
+                  <Button
+                    onClick={() => handleWordAction("needs_practice")}
+                    disabled={isAnswered}
+                    className="w-full bg-gradient-to-r from-red-400 to-pink-500 hover:from-red-500 hover:to-pink-600 active:from-red-600 active:to-pink-700 text-white font-bold border-0 rounded-lg sm:rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 active:scale-95 py-2 sm:py-3 md:py-4 px-2 sm:px-3 min-h-[48px] sm:min-h-[56px] md:min-h-[64px] relative overflow-hidden disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none touch-manipulation"
+                    aria-label="Mark word as forgotten"
+                  >
+                    <div className="absolute inset-0 bg-white/20 rounded-xl opacity-0 hover:opacity-100 transition-opacity duration-300"></div>
+                    <div className="relative z-10 flex items-center justify-center">
+                      <span className="text-base sm:text-lg mr-1 sm:mr-2 animate-wiggle">
+                        😔
+                      </span>
+                      <div className="text-center">
+                        <div className="font-bold text-xs sm:text-sm md:text-base">
+                          I Forgot
+                        </div>
+                        <div className="text-xs opacity-90 mt-0.5 hidden sm:block">
+                          Need practice! 💪
+                        </div>
+                      </div>
+                    </div>
+                  </Button>
+
+                  <Button
+                    onClick={() => handleWordAction("remembered")}
+                    disabled={isAnswered}
+                    className="w-full bg-gradient-to-r from-green-400 to-emerald-500 hover:from-green-500 hover:to-emerald-600 active:from-green-600 active:to-emerald-700 text-white font-bold border-0 rounded-lg sm:rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 active:scale-95 py-2 sm:py-3 md:py-4 px-2 sm:px-3 min-h-[48px] sm:min-h-[56px] md:min-h-[64px] relative overflow-hidden disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none touch-manipulation"
+                    aria-label="Mark word as remembered"
+                  >
+                    <div className="absolute inset-0 bg-white/20 rounded-xl opacity-0 hover:opacity-100 transition-opacity duration-300"></div>
+                    <div className="relative z-10 flex items-center justify-center">
+                      <span className="text-base sm:text-lg mr-1 sm:mr-2 animate-bounce">
+                        😊
+                      </span>
+                      <div className="text-center">
+                        <div className="font-bold text-xs sm:text-sm md:text-base">
+                          I Remember
+                        </div>
+                        <div className="text-xs opacity-90 mt-0.5 hidden sm:block">
+                          Awesome! ⭐
+                        </div>
+                      </div>
+                    </div>
+                  </Button>
+                </div>
+              </div>
+            )}
+
+            {/* AI-Enhanced Session Progress - Mobile Optimized */}
+            {!isAnswered && (
+              <div className="mt-1 sm:mt-2 bg-gradient-to-br from-blue-50 to-purple-50 rounded-lg sm:rounded-xl p-2 sm:p-3 border border-blue-200/60 shadow-sm sm:shadow-md">
+                {/* Compact AI Enhancement Badge */}
+                <div className="flex items-center justify-center mb-1 sm:mb-2">
+                  <div className="bg-gradient-to-r from-blue-500 to-purple-500 p-0.5 sm:p-1 rounded-full mr-1 sm:mr-2">
+                    <Brain className="w-2 h-2 sm:w-3 sm:h-3 text-white" />
+                  </div>
+                  <span className="text-xs font-medium text-blue-700">
+                    🤖 AI Progress
+                  </span>
+                </div>
+
+                {/* Mobile-Optimized Progress Bar */}
+                <div className="flex items-center justify-between mb-1 sm:mb-2">
+                  <div className="text-xs font-bold text-gray-700">
+                    🚀 {sessionStats.wordsCompleted}/{SESSION_SIZE}
+                  </div>
+                  <div className="flex-1 mx-2 sm:mx-3">
+                    <div className="w-full bg-gray-200 rounded-full h-1.5 sm:h-2 shadow-inner relative overflow-hidden">
+                      <div
+                        className="bg-gradient-to-r from-blue-500 to-purple-500 h-1.5 sm:h-2 rounded-full transition-all duration-500 ease-out shadow-sm relative"
+                        style={{
+                          width: `${(sessionStats.wordsCompleted / SESSION_SIZE) * 100}%`,
+                        }}
+                      >
+                        {/* Simplified shimmer for mobile */}
+                        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent transform -skew-x-12 animate-pulse opacity-60"></div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="text-xs text-gray-600">
+                    {Math.round(
+                      (sessionStats.wordsCompleted / SESSION_SIZE) * 100,
+                    )}
+                    %
+                  </div>
+                </div>
+
+                <div className="flex items-center justify-center gap-1 sm:gap-2">
+                  {/* Compact Mobile Stats */}
+                  <div className="bg-green-100 rounded px-1.5 sm:px-2 py-0.5 sm:py-1 text-center">
+                    <div className="text-xs">
+                      😊 {sessionStats.wordsRemembered}
+                    </div>
+                  </div>
+                  <div className="bg-orange-100 rounded px-1.5 sm:px-2 py-0.5 sm:py-1 text-center">
+                    <div className="text-xs">
+                      💪 {sessionStats.wordsForgotten}
+                    </div>
+                  </div>
+                  <div className="bg-blue-100 rounded px-1.5 sm:px-2 py-0.5 sm:py-1 text-center">
+                    <div className="text-xs">
+                      🤖 {Math.round(confidenceLevel * 100)}%
+                    </div>
+                  </div>
+                </div>
+
+                {/* Compact AI encouraging message */}
+                <div className="mt-1 text-center">
+                  {sessionStats.wordsRemembered >= 15 ? (
+                    <div className="text-green-600 font-medium text-xs">
+                      🌟 AI: Superstar!
+                    </div>
+                  ) : sessionStats.wordsRemembered >= 10 ? (
+                    <div className="text-green-600 font-medium text-xs">
+                      🎯 AI: Awesome!
+                    </div>
+                  ) : sessionStats.wordsCompleted >= 10 ? (
+                    <div className="text-blue-600 font-medium text-xs">
+                      🔥 AI: Keep going!
+                    </div>
+                  ) : (
+                    <div className="text-purple-600 font-medium text-xs">
+                      🌟 AI: Great start!
+                    </div>
+                  )}
+                </div>
+              </div>
+            )}
+
+            {/* Real-time AI encouragement - Mobile Optimized */}
             {realTimeEncouragement && !showWordName && (
               <motion.div
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -10 }}
-                className="text-center p-3 bg-gradient-to-r from-green-100 to-blue-100 rounded-lg border border-green-200 mb-4"
+                className="text-center p-2 sm:p-3 bg-gradient-to-r from-green-100 to-blue-100 rounded-lg border border-green-200 mb-2 sm:mb-4"
               >
-                <div className="text-sm font-medium text-green-800 flex items-center justify-center gap-2">
-                  <Brain className="w-4 h-4" />
-                  {realTimeEncouragement}
+                <div className="text-xs sm:text-sm font-medium text-green-800 flex items-center justify-center gap-1 sm:gap-2">
+                  <Brain className="w-3 h-3 sm:w-4 sm:h-4" />
+                  <span className="hidden sm:inline">
+                    {realTimeEncouragement}
+                  </span>
+                  <span className="sm:hidden">
+                    🤖 {realTimeEncouragement.slice(0, 30)}...
+                  </span>
                 </div>
               </motion.div>
             )}
+            {/* Loading next word indicator - Mobile Optimized */}
+            <AnimatePresence>
+              {isAnswered && (
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.9 }}
+                  transition={{ duration: 0.3 }}
+                  className="text-center py-4 sm:py-6"
+                >
+                  <div className="animate-spin rounded-full h-6 w-6 sm:h-8 sm:w-8 border-b-2 border-educational-purple mx-auto mb-2 will-change-transform"></div>
+                  <motion.p
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.2 }}
+                    className="text-gray-600 flex items-center justify-center gap-1 sm:gap-2 text-xs sm:text-sm"
+                  >
+                    <Brain className="w-3 h-3 sm:w-4 sm:h-4 text-blue-500" />
+                    <span className="hidden sm:inline">
+                      AI is preparing next word...
+                    </span>
+                    <span className="sm:hidden">🤖 Next word...</span>
+                  </motion.p>
+                </motion.div>
+              )}
+            </AnimatePresence>
           </CardContent>
         </Card>
       </motion.div>
