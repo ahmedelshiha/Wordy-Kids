@@ -1009,14 +1009,20 @@ export function AIEnhancedInteractiveDashboardWordCard({
             {aiState.reasoning.length > 0 && (
               <div className="mt-2 sm:mt-3 p-2 sm:p-3 bg-white/60 rounded-lg">
                 <div className="text-xs font-medium text-gray-700 mb-1">
-                  <span className="hidden sm:inline">Why AI selected these words:</span>
+                  <span className="hidden sm:inline">
+                    Why AI selected these words:
+                  </span>
                   <span className="sm:hidden">🤖 Reasoning:</span>
                 </div>
                 <ul className="text-xs text-gray-600 space-y-0.5 sm:space-y-1">
                   {aiState.reasoning.slice(-2).map((reason, index) => (
                     <li key={index} className="flex items-start gap-1">
                       <span className="text-blue-500">•</span>
-                      <span className="sm:hidden">{reason.length > 50 ? reason.slice(0, 50) + '...' : reason}</span>
+                      <span className="sm:hidden">
+                        {reason.length > 50
+                          ? reason.slice(0, 50) + "..."
+                          : reason}
+                      </span>
                       <span className="hidden sm:inline">{reason}</span>
                     </li>
                   ))}
@@ -1094,7 +1100,7 @@ export function AIEnhancedInteractiveDashboardWordCard({
                 <div className="text-xs text-gray-600 leading-tight px-1">
                   <span className="sm:hidden">
                     {achievement.description.length > 60
-                      ? achievement.description.slice(0, 60) + '...'
+                      ? achievement.description.slice(0, 60) + "..."
                       : achievement.description}
                   </span>
                   <span className="hidden sm:inline">
@@ -1111,10 +1117,12 @@ export function AIEnhancedInteractiveDashboardWordCard({
                   <Sparkles className="w-3 h-3 sm:w-4 sm:h-4" />
                   <span className="sm:hidden">
                     {realTimeEncouragement.length > 40
-                      ? realTimeEncouragement.slice(0, 40) + '...'
+                      ? realTimeEncouragement.slice(0, 40) + "..."
                       : realTimeEncouragement}
                   </span>
-                  <span className="hidden sm:inline">{realTimeEncouragement}</span>
+                  <span className="hidden sm:inline">
+                    {realTimeEncouragement}
+                  </span>
                 </div>
               </div>
             )}
@@ -1190,7 +1198,8 @@ export function AIEnhancedInteractiveDashboardWordCard({
                     🤖 AI Learning
                   </div>
                   <div className="text-xs text-gray-600 hidden sm:block">
-                    {Math.round(confidenceLevel * 100)}% | {currentWordIndex + 1}/{SESSION_SIZE}
+                    {Math.round(confidenceLevel * 100)}% |{" "}
+                    {currentWordIndex + 1}/{SESSION_SIZE}
                   </div>
                 </div>
               </div>
@@ -1204,7 +1213,10 @@ export function AIEnhancedInteractiveDashboardWordCard({
                   <BarChart3 className="w-3 h-3 sm:w-4 sm:h-4" />
                 </Button>
                 {difficultyAdjustment !== "maintain" && (
-                  <Badge variant="outline" className="text-xs hidden sm:inline-flex">
+                  <Badge
+                    variant="outline"
+                    className="text-xs hidden sm:inline-flex"
+                  >
                     {difficultyAdjustment}
                   </Badge>
                 )}
@@ -1234,7 +1246,7 @@ export function AIEnhancedInteractiveDashboardWordCard({
                   )}
                 >
                   {currentWord.category.length > 8
-                    ? currentWord.category.substring(0, 6) + '...'
+                    ? currentWord.category.substring(0, 6) + "..."
                     : currentWord.category}
                 </Badge>
                 <Badge
@@ -1405,7 +1417,10 @@ export function AIEnhancedInteractiveDashboardWordCard({
                       🤖 AI Hint:
                     </h2>
                   </div>
-                  <p className="text-yellow-700 text-xs sm:text-sm mb-1 sm:mb-2" id="hint-text">
+                  <p
+                    className="text-yellow-700 text-xs sm:text-sm mb-1 sm:mb-2"
+                    id="hint-text"
+                  >
                     "{currentWord.definition}"
                   </p>
 
@@ -1462,7 +1477,6 @@ export function AIEnhancedInteractiveDashboardWordCard({
                       </p>
                     )}
                   </div>
-
                 </motion.div>
               )}
             </AnimatePresence>
@@ -1530,7 +1544,9 @@ export function AIEnhancedInteractiveDashboardWordCard({
                   <div className="bg-gradient-to-r from-blue-500 to-purple-500 p-0.5 sm:p-1 rounded-full mr-1 sm:mr-2">
                     <Brain className="w-2 h-2 sm:w-3 sm:h-3 text-white" />
                   </div>
-                  <span className="text-xs font-medium text-blue-700">🤖 AI Progress</span>
+                  <span className="text-xs font-medium text-blue-700">
+                    🤖 AI Progress
+                  </span>
                 </div>
 
                 {/* Mobile-Optimized Progress Bar */}
@@ -1552,7 +1568,10 @@ export function AIEnhancedInteractiveDashboardWordCard({
                     </div>
                   </div>
                   <div className="text-xs text-gray-600">
-                    {Math.round((sessionStats.wordsCompleted / SESSION_SIZE) * 100)}%
+                    {Math.round(
+                      (sessionStats.wordsCompleted / SESSION_SIZE) * 100,
+                    )}
+                    %
                   </div>
                 </div>
 
@@ -1608,8 +1627,12 @@ export function AIEnhancedInteractiveDashboardWordCard({
               >
                 <div className="text-xs sm:text-sm font-medium text-green-800 flex items-center justify-center gap-1 sm:gap-2">
                   <Brain className="w-3 h-3 sm:w-4 sm:h-4" />
-                  <span className="hidden sm:inline">{realTimeEncouragement}</span>
-                  <span className="sm:hidden">🤖 {realTimeEncouragement.slice(0, 30)}...</span>
+                  <span className="hidden sm:inline">
+                    {realTimeEncouragement}
+                  </span>
+                  <span className="sm:hidden">
+                    🤖 {realTimeEncouragement.slice(0, 30)}...
+                  </span>
                 </div>
               </motion.div>
             )}
@@ -1631,7 +1654,9 @@ export function AIEnhancedInteractiveDashboardWordCard({
                     className="text-gray-600 flex items-center justify-center gap-1 sm:gap-2 text-xs sm:text-sm"
                   >
                     <Brain className="w-3 h-3 sm:w-4 sm:h-4 text-blue-500" />
-                    <span className="hidden sm:inline">AI is preparing next word...</span>
+                    <span className="hidden sm:inline">
+                      AI is preparing next word...
+                    </span>
                     <span className="sm:hidden">🤖 Next word...</span>
                   </motion.p>
                 </motion.div>
