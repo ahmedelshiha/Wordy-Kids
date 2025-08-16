@@ -453,6 +453,19 @@ export function AchievementSystem({
           journeyProgress = AchievementTracker.getJourneyProgress();
         }
 
+        // Ensure we have valid data structures
+        achievements = achievements || [];
+        journeyProgress = journeyProgress || {
+          wordsLearned: 0,
+          streakDays: 0,
+          totalAccuracy: 85,
+          difficultyStats: {
+            easy: { completed: 0 },
+            medium: { completed: 0 },
+            hard: { completed: 0 }
+          }
+        };
+
         setRealAchievements(achievements);
 
         // Re-calculate stats with fresh data
