@@ -152,7 +152,7 @@ export function KidFriendlyVowelQuiz({
   // Setup Screen - Simplified for kids
   if (showSetup) {
     return (
-      <div className="min-h-screen bg-gradient-to-b from-blue-100 to-purple-100 p-4">
+      <div className="min-h-screen bg-gradient-to-b from-blue-100 to-purple-100 p-4 mobile-container safe-area-top safe-area-bottom">
         <div className="max-w-md mx-auto text-center">
           <Button
             onClick={onExit}
