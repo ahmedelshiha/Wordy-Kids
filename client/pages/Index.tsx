@@ -23,14 +23,9 @@ import { DynamicAuthButton } from "@/components/DynamicAuthButton";
 import { GameLikeLearning } from "@/components/GameLikeLearning";
 import { WordMatchingGame } from "@/components/WordMatchingGame";
 import { GameHub } from "@/components/games/GameHub";
-import { VowelRescue } from "@/components/games/VowelRescue";
+import { EnhancedVowelQuiz } from "@/components/games/EnhancedVowelQuiz";
 import ListenAndGuessGame from "@/components/games/ListenAndGuessGame";
 import WordGarden from "@/components/games/WordGarden";
-import {
-  getSystematicEasyVowelQuestions,
-  getSystematicMediumVowelQuestions,
-  getSystematicTimedVowelQuestions,
-} from "@/lib/vowelQuizGeneration";
 import { AchievementTracker } from "@/lib/achievementTracker";
 import { audioService } from "@/lib/audioService";
 import { enhancedAudioService } from "@/lib/enhancedAudioService";
@@ -3008,7 +3003,7 @@ export default function Index({ initialProfile }: IndexProps) {
                             <Card className="cursor-pointer hover:shadow-lg transition-all duration-300 hover:scale-105 border-2 border-educational-purple/30 animate-kid-float-delayed">
                               <CardContent className="p-3 md:p-4 text-center">
                                 <div className="text-3xl md:text-5xl mb-2 md:mb-3 animate-sparkle">
-                                  🎯
+                                  ��
                                 </div>
                                 <h3 className="text-sm md:text-lg font-bold text-educational-purple mb-1 md:mb-2">
                                   Vowel Challenge!
