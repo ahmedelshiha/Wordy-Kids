@@ -166,7 +166,6 @@ export function AdventureGames({
     );
   }
 
-
   return (
     <div className="space-y-6">
       {/* Adventure Games Header */}

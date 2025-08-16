@@ -7,7 +7,12 @@ import React, {
 } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { GameResult, WordItem } from "../../types/vowel-adventure";
-import { wordsDatabase, Word, getWordsByCategory, getRandomWords } from "../../data/wordsDatabase";
+import {
+  wordsDatabase,
+  Word,
+  getWordsByCategory,
+  getRandomWords,
+} from "../../data/wordsDatabase";
 import { Button } from "../ui/button";
 import { Volume2, VolumeX, Home, RotateCcw } from "lucide-react";
 import { cn } from "../../lib/utils";
@@ -44,13 +49,13 @@ const VOWELS = ["A", "E", "I", "O", "U"];
 const generateSmartDistractors = (
   correctVowel: string,
   word: string,
-  difficulty: "easy" | "medium" | "hard"
+  difficulty: "easy" | "medium" | "hard",
 ): string[] => {
   // Find all vowels present in the word
   const upperWord = word.toUpperCase();
-  const vowelsInWord = [...new Set(
-    upperWord.split('').filter(char => VOWELS.includes(char))
-  )];
+  const vowelsInWord = [
+    ...new Set(upperWord.split("").filter((char) => VOWELS.includes(char))),
+  ];
 
   // Ensure we have the correct vowel
   const distractors = [correctVowel];
@@ -212,7 +217,11 @@ export const BalloonRescueVowelAdventure: React.FC<Props> = ({
         word.slice(0, randomVowelIndex) +
         "_" +
         word.slice(randomVowelIndex + 1);
-      const distractors = generateSmartDistractors(missingVowel, word, difficulty);
+      const distractors = generateSmartDistractors(
+        missingVowel,
+        word,
+        difficulty,
+      );
 
       return {
         id: `q${index}`,

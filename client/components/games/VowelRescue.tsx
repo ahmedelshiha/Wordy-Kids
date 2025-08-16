@@ -31,20 +31,26 @@ import { Word, getWordsByCategory, getRandomWords } from "@/data/wordsDatabase";
 const ALL_VOWELS = ["A", "E", "I", "O", "U"];
 
 // Smart vowel options generation - only shows vowels present in the word
-const getSmartVowelOptions = (word: string, difficulty?: "easy" | "medium" | "hard"): string[] => {
+const getSmartVowelOptions = (
+  word: string,
+  difficulty?: "easy" | "medium" | "hard",
+): string[] => {
   // Find all vowels present in the word
   const upperWord = word.toUpperCase();
-  const vowelsInWord = [...new Set(
-    upperWord.split('').filter(char => ALL_VOWELS.includes(char))
-  )];
+  const vowelsInWord = [
+    ...new Set(upperWord.split("").filter((char) => ALL_VOWELS.includes(char))),
+  ];
 
   // Start with vowels actually in the word
   const options = [...vowelsInWord];
 
   // Add some distractors based on difficulty
   if (options.length < 5) {
-    const distractorCount = difficulty === "easy" ? 1 : difficulty === "medium" ? 2 : 3;
-    const remainingVowels = ALL_VOWELS.filter(vowel => !options.includes(vowel));
+    const distractorCount =
+      difficulty === "easy" ? 1 : difficulty === "medium" ? 2 : 3;
+    const remainingVowels = ALL_VOWELS.filter(
+      (vowel) => !options.includes(vowel),
+    );
 
     // Shuffle and add distractors
     const shuffledDistractors = remainingVowels.sort(() => Math.random() - 0.5);
@@ -54,7 +60,9 @@ const getSmartVowelOptions = (word: string, difficulty?: "easy" | "medium" | "ha
   // Shuffle the final options and ensure we have exactly 5
   const shuffled = options.sort(() => Math.random() - 0.5);
   while (shuffled.length < 5) {
-    const missingVowels = ALL_VOWELS.filter(vowel => !shuffled.includes(vowel));
+    const missingVowels = ALL_VOWELS.filter(
+      (vowel) => !shuffled.includes(vowel),
+    );
     if (missingVowels.length > 0) {
       shuffled.push(missingVowels[0]);
     } else {
@@ -119,7 +127,10 @@ export function VowelRescue({
   // Smart vowel options for the current question
   const currentVowelOptions = useMemo(() => {
     if (!currentQuestion) return ALL_VOWELS;
-    return getSmartVowelOptions(currentQuestion.word, currentQuestion.difficulty);
+    return getSmartVowelOptions(
+      currentQuestion.word,
+      currentQuestion.difficulty,
+    );
   }, [currentQuestion]);
 
   // Enhanced word generation using database words with sophisticated selection (same as Listen & Guess)

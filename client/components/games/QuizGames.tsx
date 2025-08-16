@@ -143,7 +143,8 @@ export function QuizGames({
     {
       id: "balloon-rescue",
       title: "Balloon Rescue!",
-      description: "Save balloons by finding missing vowels! Progressive difficulty with achievements.",
+      description:
+        "Save balloons by finding missing vowels! Progressive difficulty with achievements.",
       icon: "🎈",
       difficulty: "Progressive",
       questions: 10,
@@ -154,7 +155,8 @@ export function QuizGames({
     {
       id: "pronunciation",
       title: "Pronunciation Quiz",
-      description: "Master word pronunciation! Listen and choose the correctly pronounced word.",
+      description:
+        "Master word pronunciation! Listen and choose the correctly pronounced word.",
       icon: "🗣️",
       difficulty: "Medium",
       questions: 8,
@@ -165,7 +167,8 @@ export function QuizGames({
     {
       id: "example",
       title: "Example Context",
-      description: "Learn words in context! Choose the word that best fits the example sentence.",
+      description:
+        "Learn words in context! Choose the word that best fits the example sentence.",
       icon: "📝",
       difficulty: "Medium",
       questions: 12,
@@ -176,7 +179,8 @@ export function QuizGames({
     {
       id: "mixed-challenge",
       title: "Mixed Challenge",
-      description: "Ultimate test! Mix of definitions, spellings, and pronunciations.",
+      description:
+        "Ultimate test! Mix of definitions, spellings, and pronunciations.",
       icon: "🎭",
       difficulty: "Hard",
       questions: 15,
@@ -349,7 +353,12 @@ export function QuizGames({
           const mixedQuestions = [
             ...generateQuizQuestions(5, "hard", selectedCategory, "definition"),
             ...generateQuizQuestions(5, "hard", selectedCategory, "spelling"),
-            ...generateQuizQuestions(5, "hard", selectedCategory, "pronunciation"),
+            ...generateQuizQuestions(
+              5,
+              "hard",
+              selectedCategory,
+              "pronunciation",
+            ),
           ];
           return mixedQuestions.sort(() => Math.random() - 0.5); // Shuffle the mixed questions
         default:
