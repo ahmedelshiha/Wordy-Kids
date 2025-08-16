@@ -332,7 +332,7 @@ export const BalloonRescueVowelAdventure: React.FC<Props> = ({
 
     // Final achievement check
     try {
-      const finalAchievement = await enhancedAchievementTracker.updateProgress(sessionIdRef.current, {
+      const finalAchievement = await EnhancedAchievementTracker.updateProgress(sessionIdRef.current, {
         type: "session_complete",
         correct: true,
         difficulty: "mixed",
