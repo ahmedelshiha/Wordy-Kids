@@ -1167,35 +1167,115 @@ export function AIEnhancedInteractiveDashboardWordCard({
           )}
 
           <CardContent className="p-2 sm:p-4 md:p-6 lg:p-8 relative z-10">
-            {/* AI Enhancement Header - Mobile Optimized */}
-            <div className="flex items-center justify-between mb-2 sm:mb-4 gap-1">
-              <div className="flex items-center gap-1 sm:gap-2">
-                <div className="bg-gradient-to-r from-blue-500 to-purple-500 p-1 sm:p-1.5 rounded-full">
-                  <Brain className="w-3 h-3 text-white" />
+            {/* Unified AI Header - All Features Combined */}
+            <div
+              className={cn(
+                "bg-gradient-to-r p-3 sm:p-4 rounded-2xl mb-3 sm:mb-4 shadow-lg border-2 transition-all duration-500",
+                aiState.isSessionActive
+                  ? "from-blue-500 via-purple-500 to-blue-600 text-white border-blue-300 shadow-xl"
+                  : "from-blue-50 to-purple-50 text-gray-800 border-blue-200",
+              )}
+            >
+              <div className="flex items-center justify-between gap-3">
+                {/* Left Side - AI Status & Progress */}
+                <div className="flex items-center gap-3 flex-1">
+                  <div className="relative">
+                    <Brain
+                      className={cn(
+                        "w-8 h-8 sm:w-10 sm:h-10 drop-shadow-lg transition-all duration-300",
+                        aiState.isSessionActive
+                          ? "text-white"
+                          : "text-blue-600",
+                      )}
+                    />
+                    {aiState.isSessionActive && (
+                      <div className="absolute -top-1 -right-1 w-4 h-4 bg-green-400 rounded-full shadow-lg" />
+                    )}
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center gap-2 mb-1">
+                      <span className="text-base sm:text-lg font-bold">
+                        🤖{" "}
+                        {aiState.isSessionActive
+                          ? "AI LEARNING ACTIVE!"
+                          : "AI Smart Selection"}
+                      </span>
+                      <Button
+                        onClick={() =>
+                          aiState.isSessionActive
+                            ? aiActions.endSession({ completed: false })
+                            : aiActions.reset()
+                        }
+                        size="sm"
+                        variant={
+                          aiState.isSessionActive ? "secondary" : "default"
+                        }
+                        className={cn(
+                          "ml-2 px-3 py-1 text-xs font-semibold rounded-full transition-all duration-300",
+                          aiState.isSessionActive
+                            ? "bg-white/20 hover:bg-white/30 text-white border border-white/30"
+                            : "bg-green-500 hover:bg-green-600 text-white",
+                        )}
+                      >
+                        {aiState.isSessionActive ? "AI ON" : "Enable AI"}
+                      </Button>
+                    </div>
+                    <div className="flex items-center gap-3 text-xs sm:text-sm opacity-90">
+                      <span className="font-medium">
+                        {Math.round(confidenceLevel * 100)}% Confidence
+                      </span>
+                      <span>•</span>
+                      <span>
+                        Word {currentWordIndex + 1} of {SESSION_SIZE}
+                      </span>
+                      {aiState.isSessionActive && (
+                        <>
+                          <span>•</span>
+                          <span className="font-medium">Session Active</span>
+                        </>
+                      )}
+                    </div>
+                  </div>
                 </div>
-                <div className="text-xs font-bold text-gray-800">
-                  🤖 {Math.round(confidenceLevel * 100)}% |{" "}
-                  {currentWordIndex + 1}/{SESSION_SIZE}
+
+                {/* Right Side - Controls */}
+                <div className="flex items-center gap-2">
+                  {difficultyAdjustment !== "maintain" && (
+                    <Badge
+                      variant="outline"
+                      className={cn(
+                        "text-xs px-2 py-1",
+                        aiState.isSessionActive
+                          ? "bg-white/20 text-white border-white/30"
+                          : "bg-white border-blue-300",
+                      )}
+                    >
+                      {difficultyAdjustment === "increase"
+                        ? "⬆️"
+                        : difficultyAdjustment === "decrease"
+                          ? "⬇️"
+                          : ""}
+                    </Badge>
+                  )}
+                  <Button
+                    onClick={() => setShowAIInsights(!showAIInsights)}
+                    variant="ghost"
+                    size="lg"
+                    className={cn(
+                      "p-3 sm:p-4 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105",
+                      aiState.isSessionActive
+                        ? "bg-white/20 hover:bg-white/30 text-white border-2 border-white/30 hover:border-white/50"
+                        : "bg-gradient-to-r from-purple-100 to-blue-100 hover:from-purple-200 hover:to-blue-200 text-blue-600 hover:text-blue-800 border-2 border-purple-200/50 hover:border-purple-300/50",
+                      showAIInsights &&
+                        (aiState.isSessionActive
+                          ? "ring-2 ring-white/50"
+                          : "ring-2 ring-blue-300"),
+                    )}
+                    aria-label="View AI learning statistics"
+                  >
+                    <BarChart3 className="w-5 h-5 sm:w-6 sm:h-6 drop-shadow-sm" />
+                  </Button>
                 </div>
-              </div>
-              <div className="flex items-center gap-1">
-                {difficultyAdjustment !== "maintain" && (
-                  <Badge variant="outline" className="text-xs px-1 py-0">
-                    {difficultyAdjustment === "increase"
-                      ? "⬆️"
-                      : difficultyAdjustment === "decrease"
-                        ? "⬇️"
-                        : ""}
-                  </Badge>
-                )}
-                <Button
-                  onClick={() => setShowAIInsights(!showAIInsights)}
-                  variant="ghost"
-                  size="sm"
-                  className="text-blue-600 hover:text-blue-800 p-1"
-                >
-                  <BarChart3 className="w-3 h-3" />
-                </Button>
               </div>
             </div>
 
@@ -1234,15 +1314,36 @@ export function AIEnhancedInteractiveDashboardWordCard({
                 </Badge>
               </div>
 
-              {/* Progress Bar - Keep large for kids */}
-              <div className="w-full bg-gray-200 rounded-full h-2 mb-2">
+              {/* Progress Bar - Enhanced for AI mode */}
+              <div className="w-full bg-gray-200 rounded-full h-3 sm:h-4 mb-3 relative overflow-hidden">
                 <div
-                  className="bg-gradient-to-r from-blue-500 to-purple-500 h-2 rounded-full transition-all duration-300"
+                  className="bg-gradient-to-r from-blue-500 via-purple-500 to-blue-600 h-3 sm:h-4 rounded-full transition-all duration-500 ease-out relative"
                   style={{ width: `${sessionProgress}%` }}
-                />
+                >
+                  {/* AI Enhancement - animated progress indicator */}
+                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent animate-pulse rounded-full" />
+                  {/* Progress glow effect when AI is active */}
+                  {aiState.isSessionActive && (
+                    <div className="absolute inset-0 bg-gradient-to-r from-blue-400/50 to-purple-400/50 rounded-full blur-sm animate-pulse" />
+                  )}
+                </div>
+                {/* AI Session indicator */}
+                {aiState.isSessionActive && (
+                  <div className="absolute right-2 top-1/2 transform -translate-y-1/2">
+                    <Brain className="w-3 h-3 text-blue-600 animate-pulse" />
+                  </div>
+                )}
               </div>
-              <div className="text-xs sm:text-sm text-gray-600">
-                {currentWordIndex + 1} of {SESSION_SIZE} words
+              <div className="text-xs sm:text-sm text-gray-600 flex items-center justify-center gap-2">
+                <span>
+                  {currentWordIndex + 1} of {SESSION_SIZE} words
+                </span>
+                {aiState.isSessionActive && (
+                  <span className="bg-blue-100 text-blue-700 px-2 py-1 rounded-full text-xs font-medium flex items-center gap-1">
+                    <Brain className="w-3 h-3" />
+                    AI Active
+                  </span>
+                )}
               </div>
             </div>
 
@@ -1394,7 +1495,12 @@ export function AIEnhancedInteractiveDashboardWordCard({
 
             {/* Primary Action Buttons - Always visible for quick decisions */}
             {!showWordName && (
-              <div className="flex flex-col sm:flex-row justify-center gap-3 sm:gap-4 mb-4">
+              <div
+                className={cn(
+                  "flex justify-center gap-3 sm:gap-4 mb-4",
+                  aiState.isSessionActive ? "flex-row" : "flex-col sm:flex-row",
+                )}
+              >
                 <motion.div
                   whileHover={{ scale: 1.05, y: -2 }}
                   whileTap={{ scale: 0.95, y: 0 }}
@@ -1527,7 +1633,14 @@ export function AIEnhancedInteractiveDashboardWordCard({
                   </div>
 
                   {/* Action Buttons */}
-                  <div className="flex flex-col sm:flex-row justify-center gap-3 sm:gap-4">
+                  <div
+                    className={cn(
+                      "flex justify-center gap-3 sm:gap-4",
+                      aiState.isSessionActive
+                        ? "flex-row"
+                        : "flex-col sm:flex-row",
+                    )}
+                  >
                     <motion.div
                       whileHover={{ scale: 1.05, y: -2 }}
                       whileTap={{ scale: 0.95, y: 0 }}
