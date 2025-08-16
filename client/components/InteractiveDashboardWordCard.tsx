@@ -743,6 +743,7 @@ export function InteractiveDashboardWordCard({
             {/* Celebration background effect */}
             {feedbackType === "remembered" && (
               <motion.div
+                key={`feedback-bg-${currentWordIndex}`}
                 initial={{ scale: 0, opacity: 0.8 }}
                 animate={{ scale: 2, opacity: 0 }}
                 transition={{ duration: 1, ease: "easeOut" }}
@@ -1180,7 +1181,7 @@ export function InteractiveDashboardWordCard({
                     }
                     if (percentage >= 90) return "⭐";
                     if (percentage >= 75) return "🎯";
-                    if (percentage >= 50) return "💪";
+                    if (percentage >= 50) return "����";
                     return "🌟";
                   })()}
                 </span>
