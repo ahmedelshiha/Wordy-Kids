@@ -156,37 +156,71 @@ export function useAIWordRecommendations(
       try {
         setState((prev) => ({ ...prev, isLoading: true }));
 
-        // Configure service
-        const serviceConfig: Partial<AIServiceConfig> = {
-          enableRealTimeAdaptation: config.enableRealTimeAdaptation ?? true,
-          enablePredictiveAnalytics: config.enableAnalytics ?? true,
-          enableMotivationalBoosts: config.enableMotivationalBoosts ?? true,
-        };
-
-        // Get service instance with config
+        // Get service instance
         const service = aiWordRecommendationService;
 
-        // Set up real-time adaptation callback
-        adaptationCallbackRef.current = (recommendation: AIRecommendation) => {
-          setState((prev) => ({
-            ...prev,
-            currentRecommendation: recommendation,
-            reasoning: [...prev.reasoning, "Real-time adaptation applied"],
-            adaptiveHints: [...prev.adaptiveHints, ...recommendation.reasoning],
-          }));
-        };
+        // Check if service is ready
+        if (!service.isReady()) {
+          const initError = service.getInitializationError();
+          if (initError) {
+            console.log('AI service initialization failed, but continuing with fallback mode:', initError.message);
 
-        if (config.enableRealTimeAdaptation) {
-          service.onAdaptation(adaptationCallbackRef.current);
+            // Don't treat this as an error - the service can still work in fallback mode
+            setState((prev) => ({
+              ...prev,
+              hasInitialized: true,
+              isLoading: false,
+              error: null, // Don't set error - let it work in fallback mode
+              reasoning: ["AI system running in compatibility mode"],
+            }));
+
+            return;
+          }
+
+          // Try to retry initialization once
+          const retrySuccess = await service.retryInitialization();
+          if (!retrySuccess) {
+            console.log('AI service retry failed, continuing with fallback mode');
+
+            setState((prev) => ({
+              ...prev,
+              hasInitialized: true,
+              isLoading: false,
+              error: null, // Don't set error - let it work in fallback mode
+              reasoning: ["AI system running in basic mode"],
+            }));
+
+            return;
+          }
         }
 
-        // Load initial analytics
-        if (config.enableAnalytics) {
-          const analytics = service.getLearningAnalytics(config.userId);
-          setState((prev) => ({
-            ...prev,
-            learningAnalytics: analytics,
-          }));
+        // Set up real-time adaptation callback only if service is ready
+        if (service.isReady()) {
+          adaptationCallbackRef.current = (recommendation: AIRecommendation) => {
+            setState((prev) => ({
+              ...prev,
+              currentRecommendation: recommendation,
+              reasoning: [...prev.reasoning, "Real-time adaptation applied"],
+              adaptiveHints: [...prev.adaptiveHints, ...recommendation.reasoning],
+            }));
+          };
+
+          if (config.enableRealTimeAdaptation) {
+            service.onAdaptation(adaptationCallbackRef.current);
+          }
+
+          // Load initial analytics
+          if (config.enableAnalytics) {
+            try {
+              const analytics = service.getLearningAnalytics(config.userId);
+              setState((prev) => ({
+                ...prev,
+                learningAnalytics: analytics,
+              }));
+            } catch (analyticsError) {
+              console.warn('Failed to load analytics, continuing without them:', analyticsError);
+            }
+          }
         }
 
         setState((prev) => ({
@@ -196,13 +230,15 @@ export function useAIWordRecommendations(
           error: null,
         }));
       } catch (error) {
+        console.warn('AI service initialization encountered an issue:', error);
+
+        // Even if initialization fails, allow the app to continue in fallback mode
         setState((prev) => ({
           ...prev,
-          error:
-            error instanceof Error
-              ? error.message
-              : "Failed to initialize AI service",
+          hasInitialized: true,
           isLoading: false,
+          error: null, // Don't block the app - just use fallback mode
+          reasoning: ["AI system running in basic fallback mode"],
         }));
       }
     };
