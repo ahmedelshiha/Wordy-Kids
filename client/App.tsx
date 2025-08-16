@@ -24,6 +24,7 @@ import { WordAdventureDemo } from "./pages/WordAdventureDemo";
 import { WordAdventureTest } from "./pages/WordAdventureTest";
 import { NavigationGuard } from "./components/NavigationGuard";
 import SpeechDiagnostics from "./components/SpeechDiagnostics";
+import TestBalloonRescue from "./pages/TestBalloonRescue";
 
 const queryClient = new QueryClient();
 
