@@ -1315,8 +1315,8 @@ export function AIEnhancedInteractiveDashboardWordCard({
                     <span className="text-xs">
                       Word {currentWordIndex + 1}/{SESSION_SIZE} •{" "}
                     </span>
-                    <span className="text-xs opacity-60 scale-75">
-                      {Math.round(confidenceLevel * 100)}% 📈
+                    <span className="text-xs opacity-75 bg-white/20 px-2 py-0.5 rounded-full">
+                      {Math.round(confidenceLevel * 100)}% 📊
                     </span>
                   </div>
                 )}
