@@ -1186,23 +1186,28 @@ export function AIEnhancedInteractiveDashboardWordCard({
           )}
 
           <CardContent className="p-2 sm:p-4 md:p-6 lg:p-8 relative z-10">
-            {/* AI Enhancement Header - Mobile Optimized */}
-            <div className="flex items-center justify-between mb-2 sm:mb-4 gap-1">
-              <div className="flex items-center gap-1 sm:gap-2">
+            {/* AI Enhancement Header - Mobile & Kid Friendly */}
+            <div className="flex items-center justify-between mb-2 sm:mb-4 gap-2">
+              <div className="flex items-center gap-2 sm:gap-3">
                 <div className={cn(
-                  "bg-gradient-to-r from-blue-500 to-purple-500 p-1 sm:p-1.5 rounded-full relative",
-                  aiState.isSessionActive && "animate-pulse ring-2 ring-blue-300/50"
+                  "bg-gradient-to-r from-blue-500 to-purple-500 p-2 sm:p-3 rounded-2xl relative shadow-lg",
+                  aiState.isSessionActive && "animate-pulse ring-4 ring-blue-300/50 shadow-xl"
                 )}>
-                  <Brain className="w-3 h-3 text-white" />
+                  <Brain className="w-6 h-6 sm:w-8 sm:h-8 text-white drop-shadow-lg" />
                   {aiState.isSessionActive && (
-                    <div className="absolute -top-1 -right-1 w-2 h-2 bg-green-400 rounded-full animate-ping" />
+                    <div className="absolute -top-1 -right-1 w-3 h-3 sm:w-4 sm:h-4 bg-green-400 rounded-full animate-ping shadow-lg" />
                   )}
                 </div>
-                <div className={cn(
-                  "text-xs font-bold",
-                  aiState.isSessionActive ? "text-blue-700" : "text-gray-800"
-                )}>
-                  🤖 {aiState.isSessionActive ? "AI ENABLED" : "AI Ready"} | {Math.round(confidenceLevel * 100)}% | {currentWordIndex + 1}/{SESSION_SIZE}
+                <div className="flex flex-col">
+                  <div className={cn(
+                    "text-sm sm:text-base font-bold leading-tight",
+                    aiState.isSessionActive ? "text-blue-700" : "text-gray-800"
+                  )}>
+                    🤖 {aiState.isSessionActive ? "AI LEARNING!" : "AI Ready"}
+                  </div>
+                  <div className="text-xs text-gray-600">
+                    {Math.round(confidenceLevel * 100)}% Confidence • {currentWordIndex + 1}/{SESSION_SIZE}
+                  </div>
                 </div>
               </div>
               <div className="flex items-center gap-1">
