@@ -238,6 +238,19 @@ export function QuizGames({
       );
     }
 
+    // Handle Balloon Rescue game
+    if (activeQuiz === "balloon-rescue") {
+      return (
+        <BalloonRescueVowelAdventure
+          totalQuestions={10}
+          onFinish={(result) => {
+            onQuizComplete(result.correctAnswers, result.totalQuestions);
+          }}
+          onHome={handleQuizBack}
+        />
+      );
+    }
+
     // Handle regular quiz games
     const generateQuizQuestionsByType = (type: string) => {
       switch (type) {
