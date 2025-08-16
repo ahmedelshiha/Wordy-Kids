@@ -49,6 +49,8 @@ export const SimplifiedMobileLearningAnalytics: React.FC<
   SimplifiedMobileLearningAnalyticsProps
 > = ({ children: propChildren = [] }) => {
   const [activeTab, setActiveTab] = useState("progress");
+  const [realTimeData, setRealTimeData] = useState<SimplifiedAnalyticsData | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   // Get simplified analytics data
   const analyticsData = useMemo((): SimplifiedAnalyticsData => {
