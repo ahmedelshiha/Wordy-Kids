@@ -1422,22 +1422,22 @@ export function AIEnhancedInteractiveDashboardWordCard({
                   aria-label="Word answer revealed by AI"
                   aria-live="polite"
                 >
-                  {/* Word Name with AI enhancement badge */}
-                  <div className="text-center bg-gradient-to-br from-blue-50 to-purple-50 rounded-2xl p-4 shadow-lg border border-blue-200/50">
-                    <div className="flex items-center justify-center gap-2 mb-2">
-                      <Brain className="w-4 h-4 text-blue-600" />
+                  {/* Word Name with AI enhancement badge - Mobile Optimized */}
+                  <div className="text-center bg-gradient-to-br from-blue-50 to-purple-50 rounded-lg sm:rounded-2xl p-3 sm:p-4 shadow-md sm:shadow-lg border border-blue-200/50">
+                    <div className="flex items-center justify-center gap-1 sm:gap-2 mb-1 sm:mb-2">
+                      <Brain className="w-3 h-3 sm:w-4 sm:h-4 text-blue-600" />
                       <span className="text-xs font-medium text-blue-700">
-                        AI Selected Word
+                        🤖 AI Word
                       </span>
                     </div>
-                    <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-800 mb-2">
+                    <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-800 mb-1 sm:mb-2">
                       {currentWord.word}
                     </h2>
-                    <p className="text-sm md:text-base text-gray-600 italic">
+                    <p className="text-xs sm:text-sm text-gray-600 italic px-1">
                       "{currentWord.definition}"
                     </p>
                     {currentWord.example && (
-                      <p className="text-xs md:text-sm text-gray-500 mt-2">
+                      <p className="text-xs text-gray-500 mt-1 sm:mt-2 px-1">
                         Example: {currentWord.example}
                       </p>
                     )}
