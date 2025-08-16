@@ -5,6 +5,7 @@ import { Button } from '../ui/button';
 import { Card, CardContent } from '../ui/card';
 import { Volume2, VolumeX, Home, RotateCcw } from 'lucide-react';
 import { cn } from '../../lib/utils';
+import '../../styles/vowel-adventure.css';
 
 type Props = {
   words?: WordItem[];
