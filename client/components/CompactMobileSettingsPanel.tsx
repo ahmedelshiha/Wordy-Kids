@@ -22,6 +22,8 @@ import {
   Vibrate,
   ChevronDown,
   ChevronUp,
+  Brain,
+  Sparkles,
 } from "lucide-react";
 import {
   setSoundEnabled,
