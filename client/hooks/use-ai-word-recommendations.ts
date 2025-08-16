@@ -375,7 +375,10 @@ export function useAIWordRecommendations(
       reason?: string;
       userSatisfaction?: number;
     }) => {
-      if (!state.isSessionActive) return;
+      if (!state.isSessionActive) {
+        console.log("No active session to end");
+        return;
+      }
 
       try {
         const sessionResult = await aiWordRecommendationService.completeSession(
