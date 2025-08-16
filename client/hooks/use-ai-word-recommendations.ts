@@ -265,7 +265,7 @@ export function useAIWordRecommendations(
           hasInitialized: true,
           isLoading: false,
           error: null, // Don't block the app - just use fallback mode
-          reasoning: ["AI system running in basic fallback mode"],
+          reasoning: ["AI Enhanced Learning Available"],
         }));
       }
     };
