@@ -723,11 +723,86 @@ export function InteractiveDashboardWordCard({
       }
 
       return (
-        <div className="w-48 h-32 mx-auto flex items-center justify-center bg-gradient-to-br from-blue-100 to-purple-100 rounded-2xl shadow-lg">
-          <div className="text-8xl animate-gentle-float filter drop-shadow-lg">
-            {currentWord.emoji}
+        <motion.div
+          key={`emoji-${currentWordIndex}`}
+          initial={{ scale: 0.8, opacity: 0, rotateY: -15 }}
+          animate={{ scale: 1, opacity: 1, rotateY: 0 }}
+          exit={{ scale: 0.9, opacity: 0, rotateY: 15 }}
+          transition={{
+            duration: 0.6,
+            type: "spring",
+            stiffness: 200,
+            damping: 20
+          }}
+          whileHover={{
+            scale: 1.05,
+            rotateY: 5,
+            transition: { duration: 0.3 }
+          }}
+          whileTap={{ scale: 0.95 }}
+          className="w-48 h-32 mx-auto flex items-center justify-center bg-gradient-to-br from-blue-100 via-purple-100 to-pink-100 rounded-2xl shadow-lg hover:shadow-xl cursor-pointer group relative overflow-hidden"
+          onClick={playPronunciation}
+        >
+          {/* Animated background elements */}
+          <div className="absolute inset-0 bg-gradient-to-r from-blue-200/20 via-purple-200/20 to-pink-200/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+          <div className="absolute top-2 right-2 text-xs text-blue-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+            🔊
           </div>
-        </div>
+
+          {/* Main emoji with enhanced animation */}
+          <motion.div
+            animate={{
+              y: [0, -8, 0],
+              rotate: [0, 2, -2, 0],
+              scale: [1, 1.05, 1]
+            }}
+            transition={{
+              duration: 3,
+              repeat: Infinity,
+              ease: "easeInOut",
+              times: [0, 0.5, 1]
+            }}
+            whileHover={{
+              y: -5,
+              scale: 1.1,
+              transition: { duration: 0.2 }
+            }}
+            className="text-8xl filter drop-shadow-lg relative z-10"
+          >
+            {currentWord.emoji}
+
+            {/* Sparkle effects on hover */}
+            <AnimatePresence>
+              <motion.div
+                initial={{ opacity: 0, scale: 0 }}
+                animate={{ opacity: [0, 1, 0], scale: [0, 1, 0] }}
+                transition={{
+                  duration: 2,
+                  repeat: Infinity,
+                  repeatDelay: 3,
+                  ease: "easeInOut"
+                }}
+                className="absolute -top-2 -right-2 text-yellow-400 text-sm"
+              >
+                ✨
+              </motion.div>
+              <motion.div
+                initial={{ opacity: 0, scale: 0 }}
+                animate={{ opacity: [0, 1, 0], scale: [0, 1, 0] }}
+                transition={{
+                  duration: 2,
+                  repeat: Infinity,
+                  repeatDelay: 4,
+                  delay: 1,
+                  ease: "easeInOut"
+                }}
+                className="absolute -bottom-1 -left-1 text-blue-400 text-xs"
+              >
+                ⭐
+              </motion.div>
+            </AnimatePresence>
+          </motion.div>
+        </motion.div>
       );
     }
 
