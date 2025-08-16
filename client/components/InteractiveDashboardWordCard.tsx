@@ -1101,7 +1101,7 @@ export function InteractiveDashboardWordCard({
                 {(() => {
                   const prompts = [
                     "🤔 What is this?",
-                    "🎯 Can you guess?",
+                    "�� Can you guess?",
                     "🔍 What do you see?",
                     "✨ Name this object!",
                     "🧠 Think you know?",
@@ -1368,7 +1368,47 @@ export function InteractiveDashboardWordCard({
                   </Button>
                 </div>
 
-                {/* Skip button (smaller, less prominent) - HIDDEN */}
+                {/* Particle Effects Overlay */}
+            <AnimatePresence>
+              {particles.map((particle) => (
+                <motion.div
+                  key={particle.id}
+                  initial={{
+                    scale: 0,
+                    x: particle.x - window.innerWidth / 2,
+                    y: particle.y - window.innerHeight / 2,
+                    opacity: 1
+                  }}
+                  animate={{
+                    scale: [0, 1, 0.8, 0],
+                    x: particle.x - window.innerWidth / 2 + (Math.random() - 0.5) * 200,
+                    y: particle.y - window.innerHeight / 2 - Math.random() * 150 - 50,
+                    opacity: [1, 1, 0.7, 0],
+                    rotate: Math.random() * 360
+                  }}
+                  transition={{
+                    duration: 1,
+                    ease: "easeOut",
+                    times: [0, 0.2, 0.8, 1]
+                  }}
+                  className="fixed pointer-events-none z-50"
+                  style={{
+                    left: '50%',
+                    top: '50%',
+                  }}
+                >
+                  <div className={`text-2xl ${
+                    particle.type === 'success'
+                      ? 'filter drop-shadow-lg'
+                      : 'filter drop-shadow-md'
+                  }`}>
+                    {particle.type === 'success' ? '⭐' : '💪'}
+                  </div>
+                </motion.div>
+              ))}
+            </AnimatePresence>
+
+            {/* Skip button (smaller, less prominent) - HIDDEN */}
                 <div className="hidden text-center mt-1 mb-0">
                   <Button
                     onClick={() => handleWordAction("skipped")}
