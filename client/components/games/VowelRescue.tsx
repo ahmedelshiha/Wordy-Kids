@@ -116,6 +116,12 @@ export function VowelRescue({
   const [isRestarting, setIsRestarting] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
+  // Smart vowel options for the current question
+  const currentVowelOptions = useMemo(() => {
+    if (!currentQuestion) return ALL_VOWELS;
+    return getSmartVowelOptions(currentQuestion.word, currentQuestion.difficulty);
+  }, [currentQuestion]);
+
   // Enhanced word generation using database words with sophisticated selection (same as Listen & Guess)
   const generateDatabaseWords = useCallback(
     (
