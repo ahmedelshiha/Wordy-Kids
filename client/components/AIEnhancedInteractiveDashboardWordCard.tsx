@@ -1234,15 +1234,34 @@ export function AIEnhancedInteractiveDashboardWordCard({
                 </Badge>
               </div>
 
-              {/* Progress Bar - Keep large for kids */}
-              <div className="w-full bg-gray-200 rounded-full h-2 mb-2">
+              {/* Progress Bar - Enhanced for AI mode */}
+              <div className="w-full bg-gray-200 rounded-full h-3 sm:h-4 mb-3 relative overflow-hidden">
                 <div
-                  className="bg-gradient-to-r from-blue-500 to-purple-500 h-2 rounded-full transition-all duration-300"
+                  className="bg-gradient-to-r from-blue-500 via-purple-500 to-blue-600 h-3 sm:h-4 rounded-full transition-all duration-500 ease-out relative"
                   style={{ width: `${sessionProgress}%` }}
-                />
+                >
+                  {/* AI Enhancement - animated progress indicator */}
+                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent animate-pulse rounded-full" />
+                  {/* Progress glow effect when AI is active */}
+                  {aiState.isSessionActive && (
+                    <div className="absolute inset-0 bg-gradient-to-r from-blue-400/50 to-purple-400/50 rounded-full blur-sm animate-pulse" />
+                  )}
+                </div>
+                {/* AI Session indicator */}
+                {aiState.isSessionActive && (
+                  <div className="absolute right-2 top-1/2 transform -translate-y-1/2">
+                    <Brain className="w-3 h-3 text-blue-600 animate-pulse" />
+                  </div>
+                )}
               </div>
-              <div className="text-xs sm:text-sm text-gray-600">
-                {currentWordIndex + 1} of {SESSION_SIZE} words
+              <div className="text-xs sm:text-sm text-gray-600 flex items-center justify-center gap-2">
+                <span>{currentWordIndex + 1} of {SESSION_SIZE} words</span>
+                {aiState.isSessionActive && (
+                  <span className="bg-blue-100 text-blue-700 px-2 py-1 rounded-full text-xs font-medium flex items-center gap-1">
+                    <Brain className="w-3 h-3" />
+                    AI Active
+                  </span>
+                )}
               </div>
             </div>
 
