@@ -151,8 +151,7 @@ export default function AIIntegrationDemo() {
             <CardContent>
               <ChildFriendlyCategorySelector
                 selectedCategory={selectedCategory}
-                onCategoryChange={setSelectedCategory}
-                showWordCounts={true}
+                onSelectCategory={setSelectedCategory}
               />
             </CardContent>
           </Card>
