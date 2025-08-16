@@ -1389,27 +1389,29 @@ export function AIEnhancedInteractiveDashboardWordCard({
               </motion.div>
             </AnimatePresence>
 
-            {/* Game Instructions - Mobile Optimized */}
-            <header className="text-center mb-2 sm:mb-4 md:mb-5" role="banner">
+            {/* Game Instructions - Kid-Friendly */}
+            <header className="text-center mb-2 sm:mb-3 md:mb-4" role="banner">
               <motion.h1
                 key={`prompt-${currentWordIndex}`}
                 initial={{ opacity: 0, y: -10, scale: 0.95 }}
                 animate={{ opacity: 1, y: 0, scale: 1 }}
                 transition={{ duration: 0.4, type: "spring", damping: 20 }}
-                className="text-base sm:text-lg md:text-xl lg:text-2xl font-bold text-gray-800 mb-1 sm:mb-2"
+                className="text-lg sm:text-xl md:text-2xl font-bold text-gray-800 mb-1"
               >
-                🤔 What is this?
+                🔍 What do you see?
               </motion.h1>
-              <motion.p
-                key={`desc-${currentWordIndex}`}
-                initial={{ opacity: 0, y: 5 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.4, delay: 0.1 }}
-                className="text-xs sm:text-sm text-gray-600 px-2"
-                id="game-instructions"
-              >
-                🤖 AI picked this for you!
-              </motion.p>
+              {aiState.isSessionActive && (
+                <motion.p
+                  key={`desc-${currentWordIndex}`}
+                  initial={{ opacity: 0, y: 5 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.4, delay: 0.1 }}
+                  className="text-xs sm:text-sm text-blue-600 px-2 font-medium"
+                  id="game-instructions"
+                >
+                  🤖 Your AI friend chose this!
+                </motion.p>
+              )}
             </header>
 
             {/* Action Buttons Row */}
