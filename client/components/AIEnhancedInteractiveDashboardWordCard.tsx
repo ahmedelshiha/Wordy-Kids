@@ -1078,30 +1078,42 @@ export function AIEnhancedInteractiveDashboardWordCard({
               </div>
             </div>
 
-            {/* AI Achievements */}
+            {/* Compact AI Achievements */}
             {sessionAchievements.map((achievement, index) => (
               <div
                 key={achievement.id}
-                className="mb-2 sm:mb-4 p-2 sm:p-4 bg-gradient-to-r from-yellow-100 to-orange-100 rounded-lg sm:rounded-2xl border border-yellow-300"
+                className="mb-1.5 sm:mb-4 p-2 sm:p-4 bg-gradient-to-r from-yellow-100 to-orange-100 rounded-lg border border-yellow-300"
               >
-                <div className="text-xl sm:text-3xl mb-0.5 sm:mb-2">
+                <div className="text-lg sm:text-3xl mb-0.5 sm:mb-2">
                   {achievement.emoji}
                 </div>
                 <div className="font-bold text-xs sm:text-lg text-gray-800">
                   {achievement.title}
                 </div>
-                <div className="text-xs sm:text-sm text-gray-600 leading-tight">
-                  {achievement.description}
+                <div className="text-xs text-gray-600 leading-tight px-1">
+                  <span className="sm:hidden">
+                    {achievement.description.length > 60
+                      ? achievement.description.slice(0, 60) + '...'
+                      : achievement.description}
+                  </span>
+                  <span className="hidden sm:inline">
+                    {achievement.description}
+                  </span>
                 </div>
               </div>
             ))}
 
-            {/* Real-time encouragement */}
+            {/* Compact Real-time encouragement */}
             {realTimeEncouragement && (
-              <div className="mb-4 p-3 bg-gradient-to-r from-green-100 to-blue-100 rounded-lg border border-green-200">
-                <div className="text-sm font-medium text-green-800 flex items-center gap-2">
-                  <Sparkles className="w-4 h-4" />
-                  {realTimeEncouragement}
+              <div className="mb-2 sm:mb-4 p-2 sm:p-3 bg-gradient-to-r from-green-100 to-blue-100 rounded-lg border border-green-200">
+                <div className="text-xs sm:text-sm font-medium text-green-800 flex items-center gap-1 sm:gap-2">
+                  <Sparkles className="w-3 h-3 sm:w-4 sm:h-4" />
+                  <span className="sm:hidden">
+                    {realTimeEncouragement.length > 40
+                      ? realTimeEncouragement.slice(0, 40) + '...'
+                      : realTimeEncouragement}
+                  </span>
+                  <span className="hidden sm:inline">{realTimeEncouragement}</span>
                 </div>
               </div>
             )}
