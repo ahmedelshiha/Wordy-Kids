@@ -1421,62 +1421,146 @@ export function InteractiveDashboardWordCard({
             </AnimatePresence>
 
             {/* Word Name and Details */}
-            {showWordName && (
-              <div
-                className="space-y-3 md:space-y-4 mb-6 md:mb-8"
-                role="region"
-                aria-label="Word answer revealed"
-                aria-live="polite"
-              >
-                {/* Word Name */}
-                <div className="text-center bg-gradient-to-br from-green-50 via-emerald-50/30 to-blue-50 p-4 md:p-6 rounded-2xl border border-green-200/60 shadow-lg backdrop-blur-sm ring-1 ring-green-100/50">
-                  <div className="flex items-center justify-center gap-2 md:gap-3 mb-2 md:mb-3">
-                    <div className="text-2xl md:text-3xl" aria-hidden="true">
-                      {currentWord.emoji}
+            <AnimatePresence>
+              {showWordName && (
+                <motion.div
+                  initial={{ opacity: 0, y: 20, scale: 0.95 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  exit={{ opacity: 0, y: -10, scale: 1.05 }}
+                  transition={{
+                    duration: 0.6,
+                    type: "spring",
+                    stiffness: 200,
+                    damping: 20
+                  }}
+                  className="space-y-3 md:space-y-4 mb-6 md:mb-8"
+                  role="region"
+                  aria-label="Word answer revealed"
+                  aria-live="polite"
+                >
+                  {/* Word Name */}
+                  <motion.div
+                    initial={{ scale: 0.9, opacity: 0 }}
+                    animate={{ scale: 1, opacity: 1 }}
+                    transition={{ delay: 0.2, duration: 0.5 }}
+                    className="text-center bg-gradient-to-br from-green-50 via-emerald-50/30 to-blue-50 p-4 md:p-6 rounded-2xl border border-green-200/60 shadow-lg backdrop-blur-sm ring-1 ring-green-100/50 relative overflow-hidden"
+                  >
+                    {/* Success celebration background */}
+                    <motion.div
+                      initial={{ scale: 0, opacity: 0.8 }}
+                      animate={{ scale: 3, opacity: 0 }}
+                      transition={{ duration: 1.5, ease: "easeOut" }}
+                      className="absolute inset-0 bg-gradient-to-r from-green-200/30 to-emerald-200/30 rounded-2xl"
+                    />
+
+                    <div className="flex items-center justify-center gap-2 md:gap-3 mb-2 md:mb-3 relative z-10">
+                      <motion.div
+                        initial={{ scale: 0, rotate: -180 }}
+                        animate={{ scale: 1, rotate: 0 }}
+                        transition={{ delay: 0.3, duration: 0.5, type: "spring" }}
+                        className="text-2xl md:text-3xl"
+                        aria-hidden="true"
+                      >
+                        {currentWord.emoji}
+                      </motion.div>
+
+                      <motion.h2
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.4, duration: 0.5 }}
+                        className="text-base md:text-lg lg:text-xl font-bold text-gray-800 tracking-wide"
+                        id="word-answer"
+                      >
+                        {currentWord.word.toUpperCase()}
+                      </motion.h2>
+
+                      <motion.div
+                        initial={{ scale: 0, rotate: 180 }}
+                        animate={{ scale: 1, rotate: 0 }}
+                        transition={{ delay: 0.5, duration: 0.5, type: "spring" }}
+                        className="text-2xl md:text-3xl"
+                        aria-hidden="true"
+                      >
+                        {currentWord.emoji}
+                      </motion.div>
                     </div>
-                    <h2
-                      className="text-base md:text-lg lg:text-xl font-bold text-gray-800 tracking-wide"
-                      id="word-answer"
+
+                    {/* Pronunciation */}
+                    {currentWord.pronunciation && (
+                      <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{ delay: 0.6, duration: 0.4 }}
+                        className="flex items-center justify-center gap-2"
+                      >
+                        <span className="text-lg text-gray-600 font-mono">
+                          /{currentWord.pronunciation}/
+                        </span>
+                      </motion.div>
+                    )}
+
+                    {/* Floating success elements */}
+                    <motion.div
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{
+                        opacity: [0, 1, 0],
+                        y: [20, -10, -30],
+                        x: [0, 10, -10, 0]
+                      }}
+                      transition={{
+                        duration: 2,
+                        repeat: Infinity,
+                        repeatDelay: 3,
+                        ease: "easeInOut"
+                      }}
+                      className="absolute top-2 right-4 text-yellow-400 text-sm"
                     >
-                      {currentWord.word.toUpperCase()}
-                    </h2>
-                    <div className="text-2xl md:text-3xl" aria-hidden="true">
-                      {currentWord.emoji}
+                      ⭐
+                    </motion.div>
+
+                    <motion.div
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{
+                        opacity: [0, 1, 0],
+                        y: [20, -15, -35],
+                        x: [0, -15, 10, 0]
+                      }}
+                      transition={{
+                        duration: 2.5,
+                        repeat: Infinity,
+                        repeatDelay: 4,
+                        delay: 1,
+                        ease: "easeInOut"
+                      }}
+                      className="absolute top-4 left-4 text-green-400 text-xs"
+                    >
+                      ✨
+                    </motion.div>
+                  </motion.div>
+
+                  {/* Definition and Example - Hidden to show word name only */}
+                  <div className="hidden bg-gray-50 p-6 rounded-2xl">
+                    <div className="mb-4">
+                      <h3 className="text-lg font-semibold text-gray-700 mb-2">
+                        📖 Definition:
+                      </h3>
+                      <p className="text-xl text-gray-800 leading-relaxed">
+                        {currentWord.definition}
+                      </p>
+                    </div>
+
+                    <div>
+                      <h3 className="text-lg font-semibold text-gray-700 mb-2">
+                        💬 Example:
+                      </h3>
+                      <p className="text-lg text-gray-700 italic leading-relaxed">
+                        "{currentWord.example}"
+                      </p>
                     </div>
                   </div>
-
-                  {/* Pronunciation */}
-                  {currentWord.pronunciation && (
-                    <div className="flex items-center justify-center gap-2">
-                      <span className="text-lg text-gray-600 font-mono">
-                        /{currentWord.pronunciation}/
-                      </span>
-                    </div>
-                  )}
-                </div>
-
-                {/* Definition and Example - Hidden to show word name only */}
-                <div className="hidden bg-gray-50 p-6 rounded-2xl">
-                  <div className="mb-4">
-                    <h3 className="text-lg font-semibold text-gray-700 mb-2">
-                      📖 Definition:
-                    </h3>
-                    <p className="text-xl text-gray-800 leading-relaxed">
-                      {currentWord.definition}
-                    </p>
-                  </div>
-
-                  <div>
-                    <h3 className="text-lg font-semibold text-gray-700 mb-2">
-                      💬 Example:
-                    </h3>
-                    <p className="text-lg text-gray-700 italic leading-relaxed">
-                      "{currentWord.example}"
-                    </p>
-                  </div>
-                </div>
-              </div>
-            )}
+                </motion.div>
+              )}
+            </AnimatePresence>
 
             {/* Action Buttons - Always visible */}
             {!isAnswered && (
