@@ -351,10 +351,7 @@ export function useAIWordRecommendations(
           });
         }
 
-        // Play completion sound
-        if (config.enableMotivationalBoosts && outcome.completed) {
-          audioService.playAchievementSound();
-        }
+        // Session completion (removed automatic completion sound)
 
         return sessionResult;
       } catch (error) {
