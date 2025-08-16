@@ -1858,8 +1858,8 @@ export default function Index({ initialProfile }: IndexProps) {
             {userRole === "parent" ? (
               <div className="w-full p-4 md:p-8 pb-20 lg:pb-8 mobile-parent-dashboard min-h-screen overflow-y-auto">
                 <ParentDashboard
-                  children={undefined}
-                  sessions={undefined}
+                  children={getRealChildrenData()}
+                  sessions={getRealSessionsData()}
                   onNavigateBack={() => setUserRole("child")}
                   showMobileBackButton={false}
                 />
