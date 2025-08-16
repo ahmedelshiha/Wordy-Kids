@@ -228,9 +228,7 @@ export function UnifiedVowelGame({
                   className={`cursor-pointer hover:shadow-lg transition-all duration-200 border border-${config.color}/30 h-full`}
                 >
                   <CardHeader className="text-center pb-2 pt-3 px-3">
-                    <div className="text-3xl mb-2">
-                      {config.emoji}
-                    </div>
+                    <div className="text-3xl mb-2">{config.emoji}</div>
                     <CardTitle
                       className={`text-base font-bold ${config.textColor} mb-1`}
                     >
@@ -253,7 +251,9 @@ export function UnifiedVowelGame({
                       {config.timeLimit && (
                         <div className="flex items-center justify-between text-xs">
                           <span className="text-gray-600">Time:</span>
-                          <span className={`font-bold ${config.textColor} flex items-center gap-1`}>
+                          <span
+                            className={`font-bold ${config.textColor} flex items-center gap-1`}
+                          >
                             <Timer className="w-3 h-3" />
                             {config.timeLimit}s
                           </span>
@@ -262,9 +262,22 @@ export function UnifiedVowelGame({
                       <div className="flex items-center justify-between text-xs">
                         <span className="text-gray-600">Difficulty:</span>
                         <div className="flex gap-1">
-                          {Array.from({ length: config.id === 'easy' ? 1 : config.id === 'medium' ? 2 : 3 }, (_, i) => (
-                            <div key={i} className={`w-2 h-2 rounded-full ${config.bgColor}`} />
-                          ))}
+                          {Array.from(
+                            {
+                              length:
+                                config.id === "easy"
+                                  ? 1
+                                  : config.id === "medium"
+                                    ? 2
+                                    : 3,
+                            },
+                            (_, i) => (
+                              <div
+                                key={i}
+                                className={`w-2 h-2 rounded-full ${config.bgColor}`}
+                              />
+                            ),
+                          )}
                         </div>
                       </div>
                     </div>
