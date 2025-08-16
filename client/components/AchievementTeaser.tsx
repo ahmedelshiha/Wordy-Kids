@@ -242,10 +242,9 @@ export function AchievementTeaser({ className }: AchievementTeaserProps) {
               {isTease && (
                 <motion.div
                   initial={{ opacity: 0, scale: 0.9 }}
-                  className="hidden md:block"
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{ duration: 0.5, delay: 0.3 }}
-                  className="mt-2"
+                  className="hidden md:block mt-2"
                 >
                   <Badge
                     variant="outline"
