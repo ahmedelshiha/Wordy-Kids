@@ -1,4 +1,4 @@
-export type Difficulty = 'easy' | 'medium' | 'hard';
+export type Difficulty = "easy" | "medium" | "hard";
 
 export interface VowelQuestion {
   id: string;
@@ -23,7 +23,7 @@ export interface VowelQuestion {
 export interface GameResult {
   totalQuestions: number;
   correctAnswers: number;
-  mistakes: Array<{questionId: string; expected: string; got: string}>;
+  mistakes: Array<{ questionId: string; expected: string; got: string }>;
   timeElapsed: number;
   difficulty: Difficulty;
   starRating: number; // 1-3 stars

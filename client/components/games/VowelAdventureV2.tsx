@@ -1,10 +1,10 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { GameResult, WordItem } from '../../types/vowel-adventure';
-import { defaultWords } from '../../lib/vowelEngine';
-import { Button } from '../ui/button';
-import { Volume2, VolumeX, Home, RotateCcw } from 'lucide-react';
-import { cn } from '../../lib/utils';
-import '../../styles/vowel-adventure-v2.css';
+import React, { useEffect, useRef, useState } from "react";
+import { GameResult, WordItem } from "../../types/vowel-adventure";
+import { defaultWords } from "../../lib/vowelEngine";
+import { Button } from "../ui/button";
+import { Volume2, VolumeX, Home, RotateCcw } from "lucide-react";
+import { cn } from "../../lib/utils";
+import "../../styles/vowel-adventure-v2.css";
 
 type Props = {
   words?: WordItem[];
@@ -13,7 +13,7 @@ type Props = {
   onHome?: () => void;
 };
 
-type Screen = 'play' | 'result';
+type Screen = "play" | "result";
 
 interface Question {
   id: string;
@@ -24,15 +24,15 @@ interface Question {
   displayWord: string;
 }
 
-const VOWELS = ['A', 'E', 'I', 'O', 'U'];
+const VOWELS = ["A", "E", "I", "O", "U"];
 
-export const VowelAdventureV2: React.FC<Props> = ({ 
-  words = defaultWords, 
-  totalQuestions = 10, 
+export const VowelAdventureV2: React.FC<Props> = ({
+  words = defaultWords,
+  totalQuestions = 10,
   onFinish,
-  onHome 
+  onHome,
 }) => {
-  const [screen, setScreen] = useState<Screen>('play');
+  const [screen, setScreen] = useState<Screen>("play");
   const [ttsEnabled, setTtsEnabled] = useState(true);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [questions, setQuestions] = useState<Question[]>([]);
@@ -59,43 +59,52 @@ export const VowelAdventureV2: React.FC<Props> = ({
   // Generate questions with progressive difficulty
   const generateQuestions = () => {
     // Filter words that have vowels
-    const validWords = words.filter(wordItem => {
+    const validWords = words.filter((wordItem) => {
       const word = wordItem.word.toUpperCase();
-      return VOWELS.some(vowel => word.includes(vowel));
+      return VOWELS.some((vowel) => word.includes(vowel));
     });
 
     // Ensure we have enough valid words
-    const wordsToUse = validWords.length >= totalQuestions ? validWords : [...validWords, ...validWords];
+    const wordsToUse =
+      validWords.length >= totalQuestions
+        ? validWords
+        : [...validWords, ...validWords];
     const shuffledWords = [...wordsToUse].sort(() => Math.random() - 0.5);
     const selectedWords = shuffledWords.slice(0, totalQuestions);
 
     const gameQuestions: Question[] = selectedWords.map((wordItem, index) => {
       const word = wordItem.word.toUpperCase();
-      const vowelPositions = [...word].map((char, i) => VOWELS.includes(char) ? i : -1).filter(i => i !== -1);
+      const vowelPositions = [...word]
+        .map((char, i) => (VOWELS.includes(char) ? i : -1))
+        .filter((i) => i !== -1);
 
       if (vowelPositions.length === 0) {
         // Fallback - this shouldn't happen with filtering above
         return {
           id: `q${index}`,
-          word: 'CAT',
-          emoji: '🐱',
-          missingVowel: 'A',
+          word: "CAT",
+          emoji: "🐱",
+          missingVowel: "A",
           missingIndex: 1,
-          displayWord: 'C_T'
+          displayWord: "C_T",
         };
       }
 
-      const randomVowelIndex = vowelPositions[Math.floor(Math.random() * vowelPositions.length)];
+      const randomVowelIndex =
+        vowelPositions[Math.floor(Math.random() * vowelPositions.length)];
       const missingVowel = word[randomVowelIndex];
-      const displayWord = word.slice(0, randomVowelIndex) + '_' + word.slice(randomVowelIndex + 1);
+      const displayWord =
+        word.slice(0, randomVowelIndex) +
+        "_" +
+        word.slice(randomVowelIndex + 1);
 
       return {
         id: `q${index}`,
         word: word,
-        emoji: wordItem.emoji || '🎯',
+        emoji: wordItem.emoji || "🎯",
         missingVowel: missingVowel,
         missingIndex: randomVowelIndex,
-        displayWord: displayWord
+        displayWord: displayWord,
       };
     });
 
@@ -120,18 +129,18 @@ export const VowelAdventureV2: React.FC<Props> = ({
     setIsAnimating(true);
 
     if (correct) {
-      setCorrectCount(prev => prev + 1);
-      setWordsRescued(prev => prev + 1);
+      setCorrectCount((prev) => prev + 1);
+      setWordsRescued((prev) => prev + 1);
       setShowCelebration(true);
-      speak('Correct! Well done!');
-      
+      speak("Correct! Well done!");
+
       // Auto-advance after celebration
       setTimeout(() => {
         nextQuestion();
       }, 2000);
     } else {
-      speak('Try again!');
-      
+      speak("Try again!");
+
       // Reset after feedback
       setTimeout(() => {
         setSelectedAnswer(null);
@@ -143,18 +152,18 @@ export const VowelAdventureV2: React.FC<Props> = ({
 
   const nextQuestion = () => {
     const nextIndex = currentQuestionIndex + 1;
-    
+
     if (nextIndex >= questions.length) {
       finishGame();
       return;
     }
-    
+
     setCurrentQuestionIndex(nextIndex);
     setSelectedAnswer(null);
     setIsCorrect(null);
     setIsAnimating(false);
     setShowCelebration(false);
-    
+
     // Speak the new word
     setTimeout(() => {
       if (questions[nextIndex]) {
@@ -164,9 +173,11 @@ export const VowelAdventureV2: React.FC<Props> = ({
   };
 
   const finishGame = () => {
-    const timeElapsed = startedAtRef.current ? Date.now() - startedAtRef.current : 0;
+    const timeElapsed = startedAtRef.current
+      ? Date.now() - startedAtRef.current
+      : 0;
     const accuracy = questions.length > 0 ? correctCount / questions.length : 0;
-    
+
     // Calculate star rating
     let starRating = 1;
     if (accuracy >= 0.8) starRating = 3;
@@ -177,7 +188,7 @@ export const VowelAdventureV2: React.FC<Props> = ({
       correctAnswers: correctCount,
       mistakes: [],
       timeElapsed,
-      difficulty: 'easy',
+      difficulty: "easy",
       starRating,
       bestStreak: correctCount,
     };
@@ -186,7 +197,7 @@ export const VowelAdventureV2: React.FC<Props> = ({
       onFinish(result);
     }
 
-    setScreen('result');
+    setScreen("result");
   };
 
   const playAgain = () => {
@@ -198,39 +209,37 @@ export const VowelAdventureV2: React.FC<Props> = ({
     setIsAnimating(false);
     setShowCelebration(false);
     generateQuestions();
-    setScreen('play');
+    setScreen("play");
     startedAtRef.current = Date.now();
   };
 
   // Show result screen
-  if (screen === 'result') {
-    const accuracy = questions.length > 0 ? Math.round((correctCount / questions.length) * 100) : 0;
+  if (screen === "result") {
+    const accuracy =
+      questions.length > 0
+        ? Math.round((correctCount / questions.length) * 100)
+        : 0;
     const starRating = accuracy >= 80 ? 3 : accuracy >= 60 ? 2 : 1;
 
     return (
       <div className="vowel-adventure-v2">
         <div className="game-container result-screen">
           <div className="result-content">
-            <div className="result-title">
-              🎉 Adventure Complete!
-            </div>
-            
-            <div className="result-emoji">
-              🏆
-            </div>
-            
+            <div className="result-title">🎉 Adventure Complete!</div>
+
+            <div className="result-emoji">🏆</div>
+
             <div className="stars">
-              {'⭐'.repeat(starRating)}{'☆'.repeat(3 - starRating)}
+              {"⭐".repeat(starRating)}
+              {"☆".repeat(3 - starRating)}
             </div>
 
             <div className="result-stats">
               <div className="big-number">{wordsRescued}</div>
               <div className="stat-label">Vowels Rescued!</div>
             </div>
-            
-            <div className="result-accuracy">
-              {accuracy}% Accuracy
-            </div>
+
+            <div className="result-accuracy">{accuracy}% Accuracy</div>
 
             <div className="result-actions">
               <button className="big-action-btn" onClick={playAgain}>
@@ -262,9 +271,10 @@ export const VowelAdventureV2: React.FC<Props> = ({
   }
 
   const progress = ((currentQuestionIndex + 1) / questions.length) * 100;
-  const filledWord = isCorrect && selectedAnswer 
-    ? currentQuestion.displayWord.replace('_', selectedAnswer)
-    : currentQuestion.displayWord;
+  const filledWord =
+    isCorrect && selectedAnswer
+      ? currentQuestion.displayWord.replace("_", selectedAnswer)
+      : currentQuestion.displayWord;
 
   return (
     <div className="vowel-adventure-v2">
@@ -272,10 +282,12 @@ export const VowelAdventureV2: React.FC<Props> = ({
         {/* Header with progress */}
         <div className="game-header">
           <div className="progress-section">
-            <div className="progress-label">🏆 Vowels Rescued: {wordsRescued}</div>
+            <div className="progress-label">
+              🏆 Vowels Rescued: {wordsRescued}
+            </div>
             <div className="progress-bar">
-              <div 
-                className="progress-fill" 
+              <div
+                className="progress-fill"
                 style={{ width: `${progress}%` }}
               />
             </div>
@@ -283,7 +295,7 @@ export const VowelAdventureV2: React.FC<Props> = ({
               {currentQuestionIndex + 1} / {questions.length}
             </div>
           </div>
-          
+
           <div className="game-controls">
             <button
               className="control-btn"
@@ -295,7 +307,7 @@ export const VowelAdventureV2: React.FC<Props> = ({
             <button
               className="control-btn"
               onClick={() => setTtsEnabled(!ttsEnabled)}
-              aria-label={ttsEnabled ? 'Disable voice' : 'Enable voice'}
+              aria-label={ttsEnabled ? "Disable voice" : "Enable voice"}
             >
               {ttsEnabled ? <Volume2 size={16} /> : <VolumeX size={16} />}
             </button>
@@ -313,29 +325,30 @@ export const VowelAdventureV2: React.FC<Props> = ({
         <div className="game-main">
           {/* Large emoji */}
           <div className="emoji-section">
-            <div className={cn(
-              "emoji-display",
-              showCelebration && "celebrating"
-            )}>
+            <div
+              className={cn("emoji-display", showCelebration && "celebrating")}
+            >
               {currentQuestion.emoji}
             </div>
           </div>
 
           {/* Word puzzle */}
           <div className="word-section">
-            <div className={cn(
-              "word-display",
-              isCorrect && "word-success",
-              isCorrect === false && "word-error",
-              showCelebration && "word-dancing"
-            )}>
-              {filledWord.split('').map((char, index) => (
-                <span 
-                  key={index} 
+            <div
+              className={cn(
+                "word-display",
+                isCorrect && "word-success",
+                isCorrect === false && "word-error",
+                showCelebration && "word-dancing",
+              )}
+            >
+              {filledWord.split("").map((char, index) => (
+                <span
+                  key={index}
                   className={cn(
                     "word-letter",
-                    char === '_' && "missing-letter",
-                    char === selectedAnswer && isCorrect && "filled-letter"
+                    char === "_" && "missing-letter",
+                    char === selectedAnswer && isCorrect && "filled-letter",
                   )}
                 >
                   {char}
@@ -353,7 +366,9 @@ export const VowelAdventureV2: React.FC<Props> = ({
                   className={cn(
                     "vowel-btn",
                     selectedAnswer === vowel && isCorrect && "vowel-correct",
-                    selectedAnswer === vowel && isCorrect === false && "vowel-incorrect"
+                    selectedAnswer === vowel &&
+                      isCorrect === false &&
+                      "vowel-incorrect",
                   )}
                   onClick={() => handleVowelClick(vowel)}
                   disabled={isAnimating}

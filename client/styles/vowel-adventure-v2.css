@@ -8,7 +8,7 @@
   justify-content: center;
   padding: 16px;
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  font-family: 'Comic Sans MS', cursive, sans-serif;
+  font-family: "Comic Sans MS", cursive, sans-serif;
 }
 
 .game-container {
@@ -116,10 +116,19 @@
 }
 
 @keyframes emojiCelebration {
-  0%, 100% { transform: scale(1) rotate(0deg); }
-  25% { transform: scale(1.1) rotate(-5deg); }
-  50% { transform: scale(1.2) rotate(0deg); }
-  75% { transform: scale(1.1) rotate(5deg); }
+  0%,
+  100% {
+    transform: scale(1) rotate(0deg);
+  }
+  25% {
+    transform: scale(1.1) rotate(-5deg);
+  }
+  50% {
+    transform: scale(1.2) rotate(0deg);
+  }
+  75% {
+    transform: scale(1.1) rotate(5deg);
+  }
 }
 
 /* Word Section */
@@ -141,11 +150,22 @@
 }
 
 @keyframes wordDance {
-  0%, 100% { transform: translateY(0) rotate(0deg); }
-  20% { transform: translateY(-10px) rotate(2deg); }
-  40% { transform: translateY(-5px) rotate(-1deg); }
-  60% { transform: translateY(-8px) rotate(1deg); }
-  80% { transform: translateY(-3px) rotate(-0.5deg); }
+  0%,
+  100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  20% {
+    transform: translateY(-10px) rotate(2deg);
+  }
+  40% {
+    transform: translateY(-5px) rotate(-1deg);
+  }
+  60% {
+    transform: translateY(-8px) rotate(1deg);
+  }
+  80% {
+    transform: translateY(-3px) rotate(-0.5deg);
+  }
 }
 
 .word-letter {
@@ -171,9 +191,17 @@
 }
 
 @keyframes letterFill {
-  0% { transform: scale(0.8); opacity: 0; }
-  50% { transform: scale(1.2); }
-  100% { transform: scale(1); opacity: 1; }
+  0% {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
 }
 
 /* Vowels Section */
@@ -231,14 +259,26 @@
 }
 
 @keyframes correctPulse {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.2); }
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.2);
+  }
 }
 
 @keyframes incorrectShake {
-  0%, 100% { transform: translateX(0); }
-  25% { transform: translateX(-8px); }
-  75% { transform: translateX(8px); }
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-8px);
+  }
+  75% {
+    transform: translateX(8px);
+  }
 }
 
 /* Celebration Overlay */
@@ -263,8 +303,15 @@
 }
 
 @keyframes sparkleAnimation {
-  0%, 100% { transform: scale(1) rotate(0deg); opacity: 1; }
-  50% { transform: scale(1.3) rotate(180deg); opacity: 0.8; }
+  0%,
+  100% {
+    transform: scale(1) rotate(0deg);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.3) rotate(180deg);
+    opacity: 0.8;
+  }
 }
 
 .celebration-text {
@@ -276,9 +323,18 @@
 }
 
 @keyframes celebrationBounce {
-  0% { transform: translateY(20px); opacity: 0; }
-  50% { transform: translateY(-10px); opacity: 1; }
-  100% { transform: translateY(0); opacity: 1; }
+  0% {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  50% {
+    transform: translateY(-10px);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
 }
 
 /* Result Screen */
@@ -308,9 +364,15 @@
 }
 
 @keyframes resultEmojiSpin {
-  0% { transform: scale(0) rotate(0deg); }
-  50% { transform: scale(1.2) rotate(180deg); }
-  100% { transform: scale(1) rotate(360deg); }
+  0% {
+    transform: scale(0) rotate(0deg);
+  }
+  50% {
+    transform: scale(1.2) rotate(180deg);
+  }
+  100% {
+    transform: scale(1) rotate(360deg);
+  }
 }
 
 .stars {
@@ -399,37 +461,37 @@
   .vowel-adventure-v2 {
     padding: 8px;
   }
-  
+
   .game-header {
     padding: 12px 16px;
     flex-direction: column;
     gap: 8px;
   }
-  
+
   .game-controls {
     order: -1;
     align-self: flex-end;
   }
-  
+
   .progress-section {
     width: 100%;
   }
-  
+
   .game-main {
     padding: 24px 16px;
     min-height: 450px;
   }
-  
+
   .vowels-grid {
     gap: 8px;
   }
-  
+
   .vowel-btn {
     width: 56px;
     height: 56px;
     font-size: 20px;
   }
-  
+
   .result-content {
     padding: 24px 16px;
   }
@@ -439,13 +501,13 @@
   .game-main {
     min-height: 400px;
   }
-  
+
   .vowel-btn {
     width: 48px;
     height: 48px;
     font-size: 18px;
   }
-  
+
   .vowels-grid {
     gap: 6px;
   }
@@ -462,7 +524,7 @@
   .result-emoji {
     animation: none;
   }
-  
+
   .vowel-btn:hover:not(:disabled),
   .big-action-btn:hover,
   .control-btn:hover {
@@ -475,13 +537,13 @@
   .word-display {
     color: #000000;
   }
-  
+
   .missing-letter {
     border-color: #000000;
     background: #ffffff;
     color: #000000;
   }
-  
+
   .vowel-btn {
     border: 2px solid #000000;
   }

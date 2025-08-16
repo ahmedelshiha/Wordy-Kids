@@ -2986,7 +2986,8 @@ export default function Index({ initialProfile }: IndexProps) {
                                   🌈 Vowel Adventure!
                                 </h3>
                                 <p className="text-xs md:text-sm text-gray-600 mb-2 md:mb-3 hidden md:block">
-                                  Rescue missing vowels with big emojis and fun animations! 🎯
+                                  Rescue missing vowels with big emojis and fun
+                                  animations! 🎯
                                 </p>
                                 <div className="flex justify-center gap-1 mb-2 md:mb-3">
                                   <span className="bg-educational-blue/20 text-educational-blue px-1.5 py-0.5 rounded-full text-xs">
@@ -3188,13 +3189,16 @@ export default function Index({ initialProfile }: IndexProps) {
                             // Track achievement for vowel quiz completion
                             AchievementTracker.trackActivity({
                               type: "vowelRescue",
-                              accuracy: (result.correctAnswers / result.totalQuestions) * 100,
+                              accuracy:
+                                (result.correctAnswers /
+                                  result.totalQuestions) *
+                                100,
                             });
 
                             setFeedback({
                               type: "celebration",
                               title: "Adventure Complete! 🎉",
-                              message: `You rescued ${result.correctAnswers} vowels! ${result.starRating} star${result.starRating !== 1 ? 's' : ''} earned! ⭐`,
+                              message: `You rescued ${result.correctAnswers} vowels! ${result.starRating} star${result.starRating !== 1 ? "s" : ""} earned! ⭐`,
                               onContinue: () => {
                                 setFeedback(null);
                                 setShowQuiz(false);
