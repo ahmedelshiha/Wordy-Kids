@@ -251,7 +251,7 @@ export const BalloonRescueVowelAdventure: React.FC<Props> = ({
     } else {
       setCurrentStreak(0);
       setShowRetry(true);
-      audioService.playEncouragementSound("Try again! Look at the word carefully.");
+      audioService.playEncouragementSound();
 
       // Track failed attempt
       try {
