@@ -541,6 +541,39 @@ export function ChildFriendlyCategorySelector({
             </Badge>
           </div>
         </div>
+
+        {/* Desktop Search Bar */}
+        <div className="hidden md:block mb-6">
+          <div className="max-w-md mx-auto">
+            <div className="relative">
+              <Input
+                type="text"
+                placeholder="🔍 Search categories..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="w-full px-4 py-3 pl-10 pr-12 rounded-full border-2 border-educational-blue/20 focus:border-educational-blue focus:outline-none bg-white/80 backdrop-blur-sm"
+              />
+              <div className="absolute left-3 top-1/2 transform -translate-y-1/2 text-educational-blue">
+                🔍
+              </div>
+              {searchTerm && (
+                <Button
+                  size="sm"
+                  variant="ghost"
+                  onClick={() => setSearchTerm("")}
+                  className="absolute right-2 top-1/2 transform -translate-y-1/2 h-8 w-8 p-0 hover:bg-educational-blue/10"
+                >
+                  ✕
+                </Button>
+              )}
+            </div>
+            {searchTerm && (
+              <div className="mt-2 text-sm text-slate-600 text-center">
+                Found {categories.length} categories matching "{searchTerm}"
+              </div>
+            )}
+          </div>
+        </div>
       </div>
 
       {/* Encouragement Popup */}
