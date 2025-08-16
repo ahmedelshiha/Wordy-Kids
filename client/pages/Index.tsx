@@ -3222,7 +3222,7 @@ export default function Index({ initialProfile }: IndexProps) {
                               setShowMatchingGame(false);
                               setFeedback({
                                 type: "celebration",
-                                title: "Matching Game Complete! 🎯✨",
+                                title: "Matching Game Complete! ����✨",
                                 message: `You matched ${score} pairs in ${timeSpent} seconds!`,
                                 points: score * 15,
                                 onContinue: () => setFeedback(null),
@@ -3240,35 +3240,9 @@ export default function Index({ initialProfile }: IndexProps) {
                           playerLevel={1}
                           rounds={10}
                         />
-                      ) : selectedQuizType?.startsWith("vowel-") ? (
-                        <EnhancedVowelQuiz
+                      ) : selectedQuizType === "vowel-ultimate" ? (
+                        <UltimateVowelQuiz
                           category={selectedCategory}
-                          initialGameMode={
-                            selectedQuizType === "vowel-easy"
-                              ? "easy"
-                              : selectedQuizType === "vowel-challenge"
-                                ? "challenge"
-                                : selectedQuizType === "vowel-timed"
-                                  ? "timed"
-                                  : "easy"
-                          }
-                          initialDifficulty={
-                            selectedQuizType === "vowel-easy"
-                              ? "easy"
-                              : selectedQuizType === "vowel-challenge"
-                                ? "medium"
-                                : "mixed"
-                          }
-                          rounds={
-                            selectedQuizType === "vowel-easy"
-                              ? 10
-                              : selectedQuizType === "vowel-challenge"
-                                ? 8
-                                : 15
-                          }
-                          timeLimit={
-                            selectedQuizType === "vowel-timed" ? 60 : undefined
-                          }
                           onComplete={(stats) => {
                             // Convert enhanced stats to simple score format for compatibility
                             handleQuizComplete(
