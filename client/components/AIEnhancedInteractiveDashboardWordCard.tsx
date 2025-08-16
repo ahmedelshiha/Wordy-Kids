@@ -503,10 +503,11 @@ export function AIEnhancedInteractiveDashboardWordCard({
     // Show celebration effect for successful interactions
     if (status === "remembered") {
       setCelebrationEffect(true);
-      enhancedAudioService.playSuccessSound();
+      // Only play celebration sound if user explicitly clicked "I know this!"
+      // Remove automatic celebration sounds to prevent unexpected audio
       setTimeout(() => setCelebrationEffect(false), 2000);
     } else if (status === "needs_practice") {
-      enhancedAudioService.playEncouragementSound();
+      // Only play encouragement for explicit user actions, not auto-progression
     }
 
     try {
