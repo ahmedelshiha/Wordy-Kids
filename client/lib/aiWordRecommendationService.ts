@@ -373,7 +373,9 @@ export class AIWordRecommendationService {
     achievements?: any[];
   }> {
     if (!this.currentSession) {
-      console.log("No active session to complete - creating minimal session result");
+      console.log(
+        "No active session to complete - creating minimal session result",
+      );
       // Return a basic session result instead of throwing an error
       return {
         sessionSummary: {

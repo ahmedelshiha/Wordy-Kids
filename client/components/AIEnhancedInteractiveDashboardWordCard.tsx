@@ -1252,7 +1252,9 @@ export function AIEnhancedInteractiveDashboardWordCard({
                         } else {
                           // Start AI session with current words
                           if (sessionWords.length === 0) {
-                            console.warn("Cannot start AI session: no words available");
+                            console.warn(
+                              "Cannot start AI session: no words available",
+                            );
                             return;
                           }
                           aiActions.startSession({
@@ -1290,8 +1292,12 @@ export function AIEnhancedInteractiveDashboardWordCard({
                 {/* Mobile Progress: Only show if session active */}
                 {aiState.isSessionActive && (
                   <div className="mt-2 text-center opacity-80">
-                    <span className="text-xs">Word {currentWordIndex + 1}/{SESSION_SIZE} •{" "}</span>
-                    <span className="text-xs opacity-60 scale-75">{Math.round(confidenceLevel * 100)}% 📈</span>
+                    <span className="text-xs">
+                      Word {currentWordIndex + 1}/{SESSION_SIZE} •{" "}
+                    </span>
+                    <span className="text-xs opacity-60 scale-75">
+                      {Math.round(confidenceLevel * 100)}% 📈
+                    </span>
                   </div>
                 )}
               </div>
@@ -1329,7 +1335,9 @@ export function AIEnhancedInteractiveDashboardWordCard({
                             } else {
                               // Start AI session with current words
                               if (sessionWords.length === 0) {
-                                console.warn("Cannot start AI session: no words available");
+                                console.warn(
+                                  "Cannot start AI session: no words available",
+                                );
                                 return;
                               }
                               aiActions.startSession({
