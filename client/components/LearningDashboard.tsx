@@ -186,7 +186,6 @@ export const LearningDashboard: React.FC<LearningDashboardProps> = ({
 
   return (
     <div className="space-y-4">
-
       {/* Interactive Word Learning Hub - PRIMARY FEATURE */}
       {availableWords.length > 0 && onWordProgress ? (
         <>
@@ -213,8 +212,11 @@ export const LearningDashboard: React.FC<LearningDashboardProps> = ({
               onToggleAIEnhancement={(enabled) => {
                 setUseAIEnhancement(enabled);
                 // Update localStorage settings
-                if (typeof window !== 'undefined') {
-                  localStorage.setItem('aiEnhancementEnabled', JSON.stringify(enabled));
+                if (typeof window !== "undefined") {
+                  localStorage.setItem(
+                    "aiEnhancementEnabled",
+                    JSON.stringify(enabled),
+                  );
                 }
               }}
             />
