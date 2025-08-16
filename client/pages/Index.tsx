@@ -2977,7 +2977,7 @@ export default function Index({ initialProfile }: IndexProps) {
                             </Card>
 
                             {/* Unified Vowel Adventure */}
-                            <Card className="cursor-pointer hover:shadow-lg transition-all duration-300 hover:scale-105 border-2 border-educational-blue/30 animate-kid-float col-span-full">
+                            <Card className="cursor-pointer hover:shadow-lg transition-all duration-300 hover:scale-105 border-2 border-educational-blue/30 animate-kid-float">
                               <CardContent className="p-3 md:p-4 text-center">
                                 <div className="text-3xl md:text-5xl mb-2 md:mb-3 animate-bounce">
                                   🎯
