@@ -737,7 +737,7 @@ const CreateWordWizard: React.FC<CreateWordWizardProps> = ({
           category: formData.category!,
           difficulty: formData.difficulty!,
           funFact: formData.funFact?.trim(),
-          emoji: formData.emoji?.trim(),
+          emoji: sanitizeEmoji(formData.emoji || ""),
           imageUrl: formData.imageUrl?.trim(),
           audioUrl: formData.audioUrl?.trim(),
           status: "pending",
