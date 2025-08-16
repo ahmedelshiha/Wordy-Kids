@@ -2152,6 +2152,19 @@ export default function Index({ initialProfile }: IndexProps) {
                         forgottenWordsCount={forgottenWords.size}
                         rememberedWordsCount={rememberedWords.size}
                         availableWords={currentDashboardWords}
+                        // AI Enhancement Integration
+                        userId={currentUser?.id || "default-user"}
+                        enableAIEnhancement={true}
+                        selectedCategory={selectedCategory}
+                        userProgress={{
+                          rememberedWords,
+                          forgottenWords,
+                          excludedWordIds: new Set(),
+                        }}
+                        onSessionComplete={(sessionData) => {
+                          console.log("AI session completed:", sessionData);
+                          // Optional: Show AI insights to user
+                        }}
                         onWordProgress={async (word, status) => {
                           console.log(
                             `Word Progress: ${word.word} - ${status}`,
