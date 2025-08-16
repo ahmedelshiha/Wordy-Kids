@@ -1298,66 +1298,54 @@ export function AIEnhancedInteractiveDashboardWordCard({
               <AchievementTeaser className="mb-2 sm:mb-3" />
             </div>
 
-            {/* Category and Progress Header */}
-            <div className="text-center mb-3 sm:mb-6 md:mb-8 mt-2 sm:mt-6 md:mt-8">
-              <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-3 md:gap-4 mb-3 sm:mb-4">
-                <Badge
-                  className={cn(
-                    "text-xs sm:text-sm px-2 sm:px-3 py-1",
-                    getDifficultyColor(currentWord.difficulty),
-                  )}
-                >
-                  {currentWord.difficulty
-                    ? currentWord.difficulty.charAt(0).toUpperCase() +
-                      currentWord.difficulty.slice(1)
-                    : "Medium"}
+            {/* Category and Progress Header - Mobile Optimized */}
+            <div className="text-center mb-2 sm:mb-4 md:mb-6 mt-1 sm:mt-3 md:mt-4">
+              {/* Mobile: Simplified badges */}
+              <div className="md:hidden mb-2">
+                <div className="flex items-center justify-center gap-2">
+                  <Badge className={cn("text-xs px-2 py-1", getDifficultyColor(currentWord.difficulty))}>
+                    {currentWord.category}
+                  </Badge>
+                  <Badge variant="outline" className="text-xs px-2 py-1 bg-purple-50 text-purple-700">
+                    {sessionStats.accuracy}%
+                  </Badge>
+                </div>
+              </div>
+
+              {/* Desktop: Full badges */}
+              <div className="hidden md:flex flex-wrap items-center justify-center gap-2 sm:gap-3 md:gap-4 mb-3 sm:mb-4">
+                <Badge className={cn("text-sm px-3 py-1", getDifficultyColor(currentWord.difficulty))}>
+                  {currentWord.difficulty ? currentWord.difficulty.charAt(0).toUpperCase() + currentWord.difficulty.slice(1) : "Medium"}
                 </Badge>
-                <Badge
-                  className={cn(
-                    "text-xs sm:text-sm px-2 sm:px-3 py-1",
-                    getDifficultyColor(currentWord.difficulty),
-                  )}
-                >
+                <Badge className={cn("text-sm px-3 py-1", getDifficultyColor(currentWord.difficulty))}>
                   {currentWord.category}
                 </Badge>
-                <Badge
-                  variant="outline"
-                  className="text-xs sm:text-sm px-2 sm:px-3 py-1 bg-purple-50 text-purple-700 border-purple-300"
-                >
+                <Badge variant="outline" className="text-sm px-3 py-1 bg-purple-50 text-purple-700 border-purple-300">
                   {sessionStats.accuracy}% Accuracy
                 </Badge>
               </div>
 
-              {/* Progress Bar - Enhanced for AI mode */}
-              <div className="w-full bg-gray-200 rounded-full h-3 sm:h-4 mb-3 relative overflow-hidden">
+              {/* Progress Bar - Kid-friendly and compact */}
+              <div className="w-full bg-gray-200 rounded-full h-2 sm:h-3 mb-2 relative overflow-hidden">
                 <div
-                  className="bg-gradient-to-r from-blue-500 via-purple-500 to-blue-600 h-3 sm:h-4 rounded-full transition-all duration-500 ease-out relative"
+                  className="bg-gradient-to-r from-green-400 to-blue-500 h-2 sm:h-3 rounded-full transition-all duration-500 ease-out relative"
                   style={{ width: `${sessionProgress}%` }}
                 >
-                  {/* AI Enhancement - animated progress indicator */}
-                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent animate-pulse rounded-full" />
-                  {/* Progress glow effect when AI is active */}
-                  {aiState.isSessionActive && (
-                    <div className="absolute inset-0 bg-gradient-to-r from-blue-400/50 to-purple-400/50 rounded-full blur-sm animate-pulse" />
-                  )}
+                  {/* Simple sparkle effect */}
+                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent rounded-full" />
                 </div>
-                {/* AI Session indicator */}
-                {aiState.isSessionActive && (
-                  <div className="absolute right-2 top-1/2 transform -translate-y-1/2">
-                    <Brain className="w-3 h-3 text-blue-600 animate-pulse" />
+                {/* Simple progress indicator */}
+                {sessionProgress > 10 && (
+                  <div className="absolute right-1 top-1/2 transform -translate-y-1/2">
+                    <span className="text-xs">🎆</span>
                   </div>
                 )}
               </div>
-              <div className="text-xs sm:text-sm text-gray-600 flex items-center justify-center gap-2">
-                <span>
-                  {currentWordIndex + 1} of {SESSION_SIZE} words
-                </span>
-                {aiState.isSessionActive && (
-                  <span className="bg-blue-100 text-blue-700 px-2 py-1 rounded-full text-xs font-medium flex items-center gap-1">
-                    <Brain className="w-3 h-3" />
-                    AI Active
-                  </span>
-                )}
+
+              {/* Simple progress text */}
+              <div className="text-xs sm:text-sm text-gray-600">
+                <span className="font-medium">{currentWordIndex + 1} of {SESSION_SIZE} words</span>
+                {sessionProgress >= 100 && <span className="ml-2">🎉</span>}
               </div>
             </div>
 
