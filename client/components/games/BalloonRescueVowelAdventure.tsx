@@ -218,7 +218,7 @@ export const BalloonRescueVowelAdventure: React.FC<Props> = ({
 
       // Play success sound and celebrate
       await audioService.playSuccessSound();
-      audioService.playEncouragementSound("Great job! Balloon rescued!");
+      audioService.playEncouragementSound();
 
       // Track achievement progress
       try {
