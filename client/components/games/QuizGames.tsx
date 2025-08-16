@@ -330,6 +330,28 @@ export function QuizGames({
             selectedCategory,
             "definition",
           );
+        case "pronunciation":
+          return generateQuizQuestions(
+            8,
+            undefined,
+            selectedCategory,
+            "pronunciation",
+          );
+        case "example":
+          return generateQuizQuestions(
+            12,
+            undefined,
+            selectedCategory,
+            "example",
+          );
+        case "mixed-challenge":
+          // Mix different question types for ultimate challenge
+          const mixedQuestions = [
+            ...generateQuizQuestions(5, "hard", selectedCategory, "definition"),
+            ...generateQuizQuestions(5, "hard", selectedCategory, "spelling"),
+            ...generateQuizQuestions(5, "hard", selectedCategory, "pronunciation"),
+          ];
+          return mixedQuestions.sort(() => Math.random() - 0.5); // Shuffle the mixed questions
         default:
           return generateQuizQuestions(
             10,
