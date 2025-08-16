@@ -140,6 +140,17 @@ export function QuizGames({
       color: "from-educational-orange to-orange-400",
       points: "Variable",
     },
+    {
+      id: "balloon-rescue",
+      title: "Balloon Rescue!",
+      description: "Save balloons by finding missing vowels! Progressive difficulty with achievements.",
+      icon: "🎈",
+      difficulty: "Progressive",
+      questions: 10,
+      timePerQuestion: "No limit",
+      color: "from-sky-400 to-blue-500",
+      points: "100-300 pts",
+    },
   ];
 
   const handleQuizStart = (quizType: string) => {
