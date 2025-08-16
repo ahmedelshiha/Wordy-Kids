@@ -22,6 +22,8 @@ import {
 } from "./components/WordDatabaseNotifications";
 import { WordAdventureDemo } from "./pages/WordAdventureDemo";
 import { WordAdventureTest } from "./pages/WordAdventureTest";
+import AIIntegrationDemo from "./pages/AIIntegrationDemo";
+import AIWordRecommendationDemo from "./pages/AIWordRecommendationDemo";
 import { NavigationGuard } from "./components/NavigationGuard";
 import SpeechDiagnostics from "./components/SpeechDiagnostics";
 
