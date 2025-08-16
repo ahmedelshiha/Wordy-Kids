@@ -2316,7 +2316,8 @@ export default function Index({ initialProfile }: IndexProps) {
                                       🤖 AI-Enhanced Learning
                                     </h3>
                                     <p className="text-xs text-blue-700">
-                                      Words are now selected using AI to match your learning style and progress.
+                                      Words are now selected using AI to match
+                                      your learning style and progress.
                                     </p>
                                   </div>
                                   <div className="text-right">
@@ -2932,7 +2933,8 @@ export default function Index({ initialProfile }: IndexProps) {
                                   </span>
                                 </div>
                                 <p className="text-xs text-green-700 mt-1">
-                                  Questions are personalized based on your learning progress!
+                                  Questions are personalized based on your
+                                  learning progress!
                                 </p>
                               </div>
                             )}

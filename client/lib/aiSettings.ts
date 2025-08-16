@@ -8,21 +8,36 @@ export interface AISettings {
 
 export const getAISettings = (): AISettings => {
   return {
-    aiEnhancementEnabled: JSON.parse(localStorage.getItem("aiEnhancementEnabled") || "true"),
-    aiAdaptiveDifficulty: JSON.parse(localStorage.getItem("aiAdaptiveDifficulty") || "true"),
-    aiPersonalizedHints: JSON.parse(localStorage.getItem("aiPersonalizedHints") || "true"),
+    aiEnhancementEnabled: JSON.parse(
+      localStorage.getItem("aiEnhancementEnabled") || "true",
+    ),
+    aiAdaptiveDifficulty: JSON.parse(
+      localStorage.getItem("aiAdaptiveDifficulty") || "true",
+    ),
+    aiPersonalizedHints: JSON.parse(
+      localStorage.getItem("aiPersonalizedHints") || "true",
+    ),
   };
 };
 
 export const setAISettings = (settings: Partial<AISettings>): void => {
   if (settings.aiEnhancementEnabled !== undefined) {
-    localStorage.setItem("aiEnhancementEnabled", JSON.stringify(settings.aiEnhancementEnabled));
+    localStorage.setItem(
+      "aiEnhancementEnabled",
+      JSON.stringify(settings.aiEnhancementEnabled),
+    );
   }
   if (settings.aiAdaptiveDifficulty !== undefined) {
-    localStorage.setItem("aiAdaptiveDifficulty", JSON.stringify(settings.aiAdaptiveDifficulty));
+    localStorage.setItem(
+      "aiAdaptiveDifficulty",
+      JSON.stringify(settings.aiAdaptiveDifficulty),
+    );
   }
   if (settings.aiPersonalizedHints !== undefined) {
-    localStorage.setItem("aiPersonalizedHints", JSON.stringify(settings.aiPersonalizedHints));
+    localStorage.setItem(
+      "aiPersonalizedHints",
+      JSON.stringify(settings.aiPersonalizedHints),
+    );
   }
 };
 

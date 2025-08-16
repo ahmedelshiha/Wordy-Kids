@@ -48,10 +48,7 @@ interface CompactMobileSettingsPanelProps {
 
 export const CompactMobileSettingsPanel: React.FC<
   CompactMobileSettingsPanelProps
-> = ({
-  isOpen,
-  onClose,
-}) => {
+> = ({ isOpen, onClose }) => {
   // Essential settings only
   const [soundOn, setSoundOn] = useState(isSoundEnabled());
   const [uiInteractionSounds, setUiInteractionSounds] = useState(
@@ -528,7 +525,6 @@ export const CompactMobileSettingsPanel: React.FC<
                         preview each voice
                       </p>
                     </div>
-
                   </div>
                 </div>
               )}
@@ -557,7 +553,10 @@ export const CompactMobileSettingsPanel: React.FC<
                       onCheckedChange={(checked) => {
                         setAiEnhancementEnabled(checked);
                         setHasUnsavedChanges(true);
-                        localStorage.setItem("aiEnhancementEnabled", JSON.stringify(checked));
+                        localStorage.setItem(
+                          "aiEnhancementEnabled",
+                          JSON.stringify(checked),
+                        );
                       }}
                     />
                   </CompactSettingRow>
@@ -572,7 +571,10 @@ export const CompactMobileSettingsPanel: React.FC<
                       onCheckedChange={(checked) => {
                         setAiAdaptiveDifficulty(checked);
                         setHasUnsavedChanges(true);
-                        localStorage.setItem("aiAdaptiveDifficulty", JSON.stringify(checked));
+                        localStorage.setItem(
+                          "aiAdaptiveDifficulty",
+                          JSON.stringify(checked),
+                        );
                       }}
                     />
                   </CompactSettingRow>
@@ -587,7 +589,10 @@ export const CompactMobileSettingsPanel: React.FC<
                       onCheckedChange={(checked) => {
                         setAiPersonalizedHints(checked);
                         setHasUnsavedChanges(true);
-                        localStorage.setItem("aiPersonalizedHints", JSON.stringify(checked));
+                        localStorage.setItem(
+                          "aiPersonalizedHints",
+                          JSON.stringify(checked),
+                        );
                       }}
                     />
                   </CompactSettingRow>
@@ -710,12 +715,9 @@ export const CompactMobileSettingsPanel: React.FC<
                       <span>50</span>
                     </div>
                   </div>
-
-
                 </div>
               )}
             </div>
-
 
             {/* Other Section */}
             <div className="border rounded-lg">
@@ -790,7 +792,6 @@ export const CompactMobileSettingsPanel: React.FC<
           </div>
         </div>
       </Card>
-
     </div>
   );
 };
