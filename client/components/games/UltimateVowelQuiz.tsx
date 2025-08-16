@@ -886,9 +886,9 @@ export function UltimateVowelQuiz({
 
               {/* Word Display */}
               <div className="flex justify-center items-center flex-wrap gap-2 mb-6">
-                {currentQuestion.displayWord.split("").map((char, index) => {
+                {(currentQuestion.displayWord || currentQuestion.word || "").split("").map((char, index) => {
                   const isMissing =
-                    currentQuestion.missingVowelIndices.includes(index);
+                    (currentQuestion.missingVowelIndices || currentQuestion.missingIndex || []).includes(index);
                   const selectedVowel = selectedVowels[index];
 
                   return (
