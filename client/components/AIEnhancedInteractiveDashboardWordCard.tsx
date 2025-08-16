@@ -966,53 +966,57 @@ export function AIEnhancedInteractiveDashboardWordCard({
       tabIndex={0}
       onKeyDown={handleKeyDown}
     >
-      {/* AI Insights Panel */}
+      {/* AI Insights Panel - Mobile Optimized */}
       {showAIInsights && (
-        <Card className="bg-gradient-to-r from-blue-50 to-purple-50 border-blue-200">
-          <CardContent className="p-4">
-            <div className="flex items-center justify-between mb-3">
-              <h3 className="font-semibold flex items-center gap-2">
-                <Brain className="w-4 h-4 text-blue-600" />
-                AI Learning Insights
+        <Card className="bg-gradient-to-r from-blue-50 to-purple-50 border-blue-200 mx-1 sm:mx-0">
+          <CardContent className="p-2 sm:p-4">
+            <div className="flex items-center justify-between mb-2 sm:mb-3">
+              <h3 className="font-semibold flex items-center gap-1 sm:gap-2 text-sm sm:text-base">
+                <Brain className="w-3 h-3 sm:w-4 sm:h-4 text-blue-600" />
+                <span className="hidden sm:inline">AI Learning Insights</span>
+                <span className="sm:hidden">🤖 Insights</span>
               </h3>
               <Button
                 onClick={() => setShowAIInsights(false)}
                 variant="ghost"
                 size="sm"
+                className="p-1 sm:p-2"
               >
                 ×
               </Button>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
+            <div className="grid grid-cols-3 gap-2 sm:gap-4 text-xs sm:text-sm">
               <div className="text-center">
-                <div className="text-lg font-bold text-blue-600">
+                <div className="text-sm sm:text-lg font-bold text-blue-600">
                   {Math.round(confidenceLevel * 100)}%
                 </div>
-                <div className="text-gray-600">AI Confidence</div>
+                <div className="text-gray-600 text-xs">AI Confidence</div>
               </div>
               <div className="text-center">
-                <div className="text-lg font-bold text-purple-600">
+                <div className="text-sm sm:text-lg font-bold text-purple-600">
                   {learningVelocity.toFixed(1)}
                 </div>
-                <div className="text-gray-600">Words/Min</div>
+                <div className="text-gray-600 text-xs">Words/Min</div>
               </div>
               <div className="text-center">
-                <div className="text-lg font-bold text-green-600">
+                <div className="text-sm sm:text-lg font-bold text-green-600">
                   {sessionStats.accuracy}%
                 </div>
-                <div className="text-gray-600">Accuracy</div>
+                <div className="text-gray-600 text-xs">Accuracy</div>
               </div>
             </div>
             {aiState.reasoning.length > 0 && (
-              <div className="mt-3 p-3 bg-white/60 rounded-lg">
+              <div className="mt-2 sm:mt-3 p-2 sm:p-3 bg-white/60 rounded-lg">
                 <div className="text-xs font-medium text-gray-700 mb-1">
-                  Why AI selected these words:
+                  <span className="hidden sm:inline">Why AI selected these words:</span>
+                  <span className="sm:hidden">🤖 Reasoning:</span>
                 </div>
-                <ul className="text-xs text-gray-600 space-y-1">
+                <ul className="text-xs text-gray-600 space-y-0.5 sm:space-y-1">
                   {aiState.reasoning.slice(-2).map((reason, index) => (
                     <li key={index} className="flex items-start gap-1">
                       <span className="text-blue-500">•</span>
-                      {reason}
+                      <span className="sm:hidden">{reason.length > 50 ? reason.slice(0, 50) + '...' : reason}</span>
+                      <span className="hidden sm:inline">{reason}</span>
                     </li>
                   ))}
                 </ul>
