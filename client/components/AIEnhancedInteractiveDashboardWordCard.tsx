@@ -1158,35 +1158,34 @@ export function AIEnhancedInteractiveDashboardWordCard({
             </div>
           )}
 
-          <CardContent className="p-3 sm:p-4 md:p-6 lg:p-8 relative z-10">
-            {/* AI Enhancement Header */}
-            <div className="flex items-center justify-between mb-4">
-              <div className="flex items-center gap-2">
-                <div className="bg-gradient-to-r from-blue-500 to-purple-500 p-2 rounded-full">
-                  <Brain className="w-4 h-4 text-white" />
+          <CardContent className="p-2 sm:p-3 md:p-4 lg:p-6 relative z-10">
+            {/* Compact AI Enhancement Header - Mobile Optimized */}
+            <div className="flex items-center justify-between mb-2 sm:mb-3">
+              <div className="flex items-center gap-1 sm:gap-2">
+                <div className="bg-gradient-to-r from-blue-500 to-purple-500 p-1 sm:p-1.5 rounded-full">
+                  <Brain className="w-3 h-3 sm:w-4 sm:h-4 text-white" />
                 </div>
                 <div>
-                  <div className="text-sm font-bold text-gray-800">
-                    AI Enhanced Learning
+                  <div className="text-xs sm:text-sm font-bold text-gray-800">
+                    🤖 AI Learning
                   </div>
-                  <div className="text-xs text-gray-600">
-                    Confidence: {Math.round(confidenceLevel * 100)}% | Progress:{" "}
-                    {currentWordIndex + 1}/{SESSION_SIZE}
+                  <div className="text-xs text-gray-600 hidden sm:block">
+                    {Math.round(confidenceLevel * 100)}% | {currentWordIndex + 1}/{SESSION_SIZE}
                   </div>
                 </div>
               </div>
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-1">
                 <Button
                   onClick={() => setShowAIInsights(!showAIInsights)}
                   variant="ghost"
                   size="sm"
-                  className="text-blue-600 hover:text-blue-800"
+                  className="text-blue-600 hover:text-blue-800 p-1 sm:p-2"
                 >
-                  <BarChart3 className="w-4 h-4" />
+                  <BarChart3 className="w-3 h-3 sm:w-4 sm:h-4" />
                 </Button>
                 {difficultyAdjustment !== "maintain" && (
-                  <Badge variant="outline" className="text-xs">
-                    AI suggests: {difficultyAdjustment} difficulty
+                  <Badge variant="outline" className="text-xs hidden sm:inline-flex">
+                    {difficultyAdjustment}
                   </Badge>
                 )}
               </div>
@@ -1197,45 +1196,44 @@ export function AIEnhancedInteractiveDashboardWordCard({
               <AchievementTeaser className="mb-3" />
             </div>
 
-            {/* Category and Progress Header */}
-            <div className="text-center mb-4 sm:mb-6 md:mb-8 mt-4 sm:mt-6 md:mt-8">
-              <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-3 md:gap-4 mb-3 sm:mb-4">
+            {/* Compact Category and Progress Header - Mobile Optimized */}
+            <div className="text-center mb-2 sm:mb-4 mt-2 sm:mt-4">
+              <div className="flex flex-wrap items-center justify-center gap-1 sm:gap-2 mb-2">
                 <Badge
                   className={cn(
-                    "text-xs sm:text-sm px-2 sm:px-3 py-1",
+                    "text-xs px-1 sm:px-2 py-0.5 sm:py-1",
                     getDifficultyColor(currentWord.difficulty),
                   )}
                 >
-                  {currentWord.difficulty
-                    ? currentWord.difficulty.charAt(0).toUpperCase() +
-                      currentWord.difficulty.slice(1)
-                    : "Medium"}
+                  {currentWord.difficulty?.[0]?.toUpperCase() || "M"}
                 </Badge>
                 <Badge
                   className={cn(
-                    "text-xs sm:text-sm px-2 sm:px-3 py-1",
+                    "text-xs px-1 sm:px-2 py-0.5 sm:py-1",
                     getDifficultyColor(currentWord.difficulty),
                   )}
                 >
-                  {currentWord.category}
+                  {currentWord.category.length > 8
+                    ? currentWord.category.substring(0, 6) + '...'
+                    : currentWord.category}
                 </Badge>
                 <Badge
                   variant="outline"
-                  className="text-xs sm:text-sm px-2 sm:px-3 py-1 bg-purple-50 text-purple-700 border-purple-300"
+                  className="text-xs px-1 sm:px-2 py-0.5 sm:py-1 bg-purple-50 text-purple-700 border-purple-300"
                 >
-                  {sessionStats.accuracy}% Accuracy
+                  {sessionStats.accuracy}%
                 </Badge>
               </div>
 
-              {/* Progress Bar */}
-              <div className="w-full bg-gray-200 rounded-full h-2 mb-2">
+              {/* Compact Progress Bar */}
+              <div className="w-full bg-gray-200 rounded-full h-1 sm:h-2 mb-1">
                 <div
-                  className="bg-gradient-to-r from-blue-500 to-purple-500 h-2 rounded-full transition-all duration-300"
+                  className="bg-gradient-to-r from-blue-500 to-purple-500 h-1 sm:h-2 rounded-full transition-all duration-300"
                   style={{ width: `${sessionProgress}%` }}
                 />
               </div>
               <div className="text-xs text-gray-600">
-                Session Progress: {currentWordIndex + 1} of {SESSION_SIZE} words
+                {currentWordIndex + 1}/{SESSION_SIZE}
               </div>
             </div>
 
@@ -1252,7 +1250,7 @@ export function AIEnhancedInteractiveDashboardWordCard({
                   stiffness: 200,
                   damping: 20,
                 }}
-                className="mb-4 md:mb-6"
+                className="mb-2 sm:mb-4"
                 role="img"
                 aria-label={`Picture showing ${currentWord.emoji} ${currentWord.word}`}
               >
@@ -1279,14 +1277,14 @@ export function AIEnhancedInteractiveDashboardWordCard({
               </motion.div>
             </AnimatePresence>
 
-            {/* Game Instructions */}
-            <header className="text-center mb-3 sm:mb-4 md:mb-5" role="banner">
+            {/* Compact Game Instructions - Mobile Optimized */}
+            <header className="text-center mb-2 sm:mb-3" role="banner">
               <motion.h1
                 key={`prompt-${currentWordIndex}`}
                 initial={{ opacity: 0, y: -10, scale: 0.95 }}
                 animate={{ opacity: 1, y: 0, scale: 1 }}
                 transition={{ duration: 0.4, type: "spring", damping: 20 }}
-                className="text-base sm:text-lg md:text-xl lg:text-2xl font-bold text-gray-800 mb-1 sm:mb-2"
+                className="text-sm sm:text-base md:text-lg font-bold text-gray-800 mb-1"
               >
                 🤔 What is this?
               </motion.h1>
@@ -1295,93 +1293,71 @@ export function AIEnhancedInteractiveDashboardWordCard({
                 initial={{ opacity: 0, y: 5 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.4, delay: 0.1 }}
-                className="text-xs sm:text-sm md:text-base text-gray-600 px-2"
+                className="text-xs text-gray-600 px-2 hidden sm:block"
                 id="game-instructions"
               >
-                AI has selected this word specially for you!
+                🤖 AI-selected word
               </motion.p>
             </header>
 
-            {/* Action Buttons Row */}
+            {/* Compact Action Buttons Row - Mobile Optimized */}
             <div
-              className="flex justify-center items-center gap-2 sm:gap-3 mb-3 sm:mb-4 px-2"
+              className="flex justify-center items-center gap-1 sm:gap-2 mb-2 sm:mb-3 px-1"
               role="toolbar"
               aria-label="AI-enhanced word learning controls"
               aria-describedby="game-instructions"
             >
               {!showHint && !showWordName && (
-                <motion.div
-                  whileHover={{ scale: 1.05, y: -2 }}
-                  whileTap={{ scale: 0.95, y: 0 }}
-                  transition={{ type: "spring", stiffness: 400, damping: 17 }}
+                <Button
+                  onClick={() =>
+                    handleActionWithFeedback(handleRequestHint, "light")
+                  }
+                  variant="outline"
+                  size="sm"
+                  className="px-2 py-1 text-xs rounded-lg min-h-[36px] sm:min-h-[44px] touch-manipulation bg-yellow-50 hover:bg-yellow-100 border border-yellow-200 text-yellow-700"
+                  aria-label="Get AI hint"
                 >
-                  <Button
-                    onClick={() =>
-                      handleActionWithFeedback(handleRequestHint, "light")
-                    }
-                    variant="outline"
-                    size="sm"
-                    className="px-3 py-2 text-xs sm:text-sm rounded-xl transition-all duration-300 min-h-[44px] touch-manipulation group relative overflow-hidden bg-gradient-to-r from-yellow-50 to-orange-50 hover:from-yellow-100 hover:to-orange-100 border-2 border-yellow-200 hover:border-yellow-300 shadow-md hover:shadow-lg"
-                    aria-label="Get AI hint"
-                  >
-                    <div className="absolute inset-0 bg-gradient-to-r from-yellow-200/0 via-yellow-200/50 to-yellow-200/0 transform -skew-x-12 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 ease-out" />
-                    <Lightbulb className="w-4 h-4 mr-1 group-hover:animate-pulse text-yellow-600" />
-                    <span className="relative z-10 font-semibold text-yellow-700">
-                      🤖 AI Hint {hintsUsed > 0 && `(${hintsUsed})`}
-                    </span>
-                  </Button>
-                </motion.div>
+                  <Lightbulb className="w-3 h-3 sm:w-4 sm:h-4 mr-0.5 sm:mr-1" />
+                  <span className="font-medium">
+                    💡 {hintsUsed > 0 && `(${hintsUsed})`}
+                  </span>
+                </Button>
               )}
 
               {!showWordName && (
-                <motion.div
-                  whileHover={{ scale: 1.05, y: -2 }}
-                  whileTap={{ scale: 0.95, y: 0 }}
-                  transition={{ type: "spring", stiffness: 400, damping: 17 }}
+                <Button
+                  onClick={() =>
+                    handleActionWithFeedback(
+                      () => setShowWordName(true),
+                      "medium",
+                    )
+                  }
+                  size="sm"
+                  className="bg-purple-500 hover:bg-purple-600 text-white px-2 py-1 text-xs rounded-lg min-h-[36px] sm:min-h-[44px] touch-manipulation shadow-md"
+                  aria-label="Show word answer"
                 >
-                  <Button
-                    onClick={() =>
-                      handleActionWithFeedback(
-                        () => setShowWordName(true),
-                        "medium",
-                      )
-                    }
-                    size="sm"
-                    className="bg-gradient-to-r from-educational-purple via-purple-500 to-purple-600 hover:from-purple-500 hover:via-purple-600 hover:to-purple-700 text-white px-3 py-2 text-xs sm:text-sm rounded-xl min-h-[44px] touch-manipulation group relative overflow-hidden shadow-lg hover:shadow-xl border-2 border-purple-300/50 hover:border-purple-200"
-                    aria-label="Show word answer"
-                  >
-                    <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/20 to-white/0 transform -skew-x-12 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-600 ease-out" />
-                    <Eye className="w-4 h-4 mr-1 group-hover:animate-bounce" />
-                    <span className="relative z-10 font-semibold">👁️ Show</span>
-                  </Button>
-                </motion.div>
+                  <Eye className="w-3 h-3 sm:w-4 sm:h-4 mr-0.5 sm:mr-1" />
+                  <span className="font-medium">👁️</span>
+                </Button>
               )}
 
               <Button
                 onClick={playPronunciation}
                 disabled={isPlaying}
-                size="lg"
                 className={cn(
-                  "bg-gradient-to-br from-educational-blue via-blue-500 to-blue-600 hover:from-blue-500 hover:via-blue-600 hover:to-blue-700 text-white p-4 sm:p-5 md:p-6 rounded-2xl transition-all duration-300 transform hover:scale-110 active:scale-95 shadow-xl hover:shadow-2xl border-2 border-blue-300/50 hover:border-blue-200",
-                  "min-w-[60px] min-h-[60px] sm:min-w-[70px] sm:min-h-[70px] md:min-w-[80px] md:min-h-[80px]",
-                  "ring-4 ring-blue-200/30 hover:ring-blue-300/50",
-                  "backdrop-blur-sm",
-                  isPlaying &&
-                    "animate-pulse ring-yellow-400/60 shadow-yellow-400/30",
-                  "disabled:opacity-50 disabled:transform-none disabled:hover:scale-100",
+                  "bg-gradient-to-br from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white p-2 sm:p-3 rounded-xl transition-all duration-300 transform hover:scale-105 active:scale-95 shadow-lg",
+                  "min-w-[44px] min-h-[44px] sm:min-w-[56px] sm:min-h-[56px]",
+                  isPlaying && "animate-pulse",
+                  "disabled:opacity-50",
                 )}
-                aria-label="🔊 Play pronunciation - AI-enhanced audio!"
+                aria-label="🔊 Play pronunciation"
               >
                 <Volume2
                   className={cn(
-                    "w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 lg:w-8 lg:h-8",
-                    "drop-shadow-lg",
-                    isPlaying && "animate-bounce text-yellow-100 scale-110",
+                    "w-4 h-4 sm:w-5 sm:h-5",
+                    isPlaying && "animate-bounce text-yellow-100",
                   )}
                 />
-                {isPlaying && (
-                  <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-yellow-400/20 to-orange-400/20 animate-pulse" />
-                )}
               </Button>
             </div>
 
