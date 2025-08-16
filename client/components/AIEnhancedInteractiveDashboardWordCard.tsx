@@ -1244,9 +1244,6 @@ export function AIEnhancedInteractiveDashboardWordCard({
                           ? "AI Learning Active!"
                           : "AI Helper"}
                       </span>
-                      {aiState.isSessionActive && (
-                        <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse ml-1" />
-                      )}
                     </div>
                   </div>
 
@@ -1356,6 +1353,9 @@ export function AIEnhancedInteractiveDashboardWordCard({
                             ? "AI Learning Active!"
                             : "AI Smart Helper"}
                         </span>
+                        {aiState.isSessionActive && (
+                          <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
+                        )}
                         <Button
                           onClick={() => {
                             if (aiState.isSessionActive) {
@@ -1641,7 +1641,7 @@ export function AIEnhancedInteractiveDashboardWordCard({
                     size="sm"
                     className="px-2 py-1 text-xs rounded-lg bg-purple-500 text-white min-h-[36px]"
                   >
-                    👁️ Show
+                    👁��� Show
                   </Button>
                 )}
 
