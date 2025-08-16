@@ -101,7 +101,11 @@ export class VowelQuizGenerator {
     for (const word of words) {
       if (vowelQuestions.length >= maxCount) break;
 
-      const vowelQuestion = this.createVowelQuestion(word, gameMode, maxMissingVowels);
+      const vowelQuestion = this.createVowelQuestion(
+        word,
+        gameMode,
+        maxMissingVowels,
+      );
       if (vowelQuestion) {
         vowelQuestions.push(vowelQuestion);
       }
@@ -113,7 +117,11 @@ export class VowelQuizGenerator {
         maxCount - vowelQuestions.length,
       );
       for (const word of additionalWords) {
-        const vowelQuestion = this.createVowelQuestion(word, gameMode, maxMissingVowels);
+        const vowelQuestion = this.createVowelQuestion(
+          word,
+          gameMode,
+          maxMissingVowels,
+        );
         if (vowelQuestion && vowelQuestions.length < maxCount) {
           vowelQuestions.push(vowelQuestion);
         }
@@ -147,7 +155,11 @@ export class VowelQuizGenerator {
 
       case "challenge":
         // Challenge mode: 1-2 vowels missing based on word length
-        missingIndex = this.selectMultipleVowels(vowelPositions, wordLower, effectiveMaxMissing);
+        missingIndex = this.selectMultipleVowels(
+          vowelPositions,
+          wordLower,
+          effectiveMaxMissing,
+        );
         break;
 
       case "timed":
@@ -155,7 +167,11 @@ export class VowelQuizGenerator {
         missingIndex =
           wordLower.length <= 4
             ? [this.selectSingleVowel(vowelPositions, wordLower)]
-            : this.selectMultipleVowels(vowelPositions, wordLower, effectiveMaxMissing);
+            : this.selectMultipleVowels(
+                vowelPositions,
+                wordLower,
+                effectiveMaxMissing,
+              );
         break;
 
       default:
@@ -163,14 +179,14 @@ export class VowelQuizGenerator {
     }
 
     // Create the display word with missing vowels replaced by underscores
-    const wordChars = wordLower.split('');
-    const displayWord = wordChars.map((char, index) =>
-      missingIndex.includes(index) ? '_' : char
-    ).join('');
+    const wordChars = wordLower.split("");
+    const displayWord = wordChars
+      .map((char, index) => (missingIndex.includes(index) ? "_" : char))
+      .join("");
 
     // Create correct vowels mapping
     const correctVowels: { [key: number]: string } = {};
-    missingIndex.forEach(index => {
+    missingIndex.forEach((index) => {
       correctVowels[index] = wordChars[index].toUpperCase();
     });
 
@@ -186,7 +202,7 @@ export class VowelQuizGenerator {
       displayWord,
       missingVowelIndices: missingIndex,
       correctVowels,
-      definition: word.definition || `A ${word.category || 'word'}`,
+      definition: word.definition || `A ${word.category || "word"}`,
     };
   }
 
@@ -311,7 +327,8 @@ export class VowelQuizGenerator {
       // Use EnhancedWordSelector for more systematic selection
       const wordSession = EnhancedWordSelector.generateWordSession({
         category: options.category || "all",
-        difficulty: options.difficulty === "mixed" ? "medium" : options.difficulty,
+        difficulty:
+          options.difficulty === "mixed" ? "medium" : options.difficulty,
         sessionSize: options.count,
         userProfile: options.userProfile,
       });
@@ -329,7 +346,8 @@ export class VowelQuizGenerator {
       );
       return this.generateVowelQuiz({
         ...options,
-        difficulty: options.difficulty === "mixed" ? "medium" : options.difficulty,
+        difficulty:
+          options.difficulty === "mixed" ? "medium" : options.difficulty,
       });
     }
   }
