@@ -304,7 +304,8 @@ export function UltimateVowelQuiz({
       setSelectedVowels(newSelectedVowels);
 
       // Check if all vowels are selected
-      const allSelected = currentQuestion.missingVowelIndices.every(
+      const missingIndices = currentQuestion.missingVowelIndices || currentQuestion.missingIndex || [];
+      const allSelected = missingIndices.every(
         (index) => newSelectedVowels[index],
       );
 
@@ -352,9 +353,13 @@ export function UltimateVowelQuiz({
       setAttempts({ ...attempts, [currentIndex]: newAttempts });
 
       // Check if answer is correct
-      const isCorrect = currentQuestion.missingVowelIndices.every(
-        (index) =>
-          vowelSelections[index] === currentQuestion.correctVowels[index],
+      const missingIndices = currentQuestion.missingVowelIndices || currentQuestion.missingIndex || [];
+      const correctVowels = currentQuestion.correctVowels || {};
+      const isCorrect = missingIndices.every(
+        (index) => {
+          const expectedVowel = correctVowels[index] || (currentQuestion.word || '')[index]?.toUpperCase();
+          return vowelSelections[index] === expectedVowel;
+        },
       );
 
       if (isCorrect) {
@@ -422,7 +427,8 @@ export function UltimateVowelQuiz({
           if (lives > 1) {
             // Reset selections for retry
             const resetSelections = { ...selectedVowels };
-            currentQuestion.missingVowelIndices.forEach((index) => {
+            const missingIndices = currentQuestion.missingVowelIndices || currentQuestion.missingIndex || [];
+            missingIndices.forEach((index) => {
               delete resetSelections[index];
             });
             setSelectedVowels(resetSelections);
@@ -460,8 +466,10 @@ export function UltimateVowelQuiz({
       playSoundIfEnabled("powerup");
 
       // Show one correct vowel
-      const firstMissingIndex = currentQuestion.missingVowelIndices[0];
-      const correctVowel = currentQuestion.correctVowels[firstMissingIndex];
+      const missingIndices = currentQuestion.missingVowelIndices || currentQuestion.missingIndex || [];
+      const firstMissingIndex = missingIndices[0];
+      const correctVowels = currentQuestion.correctVowels || {};
+      const correctVowel = correctVowels[firstMissingIndex] || (currentQuestion.word || '')[firstMissingIndex]?.toUpperCase();
       setSelectedVowels((prev) => ({
         ...prev,
         [firstMissingIndex]: correctVowel,
@@ -496,7 +504,7 @@ export function UltimateVowelQuiz({
         (_, index) =>
           attempts[index] === 1 ||
           (attempts[index] > 1 &&
-            selectedVowels[questions[index].missingVowelIndices[0]]),
+            selectedVowels[(questions[index].missingVowelIndices || questions[index].missingIndex || [])[0]]),
       ).length;
 
     const totalAttempts = Object.values(attempts).reduce(
@@ -930,8 +938,8 @@ export function UltimateVowelQuiz({
                 <Button
                   key={vowel}
                   onClick={() => {
-                    const nextMissingIndex =
-                      currentQuestion.missingVowelIndices.find(
+                    const missingIndices = currentQuestion.missingVowelIndices || currentQuestion.missingIndex || [];
+                    const nextMissingIndex = missingIndices.find(
                         (index) => !selectedVowels[index],
                       );
                     if (nextMissingIndex !== undefined) {
