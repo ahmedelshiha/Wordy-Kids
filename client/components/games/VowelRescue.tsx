@@ -25,7 +25,6 @@ import { EnhancedAchievementPopup } from "@/components/EnhancedAchievementPopup"
 import { audioService } from "@/lib/audioService";
 import { playSoundIfEnabled } from "@/lib/soundEffects";
 import { CelebrationEffect } from "@/components/CelebrationEffect";
-import { FloatingHelpMenu } from "@/components/FloatingHelpMenu";
 import { Word, getWordsByCategory, getRandomWords } from "@/data/wordsDatabase";
 
 const vowelOptions = ["A", "E", "I", "O", "U"];
@@ -867,43 +866,6 @@ export function VowelRescue({
           onComplete={() => setShowMainCelebration(false)}
         />
 
-        {/* Game-Specific Floating Help Menu */}
-        <FloatingHelpMenu
-          currentPage="vowel-rescue"
-          onHelpAction={(helpContent) => {
-            // Create a temporary feedback state for the help content
-            const tempFeedback = {
-              type: "info" as const,
-              title: helpContent.title,
-              message: helpContent.message,
-              onContinue: () => {
-                // Clear the help feedback
-              },
-            };
-
-            // Show help via audio service announcement
-            if ("speechSynthesis" in window) {
-              const utterance = new SpeechSynthesisUtterance(
-                `${helpContent.title}. ${helpContent.message.replace(/\n/g, ". ").replace(/•/g, "")}`,
-              );
-              utterance.rate = 0.8;
-              utterance.pitch = 1.1;
-              speechSynthesis.speak(utterance);
-            }
-
-            // Show visual feedback briefly
-            setShowFeedback(true);
-            setTimeout(() => setShowFeedback(false), 6000);
-          }}
-          onSettings={() => {
-            // Could trigger game settings overlay
-            playSoundIfEnabled("click");
-          }}
-          onAchievements={() => {
-            // Could show game-specific achievements
-            playSoundIfEnabled("success");
-          }}
-        />
       </div>
     </div>
   );
