@@ -592,7 +592,6 @@ export function ChildFriendlyCategorySelector({
 
       {/* Mobile Quick Categories - Search removed */}
       <div className="md:hidden mb-6 px-2">
-
         {/* Quick Categories Bar - All Categories */}
         {!searchTerm && (
           <div>
