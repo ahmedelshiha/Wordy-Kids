@@ -5,7 +5,7 @@ import { wordsDatabase, Word } from "../../data/wordsDatabase";
 import { Button } from "../ui/button";
 import { Volume2, VolumeX, Home, RotateCcw } from "lucide-react";
 import { cn } from "../../lib/utils";
-import { enhancedAchievementTracker } from "../../lib/enhancedAchievementTracker";
+import { EnhancedAchievementTracker } from "../../lib/enhancedAchievementTracker";
 import { audioService } from "../../lib/audioService";
 import { CelebrationEffect } from "../CelebrationEffect";
 import { EnhancedAchievementPopup } from "../EnhancedAchievementPopup";
