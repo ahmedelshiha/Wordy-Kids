@@ -1578,17 +1578,18 @@ export function AIEnhancedInteractiveDashboardWordCard({
               </div>
             )}
 
-            {/* Real-time AI encouragement */}
+            {/* Real-time AI encouragement - Mobile Optimized */}
             {realTimeEncouragement && !showWordName && (
               <motion.div
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -10 }}
-                className="text-center p-3 bg-gradient-to-r from-green-100 to-blue-100 rounded-lg border border-green-200 mb-4"
+                className="text-center p-2 sm:p-3 bg-gradient-to-r from-green-100 to-blue-100 rounded-lg border border-green-200 mb-2 sm:mb-4"
               >
-                <div className="text-sm font-medium text-green-800 flex items-center justify-center gap-2">
-                  <Brain className="w-4 h-4" />
-                  {realTimeEncouragement}
+                <div className="text-xs sm:text-sm font-medium text-green-800 flex items-center justify-center gap-1 sm:gap-2">
+                  <Brain className="w-3 h-3 sm:w-4 sm:h-4" />
+                  <span className="hidden sm:inline">{realTimeEncouragement}</span>
+                  <span className="sm:hidden">🤖 {realTimeEncouragement.slice(0, 30)}...</span>
                 </div>
               </motion.div>
             )}
