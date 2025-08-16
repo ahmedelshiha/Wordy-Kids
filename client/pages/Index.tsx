@@ -3029,8 +3029,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                 </div>
                                 <Button
                                   onClick={() => {
-                                    setSelectedQuizType("vowel-challenge");
-                                    setShowQuiz(true);
+                                    console.log("Deprecated: Use Ultimate Vowel Quiz instead");
                                   }}
                                   className="w-full bg-educational-purple text-white hover:bg-educational-purple/90 py-1.5 md:py-2 text-xs md:text-sm rounded-xl"
                                   size="sm"
