@@ -2156,7 +2156,7 @@ export default function Index({ initialProfile }: IndexProps) {
                         rememberedWordsCount={rememberedWords.size}
                         availableWords={currentDashboardWords}
                         // AI Enhancement Integration
-                        userId={currentUser?.id || "default-user"}
+                        userId={currentProfile?.id || "default-user"}
                         enableAIEnhancement={isAIEnabled()}
                         selectedCategory={selectedCategory}
                         userProgress={{
