@@ -1182,7 +1182,14 @@ export function AIEnhancedInteractiveDashboardWordCard({
                   {/* Left: Simple AI Status */}
                   <div className="flex items-center gap-2">
                     <div className="relative">
-                      <Brain className={cn("w-5 h-5 transition-all", aiState.isSessionActive ? "text-white" : "text-blue-600")} />
+                      <Brain
+                        className={cn(
+                          "w-5 h-5 transition-all",
+                          aiState.isSessionActive
+                            ? "text-white"
+                            : "text-blue-600",
+                        )}
+                      />
                       {aiState.isSessionActive && (
                         <div className="absolute -top-1 -right-1 w-2 h-2 bg-green-400 rounded-full" />
                       )}
@@ -1214,7 +1221,8 @@ export function AIEnhancedInteractiveDashboardWordCard({
                 {/* Mobile Progress: Only show if session active */}
                 {aiState.isSessionActive && (
                   <div className="mt-2 text-xs text-center opacity-80">
-                    Word {currentWordIndex + 1}/{SESSION_SIZE} • {Math.round(confidenceLevel * 100)}% 📈
+                    Word {currentWordIndex + 1}/{SESSION_SIZE} •{" "}
+                    {Math.round(confidenceLevel * 100)}% 📈
                   </div>
                 )}
               </div>
@@ -1227,7 +1235,9 @@ export function AIEnhancedInteractiveDashboardWordCard({
                       <Brain
                         className={cn(
                           "w-8 h-8 drop-shadow-lg transition-all duration-300",
-                          aiState.isSessionActive ? "text-white" : "text-blue-600",
+                          aiState.isSessionActive
+                            ? "text-white"
+                            : "text-blue-600",
                         )}
                       />
                       {aiState.isSessionActive && (
@@ -1237,7 +1247,10 @@ export function AIEnhancedInteractiveDashboardWordCard({
                     <div className="flex-1">
                       <div className="flex items-center gap-2 mb-1">
                         <span className="text-lg font-bold">
-                          🤖 {aiState.isSessionActive ? "AI Learning Active!" : "AI Smart Helper"}
+                          🤖{" "}
+                          {aiState.isSessionActive
+                            ? "AI Learning Active!"
+                            : "AI Smart Helper"}
                         </span>
                         <Button
                           onClick={() =>
@@ -1257,11 +1270,17 @@ export function AIEnhancedInteractiveDashboardWordCard({
                         </Button>
                       </div>
                       <div className="flex items-center gap-3 text-sm opacity-90">
-                        <span>📊 {Math.round(confidenceLevel * 100)}% Confidence</span>
+                        <span>
+                          📊 {Math.round(confidenceLevel * 100)}% Confidence
+                        </span>
                         <span>•</span>
-                        <span>📚 Word {currentWordIndex + 1} of {SESSION_SIZE}</span>
+                        <span>
+                          📚 Word {currentWordIndex + 1} of {SESSION_SIZE}
+                        </span>
                         {aiState.isSessionActive && (
-                          <span className="bg-white/20 px-2 py-1 rounded-full text-xs">Active</span>
+                          <span className="bg-white/20 px-2 py-1 rounded-full text-xs">
+                            Active
+                          </span>
                         )}
                       </div>
                     </div>
@@ -1270,8 +1289,18 @@ export function AIEnhancedInteractiveDashboardWordCard({
                   {/* Desktop Controls */}
                   <div className="flex items-center gap-2">
                     {difficultyAdjustment !== "maintain" && (
-                      <Badge variant="outline" className={cn("text-xs px-2 py-1", aiState.isSessionActive ? "bg-white/20 text-white border-white/30" : "bg-white border-blue-300")}>
-                        {difficultyAdjustment === "increase" ? "⬆️ Harder" : "⬇️ Easier"}
+                      <Badge
+                        variant="outline"
+                        className={cn(
+                          "text-xs px-2 py-1",
+                          aiState.isSessionActive
+                            ? "bg-white/20 text-white border-white/30"
+                            : "bg-white border-blue-300",
+                        )}
+                      >
+                        {difficultyAdjustment === "increase"
+                          ? "⬆️ Harder"
+                          : "⬇️ Easier"}
                       </Badge>
                     )}
                     <Button
@@ -1303,10 +1332,18 @@ export function AIEnhancedInteractiveDashboardWordCard({
               {/* Mobile: Simplified badges */}
               <div className="md:hidden mb-2">
                 <div className="flex items-center justify-center gap-2">
-                  <Badge className={cn("text-xs px-2 py-1", getDifficultyColor(currentWord.difficulty))}>
+                  <Badge
+                    className={cn(
+                      "text-xs px-2 py-1",
+                      getDifficultyColor(currentWord.difficulty),
+                    )}
+                  >
                     {currentWord.category}
                   </Badge>
-                  <Badge variant="outline" className="text-xs px-2 py-1 bg-purple-50 text-purple-700">
+                  <Badge
+                    variant="outline"
+                    className="text-xs px-2 py-1 bg-purple-50 text-purple-700"
+                  >
                     {sessionStats.accuracy}%
                   </Badge>
                 </div>
@@ -1314,13 +1351,29 @@ export function AIEnhancedInteractiveDashboardWordCard({
 
               {/* Desktop: Full badges */}
               <div className="hidden md:flex flex-wrap items-center justify-center gap-2 sm:gap-3 md:gap-4 mb-3 sm:mb-4">
-                <Badge className={cn("text-sm px-3 py-1", getDifficultyColor(currentWord.difficulty))}>
-                  {currentWord.difficulty ? currentWord.difficulty.charAt(0).toUpperCase() + currentWord.difficulty.slice(1) : "Medium"}
+                <Badge
+                  className={cn(
+                    "text-sm px-3 py-1",
+                    getDifficultyColor(currentWord.difficulty),
+                  )}
+                >
+                  {currentWord.difficulty
+                    ? currentWord.difficulty.charAt(0).toUpperCase() +
+                      currentWord.difficulty.slice(1)
+                    : "Medium"}
                 </Badge>
-                <Badge className={cn("text-sm px-3 py-1", getDifficultyColor(currentWord.difficulty))}>
+                <Badge
+                  className={cn(
+                    "text-sm px-3 py-1",
+                    getDifficultyColor(currentWord.difficulty),
+                  )}
+                >
                   {currentWord.category}
                 </Badge>
-                <Badge variant="outline" className="text-sm px-3 py-1 bg-purple-50 text-purple-700 border-purple-300">
+                <Badge
+                  variant="outline"
+                  className="text-sm px-3 py-1 bg-purple-50 text-purple-700 border-purple-300"
+                >
                   {sessionStats.accuracy}% Accuracy
                 </Badge>
               </div>
@@ -1344,7 +1397,9 @@ export function AIEnhancedInteractiveDashboardWordCard({
 
               {/* Simple progress text */}
               <div className="text-xs sm:text-sm text-gray-600">
-                <span className="font-medium">{currentWordIndex + 1} of {SESSION_SIZE} words</span>
+                <span className="font-medium">
+                  {currentWordIndex + 1} of {SESSION_SIZE} words
+                </span>
                 {sessionProgress >= 100 && <span className="ml-2">🎉</span>}
               </div>
             </div>
@@ -1415,12 +1470,18 @@ export function AIEnhancedInteractiveDashboardWordCard({
             </header>
 
             {/* Action Buttons Row - Mobile Optimized */}
-            <div className="flex justify-center items-center gap-2 mb-3 px-2" role="toolbar" aria-label="Word learning controls">
+            <div
+              className="flex justify-center items-center gap-2 mb-3 px-2"
+              role="toolbar"
+              aria-label="Word learning controls"
+            >
               {/* Mobile: Compact Layout */}
               <div className="md:hidden flex items-center gap-2">
                 {!showHint && !showWordName && (
                   <Button
-                    onClick={() => handleActionWithFeedback(handleRequestHint, "light")}
+                    onClick={() =>
+                      handleActionWithFeedback(handleRequestHint, "light")
+                    }
                     variant="outline"
                     size="sm"
                     className="px-2 py-1 text-xs rounded-lg bg-yellow-50 border-yellow-200 text-yellow-700 min-h-[36px]"
@@ -1431,7 +1492,12 @@ export function AIEnhancedInteractiveDashboardWordCard({
 
                 {!showWordName && (
                   <Button
-                    onClick={() => handleActionWithFeedback(() => setShowWordName(true), "medium")}
+                    onClick={() =>
+                      handleActionWithFeedback(
+                        () => setShowWordName(true),
+                        "medium",
+                      )
+                    }
                     size="sm"
                     className="px-2 py-1 text-xs rounded-lg bg-purple-500 text-white min-h-[36px]"
                   >
@@ -1445,10 +1511,12 @@ export function AIEnhancedInteractiveDashboardWordCard({
                   className={cn(
                     "bg-blue-500 hover:bg-blue-600 text-white p-3 rounded-full",
                     "min-w-[48px] min-h-[48px]",
-                    isPlaying && "animate-pulse bg-yellow-500"
+                    isPlaying && "animate-pulse bg-yellow-500",
                   )}
                 >
-                  <Volume2 className={cn("w-5 h-5", isPlaying && "animate-bounce")} />
+                  <Volume2
+                    className={cn("w-5 h-5", isPlaying && "animate-bounce")}
+                  />
                 </Button>
               </div>
 
@@ -1456,7 +1524,9 @@ export function AIEnhancedInteractiveDashboardWordCard({
               <div className="hidden md:flex items-center gap-3">
                 {!showHint && !showWordName && (
                   <Button
-                    onClick={() => handleActionWithFeedback(handleRequestHint, "light")}
+                    onClick={() =>
+                      handleActionWithFeedback(handleRequestHint, "light")
+                    }
                     variant="outline"
                     className="px-4 py-2 text-sm rounded-xl bg-yellow-50 border-yellow-200 text-yellow-700 hover:bg-yellow-100"
                   >
@@ -1467,7 +1537,12 @@ export function AIEnhancedInteractiveDashboardWordCard({
 
                 {!showWordName && (
                   <Button
-                    onClick={() => handleActionWithFeedback(() => setShowWordName(true), "medium")}
+                    onClick={() =>
+                      handleActionWithFeedback(
+                        () => setShowWordName(true),
+                        "medium",
+                      )
+                    }
                     className="px-4 py-2 text-sm rounded-xl bg-purple-500 hover:bg-purple-600 text-white"
                   >
                     <Eye className="w-4 h-4 mr-2" />
@@ -1481,10 +1556,12 @@ export function AIEnhancedInteractiveDashboardWordCard({
                   className={cn(
                     "bg-blue-500 hover:bg-blue-600 text-white p-4 rounded-2xl",
                     "min-w-[64px] min-h-[64px]",
-                    isPlaying && "animate-pulse bg-yellow-500"
+                    isPlaying && "animate-pulse bg-yellow-500",
                   )}
                 >
-                  <Volume2 className={cn("w-6 h-6", isPlaying && "animate-bounce")} />
+                  <Volume2
+                    className={cn("w-6 h-6", isPlaying && "animate-bounce")}
+                  />
                 </Button>
               </div>
             </div>

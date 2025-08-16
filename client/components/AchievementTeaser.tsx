@@ -180,7 +180,9 @@ export function AchievementTeaser({ className }: AchievementTeaserProps) {
             <CardContent className="p-1.5 sm:p-2 md:p-3">
               <div className="md:hidden">
                 <div className="flex items-center gap-2">
-                  <span className="text-sm flex-shrink-0">{getRandomEmoji()}</span>
+                  <span className="text-sm flex-shrink-0">
+                    {getRandomEmoji()}
+                  </span>
                   <motion.p
                     key={currentMessage}
                     initial={{ opacity: 0 }}
