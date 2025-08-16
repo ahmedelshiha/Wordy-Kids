@@ -1502,15 +1502,15 @@ export function AIEnhancedInteractiveDashboardWordCard({
               </div>
             )}
 
-            {/* AI-Enhanced Session Progress */}
+            {/* AI-Enhanced Session Progress - Mobile Optimized */}
             {!isAnswered && (
-              <div className="mt-2 bg-gradient-to-br from-blue-50 via-indigo-50/30 to-purple-50 rounded-xl p-3 sm:p-4 border border-blue-200/60 shadow-md backdrop-blur-sm ring-1 ring-blue-100/30">
-                {/* AI Enhancement Badge */}
-                <div className="flex items-center justify-center mb-2">
-                  <div className="bg-gradient-to-r from-blue-500 to-purple-500 p-1 rounded-full mr-2">
-                    <Brain className="w-3 h-3 text-white" />
+              <div className="mt-1 sm:mt-2 bg-gradient-to-br from-blue-50 to-purple-50 rounded-lg sm:rounded-xl p-2 sm:p-3 border border-blue-200/60 shadow-sm sm:shadow-md">
+                {/* Compact AI Enhancement Badge */}
+                <div className="flex items-center justify-center mb-1 sm:mb-2">
+                  <div className="bg-gradient-to-r from-blue-500 to-purple-500 p-0.5 sm:p-1 rounded-full mr-1 sm:mr-2">
+                    <Brain className="w-2 h-2 sm:w-3 sm:h-3 text-white" />
                   </div>
-                  <span className="text-xs font-medium text-blue-700">AI Session Progress</span>
+                  <span className="text-xs font-medium text-blue-700">🤖 AI Progress</span>
                 </div>
 
                 {/* Compact Progress Bar */}
