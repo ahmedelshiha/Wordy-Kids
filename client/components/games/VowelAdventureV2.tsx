@@ -58,29 +58,37 @@ export const VowelAdventureV2: React.FC<Props> = ({
 
   // Generate questions with progressive difficulty
   const generateQuestions = () => {
-    const shuffledWords = [...words].sort(() => Math.random() - 0.5);
+    // Filter words that have vowels
+    const validWords = words.filter(wordItem => {
+      const word = wordItem.word.toUpperCase();
+      return VOWELS.some(vowel => word.includes(vowel));
+    });
+
+    // Ensure we have enough valid words
+    const wordsToUse = validWords.length >= totalQuestions ? validWords : [...validWords, ...validWords];
+    const shuffledWords = [...wordsToUse].sort(() => Math.random() - 0.5);
     const selectedWords = shuffledWords.slice(0, totalQuestions);
-    
+
     const gameQuestions: Question[] = selectedWords.map((wordItem, index) => {
       const word = wordItem.word.toUpperCase();
       const vowelPositions = [...word].map((char, i) => VOWELS.includes(char) ? i : -1).filter(i => i !== -1);
-      
+
       if (vowelPositions.length === 0) {
-        // Fallback if no vowels found
+        // Fallback - this shouldn't happen with filtering above
         return {
           id: `q${index}`,
-          word: word,
-          emoji: wordItem.emoji || '🎯',
+          word: 'CAT',
+          emoji: '🐱',
           missingVowel: 'A',
-          missingIndex: 0,
-          displayWord: word
+          missingIndex: 1,
+          displayWord: 'C_T'
         };
       }
-      
+
       const randomVowelIndex = vowelPositions[Math.floor(Math.random() * vowelPositions.length)];
       const missingVowel = word[randomVowelIndex];
       const displayWord = word.slice(0, randomVowelIndex) + '_' + word.slice(randomVowelIndex + 1);
-      
+
       return {
         id: `q${index}`,
         word: word,
@@ -90,7 +98,7 @@ export const VowelAdventureV2: React.FC<Props> = ({
         displayWord: displayWord
       };
     });
-    
+
     setQuestions(gameQuestions);
   };
 
