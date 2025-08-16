@@ -70,6 +70,10 @@ const App = () => (
                 path="/speech-diagnostics"
                 element={<SpeechDiagnostics />}
               />
+              <Route
+                path="/test-balloon-rescue"
+                element={<TestBalloonRescue />}
+              />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
             </Routes>
