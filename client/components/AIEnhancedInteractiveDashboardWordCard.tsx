@@ -162,7 +162,6 @@ export function AIEnhancedInteractiveDashboardWordCard({
   >(null);
   const [guess, setGuess] = useState("");
   const [showHint, setShowHint] = useState(false);
-  const [wordStartTime, setWordStartTime] = useState(0);
   const [hintsUsed, setHintsUsed] = useState(0);
   const [currentAttempt, setCurrentAttempt] = useState(1);
 
