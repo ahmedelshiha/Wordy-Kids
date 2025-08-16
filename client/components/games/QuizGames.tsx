@@ -102,15 +102,15 @@ export function QuizGames({
       points: "200-500 pts",
     },
     {
-      id: "vowel-enhanced",
-      title: "Enhanced Vowel Quest",
-      description: "Complete adventure with multiple modes and difficulties!",
+      id: "vowel-ultimate",
+      title: "Ultimate Vowel Quiz",
+      description: "Four exciting modes: Rescue, Challenge, Rush & Adventure!",
       icon: "🎯",
-      difficulty: "Adaptive",
-      questions: "Customizable",
-      timePerQuestion: "Flexible",
+      difficulty: "All Levels",
+      questions: "Dynamic",
+      timePerQuestion: "Adaptive",
       color: "from-educational-blue to-educational-purple",
-      points: "50-500 pts",
+      points: "50-1000 pts",
     },
   ];
 
