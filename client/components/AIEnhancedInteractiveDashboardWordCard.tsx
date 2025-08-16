@@ -80,6 +80,7 @@ interface AIEnhancedInteractiveDashboardWordCardProps {
   selectedCategory?: string;
   className?: string;
   onSessionComplete?: (sessionData: any) => void;
+  onToggleAIEnhancement?: (enabled: boolean) => void;
 }
 
 export interface SessionStats {
@@ -112,6 +113,7 @@ export function AIEnhancedInteractiveDashboardWordCard({
   selectedCategory,
   className,
   onSessionComplete,
+  onToggleAIEnhancement,
 }: AIEnhancedInteractiveDashboardWordCardProps) {
   // Session Management
   const SESSION_SIZE = 20;
@@ -1199,13 +1201,16 @@ export function AIEnhancedInteractiveDashboardWordCard({
                     </span>
                   </div>
 
-                  {/* Right: Simple Toggle */}
+                  {/* Right: AI Enhancement Toggle */}
                   <Button
-                    onClick={() =>
-                      aiState.isSessionActive
-                        ? aiActions.endSession({ completed: false })
-                        : aiActions.reset()
-                    }
+                    onClick={() => {
+                      if (aiState.isSessionActive) {
+                        aiActions.endSession({ completed: false });
+                      } else {
+                        // Toggle AI enhancement completely
+                        onToggleAIEnhancement?.(false);
+                      }
+                    }}
                     size="sm"
                     className={cn(
                       "px-3 py-1 text-xs font-medium rounded-full h-7",
@@ -1214,7 +1219,7 @@ export function AIEnhancedInteractiveDashboardWordCard({
                         : "bg-green-500 hover:bg-green-600 text-white",
                     )}
                   >
-                    {aiState.isSessionActive ? "ON" : "OFF"}
+                    {aiState.isSessionActive ? "AI Enabled" : "Disable AI"}
                   </Button>
                 </div>
 
@@ -1253,11 +1258,14 @@ export function AIEnhancedInteractiveDashboardWordCard({
                             : "AI Smart Helper"}
                         </span>
                         <Button
-                          onClick={() =>
-                            aiState.isSessionActive
-                              ? aiActions.endSession({ completed: false })
-                              : aiActions.reset()
-                          }
+                          onClick={() => {
+                            if (aiState.isSessionActive) {
+                              aiActions.endSession({ completed: false });
+                            } else {
+                              // Toggle AI enhancement completely
+                              onToggleAIEnhancement?.(false);
+                            }
+                          }}
                           size="sm"
                           className={cn(
                             "ml-2 px-3 py-1 text-xs font-semibold rounded-full",
@@ -1266,7 +1274,9 @@ export function AIEnhancedInteractiveDashboardWordCard({
                               : "bg-green-500 hover:bg-green-600 text-white",
                           )}
                         >
-                          {aiState.isSessionActive ? "Turn Off" : "Turn On"}
+                          {aiState.isSessionActive
+                            ? "AI Enabled"
+                            : "Disable AI"}
                         </Button>
                       </div>
                       <div className="flex items-center gap-3 text-sm opacity-90">

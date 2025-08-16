@@ -8,6 +8,7 @@ import { Word } from "@/data/wordsDatabase";
 import { ChildWordStats } from "@shared/api";
 import { AchievementTracker } from "./achievementTracker";
 import { audioService } from "./audioService";
+import { SmartWordSelector } from "./smartWordSelection";
 
 export interface AIServiceConfig {
   enableRealTimeAdaptation: boolean;
@@ -392,7 +393,6 @@ export class AIWordRecommendationService {
     targetWordCount: number = 20,
   ): AIRecommendation {
     // Simple fallback using existing smart selection
-    const { SmartWordSelector } = require("./smartWordSelection");
 
     const selection = SmartWordSelector.selectWords({
       category: category || "all",
