@@ -1460,7 +1460,11 @@ export function AIEnhancedInteractiveDashboardWordCard({
             </div>
 
             {/* Achievement Teaser - Desktop Only */}
-            <div aria-live="polite" aria-label="Motivational messages" className="hidden md:block">
+            <div
+              aria-live="polite"
+              aria-label="Motivational messages"
+              className="hidden md:block"
+            >
               <AchievementTeaser className="mb-1 sm:mb-2" />
             </div>
 
