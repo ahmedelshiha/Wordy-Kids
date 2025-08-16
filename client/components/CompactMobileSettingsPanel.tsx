@@ -518,6 +518,73 @@ export const CompactMobileSettingsPanel: React.FC<
               )}
             </div>
 
+            {/* AI Settings Section */}
+            <div className="border rounded-lg">
+              <CompactSectionHeader
+                title="AI Enhancement"
+                emoji="🤖"
+                isExpanded={expandedSections.ai}
+                onToggle={() => toggleSection("ai")}
+              />
+              {expandedSections.ai && (
+                <div
+                  className="px-2 pb-2 space-y-1 max-h-[30vh] overflow-y-auto scroll-smooth"
+                  style={{ WebkitOverflowScrolling: "touch" }}
+                >
+                  <CompactSettingRow
+                    icon={aiEnhancementEnabled ? Brain : Brain}
+                    label="AI Enhanced Learning"
+                    description="Use AI to personalize your experience"
+                  >
+                    <CompactMobileSwitch
+                      checked={aiEnhancementEnabled}
+                      onCheckedChange={(checked) => {
+                        setAiEnhancementEnabled(checked);
+                        setHasUnsavedChanges(true);
+                        localStorage.setItem("aiEnhancementEnabled", JSON.stringify(checked));
+                      }}
+                    />
+                  </CompactSettingRow>
+
+                  <CompactSettingRow
+                    icon={aiAdaptiveDifficulty ? Sparkles : Sparkles}
+                    label="Adaptive Difficulty"
+                    description="AI adjusts difficulty based on performance"
+                  >
+                    <CompactMobileSwitch
+                      checked={aiAdaptiveDifficulty}
+                      onCheckedChange={(checked) => {
+                        setAiAdaptiveDifficulty(checked);
+                        setHasUnsavedChanges(true);
+                        localStorage.setItem("aiAdaptiveDifficulty", JSON.stringify(checked));
+                      }}
+                    />
+                  </CompactSettingRow>
+
+                  <CompactSettingRow
+                    icon={aiPersonalizedHints ? Target : Target}
+                    label="Smart Hints"
+                    description="Get personalized hints from AI"
+                  >
+                    <CompactMobileSwitch
+                      checked={aiPersonalizedHints}
+                      onCheckedChange={(checked) => {
+                        setAiPersonalizedHints(checked);
+                        setHasUnsavedChanges(true);
+                        localStorage.setItem("aiPersonalizedHints", JSON.stringify(checked));
+                      }}
+                    />
+                  </CompactSettingRow>
+
+                  <div className="mt-2 p-2 bg-blue-50 rounded-lg">
+                    <p className="text-xs text-blue-700">
+                      ✨ AI features improve as you learn!
+                    </p>
+                  </div>
+                </div>
+              )}
+            </div>
+
             {/* Appearance Section */}
             <div className="border rounded-lg">
               <CompactSectionHeader
