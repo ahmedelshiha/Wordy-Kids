@@ -973,24 +973,6 @@ export function AIEnhancedInteractiveDashboardWordCard({
       tabIndex={0}
       onKeyDown={handleKeyDown}
     >
-      {/* AI Active Session Banner */}
-      {aiState.isSessionActive && !showAIInsights && (
-        <motion.div
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -20 }}
-          className="bg-gradient-to-r from-blue-500 via-purple-500 to-blue-600 text-white p-2 sm:p-3 rounded-xl mb-4 shadow-lg"
-        >
-          <div className="flex items-center justify-center gap-2 text-sm font-semibold">
-            <Brain className="w-4 h-4 animate-pulse" />
-            <span>🤖 AI Enhanced Learning Session Active</span>
-            <div className="flex items-center gap-1 ml-auto">
-              <div className="w-2 h-2 bg-green-300 rounded-full animate-ping" />
-              <span className="text-xs">{Math.round(confidenceLevel * 100)}% Confidence</span>
-            </div>
-          </div>
-        </motion.div>
-      )}
 
       {/* AI Insights Panel - Mobile Optimized */}
       {showAIInsights && (
