@@ -1526,6 +1526,85 @@ export function AIEnhancedInteractiveDashboardWordCard({
               </div>
             )}
 
+            {/* AI-Enhanced Session Progress */}
+            {!isAnswered && (
+              <div className="mt-2 bg-gradient-to-br from-blue-50 via-indigo-50/30 to-purple-50 rounded-xl p-3 sm:p-4 border border-blue-200/60 shadow-md backdrop-blur-sm ring-1 ring-blue-100/30">
+                {/* AI Enhancement Badge */}
+                <div className="flex items-center justify-center mb-2">
+                  <div className="bg-gradient-to-r from-blue-500 to-purple-500 p-1 rounded-full mr-2">
+                    <Brain className="w-3 h-3 text-white" />
+                  </div>
+                  <span className="text-xs font-medium text-blue-700">AI Session Progress</span>
+                </div>
+
+                {/* Compact Progress Bar */}
+                <div className="flex items-center justify-between mb-2">
+                  <div className="text-xs font-bold text-gray-700">
+                    🚀 {sessionStats.wordsCompleted}/{SESSION_SIZE}
+                  </div>
+                  <div className="flex-1 mx-3">
+                    <div className="w-full bg-gradient-to-r from-gray-200 to-gray-300 rounded-full h-2 shadow-inner relative overflow-hidden">
+                      <div
+                        className="bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-500 h-2 rounded-full transition-all duration-700 ease-out shadow-sm relative"
+                        style={{
+                          width: `${(sessionStats.wordsCompleted / SESSION_SIZE) * 100}%`,
+                        }}
+                      >
+                        {/* Progress shimmer effect */}
+                        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent transform -skew-x-12 animate-pulse"></div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="text-xs text-gray-600">
+                    {Math.round(
+                      (sessionStats.wordsCompleted / SESSION_SIZE) * 100,
+                    )}
+                    %
+                  </div>
+                </div>
+
+                <div className="flex items-center justify-center gap-2">
+                  {/* Compact Stats with AI confidence indicator */}
+                  <div className="bg-green-100 rounded-md px-2 py-1 text-center">
+                    <div className="text-xs">
+                      😊 {sessionStats.wordsRemembered}
+                    </div>
+                  </div>
+                  <div className="bg-orange-100 rounded-md px-2 py-1 text-center">
+                    <div className="text-xs">
+                      💪 {sessionStats.wordsForgotten}
+                    </div>
+                  </div>
+                  <div className="bg-blue-100 rounded-md px-2 py-1 text-center">
+                    <div className="text-xs">
+                      🤖 {Math.round(confidenceLevel * 100)}%
+                    </div>
+                  </div>
+                </div>
+
+                {/* AI-enhanced encouraging message */}
+                <div className="mt-1 text-center">
+                  {sessionStats.wordsRemembered >= 15 ? (
+                    <div className="text-green-600 font-medium text-xs">
+                      🌟 AI says: You're a superstar!
+                    </div>
+                  ) : sessionStats.wordsRemembered >= 10 ? (
+                    <div className="text-green-600 font-medium text-xs">
+                      🎯 AI says: Awesome job!
+                    </div>
+                  ) : sessionStats.wordsCompleted >= 10 ? (
+                    <div className="text-blue-600 font-medium text-xs">
+                      🔥 AI says: Keep going!
+                    </div>
+                  ) : (
+                    <div className="text-purple-600 font-medium text-xs">
+                      🌟 AI says: Great start!
+                    </div>
+                  )}
+                </div>
+              </div>
+            )}
+
             {/* Real-time AI encouragement */}
             {realTimeEncouragement && !showWordName && (
               <motion.div
