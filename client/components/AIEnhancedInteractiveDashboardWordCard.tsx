@@ -1210,7 +1210,7 @@ export function AIEnhancedInteractiveDashboardWordCard({
                   </div>
                 </div>
               </div>
-              <div className="flex items-center gap-1">
+              <div className="flex items-center gap-2">
                 {difficultyAdjustment !== "maintain" && (
                   <Badge variant="outline" className="text-xs px-1 py-0">
                     {difficultyAdjustment === "increase"
@@ -1223,10 +1223,17 @@ export function AIEnhancedInteractiveDashboardWordCard({
                 <Button
                   onClick={() => setShowAIInsights(!showAIInsights)}
                   variant="ghost"
-                  size="sm"
-                  className="text-blue-600 hover:text-blue-800 p-1"
+                  size="lg"
+                  className={cn(
+                    "bg-gradient-to-r from-purple-100 to-blue-100 hover:from-purple-200 hover:to-blue-200",
+                    "text-blue-600 hover:text-blue-800 p-3 sm:p-4 rounded-2xl shadow-lg hover:shadow-xl",
+                    "border-2 border-purple-200/50 hover:border-purple-300/50",
+                    "transition-all duration-300 transform hover:scale-105",
+                    showAIInsights && "bg-gradient-to-r from-blue-200 to-purple-200 ring-2 ring-blue-300"
+                  )}
+                  aria-label="View AI learning statistics"
                 >
-                  <BarChart3 className="w-3 h-3" />
+                  <BarChart3 className="w-5 h-5 sm:w-6 sm:h-6 drop-shadow-sm" />
                 </Button>
               </div>
             </div>
