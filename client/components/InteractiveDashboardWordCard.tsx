@@ -1145,35 +1145,49 @@ export function InteractiveDashboardWordCard({
               aria-describedby="game-instructions"
             >
               {!showHint && !showWordName && (
-                <Button
-                  onClick={() =>
-                    handleActionWithFeedback(() => setShowHint(true), "light")
-                  }
-                  variant="outline"
-                  size="sm"
-                  className="px-3 py-2 text-xs sm:text-sm rounded-xl transition-all duration-300 transform hover:scale-105 active:scale-95 min-h-[44px] touch-manipulation"
-                  aria-label="Show hint"
+                <motion.div
+                  whileHover={{ scale: 1.05, y: -2 }}
+                  whileTap={{ scale: 0.95, y: 0 }}
+                  transition={{ type: "spring", stiffness: 400, damping: 17 }}
                 >
-                  <Lightbulb className="w-4 h-4 mr-1" />
-                  💡 Hint
-                </Button>
+                  <Button
+                    onClick={() =>
+                      handleActionWithFeedback(() => setShowHint(true), "light")
+                    }
+                    variant="outline"
+                    size="sm"
+                    className="px-3 py-2 text-xs sm:text-sm rounded-xl transition-all duration-300 min-h-[44px] touch-manipulation group relative overflow-hidden bg-gradient-to-r from-yellow-50 to-orange-50 hover:from-yellow-100 hover:to-orange-100 border-2 border-yellow-200 hover:border-yellow-300 shadow-md hover:shadow-lg"
+                    aria-label="Show hint"
+                  >
+                    <div className="absolute inset-0 bg-gradient-to-r from-yellow-200/0 via-yellow-200/50 to-yellow-200/0 transform -skew-x-12 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 ease-out" />
+                    <Lightbulb className="w-4 h-4 mr-1 group-hover:animate-pulse text-yellow-600" />
+                    <span className="relative z-10 font-semibold text-yellow-700">💡 Hint</span>
+                  </Button>
+                </motion.div>
               )}
 
               {!showWordName && (
-                <Button
-                  onClick={() =>
-                    handleActionWithFeedback(
-                      () => setShowWordName(true),
-                      "medium",
-                    )
-                  }
-                  size="sm"
-                  className="bg-educational-purple hover:bg-educational-purple/90 text-white px-3 py-2 text-xs sm:text-sm rounded-xl transition-all duration-300 transform hover:scale-105 active:scale-95 min-h-[44px] touch-manipulation"
-                  aria-label="Show word answer"
+                <motion.div
+                  whileHover={{ scale: 1.05, y: -2 }}
+                  whileTap={{ scale: 0.95, y: 0 }}
+                  transition={{ type: "spring", stiffness: 400, damping: 17 }}
                 >
-                  <Eye className="w-4 h-4 mr-1" />
-                  👁️ Show
-                </Button>
+                  <Button
+                    onClick={() =>
+                      handleActionWithFeedback(
+                        () => setShowWordName(true),
+                        "medium",
+                      )
+                    }
+                    size="sm"
+                    className="bg-gradient-to-r from-educational-purple via-purple-500 to-purple-600 hover:from-purple-500 hover:via-purple-600 hover:to-purple-700 text-white px-3 py-2 text-xs sm:text-sm rounded-xl min-h-[44px] touch-manipulation group relative overflow-hidden shadow-lg hover:shadow-xl border-2 border-purple-300/50 hover:border-purple-200"
+                    aria-label="Show word answer"
+                  >
+                    <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/20 to-white/0 transform -skew-x-12 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-600 ease-out" />
+                    <Eye className="w-4 h-4 mr-1 group-hover:animate-bounce" />
+                    <span className="relative z-10 font-semibold">👁️ Show</span>
+                  </Button>
+                </motion.div>
               )}
 
               <Button
@@ -1334,7 +1348,7 @@ export function InteractiveDashboardWordCard({
                     <div className="absolute inset-0 bg-white/20 rounded-xl opacity-0 hover:opacity-100 transition-opacity duration-300"></div>
                     <div className="relative z-10 flex items-center justify-center">
                       <span className="text-base sm:text-lg mr-1 sm:mr-2 animate-bounce">
-                        😊
+                        ����
                       </span>
                       <div className="text-center">
                         <div className="font-bold text-xs sm:text-sm md:text-base">
