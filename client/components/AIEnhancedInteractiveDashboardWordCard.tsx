@@ -1642,7 +1642,7 @@ export function AIEnhancedInteractiveDashboardWordCard({
                     size="sm"
                     className="px-2 py-1 text-xs rounded-lg bg-purple-500 text-white min-h-[36px]"
                   >
-                    👁��� Show
+                    {EMOJI_CONSTANTS.SHOW} Show
                   </Button>
                 )}
 
