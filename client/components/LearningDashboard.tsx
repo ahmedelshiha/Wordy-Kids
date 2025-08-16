@@ -189,16 +189,16 @@ export const LearningDashboard: React.FC<LearningDashboardProps> = ({
       {/* AI Enhancement Toggle */}
       {userId && (
         <Card className="bg-gradient-to-r from-blue-50 to-purple-50 border-blue-200">
-          <CardContent className="p-4">
+          <CardContent className="p-2 sm:p-4">
             <div className="flex items-center justify-between">
-              <div className="flex items-center gap-2">
-                <Brain className="w-5 h-5 text-blue-600" />
+              <div className="flex items-center gap-1 sm:gap-2">
+                <Brain className="w-4 h-4 sm:w-5 sm:h-5 text-blue-600" />
                 <div>
-                  <h3 className="font-semibold text-blue-800">
-                    AI-Enhanced Learning
+                  <h3 className="text-sm sm:text-base font-semibold text-blue-800">
+                    🤖 AI Learning
                   </h3>
-                  <p className="text-sm text-blue-600">
-                    Personalized word selection with machine learning
+                  <p className="text-xs sm:text-sm text-blue-600 hidden sm:block">
+                    Smart word selection
                   </p>
                 </div>
               </div>
