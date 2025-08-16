@@ -5,7 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { Brain, Play, Clock, Target, Trophy } from "lucide-react";
 import { QuizGame } from "../QuizGame";
 import { generateQuizQuestions } from "@/lib/gameGeneration";
-import { EnhancedVowelQuiz } from "./EnhancedVowelQuiz";
+import { UltimateVowelQuiz } from "./UltimateVowelQuiz";
 import ListenAndGuessGame from "./ListenAndGuessGame";
 import PictureFunGame from "./PictureFunGame";
 
