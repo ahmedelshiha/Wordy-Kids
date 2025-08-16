@@ -1876,7 +1876,7 @@ export function AIEnhancedInteractiveDashboardWordCard({
                   </div>
 
                   {/* Action Buttons */}
-                  <div className="flex justify-center gap-3 sm:gap-4 flex-row">
+                  <div className="flex justify-center gap-2 sm:gap-3 md:gap-4 flex-row px-2">
                     {/* I Forgot button (left side) */}
                     <motion.div
                       whileHover={{ scale: 1.05, y: -2 }}
@@ -1893,12 +1893,12 @@ export function AIEnhancedInteractiveDashboardWordCard({
                         disabled={isAnswered}
                         size="lg"
                         variant="outline"
-                        className="w-full sm:w-auto bg-gradient-to-r from-orange-50 to-red-50 hover:from-orange-100 hover:to-red-100 text-orange-700 hover:text-red-700 font-bold py-3 px-6 rounded-2xl transition-all duration-300 transform hover:scale-105 active:scale-95 shadow-lg hover:shadow-xl min-h-[60px] touch-manipulation group relative overflow-hidden border-2 border-orange-300 hover:border-red-300"
+                        className="w-full sm:w-auto bg-gradient-to-r from-orange-50 to-red-50 hover:from-orange-100 hover:to-red-100 text-orange-700 hover:text-red-700 font-bold py-2.5 px-3 sm:py-3 sm:px-6 rounded-2xl transition-all duration-300 transform hover:scale-105 active:scale-95 shadow-lg hover:shadow-xl min-h-[50px] sm:min-h-[60px] touch-manipulation group relative overflow-hidden border-2 border-orange-300 hover:border-red-300 text-sm sm:text-base"
                         aria-label="I need more practice"
                       >
                         <div className="absolute inset-0 bg-gradient-to-r from-orange-200/0 via-orange-200/30 to-orange-200/0 transform -skew-x-12 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-600 ease-out" />
                         <XCircle className="w-5 h-5 mr-2 group-hover:animate-pulse text-orange-600" />
-                        <span className="relative z-10">🤔 Need practice</span>
+                        <span className="relative z-10 truncate">🤔 Need practice</span>
                       </Button>
                     </motion.div>
 
@@ -1917,12 +1917,12 @@ export function AIEnhancedInteractiveDashboardWordCard({
                         onClick={() => handleWordAction("remembered")}
                         disabled={isAnswered}
                         size="lg"
-                        className="w-full sm:w-auto bg-gradient-to-r from-green-500 via-emerald-500 to-green-600 hover:from-green-600 hover:via-emerald-600 hover:to-green-700 text-white font-bold py-3 px-6 rounded-2xl transition-all duration-300 transform hover:scale-105 active:scale-95 shadow-xl hover:shadow-2xl min-h-[60px] touch-manipulation group relative overflow-hidden border-2 border-green-300/50 hover:border-green-200"
+                        className="w-full sm:w-auto bg-gradient-to-r from-green-500 via-emerald-500 to-green-600 hover:from-green-600 hover:via-emerald-600 hover:to-green-700 text-white font-bold py-2.5 px-3 sm:py-3 sm:px-6 rounded-2xl transition-all duration-300 transform hover:scale-105 active:scale-95 shadow-xl hover:shadow-2xl min-h-[50px] sm:min-h-[60px] touch-manipulation group relative overflow-hidden border-2 border-green-300/50 hover:border-green-200 text-sm sm:text-base"
                         aria-label="I know this word"
                       >
                         <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/20 to-white/0 transform -skew-x-12 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-600 ease-out" />
                         <CheckCircle className="w-5 h-5 mr-2 group-hover:animate-bounce" />
-                        <span className="relative z-10">😊 I know this!</span>
+                        <span className="relative z-10 truncate">😊 I know this!</span>
                       </Button>
                     </motion.div>
                   </div>
