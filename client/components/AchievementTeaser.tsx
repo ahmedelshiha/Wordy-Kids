@@ -165,7 +165,7 @@ export function AchievementTeaser({ className }: AchievementTeaserProps) {
               <div className="hidden">
                 <div className="flex items-center gap-2">
                   <span className="text-sm flex-shrink-0">
-                    {getRandomEmoji()}
+                    {getRandomEmojiSafe()}
                   </span>
                   <motion.p
                     key={currentMessage}
@@ -233,7 +233,7 @@ export function AchievementTeaser({ className }: AchievementTeaserProps) {
                     }}
                     className="text-base md:text-lg flex-shrink-0 will-change-transform"
                   >
-                    {getRandomEmoji()}
+                    {getRandomEmojiSafe()}
                   </motion.div>
                 </div>
               </div>
