@@ -883,7 +883,7 @@ export function AIEnhancedInteractiveDashboardWordCard({
               scale: 1.1,
               transition: { duration: 0.2 },
             }}
-            className="text-8xl filter drop-shadow-lg relative z-10"
+            className="text-9xl filter drop-shadow-lg relative z-10"
           >
             {currentWord.emoji}
 
@@ -1289,9 +1289,9 @@ export function AIEnhancedInteractiveDashboardWordCard({
 
                 {/* Mobile Progress: Only show if session active */}
                 {aiState.isSessionActive && (
-                  <div className="mt-2 text-xs text-center opacity-80">
-                    Word {currentWordIndex + 1}/{SESSION_SIZE} •{" "}
-                    {Math.round(confidenceLevel * 100)}% 📈
+                  <div className="mt-2 text-center opacity-80">
+                    <span className="text-xs">Word {currentWordIndex + 1}/{SESSION_SIZE} •{" "}</span>
+                    <span className="text-xs">{Math.round(confidenceLevel * 100)}% 📈</span>
                   </div>
                 )}
               </div>
@@ -1362,8 +1362,8 @@ export function AIEnhancedInteractiveDashboardWordCard({
                           {aiState.isSessionActive ? "Pause AI" : "Start AI"}
                         </Button>
                       </div>
-                      <div className="flex items-center gap-3 text-sm opacity-90">
-                        <span>
+                      <div className="flex items-center gap-3 opacity-90">
+                        <span className="text-xs">
                           📊 {Math.round(confidenceLevel * 100)}% Confidence
                         </span>
                         <span>•</span>
