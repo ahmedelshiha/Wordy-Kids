@@ -968,6 +968,29 @@ export function AIEnhancedInteractiveDashboardWordCard({
     );
   }
 
+  // Show AI disabled message if globally disabled
+  if (!globalAIEnabled) {
+    return (
+      <Card className="w-full max-w-4xl mx-auto">
+        <CardContent className="p-6 text-center">
+          <Brain className="w-12 h-12 mx-auto mb-4 text-gray-400" />
+          <h3 className="text-xl font-bold text-gray-600 mb-2">
+            AI Enhancement Disabled
+          </h3>
+          <p className="text-gray-500 mb-4">
+            AI features are currently disabled. Enable AI in settings to use smart learning features.
+          </p>
+          <Button
+            onClick={toggleGlobalAI}
+            className="bg-green-500 hover:bg-green-600 text-white"
+          >
+            Enable AI Enhancement
+          </Button>
+        </CardContent>
+      </Card>
+    );
+  }
+
   if (!currentWord) {
     return (
       <Card className={cn("w-full max-w-2xl mx-auto", className)}>
