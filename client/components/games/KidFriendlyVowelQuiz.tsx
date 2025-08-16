@@ -333,15 +333,15 @@ export function KidFriendlyVowelQuiz({
             </div>
 
             {/* Vowel Options - Large Touch Targets */}
-            <div className="grid grid-cols-5 gap-3">
+            <div className="grid grid-cols-5 gap-3 mobile-button-grid">
               {vowelOptions.map((vowel) => (
                 <Button
                   key={vowel}
                   onClick={() => handleVowelSelect(vowel)}
                   disabled={showFeedback || selectedVowel === vowel}
-                  className={`h-20 text-3xl font-bold rounded-xl transition-all duration-300 ${
+                  className={`h-20 text-3xl font-bold rounded-xl transition-all duration-300 vowel-button-touch kid-friendly-button kid-friendly-focus ${
                     selectedVowel === vowel
-                      ? "bg-purple-600 text-white scale-110 shadow-lg"
+                      ? "bg-purple-600 text-white scale-110 shadow-lg kid-friendly-bounce"
                       : "bg-gradient-to-br from-purple-400 to-pink-400 text-white hover:scale-105 shadow-md"
                   }`}
                 >
