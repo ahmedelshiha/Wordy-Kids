@@ -1241,43 +1241,45 @@ export function AIEnhancedInteractiveDashboardWordCard({
                     </span>
                   </div>
 
-                  {/* Right: AI Enhancement Toggle */}
-                  <Button
-                    onClick={() => {
-                      if (aiState.isSessionActive) {
-                        // End current AI session
-                        aiActions.endSession({ completed: false });
-                      } else {
-                        // Start AI session with current words
-                        aiActions.startSession({
-                          words: words.slice(0, 10),
-                          confidence: 0.8,
-                          reasoning: ["Starting new AI session"],
-                          expectedOutcomes: {
-                            learningVelocity: 0.7,
-                            retentionPrediction: 0.8,
-                            engagementScore: 0.85,
-                            difficultyFit: 0.75
-                          },
-                          alternativeStrategies: ["adaptive"],
-                          adaptiveInstructions: {
-                            encouragementFrequency: 0.6,
-                            hintStrategy: "moderate",
-                            errorHandling: "immediate"
-                          }
-                        });
-                      }
-                    }}
-                    size="sm"
-                    className={cn(
-                      "px-3 py-1 text-xs font-medium rounded-full h-7",
-                      aiState.isSessionActive
-                        ? "bg-white/20 hover:bg-white/30 text-white border border-white/30"
-                        : "bg-green-500 hover:bg-green-600 text-white",
-                    )}
-                  >
-                    {aiState.isSessionActive ? "Disable AI" : "Enable AI"}
-                  </Button>
+                  {/* Right: AI Enhancement Toggles */}
+                  <div className="flex items-center gap-1">
+                    <Button
+                      onClick={() => {
+                        if (aiState.isSessionActive) {
+                          // End current AI session
+                          aiActions.endSession({ completed: false });
+                        } else {
+                          // Start AI session with current words
+                          aiActions.startSession({
+                            words: words.slice(0, 10),
+                            confidence: 0.8,
+                            reasoning: ["Starting new AI session"],
+                            expectedOutcomes: {
+                              learningVelocity: 0.7,
+                              retentionPrediction: 0.8,
+                              engagementScore: 0.85,
+                              difficultyFit: 0.75
+                            },
+                            alternativeStrategies: ["adaptive"],
+                            adaptiveInstructions: {
+                              encouragementFrequency: 0.6,
+                              hintStrategy: "moderate",
+                              errorHandling: "immediate"
+                            }
+                          });
+                        }
+                      }}
+                      size="sm"
+                      className={cn(
+                        "px-3 py-1 text-xs font-medium rounded-full h-7",
+                        aiState.isSessionActive
+                          ? "bg-white/20 hover:bg-white/30 text-white border border-white/30"
+                          : "bg-green-500 hover:bg-green-600 text-white",
+                      )}
+                    >
+                      {aiState.isSessionActive ? "Pause AI" : "Start AI"}
+                    </Button>
+                  </div>
                 </div>
 
                 {/* Mobile Progress: Only show if session active */}
