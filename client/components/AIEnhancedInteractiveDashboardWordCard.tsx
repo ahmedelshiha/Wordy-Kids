@@ -1672,7 +1672,8 @@ export function AIEnhancedInteractiveDashboardWordCard({
                     className="px-4 py-2 text-sm rounded-xl bg-yellow-50 border-yellow-200 text-yellow-700 hover:bg-yellow-100"
                   >
                     <Lightbulb className="w-4 h-4 mr-2" />
-                    {EMOJI_CONSTANTS.HINT} Get Hint {hintsUsed > 0 && `(${hintsUsed})`}
+                    {EMOJI_CONSTANTS.HINT} Get Hint{" "}
+                    {hintsUsed > 0 && `(${hintsUsed})`}
                   </Button>
                 )}
 
@@ -1736,7 +1737,9 @@ export function AIEnhancedInteractiveDashboardWordCard({
                   >
                     <div className="absolute inset-0 bg-gradient-to-r from-orange-200/0 via-orange-200/30 to-orange-200/0 transform -skew-x-12 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-600 ease-out" />
                     <XCircle className="w-5 h-5 mr-2 group-hover:animate-pulse text-orange-600" />
-                    <span className="relative z-10 truncate">{EMOJI_CONSTANTS.THINKING} I Forgot</span>
+                    <span className="relative z-10 truncate">
+                      {EMOJI_CONSTANTS.THINKING} I Forgot
+                    </span>
                   </Button>
                 </motion.div>
 
@@ -1760,7 +1763,9 @@ export function AIEnhancedInteractiveDashboardWordCard({
                   >
                     <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/20 to-white/0 transform -skew-x-12 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-600 ease-out" />
                     <CheckCircle className="w-5 h-5 mr-2 group-hover:animate-bounce" />
-                    <span className="relative z-10 truncate">{EMOJI_CONSTANTS.REMEMBERED} I Remember</span>
+                    <span className="relative z-10 truncate">
+                      {EMOJI_CONSTANTS.REMEMBERED} I Remember
+                    </span>
                   </Button>
                 </motion.div>
               </div>
@@ -1899,7 +1904,9 @@ export function AIEnhancedInteractiveDashboardWordCard({
                       >
                         <div className="absolute inset-0 bg-gradient-to-r from-orange-200/0 via-orange-200/30 to-orange-200/0 transform -skew-x-12 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-600 ease-out" />
                         <XCircle className="w-5 h-5 mr-2 group-hover:animate-pulse text-orange-600" />
-                        <span className="relative z-10 truncate">{EMOJI_CONSTANTS.THINKING} Need practice</span>
+                        <span className="relative z-10 truncate">
+                          {EMOJI_CONSTANTS.THINKING} Need practice
+                        </span>
                       </Button>
                     </motion.div>
 
@@ -1923,7 +1930,9 @@ export function AIEnhancedInteractiveDashboardWordCard({
                       >
                         <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/20 to-white/0 transform -skew-x-12 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-600 ease-out" />
                         <CheckCircle className="w-5 h-5 mr-2 group-hover:animate-bounce" />
-                        <span className="relative z-10 truncate">{EMOJI_CONSTANTS.REMEMBERED} I know this!</span>
+                        <span className="relative z-10 truncate">
+                          {EMOJI_CONSTANTS.REMEMBERED} I know this!
+                        </span>
                       </Button>
                     </motion.div>
                   </div>

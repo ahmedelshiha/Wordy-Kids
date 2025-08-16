@@ -86,7 +86,7 @@ export function AchievementTeaser({ className }: AchievementTeaserProps) {
 
   const getRandomEmojiSafe = () => {
     // Use the safe emoji utility instead of local array
-    return getRandomEmoji('learning');
+    return getRandomEmoji("learning");
   };
 
   // Touch handlers for mobile interactivity
