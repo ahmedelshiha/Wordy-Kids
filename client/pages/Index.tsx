@@ -3181,6 +3181,29 @@ export default function Index({ initialProfile }: IndexProps) {
                           playerLevel={1}
                           rounds={10}
                         />
+                      ) : selectedQuizType === "vowel-adventure" ? (
+                        <VowelAdventure
+                          words={defaultWords}
+                          totalQuestions={10}
+                          onFinish={(result) => {
+                            // Track achievement for vowel quiz completion
+                            AchievementTracker.trackActivity({
+                              type: "vowelRescue",
+                              accuracy: (result.correctAnswers / result.totalQuestions) * 100,
+                            });
+
+                            setFeedback({
+                              type: "celebration",
+                              title: "Adventure Complete! 🎉",
+                              message: `You got ${result.correctAnswers} out of ${result.totalQuestions} correct with ${result.starRating} star${result.starRating !== 1 ? 's' : ''}!`,
+                              onContinue: () => {
+                                setFeedback(null);
+                                setShowQuiz(false);
+                              },
+                            });
+                          }}
+                          onHome={() => setShowQuiz(false)}
+                        />
                       ) : selectedQuizType?.startsWith("vowel-") ? (
                         <VowelRescue
                           questions={(() => {
