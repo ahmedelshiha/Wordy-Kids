@@ -12,7 +12,9 @@ export default function TestBalloonRescue() {
           totalQuestions={5}
           onFinish={(result) => {
             console.log("Game finished!", result);
-            alert(`Game completed! You rescued ${result.correctAnswers} out of ${result.totalQuestions} balloons!`);
+            alert(
+              `Game completed! You rescued ${result.correctAnswers} out of ${result.totalQuestions} balloons!`,
+            );
           }}
           onHome={() => {
             console.log("Returning home");

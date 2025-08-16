@@ -101,7 +101,8 @@ export function AdventureGames({
     {
       id: "balloon_rescue",
       title: "Balloon Rescue!",
-      description: "Save balloons by finding missing vowels! Progressive difficulty with achievements.",
+      description:
+        "Save balloons by finding missing vowels! Progressive difficulty with achievements.",
       icon: "🎈",
       difficulty: "Progressive",
       timeLimit: "3-8 min",

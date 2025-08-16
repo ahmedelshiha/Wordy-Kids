@@ -1,4 +1,10 @@
-import React, { useEffect, useRef, useState, useCallback, useMemo } from "react";
+import React, {
+  useEffect,
+  useRef,
+  useState,
+  useCallback,
+  useMemo,
+} from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { GameResult, WordItem } from "../../types/vowel-adventure";
 import { wordsDatabase, Word } from "../../data/wordsDatabase";
@@ -37,22 +43,22 @@ const VOWELS = ["A", "E", "I", "O", "U"];
 const generateSmartDistractors = (correctVowel: string): string[] => {
   const similar = {
     A: ["E", "I"],
-    E: ["A", "I"], 
+    E: ["A", "I"],
     I: ["E", "A"],
     O: ["U", "A"],
-    U: ["O", "E"]
+    U: ["O", "E"],
   };
 
   const distractors = [correctVowel];
   const similarVowels = similar[correctVowel as keyof typeof similar] || [];
-  
+
   // Add similar vowels first
-  similarVowels.forEach(vowel => {
+  similarVowels.forEach((vowel) => {
     if (distractors.length < 4) distractors.push(vowel);
   });
-  
+
   // Fill remaining with other vowels
-  VOWELS.forEach(vowel => {
+  VOWELS.forEach((vowel) => {
     if (distractors.length < 4 && !distractors.includes(vowel)) {
       distractors.push(vowel);
     }
@@ -81,8 +87,12 @@ export const BalloonRescueVowelAdventure: React.FC<Props> = ({
   const [showRetry, setShowRetry] = useState(false);
   const [balloonPositions, setBalloonPositions] = useState<number[]>([]);
   const [showAchievement, setShowAchievement] = useState<any>(null);
-  const [celebrationType, setCelebrationType] = useState<"confetti" | "stars" | "fireworks">("stars");
-  const [currentDifficultyLevel, setCurrentDifficultyLevel] = useState<"easy" | "medium" | "hard">("easy");
+  const [celebrationType, setCelebrationType] = useState<
+    "confetti" | "stars" | "fireworks"
+  >("stars");
+  const [currentDifficultyLevel, setCurrentDifficultyLevel] = useState<
+    "easy" | "medium" | "hard"
+  >("easy");
 
   const startedAtRef = useRef<number | null>(null);
   const sessionIdRef = useRef(crypto.randomUUID());
@@ -96,18 +106,21 @@ export const BalloonRescueVowelAdventure: React.FC<Props> = ({
   }, []);
 
   // Progressive difficulty calculation
-  const calculateDifficulty = useCallback((questionIndex: number): "easy" | "medium" | "hard" => {
-    if (questionIndex < 3) return "easy";
-    if (questionIndex < 7) return "medium";
-    return "hard";
-  }, []);
+  const calculateDifficulty = useCallback(
+    (questionIndex: number): "easy" | "medium" | "hard" => {
+      if (questionIndex < 3) return "easy";
+      if (questionIndex < 7) return "medium";
+      return "hard";
+    },
+    [],
+  );
 
   // Generate questions with smart distractors
   const generateQuestions = useCallback(() => {
     const difficultyQuestions: { [key: string]: Word[] } = {
-      easy: filteredWords.filter(w => w.difficulty === "easy"),
-      medium: filteredWords.filter(w => w.difficulty === "medium"),
-      hard: filteredWords.filter(w => w.difficulty === "hard")
+      easy: filteredWords.filter((w) => w.difficulty === "easy"),
+      medium: filteredWords.filter((w) => w.difficulty === "medium"),
+      hard: filteredWords.filter((w) => w.difficulty === "hard"),
     };
 
     const gameQuestions: Question[] = [];
@@ -115,14 +128,15 @@ export const BalloonRescueVowelAdventure: React.FC<Props> = ({
     for (let i = 0; i < totalQuestions; i++) {
       const targetDifficulty = calculateDifficulty(i);
       const availableWords = difficultyQuestions[targetDifficulty];
-      
+
       if (availableWords.length === 0) {
         // Fallback to any difficulty
         const allWords = Object.values(difficultyQuestions).flat();
         const wordItem = allWords[Math.floor(Math.random() * allWords.length)];
         gameQuestions.push(createQuestion(wordItem, i, targetDifficulty));
       } else {
-        const wordItem = availableWords[Math.floor(Math.random() * availableWords.length)];
+        const wordItem =
+          availableWords[Math.floor(Math.random() * availableWords.length)];
         gameQuestions.push(createQuestion(wordItem, i, targetDifficulty));
       }
     }
@@ -130,56 +144,67 @@ export const BalloonRescueVowelAdventure: React.FC<Props> = ({
     setQuestions(gameQuestions);
   }, [filteredWords, totalQuestions, calculateDifficulty]);
 
-  const createQuestion = useCallback((wordItem: Word, index: number, difficulty: "easy" | "medium" | "hard"): Question => {
-    const word = wordItem.word.toUpperCase();
-    const vowelPositions = [...word]
-      .map((char, i) => (VOWELS.includes(char) ? i : -1))
-      .filter((i) => i !== -1);
+  const createQuestion = useCallback(
+    (
+      wordItem: Word,
+      index: number,
+      difficulty: "easy" | "medium" | "hard",
+    ): Question => {
+      const word = wordItem.word.toUpperCase();
+      const vowelPositions = [...word]
+        .map((char, i) => (VOWELS.includes(char) ? i : -1))
+        .filter((i) => i !== -1);
 
-    if (vowelPositions.length === 0) {
+      if (vowelPositions.length === 0) {
+        return {
+          id: `q${index}`,
+          word: "CAT",
+          emoji: "🐱",
+          missingVowel: "A",
+          missingIndex: 1,
+          displayWord: "C_T",
+          difficulty,
+          distractors: ["A", "E", "I", "O"],
+        };
+      }
+
+      const randomVowelIndex =
+        vowelPositions[Math.floor(Math.random() * vowelPositions.length)];
+      const missingVowel = word[randomVowelIndex];
+      const displayWord =
+        word.slice(0, randomVowelIndex) +
+        "_" +
+        word.slice(randomVowelIndex + 1);
+      const distractors = generateSmartDistractors(missingVowel);
+
       return {
         id: `q${index}`,
-        word: "CAT",
-        emoji: "🐱",
-        missingVowel: "A",
-        missingIndex: 1,
-        displayWord: "C_T",
+        word: word,
+        emoji: wordItem.emoji || "🎯",
+        missingVowel: missingVowel,
+        missingIndex: randomVowelIndex,
+        displayWord: displayWord,
         difficulty,
-        distractors: ["A", "E", "I", "O"]
+        distractors,
       };
-    }
-
-    const randomVowelIndex = vowelPositions[Math.floor(Math.random() * vowelPositions.length)];
-    const missingVowel = word[randomVowelIndex];
-    const displayWord = word.slice(0, randomVowelIndex) + "_" + word.slice(randomVowelIndex + 1);
-    const distractors = generateSmartDistractors(missingVowel);
-
-    return {
-      id: `q${index}`,
-      word: word,
-      emoji: wordItem.emoji || "🎯",
-      missingVowel: missingVowel,
-      missingIndex: randomVowelIndex,
-      displayWord: displayWord,
-      difficulty,
-      distractors
-    };
-  }, []);
+    },
+    [],
+  );
 
   // Initialize game with loading animation
   useEffect(() => {
     const initGame = async () => {
       setScreen("loading");
-      
+
       // Show loading for at least 2 seconds for better UX
-      await new Promise(resolve => setTimeout(resolve, 2000));
-      
+      await new Promise((resolve) => setTimeout(resolve, 2000));
+
       generateQuestions();
       startedAtRef.current = Date.now();
       setBalloonsRescued(0);
       setBalloonPositions(Array(totalQuestions).fill(0));
       setScreen("play");
-      
+
       // Auto-pronounce first word after a delay
       setTimeout(() => {
         if (questions.length > 0) {
@@ -194,95 +219,103 @@ export const BalloonRescueVowelAdventure: React.FC<Props> = ({
   const currentQuestion = questions[currentQuestionIndex];
 
   // Handle vowel selection with retry mechanism
-  const handleVowelClick = useCallback(async (vowel: string) => {
-    if (isAnimating || !currentQuestion) return;
+  const handleVowelClick = useCallback(
+    async (vowel: string) => {
+      if (isAnimating || !currentQuestion) return;
 
-    setSelectedAnswer(vowel);
-    const correct = vowel === currentQuestion.missingVowel;
-    setIsCorrect(correct);
-    setIsAnimating(true);
+      setSelectedAnswer(vowel);
+      const correct = vowel === currentQuestion.missingVowel;
+      setIsCorrect(correct);
+      setIsAnimating(true);
 
-    if (correct) {
-      setCorrectCount((prev) => prev + 1);
-      setBalloonsRescued((prev) => prev + 1);
-      setCurrentStreak((prev) => prev + 1);
-      setShowCelebration(true);
-      setShowRetry(false);
-
-      // Update balloon position for visual feedback
-      setBalloonPositions(prev => {
-        const newPositions = [...prev];
-        newPositions[currentQuestionIndex] = 100; // Balloon floats up
-        return newPositions;
-      });
-
-      // Play success sound and celebrate
-      await audioService.playSuccessSound();
-      audioService.playEncouragementSound();
-
-      // Track achievement progress
-      try {
-        const achievement = await EnhancedAchievementTracker.updateProgress(sessionIdRef.current, {
-          type: "vowel_rescue",
-          correct: true,
-          difficulty: currentQuestion.difficulty,
-          streak: currentStreak + 1,
-          timeSpent: 3000,
-          category: "vowel_adventure"
-        });
-
-        if (achievement) {
-          setShowAchievement(achievement);
-        }
-      } catch (error) {
-        console.error("Achievement tracking error:", error);
-      }
-
-      // Celebration type based on streak
-      if (currentStreak + 1 >= 10) setCelebrationType("fireworks");
-      else if (currentStreak + 1 >= 5) setCelebrationType("confetti");
-      else setCelebrationType("stars");
-
-      // Auto-advance after celebration
-      setTimeout(() => {
-        nextQuestion();
-      }, 2500);
-      
-    } else {
-      setCurrentStreak(0);
-      setShowRetry(true);
-      audioService.playEncouragementSound();
-
-      // Track failed attempt
-      try {
-        await EnhancedAchievementTracker.updateProgress(sessionIdRef.current, {
-          type: "vowel_rescue", 
-          correct: false,
-          difficulty: currentQuestion.difficulty,
-          streak: 0,
-          timeSpent: 2000,
-          category: "vowel_adventure"
-        });
-      } catch (error) {
-        console.error("Achievement tracking error:", error);
-      }
-
-      // Reset after feedback
-      setTimeout(() => {
-        setSelectedAnswer(null);
-        setIsCorrect(null);
-        setIsAnimating(false);
+      if (correct) {
+        setCorrectCount((prev) => prev + 1);
+        setBalloonsRescued((prev) => prev + 1);
+        setCurrentStreak((prev) => prev + 1);
+        setShowCelebration(true);
         setShowRetry(false);
-      }, 1500);
-    }
-  }, [currentQuestion, currentStreak, isAnimating]);
+
+        // Update balloon position for visual feedback
+        setBalloonPositions((prev) => {
+          const newPositions = [...prev];
+          newPositions[currentQuestionIndex] = 100; // Balloon floats up
+          return newPositions;
+        });
+
+        // Play success sound and celebrate
+        await audioService.playSuccessSound();
+        audioService.playEncouragementSound();
+
+        // Track achievement progress
+        try {
+          const achievement = await EnhancedAchievementTracker.updateProgress(
+            sessionIdRef.current,
+            {
+              type: "vowel_rescue",
+              correct: true,
+              difficulty: currentQuestion.difficulty,
+              streak: currentStreak + 1,
+              timeSpent: 3000,
+              category: "vowel_adventure",
+            },
+          );
+
+          if (achievement) {
+            setShowAchievement(achievement);
+          }
+        } catch (error) {
+          console.error("Achievement tracking error:", error);
+        }
+
+        // Celebration type based on streak
+        if (currentStreak + 1 >= 10) setCelebrationType("fireworks");
+        else if (currentStreak + 1 >= 5) setCelebrationType("confetti");
+        else setCelebrationType("stars");
+
+        // Auto-advance after celebration
+        setTimeout(() => {
+          nextQuestion();
+        }, 2500);
+      } else {
+        setCurrentStreak(0);
+        setShowRetry(true);
+        audioService.playEncouragementSound();
+
+        // Track failed attempt
+        try {
+          await EnhancedAchievementTracker.updateProgress(
+            sessionIdRef.current,
+            {
+              type: "vowel_rescue",
+              correct: false,
+              difficulty: currentQuestion.difficulty,
+              streak: 0,
+              timeSpent: 2000,
+              category: "vowel_adventure",
+            },
+          );
+        } catch (error) {
+          console.error("Achievement tracking error:", error);
+        }
+
+        // Reset after feedback
+        setTimeout(() => {
+          setSelectedAnswer(null);
+          setIsCorrect(null);
+          setIsAnimating(false);
+          setShowRetry(false);
+        }, 1500);
+      }
+    },
+    [currentQuestion, currentStreak, isAnimating],
+  );
 
   const retryQuestion = useCallback(() => {
     setSelectedAnswer(null);
     setIsCorrect(null);
     setIsAnimating(false);
     setShowRetry(false);
-    
+
     // Re-pronounce the word
     if (currentQuestion) {
       audioService.pronounceWord(currentQuestion.word);
@@ -313,7 +346,9 @@ export const BalloonRescueVowelAdventure: React.FC<Props> = ({
   }, [currentQuestionIndex, questions, calculateDifficulty]);
 
   const finishGame = useCallback(async () => {
-    const timeElapsed = startedAtRef.current ? Date.now() - startedAtRef.current : 0;
+    const timeElapsed = startedAtRef.current
+      ? Date.now() - startedAtRef.current
+      : 0;
     const accuracy = questions.length > 0 ? correctCount / questions.length : 0;
 
     let starRating = 1;
@@ -332,16 +367,19 @@ export const BalloonRescueVowelAdventure: React.FC<Props> = ({
 
     // Final achievement check
     try {
-      const finalAchievement = await EnhancedAchievementTracker.updateProgress(sessionIdRef.current, {
-        type: "session_complete",
-        correct: true,
-        difficulty: "mixed",
-        streak: currentStreak,
-        timeSpent: timeElapsed,
-        category: "vowel_adventure",
-        totalCorrect: correctCount,
-        accuracy: accuracy * 100
-      });
+      const finalAchievement = await EnhancedAchievementTracker.updateProgress(
+        sessionIdRef.current,
+        {
+          type: "session_complete",
+          correct: true,
+          difficulty: "mixed",
+          streak: currentStreak,
+          timeSpent: timeElapsed,
+          category: "vowel_adventure",
+          totalCorrect: correctCount,
+          accuracy: accuracy * 100,
+        },
+      );
 
       if (finalAchievement) {
         setShowAchievement(finalAchievement);
@@ -370,7 +408,7 @@ export const BalloonRescueVowelAdventure: React.FC<Props> = ({
     setBalloonPositions(Array(totalQuestions).fill(0));
     setCurrentDifficultyLevel("easy");
     sessionIdRef.current = crypto.randomUUID();
-    
+
     generateQuestions();
     setScreen("play");
     startedAtRef.current = Date.now();
@@ -381,7 +419,7 @@ export const BalloonRescueVowelAdventure: React.FC<Props> = ({
     return (
       <div className="vowel-adventure-v2">
         <div className="game-container">
-          <motion.div 
+          <motion.div
             className="loading-container"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -393,14 +431,14 @@ export const BalloonRescueVowelAdventure: React.FC<Props> = ({
             >
               🎈🎈🎈
             </motion.div>
-            <motion.h2 
+            <motion.h2
               className="loading-title"
               animate={{ scale: [1, 1.05, 1] }}
               transition={{ duration: 1.5, repeat: Infinity }}
             >
               Preparing your balloons...
             </motion.h2>
-            <motion.div 
+            <motion.div
               className="loading-subtitle"
               initial={{ y: 20, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
@@ -416,21 +454,24 @@ export const BalloonRescueVowelAdventure: React.FC<Props> = ({
 
   // Result screen with fireworks
   if (screen === "result") {
-    const accuracy = questions.length > 0 ? Math.round((correctCount / questions.length) * 100) : 0;
+    const accuracy =
+      questions.length > 0
+        ? Math.round((correctCount / questions.length) * 100)
+        : 0;
     const starRating = accuracy >= 90 ? 3 : accuracy >= 70 ? 2 : 1;
 
     return (
       <div className="vowel-adventure-v2">
         <div className="game-container result-screen">
           <CelebrationEffect type="fireworks" />
-          
-          <motion.div 
+
+          <motion.div
             className="result-content"
             initial={{ scale: 0.9, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             transition={{ duration: 0.5 }}
           >
-            <motion.div 
+            <motion.div
               className="result-title"
               animate={{ scale: [1, 1.1, 1] }}
               transition={{ duration: 2, repeat: Infinity }}
@@ -438,7 +479,7 @@ export const BalloonRescueVowelAdventure: React.FC<Props> = ({
               🎉 All Balloons Rescued! 🎉
             </motion.div>
 
-            <motion.div 
+            <motion.div
               className="result-emoji"
               animate={{ rotate: [0, 10, -10, 0] }}
               transition={{ duration: 0.5, repeat: Infinity }}
@@ -459,7 +500,7 @@ export const BalloonRescueVowelAdventure: React.FC<Props> = ({
               ))}
             </motion.div>
 
-            <motion.div 
+            <motion.div
               className="result-stats"
               initial={{ y: 20, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
@@ -469,7 +510,7 @@ export const BalloonRescueVowelAdventure: React.FC<Props> = ({
               <div className="stat-label">Balloons Rescued!</div>
             </motion.div>
 
-            <motion.div 
+            <motion.div
               className="result-accuracy"
               initial={{ y: 20, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
@@ -478,26 +519,18 @@ export const BalloonRescueVowelAdventure: React.FC<Props> = ({
               {accuracy}% Accuracy
             </motion.div>
 
-            <motion.div 
+            <motion.div
               className="result-actions"
               initial={{ y: 20, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               transition={{ delay: 0.5 }}
             >
-              <Button 
-                className="big-action-btn" 
-                onClick={playAgain}
-                size="lg"
-              >
+              <Button className="big-action-btn" onClick={playAgain} size="lg">
                 <RotateCcw size={20} />
                 Rescue More Balloons!
               </Button>
               {onHome && (
-                <Button 
-                  variant="outline" 
-                  onClick={onHome}
-                  size="lg"
-                >
+                <Button variant="outline" onClick={onHome} size="lg">
                   <Home size={18} />
                   Home
                 </Button>
@@ -521,9 +554,10 @@ export const BalloonRescueVowelAdventure: React.FC<Props> = ({
   }
 
   const progress = ((currentQuestionIndex + 1) / questions.length) * 100;
-  const filledWord = isCorrect && selectedAnswer
-    ? currentQuestion.displayWord.replace("_", selectedAnswer)
-    : currentQuestion.displayWord;
+  const filledWord =
+    isCorrect && selectedAnswer
+      ? currentQuestion.displayWord.replace("_", selectedAnswer)
+      : currentQuestion.displayWord;
 
   return (
     <div className="vowel-adventure-v2">
@@ -540,34 +574,35 @@ export const BalloonRescueVowelAdventure: React.FC<Props> = ({
 
         {/* Celebration effects */}
         <AnimatePresence>
-          {showCelebration && (
-            <CelebrationEffect type={celebrationType} />
-          )}
+          {showCelebration && <CelebrationEffect type={celebrationType} />}
         </AnimatePresence>
 
         {/* Header with balloon progress */}
-        <motion.div 
+        <motion.div
           className="game-header"
           initial={{ y: -20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
         >
           <div className="progress-section">
-            <motion.div 
+            <motion.div
               className="progress-label"
               animate={{ scale: showCelebration ? [1, 1.1, 1] : 1 }}
             >
               🎈 Balloons Rescued: {balloonsRescued}
             </motion.div>
-            
+
             {/* Balloon progress visualization */}
             <div className="balloon-progress">
               {Array.from({ length: Math.min(totalQuestions, 10) }, (_, i) => (
                 <motion.div
                   key={i}
-                  className={cn("balloon-indicator", balloonPositions[i] > 0 && "rescued")}
-                  animate={{ 
+                  className={cn(
+                    "balloon-indicator",
+                    balloonPositions[i] > 0 && "rescued",
+                  )}
+                  animate={{
                     y: balloonPositions[i] > 0 ? -20 : 0,
-                    scale: i === currentQuestionIndex ? [1, 1.2, 1] : 1
+                    scale: i === currentQuestionIndex ? [1, 1.2, 1] : 1,
                   }}
                   transition={{ duration: 0.5 }}
                 >
@@ -575,7 +610,7 @@ export const BalloonRescueVowelAdventure: React.FC<Props> = ({
                 </motion.div>
               ))}
             </div>
-            
+
             <div className="progress-text">
               {currentQuestionIndex + 1} / {questions.length}
             </div>
@@ -592,7 +627,7 @@ export const BalloonRescueVowelAdventure: React.FC<Props> = ({
             </Button>
             <Button
               variant="ghost"
-              size="sm" 
+              size="sm"
               onClick={() => setTtsEnabled(!ttsEnabled)}
               aria-label={ttsEnabled ? "Disable voice" : "Enable voice"}
             >
@@ -612,7 +647,7 @@ export const BalloonRescueVowelAdventure: React.FC<Props> = ({
         {/* Main game area */}
         <div className="game-main">
           {/* Difficulty indicator */}
-          <motion.div 
+          <motion.div
             className="difficulty-indicator"
             initial={{ scale: 0 }}
             animate={{ scale: 1 }}
@@ -627,9 +662,9 @@ export const BalloonRescueVowelAdventure: React.FC<Props> = ({
           <motion.div className="emoji-section">
             <motion.div
               className={cn("emoji-display", showCelebration && "celebrating")}
-              animate={{ 
+              animate={{
                 scale: showCelebration ? [1, 1.2, 1] : 1,
-                rotate: showCelebration ? [0, 5, -5, 0] : 0
+                rotate: showCelebration ? [0, 5, -5, 0] : 0,
               }}
               transition={{ duration: 0.5 }}
             >
@@ -646,10 +681,14 @@ export const BalloonRescueVowelAdventure: React.FC<Props> = ({
                 isCorrect === false && "word-error",
                 showCelebration && "word-dancing",
               )}
-              animate={showCelebration ? { 
-                y: [0, -10, 0],
-                transition: { duration: 0.5, repeat: 3 }
-              } : {}}
+              animate={
+                showCelebration
+                  ? {
+                      y: [0, -10, 0],
+                      transition: { duration: 0.5, repeat: 3 },
+                    }
+                  : {}
+              }
             >
               {filledWord.split("").map((char, index) => (
                 <motion.span
@@ -659,15 +698,19 @@ export const BalloonRescueVowelAdventure: React.FC<Props> = ({
                     char === "_" && "missing-letter",
                     char === selectedAnswer && isCorrect && "filled-letter",
                   )}
-                  animate={showCelebration ? {
-                    y: [0, -Math.random() * 20, 0],
-                    rotate: [0, Math.random() * 10 - 5, 0],
-                    transition: { 
-                      duration: 0.6,
-                      delay: index * 0.1,
-                      repeat: 2
-                    }
-                  } : {}}
+                  animate={
+                    showCelebration
+                      ? {
+                          y: [0, -Math.random() * 20, 0],
+                          rotate: [0, Math.random() * 10 - 5, 0],
+                          transition: {
+                            duration: 0.6,
+                            delay: index * 0.1,
+                            repeat: 2,
+                          },
+                        }
+                      : {}
+                  }
                 >
                   {char}
                 </motion.span>
@@ -677,17 +720,16 @@ export const BalloonRescueVowelAdventure: React.FC<Props> = ({
 
           {/* Smart vowel buttons with dynamic layout */}
           <div className="vowels-section">
-            <motion.div 
-              className="vowels-grid"
-              layout
-            >
+            <motion.div className="vowels-grid" layout>
               {currentQuestion.distractors.map((vowel, index) => (
                 <motion.button
                   key={vowel}
                   className={cn(
                     "vowel-btn",
                     selectedAnswer === vowel && isCorrect && "vowel-correct",
-                    selectedAnswer === vowel && isCorrect === false && "vowel-incorrect",
+                    selectedAnswer === vowel &&
+                      isCorrect === false &&
+                      "vowel-incorrect",
                   )}
                   onClick={() => handleVowelClick(vowel)}
                   disabled={isAnimating}
@@ -729,27 +771,27 @@ export const BalloonRescueVowelAdventure: React.FC<Props> = ({
         {/* Celebration overlay with sparkles */}
         <AnimatePresence>
           {showCelebration && (
-            <motion.div 
+            <motion.div
               className="celebration-overlay"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
             >
-              <motion.div 
+              <motion.div
                 className="sparkles"
-                animate={{ 
+                animate={{
                   scale: [1, 1.5, 1],
-                  rotate: [0, 360]
+                  rotate: [0, 360],
                 }}
                 transition={{ duration: 1 }}
               >
                 ✨✨✨
               </motion.div>
-              <motion.div 
+              <motion.div
                 className="celebration-text"
-                animate={{ 
+                animate={{
                   y: [0, -10, 0],
-                  scale: [1, 1.1, 1]
+                  scale: [1, 1.1, 1],
                 }}
                 transition={{ duration: 0.5, repeat: 2 }}
               >
