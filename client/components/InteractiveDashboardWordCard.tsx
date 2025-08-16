@@ -751,6 +751,7 @@ export function InteractiveDashboardWordCard({
             )}
 
             <motion.div
+              key={`feedback-emoji-${currentWordIndex}-${feedbackType}`}
               animate={{
                 y: [0, -10, 0],
                 rotate:
@@ -770,6 +771,7 @@ export function InteractiveDashboardWordCard({
             </motion.div>
 
             <motion.div
+              key={`feedback-message-${currentWordIndex}-${feedbackType}`}
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3, duration: 0.4 }}
