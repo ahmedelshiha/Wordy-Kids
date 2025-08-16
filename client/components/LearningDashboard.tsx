@@ -210,6 +210,13 @@ export const LearningDashboard: React.FC<LearningDashboardProps> = ({
               totalPoints={stats.totalPoints}
               selectedCategory={selectedCategory}
               onSessionComplete={onSessionComplete}
+              onToggleAIEnhancement={(enabled) => {
+                setUseAIEnhancement(enabled);
+                // Update localStorage settings
+                if (typeof window !== 'undefined') {
+                  localStorage.setItem('aiEnhancementEnabled', JSON.stringify(enabled));
+                }
+              }}
             />
           ) : (
             <InteractiveDashboardWordCard
