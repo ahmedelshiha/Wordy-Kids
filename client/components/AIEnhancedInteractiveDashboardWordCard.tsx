@@ -843,7 +843,7 @@ export function AIEnhancedInteractiveDashboardWordCard({
             transition: { duration: 0.3 },
           }}
           whileTap={{ scale: 0.95 }}
-          className="w-48 h-32 mx-auto flex items-center justify-center bg-gradient-to-br from-blue-100 via-purple-100 to-pink-100 rounded-2xl shadow-lg hover:shadow-xl cursor-pointer group relative overflow-hidden"
+          className="w-56 h-40 mx-auto flex items-center justify-center bg-gradient-to-br from-blue-100 via-purple-100 to-pink-100 rounded-2xl shadow-lg hover:shadow-xl cursor-pointer group relative overflow-hidden"
           onClick={playPronunciation}
         >
           {/* AI Enhancement Badge */}
@@ -857,7 +857,7 @@ export function AIEnhancedInteractiveDashboardWordCard({
               🔊
             </div>
             <div className="bg-white/80 rounded-full px-2 py-1">
-              <span className="text-xs font-bold text-blue-600">
+              <span className="text-xs font-bold text-blue-600 opacity-75 scale-75">
                 {Math.round(confidenceLevel * 100)}%
               </span>
             </div>
@@ -883,7 +883,7 @@ export function AIEnhancedInteractiveDashboardWordCard({
               scale: 1.1,
               transition: { duration: 0.2 },
             }}
-            className="text-8xl filter drop-shadow-lg relative z-10"
+            className="text-9xl filter drop-shadow-lg relative z-10"
           >
             {currentWord.emoji}
 
@@ -1036,7 +1036,7 @@ export function AIEnhancedInteractiveDashboardWordCard({
             </div>
             <div className="grid grid-cols-3 gap-2 sm:gap-4 text-xs sm:text-sm">
               <div className="text-center">
-                <div className="text-lg font-bold text-blue-600">
+                <div className="text-xs font-bold text-blue-600 opacity-75">
                   {Math.round(confidenceLevel * 100)}%
                 </div>
                 <div className="text-gray-600">AI Confidence</div>
@@ -1086,7 +1086,7 @@ export function AIEnhancedInteractiveDashboardWordCard({
             <div className="bg-gradient-to-r from-blue-100 to-purple-100 rounded-lg p-1.5 sm:p-2 mb-2 sm:mb-4">
               <div className="flex items-center justify-center gap-1 sm:gap-2 text-xs sm:text-sm">
                 <Brain className="w-3 h-3 sm:w-4 sm:h-4 text-blue-600" />
-                <span className="font-medium text-blue-800">
+                <span className="text-xs font-medium text-blue-800 opacity-75">
                   🤖 {Math.round(confidenceLevel * 100)}%
                 </span>
               </div>
@@ -1251,8 +1251,14 @@ export function AIEnhancedInteractiveDashboardWordCard({
                           aiActions.endSession({ completed: false });
                         } else {
                           // Start AI session with current words
+                          if (sessionWords.length === 0) {
+                            console.warn(
+                              "Cannot start AI session: no words available",
+                            );
+                            return;
+                          }
                           aiActions.startSession({
-                            words: words.slice(0, 10),
+                            words: sessionWords.slice(0, 10),
                             confidence: 0.8,
                             reasoning: ["Starting new AI session"],
                             expectedOutcomes: {
@@ -1285,9 +1291,13 @@ export function AIEnhancedInteractiveDashboardWordCard({
 
                 {/* Mobile Progress: Only show if session active */}
                 {aiState.isSessionActive && (
-                  <div className="mt-2 text-xs text-center opacity-80">
-                    Word {currentWordIndex + 1}/{SESSION_SIZE} •{" "}
-                    {Math.round(confidenceLevel * 100)}% 📈
+                  <div className="mt-2 text-center opacity-80">
+                    <span className="text-xs">
+                      Word {currentWordIndex + 1}/{SESSION_SIZE} •{" "}
+                    </span>
+                    <span className="text-xs opacity-60 scale-75">
+                      {Math.round(confidenceLevel * 100)}% 📈
+                    </span>
                   </div>
                 )}
               </div>
@@ -1324,8 +1334,14 @@ export function AIEnhancedInteractiveDashboardWordCard({
                               aiActions.endSession({ completed: false });
                             } else {
                               // Start AI session with current words
+                              if (sessionWords.length === 0) {
+                                console.warn(
+                                  "Cannot start AI session: no words available",
+                                );
+                                return;
+                              }
                               aiActions.startSession({
-                                words: words.slice(0, 10),
+                                words: sessionWords.slice(0, 10),
                                 confidence: 0.8,
                                 reasoning: ["Starting new AI session"],
                                 expectedOutcomes: {
@@ -1354,8 +1370,8 @@ export function AIEnhancedInteractiveDashboardWordCard({
                           {aiState.isSessionActive ? "Pause AI" : "Start AI"}
                         </Button>
                       </div>
-                      <div className="flex items-center gap-3 text-sm opacity-90">
-                        <span>
+                      <div className="flex items-center gap-3 opacity-90">
+                        <span className="text-xs opacity-60 scale-75">
                           📊 {Math.round(confidenceLevel * 100)}% Confidence
                         </span>
                         <span>•</span>
@@ -1463,30 +1479,34 @@ export function AIEnhancedInteractiveDashboardWordCard({
                 </Badge>
               </div>
 
-              {/* Progress Bar - Kid-friendly and compact */}
-              <div className="w-full bg-gray-200 rounded-full h-2 sm:h-3 mb-2 relative overflow-hidden">
-                <div
-                  className="bg-gradient-to-r from-green-400 to-blue-500 h-2 sm:h-3 rounded-full transition-all duration-500 ease-out relative"
-                  style={{ width: `${sessionProgress}%` }}
-                >
-                  {/* Simple sparkle effect */}
-                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent rounded-full" />
-                </div>
-                {/* Simple progress indicator */}
-                {sessionProgress > 10 && (
-                  <div className="absolute right-1 top-1/2 transform -translate-y-1/2">
-                    <span className="text-xs">🎆</span>
+              {/* Progress Bar - Show only when AI is active */}
+              {aiState.isSessionActive && (
+                <>
+                  <div className="w-full bg-gray-200 rounded-full h-2 sm:h-3 mb-2 relative overflow-hidden">
+                    <div
+                      className="bg-gradient-to-r from-green-400 to-blue-500 h-2 sm:h-3 rounded-full transition-all duration-500 ease-out relative"
+                      style={{ width: `${sessionProgress}%` }}
+                    >
+                      {/* Simple sparkle effect */}
+                      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent rounded-full" />
+                    </div>
+                    {/* Simple progress indicator */}
+                    {sessionProgress > 10 && (
+                      <div className="absolute right-1 top-1/2 transform -translate-y-1/2">
+                        <span className="text-xs">🎆</span>
+                      </div>
+                    )}
                   </div>
-                )}
-              </div>
 
-              {/* Simple progress text */}
-              <div className="text-xs sm:text-sm text-gray-600">
-                <span className="font-medium">
-                  {currentWordIndex + 1} of {SESSION_SIZE} words
-                </span>
-                {sessionProgress >= 100 && <span className="ml-2">🎉</span>}
-              </div>
+                  {/* Simple progress text */}
+                  <div className="text-xs sm:text-sm text-gray-600">
+                    <span className="font-medium">
+                      {currentWordIndex + 1} of {SESSION_SIZE} words
+                    </span>
+                    {sessionProgress >= 100 && <span className="ml-2">🎉</span>}
+                  </div>
+                </>
+              )}
             </div>
 
             {/* Picture Display with State Transitions */}
@@ -1659,52 +1679,109 @@ export function AIEnhancedInteractiveDashboardWordCard({
                   aiState.isSessionActive ? "flex-row" : "flex-col sm:flex-row",
                 )}
               >
-                <motion.div
-                  whileHover={{ scale: 1.05, y: -2 }}
-                  whileTap={{ scale: 0.95, y: 0 }}
-                  transition={{
-                    type: "spring",
-                    stiffness: 400,
-                    damping: 17,
-                  }}
-                  className="flex-1 sm:flex-initial"
-                >
-                  <Button
-                    onClick={() => handleWordAction("remembered")}
-                    disabled={isAnswered}
-                    size="lg"
-                    className="w-full sm:w-auto bg-gradient-to-r from-green-500 via-emerald-500 to-green-600 hover:from-green-600 hover:via-emerald-600 hover:to-green-700 text-white font-bold py-3 px-6 rounded-2xl transition-all duration-300 transform hover:scale-105 active:scale-95 shadow-xl hover:shadow-2xl min-h-[60px] touch-manipulation group relative overflow-hidden border-2 border-green-300/50 hover:border-green-200"
-                    aria-label="I remember this word"
-                  >
-                    <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/20 to-white/0 transform -skew-x-12 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-600 ease-out" />
-                    <CheckCircle className="w-5 h-5 mr-2 group-hover:animate-bounce" />
-                    <span className="relative z-10">😊 I Remember</span>
-                  </Button>
-                </motion.div>
+                {/* Conditionally order buttons - I Remember on right when AI active */}
+                {aiState.isSessionActive ? (
+                  <>
+                    {/* I Forgot button (left side when AI active) */}
+                    <motion.div
+                      whileHover={{ scale: 1.05, y: -2 }}
+                      whileTap={{ scale: 0.95, y: 0 }}
+                      transition={{
+                        type: "spring",
+                        stiffness: 400,
+                        damping: 17,
+                      }}
+                      className="flex-1 sm:flex-initial"
+                    >
+                      <Button
+                        onClick={() => handleWordAction("needs_practice")}
+                        disabled={isAnswered}
+                        size="lg"
+                        variant="outline"
+                        className="w-full sm:w-auto bg-gradient-to-r from-orange-50 to-red-50 hover:from-orange-100 hover:to-red-100 text-orange-700 hover:text-red-700 font-bold py-3 px-6 rounded-2xl transition-all duration-300 transform hover:scale-105 active:scale-95 shadow-lg hover:shadow-xl min-h-[60px] touch-manipulation group relative overflow-hidden border-2 border-orange-300 hover:border-red-300"
+                        aria-label="I forgot this word"
+                      >
+                        <div className="absolute inset-0 bg-gradient-to-r from-orange-200/0 via-orange-200/30 to-orange-200/0 transform -skew-x-12 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-600 ease-out" />
+                        <XCircle className="w-5 h-5 mr-2 group-hover:animate-pulse text-orange-600" />
+                        <span className="relative z-10">🤔 I Forgot</span>
+                      </Button>
+                    </motion.div>
 
-                <motion.div
-                  whileHover={{ scale: 1.05, y: -2 }}
-                  whileTap={{ scale: 0.95, y: 0 }}
-                  transition={{
-                    type: "spring",
-                    stiffness: 400,
-                    damping: 17,
-                  }}
-                  className="flex-1 sm:flex-initial"
-                >
-                  <Button
-                    onClick={() => handleWordAction("needs_practice")}
-                    disabled={isAnswered}
-                    size="lg"
-                    variant="outline"
-                    className="w-full sm:w-auto bg-gradient-to-r from-orange-50 to-red-50 hover:from-orange-100 hover:to-red-100 text-orange-700 hover:text-red-700 font-bold py-3 px-6 rounded-2xl transition-all duration-300 transform hover:scale-105 active:scale-95 shadow-lg hover:shadow-xl min-h-[60px] touch-manipulation group relative overflow-hidden border-2 border-orange-300 hover:border-red-300"
-                    aria-label="I forgot this word"
-                  >
-                    <div className="absolute inset-0 bg-gradient-to-r from-orange-200/0 via-orange-200/30 to-orange-200/0 transform -skew-x-12 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-600 ease-out" />
-                    <XCircle className="w-5 h-5 mr-2 group-hover:animate-pulse text-orange-600" />
-                    <span className="relative z-10">🤔 I Forgot</span>
-                  </Button>
-                </motion.div>
+                    {/* I Remember button (right side when AI active) */}
+                    <motion.div
+                      whileHover={{ scale: 1.05, y: -2 }}
+                      whileTap={{ scale: 0.95, y: 0 }}
+                      transition={{
+                        type: "spring",
+                        stiffness: 400,
+                        damping: 17,
+                      }}
+                      className="flex-1 sm:flex-initial"
+                    >
+                      <Button
+                        onClick={() => handleWordAction("remembered")}
+                        disabled={isAnswered}
+                        size="lg"
+                        className="w-full sm:w-auto bg-gradient-to-r from-green-500 via-emerald-500 to-green-600 hover:from-green-600 hover:via-emerald-600 hover:to-green-700 text-white font-bold py-3 px-6 rounded-2xl transition-all duration-300 transform hover:scale-105 active:scale-95 shadow-xl hover:shadow-2xl min-h-[60px] touch-manipulation group relative overflow-hidden border-2 border-green-300/50 hover:border-green-200"
+                        aria-label="I remember this word"
+                      >
+                        <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/20 to-white/0 transform -skew-x-12 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-600 ease-out" />
+                        <CheckCircle className="w-5 h-5 mr-2 group-hover:animate-bounce" />
+                        <span className="relative z-10">😊 I Remember</span>
+                      </Button>
+                    </motion.div>
+                  </>
+                ) : (
+                  <>
+                    {/* Default order when AI not active - I Remember on left */}
+                    <motion.div
+                      whileHover={{ scale: 1.05, y: -2 }}
+                      whileTap={{ scale: 0.95, y: 0 }}
+                      transition={{
+                        type: "spring",
+                        stiffness: 400,
+                        damping: 17,
+                      }}
+                      className="flex-1 sm:flex-initial"
+                    >
+                      <Button
+                        onClick={() => handleWordAction("remembered")}
+                        disabled={isAnswered}
+                        size="lg"
+                        className="w-full sm:w-auto bg-gradient-to-r from-green-500 via-emerald-500 to-green-600 hover:from-green-600 hover:via-emerald-600 hover:to-green-700 text-white font-bold py-3 px-6 rounded-2xl transition-all duration-300 transform hover:scale-105 active:scale-95 shadow-xl hover:shadow-2xl min-h-[60px] touch-manipulation group relative overflow-hidden border-2 border-green-300/50 hover:border-green-200"
+                        aria-label="I remember this word"
+                      >
+                        <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/20 to-white/0 transform -skew-x-12 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-600 ease-out" />
+                        <CheckCircle className="w-5 h-5 mr-2 group-hover:animate-bounce" />
+                        <span className="relative z-10">😊 I Remember</span>
+                      </Button>
+                    </motion.div>
+
+                    <motion.div
+                      whileHover={{ scale: 1.05, y: -2 }}
+                      whileTap={{ scale: 0.95, y: 0 }}
+                      transition={{
+                        type: "spring",
+                        stiffness: 400,
+                        damping: 17,
+                      }}
+                      className="flex-1 sm:flex-initial"
+                    >
+                      <Button
+                        onClick={() => handleWordAction("needs_practice")}
+                        disabled={isAnswered}
+                        size="lg"
+                        variant="outline"
+                        className="w-full sm:w-auto bg-gradient-to-r from-orange-50 to-red-50 hover:from-orange-100 hover:to-red-100 text-orange-700 hover:text-red-700 font-bold py-3 px-6 rounded-2xl transition-all duration-300 transform hover:scale-105 active:scale-95 shadow-lg hover:shadow-xl min-h-[60px] touch-manipulation group relative overflow-hidden border-2 border-orange-300 hover:border-red-300"
+                        aria-label="I forgot this word"
+                      >
+                        <div className="absolute inset-0 bg-gradient-to-r from-orange-200/0 via-orange-200/30 to-orange-200/0 transform -skew-x-12 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-600 ease-out" />
+                        <XCircle className="w-5 h-5 mr-2 group-hover:animate-pulse text-orange-600" />
+                        <span className="relative z-10">🤔 I Forgot</span>
+                      </Button>
+                    </motion.div>
+                  </>
+                )}
               </div>
             )}
 
