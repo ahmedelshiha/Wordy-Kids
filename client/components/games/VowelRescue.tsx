@@ -460,7 +460,7 @@ export function VowelRescue({
             </p>
             <div className="mb-6">
               <div className="flex justify-center gap-2 mb-4">
-                {vowelOptions.map((vowel, idx) => (
+                {currentVowelOptions.map((vowel, idx) => (
                   <motion.div
                     key={vowel}
                     className="w-8 h-8 sm:w-10 sm:h-10 bg-educational-blue rounded-full flex items-center justify-center text-white font-bold text-sm sm:text-base"
