@@ -1118,12 +1118,12 @@ export function AIEnhancedInteractiveDashboardWordCard({
               </div>
             )}
 
-            {/* Continue Button */}
+            {/* Compact Continue Button */}
             <button
               onClick={startNewSession}
-              className="w-full bg-gradient-to-r from-green-500 to-blue-500 text-white font-bold py-2 sm:py-4 px-3 sm:px-6 text-xs sm:text-base rounded-lg sm:rounded-2xl hover:from-green-600 hover:to-blue-600 transition-all duration-300 transform hover:scale-105 shadow-lg"
+              className="w-full bg-gradient-to-r from-green-500 to-blue-500 text-white font-bold py-2.5 sm:py-4 px-4 sm:px-6 text-sm sm:text-base rounded-lg sm:rounded-2xl hover:from-green-600 hover:to-blue-600 transition-all duration-300 transform active:scale-95 sm:hover:scale-105 shadow-lg touch-manipulation"
             >
-              🤖 Start New AI Session
+              🤖 New AI Session
             </button>
           </div>
         </div>
