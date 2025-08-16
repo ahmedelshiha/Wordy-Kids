@@ -8,7 +8,6 @@ import { WordMatchingGame } from "../WordMatchingGame";
 import WordGarden from "./WordGarden";
 import { generateMatchingPairs } from "@/lib/gameGeneration";
 import { getWordsByCategory, getRandomWords } from "@/data/wordsDatabase";
-import { BalloonRescueVowelAdventure } from "./BalloonRescueVowelAdventure";
 
 interface AdventureGamesProps {
   selectedCategory: string;
