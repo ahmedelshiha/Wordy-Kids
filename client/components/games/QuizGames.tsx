@@ -122,7 +122,7 @@ export function QuizGames({
       id: "vowel-challenge",
       title: "Vowel Challenge",
       description: "Advanced vowel rescue with multiple missing letters!",
-      icon: "🎯",
+      icon: "���",
       difficulty: "Medium",
       questions: 8,
       timePerQuestion: "No limit",
@@ -384,8 +384,8 @@ export function QuizGames({
         ))}
       </div>
 
-      {/* Recent Scores Section - Hidden */}
-      <Card className="bg-gradient-to-r from-educational-blue/10 to-educational-purple/10 hidden">
+      {/* Recent Scores Section - Now Visible */}
+      <Card className="bg-gradient-to-r from-educational-blue/10 to-educational-purple/10">
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <Trophy className="w-5 h-5 text-educational-orange" />
