@@ -22,6 +22,8 @@ import {
 } from "./components/WordDatabaseNotifications";
 import { WordAdventureDemo } from "./pages/WordAdventureDemo";
 import { WordAdventureTest } from "./pages/WordAdventureTest";
+import AIIntegrationDemo from "./pages/AIIntegrationDemo";
+import AIWordRecommendationDemo from "./pages/AIWordRecommendationDemo";
 import { NavigationGuard } from "./components/NavigationGuard";
 import SpeechDiagnostics from "./components/SpeechDiagnostics";
 
@@ -68,6 +70,14 @@ const App = () => (
               <Route
                 path="/speech-diagnostics"
                 element={<SpeechDiagnostics />}
+              />
+              <Route
+                path="/ai-integration-demo"
+                element={<AIIntegrationDemo />}
+              />
+              <Route
+                path="/ai-word-recommendation-demo"
+                element={<AIWordRecommendationDemo />}
               />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
