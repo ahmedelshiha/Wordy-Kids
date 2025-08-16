@@ -71,6 +71,14 @@ const App = () => (
                 path="/speech-diagnostics"
                 element={<SpeechDiagnostics />}
               />
+              <Route
+                path="/ai-integration-demo"
+                element={<AIIntegrationDemo />}
+              />
+              <Route
+                path="/ai-word-recommendation-demo"
+                element={<AIWordRecommendationDemo />}
+              />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
             </Routes>
