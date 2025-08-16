@@ -1459,8 +1459,8 @@ export function AIEnhancedInteractiveDashboardWordCard({
               </div>
             </div>
 
-            {/* Achievement Teaser - Mobile Optimized */}
-            <div aria-live="polite" aria-label="Motivational messages">
+            {/* Achievement Teaser - Desktop Only */}
+            <div aria-live="polite" aria-label="Motivational messages" className="hidden md:block">
               <AchievementTeaser className="mb-1 sm:mb-2" />
             </div>
 
