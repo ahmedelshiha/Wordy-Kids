@@ -255,7 +255,7 @@ export const BalloonRescueVowelAdventure: React.FC<Props> = ({
 
       // Track failed attempt
       try {
-        await enhancedAchievementTracker.updateProgress(sessionIdRef.current, {
+        await EnhancedAchievementTracker.updateProgress(sessionIdRef.current, {
           type: "vowel_rescue", 
           correct: false,
           difficulty: currentQuestion.difficulty,
