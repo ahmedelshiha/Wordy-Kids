@@ -729,6 +729,7 @@ export function InteractiveDashboardWordCard({
 
         return (
           <motion.div
+            key={`feedback-${currentWordIndex}-${feedbackType}`}
             initial={{ scale: 0.8, opacity: 0, rotate: -5 }}
             animate={{ scale: 1, opacity: 1, rotate: 0 }}
             transition={{
