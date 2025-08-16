@@ -1872,7 +1872,7 @@ export const wordsDatabase: Word[] = [
     definition: "To rest with your eyes closed",
     example: "I sleep eight hours every night",
     funFact: "We spend one-third of our lives sleeping!",
-    emoji: "����",
+    emoji: "😴",
     category: "actions",
     difficulty: "easy",
   },
