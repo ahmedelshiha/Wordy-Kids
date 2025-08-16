@@ -1370,7 +1370,7 @@ export default function Index({ initialProfile }: IndexProps) {
       const categoryDisplayName = selectedCategory;
 
       if (accuracy === 100) {
-        achievementTitle = "Perfect Category Mastery! ��";
+        achievementTitle = "Perfect Category Mastery! 🏆";
         achievementIcon = "🏆";
         achievementMessage = `Outstanding! You remembered ALL ${totalWords} words in ${categoryDisplayName}! You're a true champion!\n\n🎁 Perfect Mastery Bonus: 200 points!\n✨ New adventure zone unlocked!`;
       } else if (accuracy >= 90) {
@@ -3184,7 +3184,7 @@ export default function Index({ initialProfile }: IndexProps) {
                           rounds={10}
                         />
                       ) : selectedQuizType === "vowel-adventure" ? (
-                        <VowelAdventure
+                        <VowelAdventureV2
                           words={defaultWords}
                           totalQuestions={10}
                           onFinish={(result) => {
@@ -3197,7 +3197,7 @@ export default function Index({ initialProfile }: IndexProps) {
                             setFeedback({
                               type: "celebration",
                               title: "Adventure Complete! 🎉",
-                              message: `You got ${result.correctAnswers} out of ${result.totalQuestions} correct with ${result.starRating} star${result.starRating !== 1 ? 's' : ''}!`,
+                              message: `You rescued ${result.correctAnswers} vowels! ${result.starRating} star${result.starRating !== 1 ? 's' : ''} earned! ⭐`,
                               onContinue: () => {
                                 setFeedback(null);
                                 setShowQuiz(false);
