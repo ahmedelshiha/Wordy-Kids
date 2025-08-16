@@ -1205,10 +1205,18 @@ export function AIEnhancedInteractiveDashboardWordCard({
                   <Button
                     onClick={() => {
                       if (aiState.isSessionActive) {
+                        // End current AI session
                         aiActions.endSession({ completed: false });
                       } else {
-                        // Toggle AI enhancement completely
-                        onToggleAIEnhancement?.(false);
+                        // Start AI session
+                        aiActions.startSession({
+                          words: words.slice(0, 10),
+                          confidence: 0.8,
+                          reasoning: ["Starting new AI session"],
+                          sessionId: `session-${Date.now()}`,
+                          targetAccuracy: 0.7,
+                          adaptationStrategy: "moderate"
+                        });
                       }
                     }}
                     size="sm"
@@ -1260,10 +1268,18 @@ export function AIEnhancedInteractiveDashboardWordCard({
                         <Button
                           onClick={() => {
                             if (aiState.isSessionActive) {
+                              // End current AI session
                               aiActions.endSession({ completed: false });
                             } else {
-                              // Toggle AI enhancement completely
-                              onToggleAIEnhancement?.(false);
+                              // Start AI session
+                              aiActions.startSession({
+                                words: words.slice(0, 10),
+                                confidence: 0.8,
+                                reasoning: ["Starting new AI session"],
+                                sessionId: `session-${Date.now()}`,
+                                targetAccuracy: 0.7,
+                                adaptationStrategy: "moderate"
+                              });
                             }
                           }}
                           size="sm"
