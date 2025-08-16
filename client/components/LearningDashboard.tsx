@@ -76,6 +76,16 @@ interface LearningDashboardProps {
     accuracy: number;
   };
   learningGoals?: any[];
+  // AI Enhancement props
+  userId?: string;
+  enableAIEnhancement?: boolean;
+  selectedCategory?: string;
+  userProgress?: {
+    rememberedWords: Set<number>;
+    forgottenWords: Set<number>;
+    excludedWordIds: Set<number>;
+  };
+  onSessionComplete?: (sessionData: any) => void;
 }
 
 export const LearningDashboard: React.FC<LearningDashboardProps> = ({
