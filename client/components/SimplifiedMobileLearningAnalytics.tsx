@@ -5,6 +5,8 @@ import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { AnimatedCounter } from "@/components/AnimatedCounter";
+import { goalProgressTracker } from "@/lib/goalProgressTracker";
+import { CategoryCompletionTracker } from "@/lib/categoryCompletionTracker";
 
 interface ChildProfile {
   id: string;
