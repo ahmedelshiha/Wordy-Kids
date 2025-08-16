@@ -295,7 +295,7 @@ export function UltimateVowelQuiz({
     (missingIndex: number, vowel: string) => {
       if (!currentQuestion || gameComplete) return;
 
-      playSoundIfEnabled("click");
+      playSoundIfEnabled.click();
 
       const newSelectedVowels = {
         ...selectedVowels,
@@ -381,7 +381,7 @@ export function UltimateVowelQuiz({
           return newStreak;
         });
 
-        playSoundIfEnabled("success");
+        playSoundIfEnabled.success();
         setShowReward(true);
         setSparkleCount((prev) => prev + (newAttempts === 1 ? 3 : 1));
 
@@ -410,7 +410,7 @@ export function UltimateVowelQuiz({
         }, 1500);
       } else {
         setStreak(0);
-        playSoundIfEnabled("error");
+        playSoundIfEnabled.error();
 
         if (
           gameMode === "rescue" ||
@@ -472,7 +472,7 @@ export function UltimateVowelQuiz({
     if (powerUps.hints > 0 && !isUsingHint) {
       setPowerUps((prev) => ({ ...prev, hints: prev.hints - 1 }));
       setIsUsingHint(true);
-      playSoundIfEnabled("powerup");
+      playSoundIfEnabled.levelUp();
 
       // Show one correct vowel
       const missingIndices =
@@ -494,7 +494,7 @@ export function UltimateVowelQuiz({
   const skipQuestion = () => {
     if (powerUps.skips > 0) {
       setPowerUps((prev) => ({ ...prev, skips: prev.skips - 1 }));
-      playSoundIfEnabled("powerup");
+      playSoundIfEnabled.levelUp();
       nextQuestion();
     }
   };
@@ -503,7 +503,7 @@ export function UltimateVowelQuiz({
     if (powerUps.timeBoost > 0 && gameMode === "rush") {
       setPowerUps((prev) => ({ ...prev, timeBoost: prev.timeBoost - 1 }));
       setTimeLeft((prev) => prev + 15);
-      playSoundIfEnabled("powerup");
+      playSoundIfEnabled.levelUp();
     }
   };
 
