@@ -1174,13 +1174,18 @@ export function AIEnhancedInteractiveDashboardWordCard({
                   <Brain className="w-3 h-3 text-white" />
                 </div>
                 <div className="text-xs font-bold text-gray-800">
-                  🤖 {Math.round(confidenceLevel * 100)}% | {currentWordIndex + 1}/{SESSION_SIZE}
+                  🤖 {Math.round(confidenceLevel * 100)}% |{" "}
+                  {currentWordIndex + 1}/{SESSION_SIZE}
                 </div>
               </div>
               <div className="flex items-center gap-1">
                 {difficultyAdjustment !== "maintain" && (
                   <Badge variant="outline" className="text-xs px-1 py-0">
-                    {difficultyAdjustment === "increase" ? "⬆️" : difficultyAdjustment === "decrease" ? "⬇️" : ""}
+                    {difficultyAdjustment === "increase"
+                      ? "⬆️"
+                      : difficultyAdjustment === "decrease"
+                        ? "⬇️"
+                        : ""}
                   </Badge>
                 )}
                 <Button
