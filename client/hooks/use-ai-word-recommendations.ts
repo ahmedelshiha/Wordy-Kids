@@ -424,13 +424,12 @@ export function useAIWordRecommendations(
 
         return sessionResult;
       } catch (error) {
+        console.warn("Error completing session:", error);
+        // Don't set error state for session completion issues - just end the session silently
         setState((prev) => ({
           ...prev,
-          error:
-            error instanceof Error
-              ? error.message
-              : "Failed to complete session",
           isSessionActive: false,
+          // Don't set error state to avoid showing "AI system temporarily unavailable"
         }));
       }
     },
