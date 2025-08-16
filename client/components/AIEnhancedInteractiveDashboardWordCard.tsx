@@ -80,6 +80,7 @@ interface AIEnhancedInteractiveDashboardWordCardProps {
   selectedCategory?: string;
   className?: string;
   onSessionComplete?: (sessionData: any) => void;
+  onToggleAIEnhancement?: (enabled: boolean) => void;
 }
 
 export interface SessionStats {
