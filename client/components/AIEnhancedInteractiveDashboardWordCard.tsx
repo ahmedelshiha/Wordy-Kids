@@ -1039,12 +1039,12 @@ export function AIEnhancedInteractiveDashboardWordCard({
               AI Session Complete!
             </h2>
 
-            {/* AI Enhancement Badge */}
-            <div className="bg-gradient-to-r from-blue-100 to-purple-100 rounded-lg p-2 mb-4">
-              <div className="flex items-center justify-center gap-2 text-sm">
-                <Brain className="w-4 h-4 text-blue-600" />
+            {/* AI Enhancement Badge - Mobile Optimized */}
+            <div className="bg-gradient-to-r from-blue-100 to-purple-100 rounded-lg p-1.5 sm:p-2 mb-2 sm:mb-4">
+              <div className="flex items-center justify-center gap-1 sm:gap-2 text-xs sm:text-sm">
+                <Brain className="w-3 h-3 sm:w-4 sm:h-4 text-blue-600" />
                 <span className="font-medium text-blue-800">
-                  AI Confidence: {Math.round(confidenceLevel * 100)}%
+                  🤖 {Math.round(confidenceLevel * 100)}%
                 </span>
               </div>
             </div>
