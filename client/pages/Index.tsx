@@ -23,7 +23,7 @@ import { DynamicAuthButton } from "@/components/DynamicAuthButton";
 import { GameLikeLearning } from "@/components/GameLikeLearning";
 import { WordMatchingGame } from "@/components/WordMatchingGame";
 import { GameHub } from "@/components/games/GameHub";
-import { EnhancedVowelQuiz } from "@/components/games/EnhancedVowelQuiz";
+import { UltimateVowelQuiz } from "@/components/games/UltimateVowelQuiz";
 import ListenAndGuessGame from "@/components/games/ListenAndGuessGame";
 import WordGarden from "@/components/games/WordGarden";
 import { AchievementTracker } from "@/lib/achievementTracker";
