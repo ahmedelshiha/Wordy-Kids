@@ -827,7 +827,7 @@ export function InteractiveDashboardWordCard({
 
       return (
         <motion.div
-          key={`emoji-${currentWordIndex}`}
+          key={`emoji-normal-${currentWordIndex}`}
           initial={{ scale: 0.8, opacity: 0, rotateY: -15 }}
           animate={{ scale: 1, opacity: 1, rotateY: 0 }}
           exit={{ scale: 0.9, opacity: 0, rotateY: 15 }}
@@ -1199,7 +1199,7 @@ export function InteractiveDashboardWordCard({
 
                       if (wordsLearned >= goal) {
                         if (wordsLearned >= goal * 2)
-                          return "�� SUPERSTAR! Amazing effort!";
+                          return "⭐ SUPERSTAR! Amazing effort!";
                         if (wordsLearned >= goal * 1.5)
                           return "🚀 Beyond awesome! Keep going!";
                         return "🎉 Goal achieved! You're incredible!";
