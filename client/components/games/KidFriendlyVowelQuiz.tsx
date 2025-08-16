@@ -196,7 +196,7 @@ export function KidFriendlyVowelQuiz({
                 setShowSetup(false);
                 setGameStarted(true);
               }}
-              className="w-full py-6 text-2xl font-bold bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white rounded-xl shadow-xl transform hover:scale-105 transition-all"
+              className="w-full py-6 text-2xl font-bold bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white rounded-xl shadow-xl transform hover:scale-105 transition-all kid-friendly-button kid-friendly-focus mobile-button-padding"
               size="lg"
             >
               🚀 Let's Play!
@@ -364,7 +364,7 @@ export function KidFriendlyVowelQuiz({
                   }`}
                 >
                   <div className="text-4xl mb-2">
-                    {isCorrect ? "����" : "😊"}
+                    {isCorrect ? "🎉" : "😊"}
                   </div>
                   <p className={`text-xl font-bold ${
                     isCorrect ? "text-green-700" : "text-orange-700"
