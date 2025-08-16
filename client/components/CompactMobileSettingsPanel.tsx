@@ -22,6 +22,8 @@ import {
   Vibrate,
   ChevronDown,
   ChevronUp,
+  Brain,
+  Sparkles,
 } from "lucide-react";
 import {
   setSoundEnabled,
@@ -46,10 +48,7 @@ interface CompactMobileSettingsPanelProps {
 
 export const CompactMobileSettingsPanel: React.FC<
   CompactMobileSettingsPanelProps
-> = ({
-  isOpen,
-  onClose,
-}) => {
+> = ({ isOpen, onClose }) => {
   // Essential settings only
   const [soundOn, setSoundOn] = useState(isSoundEnabled());
   const [uiInteractionSounds, setUiInteractionSounds] = useState(
@@ -58,6 +57,11 @@ export const CompactMobileSettingsPanel: React.FC<
   const [selectedVoiceType, setSelectedVoiceType] =
     useState<VoiceType>("woman");
   const [volume, setVolume] = useState([80]);
+
+  // AI Settings
+  const [aiEnhancementEnabled, setAiEnhancementEnabled] = useState(true);
+  const [aiAdaptiveDifficulty, setAiAdaptiveDifficulty] = useState(true);
+  const [aiPersonalizedHints, setAiPersonalizedHints] = useState(true);
   const [darkMode, setDarkMode] = useState(false);
   const [backgroundAnimations, setBackgroundAnimations] = useState(false);
   const [dailyGoal, setDailyGoal] = useState([10]);
@@ -71,6 +75,7 @@ export const CompactMobileSettingsPanel: React.FC<
     Record<string, boolean>
   >({
     audio: true,
+    ai: false,
     appearance: false,
     learning: true,
     other: false,
@@ -86,6 +91,22 @@ export const CompactMobileSettingsPanel: React.FC<
     // Load settings from localStorage
     setSelectedVoiceType(enhancedAudioService.getVoiceType());
     setUiInteractionSounds(isUIInteractionSoundsEnabled());
+
+    // Load AI settings
+    const aiEnabled = localStorage.getItem("aiEnhancementEnabled");
+    if (aiEnabled !== null) {
+      setAiEnhancementEnabled(JSON.parse(aiEnabled));
+    }
+
+    const aiAdaptive = localStorage.getItem("aiAdaptiveDifficulty");
+    if (aiAdaptive !== null) {
+      setAiAdaptiveDifficulty(JSON.parse(aiAdaptive));
+    }
+
+    const aiHints = localStorage.getItem("aiPersonalizedHints");
+    if (aiHints !== null) {
+      setAiPersonalizedHints(JSON.parse(aiHints));
+    }
 
     const loadSettings = () => {
       const backgroundAnimationsSettings = localStorage.getItem(
@@ -504,36 +525,82 @@ export const CompactMobileSettingsPanel: React.FC<
                         preview each voice
                       </p>
                     </div>
+                  </div>
+                </div>
+              )}
+            </div>
 
-                    {/* Debug information for voice availability */}
-                    <div className="mt-2 p-2 bg-gray-50 rounded-lg">
-                      <p className="text-xs text-gray-600 mb-1">
-                        Voice Status:
-                      </p>
-                      {enhancedAudioService
-                        .getAvailableVoices()
-                        .map((voiceInfo) => (
-                          <div
-                            key={voiceInfo.type}
-                            className="text-xs text-gray-500 flex justify-between"
-                          >
-                            <span className="capitalize">
-                              {voiceInfo.type}:
-                            </span>
-                            <span
-                              className={
-                                voiceInfo.available
-                                  ? "text-green-600"
-                                  : "text-red-500"
-                              }
-                            >
-                              {voiceInfo.available
-                                ? "✓ Available"
-                                : "✗ Not found"}
-                            </span>
-                          </div>
-                        ))}
-                    </div>
+            {/* AI Settings Section */}
+            <div className="border rounded-lg">
+              <CompactSectionHeader
+                title="AI Enhancement"
+                emoji="🤖"
+                isExpanded={expandedSections.ai}
+                onToggle={() => toggleSection("ai")}
+              />
+              {expandedSections.ai && (
+                <div
+                  className="px-2 pb-2 space-y-1 max-h-[30vh] overflow-y-auto scroll-smooth"
+                  style={{ WebkitOverflowScrolling: "touch" }}
+                >
+                  <CompactSettingRow
+                    icon={aiEnhancementEnabled ? Brain : Brain}
+                    label="AI Enhanced Learning"
+                    description="Use AI to personalize your experience"
+                  >
+                    <CompactMobileSwitch
+                      checked={aiEnhancementEnabled}
+                      onCheckedChange={(checked) => {
+                        setAiEnhancementEnabled(checked);
+                        setHasUnsavedChanges(true);
+                        localStorage.setItem(
+                          "aiEnhancementEnabled",
+                          JSON.stringify(checked),
+                        );
+                      }}
+                    />
+                  </CompactSettingRow>
+
+                  <CompactSettingRow
+                    icon={aiAdaptiveDifficulty ? Sparkles : Sparkles}
+                    label="Adaptive Difficulty"
+                    description="AI adjusts difficulty based on performance"
+                  >
+                    <CompactMobileSwitch
+                      checked={aiAdaptiveDifficulty}
+                      onCheckedChange={(checked) => {
+                        setAiAdaptiveDifficulty(checked);
+                        setHasUnsavedChanges(true);
+                        localStorage.setItem(
+                          "aiAdaptiveDifficulty",
+                          JSON.stringify(checked),
+                        );
+                      }}
+                    />
+                  </CompactSettingRow>
+
+                  <CompactSettingRow
+                    icon={aiPersonalizedHints ? Target : Target}
+                    label="Smart Hints"
+                    description="Get personalized hints from AI"
+                  >
+                    <CompactMobileSwitch
+                      checked={aiPersonalizedHints}
+                      onCheckedChange={(checked) => {
+                        setAiPersonalizedHints(checked);
+                        setHasUnsavedChanges(true);
+                        localStorage.setItem(
+                          "aiPersonalizedHints",
+                          JSON.stringify(checked),
+                        );
+                      }}
+                    />
+                  </CompactSettingRow>
+
+                  <div className="mt-2 p-2 bg-blue-50 rounded-lg">
+                    <p className="text-xs text-blue-700">
+                      ✨ AI features improve as you learn!
+                    </p>
                   </div>
                 </div>
               )}
@@ -648,12 +715,9 @@ export const CompactMobileSettingsPanel: React.FC<
                       <span>50</span>
                     </div>
                   </div>
-
-
                 </div>
               )}
             </div>
-
 
             {/* Other Section */}
             <div className="border rounded-lg">
@@ -728,7 +792,6 @@ export const CompactMobileSettingsPanel: React.FC<
           </div>
         </div>
       </Card>
-
     </div>
   );
 };

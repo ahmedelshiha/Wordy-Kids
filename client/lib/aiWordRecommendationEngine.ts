@@ -206,6 +206,7 @@ export class AIWordRecommendationEngine {
     const nextSessionPreview = this.predictNextSession(
       learningPattern,
       enhancedRecommendation,
+      predictions,
     );
 
     return {
@@ -647,6 +648,7 @@ export class AIWordRecommendationEngine {
   private static predictNextSession(
     learningPattern: AILearningPattern,
     currentWords: Word[],
+    predictions: any,
   ): AIRecommendation["nextSessionPreview"] {
     // Calculate optimal gap based on retention curve
     const baseGap = 24; // 24 hours base

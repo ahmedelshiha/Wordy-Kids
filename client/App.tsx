@@ -76,7 +76,15 @@ const App = () => (
                 element={<AIIntegrationDemo />}
               />
               <Route
+                path="/AIIntegrationDemo"
+                element={<AIIntegrationDemo />}
+              />
+              <Route
                 path="/ai-word-recommendation-demo"
+                element={<AIWordRecommendationDemo />}
+              />
+              <Route
+                path="/AIWordRecommendationDemo"
                 element={<AIWordRecommendationDemo />}
               />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}

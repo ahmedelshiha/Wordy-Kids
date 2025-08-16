@@ -115,6 +115,9 @@ import { WordProgressAPI } from "@/lib/wordProgressApi";
 import { ChildWordStats } from "@shared/api";
 import { useBrowserBackButton } from "@/hooks/useBrowserBackButton";
 import { useNavigationHistory } from "@/hooks/useNavigationHistory";
+import { useAIWordRecommendations } from "@/hooks/use-ai-word-recommendations";
+import { AIWordRecommendationService } from "@/lib/aiWordRecommendationService";
+import { getAISettings, isAIEnabled } from "@/lib/aiSettings";
 
 interface IndexProps {
   initialProfile?: any;
@@ -2152,6 +2155,19 @@ export default function Index({ initialProfile }: IndexProps) {
                         forgottenWordsCount={forgottenWords.size}
                         rememberedWordsCount={rememberedWords.size}
                         availableWords={currentDashboardWords}
+                        // AI Enhancement Integration
+                        userId={currentProfile?.id || "default-user"}
+                        enableAIEnhancement={isAIEnabled()}
+                        selectedCategory={selectedCategory}
+                        userProgress={{
+                          rememberedWords,
+                          forgottenWords,
+                          excludedWordIds: new Set(),
+                        }}
+                        onSessionComplete={(sessionData) => {
+                          console.log("AI session completed:", sessionData);
+                          // Optional: Show AI insights to user
+                        }}
                         onWordProgress={async (word, status) => {
                           console.log(
                             `Word Progress: ${word.word} - ${status}`,
@@ -2288,6 +2304,34 @@ export default function Index({ initialProfile }: IndexProps) {
                           />
                         ) : (
                           <>
+                            {/* AI Word Recommendations Banner */}
+                            {isAIEnabled() && (
+                              <div className="bg-gradient-to-r from-blue-50 to-purple-50 border border-blue-200 rounded-2xl p-4 mb-4">
+                                <div className="flex items-center gap-3">
+                                  <div className="bg-gradient-to-r from-blue-500 to-purple-500 p-2 rounded-full">
+                                    <Brain className="w-5 h-5 text-white" />
+                                  </div>
+                                  <div className="flex-1">
+                                    <h3 className="text-sm font-bold text-blue-800 mb-1">
+                                      🤖 AI-Enhanced Learning
+                                    </h3>
+                                    <p className="text-xs text-blue-700">
+                                      Words are now selected using AI to match
+                                      your learning style and progress.
+                                    </p>
+                                  </div>
+                                  <div className="text-right">
+                                    <div className="text-xs font-bold text-purple-600">
+                                      Smart Mode
+                                    </div>
+                                    <div className="text-xs text-purple-500">
+                                      ON
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            )}
+
                             <div className="text-center">
                               {/* Compact Mobile Header */}
                               <div className="mb-2">
@@ -2878,6 +2922,22 @@ export default function Index({ initialProfile }: IndexProps) {
                             <p className="text-sm md:text-lg text-gray-600 mb-4 md:mb-6 px-4">
                               Test your vocabulary with super fun quizzes! 🌟
                             </p>
+
+                            {/* AI Quiz Enhancement Notice */}
+                            {isAIEnabled() && (
+                              <div className="bg-gradient-to-r from-green-50 to-blue-50 border border-green-200 rounded-xl p-3 mb-4 mx-4">
+                                <div className="flex items-center justify-center gap-2">
+                                  <Zap className="w-4 h-4 text-green-600" />
+                                  <span className="text-sm font-semibold text-green-800">
+                                    🤖 AI-Powered Questions
+                                  </span>
+                                </div>
+                                <p className="text-xs text-green-700 mt-1">
+                                  Questions are personalized based on your
+                                  learning progress!
+                                </p>
+                              </div>
+                            )}
                           </div>
 
                           {/* Kid-Friendly Quiz Cards - Mobile Optimized */}
