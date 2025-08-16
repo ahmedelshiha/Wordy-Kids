@@ -117,6 +117,7 @@ import { useBrowserBackButton } from "@/hooks/useBrowserBackButton";
 import { useNavigationHistory } from "@/hooks/useNavigationHistory";
 import { useAIWordRecommendations } from "@/hooks/use-ai-word-recommendations";
 import { AIWordRecommendationService } from "@/lib/aiWordRecommendationService";
+import { getAISettings, isAIEnabled } from "@/lib/aiSettings";
 
 interface IndexProps {
   initialProfile?: any;
