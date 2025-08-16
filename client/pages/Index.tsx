@@ -1842,7 +1842,7 @@ export default function Index({ initialProfile }: IndexProps) {
             {backgroundAnimationsEnabled && (
               <>
                 <div className="hidden md:block absolute top-10 left-10 text-3xl animate-bounce">
-                  ���
+                  ⭐
                 </div>
                 <div className="hidden md:block absolute top-20 right-20 text-2xl animate-pulse">
                   📚
@@ -2873,7 +2873,7 @@ export default function Index({ initialProfile }: IndexProps) {
                               </div>
                             </div>
                             <h2 className="text-xl md:text-3xl font-bold text-gray-800 mb-2 md:mb-4">
-                              ���� Quiz Time!
+                              🧠 Quiz Time!
                             </h2>
                             <p className="text-sm md:text-lg text-gray-600 mb-4 md:mb-6 px-4">
                               Test your vocabulary with super fun quizzes! 🌟
