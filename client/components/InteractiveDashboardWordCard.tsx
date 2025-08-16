@@ -1616,7 +1616,7 @@ export function InteractiveDashboardWordCard({
                     <div className="absolute inset-0 bg-white/20 rounded-xl opacity-0 hover:opacity-100 transition-opacity duration-300"></div>
                     <div className="relative z-10 flex items-center justify-center">
                       <span className="text-base sm:text-lg mr-1 sm:mr-2 animate-bounce">
-                        ����
+                        😊
                       </span>
                       <div className="text-center">
                         <div className="font-bold text-xs sm:text-sm md:text-base">
