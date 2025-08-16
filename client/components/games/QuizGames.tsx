@@ -8,6 +8,7 @@ import { generateQuizQuestions } from "@/lib/gameGeneration";
 import { VowelRescue } from "./VowelRescue";
 import ListenAndGuessGame from "./ListenAndGuessGame";
 import PictureFunGame from "./PictureFunGame";
+import { BalloonRescueVowelAdventure } from "./BalloonRescueVowelAdventure";
 import {
   getSystematicEasyVowelQuestions,
   getSystematicMediumVowelQuestions,
