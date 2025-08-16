@@ -1559,7 +1559,7 @@ export const ParentDashboardDesktop: React.FC<ParentDashboardDesktopProps> = ({
                                 {topChild.weeklyProgress} words this week
                               </p>
                               <Badge className="bg-yellow-100 text-yellow-800">
-                                ��� Week's Champion
+                                🏆 Week's Champion
                               </Badge>
                             </div>
                           ) : (
