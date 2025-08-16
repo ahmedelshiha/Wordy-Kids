@@ -9,7 +9,7 @@ import { enhancedAchievementTracker } from "../../lib/enhancedAchievementTracker
 import { audioService } from "../../lib/audioService";
 import { CelebrationEffect } from "../CelebrationEffect";
 import { EnhancedAchievementPopup } from "../EnhancedAchievementPopup";
-import "../../styles/vowel-adventure-v2.css";
+import "../../styles/balloon-rescue-adventure.css";
 
 type Props = {
   words?: WordItem[];
