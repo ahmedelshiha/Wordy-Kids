@@ -2974,95 +2974,39 @@ export default function Index({ initialProfile }: IndexProps) {
                               </CardContent>
                             </Card>
 
-                            {/* Vowel Rescue - Easy */}
-                            <Card className="cursor-pointer hover:shadow-lg transition-all duration-300 hover:scale-105 border-2 border-educational-green/30 animate-kid-float">
+                            {/* Unified Vowel Adventure */}
+                            <Card className="cursor-pointer hover:shadow-lg transition-all duration-300 hover:scale-105 border-2 border-educational-blue/30 animate-kid-float md:col-span-2 lg:col-span-1">
                               <CardContent className="p-3 md:p-4 text-center">
                                 <div className="text-3xl md:text-5xl mb-2 md:mb-3 animate-bounce">
-                                  🎯
+                                  🔤
                                 </div>
-                                <h3 className="text-sm md:text-lg font-bold text-educational-green mb-1 md:mb-2">
-                                  Vowel Rescue!
+                                <h3 className="text-sm md:text-lg font-bold text-educational-blue mb-1 md:mb-2">
+                                  Vowel Adventure!
                                 </h3>
                                 <p className="text-xs md:text-sm text-gray-600 mb-2 md:mb-3 hidden md:block">
-                                  Help rescue missing vowels! 🆘
+                                  Choose your difficulty and rescue vowels! 🌟
                                 </p>
-                                <div className="flex justify-center gap-1 mb-2 md:mb-3">
+                                <div className="flex justify-center gap-1 mb-2 md:mb-3 flex-wrap">
                                   <span className="bg-educational-green/20 text-educational-green px-1.5 py-0.5 rounded-full text-xs">
-                                    🎯 Easy!
+                                    Easy
                                   </span>
-                                </div>
-                                <Button
-                                  onClick={() => {
-                                    setSelectedQuizType("vowel-easy");
-                                    setShowQuiz(true);
-                                  }}
-                                  className="w-full bg-educational-green text-white hover:bg-educational-green/90 py-1.5 md:py-2 text-xs md:text-sm rounded-xl animate-wiggle"
-                                  size="sm"
-                                >
-                                  <Play className="w-3 h-3 md:w-4 md:h-4 mr-1" />
-                                  Rescue Vowels! 🚀
-                                </Button>
-                              </CardContent>
-                            </Card>
-
-                            {/* Vowel Challenge - Medium */}
-                            <Card className="cursor-pointer hover:shadow-lg transition-all duration-300 hover:scale-105 border-2 border-educational-purple/30 animate-kid-float-delayed">
-                              <CardContent className="p-3 md:p-4 text-center">
-                                <div className="text-3xl md:text-5xl mb-2 md:mb-3 animate-sparkle">
-                                  🎯
-                                </div>
-                                <h3 className="text-sm md:text-lg font-bold text-educational-purple mb-1 md:mb-2">
-                                  Vowel Challenge!
-                                </h3>
-                                <p className="text-xs md:text-sm text-gray-600 mb-2 md:mb-3 hidden md:block">
-                                  Multiple missing vowels! 💪
-                                </p>
-                                <div className="flex justify-center gap-1 mb-2 md:mb-3">
                                   <span className="bg-educational-purple/20 text-educational-purple px-1.5 py-0.5 rounded-full text-xs">
-                                    🎯 Medium!
+                                    Medium
                                   </span>
-                                </div>
-                                <Button
-                                  onClick={() => {
-                                    setSelectedQuizType("vowel-challenge");
-                                    setShowQuiz(true);
-                                  }}
-                                  className="w-full bg-educational-purple text-white hover:bg-educational-purple/90 py-1.5 md:py-2 text-xs md:text-sm rounded-xl"
-                                  size="sm"
-                                >
-                                  <Play className="w-3 h-3 md:w-4 md:h-4 mr-1" />
-                                  Take Challenge! ⚡
-                                </Button>
-                              </CardContent>
-                            </Card>
-
-                            {/* Vowel Rush - Timed */}
-                            <Card className="cursor-pointer hover:shadow-lg transition-all duration-300 hover:scale-105 border-2 border-educational-orange/30 animate-gentle-bounce">
-                              <CardContent className="p-3 md:p-4 text-center">
-                                <div className="text-3xl md:text-5xl mb-2 md:mb-3 animate-pulse">
-                                  🎯
-                                </div>
-                                <h3 className="text-sm md:text-lg font-bold text-educational-orange mb-1 md:mb-2">
-                                  Vowel Rush!
-                                </h3>
-                                <p className="text-xs md:text-sm text-gray-600 mb-2 md:mb-3 hidden md:block">
-                                  60 seconds speed challenge! ⏰
-                                </p>
-                                <div className="flex justify-center gap-1 mb-2 md:mb-3">
                                   <span className="bg-educational-orange/20 text-educational-orange px-1.5 py-0.5 rounded-full text-xs">
-                                    🎯 Timed!
+                                    Timed
                                   </span>
                                 </div>
                                 <Button
                                   onClick={() => {
-                                    setSelectedQuizType("vowel-timed");
+                                    setSelectedQuizType("unified-vowel");
                                     setShowQuiz(true);
                                   }}
-                                  className="w-full bg-educational-orange text-white hover:bg-educational-orange/90 py-1.5 md:py-2 text-xs md:text-sm rounded-xl animate-bounce"
+                                  className="w-full bg-educational-blue text-white hover:bg-educational-blue/90 py-1.5 md:py-2 text-xs md:text-sm rounded-xl animate-wiggle"
                                   size="sm"
                                 >
                                   <Play className="w-3 h-3 md:w-4 md:h-4 mr-1" />
-                                  Rush Mode! 🔥
+                                  Start Adventure! 🚀
                                 </Button>
                               </CardContent>
                             </Card>
