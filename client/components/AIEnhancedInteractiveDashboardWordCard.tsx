@@ -1026,50 +1026,53 @@ export function AIEnhancedInteractiveDashboardWordCard({
         </Card>
       )}
 
-      {/* Session Completion Modal */}
+      {/* Session Completion Modal - Mobile Optimized */}
       {showSessionComplete && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-1 sm:p-4">
-          <div className="bg-white rounded-xl sm:rounded-3xl p-2 sm:p-8 max-w-xs sm:max-w-md w-full text-center shadow-2xl animate-in zoom-in-95 duration-300">
-            <div className="text-3xl sm:text-6xl mb-1 sm:mb-4">🤖🎉</div>
-            <h2 className="text-lg sm:text-3xl font-bold text-gray-800 mb-2 sm:mb-4">
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-2 sm:p-4">
+          <div className="bg-white rounded-lg sm:rounded-3xl p-3 sm:p-8 max-w-[90vw] sm:max-w-md w-full text-center shadow-2xl animate-in zoom-in-95 duration-300 max-h-[90vh] overflow-y-auto">
+            <div className="text-2xl sm:text-6xl mb-2 sm:mb-4">🤖🎉</div>
+            <h2 className="text-base sm:text-3xl font-bold text-gray-800 mb-2 sm:mb-4">
               AI Session Complete!
             </h2>
 
-            {/* AI Enhancement Badge */}
-            <div className="bg-gradient-to-r from-blue-100 to-purple-100 rounded-lg p-2 mb-4">
-              <div className="flex items-center justify-center gap-2 text-sm">
-                <Brain className="w-4 h-4 text-blue-600" />
+            {/* Compact AI Enhancement Badge */}
+            <div className="bg-gradient-to-r from-blue-100 to-purple-100 rounded-lg p-1.5 sm:p-2 mb-2 sm:mb-4">
+              <div className="flex items-center justify-center gap-1 sm:gap-2 text-xs sm:text-sm">
+                <Brain className="w-3 h-3 sm:w-4 sm:h-4 text-blue-600" />
                 <span className="font-medium text-blue-800">
-                  AI Confidence: {Math.round(confidenceLevel * 100)}%
+                  🤖 {Math.round(confidenceLevel * 100)}%
                 </span>
               </div>
             </div>
 
-            {/* Session Stats */}
-            <div className="bg-gradient-to-r from-blue-50 to-purple-50 rounded-lg sm:rounded-2xl p-2 sm:p-4 mb-2 sm:mb-6">
+            {/* Compact Session Stats */}
+            <div className="bg-gradient-to-r from-blue-50 to-purple-50 rounded-lg p-2 sm:p-4 mb-2 sm:mb-6">
               <div className="grid grid-cols-3 gap-1 sm:gap-4 text-center">
                 <div>
                   <div className="text-sm sm:text-2xl font-bold text-green-600">
                     {sessionStats.wordsRemembered}
                   </div>
-                  <div className="text-xs sm:text-sm text-gray-600">
-                    Mastered
+                  <div className="text-xs text-gray-600">
+                    <span className="hidden sm:inline">Mastered</span>
+                    <span className="sm:hidden">😊</span>
                   </div>
                 </div>
                 <div>
                   <div className="text-sm sm:text-2xl font-bold text-orange-600">
                     {sessionStats.wordsForgotten}
                   </div>
-                  <div className="text-xs sm:text-sm text-gray-600">
-                    To Practice
+                  <div className="text-xs text-gray-600">
+                    <span className="hidden sm:inline">To Practice</span>
+                    <span className="sm:hidden">💪</span>
                   </div>
                 </div>
                 <div>
                   <div className="text-sm sm:text-2xl font-bold text-purple-600">
                     {sessionStats.accuracy}%
                   </div>
-                  <div className="text-xs sm:text-sm text-gray-600">
-                    Accuracy
+                  <div className="text-xs text-gray-600">
+                    <span className="hidden sm:inline">Accuracy</span>
+                    <span className="sm:hidden">🎯</span>
                   </div>
                 </div>
               </div>
