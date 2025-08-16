@@ -1283,7 +1283,7 @@ export function InteractiveDashboardWordCard({
                     "🔍 What do you see?",
                     "✨ Name this object!",
                     "🧠 Think you know?",
-                    "���� Look closely...",
+                    "👀 Look closely...",
                     "🌟 What could this be?",
                     "🎪 Mystery object!",
                     "🎨 Identify this!",
