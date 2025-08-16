@@ -910,7 +910,7 @@ export function UltimateVowelQuiz({
 
               {/* Definition */}
               <p className="text-lg text-gray-600 mb-6 italic">
-                "{currentQuestion.definition}"
+                "{currentQuestion.definition || currentQuestion.originalWord?.definition || `A ${currentQuestion.category || 'word'}`}"
               </p>
 
               {/* Audio Button */}
