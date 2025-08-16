@@ -393,7 +393,6 @@ export class AIWordRecommendationService {
     targetWordCount: number = 20,
   ): AIRecommendation {
     // Simple fallback using existing smart selection
-    const { SmartWordSelector } = await import("./smartWordSelection");
 
     const selection = SmartWordSelector.selectWords({
       category: category || "all",
