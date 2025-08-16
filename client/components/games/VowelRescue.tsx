@@ -69,7 +69,7 @@ export function VowelRescue({
   }>({});
   const [showFeedback, setShowFeedback] = useState(false);
   const [showReward, setShowReward] = useState(false);
-  const [gameStarted, setGameStarted] = useState(false);
+  const [gameStarted, setGameStarted] = useState(true);
   const [attempts, setAttempts] = useState(0);
   const [timeLeft, setTimeLeft] = useState(60);
   const [gameComplete, setGameComplete] = useState(false);

@@ -205,6 +205,14 @@ export function InteractiveDashboardWordCard({
   const [guess, setGuess] = useState("");
   const [showHint, setShowHint] = useState(false);
 
+  // Enhanced visual feedback states
+  const [particles, setParticles] = useState<
+    Array<{ id: number; type: "success" | "practice"; x: number; y: number }>
+  >([]);
+  const [buttonClickedId, setButtonClickedId] = useState<string | null>(null);
+  const [showSuccessRipple, setShowSuccessRipple] = useState(false);
+  const [showPracticeRipple, setShowPracticeRipple] = useState(false);
+
   // Voice settings integration
   const voiceSettings = useVoiceSettings();
 
@@ -590,23 +598,38 @@ export function InteractiveDashboardWordCard({
   const advanceToNextWord = () => {
     console.log(`Advancing from word ${currentWordIndex + 1}/${SESSION_SIZE}`);
 
-    // Reset states for next word
-    setIsAnswered(false);
-    setFeedbackType(null);
-    setCelebrationEffect(false);
+    // Start transition effect
+    setIsTransitioning(true);
 
-    // Simply move to next word in session
-    const nextIndex = currentWordIndex + 1;
+    // Brief delay for smooth transition
+    setTimeout(() => {
+      // Reset states for next word
+      setIsAnswered(false);
+      setFeedbackType(null);
+      setCelebrationEffect(false);
+      setShowWordName(false);
+      setShowHint(false);
+      setParticles([]);
+      setButtonClickedId(null);
+      setShowSuccessRipple(false);
+      setShowPracticeRipple(false);
 
-    if (nextIndex < SESSION_SIZE && nextIndex < sessionWords.length) {
-      setCurrentWordIndex(nextIndex);
-      console.log(
-        `Advanced to word ${nextIndex + 1}/${SESSION_SIZE}: ${sessionWords[nextIndex]?.word}`,
-      );
-    } else {
-      console.log("Reached end of session words");
-      // This shouldn't happen as session completion is handled in handleWordAction
-    }
+      // Simply move to next word in session
+      const nextIndex = currentWordIndex + 1;
+
+      if (nextIndex < SESSION_SIZE && nextIndex < sessionWords.length) {
+        setCurrentWordIndex(nextIndex);
+        console.log(
+          `Advanced to word ${nextIndex + 1}/${SESSION_SIZE}: ${sessionWords[nextIndex]?.word}`,
+        );
+      } else {
+        console.log("Reached end of session words");
+        // This shouldn't happen as session completion is handled in handleWordAction
+      }
+
+      // End transition effect
+      setTimeout(() => setIsTransitioning(false), 100);
+    }, 300);
   };
 
   const startNewSession = () => {
@@ -705,23 +728,181 @@ export function InteractiveDashboardWordCard({
           feedbackType === "remembered" ? "Great job!" : "Keep practicing!";
 
         return (
-          <div
-            className={`w-48 h-32 mx-auto flex flex-col items-center justify-center bg-gradient-to-br ${feedbackColor} rounded-2xl shadow-lg border-2 ${feedbackType === "remembered" ? "border-green-300" : "border-orange-300"} transition-all duration-500`}
+          <motion.div
+            initial={{ scale: 0.8, opacity: 0, rotate: -5 }}
+            animate={{ scale: 1, opacity: 1, rotate: 0 }}
+            transition={{
+              duration: 0.6,
+              type: "spring",
+              stiffness: 300,
+              damping: 20,
+            }}
+            className={`w-48 h-32 mx-auto flex flex-col items-center justify-center bg-gradient-to-br ${feedbackColor} rounded-2xl shadow-lg hover:shadow-xl border-2 ${feedbackType === "remembered" ? "border-green-300" : "border-orange-300"} relative overflow-hidden`}
           >
-            <div className="text-4xl animate-bounce mb-1">{feedbackEmoji}</div>
-            <div className="text-xs font-bold text-gray-700">
+            {/* Celebration background effect */}
+            {feedbackType === "remembered" && (
+              <motion.div
+                initial={{ scale: 0, opacity: 0.8 }}
+                animate={{ scale: 2, opacity: 0 }}
+                transition={{ duration: 1, ease: "easeOut" }}
+                className="absolute inset-0 bg-gradient-to-r from-green-200/50 to-emerald-200/50 rounded-2xl"
+              />
+            )}
+
+            <motion.div
+              animate={{
+                y: [0, -10, 0],
+                rotate:
+                  feedbackType === "remembered"
+                    ? [0, 15, -15, 0]
+                    : [0, -5, 5, 0],
+                scale: [1, 1.2, 1],
+              }}
+              transition={{
+                duration: feedbackType === "remembered" ? 0.8 : 1.2,
+                repeat: Infinity,
+                ease: "easeInOut",
+              }}
+              className="text-4xl mb-1 relative z-10"
+            >
+              {feedbackEmoji}
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3, duration: 0.4 }}
+              className="text-xs font-bold text-gray-700 relative z-10"
+            >
               {feedbackMessage}
-            </div>
-          </div>
+            </motion.div>
+
+            {/* Extra sparkles for success */}
+            {feedbackType === "remembered" && (
+              <>
+                <motion.div
+                  initial={{ opacity: 0, scale: 0, x: -20, y: -10 }}
+                  animate={{
+                    opacity: [0, 1, 0],
+                    scale: [0, 1, 0],
+                    x: -30,
+                    y: -20,
+                  }}
+                  transition={{
+                    duration: 1.5,
+                    delay: 0.2,
+                    repeat: Infinity,
+                    repeatDelay: 2,
+                  }}
+                  className="absolute text-yellow-300 text-sm"
+                >
+                  ✨
+                </motion.div>
+                <motion.div
+                  initial={{ opacity: 0, scale: 0, x: 20, y: -10 }}
+                  animate={{
+                    opacity: [0, 1, 0],
+                    scale: [0, 1, 0],
+                    x: 30,
+                    y: -20,
+                  }}
+                  transition={{
+                    duration: 1.5,
+                    delay: 0.5,
+                    repeat: Infinity,
+                    repeatDelay: 2,
+                  }}
+                  className="absolute text-blue-300 text-xs"
+                >
+                  ⭐
+                </motion.div>
+              </>
+            )}
+          </motion.div>
         );
       }
 
       return (
-        <div className="w-48 h-32 mx-auto flex items-center justify-center bg-gradient-to-br from-blue-100 to-purple-100 rounded-2xl shadow-lg">
-          <div className="text-8xl animate-gentle-float filter drop-shadow-lg">
-            {currentWord.emoji}
+        <motion.div
+          key={`emoji-${currentWordIndex}`}
+          initial={{ scale: 0.8, opacity: 0, rotateY: -15 }}
+          animate={{ scale: 1, opacity: 1, rotateY: 0 }}
+          exit={{ scale: 0.9, opacity: 0, rotateY: 15 }}
+          transition={{
+            duration: 0.6,
+            type: "spring",
+            stiffness: 200,
+            damping: 20,
+          }}
+          whileHover={{
+            scale: 1.05,
+            rotateY: 5,
+            transition: { duration: 0.3 },
+          }}
+          whileTap={{ scale: 0.95 }}
+          className="w-48 h-32 mx-auto flex items-center justify-center bg-gradient-to-br from-blue-100 via-purple-100 to-pink-100 rounded-2xl shadow-lg hover:shadow-xl cursor-pointer group relative overflow-hidden"
+          onClick={playPronunciation}
+        >
+          {/* Animated background elements */}
+          <div className="absolute inset-0 bg-gradient-to-r from-blue-200/20 via-purple-200/20 to-pink-200/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+          <div className="absolute top-2 right-2 text-xs text-blue-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+            🔊
           </div>
-        </div>
+
+          {/* Main emoji with enhanced animation */}
+          <motion.div
+            animate={{
+              y: [0, -8, 0],
+              rotate: [0, 2, -2, 0],
+              scale: [1, 1.05, 1],
+            }}
+            transition={{
+              duration: 3,
+              repeat: Infinity,
+              ease: "easeInOut",
+              times: [0, 0.5, 1],
+            }}
+            whileHover={{
+              y: -5,
+              scale: 1.1,
+              transition: { duration: 0.2 },
+            }}
+            className="text-8xl filter drop-shadow-lg relative z-10"
+          >
+            {currentWord.emoji}
+
+            {/* Sparkle effects on hover */}
+            <AnimatePresence>
+              <motion.div
+                initial={{ opacity: 0, scale: 0 }}
+                animate={{ opacity: [0, 1, 0], scale: [0, 1, 0] }}
+                transition={{
+                  duration: 2,
+                  repeat: Infinity,
+                  repeatDelay: 3,
+                  ease: "easeInOut",
+                }}
+                className="absolute -top-2 -right-2 text-yellow-400 text-sm"
+              >
+                ✨
+              </motion.div>
+              <motion.div
+                initial={{ opacity: 0, scale: 0 }}
+                animate={{ opacity: [0, 1, 0], scale: [0, 1, 0] }}
+                transition={{
+                  duration: 2,
+                  repeat: Infinity,
+                  repeatDelay: 4,
+                  delay: 1,
+                  ease: "easeInOut",
+                }}
+                className="absolute -bottom-1 -left-1 text-blue-400 text-xs"
+              >
+                ⭐
+              </motion.div>
+            </AnimatePresence>
+          </motion.div>
+        </motion.div>
       );
     }
 
@@ -1074,26 +1255,103 @@ export function InteractiveDashboardWordCard({
               </div>
             </div>
 
-            {/* Picture Display */}
-            <div
-              className="mb-4 md:mb-6"
-              role="img"
-              aria-label={`Picture showing ${currentWord.emoji} ${currentWord.word}`}
-            >
-              {renderWordImage()}
-            </div>
+            {/* Picture Display with State Transitions */}
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={`word-${currentWordIndex}-${showWordName ? "revealed" : "hidden"}`}
+                initial={{ opacity: 0, y: 20, scale: 0.95 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                exit={{ opacity: 0, y: -10, scale: 1.05 }}
+                transition={{
+                  duration: 0.5,
+                  type: "spring",
+                  stiffness: 200,
+                  damping: 20,
+                }}
+                className="mb-4 md:mb-6"
+                role="img"
+                aria-label={`Picture showing ${currentWord.emoji} ${currentWord.word}`}
+              >
+                {renderWordImage()}
+
+                {/* State overlay for transitions */}
+                {isTransitioning && (
+                  <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 0.8 }}
+                    exit={{ opacity: 0 }}
+                    className="absolute inset-0 bg-white/50 backdrop-blur-sm rounded-2xl flex items-center justify-center"
+                  >
+                    <motion.div
+                      animate={{ rotate: 360 }}
+                      transition={{
+                        duration: 1,
+                        repeat: Infinity,
+                        ease: "linear",
+                      }}
+                      className="w-8 h-8 border-2 border-blue-500 border-t-transparent rounded-full"
+                    />
+                  </motion.div>
+                )}
+              </motion.div>
+            </AnimatePresence>
 
             {/* Game Instructions */}
             <header className="text-center mb-3 sm:mb-4 md:mb-5" role="banner">
-              <h1 className="text-base sm:text-lg md:text-xl lg:text-2xl font-bold text-gray-800 mb-1 sm:mb-2">
-                🤔 What is this?
-              </h1>
-              <p
+              <motion.h1
+                key={`prompt-${currentWordIndex}`}
+                initial={{ opacity: 0, y: -10, scale: 0.95 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                transition={{ duration: 0.4, type: "spring", damping: 20 }}
+                className="text-base sm:text-lg md:text-xl lg:text-2xl font-bold text-gray-800 mb-1 sm:mb-2"
+              >
+                {(() => {
+                  const prompts = [
+                    "🤔 What is this?",
+                    "🎯 Can you guess?",
+                    "🔍 What do you see?",
+                    "✨ Name this object!",
+                    "🧠 Think you know?",
+                    "👀 Look closely...",
+                    "🌟 What could this be?",
+                    "🎪 Mystery object!",
+                    "🎨 Identify this!",
+                    "🚀 What's shown here?",
+                  ];
+
+                  // Use word index and some randomness for variety
+                  const promptIndex =
+                    (currentWordIndex + (currentWord?.id || 0)) %
+                    prompts.length;
+                  return prompts[promptIndex];
+                })()}
+              </motion.h1>
+              <motion.p
+                key={`desc-${currentWordIndex}`}
+                initial={{ opacity: 0, y: 5 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.4, delay: 0.1 }}
                 className="text-xs sm:text-sm md:text-base text-gray-600 px-2"
                 id="game-instructions"
               >
-                Look at the picture and guess the word!
-              </p>
+                {(() => {
+                  const descriptions = [
+                    "Look at the picture and guess the word!",
+                    "Study the image and make your guess!",
+                    "Take a close look and identify it!",
+                    "Examine the picture carefully!",
+                    "What word matches this image?",
+                    "Use the visual clue to find the answer!",
+                    "Let the picture guide your guess!",
+                    "Connect the image to the right word!",
+                  ];
+
+                  const descIndex =
+                    (currentWordIndex + (currentWord?.category?.length || 0)) %
+                    descriptions.length;
+                  return descriptions[descIndex];
+                })()}
+              </motion.p>
             </header>
 
             {/* Action Buttons Row - Mobile Optimized */}
@@ -1104,35 +1362,51 @@ export function InteractiveDashboardWordCard({
               aria-describedby="game-instructions"
             >
               {!showHint && !showWordName && (
-                <Button
-                  onClick={() =>
-                    handleActionWithFeedback(() => setShowHint(true), "light")
-                  }
-                  variant="outline"
-                  size="sm"
-                  className="px-3 py-2 text-xs sm:text-sm rounded-xl transition-all duration-300 transform hover:scale-105 active:scale-95 min-h-[44px] touch-manipulation"
-                  aria-label="Show hint"
+                <motion.div
+                  whileHover={{ scale: 1.05, y: -2 }}
+                  whileTap={{ scale: 0.95, y: 0 }}
+                  transition={{ type: "spring", stiffness: 400, damping: 17 }}
                 >
-                  <Lightbulb className="w-4 h-4 mr-1" />
-                  💡 Hint
-                </Button>
+                  <Button
+                    onClick={() =>
+                      handleActionWithFeedback(() => setShowHint(true), "light")
+                    }
+                    variant="outline"
+                    size="sm"
+                    className="px-3 py-2 text-xs sm:text-sm rounded-xl transition-all duration-300 min-h-[44px] touch-manipulation group relative overflow-hidden bg-gradient-to-r from-yellow-50 to-orange-50 hover:from-yellow-100 hover:to-orange-100 border-2 border-yellow-200 hover:border-yellow-300 shadow-md hover:shadow-lg"
+                    aria-label="Show hint"
+                  >
+                    <div className="absolute inset-0 bg-gradient-to-r from-yellow-200/0 via-yellow-200/50 to-yellow-200/0 transform -skew-x-12 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 ease-out" />
+                    <Lightbulb className="w-4 h-4 mr-1 group-hover:animate-pulse text-yellow-600" />
+                    <span className="relative z-10 font-semibold text-yellow-700">
+                      💡 Hint
+                    </span>
+                  </Button>
+                </motion.div>
               )}
 
               {!showWordName && (
-                <Button
-                  onClick={() =>
-                    handleActionWithFeedback(
-                      () => setShowWordName(true),
-                      "medium",
-                    )
-                  }
-                  size="sm"
-                  className="bg-educational-purple hover:bg-educational-purple/90 text-white px-3 py-2 text-xs sm:text-sm rounded-xl transition-all duration-300 transform hover:scale-105 active:scale-95 min-h-[44px] touch-manipulation"
-                  aria-label="Show word answer"
+                <motion.div
+                  whileHover={{ scale: 1.05, y: -2 }}
+                  whileTap={{ scale: 0.95, y: 0 }}
+                  transition={{ type: "spring", stiffness: 400, damping: 17 }}
                 >
-                  <Eye className="w-4 h-4 mr-1" />
-                  👁️ Show
-                </Button>
+                  <Button
+                    onClick={() =>
+                      handleActionWithFeedback(
+                        () => setShowWordName(true),
+                        "medium",
+                      )
+                    }
+                    size="sm"
+                    className="bg-gradient-to-r from-educational-purple via-purple-500 to-purple-600 hover:from-purple-500 hover:via-purple-600 hover:to-purple-700 text-white px-3 py-2 text-xs sm:text-sm rounded-xl min-h-[44px] touch-manipulation group relative overflow-hidden shadow-lg hover:shadow-xl border-2 border-purple-300/50 hover:border-purple-200"
+                    aria-label="Show word answer"
+                  >
+                    <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/20 to-white/0 transform -skew-x-12 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-600 ease-out" />
+                    <Eye className="w-4 h-4 mr-1 group-hover:animate-bounce" />
+                    <span className="relative z-10 font-semibold">👁️ Show</span>
+                  </Button>
+                </motion.div>
               )}
 
               <Button
@@ -1152,7 +1426,7 @@ export function InteractiveDashboardWordCard({
               >
                 <Volume2
                   className={cn(
-                    "w-7 h-7 sm:w-8 sm:h-8 md:w-10 md:h-10 lg:w-12 lg:h-12",
+                    "w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 lg:w-8 lg:h-8",
                     "drop-shadow-lg",
                     isPlaying && "animate-bounce text-yellow-100 scale-110",
                   )}
@@ -1197,62 +1471,154 @@ export function InteractiveDashboardWordCard({
             </AnimatePresence>
 
             {/* Word Name and Details */}
-            {showWordName && (
-              <div
-                className="space-y-3 md:space-y-4 mb-6 md:mb-8"
-                role="region"
-                aria-label="Word answer revealed"
-                aria-live="polite"
-              >
-                {/* Word Name */}
-                <div className="text-center bg-gradient-to-br from-green-50 via-emerald-50/30 to-blue-50 p-4 md:p-6 rounded-2xl border border-green-200/60 shadow-lg backdrop-blur-sm ring-1 ring-green-100/50">
-                  <div className="flex items-center justify-center gap-2 md:gap-3 mb-2 md:mb-3">
-                    <div className="text-2xl md:text-3xl" aria-hidden="true">
-                      {currentWord.emoji}
+            <AnimatePresence>
+              {showWordName && (
+                <motion.div
+                  initial={{ opacity: 0, y: 20, scale: 0.95 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  exit={{ opacity: 0, y: -10, scale: 1.05 }}
+                  transition={{
+                    duration: 0.6,
+                    type: "spring",
+                    stiffness: 200,
+                    damping: 20,
+                  }}
+                  className="space-y-3 md:space-y-4 mb-6 md:mb-8"
+                  role="region"
+                  aria-label="Word answer revealed"
+                  aria-live="polite"
+                >
+                  {/* Word Name */}
+                  <motion.div
+                    initial={{ scale: 0.9, opacity: 0 }}
+                    animate={{ scale: 1, opacity: 1 }}
+                    transition={{ delay: 0.2, duration: 0.5 }}
+                    className="text-center bg-gradient-to-br from-green-50 via-emerald-50/30 to-blue-50 p-4 md:p-6 rounded-2xl border border-green-200/60 shadow-lg backdrop-blur-sm ring-1 ring-green-100/50 relative overflow-hidden"
+                  >
+                    {/* Success celebration background */}
+                    <motion.div
+                      initial={{ scale: 0, opacity: 0.8 }}
+                      animate={{ scale: 3, opacity: 0 }}
+                      transition={{ duration: 1.5, ease: "easeOut" }}
+                      className="absolute inset-0 bg-gradient-to-r from-green-200/30 to-emerald-200/30 rounded-2xl"
+                    />
+
+                    <div className="flex items-center justify-center gap-2 md:gap-3 mb-2 md:mb-3 relative z-10">
+                      <motion.div
+                        initial={{ scale: 0, rotate: -180 }}
+                        animate={{ scale: 1, rotate: 0 }}
+                        transition={{
+                          delay: 0.3,
+                          duration: 0.5,
+                          type: "spring",
+                        }}
+                        className="text-2xl md:text-3xl"
+                        aria-hidden="true"
+                      >
+                        {currentWord.emoji}
+                      </motion.div>
+
+                      <motion.h2
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.4, duration: 0.5 }}
+                        className="text-base md:text-lg lg:text-xl font-bold text-gray-800 tracking-wide"
+                        id="word-answer"
+                      >
+                        {currentWord.word.toUpperCase()}
+                      </motion.h2>
+
+                      <motion.div
+                        initial={{ scale: 0, rotate: 180 }}
+                        animate={{ scale: 1, rotate: 0 }}
+                        transition={{
+                          delay: 0.5,
+                          duration: 0.5,
+                          type: "spring",
+                        }}
+                        className="text-2xl md:text-3xl"
+                        aria-hidden="true"
+                      >
+                        {currentWord.emoji}
+                      </motion.div>
                     </div>
-                    <h2
-                      className="text-base md:text-lg lg:text-xl font-bold text-gray-800 tracking-wide"
-                      id="word-answer"
+
+                    {/* Pronunciation */}
+                    {currentWord.pronunciation && (
+                      <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{ delay: 0.6, duration: 0.4 }}
+                        className="flex items-center justify-center gap-2"
+                      >
+                        <span className="text-lg text-gray-600 font-mono">
+                          /{currentWord.pronunciation}/
+                        </span>
+                      </motion.div>
+                    )}
+
+                    {/* Floating success elements */}
+                    <motion.div
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{
+                        opacity: [0, 1, 0],
+                        y: [20, -10, -30],
+                        x: [0, 10, -10, 0],
+                      }}
+                      transition={{
+                        duration: 2,
+                        repeat: Infinity,
+                        repeatDelay: 3,
+                        ease: "easeInOut",
+                      }}
+                      className="absolute top-2 right-4 text-yellow-400 text-sm"
                     >
-                      {currentWord.word.toUpperCase()}
-                    </h2>
-                    <div className="text-2xl md:text-3xl" aria-hidden="true">
-                      {currentWord.emoji}
+                      ⭐
+                    </motion.div>
+
+                    <motion.div
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{
+                        opacity: [0, 1, 0],
+                        y: [20, -15, -35],
+                        x: [0, -15, 10, 0],
+                      }}
+                      transition={{
+                        duration: 2.5,
+                        repeat: Infinity,
+                        repeatDelay: 4,
+                        delay: 1,
+                        ease: "easeInOut",
+                      }}
+                      className="absolute top-4 left-4 text-green-400 text-xs"
+                    >
+                      ✨
+                    </motion.div>
+                  </motion.div>
+
+                  {/* Definition and Example - Hidden to show word name only */}
+                  <div className="hidden bg-gray-50 p-6 rounded-2xl">
+                    <div className="mb-4">
+                      <h3 className="text-lg font-semibold text-gray-700 mb-2">
+                        📖 Definition:
+                      </h3>
+                      <p className="text-xl text-gray-800 leading-relaxed">
+                        {currentWord.definition}
+                      </p>
+                    </div>
+
+                    <div>
+                      <h3 className="text-lg font-semibold text-gray-700 mb-2">
+                        💬 Example:
+                      </h3>
+                      <p className="text-lg text-gray-700 italic leading-relaxed">
+                        "{currentWord.example}"
+                      </p>
                     </div>
                   </div>
-
-                  {/* Pronunciation */}
-                  {currentWord.pronunciation && (
-                    <div className="flex items-center justify-center gap-2">
-                      <span className="text-lg text-gray-600 font-mono">
-                        /{currentWord.pronunciation}/
-                      </span>
-                    </div>
-                  )}
-                </div>
-
-                {/* Definition and Example - Hidden to show word name only */}
-                <div className="hidden bg-gray-50 p-6 rounded-2xl">
-                  <div className="mb-4">
-                    <h3 className="text-lg font-semibold text-gray-700 mb-2">
-                      📖 Definition:
-                    </h3>
-                    <p className="text-xl text-gray-800 leading-relaxed">
-                      {currentWord.definition}
-                    </p>
-                  </div>
-
-                  <div>
-                    <h3 className="text-lg font-semibold text-gray-700 mb-2">
-                      💬 Example:
-                    </h3>
-                    <p className="text-lg text-gray-700 italic leading-relaxed">
-                      "{currentWord.example}"
-                    </p>
-                  </div>
-                </div>
-              </div>
-            )}
+                </motion.div>
+              )}
+            </AnimatePresence>
 
             {/* Action Buttons - Always visible */}
             {!isAnswered && (
@@ -1306,6 +1672,55 @@ export function InteractiveDashboardWordCard({
                     </div>
                   </Button>
                 </div>
+
+                {/* Particle Effects Overlay */}
+                <AnimatePresence>
+                  {particles.map((particle) => (
+                    <motion.div
+                      key={particle.id}
+                      initial={{
+                        scale: 0,
+                        x: particle.x - window.innerWidth / 2,
+                        y: particle.y - window.innerHeight / 2,
+                        opacity: 1,
+                      }}
+                      animate={{
+                        scale: [0, 1, 0.8, 0],
+                        x:
+                          particle.x -
+                          window.innerWidth / 2 +
+                          (Math.random() - 0.5) * 200,
+                        y:
+                          particle.y -
+                          window.innerHeight / 2 -
+                          Math.random() * 150 -
+                          50,
+                        opacity: [1, 1, 0.7, 0],
+                        rotate: Math.random() * 360,
+                      }}
+                      transition={{
+                        duration: 1,
+                        ease: "easeOut",
+                        times: [0, 0.2, 0.8, 1],
+                      }}
+                      className="fixed pointer-events-none z-50"
+                      style={{
+                        left: "50%",
+                        top: "50%",
+                      }}
+                    >
+                      <div
+                        className={`text-2xl ${
+                          particle.type === "success"
+                            ? "filter drop-shadow-lg"
+                            : "filter drop-shadow-md"
+                        }`}
+                      >
+                        {particle.type === "success" ? "⭐" : "💪"}
+                      </div>
+                    </motion.div>
+                  ))}
+                </AnimatePresence>
 
                 {/* Skip button (smaller, less prominent) - HIDDEN */}
                 <div className="hidden text-center mt-1 mb-0">
