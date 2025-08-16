@@ -129,6 +129,7 @@ import {
   Train,
   Bike,
 } from "lucide-react";
+import { validateEmojiInput, sanitizeEmoji, suggestEmojisForWord } from "@/lib/emojiUtils";
 
 interface AdminWord {
   id: string;
