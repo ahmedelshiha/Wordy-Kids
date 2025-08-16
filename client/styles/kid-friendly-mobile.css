@@ -10,20 +10,36 @@
 
 /* Prevent zoom on input focus for mobile */
 @media screen and (max-width: 768px) {
-  input, select, textarea {
+  input,
+  select,
+  textarea {
     font-size: 16px !important;
   }
 }
 
 /* Optimize font sizes for mobile readability */
 @media screen and (max-width: 480px) {
-  .mobile-text-sm { font-size: 14px; }
-  .mobile-text-base { font-size: 16px; }
-  .mobile-text-lg { font-size: 18px; }
-  .mobile-text-xl { font-size: 20px; }
-  .mobile-text-2xl { font-size: 24px; }
-  .mobile-text-3xl { font-size: 28px; }
-  .mobile-text-4xl { font-size: 32px; }
+  .mobile-text-sm {
+    font-size: 14px;
+  }
+  .mobile-text-base {
+    font-size: 16px;
+  }
+  .mobile-text-lg {
+    font-size: 18px;
+  }
+  .mobile-text-xl {
+    font-size: 20px;
+  }
+  .mobile-text-2xl {
+    font-size: 24px;
+  }
+  .mobile-text-3xl {
+    font-size: 28px;
+  }
+  .mobile-text-4xl {
+    font-size: 32px;
+  }
 }
 
 /* Improve button spacing for small screens */
@@ -31,7 +47,7 @@
   .mobile-button-grid {
     gap: 8px !important;
   }
-  
+
   .mobile-button-padding {
     padding: 12px !important;
   }
@@ -42,15 +58,15 @@
   .safe-area-top {
     padding-top: max(1rem, env(safe-area-inset-top));
   }
-  
+
   .safe-area-bottom {
     padding-bottom: max(1rem, env(safe-area-inset-bottom));
   }
-  
+
   .safe-area-left {
     padding-left: max(1rem, env(safe-area-inset-left));
   }
-  
+
   .safe-area-right {
     padding-right: max(1rem, env(safe-area-inset-right));
   }
@@ -68,7 +84,7 @@
     margin: 8px;
     border-radius: 12px;
   }
-  
+
   .mobile-card-content {
     padding: 16px;
   }
@@ -80,10 +96,15 @@
 }
 
 @keyframes gentle-bounce {
-  0%, 20%, 53%, 80%, 100% {
+  0%,
+  20%,
+  53%,
+  80%,
+  100% {
     transform: translate3d(0, 0, 0);
   }
-  40%, 43% {
+  40%,
+  43% {
     transform: translate3d(0, -8px, 0);
   }
   70% {
@@ -99,7 +120,7 @@
   .kid-friendly-card {
     border: 2px solid #000;
   }
-  
+
   .kid-friendly-button {
     border: 2px solid #000;
   }
@@ -107,7 +128,9 @@
 
 /* Reduced motion support */
 @media (prefers-reduced-motion: reduce) {
-  *, ::before, ::after {
+  *,
+  ::before,
+  ::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
@@ -116,7 +139,7 @@
 
 /* Focus improvements for keyboard navigation */
 .kid-friendly-focus:focus {
-  outline: 3px solid #4F46E5;
+  outline: 3px solid #4f46e5;
   outline-offset: 2px;
   border-radius: 8px;
 }

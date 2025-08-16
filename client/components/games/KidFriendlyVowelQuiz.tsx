@@ -72,37 +72,44 @@ export function KidFriendlyVowelQuiz({
 
   const currentQuestion = questions[currentIndex];
 
-  const handleVowelSelect = useCallback((vowel: string) => {
-    if (!currentQuestion || showFeedback) return;
+  const handleVowelSelect = useCallback(
+    (vowel: string) => {
+      if (!currentQuestion || showFeedback) return;
 
-    setSelectedVowel(vowel);
-    playSoundIfEnabled.click();
+      setSelectedVowel(vowel);
+      playSoundIfEnabled.click();
 
-    // Check answer after short delay
-    setTimeout(() => {
-      checkAnswer(vowel);
-    }, 500);
-  }, [currentQuestion, showFeedback]);
+      // Check answer after short delay
+      setTimeout(() => {
+        checkAnswer(vowel);
+      }, 500);
+    },
+    [currentQuestion, showFeedback],
+  );
 
   const checkAnswer = (vowel: string) => {
     if (!currentQuestion) return;
 
-    const missingIndex = currentQuestion.missingVowelIndices?.[0] || currentQuestion.missingIndex?.[0] || 0;
-    const correctVowel = currentQuestion.correctVowels?.[missingIndex] || 
-                        (currentQuestion.word || "")[missingIndex]?.toUpperCase();
-    
+    const missingIndex =
+      currentQuestion.missingVowelIndices?.[0] ||
+      currentQuestion.missingIndex?.[0] ||
+      0;
+    const correctVowel =
+      currentQuestion.correctVowels?.[missingIndex] ||
+      (currentQuestion.word || "")[missingIndex]?.toUpperCase();
+
     const correct = vowel === correctVowel;
     setIsCorrect(correct);
     setShowFeedback(true);
 
     if (correct) {
-      setScore(prev => prev + 100);
-      setStreak(prev => prev + 1);
+      setScore((prev) => prev + 100);
+      setStreak((prev) => prev + 1);
       playSoundIfEnabled.success();
       setShowCelebration(true);
     } else {
       setStreak(0);
-      setHearts(prev => Math.max(0, prev - 1));
+      setHearts((prev) => Math.max(0, prev - 1));
       playSoundIfEnabled.error();
     }
 
@@ -111,9 +118,9 @@ export function KidFriendlyVowelQuiz({
       setShowFeedback(false);
       setShowCelebration(false);
       setSelectedVowel("");
-      
+
       if (correct && currentIndex < questions.length - 1) {
-        setCurrentIndex(prev => prev + 1);
+        setCurrentIndex((prev) => prev + 1);
       } else if (correct && currentIndex === questions.length - 1) {
         handleGameComplete();
       } else if (hearts <= 1) {
@@ -178,7 +185,9 @@ export function KidFriendlyVowelQuiz({
               <div className="space-y-3 text-left">
                 <div className="flex items-center">
                   <span className="text-2xl mr-3">👀</span>
-                  <span className="text-lg">Look at the word with missing letters</span>
+                  <span className="text-lg">
+                    Look at the word with missing letters
+                  </span>
                 </div>
                 <div className="flex items-center">
                   <span className="text-2xl mr-3">🎵</span>
@@ -186,7 +195,9 @@ export function KidFriendlyVowelQuiz({
                 </div>
                 <div className="flex items-center">
                   <span className="text-2xl mr-3">✨</span>
-                  <span className="text-lg">Pick the right vowel (A, E, I, O, U)</span>
+                  <span className="text-lg">
+                    Pick the right vowel (A, E, I, O, U)
+                  </span>
                 </div>
               </div>
             </div>
@@ -225,7 +236,12 @@ export function KidFriendlyVowelQuiz({
       <div className="max-w-md mx-auto safe-area-left safe-area-right">
         {/* Header - Simplified */}
         <div className="flex items-center justify-between mb-6">
-          <Button onClick={onExit} variant="outline" size="lg" className="rounded-xl">
+          <Button
+            onClick={onExit}
+            variant="outline"
+            size="lg"
+            className="rounded-xl"
+          >
             <Home className="w-5 h-5 mr-2" />
             Home
           </Button>
@@ -236,7 +252,12 @@ export function KidFriendlyVowelQuiz({
             </h1>
           </div>
 
-          <Button onClick={resetGame} variant="outline" size="lg" className="rounded-xl">
+          <Button
+            onClick={resetGame}
+            variant="outline"
+            size="lg"
+            className="rounded-xl"
+          >
             <RotateCcw className="w-5 h-5" />
           </Button>
         </div>
@@ -363,12 +384,12 @@ export function KidFriendlyVowelQuiz({
                       : "bg-orange-100 border-2 border-orange-300"
                   }`}
                 >
-                  <div className="text-4xl mb-2">
-                    {isCorrect ? "🎉" : "😊"}
-                  </div>
-                  <p className={`text-xl font-bold ${
-                    isCorrect ? "text-green-700" : "text-orange-700"
-                  }`}>
+                  <div className="text-4xl mb-2">{isCorrect ? "🎉" : "😊"}</div>
+                  <p
+                    className={`text-xl font-bold ${
+                      isCorrect ? "text-green-700" : "text-orange-700"
+                    }`}
+                  >
                     {isCorrect ? "Great job!" : "Try again next time!"}
                   </p>
                   {isCorrect && (
@@ -402,10 +423,12 @@ export function KidFriendlyVowelQuiz({
 
                 <div className="space-y-4 mb-8">
                   <div className="bg-purple-50 p-4 rounded-xl">
-                    <div className="text-2xl font-bold text-purple-600">{score}</div>
+                    <div className="text-2xl font-bold text-purple-600">
+                      {score}
+                    </div>
                     <div className="text-purple-700">⭐ Total Points</div>
                   </div>
-                  
+
                   <div className="bg-green-50 p-4 rounded-xl">
                     <div className="text-2xl font-bold text-green-600">
                       {Math.round((score / 100 / questions.length) * 100)}%
@@ -415,16 +438,16 @@ export function KidFriendlyVowelQuiz({
                 </div>
 
                 <div className="flex flex-col space-y-3">
-                  <Button 
-                    onClick={resetGame} 
+                  <Button
+                    onClick={resetGame}
                     className="w-full py-4 text-lg bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white rounded-xl"
                   >
                     <RotateCcw className="w-5 h-5 mr-2" />
                     Play Again
                   </Button>
-                  <Button 
-                    onClick={onExit} 
-                    variant="outline" 
+                  <Button
+                    onClick={onExit}
+                    variant="outline"
                     className="w-full py-4 text-lg rounded-xl"
                   >
                     <Home className="w-5 h-5 mr-2" />

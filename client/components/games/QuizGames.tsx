@@ -105,7 +105,8 @@ export function QuizGames({
     {
       id: "vowel-kid-friendly",
       title: "Vowel Fun for Kids",
-      description: "Simple vowel game perfect for young learners! Big buttons and fun graphics.",
+      description:
+        "Simple vowel game perfect for young learners! Big buttons and fun graphics.",
       icon: "🌈",
       difficulty: "Kids",
       questions: "5-10",
