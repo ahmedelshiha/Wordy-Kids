@@ -1138,16 +1138,27 @@ export function InteractiveDashboardWordCard({
               <Button
                 onClick={playPronunciation}
                 disabled={isPlaying}
-                size="sm"
-                className="bg-educational-blue hover:bg-educational-blue/90 text-white p-2 sm:p-3 rounded-full transition-all duration-300 transform hover:scale-105 active:scale-95 min-w-[44px] min-h-[44px] disabled:opacity-50"
-                aria-label="Play pronunciation"
+                size="lg"
+                className={cn(
+                  "bg-gradient-to-br from-educational-blue via-blue-500 to-blue-600 hover:from-blue-500 hover:via-blue-600 hover:to-blue-700 text-white p-4 sm:p-5 md:p-6 rounded-2xl transition-all duration-300 transform hover:scale-110 active:scale-95 shadow-xl hover:shadow-2xl border-2 border-blue-300/50 hover:border-blue-200",
+                  "min-w-[60px] min-h-[60px] sm:min-w-[70px] sm:min-h-[70px] md:min-w-[80px] md:min-h-[80px]",
+                  "ring-4 ring-blue-200/30 hover:ring-blue-300/50",
+                  "backdrop-blur-sm",
+                  isPlaying && "animate-pulse ring-yellow-400/60 shadow-yellow-400/30",
+                  "disabled:opacity-50 disabled:transform-none disabled:hover:scale-100"
+                )}
+                aria-label="🔊 Play pronunciation - Hear how to say this word!"
               >
                 <Volume2
                   className={cn(
-                    "w-4 h-4 sm:w-5 sm:h-5",
-                    isPlaying && "animate-pulse",
+                    "w-7 h-7 sm:w-8 sm:h-8 md:w-10 md:h-10 lg:w-12 lg:h-12",
+                    "drop-shadow-lg",
+                    isPlaying && "animate-bounce text-yellow-100 scale-110",
                   )}
                 />
+                {isPlaying && (
+                  <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-yellow-400/20 to-orange-400/20 animate-pulse" />
+                )}
               </Button>
             </div>
 
