@@ -464,11 +464,13 @@ const WordEditor: React.FC<WordEditorProps> = ({
       });
     }
 
-    if (!formData.emoji?.trim()) {
+    // Enhanced emoji validation
+    const emojiValidation = validateEmojiInput(formData.emoji || "");
+    if (!emojiValidation.isValid) {
       errors.push({
         field: "emoji",
-        message: "Adding an emoji improves visual appeal",
-        severity: "info",
+        message: emojiValidation.message || "Emoji validation failed",
+        severity: emojiValidation.severity || "info",
       });
     }
 
