@@ -189,6 +189,7 @@ export function AIEnhancedInteractiveDashboardWordCard({
   const [imageError, setImageError] = useState(false);
   const [isTransitioning, setIsTransitioning] = useState(false);
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
 
   // Initialize AI recommendations when component mounts
   useEffect(() => {
@@ -1030,7 +1031,7 @@ export function AIEnhancedInteractiveDashboardWordCard({
       {showSessionComplete && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-2 sm:p-4">
           <div className="bg-white rounded-lg sm:rounded-3xl p-3 sm:p-8 max-w-[90vw] sm:max-w-md w-full text-center shadow-2xl animate-in zoom-in-95 duration-300 max-h-[90vh] overflow-y-auto">
-            <div className="text-2xl sm:text-6xl mb-2 sm:mb-4">🤖🎉</div>
+            <div className="text-2xl sm:text-6xl mb-2 sm:mb-4">🤖���</div>
             <h2 className="text-base sm:text-3xl font-bold text-gray-800 mb-2 sm:mb-4">
               AI Session Complete!
             </h2>
