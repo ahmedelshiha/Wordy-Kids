@@ -298,10 +298,7 @@ export function useAIWordRecommendations(
         difficultyAdjustment: null,
       }));
 
-      // Play session start sound
-      if (config.enableMotivationalBoosts) {
-        audioService.playSuccessSound();
-      }
+      // Session start (removed automatic motivational sound)
     },
     [config.enableMotivationalBoosts],
   );
