@@ -120,10 +120,9 @@ export function CompactAchievementPopup({
     }
   }, [achievements.length, currentIndex, isClosing, onClose]);
 
-  // Play sound and show reward animation
+  // Show reward animation (removed automatic sound)
   useEffect(() => {
     if (achievements.length > 0 && !isClosing) {
-      audioService.playSuccessSound();
       const timer = setTimeout(() => setShowReward(true), 500);
       return () => clearTimeout(timer);
     }
