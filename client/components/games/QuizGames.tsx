@@ -5,14 +5,9 @@ import { Badge } from "@/components/ui/badge";
 import { Brain, Play, Clock, Target, Trophy } from "lucide-react";
 import { QuizGame } from "../QuizGame";
 import { generateQuizQuestions } from "@/lib/gameGeneration";
-import { VowelRescue } from "./VowelRescue";
+import { EnhancedVowelQuiz } from "./EnhancedVowelQuiz";
 import ListenAndGuessGame from "./ListenAndGuessGame";
 import PictureFunGame from "./PictureFunGame";
-import {
-  getSystematicEasyVowelQuestions,
-  getSystematicMediumVowelQuestions,
-  getSystematicTimedVowelQuestions,
-} from "@/lib/vowelQuizGeneration";
 
 interface QuizGamesProps {
   selectedCategory: string;
@@ -107,37 +102,15 @@ export function QuizGames({
       points: "200-500 pts",
     },
     {
-      id: "vowel-easy",
-      title: "Vowel Rescue",
-      description: "Help rescue missing vowels in fun words!",
+      id: "vowel-enhanced",
+      title: "Enhanced Vowel Quest",
+      description: "Complete adventure with multiple modes and difficulties!",
       icon: "🎯",
-      difficulty: "Easy",
-      questions: 10,
-      timePerQuestion: "No limit",
-      color: "from-educational-green to-green-400",
-      points: "50-100 pts",
-    },
-    {
-      id: "vowel-challenge",
-      title: "Vowel Challenge",
-      description: "Advanced vowel rescue with multiple missing letters!",
-      icon: "🎯",
-      difficulty: "Medium",
-      questions: 8,
-      timePerQuestion: "No limit",
-      color: "from-educational-purple to-purple-400",
-      points: "80-160 pts",
-    },
-    {
-      id: "vowel-timed",
-      title: "Vowel Rush",
-      description: "Race against time to rescue as many vowels as possible!",
-      icon: "🎯",
-      difficulty: "Hard",
-      questions: "∞",
-      timePerQuestion: "60s total",
-      color: "from-educational-orange to-orange-400",
-      points: "Variable",
+      difficulty: "Adaptive",
+      questions: "Customizable",
+      timePerQuestion: "Flexible",
+      color: "from-educational-blue to-educational-purple",
+      points: "50-500 pts",
     },
   ];
 
@@ -184,44 +157,17 @@ export function QuizGames({
       );
     }
 
-    // Handle Vowel Rescue games
-    if (activeQuiz.startsWith("vowel-")) {
-      let vowelQuestions;
-      let gameMode: "easy" | "challenge" | "timed" = "easy";
-
-      switch (activeQuiz) {
-        case "vowel-easy":
-          vowelQuestions = getSystematicEasyVowelQuestions(
-            10,
-            selectedCategory,
-          );
-          gameMode = "easy";
-          break;
-        case "vowel-challenge":
-          vowelQuestions = getSystematicMediumVowelQuestions(
-            8,
-            selectedCategory,
-          );
-          gameMode = "challenge";
-          break;
-        case "vowel-timed":
-          vowelQuestions = getSystematicTimedVowelQuestions(selectedCategory);
-          gameMode = "timed";
-          break;
-        default:
-          vowelQuestions = getSystematicEasyVowelQuestions(
-            10,
-            selectedCategory,
-          );
-          gameMode = "easy";
-      }
-
+    // Handle Enhanced Vowel Quiz
+    if (activeQuiz === "vowel-enhanced") {
       return (
-        <VowelRescue
-          questions={vowelQuestions}
-          onComplete={onQuizComplete}
+        <EnhancedVowelQuiz
+          category={selectedCategory}
+          onComplete={(stats) => {
+            // Convert enhanced stats to simple score format
+            onQuizComplete(stats.correctAnswers, stats.totalQuestions);
+          }}
           onExit={handleQuizBack}
-          gameMode={gameMode}
+          playerLevel={1} // Could be dynamic based on user progress
         />
       );
     }
