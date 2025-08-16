@@ -1619,6 +1619,29 @@ export function AIEnhancedInteractiveDashboardWordCard({
                 </div>
               </motion.div>
             )}
+            {/* Loading next word indicator */}
+            <AnimatePresence>
+              {isAnswered && (
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.9 }}
+                  transition={{ duration: 0.3 }}
+                  className="text-center py-6"
+                >
+                  <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-educational-purple mx-auto mb-2 will-change-transform"></div>
+                  <motion.p
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.2 }}
+                    className="text-gray-600 flex items-center justify-center gap-2"
+                  >
+                    <Brain className="w-4 h-4 text-blue-500" />
+                    AI is preparing next word...
+                  </motion.p>
+                </motion.div>
+              )}
+            </AnimatePresence>
           </CardContent>
         </Card>
       </motion.div>
