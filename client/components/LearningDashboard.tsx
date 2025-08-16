@@ -112,6 +112,12 @@ export const LearningDashboard: React.FC<LearningDashboardProps> = ({
     accuracy: 0,
   },
   learningGoals = [],
+  // AI Enhancement props
+  userId,
+  enableAIEnhancement = false,
+  selectedCategory,
+  userProgress,
+  onSessionComplete,
 }) => {
   const completionPercentage = Math.round(
     (stats.wordsLearned / stats.totalWords) * 100,
