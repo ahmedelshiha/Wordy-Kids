@@ -211,7 +211,7 @@ export function KidFriendlyVowelQuiz({
   if (!gameStarted || !currentQuestion) return null;
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-blue-100 to-purple-100 p-4 relative">
+    <div className="min-h-screen bg-gradient-to-b from-blue-100 to-purple-100 p-4 relative mobile-container safe-area-top safe-area-bottom">
       {/* Celebration Effects */}
       <AnimatePresence>
         {showCelebration && (
@@ -222,7 +222,7 @@ export function KidFriendlyVowelQuiz({
         )}
       </AnimatePresence>
 
-      <div className="max-w-md mx-auto">
+      <div className="max-w-md mx-auto safe-area-left safe-area-right">
         {/* Header - Simplified */}
         <div className="flex items-center justify-between mb-6">
           <Button onClick={onExit} variant="outline" size="lg" className="rounded-xl">
