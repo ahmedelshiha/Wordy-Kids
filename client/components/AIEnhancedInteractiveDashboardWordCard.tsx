@@ -1295,7 +1295,7 @@ export function AIEnhancedInteractiveDashboardWordCard({
 
             {/* Achievement Teaser - Mobile Optimized */}
             <div aria-live="polite" aria-label="Motivational messages">
-              <AchievementTeaser className="mb-2 sm:mb-3" />
+              <AchievementTeaser className="mb-1 sm:mb-2" />
             </div>
 
             {/* Category and Progress Header - Mobile Optimized */}
