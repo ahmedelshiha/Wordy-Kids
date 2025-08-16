@@ -169,6 +169,20 @@ export function QuizGames({
       );
     }
 
+    // Handle Kid-Friendly Vowel Quiz
+    if (activeQuiz === "vowel-kid-friendly") {
+      return (
+        <KidFriendlyVowelQuiz
+          category={selectedCategory}
+          rounds={5}
+          onComplete={(stats) => {
+            onQuizComplete(stats.correctAnswers, stats.totalQuestions);
+          }}
+          onExit={handleQuizBack}
+        />
+      );
+    }
+
     // Handle Ultimate Vowel Quiz
     if (activeQuiz === "vowel-ultimate") {
       return (
