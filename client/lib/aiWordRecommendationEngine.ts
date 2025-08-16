@@ -206,6 +206,7 @@ export class AIWordRecommendationEngine {
     const nextSessionPreview = this.predictNextSession(
       learningPattern,
       enhancedRecommendation,
+      predictions,
     );
 
     return {
