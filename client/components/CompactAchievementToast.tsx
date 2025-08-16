@@ -64,10 +64,8 @@ export function CompactAchievementToast({
     }
   }, [autoClose, autoCloseDelay, onClose]);
 
-  // Play achievement sound
-  useEffect(() => {
-    audioService.playSuccessSound();
-  }, []);
+  // Play achievement sound only for specific achievements, not automatically
+  // Removed automatic sound to prevent unexpected "Great job!" audio
 
   const handleClose = () => {
     setIsClosing(true);
