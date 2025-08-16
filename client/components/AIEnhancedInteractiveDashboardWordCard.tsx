@@ -1222,8 +1222,8 @@ export function AIEnhancedInteractiveDashboardWordCard({
               {/* Mobile Layout: Ultra Compact */}
               <div className="md:hidden p-2">
                 <div className="flex items-center justify-between gap-2">
-                  {/* Left: Simple AI Status */}
-                  <div className="flex items-center gap-2">
+                  {/* Left: Enhanced AI Status */}
+                  <div className="flex items-center gap-2 flex-1">
                     <div className="relative">
                       <Brain
                         className={cn(
@@ -1234,16 +1234,39 @@ export function AIEnhancedInteractiveDashboardWordCard({
                         )}
                       />
                       {aiState.isSessionActive && (
-                        <div className="absolute -top-1 -right-1 w-2 h-2 bg-green-400 rounded-full" />
+                        <div className="absolute -top-1 -right-1 w-2 h-2 bg-green-400 rounded-full animate-pulse" />
                       )}
                     </div>
-                    <span className="text-sm font-medium truncate">
-                      🤖 {aiState.isSessionActive ? "Learning" : "Helper"}
-                    </span>
+                    <div className="flex items-center gap-1 flex-1">
+                      <span className="text-sm font-medium truncate">
+                        🤖{" "}
+                        {aiState.isSessionActive
+                          ? "AI Learning Active!"
+                          : "AI Helper"}
+                      </span>
+                      {aiState.isSessionActive && (
+                        <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse ml-1" />
+                      )}
+                    </div>
                   </div>
 
-                  {/* Right: AI Enhancement Toggles */}
+                  {/* Right: AI Enhancement Toggles + Chart Icon */}
                   <div className="flex items-center gap-1">
+                    {/* Chart icon for mobile */}
+                    <Button
+                      onClick={() => setShowAIInsights(!showAIInsights)}
+                      variant="ghost"
+                      size="sm"
+                      className={cn(
+                        "p-2 rounded-lg transition-all h-7 w-7",
+                        aiState.isSessionActive
+                          ? "bg-white/20 hover:bg-white/30 text-white"
+                          : "bg-white/50 hover:bg-white text-blue-600",
+                      )}
+                      aria-label="View stats"
+                    >
+                      <BarChart3 className="w-3 h-3" />
+                    </Button>
                     <Button
                       onClick={() => {
                         if (aiState.isSessionActive) {
@@ -1259,7 +1282,13 @@ export function AIEnhancedInteractiveDashboardWordCard({
                           }
                           aiActions.startSession({
                             words: sessionWords.slice(0, 10),
-                            confidence: 0.8,
+                            confidence: Math.min(
+                              0.9,
+                              Math.max(
+                                0.4,
+                                (sessionStats.accuracy / 100) * 0.8 + 0.3,
+                              ),
+                            ),
                             reasoning: ["Starting new AI session"],
                             expectedOutcomes: {
                               learningVelocity: 0.7,
@@ -1295,8 +1324,8 @@ export function AIEnhancedInteractiveDashboardWordCard({
                     <span className="text-xs">
                       Word {currentWordIndex + 1}/{SESSION_SIZE} •{" "}
                     </span>
-                    <span className="text-xs opacity-60 scale-75">
-                      {Math.round(confidenceLevel * 100)}% 📈
+                    <span className="text-xs opacity-75 bg-white/20 px-2 py-0.5 rounded-full">
+                      {Math.round(confidenceLevel * 100)}% 📊
                     </span>
                   </div>
                 )}
@@ -1342,7 +1371,13 @@ export function AIEnhancedInteractiveDashboardWordCard({
                               }
                               aiActions.startSession({
                                 words: sessionWords.slice(0, 10),
-                                confidence: 0.8,
+                                confidence: Math.min(
+                                  0.9,
+                                  Math.max(
+                                    0.4,
+                                    (sessionStats.accuracy / 100) * 0.8 + 0.3,
+                                  ),
+                                ),
                                 reasoning: ["Starting new AI session"],
                                 expectedOutcomes: {
                                   learningVelocity: 0.7,
