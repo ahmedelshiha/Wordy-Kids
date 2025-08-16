@@ -195,7 +195,7 @@ const sampleChildren: ChildProfile[] = [
     id: "1",
     name: "Alex",
     age: 8,
-    avatar: "���",
+    avatar: "👦",
     level: 3,
     totalPoints: 1250,
     wordsLearned: 47,
@@ -241,7 +241,7 @@ const sampleChildren: ChildProfile[] = [
         id: "streak-5",
         title: "Streak Master",
         description: "5-day learning streak",
-        icon: "���",
+        icon: "👦",
         earnedAt: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000),
       },
       {
@@ -1046,7 +1046,7 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
               <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 md:gap-0">
                 <div>
                   <h3 className="font-semibold text-base md:text-lg">
-                    Good Morning! ��
+                    Good Morning! ☀️
                   </h3>
                   <p className="text-xs md:text-sm text-slate-600">
                     {children.length} active learner

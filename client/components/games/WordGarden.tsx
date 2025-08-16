@@ -425,7 +425,7 @@ function GameCompletionDialog({
         <DialogHeader className="text-center pb-2">
           <div className="text-5xl mb-2 animate-bounce">🌻</div>
           <DialogTitle className="text-lg font-bold text-white drop-shadow-lg">
-            🎉 Garden Done! ��
+            🎉 Garden Done! 🌸
           </DialogTitle>
           <DialogDescription className="text-green-100 text-sm">
             Amazing job growing your garden!

@@ -313,7 +313,7 @@ export class EnhancedAchievementTracker {
           ],
         },
       ],
-      reward: { type: "avatar_accessory", item: "Ninja Mask", emoji: "��" },
+      reward: { type: "avatar_accessory", item: "Ninja Mask", emoji: "🥷" },
     },
 
     // 🎭 COMEDY ACHIEVEMENTS - Funny special conditions

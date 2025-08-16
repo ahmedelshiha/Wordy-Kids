@@ -387,7 +387,7 @@ export const ParentLearningAnalyticsEnhanced: React.FC<
               </div>
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="all">👨‍���‍👧‍👦 All Children</SelectItem>
+              <SelectItem value="all">👨‍👩‍👧‍👦 All Children</SelectItem>
               {analyticsData.children.map((child) => (
                 <SelectItem key={child.id} value={child.id}>
                   👧 {child.name}

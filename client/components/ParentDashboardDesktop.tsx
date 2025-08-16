@@ -1559,7 +1559,7 @@ export const ParentDashboardDesktop: React.FC<ParentDashboardDesktopProps> = ({
                                 {topChild.weeklyProgress} words this week
                               </p>
                               <Badge className="bg-yellow-100 text-yellow-800">
-                                ��� Week's Champion
+                                🏆 Week's Champion
                               </Badge>
                             </div>
                           ) : (
@@ -2080,7 +2080,7 @@ export const ParentDashboardDesktop: React.FC<ParentDashboardDesktopProps> = ({
               <div>
                 <Label htmlFor="avatar">Avatar</Label>
                 <div className="flex gap-2 mt-2">
-                  {["���", "👧", "👦", "🧒", "👴", "👵"].map((emoji) => (
+                  {["👨‍👩‍👧‍👦", "👧", "👦", "🧒", "👴", "👵"].map((emoji) => (
                     <Button
                       key={emoji}
                       variant={
