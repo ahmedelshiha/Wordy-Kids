@@ -167,28 +167,6 @@ export function AdventureGames({
     );
   }
 
-  if (activeGame === "balloon_rescue") {
-    return (
-      <div className="space-y-6">
-        <div className="flex items-center justify-between">
-          <h2 className="text-2xl font-bold text-gray-800">
-            🎈 Balloon Rescue Adventure!
-          </h2>
-          <Button onClick={handleGameBack} variant="outline" size="sm">
-            ← Back to Games
-          </Button>
-        </div>
-        <BalloonRescueVowelAdventure
-          totalQuestions={10}
-          onFinish={(result) => {
-            onGameComplete(result.correctAnswers, result.totalQuestions);
-            handleGameBack();
-          }}
-          onHome={handleGameBack}
-        />
-      </div>
-    );
-  }
 
   return (
     <div className="space-y-6">
