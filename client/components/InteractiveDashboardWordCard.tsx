@@ -596,23 +596,38 @@ export function InteractiveDashboardWordCard({
   const advanceToNextWord = () => {
     console.log(`Advancing from word ${currentWordIndex + 1}/${SESSION_SIZE}`);
 
-    // Reset states for next word
-    setIsAnswered(false);
-    setFeedbackType(null);
-    setCelebrationEffect(false);
+    // Start transition effect
+    setIsTransitioning(true);
 
-    // Simply move to next word in session
-    const nextIndex = currentWordIndex + 1;
+    // Brief delay for smooth transition
+    setTimeout(() => {
+      // Reset states for next word
+      setIsAnswered(false);
+      setFeedbackType(null);
+      setCelebrationEffect(false);
+      setShowWordName(false);
+      setShowHint(false);
+      setParticles([]);
+      setButtonClickedId(null);
+      setShowSuccessRipple(false);
+      setShowPracticeRipple(false);
 
-    if (nextIndex < SESSION_SIZE && nextIndex < sessionWords.length) {
-      setCurrentWordIndex(nextIndex);
-      console.log(
-        `Advanced to word ${nextIndex + 1}/${SESSION_SIZE}: ${sessionWords[nextIndex]?.word}`,
-      );
-    } else {
-      console.log("Reached end of session words");
-      // This shouldn't happen as session completion is handled in handleWordAction
-    }
+      // Simply move to next word in session
+      const nextIndex = currentWordIndex + 1;
+
+      if (nextIndex < SESSION_SIZE && nextIndex < sessionWords.length) {
+        setCurrentWordIndex(nextIndex);
+        console.log(
+          `Advanced to word ${nextIndex + 1}/${SESSION_SIZE}: ${sessionWords[nextIndex]?.word}`,
+        );
+      } else {
+        console.log("Reached end of session words");
+        // This shouldn't happen as session completion is handled in handleWordAction
+      }
+
+      // End transition effect
+      setTimeout(() => setIsTransitioning(false), 100);
+    }, 300);
   };
 
   const startNewSession = () => {
