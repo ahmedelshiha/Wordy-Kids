@@ -438,6 +438,7 @@ export function AIEnhancedInteractiveDashboardWordCard({
 
   const handleWordAction = async (
     status: "remembered" | "needs_practice" | "skipped",
+    isExplicitUserAction: boolean = true,
   ) => {
     if (!currentWord || isAnswered) return;
 
