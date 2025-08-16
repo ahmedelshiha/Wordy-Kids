@@ -7,6 +7,7 @@ import React, {
 } from "react";
 import { Word, getWordsByCategory, getRandomWords } from "@/data/wordsDatabase";
 import { audioService } from "@/lib/audioService";
+import { ensureValidEmoji, getCategoryFallbackEmoji } from "@/lib/emojiUtils";
 import { EnhancedAchievementTracker } from "@/lib/enhancedAchievementTracker";
 import { Button } from "@/components/ui/button";
 import {
