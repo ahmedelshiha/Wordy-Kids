@@ -5,7 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { Brain, Play, Clock, Target, Trophy } from "lucide-react";
 import { QuizGame } from "../QuizGame";
 import { generateQuizQuestions } from "@/lib/gameGeneration";
-import { EnhancedVowelQuiz } from "./EnhancedVowelQuiz";
+import { UltimateVowelQuiz } from "./UltimateVowelQuiz";
 import ListenAndGuessGame from "./ListenAndGuessGame";
 import PictureFunGame from "./PictureFunGame";
 
@@ -102,15 +102,15 @@ export function QuizGames({
       points: "200-500 pts",
     },
     {
-      id: "vowel-enhanced",
-      title: "Enhanced Vowel Quest",
-      description: "Complete adventure with multiple modes and difficulties!",
+      id: "vowel-ultimate",
+      title: "Ultimate Vowel Quiz",
+      description: "Four exciting modes: Rescue, Challenge, Rush & Adventure!",
       icon: "🎯",
-      difficulty: "Adaptive",
-      questions: "Customizable",
-      timePerQuestion: "Flexible",
+      difficulty: "All Levels",
+      questions: "Dynamic",
+      timePerQuestion: "Adaptive",
       color: "from-educational-blue to-educational-purple",
-      points: "50-500 pts",
+      points: "50-1000 pts",
     },
   ];
 
@@ -157,10 +157,10 @@ export function QuizGames({
       );
     }
 
-    // Handle Enhanced Vowel Quiz
-    if (activeQuiz === "vowel-enhanced") {
+    // Handle Ultimate Vowel Quiz
+    if (activeQuiz === "vowel-ultimate") {
       return (
-        <EnhancedVowelQuiz
+        <UltimateVowelQuiz
           category={selectedCategory}
           onComplete={(stats) => {
             // Convert enhanced stats to simple score format

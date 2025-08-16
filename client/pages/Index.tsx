@@ -23,7 +23,7 @@ import { DynamicAuthButton } from "@/components/DynamicAuthButton";
 import { GameLikeLearning } from "@/components/GameLikeLearning";
 import { WordMatchingGame } from "@/components/WordMatchingGame";
 import { GameHub } from "@/components/games/GameHub";
-import { EnhancedVowelQuiz } from "@/components/games/EnhancedVowelQuiz";
+import { UltimateVowelQuiz } from "@/components/games/UltimateVowelQuiz";
 import ListenAndGuessGame from "@/components/games/ListenAndGuessGame";
 import WordGarden from "@/components/games/WordGarden";
 import { AchievementTracker } from "@/lib/achievementTracker";
@@ -2968,39 +2968,52 @@ export default function Index({ initialProfile }: IndexProps) {
                               </CardContent>
                             </Card>
 
-                            {/* Vowel Rescue - Easy */}
-                            <Card className="cursor-pointer hover:shadow-lg transition-all duration-300 hover:scale-105 border-2 border-educational-green/30 animate-kid-float">
-                              <CardContent className="p-3 md:p-4 text-center">
-                                <div className="text-3xl md:text-5xl mb-2 md:mb-3 animate-bounce">
+                            {/* Ultimate Vowel Quiz - All modes combined */}
+                            <Card className="cursor-pointer hover:shadow-lg transition-all duration-300 hover:scale-105 border-2 border-educational-blue/30 bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 animate-kid-float col-span-full">
+                              <CardContent className="p-4 md:p-6 text-center">
+                                <div className="text-4xl md:text-6xl mb-3 md:mb-4 animate-sparkle">
                                   🎯
                                 </div>
-                                <h3 className="text-sm md:text-lg font-bold text-educational-green mb-1 md:mb-2">
-                                  Vowel Rescue!
+                                <h3 className="text-lg md:text-2xl font-bold bg-gradient-to-r from-educational-blue via-educational-purple to-educational-pink bg-clip-text text-transparent mb-2 md:mb-3">
+                                  Ultimate Vowel Quiz
                                 </h3>
-                                <p className="text-xs md:text-sm text-gray-600 mb-2 md:mb-3 hidden md:block">
-                                  Help rescue missing vowels! 🆘
+                                <p className="text-sm md:text-base text-gray-600 mb-3 md:mb-4">
+                                  Four exciting modes: Rescue, Challenge, Rush &
+                                  Adventure! 🚀
                                 </p>
-                                <div className="flex justify-center gap-1 mb-2 md:mb-3">
-                                  <span className="bg-educational-green/20 text-educational-green px-1.5 py-0.5 rounded-full text-xs">
-                                    🎯 Easy!
+                                <div className="flex justify-center gap-2 mb-3 md:mb-4 flex-wrap">
+                                  <span className="bg-educational-green/20 text-educational-green px-2 py-1 rounded-full text-xs">
+                                    🆘 Rescue
                                   </span>
+                                  <span className="bg-educational-purple/20 text-educational-purple px-2 py-1 rounded-full text-xs">
+                                    💪 Challenge
+                                  </span>
+                                  <span className="bg-educational-orange/20 text-educational-orange px-2 py-1 rounded-full text-xs">
+                                    ⚡ Rush
+                                  </span>
+                                  <span className="bg-educational-blue/20 text-educational-blue px-2 py-1 rounded-full text-xs">
+                                    🗺️ Adventure
+                                  </span>
+                                </div>
+                                <div className="text-xs md:text-sm text-gray-500 mb-4">
+                                  ✨ Lives system • ⏰ Timed modes • 🎯
+                                  Power-ups • 🏆 Achievements
                                 </div>
                                 <Button
                                   onClick={() => {
-                                    setSelectedQuizType("vowel-easy");
+                                    setSelectedQuizType("vowel-ultimate");
                                     setShowQuiz(true);
                                   }}
-                                  className="w-full bg-educational-green text-white hover:bg-educational-green/90 py-1.5 md:py-2 text-xs md:text-sm rounded-xl animate-wiggle"
-                                  size="sm"
+                                  className="w-full bg-gradient-to-r from-educational-blue via-educational-purple to-educational-pink text-white hover:scale-105 py-3 md:py-4 text-sm md:text-base rounded-xl transition-all duration-300 shadow-lg"
+                                  size="lg"
                                 >
-                                  <Play className="w-3 h-3 md:w-4 md:h-4 mr-1" />
-                                  Rescue Vowels! 🚀
+                                  <Play className="w-4 h-4 md:w-5 md:h-5 mr-2" />
+                                  Start Ultimate Quiz! 🌟
                                 </Button>
                               </CardContent>
                             </Card>
 
-                            {/* Vowel Challenge - Medium */}
-                            <Card className="cursor-pointer hover:shadow-lg transition-all duration-300 hover:scale-105 border-2 border-educational-purple/30 animate-kid-float-delayed">
+                            <Card className="cursor-pointer hover:shadow-lg transition-all duration-300 hover:scale-105 border-2 border-educational-purple/30 animate-kid-float-delayed hidden">
                               <CardContent className="p-3 md:p-4 text-center">
                                 <div className="text-3xl md:text-5xl mb-2 md:mb-3 animate-sparkle">
                                   ��
@@ -3018,8 +3031,9 @@ export default function Index({ initialProfile }: IndexProps) {
                                 </div>
                                 <Button
                                   onClick={() => {
-                                    setSelectedQuizType("vowel-challenge");
-                                    setShowQuiz(true);
+                                    console.log(
+                                      "Deprecated: Use Ultimate Vowel Quiz instead",
+                                    );
                                   }}
                                   className="w-full bg-educational-purple text-white hover:bg-educational-purple/90 py-1.5 md:py-2 text-xs md:text-sm rounded-xl"
                                   size="sm"
@@ -3031,7 +3045,7 @@ export default function Index({ initialProfile }: IndexProps) {
                             </Card>
 
                             {/* Vowel Rush - Timed */}
-                            <Card className="cursor-pointer hover:shadow-lg transition-all duration-300 hover:scale-105 border-2 border-educational-orange/30 animate-gentle-bounce">
+                            <Card className="cursor-pointer hover:shadow-lg transition-all duration-300 hover:scale-105 border-2 border-educational-orange/30 animate-gentle-bounce hidden">
                               <CardContent className="p-3 md:p-4 text-center">
                                 <div className="text-3xl md:text-5xl mb-2 md:mb-3 animate-pulse">
                                   🎯
@@ -3049,8 +3063,9 @@ export default function Index({ initialProfile }: IndexProps) {
                                 </div>
                                 <Button
                                   onClick={() => {
-                                    setSelectedQuizType("vowel-timed");
-                                    setShowQuiz(true);
+                                    console.log(
+                                      "Deprecated: Use Ultimate Vowel Quiz instead",
+                                    );
                                   }}
                                   className="w-full bg-educational-orange text-white hover:bg-educational-orange/90 py-1.5 md:py-2 text-xs md:text-sm rounded-xl animate-bounce"
                                   size="sm"
@@ -3213,7 +3228,7 @@ export default function Index({ initialProfile }: IndexProps) {
                               setShowMatchingGame(false);
                               setFeedback({
                                 type: "celebration",
-                                title: "Matching Game Complete! 🎯✨",
+                                title: "Matching Game Complete! ����✨",
                                 message: `You matched ${score} pairs in ${timeSpent} seconds!`,
                                 points: score * 15,
                                 onContinue: () => setFeedback(null),
@@ -3231,35 +3246,9 @@ export default function Index({ initialProfile }: IndexProps) {
                           playerLevel={1}
                           rounds={10}
                         />
-                      ) : selectedQuizType?.startsWith("vowel-") ? (
-                        <EnhancedVowelQuiz
+                      ) : selectedQuizType === "vowel-ultimate" ? (
+                        <UltimateVowelQuiz
                           category={selectedCategory}
-                          initialGameMode={
-                            selectedQuizType === "vowel-easy"
-                              ? "easy"
-                              : selectedQuizType === "vowel-challenge"
-                                ? "challenge"
-                                : selectedQuizType === "vowel-timed"
-                                  ? "timed"
-                                  : "easy"
-                          }
-                          initialDifficulty={
-                            selectedQuizType === "vowel-easy"
-                              ? "easy"
-                              : selectedQuizType === "vowel-challenge"
-                                ? "medium"
-                                : "mixed"
-                          }
-                          rounds={
-                            selectedQuizType === "vowel-easy"
-                              ? 10
-                              : selectedQuizType === "vowel-challenge"
-                                ? 8
-                                : 15
-                          }
-                          timeLimit={
-                            selectedQuizType === "vowel-timed" ? 60 : undefined
-                          }
                           onComplete={(stats) => {
                             // Convert enhanced stats to simple score format for compatibility
                             handleQuizComplete(
