@@ -1513,45 +1513,42 @@ export function AIEnhancedInteractiveDashboardWordCard({
                   <span className="text-xs font-medium text-blue-700">🤖 AI Progress</span>
                 </div>
 
-                {/* Compact Progress Bar */}
-                <div className="flex items-center justify-between mb-2">
+                {/* Mobile-Optimized Progress Bar */}
+                <div className="flex items-center justify-between mb-1 sm:mb-2">
                   <div className="text-xs font-bold text-gray-700">
                     🚀 {sessionStats.wordsCompleted}/{SESSION_SIZE}
                   </div>
-                  <div className="flex-1 mx-3">
-                    <div className="w-full bg-gradient-to-r from-gray-200 to-gray-300 rounded-full h-2 shadow-inner relative overflow-hidden">
+                  <div className="flex-1 mx-2 sm:mx-3">
+                    <div className="w-full bg-gray-200 rounded-full h-1.5 sm:h-2 shadow-inner relative overflow-hidden">
                       <div
-                        className="bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-500 h-2 rounded-full transition-all duration-700 ease-out shadow-sm relative"
+                        className="bg-gradient-to-r from-blue-500 to-purple-500 h-1.5 sm:h-2 rounded-full transition-all duration-500 ease-out shadow-sm relative"
                         style={{
                           width: `${(sessionStats.wordsCompleted / SESSION_SIZE) * 100}%`,
                         }}
                       >
-                        {/* Progress shimmer effect */}
-                        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent transform -skew-x-12 animate-pulse"></div>
+                        {/* Simplified shimmer for mobile */}
+                        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent transform -skew-x-12 animate-pulse opacity-60"></div>
                       </div>
                     </div>
                   </div>
                   <div className="text-xs text-gray-600">
-                    {Math.round(
-                      (sessionStats.wordsCompleted / SESSION_SIZE) * 100,
-                    )}
-                    %
+                    {Math.round((sessionStats.wordsCompleted / SESSION_SIZE) * 100)}%
                   </div>
                 </div>
 
-                <div className="flex items-center justify-center gap-2">
-                  {/* Compact Stats with AI confidence indicator */}
-                  <div className="bg-green-100 rounded-md px-2 py-1 text-center">
+                <div className="flex items-center justify-center gap-1 sm:gap-2">
+                  {/* Compact Mobile Stats */}
+                  <div className="bg-green-100 rounded px-1.5 sm:px-2 py-0.5 sm:py-1 text-center">
                     <div className="text-xs">
                       😊 {sessionStats.wordsRemembered}
                     </div>
                   </div>
-                  <div className="bg-orange-100 rounded-md px-2 py-1 text-center">
+                  <div className="bg-orange-100 rounded px-1.5 sm:px-2 py-0.5 sm:py-1 text-center">
                     <div className="text-xs">
                       💪 {sessionStats.wordsForgotten}
                     </div>
                   </div>
-                  <div className="bg-blue-100 rounded-md px-2 py-1 text-center">
+                  <div className="bg-blue-100 rounded px-1.5 sm:px-2 py-0.5 sm:py-1 text-center">
                     <div className="text-xs">
                       🤖 {Math.round(confidenceLevel * 100)}%
                     </div>
