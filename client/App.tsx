@@ -24,6 +24,7 @@ import { WordAdventureDemo } from "./pages/WordAdventureDemo";
 import { WordAdventureTest } from "./pages/WordAdventureTest";
 import AIIntegrationDemo from "./pages/AIIntegrationDemo";
 import AIWordRecommendationDemo from "./pages/AIWordRecommendationDemo";
+import AISystemTest from "./pages/AISystemTest";
 import { NavigationGuard } from "./components/NavigationGuard";
 import SpeechDiagnostics from "./components/SpeechDiagnostics";
 
@@ -87,6 +88,7 @@ const App = () => (
                 path="/AIWordRecommendationDemo"
                 element={<AIWordRecommendationDemo />}
               />
+              <Route path="/ai-system-test" element={<AISystemTest />} />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
             </Routes>

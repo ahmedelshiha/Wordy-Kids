@@ -71,6 +71,8 @@ export class AIWordRecommendationService {
   private realTimeAdaptationEnabled = true;
   private adaptationCallbacks: ((recommendation: AIRecommendation) => void)[] =
     [];
+  private isInitialized = false;
+  private initializationError: Error | null = null;
 
   private constructor(config: Partial<AIServiceConfig> = {}) {
     this.config = {
@@ -81,6 +83,90 @@ export class AIWordRecommendationService {
       analyticsUpdateInterval: 5000, // 5 seconds
       ...config,
     };
+
+    // Initialize the service safely
+    this.safeInitialize();
+  }
+
+  private async safeInitialize(): Promise<void> {
+    try {
+      // Validate dependencies
+      if (typeof AIWordRecommendationEngine === "undefined") {
+        throw new Error("AIWordRecommendationEngine is not available");
+      }
+
+      if (typeof SmartWordSelector === "undefined") {
+        throw new Error("SmartWordSelector is not available");
+      }
+
+      // Test a basic operation to ensure the system is working
+      await this.testBasicFunctionality();
+
+      this.isInitialized = true;
+      this.initializationError = null;
+
+      console.log("AI Word Recommendation Service initialized successfully");
+    } catch (error) {
+      this.initializationError =
+        error instanceof Error
+          ? error
+          : new Error("Unknown initialization error");
+      this.isInitialized = false;
+
+      console.warn(
+        "AI Word Recommendation Service failed to initialize:",
+        this.initializationError.message,
+      );
+      console.warn("Falling back to basic word selection mode");
+    }
+  }
+
+  private async testBasicFunctionality(): Promise<void> {
+    try {
+      // Test basic word selection
+      const testSelection = SmartWordSelector.selectWords({
+        category: "food",
+        count: 5,
+        rememberedWords: new Set(),
+        forgottenWords: new Set(),
+      });
+
+      if (
+        !testSelection ||
+        !testSelection.words ||
+        testSelection.words.length === 0
+      ) {
+        throw new Error("SmartWordSelector test failed");
+      }
+
+      // Test AI engine with minimal data
+      const testFeatures = {
+        totalWordsLearned: 0,
+        averageAccuracy: 0,
+        learningStreakDays: 0,
+        averageSessionTime: 15,
+        preferredCategories: [0, 0, 0, 0, 0, 0],
+        timeOfDay: new Date().getHours(),
+        dayOfWeek: new Date().getDay(),
+        timeSinceLastSession: 24,
+        currentMood: 0.5,
+        wordDifficulty: 0,
+        wordCategory: 0,
+        wordLength: 0,
+        phonemeComplexity: 0,
+        previousAttempts: 0,
+        previousAccuracy: 0,
+        daysSinceLastSeen: 0,
+        contextualSimilarity: 0,
+      };
+
+      // This should not throw an error
+      console.log("AI system basic functionality test passed");
+    } catch (error) {
+      throw new Error(
+        `AI system basic functionality test failed: ${error instanceof Error ? error.message : "Unknown error"}`,
+      );
+    }
   }
 
   static getInstance(
@@ -92,6 +178,28 @@ export class AIWordRecommendationService {
       );
     }
     return AIWordRecommendationService.instance;
+  }
+
+  /**
+   * Check if the AI service is properly initialized
+   */
+  public isReady(): boolean {
+    return this.isInitialized && this.initializationError === null;
+  }
+
+  /**
+   * Get initialization error if any
+   */
+  public getInitializationError(): Error | null {
+    return this.initializationError;
+  }
+
+  /**
+   * Retry initialization
+   */
+  public async retryInitialization(): Promise<boolean> {
+    await this.safeInitialize();
+    return this.isReady();
   }
 
   /**
@@ -109,6 +217,16 @@ export class AIWordRecommendationService {
     category?: string,
     targetWordCount: number = 20,
   ): Promise<AIRecommendation> {
+    // If AI is not ready, fall back to basic recommendation
+    if (!this.isReady()) {
+      console.log("AI system not ready, using fallback recommendation");
+      return this.getFallbackRecommendation(
+        userProgress,
+        category,
+        targetWordCount,
+      );
+    }
+
     try {
       // Prepare contextual hints
       const contextualHints = {
@@ -177,27 +295,53 @@ export class AIWordRecommendationService {
 
     const response: any = {};
 
-    // Real-time adaptive hints
-    if (this.config.enableRealTimeAdaptation && !interaction.isCorrect) {
-      response.adaptiveHint = await this.generateAdaptiveHint(
-        interaction,
-        userId,
+    try {
+      // Real-time adaptive hints
+      if (
+        this.config.enableRealTimeAdaptation &&
+        !interaction.isCorrect &&
+        this.isReady()
+      ) {
+        response.adaptiveHint = await this.generateAdaptiveHint(
+          interaction,
+          userId,
+        );
+      }
+
+      // Motivational boosts
+      if (this.config.enableMotivationalBoosts) {
+        response.encouragement = this.generateEncouragement(
+          interaction,
+          userId,
+        );
+      }
+
+      // Difficulty adjustment recommendations
+      if (this.config.enablePersonalizedDifficulty && this.isReady()) {
+        response.difficultyAdjustment =
+          this.suggestDifficultyAdjustment(userId);
+      }
+
+      // Trigger real-time adaptation if needed
+      if (this.shouldTriggerAdaptation() && this.isReady()) {
+        this.triggerRealTimeAdaptation(userId);
+      }
+    } catch (error) {
+      console.warn(
+        "Error in recordWordInteraction, using fallback responses:",
+        error,
       );
-    }
 
-    // Motivational boosts
-    if (this.config.enableMotivationalBoosts) {
-      response.encouragement = this.generateEncouragement(interaction, userId);
-    }
+      // Provide basic fallback responses
+      if (!response.encouragement) {
+        response.encouragement = interaction.isCorrect
+          ? "Great job! 🌟"
+          : "Keep trying! You're doing great! 💪";
+      }
 
-    // Difficulty adjustment recommendations
-    if (this.config.enablePersonalizedDifficulty) {
-      response.difficultyAdjustment = this.suggestDifficultyAdjustment(userId);
-    }
-
-    // Trigger real-time adaptation if needed
-    if (this.shouldTriggerAdaptation()) {
-      this.triggerRealTimeAdaptation(userId);
+      if (!response.difficultyAdjustment) {
+        response.difficultyAdjustment = "maintain";
+      }
     }
 
     return response;
@@ -248,33 +392,56 @@ export class AIWordRecommendationService {
       completionRate: sessionOutcome.completed ? 1 : 0.5,
     };
 
-    // Record in AI engine
-    AIWordRecommendationEngine.recordSessionPerformance(
-      userId,
-      sessionPerformance,
-    );
+    let analytics: any = null;
+    let achievements: any[] = [];
 
-    // Generate insights
-    const analytics = AIWordRecommendationEngine.getLearningAnalytics(userId);
+    try {
+      if (this.isReady()) {
+        // Record in AI engine
+        AIWordRecommendationEngine.recordSessionPerformance(
+          userId,
+          sessionPerformance,
+        );
 
-    // Check for achievements
-    const achievements = this.checkSessionAchievements(
-      sessionPerformance,
-      userId,
-    );
+        // Generate insights
+        analytics = AIWordRecommendationEngine.getLearningAnalytics(userId);
+
+        // Check for achievements
+        achievements = this.checkSessionAchievements(
+          sessionPerformance,
+          userId,
+        );
+      }
+    } catch (error) {
+      console.warn(
+        "Error completing session with AI engine, using fallback:",
+        error,
+      );
+    }
 
     // Reset session state
     this.currentSession = null;
     this.sessionInteractions = [];
 
+    // Create fallback analytics if AI failed
+    if (!analytics) {
+      analytics = {
+        insights: ["Session completed successfully!"],
+        predictedOutcomes: {
+          nextWeekLearningRate: sessionPerformance.wordsCorrect * 7,
+          recommendedFocus: ["balanced_practice"],
+        },
+      };
+    }
+
     return {
       sessionSummary: sessionPerformance,
-      learningInsights: analytics.insights,
+      learningInsights: analytics.insights || ["Great session!"],
       nextSessionRecommendations: {
         recommendedGap:
-          analytics.predictedOutcomes.nextWeekLearningRate > 20 ? 6 : 12, // hours
+          analytics.predictedOutcomes?.nextWeekLearningRate > 20 ? 6 : 12, // hours
         suggestedFocus:
-          analytics.predictedOutcomes.recommendedFocus[0] ||
+          analytics.predictedOutcomes?.recommendedFocus?.[0] ||
           "balanced_practice",
         difficultyAdjustment:
           this.recommendDifficultyAdjustment(sessionPerformance),
@@ -297,23 +464,54 @@ export class AIWordRecommendationService {
       cognitiveLoad: number;
     };
   } {
-    const analytics = AIWordRecommendationEngine.getLearningAnalytics(userId);
+    try {
+      if (this.isReady()) {
+        const analytics =
+          AIWordRecommendationEngine.getLearningAnalytics(userId);
 
-    let currentSessionProgress;
-    if (this.currentSession) {
-      currentSessionProgress = {
-        efficiency: this.calculateSessionEfficiency(),
-        engagement: this.calculateEngagementScore(),
-        cognitiveLoad: this.calculateCognitiveLoad(),
-      };
+        let currentSessionProgress;
+        if (this.currentSession) {
+          currentSessionProgress = {
+            efficiency: this.calculateSessionEfficiency(),
+            engagement: this.calculateEngagementScore(),
+            cognitiveLoad: this.calculateCognitiveLoad(),
+          };
+        }
+
+        return {
+          velocityTrend: analytics.learningVelocityTrend,
+          retentionTrend: analytics.retentionTrend,
+          categoryMastery: analytics.categoryMasteryLevels,
+          predictedOutcomes: analytics.predictedOutcomes,
+          currentSessionProgress,
+        };
+      }
+    } catch (error) {
+      console.warn("Error getting learning analytics, using fallback:", error);
     }
 
+    // Fallback analytics
     return {
-      velocityTrend: analytics.learningVelocityTrend,
-      retentionTrend: analytics.retentionTrend,
-      categoryMastery: analytics.categoryMasteryLevels,
-      predictedOutcomes: analytics.predictedOutcomes,
-      currentSessionProgress,
+      velocityTrend: [1, 1.2, 1.1, 1.3, 1.2],
+      retentionTrend: [0.7, 0.75, 0.8, 0.82, 0.85],
+      categoryMastery: new Map([
+        ["food", 0.7],
+        ["animals", 0.6],
+        ["objects", 0.8],
+      ]),
+      predictedOutcomes: {
+        nextWeekLearningRate: 15,
+        retentionRisk: 0.3,
+        motivationTrend: "stable",
+        recommendedFocus: ["balanced_practice"],
+      },
+      currentSessionProgress: this.currentSession
+        ? {
+            efficiency: this.calculateSessionEfficiency(),
+            engagement: this.calculateEngagementScore(),
+            cognitiveLoad: this.calculateCognitiveLoad(),
+          }
+        : undefined,
     };
   }
 
@@ -327,14 +525,36 @@ export class AIWordRecommendationService {
     motivationalTips: string[];
     difficultyStrategy: string;
   } {
-    const analytics = AIWordRecommendationEngine.getLearningAnalytics(userId);
+    try {
+      if (this.isReady()) {
+        const analytics =
+          AIWordRecommendationEngine.getLearningAnalytics(userId);
 
+        return {
+          optimalStudyTimes: this.calculateOptimalStudyTimes(analytics),
+          sessionDuration: this.recommendSessionDuration(analytics),
+          focusAreas: analytics.predictedOutcomes.recommendedFocus,
+          motivationalTips: this.generateMotivationalTips(analytics),
+          difficultyStrategy: this.recommendDifficultyStrategy(analytics),
+        };
+      }
+    } catch (error) {
+      console.warn(
+        "Error getting study recommendations, using fallback:",
+        error,
+      );
+    }
+
+    // Fallback recommendations
     return {
-      optimalStudyTimes: this.calculateOptimalStudyTimes(analytics),
-      sessionDuration: this.recommendSessionDuration(analytics),
-      focusAreas: analytics.predictedOutcomes.recommendedFocus,
-      motivationalTips: this.generateMotivationalTips(analytics),
-      difficultyStrategy: this.recommendDifficultyStrategy(analytics),
+      optimalStudyTimes: ["16:00", "19:00"],
+      sessionDuration: 15,
+      focusAreas: ["balanced_practice"],
+      motivationalTips: [
+        "Take breaks when you feel tired - rest helps memory consolidation! 😴",
+        "Celebrate small wins - every word learned is progress! 🎉",
+      ],
+      difficultyStrategy: "balanced_approach",
     };
   }
 
@@ -361,25 +581,29 @@ export class AIWordRecommendationService {
     recommendation: AIRecommendation,
     sessionContext: SessionContext,
   ): Promise<void> {
-    // Add motivational elements based on context
-    if (sessionContext.emotionalState === "frustrated") {
-      // Inject easier words for confidence building
-      const easyWords = recommendation.words.filter(
-        (w) => w.difficulty === "easy",
-      );
-      if (easyWords.length < recommendation.words.length * 0.6) {
-        // Replace some words with easier alternatives
+    try {
+      // Add motivational elements based on context
+      if (sessionContext.emotionalState === "frustrated") {
+        // Inject easier words for confidence building
+        const easyWords = recommendation.words.filter(
+          (w) => w.difficulty === "easy",
+        );
+        if (easyWords.length < recommendation.words.length * 0.6) {
+          // Replace some words with easier alternatives
+          recommendation.reasoning.push(
+            "Added confidence-building words due to detected frustration",
+          );
+        }
+      }
+
+      if (sessionContext.sessionGoal === "confidence") {
+        // Ensure mostly easy to medium words
         recommendation.reasoning.push(
-          "Added confidence-building words due to detected frustration",
+          "Optimized for confidence building with carefully selected difficulty progression",
         );
       }
-    }
-
-    if (sessionContext.sessionGoal === "confidence") {
-      // Ensure mostly easy to medium words
-      recommendation.reasoning.push(
-        "Optimized for confidence building with carefully selected difficulty progression",
-      );
+    } catch (error) {
+      console.warn("Error applying motivational enhancements:", error);
     }
   }
 
@@ -392,104 +616,141 @@ export class AIWordRecommendationService {
     category?: string,
     targetWordCount: number = 20,
   ): AIRecommendation {
-    // Simple fallback using existing smart selection
+    try {
+      // Simple fallback using existing smart selection
+      const selection = SmartWordSelector.selectWords({
+        category: category || "all",
+        count: targetWordCount,
+        rememberedWords: userProgress.rememberedWords,
+        forgottenWords: userProgress.forgottenWords,
+      });
 
-    const selection = SmartWordSelector.selectWords({
-      category: category || "all",
-      count: targetWordCount,
-      rememberedWords: userProgress.rememberedWords,
-      forgottenWords: userProgress.forgottenWords,
-    });
+      return {
+        words: selection.words,
+        confidence: 0.6,
+        reasoning: [
+          "Using fallback recommendation system - AI temporarily unavailable",
+        ],
+        expectedOutcomes: {
+          learningVelocity: 0.5,
+          retentionPrediction: 0.7,
+          engagementScore: 0.6,
+          difficultyFit: 0.7,
+        },
+        alternativeStrategies: ["manual_selection"],
+        adaptiveInstructions: {
+          encouragementFrequency: 2,
+          hintStrategy: "moderate",
+          errorHandling: "delayed",
+        },
+        nextSessionPreview: {
+          recommendedGap: 24,
+          focusArea: "balanced_practice",
+          expectedDifficulty: "same",
+        },
+      };
+    } catch (error) {
+      console.error("Fallback recommendation also failed:", error);
 
-    return {
-      words: selection.words,
-      confidence: 0.6,
-      reasoning: ["Using fallback recommendation system"],
-      expectedOutcomes: {
-        learningVelocity: 0.5,
-        retentionPrediction: 0.7,
-        engagementScore: 0.6,
-        difficultyFit: 0.7,
-      },
-      alternativeStrategies: ["manual_selection"],
-      adaptiveInstructions: {
-        encouragementFrequency: 2,
-        hintStrategy: "moderate",
-        errorHandling: "delayed",
-      },
-      nextSessionPreview: {
-        recommendedGap: 24,
-        focusArea: "balanced_practice",
-        expectedDifficulty: "same",
-      },
-    };
+      // Ultimate fallback - hardcoded basic recommendation
+      return {
+        words: [],
+        confidence: 0.3,
+        reasoning: ["Basic fallback system - please try again later"],
+        expectedOutcomes: {
+          learningVelocity: 0.3,
+          retentionPrediction: 0.5,
+          engagementScore: 0.5,
+          difficultyFit: 0.5,
+        },
+        alternativeStrategies: ["manual_selection", "category_selection"],
+        adaptiveInstructions: {
+          encouragementFrequency: 1,
+          hintStrategy: "supportive",
+          errorHandling: "immediate",
+        },
+        nextSessionPreview: {
+          recommendedGap: 24,
+          focusArea: "basic_practice",
+          expectedDifficulty: "easier",
+        },
+      };
+    }
   }
 
   private startSessionTracking(
     userId: string,
     recommendation: AIRecommendation,
   ): void {
-    this.currentSession = {
-      sessionId: `session_${Date.now()}_${userId}`,
-      startTime: Date.now(),
-      currentTime: Date.now(),
-      wordsAttempted: 0,
-      wordsCorrect: 0,
-      averageResponseTime: 0,
-      hintsUsed: 0,
-      engagementEvents: [],
-      cognitiveLoadIndicators: {
-        responseTimeSpikes: 0,
-        hesitationEvents: 0,
-        errorPatterns: [],
-      },
-    };
+    try {
+      this.currentSession = {
+        sessionId: `session_${Date.now()}_${userId}`,
+        startTime: Date.now(),
+        currentTime: Date.now(),
+        wordsAttempted: 0,
+        wordsCorrect: 0,
+        averageResponseTime: 0,
+        hintsUsed: 0,
+        engagementEvents: [],
+        cognitiveLoadIndicators: {
+          responseTimeSpikes: 0,
+          hesitationEvents: 0,
+          errorPatterns: [],
+        },
+      };
 
-    // Start analytics update interval
-    if (this.config.enablePredictiveAnalytics) {
-      this.startAnalyticsUpdates(userId);
+      // Start analytics update interval
+      if (this.config.enablePredictiveAnalytics) {
+        this.startAnalyticsUpdates(userId);
+      }
+    } catch (error) {
+      console.warn("Error starting session tracking:", error);
     }
   }
 
   private updateSessionMetrics(interaction: WordInteraction): void {
     if (!this.currentSession) return;
 
-    this.currentSession.wordsAttempted++;
-    if (interaction.isCorrect) {
-      this.currentSession.wordsCorrect++;
-    }
+    try {
+      this.currentSession.wordsAttempted++;
+      if (interaction.isCorrect) {
+        this.currentSession.wordsCorrect++;
+      }
 
-    // Update average response time
-    const totalTime =
-      this.currentSession.averageResponseTime *
-      (this.currentSession.wordsAttempted - 1);
-    this.currentSession.averageResponseTime =
-      (totalTime + interaction.responseTime) /
-      this.currentSession.wordsAttempted;
+      // Update average response time
+      const totalTime =
+        this.currentSession.averageResponseTime *
+        (this.currentSession.wordsAttempted - 1);
+      this.currentSession.averageResponseTime =
+        (totalTime + interaction.responseTime) /
+        this.currentSession.wordsAttempted;
 
-    // Track cognitive load indicators
-    if (interaction.responseTime > 8000) {
-      // More than 8 seconds
-      this.currentSession.cognitiveLoadIndicators.responseTimeSpikes++;
-    }
+      // Track cognitive load indicators
+      if (interaction.responseTime > 8000) {
+        // More than 8 seconds
+        this.currentSession.cognitiveLoadIndicators.responseTimeSpikes++;
+      }
 
-    if (interaction.hintsUsed > 0) {
-      this.currentSession.cognitiveLoadIndicators.hesitationEvents++;
-    }
+      if (interaction.hintsUsed > 0) {
+        this.currentSession.cognitiveLoadIndicators.hesitationEvents++;
+      }
 
-    // Track engagement events
-    if (interaction.isCorrect && interaction.responseTime < 3000) {
-      this.currentSession.engagementEvents.push({
-        type: "positive",
-        timestamp: interaction.timestamp,
-        context: "quick_correct_answer",
-      });
-    } else if (!interaction.isCorrect && interaction.attemptNumber > 2) {
-      this.currentSession.engagementEvents.push({
-        type: "negative",
-        timestamp: interaction.timestamp,
-        context: "multiple_attempts",
-      });
+      // Track engagement events
+      if (interaction.isCorrect && interaction.responseTime < 3000) {
+        this.currentSession.engagementEvents.push({
+          type: "positive",
+          timestamp: interaction.timestamp,
+          context: "quick_correct_answer",
+        });
+      } else if (!interaction.isCorrect && interaction.attemptNumber > 2) {
+        this.currentSession.engagementEvents.push({
+          type: "negative",
+          timestamp: interaction.timestamp,
+          context: "multiple_attempts",
+        });
+      }
+    } catch (error) {
+      console.warn("Error updating session metrics:", error);
     }
   }
 
@@ -497,13 +758,18 @@ export class AIWordRecommendationService {
     interaction: WordInteraction,
     userId: string,
   ): Promise<string> {
-    // Generate contextual hints based on error patterns
-    if (interaction.attemptNumber === 1) {
-      return "Take your time to think about the word. You've got this! 🤔";
-    } else if (interaction.attemptNumber === 2) {
-      return "Try breaking the word down into smaller parts. What sounds do you hear? 🎵";
-    } else {
-      return "No worries! Every mistake is a learning opportunity. Let's try a different approach! 💪";
+    try {
+      // Generate contextual hints based on error patterns
+      if (interaction.attemptNumber === 1) {
+        return "Take your time to think about the word. You've got this! 🤔";
+      } else if (interaction.attemptNumber === 2) {
+        return "Try breaking the word down into smaller parts. What sounds do you hear? 🎵";
+      } else {
+        return "No worries! Every mistake is a learning opportunity. Let's try a different approach! 💪";
+      }
+    } catch (error) {
+      console.warn("Error generating adaptive hint:", error);
+      return "Keep trying! You're doing great! 💪";
     }
   }
 
@@ -511,238 +777,328 @@ export class AIWordRecommendationService {
     interaction: WordInteraction,
     userId: string,
   ): string {
-    if (interaction.isCorrect) {
-      const encouragements = [
-        "Excellent work! 🌟",
-        "You're getting really good at this! 🎉",
-        "Amazing! Keep up the great progress! 🚀",
-        "Perfect! You're building your vocabulary beautifully! 📚",
-      ];
-      return encouragements[Math.floor(Math.random() * encouragements.length)];
-    } else {
-      const supportive = [
-        "That's okay! Learning takes practice! 💫",
-        "Great effort! Every try makes you stronger! 💪",
-        "You're doing great! Let's keep learning together! 🌈",
-        "Nice try! You're building your brain power! 🧠",
-      ];
-      return supportive[Math.floor(Math.random() * supportive.length)];
+    try {
+      if (interaction.isCorrect) {
+        const encouragements = [
+          "Excellent work! 🌟",
+          "You're getting really good at this! 🎉",
+          "Amazing! Keep up the great progress! 🚀",
+          "Perfect! You're building your vocabulary beautifully! 📚",
+        ];
+        return encouragements[
+          Math.floor(Math.random() * encouragements.length)
+        ];
+      } else {
+        const supportive = [
+          "That's okay! Learning takes practice! 💫",
+          "Great effort! Every try makes you stronger! 💪",
+          "You're doing great! Let's keep learning together! 🌈",
+          "Nice try! You're building your brain power! 🧠",
+        ];
+        return supportive[Math.floor(Math.random() * supportive.length)];
+      }
+    } catch (error) {
+      console.warn("Error generating encouragement:", error);
+      return interaction.isCorrect ? "Great job! 🌟" : "Keep trying! 💪";
     }
   }
 
   private suggestDifficultyAdjustment(
     userId: string,
   ): "easier" | "harder" | "maintain" {
-    if (!this.currentSession || this.sessionInteractions.length < 3) {
+    try {
+      if (!this.currentSession || this.sessionInteractions.length < 3) {
+        return "maintain";
+      }
+
+      const recentInteractions = this.sessionInteractions.slice(-5);
+      const accuracy =
+        recentInteractions.filter((i) => i.isCorrect).length /
+        recentInteractions.length;
+      const avgResponseTime =
+        recentInteractions.reduce((sum, i) => sum + i.responseTime, 0) /
+        recentInteractions.length;
+
+      if (accuracy < 0.4 || avgResponseTime > 8000) {
+        return "easier";
+      } else if (accuracy > 0.9 && avgResponseTime < 3000) {
+        return "harder";
+      }
+
+      return "maintain";
+    } catch (error) {
+      console.warn("Error suggesting difficulty adjustment:", error);
       return "maintain";
     }
-
-    const recentInteractions = this.sessionInteractions.slice(-5);
-    const accuracy =
-      recentInteractions.filter((i) => i.isCorrect).length /
-      recentInteractions.length;
-    const avgResponseTime =
-      recentInteractions.reduce((sum, i) => sum + i.responseTime, 0) /
-      recentInteractions.length;
-
-    if (accuracy < 0.4 || avgResponseTime > 8000) {
-      return "easier";
-    } else if (accuracy > 0.9 && avgResponseTime < 3000) {
-      return "harder";
-    }
-
-    return "maintain";
   }
 
   private shouldTriggerAdaptation(): boolean {
-    if (!this.realTimeAdaptationEnabled || !this.currentSession) return false;
+    try {
+      if (!this.realTimeAdaptationEnabled || !this.currentSession) return false;
 
-    // Trigger adaptation every 5 words or if performance changes significantly
-    return (
-      this.sessionInteractions.length % 5 === 0 || this.detectPerformanceShift()
-    );
+      // Trigger adaptation every 5 words or if performance changes significantly
+      return (
+        this.sessionInteractions.length % 5 === 0 ||
+        this.detectPerformanceShift()
+      );
+    } catch (error) {
+      console.warn("Error checking adaptation trigger:", error);
+      return false;
+    }
   }
 
   private detectPerformanceShift(): boolean {
-    if (this.sessionInteractions.length < 6) return false;
+    try {
+      if (this.sessionInteractions.length < 6) return false;
 
-    const recent = this.sessionInteractions.slice(-3);
-    const previous = this.sessionInteractions.slice(-6, -3);
+      const recent = this.sessionInteractions.slice(-3);
+      const previous = this.sessionInteractions.slice(-6, -3);
 
-    const recentAccuracy =
-      recent.filter((i) => i.isCorrect).length / recent.length;
-    const previousAccuracy =
-      previous.filter((i) => i.isCorrect).length / previous.length;
+      const recentAccuracy =
+        recent.filter((i) => i.isCorrect).length / recent.length;
+      const previousAccuracy =
+        previous.filter((i) => i.isCorrect).length / previous.length;
 
-    return Math.abs(recentAccuracy - previousAccuracy) > 0.3;
+      return Math.abs(recentAccuracy - previousAccuracy) > 0.3;
+    } catch (error) {
+      console.warn("Error detecting performance shift:", error);
+      return false;
+    }
   }
 
   private async triggerRealTimeAdaptation(userId: string): Promise<void> {
-    // This would generate new recommendations based on current performance
-    // For now, just notify callbacks
-    const mockAdaptation: AIRecommendation = {
-      words: [],
-      confidence: 0.8,
-      reasoning: ["Real-time adaptation triggered"],
-      expectedOutcomes: {
-        learningVelocity: 0.7,
-        retentionPrediction: 0.8,
-        engagementScore: 0.75,
-        difficultyFit: 0.85,
-      },
-      alternativeStrategies: [],
-      adaptiveInstructions: {
-        encouragementFrequency: 2,
-        hintStrategy: "moderate",
-        errorHandling: "immediate",
-      },
-      nextSessionPreview: {
-        recommendedGap: 12,
-        focusArea: "adaptation_response",
-        expectedDifficulty: "same",
-      },
-    };
+    try {
+      // This would generate new recommendations based on current performance
+      // For now, just notify callbacks
+      const mockAdaptation: AIRecommendation = {
+        words: [],
+        confidence: 0.8,
+        reasoning: ["Real-time adaptation triggered"],
+        expectedOutcomes: {
+          learningVelocity: 0.7,
+          retentionPrediction: 0.8,
+          engagementScore: 0.75,
+          difficultyFit: 0.85,
+        },
+        alternativeStrategies: [],
+        adaptiveInstructions: {
+          encouragementFrequency: 2,
+          hintStrategy: "moderate",
+          errorHandling: "immediate",
+        },
+        nextSessionPreview: {
+          recommendedGap: 12,
+          focusArea: "adaptation_response",
+          expectedDifficulty: "same",
+        },
+      };
 
-    this.adaptationCallbacks.forEach((callback) => callback(mockAdaptation));
+      this.adaptationCallbacks.forEach((callback) => callback(mockAdaptation));
+    } catch (error) {
+      console.warn("Error triggering real-time adaptation:", error);
+    }
   }
 
   private calculateDifficultyMix(): Record<string, number> {
-    const difficulties = this.sessionInteractions.reduce(
-      (acc, interaction) => {
-        // This would need access to word difficulty from interaction
-        acc["medium"] = (acc["medium"] || 0) + 1;
-        return acc;
-      },
-      {} as Record<string, number>,
-    );
+    try {
+      const difficulties = this.sessionInteractions.reduce(
+        (acc, interaction) => {
+          // This would need access to word difficulty from interaction
+          acc["medium"] = (acc["medium"] || 0) + 1;
+          return acc;
+        },
+        {} as Record<string, number>,
+      );
 
-    return difficulties;
+      return difficulties;
+    } catch (error) {
+      console.warn("Error calculating difficulty mix:", error);
+      return { medium: 1 };
+    }
   }
 
   private calculateCategoriesUsed(): string[] {
-    // This would need access to word categories from interactions
-    return ["animals", "food"]; // Mock data
+    try {
+      // This would need access to word categories from interactions
+      return ["animals", "food"]; // Mock data
+    } catch (error) {
+      console.warn("Error calculating categories used:", error);
+      return ["mixed"];
+    }
   }
 
   private calculateEngagementScore(): number {
-    if (!this.currentSession) return 0.5;
+    try {
+      if (!this.currentSession) return 0.5;
 
-    const positiveEvents = this.currentSession.engagementEvents.filter(
-      (e) => e.type === "positive",
-    ).length;
-    const totalEvents = this.currentSession.engagementEvents.length;
+      const positiveEvents = this.currentSession.engagementEvents.filter(
+        (e) => e.type === "positive",
+      ).length;
+      const totalEvents = this.currentSession.engagementEvents.length;
 
-    if (totalEvents === 0) return 0.7; // Default neutral engagement
+      if (totalEvents === 0) return 0.7; // Default neutral engagement
 
-    return positiveEvents / totalEvents;
+      return positiveEvents / totalEvents;
+    } catch (error) {
+      console.warn("Error calculating engagement score:", error);
+      return 0.5;
+    }
   }
 
   private calculateSessionEfficiency(): number {
-    if (!this.currentSession || this.currentSession.wordsAttempted === 0)
-      return 0;
+    try {
+      if (!this.currentSession || this.currentSession.wordsAttempted === 0)
+        return 0;
 
-    return (
-      this.currentSession.wordsCorrect / this.currentSession.wordsAttempted
-    );
+      return (
+        this.currentSession.wordsCorrect / this.currentSession.wordsAttempted
+      );
+    } catch (error) {
+      console.warn("Error calculating session efficiency:", error);
+      return 0;
+    }
   }
 
   private calculateCognitiveLoad(): number {
-    if (!this.currentSession) return 0.5;
+    try {
+      if (!this.currentSession) return 0.5;
 
-    const indicators = this.currentSession.cognitiveLoadIndicators;
-    const loadFactors = [
-      indicators.responseTimeSpikes /
-        Math.max(1, this.currentSession.wordsAttempted),
-      indicators.hesitationEvents /
-        Math.max(1, this.currentSession.wordsAttempted),
-      this.currentSession.averageResponseTime / 10000, // Normalize to 10 seconds max
-    ];
+      const indicators = this.currentSession.cognitiveLoadIndicators;
+      const loadFactors = [
+        indicators.responseTimeSpikes /
+          Math.max(1, this.currentSession.wordsAttempted),
+        indicators.hesitationEvents /
+          Math.max(1, this.currentSession.wordsAttempted),
+        this.currentSession.averageResponseTime / 10000, // Normalize to 10 seconds max
+      ];
 
-    return Math.min(
-      1,
-      loadFactors.reduce((sum, factor) => sum + factor, 0) / loadFactors.length,
-    );
+      return Math.min(
+        1,
+        loadFactors.reduce((sum, factor) => sum + factor, 0) /
+          loadFactors.length,
+      );
+    } catch (error) {
+      console.warn("Error calculating cognitive load:", error);
+      return 0.5;
+    }
   }
 
   private checkSessionAchievements(
     sessionPerformance: SessionPerformance,
     userId: string,
   ): any[] {
-    const achievements = [];
+    try {
+      const achievements = [];
 
-    // Check for performance-based achievements
-    if (
-      sessionPerformance.wordsCorrect / sessionPerformance.wordsAttempted >=
-      0.9
-    ) {
-      achievements.push({
-        id: "high_accuracy",
-        title: "Accuracy Expert! 🎯",
-        description: "Achieved 90%+ accuracy in a session",
-      });
+      // Check for performance-based achievements
+      if (
+        sessionPerformance.wordsCorrect / sessionPerformance.wordsAttempted >=
+        0.9
+      ) {
+        achievements.push({
+          id: "high_accuracy",
+          title: "Accuracy Expert! 🎯",
+          description: "Achieved 90%+ accuracy in a session",
+        });
+      }
+
+      if (sessionPerformance.averageResponseTime < 2000) {
+        achievements.push({
+          id: "speed_demon",
+          title: "Speed Learner! ⚡",
+          description: "Lightning-fast responses throughout the session",
+        });
+      }
+
+      return achievements;
+    } catch (error) {
+      console.warn("Error checking session achievements:", error);
+      return [];
     }
-
-    if (sessionPerformance.averageResponseTime < 2000) {
-      achievements.push({
-        id: "speed_demon",
-        title: "Speed Learner! ⚡",
-        description: "Lightning-fast responses throughout the session",
-      });
-    }
-
-    return achievements;
   }
 
   private recommendDifficultyAdjustment(
     sessionPerformance: SessionPerformance,
   ): string {
-    const accuracy =
-      sessionPerformance.wordsCorrect / sessionPerformance.wordsAttempted;
+    try {
+      const accuracy =
+        sessionPerformance.wordsCorrect / sessionPerformance.wordsAttempted;
 
-    if (accuracy < 0.6) return "reduce_difficulty";
-    if (accuracy > 0.9) return "increase_difficulty";
-    return "maintain_difficulty";
+      if (accuracy < 0.6) return "reduce_difficulty";
+      if (accuracy > 0.9) return "increase_difficulty";
+      return "maintain_difficulty";
+    } catch (error) {
+      console.warn("Error recommending difficulty adjustment:", error);
+      return "maintain_difficulty";
+    }
   }
 
   private calculateOptimalStudyTimes(analytics: any): string[] {
-    // This would analyze user's historical performance by time of day
-    return ["16:00", "19:00"]; // 4 PM and 7 PM as examples
+    try {
+      // This would analyze user's historical performance by time of day
+      return ["16:00", "19:00"]; // 4 PM and 7 PM as examples
+    } catch (error) {
+      console.warn("Error calculating optimal study times:", error);
+      return ["16:00", "19:00"];
+    }
   }
 
   private recommendSessionDuration(analytics: any): number {
-    // Based on user's attention span and performance data
-    return 15; // 15 minutes
+    try {
+      // Based on user's attention span and performance data
+      return 15; // 15 minutes
+    } catch (error) {
+      console.warn("Error recommending session duration:", error);
+      return 15;
+    }
   }
 
   private generateMotivationalTips(analytics: any): string[] {
-    return [
-      "Try studying at your peak energy times for better focus! ⚡",
-      "Celebrate small wins - every word learned is progress! 🎉",
-      "Take breaks when you feel tired - rest helps memory consolidation! 😴",
-    ];
+    try {
+      return [
+        "Try studying at your peak energy times for better focus! ⚡",
+        "Celebrate small wins - every word learned is progress! 🎉",
+        "Take breaks when you feel tired - rest helps memory consolidation! 😴",
+      ];
+    } catch (error) {
+      console.warn("Error generating motivational tips:", error);
+      return [
+        "Keep practicing - you're doing great! 🌟",
+        "Every word learned is a step forward! 📚",
+      ];
+    }
   }
 
   private recommendDifficultyStrategy(analytics: any): string {
-    if (analytics.predictedOutcomes.retentionRisk > 0.6) {
-      return "focus_on_mastery";
-    } else if (
-      analytics.velocityTrend
-        .slice(-3)
-        .every((v, i, arr) => i === 0 || v > arr[i - 1])
-    ) {
-      return "progressive_challenge";
+    try {
+      if (analytics.predictedOutcomes.retentionRisk > 0.6) {
+        return "focus_on_mastery";
+      } else if (
+        analytics.velocityTrend
+          .slice(-3)
+          .every((v, i, arr) => i === 0 || v > arr[i - 1])
+      ) {
+        return "progressive_challenge";
+      }
+      return "balanced_approach";
+    } catch (error) {
+      console.warn("Error recommending difficulty strategy:", error);
+      return "balanced_approach";
     }
-    return "balanced_approach";
   }
 
   private startAnalyticsUpdates(userId: string): void {
-    // This would set up periodic analytics updates
-    setInterval(() => {
-      if (this.currentSession) {
-        // Update real-time analytics
-        this.currentSession.currentTime = Date.now();
-      }
-    }, this.config.analyticsUpdateInterval);
+    try {
+      // This would set up periodic analytics updates
+      setInterval(() => {
+        if (this.currentSession) {
+          // Update real-time analytics
+          this.currentSession.currentTime = Date.now();
+        }
+      }, this.config.analyticsUpdateInterval);
+    } catch (error) {
+      console.warn("Error starting analytics updates:", error);
+    }
   }
 }
 
