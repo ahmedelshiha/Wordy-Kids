@@ -1233,15 +1233,15 @@ export function AIEnhancedInteractiveDashboardWordCard({
                 </Badge>
               </div>
 
-              {/* Progress Bar */}
+              {/* Progress Bar - Keep large for kids */}
               <div className="w-full bg-gray-200 rounded-full h-2 mb-2">
                 <div
                   className="bg-gradient-to-r from-blue-500 to-purple-500 h-2 rounded-full transition-all duration-300"
                   style={{ width: `${sessionProgress}%` }}
                 />
               </div>
-              <div className="text-xs text-gray-600">
-                Session Progress: {currentWordIndex + 1} of {SESSION_SIZE} words
+              <div className="text-xs sm:text-sm text-gray-600">
+                {currentWordIndex + 1} of {SESSION_SIZE} words
               </div>
             </div>
 
