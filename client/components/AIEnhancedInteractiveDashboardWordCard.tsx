@@ -158,6 +158,19 @@ export function AIEnhancedInteractiveDashboardWordCard({
   // Global AI settings state
   const [globalAIEnabled, setGlobalAIEnabled] = useState(isAIEnabled());
 
+  // Helper function to toggle global AI settings
+  const toggleGlobalAI = () => {
+    const newValue = !globalAIEnabled;
+    setGlobalAIEnabled(newValue);
+    setAISettings({ aiEnhancementEnabled: newValue });
+    onToggleAIEnhancement?.(newValue);
+
+    // If disabling AI globally, end any active session
+    if (!newValue && aiState.isSessionActive) {
+      aiActions.endSession({ completed: false });
+    }
+  };
+
   // UI States
   const [showWordName, setShowWordName] = useState(false);
   const [isAnswered, setIsAnswered] = useState(false);
