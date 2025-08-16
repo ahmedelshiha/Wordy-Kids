@@ -282,8 +282,8 @@ export function AchievementSystem({
           difficultyStats: {
             easy: { completed: 0 },
             medium: { completed: 0 },
-            hard: { completed: 0 }
-          }
+            hard: { completed: 0 },
+          },
         };
 
         // Get category completion data
@@ -294,14 +294,16 @@ export function AchievementSystem({
 
         // Build category breakdown from real data
         let categoryBreakdown = [];
-        if (categoryStats && typeof categoryStats === 'object') {
+        if (categoryStats && typeof categoryStats === "object") {
           // If we have current session stats, create a single category entry
-          categoryBreakdown = [{
-            category: "Current Session",
-            wordsLearned: categoryStats.wordsReviewed || 0,
-            accuracy: categoryStats.accuracy || 0,
-            timeSpent: categoryStats.timeSpent || 0,
-          }];
+          categoryBreakdown = [
+            {
+              category: "Current Session",
+              wordsLearned: categoryStats.wordsReviewed || 0,
+              accuracy: categoryStats.accuracy || 0,
+              timeSpent: categoryStats.timeSpent || 0,
+            },
+          ];
         } else {
           // Build from completion history if no current session
           const categoryMap = new Map();
@@ -313,10 +315,12 @@ export function AchievementSystem({
               existing.timeSpent += record.timeSpent || 0;
               existing.totalSessions++;
               existing.totalAccuracy += record.accuracy || 0;
-              existing.accuracy = existing.totalAccuracy / existing.totalSessions;
+              existing.accuracy =
+                existing.totalAccuracy / existing.totalSessions;
             } else {
               categoryMap.set(categoryName, {
-                category: categoryName.charAt(0).toUpperCase() + categoryName.slice(1),
+                category:
+                  categoryName.charAt(0).toUpperCase() + categoryName.slice(1),
                 wordsLearned: record.wordsReviewed || 0,
                 accuracy: record.accuracy || 0,
                 timeSpent: record.timeSpent || 0,
@@ -326,7 +330,7 @@ export function AchievementSystem({
             }
           });
 
-          categoryBreakdown = Array.from(categoryMap.values()).map(cat => ({
+          categoryBreakdown = Array.from(categoryMap.values()).map((cat) => ({
             category: cat.category,
             wordsLearned: cat.wordsLearned,
             accuracy: Math.round(cat.accuracy),
@@ -335,12 +339,14 @@ export function AchievementSystem({
 
           // If no categories found, provide a default empty state
           if (categoryBreakdown.length === 0) {
-            categoryBreakdown = [{
-              category: "Getting Started",
-              wordsLearned: 0,
-              accuracy: 0,
-              timeSpent: 0,
-            }];
+            categoryBreakdown = [
+              {
+                category: "Getting Started",
+                wordsLearned: 0,
+                accuracy: 0,
+                timeSpent: 0,
+              },
+            ];
           }
         }
 
@@ -462,8 +468,8 @@ export function AchievementSystem({
           difficultyStats: {
             easy: { completed: 0 },
             medium: { completed: 0 },
-            hard: { completed: 0 }
-          }
+            hard: { completed: 0 },
+          },
         };
 
         setRealAchievements(achievements);
