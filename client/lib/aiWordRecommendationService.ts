@@ -8,6 +8,7 @@ import { Word } from "@/data/wordsDatabase";
 import { ChildWordStats } from "@shared/api";
 import { AchievementTracker } from "./achievementTracker";
 import { audioService } from "./audioService";
+import { SmartWordSelector } from "./smartWordSelection";
 
 export interface AIServiceConfig {
   enableRealTimeAdaptation: boolean;
