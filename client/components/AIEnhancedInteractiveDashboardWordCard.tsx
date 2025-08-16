@@ -1459,8 +1459,12 @@ export function AIEnhancedInteractiveDashboardWordCard({
               </div>
             </div>
 
-            {/* Achievement Teaser - Mobile Optimized */}
-            <div aria-live="polite" aria-label="Motivational messages">
+            {/* Achievement Teaser - Desktop Only */}
+            <div
+              aria-live="polite"
+              aria-label="Motivational messages"
+              className="hidden md:block"
+            >
               <AchievementTeaser className="mb-1 sm:mb-2" />
             </div>
 
@@ -1771,8 +1775,8 @@ export function AIEnhancedInteractiveDashboardWordCard({
               </div>
             )}
 
-            {/* Progress Bar - Always visible when not AI active */}
-            {!aiState.isSessionActive && !showWordName && (
+            {/* Progress Bar - Always visible */}
+            {!showWordName && (
               <div className="mb-4">
                 <div className="w-full bg-gray-200 rounded-full h-2 sm:h-3 mb-2 relative overflow-hidden">
                   <div
