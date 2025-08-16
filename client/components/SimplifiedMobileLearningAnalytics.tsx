@@ -475,34 +475,51 @@ export const SimplifiedMobileLearningAnalytics: React.FC<
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-3">
-              <div className="week-day-mobile">
-                <span className="text-sm text-gray-600">Monday</span>
-                <div className="flex items-center gap-1">
-                  <span className="text-lg mobile-emoji">✅</span>
-                  <span className="text-xs text-green-600">12 words</span>
+              {analyticsData.overview.totalWordsMastered > 0 ? (
+                <>
+                  <div className="week-day-mobile">
+                    <span className="text-sm text-gray-600">This Week</span>
+                    <div className="flex items-center gap-1">
+                      <span className="text-lg mobile-emoji">✅</span>
+                      <span className="text-xs text-green-600">
+                        {analyticsData.overview.totalWordsMastered} words learned!
+                      </span>
+                    </div>
+                  </div>
+                  <div className="week-day-mobile">
+                    <span className="text-sm text-gray-600">Streak</span>
+                    <div className="flex items-center gap-1">
+                      <span className="text-lg mobile-emoji">🔥</span>
+                      <span className="text-xs text-orange-600">
+                        {analyticsData.overview.activeLearningStreak} days in a row!
+                      </span>
+                    </div>
+                  </div>
+                  <div className="week-day-mobile">
+                    <span className="text-sm text-gray-600">Time Spent</span>
+                    <div className="flex items-center gap-1">
+                      <span className="text-lg mobile-emoji">⏰</span>
+                      <span className="text-xs text-purple-600">
+                        {analyticsData.overview.totalLearningTime} minutes
+                      </span>
+                    </div>
+                  </div>
+                  <div className="week-day-mobile">
+                    <span className="text-sm text-gray-600">Today</span>
+                    <div className="flex items-center gap-1">
+                      <span className="text-lg mobile-emoji">🎯</span>
+                      <span className="text-xs text-blue-600">Ready to learn more!</span>
+                    </div>
+                  </div>
+                </>
+              ) : (
+                <div className="text-center py-4">
+                  <div className="text-4xl mb-2">🌟</div>
+                  <p className="text-sm text-gray-600">
+                    Start learning to see your weekly progress here!
+                  </p>
                 </div>
-              </div>
-              <div className="week-day-mobile">
-                <span className="text-sm text-gray-600">Tuesday</span>
-                <div className="flex items-center gap-1">
-                  <span className="text-lg mobile-emoji">✅</span>
-                  <span className="text-xs text-green-600">8 words</span>
-                </div>
-              </div>
-              <div className="week-day-mobile">
-                <span className="text-sm text-gray-600">Wednesday</span>
-                <div className="flex items-center gap-1">
-                  <span className="text-lg mobile-emoji">✅</span>
-                  <span className="text-xs text-green-600">15 words</span>
-                </div>
-              </div>
-              <div className="week-day-mobile">
-                <span className="text-sm text-gray-600">Today</span>
-                <div className="flex items-center gap-1">
-                  <span className="text-lg mobile-emoji">🎯</span>
-                  <span className="text-xs text-blue-600">Let's learn!</span>
-                </div>
-              </div>
+              )}
             </CardContent>
           </Card>
         </TabsContent>
