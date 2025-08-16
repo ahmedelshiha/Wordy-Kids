@@ -1252,7 +1252,7 @@ export function AIEnhancedInteractiveDashboardWordCard({
                         } else {
                           // Start AI session with current words
                           aiActions.startSession({
-                            words: words.slice(0, 10),
+                            words: sessionWords.slice(0, 10),
                             confidence: 0.8,
                             reasoning: ["Starting new AI session"],
                             expectedOutcomes: {
