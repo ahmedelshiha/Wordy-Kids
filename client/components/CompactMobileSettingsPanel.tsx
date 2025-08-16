@@ -78,6 +78,7 @@ export const CompactMobileSettingsPanel: React.FC<
     Record<string, boolean>
   >({
     audio: true,
+    ai: false,
     appearance: false,
     learning: true,
     other: false,
