@@ -113,6 +113,7 @@ export function AIEnhancedInteractiveDashboardWordCard({
   selectedCategory,
   className,
   onSessionComplete,
+  onToggleAIEnhancement,
 }: AIEnhancedInteractiveDashboardWordCardProps) {
   // Session Management
   const SESSION_SIZE = 20;
