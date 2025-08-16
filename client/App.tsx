@@ -76,6 +76,10 @@ const App = () => (
                 element={<AIIntegrationDemo />}
               />
               <Route
+                path="/AIIntegrationDemo"
+                element={<AIIntegrationDemo />}
+              />
+              <Route
                 path="/ai-word-recommendation-demo"
                 element={<AIWordRecommendationDemo />}
               />
