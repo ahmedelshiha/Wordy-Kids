@@ -1348,6 +1348,7 @@ export function AIEnhancedInteractiveDashboardWordCard({
                                   hintStrategy: "moderate",
                                   errorHandling: "immediate",
                                 },
+                                nextSessionPreview: [],
                               });
                             }
                           }}
