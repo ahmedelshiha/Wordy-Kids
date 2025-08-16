@@ -978,7 +978,8 @@ export function AIEnhancedInteractiveDashboardWordCard({
             AI Enhancement Disabled
           </h3>
           <p className="text-gray-500 mb-4">
-            AI features are currently disabled. Enable AI in settings to use smart learning features.
+            AI features are currently disabled. Enable AI in settings to use
+            smart learning features.
           </p>
           <Button
             onClick={toggleGlobalAI}
@@ -1258,14 +1259,14 @@ export function AIEnhancedInteractiveDashboardWordCard({
                               learningVelocity: 0.7,
                               retentionPrediction: 0.8,
                               engagementScore: 0.85,
-                              difficultyFit: 0.75
+                              difficultyFit: 0.75,
                             },
                             alternativeStrategies: ["adaptive"],
                             adaptiveInstructions: {
                               encouragementFrequency: 0.6,
                               hintStrategy: "moderate",
-                              errorHandling: "immediate"
-                            }
+                              errorHandling: "immediate",
+                            },
                           });
                         }
                       }}
@@ -1331,14 +1332,14 @@ export function AIEnhancedInteractiveDashboardWordCard({
                                   learningVelocity: 0.7,
                                   retentionPrediction: 0.8,
                                   engagementScore: 0.85,
-                                  difficultyFit: 0.75
+                                  difficultyFit: 0.75,
                                 },
                                 alternativeStrategies: ["adaptive"],
                                 adaptiveInstructions: {
                                   encouragementFrequency: 0.6,
                                   hintStrategy: "moderate",
-                                  errorHandling: "immediate"
-                                }
+                                  errorHandling: "immediate",
+                                },
                               });
                             }
                           }}
@@ -1350,9 +1351,7 @@ export function AIEnhancedInteractiveDashboardWordCard({
                               : "bg-green-500 hover:bg-green-600 text-white",
                           )}
                         >
-                          {aiState.isSessionActive
-                            ? "Pause AI"
-                            : "Start AI"}
+                          {aiState.isSessionActive ? "Pause AI" : "Start AI"}
                         </Button>
                       </div>
                       <div className="flex items-center gap-3 text-sm opacity-90">

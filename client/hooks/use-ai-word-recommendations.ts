@@ -199,7 +199,10 @@ export function useAIWordRecommendations(
               return;
             }
           } catch (retryError) {
-            console.log("AI service retry threw error, continuing with fallback mode:", retryError);
+            console.log(
+              "AI service retry threw error, continuing with fallback mode:",
+              retryError,
+            );
 
             setState((prev) => ({
               ...prev,
