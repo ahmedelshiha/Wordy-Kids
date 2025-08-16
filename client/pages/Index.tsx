@@ -2989,14 +2989,11 @@ export default function Index({ initialProfile }: IndexProps) {
                                   Rescue missing vowels with big emojis and fun animations! 🎯
                                 </p>
                                 <div className="flex justify-center gap-1 mb-2 md:mb-3">
-                                  <span className="bg-educational-green/20 text-educational-green px-1.5 py-0.5 rounded-full text-xs">
-                                    🐣 Easy
+                                  <span className="bg-educational-blue/20 text-educational-blue px-1.5 py-0.5 rounded-full text-xs">
+                                    📱 Mobile Optimized
                                   </span>
                                   <span className="bg-educational-purple/20 text-educational-purple px-1.5 py-0.5 rounded-full text-xs">
-                                    ⚡ Medium
-                                  </span>
-                                  <span className="bg-educational-orange/20 text-educational-orange px-1.5 py-0.5 rounded-full text-xs">
-                                    🚀 Hard
+                                    ✨ Animations
                                   </span>
                                 </div>
                                 <Button
@@ -3097,7 +3094,7 @@ export default function Index({ initialProfile }: IndexProps) {
                         <div className="space-y-6">
                           <div className="flex items-center justify-between">
                             <h2 className="text-2xl font-bold text-gray-800">
-                              🌱 Word Garden
+                              ���� Word Garden
                             </h2>
                             <Button
                               onClick={() => setShowExitDialog(true)}
