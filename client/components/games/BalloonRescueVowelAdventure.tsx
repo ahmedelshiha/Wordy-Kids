@@ -99,13 +99,23 @@ export const BalloonRescueVowelAdventure: React.FC<Props> = ({
   const startedAtRef = useRef<number | null>(null);
   const sessionIdRef = useRef(crypto.randomUUID());
 
-  // Memoized filtered words for performance
+  // Memoized filtered words for performance with category support
   const filteredWords = useMemo(() => {
-    return wordsDatabase.filter((word) => {
+    let words: Word[] = [];
+
+    // Get words by category or all words
+    if (category && category !== "all") {
+      words = getWordsByCategory(category);
+    } else {
+      words = wordsDatabase;
+    }
+
+    // Filter to only include words with vowels
+    return words.filter((word) => {
       const upperWord = word.word.toUpperCase();
       return VOWELS.some((vowel) => upperWord.includes(vowel));
     });
-  }, []);
+  }, [category]);
 
   // Progressive difficulty calculation
   const calculateDifficulty = useCallback(
