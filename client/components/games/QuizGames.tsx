@@ -157,10 +157,10 @@ export function QuizGames({
       );
     }
 
-    // Handle Enhanced Vowel Quiz
-    if (activeQuiz === "vowel-enhanced") {
+    // Handle Ultimate Vowel Quiz
+    if (activeQuiz === "vowel-ultimate") {
       return (
-        <EnhancedVowelQuiz
+        <UltimateVowelQuiz
           category={selectedCategory}
           onComplete={(stats) => {
             // Convert enhanced stats to simple score format
