@@ -24,6 +24,7 @@ import { WordAdventureDemo } from "./pages/WordAdventureDemo";
 import { WordAdventureTest } from "./pages/WordAdventureTest";
 import { NavigationGuard } from "./components/NavigationGuard";
 import SpeechDiagnostics from "./components/SpeechDiagnostics";
+import TestBalloonRescue from "./pages/TestBalloonRescue";
 
 const queryClient = new QueryClient();
 
@@ -68,6 +69,10 @@ const App = () => (
               <Route
                 path="/speech-diagnostics"
                 element={<SpeechDiagnostics />}
+              />
+              <Route
+                path="/test-balloon-rescue"
+                element={<TestBalloonRescue />}
               />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />

@@ -8,6 +8,7 @@ import { WordMatchingGame } from "../WordMatchingGame";
 import WordGarden from "./WordGarden";
 import { generateMatchingPairs } from "@/lib/gameGeneration";
 import { getWordsByCategory, getRandomWords } from "@/data/wordsDatabase";
+import { BalloonRescueVowelAdventure } from "./BalloonRescueVowelAdventure";
 
 interface AdventureGamesProps {
   selectedCategory: string;
@@ -97,6 +98,22 @@ export function AdventureGames({
       color: "from-educational-blue to-blue-400",
       players: "Single Player",
     },
+    {
+      id: "balloon_rescue",
+      title: "Balloon Rescue!",
+      description:
+        "Save balloons by finding missing vowels! Progressive difficulty with achievements.",
+      icon: "🎈",
+      difficulty: "Progressive",
+      timeLimit: "3-8 min",
+      rewards: [
+        "🎈 Rescue balloons",
+        "🏆 Vowel master badges",
+        "🌟 Streak celebrations",
+      ],
+      color: "from-sky-400 to-blue-500",
+      players: "Single Player",
+    },
   ];
 
   const handleGameStart = (gameId: string) => {
@@ -161,6 +178,29 @@ export function AdventureGames({
         <WordMatchingGame
           pairs={generateMatchingPairs(6, undefined, selectedCategory)}
           onComplete={onMatchingComplete}
+        />
+      </div>
+    );
+  }
+
+  if (activeGame === "balloon_rescue") {
+    return (
+      <div className="space-y-6">
+        <div className="flex items-center justify-between">
+          <h2 className="text-2xl font-bold text-gray-800">
+            🎈 Balloon Rescue Adventure!
+          </h2>
+          <Button onClick={handleGameBack} variant="outline" size="sm">
+            ← Back to Games
+          </Button>
+        </div>
+        <BalloonRescueVowelAdventure
+          totalQuestions={10}
+          onFinish={(result) => {
+            onGameComplete(result.correctAnswers, result.totalQuestions);
+            handleGameBack();
+          }}
+          onHome={handleGameBack}
         />
       </div>
     );
