@@ -1165,7 +1165,7 @@ export function AIEnhancedInteractiveDashboardWordCard({
             </div>
           )}
 
-          <CardContent className="p-3 sm:p-4 md:p-6 lg:p-8 relative z-10">
+          <CardContent className="p-2 sm:p-4 md:p-6 lg:p-8 relative z-10">
             {/* AI Enhancement Header - Mobile Optimized */}
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-2 sm:mb-4 gap-2">
               <div className="flex items-center gap-2">
