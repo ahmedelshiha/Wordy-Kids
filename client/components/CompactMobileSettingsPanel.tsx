@@ -95,6 +95,22 @@ export const CompactMobileSettingsPanel: React.FC<
     setSelectedVoiceType(enhancedAudioService.getVoiceType());
     setUiInteractionSounds(isUIInteractionSoundsEnabled());
 
+    // Load AI settings
+    const aiEnabled = localStorage.getItem("aiEnhancementEnabled");
+    if (aiEnabled !== null) {
+      setAiEnhancementEnabled(JSON.parse(aiEnabled));
+    }
+
+    const aiAdaptive = localStorage.getItem("aiAdaptiveDifficulty");
+    if (aiAdaptive !== null) {
+      setAiAdaptiveDifficulty(JSON.parse(aiAdaptive));
+    }
+
+    const aiHints = localStorage.getItem("aiPersonalizedHints");
+    if (aiHints !== null) {
+      setAiPersonalizedHints(JSON.parse(aiHints));
+    }
+
     const loadSettings = () => {
       const backgroundAnimationsSettings = localStorage.getItem(
         "backgroundAnimations",
