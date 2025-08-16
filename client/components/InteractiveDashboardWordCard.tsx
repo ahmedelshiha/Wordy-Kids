@@ -1279,7 +1279,7 @@ export function InteractiveDashboardWordCard({
                 {(() => {
                   const prompts = [
                     "🤔 What is this?",
-                    "�� Can you guess?",
+                    "🎯 Can you guess?",
                     "🔍 What do you see?",
                     "✨ Name this object!",
                     "🧠 Think you know?",
