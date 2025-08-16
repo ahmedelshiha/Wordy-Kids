@@ -1167,114 +1167,128 @@ export function AIEnhancedInteractiveDashboardWordCard({
           )}
 
           <CardContent className="p-2 sm:p-4 md:p-6 lg:p-8 relative z-10">
-            {/* Unified AI Header - All Features Combined */}
+            {/* Mobile-Optimized Kid-Friendly AI Header */}
             <div
               className={cn(
-                "bg-gradient-to-r p-3 sm:p-4 rounded-2xl mb-3 sm:mb-4 shadow-lg border-2 transition-all duration-500",
+                "rounded-lg mb-2 shadow-sm border transition-all duration-500",
                 aiState.isSessionActive
-                  ? "from-blue-500 via-purple-500 to-blue-600 text-white border-blue-300 shadow-xl"
-                  : "from-blue-50 to-purple-50 text-gray-800 border-blue-200",
+                  ? "bg-gradient-to-r from-blue-400 to-purple-400 text-white border-blue-300"
+                  : "bg-blue-50 text-gray-800 border-blue-200",
               )}
             >
-              <div className="flex items-center justify-between gap-3">
-                {/* Left Side - AI Status & Progress */}
-                <div className="flex items-center gap-3 flex-1">
-                  <div className="relative">
-                    <Brain
-                      className={cn(
-                        "w-8 h-8 sm:w-10 sm:h-10 drop-shadow-lg transition-all duration-300",
-                        aiState.isSessionActive
-                          ? "text-white"
-                          : "text-blue-600",
-                      )}
-                    />
-                    {aiState.isSessionActive && (
-                      <div className="absolute -top-1 -right-1 w-4 h-4 bg-green-400 rounded-full shadow-lg" />
-                    )}
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-center gap-2 mb-1">
-                      <span className="text-base sm:text-lg font-bold">
-                        🤖{" "}
-                        {aiState.isSessionActive
-                          ? "AI LEARNING ACTIVE!"
-                          : "AI Smart Selection"}
-                      </span>
-                      <Button
-                        onClick={() =>
-                          aiState.isSessionActive
-                            ? aiActions.endSession({ completed: false })
-                            : aiActions.reset()
-                        }
-                        size="sm"
-                        variant={
-                          aiState.isSessionActive ? "secondary" : "default"
-                        }
-                        className={cn(
-                          "ml-2 px-3 py-1 text-xs font-semibold rounded-full transition-all duration-300",
-                          aiState.isSessionActive
-                            ? "bg-white/20 hover:bg-white/30 text-white border border-white/30"
-                            : "bg-green-500 hover:bg-green-600 text-white",
-                        )}
-                      >
-                        {aiState.isSessionActive ? "AI ON" : "Enable AI"}
-                      </Button>
-                    </div>
-                    <div className="flex items-center gap-3 text-xs sm:text-sm opacity-90">
-                      <span className="font-medium">
-                        {Math.round(confidenceLevel * 100)}% Confidence
-                      </span>
-                      <span>•</span>
-                      <span>
-                        Word {currentWordIndex + 1} of {SESSION_SIZE}
-                      </span>
+              {/* Mobile Layout: Ultra Compact */}
+              <div className="md:hidden p-2">
+                <div className="flex items-center justify-between gap-2">
+                  {/* Left: Simple AI Status */}
+                  <div className="flex items-center gap-2">
+                    <div className="relative">
+                      <Brain className={cn("w-5 h-5 transition-all", aiState.isSessionActive ? "text-white" : "text-blue-600")} />
                       {aiState.isSessionActive && (
-                        <>
-                          <span>•</span>
-                          <span className="font-medium">Session Active</span>
-                        </>
+                        <div className="absolute -top-1 -right-1 w-2 h-2 bg-green-400 rounded-full" />
                       )}
                     </div>
+                    <span className="text-sm font-medium truncate">
+                      🤖 {aiState.isSessionActive ? "Learning" : "Helper"}
+                    </span>
                   </div>
+
+                  {/* Right: Simple Toggle */}
+                  <Button
+                    onClick={() =>
+                      aiState.isSessionActive
+                        ? aiActions.endSession({ completed: false })
+                        : aiActions.reset()
+                    }
+                    size="sm"
+                    className={cn(
+                      "px-3 py-1 text-xs font-medium rounded-full h-7",
+                      aiState.isSessionActive
+                        ? "bg-white/20 hover:bg-white/30 text-white border border-white/30"
+                        : "bg-green-500 hover:bg-green-600 text-white",
+                    )}
+                  >
+                    {aiState.isSessionActive ? "ON" : "OFF"}
+                  </Button>
                 </div>
 
-                {/* Right Side - Controls */}
-                <div className="flex items-center gap-2">
-                  {difficultyAdjustment !== "maintain" && (
-                    <Badge
-                      variant="outline"
-                      className={cn(
-                        "text-xs px-2 py-1",
-                        aiState.isSessionActive
-                          ? "bg-white/20 text-white border-white/30"
-                          : "bg-white border-blue-300",
+                {/* Mobile Progress: Only show if session active */}
+                {aiState.isSessionActive && (
+                  <div className="mt-2 text-xs text-center opacity-80">
+                    Word {currentWordIndex + 1}/{SESSION_SIZE} • {Math.round(confidenceLevel * 100)}% 📈
+                  </div>
+                )}
+              </div>
+
+              {/* Desktop Layout: Full Features */}
+              <div className="hidden md:block p-3">
+                <div className="flex items-center justify-between gap-3">
+                  <div className="flex items-center gap-3 flex-1">
+                    <div className="relative">
+                      <Brain
+                        className={cn(
+                          "w-8 h-8 drop-shadow-lg transition-all duration-300",
+                          aiState.isSessionActive ? "text-white" : "text-blue-600",
+                        )}
+                      />
+                      {aiState.isSessionActive && (
+                        <div className="absolute -top-1 -right-1 w-3 h-3 bg-green-400 rounded-full shadow-lg" />
                       )}
-                    >
-                      {difficultyAdjustment === "increase"
-                        ? "⬆️"
-                        : difficultyAdjustment === "decrease"
-                          ? "⬇️"
-                          : ""}
-                    </Badge>
-                  )}
-                  <Button
-                    onClick={() => setShowAIInsights(!showAIInsights)}
-                    variant="ghost"
-                    size="lg"
-                    className={cn(
-                      "p-3 sm:p-4 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105",
-                      aiState.isSessionActive
-                        ? "bg-white/20 hover:bg-white/30 text-white border-2 border-white/30 hover:border-white/50"
-                        : "bg-gradient-to-r from-purple-100 to-blue-100 hover:from-purple-200 hover:to-blue-200 text-blue-600 hover:text-blue-800 border-2 border-purple-200/50 hover:border-purple-300/50",
-                      showAIInsights &&
-                        (aiState.isSessionActive
-                          ? "ring-2 ring-white/50"
-                          : "ring-2 ring-blue-300"),
+                    </div>
+                    <div className="flex-1">
+                      <div className="flex items-center gap-2 mb-1">
+                        <span className="text-lg font-bold">
+                          🤖 {aiState.isSessionActive ? "AI Learning Active!" : "AI Smart Helper"}
+                        </span>
+                        <Button
+                          onClick={() =>
+                            aiState.isSessionActive
+                              ? aiActions.endSession({ completed: false })
+                              : aiActions.reset()
+                          }
+                          size="sm"
+                          className={cn(
+                            "ml-2 px-3 py-1 text-xs font-semibold rounded-full",
+                            aiState.isSessionActive
+                              ? "bg-white/20 hover:bg-white/30 text-white border border-white/30"
+                              : "bg-green-500 hover:bg-green-600 text-white",
+                          )}
+                        >
+                          {aiState.isSessionActive ? "Turn Off" : "Turn On"}
+                        </Button>
+                      </div>
+                      <div className="flex items-center gap-3 text-sm opacity-90">
+                        <span>📊 {Math.round(confidenceLevel * 100)}% Confidence</span>
+                        <span>•</span>
+                        <span>📚 Word {currentWordIndex + 1} of {SESSION_SIZE}</span>
+                        {aiState.isSessionActive && (
+                          <span className="bg-white/20 px-2 py-1 rounded-full text-xs">Active</span>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Desktop Controls */}
+                  <div className="flex items-center gap-2">
+                    {difficultyAdjustment !== "maintain" && (
+                      <Badge variant="outline" className={cn("text-xs px-2 py-1", aiState.isSessionActive ? "bg-white/20 text-white border-white/30" : "bg-white border-blue-300")}>
+                        {difficultyAdjustment === "increase" ? "⬆️ Harder" : "⬇️ Easier"}
+                      </Badge>
                     )}
-                    aria-label="View AI learning statistics"
-                  >
-                    <BarChart3 className="w-5 h-5 sm:w-6 sm:h-6 drop-shadow-sm" />
-                  </Button>
+                    <Button
+                      onClick={() => setShowAIInsights(!showAIInsights)}
+                      variant="ghost"
+                      size="sm"
+                      className={cn(
+                        "p-2 rounded-lg transition-all",
+                        aiState.isSessionActive
+                          ? "bg-white/20 hover:bg-white/30 text-white"
+                          : "bg-white/50 hover:bg-white text-blue-600",
+                      )}
+                      aria-label="View stats"
+                    >
+                      <BarChart3 className="w-4 h-4" />
+                    </Button>
+                  </div>
                 </div>
               </div>
             </div>
