@@ -179,7 +179,11 @@ const PLANT_TYPES = [
 ] as const;
 
 // Generate emoji-based image using SVG data URI with larger size
-function generateEmojiImage(emoji: string, fallbackText?: string, category?: string): string {
+function generateEmojiImage(
+  emoji: string,
+  fallbackText?: string,
+  category?: string,
+): string {
   // Use emoji utility to ensure we have a valid emoji
   const validEmoji = ensureValidEmoji(emoji, category);
 

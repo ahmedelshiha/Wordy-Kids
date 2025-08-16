@@ -1252,9 +1252,10 @@ export function AIEnhancedInteractiveDashboardWordCard({
                           aiActions.endSession({ completed: false });
                         } else {
                           // Start AI session with current words
-                          const availableWords = selectedCategory && selectedCategory !== "all"
-                            ? getWordsByCategory(selectedCategory)
-                            : getRandomWords(20);
+                          const availableWords =
+                            selectedCategory && selectedCategory !== "all"
+                              ? getWordsByCategory(selectedCategory)
+                              : getRandomWords(20);
                           aiActions.startSession({
                             words: availableWords.slice(0, 10),
                             confidence: 0.8,
@@ -1329,9 +1330,10 @@ export function AIEnhancedInteractiveDashboardWordCard({
                               aiActions.endSession({ completed: false });
                             } else {
                               // Start AI session with current words
-                              const availableWords = selectedCategory && selectedCategory !== "all"
-                                ? getWordsByCategory(selectedCategory)
-                                : getRandomWords(20);
+                              const availableWords =
+                                selectedCategory && selectedCategory !== "all"
+                                  ? getWordsByCategory(selectedCategory)
+                                  : getRandomWords(20);
                               aiActions.startSession({
                                 words: availableWords.slice(0, 10),
                                 confidence: 0.8,

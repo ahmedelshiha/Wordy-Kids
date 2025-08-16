@@ -1237,25 +1237,26 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onNavigateBack }) => {
           words={words}
           categories={availableCategories.map((cat) => {
             const categoryWords = getWordsByCategory(cat.id);
-            const firstWordEmoji = categoryWords.length > 0 ? categoryWords[0]?.emoji : null;
+            const firstWordEmoji =
+              categoryWords.length > 0 ? categoryWords[0]?.emoji : null;
             // Provide better fallback emojis based on category
             const categoryEmojiMap: Record<string, string> = {
-              'food': '🍎',
-              'animals': '🐱',
-              'family': '👨‍👩‍👧‍👦',
-              'colors': '🌈',
-              'numbers': '🔢',
-              'nature': '🌳',
-              'school': '🎒',
-              'transport': '🚗',
-              'emotions': '😊',
-              'weather': '☀️',
-              'actions': '🏃',
-              'hobbies': '🎨',
-              'science': '🔬',
-              'sports': '⚽',
-              'house': '🏠',
-              'at-the-clothes-shop': '👕'
+              food: "🍎",
+              animals: "🐱",
+              family: "👨‍👩‍👧‍👦",
+              colors: "🌈",
+              numbers: "🔢",
+              nature: "🌳",
+              school: "🎒",
+              transport: "🚗",
+              emotions: "😊",
+              weather: "☀️",
+              actions: "🏃",
+              hobbies: "🎨",
+              science: "🔬",
+              sports: "⚽",
+              house: "🏠",
+              "at-the-clothes-shop": "👕",
             };
 
             return {

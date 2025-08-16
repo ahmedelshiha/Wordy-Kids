@@ -129,7 +129,11 @@ import {
   Train,
   Bike,
 } from "lucide-react";
-import { validateEmojiInput, sanitizeEmoji, suggestEmojisForWord } from "@/lib/emojiUtils";
+import {
+  validateEmojiInput,
+  sanitizeEmoji,
+  suggestEmojisForWord,
+} from "@/lib/emojiUtils";
 
 interface AdminWord {
   id: string;
@@ -692,7 +696,7 @@ const CreateWordWizard: React.FC<CreateWordWizardProps> = ({
 
     // Enhanced emoji validation
     const emojiValidation = validateEmojiInput(formData.emoji || "");
-    if (!emojiValidation.isValid && emojiValidation.severity === 'error') {
+    if (!emojiValidation.isValid && emojiValidation.severity === "error") {
       errors.push(emojiValidation.message || "Invalid emoji format");
     }
 
