@@ -28,6 +28,7 @@ import {
 import { cn } from "@/lib/utils";
 import { audioService } from "@/lib/audioService";
 import { enhancedAudioService } from "@/lib/enhancedAudioService";
+import { EMOJI_CONSTANTS } from "@/lib/emojiUtils";
 import { AchievementTracker } from "@/lib/achievementTracker";
 import { EnhancedAchievementTracker } from "@/lib/enhancedAchievementTracker";
 import { EnhancedAchievementPopup } from "@/components/EnhancedAchievementPopup";
@@ -1244,9 +1245,6 @@ export function AIEnhancedInteractiveDashboardWordCard({
                           ? "AI Learning Active!"
                           : "AI Helper"}
                       </span>
-                      {aiState.isSessionActive && (
-                        <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse ml-1" />
-                      )}
                     </div>
                   </div>
 
@@ -1356,6 +1354,9 @@ export function AIEnhancedInteractiveDashboardWordCard({
                             ? "AI Learning Active!"
                             : "AI Smart Helper"}
                         </span>
+                        {aiState.isSessionActive && (
+                          <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
+                        )}
                         <Button
                           onClick={() => {
                             if (aiState.isSessionActive) {
@@ -1626,7 +1627,7 @@ export function AIEnhancedInteractiveDashboardWordCard({
                     size="sm"
                     className="px-2 py-1 text-xs rounded-lg bg-yellow-50 border-yellow-200 text-yellow-700 min-h-[36px]"
                   >
-                    💡 Hint
+                    {EMOJI_CONSTANTS.HINT} Hint
                   </Button>
                 )}
 
@@ -1641,7 +1642,7 @@ export function AIEnhancedInteractiveDashboardWordCard({
                     size="sm"
                     className="px-2 py-1 text-xs rounded-lg bg-purple-500 text-white min-h-[36px]"
                   >
-                    👁️ Show
+                    {EMOJI_CONSTANTS.SHOW} Show
                   </Button>
                 )}
 
@@ -1671,7 +1672,8 @@ export function AIEnhancedInteractiveDashboardWordCard({
                     className="px-4 py-2 text-sm rounded-xl bg-yellow-50 border-yellow-200 text-yellow-700 hover:bg-yellow-100"
                   >
                     <Lightbulb className="w-4 h-4 mr-2" />
-                    💡 Get Hint {hintsUsed > 0 && `(${hintsUsed})`}
+                    {EMOJI_CONSTANTS.HINT} Get Hint{" "}
+                    {hintsUsed > 0 && `(${hintsUsed})`}
                   </Button>
                 )}
 
@@ -1686,7 +1688,7 @@ export function AIEnhancedInteractiveDashboardWordCard({
                     className="px-4 py-2 text-sm rounded-xl bg-purple-500 hover:bg-purple-600 text-white"
                   >
                     <Eye className="w-4 h-4 mr-2" />
-                    👁️ Show Answer
+                    {EMOJI_CONSTANTS.SHOW} Show Answer
                   </Button>
                 )}
 
@@ -1710,7 +1712,7 @@ export function AIEnhancedInteractiveDashboardWordCard({
             {!showWordName && (
               <div
                 className={cn(
-                  "flex justify-center gap-3 sm:gap-4 mb-4",
+                  "flex justify-center gap-2 sm:gap-3 md:gap-4 mb-4 px-2",
                   "flex-row", // Always use flex-row for consistent layout
                 )}
               >
@@ -1730,12 +1732,14 @@ export function AIEnhancedInteractiveDashboardWordCard({
                     disabled={isAnswered}
                     size="lg"
                     variant="outline"
-                    className="w-full sm:w-auto bg-gradient-to-r from-orange-50 to-red-50 hover:from-orange-100 hover:to-red-100 text-orange-700 hover:text-red-700 font-bold py-3 px-6 rounded-2xl transition-all duration-300 transform hover:scale-105 active:scale-95 shadow-lg hover:shadow-xl min-h-[60px] touch-manipulation group relative overflow-hidden border-2 border-orange-300 hover:border-red-300"
+                    className="w-full sm:w-auto bg-gradient-to-r from-orange-50 to-red-50 hover:from-orange-100 hover:to-red-100 text-orange-700 hover:text-red-700 font-bold py-2.5 px-3 sm:py-3 sm:px-6 rounded-2xl transition-all duration-300 transform hover:scale-105 active:scale-95 shadow-lg hover:shadow-xl min-h-[50px] sm:min-h-[60px] touch-manipulation group relative overflow-hidden border-2 border-orange-300 hover:border-red-300 text-sm sm:text-base"
                     aria-label="I forgot this word"
                   >
                     <div className="absolute inset-0 bg-gradient-to-r from-orange-200/0 via-orange-200/30 to-orange-200/0 transform -skew-x-12 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-600 ease-out" />
                     <XCircle className="w-5 h-5 mr-2 group-hover:animate-pulse text-orange-600" />
-                    <span className="relative z-10">🤔 I Forgot</span>
+                    <span className="relative z-10 truncate">
+                      {EMOJI_CONSTANTS.THINKING} I Forgot
+                    </span>
                   </Button>
                 </motion.div>
 
@@ -1754,12 +1758,14 @@ export function AIEnhancedInteractiveDashboardWordCard({
                     onClick={() => handleWordAction("remembered")}
                     disabled={isAnswered}
                     size="lg"
-                    className="w-full sm:w-auto bg-gradient-to-r from-green-500 via-emerald-500 to-green-600 hover:from-green-600 hover:via-emerald-600 hover:to-green-700 text-white font-bold py-3 px-6 rounded-2xl transition-all duration-300 transform hover:scale-105 active:scale-95 shadow-xl hover:shadow-2xl min-h-[60px] touch-manipulation group relative overflow-hidden border-2 border-green-300/50 hover:border-green-200"
+                    className="w-full sm:w-auto bg-gradient-to-r from-green-500 via-emerald-500 to-green-600 hover:from-green-600 hover:via-emerald-600 hover:to-green-700 text-white font-bold py-2.5 px-3 sm:py-3 sm:px-6 rounded-2xl transition-all duration-300 transform hover:scale-105 active:scale-95 shadow-xl hover:shadow-2xl min-h-[50px] sm:min-h-[60px] touch-manipulation group relative overflow-hidden border-2 border-green-300/50 hover:border-green-200 text-sm sm:text-base"
                     aria-label="I remember this word"
                   >
                     <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/20 to-white/0 transform -skew-x-12 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-600 ease-out" />
                     <CheckCircle className="w-5 h-5 mr-2 group-hover:animate-bounce" />
-                    <span className="relative z-10">😊 I Remember</span>
+                    <span className="relative z-10 truncate">
+                      {EMOJI_CONSTANTS.REMEMBERED} I Remember
+                    </span>
                   </Button>
                 </motion.div>
               </div>
@@ -1876,7 +1882,7 @@ export function AIEnhancedInteractiveDashboardWordCard({
                   </div>
 
                   {/* Action Buttons */}
-                  <div className="flex justify-center gap-3 sm:gap-4 flex-row">
+                  <div className="flex justify-center gap-2 sm:gap-3 md:gap-4 flex-row px-2">
                     {/* I Forgot button (left side) */}
                     <motion.div
                       whileHover={{ scale: 1.05, y: -2 }}
@@ -1893,12 +1899,14 @@ export function AIEnhancedInteractiveDashboardWordCard({
                         disabled={isAnswered}
                         size="lg"
                         variant="outline"
-                        className="w-full sm:w-auto bg-gradient-to-r from-orange-50 to-red-50 hover:from-orange-100 hover:to-red-100 text-orange-700 hover:text-red-700 font-bold py-3 px-6 rounded-2xl transition-all duration-300 transform hover:scale-105 active:scale-95 shadow-lg hover:shadow-xl min-h-[60px] touch-manipulation group relative overflow-hidden border-2 border-orange-300 hover:border-red-300"
+                        className="w-full sm:w-auto bg-gradient-to-r from-orange-50 to-red-50 hover:from-orange-100 hover:to-red-100 text-orange-700 hover:text-red-700 font-bold py-2.5 px-3 sm:py-3 sm:px-6 rounded-2xl transition-all duration-300 transform hover:scale-105 active:scale-95 shadow-lg hover:shadow-xl min-h-[50px] sm:min-h-[60px] touch-manipulation group relative overflow-hidden border-2 border-orange-300 hover:border-red-300 text-sm sm:text-base"
                         aria-label="I need more practice"
                       >
                         <div className="absolute inset-0 bg-gradient-to-r from-orange-200/0 via-orange-200/30 to-orange-200/0 transform -skew-x-12 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-600 ease-out" />
                         <XCircle className="w-5 h-5 mr-2 group-hover:animate-pulse text-orange-600" />
-                        <span className="relative z-10">🤔 Need practice</span>
+                        <span className="relative z-10 truncate">
+                          {EMOJI_CONSTANTS.THINKING} Need practice
+                        </span>
                       </Button>
                     </motion.div>
 
@@ -1917,12 +1925,14 @@ export function AIEnhancedInteractiveDashboardWordCard({
                         onClick={() => handleWordAction("remembered")}
                         disabled={isAnswered}
                         size="lg"
-                        className="w-full sm:w-auto bg-gradient-to-r from-green-500 via-emerald-500 to-green-600 hover:from-green-600 hover:via-emerald-600 hover:to-green-700 text-white font-bold py-3 px-6 rounded-2xl transition-all duration-300 transform hover:scale-105 active:scale-95 shadow-xl hover:shadow-2xl min-h-[60px] touch-manipulation group relative overflow-hidden border-2 border-green-300/50 hover:border-green-200"
+                        className="w-full sm:w-auto bg-gradient-to-r from-green-500 via-emerald-500 to-green-600 hover:from-green-600 hover:via-emerald-600 hover:to-green-700 text-white font-bold py-2.5 px-3 sm:py-3 sm:px-6 rounded-2xl transition-all duration-300 transform hover:scale-105 active:scale-95 shadow-xl hover:shadow-2xl min-h-[50px] sm:min-h-[60px] touch-manipulation group relative overflow-hidden border-2 border-green-300/50 hover:border-green-200 text-sm sm:text-base"
                         aria-label="I know this word"
                       >
                         <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/20 to-white/0 transform -skew-x-12 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-600 ease-out" />
                         <CheckCircle className="w-5 h-5 mr-2 group-hover:animate-bounce" />
-                        <span className="relative z-10">😊 I know this!</span>
+                        <span className="relative z-10 truncate">
+                          {EMOJI_CONSTANTS.REMEMBERED} I know this!
+                        </span>
                       </Button>
                     </motion.div>
                   </div>

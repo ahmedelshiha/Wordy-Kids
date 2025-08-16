@@ -4,6 +4,7 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { Trophy, Star, Sparkles, Target, Zap } from "lucide-react";
 import { EnhancedAchievementTracker } from "@/lib/enhancedAchievementTracker";
+import { getRandomEmoji, SAFE_EMOJIS } from "@/lib/emojiUtils";
 
 interface AchievementTeaserProps {
   className?: string;
@@ -83,26 +84,9 @@ export function AchievementTeaser({ className }: AchievementTeaserProps) {
     return <IconComponent className="w-3 h-3 sm:w-4 sm:h-4" />;
   };
 
-  const getRandomEmoji = () => {
-    const emojis = [
-      "🌟",
-      "⭐",
-      "✨",
-      "🎯",
-      "🚀",
-      "💫",
-      "🌈",
-      "🎊",
-      "🦋",
-      "🌺",
-      "🎪",
-      "🦄",
-      "🎵",
-      "����",
-      "🎨",
-      "🏰",
-    ];
-    return emojis[Math.floor(Math.random() * emojis.length)];
+  const getRandomEmojiSafe = () => {
+    // Use the safe emoji utility instead of local array
+    return getRandomEmoji("learning");
   };
 
   // Touch handlers for mobile interactivity
@@ -178,10 +162,10 @@ export function AchievementTeaser({ className }: AchievementTeaserProps) {
           >
             {/* Mobile: Ultra compact */}
             <CardContent className="p-1.5 sm:p-2 md:p-3">
-              <div className="md:hidden">
+              <div className="hidden">
                 <div className="flex items-center gap-2">
                   <span className="text-sm flex-shrink-0">
-                    {getRandomEmoji()}
+                    {getRandomEmojiSafe()}
                   </span>
                   <motion.p
                     key={currentMessage}
@@ -249,7 +233,7 @@ export function AchievementTeaser({ className }: AchievementTeaserProps) {
                     }}
                     className="text-base md:text-lg flex-shrink-0 will-change-transform"
                   >
-                    {getRandomEmoji()}
+                    {getRandomEmojiSafe()}
                   </motion.div>
                 </div>
               </div>
@@ -258,10 +242,9 @@ export function AchievementTeaser({ className }: AchievementTeaserProps) {
               {isTease && (
                 <motion.div
                   initial={{ opacity: 0, scale: 0.9 }}
-                  className="hidden md:block"
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{ duration: 0.5, delay: 0.3 }}
-                  className="mt-2"
+                  className="hidden md:block mt-2"
                 >
                   <Badge
                     variant="outline"
