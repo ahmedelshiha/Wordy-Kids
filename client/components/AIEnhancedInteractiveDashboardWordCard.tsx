@@ -1201,13 +1201,16 @@ export function AIEnhancedInteractiveDashboardWordCard({
                     </span>
                   </div>
 
-                  {/* Right: Simple Toggle */}
+                  {/* Right: AI Enhancement Toggle */}
                   <Button
-                    onClick={() =>
-                      aiState.isSessionActive
-                        ? aiActions.endSession({ completed: false })
-                        : aiActions.reset()
-                    }
+                    onClick={() => {
+                      if (aiState.isSessionActive) {
+                        aiActions.endSession({ completed: false });
+                      } else {
+                        // Toggle AI enhancement completely
+                        onToggleAIEnhancement?.(false);
+                      }
+                    }}
                     size="sm"
                     className={cn(
                       "px-3 py-1 text-xs font-medium rounded-full h-7",
