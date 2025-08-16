@@ -325,7 +325,7 @@ export const BalloonRescueVowelAdventure: React.FC<Props> = ({
       correctAnswers: correctCount,
       mistakes: [],
       timeElapsed,
-      difficulty: "progressive",
+      difficulty: "medium",
       starRating,
       bestStreak: Math.max(currentStreak, 0),
     };
