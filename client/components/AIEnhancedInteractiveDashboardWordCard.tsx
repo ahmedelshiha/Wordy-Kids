@@ -41,6 +41,7 @@ import { SessionContext } from "@/lib/aiWordRecommendationService";
 import { isAIEnabled, setAISettings } from "@/lib/aiSettings";
 import { useVoiceSettings } from "@/hooks/use-voice-settings";
 import { ChildWordStats } from "@shared/api";
+import { getWordsByCategory, getRandomWords } from "@/data/wordsDatabase";
 
 interface Word {
   id: number;
