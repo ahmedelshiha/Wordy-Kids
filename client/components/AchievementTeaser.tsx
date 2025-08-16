@@ -98,7 +98,7 @@ export function AchievementTeaser({ className }: AchievementTeaserProps) {
       "🎪",
       "🦄",
       "🎵",
-      "🌸",
+      "����",
       "🎨",
       "🏰",
     ];
@@ -176,78 +176,87 @@ export function AchievementTeaser({ className }: AchievementTeaserProps) {
             tabIndex={0}
             aria-label="Tap for a new motivational message"
           >
-            <CardContent className="p-2 sm:p-3 md:p-4">
-              <div className="flex items-center gap-2 sm:gap-3">
-                <motion.div
-                  animate={{
-                    rotate: [0, 5, -5, 0],
-                    scale: [1, 1.1, 1],
-                  }}
-                  transition={{
-                    duration: 2,
-                    repeat: Infinity,
-                    repeatDelay: 3,
-                    ease: "easeInOut",
-                  }}
-                  className={`flex-shrink-0 will-change-transform ${
-                    isSpecial
-                      ? "text-yellow-600 drop-shadow-sm"
-                      : isTease
-                        ? "text-purple-600 drop-shadow-sm"
-                        : "text-blue-600 drop-shadow-sm"
-                  }`}
-                >
-                  {getRandomIcon()}
-                </motion.div>
-
-                <div className="flex-1 min-w-0">
+            {/* Mobile: Ultra compact */}
+            <CardContent className="p-1.5 sm:p-2 md:p-3">
+              <div className="md:hidden">
+                <div className="flex items-center gap-2">
+                  <span className="text-sm flex-shrink-0">{getRandomEmoji()}</span>
                   <motion.p
-                    key={currentMessage} // Force re-render on message change
-                    initial={{ opacity: 0, x: 10 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    className={`text-xs sm:text-sm md:text-base font-medium leading-tight line-clamp-2 ${
-                      isSpecial
-                        ? "text-yellow-800 drop-shadow-sm"
-                        : isTease
-                          ? "text-purple-800 drop-shadow-sm"
-                          : "text-blue-800 drop-shadow-sm"
-                    }`}
+                    key={currentMessage}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    className="text-xs font-medium text-blue-700 truncate flex-1"
                   >
                     {currentMessage}
                   </motion.p>
                 </div>
-
-                <motion.div
-                  animate={{
-                    scale: [1, 1.2, 1],
-                    rotate: [0, 10, -10, 0],
-                  }}
-                  transition={{
-                    duration: 2,
-                    repeat: Infinity,
-                    repeatDelay: 4,
-                    ease: "easeInOut",
-                  }}
-                  className="text-sm sm:text-base md:text-lg flex-shrink-0 will-change-transform"
-                >
-                  {getRandomEmoji()}
-                </motion.div>
               </div>
 
-              {/* Mobile tap indicator */}
-              <div className="flex items-center justify-center mt-1 sm:hidden">
-                <motion.div
-                  animate={{ opacity: [0.3, 0.7, 0.3] }}
-                  transition={{ duration: 2, repeat: Infinity }}
-                  className="text-xs text-gray-500 flex items-center gap-1"
-                >
-                  👆 <span>Tap for new message</span>
-                </motion.div>
+              {/* Desktop: Full layout */}
+              <div className="hidden md:block">
+                <div className="flex items-center gap-3">
+                  <motion.div
+                    animate={{
+                      rotate: [0, 5, -5, 0],
+                      scale: [1, 1.1, 1],
+                    }}
+                    transition={{
+                      duration: 2,
+                      repeat: Infinity,
+                      repeatDelay: 3,
+                      ease: "easeInOut",
+                    }}
+                    className={`flex-shrink-0 will-change-transform ${
+                      isSpecial
+                        ? "text-yellow-600 drop-shadow-sm"
+                        : isTease
+                          ? "text-purple-600 drop-shadow-sm"
+                          : "text-blue-600 drop-shadow-sm"
+                    }`}
+                  >
+                    {getRandomIcon()}
+                  </motion.div>
+
+                  <div className="flex-1 min-w-0">
+                    <motion.p
+                      key={currentMessage}
+                      initial={{ opacity: 0, x: 10 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      className={`text-sm md:text-base font-medium leading-tight line-clamp-2 ${
+                        isSpecial
+                          ? "text-yellow-800 drop-shadow-sm"
+                          : isTease
+                            ? "text-purple-800 drop-shadow-sm"
+                            : "text-blue-800 drop-shadow-sm"
+                      }`}
+                    >
+                      {currentMessage}
+                    </motion.p>
+                  </div>
+
+                  <motion.div
+                    animate={{
+                      scale: [1, 1.2, 1],
+                      rotate: [0, 10, -10, 0],
+                    }}
+                    transition={{
+                      duration: 2,
+                      repeat: Infinity,
+                      repeatDelay: 4,
+                      ease: "easeInOut",
+                    }}
+                    className="text-base md:text-lg flex-shrink-0 will-change-transform"
+                  >
+                    {getRandomEmoji()}
+                  </motion.div>
+                </div>
               </div>
 
+              {/* Desktop only teaser details */}
               {isTease && (
                 <motion.div
                   initial={{ opacity: 0, scale: 0.9 }}
+                  className="hidden md:block"
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{ duration: 0.5, delay: 0.3 }}
                   className="mt-2"
