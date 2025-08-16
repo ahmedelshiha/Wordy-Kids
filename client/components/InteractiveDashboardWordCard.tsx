@@ -1144,8 +1144,9 @@ export function InteractiveDashboardWordCard({
                   "min-w-[60px] min-h-[60px] sm:min-w-[70px] sm:min-h-[70px] md:min-w-[80px] md:min-h-[80px]",
                   "ring-4 ring-blue-200/30 hover:ring-blue-300/50",
                   "backdrop-blur-sm",
-                  isPlaying && "animate-pulse ring-yellow-400/60 shadow-yellow-400/30",
-                  "disabled:opacity-50 disabled:transform-none disabled:hover:scale-100"
+                  isPlaying &&
+                    "animate-pulse ring-yellow-400/60 shadow-yellow-400/30",
+                  "disabled:opacity-50 disabled:transform-none disabled:hover:scale-100",
                 )}
                 aria-label="🔊 Play pronunciation - Hear how to say this word!"
               >
