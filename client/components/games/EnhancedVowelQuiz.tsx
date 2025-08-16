@@ -75,18 +75,19 @@ export function EnhancedVowelQuiz({
 }: EnhancedVowelQuizProps) {
   // Core game state
   const [gameMode, setGameMode] = useState<GameMode>(initialGameMode);
-  const [difficulty, setDifficulty] = useState<DifficultyLevel>(initialDifficulty);
+  const [difficulty, setDifficulty] =
+    useState<DifficultyLevel>(initialDifficulty);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [selectedVowels, setSelectedVowels] = useState<{
     [key: number]: string;
   }>({});
-  
+
   // Game progression state
   const [gameStarted, setGameStarted] = useState(false);
   const [gameComplete, setGameComplete] = useState(false);
   const [showSetup, setShowSetup] = useState(!customQuestions);
   const [isRestarting, setIsRestarting] = useState(false);
-  
+
   // Feedback and UI state
   const [showFeedback, setShowFeedback] = useState(false);
   const [showReward, setShowReward] = useState(false);
@@ -94,13 +95,13 @@ export function EnhancedVowelQuiz({
   const [showSparkleExplosion, setShowSparkleExplosion] = useState(false);
   const [sparkleCount, setSparkleCount] = useState(0);
   const [newAchievements, setNewAchievements] = useState<any[]>([]);
-  
+
   // Timer and attempts
   const [timeLeft, setTimeLeft] = useState(timeLimit);
   const [questionStartTime, setQuestionStartTime] = useState(Date.now());
   const [attempts, setAttempts] = useState(0);
   const [hintsUsed, setHintsUsed] = useState(0);
-  
+
   // Game statistics
   const [gameStats, setGameStats] = useState<GameStats>({
     totalQuestions: 0,
@@ -123,7 +124,7 @@ export function EnhancedVowelQuiz({
 
     try {
       const questionCount = gameMode === "timed" ? 50 : rounds; // More questions for timed mode
-      
+
       return VowelQuizGenerator.getSystematicVowelQuestions({
         category,
         difficulty: difficulty === "mixed" ? undefined : difficulty,
@@ -146,10 +147,11 @@ export function EnhancedVowelQuiz({
   ]);
 
   const generateFallbackQuestions = useCallback((): VowelQuestion[] => {
-    const words = category === "all" 
-      ? getRandomWords(rounds * 2) 
-      : getWordsByCategory(category).slice(0, rounds * 2);
-    
+    const words =
+      category === "all"
+        ? getRandomWords(rounds * 2)
+        : getWordsByCategory(category).slice(0, rounds * 2);
+
     return words.slice(0, rounds).map((word, index) => ({
       id: word.id || index,
       word: word.word.toLowerCase(),
@@ -161,24 +163,30 @@ export function EnhancedVowelQuiz({
     }));
   }, [category, rounds]);
 
-  const generateMissingVowelIndices = useCallback((word: string): number[] => {
-    const vowels = ["a", "e", "i", "o", "u"];
-    const vowelIndices = word
-      .split("")
-      .map((char, index) => ({ char: char.toLowerCase(), index }))
-      .filter(({ char }) => vowels.includes(char))
-      .map(({ index }) => index);
+  const generateMissingVowelIndices = useCallback(
+    (word: string): number[] => {
+      const vowels = ["a", "e", "i", "o", "u"];
+      const vowelIndices = word
+        .split("")
+        .map((char, index) => ({ char: char.toLowerCase(), index }))
+        .filter(({ char }) => vowels.includes(char))
+        .map(({ index }) => index);
 
-    if (vowelIndices.length === 0) return [];
+      if (vowelIndices.length === 0) return [];
 
-    const maxToRemove = gameMode === "easy" ? 1 : 
-                      gameMode === "challenge" ? Math.min(2, vowelIndices.length) : 
-                      Math.min(3, vowelIndices.length);
-    
-    const numToRemove = Math.min(vowelIndices.length, maxToRemove);
-    const shuffled = [...vowelIndices].sort(() => Math.random() - 0.5);
-    return shuffled.slice(0, numToRemove).sort((a, b) => a - b);
-  }, [gameMode]);
+      const maxToRemove =
+        gameMode === "easy"
+          ? 1
+          : gameMode === "challenge"
+            ? Math.min(2, vowelIndices.length)
+            : Math.min(3, vowelIndices.length);
+
+      const numToRemove = Math.min(vowelIndices.length, maxToRemove);
+      const shuffled = [...vowelIndices].sort(() => Math.random() - 0.5);
+      return shuffled.slice(0, numToRemove).sort((a, b) => a - b);
+    },
+    [gameMode],
+  );
 
   const currentQuestion = gameQuestions[currentIndex];
   const isTimedMode = gameMode === "timed";
@@ -202,7 +210,8 @@ export function EnhancedVowelQuiz({
 
   const playAudio = () => {
     if ("speechSynthesis" in window && currentQuestion) {
-      const wordToSpeak = currentQuestion.originalWord?.word || currentQuestion.word;
+      const wordToSpeak =
+        currentQuestion.originalWord?.word || currentQuestion.word;
       const utterance = new SpeechSynthesisUtterance(wordToSpeak);
       utterance.rate = 0.7;
       utterance.pitch = 1.2;
@@ -219,7 +228,7 @@ export function EnhancedVowelQuiz({
     setAttempts(attempts + 1);
 
     // Update game stats
-    setGameStats(prev => ({
+    setGameStats((prev) => ({
       ...prev,
       totalAttempts: prev.totalAttempts + 1,
     }));
@@ -277,15 +286,18 @@ export function EnhancedVowelQuiz({
 
     if (isCorrect) {
       const questionTime = Date.now() - questionStartTime;
-      const points = attempts === 1 ? 10 : attempts <= 2 ? 8 : attempts <= 4 ? 5 : 2;
+      const points =
+        attempts === 1 ? 10 : attempts <= 2 ? 8 : attempts <= 4 ? 5 : 2;
       const isPerfect = attempts === 1;
 
       // Update game stats
-      setGameStats(prev => ({
+      setGameStats((prev) => ({
         ...prev,
         correctAnswers: prev.correctAnswers + 1,
         timeSpent: prev.timeSpent + questionTime,
-        perfectAnswers: isPerfect ? prev.perfectAnswers + 1 : prev.perfectAnswers,
+        perfectAnswers: isPerfect
+          ? prev.perfectAnswers + 1
+          : prev.perfectAnswers,
       }));
 
       setShowReward(true);
@@ -322,7 +334,7 @@ export function EnhancedVowelQuiz({
     setShowFeedback(true);
     setHintsUsed(hintsUsed + 1);
 
-    setGameStats(prev => ({
+    setGameStats((prev) => ({
       ...prev,
       hintsUsed: prev.hintsUsed + 1,
     }));
@@ -351,7 +363,9 @@ export function EnhancedVowelQuiz({
     const finalStats: GameStats = {
       ...gameStats,
       totalQuestions: Math.min(currentIndex + 1, gameQuestions.length),
-      accuracy: gameStats.correctAnswers / Math.min(currentIndex + 1, gameQuestions.length),
+      accuracy:
+        gameStats.correctAnswers /
+        Math.min(currentIndex + 1, gameQuestions.length),
       averageTime: gameStats.timeSpent / Math.max(gameStats.correctAnswers, 1),
     };
 
@@ -366,7 +380,9 @@ export function EnhancedVowelQuiz({
     const unlockedAchievements = AchievementTracker.trackActivity({
       type: "vowelRescue",
       accuracy: Math.round(finalStats.accuracy * 100),
-      timeSpent: isTimedMode ? timeLimit - timeLeft : finalStats.timeSpent / 1000,
+      timeSpent: isTimedMode
+        ? timeLimit - timeLeft
+        : finalStats.timeSpent / 1000,
     });
 
     if (unlockedAchievements.length > 0) {
@@ -401,7 +417,7 @@ export function EnhancedVowelQuiz({
       hintsUsed: 0,
       perfectAnswers: 0,
     });
-    setIsRestarting(prev => !prev);
+    setIsRestarting((prev) => !prev);
   };
 
   const renderWord = () => {
@@ -470,7 +486,7 @@ export function EnhancedVowelQuiz({
               >
                 <ArrowLeft className="w-4 h-4" />
               </Button>
-              
+
               <motion.div
                 initial={{ scale: 0.5, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
@@ -488,18 +504,46 @@ export function EnhancedVowelQuiz({
 
             {/* Game Mode Selection */}
             <div className="space-y-4 mb-6">
-              <h3 className="text-lg font-semibold text-center">Choose Game Mode</h3>
+              <h3 className="text-lg font-semibold text-center">
+                Choose Game Mode
+              </h3>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 {[
-                  { id: "easy", title: "Easy Mode", desc: "Single missing vowels", icon: "🌱", color: "green" },
-                  { id: "challenge", title: "Challenge Mode", desc: "Multiple missing vowels", icon: "🎯", color: "blue" },
-                  { id: "timed", title: "Timed Rush", desc: "60 seconds to complete as many as possible", icon: "⚡", color: "orange" },
-                  { id: "custom", title: "Custom Mode", desc: "Mix of difficulties", icon: "⚙️", color: "purple" },
+                  {
+                    id: "easy",
+                    title: "Easy Mode",
+                    desc: "Single missing vowels",
+                    icon: "🌱",
+                    color: "green",
+                  },
+                  {
+                    id: "challenge",
+                    title: "Challenge Mode",
+                    desc: "Multiple missing vowels",
+                    icon: "🎯",
+                    color: "blue",
+                  },
+                  {
+                    id: "timed",
+                    title: "Timed Rush",
+                    desc: "60 seconds to complete as many as possible",
+                    icon: "⚡",
+                    color: "orange",
+                  },
+                  {
+                    id: "custom",
+                    title: "Custom Mode",
+                    desc: "Mix of difficulties",
+                    icon: "⚙️",
+                    color: "purple",
+                  },
                 ].map((mode) => (
                   <Card
                     key={mode.id}
                     className={`cursor-pointer transition-all hover:scale-105 border-2 ${
-                      gameMode === mode.id ? "border-educational-blue bg-educational-blue/10" : "border-gray-200"
+                      gameMode === mode.id
+                        ? "border-educational-blue bg-educational-blue/10"
+                        : "border-gray-200"
                     }`}
                     onClick={() => setGameMode(mode.id as GameMode)}
                   >
@@ -516,7 +560,9 @@ export function EnhancedVowelQuiz({
             {/* Difficulty Selection (not for timed mode) */}
             {gameMode !== "timed" && (
               <div className="space-y-4 mb-6">
-                <h3 className="text-lg font-semibold text-center">Choose Difficulty</h3>
+                <h3 className="text-lg font-semibold text-center">
+                  Choose Difficulty
+                </h3>
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
                   {[
                     { id: "easy", title: "Easy", icon: "😊" },
@@ -574,7 +620,7 @@ export function EnhancedVowelQuiz({
             <h1 className="text-2xl sm:text-3xl font-bold text-educational-green mb-4">
               Quest Complete!
             </h1>
-            
+
             {/* Enhanced Stats Display */}
             <div className="grid grid-cols-2 gap-3 mb-6 text-sm">
               <div className="bg-educational-green/20 rounded-lg p-3 text-center">
@@ -659,7 +705,8 @@ export function EnhancedVowelQuiz({
                 Enhanced Vowel Quiz
               </h3>
               <div className="text-xs text-gray-600 capitalize">
-                {gameMode} Mode • {difficulty !== "mixed" ? difficulty : "Mixed"} Difficulty
+                {gameMode} Mode •{" "}
+                {difficulty !== "mixed" ? difficulty : "Mixed"} Difficulty
               </div>
             </div>
 
@@ -732,10 +779,10 @@ export function EnhancedVowelQuiz({
                     onClick={playAudio}
                   >
                     <span className="text-6xl sm:text-7xl md:text-9xl animate-gentle-bounce">
-                      {currentQuestion.originalWord?.emoji || 
-                       currentQuestion.emoji || 
-                       currentQuestion.image || 
-                       "🎯"}
+                      {currentQuestion.originalWord?.emoji ||
+                        currentQuestion.emoji ||
+                        currentQuestion.image ||
+                        "🎯"}
                     </span>
                   </div>
 
@@ -781,7 +828,9 @@ export function EnhancedVowelQuiz({
                       }
                     `}
                     whileTap={{ scale: 0.9 }}
-                    onClick={() => !isDisabled && handleVowelSelect(vowel, nextPosition)}
+                    onClick={() =>
+                      !isDisabled && handleVowelSelect(vowel, nextPosition)
+                    }
                     disabled={isDisabled}
                   >
                     {vowel}

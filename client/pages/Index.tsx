@@ -3257,10 +3257,15 @@ export default function Index({ initialProfile }: IndexProps) {
                                 ? 8
                                 : 15
                           }
-                          timeLimit={selectedQuizType === "vowel-timed" ? 60 : undefined}
+                          timeLimit={
+                            selectedQuizType === "vowel-timed" ? 60 : undefined
+                          }
                           onComplete={(stats) => {
                             // Convert enhanced stats to simple score format for compatibility
-                            handleQuizComplete(stats.correctAnswers, stats.totalQuestions);
+                            handleQuizComplete(
+                              stats.correctAnswers,
+                              stats.totalQuestions,
+                            );
                           }}
                           onExit={handleQuizExit}
                           playerLevel={currentProfile?.level || 1}
