@@ -1208,14 +1208,23 @@ export function AIEnhancedInteractiveDashboardWordCard({
                         // End current AI session
                         aiActions.endSession({ completed: false });
                       } else {
-                        // Start AI session
+                        // Start AI session with current words
                         aiActions.startSession({
                           words: words.slice(0, 10),
                           confidence: 0.8,
                           reasoning: ["Starting new AI session"],
-                          sessionId: `session-${Date.now()}`,
-                          targetAccuracy: 0.7,
-                          adaptationStrategy: "moderate"
+                          expectedOutcomes: {
+                            learningVelocity: 0.7,
+                            retentionPrediction: 0.8,
+                            engagementScore: 0.85,
+                            difficultyFit: 0.75
+                          },
+                          alternativeStrategies: ["adaptive"],
+                          adaptiveInstructions: {
+                            encouragementFrequency: 0.6,
+                            hintStrategy: "moderate",
+                            errorHandling: "immediate"
+                          }
                         });
                       }
                     }}
