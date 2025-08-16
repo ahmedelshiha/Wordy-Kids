@@ -155,6 +155,9 @@ export function AIEnhancedInteractiveDashboardWordCard({
   );
   const [journeyAchievements, setJourneyAchievements] = useState<any[]>([]);
 
+  // Global AI settings state
+  const [globalAIEnabled, setGlobalAIEnabled] = useState(isAIEnabled());
+
   // UI States
   const [showWordName, setShowWordName] = useState(false);
   const [isAnswered, setIsAnswered] = useState(false);
