@@ -205,6 +205,12 @@ export function InteractiveDashboardWordCard({
   const [guess, setGuess] = useState("");
   const [showHint, setShowHint] = useState(false);
 
+  // Enhanced visual feedback states
+  const [particles, setParticles] = useState<Array<{id: number, type: 'success' | 'practice', x: number, y: number}>>([]);
+  const [buttonClickedId, setButtonClickedId] = useState<string | null>(null);
+  const [showSuccessRipple, setShowSuccessRipple] = useState(false);
+  const [showPracticeRipple, setShowPracticeRipple] = useState(false);
+
   // Voice settings integration
   const voiceSettings = useVoiceSettings();
 
@@ -1099,7 +1105,7 @@ export function InteractiveDashboardWordCard({
                     "🔍 What do you see?",
                     "✨ Name this object!",
                     "🧠 Think you know?",
-                    "👀 Look closely...",
+                    "���� Look closely...",
                     "🌟 What could this be?",
                     "🎪 Mystery object!",
                     "🎨 Identify this!",
