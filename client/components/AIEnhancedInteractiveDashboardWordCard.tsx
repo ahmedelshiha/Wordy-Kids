@@ -38,6 +38,7 @@ import {
   usePersonalizedEncouragement,
 } from "@/hooks/use-ai-word-recommendations";
 import { SessionContext } from "@/lib/aiWordRecommendationService";
+import { isAIEnabled, setAISettings } from "@/lib/aiSettings";
 import { useVoiceSettings } from "@/hooks/use-voice-settings";
 import { ChildWordStats } from "@shared/api";
 
