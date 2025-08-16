@@ -7,7 +7,7 @@ import React, {
 } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { GameResult, WordItem } from "../../types/vowel-adventure";
-import { wordsDatabase, Word } from "../../data/wordsDatabase";
+import { wordsDatabase, Word, getWordsByCategory, getRandomWords } from "../../data/wordsDatabase";
 import { Button } from "../ui/button";
 import { Volume2, VolumeX, Home, RotateCcw } from "lucide-react";
 import { cn } from "../../lib/utils";
