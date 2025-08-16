@@ -1235,11 +1235,35 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onNavigateBack }) => {
       <div className="mb-8">
         <CreateWordInsights
           words={words}
-          categories={availableCategories.map((cat) => ({
-            id: cat.id,
-            name: cat.name,
-            emoji: getWordsByCategory(cat.id)[0]?.emoji || "📁",
-          }))}
+          categories={availableCategories.map((cat) => {
+            const categoryWords = getWordsByCategory(cat.id);
+            const firstWordEmoji = categoryWords.length > 0 ? categoryWords[0]?.emoji : null;
+            // Provide better fallback emojis based on category
+            const categoryEmojiMap: Record<string, string> = {
+              'food': '🍎',
+              'animals': '🐱',
+              'family': '👨‍👩‍👧‍👦',
+              'colors': '🌈',
+              'numbers': '🔢',
+              'nature': '🌳',
+              'school': '🎒',
+              'transport': '🚗',
+              'emotions': '😊',
+              'weather': '☀️',
+              'actions': '🏃',
+              'hobbies': '🎨',
+              'science': '🔬',
+              'sports': '⚽',
+              'house': '🏠',
+              'at-the-clothes-shop': '👕'
+            };
+
+            return {
+              id: cat.id,
+              name: cat.name,
+              emoji: firstWordEmoji || categoryEmojiMap[cat.id] || "📁",
+            };
+          })}
           onCreateWord={() => {
             setCreateMethod("wizard");
             setShowCreateWizard(true);
