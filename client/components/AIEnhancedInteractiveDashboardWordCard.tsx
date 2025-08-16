@@ -1627,7 +1627,7 @@ export function AIEnhancedInteractiveDashboardWordCard({
                     size="sm"
                     className="px-2 py-1 text-xs rounded-lg bg-yellow-50 border-yellow-200 text-yellow-700 min-h-[36px]"
                   >
-                    💡 Hint
+                    {EMOJI_CONSTANTS.HINT} Hint
                   </Button>
                 )}
 
@@ -1687,7 +1687,7 @@ export function AIEnhancedInteractiveDashboardWordCard({
                     className="px-4 py-2 text-sm rounded-xl bg-purple-500 hover:bg-purple-600 text-white"
                   >
                     <Eye className="w-4 h-4 mr-2" />
-                    👁️ Show Answer
+                    {EMOJI_CONSTANTS.SHOW} Show Answer
                   </Button>
                 )}
 
