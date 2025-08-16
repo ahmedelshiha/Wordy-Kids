@@ -1214,7 +1214,7 @@ export function AIEnhancedInteractiveDashboardWordCard({
                         : "bg-green-500 hover:bg-green-600 text-white",
                     )}
                   >
-                    {aiState.isSessionActive ? "ON" : "OFF"}
+                    {aiState.isSessionActive ? "AI Enabled" : "OFF"}
                   </Button>
                 </div>
 
