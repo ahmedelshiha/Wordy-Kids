@@ -711,14 +711,74 @@ export function InteractiveDashboardWordCard({
           feedbackType === "remembered" ? "Great job!" : "Keep practicing!";
 
         return (
-          <div
-            className={`w-48 h-32 mx-auto flex flex-col items-center justify-center bg-gradient-to-br ${feedbackColor} rounded-2xl shadow-lg border-2 ${feedbackType === "remembered" ? "border-green-300" : "border-orange-300"} transition-all duration-500`}
+          <motion.div
+            initial={{ scale: 0.8, opacity: 0, rotate: -5 }}
+            animate={{ scale: 1, opacity: 1, rotate: 0 }}
+            transition={{
+              duration: 0.6,
+              type: "spring",
+              stiffness: 300,
+              damping: 20
+            }}
+            className={`w-48 h-32 mx-auto flex flex-col items-center justify-center bg-gradient-to-br ${feedbackColor} rounded-2xl shadow-lg hover:shadow-xl border-2 ${feedbackType === "remembered" ? "border-green-300" : "border-orange-300"} relative overflow-hidden`}
           >
-            <div className="text-4xl animate-bounce mb-1">{feedbackEmoji}</div>
-            <div className="text-xs font-bold text-gray-700">
+            {/* Celebration background effect */}
+            {feedbackType === "remembered" && (
+              <motion.div
+                initial={{ scale: 0, opacity: 0.8 }}
+                animate={{ scale: 2, opacity: 0 }}
+                transition={{ duration: 1, ease: "easeOut" }}
+                className="absolute inset-0 bg-gradient-to-r from-green-200/50 to-emerald-200/50 rounded-2xl"
+              />
+            )}
+
+            <motion.div
+              animate={{
+                y: [0, -10, 0],
+                rotate: feedbackType === "remembered" ? [0, 15, -15, 0] : [0, -5, 5, 0],
+                scale: [1, 1.2, 1]
+              }}
+              transition={{
+                duration: feedbackType === "remembered" ? 0.8 : 1.2,
+                repeat: Infinity,
+                ease: "easeInOut"
+              }}
+              className="text-4xl mb-1 relative z-10"
+            >
+              {feedbackEmoji}
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3, duration: 0.4 }}
+              className="text-xs font-bold text-gray-700 relative z-10"
+            >
               {feedbackMessage}
-            </div>
-          </div>
+            </motion.div>
+
+            {/* Extra sparkles for success */}
+            {feedbackType === "remembered" && (
+              <>
+                <motion.div
+                  initial={{ opacity: 0, scale: 0, x: -20, y: -10 }}
+                  animate={{ opacity: [0, 1, 0], scale: [0, 1, 0], x: -30, y: -20 }}
+                  transition={{ duration: 1.5, delay: 0.2, repeat: Infinity, repeatDelay: 2 }}
+                  className="absolute text-yellow-300 text-sm"
+                >
+                  ✨
+                </motion.div>
+                <motion.div
+                  initial={{ opacity: 0, scale: 0, x: 20, y: -10 }}
+                  animate={{ opacity: [0, 1, 0], scale: [0, 1, 0], x: 30, y: -20 }}
+                  transition={{ duration: 1.5, delay: 0.5, repeat: Infinity, repeatDelay: 2 }}
+                  className="absolute text-blue-300 text-xs"
+                >
+                  ⭐
+                </motion.div>
+              </>
+            )}
+          </motion.div>
         );
       }
 
