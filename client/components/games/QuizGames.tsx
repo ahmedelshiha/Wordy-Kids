@@ -6,6 +6,7 @@ import { Brain, Play, Clock, Target, Trophy } from "lucide-react";
 import { QuizGame } from "../QuizGame";
 import { generateQuizQuestions } from "@/lib/gameGeneration";
 import { UltimateVowelQuiz } from "./UltimateVowelQuiz";
+import { KidFriendlyVowelQuiz } from "./KidFriendlyVowelQuiz";
 import ListenAndGuessGame from "./ListenAndGuessGame";
 import PictureFunGame from "./PictureFunGame";
 
