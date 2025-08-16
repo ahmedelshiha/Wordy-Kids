@@ -304,7 +304,11 @@ export function UltimateVowelQuiz({
       setSelectedVowels(newSelectedVowels);
 
       // Check if all vowels are selected
-      const allSelected = currentQuestion.missingVowelIndices.every(
+      const missingIndices =
+        currentQuestion.missingVowelIndices ||
+        currentQuestion.missingIndex ||
+        [];
+      const allSelected = missingIndices.every(
         (index) => newSelectedVowels[index],
       );
 
@@ -352,10 +356,17 @@ export function UltimateVowelQuiz({
       setAttempts({ ...attempts, [currentIndex]: newAttempts });
 
       // Check if answer is correct
-      const isCorrect = currentQuestion.missingVowelIndices.every(
-        (index) =>
-          vowelSelections[index] === currentQuestion.correctVowels[index],
-      );
+      const missingIndices =
+        currentQuestion.missingVowelIndices ||
+        currentQuestion.missingIndex ||
+        [];
+      const correctVowels = currentQuestion.correctVowels || {};
+      const isCorrect = missingIndices.every((index) => {
+        const expectedVowel =
+          correctVowels[index] ||
+          (currentQuestion.word || "")[index]?.toUpperCase();
+        return vowelSelections[index] === expectedVowel;
+      });
 
       if (isCorrect) {
         const pointsEarned = calculateScore(
@@ -422,7 +433,11 @@ export function UltimateVowelQuiz({
           if (lives > 1) {
             // Reset selections for retry
             const resetSelections = { ...selectedVowels };
-            currentQuestion.missingVowelIndices.forEach((index) => {
+            const missingIndices =
+              currentQuestion.missingVowelIndices ||
+              currentQuestion.missingIndex ||
+              [];
+            missingIndices.forEach((index) => {
               delete resetSelections[index];
             });
             setSelectedVowels(resetSelections);
@@ -460,8 +475,15 @@ export function UltimateVowelQuiz({
       playSoundIfEnabled("powerup");
 
       // Show one correct vowel
-      const firstMissingIndex = currentQuestion.missingVowelIndices[0];
-      const correctVowel = currentQuestion.correctVowels[firstMissingIndex];
+      const missingIndices =
+        currentQuestion.missingVowelIndices ||
+        currentQuestion.missingIndex ||
+        [];
+      const firstMissingIndex = missingIndices[0];
+      const correctVowels = currentQuestion.correctVowels || {};
+      const correctVowel =
+        correctVowels[firstMissingIndex] ||
+        (currentQuestion.word || "")[firstMissingIndex]?.toUpperCase();
       setSelectedVowels((prev) => ({
         ...prev,
         [firstMissingIndex]: correctVowel,
@@ -496,7 +518,11 @@ export function UltimateVowelQuiz({
         (_, index) =>
           attempts[index] === 1 ||
           (attempts[index] > 1 &&
-            selectedVowels[questions[index].missingVowelIndices[0]]),
+            selectedVowels[
+              (questions[index].missingVowelIndices ||
+                questions[index].missingIndex ||
+                [])[0]
+            ]),
       ).length;
 
     const totalAttempts = Object.values(attempts).reduce(
@@ -886,31 +912,40 @@ export function UltimateVowelQuiz({
 
               {/* Word Display */}
               <div className="flex justify-center items-center flex-wrap gap-2 mb-6">
-                {currentQuestion.displayWord.split("").map((char, index) => {
-                  const isMissing =
-                    currentQuestion.missingVowelIndices.includes(index);
-                  const selectedVowel = selectedVowels[index];
+                {(currentQuestion.displayWord || currentQuestion.word || "")
+                  .split("")
+                  .map((char, index) => {
+                    const isMissing = (
+                      currentQuestion.missingVowelIndices ||
+                      currentQuestion.missingIndex ||
+                      []
+                    ).includes(index);
+                    const selectedVowel = selectedVowels[index];
 
-                  return (
-                    <div
-                      key={index}
-                      className={`w-12 h-16 border-2 rounded-lg flex items-center justify-center text-2xl font-bold transition-all duration-300 ${
-                        isMissing
-                          ? selectedVowel
-                            ? "border-green-400 bg-green-50 text-green-700"
-                            : "border-gray-400 bg-gray-50 text-gray-400 border-dashed"
-                          : "border-gray-200 bg-white text-gray-800"
-                      }`}
-                    >
-                      {isMissing ? selectedVowel || "_" : char}
-                    </div>
-                  );
-                })}
+                    return (
+                      <div
+                        key={index}
+                        className={`w-12 h-16 border-2 rounded-lg flex items-center justify-center text-2xl font-bold transition-all duration-300 ${
+                          isMissing
+                            ? selectedVowel
+                              ? "border-green-400 bg-green-50 text-green-700"
+                              : "border-gray-400 bg-gray-50 text-gray-400 border-dashed"
+                            : "border-gray-200 bg-white text-gray-800"
+                        }`}
+                      >
+                        {isMissing ? selectedVowel || "_" : char}
+                      </div>
+                    );
+                  })}
               </div>
 
               {/* Definition */}
               <p className="text-lg text-gray-600 mb-6 italic">
-                "{currentQuestion.definition}"
+                "
+                {currentQuestion.definition ||
+                  currentQuestion.originalWord?.definition ||
+                  `A ${currentQuestion.category || "word"}`}
+                "
               </p>
 
               {/* Audio Button */}
@@ -930,10 +965,13 @@ export function UltimateVowelQuiz({
                 <Button
                   key={vowel}
                   onClick={() => {
-                    const nextMissingIndex =
-                      currentQuestion.missingVowelIndices.find(
-                        (index) => !selectedVowels[index],
-                      );
+                    const missingIndices =
+                      currentQuestion.missingVowelIndices ||
+                      currentQuestion.missingIndex ||
+                      [];
+                    const nextMissingIndex = missingIndices.find(
+                      (index) => !selectedVowels[index],
+                    );
                     if (nextMissingIndex !== undefined) {
                       handleVowelSelect(nextMissingIndex, vowel);
                     }
