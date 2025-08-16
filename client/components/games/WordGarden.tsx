@@ -165,7 +165,7 @@ const PLANT_TYPES = [
   ["🌱", "🍀", "🌺"], // clover hibiscus - clover to tropical flower
   ["🌱", "🎋", "🏵️"], // bamboo rosette - bamboo to decorative flower
   ["🌱", "🌲", "🍄"], // forest mushroom - pine to mushroom
-  ["🌱", "🪴", "🌻"], // potted sunflower - pot plant to big sunflower
+  ["���", "🪴", "🌻"], // potted sunflower - pot plant to big sunflower
   ["🌱", "🌿", "💐"], // bouquet garden - leaves to flower bouquet
   ["🌱", "🎍", "🌸"], // bamboo cherry - bamboo decoration to blossom
   ["🌱", "🌳", "🍃"], // tree leaves - tree to fresh leaves
@@ -233,7 +233,7 @@ const generateDatabaseWords = (
   return dbWords.slice(0, count).map((word) => ({
     id: word.id,
     word: word.word,
-    imageUrl: generateEmojiImage(word.emoji, word.word), // Generate large SVG emoji for better garden visuals
+    imageUrl: generateEmojiImage(word.emoji, word.word, word.category), // Generate large SVG emoji for better garden visuals
     distractorImages: generateDistractorEmojis(word, dbWords, optionsPerRound),
     category: word.category,
     difficulty: word.difficulty,
