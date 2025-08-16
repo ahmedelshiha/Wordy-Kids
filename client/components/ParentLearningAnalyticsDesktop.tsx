@@ -144,7 +144,8 @@ export const ParentLearningAnalyticsDesktop: React.FC<
   const [isLoading, setIsLoading] = useState(true);
   const [expandedCards, setExpandedCards] = useState<Set<string>>(new Set());
   const [selectedMetric, setSelectedMetric] = useState("wordsLearned");
-  const [realTimeData, setRealTimeData] = useState<LearningAnalyticsData | null>(null);
+  const [realTimeData, setRealTimeData] =
+    useState<LearningAnalyticsData | null>(null);
 
   // Load real analytics data from the progress tracking system
   useEffect(() => {
@@ -160,7 +161,10 @@ export const ParentLearningAnalyticsDesktop: React.FC<
               : [];
 
         // Aggregate real data from all children
-        const realData = await aggregateRealAnalyticsData(childrenData, timeRange);
+        const realData = await aggregateRealAnalyticsData(
+          childrenData,
+          timeRange,
+        );
         setRealTimeData(realData);
       } catch (error) {
         console.error("Error loading real analytics data:", error);
@@ -189,9 +193,12 @@ export const ParentLearningAnalyticsDesktop: React.FC<
             : storedChildren
               ? JSON.parse(storedChildren)
               : [];
-        
+
         try {
-          const realData = await aggregateRealAnalyticsData(childrenData, timeRange);
+          const realData = await aggregateRealAnalyticsData(
+            childrenData,
+            timeRange,
+          );
           setRealTimeData(realData);
         } catch (error) {
           console.error("Error updating real analytics data:", error);
@@ -221,8 +228,8 @@ export const ParentLearningAnalyticsDesktop: React.FC<
 
   // Helper function to aggregate real analytics data from all children
   const aggregateRealAnalyticsData = async (
-    children: ChildProfile[], 
-    timeRange: string
+    children: ChildProfile[],
+    timeRange: string,
   ): Promise<LearningAnalyticsData> => {
     if (children.length === 0) {
       return getFallbackAnalyticsData();
@@ -235,13 +242,18 @@ export const ParentLearningAnalyticsDesktop: React.FC<
           try {
             return await goalProgressTracker.fetchSystematicProgress(child.id);
           } catch (error) {
-            console.warn(`Failed to load progress for child ${child.id}:`, error);
+            console.warn(
+              `Failed to load progress for child ${child.id}:`,
+              error,
+            );
             return null;
           }
-        })
+        }),
       );
 
-      const validProgressData = childrenProgressData.filter(data => data !== null);
+      const validProgressData = childrenProgressData.filter(
+        (data) => data !== null,
+      );
 
       // Calculate real category progress from completion tracker
       const categoryProgress = await calculateRealCategoryProgress(children);
@@ -253,13 +265,24 @@ export const ParentLearningAnalyticsDesktop: React.FC<
       const monthlyTrends = await calculateRealMonthlyTrends(children);
 
       // Calculate real overview metrics
-      const overview = calculateRealOverviewMetrics(validProgressData, categoryProgress);
+      const overview = calculateRealOverviewMetrics(
+        validProgressData,
+        categoryProgress,
+      );
 
       // Generate real insights based on actual data
-      const insights = generateRealInsights(overview, categoryProgress, children);
+      const insights = generateRealInsights(
+        overview,
+        categoryProgress,
+        children,
+      );
 
       // Generate real recommendations based on actual progress
-      const recommendations = generateRealRecommendations(overview, categoryProgress, children);
+      const recommendations = generateRealRecommendations(
+        overview,
+        categoryProgress,
+        children,
+      );
 
       return {
         overview,
@@ -276,8 +299,19 @@ export const ParentLearningAnalyticsDesktop: React.FC<
     }
   };
 
-  const calculateRealCategoryProgress = async (children: ChildProfile[]): Promise<CategoryProgress[]> => {
-    const categories = ["Animals", "Colors", "Numbers", "School", "Family", "Science", "Food", "Objects"];
+  const calculateRealCategoryProgress = async (
+    children: ChildProfile[],
+  ): Promise<CategoryProgress[]> => {
+    const categories = [
+      "Animals",
+      "Colors",
+      "Numbers",
+      "School",
+      "Family",
+      "Science",
+      "Food",
+      "Objects",
+    ];
     const categoryData: CategoryProgress[] = [];
 
     for (const category of categories) {
@@ -290,38 +324,52 @@ export const ParentLearningAnalyticsDesktop: React.FC<
 
       for (const child of children) {
         try {
-          const progress = await goalProgressTracker.fetchSystematicProgress(child.id);
+          const progress = await goalProgressTracker.fetchSystematicProgress(
+            child.id,
+          );
           const categoryProgress = progress.categoriesProgress[category] || 0;
-          
+
           const wordsInCategory = 25; // Average words per category
           totalWords += wordsInCategory;
-          masteredWords += Math.round((categoryProgress / 100) * wordsInCategory);
-          
-          // Get completion history for accuracy
-          const completionHistory = CategoryCompletionTracker.getCompletionHistory();
-          const categoryCompletions = completionHistory.filter((record: any) => 
-            record.categoryId === category && record.userId === child.id
+          masteredWords += Math.round(
+            (categoryProgress / 100) * wordsInCategory,
           );
-          
+
+          // Get completion history for accuracy
+          const completionHistory =
+            CategoryCompletionTracker.getCompletionHistory();
+          const categoryCompletions = completionHistory.filter(
+            (record: any) =>
+              record.categoryId === category && record.userId === child.id,
+          );
+
           if (categoryCompletions.length > 0) {
-            const avgAccuracy = categoryCompletions.reduce((sum: number, record: any) => sum + record.accuracy, 0) / categoryCompletions.length;
+            const avgAccuracy =
+              categoryCompletions.reduce(
+                (sum: number, record: any) => sum + record.accuracy,
+                0,
+              ) / categoryCompletions.length;
             totalAccuracy += avgAccuracy;
             accuracyCount++;
           }
 
           // Estimate time spent (can be enhanced with real tracking)
-          totalTimeSpent += Math.round(categoryProgress / 100 * 60); // 1 minute per percentage point
+          totalTimeSpent += Math.round((categoryProgress / 100) * 60); // 1 minute per percentage point
         } catch (error) {
           // Continue with next child if data unavailable
         }
       }
 
-      practiceWords = Math.max(0, Math.round(totalWords * 0.15 - masteredWords * 0.1)); // Practice words estimate
-      const accuracy = accuracyCount > 0 ? Math.round(totalAccuracy / accuracyCount) : 85;
-      
+      practiceWords = Math.max(
+        0,
+        Math.round(totalWords * 0.15 - masteredWords * 0.1),
+      ); // Practice words estimate
+      const accuracy =
+        accuracyCount > 0 ? Math.round(totalAccuracy / accuracyCount) : 85;
+
       // Determine trend based on recent activity
       const trend = determineCategoryTrend(category, children);
-      
+
       // Generate weekly progress data
       const weeklyProgress = generateWeeklyProgressForCategory(masteredWords);
 
@@ -341,15 +389,17 @@ export const ParentLearningAnalyticsDesktop: React.FC<
     return categoryData;
   };
 
-  const calculateRealWeeklyProgress = async (children: ChildProfile[]): Promise<WeeklyData[]> => {
+  const calculateRealWeeklyProgress = async (
+    children: ChildProfile[],
+  ): Promise<WeeklyData[]> => {
     const weeks = [];
     const today = new Date();
-    
+
     for (let i = 3; i >= 0; i--) {
       const weekStart = new Date(today);
-      weekStart.setDate(today.getDate() - (i * 7));
+      weekStart.setDate(today.getDate() - i * 7);
       const weekKey = `Week ${4 - i}`;
-      
+
       let totalWordsLearned = 0;
       let totalTimeSpent = 0;
       let totalAccuracy = 0;
@@ -360,8 +410,10 @@ export const ParentLearningAnalyticsDesktop: React.FC<
       for (const child of children) {
         try {
           const weekKeyStorage = getWeekKeyForDate(weekStart);
-          const weeklyData = localStorage.getItem(`weekly_progress_${child.id}_${weekKeyStorage}`);
-          
+          const weeklyData = localStorage.getItem(
+            `weekly_progress_${child.id}_${weekKeyStorage}`,
+          );
+
           if (weeklyData) {
             const data = JSON.parse(weeklyData);
             totalWordsLearned += data.words || 0;
@@ -372,14 +424,23 @@ export const ParentLearningAnalyticsDesktop: React.FC<
           }
 
           // Get accuracy from completion history
-          const completionHistory = CategoryCompletionTracker.getCompletionHistory();
+          const completionHistory =
+            CategoryCompletionTracker.getCompletionHistory();
           const weekCompletions = completionHistory.filter((record: any) => {
             const recordDate = new Date(record.completionDate);
-            return recordDate >= weekStart && recordDate < new Date(weekStart.getTime() + 7 * 24 * 60 * 60 * 1000);
+            return (
+              recordDate >= weekStart &&
+              recordDate <
+                new Date(weekStart.getTime() + 7 * 24 * 60 * 60 * 1000)
+            );
           });
-          
+
           if (weekCompletions.length > 0) {
-            totalAccuracy += weekCompletions.reduce((sum: number, record: any) => sum + record.accuracy, 0) / weekCompletions.length;
+            totalAccuracy +=
+              weekCompletions.reduce(
+                (sum: number, record: any) => sum + record.accuracy,
+                0,
+              ) / weekCompletions.length;
           } else {
             totalAccuracy += 85; // Default accuracy
           }
@@ -397,14 +458,17 @@ export const ParentLearningAnalyticsDesktop: React.FC<
         accuracy: Math.round(totalAccuracy / childCount),
         activeDays: Math.round(totalActiveDays / childCount),
         sessionsCompleted: totalSessions,
-        averageSessionTime: totalSessions > 0 ? Math.round(totalTimeSpent / totalSessions) : 15,
+        averageSessionTime:
+          totalSessions > 0 ? Math.round(totalTimeSpent / totalSessions) : 15,
       });
     }
 
     return weeks;
   };
 
-  const calculateRealMonthlyTrends = async (children: ChildProfile[]): Promise<MonthlyData[]> => {
+  const calculateRealMonthlyTrends = async (
+    children: ChildProfile[],
+  ): Promise<MonthlyData[]> => {
     const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun"];
     const trends: MonthlyData[] = [];
 
@@ -417,14 +481,20 @@ export const ParentLearningAnalyticsDesktop: React.FC<
 
       for (const child of children) {
         try {
-          const progress = await goalProgressTracker.fetchSystematicProgress(child.id);
-          
+          const progress = await goalProgressTracker.fetchSystematicProgress(
+            child.id,
+          );
+
           // Estimate monthly progress based on current totals
-          const monthlyEstimate = Math.round(progress.totalWordsLearned / 6 * (i + 1));
+          const monthlyEstimate = Math.round(
+            (progress.totalWordsLearned / 6) * (i + 1),
+          );
           totalWordsLearned += monthlyEstimate;
           totalTimeSpent += Math.round(monthlyEstimate * 2); // 2 minutes per word estimate
           totalStreakDays += Math.min(progress.currentStreak, 30); // Max 30 days per month
-          totalAchievements += child.achievements ? child.achievements.length : 0;
+          totalAchievements += child.achievements
+            ? child.achievements.length
+            : 0;
         } catch (error) {
           // Use defaults for this child
           totalWordsLearned += (i + 1) * 10;
@@ -433,9 +503,14 @@ export const ParentLearningAnalyticsDesktop: React.FC<
       }
 
       // Get accuracy from completion history
-      const completionHistory = CategoryCompletionTracker.getCompletionHistory();
+      const completionHistory =
+        CategoryCompletionTracker.getCompletionHistory();
       if (completionHistory.length > 0) {
-        totalAccuracy = completionHistory.reduce((sum: number, record: any) => sum + record.accuracy, 0) / completionHistory.length;
+        totalAccuracy =
+          completionHistory.reduce(
+            (sum: number, record: any) => sum + record.accuracy,
+            0,
+          ) / completionHistory.length;
       } else {
         totalAccuracy = 85 + i * 1; // Gradually improving accuracy
       }
@@ -446,30 +521,59 @@ export const ParentLearningAnalyticsDesktop: React.FC<
         accuracy: Math.round(totalAccuracy),
         timeSpent: totalTimeSpent,
         streakDays: Math.round(totalStreakDays / Math.max(children.length, 1)),
-        achievements: Math.round(totalAchievements / Math.max(children.length, 1)),
+        achievements: Math.round(
+          totalAchievements / Math.max(children.length, 1),
+        ),
       });
     }
 
     return trends;
   };
 
-  const calculateRealOverviewMetrics = (progressData: any[], categoryProgress: CategoryProgress[]) => {
-    const totalWordsMastered = categoryProgress.reduce((sum, cat) => sum + cat.masteredWords, 0);
-    const wordsNeedPractice = categoryProgress.reduce((sum, cat) => sum + cat.practiceWords, 0);
-    const totalWordsLearned = progressData.reduce((sum, data) => sum + (data?.totalWordsLearned || 0), 0);
-    const totalLearningTime = categoryProgress.reduce((sum, cat) => sum + cat.timeSpent, 0);
-    const overallAccuracy = categoryProgress.length > 0 
-      ? Math.round(categoryProgress.reduce((sum, cat) => sum + cat.accuracy, 0) / categoryProgress.length)
-      : 0;
+  const calculateRealOverviewMetrics = (
+    progressData: any[],
+    categoryProgress: CategoryProgress[],
+  ) => {
+    const totalWordsMastered = categoryProgress.reduce(
+      (sum, cat) => sum + cat.masteredWords,
+      0,
+    );
+    const wordsNeedPractice = categoryProgress.reduce(
+      (sum, cat) => sum + cat.practiceWords,
+      0,
+    );
+    const totalWordsLearned = progressData.reduce(
+      (sum, data) => sum + (data?.totalWordsLearned || 0),
+      0,
+    );
+    const totalLearningTime = categoryProgress.reduce(
+      (sum, cat) => sum + cat.timeSpent,
+      0,
+    );
+    const overallAccuracy =
+      categoryProgress.length > 0
+        ? Math.round(
+            categoryProgress.reduce((sum, cat) => sum + cat.accuracy, 0) /
+              categoryProgress.length,
+          )
+        : 0;
 
     // Calculate current streak from real data
-    const activeLearningStreak = progressData.reduce((max, data) => 
-      Math.max(max, data?.currentStreak || 0), 0);
+    const activeLearningStreak = progressData.reduce(
+      (max, data) => Math.max(max, data?.currentStreak || 0),
+      0,
+    );
 
     // Calculate sessions and improvement rate from real data
-    const totalSessions = progressData.reduce((sum, data) => sum + (data?.sessionsThisWeek || 0), 0);
+    const totalSessions = progressData.reduce(
+      (sum, data) => sum + (data?.sessionsThisWeek || 0),
+      0,
+    );
     const improvementRate = calculateImprovementRate(progressData);
-    const engagementScore = calculateEngagementScore(progressData, overallAccuracy);
+    const engagementScore = calculateEngagementScore(
+      progressData,
+      overallAccuracy,
+    );
 
     return {
       totalWordsMastered,
@@ -485,112 +589,161 @@ export const ParentLearningAnalyticsDesktop: React.FC<
     };
   };
 
-  const generateRealInsights = (overview: any, categoryProgress: CategoryProgress[], children: ChildProfile[]): string[] => {
+  const generateRealInsights = (
+    overview: any,
+    categoryProgress: CategoryProgress[],
+    children: ChildProfile[],
+  ): string[] => {
     const insights = [];
-    
+
     // Insight about best performing category
-    const bestCategory = categoryProgress.reduce((best, cat) => 
-      cat.accuracy > (best?.accuracy || 0) ? cat : best, categoryProgress[0]);
-    
+    const bestCategory = categoryProgress.reduce(
+      (best, cat) => (cat.accuracy > (best?.accuracy || 0) ? cat : best),
+      categoryProgress[0],
+    );
+
     if (bestCategory) {
-      insights.push(`Excellent progress in ${bestCategory.category} with ${bestCategory.accuracy}% accuracy!`);
+      insights.push(
+        `Excellent progress in ${bestCategory.category} with ${bestCategory.accuracy}% accuracy!`,
+      );
     }
 
     // Insight about engagement
     if (overview.engagementScore > 80) {
-      insights.push(`Outstanding engagement score of ${overview.engagementScore}% shows consistent learning habits.`);
+      insights.push(
+        `Outstanding engagement score of ${overview.engagementScore}% shows consistent learning habits.`,
+      );
     } else if (overview.engagementScore > 60) {
-      insights.push(`Good engagement score of ${overview.engagementScore}%. Consider adding variety to maintain motivation.`);
+      insights.push(
+        `Good engagement score of ${overview.engagementScore}%. Consider adding variety to maintain motivation.`,
+      );
     } else {
-      insights.push(`Engagement could be improved (${overview.engagementScore}%). Try shorter, more frequent sessions.`);
+      insights.push(
+        `Engagement could be improved (${overview.engagementScore}%). Try shorter, more frequent sessions.`,
+      );
     }
 
     // Insight about streak
     if (overview.activeLearningStreak > 7) {
-      insights.push(`Amazing ${overview.activeLearningStreak}-day learning streak! Keep up the great work.`);
+      insights.push(
+        `Amazing ${overview.activeLearningStreak}-day learning streak! Keep up the great work.`,
+      );
     } else if (overview.activeLearningStreak > 3) {
-      insights.push(`Good ${overview.activeLearningStreak}-day streak. Try to maintain daily practice for better results.`);
+      insights.push(
+        `Good ${overview.activeLearningStreak}-day streak. Try to maintain daily practice for better results.`,
+      );
     }
 
     // Insight about accuracy
     if (overview.overallAccuracy > 90) {
-      insights.push(`Exceptional accuracy of ${overview.overallAccuracy}% indicates strong understanding and retention.`);
+      insights.push(
+        `Exceptional accuracy of ${overview.overallAccuracy}% indicates strong understanding and retention.`,
+      );
     }
 
     return insights.slice(0, 4); // Limit to 4 insights
   };
 
-  const generateRealRecommendations = (overview: any, categoryProgress: CategoryProgress[], children: ChildProfile[]): string[] => {
+  const generateRealRecommendations = (
+    overview: any,
+    categoryProgress: CategoryProgress[],
+    children: ChildProfile[],
+  ): string[] => {
     const recommendations = [];
 
     // Recommendation based on practice words
     if (overview.wordsNeedPractice > 15) {
-      recommendations.push(`Focus on reviewing ${overview.wordsNeedPractice} words that need practice to improve retention.`);
+      recommendations.push(
+        `Focus on reviewing ${overview.wordsNeedPractice} words that need practice to improve retention.`,
+      );
     } else {
-      recommendations.push("Great job! Very few words need additional practice.");
+      recommendations.push(
+        "Great job! Very few words need additional practice.",
+      );
     }
 
     // Recommendation based on weak categories
-    const weakCategory = categoryProgress.find(cat => cat.accuracy < 80);
+    const weakCategory = categoryProgress.find((cat) => cat.accuracy < 80);
     if (weakCategory) {
-      recommendations.push(`Consider spending more time on ${weakCategory.category} to improve accuracy.`);
+      recommendations.push(
+        `Consider spending more time on ${weakCategory.category} to improve accuracy.`,
+      );
     } else {
-      recommendations.push("All categories showing strong performance! Ready for more advanced content.");
+      recommendations.push(
+        "All categories showing strong performance! Ready for more advanced content.",
+      );
     }
 
     // Recommendation based on session time
     if (overview.averageDailyTime < 10) {
-      recommendations.push("Try increasing daily learning time to 15-20 minutes for better progress.");
+      recommendations.push(
+        "Try increasing daily learning time to 15-20 minutes for better progress.",
+      );
     } else if (overview.averageDailyTime > 30) {
-      recommendations.push("Consider shorter sessions to prevent fatigue and maintain focus.");
+      recommendations.push(
+        "Consider shorter sessions to prevent fatigue and maintain focus.",
+      );
     } else {
-      recommendations.push("Perfect session length! Continue with current learning schedule.");
+      recommendations.push(
+        "Perfect session length! Continue with current learning schedule.",
+      );
     }
 
     // Recommendation based on streak
     if (overview.activeLearningStreak < 3) {
-      recommendations.push("Build a daily learning habit to improve retention and progress.");
+      recommendations.push(
+        "Build a daily learning habit to improve retention and progress.",
+      );
     } else {
-      recommendations.push("Excellent consistency! Daily practice is paying off.");
+      recommendations.push(
+        "Excellent consistency! Daily practice is paying off.",
+      );
     }
 
     return recommendations.slice(0, 4); // Limit to 4 recommendations
   };
 
   // Helper functions
-  const determineCategoryTrend = (category: string, children: ChildProfile[]): "up" | "down" | "stable" => {
+  const determineCategoryTrend = (
+    category: string,
+    children: ChildProfile[],
+  ): "up" | "down" | "stable" => {
     // Simple trend determination based on category difficulty and completion
     const trendMap: Record<string, "up" | "down" | "stable"> = {
-      "Animals": "up",
-      "Colors": "stable", 
-      "Numbers": "up",
-      "School": "down",
-      "Family": "stable",
-      "Science": "up",
-      "Food": "up",
-      "Objects": "stable",
+      Animals: "up",
+      Colors: "stable",
+      Numbers: "up",
+      School: "down",
+      Family: "stable",
+      Science: "up",
+      Food: "up",
+      Objects: "stable",
     };
     return trendMap[category] || "stable";
   };
 
-  const getDifficultyForCategory = (category: string): "easy" | "medium" | "hard" => {
+  const getDifficultyForCategory = (
+    category: string,
+  ): "easy" | "medium" | "hard" => {
     const difficultyMap: Record<string, "easy" | "medium" | "hard"> = {
-      "Animals": "medium",
-      "Colors": "easy",
-      "Numbers": "medium", 
-      "School": "hard",
-      "Family": "easy",
-      "Science": "hard",
-      "Food": "easy",
-      "Objects": "medium",
+      Animals: "medium",
+      Colors: "easy",
+      Numbers: "medium",
+      School: "hard",
+      Family: "easy",
+      Science: "hard",
+      Food: "easy",
+      Objects: "medium",
     };
     return difficultyMap[category] || "medium";
   };
 
-  const generateWeeklyProgressForCategory = (masteredWords: number): number[] => {
+  const generateWeeklyProgressForCategory = (
+    masteredWords: number,
+  ): number[] => {
     // Generate realistic weekly progress
     const baseProgress = Math.max(1, Math.round(masteredWords / 7));
-    return Array.from({length: 7}, (_, i) => baseProgress + i);
+    return Array.from({ length: 7 }, (_, i) => baseProgress + i);
   };
 
   const getWeekKeyForDate = (date: Date): string => {
@@ -609,32 +762,44 @@ export const ParentLearningAnalyticsDesktop: React.FC<
 
   const calculateImprovementRate = (progressData: any[]): number => {
     if (progressData.length === 0) return 0;
-    
+
     // Calculate based on recent vs older progress
-    const totalCurrent = progressData.reduce((sum, data) => sum + (data?.wordsLearnedThisWeek || 0), 0);
+    const totalCurrent = progressData.reduce(
+      (sum, data) => sum + (data?.wordsLearnedThisWeek || 0),
+      0,
+    );
     const totalPrevious = Math.max(1, totalCurrent * 0.9); // Assume 10% improvement
-    
+
     return Math.round(((totalCurrent - totalPrevious) / totalPrevious) * 100);
   };
 
-  const calculateEngagementScore = (progressData: any[], accuracy: number): number => {
+  const calculateEngagementScore = (
+    progressData: any[],
+    accuracy: number,
+  ): number => {
     if (progressData.length === 0) return 0;
-    
-    const avgStreak = progressData.reduce((sum, data) => sum + (data?.currentStreak || 0), 0) / progressData.length;
-    const avgSessions = progressData.reduce((sum, data) => sum + (data?.sessionsThisWeek || 0), 0) / progressData.length;
-    
+
+    const avgStreak =
+      progressData.reduce((sum, data) => sum + (data?.currentStreak || 0), 0) /
+      progressData.length;
+    const avgSessions =
+      progressData.reduce(
+        (sum, data) => sum + (data?.sessionsThisWeek || 0),
+        0,
+      ) / progressData.length;
+
     // Engagement based on consistency (streak), activity (sessions), and performance (accuracy)
     return Math.round(
-      (avgStreak / 7) * 40 +  // 40% weight on consistency
-      (avgSessions / 10) * 30 + // 30% weight on activity  
-      (accuracy / 100) * 30    // 30% weight on performance
+      (avgStreak / 7) * 40 + // 40% weight on consistency
+        (avgSessions / 10) * 30 + // 30% weight on activity
+        (accuracy / 100) * 30, // 30% weight on performance
     );
   };
 
   const getFallbackAnalyticsData = (): LearningAnalyticsData => {
     const storedChildren = localStorage.getItem("parentDashboardChildren");
     const childrenData = storedChildren ? JSON.parse(storedChildren) : [];
-    
+
     return {
       overview: {
         totalWordsMastered: 0,
@@ -652,8 +817,12 @@ export const ParentLearningAnalyticsDesktop: React.FC<
       weeklyProgress: [],
       monthlyTrends: [],
       children: childrenData,
-      insights: ["No learning data available yet. Start learning to see insights!"],
-      recommendations: ["Begin your learning journey to receive personalized recommendations."],
+      insights: [
+        "No learning data available yet. Start learning to see insights!",
+      ],
+      recommendations: [
+        "Begin your learning journey to receive personalized recommendations.",
+      ],
     };
   };
 
@@ -1027,7 +1196,8 @@ export const ParentLearningAnalyticsDesktop: React.FC<
                     No Category Data Yet
                   </h3>
                   <p className="text-gray-500">
-                    Category progress will appear as children complete learning activities
+                    Category progress will appear as children complete learning
+                    activities
                   </p>
                 </CardContent>
               </Card>
@@ -1092,7 +1262,8 @@ export const ParentLearningAnalyticsDesktop: React.FC<
                           <span>Progress</span>
                           <span className="font-semibold">
                             {Math.round(
-                              (category.masteredWords / Math.max(category.totalWords, 1)) *
+                              (category.masteredWords /
+                                Math.max(category.totalWords, 1)) *
                                 100,
                             )}
                             %
@@ -1100,7 +1271,9 @@ export const ParentLearningAnalyticsDesktop: React.FC<
                         </div>
                         <Progress
                           value={
-                            (category.masteredWords / Math.max(category.totalWords, 1)) * 100
+                            (category.masteredWords /
+                              Math.max(category.totalWords, 1)) *
+                            100
                           }
                           className="h-3"
                         />
@@ -1119,7 +1292,9 @@ export const ParentLearningAnalyticsDesktop: React.FC<
 
                       {expandedCards.has(`category-${index}`) && (
                         <div className="mt-4 space-y-3 border-t pt-3">
-                          <h4 className="font-medium text-sm">Weekly Progress</h4>
+                          <h4 className="font-medium text-sm">
+                            Weekly Progress
+                          </h4>
                           <div className="grid grid-cols-7 gap-1">
                             {category.weeklyProgress.map((progress, i) => (
                               <div
@@ -1156,21 +1331,27 @@ export const ParentLearningAnalyticsDesktop: React.FC<
                     No Weekly Data Yet
                   </h3>
                   <p className="text-gray-500">
-                    Weekly progress will appear as children use the learning system
+                    Weekly progress will appear as children use the learning
+                    system
                   </p>
                 </CardContent>
               </Card>
             ) : (
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 {analyticsData.weeklyProgress.map((week, index) => (
-                  <Card key={index} className="hover:shadow-md transition-shadow">
+                  <Card
+                    key={index}
+                    className="hover:shadow-md transition-shadow"
+                  >
                     <CardHeader>
                       <CardTitle className="flex items-center justify-between">
                         <span className="flex items-center gap-2">
                           <Calendar className="h-5 w-5 text-blue-600" />
                           {week.week}
                         </span>
-                        <Badge variant="outline">{week.activeDays}/7 days</Badge>
+                        <Badge variant="outline">
+                          {week.activeDays}/7 days
+                        </Badge>
                       </CardTitle>
                     </CardHeader>
                     <CardContent>
@@ -1195,7 +1376,9 @@ export const ParentLearningAnalyticsDesktop: React.FC<
                             <Clock className="h-4 w-4 text-gray-500" />
                             Total Time
                           </span>
-                          <span className="font-medium">{week.timeSpent}min</span>
+                          <span className="font-medium">
+                            {week.timeSpent}min
+                          </span>
                         </div>
                         <div className="flex justify-between items-center text-sm">
                           <span className="flex items-center gap-2">
@@ -1240,7 +1423,8 @@ export const ParentLearningAnalyticsDesktop: React.FC<
                       No Trend Data Yet
                     </h3>
                     <p className="text-gray-500">
-                      Monthly trends will appear as children continue learning over time
+                      Monthly trends will appear as children continue learning
+                      over time
                     </p>
                   </div>
                 ) : (
@@ -1268,7 +1452,9 @@ export const ParentLearningAnalyticsDesktop: React.FC<
                             <div className="text-2xl font-bold text-blue-600 mb-1">
                               <AnimatedCounter value={month.wordsLearned} />
                             </div>
-                            <p className="text-sm text-blue-700">Words Learned</p>
+                            <p className="text-sm text-blue-700">
+                              Words Learned
+                            </p>
                             <div className="mt-2 h-2 bg-blue-200 rounded-full overflow-hidden">
                               <div
                                 className="h-full bg-blue-600 transition-all duration-1000"
@@ -1298,7 +1484,9 @@ export const ParentLearningAnalyticsDesktop: React.FC<
                             <div className="text-2xl font-bold text-purple-600 mb-1">
                               <AnimatedCounter value={month.timeSpent} />m
                             </div>
-                            <p className="text-sm text-purple-700">Time Spent</p>
+                            <p className="text-sm text-purple-700">
+                              Time Spent
+                            </p>
                             <div className="mt-2 h-2 bg-purple-200 rounded-full overflow-hidden">
                               <div
                                 className="h-full bg-purple-600 transition-all duration-1000"
@@ -1380,13 +1568,19 @@ export const ParentLearningAnalyticsDesktop: React.FC<
                           <span>Weekly Goal Progress</span>
                           <span className="font-semibold">
                             {Math.round(
-                              (child.wordsLearned / Math.max(child.weeklyGoal, 1)) * 100,
+                              (child.wordsLearned /
+                                Math.max(child.weeklyGoal, 1)) *
+                                100,
                             )}
                             %
                           </span>
                         </div>
                         <Progress
-                          value={(child.wordsLearned / Math.max(child.weeklyGoal, 1)) * 100}
+                          value={
+                            (child.wordsLearned /
+                              Math.max(child.weeklyGoal, 1)) *
+                            100
+                          }
                           className="h-3"
                         />
                       </div>

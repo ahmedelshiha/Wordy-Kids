@@ -292,30 +292,32 @@ export default function Index({ initialProfile }: IndexProps) {
 
       // Fallback: create child profile from current user data
       const currentUser = JSON.parse(
-        localStorage.getItem("wordAdventureCurrentUser") || "{}"
+        localStorage.getItem("wordAdventureCurrentUser") || "{}",
       );
 
       if (currentUser.id) {
-        return [{
-          id: currentUser.id,
-          name: currentUser.name || "Alex",
-          age: currentUser.age || 8,
-          avatar: currentUser.avatar || "👦",
-          level: currentUser.level || 1,
-          totalPoints: currentUser.totalPoints || 0,
-          wordsLearned: rememberedWords.size,
-          currentStreak: learningStats.currentStreak || 0,
-          weeklyGoal: currentUser.weeklyGoal || 25,
-          accuracy: learningStats.accuracy || 0,
-          totalLearningTime: Math.round(learningStats.sessionCount * 15), // Estimate 15 min per session
-          favoriteCategory: selectedCategory || "Animals",
-          achievements: currentUser.achievements || [],
-          lastActive: new Date().toISOString(),
-          progressHistory: {},
-          strongAreas: [],
-          improvementAreas: [],
-          parentNotes: ""
-        }];
+        return [
+          {
+            id: currentUser.id,
+            name: currentUser.name || "Alex",
+            age: currentUser.age || 8,
+            avatar: currentUser.avatar || "👦",
+            level: currentUser.level || 1,
+            totalPoints: currentUser.totalPoints || 0,
+            wordsLearned: rememberedWords.size,
+            currentStreak: learningStats.currentStreak || 0,
+            weeklyGoal: currentUser.weeklyGoal || 25,
+            accuracy: learningStats.accuracy || 0,
+            totalLearningTime: Math.round(learningStats.sessionCount * 15), // Estimate 15 min per session
+            favoriteCategory: selectedCategory || "Animals",
+            achievements: currentUser.achievements || [],
+            lastActive: new Date().toISOString(),
+            progressHistory: {},
+            strongAreas: [],
+            improvementAreas: [],
+            parentNotes: "",
+          },
+        ];
       }
 
       return [];
@@ -330,7 +332,7 @@ export default function Index({ initialProfile }: IndexProps) {
       // Get session data from various localStorage sources
       const sessions: any[] = [];
       const currentUser = JSON.parse(
-        localStorage.getItem("wordAdventureCurrentUser") || "{}"
+        localStorage.getItem("wordAdventureCurrentUser") || "{}",
       );
 
       if (currentUser.id) {
@@ -356,7 +358,7 @@ export default function Index({ initialProfile }: IndexProps) {
               completedAt: date,
               category: selectedCategory || "Mixed",
               difficulty: "Medium",
-              mistakePatterns: []
+              mistakePatterns: [],
             });
           }
         }
@@ -373,7 +375,7 @@ export default function Index({ initialProfile }: IndexProps) {
             completedAt: new Date(),
             category: selectedCategory || "Mixed",
             difficulty: "Medium",
-            mistakePatterns: []
+            mistakePatterns: [],
           });
         }
       }
