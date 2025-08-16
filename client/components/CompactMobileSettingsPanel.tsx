@@ -505,35 +505,6 @@ export const CompactMobileSettingsPanel: React.FC<
                       </p>
                     </div>
 
-                    {/* Debug information for voice availability */}
-                    <div className="mt-2 p-2 bg-gray-50 rounded-lg">
-                      <p className="text-xs text-gray-600 mb-1">
-                        Voice Status:
-                      </p>
-                      {enhancedAudioService
-                        .getAvailableVoices()
-                        .map((voiceInfo) => (
-                          <div
-                            key={voiceInfo.type}
-                            className="text-xs text-gray-500 flex justify-between"
-                          >
-                            <span className="capitalize">
-                              {voiceInfo.type}:
-                            </span>
-                            <span
-                              className={
-                                voiceInfo.available
-                                  ? "text-green-600"
-                                  : "text-red-500"
-                              }
-                            >
-                              {voiceInfo.available
-                                ? "✓ Available"
-                                : "✗ Not found"}
-                            </span>
-                          </div>
-                        ))}
-                    </div>
                   </div>
                 </div>
               )}
