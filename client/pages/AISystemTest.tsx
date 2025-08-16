@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { CheckCircle, XCircle, AlertCircle, RefreshCw } from 'lucide-react';
-import { useAIWordRecommendations } from '@/hooks/use-ai-word-recommendations';
-import { aiWordRecommendationService } from '@/lib/aiWordRecommendationService';
+import React, { useState, useEffect } from "react";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { CheckCircle, XCircle, AlertCircle, RefreshCw } from "lucide-react";
+import { useAIWordRecommendations } from "@/hooks/use-ai-word-recommendations";
+import { aiWordRecommendationService } from "@/lib/aiWordRecommendationService";
 
 export default function AISystemTest() {
   const [testResults, setTestResults] = useState<{
@@ -23,7 +23,7 @@ export default function AISystemTest() {
 
   // Test the AI hook
   const [aiState, aiActions] = useAIWordRecommendations({
-    userId: 'test-user',
+    userId: "test-user",
     enableRealTimeAdaptation: true,
     enableAnalytics: true,
     enableMotivationalBoosts: true,
@@ -36,12 +36,12 @@ export default function AISystemTest() {
 
   const runTests = async () => {
     setIsRunningTest(true);
-    
+
     try {
       // Test 1: Service readiness
       const serviceReady = aiWordRecommendationService.isReady();
       const serviceError = aiWordRecommendationService.getInitializationError();
-      
+
       // Test 2: Hook initialization
       const hookInitialized = aiState.hasInitialized && !aiState.error;
 
@@ -51,8 +51,8 @@ export default function AISystemTest() {
         await aiActions.getRecommendations(
           {
             timeOfDay: new Date().getHours(),
-            sessionGoal: 'learning',
-            deviceType: 'desktop',
+            sessionGoal: "learning",
+            deviceType: "desktop",
           },
           {
             rememberedWords: new Set(),
@@ -60,12 +60,12 @@ export default function AISystemTest() {
             excludedWordIds: new Set(),
           },
           null,
-          'food',
-          5
+          "food",
+          5,
         );
         recommendationsWorking = true;
       } catch (error) {
-        console.warn('Recommendations test failed:', error);
+        console.warn("Recommendations test failed:", error);
       }
 
       setTestResults({
@@ -79,10 +79,10 @@ export default function AISystemTest() {
         serviceReady: false,
         hookInitialized: false,
         recommendationsWorking: false,
-        error: error instanceof Error ? error.message : 'Unknown error',
+        error: error instanceof Error ? error.message : "Unknown error",
       });
     }
-    
+
     setIsRunningTest(false);
   };
 
@@ -96,8 +96,8 @@ export default function AISystemTest() {
 
   const getStatusBadge = (status: boolean) => {
     return (
-      <Badge variant={status ? 'default' : 'destructive'}>
-        {status ? 'PASS' : 'FAIL'}
+      <Badge variant={status ? "default" : "destructive"}>
+        {status ? "PASS" : "FAIL"}
       </Badge>
     );
   };
@@ -113,13 +113,13 @@ export default function AISystemTest() {
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="flex justify-between items-center">
-            <Button 
-              onClick={runTests} 
+            <Button
+              onClick={runTests}
               disabled={isRunningTest}
               className="flex items-center gap-2"
             >
               {isRunningTest && <RefreshCw className="w-4 h-4 animate-spin" />}
-              {isRunningTest ? 'Running Tests...' : 'Run Tests'}
+              {isRunningTest ? "Running Tests..." : "Run Tests"}
             </Button>
           </div>
 
@@ -151,12 +151,11 @@ export default function AISystemTest() {
 
           {testResults.error && (
             <div className="p-3 border border-orange-200 bg-orange-50 rounded-lg">
-              <h4 className="font-medium text-orange-800 mb-1">
-                System Note:
-              </h4>
+              <h4 className="font-medium text-orange-800 mb-1">System Note:</h4>
               <p className="text-sm text-orange-700">{testResults.error}</p>
               <p className="text-xs text-orange-600 mt-1">
-                This is expected behavior - the AI system will work in fallback mode.
+                This is expected behavior - the AI system will work in fallback
+                mode.
               </p>
             </div>
           )}
@@ -175,15 +174,15 @@ export default function AISystemTest() {
           )}
 
           <div className="mt-4 p-3 border border-green-200 bg-green-50 rounded-lg">
-            <h4 className="font-medium text-green-800 mb-1">
-              Summary:
-            </h4>
+            <h4 className="font-medium text-green-800 mb-1">Summary:</h4>
             <p className="text-sm text-green-700">
-              {testResults.serviceReady && testResults.hookInitialized && testResults.recommendationsWorking
-                ? '✅ All systems working perfectly!'
+              {testResults.serviceReady &&
+              testResults.hookInitialized &&
+              testResults.recommendationsWorking
+                ? "✅ All systems working perfectly!"
                 : testResults.hookInitialized
-                ? '✅ AI system working in fallback mode - all features available!'
-                : '⚠️ AI system initializing - please wait or refresh.'}
+                  ? "✅ AI system working in fallback mode - all features available!"
+                  : "⚠️ AI system initializing - please wait or refresh."}
             </p>
           </div>
         </CardContent>

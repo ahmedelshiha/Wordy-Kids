@@ -163,7 +163,10 @@ export function useAIWordRecommendations(
         if (!service.isReady()) {
           const initError = service.getInitializationError();
           if (initError) {
-            console.log('AI service initialization failed, but continuing with fallback mode:', initError.message);
+            console.log(
+              "AI service initialization failed, but continuing with fallback mode:",
+              initError.message,
+            );
 
             // Don't treat this as an error - the service can still work in fallback mode
             setState((prev) => ({
@@ -180,7 +183,9 @@ export function useAIWordRecommendations(
           // Try to retry initialization once
           const retrySuccess = await service.retryInitialization();
           if (!retrySuccess) {
-            console.log('AI service retry failed, continuing with fallback mode');
+            console.log(
+              "AI service retry failed, continuing with fallback mode",
+            );
 
             setState((prev) => ({
               ...prev,
@@ -196,12 +201,17 @@ export function useAIWordRecommendations(
 
         // Set up real-time adaptation callback only if service is ready
         if (service.isReady()) {
-          adaptationCallbackRef.current = (recommendation: AIRecommendation) => {
+          adaptationCallbackRef.current = (
+            recommendation: AIRecommendation,
+          ) => {
             setState((prev) => ({
               ...prev,
               currentRecommendation: recommendation,
               reasoning: [...prev.reasoning, "Real-time adaptation applied"],
-              adaptiveHints: [...prev.adaptiveHints, ...recommendation.reasoning],
+              adaptiveHints: [
+                ...prev.adaptiveHints,
+                ...recommendation.reasoning,
+              ],
             }));
           };
 
@@ -218,7 +228,10 @@ export function useAIWordRecommendations(
                 learningAnalytics: analytics,
               }));
             } catch (analyticsError) {
-              console.warn('Failed to load analytics, continuing without them:', analyticsError);
+              console.warn(
+                "Failed to load analytics, continuing without them:",
+                analyticsError,
+              );
             }
           }
         }
@@ -230,7 +243,7 @@ export function useAIWordRecommendations(
           error: null,
         }));
       } catch (error) {
-        console.warn('AI service initialization encountered an issue:', error);
+        console.warn("AI service initialization encountered an issue:", error);
 
         // Even if initialization fails, allow the app to continue in fallback mode
         setState((prev) => ({
@@ -589,14 +602,16 @@ export function useAIWordRecommendations(
     try {
       serviceReady = await service.retryInitialization();
     } catch (error) {
-      console.warn('Service reinitialization failed during reset:', error);
+      console.warn("Service reinitialization failed during reset:", error);
     }
 
     setState({
       currentRecommendation: null,
       words: [],
       confidence: 0,
-      reasoning: serviceReady ? [] : ["AI system running in compatibility mode"],
+      reasoning: serviceReady
+        ? []
+        : ["AI system running in compatibility mode"],
 
       isSessionActive: false,
       sessionProgress: {

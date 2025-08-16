@@ -83,7 +83,7 @@ export class AIWordRecommendationService {
       analyticsUpdateInterval: 5000, // 5 seconds
       ...config,
     };
-    
+
     // Initialize the service safely
     this.safeInitialize();
   }
@@ -91,27 +91,33 @@ export class AIWordRecommendationService {
   private async safeInitialize(): Promise<void> {
     try {
       // Validate dependencies
-      if (typeof AIWordRecommendationEngine === 'undefined') {
-        throw new Error('AIWordRecommendationEngine is not available');
+      if (typeof AIWordRecommendationEngine === "undefined") {
+        throw new Error("AIWordRecommendationEngine is not available");
       }
-      
-      if (typeof SmartWordSelector === 'undefined') {
-        throw new Error('SmartWordSelector is not available');
+
+      if (typeof SmartWordSelector === "undefined") {
+        throw new Error("SmartWordSelector is not available");
       }
 
       // Test a basic operation to ensure the system is working
       await this.testBasicFunctionality();
-      
+
       this.isInitialized = true;
       this.initializationError = null;
-      
-      console.log('AI Word Recommendation Service initialized successfully');
+
+      console.log("AI Word Recommendation Service initialized successfully");
     } catch (error) {
-      this.initializationError = error instanceof Error ? error : new Error('Unknown initialization error');
+      this.initializationError =
+        error instanceof Error
+          ? error
+          : new Error("Unknown initialization error");
       this.isInitialized = false;
-      
-      console.warn('AI Word Recommendation Service failed to initialize:', this.initializationError.message);
-      console.warn('Falling back to basic word selection mode');
+
+      console.warn(
+        "AI Word Recommendation Service failed to initialize:",
+        this.initializationError.message,
+      );
+      console.warn("Falling back to basic word selection mode");
     }
   }
 
@@ -125,8 +131,12 @@ export class AIWordRecommendationService {
         forgottenWords: new Set(),
       });
 
-      if (!testSelection || !testSelection.words || testSelection.words.length === 0) {
-        throw new Error('SmartWordSelector test failed');
+      if (
+        !testSelection ||
+        !testSelection.words ||
+        testSelection.words.length === 0
+      ) {
+        throw new Error("SmartWordSelector test failed");
       }
 
       // Test AI engine with minimal data
@@ -151,9 +161,11 @@ export class AIWordRecommendationService {
       };
 
       // This should not throw an error
-      console.log('AI system basic functionality test passed');
+      console.log("AI system basic functionality test passed");
     } catch (error) {
-      throw new Error(`AI system basic functionality test failed: ${error instanceof Error ? error.message : 'Unknown error'}`);
+      throw new Error(
+        `AI system basic functionality test failed: ${error instanceof Error ? error.message : "Unknown error"}`,
+      );
     }
   }
 
@@ -207,7 +219,7 @@ export class AIWordRecommendationService {
   ): Promise<AIRecommendation> {
     // If AI is not ready, fall back to basic recommendation
     if (!this.isReady()) {
-      console.log('AI system not ready, using fallback recommendation');
+      console.log("AI system not ready, using fallback recommendation");
       return this.getFallbackRecommendation(
         userProgress,
         category,
@@ -285,7 +297,11 @@ export class AIWordRecommendationService {
 
     try {
       // Real-time adaptive hints
-      if (this.config.enableRealTimeAdaptation && !interaction.isCorrect && this.isReady()) {
+      if (
+        this.config.enableRealTimeAdaptation &&
+        !interaction.isCorrect &&
+        this.isReady()
+      ) {
         response.adaptiveHint = await this.generateAdaptiveHint(
           interaction,
           userId,
@@ -294,12 +310,16 @@ export class AIWordRecommendationService {
 
       // Motivational boosts
       if (this.config.enableMotivationalBoosts) {
-        response.encouragement = this.generateEncouragement(interaction, userId);
+        response.encouragement = this.generateEncouragement(
+          interaction,
+          userId,
+        );
       }
 
       // Difficulty adjustment recommendations
       if (this.config.enablePersonalizedDifficulty && this.isReady()) {
-        response.difficultyAdjustment = this.suggestDifficultyAdjustment(userId);
+        response.difficultyAdjustment =
+          this.suggestDifficultyAdjustment(userId);
       }
 
       // Trigger real-time adaptation if needed
@@ -307,15 +327,18 @@ export class AIWordRecommendationService {
         this.triggerRealTimeAdaptation(userId);
       }
     } catch (error) {
-      console.warn('Error in recordWordInteraction, using fallback responses:', error);
-      
+      console.warn(
+        "Error in recordWordInteraction, using fallback responses:",
+        error,
+      );
+
       // Provide basic fallback responses
       if (!response.encouragement) {
-        response.encouragement = interaction.isCorrect 
-          ? "Great job! 🌟" 
+        response.encouragement = interaction.isCorrect
+          ? "Great job! 🌟"
           : "Keep trying! You're doing great! 💪";
       }
-      
+
       if (!response.difficultyAdjustment) {
         response.difficultyAdjustment = "maintain";
       }
@@ -390,7 +413,10 @@ export class AIWordRecommendationService {
         );
       }
     } catch (error) {
-      console.warn('Error completing session with AI engine, using fallback:', error);
+      console.warn(
+        "Error completing session with AI engine, using fallback:",
+        error,
+      );
     }
 
     // Reset session state
@@ -440,7 +466,8 @@ export class AIWordRecommendationService {
   } {
     try {
       if (this.isReady()) {
-        const analytics = AIWordRecommendationEngine.getLearningAnalytics(userId);
+        const analytics =
+          AIWordRecommendationEngine.getLearningAnalytics(userId);
 
         let currentSessionProgress;
         if (this.currentSession) {
@@ -460,7 +487,7 @@ export class AIWordRecommendationService {
         };
       }
     } catch (error) {
-      console.warn('Error getting learning analytics, using fallback:', error);
+      console.warn("Error getting learning analytics, using fallback:", error);
     }
 
     // Fallback analytics
@@ -468,21 +495,23 @@ export class AIWordRecommendationService {
       velocityTrend: [1, 1.2, 1.1, 1.3, 1.2],
       retentionTrend: [0.7, 0.75, 0.8, 0.82, 0.85],
       categoryMastery: new Map([
-        ['food', 0.7],
-        ['animals', 0.6],
-        ['objects', 0.8],
+        ["food", 0.7],
+        ["animals", 0.6],
+        ["objects", 0.8],
       ]),
       predictedOutcomes: {
         nextWeekLearningRate: 15,
         retentionRisk: 0.3,
-        motivationTrend: 'stable',
-        recommendedFocus: ['balanced_practice'],
+        motivationTrend: "stable",
+        recommendedFocus: ["balanced_practice"],
       },
-      currentSessionProgress: this.currentSession ? {
-        efficiency: this.calculateSessionEfficiency(),
-        engagement: this.calculateEngagementScore(),
-        cognitiveLoad: this.calculateCognitiveLoad(),
-      } : undefined,
+      currentSessionProgress: this.currentSession
+        ? {
+            efficiency: this.calculateSessionEfficiency(),
+            engagement: this.calculateEngagementScore(),
+            cognitiveLoad: this.calculateCognitiveLoad(),
+          }
+        : undefined,
     };
   }
 
@@ -498,7 +527,8 @@ export class AIWordRecommendationService {
   } {
     try {
       if (this.isReady()) {
-        const analytics = AIWordRecommendationEngine.getLearningAnalytics(userId);
+        const analytics =
+          AIWordRecommendationEngine.getLearningAnalytics(userId);
 
         return {
           optimalStudyTimes: this.calculateOptimalStudyTimes(analytics),
@@ -509,7 +539,10 @@ export class AIWordRecommendationService {
         };
       }
     } catch (error) {
-      console.warn('Error getting study recommendations, using fallback:', error);
+      console.warn(
+        "Error getting study recommendations, using fallback:",
+        error,
+      );
     }
 
     // Fallback recommendations
@@ -570,7 +603,7 @@ export class AIWordRecommendationService {
         );
       }
     } catch (error) {
-      console.warn('Error applying motivational enhancements:', error);
+      console.warn("Error applying motivational enhancements:", error);
     }
   }
 
@@ -595,7 +628,9 @@ export class AIWordRecommendationService {
       return {
         words: selection.words,
         confidence: 0.6,
-        reasoning: ["Using fallback recommendation system - AI temporarily unavailable"],
+        reasoning: [
+          "Using fallback recommendation system - AI temporarily unavailable",
+        ],
         expectedOutcomes: {
           learningVelocity: 0.5,
           retentionPrediction: 0.7,
@@ -615,8 +650,8 @@ export class AIWordRecommendationService {
         },
       };
     } catch (error) {
-      console.error('Fallback recommendation also failed:', error);
-      
+      console.error("Fallback recommendation also failed:", error);
+
       // Ultimate fallback - hardcoded basic recommendation
       return {
         words: [],
@@ -669,7 +704,7 @@ export class AIWordRecommendationService {
         this.startAnalyticsUpdates(userId);
       }
     } catch (error) {
-      console.warn('Error starting session tracking:', error);
+      console.warn("Error starting session tracking:", error);
     }
   }
 
@@ -715,7 +750,7 @@ export class AIWordRecommendationService {
         });
       }
     } catch (error) {
-      console.warn('Error updating session metrics:', error);
+      console.warn("Error updating session metrics:", error);
     }
   }
 
@@ -733,7 +768,7 @@ export class AIWordRecommendationService {
         return "No worries! Every mistake is a learning opportunity. Let's try a different approach! 💪";
       }
     } catch (error) {
-      console.warn('Error generating adaptive hint:', error);
+      console.warn("Error generating adaptive hint:", error);
       return "Keep trying! You're doing great! 💪";
     }
   }
@@ -750,7 +785,9 @@ export class AIWordRecommendationService {
           "Amazing! Keep up the great progress! 🚀",
           "Perfect! You're building your vocabulary beautifully! 📚",
         ];
-        return encouragements[Math.floor(Math.random() * encouragements.length)];
+        return encouragements[
+          Math.floor(Math.random() * encouragements.length)
+        ];
       } else {
         const supportive = [
           "That's okay! Learning takes practice! 💫",
@@ -761,7 +798,7 @@ export class AIWordRecommendationService {
         return supportive[Math.floor(Math.random() * supportive.length)];
       }
     } catch (error) {
-      console.warn('Error generating encouragement:', error);
+      console.warn("Error generating encouragement:", error);
       return interaction.isCorrect ? "Great job! 🌟" : "Keep trying! 💪";
     }
   }
@@ -790,7 +827,7 @@ export class AIWordRecommendationService {
 
       return "maintain";
     } catch (error) {
-      console.warn('Error suggesting difficulty adjustment:', error);
+      console.warn("Error suggesting difficulty adjustment:", error);
       return "maintain";
     }
   }
@@ -801,10 +838,11 @@ export class AIWordRecommendationService {
 
       // Trigger adaptation every 5 words or if performance changes significantly
       return (
-        this.sessionInteractions.length % 5 === 0 || this.detectPerformanceShift()
+        this.sessionInteractions.length % 5 === 0 ||
+        this.detectPerformanceShift()
       );
     } catch (error) {
-      console.warn('Error checking adaptation trigger:', error);
+      console.warn("Error checking adaptation trigger:", error);
       return false;
     }
   }
@@ -823,7 +861,7 @@ export class AIWordRecommendationService {
 
       return Math.abs(recentAccuracy - previousAccuracy) > 0.3;
     } catch (error) {
-      console.warn('Error detecting performance shift:', error);
+      console.warn("Error detecting performance shift:", error);
       return false;
     }
   }
@@ -857,7 +895,7 @@ export class AIWordRecommendationService {
 
       this.adaptationCallbacks.forEach((callback) => callback(mockAdaptation));
     } catch (error) {
-      console.warn('Error triggering real-time adaptation:', error);
+      console.warn("Error triggering real-time adaptation:", error);
     }
   }
 
@@ -874,7 +912,7 @@ export class AIWordRecommendationService {
 
       return difficulties;
     } catch (error) {
-      console.warn('Error calculating difficulty mix:', error);
+      console.warn("Error calculating difficulty mix:", error);
       return { medium: 1 };
     }
   }
@@ -884,7 +922,7 @@ export class AIWordRecommendationService {
       // This would need access to word categories from interactions
       return ["animals", "food"]; // Mock data
     } catch (error) {
-      console.warn('Error calculating categories used:', error);
+      console.warn("Error calculating categories used:", error);
       return ["mixed"];
     }
   }
@@ -902,7 +940,7 @@ export class AIWordRecommendationService {
 
       return positiveEvents / totalEvents;
     } catch (error) {
-      console.warn('Error calculating engagement score:', error);
+      console.warn("Error calculating engagement score:", error);
       return 0.5;
     }
   }
@@ -916,7 +954,7 @@ export class AIWordRecommendationService {
         this.currentSession.wordsCorrect / this.currentSession.wordsAttempted
       );
     } catch (error) {
-      console.warn('Error calculating session efficiency:', error);
+      console.warn("Error calculating session efficiency:", error);
       return 0;
     }
   }
@@ -936,10 +974,11 @@ export class AIWordRecommendationService {
 
       return Math.min(
         1,
-        loadFactors.reduce((sum, factor) => sum + factor, 0) / loadFactors.length,
+        loadFactors.reduce((sum, factor) => sum + factor, 0) /
+          loadFactors.length,
       );
     } catch (error) {
-      console.warn('Error calculating cognitive load:', error);
+      console.warn("Error calculating cognitive load:", error);
       return 0.5;
     }
   }
@@ -973,7 +1012,7 @@ export class AIWordRecommendationService {
 
       return achievements;
     } catch (error) {
-      console.warn('Error checking session achievements:', error);
+      console.warn("Error checking session achievements:", error);
       return [];
     }
   }
@@ -989,7 +1028,7 @@ export class AIWordRecommendationService {
       if (accuracy > 0.9) return "increase_difficulty";
       return "maintain_difficulty";
     } catch (error) {
-      console.warn('Error recommending difficulty adjustment:', error);
+      console.warn("Error recommending difficulty adjustment:", error);
       return "maintain_difficulty";
     }
   }
@@ -999,7 +1038,7 @@ export class AIWordRecommendationService {
       // This would analyze user's historical performance by time of day
       return ["16:00", "19:00"]; // 4 PM and 7 PM as examples
     } catch (error) {
-      console.warn('Error calculating optimal study times:', error);
+      console.warn("Error calculating optimal study times:", error);
       return ["16:00", "19:00"];
     }
   }
@@ -1009,7 +1048,7 @@ export class AIWordRecommendationService {
       // Based on user's attention span and performance data
       return 15; // 15 minutes
     } catch (error) {
-      console.warn('Error recommending session duration:', error);
+      console.warn("Error recommending session duration:", error);
       return 15;
     }
   }
@@ -1022,7 +1061,7 @@ export class AIWordRecommendationService {
         "Take breaks when you feel tired - rest helps memory consolidation! 😴",
       ];
     } catch (error) {
-      console.warn('Error generating motivational tips:', error);
+      console.warn("Error generating motivational tips:", error);
       return [
         "Keep practicing - you're doing great! 🌟",
         "Every word learned is a step forward! 📚",
@@ -1043,7 +1082,7 @@ export class AIWordRecommendationService {
       }
       return "balanced_approach";
     } catch (error) {
-      console.warn('Error recommending difficulty strategy:', error);
+      console.warn("Error recommending difficulty strategy:", error);
       return "balanced_approach";
     }
   }
@@ -1058,7 +1097,7 @@ export class AIWordRecommendationService {
         }
       }, this.config.analyticsUpdateInterval);
     } catch (error) {
-      console.warn('Error starting analytics updates:', error);
+      console.warn("Error starting analytics updates:", error);
     }
   }
 }

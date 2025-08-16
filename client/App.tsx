@@ -88,10 +88,7 @@ const App = () => (
                 path="/AIWordRecommendationDemo"
                 element={<AIWordRecommendationDemo />}
               />
-              <Route
-                path="/ai-system-test"
-                element={<AISystemTest />}
-              />
+              <Route path="/ai-system-test" element={<AISystemTest />} />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
             </Routes>
