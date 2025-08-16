@@ -104,6 +104,7 @@ import {
 } from "lucide-react";
 import { refreshWordDatabase } from "@/lib/cacheManager";
 import { realTimeWordDB } from "@/lib/realTimeWordDatabase";
+import { validateEmojiInput, sanitizeEmoji, suggestEmojisForWord } from "@/lib/emojiUtils";
 
 interface AdminWord {
   id: string;
