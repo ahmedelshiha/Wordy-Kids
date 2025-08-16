@@ -307,7 +307,7 @@ export const BalloonRescueVowelAdventure: React.FC<Props> = ({
     // Speak the new word
     setTimeout(() => {
       if (questions[nextIndex]) {
-        audioService.pronounceWord(questions[nextIndex].word, "kid");
+        audioService.pronounceWord(questions[nextIndex].word);
       }
     }, 500);
   }, [currentQuestionIndex, questions, calculateDifficulty]);
