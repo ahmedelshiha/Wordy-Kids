@@ -1576,7 +1576,10 @@ export function AIEnhancedInteractiveDashboardWordCard({
                   </div>
 
                   {/* Action Buttons */}
-                  <div className="flex flex-col sm:flex-row justify-center gap-3 sm:gap-4">
+                  <div className={cn(
+                    "flex justify-center gap-3 sm:gap-4",
+                    aiState.isSessionActive ? "flex-row" : "flex-col sm:flex-row"
+                  )}>
                     <motion.div
                       whileHover={{ scale: 1.05, y: -2 }}
                       whileTap={{ scale: 0.95, y: 0 }}
