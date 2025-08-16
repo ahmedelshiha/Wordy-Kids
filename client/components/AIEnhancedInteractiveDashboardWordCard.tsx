@@ -1672,7 +1672,7 @@ export function AIEnhancedInteractiveDashboardWordCard({
                     className="px-4 py-2 text-sm rounded-xl bg-yellow-50 border-yellow-200 text-yellow-700 hover:bg-yellow-100"
                   >
                     <Lightbulb className="w-4 h-4 mr-2" />
-                    💡 Get Hint {hintsUsed > 0 && `(${hintsUsed})`}
+                    {EMOJI_CONSTANTS.HINT} Get Hint {hintsUsed > 0 && `(${hintsUsed})`}
                   </Button>
                 )}
 
