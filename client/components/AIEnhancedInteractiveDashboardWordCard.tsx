@@ -1275,8 +1275,8 @@ export function AIEnhancedInteractiveDashboardWordCard({
                           )}
                         >
                           {aiState.isSessionActive
-                            ? "AI Enabled"
-                            : "Disable AI"}
+                            ? "Disable AI"
+                            : "Enable AI"}
                         </Button>
                       </div>
                       <div className="flex items-center gap-3 text-sm opacity-90">
