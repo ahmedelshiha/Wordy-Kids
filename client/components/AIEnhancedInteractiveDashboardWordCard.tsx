@@ -973,24 +973,25 @@ export function AIEnhancedInteractiveDashboardWordCard({
       tabIndex={0}
       onKeyDown={handleKeyDown}
     >
-      {/* AI Insights Panel */}
+      {/* AI Insights Panel - Mobile Optimized */}
       {showAIInsights && (
         <Card className="bg-gradient-to-r from-blue-50 to-purple-50 border-blue-200">
-          <CardContent className="p-4">
-            <div className="flex items-center justify-between mb-3">
-              <h3 className="font-semibold flex items-center gap-2">
-                <Brain className="w-4 h-4 text-blue-600" />
-                AI Learning Insights
+          <CardContent className="p-2 sm:p-4">
+            <div className="flex items-center justify-between mb-2">
+              <h3 className="text-sm font-semibold flex items-center gap-1">
+                <Brain className="w-3 h-3 sm:w-4 sm:h-4 text-blue-600" />
+                🤖 AI Stats
               </h3>
               <Button
                 onClick={() => setShowAIInsights(false)}
                 variant="ghost"
                 size="sm"
+                className="p-1"
               >
                 ×
               </Button>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
+            <div className="grid grid-cols-3 gap-2 sm:gap-4 text-xs sm:text-sm">
               <div className="text-center">
                 <div className="text-lg font-bold text-blue-600">
                   {Math.round(confidenceLevel * 100)}%
