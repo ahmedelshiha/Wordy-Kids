@@ -2080,7 +2080,7 @@ export const ParentDashboardDesktop: React.FC<ParentDashboardDesktopProps> = ({
               <div>
                 <Label htmlFor="avatar">Avatar</Label>
                 <div className="flex gap-2 mt-2">
-                  {["���", "👧", "👦", "🧒", "👴", "👵"].map((emoji) => (
+                  {["👨‍👩‍👧‍👦", "👧", "👦", "🧒", "👴", "👵"].map((emoji) => (
                     <Button
                       key={emoji}
                       variant={

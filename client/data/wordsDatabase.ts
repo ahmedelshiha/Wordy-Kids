@@ -1096,7 +1096,7 @@ export const wordsDatabase: Word[] = [
   {
     id: 866,
     word: "Grandpa",
-    pronunciation: "/��ɡrænpɑː/",
+    pronunciation: "/ˈɡrænpɑː/",
     definition: "Your mom or dad's father",
     example: "Grandpa teaches me how to fish",
     funFact: "Grandpas love to share wisdom!",
