@@ -115,6 +115,8 @@ import { WordProgressAPI } from "@/lib/wordProgressApi";
 import { ChildWordStats } from "@shared/api";
 import { useBrowserBackButton } from "@/hooks/useBrowserBackButton";
 import { useNavigationHistory } from "@/hooks/useNavigationHistory";
+import { useAIWordRecommendations } from "@/hooks/use-ai-word-recommendations";
+import { AIWordRecommendationService } from "@/lib/aiWordRecommendationService";
 
 interface IndexProps {
   initialProfile?: any;
