@@ -1172,7 +1172,7 @@ export function AIEnhancedInteractiveDashboardWordCard({
             <div className={cn(
               "bg-gradient-to-r p-3 sm:p-4 rounded-2xl mb-3 sm:mb-4 shadow-lg border-2 transition-all duration-500",
               aiState.isSessionActive
-                ? "from-blue-500 via-purple-500 to-blue-600 text-white border-blue-300 shadow-xl animate-pulse"
+                ? "from-blue-500 via-purple-500 to-blue-600 text-white border-blue-300 shadow-xl"
                 : "from-blue-50 to-purple-50 text-gray-800 border-blue-200"
             )}>
               <div className="flex items-center justify-between gap-3">
@@ -1424,7 +1424,7 @@ export function AIEnhancedInteractiveDashboardWordCard({
                   >
                     <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/20 to-white/0 transform -skew-x-12 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-600 ease-out" />
                     <Eye className="w-4 h-4 mr-1 group-hover:animate-bounce" />
-                    <span className="relative z-10 font-semibold">👁️ Show</span>
+                    <span className="relative z-10 font-semibold">���️ Show</span>
                   </Button>
                 </motion.div>
               )}
