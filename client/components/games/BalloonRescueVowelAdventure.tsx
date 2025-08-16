@@ -212,7 +212,7 @@ export const BalloonRescueVowelAdventure: React.FC<Props> = ({
         word.slice(0, randomVowelIndex) +
         "_" +
         word.slice(randomVowelIndex + 1);
-      const distractors = generateSmartDistractors(missingVowel);
+      const distractors = generateSmartDistractors(missingVowel, word, difficulty);
 
       return {
         id: `q${index}`,
