@@ -57,6 +57,9 @@ import {
 import { AnimatedCounter } from "@/components/AnimatedCounter";
 import { EnhancedLearningReports } from "@/components/EnhancedLearningReports";
 import { cn } from "@/lib/utils";
+import { goalProgressTracker } from "@/lib/goalProgressTracker";
+import { childProgressSync } from "@/lib/childProgressSync";
+import { CategoryCompletionTracker } from "@/lib/categoryCompletionTracker";
 
 interface ChildProfile {
   id: string;
@@ -140,290 +143,78 @@ export const ParentLearningAnalyticsDesktop: React.FC<
   const [isLoading, setIsLoading] = useState(false);
   const [expandedCards, setExpandedCards] = useState<Set<string>>(new Set());
   const [selectedMetric, setSelectedMetric] = useState("wordsLearned");
+  const [realTimeData, setRealTimeData] = useState<LearningAnalyticsData | null>(null);
 
-  // Enhanced analytics data with desktop-specific insights
-  const analyticsData = useMemo((): LearningAnalyticsData => {
-    try {
-      const storedChildren = localStorage.getItem("parentDashboardChildren");
-      const childrenData =
-        propChildren.length > 0
-          ? propChildren
-          : storedChildren
-            ? JSON.parse(storedChildren)
-            : [];
+  // Load real analytics data from the progress tracking system
+  useEffect(() => {
+    const loadRealAnalyticsData = async () => {
+      setIsLoading(true);
+      try {
+        const storedChildren = localStorage.getItem("parentDashboardChildren");
+        const childrenData =
+          propChildren.length > 0
+            ? propChildren
+            : storedChildren
+              ? JSON.parse(storedChildren)
+              : [];
 
-      // Enhanced category progress with trends
-      const categoryProgress: CategoryProgress[] = [
-        {
-          category: "Animals",
-          totalWords: 150,
-          masteredWords: 89,
-          practiceWords: 23,
-          accuracy: 87,
-          timeSpent: 180,
-          difficulty: "medium",
-          trend: "up",
-          weeklyProgress: [12, 15, 18, 21, 24, 27, 30],
-        },
-        {
-          category: "Colors",
-          totalWords: 50,
-          masteredWords: 45,
-          practiceWords: 3,
-          accuracy: 94,
-          timeSpent: 90,
-          difficulty: "easy",
-          trend: "stable",
-          weeklyProgress: [8, 10, 12, 14, 15, 16, 18],
-        },
-        {
-          category: "Numbers",
-          totalWords: 100,
-          masteredWords: 67,
-          practiceWords: 15,
-          accuracy: 82,
-          timeSpent: 120,
-          difficulty: "medium",
-          trend: "up",
-          weeklyProgress: [10, 14, 18, 22, 25, 28, 32],
-        },
-        {
-          category: "School",
-          totalWords: 200,
-          masteredWords: 134,
-          practiceWords: 28,
-          accuracy: 89,
-          timeSpent: 240,
-          difficulty: "hard",
-          trend: "down",
-          weeklyProgress: [45, 48, 50, 52, 54, 55, 56],
-        },
-        {
-          category: "Family",
-          totalWords: 80,
-          masteredWords: 72,
-          practiceWords: 5,
-          accuracy: 96,
-          timeSpent: 100,
-          difficulty: "easy",
-          trend: "stable",
-          weeklyProgress: [20, 22, 24, 26, 28, 30, 32],
-        },
-        {
-          category: "Science",
-          totalWords: 120,
-          masteredWords: 45,
-          practiceWords: 35,
-          accuracy: 78,
-          timeSpent: 160,
-          difficulty: "hard",
-          trend: "up",
-          weeklyProgress: [5, 8, 12, 18, 25, 32, 40],
-        },
-      ];
+        // Aggregate real data from all children
+        const realData = await aggregateRealAnalyticsData(childrenData, timeRange);
+        setRealTimeData(realData);
+      } catch (error) {
+        console.error("Error loading real analytics data:", error);
+        // Fallback to basic structure with real children data
+        setRealTimeData(getFallbackAnalyticsData());
+      } finally {
+        setIsLoading(false);
+      }
+    };
 
-      // Enhanced weekly progress with more metrics
-      const weeklyProgress: WeeklyData[] = [
-        {
-          week: "Week 1",
-          wordsLearned: 45,
-          timeSpent: 180,
-          accuracy: 85,
-          activeDays: 5,
-          sessionsCompleted: 12,
-          averageSessionTime: 15,
-        },
-        {
-          week: "Week 2",
-          wordsLearned: 52,
-          timeSpent: 210,
-          accuracy: 88,
-          activeDays: 6,
-          sessionsCompleted: 15,
-          averageSessionTime: 14,
-        },
-        {
-          week: "Week 3",
-          wordsLearned: 38,
-          timeSpent: 150,
-          accuracy: 82,
-          activeDays: 4,
-          sessionsCompleted: 10,
-          averageSessionTime: 15,
-        },
-        {
-          week: "Week 4",
-          wordsLearned: 67,
-          timeSpent: 270,
-          accuracy: 91,
-          activeDays: 7,
-          sessionsCompleted: 18,
-          averageSessionTime: 15,
-        },
-      ];
-
-      // Monthly trends with additional metrics
-      const monthlyTrends: MonthlyData[] = [
-        {
-          month: "Jan",
-          wordsLearned: 156,
-          accuracy: 82,
-          timeSpent: 480,
-          streakDays: 15,
-          achievements: 3,
-        },
-        {
-          month: "Feb",
-          wordsLearned: 189,
-          accuracy: 85,
-          timeSpent: 620,
-          streakDays: 22,
-          achievements: 5,
-        },
-        {
-          month: "Mar",
-          wordsLearned: 223,
-          accuracy: 87,
-          timeSpent: 580,
-          streakDays: 28,
-          achievements: 4,
-        },
-        {
-          month: "Apr",
-          wordsLearned: 267,
-          accuracy: 89,
-          timeSpent: 720,
-          streakDays: 25,
-          achievements: 6,
-        },
-        {
-          month: "May",
-          wordsLearned: 302,
-          accuracy: 88,
-          timeSpent: 650,
-          streakDays: 30,
-          achievements: 7,
-        },
-        {
-          month: "Jun",
-          wordsLearned: 345,
-          accuracy: 91,
-          timeSpent: 810,
-          streakDays: 28,
-          achievements: 8,
-        },
-      ];
-
-      // Calculate enhanced overview metrics
-      const totalWordsMastered = categoryProgress.reduce(
-        (sum, cat) => sum + cat.masteredWords,
-        0,
-      );
-      const wordsNeedPractice = categoryProgress.reduce(
-        (sum, cat) => sum + cat.practiceWords,
-        0,
-      );
-      const totalWordsLearned = categoryProgress.reduce(
-        (sum, cat) => sum + cat.masteredWords + cat.practiceWords,
-        0,
-      );
-      const totalTimeSpent = categoryProgress.reduce(
-        (sum, cat) => sum + cat.timeSpent,
-        0,
-      );
-      const overallAccuracy = Math.round(
-        categoryProgress.reduce((sum, cat) => sum + cat.accuracy, 0) /
-          categoryProgress.length,
-      );
-
-      // Calculate improvement rate (trend analysis)
-      const recentWeeks = weeklyProgress.slice(-2);
-      const improvementRate =
-        recentWeeks.length === 2
-          ? Math.round(
-              ((recentWeeks[1].wordsLearned - recentWeeks[0].wordsLearned) /
-                recentWeeks[0].wordsLearned) *
-                100,
-            )
-          : 0;
-
-      // Calculate engagement score based on multiple factors
-      const avgActiveDays =
-        weeklyProgress.reduce((sum, week) => sum + week.activeDays, 0) /
-        weeklyProgress.length;
-      const avgAccuracy =
-        weeklyProgress.reduce((sum, week) => sum + week.accuracy, 0) /
-        weeklyProgress.length;
-      const engagementScore = Math.round(
-        (avgActiveDays / 7) * 40 + (avgAccuracy / 100) * 60,
-      );
-
-      // Generate AI-like insights
-      const insights = [
-        `Your children are showing strong improvement in ${categoryProgress.find((c) => c.trend === "up")?.category || "learning"} with a ${improvementRate > 0 ? improvementRate : 15}% increase this week.`,
-        `The overall engagement score of ${engagementScore}% indicates excellent learning consistency.`,
-        `Most productive learning happens during ${totalTimeSpent > 500 ? "longer" : "shorter"} sessions with an average accuracy of ${overallAccuracy}%.`,
-        `${categoryProgress.filter((c) => c.accuracy > 90).length} categories have achieved mastery level (90%+ accuracy).`,
-      ];
-
-      // Generate personalized recommendations
-      const recommendations = [
-        wordsNeedPractice > 20
-          ? `Focus on reviewing ${wordsNeedPractice} words that need practice to improve retention.`
-          : "Great job! Very few words need additional practice.",
-        engagementScore < 70
-          ? "Consider varying learning activities to boost engagement and maintain interest."
-          : "Excellent engagement! Continue with the current learning approach.",
-        overallAccuracy < 85
-          ? "Try shorter, more frequent sessions to improve accuracy and reduce fatigue."
-          : "Outstanding accuracy! Ready for more challenging content.",
-        `Consider exploring ${categoryProgress.find((c) => c.masteredWords < 50)?.category || "new"} category for broader vocabulary development.`,
-      ];
-
-      return {
-        overview: {
-          totalWordsMastered,
-          wordsNeedPractice,
-          overallAccuracy,
-          totalWordsLearned,
-          totalLearningTime: totalTimeSpent,
-          activeLearningStreak: 12,
-          averageDailyTime: Math.round(totalTimeSpent / 30),
-          totalSessions: 156,
-          improvementRate,
-          engagementScore,
-        },
-        categoryProgress,
-        weeklyProgress,
-        monthlyTrends,
-        children: childrenData,
-        insights,
-        recommendations,
-      };
-    } catch (error) {
-      console.error("Error calculating analytics data:", error);
-      return {
-        overview: {
-          totalWordsMastered: 0,
-          wordsNeedPractice: 0,
-          overallAccuracy: 0,
-          totalWordsLearned: 0,
-          totalLearningTime: 0,
-          activeLearningStreak: 0,
-          averageDailyTime: 0,
-          totalSessions: 0,
-          improvementRate: 0,
-          engagementScore: 0,
-        },
-        categoryProgress: [],
-        weeklyProgress: [],
-        monthlyTrends: [],
-        children: [],
-        insights: [],
-        recommendations: [],
-      };
-    }
+    loadRealAnalyticsData();
   }, [propChildren, timeRange]);
+
+  // Real-time updates when progress changes
+  useEffect(() => {
+    const handleProgressUpdate = () => {
+      // Debounce to prevent excessive updates
+      const timeoutId = setTimeout(async () => {
+        const storedChildren = localStorage.getItem("parentDashboardChildren");
+        const childrenData =
+          propChildren.length > 0
+            ? propChildren
+            : storedChildren
+              ? JSON.parse(storedChildren)
+              : [];
+
+        try {
+          const realData = await aggregateRealAnalyticsData(childrenData, timeRange);
+          setRealTimeData(realData);
+        } catch (error) {
+          console.error("Error updating real analytics data:", error);
+        }
+      }, 1000);
+
+      return () => clearTimeout(timeoutId);
+    };
+
+    // Listen for progress events
+    window.addEventListener("goalCompleted", handleProgressUpdate);
+    window.addEventListener("wordDatabaseUpdate", handleProgressUpdate);
+    window.addEventListener("categoryCompleted", handleProgressUpdate);
+    window.addEventListener("wordProgressUpdate", handleProgressUpdate);
+
+    return () => {
+      window.removeEventListener("goalCompleted", handleProgressUpdate);
+      window.removeEventListener("wordDatabaseUpdate", handleProgressUpdate);
+      window.removeEventListener("categoryCompleted", handleProgressUpdate);
+      window.removeEventListener("wordProgressUpdate", handleProgressUpdate);
+    };
+  }, [propChildren, timeRange]);
+
+  // Use real-time data or fallback
+  const analyticsData = useMemo((): LearningAnalyticsData => {
+    return realTimeData || getFallbackAnalyticsData();
+  }, [realTimeData]);
 
   const toggleCardExpansion = (cardId: string) => {
     const newExpanded = new Set(expandedCards);
