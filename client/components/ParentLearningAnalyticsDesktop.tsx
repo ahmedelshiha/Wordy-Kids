@@ -826,36 +826,6 @@ export const ParentLearningAnalyticsDesktop: React.FC<
     );
   };
 
-  const getFallbackAnalyticsData = (): LearningAnalyticsData => {
-    const storedChildren = localStorage.getItem("parentDashboardChildren");
-    const childrenData = storedChildren ? JSON.parse(storedChildren) : [];
-
-    return {
-      overview: {
-        totalWordsMastered: 0,
-        wordsNeedPractice: 0,
-        overallAccuracy: 0,
-        totalWordsLearned: 0,
-        totalLearningTime: 0,
-        activeLearningStreak: 0,
-        averageDailyTime: 0,
-        totalSessions: 0,
-        improvementRate: 0,
-        engagementScore: 0,
-      },
-      categoryProgress: [],
-      weeklyProgress: [],
-      monthlyTrends: [],
-      children: childrenData,
-      insights: [
-        "No learning data available yet. Start learning to see insights!",
-      ],
-      recommendations: [
-        "Begin your learning journey to receive personalized recommendations.",
-      ],
-    };
-  };
-
   const toggleCardExpansion = (cardId: string) => {
     const newExpanded = new Set(expandedCards);
     if (newExpanded.has(cardId)) {
