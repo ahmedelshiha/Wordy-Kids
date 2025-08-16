@@ -1166,7 +1166,7 @@ export function AIEnhancedInteractiveDashboardWordCard({
             </div>
           )}
 
-          <CardContent className="p-2 sm:p-4 md:p-6 lg:p-8 relative z-10">
+          <CardContent className="p-1 sm:p-3 md:p-5 lg:p-6 relative z-10">
             {/* Mobile-Optimized Kid-Friendly AI Header */}
             <div
               className={cn(
