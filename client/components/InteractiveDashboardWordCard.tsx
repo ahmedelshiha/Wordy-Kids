@@ -1215,14 +1215,42 @@ export function InteractiveDashboardWordCard({
               </div>
             </div>
 
-            {/* Picture Display */}
-            <div
-              className="mb-4 md:mb-6"
-              role="img"
-              aria-label={`Picture showing ${currentWord.emoji} ${currentWord.word}`}
-            >
-              {renderWordImage()}
-            </div>
+            {/* Picture Display with State Transitions */}
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={`word-${currentWordIndex}-${showWordName ? 'revealed' : 'hidden'}`}
+                initial={{ opacity: 0, y: 20, scale: 0.95 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                exit={{ opacity: 0, y: -10, scale: 1.05 }}
+                transition={{
+                  duration: 0.5,
+                  type: "spring",
+                  stiffness: 200,
+                  damping: 20
+                }}
+                className="mb-4 md:mb-6"
+                role="img"
+                aria-label={`Picture showing ${currentWord.emoji} ${currentWord.word}`}
+              >
+                {renderWordImage()}
+
+                {/* State overlay for transitions */}
+                {isTransitioning && (
+                  <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 0.8 }}
+                    exit={{ opacity: 0 }}
+                    className="absolute inset-0 bg-white/50 backdrop-blur-sm rounded-2xl flex items-center justify-center"
+                  >
+                    <motion.div
+                      animate={{ rotate: 360 }}
+                      transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+                      className="w-8 h-8 border-2 border-blue-500 border-t-transparent rounded-full"
+                    />
+                  </motion.div>
+                )}
+              </motion.div>
+            </AnimatePresence>
 
             {/* Game Instructions */}
             <header className="text-center mb-3 sm:mb-4 md:mb-5" role="banner">
