@@ -336,7 +336,7 @@ const WORD_TEMPLATES: WordTemplate[] = [
 const SMART_SUGGESTIONS = {
   emojis: {
     animals: ["🐘", "🦁", "🐸", "🦋", "🐝", "🐢", "🦘", "🦉", "🐧", "🦒"],
-    actions: ["⚡", "🏃", "🤸", "🕺", "🎯", "⚽", "🏊", "🚴", "🧗", "🤹"],
+    actions: ["⚡", "🏃", "🤸", "🕺", "🎯", "⚽", "🏊", "��", "🧗", "🤹"],
     feelings: ["😊", "😢", "😮", "🤔", "😴", "😡", "😍", "🤗", "😎", "🥳"],
     objects: ["📚", "🪑", "🏠", "🚗", "📱", "✏️", "🎒", "👕", "👟", "⚽"],
     nature: ["🌈", "🌸", "🌊", "⛰️", "🌙", "☀️", "❄️", "🍃", "🌺", "🦋"],
@@ -688,6 +688,12 @@ const CreateWordWizard: React.FC<CreateWordWizardProps> = ({
         .includes(formData.word?.toLowerCase() || "")
     ) {
       errors.push("Example should include the word");
+    }
+
+    // Enhanced emoji validation
+    const emojiValidation = validateEmojiInput(formData.emoji || "");
+    if (!emojiValidation.isValid && emojiValidation.severity === 'error') {
+      errors.push(emojiValidation.message || "Invalid emoji format");
     }
 
     return errors;
