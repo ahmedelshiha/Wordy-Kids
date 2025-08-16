@@ -103,6 +103,17 @@ export function QuizGames({
       points: "200-500 pts",
     },
     {
+      id: "vowel-kid-friendly",
+      title: "Vowel Fun for Kids",
+      description: "Simple vowel game perfect for young learners! Big buttons and fun graphics.",
+      icon: "🌈",
+      difficulty: "Kids",
+      questions: "5-10",
+      timePerQuestion: "No rush",
+      color: "from-pink-400 to-purple-400",
+      points: "100-500 pts",
+    },
+    {
       id: "vowel-ultimate",
       title: "Ultimate Vowel Quiz",
       description: "Four exciting modes: Rescue, Challenge, Rush & Adventure!",
