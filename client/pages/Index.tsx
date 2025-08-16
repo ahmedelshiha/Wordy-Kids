@@ -24,6 +24,7 @@ import { GameLikeLearning } from "@/components/GameLikeLearning";
 import { WordMatchingGame } from "@/components/WordMatchingGame";
 import { GameHub } from "@/components/games/GameHub";
 import { VowelRescue } from "@/components/games/VowelRescue";
+import { VowelAdventure } from "@/components/games/VowelAdventure";
 import ListenAndGuessGame from "@/components/games/ListenAndGuessGame";
 import WordGarden from "@/components/games/WordGarden";
 import {
@@ -965,7 +966,7 @@ export default function Index({ initialProfile }: IndexProps) {
       {
         id: "quiz-master",
         name: "Quiz Master",
-        icon: "🧠",
+        icon: "����",
         earned: false,
         description: "Score 100% on 5 quizzes",
       },
