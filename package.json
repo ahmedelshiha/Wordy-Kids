@@ -18,7 +18,10 @@
     "start": "node dist/server/node-build.mjs",
     "test": "vitest --run",
     "format.fix": "prettier --write .",
-    "typecheck": "tsc"
+    "typecheck": "tsc",
+    "scan:emojis": "node scripts/scan-emojis.js",
+    "lint:emojis": "npm run scan:emojis",
+    "precommit": "npm run lint:emojis && npm run typecheck"
   },
   "dependencies": {
     "dotenv": "^17.2.0",
