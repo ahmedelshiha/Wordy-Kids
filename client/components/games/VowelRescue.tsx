@@ -865,7 +865,6 @@ export function VowelRescue({
           type="stars"
           onComplete={() => setShowMainCelebration(false)}
         />
-
       </div>
     </div>
   );

@@ -56,7 +56,12 @@ const difficultyConfigs: DifficultyConfig[] = [
     bgColor: "bg-educational-green",
     textColor: "text-educational-green",
     icon: Star,
-    features: ["1 missing vowel", "10 questions", "No time limit", "Visual hints"],
+    features: [
+      "1 missing vowel",
+      "10 questions",
+      "No time limit",
+      "Visual hints",
+    ],
     rounds: 10,
   },
   {
@@ -68,7 +73,12 @@ const difficultyConfigs: DifficultyConfig[] = [
     bgColor: "bg-educational-purple",
     textColor: "text-educational-purple",
     icon: Target,
-    features: ["1-2 missing vowels", "8 questions", "No time limit", "Extra points"],
+    features: [
+      "1-2 missing vowels",
+      "8 questions",
+      "No time limit",
+      "Extra points",
+    ],
     rounds: 8,
   },
   {
@@ -80,7 +90,12 @@ const difficultyConfigs: DifficultyConfig[] = [
     bgColor: "bg-educational-orange",
     textColor: "text-educational-orange",
     icon: Timer,
-    features: ["Mixed difficulty", "30 questions", "Time pressure", "Bonus points"],
+    features: [
+      "Mixed difficulty",
+      "30 questions",
+      "Time pressure",
+      "Bonus points",
+    ],
     rounds: 30,
     timeLimit: 60,
   },
@@ -92,20 +107,36 @@ export function UnifiedVowelGame({
   selectedCategory,
   currentProfile,
 }: UnifiedVowelGameProps) {
-  const [selectedDifficulty, setSelectedDifficulty] = useState<DifficultyLevel | null>(null);
+  const [selectedDifficulty, setSelectedDifficulty] =
+    useState<DifficultyLevel | null>(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [gameQuestions, setGameQuestions] = useState<VowelQuestion[]>([]);
 
   const generateQuestions = (difficulty: DifficultyLevel): VowelQuestion[] => {
     switch (difficulty) {
       case "easy":
-        return getSystematicEasyVowelQuestions(10, selectedCategory, currentProfile);
+        return getSystematicEasyVowelQuestions(
+          10,
+          selectedCategory,
+          currentProfile,
+        );
       case "medium":
-        return getSystematicMediumVowelQuestions(8, selectedCategory, currentProfile);
+        return getSystematicMediumVowelQuestions(
+          8,
+          selectedCategory,
+          currentProfile,
+        );
       case "timed":
-        return getSystematicTimedVowelQuestions(selectedCategory, currentProfile);
+        return getSystematicTimedVowelQuestions(
+          selectedCategory,
+          currentProfile,
+        );
       default:
-        return getSystematicEasyVowelQuestions(10, selectedCategory, currentProfile);
+        return getSystematicEasyVowelQuestions(
+          10,
+          selectedCategory,
+          currentProfile,
+        );
     }
   };
 
@@ -161,7 +192,6 @@ export function UnifiedVowelGame({
             <ArrowLeft className="w-4 h-4" />
             Back to Games
           </Button>
-          
           <div className="text-center">
             <h1 className="text-2xl md:text-4xl font-bold text-gray-800 mb-2">
               🔤 Vowel Adventure! 🔤
@@ -170,7 +200,6 @@ export function UnifiedVowelGame({
               Choose your difficulty and start your vowel rescue mission!
             </p>
           </div>
-          
           <div className="w-16" /> {/* Spacer */}
         </motion.div>
 
@@ -183,7 +212,7 @@ export function UnifiedVowelGame({
         >
           {difficultyConfigs.map((config, index) => {
             const IconComponent = config.icon;
-            
+
             return (
               <motion.div
                 key={config.id}
@@ -193,19 +222,23 @@ export function UnifiedVowelGame({
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
-                <Card className={`cursor-pointer hover:shadow-xl transition-all duration-300 border-2 border-${config.color}/30 h-full`}>
+                <Card
+                  className={`cursor-pointer hover:shadow-xl transition-all duration-300 border-2 border-${config.color}/30 h-full`}
+                >
                   <CardHeader className="text-center pb-4">
                     <div className="text-6xl mb-3 animate-bounce">
                       {config.emoji}
                     </div>
-                    <CardTitle className={`text-xl font-bold ${config.textColor} mb-2`}>
+                    <CardTitle
+                      className={`text-xl font-bold ${config.textColor} mb-2`}
+                    >
                       {config.title}
                     </CardTitle>
                     <p className="text-sm text-gray-600 leading-relaxed">
                       {config.description}
                     </p>
                   </CardHeader>
-                  
+
                   <CardContent className="pt-0">
                     {/* Features List */}
                     <div className="space-y-2 mb-6">
@@ -217,7 +250,9 @@ export function UnifiedVowelGame({
                           transition={{ delay: 0.3 + featureIndex * 0.1 }}
                           className="flex items-center gap-2 text-sm"
                         >
-                          <div className={`w-2 h-2 rounded-full ${config.bgColor}`} />
+                          <div
+                            className={`w-2 h-2 rounded-full ${config.bgColor}`}
+                          />
                           <span className="text-gray-700">{feature}</span>
                         </motion.div>
                       ))}
@@ -226,15 +261,21 @@ export function UnifiedVowelGame({
                     {/* Game Stats */}
                     <div className={`${config.bgColor}/10 rounded-lg p-3 mb-4`}>
                       <div className="flex justify-between items-center text-sm">
-                        <span className="font-medium text-gray-700">Questions:</span>
+                        <span className="font-medium text-gray-700">
+                          Questions:
+                        </span>
                         <span className={`font-bold ${config.textColor}`}>
                           {config.rounds}
                         </span>
                       </div>
                       {config.timeLimit && (
                         <div className="flex justify-between items-center text-sm mt-1">
-                          <span className="font-medium text-gray-700">Time Limit:</span>
-                          <span className={`font-bold ${config.textColor} flex items-center gap-1`}>
+                          <span className="font-medium text-gray-700">
+                            Time Limit:
+                          </span>
+                          <span
+                            className={`font-bold ${config.textColor} flex items-center gap-1`}
+                          >
                             <Clock className="w-3 h-3" />
                             {config.timeLimit}s
                           </span>
@@ -297,7 +338,7 @@ export function UnifiedVowelGame({
                     </li>
                   </ul>
                 </div>
-                
+
                 <div>
                   <h4 className="font-semibold text-gray-800 mb-3 flex items-center gap-2">
                     <Crown className="w-4 h-4 text-educational-orange" />
@@ -337,7 +378,7 @@ export function UnifiedVowelGame({
           >
             <div className="inline-flex items-center gap-2 bg-white rounded-full px-4 py-2 shadow-md border border-educational-blue/20">
               <span className="text-sm font-medium text-gray-700">
-                Playing with: 
+                Playing with:
               </span>
               <span className="text-sm font-bold text-educational-blue capitalize">
                 {selectedCategory} Words
