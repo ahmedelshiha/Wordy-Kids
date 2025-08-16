@@ -1168,34 +1168,29 @@ export function AIEnhancedInteractiveDashboardWordCard({
 
           <CardContent className="p-2 sm:p-4 md:p-6 lg:p-8 relative z-10">
             {/* AI Enhancement Header - Mobile Optimized */}
-            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-2 sm:mb-4 gap-2">
-              <div className="flex items-center gap-2">
-                <div className="bg-gradient-to-r from-blue-500 to-purple-500 p-1.5 sm:p-2 rounded-full">
-                  <Brain className="w-3 h-3 sm:w-4 sm:h-4 text-white" />
+            <div className="flex items-center justify-between mb-2 sm:mb-4 gap-1">
+              <div className="flex items-center gap-1 sm:gap-2">
+                <div className="bg-gradient-to-r from-blue-500 to-purple-500 p-1 sm:p-1.5 rounded-full">
+                  <Brain className="w-3 h-3 text-white" />
                 </div>
-                <div>
-                  <div className="text-xs sm:text-sm font-bold text-gray-800">
-                    🤖 AI Learning
-                  </div>
-                  <div className="text-xs text-gray-600">
-                    {Math.round(confidenceLevel * 100)}% | {currentWordIndex + 1}/{SESSION_SIZE}
-                  </div>
+                <div className="text-xs font-bold text-gray-800">
+                  🤖 {Math.round(confidenceLevel * 100)}% | {currentWordIndex + 1}/{SESSION_SIZE}
                 </div>
               </div>
-              <div className="flex items-center gap-1 sm:gap-2">
+              <div className="flex items-center gap-1">
+                {difficultyAdjustment !== "maintain" && (
+                  <Badge variant="outline" className="text-xs px-1 py-0">
+                    {difficultyAdjustment === "increase" ? "⬆️" : difficultyAdjustment === "decrease" ? "⬇️" : ""}
+                  </Badge>
+                )}
                 <Button
                   onClick={() => setShowAIInsights(!showAIInsights)}
                   variant="ghost"
                   size="sm"
-                  className="text-blue-600 hover:text-blue-800 p-1 sm:p-2"
+                  className="text-blue-600 hover:text-blue-800 p-1"
                 >
-                  <BarChart3 className="w-3 h-3 sm:w-4 sm:h-4" />
+                  <BarChart3 className="w-3 h-3" />
                 </Button>
-                {difficultyAdjustment !== "maintain" && (
-                  <Badge variant="outline" className="text-xs hidden sm:inline-flex">
-                    AI: {difficultyAdjustment}
-                  </Badge>
-                )}
               </div>
             </div>
 
