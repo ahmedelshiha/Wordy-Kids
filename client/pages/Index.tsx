@@ -1898,7 +1898,7 @@ export default function Index({ initialProfile }: IndexProps) {
                     {
                       id: "progress",
                       icon: Trophy,
-                      label: "���� My Journey",
+                      label: "🏆 My Journey",
                       color: "yellow",
                     },
                   ].map(({ id, icon: Icon, label, color }) => (
@@ -2873,7 +2873,7 @@ export default function Index({ initialProfile }: IndexProps) {
                               </div>
                             </div>
                             <h2 className="text-xl md:text-3xl font-bold text-gray-800 mb-2 md:mb-4">
-                              🧠 Quiz Time!
+                              ���� Quiz Time!
                             </h2>
                             <p className="text-sm md:text-lg text-gray-600 mb-4 md:mb-6 px-4">
                               Test your vocabulary with super fun quizzes! 🌟
@@ -2886,7 +2886,7 @@ export default function Index({ initialProfile }: IndexProps) {
                             <Card className="cursor-pointer hover:shadow-lg transition-all duration-300 hover:scale-105 border-2 border-emerald-400/30 animate-kid-float">
                               <CardContent className="p-3 md:p-4 text-center">
                                 <div className="text-3xl md:text-5xl mb-2 md:mb-3 animate-gentle-bounce">
-                                  ����
+                                  🌱
                                 </div>
                                 <h3 className="text-sm md:text-lg font-bold text-emerald-600 mb-1 md:mb-2">
                                   Word Garden
