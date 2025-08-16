@@ -25,6 +25,7 @@ import { WordMatchingGame } from "@/components/WordMatchingGame";
 import { GameHub } from "@/components/games/GameHub";
 import { VowelRescue } from "@/components/games/VowelRescue";
 import { VowelAdventure } from "@/components/games/VowelAdventure";
+import { VowelAdventureV2 } from "@/components/games/VowelAdventureV2";
 import { defaultWords } from "@/lib/vowelEngine";
 import ListenAndGuessGame from "@/components/games/ListenAndGuessGame";
 import WordGarden from "@/components/games/WordGarden";
@@ -1369,7 +1370,7 @@ export default function Index({ initialProfile }: IndexProps) {
       const categoryDisplayName = selectedCategory;
 
       if (accuracy === 100) {
-        achievementTitle = "Perfect Category Mastery! 🏆";
+        achievementTitle = "Perfect Category Mastery! ��";
         achievementIcon = "🏆";
         achievementMessage = `Outstanding! You remembered ALL ${totalWords} words in ${categoryDisplayName}! You're a true champion!\n\n🎁 Perfect Mastery Bonus: 200 points!\n✨ New adventure zone unlocked!`;
       } else if (accuracy >= 90) {
