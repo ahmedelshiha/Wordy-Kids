@@ -273,6 +273,19 @@ export function AchievementSystem({
           journeyProgress = AchievementTracker.getJourneyProgress();
         }
 
+        // Ensure we have valid data structures
+        achievements = achievements || [];
+        journeyProgress = journeyProgress || {
+          wordsLearned: 0,
+          streakDays: 0,
+          totalAccuracy: 85,
+          difficultyStats: {
+            easy: { completed: 0 },
+            medium: { completed: 0 },
+            hard: { completed: 0 },
+          },
+        };
+
         // Get category completion data
         const categoryStats =
           CategoryCompletionTracker.getCurrentCategoryStats();
@@ -280,14 +293,62 @@ export function AchievementSystem({
           CategoryCompletionTracker.getCompletionHistory();
 
         // Build category breakdown from real data
-        const categoryBreakdown = Object.entries(categoryStats).map(
-          ([category, data]) => ({
-            category: category.charAt(0).toUpperCase() + category.slice(1),
-            wordsLearned: data.wordsReviewed || 0,
-            accuracy: data.averageAccuracy || 0,
-            timeSpent: data.timeSpent || 0,
-          }),
-        );
+        let categoryBreakdown = [];
+        if (categoryStats && typeof categoryStats === "object") {
+          // If we have current session stats, create a single category entry
+          categoryBreakdown = [
+            {
+              category: "Current Session",
+              wordsLearned: categoryStats.wordsReviewed || 0,
+              accuracy: categoryStats.accuracy || 0,
+              timeSpent: categoryStats.timeSpent || 0,
+            },
+          ];
+        } else {
+          // Build from completion history if no current session
+          const categoryMap = new Map();
+          completionHistory.forEach((record: any) => {
+            const categoryName = record.categoryId || "Unknown";
+            if (categoryMap.has(categoryName)) {
+              const existing = categoryMap.get(categoryName);
+              existing.wordsLearned += record.wordsReviewed || 0;
+              existing.timeSpent += record.timeSpent || 0;
+              existing.totalSessions++;
+              existing.totalAccuracy += record.accuracy || 0;
+              existing.accuracy =
+                existing.totalAccuracy / existing.totalSessions;
+            } else {
+              categoryMap.set(categoryName, {
+                category:
+                  categoryName.charAt(0).toUpperCase() + categoryName.slice(1),
+                wordsLearned: record.wordsReviewed || 0,
+                accuracy: record.accuracy || 0,
+                timeSpent: record.timeSpent || 0,
+                totalSessions: 1,
+                totalAccuracy: record.accuracy || 0,
+              });
+            }
+          });
+
+          categoryBreakdown = Array.from(categoryMap.values()).map((cat) => ({
+            category: cat.category,
+            wordsLearned: cat.wordsLearned,
+            accuracy: Math.round(cat.accuracy),
+            timeSpent: cat.timeSpent,
+          }));
+
+          // If no categories found, provide a default empty state
+          if (categoryBreakdown.length === 0) {
+            categoryBreakdown = [
+              {
+                category: "Getting Started",
+                wordsLearned: 0,
+                accuracy: 0,
+                timeSpent: 0,
+              },
+            ];
+          }
+        }
 
         // Get progress data from GoalProgressTracker
         let progressData;
@@ -397,6 +458,19 @@ export function AchievementSystem({
           achievements = AchievementTracker.getAchievements();
           journeyProgress = AchievementTracker.getJourneyProgress();
         }
+
+        // Ensure we have valid data structures
+        achievements = achievements || [];
+        journeyProgress = journeyProgress || {
+          wordsLearned: 0,
+          streakDays: 0,
+          totalAccuracy: 85,
+          difficultyStats: {
+            easy: { completed: 0 },
+            medium: { completed: 0 },
+            hard: { completed: 0 },
+          },
+        };
 
         setRealAchievements(achievements);
 
