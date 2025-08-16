@@ -1153,10 +1153,10 @@ export function AIEnhancedInteractiveDashboardWordCard({
           className={cn(
             "w-full max-w-3xl mx-auto relative overflow-hidden",
             "bg-gradient-to-br from-white via-blue-50/30 to-purple-50/30",
-            "shadow-lg hover:shadow-xl border-0 rounded-2xl sm:rounded-3xl",
-            "backdrop-blur-sm ring-1 ring-black/5",
+            "shadow-md sm:shadow-lg hover:shadow-lg sm:hover:shadow-xl border-0 rounded-xl sm:rounded-3xl",
+            "ring-1 ring-black/5",
             celebrationEffect &&
-              "animate-pulse shadow-2xl border-yellow-400 border-4 bg-gradient-to-br from-yellow-50 to-orange-50",
+              "animate-pulse shadow-xl sm:shadow-2xl border-yellow-400 border-2 sm:border-4 bg-gradient-to-br from-yellow-50 to-orange-50",
           )}
         >
           {/* Celebration Sparkles */}
