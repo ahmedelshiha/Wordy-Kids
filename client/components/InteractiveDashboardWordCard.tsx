@@ -782,6 +782,7 @@ export function InteractiveDashboardWordCard({
             {feedbackType === "remembered" && (
               <>
                 <motion.div
+                  key={`feedback-sparkle-1-${currentWordIndex}`}
                   initial={{ opacity: 0, scale: 0, x: -20, y: -10 }}
                   animate={{
                     opacity: [0, 1, 0],
@@ -800,6 +801,7 @@ export function InteractiveDashboardWordCard({
                   ✨
                 </motion.div>
                 <motion.div
+                  key={`feedback-sparkle-2-${currentWordIndex}`}
                   initial={{ opacity: 0, scale: 0, x: 20, y: -10 }}
                   animate={{
                     opacity: [0, 1, 0],
@@ -1197,7 +1199,7 @@ export function InteractiveDashboardWordCard({
 
                       if (wordsLearned >= goal) {
                         if (wordsLearned >= goal * 2)
-                          return "⭐ SUPERSTAR! Amazing effort!";
+                          return "�� SUPERSTAR! Amazing effort!";
                         if (wordsLearned >= goal * 1.5)
                           return "🚀 Beyond awesome! Keep going!";
                         return "🎉 Goal achieved! You're incredible!";
