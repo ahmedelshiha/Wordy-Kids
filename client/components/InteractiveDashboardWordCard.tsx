@@ -857,6 +857,7 @@ export function InteractiveDashboardWordCard({
 
           {/* Main emoji with enhanced animation */}
           <motion.div
+            key={`emoji-inner-${currentWordIndex}`}
             animate={{
               y: [0, -8, 0],
               rotate: [0, 2, -2, 0],
