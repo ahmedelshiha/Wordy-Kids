@@ -28,6 +28,7 @@ import {
 import { cn } from "@/lib/utils";
 import { audioService } from "@/lib/audioService";
 import { enhancedAudioService } from "@/lib/enhancedAudioService";
+import { EMOJI_CONSTANTS, ensureEmojiSafety } from "@/lib/emojiValidator";
 import { AchievementTracker } from "@/lib/achievementTracker";
 import { EnhancedAchievementTracker } from "@/lib/enhancedAchievementTracker";
 import { EnhancedAchievementPopup } from "@/components/EnhancedAchievementPopup";
