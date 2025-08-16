@@ -185,30 +185,82 @@ export const LearningDashboard: React.FC<LearningDashboardProps> = ({
 
   return (
     <div className="space-y-4">
+      {/* AI Enhancement Toggle */}
+      {userId && (
+        <Card className="bg-gradient-to-r from-blue-50 to-purple-50 border-blue-200">
+          <CardContent className="p-4">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <Brain className="w-5 h-5 text-blue-600" />
+                <div>
+                  <h3 className="font-semibold text-blue-800">AI-Enhanced Learning</h3>
+                  <p className="text-sm text-blue-600">Personalized word selection with machine learning</p>
+                </div>
+              </div>
+              <Button
+                onClick={() => setUseAIEnhancement(!useAIEnhancement)}
+                variant={useAIEnhancement ? "default" : "outline"}
+                className={useAIEnhancement
+                  ? "bg-gradient-to-r from-blue-500 to-purple-500 text-white"
+                  : "border-blue-300 text-blue-700 hover:bg-blue-50"
+                }
+              >
+                {useAIEnhancement ? "🤖 AI Enabled" : "Enable AI"}
+              </Button>
+            </div>
+          </CardContent>
+        </Card>
+      )}
+
       {/* Interactive Word Learning Hub - PRIMARY FEATURE */}
       {availableWords.length > 0 && onWordProgress ? (
-        <InteractiveDashboardWordCard
-          words={availableWords}
-          onWordProgress={onWordProgress}
-          onQuickQuiz={onQuickQuiz || (() => console.log("Quick quiz"))}
-          onAdventure={onAdventure || (() => console.log("Adventure"))}
-          onPracticeForgotten={
-            onPracticeForgotten || (() => console.log("Practice forgotten"))
-          }
-          dailyGoal={{
-            target: stats.dailyGoalTarget || stats.weeklyGoal, // Use daily goal if available
-            completed: stats.dailyGoalProgress || stats.weeklyProgress,
-            streak: stats.currentStreak,
-          }}
-          currentLevel={stats.level}
-          totalPoints={stats.totalPoints}
-          forgottenWordsCount={forgottenWordsCount}
-          rememberedWordsCount={rememberedWordsCount}
-          onRequestNewWords={onRequestNewWords}
-          onSessionProgress={onSessionProgress}
-          dashboardSession={dashboardSession}
-          onGenerateNewSession={onGenerateNewSession}
-        />
+        <>
+          {useAIEnhancement && userId && userProgress ? (
+            <AIEnhancedInteractiveDashboardWordCard
+              userId={userId}
+              userProgress={userProgress}
+              childStats={childStats}
+              onWordProgress={onWordProgress}
+              onQuickQuiz={onQuickQuiz || (() => console.log("Quick quiz"))}
+              onAdventure={onAdventure || (() => console.log("Adventure"))}
+              onPracticeForgotten={
+                onPracticeForgotten || (() => console.log("Practice forgotten"))
+              }
+              dailyGoal={{
+                target: stats.dailyGoalTarget || stats.weeklyGoal, // Use daily goal if available
+                completed: stats.dailyGoalProgress || stats.weeklyProgress,
+                streak: stats.currentStreak,
+              }}
+              currentLevel={stats.level}
+              totalPoints={stats.totalPoints}
+              selectedCategory={selectedCategory}
+              onSessionComplete={onSessionComplete}
+            />
+          ) : (
+            <InteractiveDashboardWordCard
+              words={availableWords}
+              onWordProgress={onWordProgress}
+              onQuickQuiz={onQuickQuiz || (() => console.log("Quick quiz"))}
+              onAdventure={onAdventure || (() => console.log("Adventure"))}
+              onPracticeForgotten={
+                onPracticeForgotten || (() => console.log("Practice forgotten"))
+              }
+              dailyGoal={{
+                target: stats.dailyGoalTarget || stats.weeklyGoal, // Use daily goal if available
+                completed: stats.dailyGoalProgress || stats.weeklyProgress,
+                streak: stats.currentStreak,
+              }}
+              currentLevel={stats.level}
+              totalPoints={stats.totalPoints}
+              forgottenWordsCount={forgottenWordsCount}
+              rememberedWordsCount={rememberedWordsCount}
+              onRequestNewWords={onRequestNewWords}
+              onSessionProgress={onSessionProgress}
+              dashboardSession={dashboardSession}
+              onGenerateNewSession={onGenerateNewSession}
+            />
+          )}
+        </>
       ) : (
         // Fallback welcome section if no words available
         <div className="text-center py-12">
