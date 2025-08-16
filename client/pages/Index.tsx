@@ -3011,7 +3011,6 @@ export default function Index({ initialProfile }: IndexProps) {
                               </CardContent>
                             </Card>
 
-                            {/* Vowel Challenge - Medium */}
                             <Card className="cursor-pointer hover:shadow-lg transition-all duration-300 hover:scale-105 border-2 border-educational-purple/30 animate-kid-float-delayed">
                               <CardContent className="p-3 md:p-4 text-center">
                                 <div className="text-3xl md:text-5xl mb-2 md:mb-3 animate-sparkle">
