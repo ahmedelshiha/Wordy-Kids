@@ -40,30 +40,55 @@ interface Question {
 
 const VOWELS = ["A", "E", "I", "O", "U"];
 
-// Smart distractor generation
-const generateSmartDistractors = (correctVowel: string): string[] => {
-  const similar = {
-    A: ["E", "I"],
-    E: ["A", "I"],
-    I: ["E", "A"],
-    O: ["U", "A"],
-    U: ["O", "E"],
-  };
+// Smart distractor generation - only uses vowels present in the word
+const generateSmartDistractors = (
+  correctVowel: string,
+  word: string,
+  difficulty: "easy" | "medium" | "hard"
+): string[] => {
+  // Find all vowels present in the word
+  const upperWord = word.toUpperCase();
+  const vowelsInWord = [...new Set(
+    upperWord.split('').filter(char => VOWELS.includes(char))
+  )];
 
+  // Ensure we have the correct vowel
   const distractors = [correctVowel];
-  const similarVowels = similar[correctVowel as keyof typeof similar] || [];
 
-  // Add similar vowels first
-  similarVowels.forEach((vowel) => {
-    if (distractors.length < 4) distractors.push(vowel);
-  });
-
-  // Fill remaining with other vowels
-  VOWELS.forEach((vowel) => {
-    if (distractors.length < 4 && !distractors.includes(vowel)) {
+  // Add other vowels that are actually in the word first
+  vowelsInWord.forEach((vowel) => {
+    if (vowel !== correctVowel && distractors.length < 4) {
       distractors.push(vowel);
     }
   });
+
+  // If we need more distractors and there aren't enough vowels in the word,
+  // add similar sounding vowels based on difficulty
+  if (distractors.length < 4) {
+    const similar = {
+      A: difficulty === "easy" ? ["E"] : ["E", "I"],
+      E: difficulty === "easy" ? ["A"] : ["A", "I"],
+      I: difficulty === "easy" ? ["E"] : ["E", "A"],
+      O: difficulty === "easy" ? ["U"] : ["U", "A"],
+      U: difficulty === "easy" ? ["O"] : ["O", "E"],
+    };
+
+    const similarVowels = similar[correctVowel as keyof typeof similar] || [];
+    similarVowels.forEach((vowel) => {
+      if (distractors.length < 4 && !distractors.includes(vowel)) {
+        distractors.push(vowel);
+      }
+    });
+  }
+
+  // If still need more, add any remaining vowels (for very complex words)
+  if (distractors.length < 4) {
+    VOWELS.forEach((vowel) => {
+      if (distractors.length < 4 && !distractors.includes(vowel)) {
+        distractors.push(vowel);
+      }
+    });
+  }
 
   // Shuffle to randomize order
   return distractors.sort(() => Math.random() - 0.5);
