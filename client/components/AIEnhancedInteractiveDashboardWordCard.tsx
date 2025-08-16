@@ -1285,8 +1285,8 @@ export function AIEnhancedInteractiveDashboardWordCard({
               </motion.div>
             </AnimatePresence>
 
-            {/* Game Instructions */}
-            <header className="text-center mb-3 sm:mb-4 md:mb-5" role="banner">
+            {/* Game Instructions - Mobile Optimized */}
+            <header className="text-center mb-2 sm:mb-4 md:mb-5" role="banner">
               <motion.h1
                 key={`prompt-${currentWordIndex}`}
                 initial={{ opacity: 0, y: -10, scale: 0.95 }}
@@ -1301,10 +1301,10 @@ export function AIEnhancedInteractiveDashboardWordCard({
                 initial={{ opacity: 0, y: 5 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.4, delay: 0.1 }}
-                className="text-xs sm:text-sm md:text-base text-gray-600 px-2"
+                className="text-xs sm:text-sm text-gray-600 px-2"
                 id="game-instructions"
               >
-                AI has selected this word specially for you!
+                🤖 AI picked this for you!
               </motion.p>
             </header>
 
