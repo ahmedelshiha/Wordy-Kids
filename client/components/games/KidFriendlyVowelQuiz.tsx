@@ -278,8 +278,8 @@ export function KidFriendlyVowelQuiz({
         </div>
 
         {/* Question Card - Large and Touch Friendly */}
-        <Card className="bg-white/95 rounded-2xl shadow-xl border-4 border-purple-200 mb-6">
-          <CardContent className="p-8">
+        <Card className="bg-white/95 rounded-2xl shadow-xl border-4 border-purple-200 mb-6 mobile-card">
+          <CardContent className="p-8 mobile-card-content">
             <div className="text-center">
               <h2 className="text-2xl font-bold mb-6 text-purple-700">
                 Complete this word:
@@ -364,7 +364,7 @@ export function KidFriendlyVowelQuiz({
                   }`}
                 >
                   <div className="text-4xl mb-2">
-                    {isCorrect ? "🎉" : "😊"}
+                    {isCorrect ? "����" : "😊"}
                   </div>
                   <p className={`text-xl font-bold ${
                     isCorrect ? "text-green-700" : "text-orange-700"
