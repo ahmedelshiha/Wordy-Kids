@@ -289,13 +289,13 @@ export function AIEnhancedInteractiveDashboardWordCard({
       case "f":
       case "F":
         event.preventDefault();
-        handleWordAction("needs_practice");
+        handleWordAction("needs_practice", false); // No celebration sound for keyboard shortcuts
         break;
       case "2":
       case "r":
       case "R":
         event.preventDefault();
-        handleWordAction("remembered");
+        handleWordAction("remembered", false); // No celebration sound for keyboard shortcuts
         break;
       case "h":
       case "H":
@@ -723,7 +723,7 @@ export function AIEnhancedInteractiveDashboardWordCard({
     // Fallback to emoji with AI feedback overlay
     if (currentWord?.emoji) {
       if (feedbackType) {
-        const feedbackEmoji = feedbackType === "remembered" ? "���" : "💪";
+        const feedbackEmoji = feedbackType === "remembered" ? "🎉" : "💪";
         const feedbackColor =
           feedbackType === "remembered"
             ? "from-green-100 to-green-200"
