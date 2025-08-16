@@ -179,14 +179,17 @@ const PLANT_TYPES = [
 ] as const;
 
 // Generate emoji-based image using SVG data URI with larger size
-function generateEmojiImage(emoji: string, fallbackText?: string): string {
-  if (emoji && emoji !== "") {
+function generateEmojiImage(emoji: string, fallbackText?: string, category?: string): string {
+  // Use emoji utility to ensure we have a valid emoji
+  const validEmoji = ensureValidEmoji(emoji, category);
+
+  if (validEmoji) {
     // Create SVG with large emoji for better visibility
     const svg = `
       <svg xmlns="http://www.w3.org/2000/svg" width="250" height="250" viewBox="0 0 250 250">
         <rect width="250" height="250" fill="#f0fdf4" rx="25"/>
         <circle cx="125" cy="125" r="110" fill="#dcfce7" opacity="0.8"/>
-        <text x="125" y="160" font-size="140" text-anchor="middle" font-family="Arial, sans-serif">${emoji}</text>
+        <text x="125" y="160" font-size="140" text-anchor="middle" font-family="Arial, sans-serif">${validEmoji}</text>
       </svg>
     `;
 
@@ -194,8 +197,17 @@ function generateEmojiImage(emoji: string, fallbackText?: string): string {
     return `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`;
   }
 
-  // Fallback to placeholder if no emoji
-  return `https://via.placeholder.com/250x250/4ade80/ffffff?text=${encodeURIComponent(fallbackText || "Word")}`;
+  // Enhanced fallback with better category-specific placeholder
+  const fallbackEmoji = category ? getCategoryFallbackEmoji(category) : "🌱";
+  const svg = `
+    <svg xmlns="http://www.w3.org/2000/svg" width="250" height="250" viewBox="0 0 250 250">
+      <rect width="250" height="250" fill="#f0fdf4" rx="25"/>
+      <circle cx="125" cy="125" r="110" fill="#dcfce7" opacity="0.8"/>
+      <text x="125" y="160" font-size="140" text-anchor="middle" font-family="Arial, sans-serif">${fallbackEmoji}</text>
+    </svg>
+  `;
+
+  return `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`;
 }
 
 // Enhanced word generation using database words with emojis (same as Listen & Guess)
