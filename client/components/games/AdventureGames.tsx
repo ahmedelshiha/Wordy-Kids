@@ -98,22 +98,6 @@ export function AdventureGames({
       color: "from-educational-blue to-blue-400",
       players: "Single Player",
     },
-    {
-      id: "balloon_rescue",
-      title: "Balloon Rescue!",
-      description:
-        "Save balloons by finding missing vowels! Progressive difficulty with achievements.",
-      icon: "🎈",
-      difficulty: "Progressive",
-      timeLimit: "3-8 min",
-      rewards: [
-        "🎈 Rescue balloons",
-        "🏆 Vowel master badges",
-        "🌟 Streak celebrations",
-      ],
-      color: "from-sky-400 to-blue-500",
-      players: "Single Player",
-    },
   ];
 
   const handleGameStart = (gameId: string) => {
