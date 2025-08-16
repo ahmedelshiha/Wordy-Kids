@@ -1251,6 +1251,10 @@ export function AIEnhancedInteractiveDashboardWordCard({
                           aiActions.endSession({ completed: false });
                         } else {
                           // Start AI session with current words
+                          if (sessionWords.length === 0) {
+                            console.warn("Cannot start AI session: no words available");
+                            return;
+                          }
                           aiActions.startSession({
                             words: sessionWords.slice(0, 10),
                             confidence: 0.8,
