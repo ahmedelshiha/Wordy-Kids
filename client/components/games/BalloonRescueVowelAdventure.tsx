@@ -20,6 +20,7 @@ import "../../styles/balloon-rescue-adventure.css";
 type Props = {
   words?: WordItem[];
   totalQuestions?: number;
+  category?: string;
   onFinish?: (result: GameResult) => void;
   onHome?: () => void;
 };
