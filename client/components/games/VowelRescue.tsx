@@ -726,7 +726,7 @@ export function VowelRescue({
 
             {/* Vowel Buttons - Mobile Optimized */}
             <div className="flex justify-center gap-2 sm:gap-3 md:gap-4 mb-6 px-2">
-              {vowelOptions.map((vowel) => {
+              {currentVowelOptions.map((vowel) => {
                 const nextPosition = getNextMissingPosition();
                 const allCompleted = getMissingVowelPositions().length === 0;
                 const isCorrectlyCompleted =
@@ -925,7 +925,7 @@ export function VowelRescue({
             // Show help via audio service announcement
             if ("speechSynthesis" in window) {
               const utterance = new SpeechSynthesisUtterance(
-                `${helpContent.title}. ${helpContent.message.replace(/\n/g, ". ").replace(/•/g, "")}`,
+                `${helpContent.title}. ${helpContent.message.replace(/\n/g, ". ").replace(/���/g, "")}`,
               );
               utterance.rate = 0.8;
               utterance.pitch = 1.1;
