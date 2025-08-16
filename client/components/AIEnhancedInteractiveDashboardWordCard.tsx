@@ -857,7 +857,7 @@ export function AIEnhancedInteractiveDashboardWordCard({
               🔊
             </div>
             <div className="bg-white/80 rounded-full px-2 py-1">
-              <span className="text-xs font-bold text-blue-600">
+              <span className="text-xs font-bold text-blue-600 opacity-75 scale-75">
                 {Math.round(confidenceLevel * 100)}%
               </span>
             </div>
@@ -1036,7 +1036,7 @@ export function AIEnhancedInteractiveDashboardWordCard({
             </div>
             <div className="grid grid-cols-3 gap-2 sm:gap-4 text-xs sm:text-sm">
               <div className="text-center">
-                <div className="text-lg font-bold text-blue-600">
+                <div className="text-xs font-bold text-blue-600 opacity-75">
                   {Math.round(confidenceLevel * 100)}%
                 </div>
                 <div className="text-gray-600">AI Confidence</div>
@@ -1086,7 +1086,7 @@ export function AIEnhancedInteractiveDashboardWordCard({
             <div className="bg-gradient-to-r from-blue-100 to-purple-100 rounded-lg p-1.5 sm:p-2 mb-2 sm:mb-4">
               <div className="flex items-center justify-center gap-1 sm:gap-2 text-xs sm:text-sm">
                 <Brain className="w-3 h-3 sm:w-4 sm:h-4 text-blue-600" />
-                <span className="font-medium text-blue-800">
+                <span className="text-xs font-medium text-blue-800 opacity-75">
                   🤖 {Math.round(confidenceLevel * 100)}%
                 </span>
               </div>
@@ -1291,7 +1291,7 @@ export function AIEnhancedInteractiveDashboardWordCard({
                 {aiState.isSessionActive && (
                   <div className="mt-2 text-center opacity-80">
                     <span className="text-xs">Word {currentWordIndex + 1}/{SESSION_SIZE} •{" "}</span>
-                    <span className="text-xs">{Math.round(confidenceLevel * 100)}% 📈</span>
+                    <span className="text-xs opacity-60 scale-75">{Math.round(confidenceLevel * 100)}% 📈</span>
                   </div>
                 )}
               </div>
@@ -1363,7 +1363,7 @@ export function AIEnhancedInteractiveDashboardWordCard({
                         </Button>
                       </div>
                       <div className="flex items-center gap-3 opacity-90">
-                        <span className="text-xs">
+                        <span className="text-xs opacity-60 scale-75">
                           📊 {Math.round(confidenceLevel * 100)}% Confidence
                         </span>
                         <span>•</span>
