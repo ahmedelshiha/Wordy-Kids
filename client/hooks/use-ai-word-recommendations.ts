@@ -1,9 +1,9 @@
 import { useState, useEffect, useCallback, useRef } from "react";
-import { 
-  aiWordRecommendationService, 
-  SessionContext, 
+import {
+  aiWordRecommendationService,
+  SessionContext,
   WordInteraction,
-  AIServiceConfig 
+  AIServiceConfig,
 } from "@/lib/aiWordRecommendationService";
 import { AIRecommendation } from "@/lib/aiWordRecommendationEngine";
 import { Word } from "@/data/wordsDatabase";
@@ -25,7 +25,7 @@ export interface AIRecommendationState {
   words: Word[];
   confidence: number;
   reasoning: string[];
-  
+
   // Session state
   isSessionActive: boolean;
   sessionProgress: {
@@ -36,12 +36,12 @@ export interface AIRecommendationState {
     engagement: number;
     cognitiveLoad: number;
   };
-  
+
   // Real-time feedback
   adaptiveHints: string[];
   encouragementMessages: string[];
   difficultyAdjustment: "easier" | "harder" | "maintain" | null;
-  
+
   // Analytics
   learningAnalytics: {
     velocityTrend: number[];
@@ -49,7 +49,7 @@ export interface AIRecommendationState {
     categoryMastery: Map<string, number>;
     predictedOutcomes: any;
   } | null;
-  
+
   // Status flags
   isLoading: boolean;
   error: string | null;
@@ -67,30 +67,40 @@ export interface AIRecommendationActions {
     },
     childStats?: ChildWordStats | null,
     category?: string,
-    targetWordCount?: number
+    targetWordCount?: number,
   ) => Promise<void>;
-  
+
   startSession: (recommendation: AIRecommendation) => void;
   endSession: (outcome: {
     completed: boolean;
     reason?: string;
     userSatisfaction?: number;
   }) => Promise<void>;
-  
+
   // Word interactions
-  recordWordInteraction: (interaction: Omit<WordInteraction, "timestamp">) => Promise<void>;
-  recordCorrectAnswer: (wordId: number, responseTime: number, hintsUsed?: number) => Promise<void>;
-  recordIncorrectAnswer: (wordId: number, responseTime: number, attemptNumber: number) => Promise<void>;
-  
+  recordWordInteraction: (
+    interaction: Omit<WordInteraction, "timestamp">,
+  ) => Promise<void>;
+  recordCorrectAnswer: (
+    wordId: number,
+    responseTime: number,
+    hintsUsed?: number,
+  ) => Promise<void>;
+  recordIncorrectAnswer: (
+    wordId: number,
+    responseTime: number,
+    attemptNumber: number,
+  ) => Promise<void>;
+
   // Adaptive features
   requestHint: (wordId: number) => Promise<string>;
   adjustDifficulty: (direction: "easier" | "harder") => Promise<void>;
   skipWord: (wordId: number, reason: string) => Promise<void>;
-  
+
   // Analytics
   refreshAnalytics: () => void;
   getStudyRecommendations: () => any;
-  
+
   // Configuration
   updateConfig: (config: Partial<AIServiceConfig>) => void;
   reset: () => void;
@@ -98,21 +108,20 @@ export interface AIRecommendationActions {
 
 /**
  * React hook for AI-powered word recommendations
- * 
+ *
  * Provides a complete interface for integrating AI recommendations into React components.
  * Handles state management, real-time adaptation, and analytics.
  */
 export function useAIWordRecommendations(
-  config: UseAIRecommendationsConfig
+  config: UseAIRecommendationsConfig,
 ): [AIRecommendationState, AIRecommendationActions] {
-  
   // Core state
   const [state, setState] = useState<AIRecommendationState>({
     currentRecommendation: null,
     words: [],
     confidence: 0,
     reasoning: [],
-    
+
     isSessionActive: false,
     sessionProgress: {
       wordsAttempted: 0,
@@ -120,36 +129,38 @@ export function useAIWordRecommendations(
       currentWordIndex: 0,
       efficiency: 0,
       engagement: 0,
-      cognitiveLoad: 0
+      cognitiveLoad: 0,
     },
-    
+
     adaptiveHints: [],
     encouragementMessages: [],
     difficultyAdjustment: null,
-    
+
     learningAnalytics: null,
-    
+
     isLoading: false,
     error: null,
-    hasInitialized: false
+    hasInitialized: false,
   });
 
   // Refs for stable references
   const sessionStartTime = useRef<number>(0);
   const currentWordIndex = useRef<number>(0);
-  const adaptationCallbackRef = useRef<((recommendation: AIRecommendation) => void) | null>(null);
+  const adaptationCallbackRef = useRef<
+    ((recommendation: AIRecommendation) => void) | null
+  >(null);
 
   // Initialize service and set up event listeners
   useEffect(() => {
     const initializeService = async () => {
       try {
-        setState(prev => ({ ...prev, isLoading: true }));
+        setState((prev) => ({ ...prev, isLoading: true }));
 
         // Configure service
         const serviceConfig: Partial<AIServiceConfig> = {
           enableRealTimeAdaptation: config.enableRealTimeAdaptation ?? true,
           enablePredictiveAnalytics: config.enableAnalytics ?? true,
-          enableMotivationalBoosts: config.enableMotivationalBoosts ?? true
+          enableMotivationalBoosts: config.enableMotivationalBoosts ?? true,
         };
 
         // Get service instance with config
@@ -157,11 +168,11 @@ export function useAIWordRecommendations(
 
         // Set up real-time adaptation callback
         adaptationCallbackRef.current = (recommendation: AIRecommendation) => {
-          setState(prev => ({
+          setState((prev) => ({
             ...prev,
             currentRecommendation: recommendation,
             reasoning: [...prev.reasoning, "Real-time adaptation applied"],
-            adaptiveHints: [...prev.adaptiveHints, ...recommendation.reasoning]
+            adaptiveHints: [...prev.adaptiveHints, ...recommendation.reasoning],
           }));
         };
 
@@ -172,24 +183,26 @@ export function useAIWordRecommendations(
         // Load initial analytics
         if (config.enableAnalytics) {
           const analytics = service.getLearningAnalytics(config.userId);
-          setState(prev => ({
+          setState((prev) => ({
             ...prev,
-            learningAnalytics: analytics
+            learningAnalytics: analytics,
           }));
         }
 
-        setState(prev => ({
+        setState((prev) => ({
           ...prev,
           hasInitialized: true,
           isLoading: false,
-          error: null
+          error: null,
         }));
-
       } catch (error) {
-        setState(prev => ({
+        setState((prev) => ({
           ...prev,
-          error: error instanceof Error ? error.message : "Failed to initialize AI service",
-          isLoading: false
+          error:
+            error instanceof Error
+              ? error.message
+              : "Failed to initialize AI service",
+          isLoading: false,
         }));
       }
     };
@@ -199,229 +212,273 @@ export function useAIWordRecommendations(
     // Cleanup
     return () => {
       if (adaptationCallbackRef.current) {
-        aiWordRecommendationService.offAdaptation(adaptationCallbackRef.current);
+        aiWordRecommendationService.offAdaptation(
+          adaptationCallbackRef.current,
+        );
       }
     };
-  }, [config.userId, config.enableRealTimeAdaptation, config.enableAnalytics, config.enableMotivationalBoosts]);
+  }, [
+    config.userId,
+    config.enableRealTimeAdaptation,
+    config.enableAnalytics,
+    config.enableMotivationalBoosts,
+  ]);
 
   // Actions
-  const getRecommendations = useCallback(async (
-    sessionContext: SessionContext,
-    userProgress: {
-      rememberedWords: Set<number>;
-      forgottenWords: Set<number>;
-      excludedWordIds: Set<number>;
-    },
-    childStats?: ChildWordStats | null,
-    category?: string,
-    targetWordCount: number = 20
-  ) => {
-    try {
-      setState(prev => ({ ...prev, isLoading: true, error: null }));
-
-      const recommendation = await aiWordRecommendationService.getRecommendations(
-        config.userId,
-        sessionContext,
-        userProgress,
-        childStats,
-        category,
-        targetWordCount
-      );
-
-      setState(prev => ({
-        ...prev,
-        currentRecommendation: recommendation,
-        words: recommendation.words,
-        confidence: recommendation.confidence,
-        reasoning: recommendation.reasoning,
-        isLoading: false
-      }));
-
-      // Auto-start session if configured
-      if (config.autoStartSession) {
-        startSession(recommendation);
-      }
-
-    } catch (error) {
-      setState(prev => ({
-        ...prev,
-        error: error instanceof Error ? error.message : "Failed to get recommendations",
-        isLoading: false
-      }));
-    }
-  }, [config.userId, config.autoStartSession]);
-
-  const startSession = useCallback((recommendation: AIRecommendation) => {
-    sessionStartTime.current = Date.now();
-    currentWordIndex.current = 0;
-    
-    setState(prev => ({
-      ...prev,
-      isSessionActive: true,
-      sessionProgress: {
-        wordsAttempted: 0,
-        wordsCorrect: 0,
-        currentWordIndex: 0,
-        efficiency: 0,
-        engagement: 0.8, // Start with positive assumption
-        cognitiveLoad: 0.3 // Start with low load
+  const getRecommendations = useCallback(
+    async (
+      sessionContext: SessionContext,
+      userProgress: {
+        rememberedWords: Set<number>;
+        forgottenWords: Set<number>;
+        excludedWordIds: Set<number>;
       },
-      adaptiveHints: [],
-      encouragementMessages: [],
-      difficultyAdjustment: null
-    }));
+      childStats?: ChildWordStats | null,
+      category?: string,
+      targetWordCount: number = 20,
+    ) => {
+      try {
+        setState((prev) => ({ ...prev, isLoading: true, error: null }));
 
-    // Play session start sound
-    if (config.enableMotivationalBoosts) {
-      audioService.playSuccessSound();
-    }
-  }, [config.enableMotivationalBoosts]);
+        const recommendation =
+          await aiWordRecommendationService.getRecommendations(
+            config.userId,
+            sessionContext,
+            userProgress,
+            childStats,
+            category,
+            targetWordCount,
+          );
 
-  const endSession = useCallback(async (outcome: {
-    completed: boolean;
-    reason?: string;
-    userSatisfaction?: number;
-  }) => {
-    if (!state.isSessionActive) return;
-
-    try {
-      const sessionResult = await aiWordRecommendationService.completeSession(
-        config.userId,
-        {
-          ...outcome,
-          finalStats: {
-            wordsAttempted: state.sessionProgress.wordsAttempted,
-            wordsCorrect: state.sessionProgress.wordsCorrect,
-            totalTime: Date.now() - sessionStartTime.current,
-            userSatisfaction: outcome.userSatisfaction
-          }
-        }
-      );
-
-      // Update analytics
-      const updatedAnalytics = aiWordRecommendationService.getLearningAnalytics(config.userId);
-
-      setState(prev => ({
-        ...prev,
-        isSessionActive: false,
-        learningAnalytics: updatedAnalytics,
-        sessionProgress: {
-          ...prev.sessionProgress,
-          efficiency: sessionResult.sessionSummary.wordsCorrect / Math.max(1, sessionResult.sessionSummary.wordsAttempted)
-        }
-      }));
-
-      // Trigger achievements if any
-      if (sessionResult.achievements && sessionResult.achievements.length > 0) {
-        sessionResult.achievements.forEach(achievement => {
-          AchievementTracker.unlockAchievement(achievement.id, achievement);
-        });
-      }
-
-      // Play completion sound
-      if (config.enableMotivationalBoosts && outcome.completed) {
-        audioService.playAchievementSound();
-      }
-
-      return sessionResult;
-
-    } catch (error) {
-      setState(prev => ({
-        ...prev,
-        error: error instanceof Error ? error.message : "Failed to complete session",
-        isSessionActive: false
-      }));
-    }
-  }, [state.isSessionActive, state.sessionProgress, config.userId, config.enableMotivationalBoosts]);
-
-  const recordWordInteraction = useCallback(async (
-    interaction: Omit<WordInteraction, "timestamp">
-  ) => {
-    const fullInteraction: WordInteraction = {
-      ...interaction,
-      timestamp: Date.now()
-    };
-
-    try {
-      const response = await aiWordRecommendationService.recordWordInteraction(
-        config.userId,
-        fullInteraction
-      );
-
-      // Update session progress
-      setState(prev => {
-        const newProgress = { ...prev.sessionProgress };
-        newProgress.wordsAttempted++;
-        if (interaction.isCorrect) {
-          newProgress.wordsCorrect++;
-        }
-        newProgress.currentWordIndex = currentWordIndex.current + 1;
-        newProgress.efficiency = newProgress.wordsCorrect / Math.max(1, newProgress.wordsAttempted);
-
-        return {
+        setState((prev) => ({
           ...prev,
-          sessionProgress: newProgress,
-          adaptiveHints: response.adaptiveHint ? 
-            [...prev.adaptiveHints, response.adaptiveHint] : prev.adaptiveHints,
-          encouragementMessages: response.encouragement ? 
-            [...prev.encouragementMessages, response.encouragement] : prev.encouragementMessages,
-          difficultyAdjustment: response.difficultyAdjustment || prev.difficultyAdjustment
-        };
-      });
+          currentRecommendation: recommendation,
+          words: recommendation.words,
+          confidence: recommendation.confidence,
+          reasoning: recommendation.reasoning,
+          isLoading: false,
+        }));
 
-      // Update analytics if enabled
-      if (config.enableAnalytics) {
-        const analytics = aiWordRecommendationService.getLearningAnalytics(config.userId);
-        setState(prev => ({
+        // Auto-start session if configured
+        if (config.autoStartSession) {
+          startSession(recommendation);
+        }
+      } catch (error) {
+        setState((prev) => ({
           ...prev,
-          learningAnalytics: analytics,
-          sessionProgress: {
-            ...prev.sessionProgress,
-            engagement: analytics.currentSessionProgress?.engagement ?? prev.sessionProgress.engagement,
-            cognitiveLoad: analytics.currentSessionProgress?.cognitiveLoad ?? prev.sessionProgress.cognitiveLoad
-          }
+          error:
+            error instanceof Error
+              ? error.message
+              : "Failed to get recommendations",
+          isLoading: false,
         }));
       }
+    },
+    [config.userId, config.autoStartSession],
+  );
 
-      currentWordIndex.current++;
+  const startSession = useCallback(
+    (recommendation: AIRecommendation) => {
+      sessionStartTime.current = Date.now();
+      currentWordIndex.current = 0;
 
-    } catch (error) {
-      setState(prev => ({
+      setState((prev) => ({
         ...prev,
-        error: error instanceof Error ? error.message : "Failed to record interaction"
+        isSessionActive: true,
+        sessionProgress: {
+          wordsAttempted: 0,
+          wordsCorrect: 0,
+          currentWordIndex: 0,
+          efficiency: 0,
+          engagement: 0.8, // Start with positive assumption
+          cognitiveLoad: 0.3, // Start with low load
+        },
+        adaptiveHints: [],
+        encouragementMessages: [],
+        difficultyAdjustment: null,
       }));
-    }
-  }, [config.userId, config.enableAnalytics]);
 
-  const recordCorrectAnswer = useCallback(async (
-    wordId: number,
-    responseTime: number,
-    hintsUsed: number = 0
-  ) => {
-    await recordWordInteraction({
-      wordId,
-      word: "", // Would be filled by the component
-      isCorrect: true,
-      responseTime,
-      hintsUsed,
-      attemptNumber: 1
-    });
-  }, [recordWordInteraction]);
+      // Play session start sound
+      if (config.enableMotivationalBoosts) {
+        audioService.playSuccessSound();
+      }
+    },
+    [config.enableMotivationalBoosts],
+  );
 
-  const recordIncorrectAnswer = useCallback(async (
-    wordId: number,
-    responseTime: number,
-    attemptNumber: number
-  ) => {
-    await recordWordInteraction({
-      wordId,
-      word: "", // Would be filled by the component
-      isCorrect: false,
-      responseTime,
-      hintsUsed: 0,
-      attemptNumber
-    });
-  }, [recordWordInteraction]);
+  const endSession = useCallback(
+    async (outcome: {
+      completed: boolean;
+      reason?: string;
+      userSatisfaction?: number;
+    }) => {
+      if (!state.isSessionActive) return;
+
+      try {
+        const sessionResult = await aiWordRecommendationService.completeSession(
+          config.userId,
+          {
+            ...outcome,
+            finalStats: {
+              wordsAttempted: state.sessionProgress.wordsAttempted,
+              wordsCorrect: state.sessionProgress.wordsCorrect,
+              totalTime: Date.now() - sessionStartTime.current,
+              userSatisfaction: outcome.userSatisfaction,
+            },
+          },
+        );
+
+        // Update analytics
+        const updatedAnalytics =
+          aiWordRecommendationService.getLearningAnalytics(config.userId);
+
+        setState((prev) => ({
+          ...prev,
+          isSessionActive: false,
+          learningAnalytics: updatedAnalytics,
+          sessionProgress: {
+            ...prev.sessionProgress,
+            efficiency:
+              sessionResult.sessionSummary.wordsCorrect /
+              Math.max(1, sessionResult.sessionSummary.wordsAttempted),
+          },
+        }));
+
+        // Trigger achievements if any
+        if (
+          sessionResult.achievements &&
+          sessionResult.achievements.length > 0
+        ) {
+          sessionResult.achievements.forEach((achievement) => {
+            AchievementTracker.unlockAchievement(achievement.id, achievement);
+          });
+        }
+
+        // Play completion sound
+        if (config.enableMotivationalBoosts && outcome.completed) {
+          audioService.playAchievementSound();
+        }
+
+        return sessionResult;
+      } catch (error) {
+        setState((prev) => ({
+          ...prev,
+          error:
+            error instanceof Error
+              ? error.message
+              : "Failed to complete session",
+          isSessionActive: false,
+        }));
+      }
+    },
+    [
+      state.isSessionActive,
+      state.sessionProgress,
+      config.userId,
+      config.enableMotivationalBoosts,
+    ],
+  );
+
+  const recordWordInteraction = useCallback(
+    async (interaction: Omit<WordInteraction, "timestamp">) => {
+      const fullInteraction: WordInteraction = {
+        ...interaction,
+        timestamp: Date.now(),
+      };
+
+      try {
+        const response =
+          await aiWordRecommendationService.recordWordInteraction(
+            config.userId,
+            fullInteraction,
+          );
+
+        // Update session progress
+        setState((prev) => {
+          const newProgress = { ...prev.sessionProgress };
+          newProgress.wordsAttempted++;
+          if (interaction.isCorrect) {
+            newProgress.wordsCorrect++;
+          }
+          newProgress.currentWordIndex = currentWordIndex.current + 1;
+          newProgress.efficiency =
+            newProgress.wordsCorrect / Math.max(1, newProgress.wordsAttempted);
+
+          return {
+            ...prev,
+            sessionProgress: newProgress,
+            adaptiveHints: response.adaptiveHint
+              ? [...prev.adaptiveHints, response.adaptiveHint]
+              : prev.adaptiveHints,
+            encouragementMessages: response.encouragement
+              ? [...prev.encouragementMessages, response.encouragement]
+              : prev.encouragementMessages,
+            difficultyAdjustment:
+              response.difficultyAdjustment || prev.difficultyAdjustment,
+          };
+        });
+
+        // Update analytics if enabled
+        if (config.enableAnalytics) {
+          const analytics = aiWordRecommendationService.getLearningAnalytics(
+            config.userId,
+          );
+          setState((prev) => ({
+            ...prev,
+            learningAnalytics: analytics,
+            sessionProgress: {
+              ...prev.sessionProgress,
+              engagement:
+                analytics.currentSessionProgress?.engagement ??
+                prev.sessionProgress.engagement,
+              cognitiveLoad:
+                analytics.currentSessionProgress?.cognitiveLoad ??
+                prev.sessionProgress.cognitiveLoad,
+            },
+          }));
+        }
+
+        currentWordIndex.current++;
+      } catch (error) {
+        setState((prev) => ({
+          ...prev,
+          error:
+            error instanceof Error
+              ? error.message
+              : "Failed to record interaction",
+        }));
+      }
+    },
+    [config.userId, config.enableAnalytics],
+  );
+
+  const recordCorrectAnswer = useCallback(
+    async (wordId: number, responseTime: number, hintsUsed: number = 0) => {
+      await recordWordInteraction({
+        wordId,
+        word: "", // Would be filled by the component
+        isCorrect: true,
+        responseTime,
+        hintsUsed,
+        attemptNumber: 1,
+      });
+    },
+    [recordWordInteraction],
+  );
+
+  const recordIncorrectAnswer = useCallback(
+    async (wordId: number, responseTime: number, attemptNumber: number) => {
+      await recordWordInteraction({
+        wordId,
+        word: "", // Would be filled by the component
+        isCorrect: false,
+        responseTime,
+        hintsUsed: 0,
+        attemptNumber,
+      });
+    },
+    [recordWordInteraction],
+  );
 
   const requestHint = useCallback(async (wordId: number): Promise<string> => {
     // This would be enhanced to provide word-specific hints
@@ -429,44 +486,55 @@ export function useAIWordRecommendations(
       "Think about what category this word belongs to 🤔",
       "Try saying the word out loud - sometimes hearing helps! 🎵",
       "Break the word into smaller parts 🧩",
-      "What does this remind you of? 💭"
+      "What does this remind you of? 💭",
     ];
-    
+
     const hint = genericHints[Math.floor(Math.random() * genericHints.length)];
-    
-    setState(prev => ({
+
+    setState((prev) => ({
       ...prev,
-      adaptiveHints: [...prev.adaptiveHints, hint]
+      adaptiveHints: [...prev.adaptiveHints, hint],
     }));
-    
+
     return hint;
   }, []);
 
-  const adjustDifficulty = useCallback(async (direction: "easier" | "harder") => {
-    setState(prev => ({
-      ...prev,
-      difficultyAdjustment: direction,
-      reasoning: [...prev.reasoning, `Difficulty adjusted to be ${direction} based on performance`]
-    }));
-  }, []);
+  const adjustDifficulty = useCallback(
+    async (direction: "easier" | "harder") => {
+      setState((prev) => ({
+        ...prev,
+        difficultyAdjustment: direction,
+        reasoning: [
+          ...prev.reasoning,
+          `Difficulty adjusted to be ${direction} based on performance`,
+        ],
+      }));
+    },
+    [],
+  );
 
-  const skipWord = useCallback(async (wordId: number, reason: string) => {
-    await recordWordInteraction({
-      wordId,
-      word: "",
-      isCorrect: false,
-      responseTime: 1000, // Minimal time for skip
-      hintsUsed: 0,
-      attemptNumber: 0 // Special value for skipped words
-    });
-  }, [recordWordInteraction]);
+  const skipWord = useCallback(
+    async (wordId: number, reason: string) => {
+      await recordWordInteraction({
+        wordId,
+        word: "",
+        isCorrect: false,
+        responseTime: 1000, // Minimal time for skip
+        hintsUsed: 0,
+        attemptNumber: 0, // Special value for skipped words
+      });
+    },
+    [recordWordInteraction],
+  );
 
   const refreshAnalytics = useCallback(() => {
     if (config.enableAnalytics) {
-      const analytics = aiWordRecommendationService.getLearningAnalytics(config.userId);
-      setState(prev => ({
+      const analytics = aiWordRecommendationService.getLearningAnalytics(
+        config.userId,
+      );
+      setState((prev) => ({
         ...prev,
-        learningAnalytics: analytics
+        learningAnalytics: analytics,
       }));
     }
   }, [config.userId, config.enableAnalytics]);
@@ -477,9 +545,9 @@ export function useAIWordRecommendations(
 
   const updateConfig = useCallback((newConfig: Partial<AIServiceConfig>) => {
     // This would update the service configuration
-    setState(prev => ({
+    setState((prev) => ({
       ...prev,
-      reasoning: [...prev.reasoning, "Configuration updated"]
+      reasoning: [...prev.reasoning, "Configuration updated"],
     }));
   }, []);
 
@@ -489,7 +557,7 @@ export function useAIWordRecommendations(
       words: [],
       confidence: 0,
       reasoning: [],
-      
+
       isSessionActive: false,
       sessionProgress: {
         wordsAttempted: 0,
@@ -497,20 +565,20 @@ export function useAIWordRecommendations(
         currentWordIndex: 0,
         efficiency: 0,
         engagement: 0,
-        cognitiveLoad: 0
+        cognitiveLoad: 0,
       },
-      
+
       adaptiveHints: [],
       encouragementMessages: [],
       difficultyAdjustment: null,
-      
+
       learningAnalytics: null,
-      
+
       isLoading: false,
       error: null,
-      hasInitialized: true
+      hasInitialized: true,
     });
-    
+
     currentWordIndex.current = 0;
     sessionStartTime.current = 0;
   }, []);
@@ -536,7 +604,7 @@ export function useAIWordRecommendations(
     refreshAnalytics,
     getStudyRecommendations,
     updateConfig,
-    reset
+    reset,
   };
 
   return [state, actions];
@@ -578,10 +646,12 @@ export function useRealTimeLearningAnalytics(userId: string) {
 export function useAdaptiveDifficulty(
   userId: string,
   currentAccuracy: number,
-  responseTime: number
+  responseTime: number,
 ) {
-  const [suggestion, setSuggestion] = useState<"easier" | "harder" | "maintain">("maintain");
-  
+  const [suggestion, setSuggestion] = useState<
+    "easier" | "harder" | "maintain"
+  >("maintain");
+
   useEffect(() => {
     // Simple adaptive logic
     if (currentAccuracy < 0.5) {
@@ -601,19 +671,24 @@ export function useAdaptiveDifficulty(
  */
 export function usePersonalizedEncouragement(
   userId: string,
-  currentProgress: { correct: number; total: number }
+  currentProgress: { correct: number; total: number },
 ) {
   const [encouragement, setEncouragement] = useState<string>("");
-  
+
   useEffect(() => {
-    const accuracy = currentProgress.total > 0 ? currentProgress.correct / currentProgress.total : 0;
-    
+    const accuracy =
+      currentProgress.total > 0
+        ? currentProgress.correct / currentProgress.total
+        : 0;
+
     if (accuracy > 0.8) {
       setEncouragement("You're on fire! Keep up the amazing work! 🔥");
     } else if (accuracy > 0.6) {
       setEncouragement("Great progress! You're building your vocabulary! 📚");
     } else if (accuracy > 0.4) {
-      setEncouragement("Keep trying! Every word you learn makes you stronger! 💪");
+      setEncouragement(
+        "Keep trying! Every word you learn makes you stronger! 💪",
+      );
     } else {
       setEncouragement("Take your time! Learning is a journey, not a race! 🌟");
     }

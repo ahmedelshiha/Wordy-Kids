@@ -20,10 +20,13 @@ import {
   CheckCircle,
   AlertCircle,
   Star,
-  Zap
+  Zap,
 } from "lucide-react";
 import { AIEnhancedWordLearning } from "@/components/AIEnhancedWordLearning";
-import { useAIWordRecommendations, useRealTimeLearningAnalytics } from "@/hooks/use-ai-word-recommendations";
+import {
+  useAIWordRecommendations,
+  useRealTimeLearningAnalytics,
+} from "@/hooks/use-ai-word-recommendations";
 import { aiWordRecommendationService } from "@/lib/aiWordRecommendationService";
 import { AIWordRecommendationEngine } from "@/lib/aiWordRecommendationEngine";
 import { wordsDatabase, getWordsByCategory } from "@/data/wordsDatabase";
@@ -55,14 +58,14 @@ const demoUsers: DemoUserProfile[] = [
     preferences: {
       sessionLength: 10,
       difficulty: "easy",
-      categories: ["animals", "colors"]
+      categories: ["animals", "colors"],
     },
     stats: {
       wordsLearned: 25,
       averageAccuracy: 75,
       totalSessions: 8,
-      learningStreak: 3
-    }
+      learningStreak: 3,
+    },
   },
   {
     id: "demo-ben",
@@ -72,14 +75,14 @@ const demoUsers: DemoUserProfile[] = [
     preferences: {
       sessionLength: 15,
       difficulty: "medium",
-      categories: ["science", "nature", "food"]
+      categories: ["science", "nature", "food"],
     },
     stats: {
       wordsLearned: 125,
       averageAccuracy: 85,
       totalSessions: 24,
-      learningStreak: 7
-    }
+      learningStreak: 7,
+    },
   },
   {
     id: "demo-cara",
@@ -89,20 +92,24 @@ const demoUsers: DemoUserProfile[] = [
     preferences: {
       sessionLength: 20,
       difficulty: "hard",
-      categories: ["science", "technology", "advanced"]
+      categories: ["science", "technology", "advanced"],
     },
     stats: {
       wordsLearned: 200,
       averageAccuracy: 92,
       totalSessions: 45,
-      learningStreak: 12
-    }
-  }
+      learningStreak: 12,
+    },
+  },
 ];
 
 export default function AIWordRecommendationDemo() {
-  const [selectedUser, setSelectedUser] = useState<DemoUserProfile>(demoUsers[0]);
-  const [currentView, setCurrentView] = useState<"overview" | "demo" | "analytics" | "integration">("overview");
+  const [selectedUser, setSelectedUser] = useState<DemoUserProfile>(
+    demoUsers[0],
+  );
+  const [currentView, setCurrentView] = useState<
+    "overview" | "demo" | "analytics" | "integration"
+  >("overview");
   const [simulationRunning, setSimulationRunning] = useState(false);
   const [simulationResults, setSimulationResults] = useState<any[]>([]);
 
@@ -110,7 +117,7 @@ export default function AIWordRecommendationDemo() {
   const [userProgress, setUserProgress] = useState({
     rememberedWords: new Set<number>([1, 2, 3, 4, 5, 10, 12, 15, 18, 20]),
     forgottenWords: new Set<number>([6, 7, 11, 16]),
-    excludedWordIds: new Set<number>()
+    excludedWordIds: new Set<number>(),
   });
 
   // Mock child stats
@@ -119,11 +126,13 @@ export default function AIWordRecommendationDemo() {
     averageAccuracy: selectedUser.stats.averageAccuracy,
     totalReviewSessions: selectedUser.stats.totalSessions,
     weakestCategories: selectedUser.level === "beginner" ? ["science"] : [],
-    strongestCategories: selectedUser.preferences.categories
+    strongestCategories: selectedUser.preferences.categories,
   };
 
   // Analytics hook
-  const { analytics, refreshAnalytics } = useRealTimeLearningAnalytics(selectedUser.id);
+  const { analytics, refreshAnalytics } = useRealTimeLearningAnalytics(
+    selectedUser.id,
+  );
 
   // Simulate AI learning patterns for different user types
   const simulateUserLearning = async () => {
@@ -132,18 +141,20 @@ export default function AIWordRecommendationDemo() {
 
     for (let session = 1; session <= 5; session++) {
       // Simulate getting recommendations
-      const recommendation = await aiWordRecommendationService.getRecommendations(
-        selectedUser.id,
-        {
-          timeOfDay: 16, // 4 PM
-          sessionGoal: session <= 2 ? "learning" : session <= 4 ? "review" : "challenge",
-          availableTime: selectedUser.preferences.sessionLength,
-          deviceType: "tablet"
-        },
-        userProgress,
-        mockChildStats,
-        selectedUser.preferences.categories[0]
-      );
+      const recommendation =
+        await aiWordRecommendationService.getRecommendations(
+          selectedUser.id,
+          {
+            timeOfDay: 16, // 4 PM
+            sessionGoal:
+              session <= 2 ? "learning" : session <= 4 ? "review" : "challenge",
+            availableTime: selectedUser.preferences.sessionLength,
+            deviceType: "tablet",
+          },
+          userProgress,
+          mockChildStats,
+          selectedUser.preferences.categories[0],
+        );
 
       // Simulate session performance based on user level
       let accuracy = 0.6; // Base accuracy
@@ -162,7 +173,7 @@ export default function AIWordRecommendationDemo() {
         actualAccuracy: accuracy,
         engagement: recommendation.expectedOutcomes.engagementScore,
         reasoning: recommendation.reasoning,
-        adaptations: Math.floor(Math.random() * 3) + 1
+        adaptations: Math.floor(Math.random() * 3) + 1,
       };
 
       results.push(sessionResult);
@@ -171,16 +182,19 @@ export default function AIWordRecommendationDemo() {
       for (let i = 0; i < Math.min(5, recommendation.words.length); i++) {
         const word = recommendation.words[i];
         const isCorrect = Math.random() < accuracy;
-        
-        await aiWordRecommendationService.recordWordInteraction(selectedUser.id, {
-          wordId: word.id,
-          word: word.word,
-          isCorrect,
-          responseTime: 2000 + Math.random() * 4000, // 2-6 seconds
-          hintsUsed: isCorrect ? 0 : Math.floor(Math.random() * 2),
-          attemptNumber: isCorrect ? 1 : Math.floor(Math.random() * 3) + 1,
-          timestamp: Date.now()
-        });
+
+        await aiWordRecommendationService.recordWordInteraction(
+          selectedUser.id,
+          {
+            wordId: word.id,
+            word: word.word,
+            isCorrect,
+            responseTime: 2000 + Math.random() * 4000, // 2-6 seconds
+            hintsUsed: isCorrect ? 0 : Math.floor(Math.random() * 2),
+            attemptNumber: isCorrect ? 1 : Math.floor(Math.random() * 3) + 1,
+            timestamp: Date.now(),
+          },
+        );
       }
 
       // Complete session
@@ -190,12 +204,12 @@ export default function AIWordRecommendationDemo() {
           wordsAttempted: 5,
           wordsCorrect: Math.floor(accuracy * 5),
           totalTime: selectedUser.preferences.sessionLength * 60 * 1000,
-          userSatisfaction: 4
-        }
+          userSatisfaction: 4,
+        },
       });
 
       // Small delay to simulate real session gaps
-      await new Promise(resolve => setTimeout(resolve, 500));
+      await new Promise((resolve) => setTimeout(resolve, 500));
     }
 
     setSimulationResults(results);
@@ -216,7 +230,9 @@ export default function AIWordRecommendationDemo() {
           AI Word Recommendation Engine
         </h1>
         <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-          Experience personalized word learning with machine learning algorithms that adapt to each child's unique learning patterns, preferences, and progress.
+          Experience personalized word learning with machine learning algorithms
+          that adapt to each child's unique learning patterns, preferences, and
+          progress.
         </p>
       </div>
 
@@ -242,10 +258,15 @@ export default function AIWordRecommendationDemo() {
               >
                 <div className="flex justify-between items-start mb-2">
                   <h3 className="font-semibold">{user.name}</h3>
-                  <Badge variant={
-                    user.level === "beginner" ? "default" :
-                    user.level === "intermediate" ? "secondary" : "outline"
-                  }>
+                  <Badge
+                    variant={
+                      user.level === "beginner"
+                        ? "default"
+                        : user.level === "intermediate"
+                          ? "secondary"
+                          : "outline"
+                    }
+                  >
                     {user.level}
                   </Badge>
                 </div>
@@ -261,7 +282,10 @@ export default function AIWordRecommendationDemo() {
       </Card>
 
       {/* Main Content */}
-      <Tabs value={currentView} onValueChange={(value) => setCurrentView(value as any)}>
+      <Tabs
+        value={currentView}
+        onValueChange={(value) => setCurrentView(value as any)}
+      >
         <TabsList className="grid w-full grid-cols-4 mb-8">
           <TabsTrigger value="overview">Overview</TabsTrigger>
           <TabsTrigger value="demo">Live Demo</TabsTrigger>
@@ -286,28 +310,40 @@ export default function AIWordRecommendationDemo() {
                     <Brain className="w-5 h-5 text-educational-blue mt-1 flex-shrink-0" />
                     <div>
                       <h4 className="font-medium">Adaptive Word Selection</h4>
-                      <p className="text-sm text-gray-600">AI analyzes learning patterns to select optimal words based on difficulty, retention, and engagement.</p>
+                      <p className="text-sm text-gray-600">
+                        AI analyzes learning patterns to select optimal words
+                        based on difficulty, retention, and engagement.
+                      </p>
                     </div>
                   </div>
                   <div className="flex items-start gap-3 p-3 bg-educational-purple/5 rounded-lg">
                     <TrendingUp className="w-5 h-5 text-educational-purple mt-1 flex-shrink-0" />
                     <div>
                       <h4 className="font-medium">Predictive Analytics</h4>
-                      <p className="text-sm text-gray-600">Predicts learning outcomes and optimizes difficulty progression in real-time.</p>
+                      <p className="text-sm text-gray-600">
+                        Predicts learning outcomes and optimizes difficulty
+                        progression in real-time.
+                      </p>
                     </div>
                   </div>
                   <div className="flex items-start gap-3 p-3 bg-educational-green/5 rounded-lg">
                     <Lightbulb className="w-5 h-5 text-educational-green mt-1 flex-shrink-0" />
                     <div>
                       <h4 className="font-medium">Personalized Hints</h4>
-                      <p className="text-sm text-gray-600">Context-aware hints and encouragement based on individual learning style.</p>
+                      <p className="text-sm text-gray-600">
+                        Context-aware hints and encouragement based on
+                        individual learning style.
+                      </p>
                     </div>
                   </div>
                   <div className="flex items-start gap-3 p-3 bg-educational-orange/5 rounded-lg">
                     <Zap className="w-5 h-5 text-educational-orange mt-1 flex-shrink-0" />
                     <div>
                       <h4 className="font-medium">Real-time Adaptation</h4>
-                      <p className="text-sm text-gray-600">Adjusts difficulty and teaching strategy based on performance patterns.</p>
+                      <p className="text-sm text-gray-600">
+                        Adjusts difficulty and teaching strategy based on
+                        performance patterns.
+                      </p>
                     </div>
                   </div>
                 </div>
@@ -325,11 +361,15 @@ export default function AIWordRecommendationDemo() {
               <CardContent className="space-y-4">
                 <div className="grid grid-cols-2 gap-4">
                   <div className="text-center p-3 bg-gray-50 rounded-lg">
-                    <div className="text-2xl font-bold text-educational-blue">{selectedUser.stats.wordsLearned}</div>
+                    <div className="text-2xl font-bold text-educational-blue">
+                      {selectedUser.stats.wordsLearned}
+                    </div>
                     <div className="text-sm text-gray-600">Words Learned</div>
                   </div>
                   <div className="text-center p-3 bg-gray-50 rounded-lg">
-                    <div className="text-2xl font-bold text-educational-purple">{selectedUser.stats.averageAccuracy}%</div>
+                    <div className="text-2xl font-bold text-educational-purple">
+                      {selectedUser.stats.averageAccuracy}%
+                    </div>
                     <div className="text-sm text-gray-600">Accuracy</div>
                   </div>
                 </div>
@@ -339,19 +379,30 @@ export default function AIWordRecommendationDemo() {
                     <div className="flex justify-between text-sm mb-1">
                       <span>Learning Velocity</span>
                       <span className="font-medium">
-                        {selectedUser.level === "beginner" ? "1.2" : 
-                         selectedUser.level === "intermediate" ? "2.1" : "3.4"} words/min
+                        {selectedUser.level === "beginner"
+                          ? "1.2"
+                          : selectedUser.level === "intermediate"
+                            ? "2.1"
+                            : "3.4"}{" "}
+                        words/min
                       </span>
                     </div>
-                    <Progress value={
-                      selectedUser.level === "beginner" ? 30 : 
-                      selectedUser.level === "intermediate" ? 60 : 90
-                    } />
+                    <Progress
+                      value={
+                        selectedUser.level === "beginner"
+                          ? 30
+                          : selectedUser.level === "intermediate"
+                            ? 60
+                            : 90
+                      }
+                    />
                   </div>
                   <div>
                     <div className="flex justify-between text-sm mb-1">
                       <span>Retention Rate</span>
-                      <span className="font-medium">{selectedUser.stats.averageAccuracy + 5}%</span>
+                      <span className="font-medium">
+                        {selectedUser.stats.averageAccuracy + 5}%
+                      </span>
                     </div>
                     <Progress value={selectedUser.stats.averageAccuracy + 5} />
                   </div>
@@ -359,27 +410,34 @@ export default function AIWordRecommendationDemo() {
                     <div className="flex justify-between text-sm mb-1">
                       <span>Engagement Score</span>
                       <span className="font-medium">
-                        {selectedUser.level === "advanced" ? "95%" : 
-                         selectedUser.level === "intermediate" ? "88%" : "82%"}
+                        {selectedUser.level === "advanced"
+                          ? "95%"
+                          : selectedUser.level === "intermediate"
+                            ? "88%"
+                            : "82%"}
                       </span>
                     </div>
-                    <Progress value={
-                      selectedUser.level === "advanced" ? 95 : 
-                      selectedUser.level === "intermediate" ? 88 : 82
-                    } />
+                    <Progress
+                      value={
+                        selectedUser.level === "advanced"
+                          ? 95
+                          : selectedUser.level === "intermediate"
+                            ? 88
+                            : 82
+                      }
+                    />
                   </div>
                 </div>
 
                 <Alert>
                   <Lightbulb className="w-4 h-4" />
                   <AlertDescription>
-                    AI Recommendation: {
-                      selectedUser.level === "beginner" 
-                        ? "Focus on confidence building with easier words and more encouragement."
-                        : selectedUser.level === "intermediate"
+                    AI Recommendation:{" "}
+                    {selectedUser.level === "beginner"
+                      ? "Focus on confidence building with easier words and more encouragement."
+                      : selectedUser.level === "intermediate"
                         ? "Introduce moderate challenges while maintaining engagement through variety."
-                        : "Challenge with advanced vocabulary while leveraging strong pattern recognition skills."
-                    }
+                        : "Challenge with advanced vocabulary while leveraging strong pattern recognition skills."}
                   </AlertDescription>
                 </Alert>
               </CardContent>
@@ -394,7 +452,7 @@ export default function AIWordRecommendationDemo() {
                   <Play className="w-5 h-5" />
                   AI Learning Simulation
                 </div>
-                <Button 
+                <Button
                   onClick={simulateUserLearning}
                   disabled={simulationRunning}
                   className="bg-gradient-to-r from-educational-blue to-educational-purple"
@@ -419,32 +477,45 @@ export default function AIWordRecommendationDemo() {
                   <div className="animate-spin w-8 h-8 mx-auto mb-4">
                     <Brain className="w-8 h-8 text-educational-blue" />
                   </div>
-                  <p>AI is analyzing learning patterns and generating recommendations...</p>
+                  <p>
+                    AI is analyzing learning patterns and generating
+                    recommendations...
+                  </p>
                 </div>
               )}
 
               {simulationResults.length > 0 && (
                 <div className="space-y-4">
-                  <h4 className="font-semibold">Simulation Results for {selectedUser.name}</h4>
+                  <h4 className="font-semibold">
+                    Simulation Results for {selectedUser.name}
+                  </h4>
                   <div className="grid gap-3">
                     {simulationResults.map((result, index) => (
-                      <div key={index} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                      <div
+                        key={index}
+                        className="flex items-center justify-between p-3 bg-gray-50 rounded-lg"
+                      >
                         <div className="flex items-center gap-3">
-                          <Badge variant="outline">Session {result.session}</Badge>
+                          <Badge variant="outline">
+                            Session {result.session}
+                          </Badge>
                           <div className="text-sm">
                             <div className="font-medium">
-                              Predicted: {Math.round(result.predictedAccuracy * 100)}% | 
+                              Predicted:{" "}
+                              {Math.round(result.predictedAccuracy * 100)}% |
                               Actual: {Math.round(result.actualAccuracy * 100)}%
                             </div>
                             <div className="text-gray-600">
-                              Confidence: {Math.round(result.confidence * 100)}% | 
-                              Words: {result.wordsSelected} | 
-                              Adaptations: {result.adaptations}
+                              Confidence: {Math.round(result.confidence * 100)}%
+                              | Words: {result.wordsSelected} | Adaptations:{" "}
+                              {result.adaptations}
                             </div>
                           </div>
                         </div>
                         <div className="flex items-center gap-2">
-                          {Math.abs(result.predictedAccuracy - result.actualAccuracy) < 0.1 ? (
+                          {Math.abs(
+                            result.predictedAccuracy - result.actualAccuracy,
+                          ) < 0.1 ? (
                             <CheckCircle className="w-5 h-5 text-green-500" />
                           ) : (
                             <AlertCircle className="w-5 h-5 text-orange-500" />
@@ -456,13 +527,22 @@ export default function AIWordRecommendationDemo() {
                   <Alert>
                     <Star className="w-4 h-4" />
                     <AlertDescription>
-                      Average prediction accuracy: {
-                        Math.round(
-                          simulationResults.reduce((sum, result) => 
-                            sum + (1 - Math.abs(result.predictedAccuracy - result.actualAccuracy)), 0
-                          ) / simulationResults.length * 100
-                        )
-                      }% - AI learns and improves with each session!
+                      Average prediction accuracy:{" "}
+                      {Math.round(
+                        (simulationResults.reduce(
+                          (sum, result) =>
+                            sum +
+                            (1 -
+                              Math.abs(
+                                result.predictedAccuracy -
+                                  result.actualAccuracy,
+                              )),
+                          0,
+                        ) /
+                          simulationResults.length) *
+                          100,
+                      )}
+                      % - AI learns and improves with each session!
                     </AlertDescription>
                   </Alert>
                 </div>
@@ -480,15 +560,17 @@ export default function AIWordRecommendationDemo() {
             selectedCategory={selectedUser.preferences.categories[0]}
             onWordProgress={(word, status) => {
               if (status === "remembered") {
-                setUserProgress(prev => ({
+                setUserProgress((prev) => ({
                   ...prev,
                   rememberedWords: new Set([...prev.rememberedWords, word.id]),
-                  forgottenWords: new Set([...prev.forgottenWords].filter(id => id !== word.id))
+                  forgottenWords: new Set(
+                    [...prev.forgottenWords].filter((id) => id !== word.id),
+                  ),
                 }));
               } else {
-                setUserProgress(prev => ({
+                setUserProgress((prev) => ({
                   ...prev,
-                  forgottenWords: new Set([...prev.forgottenWords, word.id])
+                  forgottenWords: new Set([...prev.forgottenWords, word.id]),
                 }));
               }
             }}
@@ -513,35 +595,46 @@ export default function AIWordRecommendationDemo() {
                   <div className="space-y-4">
                     <h4 className="font-semibold">Learning Velocity Trend</h4>
                     <div className="space-y-2">
-                      {analytics.velocityTrend.slice(-5).map((velocity, index) => (
-                        <div key={index} className="flex justify-between items-center">
-                          <span className="text-sm">Session {index + 1}</span>
-                          <div className="flex items-center gap-2">
-                            <div className="w-20 bg-gray-200 rounded-full h-2">
-                              <div 
-                                className="bg-educational-blue h-2 rounded-full" 
-                                style={{ width: `${Math.min(100, velocity * 50)}%` }}
-                              />
+                      {analytics.velocityTrend
+                        .slice(-5)
+                        .map((velocity, index) => (
+                          <div
+                            key={index}
+                            className="flex justify-between items-center"
+                          >
+                            <span className="text-sm">Session {index + 1}</span>
+                            <div className="flex items-center gap-2">
+                              <div className="w-20 bg-gray-200 rounded-full h-2">
+                                <div
+                                  className="bg-educational-blue h-2 rounded-full"
+                                  style={{
+                                    width: `${Math.min(100, velocity * 50)}%`,
+                                  }}
+                                />
+                              </div>
+                              <span className="text-sm font-medium">
+                                {velocity.toFixed(1)}
+                              </span>
                             </div>
-                            <span className="text-sm font-medium">{velocity.toFixed(1)}</span>
                           </div>
-                        </div>
-                      ))}
+                        ))}
                     </div>
                   </div>
 
                   <div className="space-y-4">
                     <h4 className="font-semibold">Category Mastery</h4>
                     <div className="space-y-2">
-                      {Array.from(analytics.categoryMastery.entries()).map(([category, mastery]) => (
-                        <div key={category} className="space-y-1">
-                          <div className="flex justify-between text-sm">
-                            <span className="capitalize">{category}</span>
-                            <span>{Math.round(mastery * 100)}%</span>
+                      {Array.from(analytics.categoryMastery.entries()).map(
+                        ([category, mastery]) => (
+                          <div key={category} className="space-y-1">
+                            <div className="flex justify-between text-sm">
+                              <span className="capitalize">{category}</span>
+                              <span>{Math.round(mastery * 100)}%</span>
+                            </div>
+                            <Progress value={mastery * 100} />
                           </div>
-                          <Progress value={mastery * 100} />
-                        </div>
-                      ))}
+                        ),
+                      )}
                     </div>
                   </div>
 
@@ -551,23 +644,38 @@ export default function AIWordRecommendationDemo() {
                       <div className="flex justify-between">
                         <span className="text-sm">Next Week Learning Rate</span>
                         <span className="font-medium">
-                          {analytics.predictedOutcomes.nextWeekLearningRate} words
+                          {analytics.predictedOutcomes.nextWeekLearningRate}{" "}
+                          words
                         </span>
                       </div>
                       <div className="flex justify-between">
                         <span className="text-sm">Retention Risk</span>
-                        <Badge variant={
-                          analytics.predictedOutcomes.retentionRisk > 0.5 ? "destructive" : "default"
-                        }>
-                          {Math.round(analytics.predictedOutcomes.retentionRisk * 100)}%
+                        <Badge
+                          variant={
+                            analytics.predictedOutcomes.retentionRisk > 0.5
+                              ? "destructive"
+                              : "default"
+                          }
+                        >
+                          {Math.round(
+                            analytics.predictedOutcomes.retentionRisk * 100,
+                          )}
+                          %
                         </Badge>
                       </div>
                       <div className="flex justify-between">
                         <span className="text-sm">Motivation Trend</span>
-                        <Badge variant={
-                          analytics.predictedOutcomes.motivationTrend === "improving" ? "default" :
-                          analytics.predictedOutcomes.motivationTrend === "declining" ? "destructive" : "secondary"
-                        }>
+                        <Badge
+                          variant={
+                            analytics.predictedOutcomes.motivationTrend ===
+                            "improving"
+                              ? "default"
+                              : analytics.predictedOutcomes.motivationTrend ===
+                                  "declining"
+                                ? "destructive"
+                                : "secondary"
+                          }
+                        >
                           {analytics.predictedOutcomes.motivationTrend}
                         </Badge>
                       </div>
@@ -596,11 +704,16 @@ export default function AIWordRecommendationDemo() {
             <CardContent className="space-y-6">
               <div className="prose max-w-none">
                 <h3>Quick Start Integration</h3>
-                <p>The AI Word Recommendation Engine is designed to integrate seamlessly with your existing Wordy Kids app. Here's how to get started:</p>
+                <p>
+                  The AI Word Recommendation Engine is designed to integrate
+                  seamlessly with your existing Wordy Kids app. Here's how to
+                  get started:
+                </p>
 
                 <h4>1. Basic Integration</h4>
                 <div className="bg-gray-50 p-4 rounded-lg">
-                  <pre className="text-sm"><code>{`import { useAIWordRecommendations } from "@/hooks/use-ai-word-recommendations";
+                  <pre className="text-sm">
+                    <code>{`import { useAIWordRecommendations } from "@/hooks/use-ai-word-recommendations";
 
 function YourLearningComponent({ userId, userProgress, childStats }) {
   const [aiState, aiActions] = useAIWordRecommendations({
@@ -631,23 +744,39 @@ function YourLearningComponent({ userId, userProgress, childStats }) {
       ))}
     </div>
   );
-}`}</code></pre>
+}`}</code>
+                  </pre>
                 </div>
 
                 <h4>2. Enhanced Features</h4>
                 <ul>
-                  <li><strong>Real-time Adaptation:</strong> Words adjust difficulty based on performance</li>
-                  <li><strong>Predictive Analytics:</strong> Predicts learning outcomes and engagement</li>
-                  <li><strong>Personalized Hints:</strong> Context-aware help based on learning patterns</li>
-                  <li><strong>Spaced Repetition:</strong> Optimal review timing for maximum retention</li>
+                  <li>
+                    <strong>Real-time Adaptation:</strong> Words adjust
+                    difficulty based on performance
+                  </li>
+                  <li>
+                    <strong>Predictive Analytics:</strong> Predicts learning
+                    outcomes and engagement
+                  </li>
+                  <li>
+                    <strong>Personalized Hints:</strong> Context-aware help
+                    based on learning patterns
+                  </li>
+                  <li>
+                    <strong>Spaced Repetition:</strong> Optimal review timing
+                    for maximum retention
+                  </li>
                 </ul>
 
                 <h4>3. Integration Points</h4>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="border rounded-lg p-4">
-                    <h5 className="font-semibold mb-2">Replace Word Selection</h5>
+                    <h5 className="font-semibold mb-2">
+                      Replace Word Selection
+                    </h5>
                     <p className="text-sm text-gray-600">
-                      Replace your existing word selection logic with AI recommendations in:
+                      Replace your existing word selection logic with AI
+                      recommendations in:
                     </p>
                     <ul className="text-sm list-disc list-inside mt-2">
                       <li>WordCard components</li>
@@ -672,13 +801,15 @@ function YourLearningComponent({ userId, userProgress, childStats }) {
 
                 <h4>4. Configuration Options</h4>
                 <div className="bg-blue-50 p-4 rounded-lg">
-                  <pre className="text-sm"><code>{`const aiConfig = {
+                  <pre className="text-sm">
+                    <code>{`const aiConfig = {
   enableRealTimeAdaptation: true,     // Adjust during session
   enablePredictiveAnalytics: true,    // Predict outcomes
   enablePersonalizedDifficulty: true, // Auto-adjust difficulty
   enableMotivationalBoosts: true,     // Encouragement & hints
   analyticsUpdateInterval: 5000       // Update frequency (ms)
-};`}</code></pre>
+};`}</code>
+                  </pre>
                 </div>
               </div>
             </CardContent>
@@ -687,9 +818,10 @@ function YourLearningComponent({ userId, userProgress, childStats }) {
           <Alert>
             <CheckCircle className="w-4 h-4" />
             <AlertDescription>
-              <strong>Ready to integrate!</strong> The AI system is designed to work alongside your existing components 
-              and gradually enhance the learning experience. Start with basic word recommendations and expand to 
-              full analytics and adaptation features.
+              <strong>Ready to integrate!</strong> The AI system is designed to
+              work alongside your existing components and gradually enhance the
+              learning experience. Start with basic word recommendations and
+              expand to full analytics and adaptation features.
             </AlertDescription>
           </Alert>
         </TabsContent>

@@ -15,7 +15,7 @@ import {
   BookOpen,
   Zap,
   TrendingUp,
-  Star
+  Star,
 } from "lucide-react";
 import { LearningDashboard } from "@/components/LearningDashboard";
 import { ChildFriendlyCategorySelector } from "@/components/ChildFriendlyCategorySelector";
@@ -26,7 +26,7 @@ export default function AIIntegrationDemo() {
   const [userProgress, setUserProgress] = useState({
     rememberedWords: new Set<number>([1, 2, 3, 4, 5]),
     forgottenWords: new Set<number>([6, 7, 8]),
-    excludedWordIds: new Set<number>()
+    excludedWordIds: new Set<number>(),
   });
   const [availableWords, setAvailableWords] = useState<any[]>([]);
 
@@ -38,7 +38,7 @@ export default function AIIntegrationDemo() {
     averageAccuracy: 85,
     totalReviewSessions: 12,
     weakestCategories: ["science"],
-    strongestCategories: ["animals", "colors"]
+    strongestCategories: ["animals", "colors"],
   };
 
   const mockLearningStats = {
@@ -59,16 +59,16 @@ export default function AIIntegrationDemo() {
         name: "First Word",
         icon: "🎯",
         earned: true,
-        description: "Learned your first word"
+        description: "Learned your first word",
       },
       {
         id: "streak-master",
         name: "Streak Master",
         icon: "🔥",
         earned: true,
-        description: "7-day learning streak"
-      }
-    ]
+        description: "7-day learning streak",
+      },
+    ],
   };
 
   // Load words for selected category
@@ -77,19 +77,24 @@ export default function AIIntegrationDemo() {
     setAvailableWords(categoryWords);
   }, [selectedCategory]);
 
-  const handleWordProgress = (word: any, status: "remembered" | "needs_practice" | "skipped") => {
+  const handleWordProgress = (
+    word: any,
+    status: "remembered" | "needs_practice" | "skipped",
+  ) => {
     console.log(`Word progress: ${word.word} - ${status}`);
-    
+
     if (status === "remembered") {
-      setUserProgress(prev => ({
+      setUserProgress((prev) => ({
         ...prev,
         rememberedWords: new Set([...prev.rememberedWords, word.id]),
-        forgottenWords: new Set([...prev.forgottenWords].filter(id => id !== word.id))
+        forgottenWords: new Set(
+          [...prev.forgottenWords].filter((id) => id !== word.id),
+        ),
       }));
     } else if (status === "needs_practice") {
-      setUserProgress(prev => ({
+      setUserProgress((prev) => ({
         ...prev,
-        forgottenWords: new Set([...prev.forgottenWords, word.id])
+        forgottenWords: new Set([...prev.forgottenWords, word.id]),
       }));
     }
   };
@@ -111,7 +116,8 @@ export default function AIIntegrationDemo() {
           AI Integration Demo
         </h1>
         <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-          Experience the power of AI-enhanced word learning integrated into your existing dashboard.
+          Experience the power of AI-enhanced word learning integrated into your
+          existing dashboard.
         </p>
       </div>
 
@@ -127,8 +133,10 @@ export default function AIIntegrationDemo() {
           <Alert>
             <Brain className="w-4 h-4" />
             <AlertDescription>
-              <strong>Interactive Demo:</strong> Try both the original and AI-enhanced word learning experiences below. 
-              The AI version uses machine learning to select optimal words and provide personalized feedback.
+              <strong>Interactive Demo:</strong> Try both the original and
+              AI-enhanced word learning experiences below. The AI version uses
+              machine learning to select optimal words and provide personalized
+              feedback.
             </AlertDescription>
           </Alert>
 
@@ -162,10 +170,15 @@ export default function AIIntegrationDemo() {
             forgottenWordsCount={userProgress.forgottenWords.size}
             rememberedWordsCount={userProgress.rememberedWords.size}
             onRequestNewWords={() => {
-              const newWords = getWordsByCategory(selectedCategory).slice(0, 20);
+              const newWords = getWordsByCategory(selectedCategory).slice(
+                0,
+                20,
+              );
               setAvailableWords(newWords);
             }}
-            onSessionProgress={(stats) => console.log("Session progress:", stats)}
+            onSessionProgress={(stats) =>
+              console.log("Session progress:", stats)
+            }
             // AI Enhancement props
             userId={mockUserId}
             enableAIEnhancement={true}
@@ -191,32 +204,52 @@ export default function AIIntegrationDemo() {
                   <div className="flex items-start gap-3 p-3 bg-white/60 rounded-lg">
                     <Sparkles className="w-5 h-5 text-blue-600 mt-1 flex-shrink-0" />
                     <div>
-                      <h4 className="font-medium text-blue-800">Adaptive Word Selection</h4>
-                      <p className="text-sm text-blue-700">AI analyzes learning patterns to select optimal words based on difficulty, retention rates, and engagement.</p>
+                      <h4 className="font-medium text-blue-800">
+                        Adaptive Word Selection
+                      </h4>
+                      <p className="text-sm text-blue-700">
+                        AI analyzes learning patterns to select optimal words
+                        based on difficulty, retention rates, and engagement.
+                      </p>
                     </div>
                   </div>
-                  
+
                   <div className="flex items-start gap-3 p-3 bg-white/60 rounded-lg">
                     <TrendingUp className="w-5 h-5 text-purple-600 mt-1 flex-shrink-0" />
                     <div>
-                      <h4 className="font-medium text-purple-800">Predictive Analytics</h4>
-                      <p className="text-sm text-purple-700">Predicts learning outcomes and optimizes difficulty progression in real-time.</p>
+                      <h4 className="font-medium text-purple-800">
+                        Predictive Analytics
+                      </h4>
+                      <p className="text-sm text-purple-700">
+                        Predicts learning outcomes and optimizes difficulty
+                        progression in real-time.
+                      </p>
                     </div>
                   </div>
-                  
+
                   <div className="flex items-start gap-3 p-3 bg-white/60 rounded-lg">
                     <Target className="w-5 h-5 text-green-600 mt-1 flex-shrink-0" />
                     <div>
-                      <h4 className="font-medium text-green-800">Personalized Hints</h4>
-                      <p className="text-sm text-green-700">Context-aware hints and encouragement based on individual learning style.</p>
+                      <h4 className="font-medium text-green-800">
+                        Personalized Hints
+                      </h4>
+                      <p className="text-sm text-green-700">
+                        Context-aware hints and encouragement based on
+                        individual learning style.
+                      </p>
                     </div>
                   </div>
-                  
+
                   <div className="flex items-start gap-3 p-3 bg-white/60 rounded-lg">
                     <Zap className="w-5 h-5 text-orange-600 mt-1 flex-shrink-0" />
                     <div>
-                      <h4 className="font-medium text-orange-800">Real-time Adaptation</h4>
-                      <p className="text-sm text-orange-700">Adjusts difficulty and teaching strategy based on performance patterns.</p>
+                      <h4 className="font-medium text-orange-800">
+                        Real-time Adaptation
+                      </h4>
+                      <p className="text-sm text-orange-700">
+                        Adjusts difficulty and teaching strategy based on
+                        performance patterns.
+                      </p>
                     </div>
                   </div>
                 </div>
@@ -234,30 +267,45 @@ export default function AIIntegrationDemo() {
               <CardContent className="space-y-4">
                 <div className="space-y-3">
                   <div className="flex justify-between items-center p-3 bg-white/60 rounded-lg">
-                    <span className="text-sm font-medium text-gray-700">Learning Velocity</span>
-                    <span className="text-sm font-bold text-green-600">2.3 words/min</span>
+                    <span className="text-sm font-medium text-gray-700">
+                      Learning Velocity
+                    </span>
+                    <span className="text-sm font-bold text-green-600">
+                      2.3 words/min
+                    </span>
                   </div>
-                  
+
                   <div className="flex justify-between items-center p-3 bg-white/60 rounded-lg">
-                    <span className="text-sm font-medium text-gray-700">Retention Prediction</span>
+                    <span className="text-sm font-medium text-gray-700">
+                      Retention Prediction
+                    </span>
                     <span className="text-sm font-bold text-blue-600">87%</span>
                   </div>
-                  
+
                   <div className="flex justify-between items-center p-3 bg-white/60 rounded-lg">
-                    <span className="text-sm font-medium text-gray-700">Engagement Score</span>
-                    <span className="text-sm font-bold text-purple-600">94%</span>
+                    <span className="text-sm font-medium text-gray-700">
+                      Engagement Score
+                    </span>
+                    <span className="text-sm font-bold text-purple-600">
+                      94%
+                    </span>
                   </div>
-                  
+
                   <div className="flex justify-between items-center p-3 bg-white/60 rounded-lg">
-                    <span className="text-sm font-medium text-gray-700">AI Confidence</span>
-                    <span className="text-sm font-bold text-orange-600">91%</span>
+                    <span className="text-sm font-medium text-gray-700">
+                      AI Confidence
+                    </span>
+                    <span className="text-sm font-bold text-orange-600">
+                      91%
+                    </span>
                   </div>
                 </div>
 
                 <Alert className="bg-green-100 border-green-200">
                   <Star className="w-4 h-4" />
                   <AlertDescription className="text-green-800">
-                    <strong>Predictive Success:</strong> AI predictions match actual performance with 89% accuracy on average.
+                    <strong>Predictive Success:</strong> AI predictions match
+                    actual performance with 89% accuracy on average.
                   </AlertDescription>
                 </Alert>
               </CardContent>
@@ -275,7 +323,9 @@ export default function AIIntegrationDemo() {
             <CardContent>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
-                  <h4 className="font-semibold text-gray-800 mb-3">Standard Word Selection</h4>
+                  <h4 className="font-semibold text-gray-800 mb-3">
+                    Standard Word Selection
+                  </h4>
                   <ul className="space-y-2 text-sm text-gray-600">
                     <li>• Random or category-based selection</li>
                     <li>• Fixed difficulty progression</li>
@@ -285,9 +335,14 @@ export default function AIIntegrationDemo() {
                   </ul>
                 </div>
                 <div>
-                  <h4 className="font-semibold text-green-800 mb-3">AI-Enhanced Selection</h4>
+                  <h4 className="font-semibold text-green-800 mb-3">
+                    AI-Enhanced Selection
+                  </h4>
                   <ul className="space-y-2 text-sm text-green-700">
-                    <li>• ✨ Personalized word selection based on learning patterns</li>
+                    <li>
+                      • ✨ Personalized word selection based on learning
+                      patterns
+                    </li>
                     <li>• 🎯 Adaptive difficulty scaling in real-time</li>
                     <li>• 💬 Context-aware hints and encouragement</li>
                     <li>• 📊 Predictive analytics and insights</li>
@@ -312,15 +367,19 @@ export default function AIIntegrationDemo() {
               <Alert>
                 <CheckCircle className="w-4 h-4" />
                 <AlertDescription>
-                  <strong>Good News!</strong> The AI enhancement is already integrated into your existing components. 
-                  Just pass the required props to enable AI features.
+                  <strong>Good News!</strong> The AI enhancement is already
+                  integrated into your existing components. Just pass the
+                  required props to enable AI features.
                 </AlertDescription>
               </Alert>
 
               <div className="space-y-4">
-                <h3 className="text-lg font-semibold">Step 1: Update LearningDashboard Usage</h3>
+                <h3 className="text-lg font-semibold">
+                  Step 1: Update LearningDashboard Usage
+                </h3>
                 <div className="bg-gray-50 p-4 rounded-lg">
-                  <pre className="text-sm text-gray-800 overflow-x-auto"><code>{`<LearningDashboard
+                  <pre className="text-sm text-gray-800 overflow-x-auto">
+                    <code>{`<LearningDashboard
   stats={learningStats}
   userName="Alex"
   childStats={childStats}
@@ -340,30 +399,67 @@ export default function AIIntegrationDemo() {
   onSessionComplete={(sessionData) => {
     console.log("AI session completed:", sessionData);
   }}
-/>`}</code></pre>
+/>`}</code>
+                  </pre>
                 </div>
 
-                <h3 className="text-lg font-semibold">Step 2: Required Props Explanation</h3>
+                <h3 className="text-lg font-semibold">
+                  Step 2: Required Props Explanation
+                </h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="border rounded-lg p-4">
-                    <h4 className="font-semibold mb-2 text-blue-700">Essential Props</h4>
+                    <h4 className="font-semibold mb-2 text-blue-700">
+                      Essential Props
+                    </h4>
                     <ul className="text-sm space-y-1">
-                      <li><code className="bg-gray-100 px-1 rounded">userId</code> - Unique user identifier</li>
-                      <li><code className="bg-gray-100 px-1 rounded">enableAIEnhancement</code> - Toggle AI features</li>
-                      <li><code className="bg-gray-100 px-1 rounded">userProgress</code> - Learning progress data</li>
+                      <li>
+                        <code className="bg-gray-100 px-1 rounded">userId</code>{" "}
+                        - Unique user identifier
+                      </li>
+                      <li>
+                        <code className="bg-gray-100 px-1 rounded">
+                          enableAIEnhancement
+                        </code>{" "}
+                        - Toggle AI features
+                      </li>
+                      <li>
+                        <code className="bg-gray-100 px-1 rounded">
+                          userProgress
+                        </code>{" "}
+                        - Learning progress data
+                      </li>
                     </ul>
                   </div>
                   <div className="border rounded-lg p-4">
-                    <h4 className="font-semibold mb-2 text-green-700">Optional Props</h4>
+                    <h4 className="font-semibold mb-2 text-green-700">
+                      Optional Props
+                    </h4>
                     <ul className="text-sm space-y-1">
-                      <li><code className="bg-gray-100 px-1 rounded">selectedCategory</code> - Current category</li>
-                      <li><code className="bg-gray-100 px-1 rounded">onSessionComplete</code> - Session callback</li>
-                      <li><code className="bg-gray-100 px-1 rounded">childStats</code> - Performance data</li>
+                      <li>
+                        <code className="bg-gray-100 px-1 rounded">
+                          selectedCategory
+                        </code>{" "}
+                        - Current category
+                      </li>
+                      <li>
+                        <code className="bg-gray-100 px-1 rounded">
+                          onSessionComplete
+                        </code>{" "}
+                        - Session callback
+                      </li>
+                      <li>
+                        <code className="bg-gray-100 px-1 rounded">
+                          childStats
+                        </code>{" "}
+                        - Performance data
+                      </li>
                     </ul>
                   </div>
                 </div>
 
-                <h3 className="text-lg font-semibold">Step 3: Features You Get</h3>
+                <h3 className="text-lg font-semibold">
+                  Step 3: Features You Get
+                </h3>
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                   <div className="text-center p-4 bg-blue-50 rounded-lg">
                     <Brain className="w-8 h-8 mx-auto mb-2 text-blue-600" />
@@ -389,8 +485,9 @@ export default function AIIntegrationDemo() {
           <Alert>
             <Play className="w-4 h-4" />
             <AlertDescription>
-              <strong>Ready to Try:</strong> Switch to the "Live Demo" tab to experience the AI enhancement in action. 
-              Toggle between standard and AI modes to see the difference!
+              <strong>Ready to Try:</strong> Switch to the "Live Demo" tab to
+              experience the AI enhancement in action. Toggle between standard
+              and AI modes to see the difference!
             </AlertDescription>
           </Alert>
         </TabsContent>
@@ -399,23 +496,26 @@ export default function AIIntegrationDemo() {
       {/* Quick Action Footer */}
       <Card className="bg-gradient-to-r from-blue-500 to-purple-500 text-white">
         <CardContent className="p-6 text-center">
-          <h3 className="text-xl font-bold mb-2">🚀 Ready to Enhance Your App?</h3>
+          <h3 className="text-xl font-bold mb-2">
+            🚀 Ready to Enhance Your App?
+          </h3>
           <p className="mb-4 opacity-90">
-            The AI system is already integrated and ready to use. Just enable it in your components!
+            The AI system is already integrated and ready to use. Just enable it
+            in your components!
           </p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
-            <Button 
-              variant="secondary" 
+            <Button
+              variant="secondary"
               className="bg-white text-blue-600 hover:bg-gray-100"
-              onClick={() => window.location.href = "#demo"}
+              onClick={() => (window.location.href = "#demo")}
             >
               <Play className="w-4 h-4 mr-2" />
               Try Demo
             </Button>
-            <Button 
-              variant="outline" 
+            <Button
+              variant="outline"
               className="border-white text-white hover:bg-white/10"
-              onClick={() => window.location.href = "/"}
+              onClick={() => (window.location.href = "/")}
             >
               <ArrowRight className="w-4 h-4 mr-2" />
               Back to App

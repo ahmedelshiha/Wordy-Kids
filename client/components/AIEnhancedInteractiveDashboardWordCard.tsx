@@ -23,7 +23,7 @@ import {
   Star,
   Clock,
   BarChart3,
-  Shield
+  Shield,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { audioService } from "@/lib/audioService";
@@ -32,7 +32,11 @@ import { AchievementTracker } from "@/lib/achievementTracker";
 import { EnhancedAchievementTracker } from "@/lib/enhancedAchievementTracker";
 import { EnhancedAchievementPopup } from "@/components/EnhancedAchievementPopup";
 import { AchievementTeaser } from "@/components/AchievementTeaser";
-import { useAIWordRecommendations, useAdaptiveDifficulty, usePersonalizedEncouragement } from "@/hooks/use-ai-word-recommendations";
+import {
+  useAIWordRecommendations,
+  useAdaptiveDifficulty,
+  usePersonalizedEncouragement,
+} from "@/hooks/use-ai-word-recommendations";
 import { SessionContext } from "@/lib/aiWordRecommendationService";
 import { useVoiceSettings } from "@/hooks/use-voice-settings";
 import { ChildWordStats } from "@shared/api";
@@ -109,26 +113,25 @@ export function AIEnhancedInteractiveDashboardWordCard({
   className,
   onSessionComplete,
 }: AIEnhancedInteractiveDashboardWordCardProps) {
-  
   // AI Recommendations Hook
   const [aiState, aiActions] = useAIWordRecommendations({
     userId,
     enableRealTimeAdaptation: true,
     enableAnalytics: true,
     enableMotivationalBoosts: true,
-    autoStartSession: false
+    autoStartSession: false,
   });
 
   // Adaptive features
   const difficultyAdjustment = useAdaptiveDifficulty(
     userId,
     sessionStats.accuracy / 100,
-    wordStartTime ? Date.now() - wordStartTime : 0
+    wordStartTime ? Date.now() - wordStartTime : 0,
   );
 
   const encouragement = usePersonalizedEncouragement(userId, {
     correct: sessionStats.wordsRemembered,
-    total: sessionStats.wordsCompleted
+    total: sessionStats.wordsCompleted,
   });
 
   // Session Management
@@ -143,7 +146,9 @@ export function AIEnhancedInteractiveDashboardWordCard({
   });
   const [sessionWords, setSessionWords] = useState<Word[]>([]);
   const [showSessionComplete, setShowSessionComplete] = useState(false);
-  const [sessionAchievements, setSessionAchievements] = useState<Achievement[]>([]);
+  const [sessionAchievements, setSessionAchievements] = useState<Achievement[]>(
+    [],
+  );
   const [journeyAchievements, setJourneyAchievements] = useState<any[]>([]);
 
   // UI States
@@ -151,7 +156,9 @@ export function AIEnhancedInteractiveDashboardWordCard({
   const [isAnswered, setIsAnswered] = useState(false);
   const [celebrationEffect, setCelebrationEffect] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
-  const [feedbackType, setFeedbackType] = useState<"remembered" | "needs_practice" | null>(null);
+  const [feedbackType, setFeedbackType] = useState<
+    "remembered" | "needs_practice" | null
+  >(null);
   const [guess, setGuess] = useState("");
   const [showHint, setShowHint] = useState(false);
   const [wordStartTime, setWordStartTime] = useState(0);
@@ -161,12 +168,15 @@ export function AIEnhancedInteractiveDashboardWordCard({
   // AI Enhanced States
   const [showAIInsights, setShowAIInsights] = useState(false);
   const [adaptiveHints, setAdaptiveHints] = useState<string[]>([]);
-  const [realTimeEncouragement, setRealTimeEncouragement] = useState<string>("");
+  const [realTimeEncouragement, setRealTimeEncouragement] =
+    useState<string>("");
   const [confidenceLevel, setConfidenceLevel] = useState(0);
   const [learningVelocity, setLearningVelocity] = useState(0);
 
   // Enhanced visual feedback states
-  const [particles, setParticles] = useState<Array<{ id: number; type: "success" | "practice"; x: number; y: number }>>([]);
+  const [particles, setParticles] = useState<
+    Array<{ id: number; type: "success" | "practice"; x: number; y: number }>
+  >([]);
   const [buttonClickedId, setButtonClickedId] = useState<string | null>(null);
   const [showSuccessRipple, setShowSuccessRipple] = useState(false);
   const [showPracticeRipple, setShowPracticeRipple] = useState(false);
@@ -188,8 +198,13 @@ export function AIEnhancedInteractiveDashboardWordCard({
       timeOfDay: new Date().getHours(),
       availableTime: 15, // Default 15 minutes
       sessionGoal: "learning",
-      deviceType: window.innerWidth < 768 ? "mobile" : window.innerWidth < 1024 ? "tablet" : "desktop",
-      previousSessionGap: 24 // Default 24 hours
+      deviceType:
+        window.innerWidth < 768
+          ? "mobile"
+          : window.innerWidth < 1024
+            ? "tablet"
+            : "desktop",
+      previousSessionGap: 24, // Default 24 hours
     };
 
     if (!aiState.currentRecommendation) {
@@ -198,14 +213,18 @@ export function AIEnhancedInteractiveDashboardWordCard({
         userProgress,
         childStats,
         selectedCategory || "all",
-        SESSION_SIZE
+        SESSION_SIZE,
       );
     }
   }, [aiState.hasInitialized, selectedCategory, userProgress, childStats]);
 
   // Start AI session when recommendations are ready
   useEffect(() => {
-    if (aiState.currentRecommendation && !aiState.isSessionActive && sessionWords.length === 0) {
+    if (
+      aiState.currentRecommendation &&
+      !aiState.isSessionActive &&
+      sessionWords.length === 0
+    ) {
       setSessionWords(aiState.words);
       setCurrentWordIndex(0);
       setSessionStats({
@@ -216,21 +235,27 @@ export function AIEnhancedInteractiveDashboardWordCard({
         sessionStartTime: Date.now(),
       });
       setWordStartTime(Date.now());
-      
+
       // Start AI session
       aiActions.startSession(aiState.currentRecommendation);
-      
+
       console.log("AI-Enhanced session started:", {
         confidence: aiState.confidence,
         wordsSelected: aiState.words.length,
         reasoning: aiState.reasoning,
-        expectedOutcomes: aiState.currentRecommendation.expectedOutcomes
+        expectedOutcomes: aiState.currentRecommendation.expectedOutcomes,
       });
     }
-  }, [aiState.currentRecommendation, aiState.isSessionActive, sessionWords.length]);
+  }, [
+    aiState.currentRecommendation,
+    aiState.isSessionActive,
+    sessionWords.length,
+  ]);
 
   // Haptic feedback utility for mobile
-  const triggerHapticFeedback = (type: "light" | "medium" | "heavy" = "light") => {
+  const triggerHapticFeedback = (
+    type: "light" | "medium" | "heavy" = "light",
+  ) => {
     if ("vibrate" in navigator) {
       switch (type) {
         case "light":
@@ -247,7 +272,10 @@ export function AIEnhancedInteractiveDashboardWordCard({
   };
 
   // Enhanced action handler with AI integration
-  const handleActionWithFeedback = (action: () => void, feedbackType: "light" | "medium" | "heavy" = "medium") => {
+  const handleActionWithFeedback = (
+    action: () => void,
+    feedbackType: "light" | "medium" | "heavy" = "medium",
+  ) => {
     triggerHapticFeedback(feedbackType);
     action();
   };
@@ -293,7 +321,9 @@ export function AIEnhancedInteractiveDashboardWordCard({
   };
 
   const currentWord = sessionWords[currentWordIndex] || null;
-  const sessionProgress = Math.round((sessionStats.wordsCompleted / SESSION_SIZE) * 100);
+  const sessionProgress = Math.round(
+    (sessionStats.wordsCompleted / SESSION_SIZE) * 100,
+  );
 
   // Reset card state when word changes
   useEffect(() => {
@@ -316,7 +346,9 @@ export function AIEnhancedInteractiveDashboardWordCard({
   // Update real-time encouragement based on AI insights
   useEffect(() => {
     if (aiState.encouragementMessages.length > 0) {
-      setRealTimeEncouragement(aiState.encouragementMessages[aiState.encouragementMessages.length - 1]);
+      setRealTimeEncouragement(
+        aiState.encouragementMessages[aiState.encouragementMessages.length - 1],
+      );
     }
   }, [aiState.encouragementMessages]);
 
@@ -331,7 +363,8 @@ export function AIEnhancedInteractiveDashboardWordCard({
   useEffect(() => {
     setConfidenceLevel(aiState.confidence);
     if (aiState.learningAnalytics?.velocityTrend) {
-      const latestVelocity = aiState.learningAnalytics.velocityTrend.slice(-1)[0];
+      const latestVelocity =
+        aiState.learningAnalytics.velocityTrend.slice(-1)[0];
       setLearningVelocity(latestVelocity || 0);
     }
   }, [aiState.confidence, aiState.learningAnalytics]);
@@ -352,8 +385,8 @@ export function AIEnhancedInteractiveDashboardWordCard({
     if (currentWord) {
       const hint = await aiActions.requestHint(currentWord.id);
       setShowHint(true);
-      setHintsUsed(prev => prev + 1);
-      setAdaptiveHints(prev => [...prev, hint]);
+      setHintsUsed((prev) => prev + 1);
+      setAdaptiveHints((prev) => [...prev, hint]);
     }
   };
 
@@ -403,7 +436,9 @@ export function AIEnhancedInteractiveDashboardWordCard({
     return achievements;
   };
 
-  const handleWordAction = async (status: "remembered" | "needs_practice" | "skipped") => {
+  const handleWordAction = async (
+    status: "remembered" | "needs_practice" | "skipped",
+  ) => {
     if (!currentWord || isAnswered) return;
 
     // Provide haptic feedback based on action
@@ -420,7 +455,7 @@ export function AIEnhancedInteractiveDashboardWordCard({
       sessionProgress: `${currentWordIndex + 1}/${SESSION_SIZE}`,
       aiConfidence: aiState.confidence,
       hintsUsed,
-      currentAttempt
+      currentAttempt,
     });
 
     // Mark as answered immediately
@@ -434,20 +469,29 @@ export function AIEnhancedInteractiveDashboardWordCard({
       isCorrect: status === "remembered",
       responseTime,
       hintsUsed,
-      attemptNumber: currentAttempt
+      attemptNumber: currentAttempt,
     });
 
     // Update session stats
     const newStats = {
       ...sessionStats,
       wordsCompleted: sessionStats.wordsCompleted + 1,
-      wordsRemembered: status === "remembered" ? sessionStats.wordsRemembered + 1 : sessionStats.wordsRemembered,
-      wordsForgotten: status === "needs_practice" ? sessionStats.wordsForgotten + 1 : sessionStats.wordsForgotten,
+      wordsRemembered:
+        status === "remembered"
+          ? sessionStats.wordsRemembered + 1
+          : sessionStats.wordsRemembered,
+      wordsForgotten:
+        status === "needs_practice"
+          ? sessionStats.wordsForgotten + 1
+          : sessionStats.wordsForgotten,
     };
 
     // Calculate accuracy
     const totalAnswered = newStats.wordsRemembered + newStats.wordsForgotten;
-    newStats.accuracy = totalAnswered > 0 ? Math.round((newStats.wordsRemembered / totalAnswered) * 100) : 0;
+    newStats.accuracy =
+      totalAnswered > 0
+        ? Math.round((newStats.wordsRemembered / totalAnswered) * 100)
+        : 0;
 
     setSessionStats(newStats);
 
@@ -473,7 +517,12 @@ export function AIEnhancedInteractiveDashboardWordCard({
       const newJourneyAchievements = AchievementTracker.trackActivity({
         type: "wordLearning",
         wordsLearned: status === "remembered" ? 1 : 0,
-        accuracy: status === "remembered" ? 100 : status === "needs_practice" ? 0 : undefined,
+        accuracy:
+          status === "remembered"
+            ? 100
+            : status === "needs_practice"
+              ? 0
+              : undefined,
         category: currentWord.category,
         timeSpent: 1,
       });
@@ -481,13 +530,21 @@ export function AIEnhancedInteractiveDashboardWordCard({
       const enhancedAchievements = EnhancedAchievementTracker.trackActivity({
         type: "wordLearning",
         wordsLearned: status === "remembered" ? 1 : 0,
-        accuracy: status === "remembered" ? 100 : status === "needs_practice" ? 0 : undefined,
+        accuracy:
+          status === "remembered"
+            ? 100
+            : status === "needs_practice"
+              ? 0
+              : undefined,
         category: currentWord.category,
         difficulty: currentWord.difficulty,
         timeSpent: 1,
       });
 
-      const allNewAchievements = [...newJourneyAchievements, ...enhancedAchievements];
+      const allNewAchievements = [
+        ...newJourneyAchievements,
+        ...enhancedAchievements,
+      ];
 
       if (allNewAchievements.length > 0) {
         setTimeout(() => {
@@ -506,7 +563,8 @@ export function AIEnhancedInteractiveDashboardWordCard({
       // Complete AI session
       const sessionResult = await aiActions.endSession({
         completed: true,
-        userSatisfaction: newStats.accuracy >= 80 ? 5 : newStats.accuracy >= 60 ? 4 : 3
+        userSatisfaction:
+          newStats.accuracy >= 80 ? 5 : newStats.accuracy >= 60 ? 4 : 3,
       });
 
       setShowSessionComplete(true);
@@ -516,15 +574,18 @@ export function AIEnhancedInteractiveDashboardWordCard({
         stats: newStats,
         achievements: achievements.map((a) => a.title),
         aiInsights: sessionResult?.learningInsights || [],
-        nextRecommendations: sessionResult?.nextSessionRecommendations
+        nextRecommendations: sessionResult?.nextSessionRecommendations,
       });
       return;
     }
 
     // Auto-advance to next word
-    setTimeout(() => {
-      advanceToNextWord();
-    }, status === "remembered" ? 1500 : 800);
+    setTimeout(
+      () => {
+        advanceToNextWord();
+      },
+      status === "remembered" ? 1500 : 800,
+    );
   };
 
   const advanceToNextWord = () => {
@@ -551,7 +612,9 @@ export function AIEnhancedInteractiveDashboardWordCard({
       if (nextIndex < SESSION_SIZE && nextIndex < sessionWords.length) {
         setCurrentWordIndex(nextIndex);
         setWordStartTime(Date.now());
-        console.log(`Advanced to word ${nextIndex + 1}/${SESSION_SIZE}: ${sessionWords[nextIndex]?.word}`);
+        console.log(
+          `Advanced to word ${nextIndex + 1}/${SESSION_SIZE}: ${sessionWords[nextIndex]?.word}`,
+        );
       }
 
       setTimeout(() => setIsTransitioning(false), 100);
@@ -587,7 +650,7 @@ export function AIEnhancedInteractiveDashboardWordCard({
       availableTime: 15,
       sessionGoal: "learning",
       deviceType: window.innerWidth < 768 ? "mobile" : "tablet",
-      previousSessionGap: 1 // Recent session
+      previousSessionGap: 1, // Recent session
     };
 
     await aiActions.getRecommendations(
@@ -595,7 +658,7 @@ export function AIEnhancedInteractiveDashboardWordCard({
       userProgress,
       childStats,
       selectedCategory || "all",
-      SESSION_SIZE
+      SESSION_SIZE,
     );
 
     setSessionWords([]);
@@ -630,7 +693,9 @@ export function AIEnhancedInteractiveDashboardWordCard({
             <div className="absolute inset-0 bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center">
               <div className="text-center">
                 <div className="text-4xl mb-2">{currentWord.emoji || "📚"}</div>
-                <span className="text-xs text-gray-500">Image not available</span>
+                <span className="text-xs text-gray-500">
+                  Image not available
+                </span>
               </div>
             </div>
           )}
@@ -652,8 +717,12 @@ export function AIEnhancedInteractiveDashboardWordCard({
     if (currentWord?.emoji) {
       if (feedbackType) {
         const feedbackEmoji = feedbackType === "remembered" ? "🎉" : "💪";
-        const feedbackColor = feedbackType === "remembered" ? "from-green-100 to-green-200" : "from-orange-100 to-orange-200";
-        const feedbackMessage = feedbackType === "remembered" ? "Great job!" : "Keep practicing!";
+        const feedbackColor =
+          feedbackType === "remembered"
+            ? "from-green-100 to-green-200"
+            : "from-orange-100 to-orange-200";
+        const feedbackMessage =
+          feedbackType === "remembered" ? "Great job!" : "Keep practicing!";
 
         return (
           <motion.div
@@ -687,7 +756,10 @@ export function AIEnhancedInteractiveDashboardWordCard({
               key={`feedback-emoji-${currentWordIndex}-${feedbackType}`}
               animate={{
                 y: [0, -10, 0],
-                rotate: feedbackType === "remembered" ? [0, 15, -15, 0] : [0, -5, 5, 0],
+                rotate:
+                  feedbackType === "remembered"
+                    ? [0, 15, -15, 0]
+                    : [0, -5, 5, 0],
                 scale: [1, 1.2, 1],
               }}
               transition={{
@@ -759,7 +831,9 @@ export function AIEnhancedInteractiveDashboardWordCard({
               🔊
             </div>
             <div className="bg-white/80 rounded-full px-2 py-1">
-              <span className="text-xs font-bold text-blue-600">{Math.round(confidenceLevel * 100)}%</span>
+              <span className="text-xs font-bold text-blue-600">
+                {Math.round(confidenceLevel * 100)}%
+              </span>
             </div>
           </div>
 
@@ -840,7 +914,9 @@ export function AIEnhancedInteractiveDashboardWordCard({
           <div className="animate-spin w-8 h-8 mx-auto mb-4">
             <Brain className="w-8 h-8 text-educational-blue" />
           </div>
-          <p className="text-lg text-gray-600">AI is selecting personalized words...</p>
+          <p className="text-lg text-gray-600">
+            AI is selecting personalized words...
+          </p>
           <div className="mt-4 space-y-2">
             <div className="bg-gray-200 rounded-lg h-2 w-3/4 mx-auto animate-pulse"></div>
             <div className="bg-gray-200 rounded-lg h-2 w-1/2 mx-auto animate-pulse"></div>
@@ -855,7 +931,9 @@ export function AIEnhancedInteractiveDashboardWordCard({
       <Alert className="w-full max-w-4xl mx-auto">
         <Brain className="w-4 h-4" />
         <AlertDescription className="flex items-center justify-between">
-          <span>AI system temporarily unavailable. Using standard word selection.</span>
+          <span>
+            AI system temporarily unavailable. Using standard word selection.
+          </span>
           <Button onClick={() => aiActions.reset()} variant="outline" size="sm">
             Retry AI
           </Button>
@@ -907,21 +985,29 @@ export function AIEnhancedInteractiveDashboardWordCard({
             </div>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
               <div className="text-center">
-                <div className="text-lg font-bold text-blue-600">{Math.round(confidenceLevel * 100)}%</div>
+                <div className="text-lg font-bold text-blue-600">
+                  {Math.round(confidenceLevel * 100)}%
+                </div>
                 <div className="text-gray-600">AI Confidence</div>
               </div>
               <div className="text-center">
-                <div className="text-lg font-bold text-purple-600">{learningVelocity.toFixed(1)}</div>
+                <div className="text-lg font-bold text-purple-600">
+                  {learningVelocity.toFixed(1)}
+                </div>
                 <div className="text-gray-600">Words/Min</div>
               </div>
               <div className="text-center">
-                <div className="text-lg font-bold text-green-600">{sessionStats.accuracy}%</div>
+                <div className="text-lg font-bold text-green-600">
+                  {sessionStats.accuracy}%
+                </div>
                 <div className="text-gray-600">Accuracy</div>
               </div>
             </div>
             {aiState.reasoning.length > 0 && (
               <div className="mt-3 p-3 bg-white/60 rounded-lg">
-                <div className="text-xs font-medium text-gray-700 mb-1">Why AI selected these words:</div>
+                <div className="text-xs font-medium text-gray-700 mb-1">
+                  Why AI selected these words:
+                </div>
                 <ul className="text-xs text-gray-600 space-y-1">
                   {aiState.reasoning.slice(-2).map((reason, index) => (
                     <li key={index} className="flex items-start gap-1">
@@ -962,19 +1048,25 @@ export function AIEnhancedInteractiveDashboardWordCard({
                   <div className="text-sm sm:text-2xl font-bold text-green-600">
                     {sessionStats.wordsRemembered}
                   </div>
-                  <div className="text-xs sm:text-sm text-gray-600">Mastered</div>
+                  <div className="text-xs sm:text-sm text-gray-600">
+                    Mastered
+                  </div>
                 </div>
                 <div>
                   <div className="text-sm sm:text-2xl font-bold text-orange-600">
                     {sessionStats.wordsForgotten}
                   </div>
-                  <div className="text-xs sm:text-sm text-gray-600">To Practice</div>
+                  <div className="text-xs sm:text-sm text-gray-600">
+                    To Practice
+                  </div>
                 </div>
                 <div>
                   <div className="text-sm sm:text-2xl font-bold text-purple-600">
                     {sessionStats.accuracy}%
                   </div>
-                  <div className="text-xs sm:text-sm text-gray-600">Accuracy</div>
+                  <div className="text-xs sm:text-sm text-gray-600">
+                    Accuracy
+                  </div>
                 </div>
               </div>
             </div>
@@ -1051,10 +1143,18 @@ export function AIEnhancedInteractiveDashboardWordCard({
           {/* Celebration Sparkles */}
           {celebrationEffect && (
             <div className="absolute inset-0 bg-gradient-to-r from-yellow-400/20 to-pink-400/20 animate-pulse z-20">
-              <div className="absolute top-4 left-4 text-2xl animate-bounce">✨</div>
-              <div className="absolute top-6 right-6 text-3xl animate-spin">🌟</div>
-              <div className="absolute bottom-4 left-6 text-2xl animate-bounce delay-300">🎊</div>
-              <div className="absolute bottom-6 right-4 text-2xl animate-pulse delay-500">💫</div>
+              <div className="absolute top-4 left-4 text-2xl animate-bounce">
+                ✨
+              </div>
+              <div className="absolute top-6 right-6 text-3xl animate-spin">
+                🌟
+              </div>
+              <div className="absolute bottom-4 left-6 text-2xl animate-bounce delay-300">
+                🎊
+              </div>
+              <div className="absolute bottom-6 right-4 text-2xl animate-pulse delay-500">
+                💫
+              </div>
             </div>
           )}
 
@@ -1066,10 +1166,12 @@ export function AIEnhancedInteractiveDashboardWordCard({
                   <Brain className="w-4 h-4 text-white" />
                 </div>
                 <div>
-                  <div className="text-sm font-bold text-gray-800">AI Enhanced Learning</div>
+                  <div className="text-sm font-bold text-gray-800">
+                    AI Enhanced Learning
+                  </div>
                   <div className="text-xs text-gray-600">
-                    Confidence: {Math.round(confidenceLevel * 100)}% | 
-                    Progress: {currentWordIndex + 1}/{SESSION_SIZE}
+                    Confidence: {Math.round(confidenceLevel * 100)}% | Progress:{" "}
+                    {currentWordIndex + 1}/{SESSION_SIZE}
                   </div>
                 </div>
               </div>
@@ -1105,7 +1207,8 @@ export function AIEnhancedInteractiveDashboardWordCard({
                   )}
                 >
                   {currentWord.difficulty
-                    ? currentWord.difficulty.charAt(0).toUpperCase() + currentWord.difficulty.slice(1)
+                    ? currentWord.difficulty.charAt(0).toUpperCase() +
+                      currentWord.difficulty.slice(1)
                     : "Medium"}
                 </Badge>
                 <Badge
@@ -1123,10 +1226,10 @@ export function AIEnhancedInteractiveDashboardWordCard({
                   {sessionStats.accuracy}% Accuracy
                 </Badge>
               </div>
-              
+
               {/* Progress Bar */}
               <div className="w-full bg-gray-200 rounded-full h-2 mb-2">
-                <div 
+                <div
                   className="bg-gradient-to-r from-blue-500 to-purple-500 h-2 rounded-full transition-all duration-300"
                   style={{ width: `${sessionProgress}%` }}
                 />
@@ -1213,7 +1316,9 @@ export function AIEnhancedInteractiveDashboardWordCard({
                   transition={{ type: "spring", stiffness: 400, damping: 17 }}
                 >
                   <Button
-                    onClick={() => handleActionWithFeedback(handleRequestHint, "light")}
+                    onClick={() =>
+                      handleActionWithFeedback(handleRequestHint, "light")
+                    }
                     variant="outline"
                     size="sm"
                     className="px-3 py-2 text-xs sm:text-sm rounded-xl transition-all duration-300 min-h-[44px] touch-manipulation group relative overflow-hidden bg-gradient-to-r from-yellow-50 to-orange-50 hover:from-yellow-100 hover:to-orange-100 border-2 border-yellow-200 hover:border-yellow-300 shadow-md hover:shadow-lg"
@@ -1235,7 +1340,12 @@ export function AIEnhancedInteractiveDashboardWordCard({
                   transition={{ type: "spring", stiffness: 400, damping: 17 }}
                 >
                   <Button
-                    onClick={() => handleActionWithFeedback(() => setShowWordName(true), "medium")}
+                    onClick={() =>
+                      handleActionWithFeedback(
+                        () => setShowWordName(true),
+                        "medium",
+                      )
+                    }
                     size="sm"
                     className="bg-gradient-to-r from-educational-purple via-purple-500 to-purple-600 hover:from-purple-500 hover:via-purple-600 hover:to-purple-700 text-white px-3 py-2 text-xs sm:text-sm rounded-xl min-h-[44px] touch-manipulation group relative overflow-hidden shadow-lg hover:shadow-xl border-2 border-purple-300/50 hover:border-purple-200"
                     aria-label="Show word answer"
@@ -1256,7 +1366,8 @@ export function AIEnhancedInteractiveDashboardWordCard({
                   "min-w-[60px] min-h-[60px] sm:min-w-[70px] sm:min-h-[70px] md:min-w-[80px] md:min-h-[80px]",
                   "ring-4 ring-blue-200/30 hover:ring-blue-300/50",
                   "backdrop-blur-sm",
-                  isPlaying && "animate-pulse ring-yellow-400/60 shadow-yellow-400/30",
+                  isPlaying &&
+                    "animate-pulse ring-yellow-400/60 shadow-yellow-400/30",
                   "disabled:opacity-50 disabled:transform-none disabled:hover:scale-100",
                 )}
                 aria-label="🔊 Play pronunciation - AI-enhanced audio!"
@@ -1294,16 +1405,20 @@ export function AIEnhancedInteractiveDashboardWordCard({
                   <div className="flex items-center justify-center gap-2 mb-1">
                     <Brain className="w-4 h-4 text-blue-600" />
                     <Lightbulb className="w-4 h-4 text-yellow-600" />
-                    <h2 className="text-sm font-semibold text-yellow-800">🤖 AI Hint:</h2>
+                    <h2 className="text-sm font-semibold text-yellow-800">
+                      🤖 AI Hint:
+                    </h2>
                   </div>
                   <p className="text-yellow-700 text-sm mb-2" id="hint-text">
                     "{currentWord.definition}"
                   </p>
-                  
+
                   {/* AI adaptive hints */}
                   {adaptiveHints.length > 0 && (
                     <div className="mt-3 p-2 bg-white/60 rounded-lg">
-                      <div className="text-xs font-medium text-blue-700 mb-1">💡 Personalized tip:</div>
+                      <div className="text-xs font-medium text-blue-700 mb-1">
+                        💡 Personalized tip:
+                      </div>
                       <p className="text-xs text-blue-600">
                         {adaptiveHints[adaptiveHints.length - 1]}
                       </p>
@@ -1335,7 +1450,9 @@ export function AIEnhancedInteractiveDashboardWordCard({
                   <div className="text-center bg-gradient-to-br from-blue-50 to-purple-50 rounded-2xl p-4 shadow-lg border border-blue-200/50">
                     <div className="flex items-center justify-center gap-2 mb-2">
                       <Brain className="w-4 h-4 text-blue-600" />
-                      <span className="text-xs font-medium text-blue-700">AI Selected Word</span>
+                      <span className="text-xs font-medium text-blue-700">
+                        AI Selected Word
+                      </span>
                     </div>
                     <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-800 mb-2">
                       {currentWord.word}
@@ -1355,7 +1472,11 @@ export function AIEnhancedInteractiveDashboardWordCard({
                     <motion.div
                       whileHover={{ scale: 1.05, y: -2 }}
                       whileTap={{ scale: 0.95, y: 0 }}
-                      transition={{ type: "spring", stiffness: 400, damping: 17 }}
+                      transition={{
+                        type: "spring",
+                        stiffness: 400,
+                        damping: 17,
+                      }}
                       className="flex-1 sm:flex-initial"
                     >
                       <Button
@@ -1374,7 +1495,11 @@ export function AIEnhancedInteractiveDashboardWordCard({
                     <motion.div
                       whileHover={{ scale: 1.05, y: -2 }}
                       whileTap={{ scale: 0.95, y: 0 }}
-                      transition={{ type: "spring", stiffness: 400, damping: 17 }}
+                      transition={{
+                        type: "spring",
+                        stiffness: 400,
+                        damping: 17,
+                      }}
                       className="flex-1 sm:flex-initial"
                     >
                       <Button

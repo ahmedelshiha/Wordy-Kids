@@ -1,8 +1,8 @@
-import { 
-  AIWordRecommendationEngine, 
-  AIRecommendation, 
+import {
+  AIWordRecommendationEngine,
+  AIRecommendation,
   SessionPerformance,
-  AILearningPattern 
+  AILearningPattern,
 } from "./aiWordRecommendationEngine";
 import { Word } from "@/data/wordsDatabase";
 import { ChildWordStats } from "@shared/api";
@@ -58,7 +58,7 @@ export interface SessionMetrics {
 
 /**
  * AI Word Recommendation Service
- * 
+ *
  * Provides a clean API layer for integrating AI recommendations into the React app.
  * Handles real-time adaptation, session tracking, and predictive analytics.
  */
@@ -68,7 +68,8 @@ export class AIWordRecommendationService {
   private currentSession: SessionMetrics | null = null;
   private sessionInteractions: WordInteraction[] = [];
   private realTimeAdaptationEnabled = true;
-  private adaptationCallbacks: ((recommendation: AIRecommendation) => void)[] = [];
+  private adaptationCallbacks: ((recommendation: AIRecommendation) => void)[] =
+    [];
 
   private constructor(config: Partial<AIServiceConfig> = {}) {
     this.config = {
@@ -77,13 +78,17 @@ export class AIWordRecommendationService {
       enablePersonalizedDifficulty: true,
       enableMotivationalBoosts: true,
       analyticsUpdateInterval: 5000, // 5 seconds
-      ...config
+      ...config,
     };
   }
 
-  static getInstance(config?: Partial<AIServiceConfig>): AIWordRecommendationService {
+  static getInstance(
+    config?: Partial<AIServiceConfig>,
+  ): AIWordRecommendationService {
     if (!AIWordRecommendationService.instance) {
-      AIWordRecommendationService.instance = new AIWordRecommendationService(config);
+      AIWordRecommendationService.instance = new AIWordRecommendationService(
+        config,
+      );
     }
     return AIWordRecommendationService.instance;
   }
@@ -101,7 +106,7 @@ export class AIWordRecommendationService {
     },
     childStats?: ChildWordStats | null,
     category?: string,
-    targetWordCount: number = 20
+    targetWordCount: number = 20,
   ): Promise<AIRecommendation> {
     try {
       // Prepare contextual hints
@@ -109,22 +114,26 @@ export class AIWordRecommendationService {
         timeOfDay: sessionContext.timeOfDay,
         sessionGoal: sessionContext.sessionGoal,
         availableTime: sessionContext.availableTime,
-        emotionalState: sessionContext.emotionalState
+        emotionalState: sessionContext.emotionalState,
       };
 
       // Get AI recommendations
-      const recommendation = await AIWordRecommendationEngine.generateRecommendations(
-        userId,
-        targetWordCount,
-        category,
-        userProgress,
-        childStats,
-        contextualHints
-      );
+      const recommendation =
+        await AIWordRecommendationEngine.generateRecommendations(
+          userId,
+          targetWordCount,
+          category,
+          userProgress,
+          childStats,
+          contextualHints,
+        );
 
       // Apply service-level enhancements
       if (this.config.enableMotivationalBoosts) {
-        await this.applyMotivationalEnhancements(recommendation, sessionContext);
+        await this.applyMotivationalEnhancements(
+          recommendation,
+          sessionContext,
+        );
       }
 
       // Start session tracking
@@ -135,9 +144,13 @@ export class AIWordRecommendationService {
       return recommendation;
     } catch (error) {
       console.error("Failed to get AI recommendations:", error);
-      
+
       // Fallback to basic recommendation
-      return this.getFallbackRecommendation(userProgress, category, targetWordCount);
+      return this.getFallbackRecommendation(
+        userProgress,
+        category,
+        targetWordCount,
+      );
     }
   }
 
@@ -146,7 +159,7 @@ export class AIWordRecommendationService {
    */
   async recordWordInteraction(
     userId: string,
-    interaction: WordInteraction
+    interaction: WordInteraction,
   ): Promise<{
     adaptiveHint?: string;
     encouragement?: string;
@@ -165,7 +178,10 @@ export class AIWordRecommendationService {
 
     // Real-time adaptive hints
     if (this.config.enableRealTimeAdaptation && !interaction.isCorrect) {
-      response.adaptiveHint = await this.generateAdaptiveHint(interaction, userId);
+      response.adaptiveHint = await this.generateAdaptiveHint(
+        interaction,
+        userId,
+      );
     }
 
     // Motivational boosts
@@ -200,7 +216,7 @@ export class AIWordRecommendationService {
         totalTime: number;
         userSatisfaction?: number; // 1-5 scale
       };
-    }
+    },
   ): Promise<{
     sessionSummary: SessionPerformance;
     learningInsights: string[];
@@ -225,19 +241,26 @@ export class AIWordRecommendationService {
       averageResponseTime: this.currentSession.averageResponseTime,
       difficultyMix: this.calculateDifficultyMix(),
       categoriesUsed: this.calculateCategoriesUsed(),
-      frustrationEvents: this.currentSession.cognitiveLoadIndicators.hesitationEvents,
+      frustrationEvents:
+        this.currentSession.cognitiveLoadIndicators.hesitationEvents,
       engagementScore: this.calculateEngagementScore(),
-      completionRate: sessionOutcome.completed ? 1 : 0.5
+      completionRate: sessionOutcome.completed ? 1 : 0.5,
     };
 
     // Record in AI engine
-    AIWordRecommendationEngine.recordSessionPerformance(userId, sessionPerformance);
+    AIWordRecommendationEngine.recordSessionPerformance(
+      userId,
+      sessionPerformance,
+    );
 
     // Generate insights
     const analytics = AIWordRecommendationEngine.getLearningAnalytics(userId);
-    
+
     // Check for achievements
-    const achievements = this.checkSessionAchievements(sessionPerformance, userId);
+    const achievements = this.checkSessionAchievements(
+      sessionPerformance,
+      userId,
+    );
 
     // Reset session state
     this.currentSession = null;
@@ -247,11 +270,15 @@ export class AIWordRecommendationService {
       sessionSummary: sessionPerformance,
       learningInsights: analytics.insights,
       nextSessionRecommendations: {
-        recommendedGap: analytics.predictedOutcomes.nextWeekLearningRate > 20 ? 6 : 12, // hours
-        suggestedFocus: analytics.predictedOutcomes.recommendedFocus[0] || "balanced_practice",
-        difficultyAdjustment: this.recommendDifficultyAdjustment(sessionPerformance)
+        recommendedGap:
+          analytics.predictedOutcomes.nextWeekLearningRate > 20 ? 6 : 12, // hours
+        suggestedFocus:
+          analytics.predictedOutcomes.recommendedFocus[0] ||
+          "balanced_practice",
+        difficultyAdjustment:
+          this.recommendDifficultyAdjustment(sessionPerformance),
       },
-      achievements
+      achievements,
     };
   }
 
@@ -270,13 +297,13 @@ export class AIWordRecommendationService {
     };
   } {
     const analytics = AIWordRecommendationEngine.getLearningAnalytics(userId);
-    
+
     let currentSessionProgress;
     if (this.currentSession) {
       currentSessionProgress = {
         efficiency: this.calculateSessionEfficiency(),
         engagement: this.calculateEngagementScore(),
-        cognitiveLoad: this.calculateCognitiveLoad()
+        cognitiveLoad: this.calculateCognitiveLoad(),
       };
     }
 
@@ -285,7 +312,7 @@ export class AIWordRecommendationService {
       retentionTrend: analytics.retentionTrend,
       categoryMastery: analytics.categoryMasteryLevels,
       predictedOutcomes: analytics.predictedOutcomes,
-      currentSessionProgress
+      currentSessionProgress,
     };
   }
 
@@ -300,13 +327,13 @@ export class AIWordRecommendationService {
     difficultyStrategy: string;
   } {
     const analytics = AIWordRecommendationEngine.getLearningAnalytics(userId);
-    
+
     return {
       optimalStudyTimes: this.calculateOptimalStudyTimes(analytics),
       sessionDuration: this.recommendSessionDuration(analytics),
       focusAreas: analytics.predictedOutcomes.recommendedFocus,
       motivationalTips: this.generateMotivationalTips(analytics),
-      difficultyStrategy: this.recommendDifficultyStrategy(analytics)
+      difficultyStrategy: this.recommendDifficultyStrategy(analytics),
     };
   }
 
@@ -331,21 +358,27 @@ export class AIWordRecommendationService {
 
   private async applyMotivationalEnhancements(
     recommendation: AIRecommendation,
-    sessionContext: SessionContext
+    sessionContext: SessionContext,
   ): Promise<void> {
     // Add motivational elements based on context
     if (sessionContext.emotionalState === "frustrated") {
       // Inject easier words for confidence building
-      const easyWords = recommendation.words.filter(w => w.difficulty === "easy");
+      const easyWords = recommendation.words.filter(
+        (w) => w.difficulty === "easy",
+      );
       if (easyWords.length < recommendation.words.length * 0.6) {
         // Replace some words with easier alternatives
-        recommendation.reasoning.push("Added confidence-building words due to detected frustration");
+        recommendation.reasoning.push(
+          "Added confidence-building words due to detected frustration",
+        );
       }
     }
 
     if (sessionContext.sessionGoal === "confidence") {
       // Ensure mostly easy to medium words
-      recommendation.reasoning.push("Optimized for confidence building with carefully selected difficulty progression");
+      recommendation.reasoning.push(
+        "Optimized for confidence building with carefully selected difficulty progression",
+      );
     }
   }
 
@@ -356,16 +389,16 @@ export class AIWordRecommendationService {
       excludedWordIds: Set<number>;
     },
     category?: string,
-    targetWordCount: number = 20
+    targetWordCount: number = 20,
   ): AIRecommendation {
     // Simple fallback using existing smart selection
     const { SmartWordSelector } = require("./smartWordSelection");
-    
+
     const selection = SmartWordSelector.selectWords({
       category: category || "all",
       count: targetWordCount,
       rememberedWords: userProgress.rememberedWords,
-      forgottenWords: userProgress.forgottenWords
+      forgottenWords: userProgress.forgottenWords,
     });
 
     return {
@@ -376,23 +409,26 @@ export class AIWordRecommendationService {
         learningVelocity: 0.5,
         retentionPrediction: 0.7,
         engagementScore: 0.6,
-        difficultyFit: 0.7
+        difficultyFit: 0.7,
       },
       alternativeStrategies: ["manual_selection"],
       adaptiveInstructions: {
         encouragementFrequency: 2,
         hintStrategy: "moderate",
-        errorHandling: "delayed"
+        errorHandling: "delayed",
       },
       nextSessionPreview: {
         recommendedGap: 24,
         focusArea: "balanced_practice",
-        expectedDifficulty: "same"
-      }
+        expectedDifficulty: "same",
+      },
     };
   }
 
-  private startSessionTracking(userId: string, recommendation: AIRecommendation): void {
+  private startSessionTracking(
+    userId: string,
+    recommendation: AIRecommendation,
+  ): void {
     this.currentSession = {
       sessionId: `session_${Date.now()}_${userId}`,
       startTime: Date.now(),
@@ -405,8 +441,8 @@ export class AIWordRecommendationService {
       cognitiveLoadIndicators: {
         responseTimeSpikes: 0,
         hesitationEvents: 0,
-        errorPatterns: []
-      }
+        errorPatterns: [],
+      },
     };
 
     // Start analytics update interval
@@ -424,11 +460,16 @@ export class AIWordRecommendationService {
     }
 
     // Update average response time
-    const totalTime = this.currentSession.averageResponseTime * (this.currentSession.wordsAttempted - 1);
-    this.currentSession.averageResponseTime = (totalTime + interaction.responseTime) / this.currentSession.wordsAttempted;
+    const totalTime =
+      this.currentSession.averageResponseTime *
+      (this.currentSession.wordsAttempted - 1);
+    this.currentSession.averageResponseTime =
+      (totalTime + interaction.responseTime) /
+      this.currentSession.wordsAttempted;
 
     // Track cognitive load indicators
-    if (interaction.responseTime > 8000) { // More than 8 seconds
+    if (interaction.responseTime > 8000) {
+      // More than 8 seconds
       this.currentSession.cognitiveLoadIndicators.responseTimeSpikes++;
     }
 
@@ -441,20 +482,20 @@ export class AIWordRecommendationService {
       this.currentSession.engagementEvents.push({
         type: "positive",
         timestamp: interaction.timestamp,
-        context: "quick_correct_answer"
+        context: "quick_correct_answer",
       });
     } else if (!interaction.isCorrect && interaction.attemptNumber > 2) {
       this.currentSession.engagementEvents.push({
         type: "negative",
         timestamp: interaction.timestamp,
-        context: "multiple_attempts"
+        context: "multiple_attempts",
       });
     }
   }
 
   private async generateAdaptiveHint(
     interaction: WordInteraction,
-    userId: string
+    userId: string,
   ): Promise<string> {
     // Generate contextual hints based on error patterns
     if (interaction.attemptNumber === 1) {
@@ -468,14 +509,14 @@ export class AIWordRecommendationService {
 
   private generateEncouragement(
     interaction: WordInteraction,
-    userId: string
+    userId: string,
   ): string {
     if (interaction.isCorrect) {
       const encouragements = [
         "Excellent work! 🌟",
         "You're getting really good at this! 🎉",
         "Amazing! Keep up the great progress! 🚀",
-        "Perfect! You're building your vocabulary beautifully! 📚"
+        "Perfect! You're building your vocabulary beautifully! 📚",
       ];
       return encouragements[Math.floor(Math.random() * encouragements.length)];
     } else {
@@ -483,20 +524,26 @@ export class AIWordRecommendationService {
         "That's okay! Learning takes practice! 💫",
         "Great effort! Every try makes you stronger! 💪",
         "You're doing great! Let's keep learning together! 🌈",
-        "Nice try! You're building your brain power! 🧠"
+        "Nice try! You're building your brain power! 🧠",
       ];
       return supportive[Math.floor(Math.random() * supportive.length)];
     }
   }
 
-  private suggestDifficultyAdjustment(userId: string): "easier" | "harder" | "maintain" {
+  private suggestDifficultyAdjustment(
+    userId: string,
+  ): "easier" | "harder" | "maintain" {
     if (!this.currentSession || this.sessionInteractions.length < 3) {
       return "maintain";
     }
 
     const recentInteractions = this.sessionInteractions.slice(-5);
-    const accuracy = recentInteractions.filter(i => i.isCorrect).length / recentInteractions.length;
-    const avgResponseTime = recentInteractions.reduce((sum, i) => sum + i.responseTime, 0) / recentInteractions.length;
+    const accuracy =
+      recentInteractions.filter((i) => i.isCorrect).length /
+      recentInteractions.length;
+    const avgResponseTime =
+      recentInteractions.reduce((sum, i) => sum + i.responseTime, 0) /
+      recentInteractions.length;
 
     if (accuracy < 0.4 || avgResponseTime > 8000) {
       return "easier";
@@ -509,9 +556,11 @@ export class AIWordRecommendationService {
 
   private shouldTriggerAdaptation(): boolean {
     if (!this.realTimeAdaptationEnabled || !this.currentSession) return false;
-    
+
     // Trigger adaptation every 5 words or if performance changes significantly
-    return this.sessionInteractions.length % 5 === 0 || this.detectPerformanceShift();
+    return (
+      this.sessionInteractions.length % 5 === 0 || this.detectPerformanceShift()
+    );
   }
 
   private detectPerformanceShift(): boolean {
@@ -520,8 +569,10 @@ export class AIWordRecommendationService {
     const recent = this.sessionInteractions.slice(-3);
     const previous = this.sessionInteractions.slice(-6, -3);
 
-    const recentAccuracy = recent.filter(i => i.isCorrect).length / recent.length;
-    const previousAccuracy = previous.filter(i => i.isCorrect).length / previous.length;
+    const recentAccuracy =
+      recent.filter((i) => i.isCorrect).length / recent.length;
+    const previousAccuracy =
+      previous.filter((i) => i.isCorrect).length / previous.length;
 
     return Math.abs(recentAccuracy - previousAccuracy) > 0.3;
   }
@@ -537,30 +588,33 @@ export class AIWordRecommendationService {
         learningVelocity: 0.7,
         retentionPrediction: 0.8,
         engagementScore: 0.75,
-        difficultyFit: 0.85
+        difficultyFit: 0.85,
       },
       alternativeStrategies: [],
       adaptiveInstructions: {
         encouragementFrequency: 2,
         hintStrategy: "moderate",
-        errorHandling: "immediate"
+        errorHandling: "immediate",
       },
       nextSessionPreview: {
         recommendedGap: 12,
         focusArea: "adaptation_response",
-        expectedDifficulty: "same"
-      }
+        expectedDifficulty: "same",
+      },
     };
 
-    this.adaptationCallbacks.forEach(callback => callback(mockAdaptation));
+    this.adaptationCallbacks.forEach((callback) => callback(mockAdaptation));
   }
 
   private calculateDifficultyMix(): Record<string, number> {
-    const difficulties = this.sessionInteractions.reduce((acc, interaction) => {
-      // This would need access to word difficulty from interaction
-      acc["medium"] = (acc["medium"] || 0) + 1;
-      return acc;
-    }, {} as Record<string, number>);
+    const difficulties = this.sessionInteractions.reduce(
+      (acc, interaction) => {
+        // This would need access to word difficulty from interaction
+        acc["medium"] = (acc["medium"] || 0) + 1;
+        return acc;
+      },
+      {} as Record<string, number>,
+    );
 
     return difficulties;
   }
@@ -573,18 +627,23 @@ export class AIWordRecommendationService {
   private calculateEngagementScore(): number {
     if (!this.currentSession) return 0.5;
 
-    const positiveEvents = this.currentSession.engagementEvents.filter(e => e.type === "positive").length;
+    const positiveEvents = this.currentSession.engagementEvents.filter(
+      (e) => e.type === "positive",
+    ).length;
     const totalEvents = this.currentSession.engagementEvents.length;
-    
+
     if (totalEvents === 0) return 0.7; // Default neutral engagement
-    
+
     return positiveEvents / totalEvents;
   }
 
   private calculateSessionEfficiency(): number {
-    if (!this.currentSession || this.currentSession.wordsAttempted === 0) return 0;
-    
-    return this.currentSession.wordsCorrect / this.currentSession.wordsAttempted;
+    if (!this.currentSession || this.currentSession.wordsAttempted === 0)
+      return 0;
+
+    return (
+      this.currentSession.wordsCorrect / this.currentSession.wordsAttempted
+    );
   }
 
   private calculateCognitiveLoad(): number {
@@ -592,26 +651,34 @@ export class AIWordRecommendationService {
 
     const indicators = this.currentSession.cognitiveLoadIndicators;
     const loadFactors = [
-      indicators.responseTimeSpikes / Math.max(1, this.currentSession.wordsAttempted),
-      indicators.hesitationEvents / Math.max(1, this.currentSession.wordsAttempted),
-      this.currentSession.averageResponseTime / 10000 // Normalize to 10 seconds max
+      indicators.responseTimeSpikes /
+        Math.max(1, this.currentSession.wordsAttempted),
+      indicators.hesitationEvents /
+        Math.max(1, this.currentSession.wordsAttempted),
+      this.currentSession.averageResponseTime / 10000, // Normalize to 10 seconds max
     ];
 
-    return Math.min(1, loadFactors.reduce((sum, factor) => sum + factor, 0) / loadFactors.length);
+    return Math.min(
+      1,
+      loadFactors.reduce((sum, factor) => sum + factor, 0) / loadFactors.length,
+    );
   }
 
   private checkSessionAchievements(
     sessionPerformance: SessionPerformance,
-    userId: string
+    userId: string,
   ): any[] {
     const achievements = [];
 
     // Check for performance-based achievements
-    if (sessionPerformance.wordsCorrect / sessionPerformance.wordsAttempted >= 0.9) {
+    if (
+      sessionPerformance.wordsCorrect / sessionPerformance.wordsAttempted >=
+      0.9
+    ) {
       achievements.push({
         id: "high_accuracy",
         title: "Accuracy Expert! 🎯",
-        description: "Achieved 90%+ accuracy in a session"
+        description: "Achieved 90%+ accuracy in a session",
       });
     }
 
@@ -619,16 +686,19 @@ export class AIWordRecommendationService {
       achievements.push({
         id: "speed_demon",
         title: "Speed Learner! ⚡",
-        description: "Lightning-fast responses throughout the session"
+        description: "Lightning-fast responses throughout the session",
       });
     }
 
     return achievements;
   }
 
-  private recommendDifficultyAdjustment(sessionPerformance: SessionPerformance): string {
-    const accuracy = sessionPerformance.wordsCorrect / sessionPerformance.wordsAttempted;
-    
+  private recommendDifficultyAdjustment(
+    sessionPerformance: SessionPerformance,
+  ): string {
+    const accuracy =
+      sessionPerformance.wordsCorrect / sessionPerformance.wordsAttempted;
+
     if (accuracy < 0.6) return "reduce_difficulty";
     if (accuracy > 0.9) return "increase_difficulty";
     return "maintain_difficulty";
@@ -648,14 +718,18 @@ export class AIWordRecommendationService {
     return [
       "Try studying at your peak energy times for better focus! ⚡",
       "Celebrate small wins - every word learned is progress! 🎉",
-      "Take breaks when you feel tired - rest helps memory consolidation! 😴"
+      "Take breaks when you feel tired - rest helps memory consolidation! 😴",
     ];
   }
 
   private recommendDifficultyStrategy(analytics: any): string {
     if (analytics.predictedOutcomes.retentionRisk > 0.6) {
       return "focus_on_mastery";
-    } else if (analytics.velocityTrend.slice(-3).every((v, i, arr) => i === 0 || v > arr[i-1])) {
+    } else if (
+      analytics.velocityTrend
+        .slice(-3)
+        .every((v, i, arr) => i === 0 || v > arr[i - 1])
+    ) {
       return "progressive_challenge";
     }
     return "balanced_approach";
@@ -673,4 +747,5 @@ export class AIWordRecommendationService {
 }
 
 // Export singleton instance
-export const aiWordRecommendationService = AIWordRecommendationService.getInstance();
+export const aiWordRecommendationService =
+  AIWordRecommendationService.getInstance();
