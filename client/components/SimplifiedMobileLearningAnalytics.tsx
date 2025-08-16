@@ -49,7 +49,8 @@ export const SimplifiedMobileLearningAnalytics: React.FC<
   SimplifiedMobileLearningAnalyticsProps
 > = ({ children: propChildren = [] }) => {
   const [activeTab, setActiveTab] = useState("progress");
-  const [realTimeData, setRealTimeData] = useState<SimplifiedAnalyticsData | null>(null);
+  const [realTimeData, setRealTimeData] =
+    useState<SimplifiedAnalyticsData | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
   const getFallbackData = (): SimplifiedAnalyticsData => {
@@ -153,16 +154,22 @@ export const SimplifiedMobileLearningAnalytics: React.FC<
           try {
             return await goalProgressTracker.fetchSystematicProgress(child.id);
           } catch (error) {
-            console.warn(`Failed to load progress for child ${child.id}:`, error);
+            console.warn(
+              `Failed to load progress for child ${child.id}:`,
+              error,
+            );
             return null;
           }
         }),
       );
 
-      const validProgressData = childrenProgressData.filter((data) => data !== null);
+      const validProgressData = childrenProgressData.filter(
+        (data) => data !== null,
+      );
 
       // Calculate real category progress
-      const categoryProgress = await calculateRealCategoryProgressMobile(children);
+      const categoryProgress =
+        await calculateRealCategoryProgressMobile(children);
 
       // Calculate real overview metrics
       const totalWordsMastered = categoryProgress.reduce(
@@ -211,7 +218,16 @@ export const SimplifiedMobileLearningAnalytics: React.FC<
   const calculateRealCategoryProgressMobile = async (
     children: ChildProfile[],
   ): Promise<CategoryProgress[]> => {
-    const categories = ["Animals", "Colors", "Numbers", "Family", "School", "Science", "Food", "Objects"];
+    const categories = [
+      "Animals",
+      "Colors",
+      "Numbers",
+      "Family",
+      "School",
+      "Science",
+      "Food",
+      "Objects",
+    ];
     const categoryData: CategoryProgress[] = [];
 
     for (const category of categories) {
@@ -224,15 +240,20 @@ export const SimplifiedMobileLearningAnalytics: React.FC<
 
       for (const child of children) {
         try {
-          const progress = await goalProgressTracker.fetchSystematicProgress(child.id);
+          const progress = await goalProgressTracker.fetchSystematicProgress(
+            child.id,
+          );
           const categoryProgress = progress.categoriesProgress[category] || 0;
 
           const wordsInCategory = 25; // Average words per category
           totalWords += wordsInCategory;
-          masteredWords += Math.round((categoryProgress / 100) * wordsInCategory);
+          masteredWords += Math.round(
+            (categoryProgress / 100) * wordsInCategory,
+          );
 
           // Get completion history for accuracy
-          const completionHistory = CategoryCompletionTracker.getCompletionHistory();
+          const completionHistory =
+            CategoryCompletionTracker.getCompletionHistory();
           const categoryCompletions = completionHistory.filter(
             (record: any) =>
               record.categoryId === category && record.userId === child.id,
@@ -257,8 +278,12 @@ export const SimplifiedMobileLearningAnalytics: React.FC<
 
       // Only include categories with some progress
       if (masteredWords > 0 || totalWords > 0) {
-        practiceWords = Math.max(0, Math.round(totalWords * 0.15 - masteredWords * 0.1));
-        const accuracy = accuracyCount > 0 ? Math.round(totalAccuracy / accuracyCount) : 85;
+        practiceWords = Math.max(
+          0,
+          Math.round(totalWords * 0.15 - masteredWords * 0.1),
+        );
+        const accuracy =
+          accuracyCount > 0 ? Math.round(totalAccuracy / accuracyCount) : 85;
 
         categoryData.push({
           category,
@@ -274,10 +299,38 @@ export const SimplifiedMobileLearningAnalytics: React.FC<
     // Show top 4 categories or add some default ones if none exist
     if (categoryData.length === 0) {
       return [
-        { category: "Animals", totalWords: 25, masteredWords: 0, practiceWords: 0, accuracy: 0, timeSpent: 0 },
-        { category: "Colors", totalWords: 20, masteredWords: 0, practiceWords: 0, accuracy: 0, timeSpent: 0 },
-        { category: "Numbers", totalWords: 30, masteredWords: 0, practiceWords: 0, accuracy: 0, timeSpent: 0 },
-        { category: "Family", totalWords: 25, masteredWords: 0, practiceWords: 0, accuracy: 0, timeSpent: 0 },
+        {
+          category: "Animals",
+          totalWords: 25,
+          masteredWords: 0,
+          practiceWords: 0,
+          accuracy: 0,
+          timeSpent: 0,
+        },
+        {
+          category: "Colors",
+          totalWords: 20,
+          masteredWords: 0,
+          practiceWords: 0,
+          accuracy: 0,
+          timeSpent: 0,
+        },
+        {
+          category: "Numbers",
+          totalWords: 30,
+          masteredWords: 0,
+          practiceWords: 0,
+          accuracy: 0,
+          timeSpent: 0,
+        },
+        {
+          category: "Family",
+          totalWords: 25,
+          masteredWords: 0,
+          practiceWords: 0,
+          accuracy: 0,
+          timeSpent: 0,
+        },
       ];
     }
 
@@ -482,7 +535,8 @@ export const SimplifiedMobileLearningAnalytics: React.FC<
                     <div className="flex items-center gap-1">
                       <span className="text-lg mobile-emoji">✅</span>
                       <span className="text-xs text-green-600">
-                        {analyticsData.overview.totalWordsMastered} words learned!
+                        {analyticsData.overview.totalWordsMastered} words
+                        learned!
                       </span>
                     </div>
                   </div>
@@ -491,7 +545,8 @@ export const SimplifiedMobileLearningAnalytics: React.FC<
                     <div className="flex items-center gap-1">
                       <span className="text-lg mobile-emoji">🔥</span>
                       <span className="text-xs text-orange-600">
-                        {analyticsData.overview.activeLearningStreak} days in a row!
+                        {analyticsData.overview.activeLearningStreak} days in a
+                        row!
                       </span>
                     </div>
                   </div>
@@ -508,7 +563,9 @@ export const SimplifiedMobileLearningAnalytics: React.FC<
                     <span className="text-sm text-gray-600">Today</span>
                     <div className="flex items-center gap-1">
                       <span className="text-lg mobile-emoji">🎯</span>
-                      <span className="text-xs text-blue-600">Ready to learn more!</span>
+                      <span className="text-xs text-blue-600">
+                        Ready to learn more!
+                      </span>
                     </div>
                   </div>
                 </>
