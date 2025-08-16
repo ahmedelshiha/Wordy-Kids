@@ -63,8 +63,13 @@ function scanCodebase() {
 
   FILE_PATTERNS.forEach(pattern => {
     const files = glob.sync(pattern, { cwd: process.cwd() });
-    
+
     files.forEach(file => {
+      // Skip files that intentionally contain corruption patterns
+      if (IGNORE_FILES.includes(file)) {
+        return;
+      }
+
       const issues = scanFile(file);
       allIssues.push(...issues);
     });
