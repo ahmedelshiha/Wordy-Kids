@@ -183,7 +183,7 @@ export const BalloonRescueVowelAdventure: React.FC<Props> = ({
       // Auto-pronounce first word after a delay
       setTimeout(() => {
         if (questions.length > 0) {
-          audioService.pronounceWord(questions[0].word, "kid");
+          audioService.pronounceWord(questions[0].word);
         }
       }, 1000);
     };
