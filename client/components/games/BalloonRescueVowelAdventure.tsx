@@ -285,7 +285,7 @@ export const BalloonRescueVowelAdventure: React.FC<Props> = ({
     
     // Re-pronounce the word
     if (currentQuestion) {
-      audioService.pronounceWord(currentQuestion.word, "kid");
+      audioService.pronounceWord(currentQuestion.word);
     }
   }, [currentQuestion]);
 
