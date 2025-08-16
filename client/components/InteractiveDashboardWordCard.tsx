@@ -874,6 +874,7 @@ export function InteractiveDashboardWordCard({
             {/* Sparkle effects on hover */}
             <AnimatePresence>
               <motion.div
+                key={`sparkle-1-${currentWordIndex}`}
                 initial={{ opacity: 0, scale: 0 }}
                 animate={{ opacity: [0, 1, 0], scale: [0, 1, 0] }}
                 transition={{
@@ -887,6 +888,7 @@ export function InteractiveDashboardWordCard({
                 ✨
               </motion.div>
               <motion.div
+                key={`sparkle-2-${currentWordIndex}`}
                 initial={{ opacity: 0, scale: 0 }}
                 animate={{ opacity: [0, 1, 0], scale: [0, 1, 0] }}
                 transition={{
