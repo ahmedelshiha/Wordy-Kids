@@ -311,8 +311,47 @@ export const SimplifiedMobileLearningAnalytics: React.FC<
     return "💪";
   };
 
+  if (isLoading) {
+    return (
+      <div className="mobile-analytics-container space-y-4 px-4 py-2">
+        <div className="text-center mb-6">
+          <h1 className="text-2xl font-bold text-gray-800 mb-2">
+            🏆 My Learning Progress 🎉
+          </h1>
+          <p className="text-sm text-gray-600">
+            Loading your real progress... ⏳
+          </p>
+        </div>
+
+        {/* Loading cards */}
+        <div className="metrics-grid-mobile mb-6">
+          {[1, 2, 3, 4].map((i) => (
+            <Card key={i} className="achievement-card-mobile animate-pulse">
+              <CardContent className="p-4 text-center">
+                <div className="h-8 bg-gray-200 rounded mb-2"></div>
+                <div className="h-6 bg-gray-200 rounded mb-1"></div>
+                <div className="h-4 bg-gray-200 rounded"></div>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="mobile-analytics-container space-y-4 px-4 py-2">
+      {/* Real Data Indicator */}
+      {realTimeData && (
+        <div className="mb-3 p-2 bg-green-50 border border-green-200 rounded-lg">
+          <div className="flex items-center justify-center gap-2 text-xs text-green-800">
+            <span>✅</span>
+            <span>Showing your real learning progress!</span>
+            <span className="text-green-600">• Live data</span>
+          </div>
+        </div>
+      )}
+
       {/* Simple Header */}
       <div className="text-center mb-6">
         <h1 className="text-2xl font-bold text-gray-800 mb-2">
