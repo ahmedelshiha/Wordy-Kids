@@ -206,7 +206,9 @@ export function InteractiveDashboardWordCard({
   const [showHint, setShowHint] = useState(false);
 
   // Enhanced visual feedback states
-  const [particles, setParticles] = useState<Array<{id: number, type: 'success' | 'practice', x: number, y: number}>>([]);
+  const [particles, setParticles] = useState<
+    Array<{ id: number; type: "success" | "practice"; x: number; y: number }>
+  >([]);
   const [buttonClickedId, setButtonClickedId] = useState<string | null>(null);
   const [showSuccessRipple, setShowSuccessRipple] = useState(false);
   const [showPracticeRipple, setShowPracticeRipple] = useState(false);
@@ -733,7 +735,7 @@ export function InteractiveDashboardWordCard({
               duration: 0.6,
               type: "spring",
               stiffness: 300,
-              damping: 20
+              damping: 20,
             }}
             className={`w-48 h-32 mx-auto flex flex-col items-center justify-center bg-gradient-to-br ${feedbackColor} rounded-2xl shadow-lg hover:shadow-xl border-2 ${feedbackType === "remembered" ? "border-green-300" : "border-orange-300"} relative overflow-hidden`}
           >
@@ -750,13 +752,16 @@ export function InteractiveDashboardWordCard({
             <motion.div
               animate={{
                 y: [0, -10, 0],
-                rotate: feedbackType === "remembered" ? [0, 15, -15, 0] : [0, -5, 5, 0],
-                scale: [1, 1.2, 1]
+                rotate:
+                  feedbackType === "remembered"
+                    ? [0, 15, -15, 0]
+                    : [0, -5, 5, 0],
+                scale: [1, 1.2, 1],
               }}
               transition={{
                 duration: feedbackType === "remembered" ? 0.8 : 1.2,
                 repeat: Infinity,
-                ease: "easeInOut"
+                ease: "easeInOut",
               }}
               className="text-4xl mb-1 relative z-10"
             >
@@ -777,16 +782,36 @@ export function InteractiveDashboardWordCard({
               <>
                 <motion.div
                   initial={{ opacity: 0, scale: 0, x: -20, y: -10 }}
-                  animate={{ opacity: [0, 1, 0], scale: [0, 1, 0], x: -30, y: -20 }}
-                  transition={{ duration: 1.5, delay: 0.2, repeat: Infinity, repeatDelay: 2 }}
+                  animate={{
+                    opacity: [0, 1, 0],
+                    scale: [0, 1, 0],
+                    x: -30,
+                    y: -20,
+                  }}
+                  transition={{
+                    duration: 1.5,
+                    delay: 0.2,
+                    repeat: Infinity,
+                    repeatDelay: 2,
+                  }}
                   className="absolute text-yellow-300 text-sm"
                 >
                   ✨
                 </motion.div>
                 <motion.div
                   initial={{ opacity: 0, scale: 0, x: 20, y: -10 }}
-                  animate={{ opacity: [0, 1, 0], scale: [0, 1, 0], x: 30, y: -20 }}
-                  transition={{ duration: 1.5, delay: 0.5, repeat: Infinity, repeatDelay: 2 }}
+                  animate={{
+                    opacity: [0, 1, 0],
+                    scale: [0, 1, 0],
+                    x: 30,
+                    y: -20,
+                  }}
+                  transition={{
+                    duration: 1.5,
+                    delay: 0.5,
+                    repeat: Infinity,
+                    repeatDelay: 2,
+                  }}
                   className="absolute text-blue-300 text-xs"
                 >
                   ⭐
@@ -807,12 +832,12 @@ export function InteractiveDashboardWordCard({
             duration: 0.6,
             type: "spring",
             stiffness: 200,
-            damping: 20
+            damping: 20,
           }}
           whileHover={{
             scale: 1.05,
             rotateY: 5,
-            transition: { duration: 0.3 }
+            transition: { duration: 0.3 },
           }}
           whileTap={{ scale: 0.95 }}
           className="w-48 h-32 mx-auto flex items-center justify-center bg-gradient-to-br from-blue-100 via-purple-100 to-pink-100 rounded-2xl shadow-lg hover:shadow-xl cursor-pointer group relative overflow-hidden"
@@ -829,18 +854,18 @@ export function InteractiveDashboardWordCard({
             animate={{
               y: [0, -8, 0],
               rotate: [0, 2, -2, 0],
-              scale: [1, 1.05, 1]
+              scale: [1, 1.05, 1],
             }}
             transition={{
               duration: 3,
               repeat: Infinity,
               ease: "easeInOut",
-              times: [0, 0.5, 1]
+              times: [0, 0.5, 1],
             }}
             whileHover={{
               y: -5,
               scale: 1.1,
-              transition: { duration: 0.2 }
+              transition: { duration: 0.2 },
             }}
             className="text-8xl filter drop-shadow-lg relative z-10"
           >
@@ -855,7 +880,7 @@ export function InteractiveDashboardWordCard({
                   duration: 2,
                   repeat: Infinity,
                   repeatDelay: 3,
-                  ease: "easeInOut"
+                  ease: "easeInOut",
                 }}
                 className="absolute -top-2 -right-2 text-yellow-400 text-sm"
               >
@@ -869,7 +894,7 @@ export function InteractiveDashboardWordCard({
                   repeat: Infinity,
                   repeatDelay: 4,
                   delay: 1,
-                  ease: "easeInOut"
+                  ease: "easeInOut",
                 }}
                 className="absolute -bottom-1 -left-1 text-blue-400 text-xs"
               >
@@ -1233,7 +1258,7 @@ export function InteractiveDashboardWordCard({
             {/* Picture Display with State Transitions */}
             <AnimatePresence mode="wait">
               <motion.div
-                key={`word-${currentWordIndex}-${showWordName ? 'revealed' : 'hidden'}`}
+                key={`word-${currentWordIndex}-${showWordName ? "revealed" : "hidden"}`}
                 initial={{ opacity: 0, y: 20, scale: 0.95 }}
                 animate={{ opacity: 1, y: 0, scale: 1 }}
                 exit={{ opacity: 0, y: -10, scale: 1.05 }}
@@ -1241,7 +1266,7 @@ export function InteractiveDashboardWordCard({
                   duration: 0.5,
                   type: "spring",
                   stiffness: 200,
-                  damping: 20
+                  damping: 20,
                 }}
                 className="mb-4 md:mb-6"
                 role="img"
@@ -1259,7 +1284,11 @@ export function InteractiveDashboardWordCard({
                   >
                     <motion.div
                       animate={{ rotate: 360 }}
-                      transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+                      transition={{
+                        duration: 1,
+                        repeat: Infinity,
+                        ease: "linear",
+                      }}
                       className="w-8 h-8 border-2 border-blue-500 border-t-transparent rounded-full"
                     />
                   </motion.div>
@@ -1287,11 +1316,13 @@ export function InteractiveDashboardWordCard({
                     "🌟 What could this be?",
                     "🎪 Mystery object!",
                     "🎨 Identify this!",
-                    "🚀 What's shown here?"
+                    "🚀 What's shown here?",
                   ];
 
                   // Use word index and some randomness for variety
-                  const promptIndex = (currentWordIndex + (currentWord?.id || 0)) % prompts.length;
+                  const promptIndex =
+                    (currentWordIndex + (currentWord?.id || 0)) %
+                    prompts.length;
                   return prompts[promptIndex];
                 })()}
               </motion.h1>
@@ -1312,10 +1343,12 @@ export function InteractiveDashboardWordCard({
                     "What word matches this image?",
                     "Use the visual clue to find the answer!",
                     "Let the picture guide your guess!",
-                    "Connect the image to the right word!"
+                    "Connect the image to the right word!",
                   ];
 
-                  const descIndex = (currentWordIndex + (currentWord?.category?.length || 0)) % descriptions.length;
+                  const descIndex =
+                    (currentWordIndex + (currentWord?.category?.length || 0)) %
+                    descriptions.length;
                   return descriptions[descIndex];
                 })()}
               </motion.p>
@@ -1345,7 +1378,9 @@ export function InteractiveDashboardWordCard({
                   >
                     <div className="absolute inset-0 bg-gradient-to-r from-yellow-200/0 via-yellow-200/50 to-yellow-200/0 transform -skew-x-12 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 ease-out" />
                     <Lightbulb className="w-4 h-4 mr-1 group-hover:animate-pulse text-yellow-600" />
-                    <span className="relative z-10 font-semibold text-yellow-700">💡 Hint</span>
+                    <span className="relative z-10 font-semibold text-yellow-700">
+                      💡 Hint
+                    </span>
                   </Button>
                 </motion.div>
               )}
@@ -1446,7 +1481,7 @@ export function InteractiveDashboardWordCard({
                     duration: 0.6,
                     type: "spring",
                     stiffness: 200,
-                    damping: 20
+                    damping: 20,
                   }}
                   className="space-y-3 md:space-y-4 mb-6 md:mb-8"
                   role="region"
@@ -1472,7 +1507,11 @@ export function InteractiveDashboardWordCard({
                       <motion.div
                         initial={{ scale: 0, rotate: -180 }}
                         animate={{ scale: 1, rotate: 0 }}
-                        transition={{ delay: 0.3, duration: 0.5, type: "spring" }}
+                        transition={{
+                          delay: 0.3,
+                          duration: 0.5,
+                          type: "spring",
+                        }}
                         className="text-2xl md:text-3xl"
                         aria-hidden="true"
                       >
@@ -1492,7 +1531,11 @@ export function InteractiveDashboardWordCard({
                       <motion.div
                         initial={{ scale: 0, rotate: 180 }}
                         animate={{ scale: 1, rotate: 0 }}
-                        transition={{ delay: 0.5, duration: 0.5, type: "spring" }}
+                        transition={{
+                          delay: 0.5,
+                          duration: 0.5,
+                          type: "spring",
+                        }}
                         className="text-2xl md:text-3xl"
                         aria-hidden="true"
                       >
@@ -1520,13 +1563,13 @@ export function InteractiveDashboardWordCard({
                       animate={{
                         opacity: [0, 1, 0],
                         y: [20, -10, -30],
-                        x: [0, 10, -10, 0]
+                        x: [0, 10, -10, 0],
                       }}
                       transition={{
                         duration: 2,
                         repeat: Infinity,
                         repeatDelay: 3,
-                        ease: "easeInOut"
+                        ease: "easeInOut",
                       }}
                       className="absolute top-2 right-4 text-yellow-400 text-sm"
                     >
@@ -1538,14 +1581,14 @@ export function InteractiveDashboardWordCard({
                       animate={{
                         opacity: [0, 1, 0],
                         y: [20, -15, -35],
-                        x: [0, -15, 10, 0]
+                        x: [0, -15, 10, 0],
                       }}
                       transition={{
                         duration: 2.5,
                         repeat: Infinity,
                         repeatDelay: 4,
                         delay: 1,
-                        ease: "easeInOut"
+                        ease: "easeInOut",
                       }}
                       className="absolute top-4 left-4 text-green-400 text-xs"
                     >
@@ -1631,46 +1674,55 @@ export function InteractiveDashboardWordCard({
                 </div>
 
                 {/* Particle Effects Overlay */}
-            <AnimatePresence>
-              {particles.map((particle) => (
-                <motion.div
-                  key={particle.id}
-                  initial={{
-                    scale: 0,
-                    x: particle.x - window.innerWidth / 2,
-                    y: particle.y - window.innerHeight / 2,
-                    opacity: 1
-                  }}
-                  animate={{
-                    scale: [0, 1, 0.8, 0],
-                    x: particle.x - window.innerWidth / 2 + (Math.random() - 0.5) * 200,
-                    y: particle.y - window.innerHeight / 2 - Math.random() * 150 - 50,
-                    opacity: [1, 1, 0.7, 0],
-                    rotate: Math.random() * 360
-                  }}
-                  transition={{
-                    duration: 1,
-                    ease: "easeOut",
-                    times: [0, 0.2, 0.8, 1]
-                  }}
-                  className="fixed pointer-events-none z-50"
-                  style={{
-                    left: '50%',
-                    top: '50%',
-                  }}
-                >
-                  <div className={`text-2xl ${
-                    particle.type === 'success'
-                      ? 'filter drop-shadow-lg'
-                      : 'filter drop-shadow-md'
-                  }`}>
-                    {particle.type === 'success' ? '⭐' : '💪'}
-                  </div>
-                </motion.div>
-              ))}
-            </AnimatePresence>
+                <AnimatePresence>
+                  {particles.map((particle) => (
+                    <motion.div
+                      key={particle.id}
+                      initial={{
+                        scale: 0,
+                        x: particle.x - window.innerWidth / 2,
+                        y: particle.y - window.innerHeight / 2,
+                        opacity: 1,
+                      }}
+                      animate={{
+                        scale: [0, 1, 0.8, 0],
+                        x:
+                          particle.x -
+                          window.innerWidth / 2 +
+                          (Math.random() - 0.5) * 200,
+                        y:
+                          particle.y -
+                          window.innerHeight / 2 -
+                          Math.random() * 150 -
+                          50,
+                        opacity: [1, 1, 0.7, 0],
+                        rotate: Math.random() * 360,
+                      }}
+                      transition={{
+                        duration: 1,
+                        ease: "easeOut",
+                        times: [0, 0.2, 0.8, 1],
+                      }}
+                      className="fixed pointer-events-none z-50"
+                      style={{
+                        left: "50%",
+                        top: "50%",
+                      }}
+                    >
+                      <div
+                        className={`text-2xl ${
+                          particle.type === "success"
+                            ? "filter drop-shadow-lg"
+                            : "filter drop-shadow-md"
+                        }`}
+                      >
+                        {particle.type === "success" ? "⭐" : "💪"}
+                      </div>
+                    </motion.div>
+                  ))}
+                </AnimatePresence>
 
-            {/* Skip button (smaller, less prominent) - HIDDEN */}
+                {/* Skip button (smaller, less prominent) - HIDDEN */}
                 <div className="hidden text-center mt-1 mb-0">
                   <Button
                     onClick={() => handleWordAction("skipped")}
