@@ -81,6 +81,7 @@ export class VowelQuizGenerator {
       wordSelection.words,
       gameMode,
       count,
+      options.maxMissingVowels,
     );
 
     return vowelQuestions.slice(0, count);
