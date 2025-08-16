@@ -533,9 +533,11 @@ export class AIWordRecommendationEngine {
   ): number {
     // Dynamic base confidence based on recent performance
     const recentSessions = learningPattern.sessionHistory.slice(-5);
-    const recentAccuracy = recentSessions.length > 0
-      ? recentSessions.reduce((sum, session) => sum + session.accuracy, 0) / recentSessions.length
-      : 0.5;
+    const recentAccuracy =
+      recentSessions.length > 0
+        ? recentSessions.reduce((sum, session) => sum + session.accuracy, 0) /
+          recentSessions.length
+        : 0.5;
 
     // Start with performance-based confidence (30-90% range)
     let confidence = Math.max(0.3, Math.min(0.9, recentAccuracy * 0.8 + 0.2));

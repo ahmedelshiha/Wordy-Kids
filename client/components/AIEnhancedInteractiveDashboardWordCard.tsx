@@ -1239,7 +1239,10 @@ export function AIEnhancedInteractiveDashboardWordCard({
                     </div>
                     <div className="flex items-center gap-1 flex-1">
                       <span className="text-sm font-medium truncate">
-                        🤖 {aiState.isSessionActive ? "AI Learning Active!" : "AI Helper"}
+                        🤖{" "}
+                        {aiState.isSessionActive
+                          ? "AI Learning Active!"
+                          : "AI Helper"}
                       </span>
                       {aiState.isSessionActive && (
                         <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse ml-1" />
@@ -1279,7 +1282,13 @@ export function AIEnhancedInteractiveDashboardWordCard({
                           }
                           aiActions.startSession({
                             words: sessionWords.slice(0, 10),
-                            confidence: Math.min(0.9, Math.max(0.4, (sessionStats.accuracy / 100) * 0.8 + 0.3)),
+                            confidence: Math.min(
+                              0.9,
+                              Math.max(
+                                0.4,
+                                (sessionStats.accuracy / 100) * 0.8 + 0.3,
+                              ),
+                            ),
                             reasoning: ["Starting new AI session"],
                             expectedOutcomes: {
                               learningVelocity: 0.7,
@@ -1362,7 +1371,13 @@ export function AIEnhancedInteractiveDashboardWordCard({
                               }
                               aiActions.startSession({
                                 words: sessionWords.slice(0, 10),
-                                confidence: Math.min(0.9, Math.max(0.4, (sessionStats.accuracy / 100) * 0.8 + 0.3)),
+                                confidence: Math.min(
+                                  0.9,
+                                  Math.max(
+                                    0.4,
+                                    (sessionStats.accuracy / 100) * 0.8 + 0.3,
+                                  ),
+                                ),
                                 reasoning: ["Starting new AI session"],
                                 expectedOutcomes: {
                                   learningVelocity: 0.7,
