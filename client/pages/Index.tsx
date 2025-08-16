@@ -2983,10 +2983,10 @@ export default function Index({ initialProfile }: IndexProps) {
                                   🎯
                                 </div>
                                 <h3 className="text-sm md:text-lg font-bold text-educational-blue mb-1 md:mb-2">
-                                  Vowel Adventure!
+                                  🌈 Vowel Adventure!
                                 </h3>
                                 <p className="text-xs md:text-sm text-gray-600 mb-2 md:mb-3 hidden md:block">
-                                  Complete vowel challenges with selectable difficulty! 🚀
+                                  Rescue missing vowels with big emojis and fun animations! 🎯
                                 </p>
                                 <div className="flex justify-center gap-1 mb-2 md:mb-3">
                                   <span className="bg-educational-green/20 text-educational-green px-1.5 py-0.5 rounded-full text-xs">
