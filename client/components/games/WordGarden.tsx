@@ -165,7 +165,7 @@ const PLANT_TYPES = [
   ["🌱", "🍀", "🌺"], // clover hibiscus - clover to tropical flower
   ["🌱", "🎋", "🏵️"], // bamboo rosette - bamboo to decorative flower
   ["🌱", "🌲", "🍄"], // forest mushroom - pine to mushroom
-  ["���", "🪴", "🌻"], // potted sunflower - pot plant to big sunflower
+  ["🌱", "🪴", "🌻"], // potted sunflower - pot plant to big sunflower
   ["🌱", "🌿", "💐"], // bouquet garden - leaves to flower bouquet
   ["🌱", "🎍", "🌸"], // bamboo cherry - bamboo decoration to blossom
   ["🌱", "🌳", "🍃"], // tree leaves - tree to fresh leaves
@@ -255,7 +255,7 @@ const generateDistractorEmojis = (
 
   return shuffle(distractors)
     .slice(0, optionsPerRound - 1)
-    .map((w) => generateEmojiImage(w.emoji, w.word)); // Generate large SVG emojis for better garden visuals
+    .map((w) => generateEmojiImage(w.emoji, w.word, w.category)); // Generate large SVG emojis for better garden visuals
 };
 
 // Fetch words function using the same logic as Listen & Guess
