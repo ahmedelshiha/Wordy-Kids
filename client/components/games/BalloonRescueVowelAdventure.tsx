@@ -585,7 +585,7 @@ export const BalloonRescueVowelAdventure: React.FC<Props> = ({
             <Button
               variant="ghost"
               size="sm"
-              onClick={() => audioService.pronounceWord(currentQuestion.word, "kid")}
+              onClick={() => audioService.pronounceWord(currentQuestion.word)}
               aria-label="Say word"
             >
               🔊
