@@ -1555,23 +1555,23 @@ export function AIEnhancedInteractiveDashboardWordCard({
                   </div>
                 </div>
 
-                {/* AI-enhanced encouraging message */}
+                {/* Compact AI encouraging message */}
                 <div className="mt-1 text-center">
                   {sessionStats.wordsRemembered >= 15 ? (
                     <div className="text-green-600 font-medium text-xs">
-                      🌟 AI says: You're a superstar!
+                      🌟 AI: Superstar!
                     </div>
                   ) : sessionStats.wordsRemembered >= 10 ? (
                     <div className="text-green-600 font-medium text-xs">
-                      🎯 AI says: Awesome job!
+                      🎯 AI: Awesome!
                     </div>
                   ) : sessionStats.wordsCompleted >= 10 ? (
                     <div className="text-blue-600 font-medium text-xs">
-                      🔥 AI says: Keep going!
+                      🔥 AI: Keep going!
                     </div>
                   ) : (
                     <div className="text-purple-600 font-medium text-xs">
-                      🌟 AI says: Great start!
+                      🌟 AI: Great start!
                     </div>
                   )}
                 </div>
