@@ -23,6 +23,12 @@ const FILE_PATTERNS = [
   'shared/**/*.{ts,tsx,js,jsx}'
 ];
 
+// Files to ignore (contain intentional corruption patterns for testing)
+const IGNORE_FILES = [
+  'client/lib/emojiUtils.ts',
+  'client/lib/emojiValidator.ts'
+];
+
 function scanFile(filePath) {
   try {
     const content = fs.readFileSync(filePath, 'utf8');
