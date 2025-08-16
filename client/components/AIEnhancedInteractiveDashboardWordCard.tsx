@@ -113,27 +113,6 @@ export function AIEnhancedInteractiveDashboardWordCard({
   className,
   onSessionComplete,
 }: AIEnhancedInteractiveDashboardWordCardProps) {
-  // AI Recommendations Hook
-  const [aiState, aiActions] = useAIWordRecommendations({
-    userId,
-    enableRealTimeAdaptation: true,
-    enableAnalytics: true,
-    enableMotivationalBoosts: true,
-    autoStartSession: false,
-  });
-
-  // Adaptive features
-  const difficultyAdjustment = useAdaptiveDifficulty(
-    userId,
-    sessionStats.accuracy / 100,
-    wordStartTime ? Date.now() - wordStartTime : 0,
-  );
-
-  const encouragement = usePersonalizedEncouragement(userId, {
-    correct: sessionStats.wordsRemembered,
-    total: sessionStats.wordsCompleted,
-  });
-
   // Session Management
   const SESSION_SIZE = 20;
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
@@ -143,6 +122,28 @@ export function AIEnhancedInteractiveDashboardWordCard({
     wordsForgotten: 0,
     accuracy: 0,
     sessionStartTime: Date.now(),
+  });
+  const [wordStartTime, setWordStartTime] = useState(0);
+
+  // AI Recommendations Hook
+  const [aiState, aiActions] = useAIWordRecommendations({
+    userId,
+    enableRealTimeAdaptation: true,
+    enableAnalytics: true,
+    enableMotivationalBoosts: true,
+    autoStartSession: false,
+  });
+
+  // Adaptive features (now using sessionStats after it's defined)
+  const difficultyAdjustment = useAdaptiveDifficulty(
+    userId,
+    sessionStats.accuracy / 100,
+    wordStartTime ? Date.now() - wordStartTime : 0,
+  );
+
+  const encouragement = usePersonalizedEncouragement(userId, {
+    correct: sessionStats.wordsRemembered,
+    total: sessionStats.wordsCompleted,
   });
   const [sessionWords, setSessionWords] = useState<Word[]>([]);
   const [showSessionComplete, setShowSessionComplete] = useState(false);
