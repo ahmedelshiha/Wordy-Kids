@@ -71,6 +71,7 @@ const generateSmartDistractors = (correctVowel: string): string[] => {
 
 export const BalloonRescueVowelAdventure: React.FC<Props> = ({
   totalQuestions = 10,
+  category = "all",
   onFinish,
   onHome,
 }) => {
