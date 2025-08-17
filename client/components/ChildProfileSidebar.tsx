@@ -119,14 +119,6 @@ export const ChildProfileSidebar: React.FC<ChildProfileSidebarProps> = ({
     >
       {/* Enhanced Sidebar Header */}
       <div className="p-2 bg-gradient-to-r from-white/60 to-blue-50/60 backdrop-blur-sm relative z-10">
-        {/* Fun Mascot */}
-        <FriendlyMascot
-          mood="happy"
-          size="medium"
-          position="right"
-          message="Hi there! 🌟"
-          showSpeechBubble={!isCollapsed}
-        />
         <div className="flex items-center justify-between">
           <AnimatePresence mode="wait">
             {!isCollapsed && (
@@ -137,23 +129,6 @@ export const ChildProfileSidebar: React.FC<ChildProfileSidebarProps> = ({
                 exit="collapsed"
                 className="flex-1"
               >
-                {showTimeOfDay && (
-                  <div
-                    className={cn(
-                      "bg-gradient-to-r rounded-lg p-2 mb-2 shadow-sm border border-white/30 backdrop-blur-sm",
-                      timeInfo.color,
-                    )}
-                  >
-                    <div className="flex items-center space-x-1">
-                      <span className="text-sm">{timeInfo.icon}</span>
-                      <div>
-                        <div className="text-xs font-bold text-gray-800">
-                          {timeInfo.greeting}! 🌟
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                )}
               </motion.div>
             )}
           </AnimatePresence>
