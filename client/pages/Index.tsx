@@ -1845,29 +1845,28 @@ export default function Index({ initialProfile }: IndexProps) {
               </div>
             </div>
 
-            {/* Enhanced Floating Elements - hidden on mobile to reduce clutter, conditional on setting */}
+            {/* Enhanced Floating Elements - Kid-Friendly & Playful */}
             {backgroundAnimationsEnabled && (
               <>
-                <div className="hidden md:block absolute top-10 left-10 text-3xl animate-bounce">
+                <div className="hidden md:block absolute top-8 left-8 text-2xl animate-gentle-bounce">
                   ⭐
                 </div>
-                <div className="hidden md:block absolute top-20 right-20 text-2xl animate-pulse">
+                <div className="hidden md:block absolute top-12 right-12 text-xl animate-gentle-float">
                   📚
                 </div>
-                <div className="hidden md:block absolute bottom-10 left-20 text-4xl animate-bounce delay-1000">
-                  🎯📚✨
+                <div className="hidden md:block absolute bottom-8 left-12 text-2xl animate-gentle-bounce delay-1000">
+                  🎯
                 </div>
-                <div className="hidden md:block absolute bottom-20 right-10 text-3xl animate-pulse delay-500">
+                <div className="hidden md:block absolute bottom-12 right-8 text-xl animate-gentle-float delay-500">
                   🚀
                 </div>
                 <div
-                  className="hidden md:block absolute top-1/2 left-5 text-2xl animate-spin"
-                  style={{ animationDuration: "3s" }}
+                  className="hidden md:block absolute top-1/2 left-4 text-lg animate-sparkle"
                 >
                   ✨
                 </div>
-                <div className="hidden md:block absolute top-1/3 right-5 text-2xl animate-bounce delay-700">
-                  🎪
+                <div className="hidden md:block absolute top-1/3 right-4 text-xl animate-gentle-bounce delay-700">
+                  🌈
                 </div>
               </>
             )}
@@ -1979,7 +1978,7 @@ export default function Index({ initialProfile }: IndexProps) {
                 />
               </div>
             ) : (
-              <div className="flex flex-col lg:flex-row min-h-screen">
+              <div className="flex flex-col lg:flex-row min-h-screen bg-gradient-to-br from-white via-purple-50/30 to-pink-50/30">
                 {/* Desktop Sidebar - Hidden on Mobile */}
                 <aside className="hidden lg:flex lg:w-60 xl:w-64 bg-gradient-to-b from-purple-50 via-pink-50 to-blue-50 border-r border-purple-200 shadow-sm overflow-y-auto lg:max-h-screen">
                   <div className="p-3 lg:p-4 w-full">
@@ -2378,7 +2377,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                       </div>
                                       <div className="text-xs text-slate-500">
                                         {currentWordIndex + 1}/
-                                        {displayWords.length} •{" "}
+                                        {displayWords.length} ���{" "}
                                         {rememberedWords.size} ✅
                                       </div>
                                     </div>
