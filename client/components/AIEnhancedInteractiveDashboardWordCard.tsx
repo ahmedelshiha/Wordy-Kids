@@ -1239,7 +1239,7 @@ export function AIEnhancedInteractiveDashboardWordCard({
                       <span className="text-sm font-medium truncate flex items-center gap-1">
                         🤖{" "}
                         {aiState.isSessionActive
-                          ? "AI Learning Active!"
+                          ? "AI Active!"
                           : "AI Helper"}
                         {aiState.isSessionActive && (
                           <>
@@ -1345,7 +1345,7 @@ export function AIEnhancedInteractiveDashboardWordCard({
                         <span className="text-lg font-bold">
                           🤖{" "}
                           {aiState.isSessionActive
-                            ? "AI Learning Active!"
+                            ? "AI Active!"
                             : "AI Smart Helper"}
                         </span>
                         {aiState.isSessionActive && (
