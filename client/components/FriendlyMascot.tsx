@@ -40,7 +40,7 @@ const mascotMessages = {
 const mascotCharacters = [
   "🦁",
   "🐯",
-  "🐨",
+  "���",
   "🐼",
   "🐸",
   "🐧",
@@ -69,8 +69,19 @@ export function FriendlyMascot({
     // Randomly select a mascot character on mount
     const randomIndex = Math.floor(Math.random() * mascotCharacters.length);
     setCurrentCharacter(mascotCharacters[randomIndex]);
-    setIsVisible(true);
-  }, []);
+
+    if (delayAppearance) {
+      // Set up delay timer for appearance
+      const delayTimer = setTimeout(() => {
+        setDelayComplete(true);
+        setIsVisible(true);
+      }, delayMinutes * 60 * 1000); // Convert minutes to milliseconds
+
+      return () => clearTimeout(delayTimer);
+    } else {
+      setIsVisible(true);
+    }
+  }, [delayAppearance, delayMinutes]);
 
   const sizeClasses = {
     tiny: "text-lg",
