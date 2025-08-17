@@ -2104,20 +2104,21 @@ export default function Index({ initialProfile }: IndexProps) {
                         )}
                       </button>
 
-                      <div className="mt-3 pt-3 border-t border-purple-200">
+                      <div className="mt-4 pt-3 border-t-2 border-rainbow kid-card-rainbow-border">
                         <button
                           onClick={() => {
                             setUserRole("parent");
                             window.scrollTo({ top: 0, behavior: "smooth" });
                           }}
-                          className="w-full flex items-center gap-2.5 p-2.5 lg:p-3 rounded-xl transition-all duration-200 hover:scale-[1.02] bg-gradient-to-r from-blue-100 to-indigo-100 text-gray-700 hover:from-blue-200 hover:to-indigo-200 border border-blue-200 shadow-sm"
+                          className="kid-nav-item w-full kid-gradient-magic text-purple-800 border border-purple-300 kid-interactive"
                         >
-                          <div className="p-1.5 rounded-lg bg-blue-200">
-                            <Users className="w-4 h-4 text-blue-700" />
+                          <div className="text-xl animate-mascot-wave">
+                            👨‍👩‍👧‍👦
                           </div>
-                          <span className="font-medium text-sm">
-                            👥 Parent Dashboard
+                          <span className="kid-text-big font-bold">
+                            Family Zone
                           </span>
+                          <div className="ml-auto animate-kid-magic-sparkle">👑</div>
                         </button>
                       </div>
 
