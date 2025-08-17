@@ -2000,7 +2000,7 @@ export default function Index({ initialProfile }: IndexProps) {
                     {/* Compact Magical Portal Logo Section */}
                     <div className="bg-gradient-to-br from-purple-400 via-pink-400 to-blue-400 p-2.5 rounded-xl shadow-lg mb-3 border border-yellow-300 animate-kid-pulse-glow">
                       <div className="flex items-center gap-2">
-                        <div className="text-2xl animate-mascot-bounce">🌟</div>
+                        <div className="text-lg sm:text-xl animate-mascot-bounce">🌟</div>
                         <div className="flex-1 min-w-0">
                           <h1 className="text-sm font-kid-friendly text-white text-shadow truncate">
                             Wordy Portal ✨
@@ -2032,7 +2032,7 @@ export default function Index({ initialProfile }: IndexProps) {
                             : "text-gray-700 hover:text-purple-600 kid-interactive"
                         }`}
                       >
-                        <div className="text-4xl lg:text-5xl xl:text-6xl -mt-2 lg:-mt-3 xl:-mt-4 animate-mascot-bounce">
+                        <div className="text-2xl sm:text-3xl lg:text-4xl -mt-1 sm:-mt-2 lg:-mt-3 animate-mascot-bounce">
                           🏡
                         </div>
                         <span className="text-xs font-kid-friendly font-bold">
@@ -2053,7 +2053,7 @@ export default function Index({ initialProfile }: IndexProps) {
                             : "text-gray-700 hover:text-green-600 kid-interactive"
                         }`}
                       >
-                        <div className="text-4xl lg:text-5xl xl:text-6xl -mt-2 lg:-mt-3 xl:-mt-4 animate-gentle-float">
+                        <div className="text-2xl sm:text-3xl lg:text-4xl -mt-1 sm:-mt-2 lg:-mt-3 animate-gentle-float">
                           📚
                         </div>
                         <span className="text-xs font-kid-friendly font-bold">
@@ -2074,7 +2074,7 @@ export default function Index({ initialProfile }: IndexProps) {
                             : "text-gray-700 hover:text-pink-600 kid-interactive"
                         }`}
                       >
-                        <div className="text-4xl lg:text-5xl xl:text-6xl -mt-2 lg:-mt-3 xl:-mt-4 animate-mascot-happy">
+                        <div className="text-2xl sm:text-3xl lg:text-4xl -mt-1 sm:-mt-2 lg:-mt-3 animate-mascot-happy">
                           🧙‍♂️
                         </div>
                         <span className="text-xs font-kid-friendly font-bold">
