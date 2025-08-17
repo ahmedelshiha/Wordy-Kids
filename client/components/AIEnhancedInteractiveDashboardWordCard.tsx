@@ -508,7 +508,7 @@ export function AIEnhancedInteractiveDashboardWordCard({
           id: "ai_confidence_high",
           title: "AI CONFIDENCE BOOST!",
           description: `AI predicted your success with ${Math.round(aiState.confidence * 100)}% confidence!`,
-          emoji: "🔮✨",
+          emoji: "��✨",
           unlocked: true,
         });
       }
@@ -1335,6 +1335,17 @@ export function AIEnhancedInteractiveDashboardWordCard({
               {/* Mobile: Simplified badges */}
               <div className="md:hidden mb-2">
                 <div className="flex items-center justify-center gap-2">
+                  <Badge
+                    className={cn(
+                      "text-xs px-2 py-1",
+                      getDifficultyColor(currentWord.difficulty),
+                    )}
+                  >
+                    {currentWord.difficulty
+                      ? currentWord.difficulty.charAt(0).toUpperCase() +
+                        currentWord.difficulty.slice(1)
+                      : "Medium"}
+                  </Badge>
                   <Badge
                     className={cn(
                       "text-xs px-2 py-1",
