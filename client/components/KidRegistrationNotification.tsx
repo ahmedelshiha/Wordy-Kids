@@ -15,11 +15,21 @@ import {
   Medal
 } from "lucide-react";
 
+interface ProgressData {
+  wordsLearned?: number;
+  currentStreak?: number;
+  totalPoints?: number;
+  level?: number;
+  weeklyProgress?: number;
+  weeklyGoal?: number;
+}
+
 interface KidRegistrationNotificationProps {
   className?: string;
   variant?: "banner" | "card" | "floating";
   onDismiss?: () => void;
   showDismiss?: boolean;
+  progressData?: ProgressData;
 }
 
 export const KidRegistrationNotification: React.FC<KidRegistrationNotificationProps> = ({
