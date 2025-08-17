@@ -221,6 +221,37 @@ export const KidRegistrationNotification: React.FC<KidRegistrationNotificationPr
           {personalizedContent.message}
         </motion.p>
 
+        {/* Progress highlight for kids with some achievement */}
+        {progressData && (progressData.wordsLearned! > 0 || progressData.currentStreak! > 0) && (
+          <motion.div
+            className="bg-gradient-to-r from-yellow-100 to-orange-100 border border-yellow-300 rounded-lg p-3 mb-4"
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.5 }}
+          >
+            <div className="flex items-center justify-center gap-4 text-xs font-bold">
+              {progressData.wordsLearned! > 0 && (
+                <div className="flex items-center gap-1 text-blue-700">
+                  <BookOpen className="w-3 h-3" />
+                  <span>{progressData.wordsLearned} Words!</span>
+                </div>
+              )}
+              {progressData.currentStreak! > 0 && (
+                <div className="flex items-center gap-1 text-orange-700">
+                  <Medal className="w-3 h-3" />
+                  <span>{progressData.currentStreak}-Day Streak!</span>
+                </div>
+              )}
+              {progressData.totalPoints! > 0 && (
+                <div className="flex items-center gap-1 text-purple-700">
+                  <Star className="w-3 h-3" />
+                  <span>{progressData.totalPoints} Points!</span>
+                </div>
+              )}
+            </div>
+          </motion.div>
+        )}
+
         {/* Benefits list */}
         <motion.div 
           className="grid grid-cols-2 gap-2 mb-4 text-xs"
