@@ -124,6 +124,14 @@ export const ChildProfileSidebar: React.FC<ChildProfileSidebarProps> = ({
 
       {/* Sidebar Header */}
       <div className="p-4 border-b-2 border-rainbow-300/50 bg-gradient-to-r from-yellow-100/80 to-orange-100/80 relative z-10">
+        {/* Fun Mascot */}
+        <KidFriendlyMascot
+          mood="happy"
+          size="medium"
+          position="top-right"
+          message="Hi there! 🌟"
+          showMessage={!isCollapsed}
+        />
         <div className="flex items-center justify-between">
           <AnimatePresence mode="wait">
             {!isCollapsed && (
