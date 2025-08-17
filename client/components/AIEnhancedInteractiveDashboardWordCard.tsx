@@ -163,6 +163,12 @@ export function AIEnhancedInteractiveDashboardWordCard({
   // Global AI settings state
   const [globalAIEnabled, setGlobalAIEnabled] = useState(isAIEnabled());
 
+  // AI Status Management
+  const [aiStatus, setAiStatus] = useState<AIStatus>('loading');
+  const [aiErrorMessage, setAiErrorMessage] = useState<string>('');
+  const [aiRetryCount, setAiRetryCount] = useState(0);
+  const [showAISettings, setShowAISettings] = useState(false);
+
   // Helper function to toggle global AI settings
   const toggleGlobalAI = () => {
     const newValue = !globalAIEnabled;
@@ -170,9 +176,27 @@ export function AIEnhancedInteractiveDashboardWordCard({
     setAISettings({ aiEnhancementEnabled: newValue });
     onToggleAIEnhancement?.(newValue);
 
+    // Update AI status based on toggle
+    setAiStatus(newValue ? 'loading' : 'disabled');
+
     // If disabling AI globally, end any active session
     if (!newValue && aiState.isSessionActive) {
       aiActions.endSession({ completed: false });
+    }
+  };
+
+  // AI Error Recovery
+  const retryAI = async () => {
+    setAiRetryCount(prev => prev + 1);
+    setAiStatus('loading');
+    setAiErrorMessage('');
+
+    try {
+      await aiActions.reset();
+      setAiStatus('active');
+    } catch (error) {
+      setAiStatus('error');
+      setAiErrorMessage(error instanceof Error ? error.message : 'AI system unavailable');
     }
   };
 
@@ -1816,7 +1840,7 @@ export function AIEnhancedInteractiveDashboardWordCard({
                 {/* Compact stats in single row */}
                 <div className="flex items-center justify-between text-xs gap-1">
                   <div className="flex items-center gap-0.5 bg-yellow-100 px-1 py-0.5 rounded flex-1 justify-center">
-                    <span>😊</span>
+                    <span>����</span>
                     <span className="font-medium">
                       {sessionStats.wordsRemembered}
                     </span>
