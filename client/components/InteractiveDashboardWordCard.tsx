@@ -1097,23 +1097,6 @@ export function InteractiveDashboardWordCard({
         </div>
       )}
 
-      {/* Daily Goal Header - Hidden */}
-      {/* <div className="text-center bg-gradient-to-r from-educational-blue to-educational-purple text-white p-4 rounded-2xl shadow-lg">
-        <div className="flex items-center justify-center gap-4 mb-3">
-          <Target className="w-6 h-6" />
-          <h2 className="text-lg font-bold">
-            Today's Goal: Learn {dailyGoal.target} words ({dailyGoal.completed}/
-            {dailyGoal.target})
-          </h2>
-          <div className="flex items-center gap-1">
-            <Zap className="w-5 h-5 text-yellow-300" />
-            <span className="font-bold">{dailyGoal.streak}</span>
-          </div>
-        </div>
-        <Progress value={dailyProgress} className="h-3 bg-white/20" />
-        <p className="text-sm mt-2 opacity-90">{dailyProgress}% complete</p>
-      </div> */}
-
       {/* Interactive Word Card */}
       <motion.div
         initial={{ opacity: 0, y: 20, scale: 0.95 }}
@@ -1680,6 +1663,61 @@ export function InteractiveDashboardWordCard({
                       </div>
                     </div>
                   </Button>
+                </div>
+
+                {/* AI Progress Bar - Ultra Mobile Optimized */}
+                <div className="mt-3 bg-white p-2 sm:p-4 rounded-lg sm:rounded-2xl shadow-sm border border-gray-100">
+                  {/* Compact header with inline progress */}
+                  <div className="flex items-center justify-between mb-2">
+                    <div className="flex items-center gap-1">
+                      <span className="text-xs sm:text-sm">🧠🎯</span>
+                      <h2 className="text-xs sm:text-base font-bold text-gray-800">
+                        AI Progress
+                      </h2>
+                    </div>
+                    <div className="flex items-center gap-1">
+                      <span className="text-xs sm:text-sm">🚀</span>
+                      <span className="font-medium text-gray-700 text-xs sm:text-sm">
+                        {dailyGoal.completed}/{dailyGoal.target}
+                      </span>
+                      <span className="font-bold text-gray-800 text-xs sm:text-sm">
+                        ({dailyProgress}%)
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* Ultra-compact progress bar */}
+                  <div className="w-full bg-gray-200 rounded-full h-1 sm:h-2 mb-2">
+                    <div
+                      className="bg-gradient-to-r from-blue-500 to-purple-500 h-1 sm:h-2 rounded-full transition-all duration-300"
+                      style={{ width: `${dailyProgress}%` }}
+                    ></div>
+                  </div>
+
+                  {/* Compact stats in single row */}
+                  <div className="flex items-center justify-between text-xs gap-1">
+                    <div className="flex items-center gap-0.5 bg-yellow-100 px-1 py-0.5 rounded flex-1 justify-center">
+                      <span>😊</span>
+                      <span className="font-medium">
+                        {sessionStats.wordsRemembered}
+                      </span>
+                    </div>
+                    <div className="flex items-center gap-0.5 bg-orange-100 px-1 py-0.5 rounded flex-1 justify-center">
+                      <span>💪</span>
+                      <span className="font-medium">
+                        {sessionStats.wordsForgotten}
+                      </span>
+                    </div>
+                    <div className="flex items-center gap-0.5 bg-purple-100 px-1 py-0.5 rounded flex-1 justify-center">
+                      <span>����</span>
+                      <span className="font-medium">
+                        {sessionStats.accuracy}%
+                      </span>
+                    </div>
+                    <div className="text-purple-600 font-medium text-xs hidden sm:block">
+                      🌟 AI: Great!
+                    </div>
+                  </div>
                 </div>
 
                 {/* Particle Effects Overlay */}
