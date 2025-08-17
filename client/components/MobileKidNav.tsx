@@ -325,7 +325,7 @@ export function MobileKidNav({
                           ✨
                         </motion.div>
                         <motion.div
-                          className="absolute -bottom-1 -left-1 text-yellow-300 text-xs"
+                          className="absolute -bottom-1 -left-1 text-yellow-300 text-xs sparkle-mobile"
                           animate={{
                             opacity: [0, 1, 0],
                             scale: [0.5, 1, 0.5],
