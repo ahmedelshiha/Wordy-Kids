@@ -1405,7 +1405,7 @@ export default function Index({ initialProfile }: IndexProps) {
         achievementIcon = "📚";
         achievementMessage = `Great job! You completed ${categoryDisplayName} with ${accuracy}% accuracy! Keep up the good work!\n\n🎓 Scholar Bonus: 100 points!`;
       } else if (accuracy >= 50) {
-        achievementTitle = "Category Explorer! ���️🌟";
+        achievementTitle = "Category Explorer! ��️����";
         achievementIcon = "🗺️";
         achievementMessage = `Good effort! You finished ${categoryDisplayName} with ${accuracy}% accuracy! Practice makes perfect!\n\n🎁 Explorer Bonus: 75 points!`;
       } else {
@@ -3496,7 +3496,7 @@ export default function Index({ initialProfile }: IndexProps) {
             />
           )}
 
-          {/* Kid-Friendly Floating Mascot - Appears after 5 minutes */}
+          {/* Kid-Friendly Floating Mascot - Appears after 5 minutes, optimized for mobile */}
           {userRole === "child" && (
             <FriendlyMascot
               mood={
@@ -3506,12 +3506,12 @@ export default function Index({ initialProfile }: IndexProps) {
                     ? "encouraging"
                     : "happy"
               }
-              size="medium"
-              showSpeechBubble={true}
+              size={mascotConfig.size}
+              showSpeechBubble={mascotConfig.showSpeechBubble}
               animate={true}
               delayAppearance={true}
-              delayMinutes={5}
-              className="fixed bottom-2 right-2 md:bottom-4 md:right-4 z-50 bg-white/90 backdrop-blur-sm rounded-full p-2 md:p-4 shadow-lg animate-mascot-bounce"
+              delayMinutes={mascotConfig.delayMinutes}
+              className={getMobileMascotClasses(mascotConfig.isMobile)}
             />
           )}
 
