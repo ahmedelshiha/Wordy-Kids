@@ -871,6 +871,16 @@
     padding: 0.5rem !important;
   }
 
+  /* Performance-optimized mascot container for mobile */
+  .mascot-container-mobile {
+    contain: layout style paint;
+    will-change: transform, opacity;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    position: fixed;
+    z-index: 50;
+  }
+
   .animate-wiggle {
     animation-duration: 3s;
     transform: translateZ(0);
