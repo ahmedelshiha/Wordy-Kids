@@ -247,7 +247,7 @@ export function MobileBottomNav({
                 </div>
 
                 {/* Kid-friendly Label */}
-                <span className="text-xs font-kid-friendly font-bold leading-tight text-center truncate max-w-full text-white mt-0">
+                <span className="text-xs font-kid-friendly font-bold leading-tight text-center truncate max-w-full text-white -mt-2">
                   {tab.label}
                 </span>
 
