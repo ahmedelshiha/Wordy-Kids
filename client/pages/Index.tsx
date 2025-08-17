@@ -1844,7 +1844,7 @@ export default function Index({ initialProfile }: IndexProps) {
     // Show completion feedback
     setFeedback({
       type: "celebration",
-      title: "Practice Complete! 🏆",
+      title: "Practice Complete! ��",
       message: `Great job practicing your tricky words!\n\n✅ Remembered: ${results.correctWords.length} words\n🎯 Accuracy: ${results.accuracy}%\n\nKeep practicing to master all your words!`,
       points: results.correctWords.length * 15,
       onContinue: () => setFeedback(null),
@@ -2073,31 +2073,12 @@ export default function Index({ initialProfile }: IndexProps) {
               </div>
             ) : (
               <div className="min-h-screen bg-gradient-to-br from-white via-purple-50/30 to-pink-50/30 optimize-for-small-screen">
-                {/* Enhanced Desktop Layout with Fixed Sidebar */}
-                <div className="flex h-screen">
-                  {/* Fixed Child Profile Sidebar - Desktop Only */}
-                  <div className="hidden lg:flex lg:flex-col lg:fixed lg:inset-y-0 lg:z-50 lg:w-72 xl:w-80">
-                    <div className="h-full bg-gradient-to-b from-slate-900 via-blue-900 to-purple-900 shadow-2xl border-r border-slate-700/50 backdrop-blur-sm">
-                      <ChildProfileSidebar
-                        profile={currentProfile}
-                        stats={enhancedChildStats}
-                        isCollapsed={isSidebarCollapsed}
-                        onToggleCollapse={handleSidebarToggle}
-                        onProfileEdit={handleProfileEdit}
-                        onQuickAction={handleQuickAction}
-                        onLogout={handleSidebarLogout}
-                        showTimeOfDay={true}
-                        showWeeklyProgress={true}
-                        position="left"
-                        className="h-full border-none shadow-none bg-transparent text-white"
-                      />
-                    </div>
-                  </div>
-
-                  {/* Enhanced Main Game Content Container with left margin for fixed sidebar */}
-                  <div className="flex-1 min-w-0 overflow-hidden relative lg:ml-72 xl:ml-80">
+                {/* Enhanced Desktop Layout */}
+                <div className="flex h-screen bg-gradient-to-br from-blue-50/30 to-purple-50/30">
+                  {/* Enhanced Main Game Content Container */}
+                  <div className="flex-1 min-w-0 overflow-hidden relative">
                     {/* Game Content Background */}
-                    <div className="absolute inset-0 bg-gradient-to-br from-white/95 to-blue-50/95 backdrop-blur-sm"></div>
+                    <div className="absolute inset-0 bg-gradient-to-br from-white/90 to-blue-50/90 backdrop-blur-sm"></div>
                     <div className="relative z-10 w-full h-full p-2 sm:p-3 lg:p-6 pb-20 sm:pb-24 lg:pb-6 overflow-y-auto scroll-smooth">
                       {/* Desktop: Two-column layout with main content + side card */}
                       <div className="flex gap-6 items-start">
