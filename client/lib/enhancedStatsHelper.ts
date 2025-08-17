@@ -204,8 +204,8 @@ export class EnhancedStatsHelper {
     best: number;
   } {
     return {
-      current: stats.currentStreak,
-      best: Math.max(stats.longestStreak, stats.currentStreak),
+      current: stats.currentStreak || 0,
+      best: Math.max(stats.longestStreak || 0, stats.currentStreak || 0),
     };
   }
 
