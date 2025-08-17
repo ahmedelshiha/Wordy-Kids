@@ -2304,29 +2304,27 @@ export default function Index({ initialProfile }: IndexProps) {
                           />
                         ) : (
                           <>
-                            {/* AI Word Recommendations Banner */}
+                            {/* AI Learning Banner - Mobile Optimized */}
                             {isAIEnabled() && (
-                              <div className="bg-gradient-to-r from-blue-50 to-purple-50 border border-blue-200 rounded-2xl p-4 mb-4">
-                                <div className="flex items-center gap-3">
-                                  <div className="bg-gradient-to-r from-blue-500 to-purple-500 p-2 rounded-full">
-                                    <Brain className="w-5 h-5 text-white" />
+                              <div
+                                className="bg-gradient-to-r from-blue-50 to-purple-50 border border-blue-200 rounded-lg p-2 sm:p-3 mb-3"
+                                role="status"
+                                aria-label="AI learning mode is active"
+                              >
+                                <div className="flex items-center gap-2 sm:gap-3">
+                                  <div className="bg-gradient-to-r from-blue-500 to-purple-500 p-1.5 sm:p-2 rounded-full flex-shrink-0">
+                                    <Brain className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
                                   </div>
-                                  <div className="flex-1">
-                                    <h3 className="text-sm font-bold text-blue-800 mb-1">
-                                      🤖 AI-Enhanced Learning
+                                  <div className="flex-1 min-w-0">
+                                    <h3 className="text-xs sm:text-sm font-semibold text-blue-800 mb-0.5">
+                                      🤖 AI Learning
                                     </h3>
-                                    <p className="text-xs text-blue-700">
-                                      Words are now selected using AI to match
-                                      your learning style and progress.
+                                    <p className="text-xs text-blue-700 leading-tight">
+                                      Smart word selection for your level
                                     </p>
                                   </div>
-                                  <div className="text-right">
-                                    <div className="text-xs font-bold text-purple-600">
-                                      Smart Mode
-                                    </div>
-                                    <div className="text-xs text-purple-500">
-                                      ON
-                                    </div>
+                                  <div className="text-xs font-medium text-purple-600 bg-purple-100 px-2 py-1 rounded-full">
+                                    Active
                                   </div>
                                 </div>
                               </div>
