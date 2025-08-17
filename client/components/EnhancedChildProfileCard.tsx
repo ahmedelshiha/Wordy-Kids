@@ -221,7 +221,7 @@ export const EnhancedChildProfileCard: React.FC<
                 </div>
               </TappableZone>
               <div>
-                <h3 className="font-black text-xl text-gray-800 leading-tight">
+                <h3 className="font-black text-2xl text-gray-800 leading-tight">
                   🎆 {profile.name} 🎆
                 </h3>
                 <div className="flex items-center space-x-3">
