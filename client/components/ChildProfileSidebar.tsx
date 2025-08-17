@@ -3,6 +3,12 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { EnhancedChildProfileCard } from "@/components/EnhancedChildProfileCard";
+import { KidFriendlyMascot } from "@/components/KidFriendlyMascot";
+import {
+  kidFriendlyEffects,
+  SOUNDS,
+  celebrate,
+} from "@/lib/kidFriendlyEffects";
 import {
   ChevronLeft,
   ChevronRight,
@@ -104,16 +110,53 @@ export const ChildProfileSidebar: React.FC<ChildProfileSidebarProps> = ({
       variants={sidebarVariants}
       animate={isCollapsed ? "collapsed" : "expanded"}
       className={cn(
-        "bg-gradient-to-b from-purple-50 via-pink-50 to-purple-50",
-        "border-r border-purple-200/50 shadow-lg",
+        "bg-gradient-to-b from-blue-100 via-purple-100 to-pink-100",
+        "border-r-4 border-rainbow-200 shadow-xl",
         "flex flex-col h-full overflow-hidden",
-        "transition-all duration-300",
-        position === "right" && "border-r-0 border-l",
+        "transition-all duration-500",
+        "relative",
+        position === "right" && "border-r-0 border-l-4",
         className,
       )}
     >
+      {/* Fun Background Decorations */}
+      <div className="absolute inset-0 pointer-events-none overflow-hidden">
+        <div
+          className="absolute top-10 left-4 text-2xl animate-bounce"
+          style={{ animationDelay: "0s" }}
+        >
+          ⭐
+        </div>
+        <div
+          className="absolute top-20 right-6 text-xl animate-bounce"
+          style={{ animationDelay: "1s" }}
+        >
+          🌟
+        </div>
+        <div
+          className="absolute bottom-32 left-6 text-lg animate-bounce"
+          style={{ animationDelay: "2s" }}
+        >
+          🎯
+        </div>
+        <div
+          className="absolute bottom-48 right-4 text-xl animate-bounce"
+          style={{ animationDelay: "0.5s" }}
+        >
+          🏆
+        </div>
+      </div>
+
       {/* Sidebar Header */}
-      <div className="p-4 border-b border-purple-200/30">
+      <div className="p-4 border-b-2 border-rainbow-300/50 bg-gradient-to-r from-yellow-100/80 to-orange-100/80 relative z-10">
+        {/* Fun Mascot */}
+        <KidFriendlyMascot
+          mood="happy"
+          size="medium"
+          position="top-right"
+          message="Hi there! 🌟"
+          showMessage={!isCollapsed}
+        />
         <div className="flex items-center justify-between">
           <AnimatePresence mode="wait">
             {!isCollapsed && (
@@ -127,22 +170,18 @@ export const ChildProfileSidebar: React.FC<ChildProfileSidebarProps> = ({
                 {showTimeOfDay && (
                   <div
                     className={cn(
-                      "bg-gradient-to-r rounded-lg p-3 mb-3",
+                      "bg-gradient-to-r rounded-xl p-3 mb-3 shadow-lg border-2 border-white/50",
                       timeInfo.color,
                     )}
                   >
                     <div className="flex items-center space-x-2">
                       <span className="text-lg">{timeInfo.icon}</span>
                       <div>
-                        <div className="text-sm font-medium text-gray-700">
-                          {timeInfo.greeting}!
+                        <div className="text-sm font-bold text-gray-800">
+                          {timeInfo.greeting}, Super Star! 🌟
                         </div>
-                        <div className="text-xs text-gray-600">
-                          {currentTime.toLocaleDateString("en-US", {
-                            weekday: "long",
-                            month: "short",
-                            day: "numeric",
-                          })}
+                        <div className="text-xs text-gray-700 font-medium">
+                          Let's learn something awesome today!
                         </div>
                       </div>
                     </div>
@@ -157,8 +196,11 @@ export const ChildProfileSidebar: React.FC<ChildProfileSidebarProps> = ({
             <Button
               variant="ghost"
               size="sm"
-              onClick={onToggleCollapse}
-              className="h-8 w-8 p-0 bg-white/70 hover:bg-white shadow-sm"
+              onClick={() => {
+                kidFriendlyEffects.playSound(SOUNDS.button_click);
+                onToggleCollapse();
+              }}
+              className="h-10 w-10 p-0 bg-gradient-to-r from-yellow-200 to-orange-200 hover:from-yellow-300 hover:to-orange-300 shadow-lg border-2 border-white rounded-full transition-all duration-300 hover:scale-110"
             >
               {isCollapsed ? (
                 position === "left" ? (
@@ -177,7 +219,7 @@ export const ChildProfileSidebar: React.FC<ChildProfileSidebarProps> = ({
       </div>
 
       {/* Main Profile Card */}
-      <div className="flex-1 p-4 overflow-y-auto">
+      <div className="flex-1 p-4 overflow-y-auto relative z-10">
         <AnimatePresence mode="wait">
           {!isCollapsed ? (
             <motion.div
@@ -197,46 +239,51 @@ export const ChildProfileSidebar: React.FC<ChildProfileSidebarProps> = ({
                 animationEnabled={true}
               />
 
-              {/* Additional Quick Stats */}
+              {/* Weekly Adventure Progress */}
               {showWeeklyProgress && stats && (
-                <div className="bg-white/70 rounded-lg p-4 border border-purple-100">
-                  <h4 className="text-sm font-semibold text-gray-700 mb-3 flex items-center">
-                    <TrendingUp className="w-4 h-4 mr-2" />
-                    This Week
+                <div className="bg-gradient-to-r from-green-100 to-blue-100 rounded-xl p-4 border-2 border-green-200 shadow-lg">
+                  <h4 className="text-sm font-bold text-gray-800 mb-3 flex items-center">
+                    <TrendingUp className="w-5 h-5 mr-2 text-green-600" />
+                    🏆 This Week's Adventures!
                   </h4>
                   <div className="space-y-3">
                     <div className="flex justify-between items-center">
-                      <span className="text-xs text-gray-600">Sessions</span>
-                      <Badge variant="secondary" className="text-xs">
-                        {stats.sessionsThisWeek || 0}
-                      </Badge>
-                    </div>
-                    <div className="flex justify-between items-center">
-                      <span className="text-xs text-gray-600">
-                        Words Learned
+                      <span className="text-xs font-medium text-gray-700 flex items-center">
+                        🎮 Learning Sessions
                       </span>
-                      <Badge variant="secondary" className="text-xs">
-                        {stats.wordsThisWeek || 0}
+                      <Badge className="text-xs bg-yellow-200 text-yellow-800 border-yellow-300">
+                        {stats.sessionsThisWeek || 0} ✨
                       </Badge>
                     </div>
                     <div className="flex justify-between items-center">
-                      <span className="text-xs text-gray-600">Time Spent</span>
-                      <Badge variant="secondary" className="text-xs">
+                      <span className="text-xs font-medium text-gray-700 flex items-center">
+                        📚 Words Mastered
+                      </span>
+                      <Badge className="text-xs bg-blue-200 text-blue-800 border-blue-300">
+                        {stats.wordsThisWeek || 0} 🎆
+                      </Badge>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <span className="text-xs font-medium text-gray-700 flex items-center">
+                        ⏰ Adventure Time
+                      </span>
+                      <Badge className="text-xs bg-purple-200 text-purple-800 border-purple-300">
                         {stats.timeThisWeek
                           ? `${Math.round(stats.timeThisWeek / 60)}h`
-                          : "0h"}
+                          : "0h"}{" "}
+                        🚀
                       </Badge>
                     </div>
                   </div>
                 </div>
               )}
 
-              {/* Activity Summary */}
+              {/* Recent Awesome Moments */}
               {stats?.recentActivity && (
-                <div className="bg-white/70 rounded-lg p-4 border border-purple-100">
-                  <h4 className="text-sm font-semibold text-gray-700 mb-3 flex items-center">
-                    <Activity className="w-4 h-4 mr-2" />
-                    Recent Activity
+                <div className="bg-gradient-to-r from-pink-100 to-purple-100 rounded-xl p-4 border-2 border-pink-200 shadow-lg">
+                  <h4 className="text-sm font-bold text-gray-800 mb-3 flex items-center">
+                    <Activity className="w-5 h-5 mr-2 text-pink-600" />
+                    🎉 Awesome Moments!
                   </h4>
                   <div className="space-y-2">
                     {stats.recentActivity
@@ -246,11 +293,11 @@ export const ChildProfileSidebar: React.FC<ChildProfileSidebarProps> = ({
                           key={index}
                           className="flex items-center justify-between"
                         >
-                          <span className="text-xs text-gray-600 truncate">
-                            {activity.description}
+                          <span className="text-xs font-medium text-gray-700 truncate">
+                            ✨ {activity.description}
                           </span>
-                          <Badge variant="outline" className="text-xs ml-2">
-                            +{activity.points}
+                          <Badge className="text-xs ml-2 bg-orange-200 text-orange-800 border-orange-300">
+                            +{activity.points} 🎆
                           </Badge>
                         </div>
                       ))}
@@ -269,8 +316,8 @@ export const ChildProfileSidebar: React.FC<ChildProfileSidebarProps> = ({
               {/* Collapsed Profile Avatar */}
               <div
                 className={cn(
-                  "w-12 h-12 rounded-full flex items-center justify-center text-xl shadow-md",
-                  "bg-gradient-to-r",
+                  "w-14 h-14 rounded-full flex items-center justify-center text-2xl shadow-xl border-3 border-white",
+                  "bg-gradient-to-r animate-pulse",
                   profile.avatar?.color || "from-purple-400 to-pink-400",
                 )}
               >
@@ -279,11 +326,11 @@ export const ChildProfileSidebar: React.FC<ChildProfileSidebarProps> = ({
 
               {/* Collapsed Quick Stats */}
               <div className="flex flex-col items-center space-y-2">
-                <Badge variant="secondary" className="text-xs">
-                  L{profile.level}
+                <Badge className="text-xs bg-gradient-to-r from-yellow-200 to-orange-200 text-orange-800 border-orange-300 font-bold">
+                  🎆 L{profile.level}
                 </Badge>
                 {profile.streak > 0 && (
-                  <Badge variant="outline" className="text-xs">
+                  <Badge className="text-xs bg-gradient-to-r from-red-200 to-orange-200 text-red-800 border-red-300 animate-pulse">
                     {profile.streak}🔥
                   </Badge>
                 )}
@@ -294,7 +341,7 @@ export const ChildProfileSidebar: React.FC<ChildProfileSidebarProps> = ({
       </div>
 
       {/* Sidebar Footer */}
-      <div className="p-4 border-t border-purple-200/30">
+      <div className="p-4 border-t-2 border-rainbow-300/50 bg-gradient-to-r from-green-100/80 to-blue-100/80 relative z-10">
         <AnimatePresence mode="wait">
           {!isCollapsed ? (
             <motion.div
@@ -308,22 +355,28 @@ export const ChildProfileSidebar: React.FC<ChildProfileSidebarProps> = ({
                 <Button
                   variant="outline"
                   size="sm"
-                  onClick={onProfileEdit}
-                  className="w-full text-xs bg-white/70 hover:bg-white"
+                  onClick={() => {
+                    kidFriendlyEffects.playSound(SOUNDS.button_click);
+                    onProfileEdit?.();
+                  }}
+                  className="w-full text-xs bg-gradient-to-r from-blue-200 to-purple-200 hover:from-blue-300 hover:to-purple-300 border-2 border-blue-300 text-blue-800 font-bold rounded-xl"
                 >
-                  <Settings className="w-3 h-3 mr-2" />
-                  Settings
+                  <Settings className="w-4 h-4 mr-2" />
+                  ⚙️ My Settings
                 </Button>
               )}
               {onLogout && (
                 <Button
                   variant="ghost"
                   size="sm"
-                  onClick={onLogout}
-                  className="w-full text-xs text-gray-600 hover:text-gray-800"
+                  onClick={() => {
+                    kidFriendlyEffects.playSound(SOUNDS.button_click);
+                    onLogout?.();
+                  }}
+                  className="w-full text-xs text-gray-700 hover:text-gray-900 hover:bg-gray-100 rounded-xl font-medium"
                 >
-                  <LogOut className="w-3 h-3 mr-2" />
-                  Switch Profile
+                  <LogOut className="w-4 h-4 mr-2" />
+                  🔄 Switch Friends
                 </Button>
               )}
             </motion.div>
@@ -339,8 +392,11 @@ export const ChildProfileSidebar: React.FC<ChildProfileSidebarProps> = ({
                 <Button
                   variant="ghost"
                   size="sm"
-                  onClick={onProfileEdit}
-                  className="h-8 w-8 p-0 bg-white/70 hover:bg-white"
+                  onClick={() => {
+                    kidFriendlyEffects.playSound(SOUNDS.button_click);
+                    onProfileEdit?.();
+                  }}
+                  className="h-10 w-10 p-0 bg-gradient-to-r from-blue-200 to-purple-200 hover:from-blue-300 hover:to-purple-300 rounded-full border-2 border-white shadow-lg transition-all duration-300 hover:scale-110"
                 >
                   <Settings className="w-4 h-4" />
                 </Button>
@@ -349,8 +405,11 @@ export const ChildProfileSidebar: React.FC<ChildProfileSidebarProps> = ({
                 <Button
                   variant="ghost"
                   size="sm"
-                  onClick={onLogout}
-                  className="h-8 w-8 p-0 text-gray-600 hover:text-gray-800"
+                  onClick={() => {
+                    kidFriendlyEffects.playSound(SOUNDS.button_click);
+                    onLogout?.();
+                  }}
+                  className="h-10 w-10 p-0 text-gray-700 hover:text-gray-900 bg-white/80 hover:bg-white rounded-full border-2 border-gray-200 shadow-md transition-all duration-300 hover:scale-110"
                 >
                   <LogOut className="w-4 h-4" />
                 </Button>
