@@ -2086,36 +2086,40 @@ export default function Index({ initialProfile }: IndexProps) {
 
                       <button
                         onClick={() => setActiveTab("progress")}
-                        className={`w-full flex items-center gap-3 p-3 lg:p-4 rounded-xl lg:rounded-2xl transition-all ${
+                        className={`w-full flex items-center gap-2.5 p-2.5 lg:p-3 rounded-xl transition-all duration-200 hover:scale-[1.02] ${
                           activeTab === "progress"
-                            ? "bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-lg"
-                            : "bg-white text-gray-700 hover:bg-purple-50 border border-purple-100"
+                            ? "bg-gradient-to-r from-yellow-500 to-orange-500 text-white shadow-lg transform scale-[1.02]"
+                            : "bg-white text-gray-700 hover:bg-gradient-to-r hover:from-yellow-50 hover:to-orange-50 border border-yellow-100 hover:border-yellow-200 shadow-sm"
                         }`}
                       >
                         <div
-                          className={`p-2 rounded-lg lg:rounded-xl ${activeTab === "progress" ? "bg-white/20" : "bg-yellow-100"}`}
+                          className={`p-1.5 rounded-lg transition-all duration-200 ${activeTab === "progress" ? "bg-white/20" : "bg-yellow-100"}`}
                         >
                           <Trophy
-                            className={`w-4 h-4 lg:w-5 lg:h-5 ${activeTab === "progress" ? "text-white" : "text-yellow-600"}`}
+                            className={`w-4 h-4 ${activeTab === "progress" ? "text-white" : "text-yellow-600"}`}
                           />
                         </div>
-                        <span className="font-medium lg:font-semibold text-sm lg:text-base">
-                          🎯 My Journey
+                        <span className="font-medium text-sm">
+                          🏆 My Journey
                         </span>
                       </button>
 
-                      <button
-                        onClick={() => {
-                          setUserRole("parent");
-                          window.scrollTo({ top: 0, behavior: "smooth" });
-                        }}
-                        className="w-full flex items-center gap-4 p-4 rounded-2xl transition-all bg-white text-gray-700 hover:bg-blue-50 hover:border-blue-200 border-2 border-transparent"
-                      >
-                        <div className="p-2 rounded-xl bg-blue-100">
-                          <Users className="w-5 h-5 text-blue-600" />
-                        </div>
-                        <span className="font-semibold">Parent Dashboard</span>
-                      </button>
+                      <div className="mt-3 pt-3 border-t border-purple-200">
+                        <button
+                          onClick={() => {
+                            setUserRole("parent");
+                            window.scrollTo({ top: 0, behavior: "smooth" });
+                          }}
+                          className="w-full flex items-center gap-2.5 p-2.5 lg:p-3 rounded-xl transition-all duration-200 hover:scale-[1.02] bg-gradient-to-r from-blue-100 to-indigo-100 text-gray-700 hover:from-blue-200 hover:to-indigo-200 border border-blue-200 shadow-sm"
+                        >
+                          <div className="p-1.5 rounded-lg bg-blue-200">
+                            <Users className="w-4 h-4 text-blue-700" />
+                          </div>
+                          <span className="font-medium text-sm">
+                            👥 Parent Dashboard
+                          </span>
+                        </button>
+                      </div>
 
                       <button
                         onClick={() => navigate("/admin")}
