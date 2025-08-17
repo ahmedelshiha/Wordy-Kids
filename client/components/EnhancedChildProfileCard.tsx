@@ -26,6 +26,7 @@ import { cn } from "@/lib/utils";
 import { motion, AnimatePresence } from "framer-motion";
 import { StickerBadge, StickerPresets } from "@/components/StickerBadge";
 import { kidFriendlyEffects, SOUNDS, celebrate } from "@/lib/kidFriendlyEffects";
+import { TappableZone } from "@/components/TappableZone";
 
 interface ChildProfile {
   id: string;
