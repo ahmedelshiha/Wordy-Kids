@@ -34,11 +34,15 @@ const App = () => {
   const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
-    setIsClient(true);
+    // Additional check to ensure DOM is ready
+    if (typeof window !== 'undefined' && document.getElementById('root')) {
+      setIsClient(true);
+    }
   }, []);
 
-  if (!isClient) {
-    return null; // or a loading spinner
+  // Don't render anything until client is ready and React is properly initialized
+  if (!isClient || typeof window === 'undefined') {
+    return null;
   }
 
   return (
