@@ -10,7 +10,6 @@ import {
   SessionStats,
 } from "@/components/InteractiveDashboardWordCard";
 import { AIEnhancedInteractiveDashboardWordCard } from "@/components/AIEnhancedInteractiveDashboardWordCard";
-import { KidRegistrationNotification } from "@/components/KidRegistrationNotification";
 import { useAuth } from "@/hooks/useAuth";
 import { ChildWordStats } from "@shared/api";
 import {
@@ -189,21 +188,6 @@ export const LearningDashboard: React.FC<LearningDashboardProps> = ({
 
   return (
     <div className="space-y-4">
-      {/* Kid Registration Notification - Only show for guest users */}
-      {isGuest && (
-        <KidRegistrationNotification
-          variant="banner"
-          className="mb-4"
-          progressData={{
-            wordsLearned: stats.wordsLearned,
-            currentStreak: stats.currentStreak,
-            totalPoints: stats.totalPoints,
-            level: stats.level,
-            weeklyProgress: stats.weeklyProgress,
-            weeklyGoal: stats.weeklyGoal,
-          }}
-        />
-      )}
 
       {/* Interactive Word Learning Hub - PRIMARY FEATURE */}
       {availableWords.length > 0 && onWordProgress ? (
