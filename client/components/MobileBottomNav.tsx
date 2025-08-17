@@ -236,7 +236,7 @@ export function MobileBottomNav({
                 {/* Magical Emoji Icon */}
                 <div
                   className={cn(
-                    "text-4xl sm:text-5xl md:text-6xl -mt-3 sm:-mt-4 md:-mt-5 transition-transform duration-200",
+                    "text-5xl sm:text-6xl md:text-7xl lg:text-8xl -mt-3 sm:-mt-4 md:-mt-5 transition-transform duration-200",
                     tab.id === "dashboard" && "animate-mascot-bounce",
                     tab.id === "learn" && "animate-gentle-float",
                     tab.id === "quiz" && "animate-mascot-happy",
@@ -247,7 +247,7 @@ export function MobileBottomNav({
                 </div>
 
                 {/* Kid-friendly Label */}
-                <span className="text-[10px] font-kid-friendly font-bold leading-tight text-center truncate max-w-full text-white -mt-1">
+                <span className="text-[10px] font-kid-friendly font-bold leading-tight text-center truncate max-w-full text-white -mt-3">
                   {tab.label}
                 </span>
 
@@ -277,13 +277,13 @@ export function MobileBottomNav({
             >
               <div
                 className={cn(
-                  "text-4xl sm:text-5xl md:text-6xl -mt-3 sm:-mt-4 md:-mt-5 transition-transform duration-200",
+                  "text-5xl sm:text-6xl md:text-7xl lg:text-8xl -mt-3 sm:-mt-4 md:-mt-5 transition-transform duration-200",
                   showMoreMenu ? "rotate-90 scale-110 animate-mascot-bounce" : "animate-gentle-float",
                 )}
               >
                 🎪
               </div>
-              <span className="text-[10px] font-kid-friendly font-bold leading-tight text-center text-white -mt-1">
+              <span className="text-[10px] font-kid-friendly font-bold leading-tight text-center text-white -mt-3">
                 More
               </span>
 
