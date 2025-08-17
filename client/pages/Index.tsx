@@ -3386,6 +3386,15 @@ export default function Index({ initialProfile }: IndexProps) {
               onAdminClick={() => navigate("/admin")}
             />
           )}
+
+          {/* Floating Registration Reminder for Guest Users */}
+          {showFloatingReminder && (
+            <KidRegistrationNotification
+              variant="floating"
+              onDismiss={() => dismissFloatingReminder()}
+              showDismiss={true}
+            />
+          )}
         </>
       )}
     </div>
