@@ -3,25 +3,23 @@ import * as TooltipPrimitive from "@radix-ui/react-tooltip";
 
 import { cn } from "@/lib/utils";
 
-// Safe TooltipProvider that handles React context initialization errors
-const TooltipProvider: React.FC<
+// Completely safe TooltipProvider that uses class component approach
+class TooltipProvider extends React.Component<
   React.ComponentPropsWithoutRef<typeof TooltipPrimitive.Provider>
-> = (props) => {
-  // Check if React is properly loaded before trying to use hooks
-  if (typeof React === 'undefined' || typeof React.useState !== 'function') {
-    // Fallback: just render children without tooltip context
-    return <div style={{ display: "contents" }}>{props.children}</div>;
+> {
+  constructor(props: React.ComponentPropsWithoutRef<typeof TooltipPrimitive.Provider>) {
+    super(props);
   }
 
-  try {
-    // Try to render the actual TooltipProvider
-    return <TooltipPrimitive.Provider {...props} />;
-  } catch (error) {
-    // If it fails, fall back to just rendering children
-    console.warn('TooltipProvider failed to render:', error);
-    return <div style={{ display: "contents" }}>{props.children}</div>;
+  render() {
+    try {
+      return React.createElement(TooltipPrimitive.Provider, this.props, this.props.children);
+    } catch (error) {
+      console.warn('TooltipProvider render failed:', error);
+      return React.createElement('div', { style: { display: 'contents' } }, this.props.children);
+    }
   }
-};
+}
 
 const Tooltip = TooltipPrimitive.Root;
 
