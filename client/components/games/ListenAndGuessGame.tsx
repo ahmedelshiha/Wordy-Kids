@@ -698,7 +698,9 @@ export default function ListenAndGuessGame({
         {/* Mascot + play button */}
         <div className="flex items-center justify-between gap-3 mb-4">
           <div className="flex items-center gap-2">
-            <span className="text-2xl sm:text-3xl animate-gentle-float">🦊</span>
+            <span className="text-2xl sm:text-3xl animate-gentle-float">
+              🦊
+            </span>
             <div className="leading-tight">
               <div className="text-xs uppercase tracking-wide opacity-90">
                 Listen & Guess

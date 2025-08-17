@@ -2000,7 +2000,9 @@ export default function Index({ initialProfile }: IndexProps) {
                     {/* Compact Magical Portal Logo Section */}
                     <div className="bg-gradient-to-br from-purple-400 via-pink-400 to-blue-400 p-2.5 rounded-xl shadow-lg mb-3 border border-yellow-300 animate-kid-pulse-glow">
                       <div className="flex items-center gap-2">
-                        <div className="text-lg sm:text-xl animate-mascot-bounce">🌟</div>
+                        <div className="text-lg sm:text-xl animate-mascot-bounce">
+                          🌟
+                        </div>
                         <div className="flex-1 min-w-0">
                           <h1 className="text-sm font-kid-friendly text-white text-shadow truncate">
                             Wordy Portal ✨

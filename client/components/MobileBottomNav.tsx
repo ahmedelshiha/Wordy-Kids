@@ -177,7 +177,9 @@ export function MobileBottomNav({
           />
           <div className="absolute bottom-20 left-3 right-3 bg-gradient-to-br from-purple-50 via-pink-50 to-blue-50 rounded-3xl shadow-2xl p-4 border-4 border-rainbow max-h-[70vh] overflow-y-auto animate-kid-pulse-glow">
             <div className="text-center mb-4">
-              <div className="text-2xl sm:text-3xl mb-2 animate-mascot-bounce">🎪</div>
+              <div className="text-2xl sm:text-3xl mb-2 animate-mascot-bounce">
+                🎪
+              </div>
               <h3 className="text-lg font-kid-friendly font-bold text-purple-800 text-shadow">
                 Magical Adventure Menu! ✨
               </h3>
