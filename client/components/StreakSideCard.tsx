@@ -164,7 +164,7 @@ export const StreakSideCard: React.FC<StreakSideCardProps> = ({
           stiffness: 200,
           damping: 25,
           duration: 0.8,
-          delay: 0.2
+          delay: 0.2,
         }}
         whileHover={{ scale: 1.02 }}
       >
@@ -206,7 +206,9 @@ export const StreakSideCard: React.FC<StreakSideCardProps> = ({
 
             {/* Header with streak display */}
             <div className="relative">
-              <div className={`bg-gradient-to-r ${content.color} p-6 text-white relative overflow-hidden`}>
+              <div
+                className={`bg-gradient-to-r ${content.color} p-6 text-white relative overflow-hidden`}
+              >
                 {/* Animated sparks */}
                 <div className="absolute inset-0 pointer-events-none">
                   {[...Array(6)].map((_, i) => (
@@ -214,8 +216,8 @@ export const StreakSideCard: React.FC<StreakSideCardProps> = ({
                       key={i}
                       className="absolute text-yellow-300 text-lg"
                       style={{
-                        left: `${20 + (i * 12) % 60}%`,
-                        top: `${15 + (i * 17) % 70}%`,
+                        left: `${20 + ((i * 12) % 60)}%`,
+                        top: `${15 + ((i * 17) % 70)}%`,
                       }}
                       animate={{
                         opacity: animationPhase === i ? [0, 1, 0] : 0,
@@ -240,17 +242,23 @@ export const StreakSideCard: React.FC<StreakSideCardProps> = ({
                   >
                     {content.emoji}
                   </motion.div>
-                  
+
                   <h3 className="text-xl font-bold mb-1">{content.title}</h3>
-                  <p className="text-sm opacity-90 font-medium">{content.subtitle}</p>
-                  
+                  <p className="text-sm opacity-90 font-medium">
+                    {content.subtitle}
+                  </p>
+
                   {/* Streak counter */}
                   {content.streak > 0 && (
                     <motion.div
                       className="flex items-center justify-center gap-2 mt-3 bg-white/20 backdrop-blur-sm rounded-full px-4 py-2 border border-white/30"
                       animate={{
                         scale: [1, 1.05, 1],
-                        boxShadow: ["0 0 0 0px rgba(255,255,255,0.3)", "0 0 0 8px rgba(255,255,255,0)", "0 0 0 0px rgba(255,255,255,0)"]
+                        boxShadow: [
+                          "0 0 0 0px rgba(255,255,255,0.3)",
+                          "0 0 0 8px rgba(255,255,255,0)",
+                          "0 0 0 0px rgba(255,255,255,0)",
+                        ],
                       }}
                       transition={{ duration: 2, repeat: Infinity }}
                     >
@@ -260,7 +268,9 @@ export const StreakSideCard: React.FC<StreakSideCardProps> = ({
                       >
                         <Flame className="w-5 h-5 text-yellow-200" />
                       </motion.div>
-                      <span className="text-lg font-bold">{content.streak}</span>
+                      <span className="text-lg font-bold">
+                        {content.streak}
+                      </span>
                       <span className="text-sm font-medium">Day Streak!</span>
                     </motion.div>
                   )}
@@ -276,31 +286,41 @@ export const StreakSideCard: React.FC<StreakSideCardProps> = ({
               </p>
 
               {/* Progress highlights */}
-              {progressData && (progressData.wordsLearned! > 0 || progressData.currentStreak! > 0) && (
-                <div className="grid grid-cols-2 gap-3">
-                  {progressData.wordsLearned! > 0 && (
-                    <motion.div
-                      className="bg-gradient-to-r from-blue-100 to-blue-50 border border-blue-200 rounded-lg p-3 text-center"
-                      whileHover={{ scale: 1.02 }}
-                    >
-                      <BookOpen className="w-5 h-5 text-blue-600 mx-auto mb-1" />
-                      <div className="text-lg font-bold text-blue-800">{progressData.wordsLearned}</div>
-                      <div className="text-xs text-blue-600 font-medium">Words Learned</div>
-                    </motion.div>
-                  )}
-                  
-                  {progressData.totalPoints! > 0 && (
-                    <motion.div
-                      className="bg-gradient-to-r from-yellow-100 to-yellow-50 border border-yellow-200 rounded-lg p-3 text-center"
-                      whileHover={{ scale: 1.02 }}
-                    >
-                      <Star className="w-5 h-5 text-yellow-600 mx-auto mb-1" />
-                      <div className="text-lg font-bold text-yellow-800">{progressData.totalPoints}</div>
-                      <div className="text-xs text-yellow-600 font-medium">Points Earned</div>
-                    </motion.div>
-                  )}
-                </div>
-              )}
+              {progressData &&
+                (progressData.wordsLearned! > 0 ||
+                  progressData.currentStreak! > 0) && (
+                  <div className="grid grid-cols-2 gap-3">
+                    {progressData.wordsLearned! > 0 && (
+                      <motion.div
+                        className="bg-gradient-to-r from-blue-100 to-blue-50 border border-blue-200 rounded-lg p-3 text-center"
+                        whileHover={{ scale: 1.02 }}
+                      >
+                        <BookOpen className="w-5 h-5 text-blue-600 mx-auto mb-1" />
+                        <div className="text-lg font-bold text-blue-800">
+                          {progressData.wordsLearned}
+                        </div>
+                        <div className="text-xs text-blue-600 font-medium">
+                          Words Learned
+                        </div>
+                      </motion.div>
+                    )}
+
+                    {progressData.totalPoints! > 0 && (
+                      <motion.div
+                        className="bg-gradient-to-r from-yellow-100 to-yellow-50 border border-yellow-200 rounded-lg p-3 text-center"
+                        whileHover={{ scale: 1.02 }}
+                      >
+                        <Star className="w-5 h-5 text-yellow-600 mx-auto mb-1" />
+                        <div className="text-lg font-bold text-yellow-800">
+                          {progressData.totalPoints}
+                        </div>
+                        <div className="text-xs text-yellow-600 font-medium">
+                          Points Earned
+                        </div>
+                      </motion.div>
+                    )}
+                  </div>
+                )}
 
               {/* Benefits showcase */}
               <div className="space-y-2">
@@ -309,20 +329,64 @@ export const StreakSideCard: React.FC<StreakSideCardProps> = ({
                 </h4>
                 <div className="grid grid-cols-2 gap-2 text-xs">
                   {[
-                    { icon: Trophy, text: "Save Progress", bgClass: "bg-blue-50", borderClass: "border-blue-200", hoverClass: "hover:bg-blue-100", iconClass: "text-blue-600", textClass: "text-blue-700" },
-                    { icon: Medal, text: "Earn Badges", bgClass: "bg-purple-50", borderClass: "border-purple-200", hoverClass: "hover:bg-purple-100", iconClass: "text-purple-600", textClass: "text-purple-700" },
-                    { icon: Target, text: "Track Goals", bgClass: "bg-green-50", borderClass: "border-green-200", hoverClass: "hover:bg-green-100", iconClass: "text-green-600", textClass: "text-green-700" },
-                    { icon: Gift, text: "Get Rewards", bgClass: "bg-pink-50", borderClass: "border-pink-200", hoverClass: "hover:bg-pink-100", iconClass: "text-pink-600", textClass: "text-pink-700" },
-                  ].map(({ icon: Icon, text, bgClass, borderClass, hoverClass, iconClass, textClass }) => (
-                    <motion.div
-                      key={text}
-                      className={`flex items-center gap-2 ${bgClass} border ${borderClass} rounded-lg p-2 ${hoverClass} transition-colors`}
-                      whileHover={{ scale: 1.02 }}
-                    >
-                      <Icon className={`w-3 h-3 ${iconClass}`} />
-                      <span className={`${textClass} font-medium`}>{text}</span>
-                    </motion.div>
-                  ))}
+                    {
+                      icon: Trophy,
+                      text: "Save Progress",
+                      bgClass: "bg-blue-50",
+                      borderClass: "border-blue-200",
+                      hoverClass: "hover:bg-blue-100",
+                      iconClass: "text-blue-600",
+                      textClass: "text-blue-700",
+                    },
+                    {
+                      icon: Medal,
+                      text: "Earn Badges",
+                      bgClass: "bg-purple-50",
+                      borderClass: "border-purple-200",
+                      hoverClass: "hover:bg-purple-100",
+                      iconClass: "text-purple-600",
+                      textClass: "text-purple-700",
+                    },
+                    {
+                      icon: Target,
+                      text: "Track Goals",
+                      bgClass: "bg-green-50",
+                      borderClass: "border-green-200",
+                      hoverClass: "hover:bg-green-100",
+                      iconClass: "text-green-600",
+                      textClass: "text-green-700",
+                    },
+                    {
+                      icon: Gift,
+                      text: "Get Rewards",
+                      bgClass: "bg-pink-50",
+                      borderClass: "border-pink-200",
+                      hoverClass: "hover:bg-pink-100",
+                      iconClass: "text-pink-600",
+                      textClass: "text-pink-700",
+                    },
+                  ].map(
+                    ({
+                      icon: Icon,
+                      text,
+                      bgClass,
+                      borderClass,
+                      hoverClass,
+                      iconClass,
+                      textClass,
+                    }) => (
+                      <motion.div
+                        key={text}
+                        className={`flex items-center gap-2 ${bgClass} border ${borderClass} rounded-lg p-2 ${hoverClass} transition-colors`}
+                        whileHover={{ scale: 1.02 }}
+                      >
+                        <Icon className={`w-3 h-3 ${iconClass}`} />
+                        <span className={`${textClass} font-medium`}>
+                          {text}
+                        </span>
+                      </motion.div>
+                    ),
+                  )}
                 </div>
               </div>
 
@@ -355,7 +419,8 @@ export const StreakSideCard: React.FC<StreakSideCardProps> = ({
 
               {/* Footer note */}
               <p className="text-xs text-center text-gray-500 leading-relaxed">
-                Join <span className="font-bold text-purple-600">50,000+</span> kids learning with us! 
+                Join <span className="font-bold text-purple-600">50,000+</span>{" "}
+                kids learning with us!
                 <br />
                 <span className="inline-flex items-center gap-1 mt-1">
                   ✨ It's quick, free & fun! ✨
