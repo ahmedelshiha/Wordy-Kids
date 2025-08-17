@@ -1656,22 +1656,22 @@ export function AIEnhancedInteractiveDashboardWordCard({
                 </div>
 
                 {/* Compact stats in single row */}
-                <div className="flex items-center justify-between text-xs gap-1">
-                  <div className="flex items-center gap-0.5 bg-yellow-100 px-1 py-0.5 rounded flex-1 justify-center">
-                    <span>😊</span>
-                    <span className="font-medium">
+                <div className="flex items-center justify-between text-sm gap-1">
+                  <div className="flex items-center gap-1 bg-yellow-100 px-2 py-1 rounded flex-1 justify-center">
+                    <span className="text-lg">😊</span>
+                    <span className="font-medium text-sm">
                       {sessionStats.wordsRemembered}
                     </span>
                   </div>
-                  <div className="flex items-center gap-0.5 bg-orange-100 px-1 py-0.5 rounded flex-1 justify-center">
-                    <span>💪</span>
-                    <span className="font-medium">
+                  <div className="flex items-center gap-1 bg-orange-100 px-2 py-1 rounded flex-1 justify-center">
+                    <span className="text-lg">💪</span>
+                    <span className="font-medium text-sm">
                       {sessionStats.wordsForgotten}
                     </span>
                   </div>
-                  <div className="flex items-center gap-0.5 bg-purple-100 px-1 py-0.5 rounded flex-1 justify-center">
-                    <span>🎯</span>
-                    <span className="font-medium">
+                  <div className="flex items-center gap-1 bg-purple-100 px-2 py-1 rounded flex-1 justify-center">
+                    <span className="text-lg">🎯</span>
+                    <span className="font-medium text-sm">
                       {Math.round(confidenceLevel * 100)}%
                     </span>
                   </div>
