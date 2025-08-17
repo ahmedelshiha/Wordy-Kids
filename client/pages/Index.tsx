@@ -1841,7 +1841,7 @@ export default function Index({ initialProfile }: IndexProps) {
                   </div>
                   <div>
                     <h1 className="text-sm font-bold leading-tight">
-                      Wordy Kids! ���
+                      Wordy Kids! ✨
                     </h1>
                     <p className="text-xs text-educational-yellow-light/90 font-medium">
                       Let's Learn Together! 🚀
@@ -3227,7 +3227,7 @@ export default function Index({ initialProfile }: IndexProps) {
                     </div>
 
                     {/* Streak Side Card - Desktop Only */}
-                    <div className="hidden xl:block w-80 flex-shrink-0">
+                    <div className="hidden lg:block w-80 flex-shrink-0">
                       <StreakSideCard
                         progressData={{
                           wordsLearned: rememberedWords.size,
