@@ -278,8 +278,8 @@ export const ChildProfileSidebar: React.FC<ChildProfileSidebarProps> = ({
               {/* Collapsed Profile Avatar */}
               <div
                 className={cn(
-                  "w-12 h-12 rounded-full flex items-center justify-center text-xl shadow-md",
-                  "bg-gradient-to-r",
+                  "w-14 h-14 rounded-full flex items-center justify-center text-2xl shadow-xl border-3 border-white",
+                  "bg-gradient-to-r animate-pulse",
                   profile.avatar?.color || "from-purple-400 to-pink-400",
                 )}
               >
@@ -288,11 +288,11 @@ export const ChildProfileSidebar: React.FC<ChildProfileSidebarProps> = ({
 
               {/* Collapsed Quick Stats */}
               <div className="flex flex-col items-center space-y-2">
-                <Badge variant="secondary" className="text-xs">
-                  L{profile.level}
+                <Badge className="text-xs bg-gradient-to-r from-yellow-200 to-orange-200 text-orange-800 border-orange-300 font-bold">
+                  🎆 L{profile.level}
                 </Badge>
                 {profile.streak > 0 && (
-                  <Badge variant="outline" className="text-xs">
+                  <Badge className="text-xs bg-gradient-to-r from-red-200 to-orange-200 text-red-800 border-red-300 animate-pulse">
                     {profile.streak}🔥
                   </Badge>
                 )}
@@ -303,7 +303,7 @@ export const ChildProfileSidebar: React.FC<ChildProfileSidebarProps> = ({
       </div>
 
       {/* Sidebar Footer */}
-      <div className="p-4 border-t border-purple-200/30">
+      <div className="p-4 border-t-2 border-rainbow-300/50 bg-gradient-to-r from-green-100/80 to-blue-100/80 relative z-10">
         <AnimatePresence mode="wait">
           {!isCollapsed ? (
             <motion.div
@@ -318,10 +318,10 @@ export const ChildProfileSidebar: React.FC<ChildProfileSidebarProps> = ({
                   variant="outline"
                   size="sm"
                   onClick={onProfileEdit}
-                  className="w-full text-xs bg-white/70 hover:bg-white"
+                  className="w-full text-xs bg-gradient-to-r from-blue-200 to-purple-200 hover:from-blue-300 hover:to-purple-300 border-2 border-blue-300 text-blue-800 font-bold rounded-xl"
                 >
-                  <Settings className="w-3 h-3 mr-2" />
-                  Settings
+                  <Settings className="w-4 h-4 mr-2" />
+                  ⚙️ My Settings
                 </Button>
               )}
               {onLogout && (
@@ -329,10 +329,10 @@ export const ChildProfileSidebar: React.FC<ChildProfileSidebarProps> = ({
                   variant="ghost"
                   size="sm"
                   onClick={onLogout}
-                  className="w-full text-xs text-gray-600 hover:text-gray-800"
+                  className="w-full text-xs text-gray-700 hover:text-gray-900 hover:bg-gray-100 rounded-xl font-medium"
                 >
-                  <LogOut className="w-3 h-3 mr-2" />
-                  Switch Profile
+                  <LogOut className="w-4 h-4 mr-2" />
+                  🔄 Switch Friends
                 </Button>
               )}
             </motion.div>
@@ -349,7 +349,7 @@ export const ChildProfileSidebar: React.FC<ChildProfileSidebarProps> = ({
                   variant="ghost"
                   size="sm"
                   onClick={onProfileEdit}
-                  className="h-8 w-8 p-0 bg-white/70 hover:bg-white"
+                  className="h-10 w-10 p-0 bg-gradient-to-r from-blue-200 to-purple-200 hover:from-blue-300 hover:to-purple-300 rounded-full border-2 border-white shadow-lg transition-all duration-300 hover:scale-110"
                 >
                   <Settings className="w-4 h-4" />
                 </Button>
@@ -359,7 +359,7 @@ export const ChildProfileSidebar: React.FC<ChildProfileSidebarProps> = ({
                   variant="ghost"
                   size="sm"
                   onClick={onLogout}
-                  className="h-8 w-8 p-0 text-gray-600 hover:text-gray-800"
+                  className="h-10 w-10 p-0 text-gray-700 hover:text-gray-900 bg-white/80 hover:bg-white rounded-full border-2 border-gray-200 shadow-md transition-all duration-300 hover:scale-110"
                 >
                   <LogOut className="w-4 h-4" />
                 </Button>
