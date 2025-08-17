@@ -14,6 +14,7 @@ import {
 import { WordCard } from "@/components/WordCard";
 import { LearningDashboard } from "@/components/LearningDashboard";
 import { QuizGame } from "@/components/QuizGame";
+import { ConditionalAI, LazyAIComponent, preloadAIComponents } from "@/components/LazyAIComponents";
 import { ChildFriendlyCategorySelector } from "@/components/ChildFriendlyCategorySelector";
 import { EnhancedChildLogin } from "@/components/EnhancedChildLogin";
 import { AvatarCustomization } from "@/components/AvatarCustomization";
