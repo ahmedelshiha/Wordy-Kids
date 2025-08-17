@@ -385,18 +385,17 @@ export function DesktopKidNav({
               </Button>
 
               <Button
-                variant="outline"
                 onClick={() => {
                   onSettingsClick();
                   setShowParentOptions(false);
                 }}
-                className="flex items-center gap-3 p-4 h-auto justify-start"
+                className="flex items-center gap-3 p-4 h-auto justify-start bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white border-0 shadow-lg hover:shadow-xl transition-all duration-300"
               >
-                <Settings className="w-5 h-5 text-gray-600" />
+                <Settings className="w-6 h-6" />
                 <div className="text-left">
-                  <div className="font-medium">Settings</div>
-                  <div className="text-sm text-gray-500">
-                    App preferences and controls
+                  <div className="font-semibold text-lg">Settings</div>
+                  <div className="text-sm text-green-100">
+                    Configure app preferences, controls, and customizations
                   </div>
                 </div>
               </Button>
