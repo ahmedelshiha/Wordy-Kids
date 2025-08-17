@@ -48,7 +48,7 @@ interface NavTab {
 const kidNavTabs: NavTab[] = [
   {
     id: "dashboard",
-    emoji: "🏠",
+    emoji: "🏡",
     label: "Home",
     color: "from-purple-400 via-pink-400 to-blue-400",
     hoverColor: "from-purple-500 via-pink-500 to-blue-500",
