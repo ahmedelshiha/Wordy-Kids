@@ -40,7 +40,6 @@ import {
 import {
   Tooltip,
   TooltipContent,
-  TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import {
@@ -1006,7 +1005,6 @@ export const ParentDashboardDesktop: React.FC<ParentDashboardDesktopProps> = ({
   }, [handleAddChildClick, syncChildrenProgress]);
 
   return (
-    <TooltipProvider>
       <div className="parent-dashboard-container min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 flex">
         {/* Desktop Sidebar */}
         <div
@@ -2298,6 +2296,5 @@ export const ParentDashboardDesktop: React.FC<ParentDashboardDesktopProps> = ({
           </DialogContent>
         </Dialog>
       </div>
-    </TooltipProvider>
   );
 };
