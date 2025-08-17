@@ -1441,7 +1441,7 @@ export function AIEnhancedInteractiveDashboardWordCard({
                 initial={{ opacity: 0, y: -10, scale: 0.95 }}
                 animate={{ opacity: 1, y: 0, scale: 1 }}
                 transition={{ duration: 0.4, type: "spring", damping: 20 }}
-                className="text-lg sm:text-xl md:text-2xl font-bold text-gray-800 mb-1"
+                className="text-base sm:text-lg md:text-xl font-bold text-gray-800 mb-1"
               >
                 🔍 What do you see?
               </motion.h1>
