@@ -130,14 +130,17 @@ export function DesktopKidNav({
                     key={tab.id}
                     onClick={() => onTabChange(tab.id)}
                     className={cn(
-                      "flex flex-col items-center gap-1 lg:gap-1.5 p-2 lg:p-3 xl:p-4 rounded-xl lg:rounded-2xl transition-all duration-300 transform relative group kid-nav-button-compact",
-                      // Special styling for home button
+                      "flex flex-col items-center gap-1 lg:gap-1.5 transition-all duration-300 transform relative group kid-nav-button-compact",
+                      // Special styling for home button - no container background
                       tab.id === "dashboard"
-                        ? "min-w-[90px] lg:min-w-[110px] xl:min-w-[130px] scale-110 lg:scale-125"
-                        : "min-w-[70px] lg:min-w-[80px] xl:min-w-[100px]",
-                      activeTab === tab.id
-                        ? `bg-gradient-to-br ${tab.hoverColor} text-white shadow-xl ${tab.shadowColor}`
-                        : `bg-gradient-to-br ${tab.color} text-white shadow-md hover:shadow-lg ${tab.shadowColor}`,
+                        ? "min-w-[90px] lg:min-w-[110px] xl:min-w-[130px] scale-110 lg:scale-125 p-1 lg:p-2 xl:p-3"
+                        : "min-w-[70px] lg:min-w-[80px] xl:min-w-[100px] p-2 lg:p-3 xl:p-4 rounded-xl lg:rounded-2xl",
+                      // Home button has no background, others keep their gradient
+                      tab.id === "dashboard"
+                        ? "bg-transparent hover:bg-transparent shadow-none hover:shadow-none"
+                        : activeTab === tab.id
+                          ? `bg-gradient-to-br ${tab.hoverColor} text-white shadow-xl ${tab.shadowColor}`
+                          : `bg-gradient-to-br ${tab.color} text-white shadow-md hover:shadow-lg ${tab.shadowColor}`,
                     )}
                     whileHover={{ y: -1, scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
