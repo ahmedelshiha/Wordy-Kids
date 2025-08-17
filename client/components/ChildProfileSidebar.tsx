@@ -318,20 +318,6 @@ export const ChildProfileSidebar: React.FC<ChildProfileSidebarProps> = ({
               exit="collapsed"
               className="space-y-2"
             >
-              {onProfileEdit && (
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={() => {
-                    kidFriendlyEffects.playSound(SOUNDS.button_click);
-                    onProfileEdit?.();
-                  }}
-                  className="w-full text-xs bg-gradient-to-r from-blue-200 to-purple-200 hover:from-blue-300 hover:to-purple-300 border-2 border-blue-300 text-blue-800 font-bold rounded-xl"
-                >
-                  <Settings className="w-4 h-4 mr-2" />
-                  ⚙️ My Settings
-                </Button>
-              )}
               {onLogout && (
                 <Button
                   variant="ghost"
@@ -355,19 +341,6 @@ export const ChildProfileSidebar: React.FC<ChildProfileSidebarProps> = ({
               exit="collapsed"
               className="flex flex-col items-center space-y-2"
             >
-              {onProfileEdit && (
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={() => {
-                    kidFriendlyEffects.playSound(SOUNDS.button_click);
-                    onProfileEdit?.();
-                  }}
-                  className="h-10 w-10 p-0 bg-gradient-to-r from-blue-200 to-purple-200 hover:from-blue-300 hover:to-purple-300 rounded-full border-2 border-white shadow-lg transition-all duration-300 hover:scale-110"
-                >
-                  <Settings className="w-4 h-4" />
-                </Button>
-              )}
               {onLogout && (
                 <Button
                   variant="ghost"
