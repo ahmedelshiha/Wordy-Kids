@@ -168,18 +168,15 @@ export const ChildProfileSidebar: React.FC<ChildProfileSidebarProps> = ({
                 {showTimeOfDay && (
                   <div
                     className={cn(
-                      "bg-gradient-to-r rounded-xl p-3 mb-3 shadow-md border border-white/30 backdrop-blur-sm",
+                      "bg-gradient-to-r rounded-lg p-2 mb-2 shadow-sm border border-white/30 backdrop-blur-sm",
                       timeInfo.color,
                     )}
                   >
-                    <div className="flex items-center space-x-2">
-                      <span className="text-lg">{timeInfo.icon}</span>
+                    <div className="flex items-center space-x-1">
+                      <span className="text-sm">{timeInfo.icon}</span>
                       <div>
-                        <div className="text-sm font-bold text-gray-800">
-                          {timeInfo.greeting}, Super Star! 🌟
-                        </div>
-                        <div className="text-xs text-gray-700 font-medium">
-                          Let's learn something awesome today!
+                        <div className="text-xs font-bold text-gray-800">
+                          {timeInfo.greeting}! 🌟
                         </div>
                       </div>
                     </div>
