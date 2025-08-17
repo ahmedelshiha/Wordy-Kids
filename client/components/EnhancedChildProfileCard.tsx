@@ -24,6 +24,8 @@ import {
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { motion, AnimatePresence } from "framer-motion";
+import { StickerBadge, StickerPresets } from "@/components/StickerBadge";
+import { kidFriendlyEffects, SOUNDS, celebrate } from "@/lib/kidFriendlyEffects";
 
 interface ChildProfile {
   id: string;
