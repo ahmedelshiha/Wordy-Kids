@@ -140,9 +140,9 @@ import { useNavigationHistory } from "@/hooks/useNavigationHistory";
 import { useAIWordRecommendations } from "@/hooks/use-ai-word-recommendations";
 import { AIWordRecommendationService } from "@/lib/aiWordRecommendationService";
 import { getAISettings, isAIEnabled } from "@/lib/aiSettings";
-// import { ChildProfileSidebar } from "@/components/ChildProfileSidebar";
-// import { MobileChildProfileHeader } from "@/components/MobileChildProfileHeader";
-// import { EnhancedStatsHelper } from "@/lib/enhancedStatsHelper";
+import { ChildProfileSidebar } from "@/components/ChildProfileSidebar";
+import { MobileChildProfileHeader } from "@/components/MobileChildProfileHeader";
+import { EnhancedStatsHelper } from "@/lib/enhancedStatsHelper";
 
 interface IndexProps {
   initialProfile?: any;
@@ -313,14 +313,14 @@ export default function Index({ initialProfile }: IndexProps) {
     useState(false);
 
   // Enhanced stats computation
-  // const enhancedChildStats = useMemo(() => {
-  //   return EnhancedStatsHelper.enhanceChildStats(
-  //     childStats,
-  //     rememberedWords,
-  //     forgottenWords,
-  //     currentProfile,
-  //   );
-  // }, [childStats, rememberedWords, forgottenWords, currentProfile]);
+  const enhancedChildStats = useMemo(() => {
+    return EnhancedStatsHelper.enhanceChildStats(
+      childStats,
+      rememberedWords,
+      forgottenWords,
+      currentProfile,
+    );
+  }, [childStats, rememberedWords, forgottenWords, currentProfile]);
 
   // Memoize displayWords to prevent recalculation on every render
   const displayWords = useMemo(() => {
@@ -3533,7 +3533,7 @@ export default function Index({ initialProfile }: IndexProps) {
           <MagicalPortalEffect
             isActive={backgroundAnimationsEnabled && activeTab === "learn"}
             intensity="medium"
-            particleEmojis={["✨", "🌟", "⭐", "💫", "🔮", "🌈", "🦄", "🎉"]}
+            particleEmojis={["��", "🌟", "⭐", "💫", "🔮", "🌈", "🦄", "🎉"]}
           />
 
           {/* Enhanced Reward Celebration */}
