@@ -572,6 +572,31 @@
   animation: fadeIn 0.8s ease-out;
 }
 
+/* Enhanced kid-friendly animation classes */
+.animate-mascot-bounce {
+  animation: mascotBounce 2s ease-in-out infinite;
+}
+
+.animate-mascot-wave {
+  animation: mascotWave 2s ease-in-out infinite;
+}
+
+.animate-mascot-happy {
+  animation: mascotHappy 1.5s ease-in-out infinite;
+}
+
+.animate-kid-magic-sparkle {
+  animation: kidMagicSparkle 1.8s ease-in-out infinite;
+}
+
+.animate-kid-rainbow {
+  animation: kidRainbow 3s linear infinite;
+}
+
+.animate-kid-pulse-glow {
+  animation: kidPulseGlow 2s ease-in-out infinite;
+}
+
 .animation-delay-100 {
   animation-delay: 100ms;
 }
