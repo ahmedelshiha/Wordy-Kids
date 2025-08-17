@@ -1802,7 +1802,6 @@ export default function Index({ initialProfile }: IndexProps) {
         <>
           {/* Optimized Mobile-First Header */}
           <header className="relative overflow-hidden bg-gradient-to-r from-educational-blue via-educational-purple to-educational-pink text-white">
-            <div className="absolute inset-0 bg-black/10"></div>
             <div className="relative container mx-auto px-4 py-2 md:py-4">
               {/* Mobile header - ultra compact */}
               <div className="flex items-center justify-between md:hidden">
@@ -2519,7 +2518,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                                 } else {
                                                   return (
                                                     <div className="text-xs text-blue-600 font-medium flex items-center gap-1">
-                                                      <span>🆕</span>
+                                                      <span>���</span>
                                                       <span className="hidden sm:inline">
                                                         New
                                                       </span>
