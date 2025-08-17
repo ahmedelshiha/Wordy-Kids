@@ -130,7 +130,7 @@ export function DesktopKidNav({
                     key={tab.id}
                     onClick={() => onTabChange(tab.id)}
                     className={cn(
-                      "flex flex-col items-center gap-1.5 p-3 lg:p-4 rounded-2xl transition-all duration-300 transform hover:scale-105 relative group min-w-[80px] lg:min-w-[100px]",
+                      "flex flex-col items-center gap-1 lg:gap-1.5 p-2 lg:p-3 xl:p-4 rounded-xl lg:rounded-2xl transition-all duration-300 transform relative group min-w-[70px] lg:min-w-[80px] xl:min-w-[100px] kid-nav-button-compact",
                       activeTab === tab.id
                         ? `bg-gradient-to-br ${tab.hoverColor} text-white shadow-xl ${tab.shadowColor}`
                         : `bg-gradient-to-br ${tab.color} text-white shadow-md hover:shadow-lg ${tab.shadowColor}`,
