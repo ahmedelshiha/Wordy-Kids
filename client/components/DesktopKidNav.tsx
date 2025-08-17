@@ -417,28 +417,6 @@ export function DesktopKidNav({
                 </div>
               </Button>
 
-              {/* Quick Hide Sidebar Option - Only show when sidebar is visible */}
-              {!kidModeEnabled && (
-                <Button
-                  variant="outline"
-                  onClick={() => {
-                    setKidModeEnabled(true);
-                    onRoleChange("child");
-                    setShowParentOptions(false);
-                  }}
-                  className="flex items-center gap-3 p-4 h-auto justify-start border-green-200 hover:border-green-300 hover:bg-green-50"
-                >
-                  <Eye className="w-5 h-5 text-green-600" />
-                  <div className="text-left">
-                    <div className="font-medium text-green-700">
-                      Hide Sidebar
-                    </div>
-                    <div className="text-sm text-green-600">
-                      Return to kid-safe mode
-                    </div>
-                  </div>
-                </Button>
-              )}
             </div>
 
             <Button
