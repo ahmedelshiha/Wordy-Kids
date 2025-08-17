@@ -135,8 +135,8 @@ export function DesktopKidNav({
                         ? `bg-gradient-to-br ${tab.hoverColor} text-white shadow-xl ${tab.shadowColor}`
                         : `bg-gradient-to-br ${tab.color} text-white shadow-md hover:shadow-lg ${tab.shadowColor}`,
                     )}
-                    whileHover={{ y: -2 }}
-                    whileTap={{ scale: 0.95 }}
+                    whileHover={{ y: -1, scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
                     initial={{ opacity: 0, y: 30 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: index * 0.1 }}
