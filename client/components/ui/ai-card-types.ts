@@ -1,46 +1,41 @@
 import * as React from "react";
 
-// AI State Interface
+// AI State Interface - matches AIRecommendationState
 export interface AIState {
   isSessionActive: boolean;
   confidence: number;
-  sessionId?: string;
-  startTime?: Date;
-  reasoning?: string[];
-  expectedOutcomes?: {
-    learningVelocity: number;
-    retentionPrediction: number;
-    engagementScore: number;
-    difficultyFit: number;
+  reasoning: string[];
+  currentRecommendation?: any;
+  words?: any[];
+  sessionProgress?: {
+    wordsAttempted: number;
+    wordsCorrect: number;
+    currentWordIndex: number;
+    efficiency: number;
+    engagement: number;
+    cognitiveLoad: number;
   };
-  alternativeStrategies?: string[];
-  adaptiveInstructions?: {
-    encouragementFrequency: number;
-    hintStrategy: string;
-    errorHandling: string;
-  };
+  difficultyAdjustment?: "easier" | "harder" | "maintain" | null;
+  adaptiveHints?: string[];
+  encouragementMessages?: string[];
+  learningAnalytics?: {
+    velocityTrend: number[];
+    retentionTrend: number[];
+    categoryMastery: Map<string, number>;
+    predictedOutcomes: any;
+  } | null;
+  isLoading?: boolean;
+  error?: string | null;
+  hasInitialized?: boolean;
 }
 
-// AI Actions Interface  
+// AI Actions Interface - matches AIRecommendationActions
 export interface AIActions {
-  startSession: (config: {
-    words: any[];
-    confidence: number;
-    reasoning: string[];
-    expectedOutcomes: {
-      learningVelocity: number;
-      retentionPrediction: number;
-      engagementScore: number;
-      difficultyFit: number;
-    };
-    alternativeStrategies: string[];
-    adaptiveInstructions: {
-      encouragementFrequency: number;
-      hintStrategy: string;
-      errorHandling: string;
-    };
-  }) => void;
-  endSession: (config: { completed: boolean }) => void;
+  startSession: (recommendation: any) => void;
+  endSession: (outcome: { completed: boolean; reason?: string }) => void;
+  getRecommendations?: (...args: any[]) => Promise<void>;
+  recordWordInteraction?: (interaction: any) => Promise<void>;
+  reset?: () => Promise<void>;
 }
 
 // Session Statistics
