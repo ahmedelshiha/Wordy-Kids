@@ -49,7 +49,8 @@ export interface SessionStats {
 }
 
 // AI Card Content Props
-export interface AICardContentProps extends React.HTMLAttributes<HTMLDivElement> {
+export interface AICardContentProps
+  extends React.HTMLAttributes<HTMLDivElement> {
   // Standard CardContent props
   className?: string;
   children?: React.ReactNode;

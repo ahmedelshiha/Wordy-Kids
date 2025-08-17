@@ -49,4 +49,9 @@ export * from "./tooltip";
 
 // Export new AI components
 export { AICardContent } from "./ai-card-content";
-export type { AICardContentProps, AIState, AIActions, SessionStats } from "./ai-card-types";
+export type {
+  AICardContentProps,
+  AIState,
+  AIActions,
+  SessionStats,
+} from "./ai-card-types";

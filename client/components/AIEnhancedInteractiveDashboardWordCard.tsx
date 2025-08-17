@@ -1078,7 +1078,6 @@ export function AIEnhancedInteractiveDashboardWordCard({
       tabIndex={0}
       onKeyDown={handleKeyDown}
     >
-
       {/* Enhanced AI Settings Panel */}
       {showAISettings && (
         <motion.div
@@ -1318,7 +1317,6 @@ export function AIEnhancedInteractiveDashboardWordCard({
             showQuickStats={true}
             showErrorAlert={true}
           >
-
             {/* Achievement Teaser - Desktop Only */}
             <div
               aria-live="polite"
