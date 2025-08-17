@@ -2034,8 +2034,8 @@ export default function Index({ initialProfile }: IndexProps) {
                             : "text-gray-700 hover:text-purple-600 kid-interactive"
                         }`}
                       >
-                        <div className="flex flex-col items-center animate-mascot-bounce">
-                          <div className="text-2xl sm:text-3xl lg:text-4xl -mt-1 sm:-mt-2 lg:-mt-3">
+                        <div className="flex flex-col items-center">
+                          <div className="text-2xl sm:text-3xl lg:text-4xl -mt-1 sm:-mt-2 lg:-mt-3 animate-mascot-bounce">
                             🏡
                           </div>
                           <span className="text-xs font-kid-friendly font-bold">
@@ -2057,8 +2057,8 @@ export default function Index({ initialProfile }: IndexProps) {
                             : "text-gray-700 hover:text-green-600 kid-interactive"
                         }`}
                       >
-                        <div className="flex flex-col items-center animate-gentle-float">
-                          <div className="text-2xl sm:text-3xl lg:text-4xl -mt-1 sm:-mt-2 lg:-mt-3">
+                        <div className="flex flex-col items-center">
+                          <div className="text-2xl sm:text-3xl lg:text-4xl -mt-1 sm:-mt-2 lg:-mt-3 animate-gentle-float">
                             📚
                           </div>
                           <span className="text-xs font-kid-friendly font-bold">
@@ -2080,8 +2080,8 @@ export default function Index({ initialProfile }: IndexProps) {
                             : "text-gray-700 hover:text-pink-600 kid-interactive"
                         }`}
                       >
-                        <div className="flex flex-col items-center animate-mascot-happy">
-                          <div className="text-2xl sm:text-3xl lg:text-4xl -mt-1 sm:-mt-2 lg:-mt-3">
+                        <div className="flex flex-col items-center">
+                          <div className="text-2xl sm:text-3xl lg:text-4xl -mt-1 sm:-mt-2 lg:-mt-3 animate-mascot-happy">
                             🧙‍♂️
                           </div>
                           <span className="text-xs font-kid-friendly font-bold">
@@ -2119,8 +2119,8 @@ export default function Index({ initialProfile }: IndexProps) {
                             : "text-gray-700 hover:text-yellow-600 kid-interactive"
                         }`}
                       >
-                        <div className="flex flex-col items-center animate-gentle-bounce">
-                          <div className="text-2xl sm:text-3xl lg:text-4xl -mt-1 sm:-mt-2 lg:-mt-3">
+                        <div className="flex flex-col items-center">
+                          <div className="text-2xl sm:text-3xl lg:text-4xl -mt-1 sm:-mt-2 lg:-mt-3 animate-gentle-bounce">
                             🗺️
                           </div>
                           <span className="text-xs font-kid-friendly font-bold">
