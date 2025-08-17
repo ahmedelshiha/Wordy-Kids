@@ -24,6 +24,10 @@ import {
   Clock,
   BarChart3,
   Shield,
+  RefreshCw,
+  AlertTriangle,
+  Settings,
+  Info,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { audioService } from "@/lib/audioService";
@@ -42,6 +46,8 @@ import { SessionContext } from "@/lib/aiWordRecommendationService";
 import { isAIEnabled, setAISettings } from "@/lib/aiSettings";
 import { useVoiceSettings } from "@/hooks/use-voice-settings";
 import { ChildWordStats } from "@shared/api";
+import { AIStatusIndicator, AIStatus } from "./AIStatusIndicator";
+import { EnhancedAISettings } from "./EnhancedAISettings";
 
 interface Word {
   id: number;
@@ -159,6 +165,12 @@ export function AIEnhancedInteractiveDashboardWordCard({
   // Global AI settings state
   const [globalAIEnabled, setGlobalAIEnabled] = useState(isAIEnabled());
 
+  // AI Status Management
+  const [aiStatus, setAiStatus] = useState<AIStatus>("loading");
+  const [aiErrorMessage, setAiErrorMessage] = useState<string>("");
+  const [aiRetryCount, setAiRetryCount] = useState(0);
+  const [showAISettings, setShowAISettings] = useState(false);
+
   // Helper function to toggle global AI settings
   const toggleGlobalAI = () => {
     const newValue = !globalAIEnabled;
@@ -166,9 +178,29 @@ export function AIEnhancedInteractiveDashboardWordCard({
     setAISettings({ aiEnhancementEnabled: newValue });
     onToggleAIEnhancement?.(newValue);
 
+    // Update AI status based on toggle
+    setAiStatus(newValue ? "loading" : "disabled");
+
     // If disabling AI globally, end any active session
     if (!newValue && aiState.isSessionActive) {
       aiActions.endSession({ completed: false });
+    }
+  };
+
+  // AI Error Recovery
+  const retryAI = async () => {
+    setAiRetryCount((prev) => prev + 1);
+    setAiStatus("loading");
+    setAiErrorMessage("");
+
+    try {
+      await aiActions.reset();
+      setAiStatus("active");
+    } catch (error) {
+      setAiStatus("error");
+      setAiErrorMessage(
+        error instanceof Error ? error.message : "AI system unavailable",
+      );
     }
   };
 
@@ -209,6 +241,34 @@ export function AIEnhancedInteractiveDashboardWordCard({
   const [imageError, setImageError] = useState(false);
   const [isTransitioning, setIsTransitioning] = useState(false);
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
+
+  // Monitor AI state and update status
+  useEffect(() => {
+    if (!globalAIEnabled) {
+      setAiStatus("disabled");
+      return;
+    }
+
+    if (aiState.isLoading) {
+      setAiStatus("loading");
+    } else if (aiState.error) {
+      setAiStatus("error");
+      setAiErrorMessage(aiState.error);
+    } else if (aiState.hasInitialized) {
+      if (aiState.currentRecommendation) {
+        setAiStatus("active");
+        setAiErrorMessage("");
+      } else {
+        setAiStatus("fallback");
+      }
+    }
+  }, [
+    globalAIEnabled,
+    aiState.isLoading,
+    aiState.error,
+    aiState.hasInitialized,
+    aiState.currentRecommendation,
+  ]);
 
   // Initialize AI recommendations when component mounts
   useEffect(() => {
@@ -1017,6 +1077,122 @@ export function AIEnhancedInteractiveDashboardWordCard({
       tabIndex={0}
       onKeyDown={handleKeyDown}
     >
+      {/* Enhanced AI Control Header */}
+      <Card className="bg-gradient-to-r from-blue-50/80 to-purple-50/80 border border-blue-200/60">
+        <CardContent className="p-3 sm:p-4">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <AIStatusIndicator
+                status={aiStatus}
+                confidence={aiState.confidence}
+                error={aiErrorMessage}
+                onRetry={retryAI}
+                size="md"
+                showConfidence={aiStatus === "active"}
+              />
+
+              {/* Quick Stats */}
+              {aiStatus === "active" && (
+                <div className="hidden sm:flex items-center gap-4 text-xs">
+                  <div className="text-center">
+                    <div className="font-semibold text-blue-600">
+                      {sessionStats.wordsCompleted}/{SESSION_SIZE}
+                    </div>
+                    <div className="text-gray-600">Progress</div>
+                  </div>
+                  <div className="text-center">
+                    <div className="font-semibold text-green-600">
+                      {sessionStats.accuracy}%
+                    </div>
+                    <div className="text-gray-600">Accuracy</div>
+                  </div>
+                </div>
+              )}
+            </div>
+
+            <div className="flex items-center gap-2">
+              {/* AI Settings Button */}
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => setShowAISettings(!showAISettings)}
+                className="h-8 px-2"
+              >
+                <Settings className="w-4 h-4 mr-1" />
+                <span className="hidden sm:inline">Settings</span>
+              </Button>
+
+              {/* AI Toggle */}
+              <Button
+                variant={globalAIEnabled ? "default" : "outline"}
+                size="sm"
+                onClick={toggleGlobalAI}
+                className={cn(
+                  "h-8 px-3",
+                  globalAIEnabled
+                    ? "bg-blue-600 hover:bg-blue-700"
+                    : "border-blue-300 text-blue-600 hover:bg-blue-50",
+                )}
+              >
+                <Brain className="w-4 h-4 mr-1" />
+                <span className="text-xs">
+                  {globalAIEnabled ? "AI On" : "AI Off"}
+                </span>
+              </Button>
+            </div>
+          </div>
+
+          {/* Error Message */}
+          {aiStatus === "error" && aiErrorMessage && (
+            <Alert className="mt-3 border-red-200 bg-red-50">
+              <AlertTriangle className="w-4 h-4" />
+              <AlertDescription className="text-sm">
+                <strong>AI Issue:</strong> {aiErrorMessage}
+                <Button
+                  variant="link"
+                  size="sm"
+                  onClick={retryAI}
+                  className="ml-2 h-auto p-0 text-blue-600"
+                >
+                  Try again
+                </Button>
+              </AlertDescription>
+            </Alert>
+          )}
+
+          {/* Fallback Mode Notice */}
+          {aiStatus === "fallback" && (
+            <Alert className="mt-3 border-yellow-200 bg-yellow-50">
+              <Info className="w-4 h-4" />
+              <AlertDescription className="text-sm">
+                Running in compatibility mode. Basic features available.
+              </AlertDescription>
+            </Alert>
+          )}
+        </CardContent>
+      </Card>
+
+      {/* Enhanced AI Settings Panel */}
+      {showAISettings && (
+        <motion.div
+          initial={{ opacity: 0, height: 0 }}
+          animate={{ opacity: 1, height: "auto" }}
+          exit={{ opacity: 0, height: 0 }}
+          transition={{ duration: 0.2 }}
+        >
+          <EnhancedAISettings
+            compact={true}
+            aiStatus={aiStatus}
+            aiConfidence={aiState.confidence}
+            onSettingsChange={(settings) => {
+              if (settings.aiEnhancementEnabled !== globalAIEnabled) {
+                toggleGlobalAI();
+              }
+            }}
+          />
+        </motion.div>
+      )}
+
       {/* AI Insights Panel - Mobile Optimized */}
       {showAIInsights && (
         <Card className="bg-gradient-to-r from-blue-50 to-purple-50 border-blue-200">
