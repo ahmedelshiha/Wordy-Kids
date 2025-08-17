@@ -19,6 +19,12 @@ import {
   Eye,
   EyeOff,
 } from "lucide-react";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+  TooltipProvider,
+} from "@/components/ui/tooltip";
 
 interface DesktopKidNavProps {
   activeTab: string;
