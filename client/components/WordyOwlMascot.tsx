@@ -9,6 +9,8 @@ interface WordyOwlMascotProps {
 
 const WordyOwlMascot: React.FC<WordyOwlMascotProps> = ({
   isDraggable = false,
+  delayAppearance = false,
+  delayMinutes = 5,
 }) => {
   const [currentMessage, setCurrentMessage] = useState(0);
   const [isBlinking, setIsBlinking] = useState(false);
