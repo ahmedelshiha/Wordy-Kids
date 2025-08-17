@@ -7,6 +7,7 @@ import { Card } from "./card";
 import { Alert, AlertDescription } from "./alert";
 import { Brain, BarChart3, Settings, AlertTriangle } from "lucide-react";
 import { AICardContentProps } from "./ai-card-types";
+import { useMobileTouch, useIsMobile } from "@/hooks/use-mobile-touch";
 
 // Extended props to match the comprehensive AI header requirements
 interface ExtendedAICardContentProps extends AICardContentProps {
