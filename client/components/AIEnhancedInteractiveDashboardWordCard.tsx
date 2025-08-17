@@ -1461,7 +1461,7 @@ export function AIEnhancedInteractiveDashboardWordCard({
 
             {/* Action Buttons Row - Mobile Optimized */}
             <div
-              className="flex justify-center items-center gap-2 mb-3 px-2"
+              className="flex justify-center items-center gap-1 mb-2 px-1"
               role="toolbar"
               aria-label="Word learning controls"
             >
