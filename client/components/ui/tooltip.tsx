@@ -4,18 +4,19 @@ import * as TooltipPrimitive from "@radix-ui/react-tooltip";
 import { cn } from "@/lib/utils";
 
 const TooltipProvider: React.FC<React.ComponentPropsWithoutRef<typeof TooltipPrimitive.Provider>> = ({ children, ...props }) => {
-  // Add error boundary and safe initialization
-  try {
-    return (
-      <TooltipPrimitive.Provider {...props}>
-        {children}
-      </TooltipPrimitive.Provider>
-    );
-  } catch (error) {
-    console.warn('TooltipProvider failed to initialize:', error);
-    // Fallback to just rendering children without tooltip context
-    return <>{children}</>;
-  }
+  // Use React.useMemo to ensure proper initialization
+  const provider = React.useMemo(() => {
+    try {
+      return TooltipPrimitive.Provider;
+    } catch (error) {
+      console.warn('TooltipProvider initialization failed:', error);
+      // Return a fallback that just renders children
+      return ({ children: fallbackChildren }: { children: React.ReactNode }) => <>{fallbackChildren}</>;
+    }
+  }, []);
+
+  const Provider = provider;
+  return <Provider {...props}>{children}</Provider>;
 };
 TooltipProvider.displayName = "TooltipProvider";
 
