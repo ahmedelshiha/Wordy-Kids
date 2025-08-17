@@ -99,7 +99,7 @@ export function MobileBottomNav({
     },
     {
       id: "learn",
-      emoji: "📚",
+      emoji: "��",
       label: "Magic Library",
       icon: BookOpen,
       activeGradient: "kid-gradient-learn",
@@ -152,7 +152,7 @@ export function MobileBottomNav({
     },
     {
       id: "auth",
-      emoji: isGuest ? "📝" : "👋",
+      emoji: isGuest ? "📝" : "��",
       label: isGuest ? "Sign Up" : "Sign Out",
       icon: isGuest ? Users : LogOut,
       onClick: () => {
@@ -277,7 +277,7 @@ export function MobileBottomNav({
             >
               <div
                 className={cn(
-                  "text-4xl sm:text-5xl md:text-6xl -mt-1 transition-transform duration-200",
+                  "text-4xl sm:text-5xl md:text-6xl -mt-3 sm:-mt-4 md:-mt-5 transition-transform duration-200",
                   showMoreMenu ? "rotate-90 scale-110 animate-mascot-bounce" : "animate-gentle-float",
                 )}
               >
