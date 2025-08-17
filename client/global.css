@@ -2696,6 +2696,23 @@
 /* Safe area adjustments for desktop kid mode */
 @media (min-width: 1024px) {
   .kid-mode-bottom-padding {
-    padding-bottom: 120px; /* Space for bottom nav */
+    padding-bottom: 80px; /* Reduced space for compact bottom nav */
+  }
+}
+
+@media (min-width: 1280px) {
+  .kid-mode-bottom-padding {
+    padding-bottom: 96px; /* Slightly more space for xl screens */
+  }
+}
+
+/* Compact navigation styles */
+.compact-kid-nav {
+  height: 72px; /* Fixed height for compact nav */
+}
+
+@media (min-width: 1280px) {
+  .compact-kid-nav {
+    height: 84px; /* Slightly taller on larger screens */
   }
 }
