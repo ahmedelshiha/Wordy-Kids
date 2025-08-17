@@ -167,6 +167,7 @@ const isConsecutiveDay = (lastActivity: Date, today: Date): boolean => {
 
 export default function Index({ initialProfile }: IndexProps) {
   const navigate = useNavigate();
+  const mascotConfig = useMascotMobileOptimization();
 
   // Navigation history for back button functionality
   const { canGoBack, goBack, previousPath } = useNavigationHistory({
@@ -1404,7 +1405,7 @@ export default function Index({ initialProfile }: IndexProps) {
         achievementIcon = "📚";
         achievementMessage = `Great job! You completed ${categoryDisplayName} with ${accuracy}% accuracy! Keep up the good work!\n\n🎓 Scholar Bonus: 100 points!`;
       } else if (accuracy >= 50) {
-        achievementTitle = "Category Explorer! ��️🌟";
+        achievementTitle = "Category Explorer! ���️🌟";
         achievementIcon = "🗺️";
         achievementMessage = `Good effort! You finished ${categoryDisplayName} with ${accuracy}% accuracy! Practice makes perfect!\n\n🎁 Explorer Bonus: 75 points!`;
       } else {
