@@ -42,24 +42,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<UserProfile | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
-  // Initialize navigation references as null
-  const navigate = React.useRef<any>(null);
-  const location = React.useRef<any>({ pathname: "/" });
-
-  // Use a separate effect to safely capture navigation hooks
-  React.useEffect(() => {
-    try {
-      // Access these after the component has mounted and router context is available
-      const navigateHook = useNavigate();
-      const locationHook = useLocation();
-      navigate.current = navigateHook;
-      location.current = locationHook;
-    } catch (error) {
-      // Router hooks not available - this is okay during initial render
-      console.debug("Router hooks not available during AuthProvider initialization");
-    }
-  });
-
   // Check for existing session on mount
   useEffect(() => {
     const checkExistingSession = () => {
