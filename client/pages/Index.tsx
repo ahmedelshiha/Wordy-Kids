@@ -2111,7 +2111,7 @@ export default function Index({ initialProfile }: IndexProps) {
                             : "text-gray-700 hover:text-yellow-600 kid-interactive"
                         }`}
                       >
-                        <div className="text-4xl lg:text-5xl xl:text-6xl -mt-2 lg:-mt-3 xl:-mt-4 animate-gentle-bounce">
+                        <div className="text-2xl sm:text-3xl lg:text-4xl -mt-1 sm:-mt-2 lg:-mt-3 animate-gentle-bounce">
                           🗺️
                         </div>
                         <span className="text-xs font-kid-friendly font-bold">
