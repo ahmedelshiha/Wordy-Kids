@@ -230,11 +230,11 @@ export const ChildProfileSidebar: React.FC<ChildProfileSidebarProps> = ({
               <EnhancedChildProfileCard
                 profile={profile}
                 stats={stats}
-                isCompact={false}
-                showQuickActions={true}
+                isCompact={true}
+                showQuickActions={false}
                 onProfileEdit={onProfileEdit}
                 onQuickAction={onQuickAction}
-                animationEnabled={true}
+                animationEnabled={false}
               />
 
               {/* Weekly Adventure Progress */}
