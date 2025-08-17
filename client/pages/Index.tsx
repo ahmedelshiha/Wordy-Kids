@@ -1981,11 +1981,11 @@ export default function Index({ initialProfile }: IndexProps) {
             ) : (
               <div className="flex flex-col lg:flex-row min-h-screen">
                 {/* Desktop Sidebar - Hidden on Mobile */}
-                <aside className="hidden lg:flex lg:w-80 xl:w-96 bg-gradient-to-b from-purple-50 to-pink-50 border-r border-purple-200 overflow-y-auto lg:max-h-screen">
-                  <div className="p-4 lg:p-6">
-                    {/* Logo Section - Mobile & Desktop */}
-                    <div className="flex items-center gap-3 mb-6 lg:mb-8">
-                      <div className="w-8 h-8 lg:w-10 lg:h-10 bg-white rounded-xl flex items-center justify-center p-1">
+                <aside className="hidden lg:flex lg:w-60 xl:w-64 bg-gradient-to-b from-purple-50 via-pink-50 to-blue-50 border-r border-purple-200 shadow-sm overflow-y-auto lg:max-h-screen">
+                  <div className="p-3 lg:p-4 w-full">
+                    {/* Logo Section - Compact & Playful */}
+                    <div className="flex items-center gap-2 mb-4 lg:mb-6">
+                      <div className="w-7 h-7 lg:w-8 lg:h-8 bg-gradient-to-br from-purple-100 to-pink-100 rounded-xl flex items-center justify-center p-1 shadow-sm hover:scale-105 transition-transform duration-200">
                         <img
                           src="https://cdn.builder.io/api/v1/image/assets%2Fa33f74a2f97141a4a1ef43d9448f9bda%2F2a4b7e4c3c38485b966cfd2cff50da9e?format=webp&width=800"
                           alt="Wordy Kids Logo"
@@ -1993,11 +1993,11 @@ export default function Index({ initialProfile }: IndexProps) {
                         />
                       </div>
                       <div>
-                        <h1 className="text-lg lg:text-xl font-bold text-gray-800">
-                          Wordy Kids!
+                        <h1 className="text-sm lg:text-base font-bold text-gray-800">
+                          Wordy Kids! 🌟
                         </h1>
-                        <p className="text-xs lg:text-sm text-gray-600">
-                          Fun Learning Games
+                        <p className="text-xs text-purple-600 font-medium">
+                          Let's Learn Together! 🚀
                         </p>
                       </div>
                     </div>
