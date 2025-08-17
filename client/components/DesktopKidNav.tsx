@@ -146,9 +146,9 @@ export function DesktopKidNav({
                   >
                     {/* Remove old glow effect for all icons - now using sparkles */}
 
-                    {/* Emoji Icon - Larger kid-friendly icons for all */}
+                    {/* Emoji Icon - Larger kid-friendly icons for all, moved up */}
                     <div className={cn(
-                      "relative z-10",
+                      "relative z-10 -mt-2 lg:-mt-3 xl:-mt-4",
                       tab.id === "dashboard"
                         ? "text-6xl lg:text-7xl xl:text-8xl" // Even larger home icon
                         : "text-4xl lg:text-5xl xl:text-6xl" // Much larger icons for all others
