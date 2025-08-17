@@ -30,7 +30,7 @@ export class EnhancedStatsHelper {
     baseStats: ChildWordStats | null,
     rememberedWords: Set<number>,
     forgottenWords: Set<number>,
-    currentProfile: any
+    currentProfile: any,
   ): EnhancedChildStats {
     const enhanced: EnhancedChildStats = {
       totalWordsLearned: baseStats?.totalWordsLearned || rememberedWords.size,
@@ -67,7 +67,7 @@ export class EnhancedStatsHelper {
 
   private static getSessionsThisWeek(): number {
     // Mock implementation - in real app, this would come from backend
-    const sessionsKey = 'weekly_sessions';
+    const sessionsKey = "weekly_sessions";
     const stored = localStorage.getItem(sessionsKey);
     if (stored) {
       const data = JSON.parse(stored);
@@ -96,16 +96,34 @@ export class EnhancedStatsHelper {
     timestamp: string;
   }> {
     const activities = [
-      { type: 'word_learned', description: 'Mastered "Adventure"', points: 10 },
-      { type: 'quiz_completed', description: 'Completed Quick Quiz', points: 25 },
-      { type: 'streak_milestone', description: 'Reached 5-day streak!', points: 50 },
-      { type: 'practice_session', description: 'Practice session completed', points: 15 },
-      { type: 'perfect_score', description: 'Perfect score on Animals quiz', points: 30 },
+      { type: "word_learned", description: 'Mastered "Adventure"', points: 10 },
+      {
+        type: "quiz_completed",
+        description: "Completed Quick Quiz",
+        points: 25,
+      },
+      {
+        type: "streak_milestone",
+        description: "Reached 5-day streak!",
+        points: 50,
+      },
+      {
+        type: "practice_session",
+        description: "Practice session completed",
+        points: 15,
+      },
+      {
+        type: "perfect_score",
+        description: "Perfect score on Animals quiz",
+        points: 30,
+      },
     ];
 
     return activities.slice(0, 3).map((activity, index) => ({
       ...activity,
-      timestamp: new Date(Date.now() - (index + 1) * 24 * 60 * 60 * 1000).toISOString(),
+      timestamp: new Date(
+        Date.now() - (index + 1) * 24 * 60 * 60 * 1000,
+      ).toISOString(),
     }));
   }
 
@@ -120,44 +138,54 @@ export class EnhancedStatsHelper {
       achievements.push({
         name: "Streak Master",
         date: new Date().toLocaleDateString(),
-        icon: "🔥"
+        icon: "🔥",
       });
     }
 
     if (stats.totalWordsLearned >= 50) {
       achievements.push({
         name: "Word Collector",
-        date: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toLocaleDateString(),
-        icon: "📚"
+        date: new Date(
+          Date.now() - 2 * 24 * 60 * 60 * 1000,
+        ).toLocaleDateString(),
+        icon: "📚",
       });
     }
 
     if (stats.averageAccuracy >= 80) {
       achievements.push({
         name: "Accuracy Expert",
-        date: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toLocaleDateString(),
-        icon: "🎯"
+        date: new Date(
+          Date.now() - 1 * 24 * 60 * 60 * 1000,
+        ).toLocaleDateString(),
+        icon: "🎯",
       });
     }
 
     return achievements;
   }
 
-  private static getWeeklyGoal(currentProfile: any): { target: number; current: number } {
+  private static getWeeklyGoal(currentProfile: any): {
+    target: number;
+    current: number;
+  } {
     // Default weekly goal based on level
     const level = currentProfile?.level || 1;
     const baseTarget = Math.max(20, level * 5); // Minimum 20, scales with level
-    
+
     return {
       target: baseTarget,
-      current: this.getWordsThisWeek(new Set()) // This would be properly calculated in real app
+      current: this.getWordsThisWeek(new Set()), // This would be properly calculated in real app
     };
   }
 
-  private static getDailyStreakInfo(stats: EnhancedChildStats): { current: number; best: number } {
+  private static getDailyStreakInfo(stats: EnhancedChildStats): {
+    current: number;
+    best: number;
+  } {
     return {
       current: stats.currentStreak,
-      best: Math.max(stats.longestStreak, stats.currentStreak)
+      best: Math.max(stats.longestStreak, stats.currentStreak),
     };
   }
 
@@ -170,25 +198,28 @@ export class EnhancedStatsHelper {
     return startOfWeek;
   }
 
-  static updateWeeklyProgress(action: 'session' | 'word_learned' | 'time_spent', value: number = 1): void {
+  static updateWeeklyProgress(
+    action: "session" | "word_learned" | "time_spent",
+    value: number = 1,
+  ): void {
     const weekStart = this.getWeekStart().toISOString();
-    
-    if (action === 'session') {
-      const sessionsKey = 'weekly_sessions';
+
+    if (action === "session") {
+      const sessionsKey = "weekly_sessions";
       const stored = localStorage.getItem(sessionsKey);
       let data = { weekStart, sessions: 0 };
-      
+
       if (stored) {
         const parsed = JSON.parse(stored);
         if (parsed.weekStart === weekStart) {
           data = parsed;
         }
       }
-      
+
       data.sessions += value;
       localStorage.setItem(sessionsKey, JSON.stringify(data));
     }
-    
+
     // Similar logic for other actions...
   }
 }

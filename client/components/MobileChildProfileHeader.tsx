@@ -21,16 +21,12 @@ interface MobileChildProfileHeaderProps {
   showExpanded?: boolean;
 }
 
-export const MobileChildProfileHeader: React.FC<MobileChildProfileHeaderProps> = ({
-  profile,
-  stats,
-  className,
-  onExpand,
-  showExpanded = false,
-}) => {
+export const MobileChildProfileHeader: React.FC<
+  MobileChildProfileHeaderProps
+> = ({ profile, stats, className, onExpand, showExpanded = false }) => {
   if (!profile) return null;
 
-  const accuracy = stats?.totalAnswers 
+  const accuracy = stats?.totalAnswers
     ? Math.round((stats.correctAnswers / stats.totalAnswers) * 100)
     : 0;
 
@@ -41,7 +37,7 @@ export const MobileChildProfileHeader: React.FC<MobileChildProfileHeaderProps> =
       className={cn(
         "bg-gradient-to-r from-purple-100 via-pink-100 to-purple-100",
         "border-b border-purple-200/50 shadow-sm",
-        className
+        className,
       )}
       initial={{ y: -20, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
@@ -56,7 +52,7 @@ export const MobileChildProfileHeader: React.FC<MobileChildProfileHeaderProps> =
               className={cn(
                 "w-10 h-10 rounded-full flex items-center justify-center text-lg shadow-md",
                 "bg-gradient-to-r",
-                profile.avatar?.color || "from-purple-400 to-pink-400"
+                profile.avatar?.color || "from-purple-400 to-pink-400",
               )}
             >
               {profile.avatar?.emoji || "🎯"}
@@ -72,8 +68,7 @@ export const MobileChildProfileHeader: React.FC<MobileChildProfileHeaderProps> =
                   variant="secondary"
                   className="text-xs px-1.5 py-0.5 bg-purple-100 text-purple-700 border-purple-200"
                 >
-                  <Crown className="w-2.5 h-2.5 mr-0.5" />
-                  L{profile.level}
+                  <Crown className="w-2.5 h-2.5 mr-0.5" />L{profile.level}
                 </Badge>
                 {profile.streak > 0 && (
                   <Badge
@@ -97,9 +92,7 @@ export const MobileChildProfileHeader: React.FC<MobileChildProfileHeaderProps> =
               <div className="text-xs text-gray-600">Words</div>
             </div>
             <div className="text-center">
-              <div className="text-xs font-bold text-gray-800">
-                {accuracy}%
-              </div>
+              <div className="text-xs font-bold text-gray-800">{accuracy}%</div>
               <div className="text-xs text-gray-600">Score</div>
             </div>
             {onExpand && (
@@ -109,11 +102,11 @@ export const MobileChildProfileHeader: React.FC<MobileChildProfileHeaderProps> =
                 onClick={onExpand}
                 className="h-8 w-8 p-0"
               >
-                <ChevronDown 
+                <ChevronDown
                   className={cn(
                     "w-4 h-4 transition-transform",
-                    showExpanded && "rotate-180"
-                  )} 
+                    showExpanded && "rotate-180",
+                  )}
                 />
               </Button>
             )}
@@ -135,7 +128,8 @@ export const MobileChildProfileHeader: React.FC<MobileChildProfileHeaderProps> =
                   Level Progress
                 </span>
                 <span className="text-xs text-gray-500">
-                  {100 - (profile.wordsLearned % 100)} words to level {profile.level + 1}
+                  {100 - (profile.wordsLearned % 100)} words to level{" "}
+                  {profile.level + 1}
                 </span>
               </div>
               <div className="w-full bg-purple-100 rounded-full h-2">
@@ -165,7 +159,9 @@ export const MobileChildProfileHeader: React.FC<MobileChildProfileHeaderProps> =
               <div className="bg-white/70 rounded-lg p-2 text-center border border-blue-100">
                 <Timer className="w-4 h-4 mx-auto mb-1 text-blue-600" />
                 <div className="text-sm font-bold text-gray-800">
-                  {stats?.timeSpentToday ? `${Math.round(stats.timeSpentToday / 60)}h` : "0h"}
+                  {stats?.timeSpentToday
+                    ? `${Math.round(stats.timeSpentToday / 60)}h`
+                    : "0h"}
                 </div>
                 <div className="text-xs text-gray-600">Today</div>
               </div>

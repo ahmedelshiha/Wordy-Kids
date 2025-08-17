@@ -52,9 +52,23 @@ export const ChildProfileSidebar: React.FC<ChildProfileSidebarProps> = ({
 
   const getTimeOfDayGreeting = () => {
     const hour = currentTime.getHours();
-    if (hour < 12) return { greeting: "Good morning", icon: "🌅", color: "from-orange-200 to-yellow-200" };
-    if (hour < 17) return { greeting: "Good afternoon", icon: "☀️", color: "from-blue-200 to-cyan-200" };
-    return { greeting: "Good evening", icon: "🌙", color: "from-purple-200 to-indigo-200" };
+    if (hour < 12)
+      return {
+        greeting: "Good morning",
+        icon: "🌅",
+        color: "from-orange-200 to-yellow-200",
+      };
+    if (hour < 17)
+      return {
+        greeting: "Good afternoon",
+        icon: "☀️",
+        color: "from-blue-200 to-cyan-200",
+      };
+    return {
+      greeting: "Good evening",
+      icon: "🌙",
+      color: "from-purple-200 to-indigo-200",
+    };
   };
 
   const timeInfo = getTimeOfDayGreeting();
@@ -62,25 +76,25 @@ export const ChildProfileSidebar: React.FC<ChildProfileSidebarProps> = ({
   const sidebarVariants = {
     expanded: {
       width: position === "left" ? "320px" : "320px",
-      transition: { duration: 0.3, ease: "easeInOut" }
+      transition: { duration: 0.3, ease: "easeInOut" },
     },
     collapsed: {
       width: position === "left" ? "80px" : "80px",
-      transition: { duration: 0.3, ease: "easeInOut" }
-    }
+      transition: { duration: 0.3, ease: "easeInOut" },
+    },
   };
 
   const contentVariants = {
     expanded: {
       opacity: 1,
       scale: 1,
-      transition: { delay: 0.1, duration: 0.2 }
+      transition: { delay: 0.1, duration: 0.2 },
     },
     collapsed: {
       opacity: 0,
       scale: 0.8,
-      transition: { duration: 0.2 }
-    }
+      transition: { duration: 0.2 },
+    },
   };
 
   if (!profile) return null;
@@ -95,7 +109,7 @@ export const ChildProfileSidebar: React.FC<ChildProfileSidebarProps> = ({
         "flex flex-col h-full overflow-hidden",
         "transition-all duration-300",
         position === "right" && "border-r-0 border-l",
-        className
+        className,
       )}
     >
       {/* Sidebar Header */}
@@ -111,10 +125,12 @@ export const ChildProfileSidebar: React.FC<ChildProfileSidebarProps> = ({
                 className="flex-1"
               >
                 {showTimeOfDay && (
-                  <div className={cn(
-                    "bg-gradient-to-r rounded-lg p-3 mb-3",
-                    timeInfo.color
-                  )}>
+                  <div
+                    className={cn(
+                      "bg-gradient-to-r rounded-lg p-3 mb-3",
+                      timeInfo.color,
+                    )}
+                  >
                     <div className="flex items-center space-x-2">
                       <span className="text-lg">{timeInfo.icon}</span>
                       <div>
@@ -122,10 +138,10 @@ export const ChildProfileSidebar: React.FC<ChildProfileSidebarProps> = ({
                           {timeInfo.greeting}!
                         </div>
                         <div className="text-xs text-gray-600">
-                          {currentTime.toLocaleDateString('en-US', { 
-                            weekday: 'long',
-                            month: 'short',
-                            day: 'numeric'
+                          {currentTime.toLocaleDateString("en-US", {
+                            weekday: "long",
+                            month: "short",
+                            day: "numeric",
                           })}
                         </div>
                       </div>
@@ -145,9 +161,15 @@ export const ChildProfileSidebar: React.FC<ChildProfileSidebarProps> = ({
               className="h-8 w-8 p-0 bg-white/70 hover:bg-white shadow-sm"
             >
               {isCollapsed ? (
-                position === "left" ? <ChevronRight className="w-4 h-4" /> : <ChevronLeft className="w-4 h-4" />
+                position === "left" ? (
+                  <ChevronRight className="w-4 h-4" />
+                ) : (
+                  <ChevronLeft className="w-4 h-4" />
+                )
+              ) : position === "left" ? (
+                <ChevronLeft className="w-4 h-4" />
               ) : (
-                position === "left" ? <ChevronLeft className="w-4 h-4" /> : <ChevronRight className="w-4 h-4" />
+                <ChevronRight className="w-4 h-4" />
               )}
             </Button>
           )}
@@ -190,7 +212,9 @@ export const ChildProfileSidebar: React.FC<ChildProfileSidebarProps> = ({
                       </Badge>
                     </div>
                     <div className="flex justify-between items-center">
-                      <span className="text-xs text-gray-600">Words Learned</span>
+                      <span className="text-xs text-gray-600">
+                        Words Learned
+                      </span>
                       <Badge variant="secondary" className="text-xs">
                         {stats.wordsThisWeek || 0}
                       </Badge>
@@ -198,7 +222,9 @@ export const ChildProfileSidebar: React.FC<ChildProfileSidebarProps> = ({
                     <div className="flex justify-between items-center">
                       <span className="text-xs text-gray-600">Time Spent</span>
                       <Badge variant="secondary" className="text-xs">
-                        {stats.timeThisWeek ? `${Math.round(stats.timeThisWeek / 60)}h` : "0h"}
+                        {stats.timeThisWeek
+                          ? `${Math.round(stats.timeThisWeek / 60)}h`
+                          : "0h"}
                       </Badge>
                     </div>
                   </div>
@@ -213,16 +239,21 @@ export const ChildProfileSidebar: React.FC<ChildProfileSidebarProps> = ({
                     Recent Activity
                   </h4>
                   <div className="space-y-2">
-                    {stats.recentActivity.slice(0, 3).map((activity: any, index: number) => (
-                      <div key={index} className="flex items-center justify-between">
-                        <span className="text-xs text-gray-600 truncate">
-                          {activity.description}
-                        </span>
-                        <Badge variant="outline" className="text-xs ml-2">
-                          +{activity.points}
-                        </Badge>
-                      </div>
-                    ))}
+                    {stats.recentActivity
+                      .slice(0, 3)
+                      .map((activity: any, index: number) => (
+                        <div
+                          key={index}
+                          className="flex items-center justify-between"
+                        >
+                          <span className="text-xs text-gray-600 truncate">
+                            {activity.description}
+                          </span>
+                          <Badge variant="outline" className="text-xs ml-2">
+                            +{activity.points}
+                          </Badge>
+                        </div>
+                      ))}
                   </div>
                 </div>
               )}
@@ -240,7 +271,7 @@ export const ChildProfileSidebar: React.FC<ChildProfileSidebarProps> = ({
                 className={cn(
                   "w-12 h-12 rounded-full flex items-center justify-center text-xl shadow-md",
                   "bg-gradient-to-r",
-                  profile.avatar?.color || "from-purple-400 to-pink-400"
+                  profile.avatar?.color || "from-purple-400 to-pink-400",
                 )}
               >
                 {profile.avatar?.emoji || "🎯"}

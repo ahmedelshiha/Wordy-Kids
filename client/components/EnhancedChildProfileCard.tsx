@@ -95,7 +95,9 @@ interface EnhancedChildProfileCardProps {
   animationEnabled?: boolean;
 }
 
-export const EnhancedChildProfileCard: React.FC<EnhancedChildProfileCardProps> = ({
+export const EnhancedChildProfileCard: React.FC<
+  EnhancedChildProfileCardProps
+> = ({
   profile,
   stats,
   className,
@@ -137,14 +139,16 @@ export const EnhancedChildProfileCard: React.FC<EnhancedChildProfileCardProps> =
     else if (hour < 18) timeMessage = timeBasedMessages.afternoon;
     else timeMessage = timeBasedMessages.evening;
 
-    const randomMessage = Math.random() > 0.7 ? 
-      messages[Math.floor(Math.random() * messages.length)] : timeMessage;
-    
+    const randomMessage =
+      Math.random() > 0.7
+        ? messages[Math.floor(Math.random() * messages.length)]
+        : timeMessage;
+
     setMotivationalMessage(randomMessage);
   }, [profile.name, currentTime]);
 
   // Calculate accuracy percentage
-  const accuracy = stats?.totalAnswers 
+  const accuracy = stats?.totalAnswers
     ? Math.round((stats.correctAnswers / stats.totalAnswers) * 100)
     : 0;
 
@@ -153,7 +157,7 @@ export const EnhancedChildProfileCard: React.FC<EnhancedChildProfileCardProps> =
   const nextLevelWords = 100 - (profile.wordsLearned % 100);
 
   // Calculate weekly goal progress
-  const weeklyProgress = profile.weeklyGoal 
+  const weeklyProgress = profile.weeklyGoal
     ? (profile.weeklyGoal.current / profile.weeklyGoal.target) * 100
     : 0;
 
@@ -193,7 +197,7 @@ export const EnhancedChildProfileCard: React.FC<EnhancedChildProfileCardProps> =
                 className={cn(
                   "w-14 h-14 rounded-full flex items-center justify-center text-2xl shadow-md",
                   "bg-gradient-to-r",
-                  profile.avatar?.color || "from-purple-400 to-pink-400"
+                  profile.avatar?.color || "from-purple-400 to-pink-400",
                 )}
               >
                 {profile.avatar?.emoji || "🎯"}
@@ -299,10 +303,7 @@ export const EnhancedChildProfileCard: React.FC<EnhancedChildProfileCardProps> =
                       </span>
                       <span className="text-xs text-gray-500">{accuracy}%</span>
                     </div>
-                    <Progress
-                      value={accuracy}
-                      className="h-2 bg-green-100"
-                    />
+                    <Progress value={accuracy} className="h-2 bg-green-100" />
                   </div>
 
                   {/* Weekly Goal */}
@@ -313,7 +314,8 @@ export const EnhancedChildProfileCard: React.FC<EnhancedChildProfileCardProps> =
                           Weekly Goal
                         </span>
                         <span className="text-xs text-gray-500">
-                          {profile.weeklyGoal.current}/{profile.weeklyGoal.target}
+                          {profile.weeklyGoal.current}/
+                          {profile.weeklyGoal.target}
                         </span>
                       </div>
                       <Progress
@@ -350,42 +352,49 @@ export const EnhancedChildProfileCard: React.FC<EnhancedChildProfileCardProps> =
                   <div className="bg-white/70 rounded-lg p-3 text-center border border-blue-100">
                     <Timer className="w-5 h-5 mx-auto mb-1 text-blue-600" />
                     <div className="text-lg font-bold text-gray-800">
-                      {stats?.timeSpentToday ? formatTime(stats.timeSpentToday) : "0m"}
+                      {stats?.timeSpentToday
+                        ? formatTime(stats.timeSpentToday)
+                        : "0m"}
                     </div>
                     <div className="text-xs text-gray-600">Today</div>
                   </div>
                 </div>
 
                 {/* Recent Achievements */}
-                {stats?.recentAchievements && stats.recentAchievements.length > 0 && (
-                  <div>
-                    <h4 className="text-sm font-semibold text-gray-700 mb-2 flex items-center">
-                      <Award className="w-4 h-4 mr-1" />
-                      Recent Achievements
-                    </h4>
-                    <div className="space-y-2">
-                      {stats.recentAchievements.slice(0, 2).map((achievement, index) => (
-                        <motion.div
-                          key={index}
-                          className="flex items-center space-x-2 bg-gradient-to-r from-yellow-50 to-orange-50 rounded-lg p-2 border border-yellow-200"
-                          initial={{ scale: 0.9, opacity: 0 }}
-                          animate={{ scale: 1, opacity: 1 }}
-                          transition={{ delay: index * 0.1 }}
-                        >
-                          <span className="text-lg">{achievement.icon}</span>
-                          <div className="flex-1">
-                            <div className="text-sm font-medium text-gray-800">
-                              {achievement.name}
-                            </div>
-                            <div className="text-xs text-gray-600">
-                              {achievement.date}
-                            </div>
-                          </div>
-                        </motion.div>
-                      ))}
+                {stats?.recentAchievements &&
+                  stats.recentAchievements.length > 0 && (
+                    <div>
+                      <h4 className="text-sm font-semibold text-gray-700 mb-2 flex items-center">
+                        <Award className="w-4 h-4 mr-1" />
+                        Recent Achievements
+                      </h4>
+                      <div className="space-y-2">
+                        {stats.recentAchievements
+                          .slice(0, 2)
+                          .map((achievement, index) => (
+                            <motion.div
+                              key={index}
+                              className="flex items-center space-x-2 bg-gradient-to-r from-yellow-50 to-orange-50 rounded-lg p-2 border border-yellow-200"
+                              initial={{ scale: 0.9, opacity: 0 }}
+                              animate={{ scale: 1, opacity: 1 }}
+                              transition={{ delay: index * 0.1 }}
+                            >
+                              <span className="text-lg">
+                                {achievement.icon}
+                              </span>
+                              <div className="flex-1">
+                                <div className="text-sm font-medium text-gray-800">
+                                  {achievement.name}
+                                </div>
+                                <div className="text-xs text-gray-600">
+                                  {achievement.date}
+                                </div>
+                              </div>
+                            </motion.div>
+                          ))}
+                      </div>
                     </div>
-                  </div>
-                )}
+                  )}
 
                 {/* Quick Action Buttons */}
                 {showQuickActions && (
