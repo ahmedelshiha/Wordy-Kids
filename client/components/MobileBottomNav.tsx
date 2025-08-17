@@ -277,7 +277,7 @@ export function MobileBottomNav({
             >
               <div
                 className={cn(
-                  "text-5xl sm:text-6xl md:text-7xl lg:text-8xl -mt-3 sm:-mt-4 md:-mt-5 transition-transform duration-200",
+                  "text-5xl sm:text-6xl md:text-7xl lg:text-8xl -mt-5 sm:-mt-6 md:-mt-7 lg:-mt-8 transition-transform duration-200",
                   showMoreMenu ? "rotate-90 scale-110 animate-mascot-bounce" : "animate-gentle-float",
                 )}
               >
