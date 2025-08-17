@@ -2732,18 +2732,18 @@
 
 /* Compact navigation styles */
 .compact-kid-nav {
-  height: 64px; /* Very compact for small desktop screens */
+  height: 56px; /* Reduced from 64px - very compact for small desktop screens */
 }
 
 @media (min-width: 1280px) {
   .compact-kid-nav {
-    height: 76px; /* Slightly taller on larger screens */
+    height: 68px; /* Reduced from 76px - slightly taller on larger screens */
   }
 }
 
 @media (min-width: 1536px) {
   .compact-kid-nav {
-    height: 84px; /* Full height on 2xl+ screens */
+    height: 76px; /* Reduced from 84px - full height on 2xl+ screens */
   }
 }
 

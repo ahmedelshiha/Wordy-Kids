@@ -48,7 +48,7 @@ interface NavTab {
 const kidNavTabs: NavTab[] = [
   {
     id: "dashboard",
-    emoji: "🏠",
+    emoji: "🏡",
     label: "Home",
     color: "from-purple-400 via-pink-400 to-blue-400",
     hoverColor: "from-purple-500 via-pink-500 to-blue-500",
@@ -56,14 +56,6 @@ const kidNavTabs: NavTab[] = [
   },
   {
     id: "learn",
-    emoji: "🎮",
-    label: "Play",
-    color: "from-green-400 via-emerald-400 to-teal-400",
-    hoverColor: "from-green-500 via-emerald-500 to-teal-500",
-    shadowColor: "shadow-green-300",
-  },
-  {
-    id: "quiz",
     emoji: "📚",
     label: "Library",
     color: "from-orange-400 via-yellow-400 to-red-400",
@@ -71,8 +63,16 @@ const kidNavTabs: NavTab[] = [
     shadowColor: "shadow-orange-300",
   },
   {
+    id: "quiz",
+    emoji: "🎮",
+    label: "Play",
+    color: "from-green-400 via-emerald-400 to-teal-400",
+    hoverColor: "from-green-500 via-emerald-500 to-teal-500",
+    shadowColor: "shadow-green-300",
+  },
+  {
     id: "progress",
-    emoji: "����️",
+    emoji: "🗺️",
     label: "Map",
     color: "from-indigo-400 via-purple-400 to-pink-400",
     hoverColor: "from-indigo-500 via-purple-500 to-pink-500",
@@ -94,6 +94,7 @@ export function DesktopKidNav({
   const [showParentOptions, setShowParentOptions] = useState(false);
   const [kidModeEnabled, setKidModeEnabled] = useState(userRole === "child");
   const [parentCodeError, setParentCodeError] = useState(false);
+  const [showKidModeConfirm, setShowKidModeConfirm] = useState(false);
 
   const correctParentCode = "PARENT2024"; // More secure parent code
 
@@ -112,9 +113,20 @@ export function DesktopKidNav({
   };
 
   const toggleKidMode = () => {
-    const newKidMode = !kidModeEnabled;
-    setKidModeEnabled(newKidMode);
-    onRoleChange(newKidMode ? "child" : "parent");
+    if (kidModeEnabled) {
+      // Trying to disable kid mode - show confirmation
+      setShowKidModeConfirm(true);
+    } else {
+      // Enabling kid mode - safe to do directly
+      setKidModeEnabled(true);
+      onRoleChange("child");
+    }
+  };
+
+  const confirmDisableKidMode = () => {
+    setKidModeEnabled(false);
+    onRoleChange("parent");
+    setShowKidModeConfirm(false);
   };
 
   return (
@@ -122,7 +134,7 @@ export function DesktopKidNav({
       {/* Kid Mode: Bottom Navigation - Optimized for Small Screens */}
       {kidModeEnabled && (
         <div className="fixed bottom-0 left-0 right-0 z-40 hidden lg:block compact-kid-nav">
-          <div className="bg-white/95 backdrop-blur-lg border-t-2 border-rainbow shadow-xl h-full">
+          <div className="bg-white/95 backdrop-blur-lg border-t-2 border-rainbow shadow-xl h-full max-h-16 lg:max-h-20 xl:max-h-24">
             <div className="max-w-4xl mx-auto px-3 lg:px-4 h-full">
               <div className="flex items-center justify-center gap-2 lg:gap-4 xl:gap-6 h-full">
                 {kidNavTabs.map((tab, index) => (
@@ -130,10 +142,11 @@ export function DesktopKidNav({
                     key={tab.id}
                     onClick={() => onTabChange(tab.id)}
                     className={cn(
-                      "flex flex-col items-center gap-1 lg:gap-1.5 p-2 lg:p-3 xl:p-4 rounded-xl lg:rounded-2xl transition-all duration-300 transform relative group min-w-[70px] lg:min-w-[80px] xl:min-w-[100px] kid-nav-button-compact",
-                      activeTab === tab.id
-                        ? `bg-gradient-to-br ${tab.hoverColor} text-white shadow-xl ${tab.shadowColor}`
-                        : `bg-gradient-to-br ${tab.color} text-white shadow-md hover:shadow-lg ${tab.shadowColor}`,
+                      "flex flex-col items-center transition-all duration-300 transform relative group kid-nav-button-compact",
+                      // Apply container-less design to all icons - same size for all icons
+                      "min-w-[100px] lg:min-w-[120px] xl:min-w-[140px] scale-110 lg:scale-120 p-1 lg:p-2 xl:p-3 gap-0 lg:gap-0.5",
+                      // All buttons now have transparent background - natural kid-friendly appearance
+                      "bg-transparent hover:bg-transparent shadow-none hover:shadow-none",
                     )}
                     whileHover={{ y: -1, scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
@@ -141,38 +154,77 @@ export function DesktopKidNav({
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: index * 0.1 }}
                   >
-                    {/* Magical Glow Effect */}
-                    {activeTab === tab.id && (
-                      <motion.div
-                        className="absolute inset-0 bg-gradient-to-br from-white/20 to-transparent rounded-2xl"
-                        animate={{ opacity: [0.3, 0.6, 0.3] }}
-                        transition={{ duration: 2, repeat: Infinity }}
-                      />
-                    )}
+                    {/* Remove old glow effect for all icons - now using sparkles */}
 
-                    {/* Emoji Icon - Smaller for compact design */}
-                    <div className="text-2xl lg:text-3xl xl:text-4xl relative z-10">
+                    {/* Emoji Icon - Larger kid-friendly icons for all, moved up */}
+                    <div className="relative z-10 -mt-2 lg:-mt-3 xl:-mt-4 text-4xl lg:text-5xl xl:text-6xl">
                       <motion.div
                         animate={
                           activeTab === tab.id
                             ? {
                                 scale: [1, 1.1, 1],
-                                rotate: [0, 5, -5, 0],
+                                rotate:
+                                  tab.id === "dashboard"
+                                    ? [0, 2, -2, 0]
+                                    : [0, 5, -5, 0], // Gentler animation for home
                               }
                             : { scale: 1 }
                         }
                         transition={{
-                          duration: 2,
+                          duration: tab.id === "dashboard" ? 3 : 2, // Slower animation for home
                           repeat: activeTab === tab.id ? Infinity : 0,
                           ease: "easeInOut",
                         }}
+                        className={cn(
+                          tab.id === "dashboard" && "filter drop-shadow-lg", // Extra shadow for home
+                        )}
                       >
-                        {tab.emoji}
+                        {/* Kid-friendly emoji design for all icons */}
+                        <div className="relative">
+                          <span className="relative z-10 filter drop-shadow-2xl">
+                            {tab.emoji}
+                          </span>
+                          {/* Magical sparkles around any active icon */}
+                          {activeTab === tab.id && (
+                            <>
+                              <motion.div
+                                className="absolute -top-2 -right-2 text-yellow-400 text-xl"
+                                animate={{
+                                  opacity: [0, 1, 0],
+                                  scale: [0.5, 1, 0.5],
+                                  rotate: [0, 180, 360],
+                                }}
+                                transition={{
+                                  duration: 3,
+                                  repeat: Infinity,
+                                  delay: 0,
+                                }}
+                              >
+                                ✨
+                              </motion.div>
+                              <motion.div
+                                className="absolute -bottom-2 -left-2 text-yellow-300 text-lg"
+                                animate={{
+                                  opacity: [0, 1, 0],
+                                  scale: [0.5, 1, 0.5],
+                                  rotate: [360, 180, 0],
+                                }}
+                                transition={{
+                                  duration: 3,
+                                  repeat: Infinity,
+                                  delay: 1.5,
+                                }}
+                              >
+                                🌟
+                              </motion.div>
+                            </>
+                          )}
+                        </div>
                       </motion.div>
                     </div>
 
-                    {/* Label - Smaller text */}
-                    <span className="text-sm lg:text-base xl:text-lg font-bold text-center relative z-10">
+                    {/* Label - White text for all container-less icons, same size for all */}
+                    <span className="font-bold text-center relative z-10 text-white drop-shadow-lg -mt-1 lg:-mt-2 text-sm lg:text-base xl:text-lg">
                       {tab.label}
                     </span>
 
@@ -323,43 +375,88 @@ export function DesktopKidNav({
       <Dialog open={showParentOptions} onOpenChange={setShowParentOptions}>
         <DialogContent className="sm:max-w-md">
           <DialogHeader>
-            <DialogTitle className="flex items-center gap-2">
-              <Crown className="w-5 h-5 text-yellow-600" />
-              Family Zone
+            <DialogTitle className="flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <Crown className="w-5 h-5 text-yellow-600" />
+                Family Zone
+              </div>
+              <div
+                className={`text-sm px-2 py-1 rounded-full ${
+                  kidModeEnabled
+                    ? "bg-green-100 text-green-700 border border-green-200"
+                    : "bg-amber-100 text-amber-700 border border-amber-200"
+                }`}
+              >
+                {kidModeEnabled ? "🔒 Safe Mode" : "⚠️ Sidebar Visible"}
+              </div>
             </DialogTitle>
             <DialogDescription>
               Access parent controls and family settings.
+              {!kidModeEnabled && (
+                <span className="block text-amber-600 font-medium mt-1">
+                  Note: Sidebar is currently visible to children.
+                </span>
+              )}
             </DialogDescription>
           </DialogHeader>
           <div className="space-y-4">
             {/* Kid Mode Toggle */}
-            <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+            <div
+              className={`flex items-center justify-between p-4 rounded-lg border-l-4 ${
+                kidModeEnabled
+                  ? "bg-green-50 border-green-400"
+                  : "bg-amber-50 border-amber-400"
+              }`}
+            >
               <div className="flex items-center gap-3">
-                <div className="text-2xl">{kidModeEnabled ? "👶" : "👨‍👩‍👧‍👦"}</div>
+                <div className="text-2xl">{kidModeEnabled ? "🔒" : "🔓"}</div>
                 <div>
                   <div className="font-medium text-gray-900">
-                    {kidModeEnabled ? "Kid Mode" : "Parent Mode"}
-                  </div>
-                  <div className="text-sm text-gray-500">
                     {kidModeEnabled
-                      ? "Simplified navigation for kids"
-                      : "Full navigation sidebar"}
+                      ? "Kid-Safe Mode Active"
+                      : "Parent Mode Active"}
                   </div>
+                  <div
+                    className={`text-sm ${kidModeEnabled ? "text-green-600" : "text-amber-600"}`}
+                  >
+                    {kidModeEnabled
+                      ? "✅ Navigation sidebar is hidden from children"
+                      : "⚠️ Navigation sidebar is currently visible"}
+                  </div>
+                  {!kidModeEnabled && (
+                    <div className="text-xs text-red-600 mt-1 font-medium">
+                      ⚠️ Children can access parent controls through sidebar
+                    </div>
+                  )}
                 </div>
               </div>
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={toggleKidMode}
-                className="ml-4"
-              >
-                {kidModeEnabled ? (
-                  <EyeOff className="w-4 h-4 mr-2" />
-                ) : (
-                  <Eye className="w-4 h-4 mr-2" />
-                )}
-                {kidModeEnabled ? "Show Sidebar" : "Hide Sidebar"}
-              </Button>
+              <div className="flex flex-col gap-2">
+                <Button
+                  variant={kidModeEnabled ? "outline" : "default"}
+                  size="sm"
+                  onClick={toggleKidMode}
+                  className={`ml-4 ${
+                    kidModeEnabled
+                      ? "border-amber-300 text-amber-700 hover:bg-amber-50"
+                      : "bg-green-600 hover:bg-green-700 text-white"
+                  }`}
+                >
+                  {kidModeEnabled ? (
+                    <EyeOff className="w-4 h-4 mr-2" />
+                  ) : (
+                    <Eye className="w-4 h-4 mr-2" />
+                  )}
+                  {kidModeEnabled ? "Show Sidebar" : "Hide Sidebar"}
+                </Button>
+                {/* Status indicator */}
+                <div
+                  className={`text-xs text-center font-medium ${
+                    kidModeEnabled ? "text-green-600" : "text-amber-600"
+                  }`}
+                >
+                  {kidModeEnabled ? "SAFE" : "CAUTION"}
+                </div>
+              </div>
             </div>
 
             {/* Parent Controls */}
@@ -367,6 +464,8 @@ export function DesktopKidNav({
               <Button
                 variant="outline"
                 onClick={() => {
+                  // Ensure kid mode stays enabled to prevent sidebar from showing
+                  setKidModeEnabled(true);
                   onRoleChange("parent");
                   setShowParentOptions(false);
                 }}
@@ -376,7 +475,7 @@ export function DesktopKidNav({
                 <div className="text-left">
                   <div className="font-medium">Parent Dashboard</div>
                   <div className="text-sm text-gray-500">
-                    View progress and analytics
+                    View progress and analytics (Kid-safe mode)
                   </div>
                 </div>
               </Button>
@@ -414,6 +513,29 @@ export function DesktopKidNav({
                   </div>
                 </div>
               </Button>
+
+              {/* Quick Hide Sidebar Option - Only show when sidebar is visible */}
+              {!kidModeEnabled && (
+                <Button
+                  variant="outline"
+                  onClick={() => {
+                    setKidModeEnabled(true);
+                    onRoleChange("child");
+                    setShowParentOptions(false);
+                  }}
+                  className="flex items-center gap-3 p-4 h-auto justify-start border-green-200 hover:border-green-300 hover:bg-green-50"
+                >
+                  <Eye className="w-5 h-5 text-green-600" />
+                  <div className="text-left">
+                    <div className="font-medium text-green-700">
+                      Hide Sidebar
+                    </div>
+                    <div className="text-sm text-green-600">
+                      Return to kid-safe mode
+                    </div>
+                  </div>
+                </Button>
+              )}
             </div>
 
             <Button
@@ -423,6 +545,50 @@ export function DesktopKidNav({
             >
               Close
             </Button>
+          </div>
+        </DialogContent>
+      </Dialog>
+
+      {/* Kid Mode Disable Confirmation Dialog */}
+      <Dialog open={showKidModeConfirm} onOpenChange={setShowKidModeConfirm}>
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <DialogTitle className="flex items-center gap-2">
+              <Shield className="w-5 h-5 text-amber-600" />
+              Disable Kid-Safe Mode?
+            </DialogTitle>
+            <DialogDescription>
+              This will show the full navigation sidebar which children can
+              access. Are you sure you want to continue?
+            </DialogDescription>
+          </DialogHeader>
+          <div className="space-y-4">
+            <div className="p-4 bg-amber-50 border border-amber-200 rounded-lg">
+              <div className="flex items-start gap-3">
+                <div className="text-2xl">⚠️</div>
+                <div>
+                  <div className="font-medium text-amber-800">
+                    Safety Warning
+                  </div>
+                  <div className="text-sm text-amber-700 mt-1">
+                    Disabling Kid-Safe Mode will make the sidebar visible to
+                    children, giving them access to parent controls and
+                    settings.
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="flex justify-between">
+              <Button
+                variant="outline"
+                onClick={() => setShowKidModeConfirm(false)}
+              >
+                Keep Kid-Safe Mode
+              </Button>
+              <Button variant="destructive" onClick={confirmDisableKidMode}>
+                Show Sidebar Anyway
+              </Button>
+            </div>
           </div>
         </DialogContent>
       </Dialog>

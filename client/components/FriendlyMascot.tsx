@@ -9,12 +9,14 @@ interface FriendlyMascotProps {
     | "celebrating"
     | "thinking"
     | "cheering";
-  size?: "small" | "medium" | "large";
+  size?: "tiny" | "small" | "medium" | "large";
   position?: "left" | "right" | "center";
   message?: string;
   showSpeechBubble?: boolean;
   animate?: boolean;
   className?: string;
+  delayAppearance?: boolean;
+  delayMinutes?: number;
 }
 
 const mascotExpressions = {
@@ -50,27 +52,45 @@ const mascotCharacters = [
 
 export function FriendlyMascot({
   mood = "happy",
-  size = "medium",
+  size = "tiny",
   position = "left",
   message,
   showSpeechBubble = false,
   animate = true,
   className,
+  delayAppearance = false,
+  delayMinutes = 7,
 }: FriendlyMascotProps) {
   const [currentCharacter, setCurrentCharacter] = useState(mascotCharacters[0]);
-  const [isVisible, setIsVisible] = useState(false);
+  const [isVisible, setIsVisible] = useState(!delayAppearance);
+  const [delayComplete, setDelayComplete] = useState(!delayAppearance);
 
   useEffect(() => {
     // Randomly select a mascot character on mount
     const randomIndex = Math.floor(Math.random() * mascotCharacters.length);
     setCurrentCharacter(mascotCharacters[randomIndex]);
-    setIsVisible(true);
-  }, []);
+
+    if (delayAppearance) {
+      // Set up delay timer for appearance
+      const delayTimer = setTimeout(
+        () => {
+          setDelayComplete(true);
+          setIsVisible(true);
+        },
+        delayMinutes * 60 * 1000,
+      ); // Convert minutes to milliseconds
+
+      return () => clearTimeout(delayTimer);
+    } else {
+      setIsVisible(true);
+    }
+  }, [delayAppearance, delayMinutes]);
 
   const sizeClasses = {
-    small: "text-2xl",
-    medium: "text-4xl",
-    large: "text-6xl",
+    tiny: "text-lg",
+    small: "text-xl",
+    medium: "text-3xl",
+    large: "text-5xl",
   };
 
   const positionClasses = {
@@ -92,12 +112,14 @@ export function FriendlyMascot({
 
   const displayMessage = message || mascotMessages[mood];
 
+  if (!isVisible || !delayComplete) return null;
+
   return (
     <div
       className={cn(
         "flex items-center gap-4 transition-all duration-500",
         positionClasses[position],
-        isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4",
+        "opacity-100 translate-y-0",
         className,
       )}
     >
@@ -119,12 +141,14 @@ export function FriendlyMascot({
           {currentCharacter}
           <span
             className={cn(
-              "absolute -top-1 -right-1 text-sm",
+              "absolute -top-1 -right-1",
               size === "large"
-                ? "text-lg"
-                : size === "small"
-                  ? "text-xs"
-                  : "text-sm",
+                ? "text-base"
+                : size === "medium"
+                  ? "text-sm"
+                  : size === "small"
+                    ? "text-xs"
+                    : "text-xs", // tiny size
             )}
           >
             {mascotExpressions[mood]}
