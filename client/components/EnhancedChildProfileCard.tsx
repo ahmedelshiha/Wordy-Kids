@@ -328,10 +328,19 @@ export const EnhancedChildProfileCard: React.FC<
                         {nextLevelWords} more to level up! 🚀
                       </span>
                     </div>
-                    <Progress
-                      value={levelProgress}
-                      className="h-4 bg-purple-100 border-2 border-purple-200 rounded-full overflow-hidden"
-                    />
+                    <motion.div
+                      whileHover={{ scale: 1.02 }}
+                      onClick={() => {
+                        kidFriendlyEffects.playSound(SOUNDS.success);
+                        if (levelProgress > 80) celebrate.general();
+                      }}
+                      className="cursor-pointer"
+                    >
+                      <Progress
+                        value={levelProgress}
+                        className="h-6 bg-purple-100 border-3 border-purple-200 rounded-full overflow-hidden shadow-lg transition-all duration-500 hover:shadow-xl"
+                      />
+                    </motion.div>
                   </div>
 
                   {/* Super Smart Score */}
