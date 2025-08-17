@@ -86,59 +86,59 @@ export function MobileBottomNav({
     },
   ];
 
-  // Primary tabs without My Journey - moved to More section
+  // Kid-friendly primary tabs with magical theme to match desktop
   const primaryTabs = [
     {
       id: "dashboard",
-      emoji: "🏠",
-      label: "Home",
+      emoji: "🏰",
+      label: "My Castle",
       icon: Target,
-      color: "from-purple-500 to-pink-500",
-      bgColor: "bg-purple-100",
-      textColor: "text-purple-600",
-      badge: undefined,
+      activeGradient: "kid-gradient-happy",
+      hoverGradient: "kid-gradient-learn",
+      sparkle: "✨",
     },
     {
       id: "learn",
       emoji: "📚",
-      label: "Learn",
+      label: "Magic Library",
       icon: BookOpen,
-      color: "from-green-500 to-emerald-500",
-      bgColor: "bg-green-100",
-      textColor: "text-green-600",
-      badge: undefined,
+      activeGradient: "kid-gradient-learn",
+      hoverGradient: "kid-gradient-success",
+      sparkle: "🌟",
     },
     {
       id: "quiz",
-      emoji: "🎮",
-      label: "Quiz",
+      emoji: "🧙‍♂️",
+      label: "Brain Quest",
       icon: Brain,
-      color: "from-pink-500 to-rose-500",
-      bgColor: "bg-pink-100",
-      textColor: "text-pink-600",
-      badge: undefined,
+      activeGradient: "kid-gradient-adventure",
+      hoverGradient: "kid-gradient-magic",
+      sparkle: "🔮",
     },
   ];
 
+  // Kid-friendly secondary menu items with magical theme
   const secondaryMenuItems = [
     {
       id: "progress",
-      emoji: "🌟",
-      label: userRole === "parent" ? "Reports" : "My Journey",
+      emoji: "🗺️",
+      label: userRole === "parent" ? "Reports" : "Adventure Map",
       icon: Trophy,
       onClick: () => onTabChange("progress"),
+      sparkle: "🏆",
     },
     {
       id: "parent",
       emoji: "👨‍👩‍👧‍👦",
-      label: "Parent Zone",
+      label: "Family Zone",
       icon: Users,
       onClick: onParentClick,
+      sparkle: "👑",
     },
     {
       id: "admin",
       emoji: "🛡️",
-      label: "Admin",
+      label: "Admin Dashboard",
       icon: Shield,
       onClick: onAdminClick,
     },
@@ -167,23 +167,23 @@ export function MobileBottomNav({
 
   return (
     <>
-      {/* More Menu Overlay */}
+      {/* Magical More Menu Overlay - Kid-friendly styling */}
       {showMoreMenu && (
         <div className="fixed inset-0 z-40 lg:hidden">
           <div
             className="absolute inset-0 bg-black/20"
             onClick={onMoreToggle}
           />
-          <div className="absolute bottom-20 left-3 right-3 bg-white rounded-3xl shadow-2xl p-4 border-4 border-rainbow max-h-[70vh] overflow-y-auto">
+          <div className="absolute bottom-20 left-3 right-3 bg-gradient-to-br from-purple-50 via-pink-50 to-blue-50 rounded-3xl shadow-2xl p-4 border-4 border-rainbow max-h-[70vh] overflow-y-auto animate-kid-pulse-glow">
             <div className="text-center mb-4">
-              <div className="text-2xl mb-2">🎪</div>
-              <h3 className="text-lg font-bold text-gray-800">
-                More Fun Stuff!
+              <div className="text-3xl mb-2 animate-mascot-bounce">🎪</div>
+              <h3 className="text-lg font-kid-friendly font-bold text-purple-800 text-shadow">
+                Magical Adventure Menu! ✨
               </h3>
-              <p className="text-sm text-gray-600">Tap what you want to do!</p>
+              <p className="text-sm font-kid-friendly text-purple-600">Tap to explore new worlds!</p>
             </div>
 
-            <div className="grid grid-cols-2 gap-2">
+            <div className="grid grid-cols-2 gap-3">
               {secondaryMenuItems.map((item) => (
                 <button
                   key={item.id}
@@ -191,95 +191,107 @@ export function MobileBottomNav({
                     item.onClick();
                     onMoreToggle();
                   }}
-                  className="flex flex-col items-center gap-2 p-3 rounded-2xl bg-gradient-to-br from-blue-50 to-purple-50 active:from-blue-100 active:to-purple-100 transition-all duration-200 transform active:scale-95 border-2 border-purple-200 min-h-[80px] justify-center"
+                  className="kid-nav-item bg-white hover:kid-gradient-magic hover:text-white border-2 border-purple-200 kid-interactive min-h-[90px] justify-center"
                 >
-                  <div className="text-3xl">{item.emoji}</div>
-                  <span className="text-sm font-bold text-gray-700">
+                  <div className="text-3xl animate-gentle-float">{item.emoji}</div>
+                  <span className="text-sm font-kid-friendly font-bold">
                     {item.label}
                   </span>
+                  {item.sparkle && (
+                    <div className="ml-auto animate-kid-magic-sparkle text-xs">
+                      {item.sparkle}
+                    </div>
+                  )}
                 </button>
               ))}
             </div>
 
             <button
               onClick={onMoreToggle}
-              className="w-full mt-4 py-3 rounded-2xl bg-gray-100 hover:bg-gray-200 transition-colors text-gray-600 font-medium"
+              className="w-full mt-4 py-3 rounded-2xl kid-gradient-magic text-white font-kid-friendly font-bold transition-all transform active:scale-95 shadow-lg kid-button"
             >
-              Close Menu
+              Close Magic Menu ✨
             </button>
           </div>
         </div>
       )}
 
-      {/* Optimized Bottom Navigation Bar */}
+      {/* Magical Kid-Friendly Bottom Navigation Bar */}
       <div className="fixed bottom-0 left-0 right-0 z-30 lg:hidden">
-        <div className="bg-white/95 backdrop-blur-lg border-t-4 border-rainbow shadow-2xl safe-area-padding-bottom">
+        <div className="bg-gradient-to-r from-purple-50 via-pink-50 to-blue-50 border-t-4 border-rainbow shadow-2xl safe-area-padding-bottom backdrop-blur-lg">
           <div className="flex items-center justify-around px-1 py-2">
-            {/* Primary Navigation Tabs */}
+            {/* Primary Navigation Tabs - Kid Style */}
             {primaryTabs.map((tab) => (
               <button
                 key={tab.id}
                 onClick={() => onTabChange(tab.id)}
                 className={cn(
-                  "flex flex-col items-center gap-1 p-2 rounded-xl transition-all duration-200 transform active:scale-95 relative min-w-0 flex-1 mx-0.5 min-h-[60px] justify-center",
+                  "kid-nav-item flex flex-col items-center gap-1 p-2 rounded-xl transition-all duration-200 transform active:scale-95 relative min-w-0 flex-1 mx-0.5 min-h-[60px] justify-center",
                   activeTab === tab.id
-                    ? `bg-gradient-to-br ${tab.color} text-white shadow-lg`
-                    : `${tab.bgColor} ${tab.textColor}`,
+                    ? `${tab.activeGradient} text-white shadow-lg kid-button active animate-kid-pulse-glow`
+                    : `bg-white text-gray-700 hover:${tab.hoverGradient} hover:text-white border border-purple-200 kid-interactive`,
                 )}
               >
-                {/* Emoji Icon */}
+                {/* Magical Emoji Icon */}
                 <div
                   className={cn(
                     "text-xl transition-transform duration-200",
-                    activeTab === tab.id ? "scale-110" : "",
+                    activeTab === tab.id ? "scale-110 animate-mascot-bounce" : "animate-gentle-float",
                   )}
                 >
                   {tab.emoji}
                 </div>
 
-                {/* Label */}
-                <span className="text-xs font-semibold leading-tight text-center truncate max-w-full">
+                {/* Kid-friendly Label */}
+                <span className="text-xs font-kid-friendly font-bold leading-tight text-center truncate max-w-full">
                   {tab.label}
                 </span>
 
-                {/* Achievement Badge */}
-                {tab.badge && (
-                  <Badge className="absolute -top-1 -right-1 bg-red-500 text-white text-xs px-1.5 py-0.5 animate-bounce">
-                    {tab.badge}
-                  </Badge>
+                {/* Magical Sparkle for Active Tab */}
+                {activeTab === tab.id && (
+                  <div className="absolute -top-1 -right-1 animate-kid-magic-sparkle text-xs">
+                    {tab.sparkle}
+                  </div>
                 )}
 
-                {/* Active Indicator */}
+                {/* Active Indicator - Rainbow dot */}
                 {activeTab === tab.id && (
-                  <div className="absolute -bottom-1 left-1/2 transform -translate-x-1/2 w-2 h-2 bg-white rounded-full shadow-lg"></div>
+                  <div className="absolute -bottom-1 left-1/2 transform -translate-x-1/2 w-2 h-2 bg-white rounded-full shadow-lg animate-gentle-bounce"></div>
                 )}
               </button>
             ))}
 
-            {/* More Menu Button */}
+            {/* Magical More Menu Button */}
             <button
               onClick={onMoreToggle}
               className={cn(
-                "flex flex-col items-center gap-1 p-2 rounded-xl transition-all duration-200 transform active:scale-95 min-w-0 flex-1 mx-0.5 min-h-[60px] justify-center",
+                "kid-nav-item flex flex-col items-center gap-1 p-2 rounded-xl transition-all duration-200 transform active:scale-95 min-w-0 flex-1 mx-0.5 min-h-[60px] justify-center",
                 showMoreMenu
-                  ? "bg-gradient-to-br from-blue-500 to-purple-500 text-white shadow-lg"
-                  : "bg-blue-100 text-blue-600",
+                  ? "kid-gradient-magic text-white shadow-lg kid-button active animate-kid-pulse-glow"
+                  : "bg-white text-purple-600 hover:kid-gradient-adventure hover:text-white border border-purple-200 kid-interactive",
               )}
             >
               <div
                 className={cn(
                   "text-xl transition-transform duration-200",
-                  showMoreMenu ? "rotate-90 scale-110" : "",
+                  showMoreMenu ? "rotate-90 scale-110 animate-mascot-bounce" : "animate-gentle-float",
                 )}
               >
                 🎪
               </div>
-              <span className="text-xs font-semibold leading-tight text-center">
+              <span className="text-xs font-kid-friendly font-bold leading-tight text-center">
                 More
               </span>
 
+              {/* Magical sparkle for active more menu */}
               {showMoreMenu && (
-                <div className="absolute -bottom-1 left-1/2 transform -translate-x-1/2 w-2 h-2 bg-white rounded-full shadow-lg"></div>
+                <div className="absolute -top-1 -right-1 animate-kid-magic-sparkle text-xs">
+                  ✨
+                </div>
+              )}
+
+              {showMoreMenu && (
+                <div className="absolute -bottom-1 left-1/2 transform -translate-x-1/2 w-2 h-2 bg-white rounded-full shadow-lg animate-gentle-bounce"></div>
               )}
             </button>
           </div>
