@@ -56,19 +56,19 @@ const kidNavTabs: NavTab[] = [
   },
   {
     id: "learn",
-    emoji: "🎮",
-    label: "Play",
-    color: "from-green-400 via-emerald-400 to-teal-400",
-    hoverColor: "from-green-500 via-emerald-500 to-teal-500",
-    shadowColor: "shadow-green-300",
-  },
-  {
-    id: "quiz",
     emoji: "📚",
     label: "Library",
     color: "from-orange-400 via-yellow-400 to-red-400",
     hoverColor: "from-orange-500 via-yellow-500 to-red-500",
     shadowColor: "shadow-orange-300",
+  },
+  {
+    id: "quiz",
+    emoji: "🎮",
+    label: "Play",
+    color: "from-green-400 via-emerald-400 to-teal-400",
+    hoverColor: "from-green-500 via-emerald-500 to-teal-500",
+    shadowColor: "shadow-green-300",
   },
   {
     id: "progress",
