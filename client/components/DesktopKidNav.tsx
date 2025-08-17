@@ -88,7 +88,7 @@ export function DesktopKidNav({
   const [showParentOptions, setShowParentOptions] = useState(false);
   const [kidModeEnabled, setKidModeEnabled] = useState(userRole === "child");
 
-  const correctParentCode = "PARENT123"; // In production, this would be more secure
+  const correctParentCode = "PARENT2024"; // More secure parent code
 
   const handleParentGateSubmit = () => {
     if (parentCode === correctParentCode) {
