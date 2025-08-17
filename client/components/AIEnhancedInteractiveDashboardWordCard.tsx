@@ -769,7 +769,7 @@ export function AIEnhancedInteractiveDashboardWordCard({
   const renderWordImage = () => {
     if (currentWord?.imageUrl) {
       return (
-        <div className="relative w-full h-64 rounded-2xl overflow-hidden shadow-lg">
+        <div className="relative w-full h-48 md:h-56 rounded-xl overflow-hidden shadow-md">
           {!imageLoaded && !imageError && (
             <div className="absolute inset-0 bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center">
               <div className="flex flex-col items-center gap-2">
