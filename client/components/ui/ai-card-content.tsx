@@ -86,6 +86,13 @@ export const AICardContent = React.forwardRef<
       }
     }, [showAISettings, setShowAISettings]);
 
+    // Mobile optimization hooks
+    const isMobile = useIsMobile();
+    const { elementRef } = useMobileTouch({
+      enableTouchFeedback: true,
+      optimizeForTouch: isMobile,
+    });
+
     // Safe accuracy calculation to prevent NaN
     const safeAccuracy = React.useMemo(() => {
       if (typeof sessionStats.accuracy === 'number' && !isNaN(sessionStats.accuracy)) {
