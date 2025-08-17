@@ -1308,22 +1308,22 @@ export function AIEnhancedInteractiveDashboardWordCard({
                       }}
                       size="sm"
                       className={cn(
-                        "relative px-3 py-2 h-8 rounded-full text-xs font-bold shadow-lg transition-all duration-300 transform hover:scale-105 active:scale-95",
+                        "relative px-2 py-1 h-6 rounded-full text-xs font-bold shadow-md transition-all duration-300 transform hover:scale-105 active:scale-95 flex-shrink-0",
                         aiState.isSessionActive
-                          ? "bg-red-500 hover:bg-red-600 text-white border-2 border-red-300 shadow-red-300/30"
-                          : "bg-green-500 hover:bg-green-600 text-white border-2 border-green-300 shadow-green-300/30",
+                          ? "bg-red-500 hover:bg-red-600 text-white border border-red-300 shadow-red-300/30"
+                          : "bg-green-500 hover:bg-green-600 text-white border border-green-300 shadow-green-300/30",
                       )}
                     >
-                      <div className="relative z-10 flex items-center justify-center gap-1.5">
+                      <div className="relative z-10 flex items-center justify-center gap-1">
                         {aiState.isSessionActive ? (
                           <>
-                            <span className="text-sm">🔴</span>
-                            <span className="text-xs font-bold text-white">AI OFF</span>
+                            <span className="text-xs">🔴</span>
+                            <span className="text-xs font-bold text-white">OFF</span>
                           </>
                         ) : (
                           <>
-                            <span className="text-sm">🟢</span>
-                            <span className="text-xs font-bold text-white">AI ON</span>
+                            <span className="text-xs">🟢</span>
+                            <span className="text-xs font-bold text-white">ON</span>
                           </>
                         )}
                       </div>
