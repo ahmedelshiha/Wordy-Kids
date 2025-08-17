@@ -53,7 +53,8 @@ const App = () => {
   }
 
   return (
-    <QueryClientProvider client={queryClient}>
+    <React.StrictMode>
+      <QueryClientProvider client={queryClient}>
       <TooltipProvider delayDuration={200}>
         <Toaster />
         <Sonner />
@@ -119,6 +120,7 @@ const App = () => {
         </BrowserRouter>
       </TooltipProvider>
     </QueryClientProvider>
+    </React.StrictMode>
   );
 };
 
