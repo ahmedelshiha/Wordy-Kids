@@ -37,6 +37,7 @@ export const KidRegistrationNotification: React.FC<KidRegistrationNotificationPr
   variant = "card",
   onDismiss,
   showDismiss = true,
+  progressData,
 }) => {
   const { isGuest, user } = useAuth();
   const navigate = useNavigate();
