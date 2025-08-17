@@ -1,10 +1,16 @@
-import React, { useState, useEffect } from 'react';
-import { cn } from '@/lib/utils';
+import React, { useState, useEffect } from "react";
+import { cn } from "@/lib/utils";
 
 interface FriendlyMascotProps {
-  mood?: 'happy' | 'excited' | 'encouraging' | 'celebrating' | 'thinking' | 'cheering';
-  size?: 'small' | 'medium' | 'large';
-  position?: 'left' | 'right' | 'center';
+  mood?:
+    | "happy"
+    | "excited"
+    | "encouraging"
+    | "celebrating"
+    | "thinking"
+    | "cheering";
+  size?: "small" | "medium" | "large";
+  position?: "left" | "right" | "center";
   message?: string;
   showSpeechBubble?: boolean;
   animate?: boolean;
@@ -12,12 +18,12 @@ interface FriendlyMascotProps {
 }
 
 const mascotExpressions = {
-  happy: '😊',
-  excited: '🤩',
-  encouraging: '👍',
-  celebrating: '🎉',
-  thinking: '🤔',
-  cheering: '🙌'
+  happy: "😊",
+  excited: "🤩",
+  encouraging: "👍",
+  celebrating: "🎉",
+  thinking: "🤔",
+  cheering: "🙌",
 };
 
 const mascotMessages = {
@@ -26,21 +32,30 @@ const mascotMessages = {
   encouraging: "You can do it! I believe in you! 💪",
   celebrating: "Fantastic! You're a superstar! 🏆",
   thinking: "Hmm, let's think about this together! 💭",
-  cheering: "Hooray! You did it! 🎊"
+  cheering: "Hooray! You did it! 🎊",
 };
 
 const mascotCharacters = [
-  '🦁', '🐯', '🐨', '🐼', '🐸', '🐧', '🦉', '🦊', '🐺', '🐻'
+  "🦁",
+  "🐯",
+  "🐨",
+  "🐼",
+  "🐸",
+  "🐧",
+  "🦉",
+  "🦊",
+  "🐺",
+  "🐻",
 ];
 
 export function FriendlyMascot({
-  mood = 'happy',
-  size = 'medium',
-  position = 'left',
+  mood = "happy",
+  size = "medium",
+  position = "left",
   message,
   showSpeechBubble = false,
   animate = true,
-  className
+  className,
 }: FriendlyMascotProps) {
   const [currentCharacter, setCurrentCharacter] = useState(mascotCharacters[0]);
   const [isVisible, setIsVisible] = useState(false);
@@ -53,59 +68,71 @@ export function FriendlyMascot({
   }, []);
 
   const sizeClasses = {
-    small: 'text-2xl',
-    medium: 'text-4xl',
-    large: 'text-6xl'
+    small: "text-2xl",
+    medium: "text-4xl",
+    large: "text-6xl",
   };
 
   const positionClasses = {
-    left: 'justify-start',
-    right: 'justify-end',
-    center: 'justify-center'
+    left: "justify-start",
+    right: "justify-end",
+    center: "justify-center",
   };
 
-  const animationClasses = animate ? {
-    happy: 'animate-gentle-bounce',
-    excited: 'animate-mascot-happy',
-    encouraging: 'animate-mascot-wave',
-    celebrating: 'animate-kid-pulse-glow',
-    thinking: 'animate-gentle-float',
-    cheering: 'animate-mascot-bounce'
-  }[mood] : '';
+  const animationClasses = animate
+    ? {
+        happy: "animate-gentle-bounce",
+        excited: "animate-mascot-happy",
+        encouraging: "animate-mascot-wave",
+        celebrating: "animate-kid-pulse-glow",
+        thinking: "animate-gentle-float",
+        cheering: "animate-mascot-bounce",
+      }[mood]
+    : "";
 
   const displayMessage = message || mascotMessages[mood];
 
   return (
-    <div className={cn(
-      'flex items-center gap-4 transition-all duration-500',
-      positionClasses[position],
-      isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4',
-      className
-    )}>
-      {position === 'right' && showSpeechBubble && (
+    <div
+      className={cn(
+        "flex items-center gap-4 transition-all duration-500",
+        positionClasses[position],
+        isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4",
+        className,
+      )}
+    >
+      {position === "right" && showSpeechBubble && (
         <div className="speech-bubble kid-text-big max-w-xs">
           {displayMessage}
         </div>
       )}
-      
-      <div className={cn(
-        'mascot-character filter drop-shadow-lg',
-        sizeClasses[size],
-        animationClasses,
-        'cursor-pointer hover:scale-110 transition-transform duration-300'
-      )}>
+
+      <div
+        className={cn(
+          "mascot-character filter drop-shadow-lg",
+          sizeClasses[size],
+          animationClasses,
+          "cursor-pointer hover:scale-110 transition-transform duration-300",
+        )}
+      >
         <span className="relative">
           {currentCharacter}
-          <span className={cn(
-            'absolute -top-1 -right-1 text-sm',
-            size === 'large' ? 'text-lg' : size === 'small' ? 'text-xs' : 'text-sm'
-          )}>
+          <span
+            className={cn(
+              "absolute -top-1 -right-1 text-sm",
+              size === "large"
+                ? "text-lg"
+                : size === "small"
+                  ? "text-xs"
+                  : "text-sm",
+            )}
+          >
             {mascotExpressions[mood]}
           </span>
         </span>
       </div>
 
-      {position !== 'right' && showSpeechBubble && (
+      {position !== "right" && showSpeechBubble && (
         <div className="speech-bubble kid-text-big max-w-xs">
           {displayMessage}
         </div>
@@ -116,11 +143,11 @@ export function FriendlyMascot({
 
 // Floating mascot that appears periodically
 export function FloatingMascot({
-  mood = 'happy',
+  mood = "happy",
   duration = 5000,
-  className
+  className,
 }: {
-  mood?: FriendlyMascotProps['mood'];
+  mood?: FriendlyMascotProps["mood"];
   duration?: number;
   className?: string;
 }) {
@@ -147,11 +174,13 @@ export function FloatingMascot({
   if (!isVisible) return null;
 
   return (
-    <div className={cn(
-      'fixed bottom-4 right-4 z-50 transition-all duration-500',
-      'animate-mascot-bounce',
-      className
-    )}>
+    <div
+      className={cn(
+        "fixed bottom-4 right-4 z-50 transition-all duration-500",
+        "animate-mascot-bounce",
+        className,
+      )}
+    >
       <FriendlyMascot
         mood={mood}
         size="large"
@@ -166,9 +195,9 @@ export function FloatingMascot({
 // Mascot reactions for different events
 export function MascotReaction({
   type,
-  onComplete
+  onComplete,
 }: {
-  type: 'success' | 'levelUp' | 'achievement' | 'encouragement';
+  type: "success" | "levelUp" | "achievement" | "encouragement";
   onComplete?: () => void;
 }) {
   const [isVisible, setIsVisible] = useState(true);
@@ -183,10 +212,19 @@ export function MascotReaction({
   }, [onComplete]);
 
   const reactionConfig = {
-    success: { mood: 'celebrating' as const, message: "Amazing work! 🌟" },
-    levelUp: { mood: 'excited' as const, message: "Level up! You're incredible! 🚀" },
-    achievement: { mood: 'cheering' as const, message: "Achievement unlocked! 🏆" },
-    encouragement: { mood: 'encouraging' as const, message: "Keep going! You've got this! 💪" }
+    success: { mood: "celebrating" as const, message: "Amazing work! 🌟" },
+    levelUp: {
+      mood: "excited" as const,
+      message: "Level up! You're incredible! 🚀",
+    },
+    achievement: {
+      mood: "cheering" as const,
+      message: "Achievement unlocked! 🏆",
+    },
+    encouragement: {
+      mood: "encouraging" as const,
+      message: "Keep going! You've got this! 💪",
+    },
   };
 
   const config = reactionConfig[type];

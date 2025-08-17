@@ -1,20 +1,20 @@
-import React, { useState, useEffect } from 'react';
-import { cn } from '@/lib/utils';
+import React, { useState, useEffect } from "react";
+import { cn } from "@/lib/utils";
 
 interface MagicalParticlesProps {
   trigger?: boolean;
-  type?: 'stars' | 'hearts' | 'sparkles' | 'rainbow' | 'celebration';
+  type?: "stars" | "hearts" | "sparkles" | "rainbow" | "celebration";
   duration?: number;
-  intensity?: 'low' | 'medium' | 'high';
+  intensity?: "low" | "medium" | "high";
   className?: string;
 }
 
 const particleEmojis = {
-  stars: ['⭐', '🌟', '✨', '💫'],
-  hearts: ['💖', '💕', '💗', '💝', '💘'],
-  sparkles: ['✨', '🌟', '💫', '⭐', '🔸', '🔹'],
-  rainbow: ['🌈', '🦄', '🌺', '🌸', '🌼', '🌻'],
-  celebration: ['🎉', '🎊', '🎈', '🎁', '🏆', '👑', '✨', '🌟']
+  stars: ["⭐", "🌟", "✨", "💫"],
+  hearts: ["💖", "💕", "💗", "💝", "💘"],
+  sparkles: ["✨", "🌟", "💫", "⭐", "🔸", "🔹"],
+  rainbow: ["🌈", "🦄", "🌺", "🌸", "🌼", "🌻"],
+  celebration: ["🎉", "🎊", "🎈", "🎁", "🏆", "👑", "✨", "🌟"],
 };
 
 interface Particle {
@@ -33,10 +33,10 @@ interface Particle {
 
 export function MagicalParticles({
   trigger = false,
-  type = 'sparkles',
+  type = "sparkles",
   duration = 3000,
-  intensity = 'medium',
-  className
+  intensity = "medium",
+  className,
 }: MagicalParticlesProps) {
   const [particles, setParticles] = useState<Particle[]>([]);
   const [isActive, setIsActive] = useState(false);
@@ -44,7 +44,7 @@ export function MagicalParticles({
   const intensityConfig = {
     low: { count: 15, spawnRate: 3 },
     medium: { count: 25, spawnRate: 5 },
-    high: { count: 40, spawnRate: 8 }
+    high: { count: 40, spawnRate: 8 },
   };
 
   const config = intensityConfig[intensity];
@@ -53,7 +53,7 @@ export function MagicalParticles({
     if (!trigger) return;
 
     setIsActive(true);
-    
+
     // Create initial burst of particles
     createParticleBurst();
 
@@ -80,17 +80,20 @@ export function MagicalParticles({
     if (!isActive) return;
 
     const animationFrame = setInterval(() => {
-      setParticles(prevParticles => 
+      setParticles((prevParticles) =>
         prevParticles
-          .map(particle => ({
+          .map((particle) => ({
             ...particle,
             x: particle.x + particle.vx,
             y: particle.y + particle.vy,
             vy: particle.vy + 0.1, // gravity
             life: particle.life - 1,
-            rotation: particle.rotation + particle.rotationSpeed
+            rotation: particle.rotation + particle.rotationSpeed,
           }))
-          .filter(particle => particle.life > 0 && particle.y < window.innerHeight + 50)
+          .filter(
+            (particle) =>
+              particle.life > 0 && particle.y < window.innerHeight + 50,
+          ),
       );
     }, 16); // ~60fps
 
@@ -111,20 +114,20 @@ export function MagicalParticles({
 
   const createParticles = (count: number) => {
     const newParticles: Particle[] = [];
-    
+
     for (let i = 0; i < count; i++) {
       const x = Math.random() * window.innerWidth;
       const y = -50; // Start above screen
       newParticles.push(createParticle(x, y));
     }
 
-    setParticles(prev => [...prev, ...newParticles]);
+    setParticles((prev) => [...prev, ...newParticles]);
   };
 
   const createParticle = (x: number, y: number): Particle => {
     const emojis = particleEmojis[type];
     const emoji = emojis[Math.floor(Math.random() * emojis.length)];
-    
+
     return {
       id: Math.random(),
       emoji,
@@ -136,18 +139,15 @@ export function MagicalParticles({
       maxLife: 300,
       size: 0.8 + Math.random() * 0.8,
       rotation: Math.random() * 360,
-      rotationSpeed: (Math.random() - 0.5) * 10
+      rotationSpeed: (Math.random() - 0.5) * 10,
     };
   };
 
   if (!isActive && particles.length === 0) return null;
 
   return (
-    <div className={cn(
-      'fixed inset-0 pointer-events-none z-40',
-      className
-    )}>
-      {particles.map(particle => (
+    <div className={cn("fixed inset-0 pointer-events-none z-40", className)}>
+      {particles.map((particle) => (
         <div
           key={particle.id}
           className="absolute text-2xl transition-opacity duration-300"
@@ -156,7 +156,7 @@ export function MagicalParticles({
             top: `${particle.y}px`,
             transform: `scale(${particle.size}) rotate(${particle.rotation}deg)`,
             opacity: particle.life / particle.maxLife,
-            fontSize: `${16 + particle.size * 8}px`
+            fontSize: `${16 + particle.size * 8}px`,
           }}
         >
           {particle.emoji}
@@ -167,7 +167,13 @@ export function MagicalParticles({
 }
 
 // Preset particle effects for common scenarios
-export function SuccessParticles({ trigger, onComplete }: { trigger: boolean; onComplete?: () => void }) {
+export function SuccessParticles({
+  trigger,
+  onComplete,
+}: {
+  trigger: boolean;
+  onComplete?: () => void;
+}) {
   useEffect(() => {
     if (trigger && onComplete) {
       const timer = setTimeout(onComplete, 3000);
@@ -176,7 +182,7 @@ export function SuccessParticles({ trigger, onComplete }: { trigger: boolean; on
   }, [trigger, onComplete]);
 
   return (
-    <MagicalParticles 
+    <MagicalParticles
       trigger={trigger}
       type="celebration"
       intensity="high"
@@ -219,15 +225,15 @@ export function AchievementParticles({ trigger }: { trigger: boolean }) {
 }
 
 // Floating ambient particles for background magic
-export function AmbientMagicParticles({ 
-  isActive = true, 
-  type = 'sparkles' 
-}: { 
-  isActive?: boolean; 
-  type?: 'stars' | 'sparkles' | 'hearts';
+export function AmbientMagicParticles({
+  isActive = true,
+  type = "sparkles",
+}: {
+  isActive?: boolean;
+  type?: "stars" | "sparkles" | "hearts";
 }) {
   return (
-    <MagicalParticles 
+    <MagicalParticles
       trigger={isActive}
       type={type}
       intensity="low"

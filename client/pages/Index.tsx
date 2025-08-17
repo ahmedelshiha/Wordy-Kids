@@ -44,12 +44,16 @@ import { CompactMobileSettingsPanel } from "@/components/CompactMobileSettingsPa
 import { FloatingBubbles } from "@/components/FloatingBubbles";
 import { CelebrationEffect } from "@/components/CelebrationEffect";
 import { FloatingHelpMenu } from "@/components/FloatingHelpMenu";
-import { FriendlyMascot, FloatingMascot, MascotReaction } from "@/components/FriendlyMascot";
+import {
+  FriendlyMascot,
+  FloatingMascot,
+  MascotReaction,
+} from "@/components/FriendlyMascot";
 import {
   MagicalParticles,
   SuccessParticles,
   WordLearnedParticles,
-  AmbientMagicParticles
+  AmbientMagicParticles,
 } from "@/components/MagicalParticles";
 import { SessionRestoration } from "@/components/SessionRestoration";
 import {
@@ -2022,14 +2026,14 @@ export default function Index({ initialProfile }: IndexProps) {
                             : "bg-white text-gray-700 hover:kid-gradient-learn hover:text-white border border-purple-200 kid-interactive"
                         }`}
                       >
-                        <div className="text-xl animate-mascot-bounce">
-                          🏰
-                        </div>
+                        <div className="text-xl animate-mascot-bounce">🏰</div>
                         <span className="kid-text-big font-bold">
                           My Castle
                         </span>
                         {activeTab === "dashboard" && (
-                          <div className="ml-auto animate-kid-magic-sparkle">✨</div>
+                          <div className="ml-auto animate-kid-magic-sparkle">
+                            ✨
+                          </div>
                         )}
                       </button>
 
@@ -2041,14 +2045,14 @@ export default function Index({ initialProfile }: IndexProps) {
                             : "bg-white text-gray-700 hover:kid-gradient-success hover:text-white border border-green-200 kid-interactive"
                         }`}
                       >
-                        <div className="text-xl animate-gentle-float">
-                          📚
-                        </div>
+                        <div className="text-xl animate-gentle-float">📚</div>
                         <span className="kid-text-big font-bold">
                           Magic Library
                         </span>
                         {activeTab === "learn" && (
-                          <div className="ml-auto animate-kid-magic-sparkle">🌟</div>
+                          <div className="ml-auto animate-kid-magic-sparkle">
+                            🌟
+                          </div>
                         )}
                       </button>
 
@@ -2060,14 +2064,14 @@ export default function Index({ initialProfile }: IndexProps) {
                             : "bg-white text-gray-700 hover:kid-gradient-magic hover:text-purple-800 border border-pink-200 kid-interactive"
                         }`}
                       >
-                        <div className="text-xl animate-mascot-happy">
-                          🧙‍♂️
-                        </div>
+                        <div className="text-xl animate-mascot-happy">🧙‍♂️</div>
                         <span className="kid-text-big font-bold">
                           Brain Quest
                         </span>
                         {activeTab === "quiz" && (
-                          <div className="ml-auto animate-kid-magic-sparkle">🔮</div>
+                          <div className="ml-auto animate-kid-magic-sparkle">
+                            🔮
+                          </div>
                         )}
                       </button>
 
@@ -2099,14 +2103,14 @@ export default function Index({ initialProfile }: IndexProps) {
                             : "bg-white text-gray-700 hover:kid-gradient-adventure hover:text-white border border-yellow-200 kid-interactive"
                         }`}
                       >
-                        <div className="text-xl animate-gentle-bounce">
-                          🗺️
-                        </div>
+                        <div className="text-xl animate-gentle-bounce">🗺️</div>
                         <span className="kid-text-big font-bold">
                           Adventure Map
                         </span>
                         {activeTab === "progress" && (
-                          <div className="ml-auto animate-kid-magic-sparkle">🏆</div>
+                          <div className="ml-auto animate-kid-magic-sparkle">
+                            🏆
+                          </div>
                         )}
                       </button>
 
@@ -2118,13 +2122,13 @@ export default function Index({ initialProfile }: IndexProps) {
                           }}
                           className="kid-nav-item w-full kid-gradient-magic text-purple-800 border border-purple-300 kid-interactive"
                         >
-                          <div className="text-xl animate-mascot-wave">
-                            👨‍👩‍👧‍👦
-                          </div>
+                          <div className="text-xl animate-mascot-wave">👨‍👩‍👧‍👦</div>
                           <span className="kid-text-big font-bold">
                             Family Zone
                           </span>
-                          <div className="ml-auto animate-kid-magic-sparkle">👑</div>
+                          <div className="ml-auto animate-kid-magic-sparkle">
+                            👑
+                          </div>
                         </button>
                       </div>
 
@@ -3481,7 +3485,13 @@ export default function Index({ initialProfile }: IndexProps) {
           {/* Kid-Friendly Floating Mascot */}
           {userRole === "child" && (
             <FloatingMascot
-              mood={rememberedWords.size > 5 ? "celebrating" : rememberedWords.size > 0 ? "encouraging" : "happy"}
+              mood={
+                rememberedWords.size > 5
+                  ? "celebrating"
+                  : rememberedWords.size > 0
+                    ? "encouraging"
+                    : "happy"
+              }
               duration={4000}
             />
           )}
