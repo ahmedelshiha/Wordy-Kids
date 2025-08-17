@@ -257,10 +257,10 @@ export function MascotReaction({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/20 backdrop-blur-sm">
-      <div className="celebration-burst bg-white rounded-3xl p-8 shadow-2xl animate-mascot-bounce">
+      <div className="celebration-burst bg-white rounded-3xl p-4 sm:p-6 shadow-2xl animate-mascot-bounce max-w-sm mx-4">
         <FriendlyMascot
           mood={config.mood}
-          size="large"
+          size="medium"
           position="center"
           message={config.message}
           showSpeechBubble={true}
