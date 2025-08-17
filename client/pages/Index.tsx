@@ -141,6 +141,7 @@ import { useAIWordRecommendations } from "@/hooks/use-ai-word-recommendations";
 import { AIWordRecommendationService } from "@/lib/aiWordRecommendationService";
 import { getAISettings, isAIEnabled } from "@/lib/aiSettings";
 import { ChildProfileSidebar } from "@/components/ChildProfileSidebar";
+import { MobileChildProfileHeader } from "@/components/MobileChildProfileHeader";
 
 interface IndexProps {
   initialProfile?: any;
