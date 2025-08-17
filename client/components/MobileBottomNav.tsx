@@ -224,7 +224,7 @@ export function MobileBottomNav({
       )}
 
       {/* Magical Kid-Friendly Bottom Navigation Bar */}
-      <div className="fixed bottom-0 left-0 right-0 z-30 lg:hidden">
+      <div className="fixed bottom-4 left-0 right-0 z-30 lg:hidden">
         <div className="bg-gradient-to-r from-purple-50 via-pink-50 to-blue-50 border-t-2 border-rainbow shadow-2xl safe-area-padding-bottom backdrop-blur-lg">
           <div className="flex items-center justify-around px-0.5 py-0 -my-6">
             {/* Primary Navigation Tabs - Kid Style */}
