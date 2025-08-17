@@ -600,7 +600,7 @@ export default function ListenAndGuessGame({
               {/* Compact Header */}
               <div className="flex justify-center mb-3">
                 <div className="relative">
-                  <div className="text-3xl sm:text-4xl animate-bounce">🎉</div>
+                  <div className="text-2xl sm:text-3xl animate-bounce">🎉</div>
                   <Sparkles className="w-4 h-4 sm:w-5 sm:h-5 absolute -top-1 -right-1 text-yellow-300 animate-spin" />
                 </div>
               </div>
@@ -698,7 +698,7 @@ export default function ListenAndGuessGame({
         {/* Mascot + play button */}
         <div className="flex items-center justify-between gap-3 mb-4">
           <div className="flex items-center gap-2">
-            <span className="text-4xl animate-gentle-float">🦊</span>
+            <span className="text-2xl sm:text-3xl animate-gentle-float">🦊</span>
             <div className="leading-tight">
               <div className="text-xs uppercase tracking-wide opacity-90">
                 Listen & Guess
