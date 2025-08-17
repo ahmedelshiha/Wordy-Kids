@@ -1017,54 +1017,6 @@ export function AIEnhancedInteractiveDashboardWordCard({
       tabIndex={0}
       onKeyDown={handleKeyDown}
     >
-      {/* AI Progress Header */}
-      <div className="bg-white p-4 rounded-2xl shadow-lg border border-gray-200">
-        {/* Title section */}
-        <div className="flex items-center justify-center gap-2 mb-4">
-          <span className="text-lg">🧠</span>
-          <span className="text-lg">🎯</span>
-          <h2 className="text-lg font-bold text-gray-800">AI Progress</h2>
-        </div>
-
-        {/* Progress bar section */}
-        <div className="mb-4">
-          <div className="flex items-center justify-between mb-2">
-            <div className="flex items-center gap-1">
-              <span className="text-lg">🚀</span>
-              <span className="font-medium text-gray-700">{dailyGoal.completed}/{dailyGoal.target}</span>
-            </div>
-            <span className="font-bold text-gray-800">{Math.round((dailyGoal.completed / dailyGoal.target) * 100)}%</span>
-          </div>
-          <div className="w-full bg-gray-200 rounded-full h-2">
-            <div
-              className="bg-gradient-to-r from-blue-500 to-purple-500 h-2 rounded-full transition-all duration-300"
-              style={{ width: `${Math.round((dailyGoal.completed / dailyGoal.target) * 100)}%` }}
-            ></div>
-          </div>
-        </div>
-
-        {/* Stats section */}
-        <div className="flex items-center justify-between text-sm">
-          <div className="flex items-center gap-1 bg-yellow-100 px-2 py-1 rounded-lg">
-            <span className="text-lg">😊</span>
-            <span className="font-medium">{sessionStats.wordsRemembered}</span>
-          </div>
-          <div className="flex items-center gap-1 bg-orange-100 px-2 py-1 rounded-lg">
-            <span className="text-lg">💪</span>
-            <span className="font-medium">{sessionStats.wordsForgotten}</span>
-          </div>
-          <div className="flex items-center gap-1 bg-purple-100 px-2 py-1 rounded-lg">
-            <span className="text-lg">🎯</span>
-            <span className="font-medium">{Math.round(confidenceLevel * 100)}%</span>
-          </div>
-        </div>
-
-        {/* AI encouragement */}
-        <div className="mt-3 text-center">
-          <span className="text-lg">🌟</span>
-          <span className="text-purple-600 font-medium ml-1">AI: Great start!</span>
-        </div>
-      </div>
 
       {/* AI Insights Panel - Mobile Optimized */}
       {showAIInsights && (
