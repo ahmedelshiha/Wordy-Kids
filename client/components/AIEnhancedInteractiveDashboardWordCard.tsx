@@ -1017,7 +1017,6 @@ export function AIEnhancedInteractiveDashboardWordCard({
       tabIndex={0}
       onKeyDown={handleKeyDown}
     >
-
       {/* AI Insights Panel - Mobile Optimized */}
       {showAIInsights && (
         <Card className="bg-gradient-to-r from-blue-50 to-purple-50 border-blue-200">
@@ -1519,7 +1518,6 @@ export function AIEnhancedInteractiveDashboardWordCard({
                   {sessionStats.accuracy}% Accuracy
                 </Badge>
               </div>
-
             </div>
 
             {/* Picture Display with State Transitions */}
@@ -1755,12 +1753,22 @@ export function AIEnhancedInteractiveDashboardWordCard({
                 <div className="flex items-center justify-between mb-2">
                   <div className="flex items-center gap-1">
                     <span className="text-xs sm:text-sm">🧠🎯</span>
-                    <h2 className="text-xs sm:text-base font-bold text-gray-800">AI Progress</h2>
+                    <h2 className="text-xs sm:text-base font-bold text-gray-800">
+                      AI Progress
+                    </h2>
                   </div>
                   <div className="flex items-center gap-1">
                     <span className="text-xs sm:text-sm">🚀</span>
-                    <span className="font-medium text-gray-700 text-xs sm:text-sm">{dailyGoal.completed}/{dailyGoal.target}</span>
-                    <span className="font-bold text-gray-800 text-xs sm:text-sm">({Math.round((dailyGoal.completed / dailyGoal.target) * 100)}%)</span>
+                    <span className="font-medium text-gray-700 text-xs sm:text-sm">
+                      {dailyGoal.completed}/{dailyGoal.target}
+                    </span>
+                    <span className="font-bold text-gray-800 text-xs sm:text-sm">
+                      (
+                      {Math.round(
+                        (dailyGoal.completed / dailyGoal.target) * 100,
+                      )}
+                      %)
+                    </span>
                   </div>
                 </div>
 
@@ -1768,7 +1776,9 @@ export function AIEnhancedInteractiveDashboardWordCard({
                 <div className="w-full bg-gray-200 rounded-full h-1 sm:h-2 mb-2">
                   <div
                     className="bg-gradient-to-r from-blue-500 to-purple-500 h-1 sm:h-2 rounded-full transition-all duration-300"
-                    style={{ width: `${Math.round((dailyGoal.completed / dailyGoal.target) * 100)}%` }}
+                    style={{
+                      width: `${Math.round((dailyGoal.completed / dailyGoal.target) * 100)}%`,
+                    }}
                   ></div>
                 </div>
 
@@ -1776,15 +1786,21 @@ export function AIEnhancedInteractiveDashboardWordCard({
                 <div className="flex items-center justify-between text-xs gap-1">
                   <div className="flex items-center gap-0.5 bg-yellow-100 px-1 py-0.5 rounded flex-1 justify-center">
                     <span>😊</span>
-                    <span className="font-medium">{sessionStats.wordsRemembered}</span>
+                    <span className="font-medium">
+                      {sessionStats.wordsRemembered}
+                    </span>
                   </div>
                   <div className="flex items-center gap-0.5 bg-orange-100 px-1 py-0.5 rounded flex-1 justify-center">
                     <span>💪</span>
-                    <span className="font-medium">{sessionStats.wordsForgotten}</span>
+                    <span className="font-medium">
+                      {sessionStats.wordsForgotten}
+                    </span>
                   </div>
                   <div className="flex items-center gap-0.5 bg-purple-100 px-1 py-0.5 rounded flex-1 justify-center">
                     <span>🎯</span>
-                    <span className="font-medium">{Math.round(confidenceLevel * 100)}%</span>
+                    <span className="font-medium">
+                      {Math.round(confidenceLevel * 100)}%
+                    </span>
                   </div>
                   <div className="text-purple-600 font-medium text-xs hidden sm:block">
                     🌟 AI: Great!
@@ -1793,7 +1809,9 @@ export function AIEnhancedInteractiveDashboardWordCard({
 
                 {/* Session progress - Ultra compact */}
                 <div className="mt-1 text-center text-xs text-gray-500">
-                  <span>{currentWordIndex + 1}/{SESSION_SIZE}</span>
+                  <span>
+                    {currentWordIndex + 1}/{SESSION_SIZE}
+                  </span>
                   {sessionProgress >= 100 && <span className="ml-1">🎉</span>}
                 </div>
               </div>

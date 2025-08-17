@@ -1097,7 +1097,6 @@ export function InteractiveDashboardWordCard({
         </div>
       )}
 
-
       {/* Interactive Word Card */}
       <motion.div
         initial={{ opacity: 0, y: 20, scale: 0.95 }}
@@ -1672,12 +1671,18 @@ export function InteractiveDashboardWordCard({
                   <div className="flex items-center justify-between mb-2">
                     <div className="flex items-center gap-1">
                       <span className="text-xs sm:text-sm">🧠🎯</span>
-                      <h2 className="text-xs sm:text-base font-bold text-gray-800">AI Progress</h2>
+                      <h2 className="text-xs sm:text-base font-bold text-gray-800">
+                        AI Progress
+                      </h2>
                     </div>
                     <div className="flex items-center gap-1">
                       <span className="text-xs sm:text-sm">🚀</span>
-                      <span className="font-medium text-gray-700 text-xs sm:text-sm">{dailyGoal.completed}/{dailyGoal.target}</span>
-                      <span className="font-bold text-gray-800 text-xs sm:text-sm">({dailyProgress}%)</span>
+                      <span className="font-medium text-gray-700 text-xs sm:text-sm">
+                        {dailyGoal.completed}/{dailyGoal.target}
+                      </span>
+                      <span className="font-bold text-gray-800 text-xs sm:text-sm">
+                        ({dailyProgress}%)
+                      </span>
                     </div>
                   </div>
 
@@ -1693,15 +1698,21 @@ export function InteractiveDashboardWordCard({
                   <div className="flex items-center justify-between text-xs gap-1">
                     <div className="flex items-center gap-0.5 bg-yellow-100 px-1 py-0.5 rounded flex-1 justify-center">
                       <span>😊</span>
-                      <span className="font-medium">{sessionStats.wordsRemembered}</span>
+                      <span className="font-medium">
+                        {sessionStats.wordsRemembered}
+                      </span>
                     </div>
                     <div className="flex items-center gap-0.5 bg-orange-100 px-1 py-0.5 rounded flex-1 justify-center">
                       <span>💪</span>
-                      <span className="font-medium">{sessionStats.wordsForgotten}</span>
+                      <span className="font-medium">
+                        {sessionStats.wordsForgotten}
+                      </span>
                     </div>
                     <div className="flex items-center gap-0.5 bg-purple-100 px-1 py-0.5 rounded flex-1 justify-center">
                       <span>����</span>
-                      <span className="font-medium">{sessionStats.accuracy}%</span>
+                      <span className="font-medium">
+                        {sessionStats.accuracy}%
+                      </span>
                     </div>
                     <div className="text-purple-600 font-medium text-xs hidden sm:block">
                       🌟 AI: Great!
