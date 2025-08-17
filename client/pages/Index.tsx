@@ -1378,7 +1378,7 @@ export default function Index({ initialProfile }: IndexProps) {
       if (accuracy === 100) {
         achievementTitle = "Perfect Category Mastery! 🏆";
         achievementIcon = "🏆";
-        achievementMessage = `Outstanding! You remembered ALL ${totalWords} words in ${categoryDisplayName}! You're a true champion!\n\n🎁 Perfect Mastery Bonus: 200 points!\n✨ New adventure zone unlocked!`;
+        achievementMessage = `Outstanding! You remembered ALL ${totalWords} words in ${categoryDisplayName}! You're a true champion!\n\n🎁 Perfect Mastery Bonus: 200 points!\n�� New adventure zone unlocked!`;
       } else if (accuracy >= 90) {
         achievementTitle = "Category Expert! 🎓";
         achievementIcon = "🎓⭐";
@@ -1968,7 +1968,7 @@ export default function Index({ initialProfile }: IndexProps) {
           )}
 
           {/* Main Content with Sidebar Layout */}
-          <main className="min-h-screen bg-gray-100 scroll-smooth">
+          <main className="min-h-screen bg-white scroll-smooth">
             {userRole === "parent" ? (
               <div className="w-full p-4 md:p-8 pb-20 lg:pb-8 mobile-parent-dashboard min-h-screen overflow-y-auto">
                 <ParentDashboard
