@@ -29,7 +29,6 @@ import { GameLikeLearning } from "@/components/GameLikeLearning";
 import { WordMatchingGame } from "@/components/WordMatchingGame";
 import { GameHub } from "@/components/games/GameHub";
 import { VowelRescue } from "@/components/games/VowelRescue";
-import { ReactHealthCheck } from "@/components/ReactHealthCheck";
 import ListenAndGuessGame from "@/components/games/ListenAndGuessGame";
 import WordGarden from "@/components/games/WordGarden";
 import {
@@ -1389,7 +1388,7 @@ export default function Index({ initialProfile }: IndexProps) {
         achievementIcon = "📚";
         achievementMessage = `Great job! You completed ${categoryDisplayName} with ${accuracy}% accuracy! Keep up the good work!\n\n🎓 Scholar Bonus: 100 points!`;
       } else if (accuracy >= 50) {
-        achievementTitle = "Category Explorer! 🗺️🌟";
+        achievementTitle = "Category Explorer! ��️🌟";
         achievementIcon = "🗺️";
         achievementMessage = `Good effort! You finished ${categoryDisplayName} with ${accuracy}% accuracy! Practice makes perfect!\n\n🎁 Explorer Bonus: 75 points!`;
       } else {
@@ -1772,10 +1771,6 @@ export default function Index({ initialProfile }: IndexProps) {
 
   return (
     <div className="min-h-screen bg-white relative overflow-x-hidden">
-      {/* React Health Check - Development/Debug */}
-      <div className="fixed top-4 right-4 z-50">
-        <ReactHealthCheck />
-      </div>
 
       {/* Session Restoration Modal */}
       {showSessionRestoration && sessionRestorationData && (
