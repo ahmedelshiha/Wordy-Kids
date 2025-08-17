@@ -41,17 +41,23 @@ export const useAuth = () => {
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<UserProfile | null>(null);
   const [isLoading, setIsLoading] = useState(true);
-  let navigate: any;
-  let location: any;
 
-  try {
-    navigate = useNavigate();
-    location = useLocation();
-  } catch (error) {
-    // useNavigate might not be available during SSR or initial render
-    navigate = () => {};
-    location = { pathname: "/" };
-  }
+  // Safely get navigation hooks - only use them if they're available
+  const navigate = React.useRef<any>(null);
+  const location = React.useRef<any>(null);
+
+  React.useEffect(() => {
+    // Initialize navigation hooks after component mounts
+    try {
+      const { useNavigate, useLocation } = require("react-router-dom");
+      navigate.current = useNavigate();
+      location.current = useLocation();
+    } catch (error) {
+      // Hooks not available, keep defaults
+      navigate.current = () => {};
+      location.current = { pathname: "/" };
+    }
+  }, []);
 
   // Check for existing session on mount
   useEffect(() => {
