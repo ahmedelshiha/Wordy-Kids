@@ -2166,7 +2166,7 @@ export default function Index({ initialProfile }: IndexProps) {
                 </aside>
 
                 {/* Main Content Area - Optimized for Small Screens */}
-                <div className={`flex-1 p-2 sm:p-3 lg:p-4 pb-20 sm:pb-24 ${kidModeEnabled ? 'lg:pb-32' : 'lg:pb-6'} overflow-y-auto scroll-smooth`}>
+                <div className={`flex-1 p-2 sm:p-3 lg:p-4 pb-20 sm:pb-24 ${kidModeEnabled ? 'lg:pb-20 xl:pb-24' : 'lg:pb-6'} overflow-y-auto scroll-smooth`}>
                   <Tabs
                     value={activeTab}
                     onValueChange={setActiveTab}
