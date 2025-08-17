@@ -66,19 +66,24 @@ export const SimplifiedChildSidebar: React.FC<SimplifiedChildSidebarProps> = ({
     const updateStats = async () => {
       try {
         const childId = user?.id || "guest-user";
-        
+
         // Get real progress data
-        const progressData = await goalProgressTracker.fetchSystematicProgress(childId);
+        const progressData =
+          await goalProgressTracker.fetchSystematicProgress(childId);
         const journeyProgress = AchievementTracker.getJourneyProgress();
         const sessionData = loadSession();
 
         // Calculate level from words learned (every 10 words = 1 level for kids)
         const level = Math.floor(progressData.totalWordsLearned / 10) + 1;
-        const levelProgress = ((progressData.totalWordsLearned % 10) / 10) * 100;
+        const levelProgress =
+          ((progressData.totalWordsLearned % 10) / 10) * 100;
 
         // Format time spent today (fallback to session data or journeyProgress)
         const timeMinutes = journeyProgress.timeSpentLearning || 0;
-        const timeDisplay = timeMinutes < 60 ? `${timeMinutes}m` : `${Math.floor(timeMinutes / 60)}h`;
+        const timeDisplay =
+          timeMinutes < 60
+            ? `${timeMinutes}m`
+            : `${Math.floor(timeMinutes / 60)}h`;
 
         setStats({
           wordsLearned: progressData.totalWordsLearned || 0,
@@ -87,7 +92,8 @@ export const SimplifiedChildSidebar: React.FC<SimplifiedChildSidebarProps> = ({
           level,
           levelProgress,
           timeToday: timeDisplay,
-          achievements: AchievementTracker.getUnlockedAchievements().length || 0,
+          achievements:
+            AchievementTracker.getUnlockedAchievements().length || 0,
         });
       } catch (error) {
         console.log("Using fallback stats:", error);
@@ -114,7 +120,7 @@ export const SimplifiedChildSidebar: React.FC<SimplifiedChildSidebarProps> = ({
     const updateGreeting = () => {
       const hour = new Date().getHours();
       const name = user?.name || "Friend";
-      
+
       if (hour < 12) {
         setGreeting(`Good morning, ${name}! 🌅`);
       } else if (hour < 17) {
@@ -168,13 +174,22 @@ export const SimplifiedChildSidebar: React.FC<SimplifiedChildSidebarProps> = ({
     >
       {/* Fun floating elements for kids */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        <div className="absolute top-4 right-4 text-xl animate-spin" style={{ animationDuration: "8s" }}>
+        <div
+          className="absolute top-4 right-4 text-xl animate-spin"
+          style={{ animationDuration: "8s" }}
+        >
           ⭐
         </div>
-        <div className="absolute top-16 left-4 text-lg animate-bounce" style={{ animationDelay: "1s" }}>
+        <div
+          className="absolute top-16 left-4 text-lg animate-bounce"
+          style={{ animationDelay: "1s" }}
+        >
           🌟
         </div>
-        <div className="absolute bottom-20 right-4 text-lg animate-bounce" style={{ animationDelay: "2s" }}>
+        <div
+          className="absolute bottom-20 right-4 text-lg animate-bounce"
+          style={{ animationDelay: "2s" }}
+        >
           🎯
         </div>
       </div>
@@ -261,7 +276,9 @@ export const SimplifiedChildSidebar: React.FC<SimplifiedChildSidebarProps> = ({
               {/* Level progress - BIG and simple */}
               <Card className="p-4 bg-gradient-to-r from-green-100 to-blue-100 border-2 border-green-200">
                 <div className="text-center mb-3">
-                  <div className="text-sm font-bold text-gray-800">🎮 Next Level</div>
+                  <div className="text-sm font-bold text-gray-800">
+                    🎮 Next Level
+                  </div>
                 </div>
                 <motion.div
                   whileHover={{ scale: 1.02 }}
@@ -277,7 +294,8 @@ export const SimplifiedChildSidebar: React.FC<SimplifiedChildSidebarProps> = ({
                   />
                 </motion.div>
                 <div className="text-xs text-center mt-2 text-green-700 font-medium">
-                  {Math.ceil((100 - stats.levelProgress) / 10)} more words to go! 🌟
+                  {Math.ceil((100 - stats.levelProgress) / 10)} more words to
+                  go! 🌟
                 </div>
               </Card>
 
