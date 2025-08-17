@@ -423,10 +423,7 @@ export function MobileKidNav({
               >
                 🎪
               </motion.div>
-              <span className={cn(
-                "font-bold text-center text-base leading-none",
-                showMoreMenu ? "text-white drop-shadow-lg" : "text-gray-600"
-              )}>
+              <span className="font-bold text-center text-base leading-none text-white drop-shadow-lg">
                 More
               </span>
 
