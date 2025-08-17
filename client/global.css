@@ -112,6 +112,20 @@
     --celebration-gold: 45 100% 60%;
     --celebration-sparkle: 55 100% 70%;
     --celebration-confetti: 320 85% 70%;
+
+    /* Kid Mode Desktop Navigation */
+    --kid-nav-shadow:
+      0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    --kid-nav-glow: 0 0 20px rgba(139, 92, 246, 0.3);
+    --kid-nav-border-rainbow: linear-gradient(
+      90deg,
+      #ff6b9d,
+      #ffa500,
+      #ffcc02,
+      #43e97b,
+      #4facfe,
+      #a8edea
+    );
   }
 
   .dark {
@@ -2645,4 +2659,98 @@
 
 .content-section-mobile:last-child {
   margin-bottom: 0;
+}
+
+/* Desktop Kid Mode Navigation Styles */
+.kid-nav-tab {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transform-origin: center;
+}
+
+.kid-nav-tab:hover {
+  transform: translateY(-2px) scale(1.02);
+  filter: brightness(1.1);
+}
+
+.kid-nav-tab.active {
+  animation: kid-tab-glow 2s ease-in-out infinite;
+}
+
+@keyframes kid-tab-glow {
+  0%,
+  100% {
+    box-shadow: 0 0 20px rgba(139, 92, 246, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 30px rgba(139, 92, 246, 0.5);
+  }
+}
+
+.border-rainbow {
+  background: linear-gradient(
+    90deg,
+    #ff6b9d,
+    #ffa500,
+    #ffcc02,
+    #43e97b,
+    #4facfe,
+    #a8edea
+  );
+  background-size: 400% 400%;
+  animation: rainbow-shift 3s ease infinite;
+}
+
+@keyframes rainbow-shift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* Enhanced desktop bottom nav spacing */
+.desktop-bottom-nav {
+  margin-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+/* Safe area adjustments for desktop kid mode */
+@media (min-width: 1024px) {
+  .kid-mode-bottom-padding {
+    padding-bottom: 80px; /* Reduced space for compact bottom nav */
+  }
+}
+
+@media (min-width: 1280px) {
+  .kid-mode-bottom-padding {
+    padding-bottom: 96px; /* Slightly more space for xl screens */
+  }
+}
+
+/* Compact navigation styles */
+.compact-kid-nav {
+  height: 64px; /* Very compact for small desktop screens */
+}
+
+@media (min-width: 1280px) {
+  .compact-kid-nav {
+    height: 76px; /* Slightly taller on larger screens */
+  }
+}
+
+@media (min-width: 1536px) {
+  .compact-kid-nav {
+    height: 84px; /* Full height on 2xl+ screens */
+  }
+}
+
+/* Optimize navigation button sizing for different breakpoints */
+@media (min-width: 1024px) and (max-width: 1279px) {
+  .kid-nav-button-compact {
+    min-width: 70px;
+    padding: 0.5rem 0.75rem;
+  }
 }
