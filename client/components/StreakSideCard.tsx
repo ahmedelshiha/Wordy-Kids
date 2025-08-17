@@ -299,18 +299,18 @@ export const StreakSideCard: React.FC<StreakSideCardProps> = ({
                 </h4>
                 <div className="grid grid-cols-2 gap-2 text-xs">
                   {[
-                    { icon: Trophy, text: "Save Progress", color: "blue" },
-                    { icon: Medal, text: "Earn Badges", color: "purple" },
-                    { icon: Target, text: "Track Goals", color: "green" },
-                    { icon: Gift, text: "Get Rewards", color: "pink" },
-                  ].map(({ icon: Icon, text, color }) => (
+                    { icon: Trophy, text: "Save Progress", bgClass: "bg-blue-50", borderClass: "border-blue-200", hoverClass: "hover:bg-blue-100", iconClass: "text-blue-600", textClass: "text-blue-700" },
+                    { icon: Medal, text: "Earn Badges", bgClass: "bg-purple-50", borderClass: "border-purple-200", hoverClass: "hover:bg-purple-100", iconClass: "text-purple-600", textClass: "text-purple-700" },
+                    { icon: Target, text: "Track Goals", bgClass: "bg-green-50", borderClass: "border-green-200", hoverClass: "hover:bg-green-100", iconClass: "text-green-600", textClass: "text-green-700" },
+                    { icon: Gift, text: "Get Rewards", bgClass: "bg-pink-50", borderClass: "border-pink-200", hoverClass: "hover:bg-pink-100", iconClass: "text-pink-600", textClass: "text-pink-700" },
+                  ].map(({ icon: Icon, text, bgClass, borderClass, hoverClass, iconClass, textClass }) => (
                     <motion.div
                       key={text}
-                      className={`flex items-center gap-2 bg-${color}-50 border border-${color}-200 rounded-lg p-2 hover:bg-${color}-100 transition-colors`}
+                      className={`flex items-center gap-2 ${bgClass} border ${borderClass} rounded-lg p-2 ${hoverClass} transition-colors`}
                       whileHover={{ scale: 1.02 }}
                     >
-                      <Icon className={`w-3 h-3 text-${color}-600`} />
-                      <span className={`text-${color}-700 font-medium`}>{text}</span>
+                      <Icon className={`w-3 h-3 ${iconClass}`} />
+                      <span className={`${textClass} font-medium`}>{text}</span>
                     </motion.div>
                   ))}
                 </div>
