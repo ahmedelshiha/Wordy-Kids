@@ -1941,6 +1941,18 @@ export default function Index({ initialProfile }: IndexProps) {
             )}
           </header>
 
+          {/* Mobile Child Profile Header - Only shown on mobile for child role */}
+          {userRole === "child" && (
+            <div className="block lg:hidden">
+              <MobileChildProfileHeader
+                profile={currentProfile}
+                stats={childStats}
+                onExpand={() => setShowMobileProfileExpanded(!showMobileProfileExpanded)}
+                showExpanded={showMobileProfileExpanded}
+              />
+            </div>
+          )}
+
           {/* Mobile Menu Overlay */}
           {isMobileMenuOpen && (
             <div className="fixed inset-0 z-50 md:hidden">
@@ -2630,7 +2642,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                                     <div className="absolute inset-0 bg-white/20 rounded-xl opacity-0 hover:opacity-100 transition-opacity duration-300"></div>
                                                     <div className="relative z-10 flex items-center justify-center">
                                                       <span className="text-xl sm:text-2xl mr-1 sm:mr-2 animate-wiggle">
-                                                        😔
+                                                        ����
                                                       </span>
                                                       <div className="text-center">
                                                         <div className="font-bold text-base sm:text-lg">
