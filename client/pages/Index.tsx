@@ -2003,13 +2003,17 @@ export default function Index({ initialProfile }: IndexProps) {
               </div>
             ) : (
               <div className="min-h-screen bg-gradient-to-br from-white via-purple-50/30 to-pink-50/30 optimize-for-small-screen">
-                {/* Main Content Area - Full Width */}
+                {/* Main Content Area with Side Card Layout */}
                 <div className="w-full p-2 sm:p-3 lg:p-4 pb-20 sm:pb-24 lg:pb-6 overflow-y-auto scroll-smooth">
-                  <Tabs
-                    value={activeTab}
-                    onValueChange={setActiveTab}
-                    className="w-full"
-                  >
+                  {/* Desktop: Two-column layout with main content + side card */}
+                  <div className="flex gap-6 items-start">
+                    {/* Main Content */}
+                    <div className="flex-1 min-w-0">
+                      <Tabs
+                        value={activeTab}
+                        onValueChange={setActiveTab}
+                        className="w-full"
+                      >
                     <TabsContent value="dashboard">
                       <LearningDashboard
                         stats={learningStats}
@@ -3219,7 +3223,24 @@ export default function Index({ initialProfile }: IndexProps) {
                         }}
                       />
                     </TabsContent>
-                  </Tabs>
+                      </Tabs>
+                    </div>
+
+                    {/* Streak Side Card - Desktop Only */}
+                    <div className="hidden xl:block w-80 flex-shrink-0">
+                      <StreakSideCard
+                        progressData={{
+                          wordsLearned: rememberedWords.size,
+                          currentStreak: learningStats?.currentStreak || 0,
+                          totalPoints: learningStats?.totalPoints || 0,
+                          level: learningStats?.level || 1,
+                        }}
+                        onDismiss={() => {
+                          console.log('Side card dismissed');
+                        }}
+                      />
+                    </div>
+                  </div>
                 </div>
               </div>
             )}
