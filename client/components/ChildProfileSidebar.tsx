@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { EnhancedChildProfileCard } from "@/components/EnhancedChildProfileCard";
 import { KidFriendlyMascot } from "@/components/KidFriendlyMascot";
+import { kidFriendlyEffects, SOUNDS, celebrate } from "@/lib/kidFriendlyEffects";
 import {
   ChevronLeft,
   ChevronRight,
