@@ -1404,7 +1404,7 @@ export default function Index({ initialProfile }: IndexProps) {
         achievementMessage = `Great job! You completed ${categoryDisplayName} with ${accuracy}% accuracy! Keep up the good work!\n\n🎓 Scholar Bonus: 100 points!`;
       } else if (accuracy >= 50) {
         achievementTitle = "Category Explorer! ��️🌟";
-        achievementIcon = "🗺️";
+        achievementIcon = "����️";
         achievementMessage = `Good effort! You finished ${categoryDisplayName} with ${accuracy}% accuracy! Practice makes perfect!\n\n🎁 Explorer Bonus: 75 points!`;
       } else {
         achievementTitle = "Category Challenger! 💪";
@@ -3526,6 +3526,25 @@ export default function Index({ initialProfile }: IndexProps) {
               message={feedback.message}
               points={feedback.points}
               onComplete={() => setFeedback(null)}
+            />
+          )}
+
+          {/* Desktop Kid Mode Navigation */}
+          {userRole === "child" && (
+            <DesktopKidNav
+              activeTab={activeTab}
+              onTabChange={setActiveTab}
+              userRole={userRole}
+              onRoleChange={(role) => {
+                setUserRole(role);
+                if (role === "child") {
+                  setKidModeEnabled(true);
+                } else {
+                  setKidModeEnabled(false);
+                }
+              }}
+              onSettingsClick={() => setShowSettings(true)}
+              onAdminClick={() => navigate("/admin")}
             />
           )}
         </>
