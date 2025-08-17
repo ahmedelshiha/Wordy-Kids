@@ -137,7 +137,6 @@ export default function App() {
     };
     setCurrentProfile(updatedProfile);
     setShowLevelSelection(false);
-    setIsLoggedIn(true);
   };
 
   // Show loading state while auth is initializing
