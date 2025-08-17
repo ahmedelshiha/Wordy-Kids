@@ -43,10 +43,11 @@ export class EnhancedStatsHelper {
   ): EnhancedChildStats {
     const enhanced: EnhancedChildStats = {
       // Base ChildWordStats properties
-      childId: baseStats?.childId || currentProfile?.id || 'default',
+      childId: baseStats?.childId || currentProfile?.id || "default",
       totalWordsLearned: baseStats?.totalWordsLearned || rememberedWords.size,
       wordsRemembered: baseStats?.wordsRemembered || rememberedWords.size,
-      wordsNeedingPractice: baseStats?.wordsNeedingPractice || forgottenWords.size,
+      wordsNeedingPractice:
+        baseStats?.wordsNeedingPractice || forgottenWords.size,
       averageAccuracy: baseStats?.averageAccuracy || 0,
       totalReviewSessions: baseStats?.totalReviewSessions || 0,
       strongestCategories: baseStats?.strongestCategories || [],
