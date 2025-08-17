@@ -1993,7 +1993,9 @@ export default function Index({ initialProfile }: IndexProps) {
             ) : (
               <div className="flex flex-col lg:flex-row min-h-screen bg-gradient-to-br from-white via-purple-50/30 to-pink-50/30 optimize-for-small-screen">
                 {/* Desktop Sidebar - Hidden on Mobile and in Kid Mode */}
-                <aside className={`hidden ${kidModeEnabled ? 'lg:hidden' : 'lg:flex'} lg:w-48 xl:w-52 2xl:w-56 bg-gradient-to-b from-purple-50 via-pink-50 to-blue-50 border-r border-purple-200 shadow-sm overflow-y-auto lg:max-h-screen`}>
+                <aside
+                  className={`hidden ${kidModeEnabled ? "lg:hidden" : "lg:flex"} lg:w-48 xl:w-52 2xl:w-56 bg-gradient-to-b from-purple-50 via-pink-50 to-blue-50 border-r border-purple-200 shadow-sm overflow-y-auto lg:max-h-screen`}
+                >
                   <div className="p-2 lg:p-3 w-full">
                     {/* Compact Magical Portal Logo Section */}
                     <div className="bg-gradient-to-br from-purple-400 via-pink-400 to-blue-400 p-2.5 rounded-xl shadow-lg mb-3 border border-yellow-300 animate-kid-pulse-glow">
@@ -2166,7 +2168,9 @@ export default function Index({ initialProfile }: IndexProps) {
                 </aside>
 
                 {/* Main Content Area - Optimized for Small Screens */}
-                <div className={`flex-1 p-2 sm:p-3 lg:p-4 pb-20 sm:pb-24 ${kidModeEnabled ? 'lg:pb-20 xl:pb-24' : 'lg:pb-6'} overflow-y-auto scroll-smooth`}>
+                <div
+                  className={`flex-1 p-2 sm:p-3 lg:p-4 pb-20 sm:pb-24 ${kidModeEnabled ? "lg:pb-20 xl:pb-24" : "lg:pb-6"} overflow-y-auto scroll-smooth`}
+                >
                   <Tabs
                     value={activeTab}
                     onValueChange={setActiveTab}

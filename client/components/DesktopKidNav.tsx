@@ -335,9 +335,7 @@ export function DesktopKidNav({
             {/* Kid Mode Toggle */}
             <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
               <div className="flex items-center gap-3">
-                <div className="text-2xl">
-                  {kidModeEnabled ? "👶" : "👨‍👩‍👧‍👦"}
-                </div>
+                <div className="text-2xl">{kidModeEnabled ? "👶" : "👨‍👩‍👧‍👦"}</div>
                 <div>
                   <div className="font-medium text-gray-900">
                     {kidModeEnabled ? "Kid Mode" : "Parent Mode"}

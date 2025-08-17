@@ -114,9 +114,18 @@
     --celebration-confetti: 320 85% 70%;
 
     /* Kid Mode Desktop Navigation */
-    --kid-nav-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    --kid-nav-shadow:
+      0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
     --kid-nav-glow: 0 0 20px rgba(139, 92, 246, 0.3);
-    --kid-nav-border-rainbow: linear-gradient(90deg, #ff6b9d, #ffa500, #ffcc02, #43e97b, #4facfe, #a8edea);
+    --kid-nav-border-rainbow: linear-gradient(
+      90deg,
+      #ff6b9d,
+      #ffa500,
+      #ffcc02,
+      #43e97b,
+      #4facfe,
+      #a8edea
+    );
   }
 
   .dark {
@@ -2668,7 +2677,8 @@
 }
 
 @keyframes kid-tab-glow {
-  0%, 100% {
+  0%,
+  100% {
     box-shadow: 0 0 20px rgba(139, 92, 246, 0.3);
   }
   50% {
@@ -2677,15 +2687,29 @@
 }
 
 .border-rainbow {
-  background: linear-gradient(90deg, #ff6b9d, #ffa500, #ffcc02, #43e97b, #4facfe, #a8edea);
+  background: linear-gradient(
+    90deg,
+    #ff6b9d,
+    #ffa500,
+    #ffcc02,
+    #43e97b,
+    #4facfe,
+    #a8edea
+  );
   background-size: 400% 400%;
   animation: rainbow-shift 3s ease infinite;
 }
 
 @keyframes rainbow-shift {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
 }
 
 /* Enhanced desktop bottom nav spacing */
