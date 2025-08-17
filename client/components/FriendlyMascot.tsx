@@ -70,9 +70,10 @@ export function FriendlyMascot({
   }, []);
 
   const sizeClasses = {
-    small: "text-2xl",
-    medium: "text-4xl",
-    large: "text-6xl",
+    tiny: "text-lg",
+    small: "text-xl",
+    medium: "text-3xl",
+    large: "text-5xl",
   };
 
   const positionClasses = {
