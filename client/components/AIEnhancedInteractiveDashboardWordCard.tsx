@@ -1625,17 +1625,17 @@ export function AIEnhancedInteractiveDashboardWordCard({
                 {/* Compact header with inline progress */}
                 <div className="flex items-center justify-between mb-2">
                   <div className="flex items-center gap-1">
-                    <span className="text-xs sm:text-sm">🧠🎯</span>
-                    <h2 className="text-xs sm:text-base font-bold text-gray-800">
+                    <span className="text-lg sm:text-xl">🧠🎯</span>
+                    <h2 className="text-sm sm:text-lg font-bold text-gray-800">
                       AI Progress
                     </h2>
                   </div>
                   <div className="flex items-center gap-1">
-                    <span className="text-xs sm:text-sm">🚀</span>
-                    <span className="font-medium text-gray-700 text-xs sm:text-sm">
+                    <span className="text-lg sm:text-xl">🚀</span>
+                    <span className="font-medium text-gray-700 text-sm sm:text-base">
                       {dailyGoal.completed}/{dailyGoal.target}
                     </span>
-                    <span className="font-bold text-gray-800 text-xs sm:text-sm">
+                    <span className="font-bold text-gray-800 text-sm sm:text-base">
                       (
                       {Math.round(
                         (dailyGoal.completed / dailyGoal.target) * 100,
