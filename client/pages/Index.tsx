@@ -2087,22 +2087,21 @@ export default function Index({ initialProfile }: IndexProps) {
 
                       <button
                         onClick={() => setActiveTab("progress")}
-                        className={`w-full flex items-center gap-2.5 p-2.5 lg:p-3 rounded-xl transition-all duration-200 hover:scale-[1.02] ${
+                        className={`kid-nav-item w-full ${
                           activeTab === "progress"
-                            ? "bg-gradient-to-r from-yellow-500 to-orange-500 text-white shadow-lg transform scale-[1.02]"
-                            : "bg-white text-gray-700 hover:bg-gradient-to-r hover:from-yellow-50 hover:to-orange-50 border border-yellow-100 hover:border-yellow-200 shadow-sm"
+                            ? "kid-gradient-success text-white shadow-lg kid-button active animate-kid-pulse-glow"
+                            : "bg-white text-gray-700 hover:kid-gradient-adventure hover:text-white border border-yellow-200 kid-interactive"
                         }`}
                       >
-                        <div
-                          className={`p-1.5 rounded-lg transition-all duration-200 ${activeTab === "progress" ? "bg-white/20" : "bg-yellow-100"}`}
-                        >
-                          <Trophy
-                            className={`w-4 h-4 ${activeTab === "progress" ? "text-white" : "text-yellow-600"}`}
-                          />
+                        <div className="text-xl animate-gentle-bounce">
+                          🗺️
                         </div>
-                        <span className="font-medium text-sm">
-                          🏆 My Journey
+                        <span className="kid-text-big font-bold">
+                          Adventure Map
                         </span>
+                        {activeTab === "progress" && (
+                          <div className="ml-auto animate-kid-magic-sparkle">🏆</div>
+                        )}
                       </button>
 
                       <div className="mt-3 pt-3 border-t border-purple-200">
