@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { EnhancedChildProfileCard } from "@/components/EnhancedChildProfileCard";
+import { KidFriendlyMascot } from "@/components/KidFriendlyMascot";
 import {
   ChevronLeft,
   ChevronRight,
