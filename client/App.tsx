@@ -31,18 +31,25 @@ import SpeechDiagnostics from "./components/SpeechDiagnostics";
 const queryClient = new QueryClient();
 
 const App = () => {
-  const [isClient, setIsClient] = useState(false);
+  const [isClient, setIsClient] = useState(() => {
+    // Initialize based on whether we're in browser
+    return typeof window !== "undefined";
+  });
 
   useEffect(() => {
-    // Additional check to ensure DOM is ready
-    if (typeof window !== "undefined" && document.getElementById("root")) {
+    // Ensure we're properly hydrated on the client
+    if (typeof window !== "undefined") {
       setIsClient(true);
     }
   }, []);
 
-  // Don't render anything until client is ready and React is properly initialized
-  if (!isClient || typeof window === "undefined") {
-    return null;
+  // Always render on client side, but show loading during hydration
+  if (!isClient) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <div className="text-lg">Loading...</div>
+      </div>
+    );
   }
 
   return (
