@@ -236,7 +236,7 @@ export function MobileBottomNav({
                 {/* Magical Emoji Icon */}
                 <div
                   className={cn(
-                    "text-5xl sm:text-6xl md:text-7xl lg:text-8xl -mt-3 sm:-mt-4 md:-mt-5 transition-transform duration-200",
+                    "text-5xl sm:text-6xl md:text-7xl lg:text-8xl -mt-5 sm:-mt-6 md:-mt-7 lg:-mt-8 transition-transform duration-200",
                     tab.id === "dashboard" && "animate-mascot-bounce",
                     tab.id === "learn" && "animate-gentle-float",
                     tab.id === "quiz" && "animate-mascot-happy",
