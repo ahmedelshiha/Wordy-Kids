@@ -95,7 +95,7 @@ export function MobileBottomNav({
       icon: Target,
       activeGradient: "kid-gradient-happy",
       hoverGradient: "kid-gradient-learn",
-      sparkle: "✨🌟",
+      sparkle: "✨��",
     },
     {
       id: "learn",
@@ -277,7 +277,7 @@ export function MobileBottomNav({
             >
               <div
                 className={cn(
-                  "text-5xl sm:text-6xl md:text-7xl lg:text-8xl -mt-5 sm:-mt-6 md:-mt-7 lg:-mt-8 transition-transform duration-200",
+                  "text-5xl sm:text-6xl md:text-7xl lg:text-8xl -mt-6 sm:-mt-7 md:-mt-8 lg:-mt-10 transition-transform duration-200",
                   showMoreMenu ? "rotate-90 scale-110 animate-mascot-bounce" : "animate-gentle-float",
                 )}
               >
