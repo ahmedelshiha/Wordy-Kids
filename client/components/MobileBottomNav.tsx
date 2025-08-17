@@ -214,14 +214,14 @@ export function MobileBottomNav({
       {/* Optimized Bottom Navigation Bar */}
       <div className="fixed bottom-0 left-0 right-0 z-30 lg:hidden">
         <div className="bg-white/95 backdrop-blur-lg border-t-4 border-rainbow shadow-2xl safe-area-padding-bottom">
-          <div className="flex items-center justify-around px-1 py-2">
+          <div className="flex items-center justify-around px-1 py-1">
             {/* Primary Navigation Tabs */}
             {primaryTabs.map((tab) => (
               <button
                 key={tab.id}
                 onClick={() => onTabChange(tab.id)}
                 className={cn(
-                  "flex flex-col items-center gap-1 p-2 rounded-xl transition-all duration-200 transform active:scale-95 relative min-w-0 flex-1 mx-0.5 min-h-[60px] justify-center",
+                  "flex flex-col items-center gap-0.5 p-1.5 rounded-xl transition-all duration-200 transform active:scale-95 relative min-w-0 flex-1 mx-0.5 min-h-[50px] justify-center",
                   activeTab === tab.id
                     ? `bg-gradient-to-br ${tab.color} text-white shadow-lg`
                     : `${tab.bgColor} ${tab.textColor}`,
@@ -230,7 +230,7 @@ export function MobileBottomNav({
                 {/* Emoji Icon */}
                 <div
                   className={cn(
-                    "text-xl transition-transform duration-200",
+                    "text-2xl transition-transform duration-200",
                     activeTab === tab.id ? "scale-110" : "",
                   )}
                 >
@@ -238,7 +238,7 @@ export function MobileBottomNav({
                 </div>
 
                 {/* Label */}
-                <span className="text-xs font-semibold leading-tight text-center truncate max-w-full">
+                <span className="text-sm font-semibold leading-tight text-center truncate max-w-full">
                   {tab.label}
                 </span>
 
