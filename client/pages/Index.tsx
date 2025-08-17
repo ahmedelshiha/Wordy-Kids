@@ -1957,7 +1957,7 @@ export default function Index({ initialProfile }: IndexProps) {
             <div className="block lg:hidden">
               <MobileChildProfileHeader
                 profile={currentProfile}
-                stats={childStats}
+                stats={enhancedChildStats}
                 onExpand={() => setShowMobileProfileExpanded(!showMobileProfileExpanded)}
                 showExpanded={showMobileProfileExpanded}
               />
