@@ -283,7 +283,7 @@ export function MobileBottomNav({
               >
                 🎪
               </div>
-              <span className="text-xs font-kid-friendly font-bold leading-tight text-center text-white mt-0">
+              <span className="text-xs font-kid-friendly font-bold leading-tight text-center text-white -mt-2">
                 More
               </span>
 
