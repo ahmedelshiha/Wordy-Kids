@@ -422,9 +422,9 @@ export function DesktopKidNav({
             <Button
               variant="outline"
               onClick={() => setShowParentOptions(false)}
-              className="w-full"
+              className="w-full mt-4 border-gray-300 hover:border-gray-400"
             >
-              Close
+              Close Family Zone
             </Button>
           </div>
         </DialogContent>
