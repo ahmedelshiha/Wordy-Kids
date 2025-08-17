@@ -4,7 +4,7 @@ import { Badge } from "@/components/ui/badge";
 import {
   Tooltip,
   TooltipContent,
-  TooltipProvider,
+  
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import {
@@ -206,7 +206,7 @@ export const DesktopQuickActions: React.FC<DesktopQuickActionsProps> = ({
 
   if (!isVisible) {
     return (
-      <TooltipProvider>
+      
         <Tooltip>
           <TooltipTrigger asChild>
             <Button
@@ -226,12 +226,12 @@ export const DesktopQuickActions: React.FC<DesktopQuickActionsProps> = ({
             <p>Quick Actions (Alt+Q)</p>
           </TooltipContent>
         </Tooltip>
-      </TooltipProvider>
+      
     );
   }
 
   return (
-    <TooltipProvider>
+    
       <div className="fixed right-6 top-1/2 transform -translate-y-1/2 z-50">
         <div className="bg-white/95 backdrop-blur-lg border border-gray-200 rounded-2xl shadow-xl p-4 min-w-[200px]">
           {/* Header */}
@@ -382,6 +382,6 @@ export const DesktopQuickActions: React.FC<DesktopQuickActionsProps> = ({
           </div>
         </DialogContent>
       </Dialog>
-    </TooltipProvider>
+    
   );
 };
