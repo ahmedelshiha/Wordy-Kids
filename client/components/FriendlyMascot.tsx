@@ -72,10 +72,13 @@ export function FriendlyMascot({
 
     if (delayAppearance) {
       // Set up delay timer for appearance
-      const delayTimer = setTimeout(() => {
-        setDelayComplete(true);
-        setIsVisible(true);
-      }, delayMinutes * 60 * 1000); // Convert minutes to milliseconds
+      const delayTimer = setTimeout(
+        () => {
+          setDelayComplete(true);
+          setIsVisible(true);
+        },
+        delayMinutes * 60 * 1000,
+      ); // Convert minutes to milliseconds
 
       return () => clearTimeout(delayTimer);
     } else {

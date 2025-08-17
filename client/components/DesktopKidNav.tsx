@@ -146,7 +146,7 @@ export function DesktopKidNav({
                       // Apply container-less design to all icons - same size for all icons
                       "min-w-[100px] lg:min-w-[120px] xl:min-w-[140px] scale-110 lg:scale-120 p-1 lg:p-2 xl:p-3 gap-0 lg:gap-0.5",
                       // All buttons now have transparent background - natural kid-friendly appearance
-                      "bg-transparent hover:bg-transparent shadow-none hover:shadow-none"
+                      "bg-transparent hover:bg-transparent shadow-none hover:shadow-none",
                     )}
                     whileHover={{ y: -1, scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
@@ -163,7 +163,10 @@ export function DesktopKidNav({
                           activeTab === tab.id
                             ? {
                                 scale: [1, 1.1, 1],
-                                rotate: tab.id === "dashboard" ? [0, 2, -2, 0] : [0, 5, -5, 0], // Gentler animation for home
+                                rotate:
+                                  tab.id === "dashboard"
+                                    ? [0, 2, -2, 0]
+                                    : [0, 5, -5, 0], // Gentler animation for home
                               }
                             : { scale: 1 }
                         }
@@ -173,12 +176,14 @@ export function DesktopKidNav({
                           ease: "easeInOut",
                         }}
                         className={cn(
-                          tab.id === "dashboard" && "filter drop-shadow-lg" // Extra shadow for home
+                          tab.id === "dashboard" && "filter drop-shadow-lg", // Extra shadow for home
                         )}
                       >
                         {/* Kid-friendly emoji design for all icons */}
                         <div className="relative">
-                          <span className="relative z-10 filter drop-shadow-2xl">{tab.emoji}</span>
+                          <span className="relative z-10 filter drop-shadow-2xl">
+                            {tab.emoji}
+                          </span>
                           {/* Magical sparkles around any active icon */}
                           {activeTab === tab.id && (
                             <>
@@ -187,12 +192,12 @@ export function DesktopKidNav({
                                 animate={{
                                   opacity: [0, 1, 0],
                                   scale: [0.5, 1, 0.5],
-                                  rotate: [0, 180, 360]
+                                  rotate: [0, 180, 360],
                                 }}
                                 transition={{
                                   duration: 3,
                                   repeat: Infinity,
-                                  delay: 0
+                                  delay: 0,
                                 }}
                               >
                                 ✨
@@ -202,12 +207,12 @@ export function DesktopKidNav({
                                 animate={{
                                   opacity: [0, 1, 0],
                                   scale: [0.5, 1, 0.5],
-                                  rotate: [360, 180, 0]
+                                  rotate: [360, 180, 0],
                                 }}
                                 transition={{
                                   duration: 3,
                                   repeat: Infinity,
-                                  delay: 1.5
+                                  delay: 1.5,
                                 }}
                               >
                                 🌟
@@ -375,11 +380,13 @@ export function DesktopKidNav({
                 <Crown className="w-5 h-5 text-yellow-600" />
                 Family Zone
               </div>
-              <div className={`text-sm px-2 py-1 rounded-full ${
-                kidModeEnabled
-                  ? "bg-green-100 text-green-700 border border-green-200"
-                  : "bg-amber-100 text-amber-700 border border-amber-200"
-              }`}>
+              <div
+                className={`text-sm px-2 py-1 rounded-full ${
+                  kidModeEnabled
+                    ? "bg-green-100 text-green-700 border border-green-200"
+                    : "bg-amber-100 text-amber-700 border border-amber-200"
+                }`}
+              >
                 {kidModeEnabled ? "🔒 Safe Mode" : "⚠️ Sidebar Visible"}
               </div>
             </DialogTitle>
@@ -394,18 +401,24 @@ export function DesktopKidNav({
           </DialogHeader>
           <div className="space-y-4">
             {/* Kid Mode Toggle */}
-            <div className={`flex items-center justify-between p-4 rounded-lg border-l-4 ${
-              kidModeEnabled
-                ? "bg-green-50 border-green-400"
-                : "bg-amber-50 border-amber-400"
-            }`}>
+            <div
+              className={`flex items-center justify-between p-4 rounded-lg border-l-4 ${
+                kidModeEnabled
+                  ? "bg-green-50 border-green-400"
+                  : "bg-amber-50 border-amber-400"
+              }`}
+            >
               <div className="flex items-center gap-3">
                 <div className="text-2xl">{kidModeEnabled ? "🔒" : "🔓"}</div>
                 <div>
                   <div className="font-medium text-gray-900">
-                    {kidModeEnabled ? "Kid-Safe Mode Active" : "Parent Mode Active"}
+                    {kidModeEnabled
+                      ? "Kid-Safe Mode Active"
+                      : "Parent Mode Active"}
                   </div>
-                  <div className={`text-sm ${kidModeEnabled ? "text-green-600" : "text-amber-600"}`}>
+                  <div
+                    className={`text-sm ${kidModeEnabled ? "text-green-600" : "text-amber-600"}`}
+                  >
                     {kidModeEnabled
                       ? "✅ Navigation sidebar is hidden from children"
                       : "⚠️ Navigation sidebar is currently visible"}
@@ -436,9 +449,11 @@ export function DesktopKidNav({
                   {kidModeEnabled ? "Show Sidebar" : "Hide Sidebar"}
                 </Button>
                 {/* Status indicator */}
-                <div className={`text-xs text-center font-medium ${
-                  kidModeEnabled ? "text-green-600" : "text-amber-600"
-                }`}>
+                <div
+                  className={`text-xs text-center font-medium ${
+                    kidModeEnabled ? "text-green-600" : "text-amber-600"
+                  }`}
+                >
                   {kidModeEnabled ? "SAFE" : "CAUTION"}
                 </div>
               </div>
@@ -512,7 +527,9 @@ export function DesktopKidNav({
                 >
                   <Eye className="w-5 h-5 text-green-600" />
                   <div className="text-left">
-                    <div className="font-medium text-green-700">Hide Sidebar</div>
+                    <div className="font-medium text-green-700">
+                      Hide Sidebar
+                    </div>
                     <div className="text-sm text-green-600">
                       Return to kid-safe mode
                     </div>
@@ -541,8 +558,8 @@ export function DesktopKidNav({
               Disable Kid-Safe Mode?
             </DialogTitle>
             <DialogDescription>
-              This will show the full navigation sidebar which children can access.
-              Are you sure you want to continue?
+              This will show the full navigation sidebar which children can
+              access. Are you sure you want to continue?
             </DialogDescription>
           </DialogHeader>
           <div className="space-y-4">
@@ -550,10 +567,13 @@ export function DesktopKidNav({
               <div className="flex items-start gap-3">
                 <div className="text-2xl">⚠️</div>
                 <div>
-                  <div className="font-medium text-amber-800">Safety Warning</div>
+                  <div className="font-medium text-amber-800">
+                    Safety Warning
+                  </div>
                   <div className="text-sm text-amber-700 mt-1">
-                    Disabling Kid-Safe Mode will make the sidebar visible to children,
-                    giving them access to parent controls and settings.
+                    Disabling Kid-Safe Mode will make the sidebar visible to
+                    children, giving them access to parent controls and
+                    settings.
                   </div>
                 </div>
               </div>
@@ -565,10 +585,7 @@ export function DesktopKidNav({
               >
                 Keep Kid-Safe Mode
               </Button>
-              <Button
-                variant="destructive"
-                onClick={confirmDisableKidMode}
-              >
+              <Button variant="destructive" onClick={confirmDisableKidMode}>
                 Show Sidebar Anyway
               </Button>
             </div>
