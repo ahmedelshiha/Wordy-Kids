@@ -188,7 +188,6 @@ export const LearningDashboard: React.FC<LearningDashboardProps> = ({
 
   return (
     <div className="space-y-4">
-
       {/* Interactive Word Learning Hub - PRIMARY FEATURE */}
       {availableWords.length > 0 && onWordProgress ? (
         <>
