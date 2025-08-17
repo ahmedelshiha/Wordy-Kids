@@ -178,7 +178,7 @@ export const ChildProfileSidebar: React.FC<ChildProfileSidebarProps> = ({
                       <span className="text-lg">{timeInfo.icon}</span>
                       <div>
                         <div className="text-sm font-bold text-gray-800">
-                          {timeInfo.greeting}, Super Star! ���
+                          {timeInfo.greeting}, Super Star! 🌟
                         </div>
                         <div className="text-xs text-gray-700 font-medium">
                           Let's learn something awesome today!
@@ -241,7 +241,7 @@ export const ChildProfileSidebar: React.FC<ChildProfileSidebarProps> = ({
 
               {/* Weekly Adventure Progress */}
               {showWeeklyProgress && stats && (
-                <div className="bg-gradient-to-r from-green-100 to-blue-100 rounded-xl p-4 border-2 border-green-200 shadow-lg">
+                <div className="bg-gradient-to-r from-green-50/80 to-blue-50/80 rounded-xl p-4 border border-green-200/50 shadow-md backdrop-blur-sm">
                   <h4 className="text-sm font-bold text-gray-800 mb-3 flex items-center">
                     <TrendingUp className="w-5 h-5 mr-2 text-green-600" />
                     🏆 This Week's Adventures!
@@ -294,7 +294,7 @@ export const ChildProfileSidebar: React.FC<ChildProfileSidebarProps> = ({
                           className="flex items-center justify-between"
                         >
                           <span className="text-xs font-medium text-gray-700 truncate">
-                            ✨ {activity.description}
+                            �� {activity.description}
                           </span>
                           <Badge className="text-xs ml-2 bg-orange-200 text-orange-800 border-orange-300">
                             +{activity.points} 🎆
