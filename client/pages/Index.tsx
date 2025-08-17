@@ -1953,8 +1953,8 @@ export default function Index({ initialProfile }: IndexProps) {
             )}
           </header>
 
-          {/* Mobile Child Profile Header - Only shown on mobile for child role - TEMPORARILY DISABLED */}
-          {false && userRole === "child" && (
+          {/* Mobile Child Profile Header - Only shown on mobile for child role */}
+          {userRole === "child" && (
             <div className="block lg:hidden">
               <MobileChildProfileHeader
                 profile={currentProfile}
