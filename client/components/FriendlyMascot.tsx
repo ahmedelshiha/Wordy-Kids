@@ -40,7 +40,7 @@ const mascotMessages = {
 const mascotCharacters = [
   "🦁",
   "🐯",
-  "���",
+  "🐨",
   "🐼",
   "🐸",
   "🐧",
@@ -136,12 +136,14 @@ export function FriendlyMascot({
           {currentCharacter}
           <span
             className={cn(
-              "absolute -top-1 -right-1 text-sm",
+              "absolute -top-1 -right-1",
               size === "large"
-                ? "text-lg"
-                : size === "small"
-                  ? "text-xs"
-                  : "text-sm",
+                ? "text-base"
+                : size === "medium"
+                  ? "text-sm"
+                  : size === "small"
+                    ? "text-xs"
+                    : "text-xs", // tiny size
             )}
           >
             {mascotExpressions[mood]}
