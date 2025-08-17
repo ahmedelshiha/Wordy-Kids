@@ -266,8 +266,8 @@ export function MobileKidNav({
       )}
 
       {/* Kid-Friendly Mobile Bottom Navigation */}
-      <div className="fixed bottom-0 left-0 right-0 z-40 lg:hidden">
-        <div className="bg-white/95 backdrop-blur-lg border-t-4 border-rainbow shadow-2xl safe-area-padding-bottom">
+      <div className="fixed bottom-0 left-0 right-0 z-40 lg:hidden kid-nav-mobile">
+        <div className="bg-white/95 backdrop-blur-lg border-t-4 border-rainbow shadow-2xl safe-area-padding-bottom mobile-optimized">
           <div className="flex items-center justify-center gap-1 px-2 py-1 max-w-full">
             {kidNavTabs.map((tab, index) => (
               <motion.button
