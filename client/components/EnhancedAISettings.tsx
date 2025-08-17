@@ -29,7 +29,6 @@ import { Alert, AlertDescription } from "@/components/ui/alert";
 import {
   Tooltip,
   TooltipContent,
-  TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { getAISettings, setAISettings, AISettings } from "@/lib/aiSettings";
