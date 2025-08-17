@@ -10,6 +10,8 @@ import {
   SessionStats,
 } from "@/components/InteractiveDashboardWordCard";
 import { AIEnhancedInteractiveDashboardWordCard } from "@/components/AIEnhancedInteractiveDashboardWordCard";
+import { KidRegistrationNotification } from "@/components/KidRegistrationNotification";
+import { useAuth } from "@/hooks/useAuth";
 import { ChildWordStats } from "@shared/api";
 import {
   Trophy,
