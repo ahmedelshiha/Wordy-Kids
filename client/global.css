@@ -904,6 +904,34 @@
     z-index: 50;
   }
 
+  /* Mobile kid navigation optimizations */
+  .kid-nav-mobile {
+    contain: layout style;
+    will-change: transform;
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+    -webkit-perspective: 1000px;
+    perspective: 1000px;
+  }
+
+  /* Optimized sparkle animations for mobile */
+  .sparkle-mobile {
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+    will-change: transform, opacity;
+  }
+
+  /* Reduce animation intensity on low-power devices */
+  @media (prefers-reduced-motion: reduce) {
+    .sparkle-mobile {
+      animation: none !important;
+    }
+
+    .kid-nav-mobile button {
+      animation: none !important;
+    }
+  }
+
   .animate-wiggle {
     animation-duration: 3s;
     transform: translateZ(0);
