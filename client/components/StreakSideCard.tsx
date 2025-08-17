@@ -247,11 +247,19 @@ export const StreakSideCard: React.FC<StreakSideCardProps> = ({
                   {/* Streak counter */}
                   {content.streak > 0 && (
                     <motion.div
-                      className="flex items-center justify-center gap-2 mt-3 bg-white/20 rounded-full px-4 py-2"
-                      animate={{ scale: [1, 1.05, 1] }}
+                      className="flex items-center justify-center gap-2 mt-3 bg-white/20 backdrop-blur-sm rounded-full px-4 py-2 border border-white/30"
+                      animate={{
+                        scale: [1, 1.05, 1],
+                        boxShadow: ["0 0 0 0px rgba(255,255,255,0.3)", "0 0 0 8px rgba(255,255,255,0)", "0 0 0 0px rgba(255,255,255,0)"]
+                      }}
                       transition={{ duration: 2, repeat: Infinity }}
                     >
-                      <Flame className="w-5 h-5 text-yellow-200" />
+                      <motion.div
+                        animate={{ rotate: [0, 10, -10, 0] }}
+                        transition={{ duration: 1.5, repeat: Infinity }}
+                      >
+                        <Flame className="w-5 h-5 text-yellow-200" />
+                      </motion.div>
                       <span className="text-lg font-bold">{content.streak}</span>
                       <span className="text-sm font-medium">Day Streak!</span>
                     </motion.div>
