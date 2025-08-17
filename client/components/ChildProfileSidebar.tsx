@@ -182,7 +182,7 @@ export const ChildProfileSidebar: React.FC<ChildProfileSidebarProps> = ({
       </div>
 
       {/* Main Profile Card */}
-      <div className="flex-1 p-4 overflow-y-auto">
+      <div className="flex-1 p-4 overflow-y-auto relative z-10">
         <AnimatePresence mode="wait">
           {!isCollapsed ? (
             <motion.div
@@ -202,46 +202,50 @@ export const ChildProfileSidebar: React.FC<ChildProfileSidebarProps> = ({
                 animationEnabled={true}
               />
 
-              {/* Additional Quick Stats */}
+              {/* Weekly Adventure Progress */}
               {showWeeklyProgress && stats && (
-                <div className="bg-white/70 rounded-lg p-4 border border-purple-100">
-                  <h4 className="text-sm font-semibold text-gray-700 mb-3 flex items-center">
-                    <TrendingUp className="w-4 h-4 mr-2" />
-                    This Week
+                <div className="bg-gradient-to-r from-green-100 to-blue-100 rounded-xl p-4 border-2 border-green-200 shadow-lg">
+                  <h4 className="text-sm font-bold text-gray-800 mb-3 flex items-center">
+                    <TrendingUp className="w-5 h-5 mr-2 text-green-600" />
+                    🏆 This Week's Adventures!
                   </h4>
                   <div className="space-y-3">
                     <div className="flex justify-between items-center">
-                      <span className="text-xs text-gray-600">Sessions</span>
-                      <Badge variant="secondary" className="text-xs">
-                        {stats.sessionsThisWeek || 0}
-                      </Badge>
-                    </div>
-                    <div className="flex justify-between items-center">
-                      <span className="text-xs text-gray-600">
-                        Words Learned
+                      <span className="text-xs font-medium text-gray-700 flex items-center">
+                        🎮 Learning Sessions
                       </span>
-                      <Badge variant="secondary" className="text-xs">
-                        {stats.wordsThisWeek || 0}
+                      <Badge className="text-xs bg-yellow-200 text-yellow-800 border-yellow-300">
+                        {stats.sessionsThisWeek || 0} ✨
                       </Badge>
                     </div>
                     <div className="flex justify-between items-center">
-                      <span className="text-xs text-gray-600">Time Spent</span>
-                      <Badge variant="secondary" className="text-xs">
+                      <span className="text-xs font-medium text-gray-700 flex items-center">
+                        📚 Words Mastered
+                      </span>
+                      <Badge className="text-xs bg-blue-200 text-blue-800 border-blue-300">
+                        {stats.wordsThisWeek || 0} 🎆
+                      </Badge>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <span className="text-xs font-medium text-gray-700 flex items-center">
+                        ⏰ Adventure Time
+                      </span>
+                      <Badge className="text-xs bg-purple-200 text-purple-800 border-purple-300">
                         {stats.timeThisWeek
                           ? `${Math.round(stats.timeThisWeek / 60)}h`
-                          : "0h"}
+                          : "0h"} 🚀
                       </Badge>
                     </div>
                   </div>
                 </div>
               )}
 
-              {/* Activity Summary */}
+              {/* Recent Awesome Moments */}
               {stats?.recentActivity && (
-                <div className="bg-white/70 rounded-lg p-4 border border-purple-100">
-                  <h4 className="text-sm font-semibold text-gray-700 mb-3 flex items-center">
-                    <Activity className="w-4 h-4 mr-2" />
-                    Recent Activity
+                <div className="bg-gradient-to-r from-pink-100 to-purple-100 rounded-xl p-4 border-2 border-pink-200 shadow-lg">
+                  <h4 className="text-sm font-bold text-gray-800 mb-3 flex items-center">
+                    <Activity className="w-5 h-5 mr-2 text-pink-600" />
+                    🎉 Awesome Moments!
                   </h4>
                   <div className="space-y-2">
                     {stats.recentActivity
@@ -251,11 +255,11 @@ export const ChildProfileSidebar: React.FC<ChildProfileSidebarProps> = ({
                           key={index}
                           className="flex items-center justify-between"
                         >
-                          <span className="text-xs text-gray-600 truncate">
-                            {activity.description}
+                          <span className="text-xs font-medium text-gray-700 truncate">
+                            ✨ {activity.description}
                           </span>
-                          <Badge variant="outline" className="text-xs ml-2">
-                            +{activity.points}
+                          <Badge className="text-xs ml-2 bg-orange-200 text-orange-800 border-orange-300">
+                            +{activity.points} 🎆
                           </Badge>
                         </div>
                       ))}
