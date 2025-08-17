@@ -42,16 +42,27 @@ export class EnhancedStatsHelper {
     currentProfile: any,
   ): EnhancedChildStats {
     const enhanced: EnhancedChildStats = {
+      // Base ChildWordStats properties
+      childId: baseStats?.childId || currentProfile?.id || 'default',
       totalWordsLearned: baseStats?.totalWordsLearned || rememberedWords.size,
-      correctAnswers: baseStats?.correctAnswers || 0,
-      totalAnswers: baseStats?.totalAnswers || 0,
-      currentStreak: baseStats?.currentStreak || 0,
-      longestStreak: baseStats?.longestStreak || 0,
+      wordsRemembered: baseStats?.wordsRemembered || rememberedWords.size,
+      wordsNeedingPractice: baseStats?.wordsNeedingPractice || forgottenWords.size,
       averageAccuracy: baseStats?.averageAccuracy || 0,
-      timeSpentToday: baseStats?.timeSpentToday || 0,
-      sessionsToday: baseStats?.sessionsToday || 0,
-      favoriteWords: baseStats?.favoriteWords || [],
-      strugglingWords: baseStats?.strugglingWords || [],
+      totalReviewSessions: baseStats?.totalReviewSessions || 0,
+      strongestCategories: baseStats?.strongestCategories || [],
+      weakestCategories: baseStats?.weakestCategories || [],
+      recentProgress: baseStats?.recentProgress || [],
+      masteryByCategory: baseStats?.masteryByCategory || [],
+
+      // Enhanced computed properties
+      currentStreak: 0, // Mock value, would come from a different source
+      longestStreak: 0, // Mock value
+      correctAnswers: 0, // Mock value
+      totalAnswers: 0, // Mock value
+      timeSpentToday: 0, // Mock value
+      sessionsToday: 0, // Mock value
+      favoriteWords: [],
+      strugglingWords: [],
     };
 
     // Add enhanced weekly stats
