@@ -140,9 +140,9 @@ import { useNavigationHistory } from "@/hooks/useNavigationHistory";
 import { useAIWordRecommendations } from "@/hooks/use-ai-word-recommendations";
 import { AIWordRecommendationService } from "@/lib/aiWordRecommendationService";
 import { getAISettings, isAIEnabled } from "@/lib/aiSettings";
-import { ChildProfileSidebar } from "@/components/ChildProfileSidebar";
-import { MobileChildProfileHeader } from "@/components/MobileChildProfileHeader";
-import { EnhancedStatsHelper } from "@/lib/enhancedStatsHelper";
+// import { ChildProfileSidebar } from "@/components/ChildProfileSidebar";
+// import { MobileChildProfileHeader } from "@/components/MobileChildProfileHeader";
+// import { EnhancedStatsHelper } from "@/lib/enhancedStatsHelper";
 
 interface IndexProps {
   initialProfile?: any;
@@ -1464,7 +1464,7 @@ export default function Index({ initialProfile }: IndexProps) {
         achievementMessage = `Outstanding! You remembered ALL ${totalWords} words in ${categoryDisplayName}! You're a true champion!\n\n🎁 Perfect Mastery Bonus: 200 points!\n🗺️ New adventure zone unlocked!`;
       } else if (accuracy >= 90) {
         achievementTitle = "Category Expert! 🎓";
-        achievementIcon = "🎓⭐";
+        achievementIcon = "����⭐";
         achievementMessage = `Excellent work! You mastered ${categoryDisplayName} with ${accuracy}% accuracy! Almost perfect!\n\n🎁 Expert Bonus: 150 points!`;
       } else if (accuracy >= 75) {
         achievementTitle = "Category Scholar! 📚✨";
