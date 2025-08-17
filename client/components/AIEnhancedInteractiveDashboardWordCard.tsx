@@ -1238,9 +1238,7 @@ export function AIEnhancedInteractiveDashboardWordCard({
                     <div className="flex items-center gap-1 flex-1">
                       <span className="text-sm font-medium truncate flex items-center gap-1">
                         🤖{" "}
-                        {aiState.isSessionActive
-                          ? "AI Active!"
-                          : "AI Helper"}
+                        {aiState.isSessionActive ? "AI Active!" : "AI Helper"}
                         {aiState.isSessionActive && (
                           <>
                             <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
@@ -1315,7 +1313,7 @@ export function AIEnhancedInteractiveDashboardWordCard({
                         aiState.isSessionActive
                           ? "text-red-100 hover:border-red-200/50 hover:shadow-red-200/30"
                           : "text-green-100 hover:border-green-200/50 hover:shadow-green-200/30",
-                        "before:absolute before:inset-0 before:rounded-full before:bg-gradient-to-br before:from-white/30 before:to-white/10 before:opacity-0 hover:before:opacity-100 before:transition-opacity before:duration-300"
+                        "before:absolute before:inset-0 before:rounded-full before:bg-gradient-to-br before:from-white/30 before:to-white/10 before:opacity-0 hover:before:opacity-100 before:transition-opacity before:duration-300",
                       )}
                     >
                       <div className="relative z-10 flex items-center justify-center gap-1">
@@ -1337,7 +1335,6 @@ export function AIEnhancedInteractiveDashboardWordCard({
                     </Button>
                   </div>
                 </div>
-
               </div>
 
               {/* Desktop Layout: Full Features */}
@@ -1418,7 +1415,7 @@ export function AIEnhancedInteractiveDashboardWordCard({
                             aiState.isSessionActive
                               ? "text-red-100 hover:border-red-200/60 hover:shadow-red-200/40"
                               : "text-green-100 hover:border-green-200/60 hover:shadow-green-200/40",
-                            "before:absolute before:inset-0 before:rounded-full before:bg-gradient-to-br before:from-white/40 before:to-white/10 before:opacity-0 hover:before:opacity-100 before:transition-opacity before:duration-300"
+                            "before:absolute before:inset-0 before:rounded-full before:bg-gradient-to-br before:from-white/40 before:to-white/10 before:opacity-0 hover:before:opacity-100 before:transition-opacity before:duration-300",
                           )}
                         >
                           <div className="relative z-10 flex items-center justify-center gap-1.5">
