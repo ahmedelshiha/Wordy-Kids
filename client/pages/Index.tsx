@@ -1801,73 +1801,70 @@ export default function Index({ initialProfile }: IndexProps) {
       {isSessionInitialized && (
         <>
           {/* Optimized Mobile-First Header */}
-          <header className="relative overflow-hidden bg-gradient-to-r from-educational-blue via-educational-purple to-educational-pink text-white">
-            <div className="relative container mx-auto px-4 py-2 md:py-4">
-              {/* Mobile header - ultra compact */}
+          <header className="relative overflow-hidden bg-gradient-to-r from-educational-blue via-educational-purple to-educational-pink text-white shadow-lg">
+            <div className="relative container mx-auto px-4 py-2 md:py-3">
+              {/* Mobile header - Ultra compact & optimized */}
               <div className="flex items-center justify-between md:hidden">
                 <div className="flex items-center gap-2">
-                  <div className="bg-white/20 backdrop-blur-sm rounded-full p-1">
+                  <div className="bg-white/20 backdrop-blur-sm rounded-full p-1 shadow-sm">
                     <img
                       src="https://cdn.builder.io/api/v1/image/assets%2Fa33f74a2f97141a4a1ef43d9448f9bda%2F2a4b7e4c3c38485b966cfd2cff50da9e?format=webp&width=800"
                       alt="Wordy Kids Logo"
-                      className="w-5 h-5 rounded-full"
+                      className="w-6 h-6 rounded-full"
                     />
                   </div>
                   <div>
                     <h1 className="text-sm font-bold leading-tight">
-                      Wordy Kids!
+                      Wordy Kids! ✨
                     </h1>
-                    <p className="text-xs text-educational-yellow-light opacity-90">
-                      Let's Learn! 🦉
+                    <p className="text-xs text-educational-yellow-light/90 font-medium">
+                      Let's Learn Together! 🚀
                     </p>
                   </div>
                 </div>
                 {/* Mobile menu trigger could go here if needed */}
               </div>
 
-              {/* Desktop header */}
-              <div className="text-center max-w-4xl mx-auto hidden md:block">
-                <div className="flex justify-center items-center gap-6 mb-4">
-                  <div className="bg-white/20 backdrop-blur-sm rounded-full p-3">
+              {/* Desktop header - Compact & Kid-Friendly */}
+              <div className="text-center max-w-3xl mx-auto hidden md:block">
+                <div className="flex justify-center items-center gap-4 mb-2">
+                  <div className="bg-white/20 backdrop-blur-sm rounded-full p-2 shadow-lg hover:scale-105 transition-transform duration-200">
                     <img
                       src="https://cdn.builder.io/api/v1/image/assets%2Fa33f74a2f97141a4a1ef43d9448f9bda%2F2a4b7e4c3c38485b966cfd2cff50da9e?format=webp&width=800"
                       alt="Wordy Kids Logo"
-                      className="w-16 h-16 rounded-full"
+                      className="w-10 h-10 rounded-full"
                     />
                   </div>
                 </div>
-                <h1 className="text-2xl md:text-3xl font-bold mb-1">
+                <h1 className="text-xl md:text-2xl font-bold mb-1 animate-gentle-bounce">
                   🌟 Wordy Kids!
                 </h1>
-                <p className="text-lg font-semibold text-educational-yellow-light mb-2">
-                  Fun vocabulary learning for kids! 🌟
+                <p className="text-sm font-medium text-educational-yellow-light/90 mb-1">
+                  Fun vocabulary learning for kids! 🚀
                 </p>
               </div>
             </div>
 
-            {/* Enhanced Floating Elements - hidden on mobile to reduce clutter, conditional on setting */}
+            {/* Enhanced Floating Elements - Kid-Friendly & Playful */}
             {backgroundAnimationsEnabled && (
               <>
-                <div className="hidden md:block absolute top-10 left-10 text-3xl animate-bounce">
+                <div className="hidden md:block absolute top-8 left-8 text-2xl animate-gentle-bounce">
                   ⭐
                 </div>
-                <div className="hidden md:block absolute top-20 right-20 text-2xl animate-pulse">
+                <div className="hidden md:block absolute top-12 right-12 text-xl animate-gentle-float">
                   📚
                 </div>
-                <div className="hidden md:block absolute bottom-10 left-20 text-4xl animate-bounce delay-1000">
-                  🎯📚✨
+                <div className="hidden md:block absolute bottom-8 left-12 text-2xl animate-gentle-bounce delay-1000">
+                  🎯
                 </div>
-                <div className="hidden md:block absolute bottom-20 right-10 text-3xl animate-pulse delay-500">
+                <div className="hidden md:block absolute bottom-12 right-8 text-xl animate-gentle-float delay-500">
                   🚀
                 </div>
-                <div
-                  className="hidden md:block absolute top-1/2 left-5 text-2xl animate-spin"
-                  style={{ animationDuration: "3s" }}
-                >
+                <div className="hidden md:block absolute top-1/2 left-4 text-lg animate-sparkle">
                   ✨
                 </div>
-                <div className="hidden md:block absolute top-1/3 right-5 text-2xl animate-bounce delay-700">
-                  🎪
+                <div className="hidden md:block absolute top-1/3 right-4 text-xl animate-gentle-bounce delay-700">
+                  🌈
                 </div>
               </>
             )}
@@ -1979,13 +1976,13 @@ export default function Index({ initialProfile }: IndexProps) {
                 />
               </div>
             ) : (
-              <div className="flex flex-col lg:flex-row min-h-screen">
+              <div className="flex flex-col lg:flex-row min-h-screen bg-gradient-to-br from-white via-purple-50/30 to-pink-50/30">
                 {/* Desktop Sidebar - Hidden on Mobile */}
-                <aside className="hidden lg:flex lg:w-80 xl:w-96 bg-gradient-to-b from-purple-50 to-pink-50 border-r border-purple-200 overflow-y-auto lg:max-h-screen">
-                  <div className="p-4 lg:p-6">
-                    {/* Logo Section - Mobile & Desktop */}
-                    <div className="flex items-center gap-3 mb-6 lg:mb-8">
-                      <div className="w-8 h-8 lg:w-10 lg:h-10 bg-white rounded-xl flex items-center justify-center p-1">
+                <aside className="hidden lg:flex lg:w-60 xl:w-64 2xl:w-72 bg-gradient-to-b from-purple-50 via-pink-50 to-blue-50 border-r border-purple-200 shadow-sm overflow-y-auto lg:max-h-screen">
+                  <div className="p-3 lg:p-4 w-full">
+                    {/* Logo Section - Compact & Playful */}
+                    <div className="flex items-center gap-2 mb-4 lg:mb-6">
+                      <div className="w-7 h-7 lg:w-8 lg:h-8 bg-gradient-to-br from-purple-100 to-pink-100 rounded-xl flex items-center justify-center p-1 shadow-sm hover:scale-105 transition-transform duration-200">
                         <img
                           src="https://cdn.builder.io/api/v1/image/assets%2Fa33f74a2f97141a4a1ef43d9448f9bda%2F2a4b7e4c3c38485b966cfd2cff50da9e?format=webp&width=800"
                           alt="Wordy Kids Logo"
@@ -1993,74 +1990,74 @@ export default function Index({ initialProfile }: IndexProps) {
                         />
                       </div>
                       <div>
-                        <h1 className="text-lg lg:text-xl font-bold text-gray-800">
-                          Wordy Kids!
+                        <h1 className="text-sm lg:text-base font-bold text-gray-800">
+                          Wordy Kids! 🌟
                         </h1>
-                        <p className="text-xs lg:text-sm text-gray-600">
-                          Fun Learning Games
+                        <p className="text-xs text-purple-600 font-medium">
+                          Let's Learn Together! 🚀
                         </p>
                       </div>
                     </div>
 
-                    {/* Navigation Menu */}
-                    <nav className="space-y-2">
+                    {/* Navigation Menu - Kid-Friendly & Compact */}
+                    <nav className="space-y-1.5">
                       <button
                         onClick={() => setActiveTab("dashboard")}
-                        className={`w-full flex items-center gap-3 p-3 lg:p-4 rounded-xl lg:rounded-2xl transition-all ${
+                        className={`w-full flex items-center gap-2.5 p-2.5 lg:p-3 rounded-xl transition-all duration-200 hover:scale-[1.02] ${
                           activeTab === "dashboard"
-                            ? "bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-lg"
-                            : "bg-white text-gray-700 hover:bg-purple-50 border border-purple-100"
+                            ? "bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-lg transform scale-[1.02]"
+                            : "bg-white text-gray-700 hover:bg-gradient-to-r hover:from-purple-50 hover:to-pink-50 border border-purple-100 hover:border-purple-200 shadow-sm"
                         }`}
                       >
                         <div
-                          className={`p-2 rounded-lg lg:rounded-xl ${activeTab === "dashboard" ? "bg-white/20" : "bg-purple-100"}`}
+                          className={`p-1.5 rounded-lg transition-all duration-200 ${activeTab === "dashboard" ? "bg-white/20" : "bg-purple-100 group-hover:bg-purple-200"}`}
                         >
                           <Target
-                            className={`w-4 h-4 lg:w-5 lg:h-5 ${activeTab === "dashboard" ? "text-white" : "text-purple-600"}`}
+                            className={`w-4 h-4 ${activeTab === "dashboard" ? "text-white" : "text-purple-600"}`}
                           />
                         </div>
-                        <span className="font-medium lg:font-semibold text-sm lg:text-base">
-                          Dashboard
+                        <span className="font-medium text-sm">
+                          🎯 Dashboard
                         </span>
                       </button>
 
                       <button
                         onClick={() => setActiveTab("learn")}
-                        className={`w-full flex items-center gap-3 p-3 lg:p-4 rounded-xl lg:rounded-2xl transition-all ${
+                        className={`w-full flex items-center gap-2.5 p-2.5 lg:p-3 rounded-xl transition-all duration-200 hover:scale-[1.02] ${
                           activeTab === "learn"
-                            ? "bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-lg"
-                            : "bg-white text-gray-700 hover:bg-purple-50 border border-purple-100"
+                            ? "bg-gradient-to-r from-green-500 to-blue-500 text-white shadow-lg transform scale-[1.02]"
+                            : "bg-white text-gray-700 hover:bg-gradient-to-r hover:from-green-50 hover:to-blue-50 border border-green-100 hover:border-green-200 shadow-sm"
                         }`}
                       >
                         <div
-                          className={`p-2 rounded-lg lg:rounded-xl ${activeTab === "learn" ? "bg-white/20" : "bg-green-100"}`}
+                          className={`p-1.5 rounded-lg transition-all duration-200 ${activeTab === "learn" ? "bg-white/20" : "bg-green-100"}`}
                         >
                           <BookOpen
-                            className={`w-4 h-4 lg:w-5 lg:h-5 ${activeTab === "learn" ? "text-white" : "text-green-600"}`}
+                            className={`w-4 h-4 ${activeTab === "learn" ? "text-white" : "text-green-600"}`}
                           />
                         </div>
-                        <span className="font-medium lg:font-semibold text-sm lg:text-base">
-                          Word Library
+                        <span className="font-medium text-sm">
+                          📚 Word Library
                         </span>
                       </button>
 
                       <button
                         onClick={() => setActiveTab("quiz")}
-                        className={`w-full flex items-center gap-3 p-3 lg:p-4 rounded-xl lg:rounded-2xl transition-all ${
+                        className={`w-full flex items-center gap-2.5 p-2.5 lg:p-3 rounded-xl transition-all duration-200 hover:scale-[1.02] ${
                           activeTab === "quiz"
-                            ? "bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-lg"
-                            : "bg-white text-gray-700 hover:bg-purple-50 border border-purple-100"
+                            ? "bg-gradient-to-r from-pink-500 to-purple-500 text-white shadow-lg transform scale-[1.02]"
+                            : "bg-white text-gray-700 hover:bg-gradient-to-r hover:from-pink-50 hover:to-purple-50 border border-pink-100 hover:border-pink-200 shadow-sm"
                         }`}
                       >
                         <div
-                          className={`p-2 rounded-lg lg:rounded-xl ${activeTab === "quiz" ? "bg-white/20" : "bg-pink-100"}`}
+                          className={`p-1.5 rounded-lg transition-all duration-200 ${activeTab === "quiz" ? "bg-white/20" : "bg-pink-100"}`}
                         >
                           <Brain
-                            className={`w-4 h-4 lg:w-5 lg:h-5 ${activeTab === "quiz" ? "text-white" : "text-pink-600"}`}
+                            className={`w-4 h-4 ${activeTab === "quiz" ? "text-white" : "text-pink-600"}`}
                           />
                         </div>
-                        <span className="font-medium lg:font-semibold text-sm lg:text-base">
-                          Quiz Time
+                        <span className="font-medium text-sm">
+                          🧠 Quiz Time
                         </span>
                       </button>
 
@@ -2086,36 +2083,40 @@ export default function Index({ initialProfile }: IndexProps) {
 
                       <button
                         onClick={() => setActiveTab("progress")}
-                        className={`w-full flex items-center gap-3 p-3 lg:p-4 rounded-xl lg:rounded-2xl transition-all ${
+                        className={`w-full flex items-center gap-2.5 p-2.5 lg:p-3 rounded-xl transition-all duration-200 hover:scale-[1.02] ${
                           activeTab === "progress"
-                            ? "bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-lg"
-                            : "bg-white text-gray-700 hover:bg-purple-50 border border-purple-100"
+                            ? "bg-gradient-to-r from-yellow-500 to-orange-500 text-white shadow-lg transform scale-[1.02]"
+                            : "bg-white text-gray-700 hover:bg-gradient-to-r hover:from-yellow-50 hover:to-orange-50 border border-yellow-100 hover:border-yellow-200 shadow-sm"
                         }`}
                       >
                         <div
-                          className={`p-2 rounded-lg lg:rounded-xl ${activeTab === "progress" ? "bg-white/20" : "bg-yellow-100"}`}
+                          className={`p-1.5 rounded-lg transition-all duration-200 ${activeTab === "progress" ? "bg-white/20" : "bg-yellow-100"}`}
                         >
                           <Trophy
-                            className={`w-4 h-4 lg:w-5 lg:h-5 ${activeTab === "progress" ? "text-white" : "text-yellow-600"}`}
+                            className={`w-4 h-4 ${activeTab === "progress" ? "text-white" : "text-yellow-600"}`}
                           />
                         </div>
-                        <span className="font-medium lg:font-semibold text-sm lg:text-base">
-                          🎯 My Journey
+                        <span className="font-medium text-sm">
+                          🏆 My Journey
                         </span>
                       </button>
 
-                      <button
-                        onClick={() => {
-                          setUserRole("parent");
-                          window.scrollTo({ top: 0, behavior: "smooth" });
-                        }}
-                        className="w-full flex items-center gap-4 p-4 rounded-2xl transition-all bg-white text-gray-700 hover:bg-blue-50 hover:border-blue-200 border-2 border-transparent"
-                      >
-                        <div className="p-2 rounded-xl bg-blue-100">
-                          <Users className="w-5 h-5 text-blue-600" />
-                        </div>
-                        <span className="font-semibold">Parent Dashboard</span>
-                      </button>
+                      <div className="mt-3 pt-3 border-t border-purple-200">
+                        <button
+                          onClick={() => {
+                            setUserRole("parent");
+                            window.scrollTo({ top: 0, behavior: "smooth" });
+                          }}
+                          className="w-full flex items-center gap-2.5 p-2.5 lg:p-3 rounded-xl transition-all duration-200 hover:scale-[1.02] bg-gradient-to-r from-blue-100 to-indigo-100 text-gray-700 hover:from-blue-200 hover:to-indigo-200 border border-blue-200 shadow-sm"
+                        >
+                          <div className="p-1.5 rounded-lg bg-blue-200">
+                            <Users className="w-4 h-4 text-blue-700" />
+                          </div>
+                          <span className="font-medium text-sm">
+                            👥 Parent Dashboard
+                          </span>
+                        </button>
+                      </div>
 
                       <button
                         onClick={() => navigate("/admin")}
@@ -2144,8 +2145,8 @@ export default function Index({ initialProfile }: IndexProps) {
                   </div>
                 </aside>
 
-                {/* Main Content Area - Optimized Mobile Spacing */}
-                <div className="flex-1 p-3 sm:p-4 lg:p-8 pb-20 sm:pb-24 lg:pb-8 overflow-y-auto scroll-smooth">
+                {/* Main Content Area - Kid-Friendly & Compact */}
+                <div className="flex-1 p-3 sm:p-4 lg:p-6 pb-20 sm:pb-24 lg:pb-8 overflow-y-auto scroll-smooth">
                   <Tabs
                     value={activeTab}
                     onValueChange={setActiveTab}
@@ -2374,7 +2375,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                       </div>
                                       <div className="text-xs text-slate-500">
                                         {currentWordIndex + 1}/
-                                        {displayWords.length} •{" "}
+                                        {displayWords.length} ���{" "}
                                         {rememberedWords.size} ✅
                                       </div>
                                     </div>
