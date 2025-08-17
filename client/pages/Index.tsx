@@ -55,6 +55,8 @@ import {
   WordLearnedParticles,
   AmbientMagicParticles,
 } from "@/components/MagicalParticles";
+import { MagicalPortalEffect } from "@/components/MagicalPortalEffect";
+import { RewardCelebration } from "@/components/RewardCelebration";
 import { SessionRestoration } from "@/components/SessionRestoration";
 import {
   useSessionPersistence,
