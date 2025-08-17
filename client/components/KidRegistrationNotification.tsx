@@ -76,6 +76,59 @@ export const KidRegistrationNotification: React.FC<KidRegistrationNotificationPr
     }
   };
 
+  // Personalize message based on progress
+  const getPersonalizedMessage = () => {
+    if (!progressData) {
+      return {
+        title: "Hey there, Amazing Explorer! 🌟",
+        message: "You're doing great learning new words! 📚 Want to save your awesome progress and unlock even more magical features?",
+        emoji: "🦄"
+      };
+    }
+
+    const { wordsLearned = 0, currentStreak = 0, totalPoints = 0, level = 1 } = progressData;
+
+    if (wordsLearned >= 20) {
+      return {
+        title: "WOW! You're a Word Master! 🏆",
+        message: `Amazing! You've learned ${wordsLearned} words and you're on level ${level}! 🌟 Save your incredible progress and unlock special rewards!`,
+        emoji: "👑"
+      };
+    }
+
+    if (wordsLearned >= 10) {
+      return {
+        title: "Super Star Learner! ⭐",
+        message: `Fantastic! You've learned ${wordsLearned} words! 🎉 Create an account to keep your amazing progress safe!`,
+        emoji: "🌟"
+      };
+    }
+
+    if (wordsLearned >= 5) {
+      return {
+        title: "You're Doing Great! 🚀",
+        message: `Awesome job learning ${wordsLearned} words! 📖 Sign up to save your progress and earn cool badges!`,
+        emoji: "🦄"
+      };
+    }
+
+    if (currentStreak >= 3) {
+      return {
+        title: "Amazing Streak! 🔥",
+        message: `You're on fire with a ${currentStreak}-day streak! 💪 Create an account to keep your streak going!`,
+        emoji: "🎯"
+      };
+    }
+
+    return {
+      title: "Welcome, Future Word Champion! 🌟",
+      message: "You're off to a great start! 🎉 Want to save your progress and unlock magical learning features?",
+      emoji: "🦄"
+    };
+  };
+
+  const personalizedContent = getPersonalizedMessage();
+
   if (isDismissed || !isVisible) {
     return null;
   }
