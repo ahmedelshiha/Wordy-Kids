@@ -2083,7 +2083,7 @@ export default function Index({ initialProfile }: IndexProps) {
                       {/* Desktop: Three-column layout with sidebar + main content + side card */}
                       <div className="flex gap-6 items-start">
                         {/* Child Profile Sidebar - Desktop Only */}
-                        <div className="hidden lg:block w-72 xl:w-80 flex-shrink-0">
+                        <div className="hidden lg:block w-64 xl:w-72 flex-shrink-0">
                           <ChildProfileSidebar
                             profile={currentProfile}
                             stats={enhancedChildStats}
