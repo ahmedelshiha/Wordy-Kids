@@ -174,14 +174,33 @@ const WordyOwlMascot: React.FC<WordyOwlMascotProps> = ({
     }
   }, [isDragging]);
 
+  // Handle delay appearance
+  useEffect(() => {
+    if (delayAppearance) {
+      const delayTimer = setTimeout(
+        () => {
+          setDelayComplete(true);
+          setIsVisible(true);
+        },
+        delayMinutes * 60 * 1000,
+      );
+
+      return () => clearTimeout(delayTimer);
+    } else {
+      setIsVisible(true);
+    }
+  }, [delayAppearance, delayMinutes]);
+
   // Change message after 5 seconds
   useEffect(() => {
+    if (!isVisible || !delayComplete) return;
+
     const timer = setTimeout(() => {
       setCurrentMessage(1);
     }, 5000);
 
     return () => clearTimeout(timer);
-  }, []);
+  }, [isVisible, delayComplete]);
 
   // Blinking animation
   useEffect(() => {
