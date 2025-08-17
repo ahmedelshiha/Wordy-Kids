@@ -1771,7 +1771,6 @@ export default function Index({ initialProfile }: IndexProps) {
 
   return (
     <div className="min-h-screen bg-white relative overflow-x-hidden">
-
       {/* Session Restoration Modal */}
       {showSessionRestoration && sessionRestorationData && (
         <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
