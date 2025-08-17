@@ -369,20 +369,17 @@ export function DesktopKidNav({
             {/* Parent Controls */}
             <div className="grid grid-cols-1 gap-3">
               <Button
-                variant="outline"
                 onClick={() => {
-                  // Ensure kid mode stays enabled to prevent sidebar from showing
-                  setKidModeEnabled(true);
                   onRoleChange("parent");
                   setShowParentOptions(false);
                 }}
-                className="flex items-center gap-3 p-4 h-auto justify-start"
+                className="flex items-center gap-3 p-4 h-auto justify-start bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white border-0 shadow-lg hover:shadow-xl transition-all duration-300"
               >
-                <Users className="w-5 h-5 text-blue-600" />
+                <Users className="w-6 h-6" />
                 <div className="text-left">
-                  <div className="font-medium">Parent Dashboard</div>
-                  <div className="text-sm text-gray-500">
-                    View progress and analytics (Kid-safe mode)
+                  <div className="font-semibold text-lg">Parent Dashboard</div>
+                  <div className="text-sm text-blue-100">
+                    View detailed progress, analytics, and manage learning goals
                   </div>
                 </div>
               </Button>
