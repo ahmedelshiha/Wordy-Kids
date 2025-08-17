@@ -2084,19 +2084,21 @@ export default function Index({ initialProfile }: IndexProps) {
                       <div className="flex gap-6 items-start">
                         {/* Child Profile Sidebar - Desktop Only */}
                         <div className="hidden lg:block w-64 xl:w-72 flex-shrink-0">
-                          <ChildProfileSidebar
-                            profile={currentProfile}
-                            stats={enhancedChildStats}
-                            isCollapsed={isSidebarCollapsed}
-                            onToggleCollapse={handleSidebarToggle}
-                            onProfileEdit={handleProfileEdit}
-                            onQuickAction={handleQuickAction}
-                            onLogout={handleSidebarLogout}
-                            showTimeOfDay={true}
-                            showWeeklyProgress={true}
-                            position="left"
-                            className="border-none shadow-none bg-transparent"
-                          />
+                          <Card className="bg-card text-card-foreground shadow-sm backdrop-blur-sm ring-1 ring-black/5">
+                            <ChildProfileSidebar
+                              profile={currentProfile}
+                              stats={enhancedChildStats}
+                              isCollapsed={isSidebarCollapsed}
+                              onToggleCollapse={handleSidebarToggle}
+                              onProfileEdit={handleProfileEdit}
+                              onQuickAction={handleQuickAction}
+                              onLogout={handleSidebarLogout}
+                              showTimeOfDay={true}
+                              showWeeklyProgress={true}
+                              position="left"
+                              className="border-none shadow-none bg-transparent"
+                            />
+                          </Card>
                         </div>
 
                         {/* Main Game Content */}
