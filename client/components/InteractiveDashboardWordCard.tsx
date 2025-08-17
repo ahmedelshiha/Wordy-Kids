@@ -283,6 +283,11 @@ export function InteractiveDashboardWordCard({
     (sessionStats.wordsCompleted / SESSION_SIZE) * 100,
   );
 
+  // Calculate daily progress percentage for the progress bar
+  const dailyProgress = Math.round(
+    (dailyGoal.completed / dailyGoal.target) * 100,
+  );
+
   // Debug logging for session tracking
   useEffect(() => {
     console.log("Session Debug:", {
