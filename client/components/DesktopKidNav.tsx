@@ -114,7 +114,7 @@ export function DesktopKidNav({
   return (
     <>
       {/* Kid Mode: Bottom Navigation - Optimized for Small Screens */}
-      {kidModeEnabled && (
+      {true && (
         <div className="fixed bottom-0 left-0 right-0 z-40 hidden lg:block compact-kid-nav">
           <div className="bg-white/95 backdrop-blur-lg border-t-2 border-rainbow shadow-xl h-full max-h-16 lg:max-h-20 xl:max-h-24">
             <div className="max-w-4xl mx-auto px-3 lg:px-4 h-full">
