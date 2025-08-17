@@ -1267,9 +1267,9 @@ export function AIEnhancedInteractiveDashboardWordCard({
       >
         <Card
           className={cn(
-            "w-full max-w-3xl mx-auto relative overflow-hidden",
+            "w-full max-w-2xl mx-auto relative overflow-hidden",
             "bg-gradient-to-br from-white via-blue-50/30 to-purple-50/30",
-            "shadow-lg hover:shadow-xl border-0 rounded-2xl sm:rounded-3xl",
+            "shadow-md hover:shadow-lg border-0 rounded-xl sm:rounded-2xl",
             "backdrop-blur-sm ring-1 ring-black/5",
             celebrationEffect &&
               "animate-pulse shadow-2xl border-yellow-400 border-4 bg-gradient-to-br from-yellow-50 to-orange-50",
@@ -1294,7 +1294,7 @@ export function AIEnhancedInteractiveDashboardWordCard({
           )}
 
           <AICardContent
-            className="p-1 sm:p-3 md:p-5 lg:p-6 relative z-10"
+            className="p-1 sm:p-2 md:p-3 lg:p-4 relative z-10"
             aiState={aiState}
             aiActions={aiActions}
             showAIInsights={showAIInsights}
@@ -1331,11 +1331,11 @@ export function AIEnhancedInteractiveDashboardWordCard({
               <AchievementTeaser className="mb-1 sm:mb-2" />
             </div>
 
-            {/* Category and Progress Header - Mobile Optimized */}
-            <div className="text-center mb-2 sm:mb-4 md:mb-6 mt-1 sm:mt-3 md:mt-4">
+            {/* Category and Progress Header - Compact */}
+            <div className="text-center mb-1 sm:mb-2 md:mb-3 mt-1 sm:mt-2 md:mt-3">
               {/* Mobile: Simplified badges */}
-              <div className="md:hidden mb-2">
-                <div className="flex items-center justify-center gap-2">
+              <div className="md:hidden mb-1">
+                <div className="flex items-center justify-center gap-1">
                   <Badge
                     className={cn(
                       "text-xs px-2 py-1",
