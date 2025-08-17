@@ -140,6 +140,7 @@ import { useNavigationHistory } from "@/hooks/useNavigationHistory";
 import { useAIWordRecommendations } from "@/hooks/use-ai-word-recommendations";
 import { AIWordRecommendationService } from "@/lib/aiWordRecommendationService";
 import { getAISettings, isAIEnabled } from "@/lib/aiSettings";
+import { ChildProfileSidebar } from "@/components/ChildProfileSidebar";
 
 interface IndexProps {
   initialProfile?: any;
