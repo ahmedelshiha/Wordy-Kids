@@ -144,20 +144,20 @@ export function DesktopKidNav({
                     {/* Magical Glow Effect */}
                     {activeTab === tab.id && (
                       <motion.div
-                        className="absolute inset-0 bg-gradient-to-br from-white/20 to-transparent rounded-3xl"
+                        className="absolute inset-0 bg-gradient-to-br from-white/20 to-transparent rounded-2xl"
                         animate={{ opacity: [0.3, 0.6, 0.3] }}
                         transition={{ duration: 2, repeat: Infinity }}
                       />
                     )}
 
-                    {/* Emoji Icon */}
-                    <div className="text-5xl relative z-10">
+                    {/* Emoji Icon - Smaller for compact design */}
+                    <div className="text-2xl lg:text-3xl xl:text-4xl relative z-10">
                       <motion.div
                         animate={
                           activeTab === tab.id
                             ? {
-                                scale: [1, 1.2, 1],
-                                rotate: [0, 10, -10, 0],
+                                scale: [1, 1.1, 1],
+                                rotate: [0, 5, -5, 0],
                               }
                             : { scale: 1 }
                         }
@@ -171,8 +171,8 @@ export function DesktopKidNav({
                       </motion.div>
                     </div>
 
-                    {/* Label */}
-                    <span className="text-xl font-bold text-center relative z-10">
+                    {/* Label - Smaller text */}
+                    <span className="text-sm lg:text-base xl:text-lg font-bold text-center relative z-10">
                       {tab.label}
                     </span>
 
