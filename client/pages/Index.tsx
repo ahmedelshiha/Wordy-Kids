@@ -1404,7 +1404,7 @@ export default function Index({ initialProfile }: IndexProps) {
         achievementMessage = `Great job! You completed ${categoryDisplayName} with ${accuracy}% accuracy! Keep up the good work!\n\n🎓 Scholar Bonus: 100 points!`;
       } else if (accuracy >= 50) {
         achievementTitle = "Category Explorer! ��️🌟";
-        achievementIcon = "����️";
+        achievementIcon = "🗺️";
         achievementMessage = `Good effort! You finished ${categoryDisplayName} with ${accuracy}% accuracy! Practice makes perfect!\n\n🎁 Explorer Bonus: 75 points!`;
       } else {
         achievementTitle = "Category Challenger! 💪";
@@ -2166,7 +2166,7 @@ export default function Index({ initialProfile }: IndexProps) {
                 </aside>
 
                 {/* Main Content Area - Optimized for Small Screens */}
-                <div className="flex-1 p-2 sm:p-3 lg:p-4 pb-20 sm:pb-24 lg:pb-6 overflow-y-auto scroll-smooth">
+                <div className={`flex-1 p-2 sm:p-3 lg:p-4 pb-20 sm:pb-24 ${kidModeEnabled ? 'lg:pb-32' : 'lg:pb-6'} overflow-y-auto scroll-smooth`}>
                   <Tabs
                     value={activeTab}
                     onValueChange={setActiveTab}
