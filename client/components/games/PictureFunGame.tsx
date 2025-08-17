@@ -502,7 +502,7 @@ export default function PictureFunGame({
 
         {/* Mascot + Picture - Mobile Responsive */}
         <div className="flex items-center justify-center gap-2 sm:gap-3 mb-4 text-center">
-          <span className="text-3xl sm:text-4xl animate-gentle-float">📸</span>
+          <span className="text-2xl sm:text-3xl animate-gentle-float">📸</span>
           <div className="leading-tight">
             <div className="text-xs sm:text-sm uppercase tracking-wide opacity-90">
               Picture Fun
@@ -583,7 +583,9 @@ export default function PictureFunGame({
                 {showAnswer && isCorrect && (
                   <div className="absolute inset-0 bg-green-500/30 flex items-center justify-center backdrop-blur-sm rounded-2xl">
                     <div className="text-center">
-                      <span className="text-4xl animate-gentle-bounce">✅</span>
+                      <span className="text-2xl sm:text-3xl animate-gentle-bounce">
+                        ✅
+                      </span>
                       <div className="text-white font-bold text-xs mt-1 text-shadow">
                         Correct!
                       </div>
@@ -593,7 +595,9 @@ export default function PictureFunGame({
                 {showAnswer && isSelected && !isCorrect && (
                   <div className="absolute inset-0 bg-red-500/30 flex items-center justify-center backdrop-blur-sm rounded-2xl">
                     <div className="text-center">
-                      <span className="text-4xl animate-wiggle">❌</span>
+                      <span className="text-2xl sm:text-3xl animate-wiggle">
+                        ❌
+                      </span>
                       <div className="text-white font-bold text-xs mt-1 text-shadow">
                         Try again!
                       </div>

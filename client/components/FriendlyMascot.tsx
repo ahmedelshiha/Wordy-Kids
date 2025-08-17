@@ -87,10 +87,10 @@ export function FriendlyMascot({
   }, [delayAppearance, delayMinutes]);
 
   const sizeClasses = {
-    tiny: "text-lg",
-    small: "text-xl",
-    medium: "text-3xl",
-    large: "text-5xl",
+    tiny: "text-sm sm:text-base",
+    small: "text-base sm:text-lg",
+    medium: "text-lg sm:text-xl",
+    large: "text-xl sm:text-2xl",
   };
 
   const positionClasses = {
@@ -168,7 +168,7 @@ export function FriendlyMascot({
 // Floating mascot that appears periodically
 export function FloatingMascot({
   mood = "happy",
-  duration = 5000,
+  duration = 2000,
   className,
 }: {
   mood?: FriendlyMascotProps["mood"];
@@ -187,7 +187,7 @@ export function FloatingMascot({
     const initialTimer = setTimeout(showMascot, 2000);
 
     // Show mascot periodically
-    const interval = setInterval(showMascot, 30000); // Every 30 seconds
+    const interval = setInterval(showMascot, 7 * 60 * 1000); // Every 7 minutes
 
     return () => {
       clearTimeout(initialTimer);
@@ -207,10 +207,10 @@ export function FloatingMascot({
     >
       <FriendlyMascot
         mood={mood}
-        size="large"
+        size="medium"
         showSpeechBubble={true}
         animate={true}
-        className="bg-white/90 backdrop-blur-sm rounded-full p-4 shadow-lg"
+        className="bg-white/90 backdrop-blur-sm rounded-full p-2 sm:p-3 shadow-lg"
       />
     </div>
   );
@@ -230,7 +230,7 @@ export function MascotReaction({
     const timer = setTimeout(() => {
       setIsVisible(false);
       onComplete?.();
-    }, 3000);
+    }, 2000);
 
     return () => clearTimeout(timer);
   }, [onComplete]);
@@ -257,10 +257,10 @@ export function MascotReaction({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/20 backdrop-blur-sm">
-      <div className="celebration-burst bg-white rounded-3xl p-8 shadow-2xl animate-mascot-bounce">
+      <div className="celebration-burst bg-white rounded-3xl p-4 sm:p-6 shadow-2xl animate-mascot-bounce max-w-sm mx-4">
         <FriendlyMascot
           mood={config.mood}
-          size="large"
+          size="medium"
           position="center"
           message={config.message}
           showSpeechBubble={true}
