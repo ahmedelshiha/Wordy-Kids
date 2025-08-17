@@ -131,10 +131,8 @@ export function DesktopKidNav({
                     onClick={() => onTabChange(tab.id)}
                     className={cn(
                       "flex flex-col items-center transition-all duration-300 transform relative group kid-nav-button-compact",
-                      // Apply container-less design to all icons - kid-friendly approach with larger containers
-                      tab.id === "dashboard"
-                        ? "min-w-[120px] lg:min-w-[140px] xl:min-w-[160px] scale-125 lg:scale-140 p-1 lg:p-2 xl:p-3 gap-0 lg:gap-0.5"
-                        : "min-w-[100px] lg:min-w-[120px] xl:min-w-[140px] scale-110 lg:scale-120 p-1 lg:p-2 xl:p-3 gap-0 lg:gap-0.5",
+                      // Apply container-less design to all icons - same size for all icons
+                      "min-w-[100px] lg:min-w-[120px] xl:min-w-[140px] scale-110 lg:scale-120 p-1 lg:p-2 xl:p-3 gap-0 lg:gap-0.5",
                       // All buttons now have transparent background - natural kid-friendly appearance
                       "bg-transparent hover:bg-transparent shadow-none hover:shadow-none"
                     )}
@@ -147,12 +145,7 @@ export function DesktopKidNav({
                     {/* Remove old glow effect for all icons - now using sparkles */}
 
                     {/* Emoji Icon - Larger kid-friendly icons for all, moved up */}
-                    <div className={cn(
-                      "relative z-10 -mt-2 lg:-mt-3 xl:-mt-4",
-                      tab.id === "dashboard"
-                        ? "text-6xl lg:text-7xl xl:text-8xl" // Even larger home icon
-                        : "text-4xl lg:text-5xl xl:text-6xl" // Much larger icons for all others
-                    )}>
+                    <div className="relative z-10 -mt-2 lg:-mt-3 xl:-mt-4 text-4xl lg:text-5xl xl:text-6xl">
                       <motion.div
                         animate={
                           activeTab === tab.id
