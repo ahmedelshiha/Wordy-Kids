@@ -44,6 +44,7 @@ import { CompactMobileSettingsPanel } from "@/components/CompactMobileSettingsPa
 import { FloatingBubbles } from "@/components/FloatingBubbles";
 import { CelebrationEffect } from "@/components/CelebrationEffect";
 import { FloatingHelpMenu } from "@/components/FloatingHelpMenu";
+import { FriendlyMascot, FloatingMascot, MascotReaction } from "@/components/FriendlyMascot";
 import { SessionRestoration } from "@/components/SessionRestoration";
 import {
   useSessionPersistence,
