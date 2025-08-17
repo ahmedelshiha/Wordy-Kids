@@ -1250,6 +1250,23 @@
   @apply m-1 lg:m-2;
 }
 
+/* Dashboard optimization classes */
+.dashboard-compact-btn {
+  @apply py-1.5 px-2 sm:py-2 sm:px-4 rounded-xl min-h-[40px] sm:min-h-[48px] text-xs sm:text-sm;
+}
+
+.dashboard-compact-icon {
+  @apply w-4 h-4 mr-1;
+}
+
+.dashboard-compact-container {
+  @apply max-w-2xl mx-auto;
+}
+
+.dashboard-compact-spacing {
+  @apply mb-1 sm:mb-2 md:mb-3;
+}
+
 /* Small screen optimizations */
 @media (max-width: 1366px) {
   .optimize-for-small-screen {
@@ -1284,6 +1301,19 @@
 
   .optimize-for-small-screen .gap-3 {
     gap: 0.375rem;
+  }
+
+  /* Dashboard specific optimizations */
+  .optimize-for-small-screen .dashboard-large-text {
+    font-size: 0.875rem;
+  }
+
+  .optimize-for-small-screen .dashboard-emoji {
+    font-size: 4rem;
+  }
+
+  .optimize-for-small-screen .dashboard-container {
+    padding: 0.75rem;
   }
 }
 
