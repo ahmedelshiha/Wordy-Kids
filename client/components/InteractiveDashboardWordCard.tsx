@@ -1097,21 +1097,53 @@ export function InteractiveDashboardWordCard({
         </div>
       )}
 
-      {/* Daily Goal Header */}
-      <div className="text-center bg-gradient-to-r from-educational-blue to-educational-purple text-white p-4 rounded-2xl shadow-lg">
-        <div className="flex items-center justify-center gap-4 mb-3">
-          <Target className="w-6 h-6" />
-          <h2 className="text-lg font-bold">
-            Today's Goal: Learn {dailyGoal.target} words ({dailyGoal.completed}/
-            {dailyGoal.target})
-          </h2>
-          <div className="flex items-center gap-1">
-            <Zap className="w-5 h-5 text-yellow-300" />
-            <span className="font-bold">{dailyGoal.streak}</span>
+      {/* AI Progress Header */}
+      <div className="bg-white p-4 rounded-2xl shadow-lg border border-gray-200">
+        {/* Title section */}
+        <div className="flex items-center justify-center gap-2 mb-4">
+          <span className="text-lg">🧠</span>
+          <span className="text-lg">🎯</span>
+          <h2 className="text-lg font-bold text-gray-800">AI Progress</h2>
+        </div>
+
+        {/* Progress bar section */}
+        <div className="mb-4">
+          <div className="flex items-center justify-between mb-2">
+            <div className="flex items-center gap-1">
+              <span className="text-lg">🚀</span>
+              <span className="font-medium text-gray-700">{dailyGoal.completed}/{dailyGoal.target}</span>
+            </div>
+            <span className="font-bold text-gray-800">{dailyProgress}%</span>
+          </div>
+          <div className="w-full bg-gray-200 rounded-full h-2">
+            <div
+              className="bg-gradient-to-r from-blue-500 to-purple-500 h-2 rounded-full transition-all duration-300"
+              style={{ width: `${dailyProgress}%` }}
+            ></div>
           </div>
         </div>
-        <Progress value={dailyProgress} className="h-3 bg-white/20" />
-        <p className="text-sm mt-2 opacity-90">{dailyProgress}% complete</p>
+
+        {/* Stats section */}
+        <div className="flex items-center justify-between text-sm">
+          <div className="flex items-center gap-1 bg-yellow-100 px-2 py-1 rounded-lg">
+            <span className="text-lg">😊</span>
+            <span className="font-medium">{sessionStats.wordsRemembered}</span>
+          </div>
+          <div className="flex items-center gap-1 bg-orange-100 px-2 py-1 rounded-lg">
+            <span className="text-lg">💪</span>
+            <span className="font-medium">{sessionStats.wordsForgotten}</span>
+          </div>
+          <div className="flex items-center gap-1 bg-purple-100 px-2 py-1 rounded-lg">
+            <span className="text-lg">🎯</span>
+            <span className="font-medium">{sessionStats.accuracy}%</span>
+          </div>
+        </div>
+
+        {/* AI encouragement */}
+        <div className="mt-3 text-center">
+          <span className="text-lg">🌟</span>
+          <span className="text-purple-600 font-medium ml-1">AI: Great start!</span>
+        </div>
       </div>
 
       {/* Interactive Word Card */}
