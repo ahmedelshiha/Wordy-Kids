@@ -239,23 +239,23 @@ export function MobileBottomNav({
                     : "text-gray-700 hover:text-purple-600 kid-interactive",
                 )}
               >
-                {/* Magical Emoji Icon */}
+                {/* Magical Emoji Icon & Label Combined */}
                 <div
                   className={cn(
-                    "text-5xl sm:text-6xl md:text-7xl lg:text-8xl transition-transform duration-200 -mt-2",
+                    "flex flex-col items-center transition-transform duration-200 -mt-2",
                     tab.id === "dashboard" && "animate-mascot-bounce",
                     tab.id === "learn" && "animate-gentle-float",
                     tab.id === "quiz" && "animate-mascot-happy",
                     tab.id === "progress" && "animate-gentle-bounce",
                   )}
                 >
-                  {tab.emoji}
+                  <div className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl">
+                    {tab.emoji}
+                  </div>
+                  <span className="text-[10px] font-kid-friendly font-bold leading-none text-center text-white whitespace-nowrap mt-1">
+                    {tab.label}
+                  </span>
                 </div>
-
-                {/* Kid-friendly Label */}
-                <span className="absolute bottom-[-8px] left-1/2 transform -translate-x-1/2 text-[10px] font-kid-friendly font-bold leading-none text-center text-white whitespace-nowrap z-10">
-                  {tab.label}
-                </span>
 
                 {/* Magical Sparkle for Active Tab */}
                 {activeTab === tab.id && (
@@ -283,17 +283,19 @@ export function MobileBottomNav({
             >
               <div
                 className={cn(
-                  "text-5xl sm:text-6xl md:text-7xl lg:text-8xl transition-transform duration-200 -mt-2",
+                  "flex flex-col items-center transition-transform duration-200 -mt-2",
                   showMoreMenu
                     ? "rotate-90 scale-110 animate-mascot-bounce"
                     : "animate-gentle-float",
                 )}
               >
-                🎪
+                <div className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl">
+                  🎪
+                </div>
+                <span className="text-[10px] font-kid-friendly font-bold leading-none text-center text-white whitespace-nowrap mt-1">
+                  More
+                </span>
               </div>
-              <span className="absolute bottom-[-8px] left-1/2 transform -translate-x-1/2 text-[10px] font-kid-friendly font-bold leading-none text-center text-white whitespace-nowrap z-10">
-                More
-              </span>
 
               {/* Magical sparkle for active more menu */}
               {showMoreMenu && (
