@@ -122,7 +122,7 @@ export function DesktopKidNav({
       {/* Kid Mode: Bottom Navigation - Optimized for Small Screens */}
       {kidModeEnabled && (
         <div className="fixed bottom-0 left-0 right-0 z-40 hidden lg:block compact-kid-nav">
-          <div className="bg-white/95 backdrop-blur-lg border-t-2 border-rainbow shadow-xl h-full">
+          <div className="bg-white/95 backdrop-blur-lg border-t-2 border-rainbow shadow-xl h-full max-h-16 lg:max-h-20 xl:max-h-24">
             <div className="max-w-4xl mx-auto px-3 lg:px-4 h-full">
               <div className="flex items-center justify-center gap-2 lg:gap-4 xl:gap-6 h-full">
                 {kidNavTabs.map((tab, index) => (
@@ -133,7 +133,7 @@ export function DesktopKidNav({
                       "flex flex-col items-center transition-all duration-300 transform relative group kid-nav-button-compact",
                       // Special styling for home button - closer spacing and no container background
                       tab.id === "dashboard"
-                        ? "min-w-[90px] lg:min-w-[110px] xl:min-w-[130px] scale-110 lg:scale-125 p-1 lg:p-2 xl:p-3 gap-0 lg:gap-0.5"
+                        ? "min-w-[100px] lg:min-w-[120px] xl:min-w-[140px] scale-125 lg:scale-140 p-1 lg:p-2 xl:p-3 gap-0 lg:gap-0.5"
                         : "min-w-[70px] lg:min-w-[80px] xl:min-w-[100px] p-2 lg:p-3 xl:p-4 rounded-xl lg:rounded-2xl gap-1 lg:gap-1.5",
                       // Home button has no background, others keep their gradient
                       tab.id === "dashboard"
@@ -161,7 +161,7 @@ export function DesktopKidNav({
                     <div className={cn(
                       "relative z-10",
                       tab.id === "dashboard"
-                        ? "text-4xl lg:text-5xl xl:text-6xl" // Larger home icon
+                        ? "text-5xl lg:text-6xl xl:text-7xl" // Even larger home icon
                         : "text-2xl lg:text-3xl xl:text-4xl" // Normal size for others
                     )}>
                       <motion.div
