@@ -94,11 +94,11 @@ export const AICardContent = React.forwardRef<
     }, [sessionStats.accuracy]);
 
     return (
-      <CardContent ref={ref} className={cn(className)} {...props}>
+      <CardContent ref={ref} className={cn("ai-card-mobile", className)} {...props}>
         {/* Comprehensive AI Control Header - Mobile Enhanced */}
         {enableAIHeader && (
           <Card className="bg-gradient-to-r from-blue-50/80 to-purple-50/80 border border-blue-200/60 mb-3 sm:mb-4">
-            <CardContent className="p-2 sm:p-3 md:p-4">
+            <CardContent className="card-content p-2 sm:p-3 md:p-4">
               <div className="flex items-center justify-between gap-2">
                 <div className="flex items-center gap-2 sm:gap-3 min-w-0 flex-1">
                   {/* AI Status Indicator with Confidence - Mobile Optimized */}
