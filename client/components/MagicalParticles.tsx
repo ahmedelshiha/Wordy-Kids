@@ -187,33 +187,33 @@ export function SuccessParticles({ trigger, onComplete }: { trigger: boolean; on
 
 export function LevelUpParticles({ trigger }: { trigger: boolean }) {
   return (
-    <MagicalParticles 
+    <MagicalParticles
       trigger={trigger}
       type="stars"
       intensity="high"
-      duration={4000"
+      duration={4000}
     />
   );
 }
 
 export function WordLearnedParticles({ trigger }: { trigger: boolean }) {
   return (
-    <MagicalParticles 
+    <MagicalParticles
       trigger={trigger}
       type="sparkles"
       intensity="medium"
-      duration={2000"
+      duration={2000}
     />
   );
 }
 
 export function AchievementParticles({ trigger }: { trigger: boolean }) {
   return (
-    <MagicalParticles 
+    <MagicalParticles
       trigger={trigger}
       type="rainbow"
       intensity="high"
-      duration={5000"
+      duration={5000}
     />
   );
 }
