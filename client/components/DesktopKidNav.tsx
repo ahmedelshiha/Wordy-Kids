@@ -150,8 +150,8 @@ export function DesktopKidNav({
                     <div className={cn(
                       "relative z-10",
                       tab.id === "dashboard"
-                        ? "text-5xl lg:text-6xl xl:text-7xl" // Largest home icon
-                        : "text-3xl lg:text-4xl xl:text-5xl" // Larger icons for others too
+                        ? "text-6xl lg:text-7xl xl:text-8xl" // Even larger home icon
+                        : "text-4xl lg:text-5xl xl:text-6xl" // Much larger icons for all others
                     )}>
                       <motion.div
                         animate={
