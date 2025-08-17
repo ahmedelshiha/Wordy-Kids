@@ -140,7 +140,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   const logout = () => {
     // Store current path before logout to avoid redirecting authenticated users back to app
-    const currentPath = location?.pathname || "/";
+    const currentPath = location.current?.pathname || "/";
     const isAppRoute = [
       "/app",
       "/admin",
@@ -152,10 +152,10 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     clearSession();
     setUser(null);
 
-    if (navigate && typeof navigate === "function") {
+    if (navigate.current && typeof navigate.current === "function") {
       // If user was on an app route, redirect to login, otherwise stay on current page
       if (isAppRoute) {
-        navigate("/", { replace: true });
+        navigate.current("/", { replace: true });
       }
     }
   };
