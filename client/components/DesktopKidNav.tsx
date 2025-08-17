@@ -370,12 +370,26 @@ export function DesktopKidNav({
       <Dialog open={showParentOptions} onOpenChange={setShowParentOptions}>
         <DialogContent className="sm:max-w-md">
           <DialogHeader>
-            <DialogTitle className="flex items-center gap-2">
-              <Crown className="w-5 h-5 text-yellow-600" />
-              Family Zone
+            <DialogTitle className="flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <Crown className="w-5 h-5 text-yellow-600" />
+                Family Zone
+              </div>
+              <div className={`text-sm px-2 py-1 rounded-full ${
+                kidModeEnabled
+                  ? "bg-green-100 text-green-700 border border-green-200"
+                  : "bg-amber-100 text-amber-700 border border-amber-200"
+              }`}>
+                {kidModeEnabled ? "🔒 Safe Mode" : "⚠️ Sidebar Visible"}
+              </div>
             </DialogTitle>
             <DialogDescription>
               Access parent controls and family settings.
+              {!kidModeEnabled && (
+                <span className="block text-amber-600 font-medium mt-1">
+                  Note: Sidebar is currently visible to children.
+                </span>
+              )}
             </DialogDescription>
           </DialogHeader>
           <div className="space-y-4">
