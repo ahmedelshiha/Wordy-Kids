@@ -1221,7 +1221,7 @@ export function AIEnhancedInteractiveDashboardWordCard({
               )}
             >
               {/* Mobile Layout: Ultra Compact */}
-              <div className="md:hidden p-2">
+              <div className="md:hidden p-1.5">
                 <div className="flex items-center justify-between gap-2">
                   {/* Left: Enhanced AI Status */}
                   <div className="flex items-center gap-2 flex-1">
@@ -1242,7 +1242,12 @@ export function AIEnhancedInteractiveDashboardWordCard({
                           ? "AI Learning Active!"
                           : "AI Helper"}
                         {aiState.isSessionActive && (
-                          <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
+                          <>
+                            <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
+                            <span className="text-xs opacity-75 bg-white/20 px-1.5 py-0.5 rounded-full ml-1">
+                              {Math.round(confidenceLevel * 100)}% 📊
+                            </span>
+                          </>
                         )}
                       </span>
                     </div>
@@ -1316,17 +1321,6 @@ export function AIEnhancedInteractiveDashboardWordCard({
                   </div>
                 </div>
 
-                {/* Mobile Progress: Only show if session active */}
-                {aiState.isSessionActive && (
-                  <div className="mt-2 text-center opacity-80">
-                    <span className="text-xs">
-                      Word {currentWordIndex + 1}/{SESSION_SIZE} •{" "}
-                    </span>
-                    <span className="text-xs opacity-75 bg-white/20 px-2 py-0.5 rounded-full">
-                      {Math.round(confidenceLevel * 100)}% 📊
-                    </span>
-                  </div>
-                )}
               </div>
 
               {/* Desktop Layout: Full Features */}
@@ -1355,7 +1349,12 @@ export function AIEnhancedInteractiveDashboardWordCard({
                             : "AI Smart Helper"}
                         </span>
                         {aiState.isSessionActive && (
-                          <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
+                          <>
+                            <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
+                            <span className="text-sm bg-white/20 px-2 py-1 rounded-full">
+                              {Math.round(confidenceLevel * 100)}% 📊
+                            </span>
+                          </>
                         )}
                         <Button
                           onClick={() => {
@@ -1407,13 +1406,6 @@ export function AIEnhancedInteractiveDashboardWordCard({
                         </Button>
                       </div>
                       <div className="flex items-center gap-3 opacity-90">
-                        <span className="text-xs opacity-60 scale-75">
-                          📊 {Math.round(confidenceLevel * 100)}% Confidence
-                        </span>
-                        <span>•</span>
-                        <span>
-                          📚 Word {currentWordIndex + 1} of {SESSION_SIZE}
-                        </span>
                         {aiState.isSessionActive && (
                           <span className="bg-white/20 px-2 py-1 rounded-full text-xs">
                             Active
