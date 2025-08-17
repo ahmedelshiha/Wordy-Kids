@@ -3,6 +3,8 @@ import { cn } from "@/lib/utils";
 
 interface WordyOwlMascotProps {
   isDraggable?: boolean;
+  delayAppearance?: boolean;
+  delayMinutes?: number;
 }
 
 const WordyOwlMascot: React.FC<WordyOwlMascotProps> = ({
