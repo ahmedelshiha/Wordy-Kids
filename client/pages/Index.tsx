@@ -2093,7 +2093,6 @@ export default function Index({ initialProfile }: IndexProps) {
                                 onToggleCollapse={handleSidebarToggle}
                                 onProfileEdit={handleProfileEdit}
                                 onQuickAction={handleQuickAction}
-                                onLogout={handleSidebarLogout}
                                 showTimeOfDay={true}
                                 showWeeklyProgress={true}
                                 position="left"
