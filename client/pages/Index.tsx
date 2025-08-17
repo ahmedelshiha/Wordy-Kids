@@ -3409,7 +3409,7 @@ export default function Index({ initialProfile }: IndexProps) {
 
           {/* Floating Registration Reminder for Guest Users - Mobile Only (Desktop has side card) */}
           {showFloatingReminder && (
-            <div className="xl:hidden">
+            <div className="lg:hidden">
               <KidRegistrationNotification
                 variant="floating"
                 onDismiss={() => dismissFloatingReminder()}
