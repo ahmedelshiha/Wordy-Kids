@@ -2963,8 +2963,8 @@ export default function Index({ initialProfile }: IndexProps) {
                             )}
                           </div>
 
-                          {/* Kid-Friendly Quiz Cards - Mobile Optimized */}
-                          <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 md:gap-4 max-w-6xl mx-auto px-2">
+                          {/* Compact Quiz Cards */}
+                          <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2 md:gap-3 max-w-5xl mx-auto px-1">
                             {/* Word Garden - Listen & Pick (FIRST GAME) */}
                             <Card className="cursor-pointer hover:shadow-lg transition-all duration-300 hover:scale-105 border-2 border-emerald-400/30 animate-kid-float">
                               <CardContent className="p-3 md:p-4 text-center">
