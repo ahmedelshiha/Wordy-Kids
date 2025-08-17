@@ -1378,9 +1378,9 @@ export default function Index({ initialProfile }: IndexProps) {
       if (accuracy === 100) {
         achievementTitle = "Perfect Category Mastery! 🏆";
         achievementIcon = "🏆";
-        achievementMessage = `Outstanding! You remembered ALL ${totalWords} words in ${categoryDisplayName}! You're a true champion!\n\n🎁 Perfect Mastery Bonus: 200 points!\n�� New adventure zone unlocked!`;
+        achievementMessage = `Outstanding! You remembered ALL ${totalWords} words in ${categoryDisplayName}! You're a true champion!\n\n🎁 Perfect Mastery Bonus: 200 points!\n🗺️ New adventure zone unlocked!`;
       } else if (accuracy >= 90) {
-        achievementTitle = "Category Expert! ��";
+        achievementTitle = "Category Expert! 🎓";
         achievementIcon = "🎓⭐";
         achievementMessage = `Excellent work! You mastered ${categoryDisplayName} with ${accuracy}% accuracy! Almost perfect!\n\n🎁 Expert Bonus: 150 points!`;
       } else if (accuracy >= 75) {
@@ -2515,7 +2515,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                                 } else {
                                                   return (
                                                     <div className="text-xs text-blue-600 font-medium flex items-center gap-1">
-                                                      <span>���</span>
+                                                      <span>✨</span>
                                                       <span className="hidden sm:inline">
                                                         New
                                                       </span>
@@ -2786,7 +2786,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                                         type: "celebration",
                                                         title:
                                                           completionResult.title,
-                                                        message: `${completionResult.message}\n\n✅ Remembered: ${completionResult.totalRemembered} words\n❌ Need practice: ${completionResult.totalWords - completionResult.totalRemembered} words\n\n🏆 Category Achievement Unlocked! 🎉`,
+                                                        message: `${completionResult.message}\n\n✅ Remembered: ${completionResult.totalRemembered} words\n❌ Need practice: ${completionResult.totalWords - completionResult.totalRemembered} words\n\n🏆 Category Achievement Unlocked! ����`,
                                                         points:
                                                           completionResult.totalRemembered *
                                                             20 +
@@ -2892,7 +2892,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                               ) {
                                                 return (
                                                   <div className="text-xs text-orange-600 font-medium">
-                                                    �� Review
+                                                    📚 Review
                                                   </div>
                                                 );
                                               } else {

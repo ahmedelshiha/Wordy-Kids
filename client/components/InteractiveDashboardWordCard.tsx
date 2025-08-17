@@ -1714,7 +1714,7 @@ export function InteractiveDashboardWordCard({
                       </span>
                     </div>
                     <div className="flex items-center gap-0.5 bg-purple-100 px-1 py-0.5 rounded flex-1 justify-center">
-                      <span>����</span>
+                      <span>📊</span>
                       <span className="font-medium">
                         {sessionStats.accuracy}%
                       </span>
