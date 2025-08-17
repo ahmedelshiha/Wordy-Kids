@@ -237,10 +237,10 @@ export function MobileBottomNav({
                 <div
                   className={cn(
                     "text-2xl sm:text-3xl -mt-1 transition-transform duration-200",
-                    tab.id === "dashboard" && (activeTab === tab.id ? "animate-mascot-bounce" : "animate-gentle-float"),
-                    tab.id === "learn" && (activeTab === tab.id ? "animate-gentle-float" : "animate-gentle-float"),
-                    tab.id === "quiz" && (activeTab === tab.id ? "animate-mascot-happy" : "animate-gentle-float"),
-                    tab.id === "progress" && (activeTab === tab.id ? "animate-gentle-bounce" : "animate-gentle-float"),
+                    tab.id === "dashboard" && "animate-mascot-bounce",
+                    tab.id === "learn" && "animate-gentle-float",
+                    tab.id === "quiz" && "animate-mascot-happy",
+                    tab.id === "progress" && "animate-gentle-bounce",
                   )}
                 >
                   {tab.emoji}
