@@ -353,7 +353,16 @@ export const EnhancedChildProfileCard: React.FC<
                         {accuracy}% Awesome! ✨
                       </span>
                     </div>
-                    <Progress value={accuracy} className="h-4 bg-green-100 border-2 border-green-200 rounded-full overflow-hidden" />
+                    <motion.div
+                      whileHover={{ scale: 1.02 }}
+                      onClick={() => {
+                        kidFriendlyEffects.playSound(SOUNDS.success);
+                        if (accuracy > 90) celebrate.achievement();
+                      }}
+                      className="cursor-pointer"
+                    >
+                      <Progress value={accuracy} className="h-6 bg-green-100 border-3 border-green-200 rounded-full overflow-hidden shadow-lg transition-all duration-500 hover:shadow-xl" />
+                    </motion.div>
                   </div>
 
                   {/* Weekly Challenge */}
@@ -361,16 +370,25 @@ export const EnhancedChildProfileCard: React.FC<
                     <div>
                       <div className="flex justify-between items-center mb-2">
                         <span className="text-sm font-bold text-gray-800">
-                          🏆 Weekly Challenge!
+                          ��� Weekly Challenge!
                         </span>
                         <span className="text-xs text-blue-600 font-bold bg-blue-100 px-2 py-1 rounded-full">
                           {profile.weeklyGoal.current}/{profile.weeklyGoal.target} 🎉
                         </span>
                       </div>
-                      <Progress
-                        value={weeklyProgress}
-                        className="h-4 bg-blue-100 border-2 border-blue-200 rounded-full overflow-hidden"
-                      />
+                      <motion.div
+                        whileHover={{ scale: 1.02 }}
+                        onClick={() => {
+                          kidFriendlyEffects.playSound(SOUNDS.success);
+                          if (weeklyProgress >= 100) celebrate.achievement();
+                        }}
+                        className="cursor-pointer"
+                      >
+                        <Progress
+                          value={weeklyProgress}
+                          className="h-6 bg-blue-100 border-3 border-blue-200 rounded-full overflow-hidden shadow-lg transition-all duration-500 hover:shadow-xl"
+                        />
+                      </motion.div>
                     </div>
                   )}
                 </div>
