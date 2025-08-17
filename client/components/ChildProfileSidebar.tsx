@@ -104,16 +104,25 @@ export const ChildProfileSidebar: React.FC<ChildProfileSidebarProps> = ({
       variants={sidebarVariants}
       animate={isCollapsed ? "collapsed" : "expanded"}
       className={cn(
-        "bg-gradient-to-b from-purple-50 via-pink-50 to-purple-50",
-        "border-r border-purple-200/50 shadow-lg",
+        "bg-gradient-to-b from-blue-100 via-purple-100 to-pink-100",
+        "border-r-4 border-rainbow-200 shadow-xl",
         "flex flex-col h-full overflow-hidden",
-        "transition-all duration-300",
-        position === "right" && "border-r-0 border-l",
+        "transition-all duration-500",
+        "relative",
+        position === "right" && "border-r-0 border-l-4",
         className,
       )}
     >
+      {/* Fun Background Decorations */}
+      <div className="absolute inset-0 pointer-events-none overflow-hidden">
+        <div className="absolute top-10 left-4 text-2xl animate-bounce" style={{animationDelay: '0s'}}>⭐</div>
+        <div className="absolute top-20 right-6 text-xl animate-bounce" style={{animationDelay: '1s'}}>🌟</div>
+        <div className="absolute bottom-32 left-6 text-lg animate-bounce" style={{animationDelay: '2s'}}>🎯</div>
+        <div className="absolute bottom-48 right-4 text-xl animate-bounce" style={{animationDelay: '0.5s'}}>🏆</div>
+      </div>
+
       {/* Sidebar Header */}
-      <div className="p-4 border-b border-purple-200/30">
+      <div className="p-4 border-b-2 border-rainbow-300/50 bg-gradient-to-r from-yellow-100/80 to-orange-100/80 relative z-10">
         <div className="flex items-center justify-between">
           <AnimatePresence mode="wait">
             {!isCollapsed && (
@@ -127,22 +136,18 @@ export const ChildProfileSidebar: React.FC<ChildProfileSidebarProps> = ({
                 {showTimeOfDay && (
                   <div
                     className={cn(
-                      "bg-gradient-to-r rounded-lg p-3 mb-3",
+                      "bg-gradient-to-r rounded-xl p-3 mb-3 shadow-lg border-2 border-white/50",
                       timeInfo.color,
                     )}
                   >
                     <div className="flex items-center space-x-2">
                       <span className="text-lg">{timeInfo.icon}</span>
                       <div>
-                        <div className="text-sm font-medium text-gray-700">
-                          {timeInfo.greeting}!
+                        <div className="text-sm font-bold text-gray-800">
+                          {timeInfo.greeting}, Super Star! 🌟
                         </div>
-                        <div className="text-xs text-gray-600">
-                          {currentTime.toLocaleDateString("en-US", {
-                            weekday: "long",
-                            month: "short",
-                            day: "numeric",
-                          })}
+                        <div className="text-xs text-gray-700 font-medium">
+                          Let's learn something awesome today!
                         </div>
                       </div>
                     </div>
@@ -158,7 +163,7 @@ export const ChildProfileSidebar: React.FC<ChildProfileSidebarProps> = ({
               variant="ghost"
               size="sm"
               onClick={onToggleCollapse}
-              className="h-8 w-8 p-0 bg-white/70 hover:bg-white shadow-sm"
+              className="h-10 w-10 p-0 bg-gradient-to-r from-yellow-200 to-orange-200 hover:from-yellow-300 hover:to-orange-300 shadow-lg border-2 border-white rounded-full transition-all duration-300 hover:scale-110"
             >
               {isCollapsed ? (
                 position === "left" ? (
