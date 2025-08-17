@@ -1474,7 +1474,7 @@ export function AIEnhancedInteractiveDashboardWordCard({
                     }
                     variant="outline"
                     size="sm"
-                    className="px-2 py-1 text-xs rounded-lg bg-yellow-50 border-yellow-200 text-yellow-700 min-h-[36px]"
+                    className="px-2 py-1 text-xs rounded-lg bg-yellow-50 border-yellow-200 text-yellow-700 min-h-[32px]"
                   >
                     {EMOJI_CONSTANTS.HINT} Hint
                   </Button>
