@@ -1991,19 +1991,22 @@ export default function Index({ initialProfile }: IndexProps) {
                 {/* Desktop Sidebar - Hidden on Mobile */}
                 <aside className="hidden lg:flex lg:w-60 xl:w-64 2xl:w-72 bg-gradient-to-b from-purple-50 via-pink-50 to-blue-50 border-r border-purple-200 shadow-sm overflow-y-auto lg:max-h-screen">
                   <div className="p-3 lg:p-4 w-full">
-                    {/* Logo Section - Kid-Friendly & Magical */}
-                    <div className="kid-card mb-4 lg:mb-6 kid-gradient-magic">
+                    {/* Magical Portal Logo Section */}
+                    <div className="bg-gradient-to-br from-purple-400 via-pink-400 to-blue-400 p-4 rounded-2xl shadow-xl mb-4 border-2 border-yellow-300 animate-kid-pulse-glow">
                       <div className="flex items-center gap-3">
-                        <div className="mascot-character text-2xl animate-gentle-bounce">
-                          🦁
+                        <div className="text-3xl animate-mascot-bounce">
+                          🌟
                         </div>
                         <div>
-                          <h1 className="kid-text-big font-bold text-purple-800">
-                            Wordy Kids!
+                          <h1 className="text-lg font-kid-friendly text-white text-shadow">
+                            Wordy Portal ✨
                           </h1>
-                          <p className="text-sm font-semibold text-purple-700">
-                            ✨ Magical Learning! 🚀
+                          <p className="text-sm text-yellow-200 font-kid-friendly">
+                            Magical Learning! 🚀
                           </p>
+                        </div>
+                        <div className="text-2xl animate-gentle-float animation-delay-200">
+                          🎯
                         </div>
                       </div>
                       <div className="mt-2 text-center">
