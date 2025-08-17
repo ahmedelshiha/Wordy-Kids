@@ -275,7 +275,7 @@ export function MobileBottomNav({
             <button
               onClick={onMoreToggle}
               className={cn(
-                "kid-nav-item flex flex-col items-center gap-0 p-2 rounded-lg transition-all duration-200 transform active:scale-95 min-w-0 flex-1 mx-0.5 min-h-[60px] justify-center",
+                "kid-nav-item flex flex-col items-center gap-0 p-1 rounded-lg transition-all duration-200 transform active:scale-95 min-w-0 flex-1 mx-0.5 min-h-[45px] justify-center",
                 showMoreMenu
                   ? "text-white shadow-lg kid-button active"
                   : "text-purple-600 hover:text-purple-700 kid-interactive",
@@ -283,7 +283,7 @@ export function MobileBottomNav({
             >
               <div
                 className={cn(
-                  "text-3xl sm:text-4xl md:text-5xl lg:text-6xl -mt-3 sm:-mt-4 md:-mt-5 lg:-mt-6 transition-transform duration-200",
+                  "text-5xl sm:text-6xl md:text-7xl lg:text-8xl transition-transform duration-200",
                   showMoreMenu
                     ? "rotate-90 scale-110 animate-mascot-bounce"
                     : "animate-gentle-float",
@@ -291,7 +291,7 @@ export function MobileBottomNav({
               >
                 🎪
               </div>
-              <span className="text-xs font-kid-friendly font-bold leading-tight text-center text-white -mt-2">
+              <span className="text-xs font-kid-friendly font-bold leading-tight text-center text-white -mt-1">
                 More
               </span>
 
