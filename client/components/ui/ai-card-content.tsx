@@ -33,34 +33,15 @@ export const AICardContent = React.forwardRef<
       // End current AI session
       aiActions.endSession({ completed: false });
     } else {
-      // Start AI session with current words
-      if (sessionWords.length === 0) {
-        console.warn("Cannot start AI session: no words available");
+      // Start AI session with current recommendation
+      if (aiState.currentRecommendation) {
+        aiActions.startSession(aiState.currentRecommendation);
+      } else {
+        console.warn("Cannot start AI session: no recommendation available");
         return;
       }
-      
-      aiActions.startSession({
-        words: sessionWords.slice(0, 10),
-        confidence: Math.min(
-          0.9,
-          Math.max(0.4, (sessionStats.accuracy / 100) * 0.8 + 0.3)
-        ),
-        reasoning: ["Starting new AI session"],
-        expectedOutcomes: {
-          learningVelocity: 0.7,
-          retentionPrediction: 0.8,
-          engagementScore: 0.85,
-          difficultyFit: 0.75,
-        },
-        alternativeStrategies: ["adaptive"],
-        adaptiveInstructions: {
-          encouragementFrequency: 0.6,
-          hintStrategy: "moderate",
-          errorHandling: "immediate",
-        },
-      });
     }
-  }, [aiState.isSessionActive, aiActions, sessionWords, sessionStats]);
+  }, [aiState.isSessionActive, aiState.currentRecommendation, aiActions]);
 
   // AI Insights Toggle Handler
   const handleInsightsToggle = React.useCallback(() => {
@@ -146,7 +127,7 @@ export const AICardContent = React.forwardRef<
                     <div className="relative z-10 flex items-center justify-center gap-1">
                       {aiState.isSessionActive ? (
                         <>
-                          <span className="text-xs">🔴</span>
+                          <span className="text-xs">��</span>
                           <span className="text-xs font-bold text-white">OFF</span>
                         </>
                       ) : (
