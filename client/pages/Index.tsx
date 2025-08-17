@@ -25,7 +25,6 @@ import { AvatarCustomization } from "@/components/AvatarCustomization";
 import { AchievementSystem } from "@/components/AchievementSystem";
 import { EncouragingFeedback } from "@/components/EncouragingFeedback";
 import { DynamicAuthButton } from "@/components/DynamicAuthButton";
-import { KidRegistrationNotification } from "@/components/KidRegistrationNotification";
 import { StreakSideCard } from "@/components/StreakSideCard";
 import { useRegistrationReminder } from "@/hooks/useRegistrationReminder";
 import { GameLikeLearning } from "@/components/GameLikeLearning";
@@ -3568,15 +3567,6 @@ export default function Index({ initialProfile }: IndexProps) {
           )}
 
           {/* Floating Registration Reminder for Guest Users - Mobile Only (Desktop has side card) */}
-          {showFloatingReminder && (
-            <div className="lg:hidden">
-              <KidRegistrationNotification
-                variant="floating"
-                onDismiss={() => dismissFloatingReminder()}
-                showDismiss={true}
-              />
-            </div>
-          )}
         </>
       )}
     </div>
