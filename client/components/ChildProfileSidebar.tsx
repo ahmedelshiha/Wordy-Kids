@@ -316,9 +316,9 @@ export const ChildProfileSidebar: React.FC<ChildProfileSidebarProps> = ({
               {/* Collapsed Profile Avatar */}
               <div
                 className={cn(
-                  "w-14 h-14 rounded-full flex items-center justify-center text-2xl shadow-xl border-3 border-white",
-                  "bg-gradient-to-r animate-pulse",
-                  profile.avatar?.color || "from-purple-400 to-pink-400",
+                  "w-14 h-14 rounded-full flex items-center justify-center text-2xl shadow-lg border-2 border-white/50",
+                  "bg-gradient-to-r animate-pulse backdrop-blur-sm",
+                  profile.avatar?.color || "from-purple-400/80 to-pink-400/80",
                 )}
               >
                 {profile.avatar?.emoji || "🎯"}
