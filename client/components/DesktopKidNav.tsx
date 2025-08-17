@@ -406,13 +406,13 @@ export function DesktopKidNav({
                   onAdminClick();
                   setShowParentOptions(false);
                 }}
-                className="flex items-center gap-3 p-4 h-auto justify-start"
+                className="flex items-center gap-3 p-4 h-auto justify-start border-2 border-purple-200 hover:border-purple-300 hover:bg-purple-50 transition-all duration-300"
               >
                 <Shield className="w-5 h-5 text-purple-600" />
                 <div className="text-left">
-                  <div className="font-medium">Admin Panel</div>
-                  <div className="text-sm text-gray-500">
-                    Advanced configuration
+                  <div className="font-medium text-purple-800">Admin Panel</div>
+                  <div className="text-sm text-purple-600">
+                    Advanced configuration and system controls
                   </div>
                 </div>
               </Button>
