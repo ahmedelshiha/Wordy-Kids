@@ -266,7 +266,7 @@ export function MobileBottomNav({
             <button
               onClick={onMoreToggle}
               className={cn(
-                "kid-nav-item flex flex-col items-center gap-1 p-2 rounded-xl transition-all duration-200 transform active:scale-95 min-w-0 flex-1 mx-0.5 min-h-[60px] justify-center",
+                "kid-nav-item flex flex-col items-center gap-1 p-1.5 rounded-lg transition-all duration-200 transform active:scale-95 min-w-0 flex-1 mx-0.5 min-h-[56px] justify-center",
                 showMoreMenu
                   ? "kid-gradient-magic text-white shadow-lg kid-button active animate-kid-pulse-glow"
                   : "bg-white text-purple-600 hover:kid-gradient-adventure hover:text-white border border-purple-200 kid-interactive",
