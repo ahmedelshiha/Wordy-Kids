@@ -1310,7 +1310,7 @@ export function AIEnhancedInteractiveDashboardWordCard({
                       }}
                       size="sm"
                       className={cn(
-                        "relative w-8 h-8 rounded-full text-xs font-bold shadow-lg transition-all duration-300 transform hover:scale-110 active:scale-95",
+                        "relative px-2 py-1 h-7 rounded-full text-xs font-bold shadow-lg transition-all duration-300 transform hover:scale-105 active:scale-95",
                         "bg-white/20 hover:bg-white/30 backdrop-blur-md border-2 border-white/40 shadow-white/20",
                         aiState.isSessionActive
                           ? "text-red-100 hover:border-red-200/50 hover:shadow-red-200/30"
@@ -1318,11 +1318,17 @@ export function AIEnhancedInteractiveDashboardWordCard({
                         "before:absolute before:inset-0 before:rounded-full before:bg-gradient-to-br before:from-white/30 before:to-white/10 before:opacity-0 hover:before:opacity-100 before:transition-opacity before:duration-300"
                       )}
                     >
-                      <div className="relative z-10 flex items-center justify-center">
+                      <div className="relative z-10 flex items-center justify-center gap-1">
                         {aiState.isSessionActive ? (
-                          <div className="w-2.5 h-2.5 bg-white/90 rounded-sm shadow-sm" />
+                          <>
+                            <span className="text-xs">🔴</span>
+                            <span className="text-[10px] font-medium">OFF</span>
+                          </>
                         ) : (
-                          <div className="w-0 h-0 border-l-[4px] border-l-white/90 border-y-[3px] border-y-transparent ml-0.5 drop-shadow-sm" />
+                          <>
+                            <span className="text-xs">🟢</span>
+                            <span className="text-[10px] font-medium">ON</span>
+                          </>
                         )}
                       </div>
                       {aiState.isSessionActive && (
@@ -1407,7 +1413,7 @@ export function AIEnhancedInteractiveDashboardWordCard({
                           }}
                           size="sm"
                           className={cn(
-                            "relative ml-2 w-10 h-10 rounded-full text-sm font-bold shadow-xl transition-all duration-300 transform hover:scale-110 active:scale-95",
+                            "relative ml-2 px-3 py-2 h-9 rounded-full text-sm font-bold shadow-xl transition-all duration-300 transform hover:scale-105 active:scale-95",
                             "bg-white/25 hover:bg-white/35 backdrop-blur-md border-2 border-white/50 shadow-white/30",
                             aiState.isSessionActive
                               ? "text-red-100 hover:border-red-200/60 hover:shadow-red-200/40"
@@ -1415,11 +1421,17 @@ export function AIEnhancedInteractiveDashboardWordCard({
                             "before:absolute before:inset-0 before:rounded-full before:bg-gradient-to-br before:from-white/40 before:to-white/10 before:opacity-0 hover:before:opacity-100 before:transition-opacity before:duration-300"
                           )}
                         >
-                          <div className="relative z-10 flex items-center justify-center">
+                          <div className="relative z-10 flex items-center justify-center gap-1.5">
                             {aiState.isSessionActive ? (
-                              <div className="w-3 h-3 bg-white/95 rounded-sm shadow-sm" />
+                              <>
+                                <span className="text-lg">🔴</span>
+                                <span className="text-xs font-bold">STOP</span>
+                              </>
                             ) : (
-                              <div className="w-0 h-0 border-l-[5px] border-l-white/95 border-y-[4px] border-y-transparent ml-0.5 drop-shadow-sm" />
+                              <>
+                                <span className="text-lg">🟢</span>
+                                <span className="text-xs font-bold">START</span>
+                              </>
                             )}
                           </div>
                           {aiState.isSessionActive && (
