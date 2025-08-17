@@ -117,33 +117,6 @@ export const ChildProfileSidebar: React.FC<ChildProfileSidebarProps> = ({
         className,
       )}
     >
-      {/* Subtle Background Decorations for Desktop */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden opacity-40">
-        <div
-          className="absolute top-10 left-4 text-xl animate-gentle-float"
-          style={{ animationDelay: "0s" }}
-        >
-          ⭐
-        </div>
-        <div
-          className="absolute top-20 right-6 text-lg animate-gentle-float"
-          style={{ animationDelay: "2s" }}
-        >
-          🌟
-        </div>
-        <div
-          className="absolute bottom-32 left-6 text-sm animate-gentle-float"
-          style={{ animationDelay: "4s" }}
-        >
-          🎯
-        </div>
-        <div
-          className="absolute bottom-48 right-4 text-lg animate-gentle-float"
-          style={{ animationDelay: "1s" }}
-        >
-          🏆
-        </div>
-      </div>
 
       {/* Enhanced Sidebar Header */}
       <div className="p-2 bg-gradient-to-r from-white/60 to-blue-50/60 backdrop-blur-sm relative z-10">
