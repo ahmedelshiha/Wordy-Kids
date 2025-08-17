@@ -1221,7 +1221,7 @@ export function AIEnhancedInteractiveDashboardWordCard({
               )}
             >
               {/* Mobile Layout: Ultra Compact */}
-              <div className="md:hidden p-2">
+              <div className="md:hidden p-1.5">
                 <div className="flex items-center justify-between gap-2">
                   {/* Left: Enhanced AI Status */}
                   <div className="flex items-center gap-2 flex-1">
@@ -1238,11 +1238,14 @@ export function AIEnhancedInteractiveDashboardWordCard({
                     <div className="flex items-center gap-1 flex-1">
                       <span className="text-sm font-medium truncate flex items-center gap-1">
                         🤖{" "}
-                        {aiState.isSessionActive
-                          ? "AI Learning Active!"
-                          : "AI Helper"}
+                        {aiState.isSessionActive ? "AI Active!" : "AI Helper"}
                         {aiState.isSessionActive && (
-                          <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
+                          <>
+                            <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
+                            <span className="text-xs opacity-75 bg-white/20 px-1.5 py-0.5 rounded-full ml-1">
+                              {Math.round(confidenceLevel * 100)}% 📊
+                            </span>
+                          </>
                         )}
                       </span>
                     </div>
@@ -1305,28 +1308,33 @@ export function AIEnhancedInteractiveDashboardWordCard({
                       }}
                       size="sm"
                       className={cn(
-                        "px-3 py-1 text-xs font-medium rounded-full h-7",
+                        "relative px-2 py-1 h-7 rounded-full text-xs font-bold shadow-lg transition-all duration-300 transform hover:scale-105 active:scale-95",
+                        "bg-white/20 hover:bg-white/30 backdrop-blur-md border-2 border-white/40 shadow-white/20",
                         aiState.isSessionActive
-                          ? "bg-white/20 hover:bg-white/30 text-white border border-white/30"
-                          : "bg-green-500 hover:bg-green-600 text-white",
+                          ? "text-red-100 hover:border-red-200/50 hover:shadow-red-200/30"
+                          : "text-green-100 hover:border-green-200/50 hover:shadow-green-200/30",
+                        "before:absolute before:inset-0 before:rounded-full before:bg-gradient-to-br before:from-white/30 before:to-white/10 before:opacity-0 hover:before:opacity-100 before:transition-opacity before:duration-300",
                       )}
                     >
-                      {aiState.isSessionActive ? "Pause AI" : "Start AI"}
+                      <div className="relative z-10 flex items-center justify-center gap-1">
+                        {aiState.isSessionActive ? (
+                          <>
+                            <span className="text-xs">🔴</span>
+                            <span className="text-[10px] font-medium">OFF</span>
+                          </>
+                        ) : (
+                          <>
+                            <span className="text-xs">🟢</span>
+                            <span className="text-[10px] font-medium">ON</span>
+                          </>
+                        )}
+                      </div>
+                      {aiState.isSessionActive && (
+                        <div className="absolute inset-0 rounded-full bg-white/10 animate-pulse" />
+                      )}
                     </Button>
                   </div>
                 </div>
-
-                {/* Mobile Progress: Only show if session active */}
-                {aiState.isSessionActive && (
-                  <div className="mt-2 text-center opacity-80">
-                    <span className="text-xs">
-                      Word {currentWordIndex + 1}/{SESSION_SIZE} •{" "}
-                    </span>
-                    <span className="text-xs opacity-75 bg-white/20 px-2 py-0.5 rounded-full">
-                      {Math.round(confidenceLevel * 100)}% 📊
-                    </span>
-                  </div>
-                )}
               </div>
 
               {/* Desktop Layout: Full Features */}
@@ -1351,11 +1359,16 @@ export function AIEnhancedInteractiveDashboardWordCard({
                         <span className="text-lg font-bold">
                           🤖{" "}
                           {aiState.isSessionActive
-                            ? "AI Learning Active!"
+                            ? "AI Active!"
                             : "AI Smart Helper"}
                         </span>
                         {aiState.isSessionActive && (
-                          <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
+                          <>
+                            <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
+                            <span className="text-sm bg-white/20 px-2 py-1 rounded-full">
+                              {Math.round(confidenceLevel * 100)}% 📊
+                            </span>
+                          </>
                         )}
                         <Button
                           onClick={() => {
@@ -1397,23 +1410,34 @@ export function AIEnhancedInteractiveDashboardWordCard({
                           }}
                           size="sm"
                           className={cn(
-                            "ml-2 px-3 py-1 text-xs font-semibold rounded-full",
+                            "relative ml-2 px-3 py-2 h-9 rounded-full text-sm font-bold shadow-xl transition-all duration-300 transform hover:scale-105 active:scale-95",
+                            "bg-white/25 hover:bg-white/35 backdrop-blur-md border-2 border-white/50 shadow-white/30",
                             aiState.isSessionActive
-                              ? "bg-white/20 hover:bg-white/30 text-white border border-white/30"
-                              : "bg-green-500 hover:bg-green-600 text-white",
+                              ? "text-red-100 hover:border-red-200/60 hover:shadow-red-200/40"
+                              : "text-green-100 hover:border-green-200/60 hover:shadow-green-200/40",
+                            "before:absolute before:inset-0 before:rounded-full before:bg-gradient-to-br before:from-white/40 before:to-white/10 before:opacity-0 hover:before:opacity-100 before:transition-opacity before:duration-300",
                           )}
                         >
-                          {aiState.isSessionActive ? "Pause AI" : "Start AI"}
+                          <div className="relative z-10 flex items-center justify-center gap-1.5">
+                            {aiState.isSessionActive ? (
+                              <>
+                                <span className="text-lg">🔴</span>
+                                <span className="text-xs font-bold">STOP</span>
+                              </>
+                            ) : (
+                              <>
+                                <span className="text-lg">🟢</span>
+                                <span className="text-xs font-bold">START</span>
+                              </>
+                            )}
+                          </div>
+                          {aiState.isSessionActive && (
+                            <div className="absolute inset-0 rounded-full bg-white/15 animate-pulse" />
+                          )}
+                          <div className="absolute inset-0 rounded-full ring-1 ring-white/30" />
                         </Button>
                       </div>
                       <div className="flex items-center gap-3 opacity-90">
-                        <span className="text-xs opacity-60 scale-75">
-                          📊 {Math.round(confidenceLevel * 100)}% Confidence
-                        </span>
-                        <span>•</span>
-                        <span>
-                          📚 Word {currentWordIndex + 1} of {SESSION_SIZE}
-                        </span>
                         {aiState.isSessionActive && (
                           <span className="bg-white/20 px-2 py-1 rounded-full text-xs">
                             Active
