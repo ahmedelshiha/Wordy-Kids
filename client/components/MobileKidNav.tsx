@@ -405,7 +405,7 @@ export function MobileKidNav({
               onClick={() => setShowMoreMenu(true)}
               className={cn(
                 "flex flex-col items-center transition-all duration-300 transform relative",
-                "flex-1 min-w-0 max-w-[80px] p-1.5 gap-0.5",
+                "flex-1 min-w-0 max-w-[80px] p-1 gap-0",
                 showMoreMenu
                   ? "bg-gradient-to-br from-blue-500 to-purple-500 rounded-xl"
                   : "bg-transparent"
@@ -415,7 +415,7 @@ export function MobileKidNav({
             >
               <motion.div
                 className={cn(
-                  "text-2xl transition-transform duration-200",
+                  "text-3xl transition-transform duration-200",
                   showMoreMenu ? "rotate-45 scale-110" : ""
                 )}
                 animate={showMoreMenu ? { rotate: [0, 360] } : {}}
@@ -424,7 +424,7 @@ export function MobileKidNav({
                 🎪
               </motion.div>
               <span className={cn(
-                "font-bold text-center text-xs leading-tight",
+                "font-bold text-center text-base leading-none",
                 showMoreMenu ? "text-white drop-shadow-lg" : "text-gray-600"
               )}>
                 More
