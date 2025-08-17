@@ -1670,7 +1670,6 @@ export function InteractiveDashboardWordCard({
                   </Button>
                 </div>
 
-
                 {/* Particle Effects Overlay */}
                 <AnimatePresence>
                   {particles.map((particle) => (
