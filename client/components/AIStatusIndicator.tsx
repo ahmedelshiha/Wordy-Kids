@@ -111,35 +111,37 @@ export function AIStatusIndicator({
   };
 
   return (
-      <Tooltip>
-        <TooltipTrigger asChild>
-          <div
+    <Tooltip>
+      <TooltipTrigger asChild>
+        <div
+          className={cn(
+            "flex items-center gap-2 rounded-lg border transition-all duration-200",
+            config.bgColor,
+            config.borderColor,
+            sizes.container,
+            className,
+          )}
+        >
+          {/* Status Icon */}
+          <Icon
             className={cn(
-              "flex items-center gap-2 rounded-lg border transition-all duration-200",
-              config.bgColor,
-              config.borderColor,
-              sizes.container,
-              className,
+              sizes.icon,
+              config.color,
+              status === "loading" && "animate-spin",
             )}
-          >
-            {/* Status Icon */}
-            <Icon
-              className={cn(
-                sizes.icon,
-                config.color,
-                status === "loading" && "animate-spin",
-              )}
-            />
+          />
 
-            {/* Status Text */}
-            {showText && (
-              <span className={cn("font-medium", config.color, sizes.text)}>
-                {config.label}
-              </span>
-            )}
+          {/* Status Text */}
+          {showText && (
+            <span className={cn("font-medium", config.color, sizes.text)}>
+              {config.label}
+            </span>
+          )}
 
-            {/* Confidence Badge */}
-            {showConfidence && confidence !== undefined && status === "active" && (
+          {/* Confidence Badge */}
+          {showConfidence &&
+            confidence !== undefined &&
+            status === "active" && (
               <Badge
                 variant="outline"
                 className={cn("text-xs", config.color, config.borderColor)}
@@ -148,35 +150,35 @@ export function AIStatusIndicator({
               </Badge>
             )}
 
-            {/* Retry Button for Error State */}
-            {status === "error" && onRetry && (
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={onRetry}
-                className={cn("h-auto p-1", config.color)}
-              >
-                <RefreshCw className="w-3 h-3" />
-              </Button>
-            )}
-          </div>
-        </TooltipTrigger>
-        <TooltipContent>
-          <div className="text-sm">
-            <div className="font-semibold">{config.label}</div>
-            <div className="text-muted-foreground">{config.description}</div>
-            {confidence !== undefined && status === "active" && (
-              <div className="mt-1">
-                Confidence: {getConfidenceLabel(confidence)} (
-                {Math.round(confidence * 100)}%)
-              </div>
-            )}
-            {error && status === "error" && (
-              <div className="mt-1 text-red-400">{error}</div>
-            )}
-          </div>
-        </TooltipContent>
-      </Tooltip>
+          {/* Retry Button for Error State */}
+          {status === "error" && onRetry && (
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={onRetry}
+              className={cn("h-auto p-1", config.color)}
+            >
+              <RefreshCw className="w-3 h-3" />
+            </Button>
+          )}
+        </div>
+      </TooltipTrigger>
+      <TooltipContent>
+        <div className="text-sm">
+          <div className="font-semibold">{config.label}</div>
+          <div className="text-muted-foreground">{config.description}</div>
+          {confidence !== undefined && status === "active" && (
+            <div className="mt-1">
+              Confidence: {getConfidenceLabel(confidence)} (
+              {Math.round(confidence * 100)}%)
+            </div>
+          )}
+          {error && status === "error" && (
+            <div className="mt-1 text-red-400">{error}</div>
+          )}
+        </div>
+      </TooltipContent>
+    </Tooltip>
   );
 }
 
@@ -191,20 +193,20 @@ export function AIStatusDot({
   const config = statusConfig[status];
 
   return (
-      <Tooltip>
-        <TooltipTrigger asChild>
-          <div
-            className={cn(
-              "w-3 h-3 rounded-full border-2 transition-all duration-200",
-              config.bgColor,
-              config.borderColor,
-              className,
-            )}
-          />
-        </TooltipTrigger>
-        <TooltipContent>
-          <p>{config.label}</p>
-        </TooltipContent>
-      </Tooltip>
+    <Tooltip>
+      <TooltipTrigger asChild>
+        <div
+          className={cn(
+            "w-3 h-3 rounded-full border-2 transition-all duration-200",
+            config.bgColor,
+            config.borderColor,
+            className,
+          )}
+        />
+      </TooltipTrigger>
+      <TooltipContent>
+        <p>{config.label}</p>
+      </TooltipContent>
+    </Tooltip>
   );
 }

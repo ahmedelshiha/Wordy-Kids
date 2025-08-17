@@ -1005,1296 +1005,1275 @@ export const ParentDashboardDesktop: React.FC<ParentDashboardDesktopProps> = ({
   }, [handleAddChildClick, syncChildrenProgress]);
 
   return (
-      <div className="parent-dashboard-container min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 flex">
-        {/* Desktop Sidebar */}
-        <div
-          className={cn(
-            "dashboard-sidebar bg-white border-r border-slate-200 transition-all duration-300 z-40 flex flex-col shrink-0",
-            sidebarCollapsed
-              ? "w-16 sidebar-collapsed"
-              : "w-64 sidebar-expanded",
-          )}
-        >
-          {/* Sidebar Header */}
-          <div className="p-4 border-b border-slate-200">
-            <div className="flex items-center justify-between">
-              {!sidebarCollapsed && (
-                <div>
-                  <h2 className="font-bold text-lg text-slate-800">
-                    Parent Hub
-                  </h2>
-                  <p className="text-sm text-slate-600">Learning Dashboard</p>
-                </div>
-              )}
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={() => setSidebarCollapsed(!sidebarCollapsed)}
-                className="p-2"
-              >
-                <Menu className="h-4 w-4" />
-              </Button>
-            </div>
-          </div>
-
-          {/* Sidebar Navigation */}
-          <div className="p-2 flex-1 overflow-y-auto">
-            <nav
-              className="space-y-1"
-              role="navigation"
-              aria-label="Dashboard navigation"
-            >
-              {sidebarItems.map((item) => (
-                <Tooltip key={item.id} delayDuration={0}>
-                  <TooltipTrigger asChild>
-                    <Button
-                      variant={activeTab === item.id ? "default" : "ghost"}
-                      className={cn(
-                        "sidebar-nav-item w-full justify-start mb-1 h-10 relative",
-                        sidebarCollapsed && "px-2 justify-center",
-                        activeTab === item.id && "active",
-                      )}
-                      onClick={() => setActiveTab(item.id)}
-                      aria-current={activeTab === item.id ? "page" : undefined}
-                    >
-                      <item.icon
-                        className={cn(
-                          "h-4 w-4 shrink-0",
-                          !sidebarCollapsed && "mr-3",
-                        )}
-                      />
-                      {!sidebarCollapsed && (
-                        <>
-                          <span className="flex-1 text-left truncate">
-                            {item.label}
-                          </span>
-                          {item.badge && item.badge > 0 && (
-                            <Badge
-                              variant="secondary"
-                              className="ml-auto shrink-0 text-xs px-1.5 py-0.5"
-                            >
-                              {item.badge > 99 ? "99+" : item.badge}
-                            </Badge>
-                          )}
-                        </>
-                      )}
-                      {sidebarCollapsed && item.badge && item.badge > 0 && (
-                        <div className="notification-badge absolute">
-                          {item.badge > 9 ? "9+" : item.badge}
-                        </div>
-                      )}
-                    </Button>
-                  </TooltipTrigger>
-                  {sidebarCollapsed && (
-                    <TooltipContent side="right">
-                      <p>{item.label}</p>
-                      {item.badge && item.badge > 0 && (
-                        <p className="text-xs opacity-75">
-                          {item.badge} active
-                        </p>
-                      )}
-                    </TooltipContent>
-                  )}
-                </Tooltip>
-              ))}
-            </nav>
-          </div>
-
-          {/* Quick Stats in Sidebar */}
-          {!sidebarCollapsed && (
-            <div className="p-4 mt-auto border-t border-slate-200 shrink-0">
-              <h3 className="font-medium text-sm text-slate-700 mb-3 truncate">
-                Quick Stats
-              </h3>
-              <div className="space-y-2">
-                <div className="flex justify-between items-center gap-2">
-                  <span className="text-xs text-slate-600 truncate">
-                    Active Children
-                  </span>
-                  <Badge variant="outline" className="shrink-0">
-                    {children.length}
-                  </Badge>
-                </div>
-                <div className="flex justify-between items-center gap-2">
-                  <span className="text-xs text-slate-600 truncate">
-                    Total Words
-                  </span>
-                  <Badge variant="outline" className="shrink-0">
-                    {familyStats.totalWordsLearned > 999
-                      ? `${Math.floor(familyStats.totalWordsLearned / 1000)}k`
-                      : familyStats.totalWordsLearned}
-                  </Badge>
-                </div>
-                <div className="flex justify-between items-center gap-2">
-                  <span className="text-xs text-slate-600 truncate">
-                    Best Streak
-                  </span>
-                  <Badge variant="outline" className="shrink-0">
-                    {familyStats.longestStreak}
-                  </Badge>
-                </div>
+    <div className="parent-dashboard-container min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 flex">
+      {/* Desktop Sidebar */}
+      <div
+        className={cn(
+          "dashboard-sidebar bg-white border-r border-slate-200 transition-all duration-300 z-40 flex flex-col shrink-0",
+          sidebarCollapsed ? "w-16 sidebar-collapsed" : "w-64 sidebar-expanded",
+        )}
+      >
+        {/* Sidebar Header */}
+        <div className="p-4 border-b border-slate-200">
+          <div className="flex items-center justify-between">
+            {!sidebarCollapsed && (
+              <div>
+                <h2 className="font-bold text-lg text-slate-800">Parent Hub</h2>
+                <p className="text-sm text-slate-600">Learning Dashboard</p>
               </div>
-            </div>
-          )}
+            )}
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => setSidebarCollapsed(!sidebarCollapsed)}
+              className="p-2"
+            >
+              <Menu className="h-4 w-4" />
+            </Button>
+          </div>
         </div>
 
-        {/* Main Content */}
-        <div className="dashboard-main-content flex-1 min-w-0 flex flex-col">
-          {/* Header */}
-          <div className="dashboard-header bg-white border-b border-slate-200 px-4 lg:px-6 py-4">
-            <div className="flex items-center justify-between gap-4">
-              <div className="flex items-center space-x-3 min-w-0">
-                {onNavigateBack && (
+        {/* Sidebar Navigation */}
+        <div className="p-2 flex-1 overflow-y-auto">
+          <nav
+            className="space-y-1"
+            role="navigation"
+            aria-label="Dashboard navigation"
+          >
+            {sidebarItems.map((item) => (
+              <Tooltip key={item.id} delayDuration={0}>
+                <TooltipTrigger asChild>
                   <Button
-                    variant="ghost"
-                    size="sm"
-                    onClick={onNavigateBack}
-                    className="shrink-0"
+                    variant={activeTab === item.id ? "default" : "ghost"}
+                    className={cn(
+                      "sidebar-nav-item w-full justify-start mb-1 h-10 relative",
+                      sidebarCollapsed && "px-2 justify-center",
+                      activeTab === item.id && "active",
+                    )}
+                    onClick={() => setActiveTab(item.id)}
+                    aria-current={activeTab === item.id ? "page" : undefined}
                   >
-                    <ArrowLeft className="h-4 w-4 mr-2" />
-                    <span className="hidden sm:inline">Back to Learning</span>
-                    <span className="sm:hidden">Back</span>
-                  </Button>
-                )}
-                <div className="min-w-0">
-                  <h1 className="text-xl lg:text-2xl font-bold text-slate-800 truncate">
-                    {sidebarItems.find((item) => item.id === activeTab)
-                      ?.label || "Dashboard"}
-                  </h1>
-                  <p className="text-sm text-slate-600 truncate">
-                    {children.length} active learner
-                    {children.length !== 1 ? "s" : ""}
-                  </p>
-                </div>
-              </div>
-
-              <div className="flex items-center gap-2 shrink-0">
-                {/* Time Range Selector - Hidden on smaller screens */}
-                <Select
-                  value={selectedTimeRange}
-                  onValueChange={setSelectedTimeRange}
-                >
-                  <SelectTrigger className="w-24 lg:w-32 hidden md:flex">
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="7d">Last 7 days</SelectItem>
-                    <SelectItem value="30d">Last 30 days</SelectItem>
-                    <SelectItem value="90d">Last 3 months</SelectItem>
-                  </SelectContent>
-                </Select>
-
-                {/* View Mode Toggle - Hidden on mobile */}
-                <div className="hidden lg:flex items-center border rounded-lg shrink-0">
-                  <Button
-                    variant={viewMode === "grid" ? "default" : "ghost"}
-                    size="sm"
-                    onClick={() => setViewMode("grid")}
-                    className="rounded-r-none"
-                  >
-                    <Grid3x3 className="h-4 w-4" />
-                  </Button>
-                  <Button
-                    variant={viewMode === "list" ? "default" : "ghost"}
-                    size="sm"
-                    onClick={() => setViewMode("list")}
-                    className="rounded-l-none"
-                  >
-                    <List className="h-4 w-4" />
-                  </Button>
-                </div>
-
-                {/* Action Buttons Group */}
-                <div className="flex items-center gap-2 shrink-0">
-                  {/* Refresh Button */}
-                  <Tooltip>
-                    <TooltipTrigger asChild>
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        onClick={syncChildrenProgress}
-                        disabled={isLoadingProgress}
-                        className="shrink-0"
-                      >
-                        <RefreshCw
-                          className={cn(
-                            "h-4 w-4",
-                            isLoadingProgress && "animate-spin",
-                          )}
-                        />
-                      </Button>
-                    </TooltipTrigger>
-                    <TooltipContent>
-                      <p>Refresh Data (Ctrl+R)</p>
-                    </TooltipContent>
-                  </Tooltip>
-
-                  {/* Auto-Detect Button */}
-                  {children.length === 0 && (
-                    <Tooltip>
-                      <TooltipTrigger asChild>
-                        <Button
-                          variant="outline"
-                          onClick={scanForExistingProgress}
-                          className="shrink-0"
-                        >
-                          <Search className="h-4 w-4 lg:mr-2" />
-                          <span className="hidden lg:inline">
-                            Detect Progress
-                          </span>
-                        </Button>
-                      </TooltipTrigger>
-                      <TooltipContent>
-                        <p>Scan for Existing Learning Progress</p>
-                      </TooltipContent>
-                    </Tooltip>
-                  )}
-
-                  {/* Add Child Button */}
-                  <Tooltip>
-                    <TooltipTrigger asChild>
-                      <Button
-                        onClick={handleAddChildClick}
-                        className="shrink-0"
-                      >
-                        <UserPlus className="h-4 w-4 lg:mr-2" />
-                        <span className="hidden lg:inline">Add Child</span>
-                      </Button>
-                    </TooltipTrigger>
-                    <TooltipContent>
-                      <p>Add New Child (Ctrl+N)</p>
-                    </TooltipContent>
-                  </Tooltip>
-
-                  {/* More Actions Dropdown for smaller screens */}
-                  <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        className="lg:hidden shrink-0"
-                      >
-                        <MoreHorizontal className="h-4 w-4" />
-                      </Button>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent align="end">
-                      <DropdownMenuItem
-                        onClick={() =>
-                          setViewMode(viewMode === "grid" ? "list" : "grid")
-                        }
-                      >
-                        {viewMode === "grid" ? (
-                          <List className="mr-2 h-4 w-4" />
-                        ) : (
-                          <Grid3x3 className="mr-2 h-4 w-4" />
-                        )}
-                        <span>
-                          {viewMode === "grid" ? "List View" : "Grid View"}
-                        </span>
-                      </DropdownMenuItem>
-                      <DropdownMenuItem>
-                        <CalendarIcon className="mr-2 h-4 w-4" />
-                        <span>Time Range</span>
-                      </DropdownMenuItem>
-                      <DropdownMenuSeparator />
-                      <DropdownMenuItem
-                        onClick={() => setActiveTab("settings")}
-                      >
-                        <Settings className="mr-2 h-4 w-4" />
-                        <span>Settings</span>
-                      </DropdownMenuItem>
-                      <DropdownMenuItem onClick={handleExportData}>
-                        <Download className="mr-2 h-4 w-4" />
-                        <span>Export Data</span>
-                      </DropdownMenuItem>
-                    </DropdownMenuContent>
-                  </DropdownMenu>
-
-                  {/* User Menu */}
-                  <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
-                      <Button
-                        variant="ghost"
-                        className="relative h-8 w-8 rounded-full shrink-0"
-                      >
-                        <div className="h-8 w-8 rounded-full bg-gradient-to-r from-blue-500 to-purple-600 flex items-center justify-center text-white text-sm font-medium">
-                          {user?.email?.[0]?.toUpperCase() || "P"}
-                        </div>
-                      </Button>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent
-                      className="w-56"
-                      align="end"
-                      forceMount
-                    >
-                      <DropdownMenuLabel className="font-normal">
-                        <div className="flex flex-col space-y-1">
-                          <p className="text-sm font-medium leading-none">
-                            Parent Dashboard
-                          </p>
-                          <p className="text-xs leading-none text-muted-foreground">
-                            {user?.email || "Guest User"}
-                          </p>
-                        </div>
-                      </DropdownMenuLabel>
-                      <DropdownMenuSeparator />
-                      <DropdownMenuItem
-                        onClick={() => setActiveTab("settings")}
-                        className="hidden lg:flex"
-                      >
-                        <Settings className="mr-2 h-4 w-4" />
-                        <span>Settings</span>
-                      </DropdownMenuItem>
-                      <DropdownMenuItem
-                        onClick={handleExportData}
-                        className="hidden lg:flex"
-                      >
-                        <Download className="mr-2 h-4 w-4" />
-                        <span>Export Data</span>
-                      </DropdownMenuItem>
-                      <DropdownMenuSeparator className="hidden lg:block" />
-                      {isGuest ? (
-                        <DropdownMenuItem onClick={() => navigate("/signup")}>
-                          <UserPlus className="mr-2 h-4 w-4" />
-                          <span>Create Account</span>
-                        </DropdownMenuItem>
-                      ) : (
-                        <DropdownMenuItem>
-                          <ArrowLeft className="mr-2 h-4 w-4" />
-                          <span>Sign Out</span>
-                        </DropdownMenuItem>
+                    <item.icon
+                      className={cn(
+                        "h-4 w-4 shrink-0",
+                        !sidebarCollapsed && "mr-3",
                       )}
-                    </DropdownMenuContent>
-                  </DropdownMenu>
-                </div>
+                    />
+                    {!sidebarCollapsed && (
+                      <>
+                        <span className="flex-1 text-left truncate">
+                          {item.label}
+                        </span>
+                        {item.badge && item.badge > 0 && (
+                          <Badge
+                            variant="secondary"
+                            className="ml-auto shrink-0 text-xs px-1.5 py-0.5"
+                          >
+                            {item.badge > 99 ? "99+" : item.badge}
+                          </Badge>
+                        )}
+                      </>
+                    )}
+                    {sidebarCollapsed && item.badge && item.badge > 0 && (
+                      <div className="notification-badge absolute">
+                        {item.badge > 9 ? "9+" : item.badge}
+                      </div>
+                    )}
+                  </Button>
+                </TooltipTrigger>
+                {sidebarCollapsed && (
+                  <TooltipContent side="right">
+                    <p>{item.label}</p>
+                    {item.badge && item.badge > 0 && (
+                      <p className="text-xs opacity-75">{item.badge} active</p>
+                    )}
+                  </TooltipContent>
+                )}
+              </Tooltip>
+            ))}
+          </nav>
+        </div>
+
+        {/* Quick Stats in Sidebar */}
+        {!sidebarCollapsed && (
+          <div className="p-4 mt-auto border-t border-slate-200 shrink-0">
+            <h3 className="font-medium text-sm text-slate-700 mb-3 truncate">
+              Quick Stats
+            </h3>
+            <div className="space-y-2">
+              <div className="flex justify-between items-center gap-2">
+                <span className="text-xs text-slate-600 truncate">
+                  Active Children
+                </span>
+                <Badge variant="outline" className="shrink-0">
+                  {children.length}
+                </Badge>
+              </div>
+              <div className="flex justify-between items-center gap-2">
+                <span className="text-xs text-slate-600 truncate">
+                  Total Words
+                </span>
+                <Badge variant="outline" className="shrink-0">
+                  {familyStats.totalWordsLearned > 999
+                    ? `${Math.floor(familyStats.totalWordsLearned / 1000)}k`
+                    : familyStats.totalWordsLearned}
+                </Badge>
+              </div>
+              <div className="flex justify-between items-center gap-2">
+                <span className="text-xs text-slate-600 truncate">
+                  Best Streak
+                </span>
+                <Badge variant="outline" className="shrink-0">
+                  {familyStats.longestStreak}
+                </Badge>
               </div>
             </div>
           </div>
+        )}
+      </div>
 
-          {/* Content Area */}
-          <div className="dashboard-content flex-1 p-4 lg:p-6 min-w-0 overflow-y-auto">
-            {activeTab === "overview" && (
-              <div className="space-y-6">
-                {/* Family Overview Cards */}
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                  <Card className="bg-gradient-to-r from-blue-50 to-blue-100 border-blue-200 hover:shadow-lg transition-shadow">
-                    <CardContent className="p-6">
-                      <div className="flex items-center justify-between">
-                        <div>
-                          <p className="text-sm font-medium text-blue-600">
-                            Active Learners
-                          </p>
-                          <div className="text-3xl font-bold text-blue-700">
-                            <AnimatedCounter value={children.length} />
+      {/* Main Content */}
+      <div className="dashboard-main-content flex-1 min-w-0 flex flex-col">
+        {/* Header */}
+        <div className="dashboard-header bg-white border-b border-slate-200 px-4 lg:px-6 py-4">
+          <div className="flex items-center justify-between gap-4">
+            <div className="flex items-center space-x-3 min-w-0">
+              {onNavigateBack && (
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={onNavigateBack}
+                  className="shrink-0"
+                >
+                  <ArrowLeft className="h-4 w-4 mr-2" />
+                  <span className="hidden sm:inline">Back to Learning</span>
+                  <span className="sm:hidden">Back</span>
+                </Button>
+              )}
+              <div className="min-w-0">
+                <h1 className="text-xl lg:text-2xl font-bold text-slate-800 truncate">
+                  {sidebarItems.find((item) => item.id === activeTab)?.label ||
+                    "Dashboard"}
+                </h1>
+                <p className="text-sm text-slate-600 truncate">
+                  {children.length} active learner
+                  {children.length !== 1 ? "s" : ""}
+                </p>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-2 shrink-0">
+              {/* Time Range Selector - Hidden on smaller screens */}
+              <Select
+                value={selectedTimeRange}
+                onValueChange={setSelectedTimeRange}
+              >
+                <SelectTrigger className="w-24 lg:w-32 hidden md:flex">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="7d">Last 7 days</SelectItem>
+                  <SelectItem value="30d">Last 30 days</SelectItem>
+                  <SelectItem value="90d">Last 3 months</SelectItem>
+                </SelectContent>
+              </Select>
+
+              {/* View Mode Toggle - Hidden on mobile */}
+              <div className="hidden lg:flex items-center border rounded-lg shrink-0">
+                <Button
+                  variant={viewMode === "grid" ? "default" : "ghost"}
+                  size="sm"
+                  onClick={() => setViewMode("grid")}
+                  className="rounded-r-none"
+                >
+                  <Grid3x3 className="h-4 w-4" />
+                </Button>
+                <Button
+                  variant={viewMode === "list" ? "default" : "ghost"}
+                  size="sm"
+                  onClick={() => setViewMode("list")}
+                  className="rounded-l-none"
+                >
+                  <List className="h-4 w-4" />
+                </Button>
+              </div>
+
+              {/* Action Buttons Group */}
+              <div className="flex items-center gap-2 shrink-0">
+                {/* Refresh Button */}
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={syncChildrenProgress}
+                      disabled={isLoadingProgress}
+                      className="shrink-0"
+                    >
+                      <RefreshCw
+                        className={cn(
+                          "h-4 w-4",
+                          isLoadingProgress && "animate-spin",
+                        )}
+                      />
+                    </Button>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p>Refresh Data (Ctrl+R)</p>
+                  </TooltipContent>
+                </Tooltip>
+
+                {/* Auto-Detect Button */}
+                {children.length === 0 && (
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <Button
+                        variant="outline"
+                        onClick={scanForExistingProgress}
+                        className="shrink-0"
+                      >
+                        <Search className="h-4 w-4 lg:mr-2" />
+                        <span className="hidden lg:inline">
+                          Detect Progress
+                        </span>
+                      </Button>
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      <p>Scan for Existing Learning Progress</p>
+                    </TooltipContent>
+                  </Tooltip>
+                )}
+
+                {/* Add Child Button */}
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <Button onClick={handleAddChildClick} className="shrink-0">
+                      <UserPlus className="h-4 w-4 lg:mr-2" />
+                      <span className="hidden lg:inline">Add Child</span>
+                    </Button>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p>Add New Child (Ctrl+N)</p>
+                  </TooltipContent>
+                </Tooltip>
+
+                {/* More Actions Dropdown for smaller screens */}
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="lg:hidden shrink-0"
+                    >
+                      <MoreHorizontal className="h-4 w-4" />
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="end">
+                    <DropdownMenuItem
+                      onClick={() =>
+                        setViewMode(viewMode === "grid" ? "list" : "grid")
+                      }
+                    >
+                      {viewMode === "grid" ? (
+                        <List className="mr-2 h-4 w-4" />
+                      ) : (
+                        <Grid3x3 className="mr-2 h-4 w-4" />
+                      )}
+                      <span>
+                        {viewMode === "grid" ? "List View" : "Grid View"}
+                      </span>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem>
+                      <CalendarIcon className="mr-2 h-4 w-4" />
+                      <span>Time Range</span>
+                    </DropdownMenuItem>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem onClick={() => setActiveTab("settings")}>
+                      <Settings className="mr-2 h-4 w-4" />
+                      <span>Settings</span>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onClick={handleExportData}>
+                      <Download className="mr-2 h-4 w-4" />
+                      <span>Export Data</span>
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+
+                {/* User Menu */}
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button
+                      variant="ghost"
+                      className="relative h-8 w-8 rounded-full shrink-0"
+                    >
+                      <div className="h-8 w-8 rounded-full bg-gradient-to-r from-blue-500 to-purple-600 flex items-center justify-center text-white text-sm font-medium">
+                        {user?.email?.[0]?.toUpperCase() || "P"}
+                      </div>
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent className="w-56" align="end" forceMount>
+                    <DropdownMenuLabel className="font-normal">
+                      <div className="flex flex-col space-y-1">
+                        <p className="text-sm font-medium leading-none">
+                          Parent Dashboard
+                        </p>
+                        <p className="text-xs leading-none text-muted-foreground">
+                          {user?.email || "Guest User"}
+                        </p>
+                      </div>
+                    </DropdownMenuLabel>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem
+                      onClick={() => setActiveTab("settings")}
+                      className="hidden lg:flex"
+                    >
+                      <Settings className="mr-2 h-4 w-4" />
+                      <span>Settings</span>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem
+                      onClick={handleExportData}
+                      className="hidden lg:flex"
+                    >
+                      <Download className="mr-2 h-4 w-4" />
+                      <span>Export Data</span>
+                    </DropdownMenuItem>
+                    <DropdownMenuSeparator className="hidden lg:block" />
+                    {isGuest ? (
+                      <DropdownMenuItem onClick={() => navigate("/signup")}>
+                        <UserPlus className="mr-2 h-4 w-4" />
+                        <span>Create Account</span>
+                      </DropdownMenuItem>
+                    ) : (
+                      <DropdownMenuItem>
+                        <ArrowLeft className="mr-2 h-4 w-4" />
+                        <span>Sign Out</span>
+                      </DropdownMenuItem>
+                    )}
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Content Area */}
+        <div className="dashboard-content flex-1 p-4 lg:p-6 min-w-0 overflow-y-auto">
+          {activeTab === "overview" && (
+            <div className="space-y-6">
+              {/* Family Overview Cards */}
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <Card className="bg-gradient-to-r from-blue-50 to-blue-100 border-blue-200 hover:shadow-lg transition-shadow">
+                  <CardContent className="p-6">
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <p className="text-sm font-medium text-blue-600">
+                          Active Learners
+                        </p>
+                        <div className="text-3xl font-bold text-blue-700">
+                          <AnimatedCounter value={children.length} />
+                        </div>
+                        <p className="text-xs text-blue-500 mt-1">
+                          {
+                            children.filter(
+                              (c) =>
+                                new Date().getTime() -
+                                  new Date(c.lastActive).getTime() <
+                                24 * 60 * 60 * 1000,
+                            ).length
+                          }{" "}
+                          active today
+                        </p>
+                      </div>
+                      <Users className="h-8 w-8 text-blue-500" />
+                    </div>
+                  </CardContent>
+                </Card>
+
+                <Card className="bg-gradient-to-r from-green-50 to-green-100 border-green-200 hover:shadow-lg transition-shadow">
+                  <CardContent className="p-6">
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <p className="text-sm font-medium text-green-600">
+                          Words Learned
+                        </p>
+                        <div className="text-3xl font-bold text-green-700">
+                          <AnimatedCounter
+                            value={familyStats.totalWordsLearned}
+                          />
+                        </div>
+                        <p className="text-xs text-green-500 mt-1">
+                          +{familyStats.todayActivity} today
+                        </p>
+                      </div>
+                      <BookOpen className="h-8 w-8 text-green-500" />
+                    </div>
+                  </CardContent>
+                </Card>
+
+                <Card className="bg-gradient-to-r from-orange-50 to-orange-100 border-orange-200 hover:shadow-lg transition-shadow">
+                  <CardContent className="p-6">
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <p className="text-sm font-medium text-orange-600">
+                          Longest Streak
+                        </p>
+                        <div className="text-3xl font-bold text-orange-700">
+                          <AnimatedCounter value={familyStats.longestStreak} />
+                        </div>
+                        <p className="text-xs text-orange-500 mt-1">
+                          days in a row
+                        </p>
+                      </div>
+                      <Zap className="h-8 w-8 text-orange-500" />
+                    </div>
+                  </CardContent>
+                </Card>
+
+                <Card className="bg-gradient-to-r from-purple-50 to-purple-100 border-purple-200 hover:shadow-lg transition-shadow">
+                  <CardContent className="p-6">
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <p className="text-sm font-medium text-purple-600">
+                          Today's Activity
+                        </p>
+                        <div className="text-3xl font-bold text-purple-700">
+                          <AnimatedCounter value={familyStats.todayActivity} />
+                        </div>
+                        <p className="text-xs text-purple-500 mt-1">
+                          words learned
+                        </p>
+                      </div>
+                      <Activity className="h-8 w-8 text-purple-500" />
+                    </div>
+                  </CardContent>
+                </Card>
+              </div>
+
+              {/* Quick Insights Row for Desktop */}
+              {children.length > 0 && (
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                  {/* Weekly Summary */}
+                  <Card className="lg:col-span-2">
+                    <CardHeader>
+                      <CardTitle className="flex items-center gap-2">
+                        <Calendar className="h-5 w-5 text-blue-600" />
+                        This Week's Highlights
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="grid grid-cols-3 gap-4">
+                        <div className="text-center p-4 bg-blue-50 rounded-lg">
+                          <div className="text-2xl font-bold text-blue-600 mb-1">
+                            {children.reduce(
+                              (sum, child) => sum + child.weeklyProgress,
+                              0,
+                            )}
                           </div>
-                          <p className="text-xs text-blue-500 mt-1">
-                            {
-                              children.filter(
-                                (c) =>
-                                  new Date().getTime() -
-                                    new Date(c.lastActive).getTime() <
-                                  24 * 60 * 60 * 1000,
-                              ).length
-                            }{" "}
-                            active today
+                          <p className="text-sm text-blue-700">
+                            Words This Week
                           </p>
                         </div>
-                        <Users className="h-8 w-8 text-blue-500" />
+                        <div className="text-center p-4 bg-green-50 rounded-lg">
+                          <div className="text-2xl font-bold text-green-600 mb-1">
+                            {children.length > 0
+                              ? Math.round(
+                                  children.reduce(
+                                    (sum, child) =>
+                                      sum +
+                                      (child.weeklyProgress /
+                                        child.weeklyGoal) *
+                                        100,
+                                    0,
+                                  ) / children.length,
+                                )
+                              : 0}
+                            %
+                          </div>
+                          <p className="text-sm text-green-700">
+                            Avg Goal Progress
+                          </p>
+                        </div>
+                        <div className="text-center p-4 bg-orange-50 rounded-lg">
+                          <div className="text-2xl font-bold text-orange-600 mb-1">
+                            {children.reduce(
+                              (sum, child) => sum + child.currentStreak,
+                              0,
+                            )}
+                          </div>
+                          <p className="text-sm text-orange-700">
+                            Combined Streak
+                          </p>
+                        </div>
                       </div>
                     </CardContent>
                   </Card>
 
-                  <Card className="bg-gradient-to-r from-green-50 to-green-100 border-green-200 hover:shadow-lg transition-shadow">
-                    <CardContent className="p-6">
-                      <div className="flex items-center justify-between">
-                        <div>
-                          <p className="text-sm font-medium text-green-600">
-                            Words Learned
-                          </p>
-                          <div className="text-3xl font-bold text-green-700">
-                            <AnimatedCounter
-                              value={familyStats.totalWordsLearned}
-                            />
-                          </div>
-                          <p className="text-xs text-green-500 mt-1">
-                            +{familyStats.todayActivity} today
-                          </p>
-                        </div>
-                        <BookOpen className="h-8 w-8 text-green-500" />
-                      </div>
-                    </CardContent>
-                  </Card>
+                  {/* Top Performer */}
+                  <Card>
+                    <CardHeader>
+                      <CardTitle className="flex items-center gap-2">
+                        <Trophy className="h-5 w-5 text-yellow-600" />
+                        Top Performer
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      {(() => {
+                        const topChild = children.reduce(
+                          (top, child) =>
+                            child.weeklyProgress > (top?.weeklyProgress || 0)
+                              ? child
+                              : top,
+                          null,
+                        );
 
-                  <Card className="bg-gradient-to-r from-orange-50 to-orange-100 border-orange-200 hover:shadow-lg transition-shadow">
-                    <CardContent className="p-6">
-                      <div className="flex items-center justify-between">
-                        <div>
-                          <p className="text-sm font-medium text-orange-600">
-                            Longest Streak
-                          </p>
-                          <div className="text-3xl font-bold text-orange-700">
-                            <AnimatedCounter
-                              value={familyStats.longestStreak}
-                            />
+                        return topChild ? (
+                          <div className="text-center">
+                            <div className="text-4xl mb-2">
+                              {topChild.avatar}
+                            </div>
+                            <h3 className="font-semibold text-lg">
+                              {topChild.name}
+                            </h3>
+                            <p className="text-sm text-gray-600 mb-3">
+                              {topChild.weeklyProgress} words this week
+                            </p>
+                            <Badge className="bg-yellow-100 text-yellow-800">
+                              🏆 Week's Champion
+                            </Badge>
                           </div>
-                          <p className="text-xs text-orange-500 mt-1">
-                            days in a row
-                          </p>
-                        </div>
-                        <Zap className="h-8 w-8 text-orange-500" />
-                      </div>
-                    </CardContent>
-                  </Card>
-
-                  <Card className="bg-gradient-to-r from-purple-50 to-purple-100 border-purple-200 hover:shadow-lg transition-shadow">
-                    <CardContent className="p-6">
-                      <div className="flex items-center justify-between">
-                        <div>
-                          <p className="text-sm font-medium text-purple-600">
-                            Today's Activity
-                          </p>
-                          <div className="text-3xl font-bold text-purple-700">
-                            <AnimatedCounter
-                              value={familyStats.todayActivity}
-                            />
+                        ) : (
+                          <div className="text-center text-gray-500">
+                            <Trophy className="h-12 w-12 mx-auto mb-2 opacity-50" />
+                            <p className="text-sm">
+                              Start learning to see top performers!
+                            </p>
                           </div>
-                          <p className="text-xs text-purple-500 mt-1">
-                            words learned
-                          </p>
-                        </div>
-                        <Activity className="h-8 w-8 text-purple-500" />
-                      </div>
+                        );
+                      })()}
                     </CardContent>
                   </Card>
                 </div>
+              )}
 
-                {/* Quick Insights Row for Desktop */}
-                {children.length > 0 && (
-                  <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                    {/* Weekly Summary */}
-                    <Card className="lg:col-span-2">
-                      <CardHeader>
-                        <CardTitle className="flex items-center gap-2">
-                          <Calendar className="h-5 w-5 text-blue-600" />
-                          This Week's Highlights
-                        </CardTitle>
-                      </CardHeader>
-                      <CardContent>
-                        <div className="grid grid-cols-3 gap-4">
-                          <div className="text-center p-4 bg-blue-50 rounded-lg">
-                            <div className="text-2xl font-bold text-blue-600 mb-1">
-                              {children.reduce(
-                                (sum, child) => sum + child.weeklyProgress,
-                                0,
-                              )}
+              {/* Children Grid/List View */}
+              {children.length === 0 ? (
+                <Card className="bg-gradient-to-r from-slate-50 to-blue-50">
+                  <CardContent className="p-12 text-center">
+                    <div className="text-6xl mb-4">👶</div>
+                    <h3 className="text-xl font-semibold text-slate-700 mb-2">
+                      No Children Added Yet
+                    </h3>
+                    <p className="text-slate-600 mb-6 max-w-md mx-auto">
+                      Get started by adding your first child to track their
+                      learning progress and achievements
+                    </p>
+                    <Button onClick={handleAddChildClick} size="lg">
+                      <UserPlus className="h-5 w-5 mr-2" />
+                      Add Your First Child
+                    </Button>
+                  </CardContent>
+                </Card>
+              ) : (
+                <div
+                  className={cn(
+                    "gap-4 lg:gap-6 min-w-0",
+                    viewMode === "grid"
+                      ? "children-grid-view grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4"
+                      : "children-list-view space-y-4",
+                  )}
+                >
+                  {children.map((child) => (
+                    <Card
+                      key={child.id}
+                      className={cn(
+                        "dashboard-card cursor-pointer hover:shadow-lg transition-all duration-200 border-l-4 border-l-blue-500 min-w-0",
+                        selectedChild?.id === child.id &&
+                          "selected ring-2 ring-blue-500 ring-opacity-50",
+                      )}
+                      onClick={() => setSelectedChild(child)}
+                    >
+                      <CardHeader className="pb-4">
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center space-x-3 min-w-0">
+                            <div className="text-3xl shrink-0">
+                              {child.avatar}
                             </div>
-                            <p className="text-sm text-blue-700">
-                              Words This Week
-                            </p>
+                            <div className="min-w-0 flex-1">
+                              <CardTitle className="text-lg truncate">
+                                {child.name}
+                              </CardTitle>
+                              <p className="text-sm text-slate-600 truncate">
+                                {child.age} years old • Level {child.level}
+                              </p>
+                            </div>
                           </div>
-                          <div className="text-center p-4 bg-green-50 rounded-lg">
-                            <div className="text-2xl font-bold text-green-600 mb-1">
-                              {children.length > 0
-                                ? Math.round(
-                                    children.reduce(
-                                      (sum, child) =>
-                                        sum +
-                                        (child.weeklyProgress /
-                                          child.weeklyGoal) *
-                                          100,
-                                      0,
-                                    ) / children.length,
-                                  )
-                                : 0}
-                              %
-                            </div>
-                            <p className="text-sm text-green-700">
-                              Avg Goal Progress
-                            </p>
-                          </div>
-                          <div className="text-center p-4 bg-orange-50 rounded-lg">
-                            <div className="text-2xl font-bold text-orange-600 mb-1">
-                              {children.reduce(
-                                (sum, child) => sum + child.currentStreak,
-                                0,
-                              )}
-                            </div>
-                            <p className="text-sm text-orange-700">
-                              Combined Streak
+                          <div className="text-right shrink-0">
+                            <Badge variant="outline" className="mb-1 text-xs">
+                              {getTimeAgo(child.lastActive)}
+                            </Badge>
+                            <p className="text-xs text-slate-500 whitespace-nowrap">
+                              Last active
                             </p>
                           </div>
                         </div>
-                      </CardContent>
-                    </Card>
-
-                    {/* Top Performer */}
-                    <Card>
-                      <CardHeader>
-                        <CardTitle className="flex items-center gap-2">
-                          <Trophy className="h-5 w-5 text-yellow-600" />
-                          Top Performer
-                        </CardTitle>
                       </CardHeader>
-                      <CardContent>
-                        {(() => {
-                          const topChild = children.reduce(
-                            (top, child) =>
-                              child.weeklyProgress > (top?.weeklyProgress || 0)
-                                ? child
-                                : top,
-                            null,
-                          );
 
-                          return topChild ? (
-                            <div className="text-center">
-                              <div className="text-4xl mb-2">
-                                {topChild.avatar}
-                              </div>
-                              <h3 className="font-semibold text-lg">
-                                {topChild.name}
-                              </h3>
-                              <p className="text-sm text-gray-600 mb-3">
-                                {topChild.weeklyProgress} words this week
-                              </p>
-                              <Badge className="bg-yellow-100 text-yellow-800">
-                                🏆 Week's Champion
-                              </Badge>
+                      <CardContent className="space-y-4">
+                        {/* Progress Bar */}
+                        <div>
+                          <div className="flex justify-between text-sm mb-2">
+                            <span>Weekly Goal</span>
+                            <span>
+                              {child.weeklyProgress}/{child.weeklyGoal} words
+                            </span>
+                          </div>
+                          <Progress
+                            value={
+                              (child.weeklyProgress / child.weeklyGoal) * 100
+                            }
+                            className="h-2"
+                          />
+                        </div>
+
+                        {/* Stats Grid */}
+                        <div className="grid grid-cols-3 gap-4 text-center">
+                          <div>
+                            <div className="text-lg font-bold text-blue-600">
+                              <AnimatedCounter value={child.wordsLearned} />
                             </div>
-                          ) : (
-                            <div className="text-center text-gray-500">
-                              <Trophy className="h-12 w-12 mx-auto mb-2 opacity-50" />
-                              <p className="text-sm">
-                                Start learning to see top performers!
-                              </p>
+                            <p className="text-xs text-slate-600">Words</p>
+                          </div>
+                          <div>
+                            <div className="text-lg font-bold text-orange-600">
+                              <AnimatedCounter value={child.currentStreak} />
                             </div>
-                          );
-                        })()}
+                            <p className="text-xs text-slate-600">Streak</p>
+                          </div>
+                          <div>
+                            <div className="text-lg font-bold text-green-600">
+                              {child.level}
+                            </div>
+                            <p className="text-xs text-slate-600">Level</p>
+                          </div>
+                        </div>
+
+                        {/* Actions */}
+                        <div className="flex gap-2 pt-2">
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            className="flex-1 min-w-0"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              handleOpenLearningGoals(child);
+                            }}
+                          >
+                            <Target className="h-4 w-4 shrink-0 mr-1" />
+                            <span className="truncate">Goals</span>
+                          </Button>
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            className="flex-1 min-w-0"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              setActiveTab("analytics");
+                              setSelectedChild(child);
+                            }}
+                          >
+                            <BarChart3 className="h-4 w-4 shrink-0 mr-1" />
+                            <span className="truncate">Analytics</span>
+                          </Button>
+                        </div>
                       </CardContent>
                     </Card>
-                  </div>
-                )}
+                  ))}
+                </div>
+              )}
+            </div>
+          )}
 
-                {/* Children Grid/List View */}
-                {children.length === 0 ? (
-                  <Card className="bg-gradient-to-r from-slate-50 to-blue-50">
-                    <CardContent className="p-12 text-center">
-                      <div className="text-6xl mb-4">👶</div>
-                      <h3 className="text-xl font-semibold text-slate-700 mb-2">
-                        No Children Added Yet
-                      </h3>
-                      <p className="text-slate-600 mb-6 max-w-md mx-auto">
-                        Get started by adding your first child to track their
-                        learning progress and achievements
-                      </p>
-                      <Button onClick={handleAddChildClick} size="lg">
-                        <UserPlus className="h-5 w-5 mr-2" />
-                        Add Your First Child
-                      </Button>
-                    </CardContent>
-                  </Card>
-                ) : (
-                  <div
-                    className={cn(
-                      "gap-4 lg:gap-6 min-w-0",
-                      viewMode === "grid"
-                        ? "children-grid-view grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4"
-                        : "children-list-view space-y-4",
-                    )}
+          {activeTab === "analytics" && (
+            <div className="space-y-6">
+              <ParentLearningAnalyticsDesktop children={children} />
+            </div>
+          )}
+
+          {activeTab === "goals" && (
+            <div className="space-y-6">
+              <div className="flex items-center justify-between">
+                <div>
+                  <h2 className="text-2xl font-bold text-slate-800">
+                    Learning Goals
+                  </h2>
+                  <p className="text-slate-600">
+                    Manage and track learning objectives for your children
+                  </p>
+                </div>
+                {selectedChild && (
+                  <Button
+                    onClick={() => handleOpenLearningGoals(selectedChild)}
                   >
-                    {children.map((child) => (
+                    <Plus className="h-4 w-4 mr-2" />
+                    Add Goal for {selectedChild.name}
+                  </Button>
+                )}
+              </div>
+
+              {children.length === 0 ? (
+                <Card>
+                  <CardContent className="p-12 text-center">
+                    <Target className="h-16 w-16 mx-auto text-slate-400 mb-4" />
+                    <h3 className="text-xl font-semibold text-slate-700 mb-2">
+                      No Children Added Yet
+                    </h3>
+                    <p className="text-slate-600 mb-6">
+                      Add children to start setting learning goals
+                    </p>
+                    <Button onClick={handleAddChildClick}>
+                      <UserPlus className="h-4 w-4 mr-2" />
+                      Add Child
+                    </Button>
+                  </CardContent>
+                </Card>
+              ) : (
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                  {children.map((child) => {
+                    const activeGoals =
+                      child.learningGoals?.filter((g) => g.isActive) || [];
+                    const completedGoals =
+                      child.learningGoals?.filter(
+                        (g) => g.current >= g.target,
+                      ) || [];
+
+                    return (
                       <Card
                         key={child.id}
-                        className={cn(
-                          "dashboard-card cursor-pointer hover:shadow-lg transition-all duration-200 border-l-4 border-l-blue-500 min-w-0",
-                          selectedChild?.id === child.id &&
-                            "selected ring-2 ring-blue-500 ring-opacity-50",
-                        )}
-                        onClick={() => setSelectedChild(child)}
+                        className="border-l-4 border-l-blue-500"
                       >
-                        <CardHeader className="pb-4">
+                        <CardHeader>
                           <div className="flex items-center justify-between">
-                            <div className="flex items-center space-x-3 min-w-0">
-                              <div className="text-3xl shrink-0">
-                                {child.avatar}
-                              </div>
-                              <div className="min-w-0 flex-1">
-                                <CardTitle className="text-lg truncate">
-                                  {child.name}
-                                </CardTitle>
-                                <p className="text-sm text-slate-600 truncate">
-                                  {child.age} years old • Level {child.level}
+                            <div className="flex items-center space-x-3">
+                              <div className="text-3xl">{child.avatar}</div>
+                              <div>
+                                <CardTitle>{child.name}</CardTitle>
+                                <p className="text-sm text-slate-600">
+                                  {activeGoals.length} active •{" "}
+                                  {completedGoals.length} completed
                                 </p>
                               </div>
                             </div>
-                            <div className="text-right shrink-0">
-                              <Badge variant="outline" className="mb-1 text-xs">
-                                {getTimeAgo(child.lastActive)}
-                              </Badge>
-                              <p className="text-xs text-slate-500 whitespace-nowrap">
-                                Last active
-                              </p>
-                            </div>
-                          </div>
-                        </CardHeader>
-
-                        <CardContent className="space-y-4">
-                          {/* Progress Bar */}
-                          <div>
-                            <div className="flex justify-between text-sm mb-2">
-                              <span>Weekly Goal</span>
-                              <span>
-                                {child.weeklyProgress}/{child.weeklyGoal} words
-                              </span>
-                            </div>
-                            <Progress
-                              value={
-                                (child.weeklyProgress / child.weeklyGoal) * 100
-                              }
-                              className="h-2"
-                            />
-                          </div>
-
-                          {/* Stats Grid */}
-                          <div className="grid grid-cols-3 gap-4 text-center">
-                            <div>
-                              <div className="text-lg font-bold text-blue-600">
-                                <AnimatedCounter value={child.wordsLearned} />
-                              </div>
-                              <p className="text-xs text-slate-600">Words</p>
-                            </div>
-                            <div>
-                              <div className="text-lg font-bold text-orange-600">
-                                <AnimatedCounter value={child.currentStreak} />
-                              </div>
-                              <p className="text-xs text-slate-600">Streak</p>
-                            </div>
-                            <div>
-                              <div className="text-lg font-bold text-green-600">
-                                {child.level}
-                              </div>
-                              <p className="text-xs text-slate-600">Level</p>
-                            </div>
-                          </div>
-
-                          {/* Actions */}
-                          <div className="flex gap-2 pt-2">
                             <Button
-                              variant="outline"
+                              onClick={() => handleOpenLearningGoals(child)}
                               size="sm"
-                              className="flex-1 min-w-0"
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                handleOpenLearningGoals(child);
-                              }}
                             >
-                              <Target className="h-4 w-4 shrink-0 mr-1" />
-                              <span className="truncate">Goals</span>
+                              <Target className="h-4 w-4 mr-2" />
+                              Manage
                             </Button>
-                            <Button
-                              variant="outline"
-                              size="sm"
-                              className="flex-1 min-w-0"
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                setActiveTab("analytics");
-                                setSelectedChild(child);
-                              }}
-                            >
-                              <BarChart3 className="h-4 w-4 shrink-0 mr-1" />
-                              <span className="truncate">Analytics</span>
-                            </Button>
-                          </div>
-                        </CardContent>
-                      </Card>
-                    ))}
-                  </div>
-                )}
-              </div>
-            )}
-
-            {activeTab === "analytics" && (
-              <div className="space-y-6">
-                <ParentLearningAnalyticsDesktop children={children} />
-              </div>
-            )}
-
-            {activeTab === "goals" && (
-              <div className="space-y-6">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <h2 className="text-2xl font-bold text-slate-800">
-                      Learning Goals
-                    </h2>
-                    <p className="text-slate-600">
-                      Manage and track learning objectives for your children
-                    </p>
-                  </div>
-                  {selectedChild && (
-                    <Button
-                      onClick={() => handleOpenLearningGoals(selectedChild)}
-                    >
-                      <Plus className="h-4 w-4 mr-2" />
-                      Add Goal for {selectedChild.name}
-                    </Button>
-                  )}
-                </div>
-
-                {children.length === 0 ? (
-                  <Card>
-                    <CardContent className="p-12 text-center">
-                      <Target className="h-16 w-16 mx-auto text-slate-400 mb-4" />
-                      <h3 className="text-xl font-semibold text-slate-700 mb-2">
-                        No Children Added Yet
-                      </h3>
-                      <p className="text-slate-600 mb-6">
-                        Add children to start setting learning goals
-                      </p>
-                      <Button onClick={handleAddChildClick}>
-                        <UserPlus className="h-4 w-4 mr-2" />
-                        Add Child
-                      </Button>
-                    </CardContent>
-                  </Card>
-                ) : (
-                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                    {children.map((child) => {
-                      const activeGoals =
-                        child.learningGoals?.filter((g) => g.isActive) || [];
-                      const completedGoals =
-                        child.learningGoals?.filter(
-                          (g) => g.current >= g.target,
-                        ) || [];
-
-                      return (
-                        <Card
-                          key={child.id}
-                          className="border-l-4 border-l-blue-500"
-                        >
-                          <CardHeader>
-                            <div className="flex items-center justify-between">
-                              <div className="flex items-center space-x-3">
-                                <div className="text-3xl">{child.avatar}</div>
-                                <div>
-                                  <CardTitle>{child.name}</CardTitle>
-                                  <p className="text-sm text-slate-600">
-                                    {activeGoals.length} active •{" "}
-                                    {completedGoals.length} completed
-                                  </p>
-                                </div>
-                              </div>
-                              <Button
-                                onClick={() => handleOpenLearningGoals(child)}
-                                size="sm"
-                              >
-                                <Target className="h-4 w-4 mr-2" />
-                                Manage
-                              </Button>
-                            </div>
-                          </CardHeader>
-
-                          <CardContent>
-                            {activeGoals.length > 0 ? (
-                              <div className="space-y-3">
-                                {activeGoals.slice(0, 3).map((goal) => {
-                                  const progress = Math.min(
-                                    (goal.current / goal.target) * 100,
-                                    100,
-                                  );
-                                  return (
-                                    <div
-                                      key={goal.id}
-                                      className="p-3 bg-slate-50 rounded-lg"
-                                    >
-                                      <div className="flex justify-between items-start mb-2">
-                                        <div className="flex-1">
-                                          <p className="text-sm font-medium">
-                                            {goal.description}
-                                          </p>
-                                          <p className="text-xs text-slate-600">
-                                            {goal.current}/{goal.target} •{" "}
-                                            {Math.round(progress)}%
-                                          </p>
-                                        </div>
-                                        <Badge
-                                          variant="outline"
-                                          className="text-xs"
-                                        >
-                                          {goal.type}
-                                        </Badge>
-                                      </div>
-                                      <Progress
-                                        value={progress}
-                                        className="h-2"
-                                      />
-                                    </div>
-                                  );
-                                })}
-                                {activeGoals.length > 3 && (
-                                  <p className="text-xs text-slate-500 text-center">
-                                    +{activeGoals.length - 3} more goals
-                                  </p>
-                                )}
-                              </div>
-                            ) : (
-                              <div className="text-center py-8 text-slate-500">
-                                <Target className="h-8 w-8 mx-auto mb-2 opacity-50" />
-                                <p className="text-sm">No active goals yet</p>
-                              </div>
-                            )}
-                          </CardContent>
-                        </Card>
-                      );
-                    })}
-                  </div>
-                )}
-              </div>
-            )}
-
-            {activeTab === "achievements" && (
-              <div className="space-y-6">
-                <div>
-                  <h2 className="text-2xl font-bold text-slate-800">
-                    Achievements & Milestones
-                  </h2>
-                  <p className="text-slate-600">
-                    Celebrate your children's learning successes
-                  </p>
-                </div>
-
-                {children.length === 0 ? (
-                  <Card>
-                    <CardContent className="p-12 text-center">
-                      <Trophy className="h-16 w-16 mx-auto text-slate-400 mb-4" />
-                      <h3 className="text-xl font-semibold text-slate-700 mb-2">
-                        No Achievements Yet
-                      </h3>
-                      <p className="text-slate-600 mb-6">
-                        Add children to start tracking their achievements
-                      </p>
-                      <Button onClick={handleAddChildClick}>
-                        <UserPlus className="h-4 w-4 mr-2" />
-                        Add Child
-                      </Button>
-                    </CardContent>
-                  </Card>
-                ) : (
-                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                    {children.map((child) => (
-                      <Card
-                        key={child.id}
-                        className="border-l-4 border-l-yellow-500"
-                      >
-                        <CardHeader>
-                          <div className="flex items-center space-x-3">
-                            <div className="text-3xl">{child.avatar}</div>
-                            <div>
-                              <CardTitle>{child.name}</CardTitle>
-                              <p className="text-sm text-slate-600">
-                                {child.recentAchievements.length} achievement
-                                {child.recentAchievements.length !== 1
-                                  ? "s"
-                                  : ""}{" "}
-                                earned
-                              </p>
-                            </div>
                           </div>
                         </CardHeader>
 
                         <CardContent>
-                          {child.recentAchievements.length > 0 ? (
+                          {activeGoals.length > 0 ? (
                             <div className="space-y-3">
-                              {child.recentAchievements.map((achievement) => (
-                                <div
-                                  key={achievement.id}
-                                  className="flex items-center space-x-3 p-3 bg-yellow-50 rounded-lg"
-                                >
-                                  <div className="text-2xl">
-                                    {achievement.icon}
+                              {activeGoals.slice(0, 3).map((goal) => {
+                                const progress = Math.min(
+                                  (goal.current / goal.target) * 100,
+                                  100,
+                                );
+                                return (
+                                  <div
+                                    key={goal.id}
+                                    className="p-3 bg-slate-50 rounded-lg"
+                                  >
+                                    <div className="flex justify-between items-start mb-2">
+                                      <div className="flex-1">
+                                        <p className="text-sm font-medium">
+                                          {goal.description}
+                                        </p>
+                                        <p className="text-xs text-slate-600">
+                                          {goal.current}/{goal.target} •{" "}
+                                          {Math.round(progress)}%
+                                        </p>
+                                      </div>
+                                      <Badge
+                                        variant="outline"
+                                        className="text-xs"
+                                      >
+                                        {goal.type}
+                                      </Badge>
+                                    </div>
+                                    <Progress
+                                      value={progress}
+                                      className="h-2"
+                                    />
                                   </div>
-                                  <div className="flex-1">
-                                    <p className="font-medium text-sm">
-                                      {achievement.title}
-                                    </p>
-                                    <p className="text-xs text-slate-600">
-                                      {achievement.description}
-                                    </p>
-                                    <p className="text-xs text-slate-500">
-                                      {getTimeAgo(achievement.earnedAt)}
-                                    </p>
-                                  </div>
-                                </div>
-                              ))}
+                                );
+                              })}
+                              {activeGoals.length > 3 && (
+                                <p className="text-xs text-slate-500 text-center">
+                                  +{activeGoals.length - 3} more goals
+                                </p>
+                              )}
                             </div>
                           ) : (
                             <div className="text-center py-8 text-slate-500">
-                              <Trophy className="h-8 w-8 mx-auto mb-2 opacity-50" />
-                              <p className="text-sm">No achievements yet</p>
-                              <p className="text-xs">
-                                Keep learning to unlock achievements!
-                              </p>
+                              <Target className="h-8 w-8 mx-auto mb-2 opacity-50" />
+                              <p className="text-sm">No active goals yet</p>
                             </div>
                           )}
                         </CardContent>
                       </Card>
-                    ))}
-                  </div>
-                )}
-              </div>
-            )}
-
-            {activeTab === "settings" && (
-              <div className="space-y-6">
-                <div>
-                  <h2 className="text-2xl font-bold text-slate-800">
-                    Dashboard Settings
-                  </h2>
-                  <p className="text-slate-600">
-                    Customize your parent dashboard experience
-                  </p>
+                    );
+                  })}
                 </div>
+              )}
+            </div>
+          )}
 
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                  <Card>
-                    <CardHeader>
-                      <CardTitle>Dashboard Preferences</CardTitle>
-                    </CardHeader>
-                    <CardContent className="space-y-4">
-                      <div className="flex items-center justify-between">
-                        <Label>Collapsed Sidebar</Label>
-                        <Button
-                          variant="outline"
-                          size="sm"
-                          onClick={() => setSidebarCollapsed(!sidebarCollapsed)}
-                        >
-                          {sidebarCollapsed ? (
-                            <Maximize2 className="h-4 w-4" />
-                          ) : (
-                            <Minimize2 className="h-4 w-4" />
-                          )}
-                        </Button>
-                      </div>
-                      <div className="flex items-center justify-between">
-                        <Label>Quick Actions Visible</Label>
-                        <Button
-                          variant="outline"
-                          size="sm"
-                          onClick={() =>
-                            setQuickActionsVisible(!quickActionsVisible)
-                          }
-                        >
-                          {quickActionsVisible ? (
-                            <Eye className="h-4 w-4" />
-                          ) : (
-                            <X className="h-4 w-4" />
-                          )}
-                        </Button>
-                      </div>
-                    </CardContent>
-                  </Card>
+          {activeTab === "achievements" && (
+            <div className="space-y-6">
+              <div>
+                <h2 className="text-2xl font-bold text-slate-800">
+                  Achievements & Milestones
+                </h2>
+                <p className="text-slate-600">
+                  Celebrate your children's learning successes
+                </p>
+              </div>
 
-                  <Card>
-                    <CardHeader>
-                      <CardTitle>Account Settings</CardTitle>
-                    </CardHeader>
-                    <CardContent className="space-y-4">
-                      {isGuest ? (
-                        <div className="text-center py-6">
-                          <p className="text-slate-600 mb-4">
-                            Create an account to access additional settings and
-                            save your data permanently.
-                          </p>
-                          <Button onClick={() => navigate("/signup")}>
-                            <UserPlus className="h-4 w-4 mr-2" />
-                            Create Account
-                          </Button>
-                        </div>
-                      ) : (
-                        <div className="space-y-3">
-                          <div>
-                            <Label>Email</Label>
-                            <Input value={user?.email || ""} disabled />
-                          </div>
-                          <Button variant="outline" className="w-full">
-                            <Download className="h-4 w-4 mr-2" />
-                            Export All Data
-                          </Button>
-                        </div>
-                      )}
-                    </CardContent>
-                  </Card>
-                </div>
-              </div>
-            )}
-          </div>
-        </div>
-
-        {/* Add Child Dialog */}
-        <Dialog open={showAddChildDialog} onOpenChange={setShowAddChildDialog}>
-          <DialogContent className="sm:max-w-md">
-            <DialogHeader>
-              <DialogTitle>Add New Child</DialogTitle>
-              <DialogDescription>
-                Add a child to start tracking their learning progress
-              </DialogDescription>
-            </DialogHeader>
-            <div className="space-y-4">
-              <div>
-                <Label htmlFor="name">Name</Label>
-                <Input
-                  id="name"
-                  value={newChildData.name}
-                  onChange={(e) =>
-                    setNewChildData((prev) => ({
-                      ...prev,
-                      name: e.target.value,
-                    }))
-                  }
-                  placeholder="Enter child's name"
-                />
-              </div>
-              <div>
-                <Label htmlFor="age">Age</Label>
-                <Select
-                  value={newChildData.age.toString()}
-                  onValueChange={(value) =>
-                    setNewChildData((prev) => ({
-                      ...prev,
-                      age: parseInt(value),
-                    }))
-                  }
-                >
-                  <SelectTrigger>
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {[3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map((age) => (
-                      <SelectItem key={age} value={age.toString()}>
-                        {age} years old
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
-              <div>
-                <Label htmlFor="avatar">Avatar</Label>
-                <div className="flex gap-2 mt-2">
-                  {["👨‍👩‍👧‍👦", "👧", "👦", "🧒", "👴", "👵"].map((emoji) => (
-                    <Button
-                      key={emoji}
-                      variant={
-                        newChildData.avatar === emoji ? "default" : "outline"
-                      }
-                      size="sm"
-                      onClick={() =>
-                        setNewChildData((prev) => ({ ...prev, avatar: emoji }))
-                      }
-                    >
-                      {emoji}
+              {children.length === 0 ? (
+                <Card>
+                  <CardContent className="p-12 text-center">
+                    <Trophy className="h-16 w-16 mx-auto text-slate-400 mb-4" />
+                    <h3 className="text-xl font-semibold text-slate-700 mb-2">
+                      No Achievements Yet
+                    </h3>
+                    <p className="text-slate-600 mb-6">
+                      Add children to start tracking their achievements
+                    </p>
+                    <Button onClick={handleAddChildClick}>
+                      <UserPlus className="h-4 w-4 mr-2" />
+                      Add Child
                     </Button>
-                  ))}
-                </div>
-              </div>
-              <div>
-                <Label htmlFor="learningTime">Preferred Learning Time</Label>
-                <Select
-                  value={newChildData.preferredLearningTime}
-                  onValueChange={(value) =>
-                    setNewChildData((prev) => ({
-                      ...prev,
-                      preferredLearningTime: value,
-                    }))
-                  }
-                >
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select preferred time" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="Morning (7-9 AM)">
-                      Morning (7-9 AM)
-                    </SelectItem>
-                    <SelectItem value="Mid-Morning (9-11 AM)">
-                      Mid-Morning (9-11 AM)
-                    </SelectItem>
-                    <SelectItem value="After school (3-5 PM)">
-                      After school (3-5 PM)
-                    </SelectItem>
-                    <SelectItem value="Evening (6-8 PM)">
-                      Evening (6-8 PM)
-                    </SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-            </div>
-            <DialogFooter>
-              <Button
-                variant="outline"
-                onClick={() => setShowAddChildDialog(false)}
-              >
-                Cancel
-              </Button>
-              <Button onClick={addChild} disabled={!newChildData.name.trim()}>
-                Add Child
-              </Button>
-            </DialogFooter>
-          </DialogContent>
-        </Dialog>
-
-        {/* Learning Goals Panel */}
-        {showLearningGoalsPanel && learningGoalsChild && (
-          <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-            <div className="bg-white rounded-xl shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-hidden">
-              <ChildLearningGoalsPanel
-                isOpen={showLearningGoalsPanel}
-                child={learningGoalsChild}
-                onClose={() => {
-                  setShowLearningGoalsPanel(false);
-                  setLearningGoalsChild(null);
-                }}
-                onUpdateChild={handleUpdateChild}
-              />
-            </div>
-          </div>
-        )}
-
-        {/* Quick Actions Panel */}
-        <DesktopQuickActions
-          onAddChild={handleAddChildClick}
-          onRefreshData={syncChildrenProgress}
-          onToggleAnalytics={handleToggleAnalytics}
-          onShowGoals={handleShowGoals}
-          onExportData={handleExportData}
-          onOpenSettings={handleOpenSettings}
-          isVisible={quickActionsVisible}
-          onToggleVisibility={() =>
-            setQuickActionsVisible(!quickActionsVisible)
-          }
-          isLoading={isLoadingProgress}
-          notifications={notificationCount}
-        />
-
-        {/* Registration Prompt */}
-        {showRegistrationPrompt && (
-          <AlertDialog
-            open={showRegistrationPrompt}
-            onOpenChange={setShowRegistrationPrompt}
-          >
-            <AlertDialogContent>
-              <AlertDialogHeader>
-                <AlertDialogTitle>Registration Required</AlertDialogTitle>
-                <AlertDialogDescription>
-                  To add children and track their progress, please create a free
-                  account. This will save all your data securely.
-                </AlertDialogDescription>
-              </AlertDialogHeader>
-              <AlertDialogFooter>
-                <AlertDialogCancel>Maybe Later</AlertDialogCancel>
-                <AlertDialogAction onClick={() => navigate("/signup")}>
-                  Create Account
-                </AlertDialogAction>
-              </AlertDialogFooter>
-            </AlertDialogContent>
-          </AlertDialog>
-        )}
-
-        {/* Auto-Detect Progress Dialog */}
-        <Dialog
-          open={showAutoDetectDialog}
-          onOpenChange={setShowAutoDetectDialog}
-        >
-          <DialogContent className="sm:max-w-2xl">
-            <DialogHeader>
-              <DialogTitle className="flex items-center gap-2">
-                <Search className="h-5 w-5" />
-                Found Learning Progress!
-              </DialogTitle>
-              <DialogDescription>
-                We found existing learning progress data. Connect these learners
-                to your parent dashboard:
-              </DialogDescription>
-            </DialogHeader>
-
-            <div className="space-y-4 max-h-96 overflow-y-auto">
-              {detectedProgress.map((progress, index) => {
-                const childName =
-                  childNames[progress.userId] || `Learner ${index + 1}`;
-
-                return (
-                  <Card key={progress.userId} className="p-4">
-                    <div className="flex items-center justify-between">
-                      <div className="space-y-2 flex-1">
-                        <div className="flex items-center gap-3">
-                          <div className="text-2xl">🧒</div>
+                  </CardContent>
+                </Card>
+              ) : (
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                  {children.map((child) => (
+                    <Card
+                      key={child.id}
+                      className="border-l-4 border-l-yellow-500"
+                    >
+                      <CardHeader>
+                        <div className="flex items-center space-x-3">
+                          <div className="text-3xl">{child.avatar}</div>
                           <div>
-                            <Input
-                              placeholder="Enter child's name"
-                              value={childName}
-                              onChange={(e) =>
-                                setChildNames((prev) => ({
-                                  ...prev,
-                                  [progress.userId]: e.target.value,
-                                }))
-                              }
-                              className="text-sm"
-                            />
-                            <p className="text-xs text-muted-foreground mt-1">
-                              User ID: {progress.userId}
+                            <CardTitle>{child.name}</CardTitle>
+                            <p className="text-sm text-slate-600">
+                              {child.recentAchievements.length} achievement
+                              {child.recentAchievements.length !== 1
+                                ? "s"
+                                : ""}{" "}
+                              earned
                             </p>
                           </div>
                         </div>
+                      </CardHeader>
 
-                        <div className="grid grid-cols-3 gap-4 text-sm">
-                          <div className="text-center p-2 bg-blue-50 rounded">
-                            <div className="font-semibold text-blue-600">
-                              {progress.progressStats?.totalWordsLearned || 0}
-                            </div>
-                            <div className="text-xs text-blue-700">
-                              Words Learned
-                            </div>
+                      <CardContent>
+                        {child.recentAchievements.length > 0 ? (
+                          <div className="space-y-3">
+                            {child.recentAchievements.map((achievement) => (
+                              <div
+                                key={achievement.id}
+                                className="flex items-center space-x-3 p-3 bg-yellow-50 rounded-lg"
+                              >
+                                <div className="text-2xl">
+                                  {achievement.icon}
+                                </div>
+                                <div className="flex-1">
+                                  <p className="font-medium text-sm">
+                                    {achievement.title}
+                                  </p>
+                                  <p className="text-xs text-slate-600">
+                                    {achievement.description}
+                                  </p>
+                                  <p className="text-xs text-slate-500">
+                                    {getTimeAgo(achievement.earnedAt)}
+                                  </p>
+                                </div>
+                              </div>
+                            ))}
                           </div>
-                          <div className="text-center p-2 bg-green-50 rounded">
-                            <div className="font-semibold text-green-600">
-                              {progress.progressStats?.currentStreak || 0}
-                            </div>
-                            <div className="text-xs text-green-700">
-                              Current Streak
-                            </div>
+                        ) : (
+                          <div className="text-center py-8 text-slate-500">
+                            <Trophy className="h-8 w-8 mx-auto mb-2 opacity-50" />
+                            <p className="text-sm">No achievements yet</p>
+                            <p className="text-xs">
+                              Keep learning to unlock achievements!
+                            </p>
                           </div>
-                          <div className="text-center p-2 bg-orange-50 rounded">
-                            <div className="font-semibold text-orange-600">
-                              {progress.progressStats?.todayProgress || 0}
-                            </div>
-                            <div className="text-xs text-orange-700">
-                              Today's Words
-                            </div>
-                          </div>
+                        )}
+                      </CardContent>
+                    </Card>
+                  ))}
+                </div>
+              )}
+            </div>
+          )}
+
+          {activeTab === "settings" && (
+            <div className="space-y-6">
+              <div>
+                <h2 className="text-2xl font-bold text-slate-800">
+                  Dashboard Settings
+                </h2>
+                <p className="text-slate-600">
+                  Customize your parent dashboard experience
+                </p>
+              </div>
+
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <Card>
+                  <CardHeader>
+                    <CardTitle>Dashboard Preferences</CardTitle>
+                  </CardHeader>
+                  <CardContent className="space-y-4">
+                    <div className="flex items-center justify-between">
+                      <Label>Collapsed Sidebar</Label>
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => setSidebarCollapsed(!sidebarCollapsed)}
+                      >
+                        {sidebarCollapsed ? (
+                          <Maximize2 className="h-4 w-4" />
+                        ) : (
+                          <Minimize2 className="h-4 w-4" />
+                        )}
+                      </Button>
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <Label>Quick Actions Visible</Label>
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() =>
+                          setQuickActionsVisible(!quickActionsVisible)
+                        }
+                      >
+                        {quickActionsVisible ? (
+                          <Eye className="h-4 w-4" />
+                        ) : (
+                          <X className="h-4 w-4" />
+                        )}
+                      </Button>
+                    </div>
+                  </CardContent>
+                </Card>
+
+                <Card>
+                  <CardHeader>
+                    <CardTitle>Account Settings</CardTitle>
+                  </CardHeader>
+                  <CardContent className="space-y-4">
+                    {isGuest ? (
+                      <div className="text-center py-6">
+                        <p className="text-slate-600 mb-4">
+                          Create an account to access additional settings and
+                          save your data permanently.
+                        </p>
+                        <Button onClick={() => navigate("/signup")}>
+                          <UserPlus className="h-4 w-4 mr-2" />
+                          Create Account
+                        </Button>
+                      </div>
+                    ) : (
+                      <div className="space-y-3">
+                        <div>
+                          <Label>Email</Label>
+                          <Input value={user?.email || ""} disabled />
+                        </div>
+                        <Button variant="outline" className="w-full">
+                          <Download className="h-4 w-4 mr-2" />
+                          Export All Data
+                        </Button>
+                      </div>
+                    )}
+                  </CardContent>
+                </Card>
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
+
+      {/* Add Child Dialog */}
+      <Dialog open={showAddChildDialog} onOpenChange={setShowAddChildDialog}>
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <DialogTitle>Add New Child</DialogTitle>
+            <DialogDescription>
+              Add a child to start tracking their learning progress
+            </DialogDescription>
+          </DialogHeader>
+          <div className="space-y-4">
+            <div>
+              <Label htmlFor="name">Name</Label>
+              <Input
+                id="name"
+                value={newChildData.name}
+                onChange={(e) =>
+                  setNewChildData((prev) => ({
+                    ...prev,
+                    name: e.target.value,
+                  }))
+                }
+                placeholder="Enter child's name"
+              />
+            </div>
+            <div>
+              <Label htmlFor="age">Age</Label>
+              <Select
+                value={newChildData.age.toString()}
+                onValueChange={(value) =>
+                  setNewChildData((prev) => ({
+                    ...prev,
+                    age: parseInt(value),
+                  }))
+                }
+              >
+                <SelectTrigger>
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  {[3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map((age) => (
+                    <SelectItem key={age} value={age.toString()}>
+                      {age} years old
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+            <div>
+              <Label htmlFor="avatar">Avatar</Label>
+              <div className="flex gap-2 mt-2">
+                {["👨‍👩‍👧‍👦", "👧", "👦", "🧒", "👴", "👵"].map((emoji) => (
+                  <Button
+                    key={emoji}
+                    variant={
+                      newChildData.avatar === emoji ? "default" : "outline"
+                    }
+                    size="sm"
+                    onClick={() =>
+                      setNewChildData((prev) => ({ ...prev, avatar: emoji }))
+                    }
+                  >
+                    {emoji}
+                  </Button>
+                ))}
+              </div>
+            </div>
+            <div>
+              <Label htmlFor="learningTime">Preferred Learning Time</Label>
+              <Select
+                value={newChildData.preferredLearningTime}
+                onValueChange={(value) =>
+                  setNewChildData((prev) => ({
+                    ...prev,
+                    preferredLearningTime: value,
+                  }))
+                }
+              >
+                <SelectTrigger>
+                  <SelectValue placeholder="Select preferred time" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="Morning (7-9 AM)">
+                    Morning (7-9 AM)
+                  </SelectItem>
+                  <SelectItem value="Mid-Morning (9-11 AM)">
+                    Mid-Morning (9-11 AM)
+                  </SelectItem>
+                  <SelectItem value="After school (3-5 PM)">
+                    After school (3-5 PM)
+                  </SelectItem>
+                  <SelectItem value="Evening (6-8 PM)">
+                    Evening (6-8 PM)
+                  </SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+          </div>
+          <DialogFooter>
+            <Button
+              variant="outline"
+              onClick={() => setShowAddChildDialog(false)}
+            >
+              Cancel
+            </Button>
+            <Button onClick={addChild} disabled={!newChildData.name.trim()}>
+              Add Child
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      {/* Learning Goals Panel */}
+      {showLearningGoalsPanel && learningGoalsChild && (
+        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+          <div className="bg-white rounded-xl shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-hidden">
+            <ChildLearningGoalsPanel
+              isOpen={showLearningGoalsPanel}
+              child={learningGoalsChild}
+              onClose={() => {
+                setShowLearningGoalsPanel(false);
+                setLearningGoalsChild(null);
+              }}
+              onUpdateChild={handleUpdateChild}
+            />
+          </div>
+        </div>
+      )}
+
+      {/* Quick Actions Panel */}
+      <DesktopQuickActions
+        onAddChild={handleAddChildClick}
+        onRefreshData={syncChildrenProgress}
+        onToggleAnalytics={handleToggleAnalytics}
+        onShowGoals={handleShowGoals}
+        onExportData={handleExportData}
+        onOpenSettings={handleOpenSettings}
+        isVisible={quickActionsVisible}
+        onToggleVisibility={() => setQuickActionsVisible(!quickActionsVisible)}
+        isLoading={isLoadingProgress}
+        notifications={notificationCount}
+      />
+
+      {/* Registration Prompt */}
+      {showRegistrationPrompt && (
+        <AlertDialog
+          open={showRegistrationPrompt}
+          onOpenChange={setShowRegistrationPrompt}
+        >
+          <AlertDialogContent>
+            <AlertDialogHeader>
+              <AlertDialogTitle>Registration Required</AlertDialogTitle>
+              <AlertDialogDescription>
+                To add children and track their progress, please create a free
+                account. This will save all your data securely.
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+              <AlertDialogCancel>Maybe Later</AlertDialogCancel>
+              <AlertDialogAction onClick={() => navigate("/signup")}>
+                Create Account
+              </AlertDialogAction>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
+      )}
+
+      {/* Auto-Detect Progress Dialog */}
+      <Dialog
+        open={showAutoDetectDialog}
+        onOpenChange={setShowAutoDetectDialog}
+      >
+        <DialogContent className="sm:max-w-2xl">
+          <DialogHeader>
+            <DialogTitle className="flex items-center gap-2">
+              <Search className="h-5 w-5" />
+              Found Learning Progress!
+            </DialogTitle>
+            <DialogDescription>
+              We found existing learning progress data. Connect these learners
+              to your parent dashboard:
+            </DialogDescription>
+          </DialogHeader>
+
+          <div className="space-y-4 max-h-96 overflow-y-auto">
+            {detectedProgress.map((progress, index) => {
+              const childName =
+                childNames[progress.userId] || `Learner ${index + 1}`;
+
+              return (
+                <Card key={progress.userId} className="p-4">
+                  <div className="flex items-center justify-between">
+                    <div className="space-y-2 flex-1">
+                      <div className="flex items-center gap-3">
+                        <div className="text-2xl">🧒</div>
+                        <div>
+                          <Input
+                            placeholder="Enter child's name"
+                            value={childName}
+                            onChange={(e) =>
+                              setChildNames((prev) => ({
+                                ...prev,
+                                [progress.userId]: e.target.value,
+                              }))
+                            }
+                            className="text-sm"
+                          />
+                          <p className="text-xs text-muted-foreground mt-1">
+                            User ID: {progress.userId}
+                          </p>
                         </div>
                       </div>
 
-                      <Button
-                        onClick={() =>
-                          connectDetectedProgress(progress, childName)
-                        }
-                        disabled={!childName.trim()}
-                        className="ml-4"
-                      >
-                        Connect
-                      </Button>
+                      <div className="grid grid-cols-3 gap-4 text-sm">
+                        <div className="text-center p-2 bg-blue-50 rounded">
+                          <div className="font-semibold text-blue-600">
+                            {progress.progressStats?.totalWordsLearned || 0}
+                          </div>
+                          <div className="text-xs text-blue-700">
+                            Words Learned
+                          </div>
+                        </div>
+                        <div className="text-center p-2 bg-green-50 rounded">
+                          <div className="font-semibold text-green-600">
+                            {progress.progressStats?.currentStreak || 0}
+                          </div>
+                          <div className="text-xs text-green-700">
+                            Current Streak
+                          </div>
+                        </div>
+                        <div className="text-center p-2 bg-orange-50 rounded">
+                          <div className="font-semibold text-orange-600">
+                            {progress.progressStats?.todayProgress || 0}
+                          </div>
+                          <div className="text-xs text-orange-700">
+                            Today's Words
+                          </div>
+                        </div>
+                      </div>
                     </div>
-                  </Card>
-                );
-              })}
-            </div>
 
-            <DialogFooter>
-              <Button
-                variant="outline"
-                onClick={() => setShowAutoDetectDialog(false)}
-              >
-                Skip for Now
-              </Button>
-            </DialogFooter>
-          </DialogContent>
-        </Dialog>
-      </div>
+                    <Button
+                      onClick={() =>
+                        connectDetectedProgress(progress, childName)
+                      }
+                      disabled={!childName.trim()}
+                      className="ml-4"
+                    >
+                      Connect
+                    </Button>
+                  </div>
+                </Card>
+              );
+            })}
+          </div>
+
+          <DialogFooter>
+            <Button
+              variant="outline"
+              onClick={() => setShowAutoDetectDialog(false)}
+            >
+              Skip for Now
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+    </div>
   );
 };

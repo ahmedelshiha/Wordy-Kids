@@ -426,72 +426,128 @@ export function EnhancedAISettings({
   }
 
   return (
-      <div className={cn("space-y-6", className)}>
-        {/* Header with Status */}
-        <div className="flex items-center justify-between">
-          <div>
-            <h2 className="text-2xl font-bold flex items-center gap-2">
-              <Brain className="w-6 h-6 text-blue-600" />
-              AI Settings
-            </h2>
-            <p className="text-gray-600">
-              Customize your AI-powered learning experience
-            </p>
-          </div>
-          <AIStatusIndicator
-            status={aiStatus}
-            confidence={aiConfidence}
-            size="lg"
-            showConfidence={true}
-          />
+    <div className={cn("space-y-6", className)}>
+      {/* Header with Status */}
+      <div className="flex items-center justify-between">
+        <div>
+          <h2 className="text-2xl font-bold flex items-center gap-2">
+            <Brain className="w-6 h-6 text-blue-600" />
+            AI Settings
+          </h2>
+          <p className="text-gray-600">
+            Customize your AI-powered learning experience
+          </p>
         </div>
+        <AIStatusIndicator
+          status={aiStatus}
+          confidence={aiConfidence}
+          size="lg"
+          showConfidence={true}
+        />
+      </div>
 
-        {/* Master Control */}
-        <Card className="border-2 border-blue-200">
-          <CardHeader>
-            <div className="flex items-center justify-between">
-              <div>
-                <CardTitle className="flex items-center gap-2">
-                  <Brain className="w-5 h-5" />
-                  Master AI Control
-                </CardTitle>
-                <CardDescription>
-                  Enable or disable all AI features at once
-                </CardDescription>
-              </div>
-              <Switch
-                checked={settings.aiEnhancementEnabled}
-                onCheckedChange={(checked) =>
-                  updateSetting("aiEnhancementEnabled", checked)
-                }
-                className="scale-125"
-              />
+      {/* Master Control */}
+      <Card className="border-2 border-blue-200">
+        <CardHeader>
+          <div className="flex items-center justify-between">
+            <div>
+              <CardTitle className="flex items-center gap-2">
+                <Brain className="w-5 h-5" />
+                Master AI Control
+              </CardTitle>
+              <CardDescription>
+                Enable or disable all AI features at once
+              </CardDescription>
             </div>
-          </CardHeader>
-        </Card>
+            <Switch
+              checked={settings.aiEnhancementEnabled}
+              onCheckedChange={(checked) =>
+                updateSetting("aiEnhancementEnabled", checked)
+              }
+              className="scale-125"
+            />
+          </div>
+        </CardHeader>
+      </Card>
 
-        {/* Settings Categories */}
-        {settings.aiEnhancementEnabled && (
-          <div className="space-y-6">
-            {/* Core Settings */}
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <settingCategories.core.icon className="w-5 h-5" />
-                  {settingCategories.core.title}
-                </CardTitle>
-                <CardDescription>
-                  {settingCategories.core.description}
-                </CardDescription>
-              </CardHeader>
+      {/* Settings Categories */}
+      {settings.aiEnhancementEnabled && (
+        <div className="space-y-6">
+          {/* Core Settings */}
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <settingCategories.core.icon className="w-5 h-5" />
+                {settingCategories.core.title}
+              </CardTitle>
+              <CardDescription>
+                {settingCategories.core.description}
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              {settingCategories.core.settings.map((setting) => (
+                <div
+                  key={setting.key}
+                  className="flex items-center justify-between p-3 rounded-lg border"
+                >
+                  <div className="flex items-start gap-3">
+                    <setting.icon className="w-5 h-5 text-blue-600 mt-0.5" />
+                    <div className="flex-1">
+                      <div className="flex items-center gap-2">
+                        <label className="font-medium">{setting.label}</label>
+                        <Badge
+                          className={impactColors[setting.impact]}
+                          variant="outline"
+                        >
+                          {setting.impact} Impact
+                        </Badge>
+                      </div>
+                      <p className="text-sm text-gray-600 mt-1">
+                        {setting.description}
+                      </p>
+                    </div>
+                  </div>
+                  <Switch
+                    checked={settings[setting.key] as boolean}
+                    onCheckedChange={(checked) =>
+                      updateSetting(setting.key, checked)
+                    }
+                  />
+                </div>
+              ))}
+            </CardContent>
+          </Card>
+
+          {/* Advanced Settings */}
+          <Card>
+            <CardHeader>
+              <div className="flex items-center justify-between">
+                <div>
+                  <CardTitle className="flex items-center gap-2">
+                    <settingCategories.advanced.icon className="w-5 h-5" />
+                    {settingCategories.advanced.title}
+                  </CardTitle>
+                  <CardDescription>
+                    {settingCategories.advanced.description}
+                  </CardDescription>
+                </div>
+                <Button
+                  variant="ghost"
+                  onClick={() => setShowAdvancedSettings(!showAdvancedSettings)}
+                >
+                  {showAdvancedSettings ? "Hide" : "Show"} Advanced
+                </Button>
+              </div>
+            </CardHeader>
+            {showAdvancedSettings && (
               <CardContent className="space-y-4">
-                {settingCategories.core.settings.map((setting) => (
+                {settingCategories.advanced.settings.map((setting) => (
                   <div
                     key={setting.key}
                     className="flex items-center justify-between p-3 rounded-lg border"
                   >
                     <div className="flex items-start gap-3">
-                      <setting.icon className="w-5 h-5 text-blue-600 mt-0.5" />
+                      <setting.icon className="w-5 h-5 text-purple-600 mt-0.5" />
                       <div className="flex-1">
                         <div className="flex items-center gap-2">
                           <label className="font-medium">{setting.label}</label>
@@ -501,6 +557,14 @@ export function EnhancedAISettings({
                           >
                             {setting.impact} Impact
                           </Badge>
+                          {setting.beta && (
+                            <Badge
+                              variant="secondary"
+                              className="bg-orange-100 text-orange-700"
+                            >
+                              Beta
+                            </Badge>
+                          )}
                         </div>
                         <p className="text-sm text-gray-600 mt-1">
                           {setting.description}
@@ -516,197 +580,127 @@ export function EnhancedAISettings({
                   </div>
                 ))}
               </CardContent>
-            </Card>
+            )}
+          </Card>
 
-            {/* Advanced Settings */}
+          {/* Personalization Settings */}
+          {showAdvancedSettings && (
             <Card>
               <CardHeader>
-                <div className="flex items-center justify-between">
-                  <div>
-                    <CardTitle className="flex items-center gap-2">
-                      <settingCategories.advanced.icon className="w-5 h-5" />
-                      {settingCategories.advanced.title}
-                    </CardTitle>
-                    <CardDescription>
-                      {settingCategories.advanced.description}
-                    </CardDescription>
-                  </div>
-                  <Button
-                    variant="ghost"
-                    onClick={() =>
-                      setShowAdvancedSettings(!showAdvancedSettings)
-                    }
-                  >
-                    {showAdvancedSettings ? "Hide" : "Show"} Advanced
-                  </Button>
-                </div>
+                <CardTitle className="flex items-center gap-2">
+                  <settingCategories.personalization.icon className="w-5 h-5" />
+                  {settingCategories.personalization.title}
+                </CardTitle>
+                <CardDescription>
+                  {settingCategories.personalization.description}
+                </CardDescription>
               </CardHeader>
-              {showAdvancedSettings && (
-                <CardContent className="space-y-4">
-                  {settingCategories.advanced.settings.map((setting) => (
-                    <div
-                      key={setting.key}
-                      className="flex items-center justify-between p-3 rounded-lg border"
-                    >
-                      <div className="flex items-start gap-3">
-                        <setting.icon className="w-5 h-5 text-purple-600 mt-0.5" />
-                        <div className="flex-1">
-                          <div className="flex items-center gap-2">
-                            <label className="font-medium">
-                              {setting.label}
-                            </label>
-                            <Badge
-                              className={impactColors[setting.impact]}
-                              variant="outline"
-                            >
-                              {setting.impact} Impact
-                            </Badge>
-                            {setting.beta && (
-                              <Badge
-                                variant="secondary"
-                                className="bg-orange-100 text-orange-700"
-                              >
-                                Beta
-                              </Badge>
-                            )}
-                          </div>
-                          <p className="text-sm text-gray-600 mt-1">
-                            {setting.description}
-                          </p>
-                        </div>
-                      </div>
-                      <Switch
-                        checked={settings[setting.key] as boolean}
-                        onCheckedChange={(checked) =>
-                          updateSetting(setting.key, checked)
-                        }
-                      />
+              <CardContent className="space-y-6">
+                {settingCategories.personalization.sliders.map((slider) => (
+                  <div key={slider.key} className="space-y-3">
+                    <div>
+                      <label className="font-medium">{slider.label}</label>
+                      <p className="text-sm text-gray-600">
+                        {slider.description}
+                      </p>
                     </div>
-                  ))}
-                </CardContent>
-              )}
+                    <div className="px-2">
+                      <Slider
+                        value={[settings[slider.key] as number]}
+                        onValueChange={([value]) =>
+                          updateSetting(slider.key, value)
+                        }
+                        min={slider.min}
+                        max={slider.max}
+                        step={slider.step}
+                        className="w-full"
+                      />
+                      <div className="flex justify-between text-xs text-gray-500 mt-1">
+                        {Object.entries(slider.marks).map(([value, label]) => (
+                          <span key={value}>{label}</span>
+                        ))}
+                      </div>
+                    </div>
+                    <div className="text-center">
+                      <Badge variant="outline">
+                        Current: {settings[slider.key]}
+                      </Badge>
+                    </div>
+                  </div>
+                ))}
+              </CardContent>
             </Card>
+          )}
 
-            {/* Personalization Settings */}
-            {showAdvancedSettings && (
-              <Card>
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
-                    <settingCategories.personalization.icon className="w-5 h-5" />
-                    {settingCategories.personalization.title}
-                  </CardTitle>
-                  <CardDescription>
-                    {settingCategories.personalization.description}
-                  </CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-6">
-                  {settingCategories.personalization.sliders.map((slider) => (
-                    <div key={slider.key} className="space-y-3">
-                      <div>
-                        <label className="font-medium">{slider.label}</label>
-                        <p className="text-sm text-gray-600">
-                          {slider.description}
+          {/* Privacy Settings */}
+          {showAdvancedSettings && (
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <settingCategories.privacy.icon className="w-5 h-5" />
+                  {settingCategories.privacy.title}
+                </CardTitle>
+                <CardDescription>
+                  {settingCategories.privacy.description}
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                {settingCategories.privacy.settings.map((setting) => (
+                  <div
+                    key={setting.key}
+                    className="flex items-center justify-between p-3 rounded-lg border"
+                  >
+                    <div className="flex items-start gap-3">
+                      <setting.icon className="w-5 h-5 text-green-600 mt-0.5" />
+                      <div className="flex-1">
+                        <label className="font-medium">{setting.label}</label>
+                        <p className="text-sm text-gray-600 mt-1">
+                          {setting.description}
                         </p>
                       </div>
-                      <div className="px-2">
-                        <Slider
-                          value={[settings[slider.key] as number]}
-                          onValueChange={([value]) =>
-                            updateSetting(slider.key, value)
-                          }
-                          min={slider.min}
-                          max={slider.max}
-                          step={slider.step}
-                          className="w-full"
-                        />
-                        <div className="flex justify-between text-xs text-gray-500 mt-1">
-                          {Object.entries(slider.marks).map(
-                            ([value, label]) => (
-                              <span key={value}>{label}</span>
-                            ),
-                          )}
-                        </div>
-                      </div>
-                      <div className="text-center">
-                        <Badge variant="outline">
-                          Current: {settings[slider.key]}
-                        </Badge>
-                      </div>
                     </div>
-                  ))}
-                </CardContent>
-              </Card>
-            )}
-
-            {/* Privacy Settings */}
-            {showAdvancedSettings && (
-              <Card>
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
-                    <settingCategories.privacy.icon className="w-5 h-5" />
-                    {settingCategories.privacy.title}
-                  </CardTitle>
-                  <CardDescription>
-                    {settingCategories.privacy.description}
-                  </CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  {settingCategories.privacy.settings.map((setting) => (
-                    <div
-                      key={setting.key}
-                      className="flex items-center justify-between p-3 rounded-lg border"
-                    >
-                      <div className="flex items-start gap-3">
-                        <setting.icon className="w-5 h-5 text-green-600 mt-0.5" />
-                        <div className="flex-1">
-                          <label className="font-medium">{setting.label}</label>
-                          <p className="text-sm text-gray-600 mt-1">
-                            {setting.description}
-                          </p>
-                        </div>
-                      </div>
-                      <Switch
-                        checked={settings[setting.key] as boolean}
-                        onCheckedChange={(checked) =>
-                          updateSetting(setting.key, checked)
-                        }
-                      />
-                    </div>
-                  ))}
-                </CardContent>
-              </Card>
-            )}
-          </div>
-        )}
-
-        {/* AI Disabled State */}
-        {!settings.aiEnhancementEnabled && (
-          <Alert>
-            <Info className="w-4 h-4" />
-            <AlertDescription>
-              AI features are currently disabled. Enable AI Enhancement above to
-              access personalized learning features.
-            </AlertDescription>
-          </Alert>
-        )}
-
-        {/* Action Buttons */}
-        <div className="flex gap-3 pt-4 border-t">
-          <Button
-            variant="outline"
-            onClick={resetToDefaults}
-            className="flex items-center gap-2"
-          >
-            <RotateCcw className="w-4 h-4" />
-            Reset to Defaults
-          </Button>
-          {hasUnsavedChanges && (
-            <Button onClick={saveSettings} className="flex items-center gap-2">
-              <Settings className="w-4 h-4" />
-              Save Changes
-            </Button>
+                    <Switch
+                      checked={settings[setting.key] as boolean}
+                      onCheckedChange={(checked) =>
+                        updateSetting(setting.key, checked)
+                      }
+                    />
+                  </div>
+                ))}
+              </CardContent>
+            </Card>
           )}
         </div>
+      )}
+
+      {/* AI Disabled State */}
+      {!settings.aiEnhancementEnabled && (
+        <Alert>
+          <Info className="w-4 h-4" />
+          <AlertDescription>
+            AI features are currently disabled. Enable AI Enhancement above to
+            access personalized learning features.
+          </AlertDescription>
+        </Alert>
+      )}
+
+      {/* Action Buttons */}
+      <div className="flex gap-3 pt-4 border-t">
+        <Button
+          variant="outline"
+          onClick={resetToDefaults}
+          className="flex items-center gap-2"
+        >
+          <RotateCcw className="w-4 h-4" />
+          Reset to Defaults
+        </Button>
+        {hasUnsavedChanges && (
+          <Button onClick={saveSettings} className="flex items-center gap-2">
+            <Settings className="w-4 h-4" />
+            Save Changes
+          </Button>
+        )}
       </div>
+    </div>
   );
 }
