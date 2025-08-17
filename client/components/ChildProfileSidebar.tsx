@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { EnhancedChildProfileCard } from "@/components/EnhancedChildProfileCard";
 import { FriendlyMascot } from "@/components/FriendlyMascot";
+import { DynamicAuthButton } from "@/components/DynamicAuthButton";
 import {
   kidFriendlyEffects,
   SOUNDS,
@@ -13,7 +14,6 @@ import {
   ChevronLeft,
   ChevronRight,
   Settings,
-  LogOut,
   RefreshCw,
   Calendar,
   TrendingUp,
@@ -29,7 +29,6 @@ interface ChildProfileSidebarProps {
   onToggleCollapse?: () => void;
   onProfileEdit?: () => void;
   onQuickAction?: (action: string) => void;
-  onLogout?: () => void;
   showTimeOfDay?: boolean;
   showWeeklyProgress?: boolean;
   position?: "left" | "right";
@@ -43,7 +42,6 @@ export const ChildProfileSidebar: React.FC<ChildProfileSidebarProps> = ({
   onToggleCollapse,
   onProfileEdit,
   onQuickAction,
-  onLogout,
   showTimeOfDay = true,
   showWeeklyProgress = true,
   position = "left",
@@ -292,20 +290,10 @@ export const ChildProfileSidebar: React.FC<ChildProfileSidebarProps> = ({
               exit="collapsed"
               className="space-y-2"
             >
-              {onLogout && (
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={() => {
-                    kidFriendlyEffects.playSound(SOUNDS.button_click);
-                    onLogout?.();
-                  }}
-                  className="w-full text-xs text-gray-700 hover:text-gray-900 hover:bg-gray-100 rounded-xl font-medium"
-                >
-                  <LogOut className="w-4 h-4 mr-2" />
-                  🔄 Switch Friends
-                </Button>
-              )}
+              <DynamicAuthButton
+                variant="sidebar"
+                onAction={() => kidFriendlyEffects.playSound(SOUNDS.button_click)}
+              />
             </motion.div>
           ) : (
             <motion.div
@@ -315,19 +303,13 @@ export const ChildProfileSidebar: React.FC<ChildProfileSidebarProps> = ({
               exit="collapsed"
               className="flex flex-col items-center space-y-2"
             >
-              {onLogout && (
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={() => {
-                    kidFriendlyEffects.playSound(SOUNDS.button_click);
-                    onLogout?.();
-                  }}
-                  className="h-10 w-10 p-0 text-gray-700 hover:text-gray-900 bg-white/80 hover:bg-white rounded-full border-2 border-gray-200 shadow-md transition-all duration-300 hover:scale-110"
-                >
-                  <LogOut className="w-4 h-4" />
-                </Button>
-              )}
+              <div className="w-full flex justify-center">
+                <DynamicAuthButton
+                  variant="mobile"
+                  onAction={() => kidFriendlyEffects.playSound(SOUNDS.button_click)}
+                  className="w-12 h-12 rounded-full !p-2 text-sm"
+                />
+              </div>
             </motion.div>
           )}
         </AnimatePresence>
