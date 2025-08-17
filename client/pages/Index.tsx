@@ -44,6 +44,17 @@ import { CompactMobileSettingsPanel } from "@/components/CompactMobileSettingsPa
 import { FloatingBubbles } from "@/components/FloatingBubbles";
 import { CelebrationEffect } from "@/components/CelebrationEffect";
 import { FloatingHelpMenu } from "@/components/FloatingHelpMenu";
+import {
+  FriendlyMascot,
+  FloatingMascot,
+  MascotReaction,
+} from "@/components/FriendlyMascot";
+import {
+  MagicalParticles,
+  SuccessParticles,
+  WordLearnedParticles,
+  AmbientMagicParticles,
+} from "@/components/MagicalParticles";
 import { SessionRestoration } from "@/components/SessionRestoration";
 import {
   useSessionPersistence,
@@ -1980,85 +1991,88 @@ export default function Index({ initialProfile }: IndexProps) {
                 {/* Desktop Sidebar - Hidden on Mobile */}
                 <aside className="hidden lg:flex lg:w-60 xl:w-64 2xl:w-72 bg-gradient-to-b from-purple-50 via-pink-50 to-blue-50 border-r border-purple-200 shadow-sm overflow-y-auto lg:max-h-screen">
                   <div className="p-3 lg:p-4 w-full">
-                    {/* Logo Section - Compact & Playful */}
-                    <div className="flex items-center gap-2 mb-4 lg:mb-6">
-                      <div className="w-7 h-7 lg:w-8 lg:h-8 bg-gradient-to-br from-purple-100 to-pink-100 rounded-xl flex items-center justify-center p-1 shadow-sm hover:scale-105 transition-transform duration-200">
-                        <img
-                          src="https://cdn.builder.io/api/v1/image/assets%2Fa33f74a2f97141a4a1ef43d9448f9bda%2F2a4b7e4c3c38485b966cfd2cff50da9e?format=webp&width=800"
-                          alt="Wordy Kids Logo"
-                          className="w-full h-full rounded-lg"
-                        />
+                    {/* Logo Section - Kid-Friendly & Magical */}
+                    <div className="kid-card mb-4 lg:mb-6 kid-gradient-magic">
+                      <div className="flex items-center gap-3">
+                        <div className="mascot-character text-2xl animate-gentle-bounce">
+                          🦁
+                        </div>
+                        <div>
+                          <h1 className="kid-text-big font-bold text-purple-800">
+                            Wordy Kids!
+                          </h1>
+                          <p className="text-sm font-semibold text-purple-700">
+                            ✨ Magical Learning! 🚀
+                          </p>
+                        </div>
                       </div>
-                      <div>
-                        <h1 className="text-sm lg:text-base font-bold text-gray-800">
-                          Wordy Kids! 🌟
-                        </h1>
-                        <p className="text-xs text-purple-600 font-medium">
-                          Let's Learn Together! 🚀
-                        </p>
+                      <div className="mt-2 text-center">
+                        <FriendlyMascot
+                          mood="happy"
+                          size="small"
+                          position="center"
+                          animate={true}
+                        />
                       </div>
                     </div>
 
-                    {/* Navigation Menu - Kid-Friendly & Compact */}
-                    <nav className="space-y-1.5">
+                    {/* Navigation Menu - Magical Adventure Theme */}
+                    <nav className="space-y-2">
                       <button
                         onClick={() => setActiveTab("dashboard")}
-                        className={`w-full flex items-center gap-2.5 p-2.5 lg:p-3 rounded-xl transition-all duration-200 hover:scale-[1.02] ${
+                        className={`kid-nav-item w-full ${
                           activeTab === "dashboard"
-                            ? "bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-lg transform scale-[1.02]"
-                            : "bg-white text-gray-700 hover:bg-gradient-to-r hover:from-purple-50 hover:to-pink-50 border border-purple-100 hover:border-purple-200 shadow-sm"
+                            ? "kid-gradient-happy text-white shadow-lg kid-button active animate-kid-pulse-glow"
+                            : "bg-white text-gray-700 hover:kid-gradient-learn hover:text-white border border-purple-200 kid-interactive"
                         }`}
                       >
-                        <div
-                          className={`p-1.5 rounded-lg transition-all duration-200 ${activeTab === "dashboard" ? "bg-white/20" : "bg-purple-100 group-hover:bg-purple-200"}`}
-                        >
-                          <Target
-                            className={`w-4 h-4 ${activeTab === "dashboard" ? "text-white" : "text-purple-600"}`}
-                          />
-                        </div>
-                        <span className="font-medium text-sm">
-                          🎯 Dashboard
+                        <div className="text-xl animate-mascot-bounce">🏰</div>
+                        <span className="kid-text-big font-bold">
+                          My Castle
                         </span>
+                        {activeTab === "dashboard" && (
+                          <div className="ml-auto animate-kid-magic-sparkle">
+                            ✨
+                          </div>
+                        )}
                       </button>
 
                       <button
                         onClick={() => setActiveTab("learn")}
-                        className={`w-full flex items-center gap-2.5 p-2.5 lg:p-3 rounded-xl transition-all duration-200 hover:scale-[1.02] ${
+                        className={`kid-nav-item w-full ${
                           activeTab === "learn"
-                            ? "bg-gradient-to-r from-green-500 to-blue-500 text-white shadow-lg transform scale-[1.02]"
-                            : "bg-white text-gray-700 hover:bg-gradient-to-r hover:from-green-50 hover:to-blue-50 border border-green-100 hover:border-green-200 shadow-sm"
+                            ? "kid-gradient-learn text-white shadow-lg kid-button active animate-kid-pulse-glow"
+                            : "bg-white text-gray-700 hover:kid-gradient-success hover:text-white border border-green-200 kid-interactive"
                         }`}
                       >
-                        <div
-                          className={`p-1.5 rounded-lg transition-all duration-200 ${activeTab === "learn" ? "bg-white/20" : "bg-green-100"}`}
-                        >
-                          <BookOpen
-                            className={`w-4 h-4 ${activeTab === "learn" ? "text-white" : "text-green-600"}`}
-                          />
-                        </div>
-                        <span className="font-medium text-sm">
-                          📚 Word Library
+                        <div className="text-xl animate-gentle-float">📚</div>
+                        <span className="kid-text-big font-bold">
+                          Magic Library
                         </span>
+                        {activeTab === "learn" && (
+                          <div className="ml-auto animate-kid-magic-sparkle">
+                            🌟
+                          </div>
+                        )}
                       </button>
 
                       <button
                         onClick={() => setActiveTab("quiz")}
-                        className={`w-full flex items-center gap-2.5 p-2.5 lg:p-3 rounded-xl transition-all duration-200 hover:scale-[1.02] ${
+                        className={`kid-nav-item w-full ${
                           activeTab === "quiz"
-                            ? "bg-gradient-to-r from-pink-500 to-purple-500 text-white shadow-lg transform scale-[1.02]"
-                            : "bg-white text-gray-700 hover:bg-gradient-to-r hover:from-pink-50 hover:to-purple-50 border border-pink-100 hover:border-pink-200 shadow-sm"
+                            ? "kid-gradient-adventure text-white shadow-lg kid-button active animate-kid-pulse-glow"
+                            : "bg-white text-gray-700 hover:kid-gradient-magic hover:text-purple-800 border border-pink-200 kid-interactive"
                         }`}
                       >
-                        <div
-                          className={`p-1.5 rounded-lg transition-all duration-200 ${activeTab === "quiz" ? "bg-white/20" : "bg-pink-100"}`}
-                        >
-                          <Brain
-                            className={`w-4 h-4 ${activeTab === "quiz" ? "text-white" : "text-pink-600"}`}
-                          />
-                        </div>
-                        <span className="font-medium text-sm">
-                          🧠 Quiz Time
+                        <div className="text-xl animate-mascot-happy">🧙‍♂️</div>
+                        <span className="kid-text-big font-bold">
+                          Brain Quest
                         </span>
+                        {activeTab === "quiz" && (
+                          <div className="ml-auto animate-kid-magic-sparkle">
+                            🔮
+                          </div>
+                        )}
                       </button>
 
                       <button
@@ -2083,38 +2097,38 @@ export default function Index({ initialProfile }: IndexProps) {
 
                       <button
                         onClick={() => setActiveTab("progress")}
-                        className={`w-full flex items-center gap-2.5 p-2.5 lg:p-3 rounded-xl transition-all duration-200 hover:scale-[1.02] ${
+                        className={`kid-nav-item w-full ${
                           activeTab === "progress"
-                            ? "bg-gradient-to-r from-yellow-500 to-orange-500 text-white shadow-lg transform scale-[1.02]"
-                            : "bg-white text-gray-700 hover:bg-gradient-to-r hover:from-yellow-50 hover:to-orange-50 border border-yellow-100 hover:border-yellow-200 shadow-sm"
+                            ? "kid-gradient-success text-white shadow-lg kid-button active animate-kid-pulse-glow"
+                            : "bg-white text-gray-700 hover:kid-gradient-adventure hover:text-white border border-yellow-200 kid-interactive"
                         }`}
                       >
-                        <div
-                          className={`p-1.5 rounded-lg transition-all duration-200 ${activeTab === "progress" ? "bg-white/20" : "bg-yellow-100"}`}
-                        >
-                          <Trophy
-                            className={`w-4 h-4 ${activeTab === "progress" ? "text-white" : "text-yellow-600"}`}
-                          />
-                        </div>
-                        <span className="font-medium text-sm">
-                          🏆 My Journey
+                        <div className="text-xl animate-gentle-bounce">🗺️</div>
+                        <span className="kid-text-big font-bold">
+                          Adventure Map
                         </span>
+                        {activeTab === "progress" && (
+                          <div className="ml-auto animate-kid-magic-sparkle">
+                            🏆
+                          </div>
+                        )}
                       </button>
 
-                      <div className="mt-3 pt-3 border-t border-purple-200">
+                      <div className="mt-4 pt-3 border-t-2 border-rainbow kid-card-rainbow-border">
                         <button
                           onClick={() => {
                             setUserRole("parent");
                             window.scrollTo({ top: 0, behavior: "smooth" });
                           }}
-                          className="w-full flex items-center gap-2.5 p-2.5 lg:p-3 rounded-xl transition-all duration-200 hover:scale-[1.02] bg-gradient-to-r from-blue-100 to-indigo-100 text-gray-700 hover:from-blue-200 hover:to-indigo-200 border border-blue-200 shadow-sm"
+                          className="kid-nav-item w-full kid-gradient-magic text-purple-800 border border-purple-300 kid-interactive"
                         >
-                          <div className="p-1.5 rounded-lg bg-blue-200">
-                            <Users className="w-4 h-4 text-blue-700" />
-                          </div>
-                          <span className="font-medium text-sm">
-                            👥 Parent Dashboard
+                          <div className="text-xl animate-mascot-wave">👨‍👩‍👧‍👦</div>
+                          <span className="kid-text-big font-bold">
+                            Family Zone
                           </span>
+                          <div className="ml-auto animate-kid-magic-sparkle">
+                            👑
+                          </div>
                         </button>
                       </div>
 
@@ -3373,6 +3387,16 @@ export default function Index({ initialProfile }: IndexProps) {
           {showCelebration && <CelebrationEffect trigger={showCelebration} />}
           {backgroundAnimationsEnabled && <FloatingBubbles />}
 
+          {/* Magical Particle Effects */}
+          <SuccessParticles
+            trigger={showCelebration}
+            onComplete={() => setShowCelebration(false)}
+          />
+          <WordLearnedParticles trigger={celebrationEffect} />
+          {userRole === "child" && backgroundAnimationsEnabled && (
+            <AmbientMagicParticles isActive={true} type="sparkles" />
+          )}
+
           {/* Settings Panel */}
           <CompactMobileSettingsPanel
             isOpen={showSettings}
@@ -3455,6 +3479,28 @@ export default function Index({ initialProfile }: IndexProps) {
                 // Could add additional reward logic here like updating user points
               }}
               autoCloseDelay={2000} // Auto-close after 2 seconds for mobile optimization
+            />
+          )}
+
+          {/* Kid-Friendly Floating Mascot */}
+          {userRole === "child" && (
+            <FloatingMascot
+              mood={
+                rememberedWords.size > 5
+                  ? "celebrating"
+                  : rememberedWords.size > 0
+                    ? "encouraging"
+                    : "happy"
+              }
+              duration={4000}
+            />
+          )}
+
+          {/* Show Mascot Reaction for Special Events */}
+          {feedback?.type === "celebration" && (
+            <MascotReaction
+              type="success"
+              onComplete={() => console.log("Mascot celebration complete")}
             />
           )}
         </>

@@ -39,7 +39,45 @@ export default function App() {
   });
 
   useEffect(() => {
-    // Create a default profile if user is authenticated
+    // Auto-create a default profile and authenticate user to skip login screen
+    if (!isAuthenticated && !currentProfile) {
+      // Create a default guest profile
+      const defaultProfile = {
+        id: "guest-user-" + Date.now(),
+        name: "Alex",
+        email: "guest@wordykids.com",
+        age: 8,
+        level: 3,
+        levelName: "Story Builder",
+        skillLevel: 3,
+        avatar: { emoji: "🌟", name: "Star Learner" },
+        theme: { gradient: "from-educational-blue to-educational-purple" },
+        wordsLearned: 45,
+        points: 1850,
+        streak: 12,
+        totalQuizzes: 8,
+        accuracy: 87,
+        favoriteCategory: "Adventure",
+        joinedDate: new Date().toLocaleDateString(),
+        lastActive: "Today",
+      };
+
+      // Auto-login the user
+      const userProfile = {
+        id: defaultProfile.id,
+        name: defaultProfile.name,
+        email: defaultProfile.email,
+        type: "child" as const,
+        isGuest: true,
+      };
+
+      login(userProfile);
+      setCurrentProfile(defaultProfile);
+      // Add history entry when user successfully accesses the app
+      addHistoryEntry();
+    }
+
+    // Create a default profile if user is authenticated but no profile exists
     if (isAuthenticated && user && !currentProfile) {
       const defaultProfile = {
         id: user.id,
@@ -66,7 +104,7 @@ export default function App() {
     if (mode === "create") {
       setShowProfileCreation(true);
     }
-  }, [mode, currentProfile, isAuthenticated, user, addHistoryEntry]);
+  }, [mode, currentProfile, isAuthenticated, user, addHistoryEntry, login]);
 
   const handleLogin = (profile: any) => {
     // Create user profile for auth context
@@ -99,7 +137,6 @@ export default function App() {
     };
     setCurrentProfile(updatedProfile);
     setShowLevelSelection(false);
-    setIsLoggedIn(true);
   };
 
   // Show loading state while auth is initializing
