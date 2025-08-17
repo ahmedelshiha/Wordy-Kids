@@ -81,11 +81,11 @@ export const ChildProfileSidebar: React.FC<ChildProfileSidebarProps> = ({
 
   const sidebarVariants = {
     expanded: {
-      width: position === "left" ? "340px" : "340px",
+      width: position === "left" ? "280px" : "280px",
       transition: { duration: 0.3, ease: "easeInOut" },
     },
     collapsed: {
-      width: position === "left" ? "80px" : "80px",
+      width: position === "left" ? "60px" : "60px",
       transition: { duration: 0.3, ease: "easeInOut" },
     },
   };
