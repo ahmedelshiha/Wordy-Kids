@@ -26,6 +26,7 @@ import { AchievementSystem } from "@/components/AchievementSystem";
 import { EncouragingFeedback } from "@/components/EncouragingFeedback";
 import { DynamicAuthButton } from "@/components/DynamicAuthButton";
 import { KidRegistrationNotification } from "@/components/KidRegistrationNotification";
+import { StreakSideCard } from "@/components/StreakSideCard";
 import { useRegistrationReminder } from "@/hooks/useRegistrationReminder";
 import { GameLikeLearning } from "@/components/GameLikeLearning";
 import { WordMatchingGame } from "@/components/WordMatchingGame";
@@ -3074,7 +3075,7 @@ export default function Index({ initialProfile }: IndexProps) {
                         <div className="space-y-6">
                           <div className="flex items-center justify-between">
                             <h2 className="text-2xl font-bold text-gray-800">
-                              🧩 Word Matching Game
+                              ��� Word Matching Game
                             </h2>
                           </div>
                           <WordMatchingGame
