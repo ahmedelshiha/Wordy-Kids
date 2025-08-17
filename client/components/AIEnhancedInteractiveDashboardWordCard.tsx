@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { AICardContent } from "@/components/ui/ai-card-content";
 import { Badge } from "@/components/ui/badge";
+import { AIProgressContainer } from "@/components/AIProgressContainer";
 import { Progress } from "@/components/ui/progress";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import {
@@ -508,7 +509,7 @@ export function AIEnhancedInteractiveDashboardWordCard({
           id: "ai_confidence_high",
           title: "AI CONFIDENCE BOOST!",
           description: `AI predicted your success with ${Math.round(aiState.confidence * 100)}% confidence!`,
-          emoji: "🔮✨",
+          emoji: "��✨",
           unlocked: true,
         });
       }
@@ -1341,6 +1342,17 @@ export function AIEnhancedInteractiveDashboardWordCard({
                       getDifficultyColor(currentWord.difficulty),
                     )}
                   >
+                    {currentWord.difficulty
+                      ? currentWord.difficulty.charAt(0).toUpperCase() +
+                        currentWord.difficulty.slice(1)
+                      : "Medium"}
+                  </Badge>
+                  <Badge
+                    className={cn(
+                      "text-xs px-2 py-1",
+                      getDifficultyColor(currentWord.difficulty),
+                    )}
+                  >
                     {currentWord.category}
                   </Badge>
                   <Badge
@@ -1608,76 +1620,17 @@ export function AIEnhancedInteractiveDashboardWordCard({
               </div>
             )}
 
-            {/* AI Progress Bar - Ultra Mobile Optimized */}
-            {!showWordName && (
-              <div className="mb-3 bg-white p-2 sm:p-4 rounded-lg sm:rounded-2xl shadow-sm border border-gray-100">
-                {/* Compact header with inline progress */}
-                <div className="flex items-center justify-between mb-2">
-                  <div className="flex items-center gap-1">
-                    <span className="text-xs sm:text-sm">🧠🎯</span>
-                    <h2 className="text-xs sm:text-base font-bold text-gray-800">
-                      AI Progress
-                    </h2>
-                  </div>
-                  <div className="flex items-center gap-1">
-                    <span className="text-xs sm:text-sm">🚀</span>
-                    <span className="font-medium text-gray-700 text-xs sm:text-sm">
-                      {dailyGoal.completed}/{dailyGoal.target}
-                    </span>
-                    <span className="font-bold text-gray-800 text-xs sm:text-sm">
-                      (
-                      {Math.round(
-                        (dailyGoal.completed / dailyGoal.target) * 100,
-                      )}
-                      %)
-                    </span>
-                  </div>
-                </div>
-
-                {/* Ultra-compact progress bar */}
-                <div className="w-full bg-gray-200 rounded-full h-1 sm:h-2 mb-2">
-                  <div
-                    className="bg-gradient-to-r from-blue-500 to-purple-500 h-1 sm:h-2 rounded-full transition-all duration-300"
-                    style={{
-                      width: `${Math.round((dailyGoal.completed / dailyGoal.target) * 100)}%`,
-                    }}
-                  ></div>
-                </div>
-
-                {/* Compact stats in single row */}
-                <div className="flex items-center justify-between text-xs gap-1">
-                  <div className="flex items-center gap-0.5 bg-yellow-100 px-1 py-0.5 rounded flex-1 justify-center">
-                    <span>😊</span>
-                    <span className="font-medium">
-                      {sessionStats.wordsRemembered}
-                    </span>
-                  </div>
-                  <div className="flex items-center gap-0.5 bg-orange-100 px-1 py-0.5 rounded flex-1 justify-center">
-                    <span>💪</span>
-                    <span className="font-medium">
-                      {sessionStats.wordsForgotten}
-                    </span>
-                  </div>
-                  <div className="flex items-center gap-0.5 bg-purple-100 px-1 py-0.5 rounded flex-1 justify-center">
-                    <span>🎯</span>
-                    <span className="font-medium">
-                      {Math.round(confidenceLevel * 100)}%
-                    </span>
-                  </div>
-                  <div className="text-purple-600 font-medium text-xs hidden sm:block">
-                    🌟 AI: Great!
-                  </div>
-                </div>
-
-                {/* Session progress - Ultra compact */}
-                <div className="mt-1 text-center text-xs text-gray-500">
-                  <span>
-                    {currentWordIndex + 1}/{SESSION_SIZE}
-                  </span>
-                  {sessionProgress >= 100 && <span className="ml-1">🎉</span>}
-                </div>
-              </div>
-            )}
+            {/* AI Progress Container - Comprehensive Progress Tracking */}
+            <AIProgressContainer
+              dailyGoal={dailyGoal}
+              sessionStats={sessionStats}
+              confidenceLevel={confidenceLevel}
+              currentWordIndex={currentWordIndex}
+              sessionSize={SESSION_SIZE}
+              sessionProgress={sessionProgress}
+              realTimeEncouragement={realTimeEncouragement}
+              showWordName={showWordName}
+            />
 
             {/* AI Hint Display */}
             <AnimatePresence>
@@ -1819,21 +1772,6 @@ export function AIEnhancedInteractiveDashboardWordCard({
                 </motion.div>
               )}
             </AnimatePresence>
-
-            {/* Real-time AI encouragement */}
-            {realTimeEncouragement && !showWordName && (
-              <motion.div
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -10 }}
-                className="text-center p-3 bg-gradient-to-r from-green-100 to-blue-100 rounded-lg border border-green-200 mb-4"
-              >
-                <div className="text-sm font-medium text-green-800 flex items-center justify-center gap-2">
-                  <Brain className="w-4 h-4" />
-                  {realTimeEncouragement}
-                </div>
-              </motion.div>
-            )}
           </AICardContent>
         </Card>
       </motion.div>
