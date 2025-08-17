@@ -1380,7 +1380,7 @@ export default function Index({ initialProfile }: IndexProps) {
         achievementIcon = "🏆";
         achievementMessage = `Outstanding! You remembered ALL ${totalWords} words in ${categoryDisplayName}! You're a true champion!\n\n🎁 Perfect Mastery Bonus: 200 points!\n�� New adventure zone unlocked!`;
       } else if (accuracy >= 90) {
-        achievementTitle = "Category Expert! 🎓";
+        achievementTitle = "Category Expert! ��";
         achievementIcon = "🎓⭐";
         achievementMessage = `Excellent work! You mastered ${categoryDisplayName} with ${accuracy}% accuracy! Almost perfect!\n\n🎁 Expert Bonus: 150 points!`;
       } else if (accuracy >= 75) {
@@ -2328,13 +2328,10 @@ export default function Index({ initialProfile }: IndexProps) {
                                       </div>
                                     </div>
                                     <div className="flex items-center gap-2">
-                                      <div className="text-xs font-medium text-purple-600 bg-purple-100 px-2 py-1 rounded-full">
+                                      <div className="text-xs font-medium bg-green-100 text-green-800 border-green-300 px-2 py-1 rounded-full border flex items-center gap-1.5">
+                                        <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
                                         Active
                                       </div>
-                                      <div
-                                        className="w-2 h-2 bg-green-500 rounded-full animate-pulse"
-                                        title="AI Status: Active"
-                                      />
                                     </div>
                                   </div>
                                 </div>
@@ -2895,7 +2892,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                               ) {
                                                 return (
                                                   <div className="text-xs text-orange-600 font-medium">
-                                                    🤔 Review
+                                                    �� Review
                                                   </div>
                                                 );
                                               } else {
