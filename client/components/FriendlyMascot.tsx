@@ -230,7 +230,7 @@ export function MascotReaction({
     const timer = setTimeout(() => {
       setIsVisible(false);
       onComplete?.();
-    }, 3000);
+    }, 2000);
 
     return () => clearTimeout(timer);
   }, [onComplete]);
