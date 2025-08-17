@@ -16,11 +16,6 @@ export default defineConfig(({ mode }) => ({
   build: {
     outDir: "dist/spa",
   },
-  optimizeDeps: {
-    entries: ["index.html"],
-    exclude: ["@tanstack/react-query", "react-router-dom"],
-    include: ["react", "react-dom"],
-  },
   plugins: [react(), expressPlugin()],
   resolve: {
     alias: {
