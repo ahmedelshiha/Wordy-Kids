@@ -130,7 +130,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     // This avoids router hook dependencies in the auth provider
 
     // Check if we're on an app route and need to redirect
-    const currentPath = typeof window !== "undefined" ? window.location.pathname : "/";
+    const currentPath =
+      typeof window !== "undefined" ? window.location.pathname : "/";
     const isAppRoute = [
       "/app",
       "/admin",
