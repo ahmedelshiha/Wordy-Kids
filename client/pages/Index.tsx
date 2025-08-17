@@ -1841,7 +1841,7 @@ export default function Index({ initialProfile }: IndexProps) {
                   </div>
                   <div>
                     <h1 className="text-sm font-bold leading-tight">
-                      Wordy Kids! ✨
+                      Wordy Kids! ���
                     </h1>
                     <p className="text-xs text-educational-yellow-light/90 font-medium">
                       Let's Learn Together! 🚀
@@ -3407,13 +3407,15 @@ export default function Index({ initialProfile }: IndexProps) {
             />
           )}
 
-          {/* Floating Registration Reminder for Guest Users */}
+          {/* Floating Registration Reminder for Guest Users - Mobile Only (Desktop has side card) */}
           {showFloatingReminder && (
-            <KidRegistrationNotification
-              variant="floating"
-              onDismiss={() => dismissFloatingReminder()}
-              showDismiss={true}
-            />
+            <div className="xl:hidden">
+              <KidRegistrationNotification
+                variant="floating"
+                onDismiss={() => dismissFloatingReminder()}
+                showDismiss={true}
+              />
+            </div>
           )}
         </>
       )}
