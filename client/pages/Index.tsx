@@ -1844,7 +1844,7 @@ export default function Index({ initialProfile }: IndexProps) {
     // Show completion feedback
     setFeedback({
       type: "celebration",
-      title: "Practice Complete! ��",
+      title: "Practice Complete! 🏆",
       message: `Great job practicing your tricky words!\n\n✅ Remembered: ${results.correctWords.length} words\n🎯 Accuracy: ${results.accuracy}%\n\nKeep practicing to master all your words!`,
       points: results.correctWords.length * 15,
       onContinue: () => setFeedback(null),
@@ -2080,8 +2080,27 @@ export default function Index({ initialProfile }: IndexProps) {
                     {/* Game Content Background */}
                     <div className="absolute inset-0 bg-gradient-to-br from-white/90 to-blue-50/90 backdrop-blur-sm"></div>
                     <div className="relative z-10 w-full h-full p-2 sm:p-3 lg:p-6 pb-20 sm:pb-24 lg:pb-6 overflow-y-auto scroll-smooth">
-                      {/* Desktop: Two-column layout with main content + side card */}
+                      {/* Desktop: Three-column layout with sidebar + main content + side card */}
                       <div className="flex gap-6 items-start">
+                        {/* Child Profile Sidebar - Desktop Only */}
+                        <div className="hidden lg:block w-72 xl:w-80 flex-shrink-0">
+                          <div className="bg-gradient-to-b from-slate-900 via-blue-900 to-purple-900 rounded-xl shadow-2xl border border-slate-700/50 backdrop-blur-sm h-fit">
+                            <ChildProfileSidebar
+                              profile={currentProfile}
+                              stats={enhancedChildStats}
+                              isCollapsed={isSidebarCollapsed}
+                              onToggleCollapse={handleSidebarToggle}
+                              onProfileEdit={handleProfileEdit}
+                              onQuickAction={handleQuickAction}
+                              onLogout={handleSidebarLogout}
+                              showTimeOfDay={true}
+                              showWeeklyProgress={true}
+                              position="left"
+                              className="border-none shadow-none bg-transparent text-white"
+                            />
+                          </div>
+                        </div>
+
                         {/* Main Game Content */}
                         <div className="flex-1 min-w-0">
                           <Tabs
@@ -3518,7 +3537,7 @@ export default function Index({ initialProfile }: IndexProps) {
           <MagicalPortalEffect
             isActive={backgroundAnimationsEnabled && activeTab === "learn"}
             intensity="medium"
-            particleEmojis={["✨", "🌟", "⭐", "💫", "🔮", "🌈", "🦄", "🎉"]}
+            particleEmojis={["✨", "��", "⭐", "💫", "🔮", "🌈", "🦄", "🎉"]}
           />
 
           {/* Enhanced Reward Celebration */}
