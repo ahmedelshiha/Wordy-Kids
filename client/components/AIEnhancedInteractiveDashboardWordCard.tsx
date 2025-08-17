@@ -1620,76 +1620,17 @@ export function AIEnhancedInteractiveDashboardWordCard({
               </div>
             )}
 
-            {/* AI Progress Bar - Ultra Mobile Optimized */}
-            {!showWordName && (
-              <div className="mb-3 bg-white p-2 sm:p-4 rounded-lg sm:rounded-2xl shadow-sm border border-gray-100">
-                {/* Compact header with inline progress */}
-                <div className="flex items-center justify-between mb-2">
-                  <div className="flex items-center gap-1">
-                    <span className="text-lg sm:text-xl">🧠🎯</span>
-                    <h2 className="text-sm sm:text-lg font-bold text-gray-800">
-                      AI Progress
-                    </h2>
-                  </div>
-                  <div className="flex items-center gap-1">
-                    <span className="text-lg sm:text-xl">🚀</span>
-                    <span className="font-medium text-gray-700 text-sm sm:text-base">
-                      {dailyGoal.completed}/{dailyGoal.target}
-                    </span>
-                    <span className="font-bold text-gray-800 text-sm sm:text-base">
-                      (
-                      {Math.round(
-                        (dailyGoal.completed / dailyGoal.target) * 100,
-                      )}
-                      %)
-                    </span>
-                  </div>
-                </div>
-
-                {/* Ultra-compact progress bar */}
-                <div className="w-full bg-gray-200 rounded-full h-1 sm:h-2 mb-2">
-                  <div
-                    className="bg-gradient-to-r from-blue-500 to-purple-500 h-1 sm:h-2 rounded-full transition-all duration-300"
-                    style={{
-                      width: `${Math.round((dailyGoal.completed / dailyGoal.target) * 100)}%`,
-                    }}
-                  ></div>
-                </div>
-
-                {/* Compact stats in single row */}
-                <div className="flex items-center justify-between text-sm gap-1">
-                  <div className="flex items-center gap-1 bg-yellow-100 px-2 py-1 rounded flex-1 justify-center">
-                    <span className="text-lg">😊</span>
-                    <span className="font-medium text-sm">
-                      {sessionStats.wordsRemembered}
-                    </span>
-                  </div>
-                  <div className="flex items-center gap-1 bg-orange-100 px-2 py-1 rounded flex-1 justify-center">
-                    <span className="text-lg">💪</span>
-                    <span className="font-medium text-sm">
-                      {sessionStats.wordsForgotten}
-                    </span>
-                  </div>
-                  <div className="flex items-center gap-1 bg-purple-100 px-2 py-1 rounded flex-1 justify-center">
-                    <span className="text-lg">🎯</span>
-                    <span className="font-medium text-sm">
-                      {Math.round(confidenceLevel * 100)}%
-                    </span>
-                  </div>
-                  <div className="text-purple-600 font-medium text-xs hidden sm:block">
-                    🌟 AI: Great!
-                  </div>
-                </div>
-
-                {/* Session progress - Ultra compact */}
-                <div className="mt-1 text-center text-xs text-gray-500">
-                  <span>
-                    {currentWordIndex + 1}/{SESSION_SIZE}
-                  </span>
-                  {sessionProgress >= 100 && <span className="ml-1">🎉</span>}
-                </div>
-              </div>
-            )}
+            {/* AI Progress Container - Comprehensive Progress Tracking */}
+            <AIProgressContainer
+              dailyGoal={dailyGoal}
+              sessionStats={sessionStats}
+              confidenceLevel={confidenceLevel}
+              currentWordIndex={currentWordIndex}
+              sessionSize={SESSION_SIZE}
+              sessionProgress={sessionProgress}
+              realTimeEncouragement={realTimeEncouragement}
+              showWordName={showWordName}
+            />
 
             {/* AI Hint Display */}
             <AnimatePresence>
