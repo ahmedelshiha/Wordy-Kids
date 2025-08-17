@@ -72,7 +72,7 @@ const kidNavTabs: NavTab[] = [
   },
   {
     id: "progress",
-    emoji: "����️",
+    emoji: "🗺️",
     label: "Map",
     color: "from-indigo-400 via-purple-400 to-pink-400",
     hoverColor: "from-indigo-500 via-purple-500 to-pink-500",
