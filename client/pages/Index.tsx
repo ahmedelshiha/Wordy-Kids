@@ -1953,17 +1953,17 @@ export default function Index({ initialProfile }: IndexProps) {
             )}
           </header>
 
-          {/* Mobile Child Profile Header - Only shown on mobile for child role */}
-          {userRole === "child" && (
+          {/* Mobile Child Profile Header - DISABLED FOR DEBUGGING */}
+          {false && userRole === "child" && (
             <div className="block lg:hidden">
-              <MobileChildProfileHeader
+              {/* <MobileChildProfileHeader
                 profile={currentProfile}
-                stats={enhancedChildStats}
+                stats={childStats}
                 onExpand={() =>
                   setShowMobileProfileExpanded(!showMobileProfileExpanded)
                 }
                 showExpanded={showMobileProfileExpanded}
-              />
+              /> */}
             </div>
           )}
 
