@@ -1310,13 +1310,23 @@ export function AIEnhancedInteractiveDashboardWordCard({
                       }}
                       size="sm"
                       className={cn(
-                        "px-3 py-1 text-xs font-medium rounded-full h-7",
+                        "relative w-8 h-8 rounded-full text-xs font-bold shadow-lg transition-all duration-300 transform hover:scale-110 active:scale-95",
                         aiState.isSessionActive
-                          ? "bg-white/20 hover:bg-white/30 text-white border border-white/30"
-                          : "bg-green-500 hover:bg-green-600 text-white",
+                          ? "bg-gradient-to-br from-red-400 via-red-500 to-red-600 hover:from-red-500 hover:to-red-700 text-white shadow-red-400/50 border-2 border-red-300/30 backdrop-blur-sm"
+                          : "bg-gradient-to-br from-emerald-400 via-green-500 to-green-600 hover:from-emerald-500 hover:to-green-700 text-white shadow-green-400/50 border-2 border-green-300/30 backdrop-blur-sm",
+                        "before:absolute before:inset-0 before:rounded-full before:bg-gradient-to-br before:from-white/20 before:to-transparent before:opacity-0 hover:before:opacity-100 before:transition-opacity before:duration-300"
                       )}
                     >
-                      {aiState.isSessionActive ? "Pause AI" : "Start AI"}
+                      <div className="relative z-10 flex items-center justify-center">
+                        {aiState.isSessionActive ? (
+                          <div className="w-2.5 h-2.5 bg-white rounded-sm" />
+                        ) : (
+                          <div className="w-0 h-0 border-l-[4px] border-l-white border-y-[3px] border-y-transparent ml-0.5" />
+                        )}
+                      </div>
+                      {aiState.isSessionActive && (
+                        <div className="absolute inset-0 rounded-full bg-gradient-to-br from-red-300/20 to-red-600/20 animate-pulse" />
+                      )}
                     </Button>
                   </div>
                 </div>
@@ -1396,13 +1406,24 @@ export function AIEnhancedInteractiveDashboardWordCard({
                           }}
                           size="sm"
                           className={cn(
-                            "ml-2 px-3 py-1 text-xs font-semibold rounded-full",
+                            "relative ml-2 w-10 h-10 rounded-full text-sm font-bold shadow-xl transition-all duration-300 transform hover:scale-110 active:scale-95",
                             aiState.isSessionActive
-                              ? "bg-white/20 hover:bg-white/30 text-white border border-white/30"
-                              : "bg-green-500 hover:bg-green-600 text-white",
+                              ? "bg-gradient-to-br from-red-400 via-red-500 to-red-600 hover:from-red-500 hover:to-red-700 text-white shadow-red-400/50 border-2 border-red-300/30 backdrop-blur-sm"
+                              : "bg-gradient-to-br from-emerald-400 via-green-500 to-green-600 hover:from-emerald-500 hover:to-green-700 text-white shadow-green-400/50 border-2 border-green-300/30 backdrop-blur-sm",
+                            "before:absolute before:inset-0 before:rounded-full before:bg-gradient-to-br before:from-white/30 before:to-transparent before:opacity-0 hover:before:opacity-100 before:transition-opacity before:duration-300"
                           )}
                         >
-                          {aiState.isSessionActive ? "Pause AI" : "Start AI"}
+                          <div className="relative z-10 flex items-center justify-center">
+                            {aiState.isSessionActive ? (
+                              <div className="w-3 h-3 bg-white rounded-sm shadow-sm" />
+                            ) : (
+                              <div className="w-0 h-0 border-l-[5px] border-l-white border-y-[4px] border-y-transparent ml-0.5 drop-shadow-sm" />
+                            )}
+                          </div>
+                          {aiState.isSessionActive && (
+                            <div className="absolute inset-0 rounded-full bg-gradient-to-br from-red-300/20 to-red-600/20 animate-pulse" />
+                          )}
+                          <div className="absolute inset-0 rounded-full ring-1 ring-white/20" />
                         </Button>
                       </div>
                       <div className="flex items-center gap-3 opacity-90">
