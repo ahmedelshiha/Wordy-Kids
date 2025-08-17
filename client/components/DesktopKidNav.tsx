@@ -480,6 +480,50 @@ export function DesktopKidNav({
           </div>
         </DialogContent>
       </Dialog>
+
+      {/* Kid Mode Disable Confirmation Dialog */}
+      <Dialog open={showKidModeConfirm} onOpenChange={setShowKidModeConfirm}>
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <DialogTitle className="flex items-center gap-2">
+              <Shield className="w-5 h-5 text-amber-600" />
+              Disable Kid-Safe Mode?
+            </DialogTitle>
+            <DialogDescription>
+              This will show the full navigation sidebar which children can access.
+              Are you sure you want to continue?
+            </DialogDescription>
+          </DialogHeader>
+          <div className="space-y-4">
+            <div className="p-4 bg-amber-50 border border-amber-200 rounded-lg">
+              <div className="flex items-start gap-3">
+                <div className="text-2xl">⚠️</div>
+                <div>
+                  <div className="font-medium text-amber-800">Safety Warning</div>
+                  <div className="text-sm text-amber-700 mt-1">
+                    Disabling Kid-Safe Mode will make the sidebar visible to children,
+                    giving them access to parent controls and settings.
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="flex justify-between">
+              <Button
+                variant="outline"
+                onClick={() => setShowKidModeConfirm(false)}
+              >
+                Keep Kid-Safe Mode
+              </Button>
+              <Button
+                variant="destructive"
+                onClick={confirmDisableKidMode}
+              >
+                Show Sidebar Anyway
+              </Button>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
     </>
   );
 }
