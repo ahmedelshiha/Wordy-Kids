@@ -198,27 +198,27 @@ export const KidRegistrationNotification: React.FC<KidRegistrationNotificationPr
           variants={floatingVariants}
           animate="float"
         >
-          🦄
+          {personalizedContent.emoji}
         </motion.div>
 
         {/* Title */}
-        <motion.h3 
+        <motion.h3
           className="text-lg font-bold text-purple-800 mb-2"
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
         >
-          Hey there, Amazing Explorer! 🌟
+          {personalizedContent.title}
         </motion.h3>
 
         {/* Message */}
-        <motion.p 
+        <motion.p
           className="text-sm text-purple-700 mb-4 leading-relaxed"
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.4 }}
         >
-          You're doing great learning new words! 📚 Want to save your awesome progress and unlock even more magical features?
+          {personalizedContent.message}
         </motion.p>
 
         {/* Benefits list */}
