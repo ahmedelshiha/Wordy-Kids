@@ -213,12 +213,12 @@ export function DesktopKidNav({
                       </motion.div>
                     </div>
 
-                    {/* Label - Special styling for container-less home */}
+                    {/* Label - White text for all container-less icons */}
                     <span className={cn(
-                      "font-bold text-center relative z-10",
+                      "font-bold text-center relative z-10 text-white drop-shadow-lg -mt-1 lg:-mt-2",
                       tab.id === "dashboard"
-                        ? "text-base lg:text-lg xl:text-xl text-white drop-shadow-lg -mt-1 lg:-mt-2" // White text for home, moved up
-                        : "text-sm lg:text-base xl:text-lg" // White text for others (with container)
+                        ? "text-base lg:text-lg xl:text-xl" // Larger text for home
+                        : "text-sm lg:text-base xl:text-lg" // Normal size for others
                     )}>
                       {tab.label}
                     </span>
