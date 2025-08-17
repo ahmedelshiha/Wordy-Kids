@@ -1397,7 +1397,7 @@ export default function Index({ initialProfile }: IndexProps) {
         achievementIcon = "🎓⭐";
         achievementMessage = `Excellent work! You mastered ${categoryDisplayName} with ${accuracy}% accuracy! Almost perfect!\n\n🎁 Expert Bonus: 150 points!`;
       } else if (accuracy >= 75) {
-        achievementTitle = "Category Scholar! 📚✨";
+        achievementTitle = "Category Scholar! ��✨";
         achievementIcon = "📚";
         achievementMessage = `Great job! You completed ${categoryDisplayName} with ${accuracy}% accuracy! Keep up the good work!\n\n🎓 Scholar Bonus: 100 points!`;
       } else if (accuracy >= 50) {
@@ -2966,31 +2966,31 @@ export default function Index({ initialProfile }: IndexProps) {
                           {/* Compact Quiz Cards */}
                           <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2 md:gap-3 max-w-5xl mx-auto px-1">
                             {/* Word Garden - Listen & Pick (FIRST GAME) */}
-                            <Card className="cursor-pointer hover:shadow-lg transition-all duration-300 hover:scale-105 border-2 border-emerald-400/30 animate-kid-float">
-                              <CardContent className="p-3 md:p-4 text-center">
-                                <div className="text-3xl md:text-5xl mb-2 md:mb-3 animate-gentle-bounce">
+                            <Card className="cursor-pointer hover:shadow-md transition-all duration-200 hover:scale-102 border border-emerald-400/30">
+                              <CardContent className="p-2 md:p-3 text-center">
+                                <div className="text-2xl md:text-3xl mb-1 animate-gentle-bounce">
                                   🌱
                                 </div>
-                                <h3 className="text-sm md:text-lg font-bold text-emerald-600 mb-1 md:mb-2">
+                                <h3 className="text-xs md:text-sm font-bold text-emerald-600 mb-1">
                                   Word Garden
                                 </h3>
-                                <p className="text-xs md:text-sm text-gray-600 mb-2 md:mb-3 hidden md:block">
-                                  Listen & grow your vocabulary garden! 🌸
+                                <p className="text-xs text-gray-600 mb-1 hidden lg:block">
+                                  Listen & grow! 🌸
                                 </p>
-                                <div className="flex justify-center gap-1 mb-2 md:mb-3">
-                                  <span className="bg-emerald-400/20 text-emerald-600 px-1.5 py-0.5 rounded-full text-xs">
-                                    🎯 Ages 3-5!
+                                <div className="flex justify-center gap-1 mb-2">
+                                  <span className="bg-emerald-400/20 text-emerald-600 px-1 py-0.5 rounded-full text-xs">
+                                    🎯 3-5
                                   </span>
                                 </div>
                                 <Button
                                   onClick={() => {
                                     setGameMode("word-garden");
                                   }}
-                                  className="w-full bg-emerald-500 text-white hover:bg-emerald-600 py-1.5 md:py-2 text-xs md:text-sm rounded-xl animate-wiggle"
+                                  className="w-full bg-emerald-500 text-white hover:bg-emerald-600 py-1 text-xs rounded-lg"
                                   size="sm"
                                 >
-                                  <Play className="w-3 h-3 md:w-4 md:h-4 mr-1" />
-                                  Grow Garden! 🌱
+                                  <Play className="w-3 h-3 mr-1" />
+                                  Play! 🌱
                                 </Button>
                               </CardContent>
                             </Card>
