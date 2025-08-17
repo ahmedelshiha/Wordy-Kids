@@ -280,7 +280,7 @@ export const ChildProfileSidebar: React.FC<ChildProfileSidebarProps> = ({
 
               {/* Recent Awesome Moments */}
               {stats?.recentActivity && (
-                <div className="bg-gradient-to-r from-pink-100 to-purple-100 rounded-xl p-4 border-2 border-pink-200 shadow-lg">
+                <div className="bg-gradient-to-r from-pink-50/80 to-purple-50/80 rounded-xl p-4 border border-pink-200/50 shadow-md backdrop-blur-sm">
                   <h4 className="text-sm font-bold text-gray-800 mb-3 flex items-center">
                     <Activity className="w-5 h-5 mr-2 text-pink-600" />
                     🎉 Awesome Moments!
@@ -294,7 +294,7 @@ export const ChildProfileSidebar: React.FC<ChildProfileSidebarProps> = ({
                           className="flex items-center justify-between"
                         >
                           <span className="text-xs font-medium text-gray-700 truncate">
-                            �� {activity.description}
+                            ✨ {activity.description}
                           </span>
                           <Badge className="text-xs ml-2 bg-orange-200 text-orange-800 border-orange-300">
                             +{activity.points} 🎆
