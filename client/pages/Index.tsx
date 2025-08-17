@@ -2076,11 +2076,11 @@ export default function Index({ initialProfile }: IndexProps) {
               <div className="min-h-screen bg-gradient-to-br from-white via-purple-50/30 to-pink-50/30 optimize-for-small-screen">
                 {/* Main Content Area with Sidebar and Game Layout */}
                 <div className="flex h-screen">
-                  {/* Child Profile Sidebar - Desktop Only */}
-                  <div className="hidden lg:block">
-                    <ChildProfileSidebar
+                  {/* Child Profile Sidebar - Desktop Only - DISABLED FOR DEBUGGING */}
+                  {false && <div className="hidden lg:block">
+                    {/* <ChildProfileSidebar
                       profile={currentProfile}
-                      stats={enhancedChildStats}
+                      stats={childStats}
                       isCollapsed={isSidebarCollapsed}
                       onToggleCollapse={handleSidebarToggle}
                       onProfileEdit={handleProfileEdit}
@@ -2089,8 +2089,8 @@ export default function Index({ initialProfile }: IndexProps) {
                       showTimeOfDay={true}
                       showWeeklyProgress={true}
                       position="left"
-                    />
-                  </div>
+                    /> */}
+                  </div>}
 
                   {/* Main Content Container */}
                   <div className="flex-1 min-w-0 overflow-hidden">
