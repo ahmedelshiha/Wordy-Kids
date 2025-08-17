@@ -7,7 +7,7 @@ import { Card } from "@/components/ui/card";
 import { useAuth } from "@/hooks/useAuth";
 import { DynamicAuthButton } from "@/components/DynamicAuthButton";
 import { goalProgressTracker } from "@/lib/goalProgressTracker";
-import { achievementTracker } from "@/lib/achievementTracker";
+import { AchievementTracker } from "@/lib/achievementTracker";
 import { useSessionPersistence } from "@/hooks/useSessionPersistence";
 import {
   kidFriendlyEffects,
@@ -69,7 +69,7 @@ export const SimplifiedChildSidebar: React.FC<SimplifiedChildSidebarProps> = ({
         
         // Get real progress data
         const progressData = await goalProgressTracker.fetchSystematicProgress(childId);
-        const journeyProgress = achievementTracker.getJourneyProgress(childId);
+        const journeyProgress = AchievementTracker.getJourneyProgress();
         const sessionData = loadSession();
 
         // Calculate level from words learned (every 10 words = 1 level for kids)
@@ -87,7 +87,7 @@ export const SimplifiedChildSidebar: React.FC<SimplifiedChildSidebarProps> = ({
           level,
           levelProgress,
           timeToday: timeDisplay,
-          achievements: journeyProgress.achievementsUnlocked?.length || 0,
+          achievements: AchievementTracker.getUnlockedAchievements().length || 0,
         });
       } catch (error) {
         console.log("Using fallback stats:", error);
