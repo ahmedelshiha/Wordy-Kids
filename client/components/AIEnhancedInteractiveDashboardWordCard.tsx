@@ -1520,34 +1520,6 @@ export function AIEnhancedInteractiveDashboardWordCard({
                 </Badge>
               </div>
 
-              {/* Progress Bar - Show only when AI is active */}
-              {aiState.isSessionActive && (
-                <>
-                  <div className="w-full bg-gray-200 rounded-full h-2 sm:h-3 mb-2 relative overflow-hidden">
-                    <div
-                      className="bg-gradient-to-r from-green-400 to-blue-500 h-2 sm:h-3 rounded-full transition-all duration-500 ease-out relative"
-                      style={{ width: `${sessionProgress}%` }}
-                    >
-                      {/* Simple sparkle effect */}
-                      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent rounded-full" />
-                    </div>
-                    {/* Simple progress indicator */}
-                    {sessionProgress > 10 && (
-                      <div className="absolute right-1 top-1/2 transform -translate-y-1/2">
-                        <span className="text-xs">🎆</span>
-                      </div>
-                    )}
-                  </div>
-
-                  {/* Simple progress text */}
-                  <div className="text-xs sm:text-sm text-gray-600">
-                    <span className="font-medium">
-                      {currentWordIndex + 1} of {SESSION_SIZE} words
-                    </span>
-                    {sessionProgress >= 100 && <span className="ml-2">🎉</span>}
-                  </div>
-                </>
-              )}
             </div>
 
             {/* Picture Display with State Transitions */}
