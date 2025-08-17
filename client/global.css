@@ -1250,6 +1250,43 @@
   @apply m-1 lg:m-2;
 }
 
+/* Small screen optimizations */
+@media (max-width: 1366px) {
+  .optimize-for-small-screen {
+    /* Reduce overall font sizes */
+    font-size: 0.9em;
+  }
+
+  .optimize-for-small-screen .text-xl {
+    font-size: 1rem;
+  }
+
+  .optimize-for-small-screen .text-lg {
+    font-size: 0.9rem;
+  }
+
+  .optimize-for-small-screen .text-base {
+    font-size: 0.8rem;
+  }
+
+  /* Reduce padding in cards and containers */
+  .optimize-for-small-screen .p-4 {
+    padding: 0.5rem;
+  }
+
+  .optimize-for-small-screen .p-3 {
+    padding: 0.375rem;
+  }
+
+  .optimize-for-small-screen .gap-4 {
+    gap: 0.5rem;
+  }
+
+  .optimize-for-small-screen .gap-3 {
+    gap: 0.375rem;
+  }
+}
+
 .kid-interactive {
   @apply transition-all duration-300 hover:animate-gentle-bounce cursor-pointer;
 }
