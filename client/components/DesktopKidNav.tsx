@@ -176,15 +176,15 @@ export function DesktopKidNav({
                       {tab.label}
                     </span>
 
-                    {/* Active Indicator */}
+                    {/* Active Indicator - Smaller */}
                     {activeTab === tab.id && (
                       <motion.div
-                        className="absolute -top-2 left-1/2 transform -translate-x-1/2 w-4 h-4 bg-yellow-300 rounded-full shadow-lg"
+                        className="absolute -top-1 left-1/2 transform -translate-x-1/2 w-2 h-2 lg:w-3 lg:h-3 bg-yellow-300 rounded-full shadow-md"
                         animate={{
-                          scale: [1, 1.3, 1],
+                          scale: [1, 1.2, 1],
                           boxShadow: [
                             "0 0 0 0 rgba(251, 191, 36, 0.7)",
-                            "0 0 0 10px rgba(251, 191, 36, 0)",
+                            "0 0 0 6px rgba(251, 191, 36, 0)",
                             "0 0 0 0 rgba(251, 191, 36, 0)",
                           ],
                         }}
@@ -192,12 +192,12 @@ export function DesktopKidNav({
                       />
                     )}
 
-                    {/* Sparkle Effects */}
+                    {/* Sparkle Effects - Smaller and more subtle */}
                     <AnimatePresence>
                       {activeTab === tab.id && (
                         <>
                           <motion.div
-                            className="absolute -top-1 -right-1 text-yellow-300 text-sm"
+                            className="absolute -top-0.5 -right-0.5 text-yellow-300 text-xs lg:text-sm"
                             initial={{ opacity: 0, scale: 0 }}
                             animate={{ opacity: [0, 1, 0], scale: [0, 1, 0] }}
                             transition={{
@@ -209,7 +209,7 @@ export function DesktopKidNav({
                             ✨
                           </motion.div>
                           <motion.div
-                            className="absolute -bottom-1 -left-1 text-white text-xs"
+                            className="absolute -bottom-0.5 -left-0.5 text-white text-xs"
                             initial={{ opacity: 0, scale: 0 }}
                             animate={{ opacity: [0, 1, 0], scale: [0, 1, 0] }}
                             transition={{
