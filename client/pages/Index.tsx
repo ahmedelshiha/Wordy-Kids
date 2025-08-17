@@ -2028,19 +2028,19 @@ export default function Index({ initialProfile }: IndexProps) {
                         onClick={() => setActiveTab("dashboard")}
                         className={`kid-nav-item w-full ${
                           activeTab === "dashboard"
-                            ? "kid-gradient-happy text-white shadow-lg kid-button active animate-kid-pulse-glow"
-                            : "bg-white text-gray-700 hover:kid-gradient-learn hover:text-white border border-purple-200 kid-interactive"
+                            ? "text-white shadow-lg kid-button active"
+                            : "text-gray-700 hover:text-purple-600 kid-interactive"
                         }`}
                       >
-                        <div className="text-base animate-mascot-bounce">
-                          🏰
+                        <div className="text-4xl lg:text-5xl xl:text-6xl -mt-2 lg:-mt-3 xl:-mt-4 animate-mascot-bounce">
+                          🏡
                         </div>
                         <span className="text-xs font-kid-friendly font-bold">
                           My Castle
                         </span>
                         {activeTab === "dashboard" && (
                           <div className="ml-auto animate-kid-magic-sparkle">
-                            ✨
+                            ✨🌟
                           </div>
                         )}
                       </button>
@@ -2049,17 +2049,17 @@ export default function Index({ initialProfile }: IndexProps) {
                         onClick={() => setActiveTab("learn")}
                         className={`kid-nav-item w-full ${
                           activeTab === "learn"
-                            ? "kid-gradient-learn text-white shadow-lg kid-button active animate-kid-pulse-glow"
-                            : "bg-white text-gray-700 hover:kid-gradient-success hover:text-white border border-green-200 kid-interactive"
+                            ? "text-white shadow-lg kid-button active"
+                            : "text-gray-700 hover:text-green-600 kid-interactive"
                         }`}
                       >
-                        <div className="text-base animate-gentle-float">📚</div>
+                        <div className="text-4xl lg:text-5xl xl:text-6xl -mt-2 lg:-mt-3 xl:-mt-4 animate-gentle-float">📚</div>
                         <span className="text-xs font-kid-friendly font-bold">
                           Magic Library
                         </span>
                         {activeTab === "learn" && (
                           <div className="ml-auto animate-kid-magic-sparkle">
-                            🌟
+                            ✨🌟
                           </div>
                         )}
                       </button>
@@ -2068,17 +2068,17 @@ export default function Index({ initialProfile }: IndexProps) {
                         onClick={() => setActiveTab("quiz")}
                         className={`kid-nav-item w-full ${
                           activeTab === "quiz"
-                            ? "kid-gradient-adventure text-white shadow-lg kid-button active animate-kid-pulse-glow"
-                            : "bg-white text-gray-700 hover:kid-gradient-magic hover:text-purple-800 border border-pink-200 kid-interactive"
+                            ? "text-white shadow-lg kid-button active"
+                            : "text-gray-700 hover:text-pink-600 kid-interactive"
                         }`}
                       >
-                        <div className="text-base animate-mascot-happy">🧙‍♂️</div>
+                        <div className="text-4xl lg:text-5xl xl:text-6xl -mt-2 lg:-mt-3 xl:-mt-4 animate-mascot-happy">🧙‍♂️</div>
                         <span className="text-xs font-kid-friendly font-bold">
                           Brain Quest
                         </span>
                         {activeTab === "quiz" && (
                           <div className="ml-auto animate-kid-magic-sparkle">
-                            🔮
+                            ✨🌟
                           </div>
                         )}
                       </button>
@@ -2107,11 +2107,11 @@ export default function Index({ initialProfile }: IndexProps) {
                         onClick={() => setActiveTab("progress")}
                         className={`kid-nav-item w-full ${
                           activeTab === "progress"
-                            ? "kid-gradient-success text-white shadow-lg kid-button active animate-kid-pulse-glow"
-                            : "bg-white text-gray-700 hover:kid-gradient-adventure hover:text-white border border-yellow-200 kid-interactive"
+                            ? "text-white shadow-lg kid-button active"
+                            : "text-gray-700 hover:text-yellow-600 kid-interactive"
                         }`}
                       >
-                        <div className="text-base animate-gentle-bounce">
+                        <div className="text-4xl lg:text-5xl xl:text-6xl -mt-2 lg:-mt-3 xl:-mt-4 animate-gentle-bounce">
                           🗺️
                         </div>
                         <span className="text-xs font-kid-friendly font-bold">
@@ -2119,7 +2119,7 @@ export default function Index({ initialProfile }: IndexProps) {
                         </span>
                         {activeTab === "progress" && (
                           <div className="ml-auto animate-kid-magic-sparkle">
-                            🏆
+                            ✨🌟
                           </div>
                         )}
                       </button>
