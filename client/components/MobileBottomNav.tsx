@@ -115,6 +115,15 @@ export function MobileBottomNav({
       hoverGradient: "kid-gradient-magic",
       sparkle: "🔮",
     },
+    {
+      id: "progress",
+      emoji: "🗺️",
+      label: "Adventure Map",
+      icon: Trophy,
+      activeGradient: "kid-gradient-success",
+      hoverGradient: "kid-gradient-adventure",
+      sparkle: "🏆",
+    },
   ];
 
   // Kid-friendly secondary menu items with magical theme
