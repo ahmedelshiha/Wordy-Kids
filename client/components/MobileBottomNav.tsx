@@ -260,7 +260,7 @@ export function MobileBottomNav({
             <button
               onClick={onMoreToggle}
               className={cn(
-                "flex flex-col items-center gap-0 p-1 rounded-xl transition-all duration-200 transform active:scale-95 min-w-0 flex-1 mx-0.5 min-h-[40px] justify-center",
+                "flex flex-col items-center gap-0 p-0.5 rounded-lg transition-all duration-200 transform active:scale-95 min-w-0 flex-1 mx-0.5 min-h-[32px] justify-center",
                 showMoreMenu
                   ? "bg-gradient-to-br from-blue-500 to-purple-500 text-white shadow-lg"
                   : "bg-blue-100 text-blue-600",
@@ -268,13 +268,13 @@ export function MobileBottomNav({
             >
               <div
                 className={cn(
-                  "text-3xl transition-transform duration-200",
+                  "text-4xl transition-transform duration-200",
                   showMoreMenu ? "rotate-90 scale-110" : "",
                 )}
               >
                 🎪
               </div>
-              <span className="text-base font-bold leading-none text-center text-white">
+              <span className="text-lg font-black leading-none text-center text-white">
                 More
               </span>
 
