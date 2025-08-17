@@ -76,8 +76,8 @@ export const SimplifiedChildSidebar: React.FC<SimplifiedChildSidebarProps> = ({
         const level = Math.floor(progressData.totalWordsLearned / 10) + 1;
         const levelProgress = ((progressData.totalWordsLearned % 10) / 10) * 100;
 
-        // Format time spent today
-        const timeMinutes = progressData.timeSpentToday || 0;
+        // Format time spent today (fallback to session data or journeyProgress)
+        const timeMinutes = journeyProgress.timeSpentLearning || 0;
         const timeDisplay = timeMinutes < 60 ? `${timeMinutes}m` : `${Math.floor(timeMinutes / 60)}h`;
 
         setStats({
@@ -421,7 +421,7 @@ export const SimplifiedChildSidebar: React.FC<SimplifiedChildSidebarProps> = ({
                 {isGuest ? (
                   <span className="text-lg">✨</span>
                 ) : (
-                  <span className="text-lg">🚪</span>
+                  <span className="text-lg">����</span>
                 )}
               </Button>
             </motion.div>
