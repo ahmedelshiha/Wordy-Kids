@@ -1499,8 +1499,8 @@ export function AIEnhancedInteractiveDashboardWordCard({
                   onClick={playPronunciation}
                   disabled={isPlaying}
                   className={cn(
-                    "bg-blue-500 hover:bg-blue-600 text-white p-3 rounded-full",
-                    "min-w-[48px] min-h-[48px]",
+                    "bg-blue-500 hover:bg-blue-600 text-white p-2 rounded-full",
+                    "min-w-[40px] min-h-[40px]",
                     isPlaying && "animate-pulse bg-yellow-500",
                   )}
                 >
