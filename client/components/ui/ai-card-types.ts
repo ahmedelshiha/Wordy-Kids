@@ -53,7 +53,7 @@ export interface AICardContentProps extends React.HTMLAttributes<HTMLDivElement>
   // Standard CardContent props
   className?: string;
   children?: React.ReactNode;
-  
+
   // AI Enhancement Props
   aiState: AIState;
   aiActions: AIActions;
@@ -63,10 +63,31 @@ export interface AICardContentProps extends React.HTMLAttributes<HTMLDivElement>
   difficultyAdjustment?: "increase" | "decrease" | "maintain";
   sessionWords?: any[];
   sessionStats?: SessionStats;
-  
+
   // Customization Options
   showMobileAI?: boolean;
   showDesktopAI?: boolean;
   headerClassName?: string;
   enableAIHeader?: boolean;
+}
+
+// Extended AI Card Content Props with comprehensive features
+export interface ExtendedAICardContentProps extends AICardContentProps {
+  // AI Status and Control
+  aiStatus?: "loading" | "active" | "error" | "inactive";
+  globalAIEnabled?: boolean;
+  onToggleGlobalAI?: () => void;
+  onRetryAI?: () => void;
+  aiErrorMessage?: string;
+
+  // Settings
+  showAISettings?: boolean;
+  setShowAISettings?: (show: boolean) => void;
+
+  // Session Management
+  SESSION_SIZE?: number;
+
+  // Enhanced display options
+  showQuickStats?: boolean;
+  showErrorAlert?: boolean;
 }
