@@ -71,6 +71,7 @@ import { UnifiedVowelGame } from "@/components/games/UnifiedVowelGame";
 import { WordCreator } from "@/components/WordCreator";
 import { AdventureDashboard } from "@/components/AdventureDashboard";
 import { MobileBottomNav } from "@/components/MobileBottomNav";
+import { MobileKidNav } from "@/components/MobileKidNav";
 import { DesktopKidNav } from "@/components/DesktopKidNav";
 import { adventureService } from "@/lib/adventureService";
 import { goalProgressTracker } from "@/lib/goalProgressTracker";
