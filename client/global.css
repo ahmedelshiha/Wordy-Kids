@@ -88,8 +88,19 @@
     --kid-gradient-adventure: linear-gradient(135deg, #fa709a, #fee140);
     --kid-gradient-magic: linear-gradient(135deg, #a8edea, #fed6e3, #ffecd2);
     --kid-gradient-portal: linear-gradient(135deg, #667eea, #764ba2, #f093fb);
-    --kid-gradient-celebration: linear-gradient(135deg, #ffecd2, #fcb69f, #ffeaa7);
-    --kid-gradient-rainbow: linear-gradient(135deg, #ff9a9e, #fecfef, #fecfef, #a8edea);
+    --kid-gradient-celebration: linear-gradient(
+      135deg,
+      #ffecd2,
+      #fcb69f,
+      #ffeaa7
+    );
+    --kid-gradient-rainbow: linear-gradient(
+      135deg,
+      #ff9a9e,
+      #fecfef,
+      #fecfef,
+      #a8edea
+    );
 
     /* Magic portal colors */
     --portal-primary: 264 83% 70%;
@@ -164,26 +175,38 @@
   body {
     @apply bg-background text-foreground;
     -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
-    font-family: 'Nunito', 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    font-family:
+      "Nunito",
+      "Poppins",
+      -apple-system,
+      BlinkMacSystemFont,
+      "Segoe UI",
+      Roboto,
+      sans-serif;
   }
 
   /* Kid-friendly typography system */
   .font-kid-friendly {
-    font-family: 'Comic Neue', 'Nunito', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-family:
+      "Comic Neue",
+      "Nunito",
+      -apple-system,
+      BlinkMacSystemFont,
+      sans-serif;
     font-weight: 600;
     letter-spacing: 0.025em;
     line-height: 1.4;
   }
 
   .text-playful {
-    font-family: 'Fredoka One', 'Comic Neue', cursive;
+    font-family: "Fredoka One", "Comic Neue", cursive;
     font-weight: 400;
     letter-spacing: 0.02em;
     line-height: 1.3;
   }
 
   .text-adventure {
-    font-family: 'Poppins', 'Nunito', sans-serif;
+    font-family: "Poppins", "Nunito", sans-serif;
     font-weight: 700;
     letter-spacing: 0.015em;
     line-height: 1.5;
@@ -192,7 +215,7 @@
   /* Optimized readability for kids with better density */
   .text-kid-large {
     font-size: 1rem;
-    font-family: 'Comic Neue', sans-serif;
+    font-family: "Comic Neue", sans-serif;
     font-weight: 700;
     line-height: 1.2;
     letter-spacing: 0.02em;
@@ -206,7 +229,7 @@
 
   .text-kid-medium {
     font-size: 0.875rem;
-    font-family: 'Nunito', sans-serif;
+    font-family: "Nunito", sans-serif;
     font-weight: 600;
     line-height: 1.3;
     letter-spacing: 0.015em;
@@ -220,7 +243,7 @@
 
   .text-kid-small {
     font-size: 0.75rem;
-    font-family: 'Nunito', sans-serif;
+    font-family: "Nunito", sans-serif;
     font-weight: 500;
     line-height: 1.4;
     letter-spacing: 0.01em;

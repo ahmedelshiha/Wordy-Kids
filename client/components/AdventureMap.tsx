@@ -137,7 +137,9 @@ export const AdventureMap: React.FC<AdventureMapProps> = ({
                 <Crown className="w-4 h-4 md:w-5 md:h-5" />
               </div>
               <div>
-                <h3 className="font-bold text-base md:text-lg">{wordHero.name}</h3>
+                <h3 className="font-bold text-base md:text-lg">
+                  {wordHero.name}
+                </h3>
                 <div className="flex items-center gap-2 md:gap-3 text-xs md:text-sm">
                   <span>Level {wordHero.level}</span>
                   <span>🪙 {wordHero.coins}</span>
@@ -152,7 +154,9 @@ export const AdventureMap: React.FC<AdventureMapProps> = ({
                   value={wordHero.experience % 100}
                   className="w-16 md:w-20 h-1.5 md:h-2 bg-white/20"
                 />
-                <span className="text-xs md:text-sm">{wordHero.experience} XP</span>
+                <span className="text-xs md:text-sm">
+                  {wordHero.experience} XP
+                </span>
               </div>
             </div>
           </div>
@@ -193,8 +197,12 @@ export const AdventureMap: React.FC<AdventureMapProps> = ({
                     )}
                   </div>
 
-                  <h3 className="font-bold text-sm md:text-base lg:text-lg mb-1 md:mb-2">{zone.name}</h3>
-                  <p className={`text-xs md:text-sm ${zone.color} opacity-90 hidden md:block`}>
+                  <h3 className="font-bold text-sm md:text-base lg:text-lg mb-1 md:mb-2">
+                    {zone.name}
+                  </h3>
+                  <p
+                    className={`text-xs md:text-sm ${zone.color} opacity-90 hidden md:block`}
+                  >
                     {zone.description}
                   </p>
 
@@ -224,7 +232,8 @@ export const AdventureMap: React.FC<AdventureMapProps> = ({
           <CardContent className="p-3 md:p-4 lg:p-6">
             <div className="flex items-center gap-2 md:gap-3 mb-3 md:mb-4">
               {React.createElement(zoneInfo[selectedZone].icon, {
-                className: "w-6 h-6 md:w-7 md:h-7 lg:w-8 lg:h-8 text-purple-600",
+                className:
+                  "w-6 h-6 md:w-7 md:h-7 lg:w-8 lg:h-8 text-purple-600",
               })}
               <h3 className="text-lg md:text-xl lg:text-2xl font-bold text-gray-800">
                 {zoneInfo[selectedZone].name}
@@ -362,7 +371,10 @@ export const AdventureMap: React.FC<AdventureMapProps> = ({
                       {selectedWord.health}%
                     </span>
                   </div>
-                  <Progress value={selectedWord.health} className="h-2 md:h-3" />
+                  <Progress
+                    value={selectedWord.health}
+                    className="h-2 md:h-3"
+                  />
                 </div>
 
                 <div className="grid grid-cols-2 gap-2 md:gap-3 text-xs md:text-sm">

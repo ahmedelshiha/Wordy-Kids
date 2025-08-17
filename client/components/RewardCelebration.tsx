@@ -1,8 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from "react";
 
 interface RewardCelebrationProps {
   isVisible: boolean;
-  type?: 'word_learned' | 'quiz_complete' | 'achievement' | 'level_up' | 'perfect_score';
+  type?:
+    | "word_learned"
+    | "quiz_complete"
+    | "achievement"
+    | "level_up"
+    | "perfect_score";
   title?: string;
   message?: string;
   points?: number;
@@ -24,50 +29,50 @@ interface Confetti {
 
 export const RewardCelebration: React.FC<RewardCelebrationProps> = ({
   isVisible,
-  type = 'word_learned',
+  type = "word_learned",
   title,
   message,
   points = 0,
   onComplete,
-  duration = 3000
+  duration = 3000,
 }) => {
   const [confetti, setConfetti] = useState<Confetti[]>([]);
   const [showContent, setShowContent] = useState(false);
 
   const celebrationConfig = {
     word_learned: {
-      title: title || '🌟 Amazing!',
-      message: message || 'You learned a new word!',
-      emojis: ['🌟', '✨', '🎉', '👏', '💫'],
-      colors: ['#ff6b9d', '#4facfe', '#43e97b', '#fa709a', '#feca57'],
+      title: title || "🌟 Amazing!",
+      message: message || "You learned a new word!",
+      emojis: ["🌟", "✨", "🎉", "👏", "💫"],
+      colors: ["#ff6b9d", "#4facfe", "#43e97b", "#fa709a", "#feca57"],
       confettiCount: 25,
     },
     quiz_complete: {
-      title: title || '🧠 Quiz Master!',
-      message: message || 'Outstanding quiz performance!',
-      emojis: ['🏆', '🎯', '🧠', '⭐', '🎊'],
-      colors: ['#667eea', '#764ba2', '#f093fb', '#f5576c', '#4facfe'],
+      title: title || "🧠 Quiz Master!",
+      message: message || "Outstanding quiz performance!",
+      emojis: ["🏆", "🎯", "🧠", "⭐", "🎊"],
+      colors: ["#667eea", "#764ba2", "#f093fb", "#f5576c", "#4facfe"],
       confettiCount: 35,
     },
     achievement: {
-      title: title || '🏆 Achievement Unlocked!',
-      message: message || 'You earned a new badge!',
-      emojis: ['🏆', '🥇', '👑', '💎', '🌟'],
-      colors: ['#ffd700', '#ff6b35', '#f7971e', '#ffd200', '#ffaa00'],
+      title: title || "🏆 Achievement Unlocked!",
+      message: message || "You earned a new badge!",
+      emojis: ["🏆", "🥇", "👑", "💎", "🌟"],
+      colors: ["#ffd700", "#ff6b35", "#f7971e", "#ffd200", "#ffaa00"],
       confettiCount: 40,
     },
     level_up: {
-      title: title || '🚀 Level Up!',
-      message: message || 'You reached a new level!',
-      emojis: ['🚀', '🌈', '⚡', '🔥', '💫'],
-      colors: ['#ff9a9e', '#fecfef', '#fecfef', '#a8edea', '#fed6e3'],
+      title: title || "🚀 Level Up!",
+      message: message || "You reached a new level!",
+      emojis: ["🚀", "🌈", "⚡", "🔥", "💫"],
+      colors: ["#ff9a9e", "#fecfef", "#fecfef", "#a8edea", "#fed6e3"],
       confettiCount: 50,
     },
     perfect_score: {
-      title: title || '✨ Perfect Score!',
-      message: message || 'Absolutely incredible!',
-      emojis: ['✨', '🌟', '💫', '🎯', '🔮'],
-      colors: ['#667eea', '#764ba2', '#f093fb', '#f5576c', '#4facfe'],
+      title: title || "✨ Perfect Score!",
+      message: message || "Absolutely incredible!",
+      emojis: ["✨", "🌟", "💫", "🎯", "🔮"],
+      colors: ["#667eea", "#764ba2", "#f093fb", "#f5576c", "#4facfe"],
       confettiCount: 60,
     },
   };
@@ -117,14 +122,16 @@ export const RewardCelebration: React.FC<RewardCelebrationProps> = ({
     if (confetti.length === 0) return;
 
     const animateConfetti = () => {
-      setConfetti(prev => 
-        prev.map(particle => ({
-          ...particle,
-          x: particle.x + particle.vx,
-          y: particle.y + particle.vy,
-          rotation: particle.rotation + particle.rotationSpeed,
-          vy: particle.vy + 0.3, // gravity
-        })).filter(particle => particle.y < window.innerHeight + 50)
+      setConfetti((prev) =>
+        prev
+          .map((particle) => ({
+            ...particle,
+            x: particle.x + particle.vx,
+            y: particle.y + particle.vy,
+            rotation: particle.rotation + particle.rotationSpeed,
+            vy: particle.vy + 0.3, // gravity
+          }))
+          .filter((particle) => particle.y < window.innerHeight + 50),
       );
     };
 
@@ -138,9 +145,9 @@ export const RewardCelebration: React.FC<RewardCelebrationProps> = ({
     <div className="fixed inset-0 z-50 flex items-center justify-center">
       {/* Backdrop */}
       <div className="absolute inset-0 bg-black/20 backdrop-blur-sm" />
-      
+
       {/* Confetti */}
-      {confetti.map(particle => (
+      {confetti.map((particle) => (
         <div
           key={particle.id}
           className="absolute text-2xl pointer-events-none"
@@ -160,19 +167,27 @@ export const RewardCelebration: React.FC<RewardCelebrationProps> = ({
         <div className="relative bg-gradient-to-br from-white via-yellow-50 to-pink-50 rounded-3xl shadow-2xl border-4 border-yellow-300 p-8 mx-4 max-w-md animate-badge-unlock">
           {/* Magical border effect */}
           <div className="absolute inset-0 rounded-3xl animate-magical-portal" />
-          
+
           {/* Floating sparkles around the card */}
-          <div className="absolute -top-4 -left-4 text-3xl animate-kid-magic-sparkle">✨</div>
-          <div className="absolute -top-2 -right-6 text-2xl animate-sparkle animation-delay-200">⭐</div>
-          <div className="absolute -bottom-4 -left-2 text-2xl animate-gentle-bounce">🌟</div>
-          <div className="absolute -bottom-2 -right-4 text-3xl animate-gentle-float animation-delay-100">💫</div>
+          <div className="absolute -top-4 -left-4 text-3xl animate-kid-magic-sparkle">
+            ✨
+          </div>
+          <div className="absolute -top-2 -right-6 text-2xl animate-sparkle animation-delay-200">
+            ⭐
+          </div>
+          <div className="absolute -bottom-4 -left-2 text-2xl animate-gentle-bounce">
+            🌟
+          </div>
+          <div className="absolute -bottom-2 -right-4 text-3xl animate-gentle-float animation-delay-100">
+            💫
+          </div>
 
           {/* Content */}
           <div className="relative text-center">
             <h2 className="text-3xl font-kid-friendly font-bold text-purple-800 mb-2 text-shadow animate-gentle-bounce">
               {config.title}
             </h2>
-            
+
             <p className="text-lg font-kid-friendly text-purple-700 mb-4">
               {config.message}
             </p>
@@ -188,7 +203,7 @@ export const RewardCelebration: React.FC<RewardCelebrationProps> = ({
             {/* Celebration emojis */}
             <div className="flex justify-center gap-4 mb-6">
               {config.emojis.slice(0, 3).map((emoji, index) => (
-                <span 
+                <span
                   key={index}
                   className="text-4xl animate-mascot-bounce"
                   style={{ animationDelay: `${index * 200}ms` }}

@@ -1073,7 +1073,10 @@ export function AIEnhancedInteractiveDashboardWordCard({
 
   return (
     <div
-      className={cn("space-y-3 sm:space-y-4 md:space-y-6 optimize-for-small-screen", className)}
+      className={cn(
+        "space-y-3 sm:space-y-4 md:space-y-6 optimize-for-small-screen",
+        className,
+      )}
       role="main"
       aria-label="AI-enhanced interactive word learning card"
       tabIndex={0}

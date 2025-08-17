@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from "react";
 
 interface Particle {
   id: number;
@@ -11,21 +11,21 @@ interface Particle {
 
 interface MagicalPortalEffectProps {
   isActive?: boolean;
-  intensity?: 'low' | 'medium' | 'high';
+  intensity?: "low" | "medium" | "high";
   particleEmojis?: string[];
 }
 
 export const MagicalPortalEffect: React.FC<MagicalPortalEffectProps> = ({
   isActive = true,
-  intensity = 'medium',
-  particleEmojis = ['✨', '🌟', '⭐', '💫', '🔮', '🌈', '🦄', '🎉', '🎊', '💎']
+  intensity = "medium",
+  particleEmojis = ["✨", "🌟", "⭐", "💫", "🔮", "🌈", "🦄", "🎉", "🎊", "💎"],
 }) => {
   const [particles, setParticles] = useState<Particle[]>([]);
 
   const particleCount = {
     low: 5,
     medium: 10,
-    high: 15
+    high: 15,
   }[intensity];
 
   useEffect(() => {
@@ -36,26 +36,27 @@ export const MagicalPortalEffect: React.FC<MagicalPortalEffectProps> = ({
 
     const generateParticles = () => {
       const newParticles: Particle[] = [];
-      
+
       for (let i = 0; i < particleCount; i++) {
         newParticles.push({
           id: Math.random(),
           x: Math.random() * 100, // Random position across screen
           y: 100, // Start from bottom
-          emoji: particleEmojis[Math.floor(Math.random() * particleEmojis.length)],
+          emoji:
+            particleEmojis[Math.floor(Math.random() * particleEmojis.length)],
           delay: Math.random() * 2000, // Random delay up to 2 seconds
           duration: 4000 + Math.random() * 2000, // 4-6 seconds duration
         });
       }
-      
+
       setParticles(newParticles);
     };
 
     generateParticles();
-    
+
     // Regenerate particles periodically
     const interval = setInterval(generateParticles, 3000);
-    
+
     return () => clearInterval(interval);
   }, [isActive, intensity, particleCount, particleEmojis]);
 

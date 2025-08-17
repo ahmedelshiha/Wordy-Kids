@@ -37,7 +37,8 @@ export const DynamicAuthButton: React.FC<DynamicAuthButtonProps> = ({
         text: "Enter Magic Portal",
         subtitle: "Start your word adventure!",
         bgGradient: "bg-gradient-to-r from-purple-500 via-pink-500 to-blue-500",
-        hoverEffect: "hover:from-purple-600 hover:via-pink-600 hover:to-blue-600 hover:scale-105",
+        hoverEffect:
+          "hover:from-purple-600 hover:via-pink-600 hover:to-blue-600 hover:scale-105",
         borderColor: "border-yellow-300",
         iconBg: "bg-white/20 backdrop-blur-sm",
         sparkles: true,
@@ -83,7 +84,9 @@ export const DynamicAuthButton: React.FC<DynamicAuthButtonProps> = ({
         {content.sparkles && (
           <div className="flex flex-col gap-1">
             <span className="text-lg animate-gentle-bounce">🌈</span>
-            <span className="text-sm animate-sparkle animation-delay-200">✨</span>
+            <span className="text-sm animate-sparkle animation-delay-200">
+              ✨
+            </span>
           </div>
         )}
       </button>
@@ -114,8 +117,12 @@ export const DynamicAuthButton: React.FC<DynamicAuthButtonProps> = ({
       {content.sparkles && (
         <div className="flex flex-col gap-2">
           <span className="text-2xl animate-gentle-bounce">🌈</span>
-          <span className="text-lg animate-sparkle animation-delay-200">✨</span>
-          <span className="text-sm animate-gentle-float animation-delay-100">🌟</span>
+          <span className="text-lg animate-sparkle animation-delay-200">
+            ✨
+          </span>
+          <span className="text-sm animate-gentle-float animation-delay-100">
+            🌟
+          </span>
         </div>
       )}
     </button>
