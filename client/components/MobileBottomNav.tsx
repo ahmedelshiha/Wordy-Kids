@@ -95,7 +95,7 @@ export function MobileBottomNav({
       icon: Target,
       activeGradient: "kid-gradient-happy",
       hoverGradient: "kid-gradient-learn",
-      sparkle: "✨��",
+      sparkle: "✨🌟",
     },
     {
       id: "learn",
@@ -247,7 +247,7 @@ export function MobileBottomNav({
                 </div>
 
                 {/* Kid-friendly Label */}
-                <span className="text-[10px] font-kid-friendly font-bold leading-tight text-center truncate max-w-full text-white -mt-3">
+                <span className="text-[10px] font-kid-friendly font-bold leading-tight text-center truncate max-w-full text-white -mt-1">
                   {tab.label}
                 </span>
 
