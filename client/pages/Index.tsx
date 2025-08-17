@@ -2987,7 +2987,7 @@ export default function Index({ initialProfile }: IndexProps) {
                             <Card className="cursor-pointer hover:shadow-lg transition-all duration-300 hover:scale-105 border-2 border-educational-pink/30 animate-kid-float">
                               <CardContent className="p-3 md:p-4 text-center">
                                 <div className="text-3xl md:text-5xl mb-2 md:mb-3 animate-gentle-bounce">
-                                  🎧
+                                  ��
                                 </div>
                                 <h3 className="text-sm md:text-lg font-bold text-educational-pink mb-1 md:mb-2">
                                   Listen & Guess
@@ -3459,6 +3459,22 @@ export default function Index({ initialProfile }: IndexProps) {
                 // Could add additional reward logic here like updating user points
               }}
               autoCloseDelay={2000} // Auto-close after 2 seconds for mobile optimization
+            />
+          )}
+
+          {/* Kid-Friendly Floating Mascot */}
+          {userRole === "child" && (
+            <FloatingMascot
+              mood={rememberedWords.size > 5 ? "celebrating" : rememberedWords.size > 0 ? "encouraging" : "happy"}
+              duration={4000}
+            />
+          )}
+
+          {/* Show Mascot Reaction for Special Events */}
+          {feedback?.type === "celebration" && (
+            <MascotReaction
+              type="success"
+              onComplete={() => console.log("Mascot celebration complete")}
             />
           )}
         </>
