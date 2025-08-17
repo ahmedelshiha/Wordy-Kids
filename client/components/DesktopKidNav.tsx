@@ -66,7 +66,7 @@ const kidNavTabs: NavTab[] = [
   },
   {
     id: "progress",
-    emoji: "🗺️",
+    emoji: "����️",
     label: "Map",
     color: "from-indigo-400 via-purple-400 to-pink-400",
     hoverColor: "from-indigo-500 via-purple-500 to-pink-500",
@@ -262,8 +262,15 @@ export function DesktopKidNav({
                 id="parent-code"
                 type="password"
                 value={parentCode}
-                onChange={(e) => setParentCode(e.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                onChange={(e) => {
+                  setParentCode(e.target.value);
+                  setParentCodeError(false);
+                }}
+                className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:border-transparent ${
+                  parentCodeError
+                    ? "border-red-500 focus:ring-red-500 bg-red-50"
+                    : "border-gray-300 focus:ring-blue-500"
+                }`}
                 placeholder="Enter code..."
                 onKeyDown={(e) => {
                   if (e.key === "Enter") {
@@ -271,6 +278,11 @@ export function DesktopKidNav({
                   }
                 }}
               />
+              {parentCodeError && (
+                <p className="text-sm text-red-600 mt-1">
+                  Incorrect code. Please try again.
+                </p>
+              )}
             </div>
             <div className="flex justify-between">
               <Button
