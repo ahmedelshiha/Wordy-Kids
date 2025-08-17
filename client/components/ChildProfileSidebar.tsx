@@ -178,7 +178,7 @@ export const ChildProfileSidebar: React.FC<ChildProfileSidebarProps> = ({
                       <span className="text-lg">{timeInfo.icon}</span>
                       <div>
                         <div className="text-sm font-bold text-gray-800">
-                          {timeInfo.greeting}, Super Star! 🌟
+                          {timeInfo.greeting}, Super Star! ���
                         </div>
                         <div className="text-xs text-gray-700 font-medium">
                           Let's learn something awesome today!
@@ -340,8 +340,8 @@ export const ChildProfileSidebar: React.FC<ChildProfileSidebarProps> = ({
         </AnimatePresence>
       </div>
 
-      {/* Sidebar Footer */}
-      <div className="p-4 border-t-2 border-rainbow-300/50 bg-gradient-to-r from-green-100/80 to-blue-100/80 relative z-10">
+      {/* Enhanced Sidebar Footer */}
+      <div className="p-4 border-t border-purple-200/30 bg-gradient-to-r from-white/60 to-purple-50/60 backdrop-blur-sm relative z-10">
         <AnimatePresence mode="wait">
           {!isCollapsed ? (
             <motion.div
