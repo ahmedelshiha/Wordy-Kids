@@ -2029,42 +2029,40 @@ export default function Index({ initialProfile }: IndexProps) {
 
                       <button
                         onClick={() => setActiveTab("learn")}
-                        className={`w-full flex items-center gap-2.5 p-2.5 lg:p-3 rounded-xl transition-all duration-200 hover:scale-[1.02] ${
+                        className={`kid-nav-item w-full ${
                           activeTab === "learn"
-                            ? "bg-gradient-to-r from-green-500 to-blue-500 text-white shadow-lg transform scale-[1.02]"
-                            : "bg-white text-gray-700 hover:bg-gradient-to-r hover:from-green-50 hover:to-blue-50 border border-green-100 hover:border-green-200 shadow-sm"
+                            ? "kid-gradient-learn text-white shadow-lg kid-button active animate-kid-pulse-glow"
+                            : "bg-white text-gray-700 hover:kid-gradient-success hover:text-white border border-green-200 kid-interactive"
                         }`}
                       >
-                        <div
-                          className={`p-1.5 rounded-lg transition-all duration-200 ${activeTab === "learn" ? "bg-white/20" : "bg-green-100"}`}
-                        >
-                          <BookOpen
-                            className={`w-4 h-4 ${activeTab === "learn" ? "text-white" : "text-green-600"}`}
-                          />
+                        <div className="text-xl animate-gentle-float">
+                          📚
                         </div>
-                        <span className="font-medium text-sm">
-                          📚 Word Library
+                        <span className="kid-text-big font-bold">
+                          Magic Library
                         </span>
+                        {activeTab === "learn" && (
+                          <div className="ml-auto animate-kid-magic-sparkle">🌟</div>
+                        )}
                       </button>
 
                       <button
                         onClick={() => setActiveTab("quiz")}
-                        className={`w-full flex items-center gap-2.5 p-2.5 lg:p-3 rounded-xl transition-all duration-200 hover:scale-[1.02] ${
+                        className={`kid-nav-item w-full ${
                           activeTab === "quiz"
-                            ? "bg-gradient-to-r from-pink-500 to-purple-500 text-white shadow-lg transform scale-[1.02]"
-                            : "bg-white text-gray-700 hover:bg-gradient-to-r hover:from-pink-50 hover:to-purple-50 border border-pink-100 hover:border-pink-200 shadow-sm"
+                            ? "kid-gradient-adventure text-white shadow-lg kid-button active animate-kid-pulse-glow"
+                            : "bg-white text-gray-700 hover:kid-gradient-magic hover:text-purple-800 border border-pink-200 kid-interactive"
                         }`}
                       >
-                        <div
-                          className={`p-1.5 rounded-lg transition-all duration-200 ${activeTab === "quiz" ? "bg-white/20" : "bg-pink-100"}`}
-                        >
-                          <Brain
-                            className={`w-4 h-4 ${activeTab === "quiz" ? "text-white" : "text-pink-600"}`}
-                          />
+                        <div className="text-xl animate-mascot-happy">
+                          🧙‍♂️
                         </div>
-                        <span className="font-medium text-sm">
-                          🧠 Quiz Time
+                        <span className="kid-text-big font-bold">
+                          Brain Quest
                         </span>
+                        {activeTab === "quiz" && (
+                          <div className="ml-auto animate-kid-magic-sparkle">🔮</div>
+                        )}
                       </button>
 
                       <button
