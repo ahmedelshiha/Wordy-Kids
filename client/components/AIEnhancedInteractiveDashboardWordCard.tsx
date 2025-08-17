@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { AICardContent } from "@/components/ui/ai-card-content";
 import { Badge } from "@/components/ui/badge";
+import { AIProgressContainer } from "@/components/AIProgressContainer";
 import { Progress } from "@/components/ui/progress";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import {
