@@ -849,6 +849,28 @@
     transform: translateZ(0);
   }
 
+  /* Mobile-optimized mascot styles */
+  .mascot-character {
+    transform: translateZ(0);
+    will-change: transform;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .animate-mascot-bounce,
+  .animate-mascot-wave,
+  .animate-mascot-happy {
+    animation-duration: 2.5s;
+    transform: translateZ(0);
+    -webkit-transform: translateZ(0);
+  }
+
+  /* Smaller speech bubbles for mobile */
+  .speech-bubble {
+    max-width: 200px !important;
+    font-size: 0.75rem !important;
+    padding: 0.5rem !important;
+  }
+
   .animate-wiggle {
     animation-duration: 3s;
     transform: translateZ(0);
