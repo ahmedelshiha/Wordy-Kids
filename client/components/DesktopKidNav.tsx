@@ -131,10 +131,10 @@ export function DesktopKidNav({
                     onClick={() => onTabChange(tab.id)}
                     className={cn(
                       "flex flex-col items-center transition-all duration-300 transform relative group kid-nav-button-compact",
-                      // Apply container-less design to all icons - kid-friendly approach
+                      // Apply container-less design to all icons - kid-friendly approach with larger containers
                       tab.id === "dashboard"
-                        ? "min-w-[100px] lg:min-w-[120px] xl:min-w-[140px] scale-125 lg:scale-140 p-1 lg:p-2 xl:p-3 gap-0 lg:gap-0.5"
-                        : "min-w-[80px] lg:min-w-[90px] xl:min-w-[110px] scale-110 lg:scale-120 p-1 lg:p-2 xl:p-3 gap-0 lg:gap-0.5",
+                        ? "min-w-[120px] lg:min-w-[140px] xl:min-w-[160px] scale-125 lg:scale-140 p-1 lg:p-2 xl:p-3 gap-0 lg:gap-0.5"
+                        : "min-w-[100px] lg:min-w-[120px] xl:min-w-[140px] scale-110 lg:scale-120 p-1 lg:p-2 xl:p-3 gap-0 lg:gap-0.5",
                       // All buttons now have transparent background - natural kid-friendly appearance
                       "bg-transparent hover:bg-transparent shadow-none hover:shadow-none"
                     )}
