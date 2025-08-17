@@ -226,14 +226,14 @@ export function MobileBottomNav({
       {/* Magical Kid-Friendly Bottom Navigation Bar */}
       <div className="fixed bottom-0 left-0 right-0 z-30 lg:hidden">
         <div className="bg-gradient-to-r from-purple-50 via-pink-50 to-blue-50 border-t-2 border-rainbow shadow-2xl safe-area-padding-bottom backdrop-blur-lg">
-          <div className="flex items-center justify-around px-0.5 py-0 -my-3">
+          <div className="flex items-center justify-around px-0.5 py-1 -my-1">
             {/* Primary Navigation Tabs - Kid Style */}
             {primaryTabs.map((tab) => (
               <button
                 key={tab.id}
                 onClick={() => onTabChange(tab.id)}
                 className={cn(
-                  "kid-nav-item flex flex-col items-center gap-0 p-2 rounded-lg transition-all duration-200 transform active:scale-95 relative min-w-0 flex-1 mx-0.5 min-h-[60px] justify-center",
+                  "kid-nav-item flex flex-col items-center gap-0 p-1 rounded-lg transition-all duration-200 transform active:scale-95 relative min-w-0 flex-1 mx-0.5 min-h-[45px] justify-center",
                   activeTab === tab.id
                     ? "text-white shadow-lg kid-button active"
                     : "text-gray-700 hover:text-purple-600 kid-interactive",
@@ -242,7 +242,7 @@ export function MobileBottomNav({
                 {/* Magical Emoji Icon */}
                 <div
                   className={cn(
-                    "text-3xl sm:text-4xl md:text-5xl lg:text-6xl -mt-3 sm:-mt-4 md:-mt-5 lg:-mt-6 transition-transform duration-200",
+                    "text-5xl sm:text-6xl md:text-7xl lg:text-8xl transition-transform duration-200",
                     tab.id === "dashboard" && "animate-mascot-bounce",
                     tab.id === "learn" && "animate-gentle-float",
                     tab.id === "quiz" && "animate-mascot-happy",
@@ -253,7 +253,7 @@ export function MobileBottomNav({
                 </div>
 
                 {/* Kid-friendly Label */}
-                <span className="text-xs font-kid-friendly font-bold leading-tight text-center truncate max-w-full text-white -mt-2">
+                <span className="text-xs font-kid-friendly font-bold leading-tight text-center truncate max-w-full text-white -mt-1">
                   {tab.label}
                 </span>
 
