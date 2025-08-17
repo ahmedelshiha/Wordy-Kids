@@ -236,7 +236,7 @@ export function MobileBottomNav({
                 {/* Magical Emoji Icon */}
                 <div
                   className={cn(
-                    "text-xl transition-transform duration-200",
+                    "text-lg transition-transform duration-200",
                     activeTab === tab.id ? "scale-110 animate-mascot-bounce" : "animate-gentle-float",
                   )}
                 >
@@ -244,7 +244,7 @@ export function MobileBottomNav({
                 </div>
 
                 {/* Kid-friendly Label */}
-                <span className="text-xs font-kid-friendly font-bold leading-tight text-center truncate max-w-full">
+                <span className="text-[10px] font-kid-friendly font-bold leading-tight text-center truncate max-w-full">
                   {tab.label}
                 </span>
 
@@ -274,13 +274,13 @@ export function MobileBottomNav({
             >
               <div
                 className={cn(
-                  "text-xl transition-transform duration-200",
+                  "text-lg transition-transform duration-200",
                   showMoreMenu ? "rotate-90 scale-110 animate-mascot-bounce" : "animate-gentle-float",
                 )}
               >
                 🎪
               </div>
-              <span className="text-xs font-kid-friendly font-bold leading-tight text-center">
+              <span className="text-[10px] font-kid-friendly font-bold leading-tight text-center">
                 More
               </span>
 
