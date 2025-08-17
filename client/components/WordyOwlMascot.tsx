@@ -232,6 +232,8 @@ const WordyOwlMascot: React.FC<WordyOwlMascotProps> = ({
         }
       : {};
 
+  if (!isVisible || !delayComplete) return null;
+
   return (
     <div
       ref={dragRef}
