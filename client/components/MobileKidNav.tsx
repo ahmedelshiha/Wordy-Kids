@@ -310,7 +310,7 @@ export function MobileKidNav({
                     {activeTab === tab.id && (
                       <>
                         <motion.div
-                          className="absolute -top-1 -right-1 text-yellow-400 text-sm"
+                          className="absolute -top-1 -right-1 text-yellow-400 text-sm sparkle-mobile"
                           animate={{
                             opacity: [0, 1, 0],
                             scale: [0.5, 1, 0.5],
