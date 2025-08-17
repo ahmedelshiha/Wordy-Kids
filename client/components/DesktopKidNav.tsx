@@ -130,11 +130,11 @@ export function DesktopKidNav({
                     key={tab.id}
                     onClick={() => onTabChange(tab.id)}
                     className={cn(
-                      "flex flex-col items-center gap-1 lg:gap-1.5 transition-all duration-300 transform relative group kid-nav-button-compact",
-                      // Special styling for home button - no container background
+                      "flex flex-col items-center transition-all duration-300 transform relative group kid-nav-button-compact",
+                      // Special styling for home button - closer spacing and no container background
                       tab.id === "dashboard"
-                        ? "min-w-[90px] lg:min-w-[110px] xl:min-w-[130px] scale-110 lg:scale-125 p-1 lg:p-2 xl:p-3"
-                        : "min-w-[70px] lg:min-w-[80px] xl:min-w-[100px] p-2 lg:p-3 xl:p-4 rounded-xl lg:rounded-2xl",
+                        ? "min-w-[90px] lg:min-w-[110px] xl:min-w-[130px] scale-110 lg:scale-125 p-1 lg:p-2 xl:p-3 gap-0 lg:gap-0.5"
+                        : "min-w-[70px] lg:min-w-[80px] xl:min-w-[100px] p-2 lg:p-3 xl:p-4 rounded-xl lg:rounded-2xl gap-1 lg:gap-1.5",
                       // Home button has no background, others keep their gradient
                       tab.id === "dashboard"
                         ? "bg-transparent hover:bg-transparent shadow-none hover:shadow-none"
@@ -232,7 +232,7 @@ export function DesktopKidNav({
                     <span className={cn(
                       "font-bold text-center relative z-10",
                       tab.id === "dashboard"
-                        ? "text-base lg:text-lg xl:text-xl text-gray-700 drop-shadow-sm" // Dark text for home (no container)
+                        ? "text-base lg:text-lg xl:text-xl text-white drop-shadow-lg -mt-1 lg:-mt-2" // White text for home, moved up
                         : "text-sm lg:text-base xl:text-lg" // White text for others (with container)
                     )}>
                       {tab.label}
