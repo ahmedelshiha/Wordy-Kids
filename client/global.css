@@ -2006,17 +2006,17 @@
 
 /* Mascot character styling */
 .mascot-character {
-  font-size: 2.5rem;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
-  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.1));
+  font-size: 1.5rem;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
 }
 
 .mascot-large {
-  font-size: 4rem;
+  font-size: 2.5rem;
 }
 
 .mascot-small {
-  font-size: 1.5rem;
+  font-size: 1rem;
 }
 
 /* Kid-friendly gradients */
@@ -2264,11 +2264,15 @@
   }
 
   .mascot-character {
-    font-size: 2rem;
+    font-size: 1.25rem;
   }
 
   .mascot-large {
-    font-size: 3rem;
+    font-size: 2rem;
+  }
+
+  .mascot-small {
+    font-size: 0.875rem;
   }
 }
 
