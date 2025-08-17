@@ -866,7 +866,12 @@
     -webkit-tap-highlight-color: transparent;
   }
 
-  .animate-mascot-bounce,
+  .animate-mascot-bounce {
+    animation: mascotBounceMobile 3s ease-in-out infinite;
+    transform: translateZ(0);
+    -webkit-transform: translateZ(0);
+  }
+
   .animate-mascot-wave,
   .animate-mascot-happy {
     animation-duration: 2.5s;
