@@ -2046,12 +2046,31 @@ export default function Index({ initialProfile }: IndexProps) {
               </div>
             ) : (
               <div className="min-h-screen bg-gradient-to-br from-white via-purple-50/30 to-pink-50/30 optimize-for-small-screen">
-                {/* Main Content Area with Side Card Layout */}
-                <div className="w-full p-2 sm:p-3 lg:p-4 pb-20 sm:pb-24 lg:pb-6 overflow-y-auto scroll-smooth">
-                  {/* Desktop: Two-column layout with main content + side card */}
-                  <div className="flex gap-6 items-start">
-                    {/* Main Content */}
-                    <div className="flex-1 min-w-0">
+                {/* Main Content Area with Sidebar and Game Layout */}
+                <div className="flex h-screen">
+                  {/* Child Profile Sidebar - Desktop Only */}
+                  <div className="hidden lg:block">
+                    <ChildProfileSidebar
+                      profile={currentProfile}
+                      stats={childStats}
+                      isCollapsed={isSidebarCollapsed}
+                      onToggleCollapse={handleSidebarToggle}
+                      onProfileEdit={handleProfileEdit}
+                      onQuickAction={handleQuickAction}
+                      onLogout={handleSidebarLogout}
+                      showTimeOfDay={true}
+                      showWeeklyProgress={true}
+                      position="left"
+                    />
+                  </div>
+
+                  {/* Main Content Container */}
+                  <div className="flex-1 min-w-0 overflow-hidden">
+                    <div className="w-full h-full p-2 sm:p-3 lg:p-4 pb-20 sm:pb-24 lg:pb-6 overflow-y-auto scroll-smooth">
+                      {/* Desktop: Two-column layout with main content + side card */}
+                      <div className="flex gap-6 items-start">
+                        {/* Main Game Content */}
+                        <div className="flex-1 min-w-0">
                       <Tabs
                         value={activeTab}
                         onValueChange={setActiveTab}
@@ -3289,19 +3308,21 @@ export default function Index({ initialProfile }: IndexProps) {
                       </Tabs>
                     </div>
 
-                    {/* Streak Side Card - Desktop Only */}
-                    <div className="hidden lg:block w-80 flex-shrink-0">
-                      <StreakSideCard
-                        progressData={{
-                          wordsLearned: rememberedWords.size,
-                          currentStreak: learningStats?.currentStreak || 0,
-                          totalPoints: learningStats?.totalPoints || 0,
-                          level: learningStats?.level || 1,
-                        }}
-                        onDismiss={() => {
-                          console.log("Side card dismissed");
-                        }}
-                      />
+                        {/* Streak Side Card - Desktop Only */}
+                        <div className="hidden lg:block w-80 flex-shrink-0">
+                          <StreakSideCard
+                            progressData={{
+                              wordsLearned: rememberedWords.size,
+                              currentStreak: learningStats?.currentStreak || 0,
+                              totalPoints: learningStats?.totalPoints || 0,
+                              level: learningStats?.level || 1,
+                            }}
+                            onDismiss={() => {
+                              console.log("Side card dismissed");
+                            }}
+                          />
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
