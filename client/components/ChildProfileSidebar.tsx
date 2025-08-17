@@ -292,7 +292,9 @@ export const ChildProfileSidebar: React.FC<ChildProfileSidebarProps> = ({
             >
               <DynamicAuthButton
                 variant="sidebar"
-                onAction={() => kidFriendlyEffects.playSound(SOUNDS.button_click)}
+                onAction={() =>
+                  kidFriendlyEffects.playSound(SOUNDS.button_click)
+                }
               />
             </motion.div>
           ) : (
@@ -306,7 +308,9 @@ export const ChildProfileSidebar: React.FC<ChildProfileSidebarProps> = ({
               <div className="w-full flex justify-center">
                 <DynamicAuthButton
                   variant="mobile"
-                  onAction={() => kidFriendlyEffects.playSound(SOUNDS.button_click)}
+                  onAction={() =>
+                    kidFriendlyEffects.playSound(SOUNDS.button_click)
+                  }
                   className="w-12 h-12 rounded-full !p-2 text-sm"
                 />
               </div>

@@ -55,71 +55,74 @@ const App = () => {
   return (
     <React.StrictMode>
       <QueryClientProvider client={queryClient}>
-      <TooltipProvider delayDuration={200}>
-        <Toaster />
-        <Sonner />
-        <WordDatabaseNotifications />
-        <CompactWordDatabaseNotifications />
-        <BrowserRouter>
-          <AuthProvider>
-            <NavigationGuard>
-              <Routes>
-                <Route path="/" element={<LoginForm />} />
-                <Route path="/login" element={<LoginForm />} />
-                <Route path="/signup" element={<SignUp />} />
-                <Route path="/app" element={<AppPage />} />
-                <Route path="/profile" element={<Login />} />
-                <Route path="/admin" element={<AdminPage />} />
-                <Route
-                  path="/word-card-demo"
-                  element={<EnhancedWordCardDemo />}
-                />
-                <Route path="/word-garden-demo" element={<WordGardenDemo />} />
-                <Route
-                  path="/word-adventure-demo"
-                  element={<WordAdventureDemo />}
-                />
-                <Route
-                  path="/WordAdventureDemo"
-                  element={<WordAdventureDemo />}
-                />
-                <Route
-                  path="/word-adventure-test"
-                  element={<WordAdventureTest />}
-                />
-                <Route
-                  path="/WordAdventureTest"
-                  element={<WordAdventureTest />}
-                />
-                <Route
-                  path="/speech-diagnostics"
-                  element={<SpeechDiagnostics />}
-                />
-                <Route
-                  path="/ai-integration-demo"
-                  element={<AIIntegrationDemo />}
-                />
-                <Route
-                  path="/AIIntegrationDemo"
-                  element={<AIIntegrationDemo />}
-                />
-                <Route
-                  path="/ai-word-recommendation-demo"
-                  element={<AIWordRecommendationDemo />}
-                />
-                <Route
-                  path="/AIWordRecommendationDemo"
-                  element={<AIWordRecommendationDemo />}
-                />
-                <Route path="/ai-system-test" element={<AISystemTest />} />
-                {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-                <Route path="*" element={<NotFound />} />
-              </Routes>
-            </NavigationGuard>
-          </AuthProvider>
-        </BrowserRouter>
-      </TooltipProvider>
-    </QueryClientProvider>
+        <TooltipProvider delayDuration={200}>
+          <Toaster />
+          <Sonner />
+          <WordDatabaseNotifications />
+          <CompactWordDatabaseNotifications />
+          <BrowserRouter>
+            <AuthProvider>
+              <NavigationGuard>
+                <Routes>
+                  <Route path="/" element={<LoginForm />} />
+                  <Route path="/login" element={<LoginForm />} />
+                  <Route path="/signup" element={<SignUp />} />
+                  <Route path="/app" element={<AppPage />} />
+                  <Route path="/profile" element={<Login />} />
+                  <Route path="/admin" element={<AdminPage />} />
+                  <Route
+                    path="/word-card-demo"
+                    element={<EnhancedWordCardDemo />}
+                  />
+                  <Route
+                    path="/word-garden-demo"
+                    element={<WordGardenDemo />}
+                  />
+                  <Route
+                    path="/word-adventure-demo"
+                    element={<WordAdventureDemo />}
+                  />
+                  <Route
+                    path="/WordAdventureDemo"
+                    element={<WordAdventureDemo />}
+                  />
+                  <Route
+                    path="/word-adventure-test"
+                    element={<WordAdventureTest />}
+                  />
+                  <Route
+                    path="/WordAdventureTest"
+                    element={<WordAdventureTest />}
+                  />
+                  <Route
+                    path="/speech-diagnostics"
+                    element={<SpeechDiagnostics />}
+                  />
+                  <Route
+                    path="/ai-integration-demo"
+                    element={<AIIntegrationDemo />}
+                  />
+                  <Route
+                    path="/AIIntegrationDemo"
+                    element={<AIIntegrationDemo />}
+                  />
+                  <Route
+                    path="/ai-word-recommendation-demo"
+                    element={<AIWordRecommendationDemo />}
+                  />
+                  <Route
+                    path="/AIWordRecommendationDemo"
+                    element={<AIWordRecommendationDemo />}
+                  />
+                  <Route path="/ai-system-test" element={<AISystemTest />} />
+                  {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+                  <Route path="*" element={<NotFound />} />
+                </Routes>
+              </NavigationGuard>
+            </AuthProvider>
+          </BrowserRouter>
+        </TooltipProvider>
+      </QueryClientProvider>
     </React.StrictMode>
   );
 };
