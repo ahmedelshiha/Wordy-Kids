@@ -112,6 +112,11 @@
     --celebration-gold: 45 100% 60%;
     --celebration-sparkle: 55 100% 70%;
     --celebration-confetti: 320 85% 70%;
+
+    /* Kid Mode Desktop Navigation */
+    --kid-nav-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    --kid-nav-glow: 0 0 20px rgba(139, 92, 246, 0.3);
+    --kid-nav-border-rainbow: linear-gradient(90deg, #ff6b9d, #ffa500, #ffcc02, #43e97b, #4facfe, #a8edea);
   }
 
   .dark {
