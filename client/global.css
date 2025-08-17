@@ -1212,7 +1212,7 @@
 }
 
 .kid-nav-item {
-  @apply flex items-center gap-3 p-3 rounded-xl transition-all duration-300 transform hover:scale-102 hover:shadow-lg font-kid-friendly;
+  @apply flex items-center gap-2 p-2 rounded-lg transition-all duration-300 transform hover:scale-102 hover:shadow-lg font-kid-friendly;
 }
 
 .kid-button {
