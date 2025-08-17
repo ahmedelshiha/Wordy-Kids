@@ -128,8 +128,7 @@ export const ChildProfileSidebar: React.FC<ChildProfileSidebarProps> = ({
                 animate="expanded"
                 exit="collapsed"
                 className="flex-1"
-              >
-              </motion.div>
+              ></motion.div>
             )}
           </AnimatePresence>
 
