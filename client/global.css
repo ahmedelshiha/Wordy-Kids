@@ -1172,6 +1172,51 @@
   border-radius: 8px;
 }
 
+/* Kid-friendly component classes */
+.kid-card {
+  @apply bg-white/90 backdrop-blur-sm rounded-2xl shadow-lg border-2 border-purple-200 p-4 transition-all duration-300 hover:shadow-xl hover:scale-102;
+}
+
+.kid-nav-item {
+  @apply flex items-center gap-3 p-3 rounded-xl transition-all duration-300 transform hover:scale-102 hover:shadow-lg font-kid-friendly;
+}
+
+.kid-button {
+  @apply px-6 py-3 rounded-xl font-kid-friendly font-bold text-sm transition-all duration-200 transform hover:scale-105 active:scale-95 shadow-lg;
+}
+
+.kid-interactive {
+  @apply transition-all duration-300 hover:animate-gentle-bounce cursor-pointer;
+}
+
+.kid-text-big {
+  @apply text-base font-kid-friendly font-bold;
+}
+
+.kid-gradient-happy {
+  background: linear-gradient(135deg, #ff6b9d, #ffa500, #ffcc02);
+}
+
+.kid-gradient-learn {
+  background: linear-gradient(135deg, #4facfe, #00f2fe);
+}
+
+.kid-gradient-success {
+  background: linear-gradient(135deg, #43e97b, #38f9d7);
+}
+
+.kid-gradient-adventure {
+  background: linear-gradient(135deg, #fa709a, #fee140);
+}
+
+.kid-gradient-magic {
+  background: linear-gradient(135deg, #a8edea, #fed6e3, #ffecd2);
+}
+
+.mascot-character {
+  @apply transition-transform duration-300 hover:scale-110 cursor-pointer;
+}
+
 /* Improved button states for touch */
 .button-touch {
   position: relative;
