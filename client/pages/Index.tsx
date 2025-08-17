@@ -1813,9 +1813,9 @@ export default function Index({ initialProfile }: IndexProps) {
       {/* Main Content - Only show when session is initialized */}
       {isSessionInitialized && (
         <>
-          {/* Optimized Mobile-First Header */}
+          {/* Ultra-Compact Header */}
           <header className="relative overflow-hidden bg-gradient-to-r from-educational-blue via-educational-purple to-educational-pink text-white shadow-lg">
-            <div className="relative container mx-auto px-4 py-2 md:py-3">
+            <div className="relative container mx-auto px-3 py-1 md:py-1.5">
               {/* Mobile header - Ultra compact & optimized */}
               <div className="flex items-center justify-between md:hidden">
                 <div className="flex items-center gap-2">
