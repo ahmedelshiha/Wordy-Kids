@@ -132,7 +132,7 @@ export const ChildProfileSidebar: React.FC<ChildProfileSidebarProps> = ({
             )}
           </AnimatePresence>
 
-          {/* Collapse Toggle */}
+          {/* Collapse Toggle - Hidden on Desktop */}
           {onToggleCollapse && (
             <Button
               variant="ghost"
@@ -141,7 +141,7 @@ export const ChildProfileSidebar: React.FC<ChildProfileSidebarProps> = ({
                 kidFriendlyEffects.playSound(SOUNDS.button_click);
                 onToggleCollapse();
               }}
-              className="h-10 w-10 p-0 bg-gradient-to-r from-yellow-200 to-orange-200 hover:from-yellow-300 hover:to-orange-300 shadow-lg border-2 border-white rounded-full transition-all duration-300 hover:scale-110"
+              className="h-10 w-10 p-0 bg-gradient-to-r from-yellow-200 to-orange-200 hover:from-yellow-300 hover:to-orange-300 shadow-lg border-2 border-white rounded-full transition-all duration-300 hover:scale-110 lg:hidden"
             >
               {isCollapsed ? (
                 position === "left" ? (
