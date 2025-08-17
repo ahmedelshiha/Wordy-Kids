@@ -345,7 +345,7 @@ export function MobileKidNav({
                 </div>
 
                 {/* Kid-friendly label */}
-                <span className="font-bold text-center relative z-10 text-white drop-shadow-lg text-base leading-none truncate max-w-full">
+                <span className="font-black text-center relative z-10 text-white drop-shadow-lg text-lg leading-none truncate max-w-full">
                   {tab.label}
                 </span>
 
