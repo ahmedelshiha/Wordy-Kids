@@ -130,7 +130,11 @@ export function DesktopKidNav({
                     key={tab.id}
                     onClick={() => onTabChange(tab.id)}
                     className={cn(
-                      "flex flex-col items-center gap-1 lg:gap-1.5 p-2 lg:p-3 xl:p-4 rounded-xl lg:rounded-2xl transition-all duration-300 transform relative group min-w-[70px] lg:min-w-[80px] xl:min-w-[100px] kid-nav-button-compact",
+                      "flex flex-col items-center gap-1 lg:gap-1.5 p-2 lg:p-3 xl:p-4 rounded-xl lg:rounded-2xl transition-all duration-300 transform relative group kid-nav-button-compact",
+                      // Special styling for home button
+                      tab.id === "dashboard"
+                        ? "min-w-[90px] lg:min-w-[110px] xl:min-w-[130px] scale-110 lg:scale-125"
+                        : "min-w-[70px] lg:min-w-[80px] xl:min-w-[100px]",
                       activeTab === tab.id
                         ? `bg-gradient-to-br ${tab.hoverColor} text-white shadow-xl ${tab.shadowColor}`
                         : `bg-gradient-to-br ${tab.color} text-white shadow-md hover:shadow-lg ${tab.shadowColor}`,
@@ -150,29 +154,62 @@ export function DesktopKidNav({
                       />
                     )}
 
-                    {/* Emoji Icon - Smaller for compact design */}
-                    <div className="text-2xl lg:text-3xl xl:text-4xl relative z-10">
+                    {/* Emoji Icon - Special treatment for home */}
+                    <div className={cn(
+                      "relative z-10",
+                      tab.id === "dashboard"
+                        ? "text-4xl lg:text-5xl xl:text-6xl" // Larger home icon
+                        : "text-2xl lg:text-3xl xl:text-4xl" // Normal size for others
+                    )}>
                       <motion.div
                         animate={
                           activeTab === tab.id
                             ? {
                                 scale: [1, 1.1, 1],
-                                rotate: [0, 5, -5, 0],
+                                rotate: tab.id === "dashboard" ? [0, 2, -2, 0] : [0, 5, -5, 0], // Gentler animation for home
                               }
                             : { scale: 1 }
                         }
                         transition={{
-                          duration: 2,
+                          duration: tab.id === "dashboard" ? 3 : 2, // Slower animation for home
                           repeat: activeTab === tab.id ? Infinity : 0,
                           ease: "easeInOut",
                         }}
+                        className={cn(
+                          tab.id === "dashboard" && "filter drop-shadow-lg" // Extra shadow for home
+                        )}
                       >
-                        {tab.emoji}
+                        {tab.id === "dashboard" ? (
+                          // Enhanced home emoji with house-like styling
+                          <div className="relative">
+                            <span className="relative z-10">{tab.emoji}</span>
+                            {/* Subtle background glow for home */}
+                            <motion.div
+                              className="absolute inset-0 bg-yellow-300/20 rounded-lg scale-150 blur-sm"
+                              animate={{
+                                opacity: activeTab === tab.id ? [0.3, 0.6, 0.3] : 0.2,
+                                scale: [1.4, 1.6, 1.4]
+                              }}
+                              transition={{
+                                duration: 4,
+                                repeat: Infinity,
+                                ease: "easeInOut"
+                              }}
+                            />
+                          </div>
+                        ) : (
+                          tab.emoji
+                        )}
                       </motion.div>
                     </div>
 
-                    {/* Label - Smaller text */}
-                    <span className="text-sm lg:text-base xl:text-lg font-bold text-center relative z-10">
+                    {/* Label - Special sizing for home */}
+                    <span className={cn(
+                      "font-bold text-center relative z-10",
+                      tab.id === "dashboard"
+                        ? "text-base lg:text-lg xl:text-xl" // Larger text for home
+                        : "text-sm lg:text-base xl:text-lg" // Normal size for others
+                    )}>
                       {tab.label}
                     </span>
 
