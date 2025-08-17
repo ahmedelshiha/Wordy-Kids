@@ -45,6 +45,12 @@ import { FloatingBubbles } from "@/components/FloatingBubbles";
 import { CelebrationEffect } from "@/components/CelebrationEffect";
 import { FloatingHelpMenu } from "@/components/FloatingHelpMenu";
 import { FriendlyMascot, FloatingMascot, MascotReaction } from "@/components/FriendlyMascot";
+import {
+  MagicalParticles,
+  SuccessParticles,
+  WordLearnedParticles,
+  AmbientMagicParticles
+} from "@/components/MagicalParticles";
 import { SessionRestoration } from "@/components/SessionRestoration";
 import {
   useSessionPersistence,
@@ -2987,7 +2993,7 @@ export default function Index({ initialProfile }: IndexProps) {
                             <Card className="cursor-pointer hover:shadow-lg transition-all duration-300 hover:scale-105 border-2 border-educational-pink/30 animate-kid-float">
                               <CardContent className="p-3 md:p-4 text-center">
                                 <div className="text-3xl md:text-5xl mb-2 md:mb-3 animate-gentle-bounce">
-                                  ��
+                                  🎧
                                 </div>
                                 <h3 className="text-sm md:text-lg font-bold text-educational-pink mb-1 md:mb-2">
                                   Listen & Guess
