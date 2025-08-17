@@ -1235,16 +1235,16 @@ export function AIEnhancedInteractiveDashboardWordCard({
                             : "text-blue-600",
                         )}
                       />
-                      {aiState.isSessionActive && (
-                        <div className="absolute -top-1 -right-1 w-2 h-2 bg-green-400 rounded-full animate-pulse" />
-                      )}
                     </div>
                     <div className="flex items-center gap-1 flex-1">
-                      <span className="text-sm font-medium truncate">
+                      <span className="text-sm font-medium truncate flex items-center gap-1">
                         🤖{" "}
                         {aiState.isSessionActive
                           ? "AI Learning Active!"
                           : "AI Helper"}
+                        {aiState.isSessionActive && (
+                          <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
+                        )}
                       </span>
                     </div>
                   </div>
