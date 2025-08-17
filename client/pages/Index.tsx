@@ -1803,22 +1803,22 @@ export default function Index({ initialProfile }: IndexProps) {
           {/* Optimized Mobile-First Header */}
           <header className="relative overflow-hidden bg-gradient-to-r from-educational-blue via-educational-purple to-educational-pink text-white shadow-lg">
             <div className="relative container mx-auto px-4 py-2 md:py-3">
-              {/* Mobile header - ultra compact */}
+              {/* Mobile header - Ultra compact & optimized */}
               <div className="flex items-center justify-between md:hidden">
                 <div className="flex items-center gap-2">
-                  <div className="bg-white/20 backdrop-blur-sm rounded-full p-1">
+                  <div className="bg-white/20 backdrop-blur-sm rounded-full p-1 shadow-sm">
                     <img
                       src="https://cdn.builder.io/api/v1/image/assets%2Fa33f74a2f97141a4a1ef43d9448f9bda%2F2a4b7e4c3c38485b966cfd2cff50da9e?format=webp&width=800"
                       alt="Wordy Kids Logo"
-                      className="w-5 h-5 rounded-full"
+                      className="w-6 h-6 rounded-full"
                     />
                   </div>
                   <div>
                     <h1 className="text-sm font-bold leading-tight">
-                      Wordy Kids!
+                      Wordy Kids! ✨
                     </h1>
-                    <p className="text-xs text-educational-yellow-light opacity-90">
-                      Let's Learn! 🦉
+                    <p className="text-xs text-educational-yellow-light/90 font-medium">
+                      Let's Learn Together! 🚀
                     </p>
                   </div>
                 </div>
@@ -3053,7 +3053,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                   Vowel Adventure!
                                 </h3>
                                 <p className="text-xs md:text-sm text-gray-600 mb-2 md:mb-3 hidden md:block">
-                                  Choose your difficulty and rescue vowels! 🌟
+                                  Choose your difficulty and rescue vowels! ����
                                 </p>
                                 <div className="flex justify-center gap-1 mb-2 md:mb-3 flex-wrap">
                                   <span className="bg-educational-green/20 text-educational-green px-1.5 py-0.5 rounded-full text-xs">
