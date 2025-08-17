@@ -159,8 +159,8 @@ export const AdventureMap: React.FC<AdventureMapProps> = ({
         </CardContent>
       </Card>
 
-      {/* Zone Selection */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+      {/* Zone Selection - Compact Grid */}
+      <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-2 md:gap-3">
         {Object.entries(zoneInfo).map(([zoneKey, zone]) => {
           const zoneWords = wordsByZone[zoneKey as MapZone] || [];
           const urgentWords = zoneWords.filter((w) => w.health < 30).length;
@@ -181,37 +181,36 @@ export const AdventureMap: React.FC<AdventureMapProps> = ({
               }
             >
               <CardContent
-                className={`p-0 rounded-xl bg-gradient-to-br ${zone.bgGradient} text-white relative overflow-hidden`}
+                className={`p-0 rounded-lg md:rounded-xl bg-gradient-to-br ${zone.bgGradient} text-white relative overflow-hidden`}
               >
-                <div className="p-6 relative z-10">
-                  <div className="flex items-center justify-between mb-4">
-                    <Icon className="w-8 h-8" />
+                <div className="p-3 md:p-4 lg:p-6 relative z-10">
+                  <div className="flex items-center justify-between mb-2 md:mb-3">
+                    <Icon className="w-5 h-5 md:w-6 md:h-6 lg:w-8 lg:h-8" />
                     {zoneWords.length > 0 && (
-                      <Badge className="bg-white/20 text-white border-white/30">
-                        {zoneWords.length} words
+                      <Badge className="bg-white/20 text-white border-white/30 text-xs px-1.5 py-0.5">
+                        {zoneWords.length}
                       </Badge>
                     )}
                   </div>
 
-                  <h3 className="font-bold text-lg mb-2">{zone.name}</h3>
-                  <p className={`text-sm ${zone.color} opacity-90`}>
+                  <h3 className="font-bold text-sm md:text-base lg:text-lg mb-1 md:mb-2">{zone.name}</h3>
+                  <p className={`text-xs md:text-sm ${zone.color} opacity-90 hidden md:block`}>
                     {zone.description}
                   </p>
 
                   {urgentWords > 0 && (
-                    <div className="mt-4 flex items-center gap-2">
-                      <AlertTriangle className="w-4 h-4 text-red-300 animate-pulse" />
-                      <span className="text-sm text-red-200">
-                        {urgentWords} urgent rescue
-                        {urgentWords !== 1 ? "s" : ""}!
+                    <div className="mt-2 md:mt-3 flex items-center gap-1">
+                      <AlertTriangle className="w-3 h-3 md:w-4 md:h-4 text-red-300 animate-pulse" />
+                      <span className="text-xs md:text-sm text-red-200">
+                        {urgentWords} urgent!
                       </span>
                     </div>
                   )}
                 </div>
 
                 {/* Decorative elements */}
-                <div className="absolute top-2 right-2 opacity-20">
-                  <Icon className="w-16 h-16" />
+                <div className="absolute top-1 right-1 md:top-2 md:right-2 opacity-20">
+                  <Icon className="w-8 h-8 md:w-12 md:h-12 lg:w-16 lg:h-16" />
                 </div>
               </CardContent>
             </Card>
