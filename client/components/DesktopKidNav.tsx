@@ -87,6 +87,7 @@ export function DesktopKidNav({
   const [parentCode, setParentCode] = useState("");
   const [showParentOptions, setShowParentOptions] = useState(false);
   const [kidModeEnabled, setKidModeEnabled] = useState(userRole === "child");
+  const [parentCodeError, setParentCodeError] = useState(false);
 
   const correctParentCode = "PARENT2024"; // More secure parent code
 
