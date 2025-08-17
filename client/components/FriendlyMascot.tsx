@@ -200,17 +200,17 @@ export function FloatingMascot({
   return (
     <div
       className={cn(
-        "fixed bottom-4 right-4 z-50 transition-all duration-500",
+        "fixed bottom-2 right-2 md:bottom-4 md:right-4 z-50 transition-all duration-500",
         "animate-mascot-bounce",
         className,
       )}
     >
       <FriendlyMascot
         mood={mood}
-        size="large"
+        size="medium" // Changed from "large" to "medium" for better mobile experience
         showSpeechBubble={true}
         animate={true}
-        className="bg-white/90 backdrop-blur-sm rounded-full p-4 shadow-lg"
+        className="bg-white/90 backdrop-blur-sm rounded-full p-2 md:p-4 shadow-lg"
       />
     </div>
   );
