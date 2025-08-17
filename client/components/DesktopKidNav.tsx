@@ -119,25 +119,25 @@ export function DesktopKidNav({
 
   return (
     <>
-      {/* Kid Mode: Bottom Navigation */}
+      {/* Kid Mode: Bottom Navigation - Optimized for Small Screens */}
       {kidModeEnabled && (
         <div className="fixed bottom-0 left-0 right-0 z-40 hidden lg:block">
-          <div className="bg-white/95 backdrop-blur-lg border-t-4 border-rainbow shadow-2xl">
-            <div className="max-w-6xl mx-auto px-8 py-4">
-              <div className="flex items-center justify-center gap-8">
+          <div className="bg-white/95 backdrop-blur-lg border-t-2 border-rainbow shadow-xl">
+            <div className="max-w-4xl mx-auto px-4 py-2">
+              <div className="flex items-center justify-center gap-3 sm:gap-4 lg:gap-6">
                 {kidNavTabs.map((tab, index) => (
                   <motion.button
                     key={tab.id}
                     onClick={() => onTabChange(tab.id)}
                     className={cn(
-                      "flex flex-col items-center gap-3 p-6 rounded-3xl transition-all duration-300 transform hover:scale-105 relative group min-w-[120px]",
+                      "flex flex-col items-center gap-1.5 p-3 lg:p-4 rounded-2xl transition-all duration-300 transform hover:scale-105 relative group min-w-[80px] lg:min-w-[100px]",
                       activeTab === tab.id
-                        ? `bg-gradient-to-br ${tab.hoverColor} text-white shadow-2xl ${tab.shadowColor}`
-                        : `bg-gradient-to-br ${tab.color} text-white shadow-lg hover:shadow-xl ${tab.shadowColor}`,
+                        ? `bg-gradient-to-br ${tab.hoverColor} text-white shadow-xl ${tab.shadowColor}`
+                        : `bg-gradient-to-br ${tab.color} text-white shadow-md hover:shadow-lg ${tab.shadowColor}`,
                     )}
-                    whileHover={{ y: -5 }}
+                    whileHover={{ y: -2 }}
                     whileTap={{ scale: 0.95 }}
-                    initial={{ opacity: 0, y: 50 }}
+                    initial={{ opacity: 0, y: 30 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: index * 0.1 }}
                   >
