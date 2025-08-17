@@ -1400,6 +1400,17 @@ export function AIEnhancedInteractiveDashboardWordCard({
             showMobileAI={true}
             showDesktopAI={true}
             enableAIHeader={true}
+            // Comprehensive AI header props
+            aiStatus={aiStatus}
+            globalAIEnabled={globalAIEnabled}
+            onToggleGlobalAI={toggleGlobalAI}
+            onRetryAI={retryAI}
+            aiErrorMessage={aiErrorMessage}
+            showAISettings={showAISettings}
+            setShowAISettings={setShowAISettings}
+            SESSION_SIZE={SESSION_SIZE}
+            showQuickStats={true}
+            showErrorAlert={true}
           >
 
             {/* Achievement Teaser - Desktop Only */}
