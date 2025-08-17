@@ -217,7 +217,7 @@ export const ChildProfileSidebar: React.FC<ChildProfileSidebarProps> = ({
       </div>
 
       {/* Main Profile Card */}
-      <div className="flex-1 p-4 overflow-y-auto relative z-10">
+      <div className="flex-1 p-2 overflow-y-auto relative z-10">
         <AnimatePresence mode="wait">
           {!isCollapsed ? (
             <motion.div
@@ -225,7 +225,7 @@ export const ChildProfileSidebar: React.FC<ChildProfileSidebarProps> = ({
               initial="collapsed"
               animate="expanded"
               exit="collapsed"
-              className="space-y-4"
+              className="space-y-2"
             >
               <EnhancedChildProfileCard
                 profile={profile}
