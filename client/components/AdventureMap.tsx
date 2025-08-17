@@ -218,21 +218,21 @@ export const AdventureMap: React.FC<AdventureMapProps> = ({
         })}
       </div>
 
-      {/* Zone Detail View */}
+      {/* Zone Detail View - Compact */}
       {selectedZone && (
-        <Card className="bg-white border-2 border-yellow-300">
-          <CardContent className="p-6">
-            <div className="flex items-center gap-3 mb-6">
+        <Card className="bg-white border border-yellow-300">
+          <CardContent className="p-3 md:p-4 lg:p-6">
+            <div className="flex items-center gap-2 md:gap-3 mb-3 md:mb-4">
               {React.createElement(zoneInfo[selectedZone].icon, {
-                className: "w-8 h-8 text-purple-600",
+                className: "w-6 h-6 md:w-7 md:h-7 lg:w-8 lg:h-8 text-purple-600",
               })}
-              <h3 className="text-2xl font-bold text-gray-800">
+              <h3 className="text-lg md:text-xl lg:text-2xl font-bold text-gray-800">
                 {zoneInfo[selectedZone].name}
               </h3>
             </div>
 
             {wordsByZone[selectedZone]?.length > 0 ? (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 md:gap-3">
                 {wordsByZone[selectedZone].map((word) => {
                   const healthInfo = getHealthIcon(word.health);
                   const priority = getPriorityLevel(word.health);
@@ -252,26 +252,26 @@ export const AdventureMap: React.FC<AdventureMapProps> = ({
                       }`}
                       onClick={() => handleWordClick(word)}
                     >
-                      <CardContent className="p-4">
-                        <div className="flex items-center justify-between mb-3">
-                          <div className="flex items-center gap-2">
+                      <CardContent className="p-3 md:p-4">
+                        <div className="flex items-center justify-between mb-2 md:mb-3">
+                          <div className="flex items-center gap-1.5 md:gap-2">
                             <HealthIcon
-                              className={`w-5 h-5 ${healthInfo.color} ${healthInfo.pulse ? "animate-pulse" : ""}`}
+                              className={`w-4 h-4 md:w-5 md:h-5 ${healthInfo.color} ${healthInfo.pulse ? "animate-pulse" : ""}`}
                             />
-                            <span className="font-bold text-lg">
+                            <span className="font-bold text-sm md:text-base lg:text-lg">
                               Word #{word.word_id}
                             </span>
                           </div>
-                          <MapPin className="w-4 h-4 text-gray-400" />
+                          <MapPin className="w-3 h-3 md:w-4 md:h-4 text-gray-400" />
                         </div>
 
-                        <div className="space-y-2">
+                        <div className="space-y-1.5 md:space-y-2">
                           <div className="flex items-center justify-between">
-                            <span className="text-sm text-gray-600">
+                            <span className="text-xs md:text-sm text-gray-600">
                               Health
                             </span>
                             <span
-                              className={`text-sm font-bold ${
+                              className={`text-xs md:text-sm font-bold ${
                                 word.health >= 50
                                   ? "text-green-600"
                                   : word.health >= 30
@@ -284,7 +284,7 @@ export const AdventureMap: React.FC<AdventureMapProps> = ({
                           </div>
                           <Progress
                             value={word.health}
-                            className={`h-2 ${
+                            className={`h-1.5 md:h-2 ${
                               word.health >= 50
                                 ? "bg-green-100"
                                 : word.health >= 30
@@ -300,10 +300,10 @@ export const AdventureMap: React.FC<AdventureMapProps> = ({
                         </div>
 
                         {priority === "critical" && (
-                          <div className="mt-3 flex items-center gap-2 p-2 bg-red-50 rounded-lg">
-                            <Flame className="w-4 h-4 text-red-500 animate-pulse" />
+                          <div className="mt-2 md:mt-3 flex items-center gap-1.5 p-1.5 md:p-2 bg-red-50 rounded-lg">
+                            <Flame className="w-3 h-3 md:w-4 md:h-4 text-red-500 animate-pulse" />
                             <span className="text-xs text-red-700 font-medium">
-                              URGENT RESCUE NEEDED!
+                              URGENT!
                             </span>
                           </div>
                         )}
