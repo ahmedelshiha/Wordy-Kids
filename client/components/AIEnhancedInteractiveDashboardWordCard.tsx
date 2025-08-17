@@ -1387,7 +1387,20 @@ export function AIEnhancedInteractiveDashboardWordCard({
             </div>
           )}
 
-          <CardContent className="p-1 sm:p-3 md:p-5 lg:p-6 relative z-10">
+          <AICardContent
+            className="p-1 sm:p-3 md:p-5 lg:p-6 relative z-10"
+            aiState={aiState}
+            aiActions={aiActions}
+            showAIInsights={showAIInsights}
+            setShowAIInsights={setShowAIInsights}
+            confidenceLevel={confidenceLevel}
+            difficultyAdjustment={difficultyAdjustment}
+            sessionWords={sessionWords}
+            sessionStats={sessionStats}
+            showMobileAI={true}
+            showDesktopAI={true}
+            enableAIHeader={true}
+          >
             {/* Mobile-Optimized Kid-Friendly AI Header */}
             <div
               className={cn(
@@ -2176,7 +2189,7 @@ export function AIEnhancedInteractiveDashboardWordCard({
                 </div>
               </motion.div>
             )}
-          </CardContent>
+          </AICardContent>
         </Card>
       </motion.div>
 
