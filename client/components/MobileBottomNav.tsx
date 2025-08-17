@@ -99,7 +99,7 @@ export function MobileBottomNav({
     },
     {
       id: "learn",
-      emoji: "��",
+      emoji: "📚",
       label: "Magic Library",
       icon: BookOpen,
       activeGradient: "kid-gradient-learn",
@@ -152,7 +152,7 @@ export function MobileBottomNav({
     },
     {
       id: "auth",
-      emoji: isGuest ? "📝" : "��",
+      emoji: isGuest ? "📝" : "👋",
       label: isGuest ? "Sign Up" : "Sign Out",
       icon: isGuest ? Users : LogOut,
       onClick: () => {
@@ -227,7 +227,7 @@ export function MobileBottomNav({
                 key={tab.id}
                 onClick={() => onTabChange(tab.id)}
                 className={cn(
-                  "kid-nav-item flex flex-col items-center gap-1 p-2 rounded-lg transition-all duration-200 transform active:scale-95 relative min-w-0 flex-1 mx-0.5 min-h-[60px] justify-center",
+                  "kid-nav-item flex flex-col items-center gap-0 p-2 rounded-lg transition-all duration-200 transform active:scale-95 relative min-w-0 flex-1 mx-0.5 min-h-[60px] justify-center",
                   activeTab === tab.id
                     ? "text-white shadow-lg kid-button active"
                     : "text-gray-700 hover:text-purple-600 kid-interactive",
