@@ -23,24 +23,29 @@ export const useRegistrationReminder = ({
     }
 
     // Check if user has permanently dismissed reminders
-    const permanentDismissal = localStorage.getItem("registrationReminderDismissed");
+    const permanentDismissal = localStorage.getItem(
+      "registrationReminderDismissed",
+    );
     if (permanentDismissal === "true") {
       return;
     }
 
     // Check session dismissal count
     const sessionDismissals = parseInt(
-      sessionStorage.getItem("registrationReminderCount") || "0"
+      sessionStorage.getItem("registrationReminderCount") || "0",
     );
-    
+
     if (sessionDismissals >= maxReminders) {
       return;
     }
 
     // Set up the initial delay
-    const initialTimeout = setTimeout(() => {
-      setShowFloatingReminder(true);
-    }, delayMinutes * 60 * 1000);
+    const initialTimeout = setTimeout(
+      () => {
+        setShowFloatingReminder(true);
+      },
+      delayMinutes * 60 * 1000,
+    );
 
     return () => {
       clearTimeout(initialTimeout);
@@ -54,26 +59,38 @@ export const useRegistrationReminder = ({
     }
 
     if (showFloatingReminder && reminderCount < maxReminders) {
-      const recurringTimeout = setTimeout(() => {
-        setShowFloatingReminder(true);
-        setReminderCount(prev => prev + 1);
-      }, reminderIntervalMinutes * 60 * 1000);
+      const recurringTimeout = setTimeout(
+        () => {
+          setShowFloatingReminder(true);
+          setReminderCount((prev) => prev + 1);
+        },
+        reminderIntervalMinutes * 60 * 1000,
+      );
 
       return () => {
         clearTimeout(recurringTimeout);
       };
     }
-  }, [isGuest, showFloatingReminder, reminderCount, reminderIntervalMinutes, maxReminders]);
+  }, [
+    isGuest,
+    showFloatingReminder,
+    reminderCount,
+    reminderIntervalMinutes,
+    maxReminders,
+  ]);
 
   const dismissFloatingReminder = (permanent: boolean = false) => {
     setShowFloatingReminder(false);
-    
+
     // Update session count
     const currentCount = parseInt(
-      sessionStorage.getItem("registrationReminderCount") || "0"
+      sessionStorage.getItem("registrationReminderCount") || "0",
     );
-    sessionStorage.setItem("registrationReminderCount", (currentCount + 1).toString());
-    
+    sessionStorage.setItem(
+      "registrationReminderCount",
+      (currentCount + 1).toString(),
+    );
+
     if (permanent) {
       localStorage.setItem("registrationReminderDismissed", "true");
     }

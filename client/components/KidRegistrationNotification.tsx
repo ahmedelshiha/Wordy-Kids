@@ -4,15 +4,15 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { useAuth } from "@/hooks/useAuth";
 import { useNavigate } from "react-router-dom";
-import { 
-  UserPlus, 
-  Star, 
-  Trophy, 
-  Heart, 
-  Sparkles, 
+import {
+  UserPlus,
+  Star,
+  Trophy,
+  Heart,
+  Sparkles,
   X,
   BookOpen,
-  Medal
+  Medal,
 } from "lucide-react";
 
 interface ProgressData {
@@ -32,7 +32,9 @@ interface KidRegistrationNotificationProps {
   progressData?: ProgressData;
 }
 
-export const KidRegistrationNotification: React.FC<KidRegistrationNotificationProps> = ({
+export const KidRegistrationNotification: React.FC<
+  KidRegistrationNotificationProps
+> = ({
   className = "",
   variant = "card",
   onDismiss,
@@ -81,18 +83,24 @@ export const KidRegistrationNotification: React.FC<KidRegistrationNotificationPr
     if (!progressData) {
       return {
         title: "Hey there, Amazing Explorer! 🌟",
-        message: "You're doing great learning new words! 📚 Want to save your awesome progress and unlock even more magical features?",
-        emoji: "🦄"
+        message:
+          "You're doing great learning new words! 📚 Want to save your awesome progress and unlock even more magical features?",
+        emoji: "🦄",
       };
     }
 
-    const { wordsLearned = 0, currentStreak = 0, totalPoints = 0, level = 1 } = progressData;
+    const {
+      wordsLearned = 0,
+      currentStreak = 0,
+      totalPoints = 0,
+      level = 1,
+    } = progressData;
 
     if (wordsLearned >= 20) {
       return {
         title: "WOW! You're a Word Master! 🏆",
         message: `Amazing! You've learned ${wordsLearned} words and you're on level ${level}! 🌟 Save your incredible progress and unlock special rewards!`,
-        emoji: "👑"
+        emoji: "👑",
       };
     }
 
@@ -100,7 +108,7 @@ export const KidRegistrationNotification: React.FC<KidRegistrationNotificationPr
       return {
         title: "Super Star Learner! ⭐",
         message: `Fantastic! You've learned ${wordsLearned} words! 🎉 Create an account to keep your amazing progress safe!`,
-        emoji: "🌟"
+        emoji: "🌟",
       };
     }
 
@@ -108,7 +116,7 @@ export const KidRegistrationNotification: React.FC<KidRegistrationNotificationPr
       return {
         title: "You're Doing Great! 🚀",
         message: `Awesome job learning ${wordsLearned} words! 📖 Sign up to save your progress and earn cool badges!`,
-        emoji: "🦄"
+        emoji: "🦄",
       };
     }
 
@@ -116,14 +124,15 @@ export const KidRegistrationNotification: React.FC<KidRegistrationNotificationPr
       return {
         title: "Amazing Streak! 🔥",
         message: `You're on fire with a ${currentStreak}-day streak! 💪 Create an account to keep your streak going!`,
-        emoji: "🎯"
+        emoji: "🎯",
       };
     }
 
     return {
       title: "Welcome, Future Word Champion! 🌟",
-      message: "You're off to a great start! 🎉 Want to save your progress and unlock magical learning features?",
-      emoji: "🦄"
+      message:
+        "You're off to a great start! 🎉 Want to save your progress and unlock magical learning features?",
+      emoji: "🦄",
     };
   };
 
@@ -135,19 +144,19 @@ export const KidRegistrationNotification: React.FC<KidRegistrationNotificationPr
 
   const sparkleVariants = {
     hidden: { opacity: 0, scale: 0, rotate: 0 },
-    visible: { 
-      opacity: [0, 1, 0], 
-      scale: [0.5, 1.2, 0.5], 
+    visible: {
+      opacity: [0, 1, 0],
+      scale: [0.5, 1.2, 0.5],
       rotate: [0, 180, 360],
-      transition: { duration: 2, repeat: Infinity }
-    }
+      transition: { duration: 2, repeat: Infinity },
+    },
   };
 
   const floatingVariants = {
     float: {
       y: [-10, 10, -10],
-      transition: { duration: 3, repeat: Infinity, ease: "easeInOut" }
-    }
+      transition: { duration: 3, repeat: Infinity, ease: "easeInOut" },
+    },
   };
 
   const cardContent = (
@@ -222,38 +231,40 @@ export const KidRegistrationNotification: React.FC<KidRegistrationNotificationPr
         </motion.p>
 
         {/* Progress highlight for kids with some achievement */}
-        {progressData && (progressData.wordsLearned! > 0 || progressData.currentStreak! > 0) && (
-          <motion.div
-            className="bg-gradient-to-r from-yellow-100 to-orange-100 border border-yellow-300 rounded-lg p-3 mb-4"
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 0.5 }}
-          >
-            <div className="flex items-center justify-center gap-4 text-xs font-bold">
-              {progressData.wordsLearned! > 0 && (
-                <div className="flex items-center gap-1 text-blue-700">
-                  <BookOpen className="w-3 h-3" />
-                  <span>{progressData.wordsLearned} Words!</span>
-                </div>
-              )}
-              {progressData.currentStreak! > 0 && (
-                <div className="flex items-center gap-1 text-orange-700">
-                  <Medal className="w-3 h-3" />
-                  <span>{progressData.currentStreak}-Day Streak!</span>
-                </div>
-              )}
-              {progressData.totalPoints! > 0 && (
-                <div className="flex items-center gap-1 text-purple-700">
-                  <Star className="w-3 h-3" />
-                  <span>{progressData.totalPoints} Points!</span>
-                </div>
-              )}
-            </div>
-          </motion.div>
-        )}
+        {progressData &&
+          (progressData.wordsLearned! > 0 ||
+            progressData.currentStreak! > 0) && (
+            <motion.div
+              className="bg-gradient-to-r from-yellow-100 to-orange-100 border border-yellow-300 rounded-lg p-3 mb-4"
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: 0.5 }}
+            >
+              <div className="flex items-center justify-center gap-4 text-xs font-bold">
+                {progressData.wordsLearned! > 0 && (
+                  <div className="flex items-center gap-1 text-blue-700">
+                    <BookOpen className="w-3 h-3" />
+                    <span>{progressData.wordsLearned} Words!</span>
+                  </div>
+                )}
+                {progressData.currentStreak! > 0 && (
+                  <div className="flex items-center gap-1 text-orange-700">
+                    <Medal className="w-3 h-3" />
+                    <span>{progressData.currentStreak}-Day Streak!</span>
+                  </div>
+                )}
+                {progressData.totalPoints! > 0 && (
+                  <div className="flex items-center gap-1 text-purple-700">
+                    <Star className="w-3 h-3" />
+                    <span>{progressData.totalPoints} Points!</span>
+                  </div>
+                )}
+              </div>
+            </motion.div>
+          )}
 
         {/* Benefits list */}
-        <motion.div 
+        <motion.div
           className="grid grid-cols-2 gap-2 mb-4 text-xs"
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
@@ -291,7 +302,7 @@ export const KidRegistrationNotification: React.FC<KidRegistrationNotificationPr
               className="absolute inset-0 bg-gradient-to-r from-yellow-400/20 to-transparent"
               animate={{
                 x: ["-100%", "100%"],
-                transition: { duration: 2, repeat: Infinity, ease: "linear" }
+                transition: { duration: 2, repeat: Infinity, ease: "linear" },
               }}
             />
             <UserPlus className="w-4 h-4 mr-2" />
@@ -300,7 +311,7 @@ export const KidRegistrationNotification: React.FC<KidRegistrationNotificationPr
         </motion.div>
 
         {/* Secondary message */}
-        <motion.p 
+        <motion.p
           className="text-xs text-gray-600 mt-3"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -355,9 +366,7 @@ export const KidRegistrationNotification: React.FC<KidRegistrationNotificationPr
         transition={{ duration: 0.5 }}
       >
         <Card className="bg-gradient-to-br from-purple-50 via-pink-50 to-blue-50 border-2 border-purple-200 shadow-lg hover:shadow-xl transition-all duration-300">
-          <CardContent className="p-0">
-            {cardContent}
-          </CardContent>
+          <CardContent className="p-0">{cardContent}</CardContent>
         </Card>
       </motion.div>
     </AnimatePresence>

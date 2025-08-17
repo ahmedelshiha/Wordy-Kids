@@ -10,13 +10,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { cn } from "@/lib/utils";
-import {
-  Settings,
-  Users,
-  Shield,
-  Crown,
-  Lock,
-} from "lucide-react";
+import { Settings, Users, Shield, Crown, Lock } from "lucide-react";
 import {
   Tooltip,
   TooltipContent,
@@ -107,7 +101,6 @@ export function DesktopKidNav({
       setTimeout(() => setParentCodeError(false), 3000);
     }
   };
-
 
   return (
     <>
@@ -414,7 +407,6 @@ export function DesktopKidNav({
                   </div>
                 </div>
               </Button>
-
             </div>
 
             <Button
@@ -427,7 +419,6 @@ export function DesktopKidNav({
           </div>
         </DialogContent>
       </Dialog>
-
     </>
   );
 }

@@ -200,7 +200,7 @@ export const LearningDashboard: React.FC<LearningDashboardProps> = ({
             totalPoints: stats.totalPoints,
             level: stats.level,
             weeklyProgress: stats.weeklyProgress,
-            weeklyGoal: stats.weeklyGoal
+            weeklyGoal: stats.weeklyGoal,
           }}
         />
       )}

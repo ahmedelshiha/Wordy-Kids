@@ -269,14 +269,12 @@ export default function Index({ initialProfile }: IndexProps) {
   });
 
   // Registration reminder for guest users
-  const {
-    showFloatingReminder,
-    dismissFloatingReminder,
-  } = useRegistrationReminder({
-    delayMinutes: 3, // Show after 3 minutes of interaction
-    reminderIntervalMinutes: 8, // Remind every 8 minutes
-    maxReminders: 2, // Only 2 reminders per session to avoid annoyance
-  });
+  const { showFloatingReminder, dismissFloatingReminder } =
+    useRegistrationReminder({
+      delayMinutes: 3, // Show after 3 minutes of interaction
+      reminderIntervalMinutes: 8, // Remind every 8 minutes
+      maxReminders: 2, // Only 2 reminders per session to avoid annoyance
+    });
 
   const persistenceService = getSessionPersistenceService();
 
