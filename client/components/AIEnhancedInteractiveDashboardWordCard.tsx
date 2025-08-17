@@ -1308,24 +1308,22 @@ export function AIEnhancedInteractiveDashboardWordCard({
                       }}
                       size="sm"
                       className={cn(
-                        "relative px-2 py-1 h-7 rounded-full text-xs font-bold shadow-lg transition-all duration-300 transform hover:scale-105 active:scale-95",
-                        "bg-white/20 hover:bg-white/30 backdrop-blur-md border-2 border-white/40 shadow-white/20",
+                        "relative px-3 py-2 h-8 rounded-full text-xs font-bold shadow-lg transition-all duration-300 transform hover:scale-105 active:scale-95",
                         aiState.isSessionActive
-                          ? "text-red-100 hover:border-red-200/50 hover:shadow-red-200/30"
-                          : "text-green-100 hover:border-green-200/50 hover:shadow-green-200/30",
-                        "before:absolute before:inset-0 before:rounded-full before:bg-gradient-to-br before:from-white/30 before:to-white/10 before:opacity-0 hover:before:opacity-100 before:transition-opacity before:duration-300",
+                          ? "bg-red-500 hover:bg-red-600 text-white border-2 border-red-300 shadow-red-300/30"
+                          : "bg-green-500 hover:bg-green-600 text-white border-2 border-green-300 shadow-green-300/30",
                       )}
                     >
-                      <div className="relative z-10 flex items-center justify-center gap-1">
+                      <div className="relative z-10 flex items-center justify-center gap-1.5">
                         {aiState.isSessionActive ? (
                           <>
-                            <span className="text-xs">🔴</span>
-                            <span className="text-[10px] font-medium">OFF</span>
+                            <span className="text-sm">🔴</span>
+                            <span className="text-xs font-bold text-white">AI OFF</span>
                           </>
                         ) : (
                           <>
-                            <span className="text-xs">🟢</span>
-                            <span className="text-[10px] font-medium">ON</span>
+                            <span className="text-sm">🟢</span>
+                            <span className="text-xs font-bold text-white">AI ON</span>
                           </>
                         )}
                       </div>
