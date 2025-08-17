@@ -132,9 +132,6 @@ export const AICardContent = React.forwardRef<
                           aiStatus === "loading" && "animate-pulse",
                         )}
                       />
-                      {aiStatus === "active" && (
-                        <div className="absolute -top-1 -right-1 w-2.5 h-2.5 sm:w-3 sm:h-3 bg-green-400 rounded-full shadow-lg animate-pulse" />
-                      )}
                     </div>
 
                     {/* Status Badge - Mobile Responsive */}
@@ -149,7 +146,12 @@ export const AICardContent = React.forwardRef<
                             "bg-green-100 text-green-800 border-green-300",
                         )}
                       >
-                        {aiStatus === "active" && "Active"}
+                        {aiStatus === "active" && (
+                          <div className="flex items-center gap-1.5">
+                            <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
+                            Active
+                          </div>
+                        )}
                         {aiStatus === "loading" && "Loading..."}
                         {aiStatus === "error" && "Error"}
                         {aiStatus === "inactive" && "Inactive"}
