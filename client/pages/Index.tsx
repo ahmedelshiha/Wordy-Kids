@@ -1378,7 +1378,7 @@ export default function Index({ initialProfile }: IndexProps) {
       if (accuracy === 100) {
         achievementTitle = "Perfect Category Mastery! 🏆";
         achievementIcon = "🏆";
-        achievementMessage = `Outstanding! You remembered ALL ${totalWords} words in ${categoryDisplayName}! You're a true champion!\n\n🎁 Perfect Mastery Bonus: 200 points!\n�� New adventure zone unlocked!`;
+        achievementMessage = `Outstanding! You remembered ALL ${totalWords} words in ${categoryDisplayName}! You're a true champion!\n\n🎁 Perfect Mastery Bonus: 200 points!\n🗺️ New adventure zone unlocked!`;
       } else if (accuracy >= 90) {
         achievementTitle = "Category Expert! 🎓";
         achievementIcon = "🎓⭐";
@@ -1388,7 +1388,7 @@ export default function Index({ initialProfile }: IndexProps) {
         achievementIcon = "📚";
         achievementMessage = `Great job! You completed ${categoryDisplayName} with ${accuracy}% accuracy! Keep up the good work!\n\n🎓 Scholar Bonus: 100 points!`;
       } else if (accuracy >= 50) {
-        achievementTitle = "Category Explorer! 🗺️🌟";
+        achievementTitle = "Category Explorer! ��️🌟";
         achievementIcon = "🗺️";
         achievementMessage = `Good effort! You finished ${categoryDisplayName} with ${accuracy}% accuracy! Practice makes perfect!\n\n🎁 Explorer Bonus: 75 points!`;
       } else {
@@ -2328,13 +2328,10 @@ export default function Index({ initialProfile }: IndexProps) {
                                       </div>
                                     </div>
                                     <div className="flex items-center gap-2">
-                                      <div className="text-xs font-medium text-purple-600 bg-purple-100 px-2 py-1 rounded-full">
+                                      <div className="text-xs font-medium bg-green-100 text-green-800 border-green-300 px-2 py-1 rounded-full border flex items-center gap-1.5">
+                                        <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
                                         Active
                                       </div>
-                                      <div
-                                        className="w-2 h-2 bg-green-500 rounded-full animate-pulse"
-                                        title="AI Status: Active"
-                                      />
                                     </div>
                                   </div>
                                 </div>
@@ -2518,7 +2515,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                                 } else {
                                                   return (
                                                     <div className="text-xs text-blue-600 font-medium flex items-center gap-1">
-                                                      <span>���</span>
+                                                      <span>✨</span>
                                                       <span className="hidden sm:inline">
                                                         New
                                                       </span>
@@ -2895,7 +2892,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                               ) {
                                                 return (
                                                   <div className="text-xs text-orange-600 font-medium">
-                                                    🤔 Review
+                                                    📚 Review
                                                   </div>
                                                 );
                                               } else {

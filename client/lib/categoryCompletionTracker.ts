@@ -138,7 +138,7 @@ export class CategoryCompletionTracker {
   /**
    * Get progress percentage for current category
    */
-  static getCategoryProgress(): number {
+  static getCurrentCategoryProgress(): number {
     if (!this.currentSession) return 0;
 
     const reviewed = this.currentSession.reviewedWords.size;

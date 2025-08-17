@@ -509,7 +509,7 @@ export function AIEnhancedInteractiveDashboardWordCard({
           id: "ai_confidence_high",
           title: "AI CONFIDENCE BOOST!",
           description: `AI predicted your success with ${Math.round(aiState.confidence * 100)}% confidence!`,
-          emoji: "��✨",
+          emoji: "🤖✨",
           unlocked: true,
         });
       }

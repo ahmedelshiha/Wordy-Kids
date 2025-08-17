@@ -8,11 +8,6 @@ if (!rootElement) {
   throw new Error("Root element not found");
 }
 
-// Check if root has already been created
-let root: any = (rootElement as any)._reactRoot;
-if (!root) {
-  root = createRoot(rootElement);
-  (rootElement as any)._reactRoot = root;
-}
-
+// Create root without caching to avoid React context issues
+const root = createRoot(rootElement);
 root.render(<App />);

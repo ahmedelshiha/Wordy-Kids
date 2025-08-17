@@ -22,7 +22,7 @@ import {
 import {
   Tooltip,
   TooltipContent,
-  TooltipProvider,
+  
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import {
@@ -931,7 +931,7 @@ export const ParentLearningAnalyticsDesktop: React.FC<
   }
 
   return (
-    <TooltipProvider>
+    
       <div className="space-y-6">
         {/* Real Data Indicator */}
         <div className="mb-4 p-3 bg-green-50 border border-green-200 rounded-lg">
@@ -1686,6 +1686,6 @@ export const ParentLearningAnalyticsDesktop: React.FC<
           </DialogContent>
         </Dialog>
       </div>
-    </TooltipProvider>
+    
   );
 };

@@ -632,7 +632,7 @@ export class AudioService {
     return this.isEnabled;
   }
 
-  public isSupported(): boolean {
+  public checkSupport(): boolean {
     return this.isSupported;
   }
 
