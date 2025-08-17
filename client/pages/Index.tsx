@@ -268,6 +268,16 @@ export default function Index({ initialProfile }: IndexProps) {
     compressionEnabled: true,
   });
 
+  // Registration reminder for guest users
+  const {
+    showFloatingReminder,
+    dismissFloatingReminder,
+  } = useRegistrationReminder({
+    delayMinutes: 3, // Show after 3 minutes of interaction
+    reminderIntervalMinutes: 8, // Remind every 8 minutes
+    maxReminders: 2, // Only 2 reminders per session to avoid annoyance
+  });
+
   const persistenceService = getSessionPersistenceService();
 
   // Learning goals state and progress tracking
@@ -2392,7 +2402,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                                   ����
                                                 </div>
                                                 <div className="absolute bottom-4 left-6 text-2xl animate-bounce delay-300">
-                                                  🎊
+                                                  ���
                                                 </div>
                                                 <div className="absolute bottom-6 right-4 text-2xl animate-pulse delay-500">
                                                   💫
