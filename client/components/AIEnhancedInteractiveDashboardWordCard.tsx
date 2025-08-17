@@ -906,7 +906,7 @@ export function AIEnhancedInteractiveDashboardWordCard({
             transition: { duration: 0.3 },
           }}
           whileTap={{ scale: 0.95 }}
-          className="w-56 h-40 mx-auto flex items-center justify-center bg-gradient-to-br from-blue-100 via-purple-100 to-pink-100 rounded-2xl shadow-lg hover:shadow-xl cursor-pointer group relative overflow-hidden"
+          className="w-48 h-32 md:w-52 md:h-36 mx-auto flex items-center justify-center bg-gradient-to-br from-blue-100 via-purple-100 to-pink-100 rounded-xl shadow-md hover:shadow-lg cursor-pointer group relative overflow-hidden"
           onClick={playPronunciation}
         >
           {/* AI Enhancement Badge */}
