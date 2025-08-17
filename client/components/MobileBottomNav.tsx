@@ -233,7 +233,7 @@ export function MobileBottomNav({
                 key={tab.id}
                 onClick={() => onTabChange(tab.id)}
                 className={cn(
-                  "kid-nav-item flex flex-col items-center gap-0 p-0 rounded-lg transition-all duration-200 transform active:scale-95 relative min-w-0 flex-1 mx-0.5 min-h-[10px] justify-center",
+                  "kid-nav-item flex flex-col items-center gap-0 p-0 rounded-lg transition-all duration-200 transform active:scale-95 relative min-w-0 flex-1 mx-0.5 min-h-[10px] justify-center overflow-visible",
                   activeTab === tab.id
                     ? "text-white shadow-lg kid-button active"
                     : "text-gray-700 hover:text-purple-600 kid-interactive",
@@ -253,7 +253,7 @@ export function MobileBottomNav({
                 </div>
 
                 {/* Kid-friendly Label */}
-                <span className="absolute bottom-0 left-1/2 transform -translate-x-1/2 text-xs font-kid-friendly font-bold leading-none text-center text-white whitespace-nowrap">
+                <span className="absolute bottom-[-8px] left-1/2 transform -translate-x-1/2 text-[10px] font-kid-friendly font-bold leading-none text-center text-white whitespace-nowrap z-10">
                   {tab.label}
                 </span>
 
@@ -275,7 +275,7 @@ export function MobileBottomNav({
             <button
               onClick={onMoreToggle}
               className={cn(
-                "kid-nav-item flex flex-col items-center gap-0 p-0 rounded-lg transition-all duration-200 transform active:scale-95 min-w-0 flex-1 mx-0.5 min-h-[10px] justify-center",
+                "kid-nav-item flex flex-col items-center gap-0 p-0 rounded-lg transition-all duration-200 transform active:scale-95 min-w-0 flex-1 mx-0.5 min-h-[10px] justify-center overflow-visible",
                 showMoreMenu
                   ? "text-white shadow-lg kid-button active"
                   : "text-purple-600 hover:text-purple-700 kid-interactive",
@@ -291,7 +291,7 @@ export function MobileBottomNav({
               >
                 🎪
               </div>
-              <span className="absolute bottom-0 left-1/2 transform -translate-x-1/2 text-xs font-kid-friendly font-bold leading-none text-center text-white whitespace-nowrap">
+              <span className="absolute bottom-[-8px] left-1/2 transform -translate-x-1/2 text-[10px] font-kid-friendly font-bold leading-none text-center text-white whitespace-nowrap z-10">
                 More
               </span>
 
