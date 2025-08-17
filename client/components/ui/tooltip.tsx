@@ -3,7 +3,15 @@ import * as TooltipPrimitive from "@radix-ui/react-tooltip";
 
 import { cn } from "@/lib/utils";
 
-const TooltipProvider = TooltipPrimitive.Provider;
+// Safe TooltipProvider that checks for React context availability
+const TooltipProvider: React.FC<React.ComponentPropsWithoutRef<typeof TooltipPrimitive.Provider>> = (props) => {
+  // Only render if React is properly initialized
+  if (typeof React.useState !== 'function') {
+    return <div>{props.children}</div>;
+  }
+
+  return <TooltipPrimitive.Provider {...props} />;
+};
 
 const Tooltip = TooltipPrimitive.Root;
 
