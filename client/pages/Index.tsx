@@ -2073,27 +2073,32 @@ export default function Index({ initialProfile }: IndexProps) {
               </div>
             ) : (
               <div className="min-h-screen bg-gradient-to-br from-white via-purple-50/30 to-pink-50/30 optimize-for-small-screen">
-                {/* Main Content Area with Sidebar and Game Layout */}
-                <div className="flex h-screen">
-                  {/* Child Profile Sidebar - Desktop Only */}
-                  <div className="hidden lg:block">
-                    <ChildProfileSidebar
-                      profile={currentProfile}
-                      stats={enhancedChildStats}
-                      isCollapsed={isSidebarCollapsed}
-                      onToggleCollapse={handleSidebarToggle}
-                      onProfileEdit={handleProfileEdit}
-                      onQuickAction={handleQuickAction}
-                      onLogout={handleSidebarLogout}
-                      showTimeOfDay={true}
-                      showWeeklyProgress={true}
-                      position="left"
-                    />
+                {/* Enhanced Desktop Layout with Integrated Sidebar */}
+                <div className="flex h-screen bg-gradient-to-br from-blue-50/30 to-purple-50/30">
+                  {/* Enhanced Child Profile Sidebar - Desktop Only */}
+                  <div className="hidden lg:block transition-all duration-300 ease-in-out">
+                    <div className="h-full bg-white/80 backdrop-blur-sm shadow-2xl border-r border-purple-200/50">
+                      <ChildProfileSidebar
+                        profile={currentProfile}
+                        stats={enhancedChildStats}
+                        isCollapsed={isSidebarCollapsed}
+                        onToggleCollapse={handleSidebarToggle}
+                        onProfileEdit={handleProfileEdit}
+                        onQuickAction={handleQuickAction}
+                        onLogout={handleSidebarLogout}
+                        showTimeOfDay={true}
+                        showWeeklyProgress={true}
+                        position="left"
+                        className="h-full border-none shadow-none bg-transparent"
+                      />
+                    </div>
                   </div>
 
-                  {/* Main Content Container */}
-                  <div className="flex-1 min-w-0 overflow-hidden">
-                    <div className="w-full h-full p-2 sm:p-3 lg:p-4 pb-20 sm:pb-24 lg:pb-6 overflow-y-auto scroll-smooth">
+                  {/* Enhanced Main Game Content Container */}
+                  <div className="flex-1 min-w-0 overflow-hidden relative">
+                    {/* Game Content Background */}
+                    <div className="absolute inset-0 bg-gradient-to-br from-white/90 to-blue-50/90 backdrop-blur-sm"></div>
+                    <div className="relative z-10 w-full h-full p-2 sm:p-3 lg:p-6 pb-20 sm:pb-24 lg:pb-6 overflow-y-auto scroll-smooth">
                       {/* Desktop: Two-column layout with main content + side card */}
                       <div className="flex gap-6 items-start">
                         {/* Main Game Content */}
@@ -3127,7 +3132,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                           <div className="flex justify-between items-center p-3 bg-white rounded-lg">
                                             <div className="flex items-center gap-3">
                                               <span className="text-2xl">
-                                                🌱
+                                                ���
                                               </span>
                                               <div>
                                                 <div className="font-semibold">
