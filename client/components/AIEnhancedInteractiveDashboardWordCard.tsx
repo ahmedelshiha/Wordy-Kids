@@ -1773,20 +1773,6 @@ export function AIEnhancedInteractiveDashboardWordCard({
               )}
             </AnimatePresence>
 
-            {/* Real-time AI encouragement */}
-            {realTimeEncouragement && !showWordName && (
-              <motion.div
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -10 }}
-                className="text-center p-3 bg-gradient-to-r from-green-100 to-blue-100 rounded-lg border border-green-200 mb-4"
-              >
-                <div className="text-sm font-medium text-green-800 flex items-center justify-center gap-2">
-                  <Brain className="w-4 h-4" />
-                  {realTimeEncouragement}
-                </div>
-              </motion.div>
-            )}
           </AICardContent>
         </Card>
       </motion.div>
