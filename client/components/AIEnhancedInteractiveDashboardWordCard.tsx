@@ -1318,12 +1318,16 @@ export function AIEnhancedInteractiveDashboardWordCard({
                         {aiState.isSessionActive ? (
                           <>
                             <span className="text-xs">🔴</span>
-                            <span className="text-xs font-bold text-white">OFF</span>
+                            <span className="text-xs font-bold text-white">
+                              OFF
+                            </span>
                           </>
                         ) : (
                           <>
                             <span className="text-xs">🟢</span>
-                            <span className="text-xs font-bold text-white">ON</span>
+                            <span className="text-xs font-bold text-white">
+                              ON
+                            </span>
                           </>
                         )}
                       </div>
@@ -1418,12 +1422,16 @@ export function AIEnhancedInteractiveDashboardWordCard({
                             {aiState.isSessionActive ? (
                               <>
                                 <span className="text-lg">🔴</span>
-                                <span className="text-sm font-bold text-white">AI STOP</span>
+                                <span className="text-sm font-bold text-white">
+                                  AI STOP
+                                </span>
                               </>
                             ) : (
                               <>
                                 <span className="text-lg">🟢</span>
-                                <span className="text-sm font-bold text-white">AI START</span>
+                                <span className="text-sm font-bold text-white">
+                                  AI START
+                                </span>
                               </>
                             )}
                           </div>
