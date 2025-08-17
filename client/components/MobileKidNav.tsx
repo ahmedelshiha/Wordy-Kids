@@ -268,14 +268,14 @@ export function MobileKidNav({
       {/* Kid-Friendly Mobile Bottom Navigation */}
       <div className="fixed bottom-0 left-0 right-0 z-40 lg:hidden kid-nav-mobile">
         <div className="bg-white/95 backdrop-blur-lg border-t-4 border-rainbow shadow-2xl safe-area-padding-bottom mobile-optimized">
-          <div className="flex items-center justify-center gap-1 px-2 py-0.5 max-w-full">
+          <div className="flex items-center justify-center gap-0.5 px-1 py-0 max-w-full">
             {kidNavTabs.map((tab, index) => (
               <motion.button
                 key={tab.id}
                 onClick={() => onTabChange(tab.id)}
                 className={cn(
                   "flex flex-col items-center transition-all duration-300 transform relative group",
-                  "flex-1 min-w-0 max-w-[80px] p-1 gap-0",
+                  "flex-1 min-w-0 max-w-[90px] p-0.5 gap-0",
                   "bg-transparent hover:bg-transparent"
                 )}
                 whileHover={{ y: -2, scale: 1.05 }}
@@ -285,7 +285,7 @@ export function MobileKidNav({
                 transition={{ delay: index * 0.1 }}
               >
                 {/* Emoji Icon with magical animations */}
-                <div className="relative z-10 text-3xl">
+                <div className="relative z-10 text-4xl">
                   <motion.div
                     animate={
                       activeTab === tab.id
