@@ -2037,7 +2037,7 @@ export default function Index({ initialProfile }: IndexProps) {
                         </span>
                         {activeTab === "dashboard" && (
                           <div className="ml-auto animate-kid-magic-sparkle">
-                            ✨
+                            ��
                           </div>
                         )}
                       </button>
@@ -3506,6 +3506,25 @@ export default function Index({ initialProfile }: IndexProps) {
             <MascotReaction
               type="success"
               onComplete={() => console.log("Mascot celebration complete")}
+            />
+          )}
+
+          {/* Magical Portal Effects - Enhanced Desktop Experience */}
+          <MagicalPortalEffect
+            isActive={backgroundAnimationsEnabled && activeTab === "learn"}
+            intensity="medium"
+            particleEmojis={['✨', '🌟', '⭐', '💫', '🔮', '🌈', '🦄', '🎉']}
+          />
+
+          {/* Enhanced Reward Celebration */}
+          {feedback?.type === "celebration" && (
+            <RewardCelebration
+              isVisible={true}
+              type={rememberedWords.size >= 10 ? "achievement" : "word_learned"}
+              title={feedback.title}
+              message={feedback.message}
+              points={feedback.points}
+              onComplete={() => setFeedback(null)}
             />
           )}
         </>
