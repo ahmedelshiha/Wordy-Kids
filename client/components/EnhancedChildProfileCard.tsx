@@ -423,27 +423,31 @@ export const EnhancedChildProfileCard: React.FC<
                     </div>
                   )}
 
-                {/* Quick Action Buttons */}
+                {/* Super Fun Action Buttons */}
                 {showQuickActions && (
-                  <div className="grid grid-cols-2 gap-2 pt-2">
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      onClick={() => onQuickAction?.("continue_learning")}
-                      className="text-xs bg-gradient-to-r from-purple-50 to-pink-50 border-purple-200 hover:from-purple-100 hover:to-pink-100"
-                    >
-                      <BookOpen className="w-3 h-3 mr-1" />
-                      Continue
-                    </Button>
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      onClick={() => onQuickAction?.("practice_words")}
-                      className="text-xs bg-gradient-to-r from-blue-50 to-cyan-50 border-blue-200 hover:from-blue-100 hover:to-cyan-100"
-                    >
-                      <Sparkles className="w-3 h-3 mr-1" />
-                      Practice
-                    </Button>
+                  <div className="grid grid-cols-2 gap-3 pt-3">
+                    <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => onQuickAction?.("continue_learning")}
+                        className="w-full text-sm font-bold bg-gradient-to-r from-purple-200 to-pink-200 border-3 border-purple-300 hover:from-purple-300 hover:to-pink-300 text-purple-800 rounded-xl shadow-lg transition-all duration-300"
+                      >
+                        <BookOpen className="w-4 h-4 mr-2" />
+                        🚀 Let's Go!
+                      </Button>
+                    </motion.div>
+                    <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => onQuickAction?.("practice_words")}
+                        className="w-full text-sm font-bold bg-gradient-to-r from-blue-200 to-cyan-200 border-3 border-blue-300 hover:from-blue-300 hover:to-cyan-300 text-blue-800 rounded-xl shadow-lg transition-all duration-300"
+                      >
+                        <Sparkles className="w-4 h-4 mr-2" />
+                        ✨ Practice!
+                      </Button>
+                    </motion.div>
                   </div>
                 )}
               </CardContent>
