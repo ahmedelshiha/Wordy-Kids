@@ -1556,7 +1556,7 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50">
+    <div className="min-h-screen bg-gray-100">
       {/* Back Button */}
       {showMobileBackButton && onNavigateBack && (
         <div className="p-4 lg:hidden">
