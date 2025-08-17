@@ -285,7 +285,7 @@ export function InteractiveDashboardWordCard({
 
   // Calculate daily progress percentage for the progress bar
   const dailyProgress = Math.round(
-    (dailyGoal.completed / dailyGoal.target) * 100
+    (dailyGoal.completed / dailyGoal.target) * 100,
   );
 
   // Debug logging for session tracking
