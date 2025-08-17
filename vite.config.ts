@@ -17,10 +17,7 @@ export default defineConfig(({ mode }) => ({
     outDir: "dist/spa",
   },
   optimizeDeps: {
-    entries: ["index.html", "client/main.tsx"],
-    include: ["react", "react-dom", "react-router-dom"],
-    exclude: ["./public/pwa-install-popup.html"],
-    force: true,
+    disabled: true,
   },
   plugins: [react(), expressPlugin()],
   resolve: {
