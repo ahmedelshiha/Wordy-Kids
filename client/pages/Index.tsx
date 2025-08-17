@@ -1873,7 +1873,7 @@ export default function Index({ initialProfile }: IndexProps) {
                   ⭐
                 </div>
                 <div className="hidden md:block absolute top-12 right-12 text-xl animate-gentle-float">
-                  📚
+                  ���
                 </div>
                 <div className="hidden md:block absolute bottom-8 left-12 text-2xl animate-gentle-bounce delay-1000">
                   🎯
@@ -2407,7 +2407,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                       </div>
                                       <div className="text-xs text-slate-500">
                                         {currentWordIndex + 1}/
-                                        {displayWords.length} ���{" "}
+                                        {displayWords.length} 📚{" "}
                                         {rememberedWords.size} ✅
                                       </div>
                                     </div>
