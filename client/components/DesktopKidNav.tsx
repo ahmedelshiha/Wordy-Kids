@@ -380,38 +380,54 @@ export function DesktopKidNav({
           </DialogHeader>
           <div className="space-y-4">
             {/* Kid Mode Toggle */}
-            <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg border-l-4 border-yellow-400">
+            <div className={`flex items-center justify-between p-4 rounded-lg border-l-4 ${
+              kidModeEnabled
+                ? "bg-green-50 border-green-400"
+                : "bg-amber-50 border-amber-400"
+            }`}>
               <div className="flex items-center gap-3">
-                <div className="text-2xl">{kidModeEnabled ? "👶" : "👨‍👩‍👧‍👦"}</div>
+                <div className="text-2xl">{kidModeEnabled ? "🔒" : "🔓"}</div>
                 <div>
                   <div className="font-medium text-gray-900">
-                    {kidModeEnabled ? "Kid-Safe Mode" : "Parent Mode"}
+                    {kidModeEnabled ? "Kid-Safe Mode Active" : "Parent Mode Active"}
                   </div>
-                  <div className="text-sm text-gray-500">
+                  <div className={`text-sm ${kidModeEnabled ? "text-green-600" : "text-amber-600"}`}>
                     {kidModeEnabled
-                      ? "🔒 Protected navigation - sidebar hidden"
-                      : "⚠️ Full navigation sidebar visible"}
+                      ? "✅ Navigation sidebar is hidden from children"
+                      : "⚠️ Navigation sidebar is currently visible"}
                   </div>
                   {!kidModeEnabled && (
-                    <div className="text-xs text-amber-600 mt-1 font-medium">
-                      Note: Sidebar will be visible to children
+                    <div className="text-xs text-red-600 mt-1 font-medium">
+                      ⚠️ Children can access parent controls through sidebar
                     </div>
                   )}
                 </div>
               </div>
-              <Button
-                variant={kidModeEnabled ? "outline" : "destructive"}
-                size="sm"
-                onClick={toggleKidMode}
-                className="ml-4"
-              >
-                {kidModeEnabled ? (
-                  <EyeOff className="w-4 h-4 mr-2" />
-                ) : (
-                  <Eye className="w-4 h-4 mr-2" />
-                )}
-                {kidModeEnabled ? "Show Sidebar" : "Hide Sidebar"}
-              </Button>
+              <div className="flex flex-col gap-2">
+                <Button
+                  variant={kidModeEnabled ? "outline" : "default"}
+                  size="sm"
+                  onClick={toggleKidMode}
+                  className={`ml-4 ${
+                    kidModeEnabled
+                      ? "border-amber-300 text-amber-700 hover:bg-amber-50"
+                      : "bg-green-600 hover:bg-green-700 text-white"
+                  }`}
+                >
+                  {kidModeEnabled ? (
+                    <EyeOff className="w-4 h-4 mr-2" />
+                  ) : (
+                    <Eye className="w-4 h-4 mr-2" />
+                  )}
+                  {kidModeEnabled ? "Show Sidebar" : "Hide Sidebar"}
+                </Button>
+                {/* Status indicator */}
+                <div className={`text-xs text-center font-medium ${
+                  kidModeEnabled ? "text-green-600" : "text-amber-600"
+                }`}>
+                  {kidModeEnabled ? "SAFE" : "CAUTION"}
+                </div>
+              </div>
             </div>
 
             {/* Parent Controls */}
