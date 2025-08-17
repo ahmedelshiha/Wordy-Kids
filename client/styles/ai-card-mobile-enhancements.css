@@ -117,7 +117,11 @@
 /* Dark mode mobile enhancements */
 @media (prefers-color-scheme: dark) {
   .ai-card-mobile {
-    background: linear-gradient(135deg, rgba(30, 41, 59, 0.8), rgba(51, 65, 85, 0.8));
+    background: linear-gradient(
+      135deg,
+      rgba(30, 41, 59, 0.8),
+      rgba(51, 65, 85, 0.8)
+    );
   }
 
   .ai-card-mobile .card {

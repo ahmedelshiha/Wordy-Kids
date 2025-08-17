@@ -95,7 +95,10 @@ export const AICardContent = React.forwardRef<
 
     // Safe accuracy calculation to prevent NaN
     const safeAccuracy = React.useMemo(() => {
-      if (typeof sessionStats.accuracy === 'number' && !isNaN(sessionStats.accuracy)) {
+      if (
+        typeof sessionStats.accuracy === "number" &&
+        !isNaN(sessionStats.accuracy)
+      ) {
         return sessionStats.accuracy;
       }
       return 0;
@@ -104,7 +107,7 @@ export const AICardContent = React.forwardRef<
     return (
       <CardContent
         ref={(node) => {
-          if (typeof ref === 'function') ref(node);
+          if (typeof ref === "function") ref(node);
           else if (ref) ref.current = node;
           if (node) elementRef.current = node;
         }}
@@ -191,10 +194,19 @@ export const AICardContent = React.forwardRef<
                   {/* Mobile Quick Stats - Compact version for small screens */}
                   {aiStatus === "active" && showQuickStats && (
                     <div className="flex sm:hidden items-center gap-2 text-xs overflow-hidden">
-                      <Badge variant="outline" className="px-1 py-0.5 text-xs shrink-0">
-                        {sessionStats.totalWords || sessionStats.wordsLearned || 0}/{SESSION_SIZE}
+                      <Badge
+                        variant="outline"
+                        className="px-1 py-0.5 text-xs shrink-0"
+                      >
+                        {sessionStats.totalWords ||
+                          sessionStats.wordsLearned ||
+                          0}
+                        /{SESSION_SIZE}
                       </Badge>
-                      <Badge variant="outline" className="px-1 py-0.5 text-xs shrink-0">
+                      <Badge
+                        variant="outline"
+                        className="px-1 py-0.5 text-xs shrink-0"
+                      >
                         {safeAccuracy}%
                       </Badge>
                     </div>
@@ -259,8 +271,12 @@ export const AICardContent = React.forwardRef<
                   >
                     <Brain className="w-3.5 h-3.5 sm:w-4 sm:h-4 sm:mr-1" />
                     <span className="text-xs sm:text-sm">
-                      <span className="sm:hidden">{globalAIEnabled ? "On" : "Off"}</span>
-                      <span className="hidden sm:inline">{globalAIEnabled ? "AI On" : "AI Off"}</span>
+                      <span className="sm:hidden">
+                        {globalAIEnabled ? "On" : "Off"}
+                      </span>
+                      <span className="hidden sm:inline">
+                        {globalAIEnabled ? "AI On" : "AI Off"}
+                      </span>
                     </span>
                   </Button>
                 </div>

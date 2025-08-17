@@ -383,9 +383,7 @@ export const EnhancedWordLibrary: React.FC<EnhancedWordLibraryProps> = ({
     <div
       ref={containerRef}
       className={`min-h-screen transition-all duration-300 ${
-        highContrastMode
-          ? "bg-black text-white"
-          : "bg-white"
+        highContrastMode ? "bg-black text-white" : "bg-white"
       }`}
     >
       {/* Enhanced Mobile Header */}
