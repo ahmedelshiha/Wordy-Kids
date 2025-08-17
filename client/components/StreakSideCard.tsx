@@ -155,7 +155,7 @@ export const StreakSideCard: React.FC<StreakSideCardProps> = ({
   return (
     <AnimatePresence>
       <motion.div
-        className={`sticky top-6 ${className}`}
+        className={`sticky top-6 max-h-[calc(100vh-2rem)] overflow-y-auto ${className}`}
         initial={{ opacity: 0, x: 30, scale: 0.9 }}
         animate={{ opacity: 1, x: 0, scale: 1 }}
         exit={{ opacity: 0, x: 30, scale: 0.9 }}
