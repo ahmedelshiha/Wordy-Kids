@@ -185,7 +185,7 @@ export const AICardContent = React.forwardRef<
                   )}
                 </div>
 
-                <div className="flex items-center gap-1 sm:gap-2 flex-shrink-0">
+                <div className="controls-row flex items-center gap-1 sm:gap-2 flex-shrink-0">
                   {/* Difficulty Adjustment Badge - Mobile Responsive */}
                   {difficultyAdjustment !== "maintain" && (
                     <Badge
