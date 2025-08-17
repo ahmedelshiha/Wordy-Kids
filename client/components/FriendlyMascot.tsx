@@ -52,15 +52,18 @@ const mascotCharacters = [
 
 export function FriendlyMascot({
   mood = "happy",
-  size = "medium",
+  size = "tiny",
   position = "left",
   message,
   showSpeechBubble = false,
   animate = true,
   className,
+  delayAppearance = false,
+  delayMinutes = 7,
 }: FriendlyMascotProps) {
   const [currentCharacter, setCurrentCharacter] = useState(mascotCharacters[0]);
-  const [isVisible, setIsVisible] = useState(false);
+  const [isVisible, setIsVisible] = useState(!delayAppearance);
+  const [delayComplete, setDelayComplete] = useState(!delayAppearance);
 
   useEffect(() => {
     // Randomly select a mascot character on mount
