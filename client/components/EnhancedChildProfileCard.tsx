@@ -204,15 +204,22 @@ export const EnhancedChildProfileCard: React.FC<
         <CardHeader className="pb-3 relative z-10">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-3">
-              <div
-                className={cn(
-                  "w-16 h-16 rounded-full flex items-center justify-center text-3xl shadow-xl border-4 border-white",
-                  "bg-gradient-to-r animate-pulse",
-                  profile.avatar?.color || "from-purple-400 via-pink-400 to-yellow-400",
-                )}
+              <TappableZone
+                tapEffect="sparkle"
+                soundEffect={true}
+                celebration={true}
+                maxTaps={3}
               >
-                {profile.avatar?.emoji || "🎯"}
-              </div>
+                <div
+                  className={cn(
+                    "w-20 h-20 rounded-full flex items-center justify-center text-4xl shadow-xl border-4 border-white",
+                    "bg-gradient-to-r animate-pulse cursor-pointer transition-all duration-300 hover:scale-110",
+                    profile.avatar?.color || "from-purple-400 via-pink-400 to-yellow-400",
+                  )}
+                >
+                  {profile.avatar?.emoji || "🎯"}
+                </div>
+              </TappableZone>
               <div>
                 <h3 className="font-black text-xl text-gray-800 leading-tight">
                   🎆 {profile.name} 🎆
