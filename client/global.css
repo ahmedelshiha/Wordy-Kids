@@ -60,7 +60,7 @@
     --sidebar-border: 220 13% 91%;
     --sidebar-ring: 217.2 91.2% 59.8%;
 
-    /* Educational color palette */
+    /* Educational color palette - Enhanced for kids */
     --educational-blue: 220 98% 61%;
     --educational-blue-light: 220 98% 85%;
     --educational-purple: 282 83% 71%;
@@ -73,6 +73,20 @@
     --educational-pink-light: 330 81% 85%;
     --educational-yellow: 48 96% 53%;
     --educational-yellow-light: 48 96% 85%;
+
+    /* Kid-friendly mascot and character colors */
+    --mascot-primary: 45 100% 65%;      /* Sunny yellow for main mascot */
+    --mascot-secondary: 15 100% 70%;    /* Warm orange for accents */
+    --mascot-friendly: 120 60% 70%;     /* Gentle green for success */
+    --mascot-excited: 300 80% 75%;      /* Playful purple for achievements */
+    --mascot-calm: 200 70% 80%;         /* Soft blue for learning moments */
+
+    /* Kid-friendly gradients */
+    --kid-gradient-happy: linear-gradient(135deg, #ff6b9d, #ffa500, #ffcc02);
+    --kid-gradient-learn: linear-gradient(135deg, #4facfe, #00f2fe);
+    --kid-gradient-success: linear-gradient(135deg, #43e97b, #38f9d7);
+    --kid-gradient-adventure: linear-gradient(135deg, #fa709a, #fee140);
+    --kid-gradient-magic: linear-gradient(135deg, #a8edea, #fed6e3, #ffecd2);
   }
 
   .dark {
