@@ -122,8 +122,15 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const logout = () => {
-    // Store current path before logout to avoid redirecting authenticated users back to app
-    const currentPath = location.current?.pathname || "/";
+    // Clear session data first
+    clearSession();
+    setUser(null);
+
+    // For logout navigation, we'll rely on the components themselves to handle redirects
+    // This avoids router hook dependencies in the auth provider
+
+    // Check if we're on an app route and need to redirect
+    const currentPath = typeof window !== "undefined" ? window.location.pathname : "/";
     const isAppRoute = [
       "/app",
       "/admin",
@@ -132,14 +139,9 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       "/word-garden-demo",
     ].includes(currentPath);
 
-    clearSession();
-    setUser(null);
-
-    if (navigate.current && typeof navigate.current === "function") {
-      // If user was on an app route, redirect to login, otherwise stay on current page
-      if (isAppRoute) {
-        navigate.current("/", { replace: true });
-      }
+    if (isAppRoute && typeof window !== "undefined") {
+      // Use native navigation for logout to avoid router dependencies
+      window.location.href = "/";
     }
   };
 
