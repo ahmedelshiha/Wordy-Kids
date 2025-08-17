@@ -2708,11 +2708,25 @@
 
 /* Compact navigation styles */
 .compact-kid-nav {
-  height: 72px; /* Fixed height for compact nav */
+  height: 64px; /* Very compact for small desktop screens */
 }
 
 @media (min-width: 1280px) {
   .compact-kid-nav {
-    height: 84px; /* Slightly taller on larger screens */
+    height: 76px; /* Slightly taller on larger screens */
+  }
+}
+
+@media (min-width: 1536px) {
+  .compact-kid-nav {
+    height: 84px; /* Full height on 2xl+ screens */
+  }
+}
+
+/* Optimize navigation button sizing for different breakpoints */
+@media (min-width: 1024px) and (max-width: 1279px) {
+  .kid-nav-button-compact {
+    min-width: 70px;
+    padding: 0.5rem 0.75rem;
   }
 }
