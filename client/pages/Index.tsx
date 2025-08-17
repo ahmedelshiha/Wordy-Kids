@@ -25,6 +25,8 @@ import { AvatarCustomization } from "@/components/AvatarCustomization";
 import { AchievementSystem } from "@/components/AchievementSystem";
 import { EncouragingFeedback } from "@/components/EncouragingFeedback";
 import { DynamicAuthButton } from "@/components/DynamicAuthButton";
+import { KidRegistrationNotification } from "@/components/KidRegistrationNotification";
+import { useRegistrationReminder } from "@/hooks/useRegistrationReminder";
 import { GameLikeLearning } from "@/components/GameLikeLearning";
 import { WordMatchingGame } from "@/components/WordMatchingGame";
 import { GameHub } from "@/components/games/GameHub";
@@ -265,6 +267,14 @@ export default function Index({ initialProfile }: IndexProps) {
     enableBackgroundSync: true,
     compressionEnabled: true,
   });
+
+  // Registration reminder for guest users
+  const { showFloatingReminder, dismissFloatingReminder } =
+    useRegistrationReminder({
+      delayMinutes: 3, // Show after 3 minutes of interaction
+      reminderIntervalMinutes: 8, // Remind every 8 minutes
+      maxReminders: 2, // Only 2 reminders per session to avoid annoyance
+    });
 
   const persistenceService = getSessionPersistenceService();
 
@@ -1991,194 +2001,9 @@ export default function Index({ initialProfile }: IndexProps) {
                 />
               </div>
             ) : (
-              <div className="flex flex-col lg:flex-row min-h-screen bg-gradient-to-br from-white via-purple-50/30 to-pink-50/30 optimize-for-small-screen">
-                {/* Desktop Sidebar - Hidden on Mobile and in Kid Mode */}
-                <aside
-                  className={`hidden ${kidModeEnabled ? "lg:hidden" : "lg:flex"} lg:w-48 xl:w-52 2xl:w-56 bg-gradient-to-b from-purple-50 via-pink-50 to-blue-50 border-r border-purple-200 shadow-sm overflow-y-auto lg:max-h-screen`}
-                >
-                  <div className="p-2 lg:p-3 w-full">
-                    {/* Compact Magical Portal Logo Section */}
-                    <div className="bg-gradient-to-br from-purple-400 via-pink-400 to-blue-400 p-2.5 rounded-xl shadow-lg mb-3 border border-yellow-300 animate-kid-pulse-glow">
-                      <div className="flex items-center gap-2">
-                        <div className="text-lg sm:text-xl animate-mascot-bounce">
-                          🌟
-                        </div>
-                        <div className="flex-1 min-w-0">
-                          <h1 className="text-sm font-kid-friendly text-white text-shadow truncate">
-                            Wordy Portal ✨
-                          </h1>
-                          <p className="text-xs text-yellow-200 font-kid-friendly">
-                            Magical Learning! 🚀
-                          </p>
-                        </div>
-                      </div>
-                      <div className="mt-1 text-center">
-                        <FriendlyMascot
-                          mood="happy"
-                          size="tiny"
-                          position="center"
-                          animate={true}
-                          delayAppearance={true}
-                          delayMinutes={7}
-                        />
-                      </div>
-                    </div>
-
-                    {/* Navigation Menu - Magical Adventure Theme */}
-                    <nav className="space-y-2">
-                      <button
-                        onClick={() => setActiveTab("dashboard")}
-                        className={`kid-nav-item w-full ${
-                          activeTab === "dashboard"
-                            ? "text-white shadow-lg kid-button active"
-                            : "text-gray-700 hover:text-purple-600 kid-interactive"
-                        }`}
-                      >
-                        <div className="flex flex-col items-center">
-                          <div className="text-2xl sm:text-3xl lg:text-4xl -mt-1 sm:-mt-2 lg:-mt-3 animate-mascot-bounce">
-                            🏡
-                          </div>
-                          <span className="text-xs font-kid-friendly font-bold">
-                            My Castle
-                          </span>
-                        </div>
-                        {activeTab === "dashboard" && (
-                          <div className="ml-auto animate-kid-magic-sparkle">
-                            ✨🌟
-                          </div>
-                        )}
-                      </button>
-
-                      <button
-                        onClick={() => setActiveTab("learn")}
-                        className={`kid-nav-item w-full ${
-                          activeTab === "learn"
-                            ? "text-white shadow-lg kid-button active"
-                            : "text-gray-700 hover:text-green-600 kid-interactive"
-                        }`}
-                      >
-                        <div className="flex flex-col items-center">
-                          <div className="text-2xl sm:text-3xl lg:text-4xl -mt-1 sm:-mt-2 lg:-mt-3 animate-gentle-float">
-                            📚
-                          </div>
-                          <span className="text-xs font-kid-friendly font-bold">
-                            Magic Library
-                          </span>
-                        </div>
-                        {activeTab === "learn" && (
-                          <div className="ml-auto animate-kid-magic-sparkle">
-                            ✨🌟
-                          </div>
-                        )}
-                      </button>
-
-                      <button
-                        onClick={() => setActiveTab("quiz")}
-                        className={`kid-nav-item w-full ${
-                          activeTab === "quiz"
-                            ? "text-white shadow-lg kid-button active"
-                            : "text-gray-700 hover:text-pink-600 kid-interactive"
-                        }`}
-                      >
-                        <div className="flex flex-col items-center">
-                          <div className="text-2xl sm:text-3xl lg:text-4xl -mt-1 sm:-mt-2 lg:-mt-3 animate-mascot-happy">
-                            🧙‍♂️
-                          </div>
-                          <span className="text-xs font-kid-friendly font-bold">
-                            Brain Quest
-                          </span>
-                        </div>
-                        {activeTab === "quiz" && (
-                          <div className="ml-auto animate-kid-magic-sparkle">
-                            ✨🌟
-                          </div>
-                        )}
-                      </button>
-
-                      <button
-                        onClick={() => setActiveTab("adventure")}
-                        className={`hidden w-full flex items-center gap-3 p-3 lg:p-4 rounded-xl lg:rounded-2xl transition-all ${
-                          activeTab === "adventure"
-                            ? "bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-lg"
-                            : "bg-white text-gray-700 hover:bg-purple-50 border border-purple-100"
-                        }`}
-                      >
-                        <Sword
-                          className={`w-4 h-4 lg:w-5 lg:h-5 ${activeTab === "adventure" ? "text-white" : "text-green-600"}`}
-                        />
-                        <span className="font-medium lg:font-semibold text-sm lg:text-base">
-                          🎯 Word Practice
-                        </span>
-                      </button>
-
-                      <button
-                        onClick={() => setActiveTab("progress")}
-                        className={`kid-nav-item w-full ${
-                          activeTab === "progress"
-                            ? "text-white shadow-lg kid-button active"
-                            : "text-gray-700 hover:text-yellow-600 kid-interactive"
-                        }`}
-                      >
-                        <div className="flex flex-col items-center">
-                          <div className="text-2xl sm:text-3xl lg:text-4xl -mt-1 sm:-mt-2 lg:-mt-3 animate-gentle-bounce">
-                            🗺️
-                          </div>
-                          <span className="text-xs font-kid-friendly font-bold">
-                            Adventure Map
-                          </span>
-                        </div>
-                        {activeTab === "progress" && (
-                          <div className="ml-auto animate-kid-magic-sparkle">
-                            ✨🌟
-                          </div>
-                        )}
-                      </button>
-
-                      <div className="mt-4 pt-3 border-t-2 border-rainbow kid-card-rainbow-border">
-                        <button
-                          onClick={() => {
-                            setUserRole("parent");
-                            window.scrollTo({ top: 0, behavior: "smooth" });
-                          }}
-                          className="kid-nav-item w-full kid-gradient-magic text-purple-800 border border-purple-300 kid-interactive"
-                        >
-                          <div className="text-xl animate-mascot-wave">👨‍👩‍👧‍👦</div>
-                          <span className="kid-text-big font-bold">
-                            Family Zone
-                          </span>
-                          <div className="ml-auto animate-kid-magic-sparkle">
-                            👑
-                          </div>
-                        </button>
-                      </div>
-
-                      <button
-                        onClick={() => navigate("/admin")}
-                        className="w-full flex items-center gap-4 p-4 rounded-2xl transition-all bg-white text-gray-700 hover:bg-red-50 hover:border-red-200 border-2 border-transparent"
-                      >
-                        <Shield className="w-5 h-5 text-red-600" />
-                        <span className="font-semibold">
-                          Administrator Dashboard
-                        </span>
-                      </button>
-
-                      <button
-                        onClick={() => setShowSettings(true)}
-                        className="w-full flex items-center gap-4 p-4 rounded-2xl bg-white text-gray-700 hover:bg-purple-50 transition-all border border-purple-200"
-                      >
-                        <Settings className="w-5 h-5 text-gray-600" />
-                        <span className="font-semibold">Settings</span>
-                      </button>
-
-                      <DynamicAuthButton variant="sidebar" />
-                    </nav>
-                  </div>
-                </aside>
-
-                {/* Main Content Area - Optimized for Small Screens */}
-                <div
-                  className={`flex-1 p-2 sm:p-3 lg:p-4 pb-20 sm:pb-24 ${kidModeEnabled ? "lg:pb-20 xl:pb-24" : "lg:pb-6"} overflow-y-auto scroll-smooth`}
-                >
+              <div className="min-h-screen bg-gradient-to-br from-white via-purple-50/30 to-pink-50/30 optimize-for-small-screen">
+                {/* Main Content Area - Full Width */}
+                <div className="w-full p-2 sm:p-3 lg:p-4 pb-20 sm:pb-24 lg:pb-6 overflow-y-auto scroll-smooth">
                   <Tabs
                     value={activeTab}
                     onValueChange={setActiveTab}
@@ -2572,10 +2397,10 @@ export default function Index({ initialProfile }: IndexProps) {
                                                   ✨
                                                 </div>
                                                 <div className="absolute top-6 right-6 text-3xl animate-spin">
-                                                  🌟
+                                                  ����
                                                 </div>
                                                 <div className="absolute bottom-4 left-6 text-2xl animate-bounce delay-300">
-                                                  🎊
+                                                  ���
                                                 </div>
                                                 <div className="absolute bottom-6 right-4 text-2xl animate-pulse delay-500">
                                                   💫
@@ -3557,6 +3382,15 @@ export default function Index({ initialProfile }: IndexProps) {
               }}
               onSettingsClick={() => setShowSettings(true)}
               onAdminClick={() => navigate("/admin")}
+            />
+          )}
+
+          {/* Floating Registration Reminder for Guest Users */}
+          {showFloatingReminder && (
+            <KidRegistrationNotification
+              variant="floating"
+              onDismiss={() => dismissFloatingReminder()}
+              showDismiss={true}
             />
           )}
         </>

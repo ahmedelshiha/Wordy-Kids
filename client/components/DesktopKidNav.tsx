@@ -10,15 +10,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { cn } from "@/lib/utils";
-import {
-  Settings,
-  Users,
-  Shield,
-  Crown,
-  Lock,
-  Eye,
-  EyeOff,
-} from "lucide-react";
+import { Settings, Users, Shield, Crown, Lock } from "lucide-react";
 import {
   Tooltip,
   TooltipContent,
@@ -92,9 +84,7 @@ export function DesktopKidNav({
   const [showParentGate, setShowParentGate] = useState(false);
   const [parentCode, setParentCode] = useState("");
   const [showParentOptions, setShowParentOptions] = useState(false);
-  const [kidModeEnabled, setKidModeEnabled] = useState(userRole === "child");
   const [parentCodeError, setParentCodeError] = useState(false);
-  const [showKidModeConfirm, setShowKidModeConfirm] = useState(false);
 
   const correctParentCode = "PARENT2024"; // More secure parent code
 
@@ -112,27 +102,10 @@ export function DesktopKidNav({
     }
   };
 
-  const toggleKidMode = () => {
-    if (kidModeEnabled) {
-      // Trying to disable kid mode - show confirmation
-      setShowKidModeConfirm(true);
-    } else {
-      // Enabling kid mode - safe to do directly
-      setKidModeEnabled(true);
-      onRoleChange("child");
-    }
-  };
-
-  const confirmDisableKidMode = () => {
-    setKidModeEnabled(false);
-    onRoleChange("parent");
-    setShowKidModeConfirm(false);
-  };
-
   return (
     <>
       {/* Kid Mode: Bottom Navigation - Optimized for Small Screens */}
-      {kidModeEnabled && (
+      {true && (
         <div className="fixed bottom-0 left-0 right-0 z-40 hidden lg:block compact-kid-nav">
           <div className="bg-white/95 backdrop-blur-lg border-t-2 border-rainbow shadow-xl h-full max-h-16 lg:max-h-20 xl:max-h-24">
             <div className="max-w-4xl mx-auto px-3 lg:px-4 h-full">
@@ -375,124 +348,45 @@ export function DesktopKidNav({
       <Dialog open={showParentOptions} onOpenChange={setShowParentOptions}>
         <DialogContent className="sm:max-w-md">
           <DialogHeader>
-            <DialogTitle className="flex items-center justify-between">
-              <div className="flex items-center gap-2">
-                <Crown className="w-5 h-5 text-yellow-600" />
-                Family Zone
-              </div>
-              <div
-                className={`text-sm px-2 py-1 rounded-full ${
-                  kidModeEnabled
-                    ? "bg-green-100 text-green-700 border border-green-200"
-                    : "bg-amber-100 text-amber-700 border border-amber-200"
-                }`}
-              >
-                {kidModeEnabled ? "🔒 Safe Mode" : "⚠️ Sidebar Visible"}
-              </div>
+            <DialogTitle className="flex items-center gap-2">
+              <Crown className="w-5 h-5 text-yellow-600" />
+              Family Zone
             </DialogTitle>
             <DialogDescription>
-              Access parent controls and family settings.
-              {!kidModeEnabled && (
-                <span className="block text-amber-600 font-medium mt-1">
-                  Note: Sidebar is currently visible to children.
-                </span>
-              )}
+              Access parent dashboard, settings, and family controls.
             </DialogDescription>
           </DialogHeader>
           <div className="space-y-4">
-            {/* Kid Mode Toggle */}
-            <div
-              className={`flex items-center justify-between p-4 rounded-lg border-l-4 ${
-                kidModeEnabled
-                  ? "bg-green-50 border-green-400"
-                  : "bg-amber-50 border-amber-400"
-              }`}
-            >
-              <div className="flex items-center gap-3">
-                <div className="text-2xl">{kidModeEnabled ? "🔒" : "🔓"}</div>
-                <div>
-                  <div className="font-medium text-gray-900">
-                    {kidModeEnabled
-                      ? "Kid-Safe Mode Active"
-                      : "Parent Mode Active"}
-                  </div>
-                  <div
-                    className={`text-sm ${kidModeEnabled ? "text-green-600" : "text-amber-600"}`}
-                  >
-                    {kidModeEnabled
-                      ? "✅ Navigation sidebar is hidden from children"
-                      : "⚠️ Navigation sidebar is currently visible"}
-                  </div>
-                  {!kidModeEnabled && (
-                    <div className="text-xs text-red-600 mt-1 font-medium">
-                      ⚠️ Children can access parent controls through sidebar
-                    </div>
-                  )}
-                </div>
-              </div>
-              <div className="flex flex-col gap-2">
-                <Button
-                  variant={kidModeEnabled ? "outline" : "default"}
-                  size="sm"
-                  onClick={toggleKidMode}
-                  className={`ml-4 ${
-                    kidModeEnabled
-                      ? "border-amber-300 text-amber-700 hover:bg-amber-50"
-                      : "bg-green-600 hover:bg-green-700 text-white"
-                  }`}
-                >
-                  {kidModeEnabled ? (
-                    <EyeOff className="w-4 h-4 mr-2" />
-                  ) : (
-                    <Eye className="w-4 h-4 mr-2" />
-                  )}
-                  {kidModeEnabled ? "Show Sidebar" : "Hide Sidebar"}
-                </Button>
-                {/* Status indicator */}
-                <div
-                  className={`text-xs text-center font-medium ${
-                    kidModeEnabled ? "text-green-600" : "text-amber-600"
-                  }`}
-                >
-                  {kidModeEnabled ? "SAFE" : "CAUTION"}
-                </div>
-              </div>
-            </div>
-
             {/* Parent Controls */}
             <div className="grid grid-cols-1 gap-3">
               <Button
-                variant="outline"
                 onClick={() => {
-                  // Ensure kid mode stays enabled to prevent sidebar from showing
-                  setKidModeEnabled(true);
                   onRoleChange("parent");
                   setShowParentOptions(false);
                 }}
-                className="flex items-center gap-3 p-4 h-auto justify-start"
+                className="flex items-center gap-3 p-4 h-auto justify-start bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white border-0 shadow-lg hover:shadow-xl transition-all duration-300"
               >
-                <Users className="w-5 h-5 text-blue-600" />
+                <Users className="w-6 h-6" />
                 <div className="text-left">
-                  <div className="font-medium">Parent Dashboard</div>
-                  <div className="text-sm text-gray-500">
-                    View progress and analytics (Kid-safe mode)
+                  <div className="font-semibold text-lg">Parent Dashboard</div>
+                  <div className="text-sm text-blue-100">
+                    View detailed progress, analytics, and manage learning goals
                   </div>
                 </div>
               </Button>
 
               <Button
-                variant="outline"
                 onClick={() => {
                   onSettingsClick();
                   setShowParentOptions(false);
                 }}
-                className="flex items-center gap-3 p-4 h-auto justify-start"
+                className="flex items-center gap-3 p-4 h-auto justify-start bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white border-0 shadow-lg hover:shadow-xl transition-all duration-300"
               >
-                <Settings className="w-5 h-5 text-gray-600" />
+                <Settings className="w-6 h-6" />
                 <div className="text-left">
-                  <div className="font-medium">Settings</div>
-                  <div className="text-sm text-gray-500">
-                    App preferences and controls
+                  <div className="font-semibold text-lg">Settings</div>
+                  <div className="text-sm text-green-100">
+                    Configure app preferences, controls, and customizations
                   </div>
                 </div>
               </Button>
@@ -503,92 +397,25 @@ export function DesktopKidNav({
                   onAdminClick();
                   setShowParentOptions(false);
                 }}
-                className="flex items-center gap-3 p-4 h-auto justify-start"
+                className="flex items-center gap-3 p-4 h-auto justify-start border-2 border-purple-200 hover:border-purple-300 hover:bg-purple-50 transition-all duration-300"
               >
                 <Shield className="w-5 h-5 text-purple-600" />
                 <div className="text-left">
-                  <div className="font-medium">Admin Panel</div>
-                  <div className="text-sm text-gray-500">
-                    Advanced configuration
+                  <div className="font-medium text-purple-800">Admin Panel</div>
+                  <div className="text-sm text-purple-600">
+                    Advanced configuration and system controls
                   </div>
                 </div>
               </Button>
-
-              {/* Quick Hide Sidebar Option - Only show when sidebar is visible */}
-              {!kidModeEnabled && (
-                <Button
-                  variant="outline"
-                  onClick={() => {
-                    setKidModeEnabled(true);
-                    onRoleChange("child");
-                    setShowParentOptions(false);
-                  }}
-                  className="flex items-center gap-3 p-4 h-auto justify-start border-green-200 hover:border-green-300 hover:bg-green-50"
-                >
-                  <Eye className="w-5 h-5 text-green-600" />
-                  <div className="text-left">
-                    <div className="font-medium text-green-700">
-                      Hide Sidebar
-                    </div>
-                    <div className="text-sm text-green-600">
-                      Return to kid-safe mode
-                    </div>
-                  </div>
-                </Button>
-              )}
             </div>
 
             <Button
               variant="outline"
               onClick={() => setShowParentOptions(false)}
-              className="w-full"
+              className="w-full mt-4 border-gray-300 hover:border-gray-400"
             >
-              Close
+              Close Family Zone
             </Button>
-          </div>
-        </DialogContent>
-      </Dialog>
-
-      {/* Kid Mode Disable Confirmation Dialog */}
-      <Dialog open={showKidModeConfirm} onOpenChange={setShowKidModeConfirm}>
-        <DialogContent className="sm:max-w-md">
-          <DialogHeader>
-            <DialogTitle className="flex items-center gap-2">
-              <Shield className="w-5 h-5 text-amber-600" />
-              Disable Kid-Safe Mode?
-            </DialogTitle>
-            <DialogDescription>
-              This will show the full navigation sidebar which children can
-              access. Are you sure you want to continue?
-            </DialogDescription>
-          </DialogHeader>
-          <div className="space-y-4">
-            <div className="p-4 bg-amber-50 border border-amber-200 rounded-lg">
-              <div className="flex items-start gap-3">
-                <div className="text-2xl">⚠️</div>
-                <div>
-                  <div className="font-medium text-amber-800">
-                    Safety Warning
-                  </div>
-                  <div className="text-sm text-amber-700 mt-1">
-                    Disabling Kid-Safe Mode will make the sidebar visible to
-                    children, giving them access to parent controls and
-                    settings.
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="flex justify-between">
-              <Button
-                variant="outline"
-                onClick={() => setShowKidModeConfirm(false)}
-              >
-                Keep Kid-Safe Mode
-              </Button>
-              <Button variant="destructive" onClick={confirmDisableKidMode}>
-                Show Sidebar Anyway
-              </Button>
-            </div>
           </div>
         </DialogContent>
       </Dialog>
