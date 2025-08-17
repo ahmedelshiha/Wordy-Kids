@@ -91,7 +91,7 @@ export function MobileBottomNav({
     {
       id: "dashboard",
       emoji: "🏡",
-      label: "My Castle",
+      label: "Home",
       icon: Target,
       activeGradient: "kid-gradient-happy",
       hoverGradient: "kid-gradient-learn",
@@ -100,7 +100,7 @@ export function MobileBottomNav({
     {
       id: "learn",
       emoji: "📚",
-      label: "Magic Library",
+      label: "Learn",
       icon: BookOpen,
       activeGradient: "kid-gradient-learn",
       hoverGradient: "kid-gradient-success",
@@ -109,7 +109,7 @@ export function MobileBottomNav({
     {
       id: "quiz",
       emoji: "🧙‍♂️",
-      label: "Brain Quest",
+      label: "Quiz",
       icon: Brain,
       activeGradient: "kid-gradient-adventure",
       hoverGradient: "kid-gradient-magic",
@@ -118,7 +118,7 @@ export function MobileBottomNav({
     {
       id: "progress",
       emoji: "🗺️",
-      label: "Adventure Map",
+      label: "Map",
       icon: Trophy,
       activeGradient: "kid-gradient-success",
       hoverGradient: "kid-gradient-adventure",
