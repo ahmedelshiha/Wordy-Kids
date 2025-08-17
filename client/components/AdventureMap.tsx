@@ -117,42 +117,42 @@ export const AdventureMap: React.FC<AdventureMapProps> = ({
   };
 
   return (
-    <div className="space-y-6">
-      {/* Map Header */}
+    <div className="space-y-3 sm:space-y-4 md:space-y-6 optimize-for-small-screen">
+      {/* Map Header - Compact */}
       <div className="text-center">
-        <h2 className="text-3xl font-bold text-gray-800 mb-2">
+        <h2 className="text-xl md:text-2xl font-bold text-gray-800 mb-1">
           🗺️ Word Rescue Map
         </h2>
-        <p className="text-gray-600">
+        <p className="text-sm md:text-base text-gray-600">
           Choose a zone to rescue forgotten words and restore their power!
         </p>
       </div>
 
-      {/* Hero Status Bar */}
+      {/* Hero Status Bar - Compact */}
       <Card className="bg-gradient-to-r from-purple-500 to-pink-500 text-white">
-        <CardContent className="p-4">
+        <CardContent className="p-3 md:p-4">
           <div className="flex items-center justify-between">
-            <div className="flex items-center gap-4">
-              <div className="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center">
-                <Crown className="w-6 h-6" />
+            <div className="flex items-center gap-2 md:gap-4">
+              <div className="w-8 h-8 md:w-10 md:h-10 bg-white/20 rounded-full flex items-center justify-center">
+                <Crown className="w-4 h-4 md:w-5 md:h-5" />
               </div>
               <div>
-                <h3 className="font-bold text-lg">{wordHero.name}</h3>
-                <div className="flex items-center gap-4 text-sm">
+                <h3 className="font-bold text-base md:text-lg">{wordHero.name}</h3>
+                <div className="flex items-center gap-2 md:gap-3 text-xs md:text-sm">
                   <span>Level {wordHero.level}</span>
                   <span>🪙 {wordHero.coins}</span>
-                  <span>🛡️ {wordHero.rescued_words_count} Rescued</span>
+                  <span>🛡️ {wordHero.rescued_words_count}</span>
                 </div>
               </div>
             </div>
             <div className="text-right">
-              <div className="text-sm opacity-90">Experience</div>
-              <div className="flex items-center gap-2">
+              <div className="text-xs md:text-sm opacity-90">Experience</div>
+              <div className="flex items-center gap-1 md:gap-2">
                 <Progress
                   value={wordHero.experience % 100}
-                  className="w-24 h-2 bg-white/20"
+                  className="w-16 md:w-20 h-1.5 md:h-2 bg-white/20"
                 />
-                <span className="text-sm">{wordHero.experience} XP</span>
+                <span className="text-xs md:text-sm">{wordHero.experience} XP</span>
               </div>
             </div>
           </div>
