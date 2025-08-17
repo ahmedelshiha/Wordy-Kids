@@ -402,6 +402,8 @@ export function DesktopKidNav({
               <Button
                 variant="outline"
                 onClick={() => {
+                  // Ensure kid mode stays enabled to prevent sidebar from showing
+                  setKidModeEnabled(true);
                   onRoleChange("parent");
                   setShowParentOptions(false);
                 }}
@@ -411,7 +413,7 @@ export function DesktopKidNav({
                 <div className="text-left">
                   <div className="font-medium">Parent Dashboard</div>
                   <div className="text-sm text-gray-500">
-                    View progress and analytics
+                    View progress and analytics (Kid-safe mode)
                   </div>
                 </div>
               </Button>
