@@ -2029,8 +2029,8 @@ export default function Index({ initialProfile }: IndexProps) {
                             : "bg-white text-gray-700 hover:kid-gradient-learn hover:text-white border border-purple-200 kid-interactive"
                         }`}
                       >
-                        <div className="text-xl animate-mascot-bounce">🏰</div>
-                        <span className="kid-text-big font-bold">
+                        <div className="text-lg animate-mascot-bounce">🏰</div>
+                        <span className="text-sm font-kid-friendly font-bold">
                           My Castle
                         </span>
                         {activeTab === "dashboard" && (
@@ -2048,8 +2048,8 @@ export default function Index({ initialProfile }: IndexProps) {
                             : "bg-white text-gray-700 hover:kid-gradient-success hover:text-white border border-green-200 kid-interactive"
                         }`}
                       >
-                        <div className="text-xl animate-gentle-float">📚</div>
-                        <span className="kid-text-big font-bold">
+                        <div className="text-lg animate-gentle-float">📚</div>
+                        <span className="text-sm font-kid-friendly font-bold">
                           Magic Library
                         </span>
                         {activeTab === "learn" && (
@@ -2067,8 +2067,8 @@ export default function Index({ initialProfile }: IndexProps) {
                             : "bg-white text-gray-700 hover:kid-gradient-magic hover:text-purple-800 border border-pink-200 kid-interactive"
                         }`}
                       >
-                        <div className="text-xl animate-mascot-happy">🧙‍♂️</div>
-                        <span className="kid-text-big font-bold">
+                        <div className="text-lg animate-mascot-happy">🧙‍♂️</div>
+                        <span className="text-sm font-kid-friendly font-bold">
                           Brain Quest
                         </span>
                         {activeTab === "quiz" && (
@@ -2106,8 +2106,8 @@ export default function Index({ initialProfile }: IndexProps) {
                             : "bg-white text-gray-700 hover:kid-gradient-adventure hover:text-white border border-yellow-200 kid-interactive"
                         }`}
                       >
-                        <div className="text-xl animate-gentle-bounce">🗺️</div>
-                        <span className="kid-text-big font-bold">
+                        <div className="text-lg animate-gentle-bounce">🗺️</div>
+                        <span className="text-sm font-kid-friendly font-bold">
                           Adventure Map
                         </span>
                         {activeTab === "progress" && (
