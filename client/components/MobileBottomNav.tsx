@@ -108,7 +108,7 @@ export function MobileBottomNav({
     },
     {
       id: "quiz",
-      emoji: "🧙‍��️",
+      emoji: "🧙‍♂️",
       label: "Brain Quest",
       icon: Brain,
       activeGradient: "kid-gradient-adventure",
@@ -277,7 +277,7 @@ export function MobileBottomNav({
             >
               <div
                 className={cn(
-                  "text-2xl sm:text-3xl -mt-1 transition-transform duration-200",
+                  "text-3xl sm:text-4xl md:text-5xl -mt-1 transition-transform duration-200",
                   showMoreMenu ? "rotate-90 scale-110 animate-mascot-bounce" : "animate-gentle-float",
                 )}
               >
