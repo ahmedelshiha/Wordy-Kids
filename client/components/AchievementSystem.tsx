@@ -741,22 +741,21 @@ export function AchievementSystem({
   );
 
   const renderStreakFun = () => (
-    <div className="space-y-4 md:space-y-6">
-      <Card className="bg-gradient-to-br from-green-50 to-blue-50 mx-2 md:mx-0">
-        <CardHeader className="pb-3 md:pb-6">
-          <CardTitle className="flex items-center gap-2 text-educational-green text-lg md:text-xl">
-            <Activity className="w-5 h-5 md:w-6 md:h-6" />
-            🔥 Your Learning Adventure Map!
+    <div className="space-y-3 md:space-y-4 lg:space-y-6">
+      <Card className="bg-gradient-to-br from-green-50 to-blue-50 mx-1 md:mx-0">
+        <CardHeader className="pb-2 md:pb-3 lg:pb-6">
+          <CardTitle className="flex items-center gap-2 text-educational-green text-base md:text-lg">
+            <Activity className="w-4 h-4 md:w-5 md:h-5" />
+            🔥 Learning Adventure Map!
           </CardTitle>
         </CardHeader>
-        <CardContent className="px-3 md:px-6">
-          <div className="space-y-3 md:space-y-4">
-            <p className="text-center text-educational-purple font-semibold text-sm md:text-base">
-              Look at all the days you've been learning! Each square is a day of
-              adventure! 🗺️
+        <CardContent className="px-2 md:px-3 lg:px-6">
+          <div className="space-y-2 md:space-y-3">
+            <p className="text-center text-educational-purple font-semibold text-xs md:text-sm">
+              Your learning adventure! Each square is a day! 🗺️
             </p>
 
-            <div className="grid grid-cols-10 gap-0.5 md:gap-1 justify-center">
+            <div className="grid grid-cols-10 gap-0.5 justify-center">
               {stats.streakData.map((day, index) => {
                 const emojis = ["💫", "⭐", "🌟", "✨", "🎊"];
                 const randomEmoji =
@@ -765,7 +764,7 @@ export function AchievementSystem({
                 return (
                   <div
                     key={index}
-                    className={`w-5 h-5 md:w-6 md:h-6 rounded-lg flex items-center justify-center text-xs font-bold transition-all hover:scale-125 cursor-pointer ${
+                    className={`w-4 h-4 md:w-5 md:h-5 rounded-md flex items-center justify-center text-xs font-bold transition-all hover:scale-110 cursor-pointer ${
                       day.active
                         ? day.wordsLearned > 8
                           ? "bg-gradient-to-br from-educational-green to-green-400 text-white shadow-lg"

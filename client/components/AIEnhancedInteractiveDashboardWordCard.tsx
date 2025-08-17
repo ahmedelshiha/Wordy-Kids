@@ -769,7 +769,7 @@ export function AIEnhancedInteractiveDashboardWordCard({
   const renderWordImage = () => {
     if (currentWord?.imageUrl) {
       return (
-        <div className="relative w-full h-64 rounded-2xl overflow-hidden shadow-lg">
+        <div className="relative w-full h-48 md:h-56 rounded-xl overflow-hidden shadow-md">
           {!imageLoaded && !imageError && (
             <div className="absolute inset-0 bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center">
               <div className="flex flex-col items-center gap-2">
@@ -906,7 +906,7 @@ export function AIEnhancedInteractiveDashboardWordCard({
             transition: { duration: 0.3 },
           }}
           whileTap={{ scale: 0.95 }}
-          className="w-56 h-40 mx-auto flex items-center justify-center bg-gradient-to-br from-blue-100 via-purple-100 to-pink-100 rounded-2xl shadow-lg hover:shadow-xl cursor-pointer group relative overflow-hidden"
+          className="w-48 h-32 md:w-52 md:h-36 mx-auto flex items-center justify-center bg-gradient-to-br from-blue-100 via-purple-100 to-pink-100 rounded-xl shadow-md hover:shadow-lg cursor-pointer group relative overflow-hidden"
           onClick={playPronunciation}
         >
           {/* AI Enhancement Badge */}
@@ -946,7 +946,7 @@ export function AIEnhancedInteractiveDashboardWordCard({
               scale: 1.1,
               transition: { duration: 0.2 },
             }}
-            className="text-9xl filter drop-shadow-lg relative z-10"
+            className="text-6xl md:text-7xl filter drop-shadow-lg relative z-10"
           >
             {currentWord.emoji}
 
@@ -1073,7 +1073,10 @@ export function AIEnhancedInteractiveDashboardWordCard({
 
   return (
     <div
-      className={cn("space-y-6", className)}
+      className={cn(
+        "space-y-3 sm:space-y-4 md:space-y-6 optimize-for-small-screen",
+        className,
+      )}
       role="main"
       aria-label="AI-enhanced interactive word learning card"
       tabIndex={0}
@@ -1100,10 +1103,10 @@ export function AIEnhancedInteractiveDashboardWordCard({
         </motion.div>
       )}
 
-      {/* AI Insights Panel - Mobile Optimized */}
+      {/* AI Insights Panel - Compact */}
       {showAIInsights && (
         <Card className="bg-gradient-to-r from-blue-50 to-purple-50 border-blue-200">
-          <CardContent className="p-2 sm:p-4">
+          <CardContent className="p-2 sm:p-3">
             <div className="flex items-center justify-between mb-2">
               <h3 className="text-sm font-semibold flex items-center gap-1">
                 <Brain className="w-3 h-3 sm:w-4 sm:h-4 text-blue-600" />
@@ -1159,10 +1162,10 @@ export function AIEnhancedInteractiveDashboardWordCard({
 
       {/* Session Completion Modal */}
       {showSessionComplete && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-1 sm:p-4">
-          <div className="bg-white rounded-xl sm:rounded-3xl p-2 sm:p-8 max-w-xs sm:max-w-md w-full text-center shadow-2xl animate-in zoom-in-95 duration-300">
-            <div className="text-3xl sm:text-6xl mb-1 sm:mb-4">🤖🎉</div>
-            <h2 className="text-lg sm:text-3xl font-bold text-gray-800 mb-2 sm:mb-4">
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-1 sm:p-2">
+          <div className="bg-white rounded-xl sm:rounded-2xl p-3 sm:p-6 max-w-xs sm:max-w-sm w-full text-center shadow-xl animate-in zoom-in-95 duration-300">
+            <div className="text-2xl sm:text-4xl mb-1 sm:mb-2">🤖🎉</div>
+            <h2 className="text-base sm:text-xl font-bold text-gray-800 mb-1 sm:mb-2">
               AI Session Complete!
             </h2>
 
@@ -1267,9 +1270,9 @@ export function AIEnhancedInteractiveDashboardWordCard({
       >
         <Card
           className={cn(
-            "w-full max-w-3xl mx-auto relative overflow-hidden",
+            "w-full max-w-2xl mx-auto relative overflow-hidden",
             "bg-gradient-to-br from-white via-blue-50/30 to-purple-50/30",
-            "shadow-lg hover:shadow-xl border-0 rounded-2xl sm:rounded-3xl",
+            "shadow-md hover:shadow-lg border-0 rounded-xl sm:rounded-2xl",
             "backdrop-blur-sm ring-1 ring-black/5",
             celebrationEffect &&
               "animate-pulse shadow-2xl border-yellow-400 border-4 bg-gradient-to-br from-yellow-50 to-orange-50",
@@ -1294,7 +1297,7 @@ export function AIEnhancedInteractiveDashboardWordCard({
           )}
 
           <AICardContent
-            className="p-1 sm:p-3 md:p-5 lg:p-6 relative z-10"
+            className="p-1 sm:p-2 md:p-3 lg:p-4 relative z-10"
             aiState={aiState}
             aiActions={aiActions}
             showAIInsights={showAIInsights}
@@ -1331,11 +1334,11 @@ export function AIEnhancedInteractiveDashboardWordCard({
               <AchievementTeaser className="mb-1 sm:mb-2" />
             </div>
 
-            {/* Category and Progress Header - Mobile Optimized */}
-            <div className="text-center mb-2 sm:mb-4 md:mb-6 mt-1 sm:mt-3 md:mt-4">
+            {/* Category and Progress Header - Compact */}
+            <div className="text-center mb-1 sm:mb-2 md:mb-3 mt-1 sm:mt-2 md:mt-3">
               {/* Mobile: Simplified badges */}
-              <div className="md:hidden mb-2">
-                <div className="flex items-center justify-center gap-2">
+              <div className="md:hidden mb-1">
+                <div className="flex items-center justify-center gap-1">
                   <Badge
                     className={cn(
                       "text-xs px-2 py-1",
@@ -1441,7 +1444,7 @@ export function AIEnhancedInteractiveDashboardWordCard({
                 initial={{ opacity: 0, y: -10, scale: 0.95 }}
                 animate={{ opacity: 1, y: 0, scale: 1 }}
                 transition={{ duration: 0.4, type: "spring", damping: 20 }}
-                className="text-lg sm:text-xl md:text-2xl font-bold text-gray-800 mb-1"
+                className="text-base sm:text-lg md:text-xl font-bold text-gray-800 mb-1"
               >
                 🔍 What do you see?
               </motion.h1>
@@ -1461,7 +1464,7 @@ export function AIEnhancedInteractiveDashboardWordCard({
 
             {/* Action Buttons Row - Mobile Optimized */}
             <div
-              className="flex justify-center items-center gap-2 mb-3 px-2"
+              className="flex justify-center items-center gap-1 mb-2 px-1"
               role="toolbar"
               aria-label="Word learning controls"
             >
@@ -1474,7 +1477,7 @@ export function AIEnhancedInteractiveDashboardWordCard({
                     }
                     variant="outline"
                     size="sm"
-                    className="px-2 py-1 text-xs rounded-lg bg-yellow-50 border-yellow-200 text-yellow-700 min-h-[36px]"
+                    className="px-2 py-1 text-xs rounded-lg bg-yellow-50 border-yellow-200 text-yellow-700 min-h-[32px]"
                   >
                     {EMOJI_CONSTANTS.HINT} Hint
                   </Button>
@@ -1499,8 +1502,8 @@ export function AIEnhancedInteractiveDashboardWordCard({
                   onClick={playPronunciation}
                   disabled={isPlaying}
                   className={cn(
-                    "bg-blue-500 hover:bg-blue-600 text-white p-3 rounded-full",
-                    "min-w-[48px] min-h-[48px]",
+                    "bg-blue-500 hover:bg-blue-600 text-white p-2 rounded-full",
+                    "min-w-[40px] min-h-[40px]",
                     isPlaying && "animate-pulse bg-yellow-500",
                   )}
                 >

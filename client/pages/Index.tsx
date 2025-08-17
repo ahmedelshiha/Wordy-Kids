@@ -55,6 +55,8 @@ import {
   WordLearnedParticles,
   AmbientMagicParticles,
 } from "@/components/MagicalParticles";
+import { MagicalPortalEffect } from "@/components/MagicalPortalEffect";
+import { RewardCelebration } from "@/components/RewardCelebration";
 import { SessionRestoration } from "@/components/SessionRestoration";
 import {
   useSessionPersistence,
@@ -1811,9 +1813,9 @@ export default function Index({ initialProfile }: IndexProps) {
       {/* Main Content - Only show when session is initialized */}
       {isSessionInitialized && (
         <>
-          {/* Optimized Mobile-First Header */}
+          {/* Ultra-Compact Header */}
           <header className="relative overflow-hidden bg-gradient-to-r from-educational-blue via-educational-purple to-educational-pink text-white shadow-lg">
-            <div className="relative container mx-auto px-4 py-2 md:py-3">
+            <div className="relative container mx-auto px-3 py-1 md:py-1.5">
               {/* Mobile header - Ultra compact & optimized */}
               <div className="flex items-center justify-between md:hidden">
                 <div className="flex items-center gap-2">
@@ -1987,26 +1989,24 @@ export default function Index({ initialProfile }: IndexProps) {
                 />
               </div>
             ) : (
-              <div className="flex flex-col lg:flex-row min-h-screen bg-gradient-to-br from-white via-purple-50/30 to-pink-50/30">
+              <div className="flex flex-col lg:flex-row min-h-screen bg-gradient-to-br from-white via-purple-50/30 to-pink-50/30 optimize-for-small-screen">
                 {/* Desktop Sidebar - Hidden on Mobile */}
-                <aside className="hidden lg:flex lg:w-60 xl:w-64 2xl:w-72 bg-gradient-to-b from-purple-50 via-pink-50 to-blue-50 border-r border-purple-200 shadow-sm overflow-y-auto lg:max-h-screen">
-                  <div className="p-3 lg:p-4 w-full">
-                    {/* Logo Section - Kid-Friendly & Magical */}
-                    <div className="kid-card mb-4 lg:mb-6 kid-gradient-magic">
-                      <div className="flex items-center gap-3">
-                        <div className="mascot-character text-2xl animate-gentle-bounce">
-                          🦁
-                        </div>
-                        <div>
-                          <h1 className="kid-text-big font-bold text-purple-800">
-                            Wordy Kids!
+                <aside className="hidden lg:flex lg:w-48 xl:w-52 2xl:w-56 bg-gradient-to-b from-purple-50 via-pink-50 to-blue-50 border-r border-purple-200 shadow-sm overflow-y-auto lg:max-h-screen">
+                  <div className="p-2 lg:p-3 w-full">
+                    {/* Compact Magical Portal Logo Section */}
+                    <div className="bg-gradient-to-br from-purple-400 via-pink-400 to-blue-400 p-2.5 rounded-xl shadow-lg mb-3 border border-yellow-300 animate-kid-pulse-glow">
+                      <div className="flex items-center gap-2">
+                        <div className="text-2xl animate-mascot-bounce">🌟</div>
+                        <div className="flex-1 min-w-0">
+                          <h1 className="text-sm font-kid-friendly text-white text-shadow truncate">
+                            Wordy Portal ✨
                           </h1>
-                          <p className="text-sm font-semibold text-purple-700">
-                            ✨ Magical Learning! 🚀
+                          <p className="text-xs text-yellow-200 font-kid-friendly">
+                            Magical Learning! 🚀
                           </p>
                         </div>
                       </div>
-                      <div className="mt-2 text-center">
+                      <div className="mt-1 text-center">
                         <FriendlyMascot
                           mood="happy"
                           size="small"
@@ -2026,13 +2026,15 @@ export default function Index({ initialProfile }: IndexProps) {
                             : "bg-white text-gray-700 hover:kid-gradient-learn hover:text-white border border-purple-200 kid-interactive"
                         }`}
                       >
-                        <div className="text-xl animate-mascot-bounce">🏰</div>
-                        <span className="kid-text-big font-bold">
+                        <div className="text-base animate-mascot-bounce">
+                          🏰
+                        </div>
+                        <span className="text-xs font-kid-friendly font-bold">
                           My Castle
                         </span>
                         {activeTab === "dashboard" && (
                           <div className="ml-auto animate-kid-magic-sparkle">
-                            ✨
+                            ��
                           </div>
                         )}
                       </button>
@@ -2045,8 +2047,8 @@ export default function Index({ initialProfile }: IndexProps) {
                             : "bg-white text-gray-700 hover:kid-gradient-success hover:text-white border border-green-200 kid-interactive"
                         }`}
                       >
-                        <div className="text-xl animate-gentle-float">📚</div>
-                        <span className="kid-text-big font-bold">
+                        <div className="text-base animate-gentle-float">📚</div>
+                        <span className="text-xs font-kid-friendly font-bold">
                           Magic Library
                         </span>
                         {activeTab === "learn" && (
@@ -2064,8 +2066,8 @@ export default function Index({ initialProfile }: IndexProps) {
                             : "bg-white text-gray-700 hover:kid-gradient-magic hover:text-purple-800 border border-pink-200 kid-interactive"
                         }`}
                       >
-                        <div className="text-xl animate-mascot-happy">🧙‍♂️</div>
-                        <span className="kid-text-big font-bold">
+                        <div className="text-base animate-mascot-happy">🧙‍♂️</div>
+                        <span className="text-xs font-kid-friendly font-bold">
                           Brain Quest
                         </span>
                         {activeTab === "quiz" && (
@@ -2103,8 +2105,10 @@ export default function Index({ initialProfile }: IndexProps) {
                             : "bg-white text-gray-700 hover:kid-gradient-adventure hover:text-white border border-yellow-200 kid-interactive"
                         }`}
                       >
-                        <div className="text-xl animate-gentle-bounce">🗺️</div>
-                        <span className="kid-text-big font-bold">
+                        <div className="text-base animate-gentle-bounce">
+                          🗺️
+                        </div>
+                        <span className="text-xs font-kid-friendly font-bold">
                           Adventure Map
                         </span>
                         {activeTab === "progress" && (
@@ -2159,8 +2163,8 @@ export default function Index({ initialProfile }: IndexProps) {
                   </div>
                 </aside>
 
-                {/* Main Content Area - Kid-Friendly & Compact */}
-                <div className="flex-1 p-3 sm:p-4 lg:p-6 pb-20 sm:pb-24 lg:pb-8 overflow-y-auto scroll-smooth">
+                {/* Main Content Area - Optimized for Small Screens */}
+                <div className="flex-1 p-2 sm:p-3 lg:p-4 pb-20 sm:pb-24 lg:pb-6 overflow-y-auto scroll-smooth">
                   <Tabs
                     value={activeTab}
                     onValueChange={setActiveTab}
@@ -2961,34 +2965,34 @@ export default function Index({ initialProfile }: IndexProps) {
                             )}
                           </div>
 
-                          {/* Kid-Friendly Quiz Cards - Mobile Optimized */}
-                          <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 md:gap-4 max-w-6xl mx-auto px-2">
+                          {/* Compact Quiz Cards */}
+                          <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2 md:gap-3 max-w-5xl mx-auto px-1">
                             {/* Word Garden - Listen & Pick (FIRST GAME) */}
-                            <Card className="cursor-pointer hover:shadow-lg transition-all duration-300 hover:scale-105 border-2 border-emerald-400/30 animate-kid-float">
-                              <CardContent className="p-3 md:p-4 text-center">
-                                <div className="text-3xl md:text-5xl mb-2 md:mb-3 animate-gentle-bounce">
+                            <Card className="cursor-pointer hover:shadow-md transition-all duration-200 hover:scale-102 border border-emerald-400/30">
+                              <CardContent className="p-2 md:p-3 text-center">
+                                <div className="text-2xl md:text-3xl mb-1 animate-gentle-bounce">
                                   🌱
                                 </div>
-                                <h3 className="text-sm md:text-lg font-bold text-emerald-600 mb-1 md:mb-2">
+                                <h3 className="text-xs md:text-sm font-bold text-emerald-600 mb-1">
                                   Word Garden
                                 </h3>
-                                <p className="text-xs md:text-sm text-gray-600 mb-2 md:mb-3 hidden md:block">
-                                  Listen & grow your vocabulary garden! 🌸
+                                <p className="text-xs text-gray-600 mb-1 hidden lg:block">
+                                  Listen & grow! 🌸
                                 </p>
-                                <div className="flex justify-center gap-1 mb-2 md:mb-3">
-                                  <span className="bg-emerald-400/20 text-emerald-600 px-1.5 py-0.5 rounded-full text-xs">
-                                    🎯 Ages 3-5!
+                                <div className="flex justify-center gap-1 mb-2">
+                                  <span className="bg-emerald-400/20 text-emerald-600 px-1 py-0.5 rounded-full text-xs">
+                                    🎯 3-5
                                   </span>
                                 </div>
                                 <Button
                                   onClick={() => {
                                     setGameMode("word-garden");
                                   }}
-                                  className="w-full bg-emerald-500 text-white hover:bg-emerald-600 py-1.5 md:py-2 text-xs md:text-sm rounded-xl animate-wiggle"
+                                  className="w-full bg-emerald-500 text-white hover:bg-emerald-600 py-1 text-xs rounded-lg"
                                   size="sm"
                                 >
-                                  <Play className="w-3 h-3 md:w-4 md:h-4 mr-1" />
-                                  Grow Garden! 🌱
+                                  <Play className="w-3 h-3 mr-1" />
+                                  Play! 🌱
                                 </Button>
                               </CardContent>
                             </Card>
@@ -3501,6 +3505,25 @@ export default function Index({ initialProfile }: IndexProps) {
             <MascotReaction
               type="success"
               onComplete={() => console.log("Mascot celebration complete")}
+            />
+          )}
+
+          {/* Magical Portal Effects - Enhanced Desktop Experience */}
+          <MagicalPortalEffect
+            isActive={backgroundAnimationsEnabled && activeTab === "learn"}
+            intensity="medium"
+            particleEmojis={["✨", "🌟", "⭐", "💫", "🔮", "🌈", "🦄", "🎉"]}
+          />
+
+          {/* Enhanced Reward Celebration */}
+          {feedback?.type === "celebration" && (
+            <RewardCelebration
+              isVisible={true}
+              type={rememberedWords.size >= 10 ? "achievement" : "word_learned"}
+              title={feedback.title}
+              message={feedback.message}
+              points={feedback.points}
+              onComplete={() => setFeedback(null)}
             />
           )}
         </>

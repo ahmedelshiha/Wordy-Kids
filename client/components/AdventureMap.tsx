@@ -117,50 +117,54 @@ export const AdventureMap: React.FC<AdventureMapProps> = ({
   };
 
   return (
-    <div className="space-y-6">
-      {/* Map Header */}
+    <div className="space-y-3 sm:space-y-4 md:space-y-6 optimize-for-small-screen">
+      {/* Map Header - Compact */}
       <div className="text-center">
-        <h2 className="text-3xl font-bold text-gray-800 mb-2">
+        <h2 className="text-xl md:text-2xl font-bold text-gray-800 mb-1">
           🗺️ Word Rescue Map
         </h2>
-        <p className="text-gray-600">
+        <p className="text-sm md:text-base text-gray-600">
           Choose a zone to rescue forgotten words and restore their power!
         </p>
       </div>
 
-      {/* Hero Status Bar */}
+      {/* Hero Status Bar - Compact */}
       <Card className="bg-gradient-to-r from-purple-500 to-pink-500 text-white">
-        <CardContent className="p-4">
+        <CardContent className="p-3 md:p-4">
           <div className="flex items-center justify-between">
-            <div className="flex items-center gap-4">
-              <div className="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center">
-                <Crown className="w-6 h-6" />
+            <div className="flex items-center gap-2 md:gap-4">
+              <div className="w-8 h-8 md:w-10 md:h-10 bg-white/20 rounded-full flex items-center justify-center">
+                <Crown className="w-4 h-4 md:w-5 md:h-5" />
               </div>
               <div>
-                <h3 className="font-bold text-lg">{wordHero.name}</h3>
-                <div className="flex items-center gap-4 text-sm">
+                <h3 className="font-bold text-base md:text-lg">
+                  {wordHero.name}
+                </h3>
+                <div className="flex items-center gap-2 md:gap-3 text-xs md:text-sm">
                   <span>Level {wordHero.level}</span>
                   <span>🪙 {wordHero.coins}</span>
-                  <span>🛡️ {wordHero.rescued_words_count} Rescued</span>
+                  <span>🛡️ {wordHero.rescued_words_count}</span>
                 </div>
               </div>
             </div>
             <div className="text-right">
-              <div className="text-sm opacity-90">Experience</div>
-              <div className="flex items-center gap-2">
+              <div className="text-xs md:text-sm opacity-90">Experience</div>
+              <div className="flex items-center gap-1 md:gap-2">
                 <Progress
                   value={wordHero.experience % 100}
-                  className="w-24 h-2 bg-white/20"
+                  className="w-16 md:w-20 h-1.5 md:h-2 bg-white/20"
                 />
-                <span className="text-sm">{wordHero.experience} XP</span>
+                <span className="text-xs md:text-sm">
+                  {wordHero.experience} XP
+                </span>
               </div>
             </div>
           </div>
         </CardContent>
       </Card>
 
-      {/* Zone Selection */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+      {/* Zone Selection - Compact Grid */}
+      <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-2 md:gap-3">
         {Object.entries(zoneInfo).map(([zoneKey, zone]) => {
           const zoneWords = wordsByZone[zoneKey as MapZone] || [];
           const urgentWords = zoneWords.filter((w) => w.health < 30).length;
@@ -181,37 +185,40 @@ export const AdventureMap: React.FC<AdventureMapProps> = ({
               }
             >
               <CardContent
-                className={`p-0 rounded-xl bg-gradient-to-br ${zone.bgGradient} text-white relative overflow-hidden`}
+                className={`p-0 rounded-lg md:rounded-xl bg-gradient-to-br ${zone.bgGradient} text-white relative overflow-hidden`}
               >
-                <div className="p-6 relative z-10">
-                  <div className="flex items-center justify-between mb-4">
-                    <Icon className="w-8 h-8" />
+                <div className="p-3 md:p-4 lg:p-6 relative z-10">
+                  <div className="flex items-center justify-between mb-2 md:mb-3">
+                    <Icon className="w-5 h-5 md:w-6 md:h-6 lg:w-8 lg:h-8" />
                     {zoneWords.length > 0 && (
-                      <Badge className="bg-white/20 text-white border-white/30">
-                        {zoneWords.length} words
+                      <Badge className="bg-white/20 text-white border-white/30 text-xs px-1.5 py-0.5">
+                        {zoneWords.length}
                       </Badge>
                     )}
                   </div>
 
-                  <h3 className="font-bold text-lg mb-2">{zone.name}</h3>
-                  <p className={`text-sm ${zone.color} opacity-90`}>
+                  <h3 className="font-bold text-sm md:text-base lg:text-lg mb-1 md:mb-2">
+                    {zone.name}
+                  </h3>
+                  <p
+                    className={`text-xs md:text-sm ${zone.color} opacity-90 hidden md:block`}
+                  >
                     {zone.description}
                   </p>
 
                   {urgentWords > 0 && (
-                    <div className="mt-4 flex items-center gap-2">
-                      <AlertTriangle className="w-4 h-4 text-red-300 animate-pulse" />
-                      <span className="text-sm text-red-200">
-                        {urgentWords} urgent rescue
-                        {urgentWords !== 1 ? "s" : ""}!
+                    <div className="mt-2 md:mt-3 flex items-center gap-1">
+                      <AlertTriangle className="w-3 h-3 md:w-4 md:h-4 text-red-300 animate-pulse" />
+                      <span className="text-xs md:text-sm text-red-200">
+                        {urgentWords} urgent!
                       </span>
                     </div>
                   )}
                 </div>
 
                 {/* Decorative elements */}
-                <div className="absolute top-2 right-2 opacity-20">
-                  <Icon className="w-16 h-16" />
+                <div className="absolute top-1 right-1 md:top-2 md:right-2 opacity-20">
+                  <Icon className="w-8 h-8 md:w-12 md:h-12 lg:w-16 lg:h-16" />
                 </div>
               </CardContent>
             </Card>
@@ -219,21 +226,22 @@ export const AdventureMap: React.FC<AdventureMapProps> = ({
         })}
       </div>
 
-      {/* Zone Detail View */}
+      {/* Zone Detail View - Compact */}
       {selectedZone && (
-        <Card className="bg-white border-2 border-yellow-300">
-          <CardContent className="p-6">
-            <div className="flex items-center gap-3 mb-6">
+        <Card className="bg-white border border-yellow-300">
+          <CardContent className="p-3 md:p-4 lg:p-6">
+            <div className="flex items-center gap-2 md:gap-3 mb-3 md:mb-4">
               {React.createElement(zoneInfo[selectedZone].icon, {
-                className: "w-8 h-8 text-purple-600",
+                className:
+                  "w-6 h-6 md:w-7 md:h-7 lg:w-8 lg:h-8 text-purple-600",
               })}
-              <h3 className="text-2xl font-bold text-gray-800">
+              <h3 className="text-lg md:text-xl lg:text-2xl font-bold text-gray-800">
                 {zoneInfo[selectedZone].name}
               </h3>
             </div>
 
             {wordsByZone[selectedZone]?.length > 0 ? (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 md:gap-3">
                 {wordsByZone[selectedZone].map((word) => {
                   const healthInfo = getHealthIcon(word.health);
                   const priority = getPriorityLevel(word.health);
@@ -253,26 +261,26 @@ export const AdventureMap: React.FC<AdventureMapProps> = ({
                       }`}
                       onClick={() => handleWordClick(word)}
                     >
-                      <CardContent className="p-4">
-                        <div className="flex items-center justify-between mb-3">
-                          <div className="flex items-center gap-2">
+                      <CardContent className="p-3 md:p-4">
+                        <div className="flex items-center justify-between mb-2 md:mb-3">
+                          <div className="flex items-center gap-1.5 md:gap-2">
                             <HealthIcon
-                              className={`w-5 h-5 ${healthInfo.color} ${healthInfo.pulse ? "animate-pulse" : ""}`}
+                              className={`w-4 h-4 md:w-5 md:h-5 ${healthInfo.color} ${healthInfo.pulse ? "animate-pulse" : ""}`}
                             />
-                            <span className="font-bold text-lg">
+                            <span className="font-bold text-sm md:text-base lg:text-lg">
                               Word #{word.word_id}
                             </span>
                           </div>
-                          <MapPin className="w-4 h-4 text-gray-400" />
+                          <MapPin className="w-3 h-3 md:w-4 md:h-4 text-gray-400" />
                         </div>
 
-                        <div className="space-y-2">
+                        <div className="space-y-1.5 md:space-y-2">
                           <div className="flex items-center justify-between">
-                            <span className="text-sm text-gray-600">
+                            <span className="text-xs md:text-sm text-gray-600">
                               Health
                             </span>
                             <span
-                              className={`text-sm font-bold ${
+                              className={`text-xs md:text-sm font-bold ${
                                 word.health >= 50
                                   ? "text-green-600"
                                   : word.health >= 30
@@ -285,7 +293,7 @@ export const AdventureMap: React.FC<AdventureMapProps> = ({
                           </div>
                           <Progress
                             value={word.health}
-                            className={`h-2 ${
+                            className={`h-1.5 md:h-2 ${
                               word.health >= 50
                                 ? "bg-green-100"
                                 : word.health >= 30
@@ -301,10 +309,10 @@ export const AdventureMap: React.FC<AdventureMapProps> = ({
                         </div>
 
                         {priority === "critical" && (
-                          <div className="mt-3 flex items-center gap-2 p-2 bg-red-50 rounded-lg">
-                            <Flame className="w-4 h-4 text-red-500 animate-pulse" />
+                          <div className="mt-2 md:mt-3 flex items-center gap-1.5 p-1.5 md:p-2 bg-red-50 rounded-lg">
+                            <Flame className="w-3 h-3 md:w-4 md:h-4 text-red-500 animate-pulse" />
                             <span className="text-xs text-red-700 font-medium">
-                              URGENT RESCUE NEEDED!
+                              URGENT!
                             </span>
                           </div>
                         )}
@@ -314,14 +322,13 @@ export const AdventureMap: React.FC<AdventureMapProps> = ({
                 })}
               </div>
             ) : (
-              <div className="text-center py-12">
-                <Star className="w-16 h-16 text-yellow-400 mx-auto mb-4" />
-                <h3 className="text-xl font-bold text-gray-700 mb-2">
+              <div className="text-center py-6 md:py-8">
+                <Star className="w-12 h-12 md:w-14 md:h-14 text-yellow-400 mx-auto mb-2 md:mb-3" />
+                <h3 className="text-lg md:text-xl font-bold text-gray-700 mb-1 md:mb-2">
                   No Words Need Rescue!
                 </h3>
-                <p className="text-gray-500">
-                  All words in {zoneInfo[selectedZone].name} are healthy and
-                  happy! 🎉
+                <p className="text-sm md:text-base text-gray-500">
+                  All words in {zoneInfo[selectedZone].name} are healthy! 🎉
                 </p>
               </div>
             )}
@@ -329,31 +336,31 @@ export const AdventureMap: React.FC<AdventureMapProps> = ({
         </Card>
       )}
 
-      {/* Word Detail Modal */}
+      {/* Word Detail Modal - Compact */}
       {showWordDetails && selectedWord && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-          <Card className="max-w-md w-full bg-white">
-            <CardContent className="p-6">
-              <div className="text-center mb-6">
-                <div className="w-16 h-16 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <Sword className="w-8 h-8 text-white" />
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-2 md:p-4">
+          <Card className="max-w-sm md:max-w-md w-full bg-white">
+            <CardContent className="p-4 md:p-6">
+              <div className="text-center mb-4 md:mb-6">
+                <div className="w-12 h-12 md:w-14 md:h-14 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center mx-auto mb-2 md:mb-3">
+                  <Sword className="w-6 h-6 md:w-7 md:h-7 text-white" />
                 </div>
-                <h2 className="text-2xl font-bold text-gray-800 mb-2">
+                <h2 className="text-lg md:text-xl font-bold text-gray-800 mb-1 md:mb-2">
                   Rescue Mission
                 </h2>
-                <p className="text-gray-600">
-                  Choose your rescue strategy for Word #{selectedWord.word_id}
+                <p className="text-sm md:text-base text-gray-600">
+                  Choose rescue strategy for Word #{selectedWord.word_id}
                 </p>
               </div>
 
-              <div className="space-y-4 mb-6">
-                <div className="p-4 bg-gray-50 rounded-lg">
+              <div className="space-y-3 md:space-y-4 mb-4 md:mb-6">
+                <div className="p-3 md:p-4 bg-gray-50 rounded-lg">
                   <div className="flex items-center justify-between mb-2">
-                    <span className="text-sm font-medium text-gray-700">
+                    <span className="text-xs md:text-sm font-medium text-gray-700">
                       Word Health
                     </span>
                     <span
-                      className={`text-sm font-bold ${
+                      className={`text-xs md:text-sm font-bold ${
                         selectedWord.health >= 50
                           ? "text-green-600"
                           : selectedWord.health >= 30
@@ -364,51 +371,57 @@ export const AdventureMap: React.FC<AdventureMapProps> = ({
                       {selectedWord.health}%
                     </span>
                   </div>
-                  <Progress value={selectedWord.health} className="h-3" />
+                  <Progress
+                    value={selectedWord.health}
+                    className="h-2 md:h-3"
+                  />
                 </div>
 
-                <div className="grid grid-cols-2 gap-4 text-sm">
-                  <div className="text-center p-3 bg-blue-50 rounded-lg">
+                <div className="grid grid-cols-2 gap-2 md:gap-3 text-xs md:text-sm">
+                  <div className="text-center p-2 md:p-3 bg-blue-50 rounded-lg">
                     <div className="font-bold text-blue-600">
                       {selectedWord.forget_count}
                     </div>
-                    <div className="text-gray-600">Times Forgotten</div>
+                    <div className="text-gray-600">Forgotten</div>
                   </div>
-                  <div className="text-center p-3 bg-purple-50 rounded-lg">
+                  <div className="text-center p-2 md:p-3 bg-purple-50 rounded-lg">
                     <div className="font-bold text-purple-600">
                       {selectedWord.rescue_attempts}
                     </div>
-                    <div className="text-gray-600">Rescue Attempts</div>
+                    <div className="text-gray-600">Attempts</div>
                   </div>
                 </div>
               </div>
 
-              <div className="space-y-3 mb-6">
-                <h3 className="font-bold text-gray-800">
+              <div className="space-y-2 md:space-y-3 mb-4 md:mb-6">
+                <h3 className="font-bold text-sm md:text-base text-gray-800">
                   Choose Your Rescue Game:
                 </h3>
 
                 <Button
                   onClick={() => handleStartRescue("flashcard_duel")}
-                  className="w-full bg-gradient-to-r from-red-500 to-pink-500 hover:from-red-600 hover:to-pink-600 text-white"
+                  className="w-full bg-gradient-to-r from-red-500 to-pink-500 hover:from-red-600 hover:to-pink-600 text-white py-2 text-sm"
+                  size="sm"
                 >
-                  <Zap className="w-4 h-4 mr-2" />
+                  <Zap className="w-3 h-3 md:w-4 md:h-4 mr-1.5" />
                   Flashcard Duel
                 </Button>
 
                 <Button
                   onClick={() => handleStartRescue("word_match_race")}
-                  className="w-full bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600 text-white"
+                  className="w-full bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600 text-white py-2 text-sm"
+                  size="sm"
                 >
-                  <Clock className="w-4 h-4 mr-2" />
+                  <Clock className="w-3 h-3 md:w-4 md:h-4 mr-1.5" />
                   Word Match Race
                 </Button>
 
                 <Button
                   onClick={() => handleStartRescue("letter_builder")}
-                  className="w-full bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 text-white"
+                  className="w-full bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 text-white py-2 text-sm"
+                  size="sm"
                 >
-                  <Shield className="w-4 h-4 mr-2" />
+                  <Shield className="w-3 h-3 md:w-4 md:h-4 mr-1.5" />
                   Letter Builder
                 </Button>
               </div>
@@ -416,7 +429,8 @@ export const AdventureMap: React.FC<AdventureMapProps> = ({
               <Button
                 onClick={() => setShowWordDetails(false)}
                 variant="outline"
-                className="w-full"
+                className="w-full py-2 text-sm"
+                size="sm"
               >
                 Cancel Mission
               </Button>
