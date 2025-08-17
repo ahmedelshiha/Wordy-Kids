@@ -426,7 +426,6 @@ export function EnhancedAISettings({
   }
 
   return (
-    <TooltipProvider>
       <div className={cn("space-y-6", className)}>
         {/* Header with Status */}
         <div className="flex items-center justify-between">
@@ -709,6 +708,5 @@ export function EnhancedAISettings({
           )}
         </div>
       </div>
-    </TooltipProvider>
   );
 }
