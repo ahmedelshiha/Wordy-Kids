@@ -1301,7 +1301,11 @@ export function AIEnhancedInteractiveDashboardWordCard({
             confidenceLevel={confidenceLevel}
             difficultyAdjustment={difficultyAdjustment}
             sessionWords={sessionWords}
-            sessionStats={sessionStats}
+            sessionStats={{
+              accuracy: sessionStats.accuracy,
+              wordsLearned: sessionStats.wordsRemembered,
+              totalWords: sessionStats.wordsCompleted,
+            }}
             showMobileAI={true}
             showDesktopAI={true}
             enableAIHeader={true}
