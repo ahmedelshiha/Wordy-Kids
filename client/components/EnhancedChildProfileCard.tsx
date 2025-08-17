@@ -117,20 +117,22 @@ export const EnhancedChildProfileCard: React.FC<
     return () => clearInterval(timer);
   }, []);
 
-  // Generate motivational messages based on progress
+  // Generate super fun motivational messages for kids
   useEffect(() => {
     const messages = [
-      `Amazing progress, ${profile.name}! 🌟`,
-      `Keep up the great work! 🚀`,
-      `You're doing fantastic! 💪`,
-      `Learning superstar! ⭐`,
-      `Vocabulary champion! 🏆`,
+      `WOW! You're a word wizard, ${profile.name}! 🧙‍♂️✨`,
+      `AWESOME sauce! Keep being amazing! 🚀🎉`,
+      `You're FANTASTIC! High five! 🙆✋`,
+      `Super duper learning star! ⭐🌟`,
+      `Word champion extraordinaire! 🏆🎆`,
+      `Brain power activated! 🧠⚡`,
+      `Reading superhero mode ON! 🦸‍♂️📚`,
     ];
 
     const timeBasedMessages = {
-      morning: `Good morning, ${profile.name}! Ready to learn? 🌅`,
-      afternoon: `Great afternoon learning, ${profile.name}! 🌞`,
-      evening: `Evening study session, ${profile.name}! 🌙`,
+      morning: `Good morning, sunshine ${profile.name}! Time for word adventures! 🌅🎨`,
+      afternoon: `Hey there, word explorer ${profile.name}! Let's discover more! 🌞🔍`,
+      evening: `Evening learning party, ${profile.name}! 🌙🎉`,
     };
 
     const hour = currentTime.getHours();
@@ -188,39 +190,43 @@ export const EnhancedChildProfileCard: React.FC<
       whileHover={animationEnabled ? "hover" : undefined}
       className={cn("w-full max-w-sm", className)}
     >
-      <Card className="bg-gradient-to-br from-white to-purple-50/30 border-2 border-purple-200/50 shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden">
+      <Card className="bg-gradient-to-br from-yellow-50 via-pink-50 to-purple-50 border-4 border-rainbow-300 shadow-2xl hover:shadow-3xl transition-all duration-500 overflow-hidden relative">
+        {/* Fun Background Elements */}
+        <div className="absolute inset-0 pointer-events-none overflow-hidden">
+          <div className="absolute top-2 right-2 text-lg animate-spin" style={{animationDuration: '4s'}}>✨</div>
+          <div className="absolute bottom-2 left-2 text-sm animate-bounce" style={{animationDelay: '1s'}}>🌈</div>
+        </div>
+
         {/* Header with Avatar and Basic Info */}
-        <CardHeader className="pb-3">
+        <CardHeader className="pb-3 relative z-10">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-3">
               <div
                 className={cn(
-                  "w-14 h-14 rounded-full flex items-center justify-center text-2xl shadow-md",
-                  "bg-gradient-to-r",
-                  profile.avatar?.color || "from-purple-400 to-pink-400",
+                  "w-16 h-16 rounded-full flex items-center justify-center text-3xl shadow-xl border-4 border-white",
+                  "bg-gradient-to-r animate-pulse",
+                  profile.avatar?.color || "from-purple-400 via-pink-400 to-yellow-400",
                 )}
               >
                 {profile.avatar?.emoji || "🎯"}
               </div>
               <div>
-                <h3 className="font-bold text-lg text-gray-800 leading-tight">
-                  {profile.name}
+                <h3 className="font-black text-xl text-gray-800 leading-tight">
+                  🎆 {profile.name} 🎆
                 </h3>
                 <div className="flex items-center space-x-2">
                   <Badge
-                    variant="secondary"
-                    className="text-xs bg-purple-100 text-purple-700"
+                    className="text-sm bg-gradient-to-r from-yellow-200 to-orange-200 text-orange-800 border-2 border-orange-300 font-bold shadow-lg"
                   >
-                    <Crown className="w-3 h-3 mr-1" />
-                    Level {profile.level}
+                    <Crown className="w-4 h-4 mr-1" />
+                    🎆 Level {profile.level}
                   </Badge>
                   {profile.streak > 0 && (
                     <Badge
-                      variant="outline"
-                      className="text-xs border-orange-200 text-orange-600"
+                      className="text-sm bg-gradient-to-r from-red-200 to-orange-200 text-red-800 border-2 border-red-300 animate-pulse font-bold shadow-lg"
                     >
-                      <Zap className="w-3 h-3 mr-1" />
-                      {profile.streak}🔥
+                      <Zap className="w-4 h-4 mr-1" />
+                      {profile.streak}🔥 STREAK!
                     </Badge>
                   )}
                 </div>
@@ -254,13 +260,20 @@ export const EnhancedChildProfileCard: React.FC<
             )}
           </div>
 
-          {/* Motivational Message */}
+          {/* Super Fun Motivational Message */}
           <motion.div
-            className="bg-gradient-to-r from-purple-100 to-pink-100 rounded-lg p-2 mt-3"
-            animate={{ scale: [1, 1.02, 1] }}
-            transition={{ duration: 2, repeat: Infinity, repeatDelay: 8 }}
+            className="bg-gradient-to-r from-yellow-200 via-pink-200 to-purple-200 rounded-xl p-3 mt-3 border-2 border-yellow-300 shadow-lg"
+            animate={{
+              scale: [1, 1.05, 1],
+              boxShadow: [
+                "0 4px 6px rgba(0, 0, 0, 0.1)",
+                "0 8px 25px rgba(255, 255, 0, 0.3)",
+                "0 4px 6px rgba(0, 0, 0, 0.1)"
+              ]
+            }}
+            transition={{ duration: 3, repeat: Infinity, repeatDelay: 5 }}
           >
-            <p className="text-xs text-purple-700 font-medium text-center">
+            <p className="text-sm text-purple-800 font-bold text-center leading-relaxed">
               {motivationalMessage}
             </p>
           </motion.div>
