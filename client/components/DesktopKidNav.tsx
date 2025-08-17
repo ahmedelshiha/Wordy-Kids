@@ -16,8 +16,6 @@ import {
   Shield,
   Crown,
   Lock,
-  Eye,
-  EyeOff,
 } from "lucide-react";
 import {
   Tooltip,
