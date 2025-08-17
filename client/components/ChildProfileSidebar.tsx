@@ -239,12 +239,12 @@ export const ChildProfileSidebar: React.FC<ChildProfileSidebarProps> = ({
 
               {/* Weekly Adventure Progress */}
               {showWeeklyProgress && stats && (
-                <div className="bg-gradient-to-r from-green-50/80 to-blue-50/80 rounded-xl p-4 border border-green-200/50 shadow-md backdrop-blur-sm">
-                  <h4 className="text-sm font-bold text-gray-800 mb-3 flex items-center">
-                    <TrendingUp className="w-5 h-5 mr-2 text-green-600" />
-                    🏆 This Week's Adventures!
+                <div className="bg-gradient-to-r from-green-50/80 to-blue-50/80 rounded-lg p-3 border border-green-200/50 shadow-sm backdrop-blur-sm">
+                  <h4 className="text-xs font-bold text-gray-800 mb-2 flex items-center">
+                    <TrendingUp className="w-4 h-4 mr-1 text-green-600" />
+                    🏆 This Week
                   </h4>
-                  <div className="space-y-3">
+                  <div className="space-y-2">
                     <div className="flex justify-between items-center">
                       <span className="text-xs font-medium text-gray-700 flex items-center">
                         🎮 Learning Sessions
