@@ -170,7 +170,7 @@ export const ChildProfileSidebar: React.FC<ChildProfileSidebarProps> = ({
                 {showTimeOfDay && (
                   <div
                     className={cn(
-                      "bg-gradient-to-r rounded-xl p-3 mb-3 shadow-lg border-2 border-white/50",
+                      "bg-gradient-to-r rounded-xl p-3 mb-3 shadow-md border border-white/30 backdrop-blur-sm",
                       timeInfo.color,
                     )}
                   >
