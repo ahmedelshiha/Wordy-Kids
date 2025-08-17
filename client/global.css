@@ -2651,3 +2651,51 @@
 .content-section-mobile:last-child {
   margin-bottom: 0;
 }
+
+/* Desktop Kid Mode Navigation Styles */
+.kid-nav-tab {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transform-origin: center;
+}
+
+.kid-nav-tab:hover {
+  transform: translateY(-2px) scale(1.02);
+  filter: brightness(1.1);
+}
+
+.kid-nav-tab.active {
+  animation: kid-tab-glow 2s ease-in-out infinite;
+}
+
+@keyframes kid-tab-glow {
+  0%, 100% {
+    box-shadow: 0 0 20px rgba(139, 92, 246, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 30px rgba(139, 92, 246, 0.5);
+  }
+}
+
+.border-rainbow {
+  background: linear-gradient(90deg, #ff6b9d, #ffa500, #ffcc02, #43e97b, #4facfe, #a8edea);
+  background-size: 400% 400%;
+  animation: rainbow-shift 3s ease infinite;
+}
+
+@keyframes rainbow-shift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Enhanced desktop bottom nav spacing */
+.desktop-bottom-nav {
+  margin-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+/* Safe area adjustments for desktop kid mode */
+@media (min-width: 1024px) {
+  .kid-mode-bottom-padding {
+    padding-bottom: 120px; /* Space for bottom nav */
+  }
+}
