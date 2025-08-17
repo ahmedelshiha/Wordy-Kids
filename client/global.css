@@ -7,6 +7,9 @@
 /* Import accessibility enhancements */
 @import "./styles/accessibility-enhancements.css";
 
+/* Import AI card mobile enhancements */
+@import "./styles/ai-card-mobile-enhancements.css";
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
