@@ -194,6 +194,14 @@ export const LearningDashboard: React.FC<LearningDashboardProps> = ({
         <KidRegistrationNotification
           variant="banner"
           className="mb-4"
+          progressData={{
+            wordsLearned: stats.wordsLearned,
+            currentStreak: stats.currentStreak,
+            totalPoints: stats.totalPoints,
+            level: stats.level,
+            weeklyProgress: stats.weeklyProgress,
+            weeklyGoal: stats.weeklyGoal
+          }}
         />
       )}
 
