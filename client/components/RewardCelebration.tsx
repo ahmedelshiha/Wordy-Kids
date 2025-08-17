@@ -205,7 +205,7 @@ export const RewardCelebration: React.FC<RewardCelebrationProps> = ({
               {config.emojis.slice(0, 3).map((emoji, index) => (
                 <span
                   key={index}
-                  className="text-4xl animate-mascot-bounce"
+                  className="text-2xl sm:text-3xl animate-mascot-bounce"
                   style={{ animationDelay: `${index * 200}ms` }}
                 >
                   {emoji}
