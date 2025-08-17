@@ -111,7 +111,7 @@ export const ChildProfileSidebar: React.FC<ChildProfileSidebarProps> = ({
       animate={isCollapsed ? "collapsed" : "expanded"}
       className={cn(
         "bg-transparent", // Let parent background show through
-        "flex flex-col h-full overflow-hidden",
+        "flex flex-col h-fit max-h-full",
         "transition-all duration-500",
         "relative backdrop-blur-md",
         className,
@@ -160,7 +160,7 @@ export const ChildProfileSidebar: React.FC<ChildProfileSidebarProps> = ({
       </div>
 
       {/* Main Profile Card */}
-      <div className="flex-1 p-2 overflow-y-auto relative z-10">
+      <div className="flex-1 p-2 relative z-10">
         <AnimatePresence mode="wait">
           {!isCollapsed ? (
             <motion.div
