@@ -946,7 +946,7 @@ export function AIEnhancedInteractiveDashboardWordCard({
               scale: 1.1,
               transition: { duration: 0.2 },
             }}
-            className="text-9xl filter drop-shadow-lg relative z-10"
+            className="text-6xl md:text-7xl filter drop-shadow-lg relative z-10"
           >
             {currentWord.emoji}
 
