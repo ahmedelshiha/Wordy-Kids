@@ -23,6 +23,15 @@ export interface EnhancedChildStats extends ChildWordStats {
     current: number;
     best: number;
   };
+  // Additional computed stats
+  currentStreak?: number;
+  longestStreak?: number;
+  correctAnswers?: number;
+  totalAnswers?: number;
+  timeSpentToday?: number;
+  sessionsToday?: number;
+  favoriteWords?: string[];
+  strugglingWords?: string[];
 }
 
 export class EnhancedStatsHelper {
