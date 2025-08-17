@@ -388,25 +388,28 @@ export const AdventureMap: React.FC<AdventureMapProps> = ({
 
                 <Button
                   onClick={() => handleStartRescue("flashcard_duel")}
-                  className="w-full bg-gradient-to-r from-red-500 to-pink-500 hover:from-red-600 hover:to-pink-600 text-white"
+                  className="w-full bg-gradient-to-r from-red-500 to-pink-500 hover:from-red-600 hover:to-pink-600 text-white py-2 text-sm"
+                  size="sm"
                 >
-                  <Zap className="w-4 h-4 mr-2" />
+                  <Zap className="w-3 h-3 md:w-4 md:h-4 mr-1.5" />
                   Flashcard Duel
                 </Button>
 
                 <Button
                   onClick={() => handleStartRescue("word_match_race")}
-                  className="w-full bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600 text-white"
+                  className="w-full bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600 text-white py-2 text-sm"
+                  size="sm"
                 >
-                  <Clock className="w-4 h-4 mr-2" />
+                  <Clock className="w-3 h-3 md:w-4 md:h-4 mr-1.5" />
                   Word Match Race
                 </Button>
 
                 <Button
                   onClick={() => handleStartRescue("letter_builder")}
-                  className="w-full bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 text-white"
+                  className="w-full bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 text-white py-2 text-sm"
+                  size="sm"
                 >
-                  <Shield className="w-4 h-4 mr-2" />
+                  <Shield className="w-3 h-3 md:w-4 md:h-4 mr-1.5" />
                   Letter Builder
                 </Button>
               </div>
@@ -414,7 +417,8 @@ export const AdventureMap: React.FC<AdventureMapProps> = ({
               <Button
                 onClick={() => setShowWordDetails(false)}
                 variant="outline"
-                className="w-full"
+                className="w-full py-2 text-sm"
+                size="sm"
               >
                 Cancel Mission
               </Button>
