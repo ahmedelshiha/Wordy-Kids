@@ -1308,24 +1308,26 @@ export function AIEnhancedInteractiveDashboardWordCard({
                       }}
                       size="sm"
                       className={cn(
-                        "relative px-2 py-1 h-7 rounded-full text-xs font-bold shadow-lg transition-all duration-300 transform hover:scale-105 active:scale-95",
-                        "bg-white/20 hover:bg-white/30 backdrop-blur-md border-2 border-white/40 shadow-white/20",
+                        "relative px-2 py-1 h-6 rounded-full text-xs font-bold shadow-md transition-all duration-300 transform hover:scale-105 active:scale-95 flex-shrink-0",
                         aiState.isSessionActive
-                          ? "text-red-100 hover:border-red-200/50 hover:shadow-red-200/30"
-                          : "text-green-100 hover:border-green-200/50 hover:shadow-green-200/30",
-                        "before:absolute before:inset-0 before:rounded-full before:bg-gradient-to-br before:from-white/30 before:to-white/10 before:opacity-0 hover:before:opacity-100 before:transition-opacity before:duration-300",
+                          ? "bg-red-500 hover:bg-red-600 text-white border border-red-300 shadow-red-300/30"
+                          : "bg-green-500 hover:bg-green-600 text-white border border-green-300 shadow-green-300/30",
                       )}
                     >
                       <div className="relative z-10 flex items-center justify-center gap-1">
                         {aiState.isSessionActive ? (
                           <>
                             <span className="text-xs">🔴</span>
-                            <span className="text-[10px] font-medium">OFF</span>
+                            <span className="text-xs font-bold text-white">
+                              OFF
+                            </span>
                           </>
                         ) : (
                           <>
                             <span className="text-xs">🟢</span>
-                            <span className="text-[10px] font-medium">ON</span>
+                            <span className="text-xs font-bold text-white">
+                              ON
+                            </span>
                           </>
                         )}
                       </div>
@@ -1410,31 +1412,32 @@ export function AIEnhancedInteractiveDashboardWordCard({
                           }}
                           size="sm"
                           className={cn(
-                            "relative ml-2 px-3 py-2 h-9 rounded-full text-sm font-bold shadow-xl transition-all duration-300 transform hover:scale-105 active:scale-95",
-                            "bg-white/25 hover:bg-white/35 backdrop-blur-md border-2 border-white/50 shadow-white/30",
+                            "relative ml-2 px-4 py-2 h-9 rounded-full text-sm font-bold shadow-xl transition-all duration-300 transform hover:scale-105 active:scale-95",
                             aiState.isSessionActive
-                              ? "text-red-100 hover:border-red-200/60 hover:shadow-red-200/40"
-                              : "text-green-100 hover:border-green-200/60 hover:shadow-green-200/40",
-                            "before:absolute before:inset-0 before:rounded-full before:bg-gradient-to-br before:from-white/40 before:to-white/10 before:opacity-0 hover:before:opacity-100 before:transition-opacity before:duration-300",
+                              ? "bg-red-500 hover:bg-red-600 text-white border-2 border-red-300 shadow-red-300/40"
+                              : "bg-green-500 hover:bg-green-600 text-white border-2 border-green-300 shadow-green-300/40",
                           )}
                         >
-                          <div className="relative z-10 flex items-center justify-center gap-1.5">
+                          <div className="relative z-10 flex items-center justify-center gap-2">
                             {aiState.isSessionActive ? (
                               <>
                                 <span className="text-lg">🔴</span>
-                                <span className="text-xs font-bold">STOP</span>
+                                <span className="text-sm font-bold text-white">
+                                  AI STOP
+                                </span>
                               </>
                             ) : (
                               <>
                                 <span className="text-lg">🟢</span>
-                                <span className="text-xs font-bold">START</span>
+                                <span className="text-sm font-bold text-white">
+                                  AI START
+                                </span>
                               </>
                             )}
                           </div>
                           {aiState.isSessionActive && (
-                            <div className="absolute inset-0 rounded-full bg-white/15 animate-pulse" />
+                            <div className="absolute inset-0 rounded-full bg-white/10 animate-pulse" />
                           )}
-                          <div className="absolute inset-0 rounded-full ring-1 ring-white/30" />
                         </Button>
                       </div>
                       <div className="flex items-center gap-3 opacity-90">
