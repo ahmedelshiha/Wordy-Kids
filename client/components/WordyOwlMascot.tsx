@@ -258,10 +258,10 @@ const WordyOwlMascot: React.FC<WordyOwlMascotProps> = ({
       )}
 
       {/* Speech Bubble */}
-      <div className="absolute -top-16 md:-top-20 left-1/2 transform -translate-x-1/2 z-10 animate-fade-in">
+      <div className="absolute -top-12 md:-top-20 left-1/2 transform -translate-x-1/2 z-10 animate-fade-in">
         <div
           className={cn(
-            "bg-white rounded-xl px-3 py-2 md:px-4 md:py-3 shadow-lg border-2 md:border-3 border-educational-yellow max-w-[280px] md:max-w-xs relative",
+            "bg-white rounded-xl px-2 py-1 md:px-4 md:py-3 shadow-lg border-2 md:border-3 border-educational-yellow max-w-[200px] md:max-w-xs relative",
             isDraggable && "border-dashed border-educational-purple",
             isDragging && "border-educational-pink border-3",
           )}
