@@ -1801,8 +1801,8 @@ export default function Index({ initialProfile }: IndexProps) {
       {isSessionInitialized && (
         <>
           {/* Optimized Mobile-First Header */}
-          <header className="relative overflow-hidden bg-gradient-to-r from-educational-blue via-educational-purple to-educational-pink text-white">
-            <div className="relative container mx-auto px-4 py-2 md:py-4">
+          <header className="relative overflow-hidden bg-gradient-to-r from-educational-blue via-educational-purple to-educational-pink text-white shadow-lg">
+            <div className="relative container mx-auto px-4 py-2 md:py-3">
               {/* Mobile header - ultra compact */}
               <div className="flex items-center justify-between md:hidden">
                 <div className="flex items-center gap-2">
@@ -1825,22 +1825,22 @@ export default function Index({ initialProfile }: IndexProps) {
                 {/* Mobile menu trigger could go here if needed */}
               </div>
 
-              {/* Desktop header */}
-              <div className="text-center max-w-4xl mx-auto hidden md:block">
-                <div className="flex justify-center items-center gap-6 mb-4">
-                  <div className="bg-white/20 backdrop-blur-sm rounded-full p-3">
+              {/* Desktop header - Compact & Kid-Friendly */}
+              <div className="text-center max-w-3xl mx-auto hidden md:block">
+                <div className="flex justify-center items-center gap-4 mb-2">
+                  <div className="bg-white/20 backdrop-blur-sm rounded-full p-2 shadow-lg hover:scale-105 transition-transform duration-200">
                     <img
                       src="https://cdn.builder.io/api/v1/image/assets%2Fa33f74a2f97141a4a1ef43d9448f9bda%2F2a4b7e4c3c38485b966cfd2cff50da9e?format=webp&width=800"
                       alt="Wordy Kids Logo"
-                      className="w-16 h-16 rounded-full"
+                      className="w-10 h-10 rounded-full"
                     />
                   </div>
                 </div>
-                <h1 className="text-2xl md:text-3xl font-bold mb-1">
+                <h1 className="text-xl md:text-2xl font-bold mb-1 animate-gentle-bounce">
                   🌟 Wordy Kids!
                 </h1>
-                <p className="text-lg font-semibold text-educational-yellow-light mb-2">
-                  Fun vocabulary learning for kids! 🌟
+                <p className="text-sm font-medium text-educational-yellow-light/90 mb-1">
+                  Fun vocabulary learning for kids! 🚀
                 </p>
               </div>
             </div>
