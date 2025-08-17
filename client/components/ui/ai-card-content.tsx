@@ -242,4 +242,4 @@ AICardContent.displayName = "AICardContent";
 
 // Export component and types
 export { AICardContent as default };
-export type { ExtendedAICardContentProps } from "./ai-card-types";
+export type { ExtendedAICardContentProps };
