@@ -1748,61 +1748,53 @@ export function AIEnhancedInteractiveDashboardWordCard({
               </div>
             )}
 
-            {/* AI Progress Bar - Mobile Optimized */}
+            {/* AI Progress Bar - Ultra Mobile Optimized */}
             {!showWordName && (
-              <div className="mb-4 bg-white p-3 sm:p-4 rounded-xl sm:rounded-2xl shadow-md border border-gray-100">
-                {/* Title section - Compact for mobile */}
-                <div className="flex items-center justify-center gap-1 sm:gap-2 mb-3">
-                  <span className="text-sm sm:text-base">🧠</span>
-                  <span className="text-sm sm:text-base">🎯</span>
-                  <h2 className="text-sm sm:text-base font-bold text-gray-800">AI Progress</h2>
-                </div>
-
-                {/* Progress bar section - Mobile first */}
-                <div className="mb-3">
-                  <div className="flex items-center justify-between mb-1.5 sm:mb-2">
-                    <div className="flex items-center gap-1">
-                      <span className="text-sm sm:text-base">🚀</span>
-                      <span className="font-medium text-gray-700 text-xs sm:text-sm">{dailyGoal.completed}/{dailyGoal.target}</span>
-                    </div>
-                    <span className="font-bold text-gray-800 text-xs sm:text-sm">{Math.round((dailyGoal.completed / dailyGoal.target) * 100)}%</span>
+              <div className="mb-3 bg-white p-2 sm:p-4 rounded-lg sm:rounded-2xl shadow-sm border border-gray-100">
+                {/* Compact header with inline progress */}
+                <div className="flex items-center justify-between mb-2">
+                  <div className="flex items-center gap-1">
+                    <span className="text-xs sm:text-sm">🧠🎯</span>
+                    <h2 className="text-xs sm:text-base font-bold text-gray-800">AI Progress</h2>
                   </div>
-                  <div className="w-full bg-gray-200 rounded-full h-1.5 sm:h-2">
-                    <div
-                      className="bg-gradient-to-r from-blue-500 to-purple-500 h-1.5 sm:h-2 rounded-full transition-all duration-300"
-                      style={{ width: `${Math.round((dailyGoal.completed / dailyGoal.target) * 100)}%` }}
-                    ></div>
+                  <div className="flex items-center gap-1">
+                    <span className="text-xs sm:text-sm">🚀</span>
+                    <span className="font-medium text-gray-700 text-xs sm:text-sm">{dailyGoal.completed}/{dailyGoal.target}</span>
+                    <span className="font-bold text-gray-800 text-xs sm:text-sm">({Math.round((dailyGoal.completed / dailyGoal.target) * 100)}%)</span>
                   </div>
                 </div>
 
-                {/* Stats section - Mobile grid */}
-                <div className="flex items-center justify-between text-xs sm:text-sm gap-1 sm:gap-2">
-                  <div className="flex items-center gap-0.5 sm:gap-1 bg-yellow-100 px-1.5 sm:px-2 py-1 rounded-md sm:rounded-lg flex-1 justify-center">
-                    <span className="text-sm sm:text-base">😊</span>
+                {/* Ultra-compact progress bar */}
+                <div className="w-full bg-gray-200 rounded-full h-1 sm:h-2 mb-2">
+                  <div
+                    className="bg-gradient-to-r from-blue-500 to-purple-500 h-1 sm:h-2 rounded-full transition-all duration-300"
+                    style={{ width: `${Math.round((dailyGoal.completed / dailyGoal.target) * 100)}%` }}
+                  ></div>
+                </div>
+
+                {/* Compact stats in single row */}
+                <div className="flex items-center justify-between text-xs gap-1">
+                  <div className="flex items-center gap-0.5 bg-yellow-100 px-1 py-0.5 rounded flex-1 justify-center">
+                    <span>😊</span>
                     <span className="font-medium">{sessionStats.wordsRemembered}</span>
                   </div>
-                  <div className="flex items-center gap-0.5 sm:gap-1 bg-orange-100 px-1.5 sm:px-2 py-1 rounded-md sm:rounded-lg flex-1 justify-center">
-                    <span className="text-sm sm:text-base">💪</span>
+                  <div className="flex items-center gap-0.5 bg-orange-100 px-1 py-0.5 rounded flex-1 justify-center">
+                    <span>💪</span>
                     <span className="font-medium">{sessionStats.wordsForgotten}</span>
                   </div>
-                  <div className="flex items-center gap-0.5 sm:gap-1 bg-purple-100 px-1.5 sm:px-2 py-1 rounded-md sm:rounded-lg flex-1 justify-center">
-                    <span className="text-sm sm:text-base">🎯</span>
+                  <div className="flex items-center gap-0.5 bg-purple-100 px-1 py-0.5 rounded flex-1 justify-center">
+                    <span>🎯</span>
                     <span className="font-medium">{Math.round(confidenceLevel * 100)}%</span>
+                  </div>
+                  <div className="text-purple-600 font-medium text-xs hidden sm:block">
+                    🌟 AI: Great!
                   </div>
                 </div>
 
-                {/* AI encouragement - Compact */}
-                <div className="mt-2 sm:mt-3 text-center">
-                  <span className="text-sm sm:text-base">🌟</span>
-                  <span className="text-purple-600 font-medium ml-1 text-xs sm:text-sm">AI: Great start!</span>
-                </div>
-
-                {/* Session progress indicator */}
-                <div className="mt-2 text-xs sm:text-sm text-gray-600 text-center">
-                  <span className="font-medium">
-                    {currentWordIndex + 1} of {SESSION_SIZE} words
-                  </span>
-                  {sessionProgress >= 100 && <span className="ml-2">🎉</span>}
+                {/* Session progress - Ultra compact */}
+                <div className="mt-1 text-center text-xs text-gray-500">
+                  <span>{currentWordIndex + 1}/{SESSION_SIZE}</span>
+                  {sessionProgress >= 100 && <span className="ml-1">🎉</span>}
                 </div>
               </div>
             )}
