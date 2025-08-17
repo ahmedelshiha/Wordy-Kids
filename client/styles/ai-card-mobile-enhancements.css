@@ -114,24 +114,22 @@
   }
 }
 
-/* Dark mode mobile enhancements */
-@media (prefers-color-scheme: dark) {
-  .ai-card-mobile {
-    background: linear-gradient(
-      135deg,
-      rgba(30, 41, 59, 0.8),
-      rgba(51, 65, 85, 0.8)
-    );
-  }
+/* Dark mode mobile enhancements - only when app is in dark mode */
+.dark .ai-card-mobile {
+  background: linear-gradient(
+    135deg,
+    rgba(30, 41, 59, 0.8),
+    rgba(51, 65, 85, 0.8)
+  );
+}
 
-  .ai-card-mobile .card {
-    border-color: rgba(100, 116, 139, 0.3);
-  }
+.dark .ai-card-mobile .card {
+  border-color: rgba(100, 116, 139, 0.3);
+}
 
-  .ai-card-mobile .badge-outline {
-    border-color: rgba(148, 163, 184, 0.5);
-    background-color: rgba(30, 41, 59, 0.5);
-  }
+.dark .ai-card-mobile .badge-outline {
+  border-color: rgba(148, 163, 184, 0.5);
+  background-color: rgba(30, 41, 59, 0.5);
 }
 
 /* Focus improvements for accessibility */
