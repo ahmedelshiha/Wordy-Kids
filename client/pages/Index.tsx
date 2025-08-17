@@ -2304,27 +2304,30 @@ export default function Index({ initialProfile }: IndexProps) {
                           />
                         ) : (
                           <>
-                            {/* AI Learning Banner - Mobile Optimized */}
+                            {/* Enhanced AI Learning Banner */}
                             {isAIEnabled() && (
-                              <div
-                                className="bg-gradient-to-r from-blue-50 to-purple-50 border border-blue-200 rounded-lg p-2 sm:p-3 mb-3"
-                                role="status"
-                                aria-label="AI learning mode is active"
-                              >
-                                <div className="flex items-center gap-2 sm:gap-3">
-                                  <div className="bg-gradient-to-r from-blue-500 to-purple-500 p-1.5 sm:p-2 rounded-full flex-shrink-0">
-                                    <Brain className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
-                                  </div>
-                                  <div className="flex-1 min-w-0">
-                                    <h3 className="text-xs sm:text-sm font-semibold text-blue-800 mb-0.5">
-                                      🤖 AI Learning
-                                    </h3>
-                                    <p className="text-xs text-blue-700 leading-tight">
-                                      Smart word selection for your level
-                                    </p>
-                                  </div>
-                                  <div className="text-xs font-medium text-purple-600 bg-purple-100 px-2 py-1 rounded-full">
-                                    Active
+                              <div className="mb-3">
+                                <div className="bg-gradient-to-r from-blue-50 to-purple-50 border border-blue-200 rounded-lg p-2 sm:p-3">
+                                  <div className="flex items-center justify-between">
+                                    <div className="flex items-center gap-2 sm:gap-3">
+                                      <div className="bg-gradient-to-r from-blue-500 to-purple-500 p-1.5 sm:p-2 rounded-full flex-shrink-0">
+                                        <Brain className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
+                                      </div>
+                                      <div className="flex-1 min-w-0">
+                                        <h3 className="text-xs sm:text-sm font-semibold text-blue-800 mb-0.5">
+                                          🤖 AI Learning Enhanced
+                                        </h3>
+                                        <p className="text-xs text-blue-700 leading-tight">
+                                          Personalized learning with smart recommendations
+                                        </p>
+                                      </div>
+                                    </div>
+                                    <div className="flex items-center gap-2">
+                                      <div className="text-xs font-medium text-purple-600 bg-purple-100 px-2 py-1 rounded-full">
+                                        Active
+                                      </div>
+                                      <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" title="AI Status: Active" />
+                                    </div>
                                   </div>
                                 </div>
                               </div>
