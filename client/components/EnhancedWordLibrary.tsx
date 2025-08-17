@@ -385,7 +385,7 @@ export const EnhancedWordLibrary: React.FC<EnhancedWordLibraryProps> = ({
       className={`min-h-screen transition-all duration-300 ${
         highContrastMode
           ? "bg-black text-white"
-          : "bg-gray-100"
+          : "bg-white"
       }`}
     >
       {/* Enhanced Mobile Header */}
