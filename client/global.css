@@ -189,29 +189,47 @@
     line-height: 1.5;
   }
 
-  /* Enhanced readability for kids */
+  /* Optimized readability for kids with better density */
   .text-kid-large {
-    font-size: 1.25rem;
+    font-size: 1rem;
     font-family: 'Comic Neue', sans-serif;
     font-weight: 700;
-    line-height: 1.3;
+    line-height: 1.2;
     letter-spacing: 0.02em;
   }
 
+  @media (min-width: 1024px) {
+    .text-kid-large {
+      font-size: 1.125rem;
+    }
+  }
+
   .text-kid-medium {
-    font-size: 1rem;
+    font-size: 0.875rem;
     font-family: 'Nunito', sans-serif;
     font-weight: 600;
-    line-height: 1.4;
+    line-height: 1.3;
     letter-spacing: 0.015em;
   }
 
+  @media (min-width: 1024px) {
+    .text-kid-medium {
+      font-size: 1rem;
+    }
+  }
+
   .text-kid-small {
-    font-size: 0.875rem;
+    font-size: 0.75rem;
     font-family: 'Nunito', sans-serif;
     font-weight: 500;
-    line-height: 1.5;
+    line-height: 1.4;
     letter-spacing: 0.01em;
+  }
+
+  @media (min-width: 1024px) {
+    .text-kid-small {
+      font-size: 0.875rem;
+    }
   }
 
   /* Mobile touch improvements */
