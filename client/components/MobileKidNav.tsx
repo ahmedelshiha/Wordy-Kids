@@ -167,7 +167,7 @@ export function MobileKidNav({
 
   const handleMoreItemClick = (itemId: string) => {
     setShowMoreMenu(false);
-    
+
     switch (itemId) {
       case "parent":
         setShowParentGate(true);
@@ -208,7 +208,7 @@ export function MobileKidNav({
             transition={{ type: "spring", damping: 25, stiffness: 300 }}
           >
             <div className="text-center mb-4">
-              <motion.div 
+              <motion.div
                 className="text-3xl mb-2"
                 animate={{ rotate: [0, 10, -10, 0] }}
                 transition={{ duration: 2, repeat: Infinity }}
@@ -228,7 +228,7 @@ export function MobileKidNav({
                   onClick={() => handleMoreItemClick(item.id)}
                   className={cn(
                     "flex flex-col items-center gap-2 p-4 rounded-2xl transition-all duration-200 transform active:scale-95 border-2 min-h-[90px] justify-center",
-                    `bg-gradient-to-br ${item.color} text-white shadow-lg hover:shadow-xl`
+                    `bg-gradient-to-br ${item.color} text-white shadow-lg hover:shadow-xl`,
                   )}
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
@@ -236,11 +236,12 @@ export function MobileKidNav({
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                 >
-                  <motion.div 
+                  <motion.div
                     className="text-2xl"
-                    animate={{ 
+                    animate={{
                       scale: [1, 1.1, 1],
-                      rotate: item.id === "parent" ? [0, 5, -5, 0] : [0, 0, 0, 0]
+                      rotate:
+                        item.id === "parent" ? [0, 5, -5, 0] : [0, 0, 0, 0],
                     }}
                     transition={{ duration: 2, repeat: Infinity }}
                   >
@@ -276,7 +277,7 @@ export function MobileKidNav({
                 className={cn(
                   "flex flex-col items-center transition-all duration-300 transform relative group",
                   "flex-1 min-w-0 max-w-[90px] p-0.5 gap-0",
-                  "bg-transparent hover:bg-transparent"
+                  "bg-transparent hover:bg-transparent",
                 )}
                 whileHover={{ y: -2, scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
@@ -291,7 +292,10 @@ export function MobileKidNav({
                       activeTab === tab.id
                         ? {
                             scale: [1, 1.15, 1],
-                            rotate: tab.id === "dashboard" ? [0, 5, -5, 0] : [0, 8, -8, 0],
+                            rotate:
+                              tab.id === "dashboard"
+                                ? [0, 5, -5, 0]
+                                : [0, 8, -8, 0],
                           }
                         : { scale: 1 }
                     }
@@ -305,7 +309,7 @@ export function MobileKidNav({
                     <span className="relative z-10 filter drop-shadow-lg">
                       {tab.emoji}
                     </span>
-                    
+
                     {/* Magical sparkles for active tab */}
                     {activeTab === tab.id && (
                       <>
@@ -408,7 +412,7 @@ export function MobileKidNav({
                 "flex-1 min-w-0 max-w-[90px] p-0.5 gap-0",
                 showMoreMenu
                   ? "bg-gradient-to-br from-blue-500 to-purple-500 rounded-xl"
-                  : "bg-transparent"
+                  : "bg-transparent",
               )}
               whileHover={{ y: -2, scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
@@ -416,7 +420,7 @@ export function MobileKidNav({
               <motion.div
                 className={cn(
                   "text-4xl transition-transform duration-200",
-                  showMoreMenu ? "rotate-45 scale-110" : ""
+                  showMoreMenu ? "rotate-45 scale-110" : "",
                 )}
                 animate={showMoreMenu ? { rotate: [0, 360] } : {}}
                 transition={{ duration: 0.5 }}

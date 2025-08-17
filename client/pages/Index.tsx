@@ -49,7 +49,10 @@ import {
   FloatingMascot,
   MascotReaction,
 } from "@/components/FriendlyMascot";
-import { useMascotMobileOptimization, getMobileMascotClasses } from "@/hooks/use-mascot-mobile-optimization";
+import {
+  useMascotMobileOptimization,
+  getMobileMascotClasses,
+} from "@/hooks/use-mascot-mobile-optimization";
 import {
   MagicalParticles,
   SuccessParticles,
