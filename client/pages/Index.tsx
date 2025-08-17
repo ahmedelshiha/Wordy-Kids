@@ -3494,9 +3494,9 @@ export default function Index({ initialProfile }: IndexProps) {
             />
           )}
 
-          {/* Kid-Friendly Floating Mascot */}
+          {/* Kid-Friendly Floating Mascot - Appears after 5 minutes */}
           {userRole === "child" && (
-            <FloatingMascot
+            <FriendlyMascot
               mood={
                 rememberedWords.size > 5
                   ? "celebrating"
@@ -3504,7 +3504,12 @@ export default function Index({ initialProfile }: IndexProps) {
                     ? "encouraging"
                     : "happy"
               }
-              duration={4000}
+              size="medium"
+              showSpeechBubble={true}
+              animate={true}
+              delayAppearance={true}
+              delayMinutes={5}
+              className="fixed bottom-2 right-2 md:bottom-4 md:right-4 z-50 bg-white/90 backdrop-blur-sm rounded-full p-2 md:p-4 shadow-lg animate-mascot-bounce"
             />
           )}
 
