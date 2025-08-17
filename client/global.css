@@ -81,12 +81,26 @@
     --mascot-excited: 300 80% 75%; /* Playful purple for achievements */
     --mascot-calm: 200 70% 80%; /* Soft blue for learning moments */
 
-    /* Kid-friendly gradients */
+    /* Enhanced kid-friendly gradients */
     --kid-gradient-happy: linear-gradient(135deg, #ff6b9d, #ffa500, #ffcc02);
     --kid-gradient-learn: linear-gradient(135deg, #4facfe, #00f2fe);
     --kid-gradient-success: linear-gradient(135deg, #43e97b, #38f9d7);
     --kid-gradient-adventure: linear-gradient(135deg, #fa709a, #fee140);
     --kid-gradient-magic: linear-gradient(135deg, #a8edea, #fed6e3, #ffecd2);
+    --kid-gradient-portal: linear-gradient(135deg, #667eea, #764ba2, #f093fb);
+    --kid-gradient-celebration: linear-gradient(135deg, #ffecd2, #fcb69f, #ffeaa7);
+    --kid-gradient-rainbow: linear-gradient(135deg, #ff9a9e, #fecfef, #fecfef, #a8edea);
+
+    /* Magic portal colors */
+    --portal-primary: 264 83% 70%;
+    --portal-secondary: 290 95% 85%;
+    --portal-accent: 315 100% 75%;
+    --portal-glow: 270 100% 80%;
+
+    /* Celebration colors */
+    --celebration-gold: 45 100% 60%;
+    --celebration-sparkle: 55 100% 70%;
+    --celebration-confetti: 320 85% 70%;
   }
 
   .dark {
@@ -150,6 +164,20 @@
   body {
     @apply bg-background text-foreground;
     -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  }
+
+  /* Kid-friendly typography */
+  .font-kid-friendly {
+    font-family: 'Comic Neue', 'Fredoka One', 'Nunito', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-weight: 600;
+    letter-spacing: 0.025em;
+  }
+
+  .text-playful {
+    font-family: 'Fredoka One', 'Comic Neue', cursive;
+    font-weight: 400;
+    letter-spacing: 0.02em;
   }
 
   /* Mobile touch improvements */
