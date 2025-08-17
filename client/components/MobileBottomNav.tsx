@@ -211,7 +211,7 @@ export function MobileBottomNav({
               onClick={onMoreToggle}
               className="w-full mt-4 py-3 rounded-2xl kid-gradient-magic text-white font-kid-friendly font-bold transition-all transform active:scale-95 shadow-lg kid-button"
             >
-              Close Magic Menu ���
+              Close Magic Menu ✨
             </button>
           </div>
         </div>
@@ -283,7 +283,7 @@ export function MobileBottomNav({
               >
                 🎪
               </div>
-              <span className="text-[10px] font-kid-friendly font-bold leading-tight text-center">
+              <span className="text-[10px] font-kid-friendly font-bold leading-tight text-center text-white">
                 More
               </span>
 
