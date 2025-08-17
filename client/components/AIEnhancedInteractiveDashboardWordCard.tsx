@@ -26,6 +26,8 @@ import {
   Shield,
   RefreshCw,
   AlertTriangle,
+  Settings,
+  Info,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { audioService } from "@/lib/audioService";
