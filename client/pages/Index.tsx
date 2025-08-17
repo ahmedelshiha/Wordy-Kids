@@ -14,7 +14,11 @@ import {
 import { WordCard } from "@/components/WordCard";
 import { LearningDashboard } from "@/components/LearningDashboard";
 import { QuizGame } from "@/components/QuizGame";
-import { ConditionalAI, LazyAIComponent, preloadAIComponents } from "@/components/LazyAIComponents";
+import {
+  ConditionalAI,
+  LazyAIComponent,
+  preloadAIComponents,
+} from "@/components/LazyAIComponents";
 import { ChildFriendlyCategorySelector } from "@/components/ChildFriendlyCategorySelector";
 import { EnhancedChildLogin } from "@/components/EnhancedChildLogin";
 import { AvatarCustomization } from "@/components/AvatarCustomization";
@@ -2319,7 +2323,8 @@ export default function Index({ initialProfile }: IndexProps) {
                                           🤖 AI Learning Enhanced
                                         </h3>
                                         <p className="text-xs text-blue-700 leading-tight">
-                                          Personalized learning with smart recommendations
+                                          Personalized learning with smart
+                                          recommendations
                                         </p>
                                       </div>
                                     </div>
@@ -2327,7 +2332,10 @@ export default function Index({ initialProfile }: IndexProps) {
                                       <div className="text-xs font-medium text-purple-600 bg-purple-100 px-2 py-1 rounded-full">
                                         Active
                                       </div>
-                                      <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" title="AI Status: Active" />
+                                      <div
+                                        className="w-2 h-2 bg-green-500 rounded-full animate-pulse"
+                                        title="AI Status: Active"
+                                      />
                                     </div>
                                   </div>
                                 </div>

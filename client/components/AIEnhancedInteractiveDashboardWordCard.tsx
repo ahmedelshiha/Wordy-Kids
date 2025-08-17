@@ -166,8 +166,8 @@ export function AIEnhancedInteractiveDashboardWordCard({
   const [globalAIEnabled, setGlobalAIEnabled] = useState(isAIEnabled());
 
   // AI Status Management
-  const [aiStatus, setAiStatus] = useState<AIStatus>('loading');
-  const [aiErrorMessage, setAiErrorMessage] = useState<string>('');
+  const [aiStatus, setAiStatus] = useState<AIStatus>("loading");
+  const [aiErrorMessage, setAiErrorMessage] = useState<string>("");
   const [aiRetryCount, setAiRetryCount] = useState(0);
   const [showAISettings, setShowAISettings] = useState(false);
 
@@ -179,7 +179,7 @@ export function AIEnhancedInteractiveDashboardWordCard({
     onToggleAIEnhancement?.(newValue);
 
     // Update AI status based on toggle
-    setAiStatus(newValue ? 'loading' : 'disabled');
+    setAiStatus(newValue ? "loading" : "disabled");
 
     // If disabling AI globally, end any active session
     if (!newValue && aiState.isSessionActive) {
@@ -189,16 +189,18 @@ export function AIEnhancedInteractiveDashboardWordCard({
 
   // AI Error Recovery
   const retryAI = async () => {
-    setAiRetryCount(prev => prev + 1);
-    setAiStatus('loading');
-    setAiErrorMessage('');
+    setAiRetryCount((prev) => prev + 1);
+    setAiStatus("loading");
+    setAiErrorMessage("");
 
     try {
       await aiActions.reset();
-      setAiStatus('active');
+      setAiStatus("active");
     } catch (error) {
-      setAiStatus('error');
-      setAiErrorMessage(error instanceof Error ? error.message : 'AI system unavailable');
+      setAiStatus("error");
+      setAiErrorMessage(
+        error instanceof Error ? error.message : "AI system unavailable",
+      );
     }
   };
 
@@ -243,24 +245,30 @@ export function AIEnhancedInteractiveDashboardWordCard({
   // Monitor AI state and update status
   useEffect(() => {
     if (!globalAIEnabled) {
-      setAiStatus('disabled');
+      setAiStatus("disabled");
       return;
     }
 
     if (aiState.isLoading) {
-      setAiStatus('loading');
+      setAiStatus("loading");
     } else if (aiState.error) {
-      setAiStatus('error');
+      setAiStatus("error");
       setAiErrorMessage(aiState.error);
     } else if (aiState.hasInitialized) {
       if (aiState.currentRecommendation) {
-        setAiStatus('active');
-        setAiErrorMessage('');
+        setAiStatus("active");
+        setAiErrorMessage("");
       } else {
-        setAiStatus('fallback');
+        setAiStatus("fallback");
       }
     }
-  }, [globalAIEnabled, aiState.isLoading, aiState.error, aiState.hasInitialized, aiState.currentRecommendation]);
+  }, [
+    globalAIEnabled,
+    aiState.isLoading,
+    aiState.error,
+    aiState.hasInitialized,
+    aiState.currentRecommendation,
+  ]);
 
   // Initialize AI recommendations when component mounts
   useEffect(() => {
@@ -1080,11 +1088,11 @@ export function AIEnhancedInteractiveDashboardWordCard({
                 error={aiErrorMessage}
                 onRetry={retryAI}
                 size="md"
-                showConfidence={aiStatus === 'active'}
+                showConfidence={aiStatus === "active"}
               />
 
               {/* Quick Stats */}
-              {aiStatus === 'active' && (
+              {aiStatus === "active" && (
                 <div className="hidden sm:flex items-center gap-4 text-xs">
                   <div className="text-center">
                     <div className="font-semibold text-blue-600">
@@ -1123,7 +1131,7 @@ export function AIEnhancedInteractiveDashboardWordCard({
                   "h-8 px-3",
                   globalAIEnabled
                     ? "bg-blue-600 hover:bg-blue-700"
-                    : "border-blue-300 text-blue-600 hover:bg-blue-50"
+                    : "border-blue-300 text-blue-600 hover:bg-blue-50",
                 )}
               >
                 <Brain className="w-4 h-4 mr-1" />
@@ -1135,7 +1143,7 @@ export function AIEnhancedInteractiveDashboardWordCard({
           </div>
 
           {/* Error Message */}
-          {aiStatus === 'error' && aiErrorMessage && (
+          {aiStatus === "error" && aiErrorMessage && (
             <Alert className="mt-3 border-red-200 bg-red-50">
               <AlertTriangle className="w-4 h-4" />
               <AlertDescription className="text-sm">
@@ -1153,7 +1161,7 @@ export function AIEnhancedInteractiveDashboardWordCard({
           )}
 
           {/* Fallback Mode Notice */}
-          {aiStatus === 'fallback' && (
+          {aiStatus === "fallback" && (
             <Alert className="mt-3 border-yellow-200 bg-yellow-50">
               <Info className="w-4 h-4" />
               <AlertDescription className="text-sm">

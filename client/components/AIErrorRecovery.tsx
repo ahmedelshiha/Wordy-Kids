@@ -1,79 +1,81 @@
-import React, { useState, useEffect } from 'react';
-import { cn } from '@/lib/utils';
-import { 
-  AlertTriangle, 
-  RefreshCw, 
-  WifiOff, 
-  Brain, 
-  CheckCircle, 
+import React, { useState, useEffect } from "react";
+import { cn } from "@/lib/utils";
+import {
+  AlertTriangle,
+  RefreshCw,
+  WifiOff,
+  Brain,
+  CheckCircle,
   AlertCircle,
   Info,
-  Settings
-} from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Alert, AlertDescription } from '@/components/ui/alert';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Progress } from '@/components/ui/progress';
-import { Separator } from '@/components/ui/separator';
+  Settings,
+} from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Progress } from "@/components/ui/progress";
+import { Separator } from "@/components/ui/separator";
 
 export interface AIErrorRecoveryProps {
   error: string;
-  errorType?: 'network' | 'service' | 'timeout' | 'unknown';
+  errorType?: "network" | "service" | "timeout" | "unknown";
   onRetry: () => Promise<void>;
   onFallbackMode?: () => void;
   onOpenSettings?: () => void;
   retryCount?: number;
   maxRetries?: number;
   className?: string;
-  variant?: 'minimal' | 'detailed' | 'card';
+  variant?: "minimal" | "detailed" | "card";
 }
 
 const errorTypeConfig = {
   network: {
     icon: WifiOff,
-    title: 'Connection Issue',
-    description: 'Unable to connect to AI services. Check your internet connection.',
-    color: 'text-orange-600',
-    bgColor: 'bg-orange-50',
-    borderColor: 'border-orange-200'
+    title: "Connection Issue",
+    description:
+      "Unable to connect to AI services. Check your internet connection.",
+    color: "text-orange-600",
+    bgColor: "bg-orange-50",
+    borderColor: "border-orange-200",
   },
   service: {
     icon: Brain,
-    title: 'AI Service Unavailable',
-    description: 'The AI system is temporarily unavailable. This usually resolves quickly.',
-    color: 'text-blue-600',
-    bgColor: 'bg-blue-50',
-    borderColor: 'border-blue-200'
+    title: "AI Service Unavailable",
+    description:
+      "The AI system is temporarily unavailable. This usually resolves quickly.",
+    color: "text-blue-600",
+    bgColor: "bg-blue-50",
+    borderColor: "border-blue-200",
   },
   timeout: {
     icon: AlertCircle,
-    title: 'Request Timeout',
-    description: 'The AI took too long to respond. Please try again.',
-    color: 'text-yellow-600',
-    bgColor: 'bg-yellow-50',
-    borderColor: 'border-yellow-200'
+    title: "Request Timeout",
+    description: "The AI took too long to respond. Please try again.",
+    color: "text-yellow-600",
+    bgColor: "bg-yellow-50",
+    borderColor: "border-yellow-200",
   },
   unknown: {
     icon: AlertTriangle,
-    title: 'Unexpected Error',
-    description: 'Something went wrong with the AI system.',
-    color: 'text-red-600',
-    bgColor: 'bg-red-50',
-    borderColor: 'border-red-200'
-  }
+    title: "Unexpected Error",
+    description: "Something went wrong with the AI system.",
+    color: "text-red-600",
+    bgColor: "bg-red-50",
+    borderColor: "border-red-200",
+  },
 };
 
 export function AIErrorRecovery({
   error,
-  errorType = 'unknown',
+  errorType = "unknown",
   onRetry,
   onFallbackMode,
   onOpenSettings,
   retryCount = 0,
   maxRetries = 3,
   className,
-  variant = 'detailed'
+  variant = "detailed",
 }: AIErrorRecoveryProps) {
   const [isRetrying, setIsRetrying] = useState(false);
   const [showAdvanced, setShowAdvanced] = useState(false);
@@ -85,7 +87,7 @@ export function AIErrorRecovery({
 
   // Auto-retry countdown for certain error types
   useEffect(() => {
-    if (errorType === 'timeout' && retryCount === 0) {
+    if (errorType === "timeout" && retryCount === 0) {
       setAutoRetryCountdown(5);
       const countdown = setInterval(() => {
         setAutoRetryCountdown((prev) => {
@@ -97,19 +99,19 @@ export function AIErrorRecovery({
           return prev - 1;
         });
       }, 1000);
-      
+
       return () => clearInterval(countdown);
     }
   }, [errorType, retryCount]);
 
   const handleRetry = async () => {
     if (!canRetry || isRetrying) return;
-    
+
     setIsRetrying(true);
     try {
       await onRetry();
     } catch (retryError) {
-      console.error('Retry failed:', retryError);
+      console.error("Retry failed:", retryError);
     } finally {
       setIsRetrying(false);
     }
@@ -124,28 +126,35 @@ export function AIErrorRecovery({
 
   const getSuggestions = () => {
     const suggestions = [];
-    
-    if (errorType === 'network') {
+
+    if (errorType === "network") {
       suggestions.push("Check your internet connection");
       suggestions.push("Try refreshing the page");
-    } else if (errorType === 'service') {
+    } else if (errorType === "service") {
       suggestions.push("Wait a moment and try again");
       suggestions.push("The issue usually resolves automatically");
-    } else if (errorType === 'timeout') {
+    } else if (errorType === "timeout") {
       suggestions.push("Try again - it might work faster now");
       suggestions.push("Check if other apps are using internet");
     }
-    
+
     suggestions.push("Use basic mode without AI");
     if (onOpenSettings) suggestions.push("Check AI settings");
-    
+
     return suggestions;
   };
 
-  if (variant === 'minimal') {
+  if (variant === "minimal") {
     return (
-      <Alert className={cn('border-l-4', config.borderColor, config.bgColor, className)}>
-        <Icon className={cn('w-4 h-4', config.color)} />
+      <Alert
+        className={cn(
+          "border-l-4",
+          config.borderColor,
+          config.bgColor,
+          className,
+        )}
+      >
+        <Icon className={cn("w-4 h-4", config.color)} />
         <AlertDescription className="flex items-center justify-between">
           <span className="text-sm">{config.title}</span>
           <div className="flex gap-2">
@@ -162,7 +171,7 @@ export function AIErrorRecovery({
                 ) : autoRetryCountdown > 0 ? (
                   `${autoRetryCountdown}s`
                 ) : (
-                  'Retry'
+                  "Retry"
                 )}
               </Button>
             )}
@@ -182,18 +191,20 @@ export function AIErrorRecovery({
     );
   }
 
-  if (variant === 'card') {
+  if (variant === "card") {
     return (
-      <Card className={cn('w-full', config.borderColor, className)}>
+      <Card className={cn("w-full", config.borderColor, className)}>
         <CardHeader className="pb-3">
-          <CardTitle className={cn('flex items-center gap-2 text-lg', config.color)}>
+          <CardTitle
+            className={cn("flex items-center gap-2 text-lg", config.color)}
+          >
             <Icon className="w-5 h-5" />
             {config.title}
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
           <p className="text-sm text-gray-600">{config.description}</p>
-          
+
           {error && showAdvanced && (
             <div className="p-3 bg-gray-50 rounded-lg">
               <p className="text-xs font-mono text-gray-700">{error}</p>
@@ -211,14 +222,14 @@ export function AIErrorRecovery({
                 </Badge>
               )}
             </div>
-            
+
             <Button
               variant="link"
               size="sm"
               onClick={() => setShowAdvanced(!showAdvanced)}
               className="h-auto p-0 text-xs"
             >
-              {showAdvanced ? 'Hide' : 'Show'} Details
+              {showAdvanced ? "Hide" : "Show"} Details
             </Button>
           </div>
 
@@ -254,7 +265,7 @@ export function AIErrorRecovery({
                 </AlertDescription>
               </Alert>
             )}
-            
+
             {onFallbackMode && (
               <Button variant="outline" onClick={onFallbackMode}>
                 Basic Mode
@@ -268,14 +279,16 @@ export function AIErrorRecovery({
 
   // Detailed variant (default)
   return (
-    <div className={cn('space-y-4', className)}>
+    <div className={cn("space-y-4", className)}>
       {/* Main Error Alert */}
-      <Alert className={cn('border-l-4', config.borderColor, config.bgColor)}>
-        <Icon className={cn('w-5 h-5', config.color)} />
+      <Alert className={cn("border-l-4", config.borderColor, config.bgColor)}>
+        <Icon className={cn("w-5 h-5", config.color)} />
         <AlertDescription>
           <div className="space-y-3">
             <div>
-              <h4 className={cn('font-semibold', config.color)}>{config.title}</h4>
+              <h4 className={cn("font-semibold", config.color)}>
+                {config.title}
+              </h4>
               <p className="text-sm text-gray-600 mt-1">{config.description}</p>
             </div>
 
@@ -284,9 +297,14 @@ export function AIErrorRecovery({
               <div className="space-y-2">
                 <div className="flex items-center justify-between text-xs">
                   <span>Retry Attempts</span>
-                  <span>{retryCount}/{maxRetries}</span>
+                  <span>
+                    {retryCount}/{maxRetries}
+                  </span>
                 </div>
-                <Progress value={(retryCount / maxRetries) * 100} className="h-2" />
+                <Progress
+                  value={(retryCount / maxRetries) * 100}
+                  className="h-2"
+                />
               </div>
             )}
 
@@ -315,7 +333,7 @@ export function AIErrorRecovery({
                   {getRetryMessage()}
                 </Button>
               )}
-              
+
               {onFallbackMode && (
                 <Button
                   variant="outline"
@@ -327,7 +345,7 @@ export function AIErrorRecovery({
                   Use Basic Mode
                 </Button>
               )}
-              
+
               {onOpenSettings && (
                 <Button
                   variant="ghost"
@@ -400,36 +418,41 @@ export function AIErrorRecovery({
 
 // Hook for managing AI error recovery state
 export function useAIErrorRecovery() {
-  const [errors, setErrors] = useState<Array<{
-    id: string;
-    error: string;
-    type: string;
-    timestamp: number;
-    retryCount: number;
-  }>>([]);
+  const [errors, setErrors] = useState<
+    Array<{
+      id: string;
+      error: string;
+      type: string;
+      timestamp: number;
+      retryCount: number;
+    }>
+  >([]);
 
-  const addError = (error: string, type = 'unknown') => {
+  const addError = (error: string, type = "unknown") => {
     const id = `error-${Date.now()}-${Math.random()}`;
-    setErrors(prev => [...prev, {
-      id,
-      error,
-      type,
-      timestamp: Date.now(),
-      retryCount: 0
-    }]);
+    setErrors((prev) => [
+      ...prev,
+      {
+        id,
+        error,
+        type,
+        timestamp: Date.now(),
+        retryCount: 0,
+      },
+    ]);
     return id;
   };
 
   const retryError = (id: string) => {
-    setErrors(prev => prev.map(err => 
-      err.id === id 
-        ? { ...err, retryCount: err.retryCount + 1 }
-        : err
-    ));
+    setErrors((prev) =>
+      prev.map((err) =>
+        err.id === id ? { ...err, retryCount: err.retryCount + 1 } : err,
+      ),
+    );
   };
 
   const removeError = (id: string) => {
-    setErrors(prev => prev.filter(err => err.id !== id));
+    setErrors((prev) => prev.filter((err) => err.id !== id));
   };
 
   const clearErrors = () => {
@@ -441,6 +464,6 @@ export function useAIErrorRecovery() {
     addError,
     retryError,
     removeError,
-    clearErrors
+    clearErrors,
   };
 }

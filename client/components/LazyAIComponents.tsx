@@ -1,22 +1,28 @@
-import React, { Suspense, lazy, useState, useEffect } from 'react';
-import { cn } from '@/lib/utils';
-import { Brain, Loader2, AlertTriangle } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent } from '@/components/ui/card';
-import { Skeleton } from '@/components/ui/skeleton';
-import { isAIEnabled } from '@/lib/aiSettings';
+import React, { Suspense, lazy, useState, useEffect } from "react";
+import { cn } from "@/lib/utils";
+import { Brain, Loader2, AlertTriangle } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { Skeleton } from "@/components/ui/skeleton";
+import { isAIEnabled } from "@/lib/aiSettings";
 
 // Lazy load AI components only when needed
-const AIEnhancedWordLearning = lazy(() => 
-  import('./AIEnhancedWordLearning').then(module => ({ default: module.AIEnhancedWordLearning }))
+const AIEnhancedWordLearning = lazy(() =>
+  import("./AIEnhancedWordLearning").then((module) => ({
+    default: module.AIEnhancedWordLearning,
+  })),
 );
 
-const AIEnhancedInteractiveDashboardWordCard = lazy(() => 
-  import('./AIEnhancedInteractiveDashboardWordCard').then(module => ({ default: module.AIEnhancedInteractiveDashboardWordCard }))
+const AIEnhancedInteractiveDashboardWordCard = lazy(() =>
+  import("./AIEnhancedInteractiveDashboardWordCard").then((module) => ({
+    default: module.AIEnhancedInteractiveDashboardWordCard,
+  })),
 );
 
-const EnhancedAISettings = lazy(() => 
-  import('./EnhancedAISettings').then(module => ({ default: module.EnhancedAISettings }))
+const EnhancedAISettings = lazy(() =>
+  import("./EnhancedAISettings").then((module) => ({
+    default: module.EnhancedAISettings,
+  })),
 );
 
 // Preload AI components when hovering over AI controls
@@ -25,15 +31,19 @@ let aiComponentsPreloaded = false;
 export const preloadAIComponents = () => {
   if (!aiComponentsPreloaded) {
     aiComponentsPreloaded = true;
-    import('./AIEnhancedWordLearning');
-    import('./AIEnhancedInteractiveDashboardWordCard');
-    import('./EnhancedAISettings');
+    import("./AIEnhancedWordLearning");
+    import("./AIEnhancedInteractiveDashboardWordCard");
+    import("./EnhancedAISettings");
   }
 };
 
 // Loading skeleton for AI components
-function AILoadingSkeleton({ variant = 'card' }: { variant?: 'card' | 'settings' | 'compact' }) {
-  if (variant === 'settings') {
+function AILoadingSkeleton({
+  variant = "card",
+}: {
+  variant?: "card" | "settings" | "compact";
+}) {
+  if (variant === "settings") {
     return (
       <Card className="w-full">
         <CardContent className="p-6">
@@ -57,7 +67,7 @@ function AILoadingSkeleton({ variant = 'card' }: { variant?: 'card' | 'settings'
     );
   }
 
-  if (variant === 'compact') {
+  if (variant === "compact") {
     return (
       <div className="flex items-center gap-2 p-2 border rounded-lg">
         <Skeleton className="w-4 h-4 rounded-full" />
@@ -92,7 +102,11 @@ function AILoadingSkeleton({ variant = 'card' }: { variant?: 'card' | 'settings'
 
 // Error boundary for AI components
 class AIErrorBoundary extends React.Component<
-  { children: React.ReactNode; fallback?: React.ReactNode; onRetry?: () => void },
+  {
+    children: React.ReactNode;
+    fallback?: React.ReactNode;
+    onRetry?: () => void;
+  },
   { hasError: boolean; error?: Error }
 > {
   constructor(props: any) {
@@ -105,7 +119,7 @@ class AIErrorBoundary extends React.Component<
   }
 
   componentDidCatch(error: Error, errorInfo: React.ErrorInfo) {
-    console.error('AI Component Error:', error, errorInfo);
+    console.error("AI Component Error:", error, errorInfo);
   }
 
   render() {
@@ -118,9 +132,12 @@ class AIErrorBoundary extends React.Component<
         <Card className="w-full border-red-200 bg-red-50">
           <CardContent className="p-6 text-center">
             <AlertTriangle className="w-8 h-8 text-red-500 mx-auto mb-3" />
-            <h3 className="font-semibold text-red-800 mb-2">AI Component Error</h3>
+            <h3 className="font-semibold text-red-800 mb-2">
+              AI Component Error
+            </h3>
             <p className="text-sm text-red-600 mb-4">
-              The AI component encountered an issue. You can continue using basic features.
+              The AI component encountered an issue. You can continue using
+              basic features.
             </p>
             {this.props.onRetry && (
               <Button
@@ -147,7 +164,7 @@ class AIErrorBoundary extends React.Component<
 interface LazyAIComponentProps {
   children?: React.ReactNode;
   fallback?: React.ReactNode;
-  loadingVariant?: 'card' | 'settings' | 'compact';
+  loadingVariant?: "card" | "settings" | "compact";
   className?: string;
   onLoadError?: (error: Error) => void;
   enablePreload?: boolean;
@@ -157,10 +174,10 @@ interface LazyAIComponentProps {
 export function LazyAIComponent({
   children,
   fallback,
-  loadingVariant = 'card',
+  loadingVariant = "card",
   className,
   onLoadError,
-  enablePreload = true
+  enablePreload = true,
 }: LazyAIComponentProps) {
   const [isAIEnabledState, setIsAIEnabledState] = useState(false);
   const [shouldLoad, setShouldLoad] = useState(false);
@@ -168,7 +185,7 @@ export function LazyAIComponent({
   useEffect(() => {
     const aiEnabled = isAIEnabled();
     setIsAIEnabledState(aiEnabled);
-    
+
     // Only load AI components if AI is enabled
     if (aiEnabled) {
       setShouldLoad(true);
@@ -181,12 +198,12 @@ export function LazyAIComponent({
   }
 
   return (
-    <div 
-      className={cn('w-full', className)}
+    <div
+      className={cn("w-full", className)}
       onMouseEnter={enablePreload ? preloadAIComponents : undefined}
     >
       <AIErrorBoundary onRetry={() => setShouldLoad(true)}>
-        <Suspense 
+        <Suspense
           fallback={
             <div className="w-full">
               <AILoadingSkeleton variant={loadingVariant} />
@@ -231,16 +248,18 @@ export function useAIPerformance() {
     loadTime: 0,
     errorCount: 0,
     successfulLoads: 0,
-    lastLoadTime: null as Date | null
+    lastLoadTime: null as Date | null,
   });
 
   const recordLoad = (loadTime: number, success: boolean) => {
-    setMetrics(prev => ({
+    setMetrics((prev) => ({
       ...prev,
       loadTime: success ? loadTime : prev.loadTime,
       errorCount: success ? prev.errorCount : prev.errorCount + 1,
-      successfulLoads: success ? prev.successfulLoads + 1 : prev.successfulLoads,
-      lastLoadTime: new Date()
+      successfulLoads: success
+        ? prev.successfulLoads + 1
+        : prev.successfulLoads,
+      lastLoadTime: new Date(),
     }));
   };
 
@@ -262,7 +281,7 @@ export function useInViewLazyLoad(threshold = 0.1) {
           observer.disconnect(); // Only load once
         }
       },
-      { threshold }
+      { threshold },
     );
 
     observer.observe(ref);
@@ -302,14 +321,11 @@ export function AIResourceHints() {
   useEffect(() => {
     if (isAIEnabled()) {
       // Add resource hints for AI-related resources
-      const preloadLinks = [
-        '/api/ai-recommendations',
-        '/api/ai-analytics'
-      ];
+      const preloadLinks = ["/api/ai-recommendations", "/api/ai-analytics"];
 
-      preloadLinks.forEach(href => {
-        const link = document.createElement('link');
-        link.rel = 'prefetch';
+      preloadLinks.forEach((href) => {
+        const link = document.createElement("link");
+        link.rel = "prefetch";
         link.href = href;
         document.head.appendChild(link);
       });
@@ -320,27 +336,27 @@ export function AIResourceHints() {
 }
 
 // Conditional rendering for AI features
-export function ConditionalAI({ 
-  children, 
-  fallback = null 
-}: { 
-  children: React.ReactNode; 
-  fallback?: React.ReactNode; 
+export function ConditionalAI({
+  children,
+  fallback = null,
+}: {
+  children: React.ReactNode;
+  fallback?: React.ReactNode;
 }) {
   const [aiEnabled, setAiEnabled] = useState(false);
 
   useEffect(() => {
     setAiEnabled(isAIEnabled());
-    
+
     // Listen for AI setting changes
     const handleStorageChange = (e: StorageEvent) => {
-      if (e.key === 'aiEnhancementEnabled') {
-        setAiEnabled(JSON.parse(e.newValue || 'false'));
+      if (e.key === "aiEnhancementEnabled") {
+        setAiEnabled(JSON.parse(e.newValue || "false"));
       }
     };
 
-    window.addEventListener('storage', handleStorageChange);
-    return () => window.removeEventListener('storage', handleStorageChange);
+    window.addEventListener("storage", handleStorageChange);
+    return () => window.removeEventListener("storage", handleStorageChange);
   }, []);
 
   return aiEnabled ? <>{children}</> : <>{fallback}</>;
