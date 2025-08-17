@@ -1067,6 +1067,122 @@ export function AIEnhancedInteractiveDashboardWordCard({
       tabIndex={0}
       onKeyDown={handleKeyDown}
     >
+      {/* Enhanced AI Control Header */}
+      <Card className="bg-gradient-to-r from-blue-50/80 to-purple-50/80 border border-blue-200/60">
+        <CardContent className="p-3 sm:p-4">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <AIStatusIndicator
+                status={aiStatus}
+                confidence={aiState.confidence}
+                error={aiErrorMessage}
+                onRetry={retryAI}
+                size="md"
+                showConfidence={aiStatus === 'active'}
+              />
+
+              {/* Quick Stats */}
+              {aiStatus === 'active' && (
+                <div className="hidden sm:flex items-center gap-4 text-xs">
+                  <div className="text-center">
+                    <div className="font-semibold text-blue-600">
+                      {sessionStats.wordsCompleted}/{SESSION_SIZE}
+                    </div>
+                    <div className="text-gray-600">Progress</div>
+                  </div>
+                  <div className="text-center">
+                    <div className="font-semibold text-green-600">
+                      {sessionStats.accuracy}%
+                    </div>
+                    <div className="text-gray-600">Accuracy</div>
+                  </div>
+                </div>
+              )}
+            </div>
+
+            <div className="flex items-center gap-2">
+              {/* AI Settings Button */}
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => setShowAISettings(!showAISettings)}
+                className="h-8 px-2"
+              >
+                <Settings className="w-4 h-4 mr-1" />
+                <span className="hidden sm:inline">Settings</span>
+              </Button>
+
+              {/* AI Toggle */}
+              <Button
+                variant={globalAIEnabled ? "default" : "outline"}
+                size="sm"
+                onClick={toggleGlobalAI}
+                className={cn(
+                  "h-8 px-3",
+                  globalAIEnabled
+                    ? "bg-blue-600 hover:bg-blue-700"
+                    : "border-blue-300 text-blue-600 hover:bg-blue-50"
+                )}
+              >
+                <Brain className="w-4 h-4 mr-1" />
+                <span className="text-xs">
+                  {globalAIEnabled ? "AI On" : "AI Off"}
+                </span>
+              </Button>
+            </div>
+          </div>
+
+          {/* Error Message */}
+          {aiStatus === 'error' && aiErrorMessage && (
+            <Alert className="mt-3 border-red-200 bg-red-50">
+              <AlertTriangle className="w-4 h-4" />
+              <AlertDescription className="text-sm">
+                <strong>AI Issue:</strong> {aiErrorMessage}
+                <Button
+                  variant="link"
+                  size="sm"
+                  onClick={retryAI}
+                  className="ml-2 h-auto p-0 text-blue-600"
+                >
+                  Try again
+                </Button>
+              </AlertDescription>
+            </Alert>
+          )}
+
+          {/* Fallback Mode Notice */}
+          {aiStatus === 'fallback' && (
+            <Alert className="mt-3 border-yellow-200 bg-yellow-50">
+              <Info className="w-4 h-4" />
+              <AlertDescription className="text-sm">
+                Running in compatibility mode. Basic features available.
+              </AlertDescription>
+            </Alert>
+          )}
+        </CardContent>
+      </Card>
+
+      {/* Enhanced AI Settings Panel */}
+      {showAISettings && (
+        <motion.div
+          initial={{ opacity: 0, height: 0 }}
+          animate={{ opacity: 1, height: "auto" }}
+          exit={{ opacity: 0, height: 0 }}
+          transition={{ duration: 0.2 }}
+        >
+          <EnhancedAISettings
+            compact={true}
+            aiStatus={aiStatus}
+            aiConfidence={aiState.confidence}
+            onSettingsChange={(settings) => {
+              if (settings.aiEnhancementEnabled !== globalAIEnabled) {
+                toggleGlobalAI();
+              }
+            }}
+          />
+        </motion.div>
+      )}
+
       {/* AI Insights Panel - Mobile Optimized */}
       {showAIInsights && (
         <Card className="bg-gradient-to-r from-blue-50 to-purple-50 border-blue-200">
