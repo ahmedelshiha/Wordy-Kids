@@ -59,7 +59,7 @@ export function FriendlyMascot({
   animate = true,
   className,
   delayAppearance = false,
-  delayMinutes = 7,
+  delayMinutes = 5,
 }: FriendlyMascotProps) {
   const [currentCharacter, setCurrentCharacter] = useState(mascotCharacters[0]);
   const [isVisible, setIsVisible] = useState(!delayAppearance);
@@ -87,10 +87,10 @@ export function FriendlyMascot({
   }, [delayAppearance, delayMinutes]);
 
   const sizeClasses = {
-    tiny: "text-lg",
-    small: "text-xl",
-    medium: "text-3xl",
-    large: "text-5xl",
+    tiny: "text-sm md:text-lg",
+    small: "text-base md:text-xl",
+    medium: "text-xl md:text-3xl",
+    large: "text-2xl md:text-5xl",
   };
 
   const positionClasses = {
@@ -124,7 +124,7 @@ export function FriendlyMascot({
       )}
     >
       {position === "right" && showSpeechBubble && (
-        <div className="speech-bubble kid-text-big max-w-xs">
+        <div className="speech-bubble kid-text-big max-w-xs md:max-w-sm text-xs md:text-sm">
           {displayMessage}
         </div>
       )}
@@ -143,9 +143,9 @@ export function FriendlyMascot({
             className={cn(
               "absolute -top-1 -right-1",
               size === "large"
-                ? "text-base"
+                ? "text-sm md:text-base"
                 : size === "medium"
-                  ? "text-sm"
+                  ? "text-xs md:text-sm"
                   : size === "small"
                     ? "text-xs"
                     : "text-xs", // tiny size
@@ -157,7 +157,7 @@ export function FriendlyMascot({
       </div>
 
       {position !== "right" && showSpeechBubble && (
-        <div className="speech-bubble kid-text-big max-w-xs">
+        <div className="speech-bubble kid-text-big max-w-xs md:max-w-sm text-xs md:text-sm">
           {displayMessage}
         </div>
       )}
