@@ -274,7 +274,7 @@ export function MobileBottomNav({
               >
                 🎪
               </div>
-              <span className="text-base font-bold leading-none text-center">
+              <span className="text-base font-bold leading-none text-center text-white">
                 More
               </span>
 
