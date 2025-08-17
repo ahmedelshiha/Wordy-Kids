@@ -51,10 +51,7 @@ export function AIProgressContainer({
               {dailyGoal.completed}/{dailyGoal.target}
             </span>
             <span className="font-bold text-gray-800 text-sm sm:text-base">
-              (
-              {Math.round(
-                (dailyGoal.completed / dailyGoal.target) * 100,
-              )}
+              ({Math.round((dailyGoal.completed / dailyGoal.target) * 100)}
               %)
             </span>
           </div>

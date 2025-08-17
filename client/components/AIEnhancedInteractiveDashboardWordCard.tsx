@@ -1772,7 +1772,6 @@ export function AIEnhancedInteractiveDashboardWordCard({
                 </motion.div>
               )}
             </AnimatePresence>
-
           </AICardContent>
         </Card>
       </motion.div>
