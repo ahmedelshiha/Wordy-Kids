@@ -206,13 +206,8 @@ export function DesktopKidNav({
                       </motion.div>
                     </div>
 
-                    {/* Label - White text for all container-less icons */}
-                    <span className={cn(
-                      "font-bold text-center relative z-10 text-white drop-shadow-lg -mt-1 lg:-mt-2",
-                      tab.id === "dashboard"
-                        ? "text-base lg:text-lg xl:text-xl" // Larger text for home
-                        : "text-sm lg:text-base xl:text-lg" // Normal size for others
-                    )}>
+                    {/* Label - White text for all container-less icons, same size for all */}
+                    <span className="font-bold text-center relative z-10 text-white drop-shadow-lg -mt-1 lg:-mt-2 text-sm lg:text-base xl:text-lg">
                       {tab.label}
                     </span>
 
