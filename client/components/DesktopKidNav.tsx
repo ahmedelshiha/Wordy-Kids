@@ -368,22 +368,27 @@ export function DesktopKidNav({
           </DialogHeader>
           <div className="space-y-4">
             {/* Kid Mode Toggle */}
-            <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+            <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg border-l-4 border-yellow-400">
               <div className="flex items-center gap-3">
                 <div className="text-2xl">{kidModeEnabled ? "👶" : "👨‍👩‍👧‍👦"}</div>
                 <div>
                   <div className="font-medium text-gray-900">
-                    {kidModeEnabled ? "Kid Mode" : "Parent Mode"}
+                    {kidModeEnabled ? "Kid-Safe Mode" : "Parent Mode"}
                   </div>
                   <div className="text-sm text-gray-500">
                     {kidModeEnabled
-                      ? "Simplified navigation for kids"
-                      : "Full navigation sidebar"}
+                      ? "🔒 Protected navigation - sidebar hidden"
+                      : "⚠️ Full navigation sidebar visible"}
                   </div>
+                  {!kidModeEnabled && (
+                    <div className="text-xs text-amber-600 mt-1 font-medium">
+                      Note: Sidebar will be visible to children
+                    </div>
+                  )}
                 </div>
               </div>
               <Button
-                variant="outline"
+                variant={kidModeEnabled ? "outline" : "destructive"}
                 size="sm"
                 onClick={toggleKidMode}
                 className="ml-4"
