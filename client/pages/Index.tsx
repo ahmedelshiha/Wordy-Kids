@@ -2091,13 +2091,9 @@ export default function Index({ initialProfile }: IndexProps) {
                             : "bg-white text-gray-700 hover:bg-purple-50 border border-purple-100"
                         }`}
                       >
-                        <div
-                          className={`p-2 rounded-lg lg:rounded-xl ${activeTab === "adventure" ? "bg-white/20" : "bg-green-100"}`}
-                        >
-                          <Sword
-                            className={`w-4 h-4 lg:w-5 lg:h-5 ${activeTab === "adventure" ? "text-white" : "text-green-600"}`}
-                          />
-                        </div>
+                        <Sword
+                          className={`w-4 h-4 lg:w-5 lg:h-5 ${activeTab === "adventure" ? "text-white" : "text-green-600"}`}
+                        />
                         <span className="font-medium lg:font-semibold text-sm lg:text-base">
                           🎯 Word Practice
                         </span>
@@ -2146,9 +2142,7 @@ export default function Index({ initialProfile }: IndexProps) {
                         onClick={() => navigate("/admin")}
                         className="w-full flex items-center gap-4 p-4 rounded-2xl transition-all bg-white text-gray-700 hover:bg-red-50 hover:border-red-200 border-2 border-transparent"
                       >
-                        <div className="p-2 rounded-xl bg-red-100">
-                          <Shield className="w-5 h-5 text-red-600" />
-                        </div>
+                        <Shield className="w-5 h-5 text-red-600" />
                         <span className="font-semibold">
                           Administrator Dashboard
                         </span>
@@ -2158,9 +2152,7 @@ export default function Index({ initialProfile }: IndexProps) {
                         onClick={() => setShowSettings(true)}
                         className="w-full flex items-center gap-4 p-4 rounded-2xl bg-white text-gray-700 hover:bg-purple-50 transition-all border border-purple-200"
                       >
-                        <div className="p-2 rounded-xl bg-gray-100">
-                          <Settings className="w-5 h-5 text-gray-600" />
-                        </div>
+                        <Settings className="w-5 h-5 text-gray-600" />
                         <span className="font-semibold">Settings</span>
                       </button>
 
