@@ -96,9 +96,12 @@ export function DesktopKidNav({
       setShowParentGate(false);
       setShowParentOptions(true);
       setParentCode("");
+      setParentCodeError(false);
     } else {
       // Show error feedback
+      setParentCodeError(true);
       setParentCode("");
+      setTimeout(() => setParentCodeError(false), 3000);
     }
   };
 
