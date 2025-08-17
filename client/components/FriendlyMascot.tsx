@@ -9,12 +9,14 @@ interface FriendlyMascotProps {
     | "celebrating"
     | "thinking"
     | "cheering";
-  size?: "small" | "medium" | "large";
+  size?: "tiny" | "small" | "medium" | "large";
   position?: "left" | "right" | "center";
   message?: string;
   showSpeechBubble?: boolean;
   animate?: boolean;
   className?: string;
+  delayAppearance?: boolean;
+  delayMinutes?: number;
 }
 
 const mascotExpressions = {
