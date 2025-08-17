@@ -110,12 +110,12 @@ export const ChildProfileSidebar: React.FC<ChildProfileSidebarProps> = ({
       variants={sidebarVariants}
       animate={isCollapsed ? "collapsed" : "expanded"}
       className={cn(
-        "bg-gradient-to-b from-blue-100 via-purple-100 to-pink-100",
-        "border-r-4 border-rainbow-200 shadow-xl",
+        "bg-gradient-to-b from-blue-50/50 via-purple-50/50 to-pink-50/50",
+        "border-r-2 border-purple-200/30",
         "flex flex-col h-full overflow-hidden",
         "transition-all duration-500",
-        "relative",
-        position === "right" && "border-r-0 border-l-4",
+        "relative backdrop-blur-md",
+        position === "right" && "border-r-0 border-l-2 border-purple-200/30",
         className,
       )}
     >
