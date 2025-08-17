@@ -1980,7 +1980,7 @@ export default function Index({ initialProfile }: IndexProps) {
             ) : (
               <div className="flex flex-col lg:flex-row min-h-screen bg-gradient-to-br from-white via-purple-50/30 to-pink-50/30">
                 {/* Desktop Sidebar - Hidden on Mobile */}
-                <aside className="hidden lg:flex lg:w-60 xl:w-64 bg-gradient-to-b from-purple-50 via-pink-50 to-blue-50 border-r border-purple-200 shadow-sm overflow-y-auto lg:max-h-screen">
+                <aside className="hidden lg:flex lg:w-60 xl:w-64 2xl:w-72 bg-gradient-to-b from-purple-50 via-pink-50 to-blue-50 border-r border-purple-200 shadow-sm overflow-y-auto lg:max-h-screen">
                   <div className="p-3 lg:p-4 w-full">
                     {/* Logo Section - Compact & Playful */}
                     <div className="flex items-center gap-2 mb-4 lg:mb-6">
@@ -3053,7 +3053,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                   Vowel Adventure!
                                 </h3>
                                 <p className="text-xs md:text-sm text-gray-600 mb-2 md:mb-3 hidden md:block">
-                                  Choose your difficulty and rescue vowels! ����
+                                  Choose your difficulty and rescue vowels! 🌟
                                 </p>
                                 <div className="flex justify-center gap-1 mb-2 md:mb-3 flex-wrap">
                                   <span className="bg-educational-green/20 text-educational-green px-1.5 py-0.5 rounded-full text-xs">
