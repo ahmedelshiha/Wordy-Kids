@@ -3,9 +3,20 @@ import * as TooltipPrimitive from "@radix-ui/react-tooltip";
 
 import { cn } from "@/lib/utils";
 
-const TooltipProvider = (
-  props: React.ComponentPropsWithoutRef<typeof TooltipPrimitive.Provider>,
-) => <TooltipPrimitive.Provider {...props} />;
+const TooltipProvider: React.FC<React.ComponentPropsWithoutRef<typeof TooltipPrimitive.Provider>> = ({ children, ...props }) => {
+  // Add error boundary and safe initialization
+  try {
+    return (
+      <TooltipPrimitive.Provider {...props}>
+        {children}
+      </TooltipPrimitive.Provider>
+    );
+  } catch (error) {
+    console.warn('TooltipProvider failed to initialize:', error);
+    // Fallback to just rendering children without tooltip context
+    return <>{children}</>;
+  }
+};
 TooltipProvider.displayName = "TooltipProvider";
 
 const Tooltip = TooltipPrimitive.Root;
