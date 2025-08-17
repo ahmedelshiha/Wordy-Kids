@@ -1981,22 +1981,28 @@ export default function Index({ initialProfile }: IndexProps) {
                 {/* Desktop Sidebar - Hidden on Mobile */}
                 <aside className="hidden lg:flex lg:w-60 xl:w-64 2xl:w-72 bg-gradient-to-b from-purple-50 via-pink-50 to-blue-50 border-r border-purple-200 shadow-sm overflow-y-auto lg:max-h-screen">
                   <div className="p-3 lg:p-4 w-full">
-                    {/* Logo Section - Compact & Playful */}
-                    <div className="flex items-center gap-2 mb-4 lg:mb-6">
-                      <div className="w-7 h-7 lg:w-8 lg:h-8 bg-gradient-to-br from-purple-100 to-pink-100 rounded-xl flex items-center justify-center p-1 shadow-sm hover:scale-105 transition-transform duration-200">
-                        <img
-                          src="https://cdn.builder.io/api/v1/image/assets%2Fa33f74a2f97141a4a1ef43d9448f9bda%2F2a4b7e4c3c38485b966cfd2cff50da9e?format=webp&width=800"
-                          alt="Wordy Kids Logo"
-                          className="w-full h-full rounded-lg"
-                        />
+                    {/* Logo Section - Kid-Friendly & Magical */}
+                    <div className="kid-card mb-4 lg:mb-6 kid-gradient-magic">
+                      <div className="flex items-center gap-3">
+                        <div className="mascot-character text-2xl animate-gentle-bounce">
+                          🦁
+                        </div>
+                        <div>
+                          <h1 className="kid-text-big font-bold text-purple-800">
+                            Wordy Kids!
+                          </h1>
+                          <p className="text-sm font-semibold text-purple-700">
+                            ✨ Magical Learning! 🚀
+                          </p>
+                        </div>
                       </div>
-                      <div>
-                        <h1 className="text-sm lg:text-base font-bold text-gray-800">
-                          Wordy Kids! 🌟
-                        </h1>
-                        <p className="text-xs text-purple-600 font-medium">
-                          Let's Learn Together! 🚀
-                        </p>
+                      <div className="mt-2 text-center">
+                        <FriendlyMascot
+                          mood="happy"
+                          size="small"
+                          position="center"
+                          animate={true}
+                        />
                       </div>
                     </div>
 
