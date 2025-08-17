@@ -131,16 +131,12 @@ export function DesktopKidNav({
                     onClick={() => onTabChange(tab.id)}
                     className={cn(
                       "flex flex-col items-center transition-all duration-300 transform relative group kid-nav-button-compact",
-                      // Special styling for home button - closer spacing and no container background
+                      // Apply container-less design to all icons - kid-friendly approach
                       tab.id === "dashboard"
                         ? "min-w-[100px] lg:min-w-[120px] xl:min-w-[140px] scale-125 lg:scale-140 p-1 lg:p-2 xl:p-3 gap-0 lg:gap-0.5"
-                        : "min-w-[70px] lg:min-w-[80px] xl:min-w-[100px] p-2 lg:p-3 xl:p-4 rounded-xl lg:rounded-2xl gap-1 lg:gap-1.5",
-                      // Home button has no background, others keep their gradient
-                      tab.id === "dashboard"
-                        ? "bg-transparent hover:bg-transparent shadow-none hover:shadow-none"
-                        : activeTab === tab.id
-                          ? `bg-gradient-to-br ${tab.hoverColor} text-white shadow-xl ${tab.shadowColor}`
-                          : `bg-gradient-to-br ${tab.color} text-white shadow-md hover:shadow-lg ${tab.shadowColor}`,
+                        : "min-w-[80px] lg:min-w-[90px] xl:min-w-[110px] scale-110 lg:scale-120 p-1 lg:p-2 xl:p-3 gap-0 lg:gap-0.5",
+                      // All buttons now have transparent background - natural kid-friendly appearance
+                      "bg-transparent hover:bg-transparent shadow-none hover:shadow-none"
                     )}
                     whileHover={{ y: -1, scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
@@ -148,21 +144,14 @@ export function DesktopKidNav({
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: index * 0.1 }}
                   >
-                    {/* Magical Glow Effect */}
-                    {activeTab === tab.id && (
-                      <motion.div
-                        className="absolute inset-0 bg-gradient-to-br from-white/20 to-transparent rounded-2xl"
-                        animate={{ opacity: [0.3, 0.6, 0.3] }}
-                        transition={{ duration: 2, repeat: Infinity }}
-                      />
-                    )}
+                    {/* Remove old glow effect for all icons - now using sparkles */}
 
-                    {/* Emoji Icon - Special treatment for home */}
+                    {/* Emoji Icon - Larger kid-friendly icons for all */}
                     <div className={cn(
                       "relative z-10",
                       tab.id === "dashboard"
-                        ? "text-5xl lg:text-6xl xl:text-7xl" // Even larger home icon
-                        : "text-2xl lg:text-3xl xl:text-4xl" // Normal size for others
+                        ? "text-5xl lg:text-6xl xl:text-7xl" // Largest home icon
+                        : "text-3xl lg:text-4xl xl:text-5xl" // Larger icons for others too
                     )}>
                       <motion.div
                         animate={
