@@ -292,94 +292,107 @@ export const EnhancedChildProfileCard: React.FC<
               <CardContent className="pt-0 space-y-4">
                 {/* Quick Progress Overview */}
                 <div className="space-y-3">
-                  {/* Words Learned Progress */}
+                  {/* Level Up Adventure Progress */}
                   <div>
-                    <div className="flex justify-between items-center mb-1">
-                      <span className="text-xs font-medium text-gray-600">
-                        Level Progress
+                    <div className="flex justify-between items-center mb-2">
+                      <span className="text-sm font-bold text-gray-800">
+                        🎮 Level Up Adventure!
                       </span>
-                      <span className="text-xs text-gray-500">
-                        {nextLevelWords} words to next level
+                      <span className="text-xs text-purple-600 font-medium bg-purple-100 px-2 py-1 rounded-full">
+                        {nextLevelWords} more to level up! 🚀
                       </span>
                     </div>
                     <Progress
                       value={levelProgress}
-                      className="h-2 bg-purple-100"
+                      className="h-4 bg-purple-100 border-2 border-purple-200 rounded-full overflow-hidden"
                     />
                   </div>
 
-                  {/* Accuracy */}
+                  {/* Super Smart Score */}
                   <div>
-                    <div className="flex justify-between items-center mb-1">
-                      <span className="text-xs font-medium text-gray-600">
-                        Accuracy
+                    <div className="flex justify-between items-center mb-2">
+                      <span className="text-sm font-bold text-gray-800">
+                        🧠 Smart Score!
                       </span>
-                      <span className="text-xs text-gray-500">{accuracy}%</span>
+                      <span className="text-xs text-green-600 font-bold bg-green-100 px-2 py-1 rounded-full">
+                        {accuracy}% Awesome! ✨
+                      </span>
                     </div>
-                    <Progress value={accuracy} className="h-2 bg-green-100" />
+                    <Progress value={accuracy} className="h-4 bg-green-100 border-2 border-green-200 rounded-full overflow-hidden" />
                   </div>
 
-                  {/* Weekly Goal */}
+                  {/* Weekly Challenge */}
                   {profile.weeklyGoal && (
                     <div>
-                      <div className="flex justify-between items-center mb-1">
-                        <span className="text-xs font-medium text-gray-600">
-                          Weekly Goal
+                      <div className="flex justify-between items-center mb-2">
+                        <span className="text-sm font-bold text-gray-800">
+                          🏆 Weekly Challenge!
                         </span>
-                        <span className="text-xs text-gray-500">
-                          {profile.weeklyGoal.current}/
-                          {profile.weeklyGoal.target}
+                        <span className="text-xs text-blue-600 font-bold bg-blue-100 px-2 py-1 rounded-full">
+                          {profile.weeklyGoal.current}/{profile.weeklyGoal.target} 🎉
                         </span>
                       </div>
                       <Progress
                         value={weeklyProgress}
-                        className="h-2 bg-blue-100"
+                        className="h-4 bg-blue-100 border-2 border-blue-200 rounded-full overflow-hidden"
                       />
                     </div>
                   )}
                 </div>
 
-                {/* Quick Stats Grid */}
+                {/* Super Cool Stats Grid */}
                 <div className="grid grid-cols-2 gap-3">
-                  <div className="bg-white/70 rounded-lg p-3 text-center border border-purple-100">
-                    <BookOpen className="w-5 h-5 mx-auto mb-1 text-purple-600" />
-                    <div className="text-lg font-bold text-gray-800">
+                  <motion.div
+                    whileHover={{ scale: 1.05 }}
+                    className="bg-gradient-to-br from-purple-100 to-pink-100 rounded-xl p-4 text-center border-3 border-purple-200 shadow-lg"
+                  >
+                    <BookOpen className="w-6 h-6 mx-auto mb-2 text-purple-600" />
+                    <div className="text-xl font-black text-gray-800">
                       {profile.wordsLearned}
                     </div>
-                    <div className="text-xs text-gray-600">Words</div>
-                  </div>
-                  <div className="bg-white/70 rounded-lg p-3 text-center border border-orange-100">
-                    <Trophy className="w-5 h-5 mx-auto mb-1 text-orange-600" />
-                    <div className="text-lg font-bold text-gray-800">
+                    <div className="text-xs font-bold text-purple-700">📚 Words Learned!</div>
+                  </motion.div>
+                  <motion.div
+                    whileHover={{ scale: 1.05 }}
+                    className="bg-gradient-to-br from-orange-100 to-yellow-100 rounded-xl p-4 text-center border-3 border-orange-200 shadow-lg"
+                  >
+                    <Trophy className="w-6 h-6 mx-auto mb-2 text-orange-600" />
+                    <div className="text-xl font-black text-gray-800">
                       {profile.points}
                     </div>
-                    <div className="text-xs text-gray-600">Points</div>
-                  </div>
-                  <div className="bg-white/70 rounded-lg p-3 text-center border border-green-100">
-                    <Target className="w-5 h-5 mx-auto mb-1 text-green-600" />
-                    <div className="text-lg font-bold text-gray-800">
+                    <div className="text-xs font-bold text-orange-700">🏆 Super Points!</div>
+                  </motion.div>
+                  <motion.div
+                    whileHover={{ scale: 1.05 }}
+                    className="bg-gradient-to-br from-green-100 to-blue-100 rounded-xl p-4 text-center border-3 border-green-200 shadow-lg"
+                  >
+                    <Target className="w-6 h-6 mx-auto mb-2 text-green-600" />
+                    <div className="text-xl font-black text-gray-800">
                       {stats?.currentStreak || profile.streak}
                     </div>
-                    <div className="text-xs text-gray-600">Streak</div>
-                  </div>
-                  <div className="bg-white/70 rounded-lg p-3 text-center border border-blue-100">
-                    <Timer className="w-5 h-5 mx-auto mb-1 text-blue-600" />
-                    <div className="text-lg font-bold text-gray-800">
+                    <div className="text-xs font-bold text-green-700">🔥 Fire Streak!</div>
+                  </motion.div>
+                  <motion.div
+                    whileHover={{ scale: 1.05 }}
+                    className="bg-gradient-to-br from-blue-100 to-purple-100 rounded-xl p-4 text-center border-3 border-blue-200 shadow-lg"
+                  >
+                    <Timer className="w-6 h-6 mx-auto mb-2 text-blue-600" />
+                    <div className="text-xl font-black text-gray-800">
                       {stats?.timeSpentToday
                         ? formatTime(stats.timeSpentToday)
                         : "0m"}
                     </div>
-                    <div className="text-xs text-gray-600">Today</div>
-                  </div>
+                    <div className="text-xs font-bold text-blue-700">⏰ Adventure Time!</div>
+                  </motion.div>
                 </div>
 
-                {/* Recent Achievements */}
+                {/* Amazing Achievements */}
                 {stats?.recentAchievements &&
                   stats.recentAchievements.length > 0 && (
                     <div>
-                      <h4 className="text-sm font-semibold text-gray-700 mb-2 flex items-center">
-                        <Award className="w-4 h-4 mr-1" />
-                        Recent Achievements
+                      <h4 className="text-sm font-bold text-gray-800 mb-3 flex items-center">
+                        <Award className="w-5 h-5 mr-2 text-yellow-600" />
+                        🎆 Amazing Achievements!
                       </h4>
                       <div className="space-y-2">
                         {stats.recentAchievements
@@ -387,20 +400,21 @@ export const EnhancedChildProfileCard: React.FC<
                           .map((achievement, index) => (
                             <motion.div
                               key={index}
-                              className="flex items-center space-x-2 bg-gradient-to-r from-yellow-50 to-orange-50 rounded-lg p-2 border border-yellow-200"
-                              initial={{ scale: 0.9, opacity: 0 }}
-                              animate={{ scale: 1, opacity: 1 }}
-                              transition={{ delay: index * 0.1 }}
+                              className="flex items-center space-x-3 bg-gradient-to-r from-yellow-100 to-orange-100 rounded-xl p-3 border-2 border-yellow-300 shadow-md"
+                              initial={{ scale: 0.8, opacity: 0, x: -20 }}
+                              animate={{ scale: 1, opacity: 1, x: 0 }}
+                              transition={{ delay: index * 0.2, type: "spring" }}
+                              whileHover={{ scale: 1.02 }}
                             >
-                              <span className="text-lg">
+                              <span className="text-2xl animate-bounce">
                                 {achievement.icon}
                               </span>
                               <div className="flex-1">
-                                <div className="text-sm font-medium text-gray-800">
-                                  {achievement.name}
+                                <div className="text-sm font-bold text-gray-800">
+                                  ✨ {achievement.name}
                                 </div>
-                                <div className="text-xs text-gray-600">
-                                  {achievement.date}
+                                <div className="text-xs font-medium text-yellow-700">
+                                  🗺 {achievement.date}
                                 </div>
                               </div>
                             </motion.div>
