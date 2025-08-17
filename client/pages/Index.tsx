@@ -2002,65 +2002,65 @@ export default function Index({ initialProfile }: IndexProps) {
                       </div>
                     </div>
 
-                    {/* Navigation Menu */}
-                    <nav className="space-y-2">
+                    {/* Navigation Menu - Kid-Friendly & Compact */}
+                    <nav className="space-y-1.5">
                       <button
                         onClick={() => setActiveTab("dashboard")}
-                        className={`w-full flex items-center gap-3 p-3 lg:p-4 rounded-xl lg:rounded-2xl transition-all ${
+                        className={`w-full flex items-center gap-2.5 p-2.5 lg:p-3 rounded-xl transition-all duration-200 hover:scale-[1.02] ${
                           activeTab === "dashboard"
-                            ? "bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-lg"
-                            : "bg-white text-gray-700 hover:bg-purple-50 border border-purple-100"
+                            ? "bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-lg transform scale-[1.02]"
+                            : "bg-white text-gray-700 hover:bg-gradient-to-r hover:from-purple-50 hover:to-pink-50 border border-purple-100 hover:border-purple-200 shadow-sm"
                         }`}
                       >
                         <div
-                          className={`p-2 rounded-lg lg:rounded-xl ${activeTab === "dashboard" ? "bg-white/20" : "bg-purple-100"}`}
+                          className={`p-1.5 rounded-lg transition-all duration-200 ${activeTab === "dashboard" ? "bg-white/20" : "bg-purple-100 group-hover:bg-purple-200"}`}
                         >
                           <Target
-                            className={`w-4 h-4 lg:w-5 lg:h-5 ${activeTab === "dashboard" ? "text-white" : "text-purple-600"}`}
+                            className={`w-4 h-4 ${activeTab === "dashboard" ? "text-white" : "text-purple-600"}`}
                           />
                         </div>
-                        <span className="font-medium lg:font-semibold text-sm lg:text-base">
-                          Dashboard
+                        <span className="font-medium text-sm">
+                          🎯 Dashboard
                         </span>
                       </button>
 
                       <button
                         onClick={() => setActiveTab("learn")}
-                        className={`w-full flex items-center gap-3 p-3 lg:p-4 rounded-xl lg:rounded-2xl transition-all ${
+                        className={`w-full flex items-center gap-2.5 p-2.5 lg:p-3 rounded-xl transition-all duration-200 hover:scale-[1.02] ${
                           activeTab === "learn"
-                            ? "bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-lg"
-                            : "bg-white text-gray-700 hover:bg-purple-50 border border-purple-100"
+                            ? "bg-gradient-to-r from-green-500 to-blue-500 text-white shadow-lg transform scale-[1.02]"
+                            : "bg-white text-gray-700 hover:bg-gradient-to-r hover:from-green-50 hover:to-blue-50 border border-green-100 hover:border-green-200 shadow-sm"
                         }`}
                       >
                         <div
-                          className={`p-2 rounded-lg lg:rounded-xl ${activeTab === "learn" ? "bg-white/20" : "bg-green-100"}`}
+                          className={`p-1.5 rounded-lg transition-all duration-200 ${activeTab === "learn" ? "bg-white/20" : "bg-green-100"}`}
                         >
                           <BookOpen
-                            className={`w-4 h-4 lg:w-5 lg:h-5 ${activeTab === "learn" ? "text-white" : "text-green-600"}`}
+                            className={`w-4 h-4 ${activeTab === "learn" ? "text-white" : "text-green-600"}`}
                           />
                         </div>
-                        <span className="font-medium lg:font-semibold text-sm lg:text-base">
-                          Word Library
+                        <span className="font-medium text-sm">
+                          📚 Word Library
                         </span>
                       </button>
 
                       <button
                         onClick={() => setActiveTab("quiz")}
-                        className={`w-full flex items-center gap-3 p-3 lg:p-4 rounded-xl lg:rounded-2xl transition-all ${
+                        className={`w-full flex items-center gap-2.5 p-2.5 lg:p-3 rounded-xl transition-all duration-200 hover:scale-[1.02] ${
                           activeTab === "quiz"
-                            ? "bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-lg"
-                            : "bg-white text-gray-700 hover:bg-purple-50 border border-purple-100"
+                            ? "bg-gradient-to-r from-pink-500 to-purple-500 text-white shadow-lg transform scale-[1.02]"
+                            : "bg-white text-gray-700 hover:bg-gradient-to-r hover:from-pink-50 hover:to-purple-50 border border-pink-100 hover:border-pink-200 shadow-sm"
                         }`}
                       >
                         <div
-                          className={`p-2 rounded-lg lg:rounded-xl ${activeTab === "quiz" ? "bg-white/20" : "bg-pink-100"}`}
+                          className={`p-1.5 rounded-lg transition-all duration-200 ${activeTab === "quiz" ? "bg-white/20" : "bg-pink-100"}`}
                         >
                           <Brain
-                            className={`w-4 h-4 lg:w-5 lg:h-5 ${activeTab === "quiz" ? "text-white" : "text-pink-600"}`}
+                            className={`w-4 h-4 ${activeTab === "quiz" ? "text-white" : "text-pink-600"}`}
                           />
                         </div>
-                        <span className="font-medium lg:font-semibold text-sm lg:text-base">
-                          Quiz Time
+                        <span className="font-medium text-sm">
+                          🧠 Quiz Time
                         </span>
                       </button>
 
