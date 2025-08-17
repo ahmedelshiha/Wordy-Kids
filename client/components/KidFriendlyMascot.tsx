@@ -4,7 +4,12 @@ import { motion, AnimatePresence } from "framer-motion";
 interface KidFriendlyMascotProps {
   mood?: "happy" | "excited" | "encouraging" | "celebrating";
   size?: "small" | "medium" | "large";
-  position?: "top-left" | "top-right" | "bottom-left" | "bottom-right" | "center";
+  position?:
+    | "top-left"
+    | "top-right"
+    | "bottom-left"
+    | "bottom-right"
+    | "center";
   message?: string;
   showMessage?: boolean;
   onClick?: () => void;
@@ -45,7 +50,8 @@ export const KidFriendlyMascot: React.FC<KidFriendlyMascotProps> = ({
   useEffect(() => {
     const interval = setInterval(() => {
       const moodMascots = mascots[mood];
-      const randomMascot = moodMascots[Math.floor(Math.random() * moodMascots.length)];
+      const randomMascot =
+        moodMascots[Math.floor(Math.random() * moodMascots.length)];
       setCurrentMascot(randomMascot);
       setIsAnimating(true);
       setTimeout(() => setIsAnimating(false), 300);
@@ -67,7 +73,7 @@ export const KidFriendlyMascot: React.FC<KidFriendlyMascotProps> = ({
           ${sizeClasses[size]} 
           flex items-center justify-center 
           cursor-pointer select-none
-          ${isAnimating ? 'animate-bounce' : ''}
+          ${isAnimating ? "animate-bounce" : ""}
         `}
         onClick={handleClick}
         whileHover={{ scale: 1.2, rotate: 10 }}

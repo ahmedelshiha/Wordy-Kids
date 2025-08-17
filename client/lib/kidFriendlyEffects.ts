@@ -24,7 +24,8 @@ class KidFriendlyEffects {
 
   private initAudioContext() {
     try {
-      this.audioContext = new (window.AudioContext || (window as any).webkitAudioContext)();
+      this.audioContext = new (window.AudioContext ||
+        (window as any).webkitAudioContext)();
     } catch (error) {
       console.log("Audio context not supported");
       this.isEnabled = false;
@@ -41,11 +42,17 @@ class KidFriendlyEffects {
     oscillator.connect(gainNode);
     gainNode.connect(this.audioContext.destination);
 
-    oscillator.frequency.setValueAtTime(effect.frequency, this.audioContext.currentTime);
-    oscillator.type = 'sine';
+    oscillator.frequency.setValueAtTime(
+      effect.frequency,
+      this.audioContext.currentTime,
+    );
+    oscillator.type = "sine";
 
     gainNode.gain.setValueAtTime(0.1, this.audioContext.currentTime);
-    gainNode.gain.exponentialRampToValueAtTime(0.01, this.audioContext.currentTime + effect.duration / 1000);
+    gainNode.gain.exponentialRampToValueAtTime(
+      0.01,
+      this.audioContext.currentTime + effect.duration / 1000,
+    );
 
     oscillator.start(this.audioContext.currentTime);
     oscillator.stop(this.audioContext.currentTime + effect.duration / 1000);
@@ -96,12 +103,12 @@ class KidFriendlyEffects {
 
   // Create visual celebration effects
   createCelebration(element: HTMLElement, options: CelebrationOptions) {
-    const celebration = document.createElement('div');
-    celebration.className = 'fixed inset-0 pointer-events-none z-50';
-    
+    const celebration = document.createElement("div");
+    celebration.className = "fixed inset-0 pointer-events-none z-50";
+
     const confetti = this.createConfetti(options.intensity || "medium");
     celebration.appendChild(confetti);
-    
+
     document.body.appendChild(celebration);
 
     // Remove after animation
@@ -111,8 +118,8 @@ class KidFriendlyEffects {
   }
 
   private createConfetti(intensity: "low" | "medium" | "high") {
-    const container = document.createElement('div');
-    container.className = 'absolute inset-0';
+    const container = document.createElement("div");
+    container.className = "absolute inset-0";
 
     const confettiCount = {
       low: 15,
@@ -120,17 +127,17 @@ class KidFriendlyEffects {
       high: 50,
     }[intensity];
 
-    const emojis = ['🎉', '🎊', '✨', '⭐', '🌟', '💫', '🎈', '🏆', '🎯'];
+    const emojis = ["🎉", "🎊", "✨", "⭐", "🌟", "💫", "🎈", "🏆", "🎯"];
 
     for (let i = 0; i < confettiCount; i++) {
-      const confetti = document.createElement('div');
+      const confetti = document.createElement("div");
       confetti.textContent = emojis[Math.floor(Math.random() * emojis.length)];
-      confetti.className = 'absolute text-2xl animate-bounce';
-      confetti.style.left = Math.random() * 100 + '%';
-      confetti.style.top = Math.random() * 100 + '%';
-      confetti.style.animationDelay = Math.random() * 2 + 's';
-      confetti.style.animationDuration = (2 + Math.random() * 3) + 's';
-      
+      confetti.className = "absolute text-2xl animate-bounce";
+      confetti.style.left = Math.random() * 100 + "%";
+      confetti.style.top = Math.random() * 100 + "%";
+      confetti.style.animationDelay = Math.random() * 2 + "s";
+      confetti.style.animationDuration = 2 + Math.random() * 3 + "s";
+
       container.appendChild(confetti);
     }
 
@@ -182,27 +189,42 @@ export const SOUNDS = {
 // Easy-to-use celebration functions
 export const celebrate = {
   achievement: (element?: HTMLElement) => {
-    kidFriendlyEffects.playCelebration({ type: "achievement", intensity: "medium" });
+    kidFriendlyEffects.playCelebration({
+      type: "achievement",
+      intensity: "medium",
+    });
     if (element) {
-      kidFriendlyEffects.createCelebration(element, { type: "achievement", intensity: "medium" });
+      kidFriendlyEffects.createCelebration(element, {
+        type: "achievement",
+        intensity: "medium",
+      });
     }
   },
   levelUp: (element?: HTMLElement) => {
     kidFriendlyEffects.playCelebration({ type: "level_up", intensity: "high" });
     if (element) {
-      kidFriendlyEffects.createCelebration(element, { type: "level_up", intensity: "high" });
+      kidFriendlyEffects.createCelebration(element, {
+        type: "level_up",
+        intensity: "high",
+      });
     }
   },
   streak: (element?: HTMLElement) => {
     kidFriendlyEffects.playCelebration({ type: "streak", intensity: "medium" });
     if (element) {
-      kidFriendlyEffects.createCelebration(element, { type: "streak", intensity: "low" });
+      kidFriendlyEffects.createCelebration(element, {
+        type: "streak",
+        intensity: "low",
+      });
     }
   },
   general: (element?: HTMLElement) => {
     kidFriendlyEffects.playCelebration({ type: "general", intensity: "low" });
     if (element) {
-      kidFriendlyEffects.createCelebration(element, { type: "general", intensity: "low" });
+      kidFriendlyEffects.createCelebration(element, {
+        type: "general",
+        intensity: "low",
+      });
     }
   },
 };

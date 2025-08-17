@@ -3,7 +3,15 @@ import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 
 interface StickerBadgeProps {
-  type: "star" | "trophy" | "heart" | "rocket" | "rainbow" | "diamond" | "crown" | "fire";
+  type:
+    | "star"
+    | "trophy"
+    | "heart"
+    | "rocket"
+    | "rainbow"
+    | "diamond"
+    | "crown"
+    | "fire";
   size?: "small" | "medium" | "large";
   color?: "gold" | "silver" | "rainbow" | "pink" | "blue" | "green" | "purple";
   glowing?: boolean;
@@ -42,12 +50,16 @@ export const StickerBadge: React.FC<StickerBadgeProps> = ({
 
   const colorClasses = {
     gold: "bg-gradient-to-br from-yellow-200 via-yellow-300 to-orange-300 border-yellow-400",
-    silver: "bg-gradient-to-br from-gray-200 via-gray-300 to-gray-400 border-gray-500",
-    rainbow: "bg-gradient-to-br from-pink-200 via-purple-200 to-blue-200 border-purple-400",
+    silver:
+      "bg-gradient-to-br from-gray-200 via-gray-300 to-gray-400 border-gray-500",
+    rainbow:
+      "bg-gradient-to-br from-pink-200 via-purple-200 to-blue-200 border-purple-400",
     pink: "bg-gradient-to-br from-pink-200 via-pink-300 to-rose-300 border-pink-400",
     blue: "bg-gradient-to-br from-blue-200 via-blue-300 to-cyan-300 border-blue-400",
-    green: "bg-gradient-to-br from-green-200 via-green-300 to-emerald-300 border-green-400",
-    purple: "bg-gradient-to-br from-purple-200 via-purple-300 to-violet-300 border-purple-400",
+    green:
+      "bg-gradient-to-br from-green-200 via-green-300 to-emerald-300 border-green-400",
+    purple:
+      "bg-gradient-to-br from-purple-200 via-purple-300 to-violet-300 border-purple-400",
   };
 
   const glowClasses = {
@@ -68,7 +80,7 @@ export const StickerBadge: React.FC<StickerBadgeProps> = ({
         colorClasses[color],
         glowing && glowClasses[color],
         onClick && "cursor-pointer",
-        className
+        className,
       )}
       onClick={onClick}
       whileHover={
@@ -163,27 +175,17 @@ export const StickerBadge: React.FC<StickerBadgeProps> = ({
 
 // Preset sticker combinations for common achievements
 export const StickerPresets = {
-  FirstWord: () => (
-    <StickerBadge type="star" color="gold" glowing animated />
-  ),
+  FirstWord: () => <StickerBadge type="star" color="gold" glowing animated />,
   StreakFire: () => (
     <StickerBadge type="fire" color="rainbow" glowing animated />
   ),
-  LevelUp: () => (
-    <StickerBadge type="crown" color="gold" glowing animated />
-  ),
+  LevelUp: () => <StickerBadge type="crown" color="gold" glowing animated />,
   Perfect: () => (
     <StickerBadge type="diamond" color="rainbow" glowing animated />
   ),
-  Rocket: () => (
-    <StickerBadge type="rocket" color="blue" glowing animated />
-  ),
-  Heart: () => (
-    <StickerBadge type="heart" color="pink" glowing animated />
-  ),
-  Trophy: () => (
-    <StickerBadge type="trophy" color="gold" glowing animated />
-  ),
+  Rocket: () => <StickerBadge type="rocket" color="blue" glowing animated />,
+  Heart: () => <StickerBadge type="heart" color="pink" glowing animated />,
+  Trophy: () => <StickerBadge type="trophy" color="gold" glowing animated />,
   Rainbow: () => (
     <StickerBadge type="rainbow" color="rainbow" glowing animated />
   ),

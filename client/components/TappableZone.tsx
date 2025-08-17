@@ -1,6 +1,10 @@
 import React, { useState, useRef } from "react";
 import { motion } from "framer-motion";
-import { kidFriendlyEffects, SOUNDS, celebrate } from "@/lib/kidFriendlyEffects";
+import {
+  kidFriendlyEffects,
+  SOUNDS,
+  celebrate,
+} from "@/lib/kidFriendlyEffects";
 
 interface TappableZoneProps {
   onTap?: () => void;
@@ -51,38 +55,34 @@ export const TappableZone: React.FC<TappableZoneProps> = ({
     switch (tapEffect) {
       case "bounce":
         return {
-          animate: isAnimating 
+          animate: isAnimating
             ? { y: [-5, 0], scale: [1, 1.1, 1] }
             : { y: 0, scale: 1 },
         };
       case "pulse":
         return {
-          animate: isAnimating 
-            ? { scale: [1, 1.2, 1] }
-            : { scale: 1 },
+          animate: isAnimating ? { scale: [1, 1.2, 1] } : { scale: 1 },
         };
       case "shake":
         return {
-          animate: isAnimating 
-            ? { x: [-5, 5, -5, 5, 0] }
-            : { x: 0 },
+          animate: isAnimating ? { x: [-5, 5, -5, 5, 0] } : { x: 0 },
         };
       case "sparkle":
         return {
-          animate: isAnimating 
-            ? { 
-                scale: [1, 1.1, 1], 
+          animate: isAnimating
+            ? {
+                scale: [1, 1.1, 1],
                 rotate: [0, 5, -5, 0],
-                filter: ["brightness(1)", "brightness(1.3)", "brightness(1)"]
+                filter: ["brightness(1)", "brightness(1.3)", "brightness(1)"],
               }
             : { scale: 1, rotate: 0, filter: "brightness(1)" },
         };
       case "rainbow":
         return {
-          animate: isAnimating 
-            ? { 
+          animate: isAnimating
+            ? {
                 scale: [1, 1.05, 1],
-                hue: [0, 180, 360]
+                hue: [0, 180, 360],
               }
             : { scale: 1, hue: 0 },
         };
@@ -108,7 +108,7 @@ export const TappableZone: React.FC<TappableZoneProps> = ({
       }}
     >
       {children}
-      
+
       {/* Tap counter display */}
       {tapCount > 0 && (
         <motion.div
@@ -128,13 +128,13 @@ export const TappableZone: React.FC<TappableZoneProps> = ({
               key={i}
               className="absolute text-yellow-400 text-lg"
               style={{
-                left: `${20 + (i * 10)}%`,
-                top: `${20 + (i * 10)}%`,
+                left: `${20 + i * 10}%`,
+                top: `${20 + i * 10}%`,
               }}
               initial={{ opacity: 0, scale: 0, rotate: 0 }}
-              animate={{ 
-                opacity: [0, 1, 0], 
-                scale: [0, 1.5, 0], 
+              animate={{
+                opacity: [0, 1, 0],
+                scale: [0, 1.5, 0],
                 rotate: [0, 180, 360],
                 y: [0, -20, -40],
               }}

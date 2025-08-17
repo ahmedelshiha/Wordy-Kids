@@ -25,7 +25,11 @@ import {
 import { cn } from "@/lib/utils";
 import { motion, AnimatePresence } from "framer-motion";
 import { StickerBadge, StickerPresets } from "@/components/StickerBadge";
-import { kidFriendlyEffects, SOUNDS, celebrate } from "@/lib/kidFriendlyEffects";
+import {
+  kidFriendlyEffects,
+  SOUNDS,
+  celebrate,
+} from "@/lib/kidFriendlyEffects";
 import { TappableZone } from "@/components/TappableZone";
 
 interface ChildProfile {
@@ -196,8 +200,18 @@ export const EnhancedChildProfileCard: React.FC<
       <Card className="bg-gradient-to-br from-yellow-50 via-pink-50 to-purple-50 border-4 border-rainbow-300 shadow-2xl hover:shadow-3xl transition-all duration-500 overflow-hidden relative">
         {/* Fun Background Elements */}
         <div className="absolute inset-0 pointer-events-none overflow-hidden">
-          <div className="absolute top-2 right-2 text-lg animate-spin" style={{animationDuration: '4s'}}>✨</div>
-          <div className="absolute bottom-2 left-2 text-sm animate-bounce" style={{animationDelay: '1s'}}>🌈</div>
+          <div
+            className="absolute top-2 right-2 text-lg animate-spin"
+            style={{ animationDuration: "4s" }}
+          >
+            ✨
+          </div>
+          <div
+            className="absolute bottom-2 left-2 text-sm animate-bounce"
+            style={{ animationDelay: "1s" }}
+          >
+            🌈
+          </div>
         </div>
 
         {/* Header with Avatar and Basic Info */}
@@ -214,7 +228,8 @@ export const EnhancedChildProfileCard: React.FC<
                   className={cn(
                     "w-20 h-20 rounded-full flex items-center justify-center text-4xl shadow-xl border-4 border-white",
                     "bg-gradient-to-r animate-pulse cursor-pointer transition-all duration-300 hover:scale-110",
-                    profile.avatar?.color || "from-purple-400 via-pink-400 to-yellow-400",
+                    profile.avatar?.color ||
+                      "from-purple-400 via-pink-400 to-yellow-400",
                   )}
                 >
                   {profile.avatar?.emoji || "🎯"}
@@ -294,8 +309,8 @@ export const EnhancedChildProfileCard: React.FC<
               boxShadow: [
                 "0 4px 6px rgba(0, 0, 0, 0.1)",
                 "0 8px 25px rgba(255, 255, 0, 0.3)",
-                "0 4px 6px rgba(0, 0, 0, 0.1)"
-              ]
+                "0 4px 6px rgba(0, 0, 0, 0.1)",
+              ],
             }}
             transition={{ duration: 3, repeat: Infinity, repeatDelay: 5 }}
           >
@@ -361,7 +376,10 @@ export const EnhancedChildProfileCard: React.FC<
                       }}
                       className="cursor-pointer"
                     >
-                      <Progress value={accuracy} className="h-6 bg-green-100 border-3 border-green-200 rounded-full overflow-hidden shadow-lg transition-all duration-500 hover:shadow-xl" />
+                      <Progress
+                        value={accuracy}
+                        className="h-6 bg-green-100 border-3 border-green-200 rounded-full overflow-hidden shadow-lg transition-all duration-500 hover:shadow-xl"
+                      />
                     </motion.div>
                   </div>
 
@@ -373,7 +391,8 @@ export const EnhancedChildProfileCard: React.FC<
                           ��� Weekly Challenge!
                         </span>
                         <span className="text-xs text-blue-600 font-bold bg-blue-100 px-2 py-1 rounded-full">
-                          {profile.weeklyGoal.current}/{profile.weeklyGoal.target} 🎉
+                          {profile.weeklyGoal.current}/
+                          {profile.weeklyGoal.target} 🎉
                         </span>
                       </div>
                       <motion.div
@@ -403,7 +422,9 @@ export const EnhancedChildProfileCard: React.FC<
                     <div className="text-xl font-black text-gray-800">
                       {profile.wordsLearned}
                     </div>
-                    <div className="text-xs font-bold text-purple-700">📚 Words Learned!</div>
+                    <div className="text-xs font-bold text-purple-700">
+                      📚 Words Learned!
+                    </div>
                   </motion.div>
                   <motion.div
                     whileHover={{ scale: 1.05 }}
@@ -413,7 +434,9 @@ export const EnhancedChildProfileCard: React.FC<
                     <div className="text-xl font-black text-gray-800">
                       {profile.points}
                     </div>
-                    <div className="text-xs font-bold text-orange-700">🏆 Super Points!</div>
+                    <div className="text-xs font-bold text-orange-700">
+                      🏆 Super Points!
+                    </div>
                   </motion.div>
                   <motion.div
                     whileHover={{ scale: 1.05 }}
@@ -423,7 +446,9 @@ export const EnhancedChildProfileCard: React.FC<
                     <div className="text-xl font-black text-gray-800">
                       {stats?.currentStreak || profile.streak}
                     </div>
-                    <div className="text-xs font-bold text-green-700">🔥 Fire Streak!</div>
+                    <div className="text-xs font-bold text-green-700">
+                      🔥 Fire Streak!
+                    </div>
                   </motion.div>
                   <motion.div
                     whileHover={{ scale: 1.05 }}
@@ -435,7 +460,9 @@ export const EnhancedChildProfileCard: React.FC<
                         ? formatTime(stats.timeSpentToday)
                         : "0m"}
                     </div>
-                    <div className="text-xs font-bold text-blue-700">⏰ Adventure Time!</div>
+                    <div className="text-xs font-bold text-blue-700">
+                      ⏰ Adventure Time!
+                    </div>
                   </motion.div>
                 </div>
 
@@ -456,7 +483,10 @@ export const EnhancedChildProfileCard: React.FC<
                               className="flex items-center space-x-3 bg-gradient-to-r from-yellow-100 to-orange-100 rounded-xl p-3 border-2 border-yellow-300 shadow-md"
                               initial={{ scale: 0.8, opacity: 0, x: -20 }}
                               animate={{ scale: 1, opacity: 1, x: 0 }}
-                              transition={{ delay: index * 0.2, type: "spring" }}
+                              transition={{
+                                delay: index * 0.2,
+                                type: "spring",
+                              }}
                               whileHover={{ scale: 1.02 }}
                             >
                               <span className="text-2xl animate-bounce">
@@ -479,7 +509,10 @@ export const EnhancedChildProfileCard: React.FC<
                 {/* Super Fun Action Buttons */}
                 {showQuickActions && (
                   <div className="grid grid-cols-2 gap-3 pt-3">
-                    <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                    <motion.div
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                    >
                       <Button
                         variant="outline"
                         size="sm"
@@ -490,15 +523,17 @@ export const EnhancedChildProfileCard: React.FC<
                         🚀 Let's Go!
                       </Button>
                     </motion.div>
-                    <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                    <motion.div
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                    >
                       <Button
                         variant="outline"
                         size="sm"
                         onClick={() => onQuickAction?.("practice_words")}
                         className="w-full text-sm font-bold bg-gradient-to-r from-blue-200 to-cyan-200 border-3 border-blue-300 hover:from-blue-300 hover:to-cyan-300 text-blue-800 rounded-xl shadow-lg transition-all duration-300"
                       >
-                        <Sparkles className="w-4 h-4 mr-2" />
-                        ✨ Practice!
+                        <Sparkles className="w-4 h-4 mr-2" />✨ Practice!
                       </Button>
                     </motion.div>
                   </div>

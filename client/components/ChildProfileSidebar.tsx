@@ -4,7 +4,11 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { EnhancedChildProfileCard } from "@/components/EnhancedChildProfileCard";
 import { KidFriendlyMascot } from "@/components/KidFriendlyMascot";
-import { kidFriendlyEffects, SOUNDS, celebrate } from "@/lib/kidFriendlyEffects";
+import {
+  kidFriendlyEffects,
+  SOUNDS,
+  celebrate,
+} from "@/lib/kidFriendlyEffects";
 import {
   ChevronLeft,
   ChevronRight,
@@ -117,10 +121,30 @@ export const ChildProfileSidebar: React.FC<ChildProfileSidebarProps> = ({
     >
       {/* Fun Background Decorations */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        <div className="absolute top-10 left-4 text-2xl animate-bounce" style={{animationDelay: '0s'}}>⭐</div>
-        <div className="absolute top-20 right-6 text-xl animate-bounce" style={{animationDelay: '1s'}}>🌟</div>
-        <div className="absolute bottom-32 left-6 text-lg animate-bounce" style={{animationDelay: '2s'}}>🎯</div>
-        <div className="absolute bottom-48 right-4 text-xl animate-bounce" style={{animationDelay: '0.5s'}}>🏆</div>
+        <div
+          className="absolute top-10 left-4 text-2xl animate-bounce"
+          style={{ animationDelay: "0s" }}
+        >
+          ⭐
+        </div>
+        <div
+          className="absolute top-20 right-6 text-xl animate-bounce"
+          style={{ animationDelay: "1s" }}
+        >
+          🌟
+        </div>
+        <div
+          className="absolute bottom-32 left-6 text-lg animate-bounce"
+          style={{ animationDelay: "2s" }}
+        >
+          🎯
+        </div>
+        <div
+          className="absolute bottom-48 right-4 text-xl animate-bounce"
+          style={{ animationDelay: "0.5s" }}
+        >
+          🏆
+        </div>
       </div>
 
       {/* Sidebar Header */}
@@ -246,7 +270,8 @@ export const ChildProfileSidebar: React.FC<ChildProfileSidebarProps> = ({
                       <Badge className="text-xs bg-purple-200 text-purple-800 border-purple-300">
                         {stats.timeThisWeek
                           ? `${Math.round(stats.timeThisWeek / 60)}h`
-                          : "0h"} 🚀
+                          : "0h"}{" "}
+                        🚀
                       </Badge>
                     </div>
                   </div>
