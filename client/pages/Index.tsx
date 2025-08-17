@@ -311,6 +311,16 @@ export default function Index({ initialProfile }: IndexProps) {
   const [showProfileEdit, setShowProfileEdit] = useState(false);
   const [showMobileProfileExpanded, setShowMobileProfileExpanded] = useState(false);
 
+  // Enhanced stats computation
+  const enhancedChildStats = useMemo(() => {
+    return EnhancedStatsHelper.enhanceChildStats(
+      childStats,
+      rememberedWords,
+      forgottenWords,
+      currentProfile
+    );
+  }, [childStats, rememberedWords, forgottenWords, currentProfile]);
+
   // Memoize displayWords to prevent recalculation on every render
   const displayWords = useMemo(() => {
     if (currentDashboardWords.length > 0) {
