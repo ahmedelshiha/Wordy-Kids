@@ -111,12 +111,11 @@ export const ChildProfileSidebar: React.FC<ChildProfileSidebarProps> = ({
       animate={isCollapsed ? "collapsed" : "expanded"}
       className={cn(
         "bg-transparent", // Let parent background show through
-        "border-r-2 border-slate-600/30",
+        "border-r-2 border-purple-200/30",
         "flex flex-col h-full overflow-hidden",
         "transition-all duration-500",
         "relative backdrop-blur-md",
-        "text-white", // Ensure text is white for dark background
-        position === "right" && "border-r-0 border-l-2 border-slate-600/30",
+        position === "right" && "border-r-0 border-l-2 border-purple-200/30",
         className,
       )}
     >
