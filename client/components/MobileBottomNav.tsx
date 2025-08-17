@@ -130,7 +130,7 @@ export function MobileBottomNav({
   const secondaryMenuItems = [
     {
       id: "parent",
-      emoji: "👨‍👩‍👧‍👦",
+      emoji: "👨��👩‍👧‍👦",
       label: "Family Zone",
       icon: Users,
       onClick: onParentClick,
@@ -175,7 +175,7 @@ export function MobileBottomNav({
             className="absolute inset-0 bg-black/20"
             onClick={onMoreToggle}
           />
-          <div className="absolute bottom-20 left-3 right-3 bg-gradient-to-br from-purple-50 via-pink-50 to-blue-50 rounded-3xl shadow-2xl p-4 border-4 border-rainbow max-h-[70vh] overflow-y-auto animate-kid-pulse-glow">
+          <div className="absolute bottom-12 left-3 right-3 bg-gradient-to-br from-purple-50 via-pink-50 to-blue-50 rounded-3xl shadow-2xl p-4 border-4 border-rainbow max-h-[70vh] overflow-y-auto animate-kid-pulse-glow">
             <div className="text-center mb-4">
               <div className="text-2xl sm:text-3xl mb-2 animate-mascot-bounce">
                 🎪
@@ -224,38 +224,38 @@ export function MobileBottomNav({
       )}
 
       {/* Magical Kid-Friendly Bottom Navigation Bar */}
-      <div className="fixed bottom-0 left-0 right-0 z-30 lg:hidden">
+      <div className="fixed bottom-8 left-0 right-0 z-30 lg:hidden">
         <div className="bg-gradient-to-r from-purple-50 via-pink-50 to-blue-50 border-t-2 border-rainbow shadow-2xl safe-area-padding-bottom backdrop-blur-lg">
-          <div className="flex items-center justify-around px-0.5 py-0 -my-3">
+          <div className="flex items-center justify-around px-0.5 py-0 -my-6">
             {/* Primary Navigation Tabs - Kid Style */}
             {primaryTabs.map((tab) => (
               <button
                 key={tab.id}
                 onClick={() => onTabChange(tab.id)}
                 className={cn(
-                  "kid-nav-item flex flex-col items-center gap-0 p-2 rounded-lg transition-all duration-200 transform active:scale-95 relative min-w-0 flex-1 mx-0.5 min-h-[60px] justify-center",
+                  "kid-nav-item flex flex-col items-center gap-0 p-0 rounded-lg transition-all duration-200 transform active:scale-95 relative min-w-0 flex-1 mx-0.5 min-h-[10px] justify-center overflow-visible",
                   activeTab === tab.id
                     ? "text-white shadow-lg kid-button active"
                     : "text-gray-700 hover:text-purple-600 kid-interactive",
                 )}
               >
-                {/* Magical Emoji Icon */}
+                {/* Magical Emoji Icon & Label Combined */}
                 <div
                   className={cn(
-                    "text-3xl sm:text-4xl md:text-5xl lg:text-6xl -mt-3 sm:-mt-4 md:-mt-5 lg:-mt-6 transition-transform duration-200",
+                    "flex flex-col items-center transition-transform duration-200 -mt-2",
                     tab.id === "dashboard" && "animate-mascot-bounce",
                     tab.id === "learn" && "animate-gentle-float",
                     tab.id === "quiz" && "animate-mascot-happy",
                     tab.id === "progress" && "animate-gentle-bounce",
                   )}
                 >
-                  {tab.emoji}
+                  <div className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl">
+                    {tab.emoji}
+                  </div>
+                  <span className="text-[10px] font-kid-friendly font-bold leading-none text-center text-white whitespace-nowrap mt-1">
+                    {tab.label}
+                  </span>
                 </div>
-
-                {/* Kid-friendly Label */}
-                <span className="text-xs font-kid-friendly font-bold leading-tight text-center truncate max-w-full text-white -mt-2">
-                  {tab.label}
-                </span>
 
                 {/* Magical Sparkle for Active Tab */}
                 {activeTab === tab.id && (
@@ -275,7 +275,7 @@ export function MobileBottomNav({
             <button
               onClick={onMoreToggle}
               className={cn(
-                "kid-nav-item flex flex-col items-center gap-0 p-2 rounded-lg transition-all duration-200 transform active:scale-95 min-w-0 flex-1 mx-0.5 min-h-[60px] justify-center",
+                "kid-nav-item flex flex-col items-center gap-0 p-0 rounded-lg transition-all duration-200 transform active:scale-95 min-w-0 flex-1 mx-0.5 min-h-[10px] justify-center overflow-visible",
                 showMoreMenu
                   ? "text-white shadow-lg kid-button active"
                   : "text-purple-600 hover:text-purple-700 kid-interactive",
@@ -283,17 +283,19 @@ export function MobileBottomNav({
             >
               <div
                 className={cn(
-                  "text-3xl sm:text-4xl md:text-5xl lg:text-6xl -mt-3 sm:-mt-4 md:-mt-5 lg:-mt-6 transition-transform duration-200",
+                  "flex flex-col items-center transition-transform duration-200 -mt-2",
                   showMoreMenu
                     ? "rotate-90 scale-110 animate-mascot-bounce"
                     : "animate-gentle-float",
                 )}
               >
-                🎪
+                <div className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl">
+                  🎪
+                </div>
+                <span className="text-[10px] font-kid-friendly font-bold leading-none text-center text-white whitespace-nowrap mt-1">
+                  More
+                </span>
               </div>
-              <span className="text-xs font-kid-friendly font-bold leading-tight text-center text-white -mt-2">
-                More
-              </span>
 
               {/* Magical sparkle for active more menu */}
               {showMoreMenu && (
