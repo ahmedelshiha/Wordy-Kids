@@ -229,15 +229,18 @@ export function MobileBottomNav({
                 className={cn(
                   "kid-nav-item flex flex-col items-center gap-1 p-1.5 rounded-lg transition-all duration-200 transform active:scale-95 relative min-w-0 flex-1 mx-0.5 min-h-[56px] justify-center",
                   activeTab === tab.id
-                    ? `${tab.activeGradient} text-white shadow-lg kid-button active animate-kid-pulse-glow`
-                    : `bg-white text-gray-700 hover:${tab.hoverGradient} hover:text-white border border-purple-200 kid-interactive`,
+                    ? "text-white shadow-lg kid-button active"
+                    : "text-gray-700 hover:text-purple-600 kid-interactive",
                 )}
               >
                 {/* Magical Emoji Icon */}
                 <div
                   className={cn(
-                    "text-lg transition-transform duration-200",
-                    activeTab === tab.id ? "scale-110 animate-mascot-bounce" : "animate-gentle-float",
+                    "text-2xl sm:text-3xl -mt-1 transition-transform duration-200",
+                    tab.id === "dashboard" && (activeTab === tab.id ? "animate-mascot-bounce" : "animate-gentle-float"),
+                    tab.id === "learn" && (activeTab === tab.id ? "animate-gentle-float" : "animate-gentle-float"),
+                    tab.id === "quiz" && (activeTab === tab.id ? "animate-mascot-happy" : "animate-gentle-float"),
+                    tab.id === "progress" && (activeTab === tab.id ? "animate-gentle-bounce" : "animate-gentle-float"),
                   )}
                 >
                   {tab.emoji}
@@ -268,13 +271,13 @@ export function MobileBottomNav({
               className={cn(
                 "kid-nav-item flex flex-col items-center gap-1 p-1.5 rounded-lg transition-all duration-200 transform active:scale-95 min-w-0 flex-1 mx-0.5 min-h-[56px] justify-center",
                 showMoreMenu
-                  ? "kid-gradient-magic text-white shadow-lg kid-button active animate-kid-pulse-glow"
-                  : "bg-white text-purple-600 hover:kid-gradient-adventure hover:text-white border border-purple-200 kid-interactive",
+                  ? "text-white shadow-lg kid-button active"
+                  : "text-purple-600 hover:text-purple-700 kid-interactive",
               )}
             >
               <div
                 className={cn(
-                  "text-lg transition-transform duration-200",
+                  "text-2xl sm:text-3xl -mt-1 transition-transform duration-200",
                   showMoreMenu ? "rotate-90 scale-110 animate-mascot-bounce" : "animate-gentle-float",
                 )}
               >
