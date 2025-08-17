@@ -119,14 +119,6 @@ export const ChildProfileSidebar: React.FC<ChildProfileSidebarProps> = ({
     >
       {/* Enhanced Sidebar Header */}
       <div className="p-2 bg-gradient-to-r from-white/60 to-blue-50/60 backdrop-blur-sm relative z-10">
-        {/* Fun Mascot */}
-        <FriendlyMascot
-          mood="happy"
-          size="medium"
-          position="right"
-          message="Hi there! 🌟"
-          showSpeechBubble={!isCollapsed}
-        />
         <div className="flex items-center justify-between">
           <AnimatePresence mode="wait">
             {!isCollapsed && (
@@ -136,25 +128,7 @@ export const ChildProfileSidebar: React.FC<ChildProfileSidebarProps> = ({
                 animate="expanded"
                 exit="collapsed"
                 className="flex-1"
-              >
-                {showTimeOfDay && (
-                  <div
-                    className={cn(
-                      "bg-gradient-to-r rounded-lg p-2 mb-2 shadow-sm border border-white/30 backdrop-blur-sm",
-                      timeInfo.color,
-                    )}
-                  >
-                    <div className="flex items-center space-x-1">
-                      <span className="text-sm">{timeInfo.icon}</span>
-                      <div>
-                        <div className="text-xs font-bold text-gray-800">
-                          {timeInfo.greeting}! 🌟
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                )}
-              </motion.div>
+              ></motion.div>
             )}
           </AnimatePresence>
 
@@ -318,20 +292,6 @@ export const ChildProfileSidebar: React.FC<ChildProfileSidebarProps> = ({
               exit="collapsed"
               className="space-y-2"
             >
-              {onProfileEdit && (
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={() => {
-                    kidFriendlyEffects.playSound(SOUNDS.button_click);
-                    onProfileEdit?.();
-                  }}
-                  className="w-full text-xs bg-gradient-to-r from-blue-200 to-purple-200 hover:from-blue-300 hover:to-purple-300 border-2 border-blue-300 text-blue-800 font-bold rounded-xl"
-                >
-                  <Settings className="w-4 h-4 mr-2" />
-                  ⚙️ My Settings
-                </Button>
-              )}
               {onLogout && (
                 <Button
                   variant="ghost"
@@ -355,19 +315,6 @@ export const ChildProfileSidebar: React.FC<ChildProfileSidebarProps> = ({
               exit="collapsed"
               className="flex flex-col items-center space-y-2"
             >
-              {onProfileEdit && (
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={() => {
-                    kidFriendlyEffects.playSound(SOUNDS.button_click);
-                    onProfileEdit?.();
-                  }}
-                  className="h-10 w-10 p-0 bg-gradient-to-r from-blue-200 to-purple-200 hover:from-blue-300 hover:to-purple-300 rounded-full border-2 border-white shadow-lg transition-all duration-300 hover:scale-110"
-                >
-                  <Settings className="w-4 h-4" />
-                </Button>
-              )}
               {onLogout && (
                 <Button
                   variant="ghost"
