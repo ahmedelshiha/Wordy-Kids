@@ -326,7 +326,7 @@ export default function IndexEnhanced() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 relative">
+    <div className="min-h-screen bg-white relative">
       {/* Hero Header */}
       <header className="relative overflow-hidden bg-gradient-to-r from-educational-blue via-educational-purple to-educational-pink text-white">
         <div className="relative container mx-auto px-4 py-8">
