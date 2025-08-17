@@ -2077,7 +2077,7 @@ export default function Index({ initialProfile }: IndexProps) {
                   <div className="hidden lg:block">
                     <ChildProfileSidebar
                       profile={currentProfile}
-                      stats={childStats}
+                      stats={enhancedChildStats}
                       isCollapsed={isSidebarCollapsed}
                       onToggleCollapse={handleSidebarToggle}
                       onProfileEdit={handleProfileEdit}
