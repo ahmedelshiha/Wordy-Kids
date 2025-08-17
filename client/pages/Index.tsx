@@ -2006,26 +2006,25 @@ export default function Index({ initialProfile }: IndexProps) {
                       </div>
                     </div>
 
-                    {/* Navigation Menu - Kid-Friendly & Compact */}
-                    <nav className="space-y-1.5">
+                    {/* Navigation Menu - Magical Adventure Theme */}
+                    <nav className="space-y-2">
                       <button
                         onClick={() => setActiveTab("dashboard")}
-                        className={`w-full flex items-center gap-2.5 p-2.5 lg:p-3 rounded-xl transition-all duration-200 hover:scale-[1.02] ${
+                        className={`kid-nav-item w-full ${
                           activeTab === "dashboard"
-                            ? "bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-lg transform scale-[1.02]"
-                            : "bg-white text-gray-700 hover:bg-gradient-to-r hover:from-purple-50 hover:to-pink-50 border border-purple-100 hover:border-purple-200 shadow-sm"
+                            ? "kid-gradient-happy text-white shadow-lg kid-button active animate-kid-pulse-glow"
+                            : "bg-white text-gray-700 hover:kid-gradient-learn hover:text-white border border-purple-200 kid-interactive"
                         }`}
                       >
-                        <div
-                          className={`p-1.5 rounded-lg transition-all duration-200 ${activeTab === "dashboard" ? "bg-white/20" : "bg-purple-100 group-hover:bg-purple-200"}`}
-                        >
-                          <Target
-                            className={`w-4 h-4 ${activeTab === "dashboard" ? "text-white" : "text-purple-600"}`}
-                          />
+                        <div className="text-xl animate-mascot-bounce">
+                          🏰
                         </div>
-                        <span className="font-medium text-sm">
-                          🎯 Dashboard
+                        <span className="kid-text-big font-bold">
+                          My Castle
                         </span>
+                        {activeTab === "dashboard" && (
+                          <div className="ml-auto animate-kid-magic-sparkle">✨</div>
+                        )}
                       </button>
 
                       <button
