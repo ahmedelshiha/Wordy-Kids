@@ -1378,7 +1378,7 @@ export default function Index({ initialProfile }: IndexProps) {
       if (accuracy === 100) {
         achievementTitle = "Perfect Category Mastery! 🏆";
         achievementIcon = "🏆";
-        achievementMessage = `Outstanding! You remembered ALL ${totalWords} words in ${categoryDisplayName}! You're a true champion!\n\n🎁 Perfect Mastery Bonus: 200 points!\n✨ New adventure zone unlocked!`;
+        achievementMessage = `Outstanding! You remembered ALL ${totalWords} words in ${categoryDisplayName}! You're a true champion!\n\n🎁 Perfect Mastery Bonus: 200 points!\n�� New adventure zone unlocked!`;
       } else if (accuracy >= 90) {
         achievementTitle = "Category Expert! 🎓";
         achievementIcon = "🎓⭐";
@@ -1770,7 +1770,7 @@ export default function Index({ initialProfile }: IndexProps) {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 relative overflow-x-hidden">
+    <div className="min-h-screen bg-white relative overflow-x-hidden">
       {/* Session Restoration Modal */}
       {showSessionRestoration && sessionRestorationData && (
         <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
@@ -1802,7 +1802,6 @@ export default function Index({ initialProfile }: IndexProps) {
         <>
           {/* Optimized Mobile-First Header */}
           <header className="relative overflow-hidden bg-gradient-to-r from-educational-blue via-educational-purple to-educational-pink text-white">
-            <div className="absolute inset-0 bg-black/10"></div>
             <div className="relative container mx-auto px-4 py-2 md:py-4">
               {/* Mobile header - ultra compact */}
               <div className="flex items-center justify-between md:hidden">
@@ -1969,7 +1968,7 @@ export default function Index({ initialProfile }: IndexProps) {
           )}
 
           {/* Main Content with Sidebar Layout */}
-          <main className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 scroll-smooth">
+          <main className="min-h-screen bg-white scroll-smooth">
             {userRole === "parent" ? (
               <div className="w-full p-4 md:p-8 pb-20 lg:pb-8 mobile-parent-dashboard min-h-screen overflow-y-auto">
                 <ParentDashboard
@@ -2519,7 +2518,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                                 } else {
                                                   return (
                                                     <div className="text-xs text-blue-600 font-medium flex items-center gap-1">
-                                                      <span>🆕</span>
+                                                      <span>���</span>
                                                       <span className="hidden sm:inline">
                                                         New
                                                       </span>

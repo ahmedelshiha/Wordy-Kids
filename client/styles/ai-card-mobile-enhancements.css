@@ -1,0 +1,150 @@
+/* AI Card Mobile Enhancements */
+
+/* Touch-friendly button spacing and sizing */
+.ai-card-mobile button {
+  min-height: 44px; /* iOS recommended touch target size */
+  min-width: 44px;
+}
+
+@media (max-width: 640px) {
+  /* Mobile-specific spacing for AI card buttons */
+  .ai-card-mobile button {
+    min-height: 40px;
+    min-width: 40px;
+    padding: 8px;
+  }
+
+  /* Improve touch targets for small badges */
+  .ai-card-mobile .badge {
+    min-height: 24px;
+    font-size: 11px;
+    padding: 2px 6px;
+  }
+
+  /* Better spacing for mobile controls */
+  .ai-card-mobile .controls-row {
+    gap: 4px;
+  }
+
+  /* Prevent text overflow on mobile */
+  .ai-card-mobile .status-text {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 80px;
+  }
+
+  /* Mobile-optimized icon sizes */
+  .ai-card-mobile .mobile-icon {
+    width: 14px;
+    height: 14px;
+  }
+
+  /* Smooth animations for mobile interactions */
+  .ai-card-mobile button {
+    transition: all 0.2s ease-in-out;
+  }
+
+  .ai-card-mobile button:active {
+    transform: scale(0.95);
+  }
+
+  /* Better spacing for mobile alerts */
+  .ai-card-mobile .alert {
+    padding: 8px 12px;
+    margin-top: 8px;
+  }
+
+  /* Improve mobile readability */
+  .ai-card-mobile .text-xs {
+    font-size: 11px;
+  }
+
+  /* Mobile-first error message layout */
+  .ai-card-mobile .error-message {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+}
+
+/* Extra small screens (phones in portrait) */
+@media (max-width: 475px) {
+  .ai-card-mobile {
+    padding: 8px;
+  }
+
+  .ai-card-mobile .card-content {
+    padding: 12px;
+  }
+
+  /* Ultra-compact mode for very small screens */
+  .ai-card-mobile .ultra-compact {
+    display: none;
+  }
+
+  .ai-card-mobile .mobile-only {
+    display: flex;
+  }
+
+  /* Ensure buttons don't get too small */
+  .ai-card-mobile button {
+    min-height: 36px;
+    min-width: 36px;
+  }
+}
+
+/* Landscape mobile orientation */
+@media (max-width: 896px) and (orientation: landscape) {
+  .ai-card-mobile {
+    max-height: 90vh;
+    overflow-y: auto;
+  }
+
+  .ai-card-mobile .header-controls {
+    flex-wrap: wrap;
+    gap: 4px;
+  }
+}
+
+/* High DPI displays - ensure crisp icons */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  .ai-card-mobile .icon {
+    image-rendering: -webkit-optimize-contrast;
+  }
+}
+
+/* Dark mode mobile enhancements */
+@media (prefers-color-scheme: dark) {
+  .ai-card-mobile {
+    background: linear-gradient(
+      135deg,
+      rgba(30, 41, 59, 0.8),
+      rgba(51, 65, 85, 0.8)
+    );
+  }
+
+  .ai-card-mobile .card {
+    border-color: rgba(100, 116, 139, 0.3);
+  }
+
+  .ai-card-mobile .badge-outline {
+    border-color: rgba(148, 163, 184, 0.5);
+    background-color: rgba(30, 41, 59, 0.5);
+  }
+}
+
+/* Focus improvements for accessibility */
+.ai-card-mobile button:focus-visible {
+  outline: 2px solid #3b82f6;
+  outline-offset: 2px;
+}
+
+/* Reduce motion for users who prefer it */
+@media (prefers-reduced-motion: reduce) {
+  .ai-card-mobile * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

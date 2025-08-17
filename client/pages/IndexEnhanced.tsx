@@ -329,7 +329,6 @@ export default function IndexEnhanced() {
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 relative">
       {/* Hero Header */}
       <header className="relative overflow-hidden bg-gradient-to-r from-educational-blue via-educational-purple to-educational-pink text-white">
-        <div className="absolute inset-0 bg-black/10"></div>
         <div className="relative container mx-auto px-4 py-8">
           <div className="text-center max-w-4xl mx-auto">
             <div className="flex justify-center mb-4">
