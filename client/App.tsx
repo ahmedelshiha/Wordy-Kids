@@ -55,7 +55,7 @@ const App = () => {
   return (
     <React.StrictMode>
       <QueryClientProvider client={queryClient}>
-        <TooltipProvider delayDuration={200}>
+        <React.Fragment>
           <Toaster />
           <Sonner />
           <WordDatabaseNotifications />
@@ -121,7 +121,7 @@ const App = () => {
               </NavigationGuard>
             </AuthProvider>
           </BrowserRouter>
-        </TooltipProvider>
+        </React.Fragment>
       </QueryClientProvider>
     </React.StrictMode>
   );
