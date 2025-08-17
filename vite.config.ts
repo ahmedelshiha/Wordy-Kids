@@ -17,7 +17,8 @@ export default defineConfig(({ mode }) => ({
     outDir: "dist/spa",
   },
   optimizeDeps: {
-    disabled: true,
+    noDiscovery: true,
+    include: [],
   },
   plugins: [react(), expressPlugin()],
   resolve: {
