@@ -299,7 +299,7 @@ export const EnhancedChildProfileCard: React.FC<
             }}
             transition={{ duration: 3, repeat: Infinity, repeatDelay: 5 }}
           >
-            <p className="text-sm text-purple-800 font-bold text-center leading-relaxed">
+            <p className="text-base text-purple-800 font-bold text-center leading-relaxed">
               {motivationalMessage}
             </p>
           </motion.div>
