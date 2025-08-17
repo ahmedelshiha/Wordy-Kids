@@ -171,49 +171,45 @@ export function DesktopKidNav({
                           tab.id === "dashboard" && "filter drop-shadow-lg" // Extra shadow for home
                         )}
                       >
-                        {tab.id === "dashboard" ? (
-                          // Kid-friendly home emoji without container styling
-                          <div className="relative">
-                            <span className="relative z-10 filter drop-shadow-2xl">{tab.emoji}</span>
-                            {/* Magical sparkles around home when active */}
-                            {activeTab === tab.id && (
-                              <>
-                                <motion.div
-                                  className="absolute -top-2 -right-2 text-yellow-400 text-xl"
-                                  animate={{
-                                    opacity: [0, 1, 0],
-                                    scale: [0.5, 1, 0.5],
-                                    rotate: [0, 180, 360]
-                                  }}
-                                  transition={{
-                                    duration: 3,
-                                    repeat: Infinity,
-                                    delay: 0
-                                  }}
-                                >
-                                  ✨
-                                </motion.div>
-                                <motion.div
-                                  className="absolute -bottom-2 -left-2 text-yellow-300 text-lg"
-                                  animate={{
-                                    opacity: [0, 1, 0],
-                                    scale: [0.5, 1, 0.5],
-                                    rotate: [360, 180, 0]
-                                  }}
-                                  transition={{
-                                    duration: 3,
-                                    repeat: Infinity,
-                                    delay: 1.5
-                                  }}
-                                >
-                                  🌟
-                                </motion.div>
-                              </>
-                            )}
-                          </div>
-                        ) : (
-                          tab.emoji
-                        )}
+                        {/* Kid-friendly emoji design for all icons */}
+                        <div className="relative">
+                          <span className="relative z-10 filter drop-shadow-2xl">{tab.emoji}</span>
+                          {/* Magical sparkles around any active icon */}
+                          {activeTab === tab.id && (
+                            <>
+                              <motion.div
+                                className="absolute -top-2 -right-2 text-yellow-400 text-xl"
+                                animate={{
+                                  opacity: [0, 1, 0],
+                                  scale: [0.5, 1, 0.5],
+                                  rotate: [0, 180, 360]
+                                }}
+                                transition={{
+                                  duration: 3,
+                                  repeat: Infinity,
+                                  delay: 0
+                                }}
+                              >
+                                ✨
+                              </motion.div>
+                              <motion.div
+                                className="absolute -bottom-2 -left-2 text-yellow-300 text-lg"
+                                animate={{
+                                  opacity: [0, 1, 0],
+                                  scale: [0.5, 1, 0.5],
+                                  rotate: [360, 180, 0]
+                                }}
+                                transition={{
+                                  duration: 3,
+                                  repeat: Infinity,
+                                  delay: 1.5
+                                }}
+                              >
+                                🌟
+                              </motion.div>
+                            </>
+                          )}
+                        </div>
                       </motion.div>
                     </div>
 
