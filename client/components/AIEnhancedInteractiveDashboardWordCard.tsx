@@ -1100,10 +1100,10 @@ export function AIEnhancedInteractiveDashboardWordCard({
         </motion.div>
       )}
 
-      {/* AI Insights Panel - Mobile Optimized */}
+      {/* AI Insights Panel - Compact */}
       {showAIInsights && (
         <Card className="bg-gradient-to-r from-blue-50 to-purple-50 border-blue-200">
-          <CardContent className="p-2 sm:p-4">
+          <CardContent className="p-2 sm:p-3">
             <div className="flex items-center justify-between mb-2">
               <h3 className="text-sm font-semibold flex items-center gap-1">
                 <Brain className="w-3 h-3 sm:w-4 sm:h-4 text-blue-600" />
