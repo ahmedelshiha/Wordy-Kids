@@ -2013,9 +2013,11 @@ export default function Index({ initialProfile }: IndexProps) {
                       <div className="mt-1 text-center">
                         <FriendlyMascot
                           mood="happy"
-                          size="small"
+                          size="tiny"
                           position="center"
                           animate={true}
+                          delayAppearance={true}
+                          delayMinutes={7}
                         />
                       </div>
                     </div>
