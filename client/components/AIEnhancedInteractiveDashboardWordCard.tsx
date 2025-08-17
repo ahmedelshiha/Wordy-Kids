@@ -1161,8 +1161,8 @@ export function AIEnhancedInteractiveDashboardWordCard({
       {showSessionComplete && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-1 sm:p-2">
           <div className="bg-white rounded-xl sm:rounded-2xl p-3 sm:p-6 max-w-xs sm:max-w-sm w-full text-center shadow-xl animate-in zoom-in-95 duration-300">
-            <div className="text-3xl sm:text-6xl mb-1 sm:mb-4">🤖🎉</div>
-            <h2 className="text-lg sm:text-3xl font-bold text-gray-800 mb-2 sm:mb-4">
+            <div className="text-2xl sm:text-4xl mb-1 sm:mb-2">🤖🎉</div>
+            <h2 className="text-base sm:text-xl font-bold text-gray-800 mb-1 sm:mb-2">
               AI Session Complete!
             </h2>
 
