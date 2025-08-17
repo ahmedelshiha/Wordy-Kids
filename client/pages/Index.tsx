@@ -1991,27 +1991,24 @@ export default function Index({ initialProfile }: IndexProps) {
             ) : (
               <div className="flex flex-col lg:flex-row min-h-screen bg-gradient-to-br from-white via-purple-50/30 to-pink-50/30">
                 {/* Desktop Sidebar - Hidden on Mobile */}
-                <aside className="hidden lg:flex lg:w-60 xl:w-64 2xl:w-72 bg-gradient-to-b from-purple-50 via-pink-50 to-blue-50 border-r border-purple-200 shadow-sm overflow-y-auto lg:max-h-screen">
-                  <div className="p-3 lg:p-4 w-full">
-                    {/* Magical Portal Logo Section */}
-                    <div className="bg-gradient-to-br from-purple-400 via-pink-400 to-blue-400 p-4 rounded-2xl shadow-xl mb-4 border-2 border-yellow-300 animate-kid-pulse-glow">
-                      <div className="flex items-center gap-3">
-                        <div className="text-3xl animate-mascot-bounce">
+                <aside className="hidden lg:flex lg:w-48 xl:w-52 2xl:w-56 bg-gradient-to-b from-purple-50 via-pink-50 to-blue-50 border-r border-purple-200 shadow-sm overflow-y-auto lg:max-h-screen">
+                  <div className="p-2 lg:p-3 w-full">
+                    {/* Compact Magical Portal Logo Section */}
+                    <div className="bg-gradient-to-br from-purple-400 via-pink-400 to-blue-400 p-2.5 rounded-xl shadow-lg mb-3 border border-yellow-300 animate-kid-pulse-glow">
+                      <div className="flex items-center gap-2">
+                        <div className="text-2xl animate-mascot-bounce">
                           🌟
                         </div>
-                        <div>
-                          <h1 className="text-lg font-kid-friendly text-white text-shadow">
+                        <div className="flex-1 min-w-0">
+                          <h1 className="text-sm font-kid-friendly text-white text-shadow truncate">
                             Wordy Portal ✨
                           </h1>
-                          <p className="text-sm text-yellow-200 font-kid-friendly">
+                          <p className="text-xs text-yellow-200 font-kid-friendly">
                             Magical Learning! 🚀
                           </p>
                         </div>
-                        <div className="text-2xl animate-gentle-float animation-delay-200">
-                          🎯
-                        </div>
                       </div>
-                      <div className="mt-2 text-center">
+                      <div className="mt-1 text-center">
                         <FriendlyMascot
                           mood="happy"
                           size="small"
@@ -2031,8 +2028,8 @@ export default function Index({ initialProfile }: IndexProps) {
                             : "bg-white text-gray-700 hover:kid-gradient-learn hover:text-white border border-purple-200 kid-interactive"
                         }`}
                       >
-                        <div className="text-lg animate-mascot-bounce">🏰</div>
-                        <span className="text-sm font-kid-friendly font-bold">
+                        <div className="text-base animate-mascot-bounce">🏰</div>
+                        <span className="text-xs font-kid-friendly font-bold">
                           My Castle
                         </span>
                         {activeTab === "dashboard" && (
@@ -2050,8 +2047,8 @@ export default function Index({ initialProfile }: IndexProps) {
                             : "bg-white text-gray-700 hover:kid-gradient-success hover:text-white border border-green-200 kid-interactive"
                         }`}
                       >
-                        <div className="text-lg animate-gentle-float">📚</div>
-                        <span className="text-sm font-kid-friendly font-bold">
+                        <div className="text-base animate-gentle-float">📚</div>
+                        <span className="text-xs font-kid-friendly font-bold">
                           Magic Library
                         </span>
                         {activeTab === "learn" && (
@@ -2069,8 +2066,8 @@ export default function Index({ initialProfile }: IndexProps) {
                             : "bg-white text-gray-700 hover:kid-gradient-magic hover:text-purple-800 border border-pink-200 kid-interactive"
                         }`}
                       >
-                        <div className="text-lg animate-mascot-happy">🧙‍♂️</div>
-                        <span className="text-sm font-kid-friendly font-bold">
+                        <div className="text-base animate-mascot-happy">🧙‍♂️</div>
+                        <span className="text-xs font-kid-friendly font-bold">
                           Brain Quest
                         </span>
                         {activeTab === "quiz" && (
@@ -2108,8 +2105,8 @@ export default function Index({ initialProfile }: IndexProps) {
                             : "bg-white text-gray-700 hover:kid-gradient-adventure hover:text-white border border-yellow-200 kid-interactive"
                         }`}
                       >
-                        <div className="text-lg animate-gentle-bounce">🗺️</div>
-                        <span className="text-sm font-kid-friendly font-bold">
+                        <div className="text-base animate-gentle-bounce">🗺️</div>
+                        <span className="text-xs font-kid-friendly font-bold">
                           Adventure Map
                         </span>
                         {activeTab === "progress" && (
@@ -2164,8 +2161,8 @@ export default function Index({ initialProfile }: IndexProps) {
                   </div>
                 </aside>
 
-                {/* Main Content Area - Kid-Friendly & Compact */}
-                <div className="flex-1 p-3 sm:p-4 lg:p-6 pb-20 sm:pb-24 lg:pb-8 overflow-y-auto scroll-smooth">
+                {/* Main Content Area - Optimized for Small Screens */}
+                <div className="flex-1 p-2 sm:p-3 lg:p-4 pb-20 sm:pb-24 lg:pb-6 overflow-y-auto scroll-smooth">
                   <Tabs
                     value={activeTab}
                     onValueChange={setActiveTab}
