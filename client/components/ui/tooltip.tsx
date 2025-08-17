@@ -4,7 +4,9 @@ import * as TooltipPrimitive from "@radix-ui/react-tooltip";
 import { cn } from "@/lib/utils";
 
 // Safe TooltipProvider with proper initialization check
-const TooltipProvider: React.FC<React.ComponentPropsWithoutRef<typeof TooltipPrimitive.Provider>> = (props) => {
+const TooltipProvider: React.FC<
+  React.ComponentPropsWithoutRef<typeof TooltipPrimitive.Provider>
+> = (props) => {
   const [isReady, setIsReady] = React.useState(false);
 
   React.useEffect(() => {
@@ -14,7 +16,7 @@ const TooltipProvider: React.FC<React.ComponentPropsWithoutRef<typeof TooltipPri
 
   // Fallback during initial render to prevent hooks errors
   if (!isReady) {
-    return <div style={{ display: 'contents' }}>{props.children}</div>;
+    return <div style={{ display: "contents" }}>{props.children}</div>;
   }
 
   return <TooltipPrimitive.Provider {...props} />;
