@@ -81,11 +81,11 @@ export const ChildProfileSidebar: React.FC<ChildProfileSidebarProps> = ({
 
   const sidebarVariants = {
     expanded: {
-      width: position === "left" ? "340px" : "340px",
+      width: position === "left" ? "280px" : "280px",
       transition: { duration: 0.3, ease: "easeInOut" },
     },
     collapsed: {
-      width: position === "left" ? "80px" : "80px",
+      width: position === "left" ? "60px" : "60px",
       transition: { duration: 0.3, ease: "easeInOut" },
     },
   };
@@ -110,45 +110,15 @@ export const ChildProfileSidebar: React.FC<ChildProfileSidebarProps> = ({
       variants={sidebarVariants}
       animate={isCollapsed ? "collapsed" : "expanded"}
       className={cn(
-        "bg-gradient-to-b from-blue-50/50 via-purple-50/50 to-pink-50/50",
-        "border-r-2 border-purple-200/30",
+        "bg-transparent", // Let parent background show through
         "flex flex-col h-full overflow-hidden",
         "transition-all duration-500",
         "relative backdrop-blur-md",
-        position === "right" && "border-r-0 border-l-2 border-purple-200/30",
         className,
       )}
     >
-      {/* Subtle Background Decorations for Desktop */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden opacity-40">
-        <div
-          className="absolute top-10 left-4 text-xl animate-gentle-float"
-          style={{ animationDelay: "0s" }}
-        >
-          ⭐
-        </div>
-        <div
-          className="absolute top-20 right-6 text-lg animate-gentle-float"
-          style={{ animationDelay: "2s" }}
-        >
-          🌟
-        </div>
-        <div
-          className="absolute bottom-32 left-6 text-sm animate-gentle-float"
-          style={{ animationDelay: "4s" }}
-        >
-          🎯
-        </div>
-        <div
-          className="absolute bottom-48 right-4 text-lg animate-gentle-float"
-          style={{ animationDelay: "1s" }}
-        >
-          🏆
-        </div>
-      </div>
-
       {/* Enhanced Sidebar Header */}
-      <div className="p-4 border-b border-purple-200/30 bg-gradient-to-r from-white/60 to-blue-50/60 backdrop-blur-sm relative z-10">
+      <div className="p-2 bg-gradient-to-r from-white/60 to-blue-50/60 backdrop-blur-sm relative z-10">
         {/* Fun Mascot */}
         <FriendlyMascot
           mood="happy"
@@ -170,18 +140,15 @@ export const ChildProfileSidebar: React.FC<ChildProfileSidebarProps> = ({
                 {showTimeOfDay && (
                   <div
                     className={cn(
-                      "bg-gradient-to-r rounded-xl p-3 mb-3 shadow-md border border-white/30 backdrop-blur-sm",
+                      "bg-gradient-to-r rounded-lg p-2 mb-2 shadow-sm border border-white/30 backdrop-blur-sm",
                       timeInfo.color,
                     )}
                   >
-                    <div className="flex items-center space-x-2">
-                      <span className="text-lg">{timeInfo.icon}</span>
+                    <div className="flex items-center space-x-1">
+                      <span className="text-sm">{timeInfo.icon}</span>
                       <div>
-                        <div className="text-sm font-bold text-gray-800">
-                          {timeInfo.greeting}, Super Star! 🌟
-                        </div>
-                        <div className="text-xs text-gray-700 font-medium">
-                          Let's learn something awesome today!
+                        <div className="text-xs font-bold text-gray-800">
+                          {timeInfo.greeting}! 🌟
                         </div>
                       </div>
                     </div>
@@ -219,7 +186,7 @@ export const ChildProfileSidebar: React.FC<ChildProfileSidebarProps> = ({
       </div>
 
       {/* Main Profile Card */}
-      <div className="flex-1 p-4 overflow-y-auto relative z-10">
+      <div className="flex-1 p-2 overflow-y-auto relative z-10">
         <AnimatePresence mode="wait">
           {!isCollapsed ? (
             <motion.div
@@ -227,26 +194,26 @@ export const ChildProfileSidebar: React.FC<ChildProfileSidebarProps> = ({
               initial="collapsed"
               animate="expanded"
               exit="collapsed"
-              className="space-y-4"
+              className="space-y-2"
             >
               <EnhancedChildProfileCard
                 profile={profile}
                 stats={stats}
-                isCompact={false}
-                showQuickActions={true}
+                isCompact={true}
+                showQuickActions={false}
                 onProfileEdit={onProfileEdit}
                 onQuickAction={onQuickAction}
-                animationEnabled={true}
+                animationEnabled={false}
               />
 
               {/* Weekly Adventure Progress */}
               {showWeeklyProgress && stats && (
-                <div className="bg-gradient-to-r from-green-50/80 to-blue-50/80 rounded-xl p-4 border border-green-200/50 shadow-md backdrop-blur-sm">
-                  <h4 className="text-sm font-bold text-gray-800 mb-3 flex items-center">
-                    <TrendingUp className="w-5 h-5 mr-2 text-green-600" />
-                    🏆 This Week's Adventures!
+                <div className="bg-gradient-to-r from-green-50/80 to-blue-50/80 rounded-lg p-3 border border-green-200/50 shadow-sm backdrop-blur-sm">
+                  <h4 className="text-xs font-bold text-gray-800 mb-2 flex items-center">
+                    <TrendingUp className="w-4 h-4 mr-1 text-green-600" />
+                    🏆 This Week
                   </h4>
-                  <div className="space-y-3">
+                  <div className="space-y-2">
                     <div className="flex justify-between items-center">
                       <span className="text-xs font-medium text-gray-700 flex items-center">
                         🎮 Learning Sessions
