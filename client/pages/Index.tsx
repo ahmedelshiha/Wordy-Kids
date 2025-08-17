@@ -2084,7 +2084,7 @@ export default function Index({ initialProfile }: IndexProps) {
                       <div className="flex gap-6 items-start">
                         {/* Child Profile Sidebar - Desktop Only */}
                         <div className="hidden lg:block w-64 xl:w-72 flex-shrink-0">
-                          <div className="sticky top-6 max-h-[calc(100vh-3rem)] overflow-y-auto">
+                          <div className="sticky top-6">
                             <Card className="bg-card text-card-foreground shadow-sm backdrop-blur-sm ring-1 ring-black/5">
                               <ChildProfileSidebar
                                 profile={currentProfile}
@@ -3243,7 +3243,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                 <div className="space-y-6">
                                   <div className="flex items-center justify-between">
                                     <h2 className="text-2xl font-bold text-gray-800">
-                                      ��� Word Matching Game
+                                      ���� Word Matching Game
                                     </h2>
                                   </div>
                                   <WordMatchingGame

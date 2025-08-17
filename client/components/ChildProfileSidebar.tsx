@@ -111,7 +111,7 @@ export const ChildProfileSidebar: React.FC<ChildProfileSidebarProps> = ({
       animate={isCollapsed ? "collapsed" : "expanded"}
       className={cn(
         "bg-transparent", // Let parent background show through
-        "flex flex-col h-full overflow-hidden",
+        "flex flex-col h-fit max-h-full",
         "transition-all duration-500",
         "relative backdrop-blur-md",
         className,
@@ -132,7 +132,7 @@ export const ChildProfileSidebar: React.FC<ChildProfileSidebarProps> = ({
             )}
           </AnimatePresence>
 
-          {/* Collapse Toggle */}
+          {/* Collapse Toggle - Hidden on Desktop */}
           {onToggleCollapse && (
             <Button
               variant="ghost"
@@ -141,7 +141,7 @@ export const ChildProfileSidebar: React.FC<ChildProfileSidebarProps> = ({
                 kidFriendlyEffects.playSound(SOUNDS.button_click);
                 onToggleCollapse();
               }}
-              className="h-10 w-10 p-0 bg-gradient-to-r from-yellow-200 to-orange-200 hover:from-yellow-300 hover:to-orange-300 shadow-lg border-2 border-white rounded-full transition-all duration-300 hover:scale-110"
+              className="h-10 w-10 p-0 bg-gradient-to-r from-yellow-200 to-orange-200 hover:from-yellow-300 hover:to-orange-300 shadow-lg border-2 border-white rounded-full transition-all duration-300 hover:scale-110 lg:hidden"
             >
               {isCollapsed ? (
                 position === "left" ? (
@@ -160,7 +160,7 @@ export const ChildProfileSidebar: React.FC<ChildProfileSidebarProps> = ({
       </div>
 
       {/* Main Profile Card */}
-      <div className="flex-1 p-2 overflow-y-auto relative z-10">
+      <div className="flex-1 p-2 relative z-10">
         <AnimatePresence mode="wait">
           {!isCollapsed ? (
             <motion.div
