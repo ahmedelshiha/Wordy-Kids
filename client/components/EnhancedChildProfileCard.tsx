@@ -216,20 +216,36 @@ export const EnhancedChildProfileCard: React.FC<
                 <h3 className="font-black text-xl text-gray-800 leading-tight">
                   🎆 {profile.name} 🎆
                 </h3>
-                <div className="flex items-center space-x-2">
-                  <Badge
-                    className="text-sm bg-gradient-to-r from-yellow-200 to-orange-200 text-orange-800 border-2 border-orange-300 font-bold shadow-lg"
+                <div className="flex items-center space-x-3">
+                  <StickerBadge
+                    type="crown"
+                    color="gold"
+                    glowing
+                    animated
+                    size="medium"
+                    onClick={() => {
+                      celebrate.levelUp();
+                    }}
                   >
-                    <Crown className="w-4 h-4 mr-1" />
-                    🎆 Level {profile.level}
-                  </Badge>
+                    <span className="text-xs font-bold text-orange-800 absolute -bottom-6 whitespace-nowrap">
+                      Level {profile.level}
+                    </span>
+                  </StickerBadge>
                   {profile.streak > 0 && (
-                    <Badge
-                      className="text-sm bg-gradient-to-r from-red-200 to-orange-200 text-red-800 border-2 border-red-300 animate-pulse font-bold shadow-lg"
+                    <StickerBadge
+                      type="fire"
+                      color="rainbow"
+                      glowing
+                      animated
+                      size="medium"
+                      onClick={() => {
+                        celebrate.streak();
+                      }}
                     >
-                      <Zap className="w-4 h-4 mr-1" />
-                      {profile.streak}🔥 STREAK!
-                    </Badge>
+                      <span className="text-xs font-bold text-red-800 absolute -bottom-6 whitespace-nowrap">
+                        {profile.streak} Streak!
+                      </span>
+                    </StickerBadge>
                   )}
                 </div>
               </div>
