@@ -304,6 +304,10 @@ export default function Index({ initialProfile }: IndexProps) {
     useState<DashboardWordSession | null>(null);
   const [dashboardSessionNumber, setDashboardSessionNumber] = useState(1);
 
+  // Sidebar states
+  const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
+  const [showProfileEdit, setShowProfileEdit] = useState(false);
+
   // Memoize displayWords to prevent recalculation on every render
   const displayWords = useMemo(() => {
     if (currentDashboardWords.length > 0) {
