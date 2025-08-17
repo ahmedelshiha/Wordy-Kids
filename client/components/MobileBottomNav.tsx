@@ -181,7 +181,9 @@ export function MobileBottomNav({
               <h3 className="text-lg font-kid-friendly font-bold text-purple-800 text-shadow">
                 Magical Adventure Menu! ✨
               </h3>
-              <p className="text-sm font-kid-friendly text-purple-600">Tap to explore new worlds!</p>
+              <p className="text-sm font-kid-friendly text-purple-600">
+                Tap to explore new worlds!
+              </p>
             </div>
 
             <div className="grid grid-cols-2 gap-3">
@@ -194,7 +196,9 @@ export function MobileBottomNav({
                   }}
                   className="kid-nav-item bg-white hover:kid-gradient-magic hover:text-white border-2 border-purple-200 kid-interactive min-h-[90px] justify-center"
                 >
-                  <div className="text-3xl animate-gentle-float">{item.emoji}</div>
+                  <div className="text-3xl animate-gentle-float">
+                    {item.emoji}
+                  </div>
                   <span className="text-sm font-kid-friendly font-bold">
                     {item.label}
                   </span>
@@ -278,7 +282,9 @@ export function MobileBottomNav({
               <div
                 className={cn(
                   "text-5xl sm:text-6xl md:text-7xl lg:text-8xl -mt-6 sm:-mt-7 md:-mt-8 lg:-mt-10 transition-transform duration-200",
-                  showMoreMenu ? "rotate-90 scale-110 animate-mascot-bounce" : "animate-gentle-float",
+                  showMoreMenu
+                    ? "rotate-90 scale-110 animate-mascot-bounce"
+                    : "animate-gentle-float",
                 )}
               >
                 🎪

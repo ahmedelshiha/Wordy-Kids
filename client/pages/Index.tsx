@@ -2053,7 +2053,9 @@ export default function Index({ initialProfile }: IndexProps) {
                             : "text-gray-700 hover:text-green-600 kid-interactive"
                         }`}
                       >
-                        <div className="text-4xl lg:text-5xl xl:text-6xl -mt-2 lg:-mt-3 xl:-mt-4 animate-gentle-float">📚</div>
+                        <div className="text-4xl lg:text-5xl xl:text-6xl -mt-2 lg:-mt-3 xl:-mt-4 animate-gentle-float">
+                          📚
+                        </div>
                         <span className="text-xs font-kid-friendly font-bold">
                           Magic Library
                         </span>
@@ -2072,7 +2074,9 @@ export default function Index({ initialProfile }: IndexProps) {
                             : "text-gray-700 hover:text-pink-600 kid-interactive"
                         }`}
                       >
-                        <div className="text-4xl lg:text-5xl xl:text-6xl -mt-2 lg:-mt-3 xl:-mt-4 animate-mascot-happy">🧙‍♂️</div>
+                        <div className="text-4xl lg:text-5xl xl:text-6xl -mt-2 lg:-mt-3 xl:-mt-4 animate-mascot-happy">
+                          🧙‍♂️
+                        </div>
                         <span className="text-xs font-kid-friendly font-bold">
                           Brain Quest
                         </span>
