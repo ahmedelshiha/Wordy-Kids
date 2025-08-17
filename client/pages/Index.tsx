@@ -139,7 +139,7 @@ import { useNavigationHistory } from "@/hooks/useNavigationHistory";
 import { useAIWordRecommendations } from "@/hooks/use-ai-word-recommendations";
 import { AIWordRecommendationService } from "@/lib/aiWordRecommendationService";
 import { getAISettings, isAIEnabled } from "@/lib/aiSettings";
-import { SimplifiedChildSidebar } from "@/components/SimplifiedChildSidebar";
+import { ChildProfileSidebar } from "@/components/ChildProfileSidebar";
 import { MobileChildProfileHeader } from "@/components/MobileChildProfileHeader";
 import { EnhancedStatsHelper } from "@/lib/enhancedStatsHelper";
 
@@ -2077,9 +2077,16 @@ export default function Index({ initialProfile }: IndexProps) {
                 <div className="flex h-screen">
                   {/* Child Profile Sidebar - Desktop Only */}
                   <div className="hidden lg:block">
-                    <SimplifiedChildSidebar
+                    <ChildProfileSidebar
+                      profile={currentProfile}
+                      stats={enhancedChildStats}
                       isCollapsed={isSidebarCollapsed}
                       onToggleCollapse={handleSidebarToggle}
+                      onProfileEdit={handleProfileEdit}
+                      onQuickAction={handleQuickAction}
+                      onLogout={handleSidebarLogout}
+                      showTimeOfDay={true}
+                      showWeeklyProgress={true}
                       position="left"
                     />
                   </div>
