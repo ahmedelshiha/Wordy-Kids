@@ -2084,21 +2084,19 @@ export default function Index({ initialProfile }: IndexProps) {
                       <div className="flex gap-6 items-start">
                         {/* Child Profile Sidebar - Desktop Only */}
                         <div className="hidden lg:block w-72 xl:w-80 flex-shrink-0">
-                          <div className="bg-gradient-to-b from-slate-900 via-blue-900 to-purple-900 rounded-xl shadow-2xl border border-slate-700/50 backdrop-blur-sm h-fit">
-                            <ChildProfileSidebar
-                              profile={currentProfile}
-                              stats={enhancedChildStats}
-                              isCollapsed={isSidebarCollapsed}
-                              onToggleCollapse={handleSidebarToggle}
-                              onProfileEdit={handleProfileEdit}
-                              onQuickAction={handleQuickAction}
-                              onLogout={handleSidebarLogout}
-                              showTimeOfDay={true}
-                              showWeeklyProgress={true}
-                              position="left"
-                              className="border-none shadow-none bg-transparent text-white"
-                            />
-                          </div>
+                          <ChildProfileSidebar
+                            profile={currentProfile}
+                            stats={enhancedChildStats}
+                            isCollapsed={isSidebarCollapsed}
+                            onToggleCollapse={handleSidebarToggle}
+                            onProfileEdit={handleProfileEdit}
+                            onQuickAction={handleQuickAction}
+                            onLogout={handleSidebarLogout}
+                            showTimeOfDay={true}
+                            showWeeklyProgress={true}
+                            position="left"
+                            className="border-none shadow-none bg-transparent"
+                          />
                         </div>
 
                         {/* Main Game Content */}
@@ -3537,7 +3535,7 @@ export default function Index({ initialProfile }: IndexProps) {
           <MagicalPortalEffect
             isActive={backgroundAnimationsEnabled && activeTab === "learn"}
             intensity="medium"
-            particleEmojis={["✨", "��", "⭐", "💫", "🔮", "🌈", "🦄", "🎉"]}
+            particleEmojis={["✨", "🌟", "⭐", "💫", "🔮", "🌈", "🦄", "🎉"]}
           />
 
           {/* Enhanced Reward Celebration */}
