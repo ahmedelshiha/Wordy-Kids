@@ -109,12 +109,14 @@ export function FriendlyMascot({
 
   const displayMessage = message || mascotMessages[mood];
 
+  if (!isVisible || !delayComplete) return null;
+
   return (
     <div
       className={cn(
         "flex items-center gap-4 transition-all duration-500",
         positionClasses[position],
-        isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4",
+        "opacity-100 translate-y-0",
         className,
       )}
     >
