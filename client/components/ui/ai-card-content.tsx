@@ -102,7 +102,15 @@ export const AICardContent = React.forwardRef<
     }, [sessionStats.accuracy]);
 
     return (
-      <CardContent ref={ref} className={cn("ai-card-mobile", className)} {...props}>
+      <CardContent
+        ref={(node) => {
+          if (typeof ref === 'function') ref(node);
+          else if (ref) ref.current = node;
+          if (node) elementRef.current = node;
+        }}
+        className={cn("ai-card-mobile", className)}
+        {...props}
+      >
         {/* Comprehensive AI Control Header - Mobile Enhanced */}
         {enableAIHeader && (
           <Card className="bg-gradient-to-r from-blue-50/80 to-purple-50/80 border border-blue-200/60 mb-3 sm:mb-4">
