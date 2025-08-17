@@ -599,6 +599,16 @@
   }
 }
 
+/* Mobile-optimized mascot bounce animation for better performance */
+@keyframes mascotBounceMobile {
+  0%, 100% {
+    transform: translateY(0) translateZ(0);
+  }
+  50% {
+    transform: translateY(-8px) translateZ(0);
+  }
+}
+
 @keyframes rainbowBorder {
   0% {
     border-color: #ff6b6b;
