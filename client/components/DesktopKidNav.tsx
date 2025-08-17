@@ -263,6 +263,10 @@ export function DesktopKidNav({
             </DialogTitle>
             <DialogDescription>
               Enter the parent code to access family settings and controls.
+              <br />
+              <span className="text-xs text-gray-500 mt-2 block">
+                Hint: The code is "PARENT2024"
+              </span>
             </DialogDescription>
           </DialogHeader>
           <div className="space-y-4">
