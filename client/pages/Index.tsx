@@ -3383,6 +3383,16 @@ export default function Index({ initialProfile }: IndexProps) {
           {showCelebration && <CelebrationEffect trigger={showCelebration} />}
           {backgroundAnimationsEnabled && <FloatingBubbles />}
 
+          {/* Magical Particle Effects */}
+          <SuccessParticles
+            trigger={showCelebration}
+            onComplete={() => setShowCelebration(false)}
+          />
+          <WordLearnedParticles trigger={celebrationEffect} />
+          {userRole === "child" && backgroundAnimationsEnabled && (
+            <AmbientMagicParticles isActive={true} type="sparkles" />
+          )}
+
           {/* Settings Panel */}
           <CompactMobileSettingsPanel
             isOpen={showSettings}
