@@ -1860,9 +1860,7 @@ export default function Index({ initialProfile }: IndexProps) {
                 <div className="hidden md:block absolute bottom-12 right-8 text-xl animate-gentle-float delay-500">
                   🚀
                 </div>
-                <div
-                  className="hidden md:block absolute top-1/2 left-4 text-lg animate-sparkle"
-                >
+                <div className="hidden md:block absolute top-1/2 left-4 text-lg animate-sparkle">
                   ✨
                 </div>
                 <div className="hidden md:block absolute top-1/3 right-4 text-xl animate-gentle-bounce delay-700">
