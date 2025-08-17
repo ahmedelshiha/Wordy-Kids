@@ -189,6 +189,14 @@ export const LearningDashboard: React.FC<LearningDashboardProps> = ({
 
   return (
     <div className="space-y-4">
+      {/* Kid Registration Notification - Only show for guest users */}
+      {isGuest && (
+        <KidRegistrationNotification
+          variant="banner"
+          className="mb-4"
+        />
+      )}
+
       {/* Interactive Word Learning Hub - PRIMARY FEATURE */}
       {availableWords.length > 0 && onWordProgress ? (
         <>
@@ -407,7 +415,7 @@ export const LearningDashboard: React.FC<LearningDashboardProps> = ({
               ))}
             {stats.badges.filter((badge) => badge.earned).length === 0 && (
               <div className="text-center text-gray-500 w-full py-4">
-                <div className="text-4xl mb-2">���</div>
+                <div className="text-4xl mb-2">🎯</div>
                 <p className="text-sm">
                   Start learning to earn your first badge!
                 </p>
