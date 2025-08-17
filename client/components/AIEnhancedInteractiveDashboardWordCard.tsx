@@ -238,6 +238,28 @@ export function AIEnhancedInteractiveDashboardWordCard({
   const [isTransitioning, setIsTransitioning] = useState(false);
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
 
+  // Monitor AI state and update status
+  useEffect(() => {
+    if (!globalAIEnabled) {
+      setAiStatus('disabled');
+      return;
+    }
+
+    if (aiState.isLoading) {
+      setAiStatus('loading');
+    } else if (aiState.error) {
+      setAiStatus('error');
+      setAiErrorMessage(aiState.error);
+    } else if (aiState.hasInitialized) {
+      if (aiState.currentRecommendation) {
+        setAiStatus('active');
+        setAiErrorMessage('');
+      } else {
+        setAiStatus('fallback');
+      }
+    }
+  }, [globalAIEnabled, aiState.isLoading, aiState.error, aiState.hasInitialized, aiState.currentRecommendation]);
+
   // Initialize AI recommendations when component mounts
   useEffect(() => {
     if (!aiState.hasInitialized) return;
@@ -1840,7 +1862,7 @@ export function AIEnhancedInteractiveDashboardWordCard({
                 {/* Compact stats in single row */}
                 <div className="flex items-center justify-between text-xs gap-1">
                   <div className="flex items-center gap-0.5 bg-yellow-100 px-1 py-0.5 rounded flex-1 justify-center">
-                    <span>����</span>
+                    <span>😊</span>
                     <span className="font-medium">
                       {sessionStats.wordsRemembered}
                     </span>
