@@ -2034,12 +2034,14 @@ export default function Index({ initialProfile }: IndexProps) {
                             : "text-gray-700 hover:text-purple-600 kid-interactive"
                         }`}
                       >
-                        <div className="text-2xl sm:text-3xl lg:text-4xl -mt-1 sm:-mt-2 lg:-mt-3 animate-mascot-bounce">
-                          🏡
+                        <div className="flex flex-col items-center animate-mascot-bounce">
+                          <div className="text-2xl sm:text-3xl lg:text-4xl -mt-1 sm:-mt-2 lg:-mt-3">
+                            🏡
+                          </div>
+                          <span className="text-xs font-kid-friendly font-bold">
+                            My Castle
+                          </span>
                         </div>
-                        <span className="text-xs font-kid-friendly font-bold">
-                          My Castle
-                        </span>
                         {activeTab === "dashboard" && (
                           <div className="ml-auto animate-kid-magic-sparkle">
                             ✨🌟
@@ -2055,12 +2057,14 @@ export default function Index({ initialProfile }: IndexProps) {
                             : "text-gray-700 hover:text-green-600 kid-interactive"
                         }`}
                       >
-                        <div className="text-2xl sm:text-3xl lg:text-4xl -mt-1 sm:-mt-2 lg:-mt-3 animate-gentle-float">
-                          📚
+                        <div className="flex flex-col items-center animate-gentle-float">
+                          <div className="text-2xl sm:text-3xl lg:text-4xl -mt-1 sm:-mt-2 lg:-mt-3">
+                            📚
+                          </div>
+                          <span className="text-xs font-kid-friendly font-bold">
+                            Magic Library
+                          </span>
                         </div>
-                        <span className="text-xs font-kid-friendly font-bold">
-                          Magic Library
-                        </span>
                         {activeTab === "learn" && (
                           <div className="ml-auto animate-kid-magic-sparkle">
                             ✨🌟
@@ -2076,12 +2080,14 @@ export default function Index({ initialProfile }: IndexProps) {
                             : "text-gray-700 hover:text-pink-600 kid-interactive"
                         }`}
                       >
-                        <div className="text-2xl sm:text-3xl lg:text-4xl -mt-1 sm:-mt-2 lg:-mt-3 animate-mascot-happy">
-                          🧙‍♂️
+                        <div className="flex flex-col items-center animate-mascot-happy">
+                          <div className="text-2xl sm:text-3xl lg:text-4xl -mt-1 sm:-mt-2 lg:-mt-3">
+                            🧙‍♂️
+                          </div>
+                          <span className="text-xs font-kid-friendly font-bold">
+                            Brain Quest
+                          </span>
                         </div>
-                        <span className="text-xs font-kid-friendly font-bold">
-                          Brain Quest
-                        </span>
                         {activeTab === "quiz" && (
                           <div className="ml-auto animate-kid-magic-sparkle">
                             ✨🌟
@@ -2113,12 +2119,14 @@ export default function Index({ initialProfile }: IndexProps) {
                             : "text-gray-700 hover:text-yellow-600 kid-interactive"
                         }`}
                       >
-                        <div className="text-2xl sm:text-3xl lg:text-4xl -mt-1 sm:-mt-2 lg:-mt-3 animate-gentle-bounce">
-                          🗺️
+                        <div className="flex flex-col items-center animate-gentle-bounce">
+                          <div className="text-2xl sm:text-3xl lg:text-4xl -mt-1 sm:-mt-2 lg:-mt-3">
+                            🗺️
+                          </div>
+                          <span className="text-xs font-kid-friendly font-bold">
+                            Adventure Map
+                          </span>
                         </div>
-                        <span className="text-xs font-kid-friendly font-bold">
-                          Adventure Map
-                        </span>
                         {activeTab === "progress" && (
                           <div className="ml-auto animate-kid-magic-sparkle">
                             ✨🌟
