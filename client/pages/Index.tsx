@@ -29,7 +29,6 @@ import { GameLikeLearning } from "@/components/GameLikeLearning";
 import { WordMatchingGame } from "@/components/WordMatchingGame";
 import { GameHub } from "@/components/games/GameHub";
 import { VowelRescue } from "@/components/games/VowelRescue";
-import { ReactContextTest } from "@/components/ReactContextTest";
 import ListenAndGuessGame from "@/components/games/ListenAndGuessGame";
 import WordGarden from "@/components/games/WordGarden";
 import {
@@ -1772,10 +1771,6 @@ export default function Index({ initialProfile }: IndexProps) {
 
   return (
     <div className="min-h-screen bg-white relative overflow-x-hidden">
-      {/* React Context Test - Debug */}
-      <div className="fixed top-4 right-4 z-50 max-w-sm">
-        <ReactContextTest />
-      </div>
 
       {/* Session Restoration Modal */}
       {showSessionRestoration && sessionRestorationData && (
