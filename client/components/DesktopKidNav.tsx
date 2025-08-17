@@ -15,7 +15,6 @@ import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
-  TooltipProvider,
 } from "@/components/ui/tooltip";
 
 interface DesktopKidNavProps {
@@ -259,23 +258,21 @@ export function DesktopKidNav({
 
       {/* Parent Gate Button - Top Right Corner */}
       <div className="fixed top-3 right-3 lg:top-4 lg:right-4 z-50 hidden lg:block">
-        <TooltipProvider>
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <motion.button
-                onClick={() => setShowParentGate(true)}
-                className="bg-white/90 backdrop-blur-lg border-2 border-gray-300 rounded-full p-2 lg:p-3 shadow-lg hover:shadow-xl transition-all duration-300 group"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                <Crown className="w-5 h-5 lg:w-6 lg:h-6 text-yellow-600 group-hover:text-yellow-700" />
-              </motion.button>
-            </TooltipTrigger>
-            <TooltipContent>
-              <p>Family Zone & Settings</p>
-            </TooltipContent>
-          </Tooltip>
-        </TooltipProvider>
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <motion.button
+              onClick={() => setShowParentGate(true)}
+              className="bg-white/90 backdrop-blur-lg border-2 border-gray-300 rounded-full p-2 lg:p-3 shadow-lg hover:shadow-xl transition-all duration-300 group"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <Crown className="w-5 h-5 lg:w-6 lg:h-6 text-yellow-600 group-hover:text-yellow-700" />
+            </motion.button>
+          </TooltipTrigger>
+          <TooltipContent>
+            <p>Family Zone & Settings</p>
+          </TooltipContent>
+        </Tooltip>
       </div>
 
       {/* Parent Gate Dialog */}
