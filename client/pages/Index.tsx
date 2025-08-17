@@ -2036,7 +2036,7 @@ export default function Index({ initialProfile }: IndexProps) {
                         </span>
                         {activeTab === "dashboard" && (
                           <div className="ml-auto animate-kid-magic-sparkle">
-                            ��
+                            ✨
                           </div>
                         )}
                       </button>
