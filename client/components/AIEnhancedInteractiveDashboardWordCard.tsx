@@ -24,6 +24,8 @@ import {
   Clock,
   BarChart3,
   Shield,
+  RefreshCw,
+  AlertTriangle,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { audioService } from "@/lib/audioService";
@@ -42,6 +44,8 @@ import { SessionContext } from "@/lib/aiWordRecommendationService";
 import { isAIEnabled, setAISettings } from "@/lib/aiSettings";
 import { useVoiceSettings } from "@/hooks/use-voice-settings";
 import { ChildWordStats } from "@shared/api";
+import { AIStatusIndicator, AIStatus } from "./AIStatusIndicator";
+import { EnhancedAISettings } from "./EnhancedAISettings";
 
 interface Word {
   id: number;
