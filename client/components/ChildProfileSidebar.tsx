@@ -147,8 +147,8 @@ export const ChildProfileSidebar: React.FC<ChildProfileSidebarProps> = ({
         </div>
       </div>
 
-      {/* Sidebar Header */}
-      <div className="p-4 border-b-2 border-rainbow-300/50 bg-gradient-to-r from-yellow-100/80 to-orange-100/80 relative z-10">
+      {/* Enhanced Sidebar Header */}
+      <div className="p-4 border-b border-purple-200/30 bg-gradient-to-r from-white/60 to-blue-50/60 backdrop-blur-sm relative z-10">
         {/* Fun Mascot */}
         <FriendlyMascot
           mood="happy"
