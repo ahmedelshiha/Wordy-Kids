@@ -142,6 +142,7 @@ import { AIWordRecommendationService } from "@/lib/aiWordRecommendationService";
 import { getAISettings, isAIEnabled } from "@/lib/aiSettings";
 import { ChildProfileSidebar } from "@/components/ChildProfileSidebar";
 import { MobileChildProfileHeader } from "@/components/MobileChildProfileHeader";
+import { EnhancedStatsHelper } from "@/lib/enhancedStatsHelper";
 
 interface IndexProps {
   initialProfile?: any;
@@ -2642,7 +2643,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                                     <div className="absolute inset-0 bg-white/20 rounded-xl opacity-0 hover:opacity-100 transition-opacity duration-300"></div>
                                                     <div className="relative z-10 flex items-center justify-center">
                                                       <span className="text-xl sm:text-2xl mr-1 sm:mr-2 animate-wiggle">
-                                                        ����
+                                                        😔
                                                       </span>
                                                       <div className="text-center">
                                                         <div className="font-bold text-base sm:text-lg">
