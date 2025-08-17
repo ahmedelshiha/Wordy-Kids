@@ -1258,6 +1258,44 @@ export default function Index({ initialProfile }: IndexProps) {
     // You could implement "Continue where you left off" feature
   };
 
+  // Sidebar handlers
+  const handleSidebarToggle = () => {
+    setIsSidebarCollapsed(!isSidebarCollapsed);
+  };
+
+  const handleProfileEdit = () => {
+    setShowProfileEdit(true);
+  };
+
+  const handleQuickAction = (action: string) => {
+    switch (action) {
+      case "continue_learning":
+        setActiveTab("learn");
+        break;
+      case "practice_words":
+        if (forgottenWords.size > 0) {
+          startPracticeGame();
+        } else {
+          setActiveTab("quiz");
+          setSelectedQuizType("quick");
+          setShowQuiz(true);
+        }
+        break;
+      default:
+        break;
+    }
+  };
+
+  const handleSidebarLogout = () => {
+    // Navigate back to profile selection
+    setCurrentProfile(null);
+    setRememberedWords(new Set());
+    setForgottenWords(new Set());
+    setChildStats(null);
+    setCurrentSessionId(null);
+    setActiveTab("dashboard");
+  };
+
   const generateFreshWords = () => {
     if (!selectedCategory) {
       console.log("No category selected, skipping word generation");
@@ -1417,7 +1455,7 @@ export default function Index({ initialProfile }: IndexProps) {
       } else if (accuracy >= 75) {
         achievementTitle = "Category Scholar! 📚✨";
         achievementIcon = "📚";
-        achievementMessage = `Great job! You completed ${categoryDisplayName} with ${accuracy}% accuracy! Keep up the good work!\n\n🎓 Scholar Bonus: 100 points!`;
+        achievementMessage = `Great job! You completed ${categoryDisplayName} with ${accuracy}% accuracy! Keep up the good work!\n\n���� Scholar Bonus: 100 points!`;
       } else if (accuracy >= 50) {
         achievementTitle = "Category Explorer! ��️🌟";
         achievementIcon = "🗺️";
