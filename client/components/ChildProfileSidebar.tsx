@@ -330,7 +330,10 @@ export const ChildProfileSidebar: React.FC<ChildProfileSidebarProps> = ({
                 <Button
                   variant="outline"
                   size="sm"
-                  onClick={onProfileEdit}
+                  onClick={() => {
+                    kidFriendlyEffects.playSound(SOUNDS.button_click);
+                    onProfileEdit?.();
+                  }}
                   className="w-full text-xs bg-gradient-to-r from-blue-200 to-purple-200 hover:from-blue-300 hover:to-purple-300 border-2 border-blue-300 text-blue-800 font-bold rounded-xl"
                 >
                   <Settings className="w-4 h-4 mr-2" />
@@ -341,7 +344,10 @@ export const ChildProfileSidebar: React.FC<ChildProfileSidebarProps> = ({
                 <Button
                   variant="ghost"
                   size="sm"
-                  onClick={onLogout}
+                  onClick={() => {
+                    kidFriendlyEffects.playSound(SOUNDS.button_click);
+                    onLogout?.();
+                  }}
                   className="w-full text-xs text-gray-700 hover:text-gray-900 hover:bg-gray-100 rounded-xl font-medium"
                 >
                   <LogOut className="w-4 h-4 mr-2" />
@@ -361,7 +367,10 @@ export const ChildProfileSidebar: React.FC<ChildProfileSidebarProps> = ({
                 <Button
                   variant="ghost"
                   size="sm"
-                  onClick={onProfileEdit}
+                  onClick={() => {
+                    kidFriendlyEffects.playSound(SOUNDS.button_click);
+                    onProfileEdit?.();
+                  }}
                   className="h-10 w-10 p-0 bg-gradient-to-r from-blue-200 to-purple-200 hover:from-blue-300 hover:to-purple-300 rounded-full border-2 border-white shadow-lg transition-all duration-300 hover:scale-110"
                 >
                   <Settings className="w-4 h-4" />
@@ -371,7 +380,10 @@ export const ChildProfileSidebar: React.FC<ChildProfileSidebarProps> = ({
                 <Button
                   variant="ghost"
                   size="sm"
-                  onClick={onLogout}
+                  onClick={() => {
+                    kidFriendlyEffects.playSound(SOUNDS.button_click);
+                    onLogout?.();
+                  }}
                   className="h-10 w-10 p-0 text-gray-700 hover:text-gray-900 bg-white/80 hover:bg-white rounded-full border-2 border-gray-200 shadow-md transition-all duration-300 hover:scale-110"
                 >
                   <LogOut className="w-4 h-4" />
