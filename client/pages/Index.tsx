@@ -313,14 +313,14 @@ export default function Index({ initialProfile }: IndexProps) {
     useState(false);
 
   // Enhanced stats computation
-  const enhancedChildStats = useMemo(() => {
-    return EnhancedStatsHelper.enhanceChildStats(
-      childStats,
-      rememberedWords,
-      forgottenWords,
-      currentProfile,
-    );
-  }, [childStats, rememberedWords, forgottenWords, currentProfile]);
+  // const enhancedChildStats = useMemo(() => {
+  //   return EnhancedStatsHelper.enhanceChildStats(
+  //     childStats,
+  //     rememberedWords,
+  //     forgottenWords,
+  //     currentProfile,
+  //   );
+  // }, [childStats, rememberedWords, forgottenWords, currentProfile]);
 
   // Memoize displayWords to prevent recalculation on every render
   const displayWords = useMemo(() => {
