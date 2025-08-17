@@ -110,22 +110,6 @@ export function DesktopKidNav({
     }
   };
 
-  const toggleKidMode = () => {
-    if (kidModeEnabled) {
-      // Trying to disable kid mode - show confirmation
-      setShowKidModeConfirm(true);
-    } else {
-      // Enabling kid mode - safe to do directly
-      setKidModeEnabled(true);
-      onRoleChange("child");
-    }
-  };
-
-  const confirmDisableKidMode = () => {
-    setKidModeEnabled(false);
-    onRoleChange("parent");
-    setShowKidModeConfirm(false);
-  };
 
   return (
     <>
