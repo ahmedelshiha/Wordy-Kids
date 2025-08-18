@@ -1108,7 +1108,7 @@
 
 /* AI Card responsive backgrounds */
 .ai-card-background {
-  background-image: url("/images/ai-card-desktop-bg.jpg");
+  background-image: url("/images/ai-card-desktop-bg.webp");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -1117,14 +1117,14 @@
 /* Mobile AI card background */
 @media (max-width: 640px) {
   .ai-card-background {
-    background-image: url("/images/ai-card-mobile-bg.jpg");
+    background-image: url("/images/ai-card-mobile-bg.webp");
   }
 }
 
 /* Tablet AI card background */
 @media (min-width: 641px) and (max-width: 1024px) {
   .ai-card-background {
-    background-image: url("/images/ai-card-tablet-bg.jpg");
+    background-image: url("/images/ai-card-tablet-bg.webp");
   }
 }
 
