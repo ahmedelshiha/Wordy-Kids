@@ -1909,7 +1909,6 @@ export default function Index({ initialProfile }: IndexProps) {
       {/* Main Content - Only show when session is initialized */}
       {isSessionInitialized && (
         <>
-
           {/* Mobile Child Profile Header - DISABLED
           {userRole === "child" && (
             <div className="block lg:hidden">
