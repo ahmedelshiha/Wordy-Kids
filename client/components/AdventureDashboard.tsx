@@ -247,7 +247,7 @@ export const AdventureDashboard: React.FC<AdventureDashboardProps> = ({
   return (
     <div
       className="min-h-screen bg-cover bg-center bg-no-repeat p-4"
-      style={{ backgroundImage: "url(/images/background.jpg)" }}
+      style={{ backgroundImage: "url(/images/bg_desktop.webp)" }}
     >
       <div className="max-w-7xl mx-auto space-y-6">
         {/* Header */}
