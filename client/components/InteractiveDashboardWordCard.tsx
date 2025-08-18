@@ -1181,7 +1181,7 @@ export function InteractiveDashboardWordCard({
                     }
                     if (percentage >= 90) return "⭐";
                     if (percentage >= 75) return "🎯";
-                    if (percentage >= 50) return "🌿";
+                    if (percentage >= 50) return "��";
                     return "🌟";
                   })()}
                 </span>
@@ -1402,7 +1402,7 @@ export function InteractiveDashboardWordCard({
                           initial={{ opacity: 0, scale: 0.8 }}
                           animate={{ opacity: 1, scale: 1 }}
                           transition={{ delay: 0.6, duration: 0.4 }}
-                          className="mt-2 flex justify-center"
+                          className="mt-1.5 sm:mt-2 flex justify-center"
                         >
                           <Button
                             onClick={playPronunciation}
