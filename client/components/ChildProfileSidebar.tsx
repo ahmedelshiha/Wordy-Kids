@@ -115,15 +115,15 @@ export const ChildProfileSidebar: React.FC<ChildProfileSidebarProps> = ({
       variants={sidebarVariants}
       animate={isCollapsed ? "collapsed" : "expanded"}
       className={cn(
-        "bg-white/95 backdrop-blur-sm",
+        "jungle-zone",
         "flex flex-col h-fit max-h-full",
         "transition-all duration-300",
-        "relative border border-slate-200 rounded-xl shadow-md",
+        "relative border-4 border-yellow-400/50 rounded-3xl shadow-2xl",
         className,
       )}
     >
       {/* Simplified Sidebar Header */}
-      <div className="p-3 bg-slate-50/80 relative z-10 rounded-t-xl border-b border-slate-200">
+      <div className="p-3 bg-gradient-to-r from-yellow-400/20 to-orange-400/20 relative z-10 rounded-t-3xl border-b-2 border-yellow-400/30">
         <div className="flex items-center justify-between">
           <AnimatePresence mode="wait">
             {!isCollapsed && (
