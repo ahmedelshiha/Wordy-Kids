@@ -382,7 +382,7 @@ export const EnhancedWordLibrary: React.FC<EnhancedWordLibraryProps> = ({
   return (
     <div
       ref={containerRef}
-      className={`min-h-screen bg-cover bg-center bg-no-repeat transition-all duration-300 ${
+      className={`min-h-screen bg-cover bg-center bg-no-repeat transition-all duration-300 optimize-for-small-screen ${
         highContrastMode ? "bg-black text-white" : ""
       }`}
       style={{
