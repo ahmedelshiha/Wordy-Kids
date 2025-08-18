@@ -407,9 +407,10 @@ export default function LoginForm() {
               <div className="space-y-1 sm:space-y-2">
                 <Label
                   htmlFor="email"
-                  className="text-sm font-medium text-gray-700 flex items-center gap-2"
+                  className="text-base font-semibold text-navy flex items-center gap-2"
+                  style={{ fontFamily: 'Baloo 2', fontWeight: 600 }}
                 >
-                  <Mail className="w-4 h-4 text-gray-500" />
+                  <Mail className="w-4 h-4 text-navy" />
                   Parent Email Address
                 </Label>
                 <div className="relative">
