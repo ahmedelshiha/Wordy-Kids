@@ -264,8 +264,7 @@ export const ChildProfileSidebar: React.FC<ChildProfileSidebarProps> = ({
                 className={cn(
                   "w-12 h-12 rounded-full flex items-center justify-center text-xl shadow-md border-2 border-white",
                   "bg-gradient-to-r transition-all duration-200",
-                  profile.avatar?.color ||
-                    "from-blue-400 to-purple-400",
+                  profile.avatar?.color || "from-blue-400 to-purple-400",
                 )}
               >
                 {profile.avatar?.emoji || "🎯"}
@@ -325,7 +324,11 @@ export const ChildProfileSidebar: React.FC<ChildProfileSidebarProps> = ({
                       className="absolute inset-0 bg-gradient-to-r from-yellow-400/20 to-transparent"
                       animate={{
                         x: ["-100%", "100%"],
-                        transition: { duration: 2, repeat: Infinity, ease: "linear" },
+                        transition: {
+                          duration: 2,
+                          repeat: Infinity,
+                          ease: "linear",
+                        },
                       }}
                     />
                     <UserPlus className="w-4 h-4 mr-2" />

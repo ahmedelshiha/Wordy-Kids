@@ -196,7 +196,6 @@ export const EnhancedChildProfileCard: React.FC<
       className={cn("w-full max-w-sm", className)}
     >
       <Card className="bg-gradient-to-br from-blue-50 to-purple-50 border-2 border-slate-200 shadow-lg transition-all duration-300 overflow-hidden relative">
-
         {/* Header with Avatar and Basic Info */}
         <CardHeader className="pb-3 relative z-10">
           <div className="flex items-center justify-between">
@@ -205,8 +204,7 @@ export const EnhancedChildProfileCard: React.FC<
                 className={cn(
                   "w-16 h-16 rounded-full flex items-center justify-center text-3xl shadow-md border-2 border-white",
                   "bg-gradient-to-r transition-all duration-200",
-                  profile.avatar?.color ||
-                    "from-blue-400 to-purple-400",
+                  profile.avatar?.color || "from-blue-400 to-purple-400",
                 )}
               >
                 {profile.avatar?.emoji || "🎯"}
@@ -221,7 +219,7 @@ export const EnhancedChildProfileCard: React.FC<
                   </Badge>
                   {profile.streak > 0 && (
                     <Badge className="text-xs bg-orange-500 text-white px-2 py-1 rounded-md">
-                      {profile.streak} day{profile.streak > 1 ? 's' : ''}
+                      {profile.streak} day{profile.streak > 1 ? "s" : ""}
                     </Badge>
                   )}
                 </div>
