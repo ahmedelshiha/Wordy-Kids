@@ -375,6 +375,16 @@ export default function LoginForm() {
               </div>
             </div>
           </div>
+
+          {/* Wordy Jungle Adventure Logo */}
+          <div className="flex justify-center mb-3 sm:mb-4">
+            <img
+              src="/images/Wordy Jungle Adventure Logo.png"
+              alt="Wordy Jungle Adventure Logo"
+              className="max-h-16 lg:max-h-24 xl:max-h-28 object-contain"
+            />
+          </div>
+
           <p className="text-gray-600 text-sm sm:text-base">
             Continue your learning journey
           </p>
