@@ -1,0 +1,325 @@
+/* Jungle Adventure Theme CSS Animations */
+
+/* Keyframe Animations */
+@keyframes gentle-shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  75% { transform: translateX(5px); }
+}
+
+@keyframes fall-and-fade {
+  0% {
+    opacity: 1;
+    transform: translateY(0) rotate(0deg);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(400px) rotate(360deg);
+  }
+}
+
+@keyframes collectible-found {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.5);
+  }
+  50% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1.2);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -80%) scale(1);
+  }
+}
+
+@keyframes jungle-bounce {
+  0%, 20%, 50%, 80%, 100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-8px);
+  }
+  60% {
+    transform: translateY(-4px);
+  }
+}
+
+@keyframes jungle-glow {
+  0%, 100% {
+    box-shadow: 0 0 10px rgba(251, 191, 36, 0.5);
+  }
+  50% {
+    box-shadow: 0 0 20px rgba(251, 191, 36, 0.8), 0 0 30px rgba(251, 191, 36, 0.4);
+  }
+}
+
+@keyframes sparkle {
+  0%, 100% {
+    opacity: 0;
+    transform: scale(0);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes vine-sway {
+  0%, 100% {
+    transform: rotate(-2deg);
+  }
+  50% {
+    transform: rotate(2deg);
+  }
+}
+
+@keyframes leaf-float {
+  0%, 100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  33% {
+    transform: translateY(-10px) rotate(2deg);
+  }
+  66% {
+    transform: translateY(-5px) rotate(-1deg);
+  }
+}
+
+@keyframes torch-flame {
+  0%, 100% {
+    transform: scale(1) rotate(-2deg);
+    filter: hue-rotate(0deg);
+  }
+  25% {
+    transform: scale(1.05) rotate(2deg);
+    filter: hue-rotate(10deg);
+  }
+  50% {
+    transform: scale(0.98) rotate(-1deg);
+    filter: hue-rotate(-5deg);
+  }
+  75% {
+    transform: scale(1.02) rotate(1deg);
+    filter: hue-rotate(5deg);
+  }
+}
+
+@keyframes treasure-glow {
+  0%, 100% {
+    box-shadow: 0 0 15px rgba(251, 191, 36, 0.3);
+    transform: scale(1);
+  }
+  50% {
+    box-shadow: 0 0 25px rgba(251, 191, 36, 0.6), 0 0 35px rgba(251, 191, 36, 0.3);
+    transform: scale(1.05);
+  }
+}
+
+@keyframes mascot-idle {
+  0%, 100% {
+    transform: translateY(0) rotate(-1deg);
+  }
+  50% {
+    transform: translateY(-5px) rotate(1deg);
+  }
+}
+
+@keyframes mascot-celebrate {
+  0%, 100% {
+    transform: scale(1) rotate(0deg);
+  }
+  25% {
+    transform: scale(1.1) rotate(-5deg);
+  }
+  50% {
+    transform: scale(1.2) rotate(0deg);
+  }
+  75% {
+    transform: scale(1.1) rotate(5deg);
+  }
+}
+
+@keyframes button-press {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(0.95);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* Jungle Adventure Utility Classes */
+.jungle-card {
+  @apply rounded-3xl shadow-2xl backdrop-blur-sm border-2 border-white/20;
+  background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 100%);
+}
+
+.jungle-button {
+  @apply px-6 py-3 rounded-2xl font-bold text-white shadow-lg transform transition-all duration-200 hover:scale-105 active:scale-95;
+}
+
+.jungle-button-hint {
+  @apply jungle-button bg-gradient-to-r from-yellow-400 to-orange-500 hover:from-yellow-500 hover:to-orange-600;
+  animation: jungle-glow 2s ease-in-out infinite;
+}
+
+.jungle-button-forgot {
+  @apply jungle-button bg-gradient-to-r from-red-400 to-pink-500 hover:from-red-500 hover:to-pink-600;
+}
+
+.jungle-button-forgot:hover {
+  animation: jungle-bounce 0.6s ease-in-out;
+}
+
+.jungle-button-remember {
+  @apply jungle-button bg-gradient-to-r from-green-400 to-emerald-500 hover:from-green-500 hover:to-emerald-600;
+  position: relative;
+  overflow: hidden;
+}
+
+.jungle-button-remember:hover {
+  animation: jungle-bounce 0.6s ease-in-out;
+}
+
+.jungle-button-remember::after {
+  content: '✨';
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  font-size: 12px;
+  animation: sparkle 1.5s ease-in-out infinite;
+}
+
+.jungle-background {
+  background: linear-gradient(135deg, #10B981 0%, #059669 25%, #047857 50%, #065F46 75%, #064E3B 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+.jungle-background::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: 
+    radial-gradient(circle at 20% 80%, rgba(34, 197, 94, 0.3) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(132, 204, 22, 0.3) 0%, transparent 50%),
+    radial-gradient(circle at 40% 40%, rgba(16, 185, 129, 0.2) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+.jungle-zone {
+  @apply jungle-background p-6 rounded-3xl shadow-xl;
+  border: 3px solid rgba(255, 255, 255, 0.2);
+}
+
+.jungle-progress-icon {
+  @apply w-12 h-12 rounded-full flex items-center justify-center text-2xl shadow-lg;
+  background: linear-gradient(135deg, #FBBF24, #F59E0B);
+  animation: gentle-float 3s ease-in-out infinite;
+}
+
+.jungle-progress-book {
+  @apply jungle-progress-icon;
+  background: linear-gradient(135deg, #8B5CF6, #7C3AED);
+}
+
+.jungle-progress-torch {
+  @apply jungle-progress-icon;
+  background: linear-gradient(135deg, #EF4444, #DC2626);
+  animation: torch-flame 2s ease-in-out infinite;
+}
+
+.jungle-progress-treasure {
+  @apply jungle-progress-icon;
+  background: linear-gradient(135deg, #FBBF24, #F59E0B);
+  animation: treasure-glow 3s ease-in-out infinite;
+}
+
+.jungle-nav-icon {
+  @apply w-16 h-16 rounded-2xl flex items-center justify-center text-3xl shadow-lg transform transition-all duration-200 hover:scale-110 active:scale-95;
+  background: linear-gradient(135deg, #10B981, #059669);
+  border: 3px solid rgba(255, 255, 255, 0.3);
+}
+
+.jungle-nav-icon:hover {
+  animation: jungle-bounce 0.8s ease-in-out;
+}
+
+.jungle-mascot {
+  @apply text-6xl;
+  animation: mascot-idle 4s ease-in-out infinite;
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2));
+}
+
+.jungle-mascot.celebrating {
+  animation: mascot-celebrate 1s ease-in-out;
+}
+
+.jungle-collectible {
+  @apply inline-flex items-center gap-2 bg-gradient-to-r from-yellow-100 to-orange-100 border-2 border-yellow-300 rounded-full px-3 py-1 shadow-md;
+  animation: gentle-float 2s ease-in-out infinite;
+}
+
+.jungle-vine {
+  position: absolute;
+  background: linear-gradient(90deg, #22C55E, #16A34A);
+  height: 4px;
+  border-radius: 2px;
+  animation: vine-sway 4s ease-in-out infinite;
+}
+
+.jungle-leaf {
+  animation: leaf-float 6s ease-in-out infinite;
+}
+
+/* Responsive Jungle Theme */
+@media (max-width: 768px) {
+  .jungle-card {
+    @apply rounded-2xl shadow-lg;
+  }
+  
+  .jungle-button {
+    @apply px-4 py-2 text-sm;
+  }
+  
+  .jungle-nav-icon {
+    @apply w-12 h-12 text-2xl;
+  }
+  
+  .jungle-mascot {
+    @apply text-4xl;
+  }
+}
+
+/* Dark mode jungle theme */
+@media (prefers-color-scheme: dark) {
+  .jungle-background {
+    background: linear-gradient(135deg, #064E3B 0%, #047857 25%, #059669 50%, #10B981 75%, #34D399 100%);
+  }
+  
+  .jungle-card {
+    background: linear-gradient(135deg, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.1) 100%);
+    border-color: rgba(255, 255, 255, 0.1);
+  }
+}
+
+/* Print styles */
+@media print {
+  .jungle-background,
+  .jungle-card {
+    background: white !important;
+    box-shadow: none !important;
+  }
+  
+  .jungle-button {
+    background: #4B5563 !important;
+    color: white !important;
+  }
+}
