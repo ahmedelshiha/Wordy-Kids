@@ -1352,40 +1352,6 @@ export function InteractiveDashboardWordCard({
               </motion.p>
             </header>
 
-            {/* Action Buttons Row - Mobile Optimized */}
-            <div
-              className="flex justify-center items-center gap-2 sm:gap-3 mb-3 sm:mb-4 px-2"
-              role="toolbar"
-              aria-label="Word learning controls"
-              aria-describedby="game-instructions"
-            >
-              <Button
-                onClick={playPronunciation}
-                disabled={isPlaying}
-                size="lg"
-                className={cn(
-                  "bg-gradient-to-br from-educational-blue via-blue-500 to-blue-600 hover:from-blue-500 hover:via-blue-600 hover:to-blue-700 text-white p-4 sm:p-5 md:p-6 rounded-2xl transition-all duration-300 transform hover:scale-110 active:scale-95 shadow-xl hover:shadow-2xl border-2 border-blue-300/50 hover:border-blue-200",
-                  "min-w-[60px] min-h-[60px] sm:min-w-[70px] sm:min-h-[70px] md:min-w-[80px] md:min-h-[80px]",
-                  "ring-4 ring-blue-200/30 hover:ring-blue-300/50",
-                  "backdrop-blur-sm",
-                  isPlaying &&
-                    "animate-pulse ring-yellow-400/60 shadow-yellow-400/30",
-                  "disabled:opacity-50 disabled:transform-none disabled:hover:scale-100",
-                )}
-                aria-label="🔊 Play pronunciation - Hear how to say this word!"
-              >
-                <Volume2
-                  className={cn(
-                    "w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 lg:w-8 lg:h-8",
-                    "drop-shadow-lg",
-                    isPlaying && "animate-bounce text-yellow-100 scale-110",
-                  )}
-                />
-                {isPlaying && (
-                  <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-yellow-400/20 to-orange-400/20 animate-pulse" />
-                )}
-              </Button>
-            </div>
 
             {/* Hint Display */}
             <AnimatePresence>
@@ -1465,6 +1431,43 @@ export function InteractiveDashboardWordCard({
                         <p className="text-xs text-gray-600 mt-1">
                           This might help you guess the word!
                         </p>
+
+                        {/* Speaker button inside hint card */}
+                        <motion.div
+                          initial={{ opacity: 0, scale: 0.8 }}
+                          animate={{ opacity: 1, scale: 1 }}
+                          transition={{ delay: 0.6, duration: 0.4 }}
+                          className="mt-3 flex justify-center"
+                        >
+                          <Button
+                            onClick={playPronunciation}
+                            disabled={isPlaying}
+                            size="sm"
+                            className={cn(
+                              "bg-gradient-to-br from-educational-blue via-blue-500 to-blue-600 hover:from-blue-500 hover:via-blue-600 hover:to-blue-700 text-white px-4 py-2 rounded-xl transition-all duration-300 transform hover:scale-110 active:scale-95 shadow-lg hover:shadow-xl border border-blue-300/50 hover:border-blue-200",
+                              "ring-2 ring-blue-200/30 hover:ring-blue-300/50",
+                              "backdrop-blur-sm",
+                              isPlaying &&
+                                "animate-pulse ring-yellow-400/60 shadow-yellow-400/30",
+                              "disabled:opacity-50 disabled:transform-none disabled:hover:scale-100",
+                            )}
+                            aria-label="🔊 Play pronunciation - Hear how to say this word!"
+                          >
+                            <Volume2
+                              className={cn(
+                                "w-4 h-4 mr-1",
+                                "drop-shadow-lg",
+                                isPlaying && "animate-bounce text-yellow-100 scale-110",
+                              )}
+                            />
+                            <span className="text-sm font-medium">
+                              {isPlaying ? "Playing..." : "Listen"}
+                            </span>
+                            {isPlaying && (
+                              <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-yellow-400/20 to-orange-400/20 animate-pulse" />
+                            )}
+                          </Button>
+                        </motion.div>
                       </motion.div>
 
                       {/* Floating hint elements */}
