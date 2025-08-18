@@ -1326,6 +1326,7 @@ export function AIEnhancedInteractiveDashboardWordCard({
             showErrorAlert={true}
           >
             {/* Achievement Teaser - Desktop Only */}
+            {/* AchievementTeaser DISABLED
             <div
               aria-live="polite"
               aria-label="Motivational messages"
@@ -1333,6 +1334,7 @@ export function AIEnhancedInteractiveDashboardWordCard({
             >
               <AchievementTeaser className="mb-1 sm:mb-2" />
             </div>
+            */}
 
             {/* Category and Progress Header - Compact */}
             <div className="text-center mb-1 sm:mb-2 md:mb-3 mt-1 sm:mt-2 md:mt-3">
