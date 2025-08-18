@@ -18,7 +18,10 @@ import {
   Calendar,
   TrendingUp,
   Activity,
+  UserPlus,
 } from "lucide-react";
+import { useAuth } from "@/hooks/useAuth";
+import { useNavigate } from "react-router-dom";
 import { cn } from "@/lib/utils";
 
 interface ChildProfileSidebarProps {
@@ -50,6 +53,8 @@ export const ChildProfileSidebar: React.FC<ChildProfileSidebarProps> = ({
 }) => {
   const [currentTime, setCurrentTime] = useState(new Date());
   const [isVisible, setIsVisible] = useState(true);
+  const { isGuest, logout } = useAuth();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const timer = setInterval(() => setCurrentTime(new Date()), 60000);
@@ -293,20 +298,44 @@ export const ChildProfileSidebar: React.FC<ChildProfileSidebarProps> = ({
               exit="collapsed"
               className="space-y-2"
             >
-              {onLogout && (
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={() => {
-                    kidFriendlyEffects.playSound(SOUNDS.button_click);
-                    onLogout?.();
-                  }}
-                  className="w-full text-xs text-white hover:text-white hover:bg-white/20 rounded-xl font-bold bg-gradient-to-r from-educational-pink/30 to-educational-purple/30 border border-white/20 shadow-md transition-all duration-300 hover:scale-105"
-                >
-                  <LogOut className="w-4 h-4 mr-2" />
-                  🔄 Switch Friends
-                </Button>
-              )}
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => {
+                  kidFriendlyEffects.playSound(SOUNDS.button_click);
+                  if (isGuest) {
+                    navigate("/signup");
+                  } else {
+                    logout();
+                    if (onLogout) onLogout();
+                  }
+                }}
+                className={`w-full text-xs text-white hover:text-white hover:bg-white/20 rounded-xl font-bold border border-white/20 shadow-md transition-all duration-300 hover:scale-105 ${
+                  isGuest
+                    ? "bg-gradient-to-r from-educational-yellow/40 to-educational-orange/40 animate-pulse"
+                    : "bg-gradient-to-r from-educational-pink/30 to-educational-purple/30"
+                }`}
+              >
+                {isGuest ? (
+                  <>
+                    <UserPlus className="w-4 h-4 mr-2" />
+                    ✨ Join Adventure!
+                  </>
+                ) : (
+                  <>
+                    <LogOut className="w-4 h-4 mr-2" />
+                    👋 See You Later!
+                  </>
+                )}
+              </Button>
+              {/* Dynamic message below button */}
+              <div className="text-center">
+                <p className="text-xs text-white/80 font-medium">
+                  {isGuest
+                    ? "Save your progress & unlock more!"
+                    : "Thanks for learning with us!"}
+                </p>
+              </div>
             </motion.div>
           ) : (
             <motion.div
@@ -316,19 +345,30 @@ export const ChildProfileSidebar: React.FC<ChildProfileSidebarProps> = ({
               exit="collapsed"
               className="flex flex-col items-center space-y-2"
             >
-              {onLogout && (
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={() => {
-                    kidFriendlyEffects.playSound(SOUNDS.button_click);
-                    onLogout?.();
-                  }}
-                  className="h-10 w-10 p-0 text-white hover:text-white bg-gradient-to-r from-educational-pink to-educational-purple hover:from-educational-pink-light hover:to-educational-purple-light rounded-full border-2 border-white/80 shadow-xl transition-all duration-300 hover:scale-110 animate-gentle-bounce"
-                >
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => {
+                  kidFriendlyEffects.playSound(SOUNDS.button_click);
+                  if (isGuest) {
+                    navigate("/signup");
+                  } else {
+                    logout();
+                    if (onLogout) onLogout();
+                  }
+                }}
+                className={`h-10 w-10 p-0 text-white hover:text-white rounded-full border-2 border-white/80 shadow-xl transition-all duration-300 hover:scale-110 animate-gentle-bounce ${
+                  isGuest
+                    ? "bg-gradient-to-r from-educational-yellow to-educational-orange animate-pulse"
+                    : "bg-gradient-to-r from-educational-pink to-educational-purple hover:from-educational-pink-light hover:to-educational-purple-light"
+                }`}
+              >
+                {isGuest ? (
+                  <UserPlus className="w-4 h-4" />
+                ) : (
                   <LogOut className="w-4 h-4" />
-                </Button>
-              )}
+                )}
+              </Button>
             </motion.div>
           )}
         </AnimatePresence>
