@@ -3517,7 +3517,6 @@ export default function Index({ initialProfile }: IndexProps) {
             />
           )}
 
-
           {/* Enhanced Achievement Popup */}
           {achievementPopup.length > 0 && (
             <EnhancedAchievementPopup
