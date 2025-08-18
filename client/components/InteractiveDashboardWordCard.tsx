@@ -1004,7 +1004,7 @@ export function InteractiveDashboardWordCard({
                             return "⭐ SUPERSTAR! Amazing effort!";
                           if (wordsLearned >= goal * 1.5)
                             return "🚀 Beyond awesome! Keep going!";
-                          return "�� Goal achieved! You're incredible!";
+                          return "🎯 Goal achieved! You're incredible!";
                         }
                         if (percentage >= 90)
                           return "🌟 Almost there, superstar!";
