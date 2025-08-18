@@ -1125,16 +1125,16 @@ export function InteractiveDashboardWordCard({
         <Card
           className={cn(
             "w-full max-w-3xl mx-auto relative overflow-hidden",
-            "bg-gradient-to-br from-white via-blue-50/30 to-purple-50/30",
+            "ai-card-background",
             "shadow-lg hover:shadow-xl border-0 rounded-2xl sm:rounded-3xl",
             "backdrop-blur-sm ring-1 ring-black/5",
             celebrationEffect &&
-              "animate-pulse shadow-2xl border-yellow-400 border-4 bg-gradient-to-br from-yellow-50 to-orange-50",
+              "animate-pulse shadow-2xl border-yellow-400 border-4",
           )}
         >
           {/* Celebration Sparkles */}
           {celebrationEffect && (
-            <div className="absolute inset-0 bg-gradient-to-r from-yellow-400/20 to-pink-400/20 animate-pulse z-20">
+            <div className="absolute inset-0 animate-pulse z-20">
               <div className="absolute top-4 left-4 text-2xl animate-bounce">
                 ✨
               </div>
