@@ -1652,7 +1652,7 @@ export function InteractiveDashboardWordCard({
             {/* Action Buttons - Inside card at bottom */}
             {!isAnswered && (
               <div
-                className="space-y-3 sm:space-y-4 px-2 sm:px-0 mt-52 sm:mt-60"
+                className="space-y-3 sm:space-y-4 px-2 sm:px-0 mt-40 sm:mt-48 md:mt-56 lg:mt-64 xl:mt-72 relative z-30"
                 role="group"
                 aria-label="Word learning choices"
               >
