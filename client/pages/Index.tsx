@@ -1884,7 +1884,7 @@ export default function Index({ initialProfile }: IndexProps) {
       {isSessionInitialized && (
         <>
           {/* Ultra-Compact Header */}
-          <header className="relative overflow-hidden bg-gradient-to-r from-educational-blue via-educational-purple to-educational-pink text-white shadow-lg">
+          <header className="relative overflow-hidden jungle-background text-white shadow-2xl border-b-4 border-yellow-400">
             <div className="relative container mx-auto px-3 py-1 md:py-1.5">
               {/* Mobile header - Ultra compact & optimized */}
               <div className="flex items-center justify-between md:hidden">
@@ -1898,10 +1898,10 @@ export default function Index({ initialProfile }: IndexProps) {
                   </div>
                   <div>
                     <h1 className="text-sm font-bold leading-tight">
-                      Wordy Kids! ✨
+                      🌿 Jungle Wordy! 🦜
                     </h1>
-                    <p className="text-xs text-educational-yellow-light/90 font-medium">
-                      Let's Learn Together! 🚀
+                    <p className="text-xs text-yellow-200 font-medium">
+                      Adventure Awaits! 🌟
                     </p>
                   </div>
                 </div>
@@ -1911,7 +1911,7 @@ export default function Index({ initialProfile }: IndexProps) {
               {/* Desktop header - Compact & Kid-Friendly */}
               <div className="text-center max-w-3xl mx-auto hidden md:block">
                 <div className="flex justify-center items-center gap-4 mb-2">
-                  <div className="bg-white/20 backdrop-blur-sm rounded-full p-2 shadow-lg hover:scale-105 transition-transform duration-200">
+                  <div className="bg-yellow-400/30 backdrop-blur-sm rounded-full p-2 shadow-lg hover:scale-105 transition-transform duration-200 jungle-glow border-2 border-yellow-300/50">
                     <img
                       src="https://cdn.builder.io/api/v1/image/assets%2Fa33f74a2f97141a4a1ef43d9448f9bda%2F2a4b7e4c3c38485b966cfd2cff50da9e?format=webp&width=800"
                       alt="Wordy Kids Logo"
@@ -3155,7 +3155,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                           <div className="flex justify-between items-center p-3 bg-white rounded-lg">
                                             <div className="flex items-center gap-3">
                                               <span className="text-2xl">
-                                                🏆
+                                                ��
                                               </span>
                                               <div>
                                                 <div className="font-semibold">
