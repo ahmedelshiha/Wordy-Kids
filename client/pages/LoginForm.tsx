@@ -631,7 +631,13 @@ export default function LoginForm() {
             <Button
               type="button"
               onClick={handleBackToMain}
-              className="w-full py-2 sm:py-3 bg-gradient-to-r from-orange-500 via-yellow-500 to-amber-500 hover:from-orange-600 hover:via-yellow-600 hover:to-amber-600 text-white font-semibold text-sm sm:text-base shadow-lg hover:shadow-xl transform hover:scale-[1.02] transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none min-h-[44px] touch-target"
+              className="w-full py-4 bg-sunshine hover:bg-sunshine-dark text-navy font-bold text-lg rounded-3xl transition-all duration-300 transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none min-h-[56px] min-w-[200px] touch-target"
+              style={{
+                boxShadow: '0 4px 12px rgba(255, 193, 7, 0.3)',
+                fontFamily: 'Baloo 2',
+                fontWeight: 700,
+                letterSpacing: '0.5px'
+              }}
               disabled={isLoading}
               aria-label="Sign in as guest to explore"
             >
