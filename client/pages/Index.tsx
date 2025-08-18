@@ -3553,7 +3553,7 @@ export default function Index({ initialProfile }: IndexProps) {
           )}
 
           {/* Kid-Friendly Floating Mascot */}
-          {userRole === "child" && (
+          {userRole === "child" && mascotEnabled && (
             <FloatingMascot
               mood={
                 rememberedWords.size > 5
@@ -3567,7 +3567,7 @@ export default function Index({ initialProfile }: IndexProps) {
           )}
 
           {/* Show Mascot Reaction for Special Events */}
-          {feedback?.type === "celebration" && (
+          {feedback?.type === "celebration" && mascotEnabled && (
             <MascotReaction
               type="success"
               onComplete={() => console.log("Mascot celebration complete")}
