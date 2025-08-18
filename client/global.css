@@ -314,6 +314,13 @@
       sans-serif;
   }
 
+  /* Mobile background */
+  @media (max-width: 767px) {
+    body {
+      background-image: url("/images/background_mobile.jpg");
+    }
+  }
+
   /* Tablet background */
   @media (min-width: 768px) and (max-width: 1024px) {
     body {
