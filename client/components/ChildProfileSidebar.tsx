@@ -291,7 +291,7 @@ export const ChildProfileSidebar: React.FC<ChildProfileSidebarProps> = ({
       </div>
 
       {/* Enhanced Sidebar Footer */}
-      <div className="p-4 border-t border-slate-200 bg-slate-50/80 backdrop-blur-sm relative z-10 rounded-b-2xl">
+      <div className="p-4 border-t-2 border-yellow-400/30 bg-gradient-to-r from-orange-400/20 to-red-400/20 backdrop-blur-sm relative z-10 rounded-b-3xl">
         <AnimatePresence mode="wait">
           {!isCollapsed ? (
             <motion.div
