@@ -230,6 +230,7 @@ export default function Index({ initialProfile }: IndexProps) {
   const [customWords, setCustomWords] = useState<any[]>([]);
   const [backgroundAnimationsEnabled, setBackgroundAnimationsEnabled] =
     useState(false);
+  const [mascotEnabled, setMascotEnabled] = useState(false); // Disabled by default
   const [navigationHistory, setNavigationHistory] = useState<string[]>([]);
 
   // New child-friendly states
