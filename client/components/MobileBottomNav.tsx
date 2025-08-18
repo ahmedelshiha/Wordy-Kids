@@ -176,16 +176,16 @@ export function MobileBottomNav({
             className="absolute inset-0 bg-black/20"
             onClick={onMoreToggle}
           />
-          <div className="absolute bottom-12 left-3 right-3 bg-gradient-to-br from-purple-50 via-pink-50 to-blue-50 rounded-3xl shadow-2xl p-4 border-4 border-rainbow max-h-[70vh] overflow-y-auto animate-kid-pulse-glow">
+          <div className="absolute bottom-12 left-3 right-3 jungle-card shadow-2xl p-4 border-4 border-yellow-400/50 max-h-[70vh] overflow-y-auto animate-kid-pulse-glow">
             <div className="text-center mb-4">
               <div className="text-2xl sm:text-3xl mb-2 animate-mascot-bounce">
-                🎪
+                🦜
               </div>
-              <h3 className="text-lg font-kid-friendly font-bold text-purple-800 text-shadow">
-                Magical Adventure Menu! ✨
+              <h3 className="text-lg font-kid-friendly font-bold text-white text-shadow">
+                Jungle Adventure Menu! 🌿
               </h3>
-              <p className="text-sm font-kid-friendly text-purple-600">
-                Tap to explore new worlds!
+              <p className="text-sm font-kid-friendly text-white/90">
+                Explore the magical jungle!
               </p>
             </div>
 
