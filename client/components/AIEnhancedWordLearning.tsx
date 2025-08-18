@@ -245,7 +245,7 @@ export function AIEnhancedWordLearning({
     <div className="w-full max-w-6xl mx-auto space-y-6">
       {/* Floating Effects */}
       <FloatingBubbles />
-      {showCelebration && <CelebrationEffect />}
+      {showCelebration && <CelebrationEffect trigger={showCelebration} />}
 
       {/* AI Insights Header */}
       <Card className="bg-gradient-to-r from-educational-blue/5 to-educational-purple/5 border-educational-blue/20">
@@ -408,12 +408,10 @@ export function AIEnhancedWordLearning({
             {/* Word Card */}
             <WordCard
               word={currentWord}
-              onWordLearned={(word, rating) =>
-                handleWordResponse(word, rating === "easy")
+              onWordMastered={(wordId, rating) =>
+                handleWordResponse(currentWord, rating === "easy")
               }
               showDefinition={true}
-              autoPlay={true}
-              compact={false}
             />
 
             {/* Action Buttons */}

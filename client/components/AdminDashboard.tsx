@@ -121,7 +121,17 @@ import {
   getWordsByCategory,
 } from "@/data/wordsDatabase";
 
-interface AdminWord extends Word {
+interface AdminWord {
+  id: string;
+  word: string;
+  pronunciation: string;
+  definition: string;
+  example: string;
+  funFact: string;
+  emoji: string;
+  category: string;
+  difficulty: "easy" | "medium" | "hard";
+  imageUrl?: string;
   status: "approved" | "pending" | "rejected";
   submittedBy?: string;
   submittedAt: Date;
@@ -185,7 +195,13 @@ interface SupportTicket {
     isAdmin: boolean;
     timestamp: Date;
     author: string;
+    attachments?: string[];
   }>;
+  tags?: string[];
+  category?: string;
+  userRole?: string;
+  urgencyScore?: number;
+  attachments?: string[];
 }
 
 interface SystemAnalytics {
@@ -215,11 +231,15 @@ const sampleWords: AdminWord[] = [
     category: "Animals",
     difficulty: "easy",
     funFact: "Elephants can live up to 70 years!",
+    emoji: "🐘",
     status: "approved",
     submittedAt: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000),
     approvedAt: new Date(Date.now() - 4 * 24 * 60 * 60 * 1000),
     usageCount: 1247,
     accuracy: 87,
+    isActive: true,
+    tags: ["Animals", "easy"],
+    lastUsed: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000),
   },
   {
     id: "2",
@@ -229,11 +249,15 @@ const sampleWords: AdminWord[] = [
     example: "The solution will crystallize overnight.",
     category: "Science",
     difficulty: "hard",
+    funFact: "Crystals can form over millions of years!",
+    emoji: "💎",
     status: "pending",
     submittedBy: "teacher@school.edu",
     submittedAt: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000),
     usageCount: 0,
     accuracy: 0,
+    isActive: false,
+    tags: ["Science", "hard"],
   },
 ];
 

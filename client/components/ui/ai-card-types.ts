@@ -35,7 +35,7 @@ export interface AIActions {
   endSession: (outcome: { completed: boolean; reason?: string }) => void;
   getRecommendations?: (...args: any[]) => Promise<void>;
   recordWordInteraction?: (interaction: any) => Promise<void>;
-  reset?: () => Promise<void>;
+  reset?: () => void;
 }
 
 // Session Statistics
@@ -61,7 +61,7 @@ export interface AICardContentProps
   showAIInsights?: boolean;
   setShowAIInsights?: (show: boolean) => void;
   confidenceLevel?: number;
-  difficultyAdjustment?: "increase" | "decrease" | "maintain";
+  difficultyAdjustment?: "easier" | "harder" | "maintain";
   sessionWords?: any[];
   sessionStats?: SessionStats;
 
@@ -75,7 +75,7 @@ export interface AICardContentProps
 // Extended AI Card Content Props with comprehensive features
 export interface ExtendedAICardContentProps extends AICardContentProps {
   // AI Status and Control
-  aiStatus?: "loading" | "active" | "error" | "inactive";
+  aiStatus?: "loading" | "active" | "error" | "inactive" | "disabled";
   globalAIEnabled?: boolean;
   onToggleGlobalAI?: () => void;
   onRetryAI?: () => void;
