@@ -125,14 +125,23 @@ export const EnhancedWordCard: React.FC<EnhancedWordCardProps> = ({
     setRatedAs(rating);
     setShowCelebration(true);
 
-    // Different sounds for different ratings
+    // Jungle-themed celebrations and sounds
     if (rating === "easy") {
       playSoundIfEnabled.success();
       playSoundIfEnabled.levelUp();
+      jungleConfetti.jungleSuccess();
+
+      // Award a random collectible for correct answers
+      const collectible = getRandomCollectible();
+      setTimeout(() => {
+        jungleConfetti.collectibleFound(collectible);
+      }, 800);
     } else if (rating === "medium") {
       playSoundIfEnabled.click();
+      jungleConfetti.celebrate();
     } else {
       playSoundIfEnabled.hover();
+      jungleConfetti.oopsEffect();
     }
 
     // UI interaction sound
