@@ -2044,7 +2044,7 @@ export default function Index({ initialProfile }: IndexProps) {
                       <div
                         className="w-full flex justify-center items-center relative"
                         style={{
-                          padding: '40px 20px',
+                          padding: '20px 20px 10px 20px',
                           zIndex: 10
                         }}
                       >
