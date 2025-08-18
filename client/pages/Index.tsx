@@ -1041,9 +1041,23 @@ export default function Index({ initialProfile }: IndexProps) {
   useEffect(() => {
     setBackgroundAnimationsEnabled(isBackgroundAnimationsEnabled());
 
+    // Load mascot settings from localStorage
+    const loadMascotSettings = () => {
+      const mascotSettings = localStorage.getItem("mascotSettings");
+      if (mascotSettings) {
+        const settings = JSON.parse(mascotSettings);
+        setMascotEnabled(settings.enabled === true); // Default to false if not set
+      }
+    };
+    loadMascotSettings();
+
     // Listen for setting changes
     const handleAnimationsChange = (event: CustomEvent) => {
       setBackgroundAnimationsEnabled(event.detail);
+    };
+
+    const handleMascotChange = (event: CustomEvent) => {
+      setMascotEnabled(event.detail.enabled);
     };
 
     window.addEventListener(
@@ -1051,10 +1065,19 @@ export default function Index({ initialProfile }: IndexProps) {
       handleAnimationsChange as EventListener,
     );
 
+    window.addEventListener(
+      "mascotSettingsChanged",
+      handleMascotChange as EventListener,
+    );
+
     return () => {
       window.removeEventListener(
         "backgroundAnimationsChanged",
         handleAnimationsChange as EventListener,
+      );
+      window.removeEventListener(
+        "mascotSettingsChanged",
+        handleMascotChange as EventListener,
       );
     };
   }, []);
