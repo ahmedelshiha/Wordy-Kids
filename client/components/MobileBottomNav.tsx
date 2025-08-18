@@ -91,8 +91,8 @@ export function MobileBottomNav({
   const primaryTabs = [
     {
       id: "dashboard",
-      emoji: "🏡",
-      label: "Home",
+      emoji: "🌳",
+      label: "Treehouse",
       icon: Target,
       activeGradient: "kid-gradient-happy",
       hoverGradient: "kid-gradient-learn",
@@ -100,8 +100,8 @@ export function MobileBottomNav({
     },
     {
       id: "learn",
-      emoji: "📚",
-      label: "Learn",
+      emoji: "🌿",
+      label: "Library",
       icon: BookOpen,
       activeGradient: "kid-gradient-learn",
       hoverGradient: "kid-gradient-success",
