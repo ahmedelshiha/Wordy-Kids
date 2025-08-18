@@ -195,7 +195,13 @@ interface SupportTicket {
     isAdmin: boolean;
     timestamp: Date;
     author: string;
+    attachments?: string[];
   }>;
+  tags?: string[];
+  category?: string;
+  userRole?: string;
+  urgencyScore?: number;
+  attachments?: string[];
 }
 
 interface SystemAnalytics {
