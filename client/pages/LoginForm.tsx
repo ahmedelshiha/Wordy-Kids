@@ -361,26 +361,23 @@ export default function LoginForm() {
       <div className="w-full max-w-sm sm:max-w-md mx-auto relative z-10 px-3 sm:px-0">
         {/* Header Section with Enhanced Design */}
         <div className="text-center mb-4 sm:mb-6 animate-fade-in">
-          <div className="flex justify-center mb-3 sm:mb-4">
-            <div className="relative">
-              <img
-                src="https://cdn.builder.io/api/v1/image/assets%2F783bb0e1cd3e4c73aa9ce79d668738ac%2Fee8d2c4de0ab40c1b0b38ee3c2ef1020?format=webp&width=800"
-                alt="Wordy Kids Logo"
-                className="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 lg:w-28 lg:h-28 object-contain animate-gentle-float"
-              />
-              <div className="absolute -top-1 -right-1 bg-yellow-400 p-1 sm:p-2 rounded-full animate-bounce">
-                <Sparkles className="w-3 h-3 sm:w-4 sm:h-4 text-white" />
-              </div>
-            </div>
-          </div>
-
-          {/* Wordy Jungle Adventure Logo */}
-          <div className="flex justify-center mb-1 sm:mb-2">
+          {/* Combined Logo Section */}
+          <div className="flex justify-center items-center gap-4 mb-1 sm:mb-2">
             <img
               src="/images/Wordy Jungle Adventure Logo.png"
               alt="Wordy Jungle Adventure Logo"
               className="max-h-16 lg:max-h-24 xl:max-h-28 object-contain"
             />
+            <div className="relative">
+              <img
+                src="https://cdn.builder.io/api/v1/image/assets%2F783bb0e1cd3e4c73aa9ce79d668738ac%2Fee8d2c4de0ab40c1b0b38ee3c2ef1020?format=webp&width=800"
+                alt="Wordy Kids Logo"
+                className="w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 lg:w-24 lg:h-24 object-contain animate-gentle-float"
+              />
+              <div className="absolute -top-1 -right-1 bg-yellow-400 p-1 sm:p-2 rounded-full animate-bounce">
+                <Sparkles className="w-3 h-3 sm:w-4 sm:h-4 text-white" />
+              </div>
+            </div>
           </div>
 
           <p className="text-gray-600 text-sm sm:text-base">
