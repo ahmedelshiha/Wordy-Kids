@@ -265,7 +265,8 @@ export const ChildProfileSidebar: React.FC<ChildProfileSidebarProps> = ({
                 className={cn(
                   "w-14 h-14 rounded-full flex items-center justify-center text-2xl shadow-xl border-3 border-white/80",
                   "bg-gradient-to-r animate-gentle-bounce backdrop-blur-sm kid-gradient-magic",
-                  profile.avatar?.color || "from-educational-purple to-educational-pink",
+                  profile.avatar?.color ||
+                    "from-educational-purple to-educational-pink",
                 )}
               >
                 {profile.avatar?.emoji || "🎯"}
@@ -278,7 +279,9 @@ export const ChildProfileSidebar: React.FC<ChildProfileSidebarProps> = ({
                 </Badge>
                 {profile.streak > 0 && (
                   <Badge className="text-xs bg-gradient-to-r from-yellow-500 via-orange-500 to-red-500 text-white border-yellow-400 shadow-xl font-bold animate-pulse kid-gradient-celebration">
-                    {profile.streak >= 7 ? "🏆 LEGENDARY!" : `${profile.streak}🔥`}
+                    {profile.streak >= 7
+                      ? "🏆 LEGENDARY!"
+                      : `${profile.streak}🔥`}
                   </Badge>
                 )}
               </div>
@@ -319,8 +322,7 @@ export const ChildProfileSidebar: React.FC<ChildProfileSidebarProps> = ({
               >
                 {isGuest ? (
                   <>
-                    <UserPlus className="w-4 h-4 mr-2" />
-                    ✨ Join Adventure!
+                    <UserPlus className="w-4 h-4 mr-2" />✨ Join Adventure!
                   </>
                 ) : (
                   <>
