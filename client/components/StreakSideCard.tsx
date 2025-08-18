@@ -82,12 +82,12 @@ export const StreakSideCard: React.FC<StreakSideCardProps> = ({
   const getStreakContent = () => {
     if (!progressData) {
       return {
-        title: "Start Your Journey! 🌟",
-        subtitle: "Every expert was once a beginner",
+        title: "Welcome to the Jungle! 🌿",
+        subtitle: "Every explorer starts somewhere",
         streak: 0,
-        message: "Begin building your learning streak today!",
-        emoji: "🚀",
-        color: "from-purple-500 to-pink-500",
+        message: "Begin your jungle adventure today!",
+        emoji: "🦜",
+        color: "from-green-500 to-emerald-500",
       };
     }
 
@@ -95,40 +95,40 @@ export const StreakSideCard: React.FC<StreakSideCardProps> = ({
 
     if (currentStreak >= 7) {
       return {
-        title: "LEGENDARY STREAK! 🏆",
-        subtitle: "You're absolutely unstoppable!",
+        title: "JUNGLE MASTER! 🏆",
+        subtitle: "You've conquered the jungle!",
         streak: currentStreak,
-        message: "Save this incredible achievement forever!",
-        emoji: "👑",
-        color: "from-yellow-500 via-orange-500 to-red-500",
+        message: "Your treasure chest glows with power!",
+        emoji: "💰",
+        color: "from-yellow-400 via-orange-400 to-amber-500",
       };
     }
 
     if (currentStreak >= 5) {
       return {
-        title: "AMAZING STREAK! 🔥",
-        subtitle: "You're on fire with consistency!",
+        title: "JUNGLE EXPLORER! 🔥",
+        subtitle: "Your torch burns bright!",
         streak: currentStreak,
-        message: "Keep this momentum going strong!",
-        emoji: "🔥",
-        color: "from-orange-500 to-red-500",
+        message: "The jungle spirits guide your way!",
+        emoji: "🕯️",
+        color: "from-orange-400 to-red-400",
       };
     }
 
     if (currentStreak >= 3) {
       return {
-        title: "Great Progress! ⚡",
-        subtitle: "Building a fantastic habit!",
+        title: "Jungle Adventurer! ⚡",
+        subtitle: "Building fantastic habits!",
         streak: currentStreak,
-        message: "Create an account to keep your streak safe!",
-        emoji: "⚡",
-        color: "from-blue-500 to-purple-500",
+        message: "Save your adventure progress!",
+        emoji: "🌈",
+        color: "from-emerald-400 to-green-500",
       };
     }
 
     if (wordsLearned >= 10) {
       return {
-        title: "Word Master! 📚",
+        title: "Word Explorer! 📚",
         subtitle: "Your vocabulary is growing!",
         streak: currentStreak,
         message: "Unlock achievements and track your progress!",
