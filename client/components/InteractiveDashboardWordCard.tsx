@@ -1139,6 +1139,7 @@ export function InteractiveDashboardWordCard({
             "ai-card-background",
             "shadow-lg hover:shadow-xl border-0 rounded-2xl sm:rounded-3xl",
             "backdrop-blur-sm ring-1 ring-black/5",
+            "bg-transparent",
             celebrationEffect &&
               "animate-pulse shadow-2xl border-yellow-400 border-4",
           )}
