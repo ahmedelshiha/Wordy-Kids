@@ -69,6 +69,7 @@ export const CompactMobileSettingsPanel: React.FC<
   const [dailyReminders, setDailyReminders] = useState(true);
   const [largeText, setLargeText] = useState(false);
   const [autoPlay, setAutoPlay] = useState(true);
+  const [mascotEnabled, setMascotEnabled] = useState(false); // Disabled by default
 
   // Collapsible sections
   const [expandedSections, setExpandedSections] = useState<
@@ -140,6 +141,12 @@ export const CompactMobileSettingsPanel: React.FC<
       if (notificationSettings) {
         const settings = JSON.parse(notificationSettings);
         setDailyReminders(settings.dailyReminders !== false);
+      }
+
+      const mascotSettings = localStorage.getItem("mascotSettings");
+      if (mascotSettings) {
+        const settings = JSON.parse(mascotSettings);
+        setMascotEnabled(settings.enabled === true); // Default to false if not set
       }
     };
 
@@ -218,7 +225,19 @@ export const CompactMobileSettingsPanel: React.FC<
       }),
     );
 
+    localStorage.setItem(
+      "mascotSettings",
+      JSON.stringify({
+        enabled: mascotEnabled,
+      }),
+    );
+
     // Dispatch events for components that need to know about changes
+    window.dispatchEvent(
+      new CustomEvent("mascotSettingsChanged", {
+        detail: { enabled: mascotEnabled },
+      }),
+    );
     window.dispatchEvent(
       new CustomEvent("backgroundAnimationsChanged", {
         detail: backgroundAnimations,
@@ -251,6 +270,7 @@ export const CompactMobileSettingsPanel: React.FC<
     setDailyReminders(true);
     setLargeText(false);
     setAutoPlay(true);
+    setMascotEnabled(false); // Reset to disabled by default
     document.documentElement.classList.remove("dark");
     setHasUnsavedChanges(true);
     if (deviceInfo.hasHaptic) triggerHapticFeedback("medium");
@@ -664,6 +684,34 @@ export const CompactMobileSettingsPanel: React.FC<
                       checked={backgroundAnimations}
                       onCheckedChange={(checked) => {
                         setBackgroundAnimations(checked);
+                        setHasUnsavedChanges(true);
+                        if (deviceInfo.hasHaptic)
+                          triggerHapticFeedback("light");
+                      }}
+                    />
+                  </CompactSettingRow>
+
+                  <CompactSettingRow
+                    icon={
+                      mascotEnabled
+                        ? () => (
+                            <span className="w-4 h-4 flex items-center justify-center">
+                              🦁
+                            </span>
+                          )
+                        : () => (
+                            <span className="w-4 h-4 flex items-center justify-center">
+                              😴
+                            </span>
+                          )
+                    }
+                    label="Friendly Mascot"
+                    description="Show floating helper character"
+                  >
+                    <CompactMobileSwitch
+                      checked={mascotEnabled}
+                      onCheckedChange={(checked) => {
+                        setMascotEnabled(checked);
                         setHasUnsavedChanges(true);
                         if (deviceInfo.hasHaptic)
                           triggerHapticFeedback("light");

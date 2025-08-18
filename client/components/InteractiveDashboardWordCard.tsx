@@ -1054,36 +1054,6 @@ export function InteractiveDashboardWordCard({
               Session Complete!
             </h2>
 
-            {/* Session Stats */}
-            <div className="bg-gradient-to-r from-blue-50 to-purple-50 rounded-lg sm:rounded-2xl p-2 sm:p-4 mb-2 sm:mb-6">
-              <div className="grid grid-cols-3 gap-1 sm:gap-4 text-center">
-                <div>
-                  <div className="text-sm sm:text-2xl font-bold text-green-600">
-                    {sessionStats.wordsRemembered}
-                  </div>
-                  <div className="text-xs sm:text-sm text-gray-600">
-                    Remembered
-                  </div>
-                </div>
-                <div>
-                  <div className="text-sm sm:text-2xl font-bold text-orange-600">
-                    {sessionStats.wordsForgotten}
-                  </div>
-                  <div className="text-xs sm:text-sm text-gray-600">
-                    To Practice
-                  </div>
-                </div>
-                <div>
-                  <div className="text-sm sm:text-2xl font-bold text-purple-600">
-                    {sessionStats.accuracy}%
-                  </div>
-                  <div className="text-xs sm:text-sm text-gray-600">
-                    Accuracy
-                  </div>
-                </div>
-              </div>
-            </div>
-
             {/* Achievements */}
             {sessionAchievements.map((achievement, index) => (
               <div
