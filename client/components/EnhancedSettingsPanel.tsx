@@ -157,6 +157,12 @@ export const EnhancedSettingsPanel: React.FC<EnhancedSettingsPanelProps> = ({
         setSpeechRate([settings.speechRate || 1]);
         setVolume([settings.volume || 80]);
       }
+
+      const uiSettings = localStorage.getItem("uiSettings");
+      if (uiSettings) {
+        const settings = JSON.parse(uiSettings);
+        setShowBottomNav(settings.showBottomNav !== false);
+      }
     };
 
     loadSettings();
