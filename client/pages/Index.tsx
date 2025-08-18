@@ -41,7 +41,12 @@ import {
 import { AchievementTracker } from "@/lib/achievementTracker";
 import { audioService } from "@/lib/audioService";
 import { enhancedAudioService } from "@/lib/enhancedAudioService";
-import { jungleConfetti, jungleTheme, getRandomCollectible, getMascotForState } from "@/lib/jungleAdventureEffects";
+import {
+  jungleConfetti,
+  jungleTheme,
+  getRandomCollectible,
+  getMascotForState,
+} from "@/lib/jungleAdventureEffects";
 import { EnhancedAchievementPopup } from "@/components/EnhancedAchievementPopup";
 import { CompactMobileSettingsPanel } from "@/components/CompactMobileSettingsPanel";
 import { FloatingBubbles } from "@/components/FloatingBubbles";

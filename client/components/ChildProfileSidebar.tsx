@@ -23,7 +23,10 @@ import {
 import { useAuth } from "@/hooks/useAuth";
 import { useNavigate } from "react-router-dom";
 import { cn } from "@/lib/utils";
-import { jungleConfetti, getMascotForState } from "@/lib/jungleAdventureEffects";
+import {
+  jungleConfetti,
+  getMascotForState,
+} from "@/lib/jungleAdventureEffects";
 import { SimpleCollectiblesDisplay } from "@/components/SimpleCollectiblesDisplay";
 
 interface ChildProfileSidebarProps {
@@ -201,7 +204,10 @@ export const ChildProfileSidebar: React.FC<ChildProfileSidebarProps> = ({
                         Adventure Time
                       </span>
                       <div className="jungle-collectible">
-                        <span className="font-bold">{stats.sessionsThisWeek || 0}</span> 🔥
+                        <span className="font-bold">
+                          {stats.sessionsThisWeek || 0}
+                        </span>{" "}
+                        🔥
                       </div>
                     </div>
                     <div className="flex justify-between items-center">
@@ -210,7 +216,10 @@ export const ChildProfileSidebar: React.FC<ChildProfileSidebarProps> = ({
                         Words Learned
                       </span>
                       <div className="jungle-collectible">
-                        <span className="font-bold">{stats.wordsThisWeek || 0}</span> ⭐
+                        <span className="font-bold">
+                          {stats.wordsThisWeek || 0}
+                        </span>{" "}
+                        ⭐
                       </div>
                     </div>
                     <div className="flex justify-between items-center">
@@ -219,9 +228,12 @@ export const ChildProfileSidebar: React.FC<ChildProfileSidebarProps> = ({
                         Legendary Streak
                       </span>
                       <div className="jungle-collectible">
-                        <span className="font-bold">{stats.timeThisWeek
-                          ? `${Math.round(stats.timeThisWeek / 60)}h`
-                          : "0h"}</span> 🌟
+                        <span className="font-bold">
+                          {stats.timeThisWeek
+                            ? `${Math.round(stats.timeThisWeek / 60)}h`
+                            : "0h"}
+                        </span>{" "}
+                        🌟
                       </div>
                     </div>
                   </div>
