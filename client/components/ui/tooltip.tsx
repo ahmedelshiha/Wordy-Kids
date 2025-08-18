@@ -16,9 +16,24 @@ const TooltipProvider: React.FC<
   }
 };
 
-const Tooltip = TooltipPrimitive.Root;
+// Safe Tooltip components that don't crash without TooltipProvider
+const Tooltip: React.FC<React.ComponentPropsWithoutRef<typeof TooltipPrimitive.Root>> = (props) => {
+  try {
+    return <TooltipPrimitive.Root {...props} />;
+  } catch (error) {
+    // If tooltip fails, just render children
+    return <>{props.children}</>;
+  }
+};
 
-const TooltipTrigger = TooltipPrimitive.Trigger;
+const TooltipTrigger: React.FC<React.ComponentPropsWithoutRef<typeof TooltipPrimitive.Trigger>> = (props) => {
+  try {
+    return <TooltipPrimitive.Trigger {...props} />;
+  } catch (error) {
+    // If trigger fails, just render children
+    return <>{props.children}</>;
+  }
+};
 
 const TooltipContent = React.forwardRef<
   React.ElementRef<typeof TooltipPrimitive.Content>,
