@@ -354,7 +354,7 @@ export default function LoginForm() {
           🌈
         </div>
         <div className="hidden sm:block absolute top-1/4 right-1/4 text-3xl animate-gentle-float animation-delay-300">
-          🎨
+          ����
         </div>
       </div>
 
@@ -377,7 +377,7 @@ export default function LoginForm() {
           </div>
 
           {/* Wordy Jungle Adventure Logo */}
-          <div className="flex justify-center mb-3 sm:mb-4">
+          <div className="flex justify-center mb-1 sm:mb-2">
             <img
               src="/images/Wordy Jungle Adventure Logo.png"
               alt="Wordy Jungle Adventure Logo"
