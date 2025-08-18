@@ -307,6 +307,7 @@ export const ChildProfileSidebar: React.FC<ChildProfileSidebarProps> = ({
                     navigate("/signup");
                   } else {
                     logout();
+                    navigate("/"); // Navigate to login page
                     if (onLogout) onLogout();
                   }
                 }}
@@ -354,6 +355,7 @@ export const ChildProfileSidebar: React.FC<ChildProfileSidebarProps> = ({
                     navigate("/signup");
                   } else {
                     logout();
+                    navigate("/"); // Navigate to login page
                     if (onLogout) onLogout();
                   }
                 }}
