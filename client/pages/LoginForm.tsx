@@ -313,15 +313,15 @@ export default function LoginForm() {
   };
 
   const getInputClassName = (field: keyof ValidationState) => {
-    const baseClass = "pr-10 transition-all duration-200";
+    const baseClass = "pr-10 transition-all duration-300 rounded-xl px-4 py-4 text-base border-2";
     const state = validationState[field];
 
     if (state === "valid") {
-      return `${baseClass} border-green-400 focus:border-green-500 focus:ring-green-500/20`;
+      return `${baseClass} border-jungle focus:border-jungle focus:ring-jungle/20 focus:outline-none`;
     } else if (state === "invalid") {
-      return `${baseClass} border-red-400 focus:border-red-500 focus:ring-red-500/20`;
+      return `${baseClass} border-red-400 focus:border-red-500 focus:ring-red-500/20 focus:outline-none`;
     }
-    return `${baseClass} focus:border-blue-500 focus:ring-blue-500/20`;
+    return `${baseClass} border-gray-300 focus:border-jungle focus:ring-jungle/20 focus:outline-none placeholder:text-gray-400`;
   };
 
   const isFormValid =
