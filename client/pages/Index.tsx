@@ -2523,7 +2523,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                                           ✨
                                                         </div>
                                                         <div className="absolute bottom-4 left-6 text-2xl animate-bounce delay-300">
-                                                          ���
+                                                          🌟
                                                         </div>
                                                         <div className="absolute bottom-6 right-4 text-2xl animate-pulse delay-500">
                                                           💫
