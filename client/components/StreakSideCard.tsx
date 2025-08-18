@@ -208,7 +208,7 @@ export const StreakSideCard: React.FC<StreakSideCardProps> = ({
             {/* Header with streak display */}
             <div className="relative">
               <div
-                className={`bg-gradient-to-r ${content.color} p-6 text-white relative overflow-hidden`}
+                className={`jungle-background p-6 text-white relative overflow-hidden`}
               >
                 {/* Animated sparks */}
                 <div className="absolute inset-0 pointer-events-none">
