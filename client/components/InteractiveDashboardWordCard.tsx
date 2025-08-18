@@ -1393,7 +1393,7 @@ export function InteractiveDashboardWordCard({
                         <div className="text-xl sm:text-2xl md:text-3xl mb-1">
                           {currentWord.emoji}
                         </div>
-                        <p className="text-base sm:text-lg md:text-xl font-bold text-gray-800 tracking-wide">
+                        <p className="text-lg sm:text-xl md:text-2xl font-extrabold text-gray-800 tracking-wide">
                           {currentWord.word}
                         </p>
 
