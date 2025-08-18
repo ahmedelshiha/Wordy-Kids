@@ -2862,7 +2862,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                                       <div className="flex justify-center gap-3 sm:gap-4 text-sm">
                                                         <div className="flex items-center gap-1 text-green-600 bg-green-50 px-2 py-1 rounded-lg">
                                                           <span className="text-sm">
-                                                            ���
+                                                            ✅
                                                           </span>
                                                           <span className="font-bold text-sm">
                                                             {
