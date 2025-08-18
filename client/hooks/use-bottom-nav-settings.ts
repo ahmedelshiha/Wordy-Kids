@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
 
 export interface BottomNavSettings {
   showBottomNav: boolean;
@@ -16,7 +16,7 @@ export function useBottomNavSettings() {
   useEffect(() => {
     const loadSettings = () => {
       try {
-        const uiSettings = localStorage.getItem('uiSettings');
+        const uiSettings = localStorage.getItem("uiSettings");
         if (uiSettings) {
           const parsedSettings = JSON.parse(uiSettings);
           setSettings({
@@ -24,7 +24,7 @@ export function useBottomNavSettings() {
           });
         }
       } catch (error) {
-        console.error('Error loading bottom nav settings:', error);
+        console.error("Error loading bottom nav settings:", error);
         setSettings(DEFAULT_SETTINGS);
       } finally {
         setIsLoaded(true);
@@ -41,15 +41,20 @@ export function useBottomNavSettings() {
 
     try {
       // Get existing UI settings and merge with new ones
-      const existingSettings = localStorage.getItem('uiSettings');
-      const existingParsed = existingSettings ? JSON.parse(existingSettings) : {};
-      
-      localStorage.setItem('uiSettings', JSON.stringify({
-        ...existingParsed,
-        ...updatedSettings,
-      }));
+      const existingSettings = localStorage.getItem("uiSettings");
+      const existingParsed = existingSettings
+        ? JSON.parse(existingSettings)
+        : {};
+
+      localStorage.setItem(
+        "uiSettings",
+        JSON.stringify({
+          ...existingParsed,
+          ...updatedSettings,
+        }),
+      );
     } catch (error) {
-      console.error('Error saving bottom nav settings:', error);
+      console.error("Error saving bottom nav settings:", error);
     }
   };
 
@@ -58,6 +63,7 @@ export function useBottomNavSettings() {
     updateSettings,
     isLoaded,
     showBottomNav: settings.showBottomNav,
-    setShowBottomNav: (show: boolean) => updateSettings({ showBottomNav: show }),
+    setShowBottomNav: (show: boolean) =>
+      updateSettings({ showBottomNav: show }),
   };
 }

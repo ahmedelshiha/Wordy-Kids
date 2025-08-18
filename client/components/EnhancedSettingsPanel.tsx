@@ -452,7 +452,12 @@ export const EnhancedSettingsPanel: React.FC<EnhancedSettingsPanelProps> = ({
                   emoji: "🔔",
                 },
                 { id: "profile", label: "Profile", icon: User, emoji: "👤" },
-                { id: "other", label: "Other Settings", icon: Settings, emoji: "⚙️" },
+                {
+                  id: "other",
+                  label: "Other Settings",
+                  icon: Settings,
+                  emoji: "⚙️",
+                },
               ].map((tab) => (
                 <Button
                   key={tab.id}
@@ -1408,7 +1413,8 @@ export const EnhancedSettingsPanel: React.FC<EnhancedSettingsPanelProps> = ({
                               Show Bottom Navigation
                             </h5>
                             <p className="text-sm text-slate-600 mt-1">
-                              Display the bottom navigation bar on mobile devices
+                              Display the bottom navigation bar on mobile
+                              devices
                             </p>
                           </div>
                           <Switch
