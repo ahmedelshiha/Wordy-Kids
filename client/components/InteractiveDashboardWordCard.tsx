@@ -1181,7 +1181,7 @@ export function InteractiveDashboardWordCard({
                     }
                     if (percentage >= 90) return "⭐";
                     if (percentage >= 75) return "🎯";
-                    if (percentage >= 50) return "��";
+                    if (percentage >= 50) return "🌿";
                     return "🌟";
                   })()}
                 </span>
@@ -1409,7 +1409,7 @@ export function InteractiveDashboardWordCard({
                             disabled={isPlaying}
                             size="sm"
                             className={cn(
-                              "bg-gradient-to-br from-orange-400 via-orange-500 to-orange-600 hover:from-orange-500 hover:via-orange-600 hover:to-orange-700 text-white px-3 py-1.5 rounded-lg transition-all duration-300 transform hover:scale-110 active:scale-95 shadow-md hover:shadow-lg border border-orange-300/50 hover:border-orange-200",
+                              "bg-gradient-to-br from-orange-400 via-orange-500 to-orange-600 hover:from-orange-500 hover:via-orange-600 hover:to-orange-700 text-white px-2 sm:px-3 py-1 sm:py-1.5 rounded-md sm:rounded-lg transition-all duration-300 transform hover:scale-110 active:scale-95 shadow-md hover:shadow-lg border border-orange-300/50 hover:border-orange-200",
                               "ring-2 ring-orange-200/30 hover:ring-orange-300/50",
                               "backdrop-blur-sm",
                               isPlaying &&
