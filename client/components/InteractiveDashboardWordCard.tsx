@@ -1378,7 +1378,7 @@ export function InteractiveDashboardWordCard({
                           type: "spring",
                           stiffness: 200,
                         }}
-                        className="text-xl md:text-2xl mb-1"
+                        className="text-lg md:text-xl mb-0.5"
                         aria-hidden="true"
                       >
                         💡
