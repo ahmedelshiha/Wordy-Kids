@@ -1382,6 +1382,18 @@ export function InteractiveDashboardWordCard({
                     }}
                     className="mx-auto max-w-xs p-3 md:p-4 rounded-xl border-2 border-yellow-300/60 shadow-lg relative overflow-hidden"
                   >
+                    {/* Exit Button */}
+                    <motion.button
+                      initial={{ opacity: 0, scale: 0.8 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      transition={{ delay: 0.8, duration: 0.3 }}
+                      onClick={() => setShowHint(false)}
+                      className="absolute top-2 right-2 w-6 h-6 bg-red-500/80 hover:bg-red-600 text-white rounded-full flex items-center justify-center transition-all duration-200 hover:scale-110 active:scale-95 z-20"
+                      aria-label="Close hint"
+                    >
+                      <span className="text-xs font-bold">×</span>
+                    </motion.button>
+
                     {/* Hint background glow */}
                     <motion.div
                       initial={{ scale: 0, opacity: 0.6 }}
