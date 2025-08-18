@@ -121,16 +121,6 @@ export const EnhancedWordLibrary: React.FC<EnhancedWordLibraryProps> = ({
   const [isTablet, setIsTablet] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
 
-  // Function to get the appropriate background image based on device type
-  const getBackgroundImage = () => {
-    if (isMobile) {
-      return "url(/images/background_mobile.jpg)";
-    } else if (isTablet) {
-      return "url(/images/background_tablet.jpg)";
-    } else {
-      return "url(/images/background.jpg)";
-    }
-  };
 
   useEffect(() => {
     const checkMobile = () => {
