@@ -73,6 +73,18 @@ export default {
           yellow: "hsl(var(--educational-yellow))",
           "yellow-light": "hsl(var(--educational-yellow-light))",
         },
+        // Jungle Green Family
+        jungle: {
+          DEFAULT: "hsl(var(--jungle-green))", // #4CAF50
+          dark: "hsl(var(--jungle-green-dark))", // #388E3C
+          light: "hsl(var(--jungle-green-light))", // #81C784
+        },
+        // Sunshine Yellow Family
+        sunshine: {
+          DEFAULT: "hsl(var(--sunshine-yellow))", // #FFC107
+          dark: "hsl(var(--sunshine-yellow-dark))", // #F57F17
+          light: "hsl(var(--sunshine-yellow-light))", // #FFF176
+        },
       },
       borderRadius: {
         lg: "var(--radius)",
