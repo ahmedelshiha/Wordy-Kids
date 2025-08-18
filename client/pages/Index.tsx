@@ -142,6 +142,7 @@ import { getAISettings, isAIEnabled } from "@/lib/aiSettings";
 import { ChildProfileSidebar } from "@/components/ChildProfileSidebar";
 import { MobileChildProfileHeader } from "@/components/MobileChildProfileHeader";
 import { EnhancedStatsHelper } from "@/lib/enhancedStatsHelper";
+import { useBottomNavSettings } from "@/hooks/use-bottom-nav-settings";
 
 interface IndexProps {
   initialProfile?: any;
