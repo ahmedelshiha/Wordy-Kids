@@ -301,7 +301,7 @@ export function MobileBottomNav({
               {/* Magical sparkle for active more menu */}
               {showMoreMenu && (
                 <div className="absolute -top-1 -right-1 animate-kid-magic-sparkle text-xs">
-                  ✨
+                  🍃
                 </div>
               )}
 
