@@ -1419,9 +1419,6 @@ export function InteractiveDashboardWordCard({
                         <p className="text-lg md:text-xl font-bold text-gray-800 tracking-wide">
                           {currentWord.word}
                         </p>
-                        <p className="text-xs text-gray-600 mt-1">
-                          This might help you guess the word!
-                        </p>
 
                         {/* Speaker button inside hint card */}
                         <motion.div
