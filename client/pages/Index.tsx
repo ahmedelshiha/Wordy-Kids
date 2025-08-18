@@ -3091,7 +3091,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                           size="sm"
                                         >
                                           <Play className="w-3 h-3 md:w-4 md:h-4 mr-1" />
-                                          Start Adventure! ���
+                                          Start Adventure! 🚀
                                         </Button>
                                       </CardContent>
                                     </Card>
