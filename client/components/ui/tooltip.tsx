@@ -11,13 +11,15 @@ const TooltipProvider: React.FC<
   try {
     return <TooltipPrimitive.Provider {...props} />;
   } catch (error) {
-    console.warn('TooltipProvider failed, falling back to div wrapper:', error);
+    console.warn("TooltipProvider failed, falling back to div wrapper:", error);
     return <div style={{ display: "contents" }}>{props.children}</div>;
   }
 };
 
 // Safe Tooltip components that don't crash without TooltipProvider
-const Tooltip: React.FC<React.ComponentPropsWithoutRef<typeof TooltipPrimitive.Root>> = (props) => {
+const Tooltip: React.FC<
+  React.ComponentPropsWithoutRef<typeof TooltipPrimitive.Root>
+> = (props) => {
   try {
     return <TooltipPrimitive.Root {...props} />;
   } catch (error) {
@@ -26,7 +28,9 @@ const Tooltip: React.FC<React.ComponentPropsWithoutRef<typeof TooltipPrimitive.R
   }
 };
 
-const TooltipTrigger: React.FC<React.ComponentPropsWithoutRef<typeof TooltipPrimitive.Trigger>> = (props) => {
+const TooltipTrigger: React.FC<
+  React.ComponentPropsWithoutRef<typeof TooltipPrimitive.Trigger>
+> = (props) => {
   try {
     return <TooltipPrimitive.Trigger {...props} />;
   } catch (error) {
