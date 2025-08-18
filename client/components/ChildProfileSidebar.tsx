@@ -268,7 +268,7 @@ export const ChildProfileSidebar: React.FC<ChildProfileSidebarProps> = ({
               )}
 
               {/* Simple Jungle Collectibles */}
-              <SimpleCollectiblesDisplay className="w-full" />
+              {/* <SimpleCollectiblesDisplay className="w-full" /> */}
             </motion.div>
           ) : (
             <motion.div
