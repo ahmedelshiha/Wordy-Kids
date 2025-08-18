@@ -1735,44 +1735,60 @@ export function InteractiveDashboardWordCard({
               >
                 <div className="grid grid-cols-2 gap-2 sm:gap-3">
                   <Button
-                    onClick={() => handleWordAction("needs_practice")}
+                    onClick={() => {
+                      // Show hint first if not already shown
+                      if (!showHint && !showWordDetails) {
+                        handleActionWithFeedback(() => setShowHint(true), "light");
+                      } else {
+                        // If hint is already shown, proceed with main functionality
+                        handleWordAction("needs_practice");
+                      }
+                    }}
                     disabled={isAnswered}
                     className="w-full bg-gradient-to-r from-red-400 to-pink-500 hover:from-red-500 hover:to-pink-600 active:from-red-600 active:to-pink-700 text-white font-bold border-0 rounded-lg sm:rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 active:scale-95 py-2 sm:py-3 md:py-4 px-2 sm:px-3 min-h-[48px] sm:min-h-[56px] md:min-h-[64px] relative overflow-hidden disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none touch-manipulation"
-                    aria-label="Mark word as forgotten"
+                    aria-label={!showHint && !showWordDetails ? "Get hint for this word" : "Mark word as needing practice"}
                   >
                     <div className="absolute inset-0 bg-white/20 rounded-xl opacity-0 hover:opacity-100 transition-opacity duration-300"></div>
                     <div className="relative z-10 flex items-center justify-center">
                       <span className="text-base sm:text-lg mr-1 sm:mr-2 animate-wiggle">
-                        😔
+                        {!showHint && !showWordDetails ? "💡" : "😔"}
                       </span>
                       <div className="text-center">
                         <div className="font-bold text-xs sm:text-sm md:text-base">
-                          Get Hint
+                          {!showHint && !showWordDetails ? "Get Hint" : "Need Practice"}
                         </div>
                         <div className="text-xs opacity-90 mt-0.5 hidden sm:block">
-                          Need practice! 💪
+                          {!showHint && !showWordDetails ? "Need help? 💡" : "Need practice! 💪"}
                         </div>
                       </div>
                     </div>
                   </Button>
 
                   <Button
-                    onClick={() => handleWordAction("remembered")}
+                    onClick={() => {
+                      // Show hint first if not already shown
+                      if (!showHint && !showWordDetails) {
+                        handleActionWithFeedback(() => setShowHint(true), "light");
+                      } else {
+                        // If hint is already shown, proceed with main functionality
+                        handleWordAction("remembered");
+                      }
+                    }}
                     disabled={isAnswered}
                     className="w-full bg-gradient-to-r from-green-400 to-emerald-500 hover:from-green-500 hover:to-emerald-600 active:from-green-600 active:to-emerald-700 text-white font-bold border-0 rounded-lg sm:rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 active:scale-95 py-2 sm:py-3 md:py-4 px-2 sm:px-3 min-h-[48px] sm:min-h-[56px] md:min-h-[64px] relative overflow-hidden disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none touch-manipulation"
-                    aria-label="Mark word as remembered"
+                    aria-label={!showHint && !showWordDetails ? "Get hint for this word" : "Mark word as remembered"}
                   >
                     <div className="absolute inset-0 bg-white/20 rounded-xl opacity-0 hover:opacity-100 transition-opacity duration-300"></div>
                     <div className="relative z-10 flex items-center justify-center">
                       <span className="text-base sm:text-lg mr-1 sm:mr-2 animate-bounce">
-                        😊
+                        {!showHint && !showWordDetails ? "💡" : "😊"}
                       </span>
                       <div className="text-center">
                         <div className="font-bold text-xs sm:text-sm md:text-base">
-                          I Remember
+                          {!showHint && !showWordDetails ? "Get Hint" : "I Remember"}
                         </div>
                         <div className="text-xs opacity-90 mt-0.5 hidden sm:block">
-                          Awesome! ⭐
+                          {!showHint && !showWordDetails ? "Need help? 💡" : "Awesome! ⭐"}
                         </div>
                       </div>
                     </div>
