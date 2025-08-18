@@ -862,11 +862,11 @@ export function InteractiveDashboardWordCard({
             transition: { duration: 0.3 },
           }}
           whileTap={{ scale: 0.95 }}
-          className="w-48 h-32 mx-auto flex items-center justify-center bg-gradient-to-br from-blue-100 via-purple-100 to-pink-100 rounded-2xl shadow-lg hover:shadow-xl cursor-pointer group relative overflow-hidden"
+          className="w-48 h-32 mx-auto flex items-center justify-center rounded-2xl shadow-lg hover:shadow-xl cursor-pointer group relative overflow-hidden"
           onClick={playPronunciation}
         >
           {/* Animated background elements */}
-          <div className="absolute inset-0 bg-gradient-to-r from-blue-200/20 via-purple-200/20 to-pink-200/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+          <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
           <div className="absolute top-2 right-2 text-xs text-blue-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
             🔊
           </div>
@@ -1135,10 +1135,11 @@ export function InteractiveDashboardWordCard({
       >
         <Card
           className={cn(
-            "w-full max-w-3xl mx-auto relative overflow-hidden",
+            "w-[340px] h-[480px] sm:w-[480px] sm:h-[540px] md:w-[600px] md:h-[560px] lg:w-[800px] lg:h-[600px] mx-auto relative overflow-hidden",
             "ai-card-background",
             "shadow-lg hover:shadow-xl border-0 rounded-2xl sm:rounded-3xl",
             "backdrop-blur-sm ring-1 ring-black/5",
+            "bg-transparent",
             celebrationEffect &&
               "animate-pulse shadow-2xl border-yellow-400 border-4",
           )}
@@ -1232,9 +1233,9 @@ export function InteractiveDashboardWordCard({
                 initial={{ opacity: 0, y: -10, scale: 0.95 }}
                 animate={{ opacity: 1, y: 0, scale: 1 }}
                 transition={{ duration: 0.4, type: "spring", damping: 20 }}
-                className="text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl font-bold text-gray-800 mb-1 sm:mb-2"
+                className="text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl font-bold text-white mb-1 sm:mb-2"
               >
-                ✨ Name this object!
+                🤔 Name this object!
               </motion.h1>
             </header>
 
