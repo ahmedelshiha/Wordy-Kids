@@ -17,6 +17,7 @@ import {
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { jungleTheme } from "@/lib/jungleAdventureEffects";
+import { jungleInteractions } from "@/lib/jungleSoundSystem";
 
 interface MobileBottomNavProps {
   activeTab: string;
