@@ -24,7 +24,6 @@ import { useAuth } from "@/hooks/useAuth";
 import { useNavigate } from "react-router-dom";
 import { cn } from "@/lib/utils";
 import { jungleConfetti, getMascotForState } from "@/lib/jungleAdventureEffects";
-import { JungleCollectiblesDisplay } from "@/components/JungleCollectiblesDisplay";
 
 interface ChildProfileSidebarProps {
   profile: any;
