@@ -236,6 +236,13 @@ export const EnhancedWordCard: React.FC<EnhancedWordCardProps> = ({
           )}
         >
           <CardContent className="p-3 sm:p-4 h-full flex flex-col text-white relative touch-optimized jungle-background">
+            {/* Jungle Mascot Area */}
+            <div className="absolute top-2 right-2 z-20">
+              <div className="jungle-mascot text-2xl">
+                {getMascotForState(showCelebration ? 'celebrating' : 'idle')}
+              </div>
+            </div>
+
             {/* Header with badges - Mobile optimized */}
             <div className="flex items-start mb-2 sm:mb-3">
               <div className="flex flex-wrap gap-1.5">
@@ -539,7 +546,7 @@ export const EnhancedWordCard: React.FC<EnhancedWordCardProps> = ({
                                 : "animate-celebration-sparkles",
                             )}
                           >
-                            🎉
+                            ����
                           </span>
                           <span className="text-xs font-bold leading-tight">
                             Easy
