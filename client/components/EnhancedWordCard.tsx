@@ -135,11 +135,9 @@ export const EnhancedWordCard: React.FC<EnhancedWordCardProps> = ({
       // jungleInteractions.success();
       // jungleInteractions.achievement();
       // jungleConfetti.jungleSuccess();
-
       // Award a random collectible for correct answers
       // const collectible = getRandomCollectible();
       // const isNewItem = collectiblesManager.collectItem(collectible);
-
       // setTimeout(() => {
       //   jungleConfetti.collectibleFound(collectible);
       //   jungleInteractions.collectible();
