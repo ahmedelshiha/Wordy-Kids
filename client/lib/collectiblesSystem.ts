@@ -3,6 +3,7 @@
  * Manages stickers, gems, and jungle fruits that kids can collect during their learning adventure
  */
 
+import React from "react";
 import { JUNGLE_COLLECTIBLES, type JungleCollectible } from "./jungleAdventureEffects";
 
 interface CollectedItem extends JungleCollectible {
