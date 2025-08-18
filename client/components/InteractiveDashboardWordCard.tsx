@@ -1649,10 +1649,11 @@ export function InteractiveDashboardWordCard({
               )}
             </AnimatePresence>
 
-            {/* Action Buttons - Always visible */}
+
+            {/* Action Buttons - Moved to bottom */}
             {!isAnswered && (
               <div
-                className="space-y-3 sm:space-y-4 px-2 sm:px-0"
+                className="space-y-3 sm:space-y-4 px-2 sm:px-0 mt-6"
                 role="group"
                 aria-label="Word learning choices"
               >
