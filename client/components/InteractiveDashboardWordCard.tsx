@@ -1390,10 +1390,10 @@ export function InteractiveDashboardWordCard({
                         transition={{ delay: 0.4, duration: 0.5 }}
                         className="bg-white/60 rounded-lg p-1.5 sm:p-2 border border-yellow-200/80 shadow-inner"
                       >
-                        <div className="text-2xl md:text-3xl mb-1">
+                        <div className="text-xl sm:text-2xl md:text-3xl mb-1">
                           {currentWord.emoji}
                         </div>
-                        <p className="text-lg sm:text-xl md:text-2xl font-bold text-gray-800 tracking-wide">
+                        <p className="text-base sm:text-lg md:text-xl font-bold text-gray-800 tracking-wide">
                           {currentWord.word}
                         </p>
 
