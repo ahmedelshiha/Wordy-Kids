@@ -2032,8 +2032,7 @@ export default function Index({ initialProfile }: IndexProps) {
               </div>
             ) : (
               <div
-                className="min-h-screen bg-cover bg-center bg-no-repeat optimize-for-small-screen"
-                style={{ backgroundImage: "url(/images/bg_desktop.webp)" }}
+                className="min-h-screen bg-responsive-dashboard optimize-for-small-screen"
               >
                 {/* Enhanced Desktop Layout */}
                 <div className="flex min-h-screen">
