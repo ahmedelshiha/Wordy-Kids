@@ -370,7 +370,7 @@ export function InteractiveDashboardWordCard({
           id: "good_effort",
           title: "GOOD EFFORT!",
           description: `Nice try! ${accuracy}% accuracy. Practice makes perfect!`,
-          emoji: "���",
+          emoji: "💪",
           unlocked: true,
         });
       } else {
@@ -976,7 +976,7 @@ export function InteractiveDashboardWordCard({
                       if (wordsLearned >= goal) {
                         if (wordsLearned >= goal * 2) return "⭐";
                         if (wordsLearned >= goal * 1.5) return "🚀";
-                        return "���";
+                        return "🏆";
                       }
                       if (percentage >= 90) return "⭐";
                       if (percentage >= 75) return "🎯";
@@ -1427,7 +1427,7 @@ export function InteractiveDashboardWordCard({
                         <div className="text-2xl md:text-3xl mb-1">
                           {currentWord.emoji}
                         </div>
-                        <p className="text-base md:text-lg font-bold text-gray-800 tracking-wide">
+                        <p className="text-lg sm:text-xl md:text-2xl font-bold text-gray-800 tracking-wide">
                           {currentWord.word}
                         </p>
 
