@@ -1940,7 +1940,7 @@ export default function Index({ initialProfile }: IndexProps) {
                   🎯
                 </div>
                 <div className="hidden md:block absolute bottom-12 right-8 text-xl animate-gentle-float delay-500">
-                  🚀
+                  ��
                 </div>
                 <div className="hidden md:block absolute top-1/2 left-4 text-lg animate-sparkle">
                   ✨
@@ -2520,10 +2520,10 @@ export default function Index({ initialProfile }: IndexProps) {
                                                           ✨
                                                         </div>
                                                         <div className="absolute top-6 right-6 text-3xl animate-spin">
-                                                          ����
+                                                          ✨
                                                         </div>
                                                         <div className="absolute bottom-4 left-6 text-2xl animate-bounce delay-300">
-                                                          ���
+                                                          🌟
                                                         </div>
                                                         <div className="absolute bottom-6 right-4 text-2xl animate-pulse delay-500">
                                                           💫
