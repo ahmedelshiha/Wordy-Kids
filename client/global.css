@@ -21,7 +21,7 @@
   /* Responsive background images */
   .bg-responsive-dashboard {
     background-image: url("/images/bg_desktop.webp");
-    background-size: contain;
+    background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
     background-attachment: fixed;
