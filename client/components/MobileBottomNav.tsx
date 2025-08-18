@@ -96,7 +96,7 @@ export function MobileBottomNav({
       icon: Target,
       activeGradient: "kid-gradient-happy",
       hoverGradient: "kid-gradient-learn",
-      sparkle: "✨🌟",
+      sparkle: "🍃🦋",
     },
     {
       id: "learn",
@@ -105,7 +105,7 @@ export function MobileBottomNav({
       icon: BookOpen,
       activeGradient: "kid-gradient-learn",
       hoverGradient: "kid-gradient-success",
-      sparkle: "✨🌟",
+      sparkle: "🍃🦋",
     },
     {
       id: "quiz",
@@ -114,7 +114,7 @@ export function MobileBottomNav({
       icon: Brain,
       activeGradient: "kid-gradient-adventure",
       hoverGradient: "kid-gradient-magic",
-      sparkle: "✨🌟",
+      sparkle: "🍃🦋",
     },
     {
       id: "progress",
@@ -123,7 +123,7 @@ export function MobileBottomNav({
       icon: Trophy,
       activeGradient: "kid-gradient-success",
       hoverGradient: "kid-gradient-adventure",
-      sparkle: "✨🌟",
+      sparkle: "🍃🦋",
     },
   ];
 
