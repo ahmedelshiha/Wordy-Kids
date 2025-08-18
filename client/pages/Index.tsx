@@ -2084,11 +2084,11 @@ export default function Index({ initialProfile }: IndexProps) {
                 style={{ backgroundImage: "url(/images/background.jpg)" }}
               >
                 {/* Enhanced Desktop Layout */}
-                <div className="flex h-screen">
+                <div className="flex min-h-screen">
                   {/* Enhanced Main Game Content Container */}
                   <div className="flex-1 min-w-0 overflow-hidden relative">
                     {/* Game Content Background */}
-                    <div className="relative z-10 w-full h-full p-2 sm:p-3 lg:p-6 pb-20 sm:pb-24 lg:pb-6 overflow-y-auto scroll-smooth">
+                    <div className="relative z-10 w-full min-h-screen p-2 sm:p-3 lg:p-6 pb-20 sm:pb-24 lg:pb-6 overflow-y-auto scroll-smooth">
                       {/* Desktop: Three-column layout with sidebar + main content + side card */}
                       <div className="flex gap-6 items-start">
                         {/* Child Profile Sidebar - Desktop Only */}
