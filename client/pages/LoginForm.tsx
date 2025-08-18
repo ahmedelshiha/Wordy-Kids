@@ -409,7 +409,7 @@ export default function LoginForm() {
               Sign In to Continue
             </CardTitle>
           </CardHeader>
-          <CardContent className="space-y-3 sm:space-y-4 px-3 sm:px-4 md:px-6">
+          <CardContent className="space-y-4 px-0">
             <form
               onSubmit={handleLogin}
               className="space-y-3 sm:space-y-4"
