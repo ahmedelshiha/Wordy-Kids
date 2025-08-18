@@ -313,7 +313,8 @@ export default function LoginForm() {
   };
 
   const getInputClassName = (field: keyof ValidationState) => {
-    const baseClass = "pr-10 transition-all duration-300 rounded-xl px-4 py-4 text-base border-2";
+    const baseClass =
+      "pr-10 transition-all duration-300 rounded-xl px-4 py-4 text-base border-2";
     const state = validationState[field];
 
     if (state === "valid") {
@@ -380,13 +381,12 @@ export default function LoginForm() {
             </div>
           </div>
 
-
           <p
             className="text-navy text-lg"
             style={{
-              fontFamily: 'Baloo 2',
+              fontFamily: "Baloo 2",
               fontWeight: 500,
-              fontSize: '18px'
+              fontSize: "18px",
             }}
           >
             Continue your learning journey
@@ -397,10 +397,11 @@ export default function LoginForm() {
         <Card
           className="border-0 bg-white animate-fade-in animation-delay-100 mx-1 sm:mx-0"
           style={{
-            borderRadius: '24px',
-            padding: '32px',
-            boxShadow: '0 12px 32px rgba(0,0,0,0.15), inset 0 1px 0 rgba(255,255,255,0.5)',
-            background: '#FFFFFF'
+            borderRadius: "24px",
+            padding: "32px",
+            boxShadow:
+              "0 12px 32px rgba(0,0,0,0.15), inset 0 1px 0 rgba(255,255,255,0.5)",
+            background: "#FFFFFF",
           }}
         >
           <CardHeader className="pb-4 px-0">
@@ -408,9 +409,9 @@ export default function LoginForm() {
               id="login-title"
               className="text-center text-xl text-navy flex items-center justify-center gap-2"
               style={{
-                fontFamily: 'Baloo 2',
+                fontFamily: "Baloo 2",
                 fontWeight: 600,
-                fontSize: '20px'
+                fontSize: "20px",
               }}
             >
               <UserCheck className="w-5 h-5 text-jungle" />
@@ -429,7 +430,7 @@ export default function LoginForm() {
                 <Label
                   htmlFor="email"
                   className="text-base font-semibold text-navy flex items-center gap-2"
-                  style={{ fontFamily: 'Baloo 2', fontWeight: 600 }}
+                  style={{ fontFamily: "Baloo 2", fontWeight: 600 }}
                 >
                   <Mail className="w-4 h-4 text-navy" />
                   Parent Email Address
@@ -451,7 +452,7 @@ export default function LoginForm() {
                     onKeyDown={(e) => handleKeyDown(e, "password")}
                     disabled={isLoading}
                     className={`${getInputClassName("email")} min-h-[56px] touch-target`}
-                    style={{ fontFamily: 'Baloo 2' }}
+                    style={{ fontFamily: "Baloo 2" }}
                     aria-describedby={errors.email ? "email-error" : undefined}
                     aria-invalid={!!errors.email}
                   />
@@ -478,7 +479,7 @@ export default function LoginForm() {
                 <Label
                   htmlFor="password"
                   className="text-base font-semibold text-navy flex items-center gap-2"
-                  style={{ fontFamily: 'Baloo 2', fontWeight: 600 }}
+                  style={{ fontFamily: "Baloo 2", fontWeight: 600 }}
                 >
                   <Lock className="w-4 h-4 text-navy" />
                   Password
@@ -499,7 +500,7 @@ export default function LoginForm() {
                     }
                     disabled={isLoading}
                     className={`${getInputClassName("password")} min-h-[56px] touch-target`}
-                    style={{ fontFamily: 'Baloo 2' }}
+                    style={{ fontFamily: "Baloo 2" }}
                     aria-describedby={
                       errors.password ? "password-error" : undefined
                     }
@@ -595,10 +596,10 @@ export default function LoginForm() {
                 disabled={isLoading}
                 className="w-full py-4 bg-jungle hover:bg-jungle-dark text-white font-bold text-lg rounded-3xl transition-all duration-300 transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none min-h-[56px] min-w-[200px] touch-target"
                 style={{
-                  boxShadow: '0 4px 12px rgba(76, 175, 80, 0.3)',
-                  fontFamily: 'Baloo 2',
+                  boxShadow: "0 4px 12px rgba(76, 175, 80, 0.3)",
+                  fontFamily: "Baloo 2",
                   fontWeight: 700,
-                  letterSpacing: '0.5px'
+                  letterSpacing: "0.5px",
                 }}
                 aria-describedby={errors.general ? "general-error" : undefined}
               >
@@ -636,10 +637,10 @@ export default function LoginForm() {
                 onClick={() => navigate("/signup")}
                 className="w-full py-4 bg-sky hover:bg-sky-dark text-white font-bold text-lg rounded-3xl transition-all duration-300 transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none min-h-[56px] min-w-[200px] touch-target"
                 style={{
-                  boxShadow: '0 4px 12px rgba(33, 150, 243, 0.3)',
-                  fontFamily: 'Baloo 2',
+                  boxShadow: "0 4px 12px rgba(33, 150, 243, 0.3)",
+                  fontFamily: "Baloo 2",
                   fontWeight: 700,
-                  letterSpacing: '0.5px'
+                  letterSpacing: "0.5px",
                 }}
                 disabled={isLoading}
                 aria-label="Create new account"
@@ -658,10 +659,10 @@ export default function LoginForm() {
               onClick={handleBackToMain}
               className="w-full py-4 bg-sunshine hover:bg-sunshine-dark text-navy font-bold text-lg rounded-3xl transition-all duration-300 transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none min-h-[56px] min-w-[200px] touch-target"
               style={{
-                boxShadow: '0 4px 12px rgba(255, 193, 7, 0.3)',
-                fontFamily: 'Baloo 2',
+                boxShadow: "0 4px 12px rgba(255, 193, 7, 0.3)",
+                fontFamily: "Baloo 2",
                 fontWeight: 700,
-                letterSpacing: '0.5px'
+                letterSpacing: "0.5px",
               }}
               disabled={isLoading}
               aria-label="Sign in as guest to explore"
