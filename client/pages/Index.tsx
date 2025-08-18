@@ -1883,7 +1883,7 @@ export default function Index({ initialProfile }: IndexProps) {
       {isSessionInitialized && (
         <>
           {/* Ultra-Compact Header */}
-          <header className="relative overflow-hidden bg-gradient-to-r from-educational-blue via-educational-purple to-educational-pink text-white shadow-lg">
+          <header className="relative overflow-hidden bg-cover bg-center bg-no-repeat text-white shadow-lg" style={{backgroundImage: 'linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url(/images/background.jpg)'}}>
             <div className="relative container mx-auto px-3 py-1 md:py-1.5">
               {/* Mobile header - Ultra compact & optimized */}
               <div className="flex items-center justify-between md:hidden">
@@ -3039,7 +3039,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                         </p>
                                         <div className="flex justify-center gap-1 mb-2 md:mb-3">
                                           <span className="bg-educational-orange/20 text-educational-orange px-1.5 py-0.5 rounded-full text-xs">
-                                            🎯 Fun!
+                                            ���� Fun!
                                           </span>
                                         </div>
                                         <Button
