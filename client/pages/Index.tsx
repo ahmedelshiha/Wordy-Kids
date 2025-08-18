@@ -2051,7 +2051,7 @@ export default function Index({ initialProfile }: IndexProps) {
                         <img
                           src="/images/Wordy Jungle Adventure Logo.png"
                           alt="Wordy Jungle Adventure Logo"
-                          className="max-h-16 object-contain"
+                          className="max-h-16 lg:max-h-24 xl:max-h-28 object-contain"
                         />
                       </div>
 
