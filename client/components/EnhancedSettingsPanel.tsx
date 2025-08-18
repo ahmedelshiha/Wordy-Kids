@@ -445,6 +445,7 @@ export const EnhancedSettingsPanel: React.FC<EnhancedSettingsPanelProps> = ({
                   emoji: "🔔",
                 },
                 { id: "profile", label: "Profile", icon: User, emoji: "👤" },
+                { id: "other", label: "Other Settings", icon: Settings, emoji: "⚙️" },
               ].map((tab) => (
                 <Button
                   key={tab.id}
