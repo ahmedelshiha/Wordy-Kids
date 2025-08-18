@@ -1380,7 +1380,7 @@ export function InteractiveDashboardWordCard({
                       backdropFilter: "blur(8px)",
                       backgroundColor: "rgba(255, 255, 255, 0.85)",
                     }}
-                    className="mx-auto max-w-xs p-4 md:p-6 rounded-2xl border-2 border-yellow-300/60 shadow-xl relative overflow-hidden"
+                    className="mx-auto max-w-xs p-3 md:p-4 rounded-xl border-2 border-yellow-300/60 shadow-lg relative overflow-hidden"
                   >
                     {/* Hint background glow */}
                     <motion.div
@@ -1400,7 +1400,7 @@ export function InteractiveDashboardWordCard({
                           type: "spring",
                           stiffness: 200,
                         }}
-                        className="text-2xl md:text-3xl mb-2"
+                        className="text-xl md:text-2xl mb-1"
                         aria-hidden="true"
                       >
                         💡
@@ -1411,12 +1411,12 @@ export function InteractiveDashboardWordCard({
                         initial={{ opacity: 0, scale: 0.8 }}
                         animate={{ opacity: 1, scale: 1 }}
                         transition={{ delay: 0.4, duration: 0.5 }}
-                        className="bg-white/60 rounded-xl p-3 border border-yellow-200/80 shadow-inner"
+                        className="bg-white/60 rounded-lg p-2 border border-yellow-200/80 shadow-inner"
                       >
-                        <div className="text-3xl md:text-4xl mb-2">
+                        <div className="text-2xl md:text-3xl mb-1">
                           {currentWord.emoji}
                         </div>
-                        <p className="text-lg md:text-xl font-bold text-gray-800 tracking-wide">
+                        <p className="text-base md:text-lg font-bold text-gray-800 tracking-wide">
                           {currentWord.word}
                         </p>
 
@@ -1425,15 +1425,15 @@ export function InteractiveDashboardWordCard({
                           initial={{ opacity: 0, scale: 0.8 }}
                           animate={{ opacity: 1, scale: 1 }}
                           transition={{ delay: 0.6, duration: 0.4 }}
-                          className="mt-3 flex justify-center"
+                          className="mt-2 flex justify-center"
                         >
                           <Button
                             onClick={playPronunciation}
                             disabled={isPlaying}
                             size="sm"
                             className={cn(
-                              "bg-gradient-to-br from-educational-blue via-blue-500 to-blue-600 hover:from-blue-500 hover:via-blue-600 hover:to-blue-700 text-white px-4 py-2 rounded-xl transition-all duration-300 transform hover:scale-110 active:scale-95 shadow-lg hover:shadow-xl border border-blue-300/50 hover:border-blue-200",
-                              "ring-2 ring-blue-200/30 hover:ring-blue-300/50",
+                              "bg-gradient-to-br from-orange-400 via-orange-500 to-orange-600 hover:from-orange-500 hover:via-orange-600 hover:to-orange-700 text-white px-3 py-1.5 rounded-lg transition-all duration-300 transform hover:scale-110 active:scale-95 shadow-md hover:shadow-lg border border-orange-300/50 hover:border-orange-200",
+                              "ring-2 ring-orange-200/30 hover:ring-orange-300/50",
                               "backdrop-blur-sm",
                               isPlaying &&
                                 "animate-pulse ring-yellow-400/60 shadow-yellow-400/30",
@@ -1449,7 +1449,7 @@ export function InteractiveDashboardWordCard({
                                   "animate-bounce text-yellow-100 scale-110",
                               )}
                             />
-                            <span className="text-sm font-medium">
+                            <span className="text-xs font-medium">
                               {isPlaying ? "Playing..." : "Listen"}
                             </span>
                             {isPlaying && (
