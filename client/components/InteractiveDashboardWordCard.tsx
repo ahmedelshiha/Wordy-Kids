@@ -1695,31 +1695,21 @@ export function InteractiveDashboardWordCard({
                     disabled={isAnswered}
                     className={cn(
                       "w-full text-white font-bold border-0 rounded-lg sm:rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 active:scale-95 py-2 sm:py-3 md:py-4 px-2 sm:px-3 min-h-[48px] sm:min-h-[56px] md:min-h-[64px] relative overflow-hidden disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none touch-manipulation",
-                      !showHint && !showWordDetails
-                        ? "bg-gradient-to-r from-orange-400 to-amber-500 hover:from-orange-500 hover:to-amber-600 active:from-orange-600 active:to-amber-700"
-                        : "bg-gradient-to-r from-red-400 to-pink-500 hover:from-red-500 hover:to-pink-600 active:from-red-600 active:to-pink-700",
+                      "bg-gradient-to-r from-orange-400 to-amber-500 hover:from-orange-500 hover:to-amber-600 active:from-orange-600 active:to-amber-700",
                     )}
-                    aria-label={
-                      !showHint && !showWordDetails
-                        ? "Get hint for this word"
-                        : "Mark word as needing practice"
-                    }
+                    aria-label="Get hint for this word"
                   >
                     <div className="absolute inset-0 bg-white/20 rounded-xl opacity-0 hover:opacity-100 transition-opacity duration-300"></div>
                     <div className="relative z-10 flex items-center justify-center">
                       <span className="text-base sm:text-lg mr-1 sm:mr-2 animate-wiggle">
-                        {!showHint && !showWordDetails ? "💡" : "😔"}
+                        💡
                       </span>
                       <div className="text-center">
                         <div className="font-bold text-xs sm:text-sm md:text-base">
-                          {!showHint && !showWordDetails
-                            ? "Get Hint"
-                            : "Need Practice"}
+                          Get Hint
                         </div>
                         <div className="text-xs opacity-90 mt-0.5 hidden sm:block">
-                          {!showHint && !showWordDetails
-                            ? "Need help? 💡"
-                            : "Need practice! 💪"}
+                          Need help? 💡
                         </div>
                       </div>
                     </div>
