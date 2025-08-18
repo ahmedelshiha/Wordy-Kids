@@ -121,7 +121,6 @@ export const EnhancedWordLibrary: React.FC<EnhancedWordLibraryProps> = ({
   const [isTablet, setIsTablet] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
 
-
   useEffect(() => {
     const checkMobile = () => {
       const width = window.innerWidth;
