@@ -1388,7 +1388,7 @@ export function InteractiveDashboardWordCard({
                         initial={{ opacity: 0, scale: 0.8 }}
                         animate={{ opacity: 1, scale: 1 }}
                         transition={{ delay: 0.4, duration: 0.5 }}
-                        className="bg-white/60 rounded-lg p-2 border border-yellow-200/80 shadow-inner"
+                        className="bg-white/60 rounded-lg p-1.5 sm:p-2 border border-yellow-200/80 shadow-inner"
                       >
                         <div className="text-2xl md:text-3xl mb-1">
                           {currentWord.emoji}
