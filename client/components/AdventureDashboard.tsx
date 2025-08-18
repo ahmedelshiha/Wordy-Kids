@@ -245,7 +245,10 @@ export const AdventureDashboard: React.FC<AdventureDashboardProps> = ({
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-50 via-blue-50 to-pink-50 p-4">
+    <div
+      className="min-h-screen bg-cover bg-center bg-no-repeat p-4"
+      style={{ backgroundImage: "url(/images/background.jpg)" }}
+    >
       <div className="max-w-7xl mx-auto space-y-6">
         {/* Header */}
         <div className="text-center mb-8">
