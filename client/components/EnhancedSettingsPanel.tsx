@@ -112,6 +112,7 @@ export const EnhancedSettingsPanel: React.FC<EnhancedSettingsPanelProps> = ({
   // Mobile-specific states
   const [activeTab, setActiveTab] = useState("audio");
   const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false);
+  const [showBottomNav, setShowBottomNav] = useState(true);
 
   // Mobile device detection
   const deviceInfo = useMobileDevice();
@@ -222,6 +223,13 @@ export const EnhancedSettingsPanel: React.FC<EnhancedSettingsPanelProps> = ({
         dailyReminders,
         achievementNotifications,
         streakReminders,
+      }),
+    );
+
+    localStorage.setItem(
+      "uiSettings",
+      JSON.stringify({
+        showBottomNav,
       }),
     );
 
@@ -378,6 +386,7 @@ export const EnhancedSettingsPanel: React.FC<EnhancedSettingsPanelProps> = ({
                     emoji: "🔔",
                   },
                   { id: "profile", label: "Profile", icon: User, emoji: "👤" },
+                  { id: "other", label: "Other", icon: Settings, emoji: "⚙️" },
                 ].map((tab) => (
                   <Button
                     key={tab.id}
