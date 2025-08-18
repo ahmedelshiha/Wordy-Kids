@@ -1649,8 +1649,6 @@ export function InteractiveDashboardWordCard({
               )}
             </AnimatePresence>
 
-
-
             {/* Action Buttons - Inside card at bottom */}
             {!isAnswered && (
               <div
@@ -1862,7 +1860,6 @@ export function InteractiveDashboardWordCard({
           </div>
         </div>
       </div> */}
-
 
       {/* Enhanced Achievement Popup for Journey Achievements */}
       {journeyAchievements.length > 0 && (
