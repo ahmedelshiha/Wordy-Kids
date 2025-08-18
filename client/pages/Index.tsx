@@ -1844,7 +1844,7 @@ export default function Index({ initialProfile }: IndexProps) {
     // Show completion feedback
     setFeedback({
       type: "celebration",
-      title: "Practice Complete! 🏆",
+      title: "Practice Complete! ����",
       message: `Great job practicing your tricky words!\n\n✅ Remembered: ${results.correctWords.length} words\n🎯 Accuracy: ${results.accuracy}%\n\nKeep practicing to master all your words!`,
       points: results.correctWords.length * 15,
       onContinue: () => setFeedback(null),
@@ -2061,7 +2061,7 @@ export default function Index({ initialProfile }: IndexProps) {
           )}
 
           {/* Main Content with Sidebar Layout */}
-          <main className="min-h-screen bg-white scroll-smooth">
+          <main className="min-h-screen scroll-smooth">
             {userRole === "parent" ? (
               <div className="w-full p-4 md:p-8 pb-20 lg:pb-8 mobile-parent-dashboard min-h-screen overflow-y-auto">
                 <ParentDashboard
@@ -2078,7 +2078,6 @@ export default function Index({ initialProfile }: IndexProps) {
                   {/* Enhanced Main Game Content Container */}
                   <div className="flex-1 min-w-0 overflow-hidden relative">
                     {/* Game Content Background */}
-                    <div className="absolute inset-0 bg-white/80 backdrop-blur-sm"></div>
                     <div className="relative z-10 w-full h-full p-2 sm:p-3 lg:p-6 pb-20 sm:pb-24 lg:pb-6 overflow-y-auto scroll-smooth">
                       {/* Desktop: Three-column layout with sidebar + main content + side card */}
                       <div className="flex gap-6 items-start">
