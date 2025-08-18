@@ -230,13 +230,12 @@ export const EnhancedWordCard: React.FC<EnhancedWordCardProps> = ({
         <Card
           className={cn(
             "absolute inset-0 w-full h-full backface-hidden",
-            `bg-gradient-to-br ${getCategoryColor(word.category)}`,
-            "shadow-xl hover:shadow-2xl rounded-xl overflow-hidden",
+            "jungle-card",
             "cursor-pointer transition-all duration-300",
             !isFlipped && "z-10",
           )}
         >
-          <CardContent className="p-3 sm:p-4 h-full flex flex-col text-white relative touch-optimized">
+          <CardContent className="p-3 sm:p-4 h-full flex flex-col text-white relative touch-optimized jungle-background">
             {/* Header with badges - Mobile optimized */}
             <div className="flex items-start mb-2 sm:mb-3">
               <div className="flex flex-wrap gap-1.5">
