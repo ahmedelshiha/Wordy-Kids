@@ -1654,7 +1654,7 @@ export function InteractiveDashboardWordCard({
             {/* Action Buttons - Inside card at bottom */}
             {!isAnswered && (
               <div
-                className="space-y-3 sm:space-y-4 px-2 sm:px-0 mt-20 sm:mt-24"
+                className="space-y-3 sm:space-y-4 px-2 sm:px-0 mt-32 sm:mt-40"
                 role="group"
                 aria-label="Word learning choices"
               >
