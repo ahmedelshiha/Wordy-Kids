@@ -2352,7 +2352,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                               </div>
                                               <div className="text-xs text-slate-500">
                                                 {currentWordIndex + 1}/
-                                                {displayWords.length} ���{" "}
+                                                {displayWords.length} 📝{" "}
                                                 {rememberedWords.size} ✅
                                               </div>
                                             </div>
