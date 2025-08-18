@@ -2072,13 +2072,13 @@ export default function Index({ initialProfile }: IndexProps) {
                 />
               </div>
             ) : (
-              <div className="min-h-screen bg-gradient-to-br from-white via-purple-50/30 to-pink-50/30 optimize-for-small-screen">
+              <div className="min-h-screen bg-cover bg-center bg-no-repeat optimize-for-small-screen" style={{backgroundImage: 'url(/images/background.jpg)'}}>
                 {/* Enhanced Desktop Layout */}
-                <div className="flex h-screen bg-gradient-to-br from-blue-50/30 to-purple-50/30">
+                <div className="flex h-screen">
                   {/* Enhanced Main Game Content Container */}
                   <div className="flex-1 min-w-0 overflow-hidden relative">
                     {/* Game Content Background */}
-                    <div className="absolute inset-0 bg-gradient-to-br from-white/90 to-blue-50/90 backdrop-blur-sm"></div>
+                    <div className="absolute inset-0 bg-white/80 backdrop-blur-sm"></div>
                     <div className="relative z-10 w-full h-full p-2 sm:p-3 lg:p-6 pb-20 sm:pb-24 lg:pb-6 overflow-y-auto scroll-smooth">
                       {/* Desktop: Three-column layout with sidebar + main content + side card */}
                       <div className="flex gap-6 items-start">
