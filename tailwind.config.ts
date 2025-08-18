@@ -85,6 +85,16 @@ export default {
           dark: "hsl(var(--sunshine-yellow-dark))", // #F57F17
           light: "hsl(var(--sunshine-yellow-light))", // #FFF176
         },
+        // Sky Blue Family
+        sky: {
+          DEFAULT: "hsl(var(--sky-blue))", // #2196F3
+          dark: "hsl(var(--sky-blue-dark))", // #1976D2
+          light: "hsl(var(--sky-blue-light))", // Light variant
+        },
+        // Dark Navy
+        navy: {
+          DEFAULT: "hsl(var(--dark-navy))", // #1A237E
+        },
       },
       borderRadius: {
         lg: "var(--radius)",
