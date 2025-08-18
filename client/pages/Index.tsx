@@ -1463,14 +1463,14 @@ export default function Index({ initialProfile }: IndexProps) {
         achievementMessage = `Outstanding! You remembered ALL ${totalWords} words in ${categoryDisplayName}! You're a true champion!\n\n🎁 Perfect Mastery Bonus: 200 points!\n🗺️ New adventure zone unlocked!`;
       } else if (accuracy >= 90) {
         achievementTitle = "Category Expert! 🎓";
-        achievementIcon = "����⭐";
+        achievementIcon = "🎓⭐";
         achievementMessage = `Excellent work! You mastered ${categoryDisplayName} with ${accuracy}% accuracy! Almost perfect!\n\n🎁 Expert Bonus: 150 points!`;
       } else if (accuracy >= 75) {
         achievementTitle = "Category Scholar! 📚✨";
         achievementIcon = "📚";
-        achievementMessage = `Great job! You completed ${categoryDisplayName} with ${accuracy}% accuracy! Keep up the good work!\n\n���� Scholar Bonus: 100 points!`;
+        achievementMessage = `Great job! You completed ${categoryDisplayName} with ${accuracy}% accuracy! Keep up the good work!\n\n🎁 Scholar Bonus: 100 points!`;
       } else if (accuracy >= 50) {
-        achievementTitle = "Category Explorer! ��️🌟";
+        achievementTitle = "Category Explorer! 🗺️🌟";
         achievementIcon = "🗺️";
         achievementMessage = `Good effort! You finished ${categoryDisplayName} with ${accuracy}% accuracy! Practice makes perfect!\n\n🎁 Explorer Bonus: 75 points!`;
       } else {
@@ -2352,7 +2352,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                               </div>
                                               <div className="text-xs text-slate-500">
                                                 {currentWordIndex + 1}/
-                                                {displayWords.length} ���{" "}
+                                                {displayWords.length} 📚{" "}
                                                 {rememberedWords.size} ✅
                                               </div>
                                             </div>
