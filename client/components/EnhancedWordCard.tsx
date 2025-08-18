@@ -19,7 +19,11 @@ import { audioService } from "@/lib/audioService";
 import { enhancedAudioService } from "@/lib/enhancedAudioService";
 import { useVoiceSettings } from "@/hooks/use-voice-settings";
 import { cn } from "@/lib/utils";
-import { jungleConfetti, getMascotForState, getRandomCollectible } from "@/lib/jungleAdventureEffects";
+import {
+  jungleConfetti,
+  getMascotForState,
+  getRandomCollectible,
+} from "@/lib/jungleAdventureEffects";
 import { jungleInteractions } from "@/lib/jungleSoundSystem";
 import { collectiblesManager } from "@/lib/collectiblesSystem";
 
@@ -257,7 +261,7 @@ export const EnhancedWordCard: React.FC<EnhancedWordCardProps> = ({
             {/* Jungle Mascot Area */}
             <div className="absolute top-2 right-2 z-20">
               <div className="jungle-mascot text-2xl">
-                {getMascotForState(showCelebration ? 'celebrating' : 'idle')}
+                {getMascotForState(showCelebration ? "celebrating" : "idle")}
               </div>
             </div>
 
@@ -470,8 +474,11 @@ export const EnhancedWordCard: React.FC<EnhancedWordCardProps> = ({
                           }}
                           className={cn(
                             "jungle-button-forgot w-full h-12 sm:h-14",
-                            ratedAs === "hard" && "ring-2 ring-pink-300 ring-opacity-75 scale-105",
-                            showCelebration && ratedAs === "hard" && "rating-glow rating-celebration",
+                            ratedAs === "hard" &&
+                              "ring-2 ring-pink-300 ring-opacity-75 scale-105",
+                            showCelebration &&
+                              ratedAs === "hard" &&
+                              "rating-glow rating-celebration",
                           )}
                           aria-label="Mark word as hard - I need more practice"
                         >
@@ -506,8 +513,11 @@ export const EnhancedWordCard: React.FC<EnhancedWordCardProps> = ({
                           }}
                           className={cn(
                             "jungle-button-hint w-full h-12 sm:h-14",
-                            ratedAs === "medium" && "ring-2 ring-orange-300 ring-opacity-75 scale-105",
-                            showCelebration && ratedAs === "medium" && "rating-glow rating-celebration",
+                            ratedAs === "medium" &&
+                              "ring-2 ring-orange-300 ring-opacity-75 scale-105",
+                            showCelebration &&
+                              ratedAs === "medium" &&
+                              "rating-glow rating-celebration",
                           )}
                           aria-label="Mark word as okay - I know it a little"
                         >
@@ -542,8 +552,11 @@ export const EnhancedWordCard: React.FC<EnhancedWordCardProps> = ({
                           }}
                           className={cn(
                             "jungle-button-remember w-full h-12 sm:h-14",
-                            ratedAs === "easy" && "ring-2 ring-yellow-300 ring-opacity-75 scale-105",
-                            showCelebration && ratedAs === "easy" && "rating-glow rating-celebration",
+                            ratedAs === "easy" &&
+                              "ring-2 ring-yellow-300 ring-opacity-75 scale-105",
+                            showCelebration &&
+                              ratedAs === "easy" &&
+                              "rating-glow rating-celebration",
                           )}
                           aria-label="Mark word as easy - I know it well"
                         >

@@ -3,21 +3,23 @@
  * Shows collected items without complex React hooks
  */
 
-import React, { useState, useEffect } from 'react';
-import { Card, CardContent } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { getCollectiblesData } from '@/lib/collectiblesSystem';
-import { cn } from '@/lib/utils';
-import { Gift } from 'lucide-react';
+import React, { useState, useEffect } from "react";
+import { Card, CardContent } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { getCollectiblesData } from "@/lib/collectiblesSystem";
+import { cn } from "@/lib/utils";
+import { Gift } from "lucide-react";
 
 interface SimpleCollectiblesDisplayProps {
   className?: string;
 }
 
-export const SimpleCollectiblesDisplay: React.FC<SimpleCollectiblesDisplayProps> = ({
-  className
-}) => {
-  const [collectiblesData, setCollectiblesData] = useState(() => getCollectiblesData());
+export const SimpleCollectiblesDisplay: React.FC<
+  SimpleCollectiblesDisplayProps
+> = ({ className }) => {
+  const [collectiblesData, setCollectiblesData] = useState(() =>
+    getCollectiblesData(),
+  );
 
   // Update data periodically
   useEffect(() => {
@@ -32,7 +34,9 @@ export const SimpleCollectiblesDisplay: React.FC<SimpleCollectiblesDisplayProps>
   const nextMilestone = getNextMilestone();
 
   return (
-    <Card className={cn("jungle-card border-2 border-yellow-400/50", className)}>
+    <Card
+      className={cn("jungle-card border-2 border-yellow-400/50", className)}
+    >
       <CardContent className="p-4">
         <div className="flex items-center justify-between mb-3">
           <h3 className="text-sm font-bold text-white flex items-center gap-2">
@@ -43,21 +47,27 @@ export const SimpleCollectiblesDisplay: React.FC<SimpleCollectiblesDisplayProps>
             {progress.totalCollected} items
           </Badge>
         </div>
-        
+
         <div className="grid grid-cols-3 gap-2 text-center">
           <div className="jungle-card p-2 border border-emerald-300/50">
             <div className="text-lg mb-1">🎨</div>
-            <div className="text-xs text-white font-bold">{progress.stickersCount}</div>
+            <div className="text-xs text-white font-bold">
+              {progress.stickersCount}
+            </div>
             <div className="text-xs text-white/80">Stickers</div>
           </div>
           <div className="jungle-card p-2 border border-purple-300/50">
             <div className="text-lg mb-1">💎</div>
-            <div className="text-xs text-white font-bold">{progress.gemsCount}</div>
+            <div className="text-xs text-white font-bold">
+              {progress.gemsCount}
+            </div>
             <div className="text-xs text-white/80">Gems</div>
           </div>
           <div className="jungle-card p-2 border border-orange-300/50">
             <div className="text-lg mb-1">🥭</div>
-            <div className="text-xs text-white font-bold">{progress.fruitsCount}</div>
+            <div className="text-xs text-white font-bold">
+              {progress.fruitsCount}
+            </div>
             <div className="text-xs text-white/80">Fruits</div>
           </div>
         </div>

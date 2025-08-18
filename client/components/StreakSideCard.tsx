@@ -272,7 +272,9 @@ export const StreakSideCard: React.FC<StreakSideCardProps> = ({
                       <span className="text-lg font-bold">
                         {content.streak}
                       </span>
-                      <span className="text-sm font-medium">Adventure Days!</span>
+                      <span className="text-sm font-medium">
+                        Adventure Days!
+                      </span>
                     </motion.div>
                   )}
                 </div>
@@ -296,7 +298,9 @@ export const StreakSideCard: React.FC<StreakSideCardProps> = ({
                         className="jungle-card p-3 text-center border-2 border-emerald-300/50"
                         whileHover={{ scale: 1.02 }}
                       >
-                        <div className="jungle-progress-book mx-auto mb-1">📚</div>
+                        <div className="jungle-progress-book mx-auto mb-1">
+                          📚
+                        </div>
                         <div className="text-lg font-bold text-white">
                           {progressData.wordsLearned}
                         </div>
@@ -311,7 +315,9 @@ export const StreakSideCard: React.FC<StreakSideCardProps> = ({
                         className="jungle-card p-3 text-center border-2 border-yellow-300/50"
                         whileHover={{ scale: 1.02 }}
                       >
-                        <div className="jungle-progress-treasure mx-auto mb-1">🏆</div>
+                        <div className="jungle-progress-treasure mx-auto mb-1">
+                          🏆
+                        </div>
                         <div className="text-lg font-bold text-white">
                           {progressData.totalPoints}
                         </div>
