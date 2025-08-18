@@ -1883,7 +1883,13 @@ export default function Index({ initialProfile }: IndexProps) {
       {isSessionInitialized && (
         <>
           {/* Ultra-Compact Header */}
-          <header className="relative overflow-hidden bg-cover bg-center bg-no-repeat text-white shadow-lg" style={{backgroundImage: 'linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url(/images/background.jpg)'}}>
+          <header
+            className="relative overflow-hidden bg-cover bg-center bg-no-repeat text-white shadow-lg"
+            style={{
+              backgroundImage:
+                "linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url(/images/background.jpg)",
+            }}
+          >
             <div className="relative container mx-auto px-3 py-1 md:py-1.5">
               {/* Mobile header - Ultra compact & optimized */}
               <div className="flex items-center justify-between md:hidden">
@@ -2072,7 +2078,10 @@ export default function Index({ initialProfile }: IndexProps) {
                 />
               </div>
             ) : (
-              <div className="min-h-screen bg-cover bg-center bg-no-repeat optimize-for-small-screen" style={{backgroundImage: 'url(/images/background.jpg)'}}>
+              <div
+                className="min-h-screen bg-cover bg-center bg-no-repeat optimize-for-small-screen"
+                style={{ backgroundImage: "url(/images/background.jpg)" }}
+              >
                 {/* Enhanced Desktop Layout */}
                 <div className="flex h-screen">
                   {/* Enhanced Main Game Content Container */}
