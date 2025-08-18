@@ -134,9 +134,16 @@ export const EnhancedWordCard: React.FC<EnhancedWordCardProps> = ({
 
       // Award a random collectible for correct answers
       const collectible = getRandomCollectible();
+      const isNewItem = collectiblesManager.collectItem(collectible);
+
       setTimeout(() => {
         jungleConfetti.collectibleFound(collectible);
         jungleInteractions.collectible();
+
+        // Show special celebration for new items
+        if (isNewItem) {
+          jungleInteractions.achievement();
+        }
       }, 800);
     } else if (rating === "medium") {
       jungleInteractions.buttonClick();
