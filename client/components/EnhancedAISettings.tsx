@@ -68,7 +68,7 @@ export interface ExtendedAISettings extends AISettings {
 }
 
 const defaultSettings: ExtendedAISettings = {
-  aiEnhancementEnabled: true,
+  aiEnhancementEnabled: false,
   aiAdaptiveDifficulty: true,
   aiPersonalizedHints: true,
   aiRealTimeAdaptation: true,

@@ -9,7 +9,7 @@ export interface AISettings {
 export const getAISettings = (): AISettings => {
   return {
     aiEnhancementEnabled: JSON.parse(
-      localStorage.getItem("aiEnhancementEnabled") || "true",
+      localStorage.getItem("aiEnhancementEnabled") || "false",
     ),
     aiAdaptiveDifficulty: JSON.parse(
       localStorage.getItem("aiAdaptiveDifficulty") || "true",
