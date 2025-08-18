@@ -188,7 +188,7 @@ export const ChildProfileSidebar: React.FC<ChildProfileSidebarProps> = ({
               {/* Weekly Adventure Progress */}
               {showWeeklyProgress && stats && (
                 <div className="bg-gradient-to-r from-educational-green/20 to-educational-blue/20 rounded-xl p-3 border border-educational-green/30 shadow-lg backdrop-blur-sm kid-card">
-                  <h4 className="text-xs font-bold text-white mb-2 flex items-center kid-text-big text-shadow">
+                  <h4 className="text-xs font-bold text-gray-800 mb-2 flex items-center kid-text-big text-shadow">
                     <TrendingUp className="w-4 h-4 mr-1 text-educational-yellow" />
                     🏆 This Week
                   </h4>
@@ -227,7 +227,7 @@ export const ChildProfileSidebar: React.FC<ChildProfileSidebarProps> = ({
               {/* Recent Awesome Moments */}
               {stats?.recentActivity && (
                 <div className="bg-gradient-to-r from-educational-pink/20 to-educational-purple/20 rounded-xl p-4 border border-educational-pink/30 shadow-lg backdrop-blur-sm kid-card">
-                  <h4 className="text-sm font-bold text-white mb-3 flex items-center kid-text-big text-shadow">
+                  <h4 className="text-sm font-bold text-gray-800 mb-3 flex items-center kid-text-big text-shadow">
                     <Activity className="w-5 h-5 mr-2 text-educational-yellow" />
                     🎉 Awesome Moments!
                   </h4>
