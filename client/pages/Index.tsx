@@ -142,6 +142,7 @@ import { getAISettings, isAIEnabled } from "@/lib/aiSettings";
 import { ChildProfileSidebar } from "@/components/ChildProfileSidebar";
 import { MobileChildProfileHeader } from "@/components/MobileChildProfileHeader";
 import { EnhancedStatsHelper } from "@/lib/enhancedStatsHelper";
+import { useBottomNavSettings } from "@/hooks/use-bottom-nav-settings";
 
 interface IndexProps {
   initialProfile?: any;
@@ -255,6 +256,9 @@ export default function Index({ initialProfile }: IndexProps) {
   const [excludedWordIds, setExcludedWordIds] = useState<Set<number>>(
     new Set(),
   );
+
+  // Bottom navigation settings
+  const { showBottomNav } = useBottomNavSettings();
 
   // Session persistence states
   const [showSessionRestoration, setShowSessionRestoration] = useState(false);
@@ -3460,33 +3464,35 @@ export default function Index({ initialProfile }: IndexProps) {
           )}
 
           {/* Mobile Bottom Navigation - Show for both child and parent modes */}
-          <MobileBottomNav
-            activeTab={userRole === "parent" ? "" : activeTab}
-            onTabChange={(tab) => {
-              setUserRole("child");
-              setActiveTab(tab);
-              setShowMobileMoreMenu(false);
-            }}
-            onSettingsClick={() => {
-              setShowSettings(true);
-              setShowMobileMoreMenu(false);
-            }}
-            onParentClick={() => {
-              setUserRole("parent");
-              setShowMobileMoreMenu(false);
-              window.scrollTo({ top: 0, behavior: "smooth" });
-            }}
-            onAdminClick={() => {
-              navigate("/admin");
-              setShowMobileMoreMenu(false);
-            }}
-            showMoreMenu={showMobileMoreMenu}
-            userRole={userRole}
-            onMoreToggle={() => setShowMobileMoreMenu(!showMobileMoreMenu)}
-            achievementCount={
-              learningStats.badges.filter((b) => b.earned).length
-            }
-          />
+          {showBottomNav && (
+            <MobileBottomNav
+              activeTab={userRole === "parent" ? "" : activeTab}
+              onTabChange={(tab) => {
+                setUserRole("child");
+                setActiveTab(tab);
+                setShowMobileMoreMenu(false);
+              }}
+              onSettingsClick={() => {
+                setShowSettings(true);
+                setShowMobileMoreMenu(false);
+              }}
+              onParentClick={() => {
+                setUserRole("parent");
+                setShowMobileMoreMenu(false);
+                window.scrollTo({ top: 0, behavior: "smooth" });
+              }}
+              onAdminClick={() => {
+                navigate("/admin");
+                setShowMobileMoreMenu(false);
+              }}
+              showMoreMenu={showMobileMoreMenu}
+              userRole={userRole}
+              onMoreToggle={() => setShowMobileMoreMenu(!showMobileMoreMenu)}
+              achievementCount={
+                learningStats.badges.filter((b) => b.earned).length
+              }
+            />
+          )}
 
           {/* Enhanced Floating Help Menu */}
           <FloatingHelpMenu
