@@ -2085,21 +2085,18 @@ export default function Index({ initialProfile }: IndexProps) {
                         {/* Child Profile Sidebar - Desktop Only */}
                         <div className="hidden lg:block w-64 xl:w-72 flex-shrink-0">
                           <div className="sticky top-6">
-                            <Card className="bg-card text-card-foreground shadow-sm backdrop-blur-sm ring-1 ring-black/5">
-                              <ChildProfileSidebar
-                                profile={currentProfile}
-                                stats={enhancedChildStats}
-                                isCollapsed={isSidebarCollapsed}
-                                onToggleCollapse={handleSidebarToggle}
-                                onProfileEdit={handleProfileEdit}
-                                onQuickAction={handleQuickAction}
-                                onLogout={handleSidebarLogout}
-                                showTimeOfDay={true}
-                                showWeeklyProgress={true}
-                                position="left"
-                                className="border-none shadow-none bg-transparent"
-                              />
-                            </Card>
+                            <ChildProfileSidebar
+                              profile={currentProfile}
+                              stats={enhancedChildStats}
+                              isCollapsed={isSidebarCollapsed}
+                              onToggleCollapse={handleSidebarToggle}
+                              onProfileEdit={handleProfileEdit}
+                              onQuickAction={handleQuickAction}
+                              onLogout={handleSidebarLogout}
+                              showTimeOfDay={true}
+                              showWeeklyProgress={true}
+                              position="left"
+                            />
                           </div>
                         </div>
 
@@ -3067,7 +3064,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                         </h3>
                                         <p className="text-xs md:text-sm text-gray-600 mb-2 md:mb-3 hidden md:block">
                                           Choose your difficulty and rescue
-                                          vowels! 🌟
+                                          vowels! ���
                                         </p>
                                         <div className="flex justify-center gap-1 mb-2 md:mb-3 flex-wrap">
                                           <span className="bg-educational-green/20 text-educational-green px-1.5 py-0.5 rounded-full text-xs">
