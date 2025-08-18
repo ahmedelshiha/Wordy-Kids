@@ -395,12 +395,17 @@ export default function LoginForm() {
             background: '#FFFFFF'
           }}
         >
-          <CardHeader className="pb-2 sm:pb-3 px-3 sm:px-4 md:px-6">
+          <CardHeader className="pb-4 px-0">
             <CardTitle
               id="login-title"
-              className="text-center text-base sm:text-lg text-gray-800 flex items-center justify-center gap-2"
+              className="text-center text-xl text-navy flex items-center justify-center gap-2"
+              style={{
+                fontFamily: 'Baloo 2',
+                fontWeight: 600,
+                fontSize: '20px'
+              }}
             >
-              <UserCheck className="w-5 h-5 text-blue-500" />
+              <UserCheck className="w-5 h-5 text-jungle" />
               Sign In to Continue
             </CardTitle>
           </CardHeader>
