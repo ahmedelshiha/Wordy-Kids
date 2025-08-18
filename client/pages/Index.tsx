@@ -1463,14 +1463,14 @@ export default function Index({ initialProfile }: IndexProps) {
         achievementMessage = `Outstanding! You remembered ALL ${totalWords} words in ${categoryDisplayName}! You're a true champion!\n\n🎁 Perfect Mastery Bonus: 200 points!\n🗺️ New adventure zone unlocked!`;
       } else if (accuracy >= 90) {
         achievementTitle = "Category Expert! 🎓";
-        achievementIcon = "����⭐";
+        achievementIcon = "🎓⭐";
         achievementMessage = `Excellent work! You mastered ${categoryDisplayName} with ${accuracy}% accuracy! Almost perfect!\n\n🎁 Expert Bonus: 150 points!`;
       } else if (accuracy >= 75) {
         achievementTitle = "Category Scholar! 📚✨";
         achievementIcon = "📚";
-        achievementMessage = `Great job! You completed ${categoryDisplayName} with ${accuracy}% accuracy! Keep up the good work!\n\n���� Scholar Bonus: 100 points!`;
+        achievementMessage = `Great job! You completed ${categoryDisplayName} with ${accuracy}% accuracy! Keep up the good work!\n\n🎁 Scholar Bonus: 100 points!`;
       } else if (accuracy >= 50) {
-        achievementTitle = "Category Explorer! ��️🌟";
+        achievementTitle = "Category Explorer! 🗺️🌟";
         achievementIcon = "🗺️";
         achievementMessage = `Good effort! You finished ${categoryDisplayName} with ${accuracy}% accuracy! Practice makes perfect!\n\n🎁 Explorer Bonus: 75 points!`;
       } else {
@@ -2352,7 +2352,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                               </div>
                                               <div className="text-xs text-slate-500">
                                                 {currentWordIndex + 1}/
-                                                {displayWords.length} ���{" "}
+                                                {displayWords.length} 📝{" "}
                                                 {rememberedWords.size} ✅
                                               </div>
                                             </div>
@@ -2520,10 +2520,10 @@ export default function Index({ initialProfile }: IndexProps) {
                                                           ✨
                                                         </div>
                                                         <div className="absolute top-6 right-6 text-3xl animate-spin">
-                                                          ����
+                                                          ✨
                                                         </div>
                                                         <div className="absolute bottom-4 left-6 text-2xl animate-bounce delay-300">
-                                                          ���
+                                                          🌟
                                                         </div>
                                                         <div className="absolute bottom-6 right-4 text-2xl animate-pulse delay-500">
                                                           💫
@@ -2862,7 +2862,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                                       <div className="flex justify-center gap-3 sm:gap-4 text-sm">
                                                         <div className="flex items-center gap-1 text-green-600 bg-green-50 px-2 py-1 rounded-lg">
                                                           <span className="text-sm">
-                                                            ���
+                                                            ✅
                                                           </span>
                                                           <span className="font-bold text-sm">
                                                             {
@@ -3091,7 +3091,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                           size="sm"
                                         >
                                           <Play className="w-3 h-3 md:w-4 md:h-4 mr-1" />
-                                          Start Adventure! ���
+                                          Start Adventure! 🚀
                                         </Button>
                                       </CardContent>
                                     </Card>
@@ -3134,7 +3134,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                           <div className="flex justify-between items-center p-3 bg-white rounded-lg">
                                             <div className="flex items-center gap-3">
                                               <span className="text-2xl">
-                                                ���
+                                                📊
                                               </span>
                                               <div>
                                                 <div className="font-semibold">
@@ -3243,7 +3243,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                 <div className="space-y-6">
                                   <div className="flex items-center justify-between">
                                     <h2 className="text-2xl font-bold text-gray-800">
-                                      ���� Word Matching Game
+                                      🎯 Word Matching Game
                                     </h2>
                                   </div>
                                   <WordMatchingGame

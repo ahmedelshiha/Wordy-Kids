@@ -439,7 +439,7 @@ export const SimplifiedChildSidebar: React.FC<SimplifiedChildSidebarProps> = ({
                 {isGuest ? (
                   <span className="text-lg">✨</span>
                 ) : (
-                  <span className="text-lg">����</span>
+                  <span className="text-lg">🎧</span>
                 )}
               </Button>
             </motion.div>
