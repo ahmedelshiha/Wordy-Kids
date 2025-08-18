@@ -187,27 +187,29 @@ export const ChildProfileSidebar: React.FC<ChildProfileSidebarProps> = ({
 
               {/* Weekly Adventure Progress */}
               {showWeeklyProgress && stats && (
-                <div className="bg-white/60 rounded-xl p-3 border border-slate-200 shadow-sm backdrop-blur-sm kid-card">
-                  <h4 className="text-xs font-bold text-gray-800 mb-2 flex items-center kid-text-big text-shadow">
-                    <TrendingUp className="w-4 h-4 mr-1 text-educational-yellow" />
-                    🏆 This Week
+                <div className="jungle-card p-3 border-2 border-emerald-300/50 shadow-lg kid-card">
+                  <h4 className="text-xs font-bold text-white mb-2 flex items-center kid-text-big text-shadow">
+                    <div className="jungle-progress-treasure mr-2">🏆</div>
+                    🌿 Adventure Progress
                   </h4>
                   <div className="space-y-2">
                     <div className="flex justify-between items-center">
-                      <span className="text-xs font-medium text-gray-700 flex items-center">
-                        🎮 Learning Sessions
+                      <span className="text-xs font-medium text-white flex items-center">
+                        <div className="jungle-progress-torch mr-1">⏳</div>
+                        Adventure Time
                       </span>
-                      <Badge className="text-xs bg-gradient-to-r from-educational-yellow to-educational-orange text-white border-educational-yellow shadow-md font-bold">
-                        {stats.sessionsThisWeek || 0} ✨
-                      </Badge>
+                      <div className="jungle-collectible">
+                        <span className="font-bold">{stats.sessionsThisWeek || 0}</span> 🔥
+                      </div>
                     </div>
                     <div className="flex justify-between items-center">
-                      <span className="text-xs font-medium text-gray-700 flex items-center">
-                        📚 Words Mastered
+                      <span className="text-xs font-medium text-white flex items-center">
+                        <div className="jungle-progress-book mr-1">📚</div>
+                        Words Learned
                       </span>
-                      <Badge className="text-xs bg-gradient-to-r from-educational-blue to-educational-purple text-white border-educational-blue shadow-md font-bold">
-                        {stats.wordsThisWeek || 0} 🎆
-                      </Badge>
+                      <div className="jungle-collectible">
+                        <span className="font-bold">{stats.wordsThisWeek || 0}</span> ⭐
+                      </div>
                     </div>
                     <div className="flex justify-between items-center">
                       <span className="text-xs font-medium text-gray-700 flex items-center">
