@@ -1056,7 +1056,7 @@
 /* AI Card responsive backgrounds */
 .ai-card-background {
   background-image: url("/images/ai-card-desktop-bg.jpg");
-  background-size: cover;
+  background-size: contain;
   background-position: center;
   background-repeat: no-repeat;
 }
