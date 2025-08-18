@@ -373,7 +373,7 @@ export function InteractiveDashboardWordCard({
           id: "great_session",
           title: "GREAT SESSION!",
           description: `Well done! ${accuracy}% accuracy. Keep it up!`,
-          emoji: "🎯",
+          emoji: "��",
           unlocked: true,
         });
       } else if (accuracy >= 50) {
@@ -862,7 +862,7 @@ export function InteractiveDashboardWordCard({
             transition: { duration: 0.3 },
           }}
           whileTap={{ scale: 0.95 }}
-          className="w-48 h-32 mx-auto flex items-center justify-center bg-gradient-to-br from-blue-100 via-purple-100 to-pink-100 rounded-2xl shadow-lg hover:shadow-xl cursor-pointer group relative overflow-hidden"
+          className="w-48 h-32 mx-auto flex items-center justify-center rounded-2xl shadow-lg hover:shadow-xl cursor-pointer group relative overflow-hidden"
           onClick={playPronunciation}
         >
           {/* Animated background elements */}
