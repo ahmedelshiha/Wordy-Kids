@@ -257,6 +257,9 @@ export default function Index({ initialProfile }: IndexProps) {
     new Set(),
   );
 
+  // Bottom navigation settings
+  const { showBottomNav } = useBottomNavSettings();
+
   // Session persistence states
   const [showSessionRestoration, setShowSessionRestoration] = useState(false);
   const [sessionRestorationData, setSessionRestorationData] =
