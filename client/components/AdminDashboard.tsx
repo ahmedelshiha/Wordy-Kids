@@ -121,7 +121,17 @@ import {
   getWordsByCategory,
 } from "@/data/wordsDatabase";
 
-interface AdminWord extends Word {
+interface AdminWord {
+  id: string;
+  word: string;
+  pronunciation: string;
+  definition: string;
+  example: string;
+  funFact: string;
+  emoji: string;
+  category: string;
+  difficulty: "easy" | "medium" | "hard";
+  imageUrl?: string;
   status: "approved" | "pending" | "rejected";
   submittedBy?: string;
   submittedAt: Date;
