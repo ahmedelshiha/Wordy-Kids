@@ -288,6 +288,7 @@ export const EnhancedSettingsPanel: React.FC<EnhancedSettingsPanelProps> = ({
     setDailyReminders(true);
     setAchievementNotifications(true);
     setStreakReminders(true);
+    setShowBottomNav(false); // Default to disabled
 
     document.documentElement.classList.remove("dark");
     setHasUnsavedChanges(true);
