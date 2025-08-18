@@ -233,7 +233,10 @@ export function MobileBottomNav({
             {primaryTabs.map((tab) => (
               <button
                 key={tab.id}
-                onClick={() => onTabChange(tab.id)}
+                onClick={(e) => {
+                  jungleInteractions.navigation(e.currentTarget);
+                  onTabChange(tab.id);
+                }}
                 className={cn(
                   "kid-nav-item flex flex-col items-center gap-0 p-0 rounded-lg transition-all duration-200 transform active:scale-95 relative min-w-0 flex-1 mx-0.5 min-h-[10px] justify-center overflow-visible",
                   activeTab === tab.id
