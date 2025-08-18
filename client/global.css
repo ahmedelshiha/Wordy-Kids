@@ -355,6 +355,7 @@
     background-attachment: fixed;
     -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
     font-family:
+      "Baloo 2",
       "Nunito",
       "Poppins",
       -apple-system,
@@ -362,6 +363,8 @@
       "Segoe UI",
       Roboto,
       sans-serif;
+    font-size: 18px;
+    line-height: 1.5;
   }
 
   /* Mobile background */
