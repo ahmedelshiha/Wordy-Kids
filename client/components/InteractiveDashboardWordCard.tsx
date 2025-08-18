@@ -1352,7 +1352,6 @@ export function InteractiveDashboardWordCard({
               </motion.p>
             </header>
 
-
             {/* Hint Display */}
             <AnimatePresence>
               {showHint && !showWordDetails && (
@@ -1457,7 +1456,8 @@ export function InteractiveDashboardWordCard({
                               className={cn(
                                 "w-4 h-4 mr-1",
                                 "drop-shadow-lg",
-                                isPlaying && "animate-bounce text-yellow-100 scale-110",
+                                isPlaying &&
+                                  "animate-bounce text-yellow-100 scale-110",
                               )}
                             />
                             <span className="text-sm font-medium">
@@ -1708,7 +1708,7 @@ export function InteractiveDashboardWordCard({
                       "w-full text-white font-bold border-0 rounded-lg sm:rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 active:scale-95 py-2 sm:py-3 md:py-4 px-2 sm:px-3 min-h-[48px] sm:min-h-[56px] md:min-h-[64px] relative overflow-hidden disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none touch-manipulation",
                       !showHint && !showWordDetails
                         ? "bg-gradient-to-r from-orange-400 to-amber-500 hover:from-orange-500 hover:to-amber-600 active:from-orange-600 active:to-amber-700"
-                        : "bg-gradient-to-r from-red-400 to-pink-500 hover:from-red-500 hover:to-pink-600 active:from-red-600 active:to-pink-700"
+                        : "bg-gradient-to-r from-red-400 to-pink-500 hover:from-red-500 hover:to-pink-600 active:from-red-600 active:to-pink-700",
                     )}
                     aria-label={
                       !showHint && !showWordDetails
