@@ -1940,7 +1940,7 @@ export default function Index({ initialProfile }: IndexProps) {
                   🎯
                 </div>
                 <div className="hidden md:block absolute bottom-12 right-8 text-xl animate-gentle-float delay-500">
-                  ��
+                  🚀
                 </div>
                 <div className="hidden md:block absolute top-1/2 left-4 text-lg animate-sparkle">
                   ✨
@@ -2862,7 +2862,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                                       <div className="flex justify-center gap-3 sm:gap-4 text-sm">
                                                         <div className="flex items-center gap-1 text-green-600 bg-green-50 px-2 py-1 rounded-lg">
                                                           <span className="text-sm">
-                                                            ���
+                                                            ✅
                                                           </span>
                                                           <span className="font-bold text-sm">
                                                             {
@@ -3091,7 +3091,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                           size="sm"
                                         >
                                           <Play className="w-3 h-3 md:w-4 md:h-4 mr-1" />
-                                          Start Adventure! ���
+                                          Start Adventure! 🚀
                                         </Button>
                                       </CardContent>
                                     </Card>
@@ -3134,7 +3134,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                           <div className="flex justify-between items-center p-3 bg-white rounded-lg">
                                             <div className="flex items-center gap-3">
                                               <span className="text-2xl">
-                                                ���
+                                                🏆
                                               </span>
                                               <div>
                                                 <div className="font-semibold">
@@ -3243,7 +3243,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                 <div className="space-y-6">
                                   <div className="flex items-center justify-between">
                                     <h2 className="text-2xl font-bold text-gray-800">
-                                      ���� Word Matching Game
+                                      🎲 Word Matching Game
                                     </h2>
                                   </div>
                                   <WordMatchingGame
