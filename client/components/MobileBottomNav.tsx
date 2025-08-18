@@ -278,7 +278,10 @@ export function MobileBottomNav({
 
             {/* Magical More Menu Button */}
             <button
-              onClick={onMoreToggle}
+              onClick={(e) => {
+                jungleInteractions.buttonClick(e.currentTarget);
+                onMoreToggle();
+              }}
               className={cn(
                 "kid-nav-item flex flex-col items-center gap-0 p-0 rounded-lg transition-all duration-200 transform active:scale-95 min-w-0 flex-1 mx-0.5 min-h-[10px] justify-center overflow-visible",
                 showMoreMenu
