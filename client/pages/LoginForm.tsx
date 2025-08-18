@@ -380,17 +380,6 @@ export default function LoginForm() {
             </div>
           </div>
 
-          <h1
-            className="text-sunshine text-center mb-2"
-            style={{
-              fontFamily: 'Baloo 2',
-              fontWeight: 800,
-              fontSize: 'clamp(28px, 5vw, 48px)',
-              textShadow: '2px 2px 4px rgba(0,0,0,0.3)'
-            }}
-          >
-            Wordy Jungle Adventure
-          </h1>
 
           <p
             className="text-navy text-lg"
