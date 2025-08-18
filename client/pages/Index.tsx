@@ -1943,14 +1943,14 @@ export default function Index({ initialProfile }: IndexProps) {
                 <div className="hidden md:block absolute top-4 right-1/4 text-xl animate-gentle-bounce delay-700 jungle-leaf">
                   🍀
                 </div>
-                <div className="hidden md:block absolute bottom-8 left-12 text-2xl animate-gentle-bounce delay-1000">
-                  🎯
+                <div className="hidden md:block absolute bottom-8 left-12 text-2xl animate-gentle-bounce delay-1000 jungle-leaf">
+                  🦜
                 </div>
-                <div className="hidden md:block absolute bottom-12 right-8 text-xl animate-gentle-float delay-500">
-                  🚀
+                <div className="hidden md:block absolute bottom-12 right-8 text-xl animate-gentle-float delay-500 jungle-leaf">
+                  🌈
                 </div>
                 <div className="hidden md:block absolute top-1/2 left-4 text-lg animate-sparkle">
-                  ✨
+                  🦋
                 </div>
                 <div className="hidden md:block absolute top-1/3 right-4 text-xl animate-gentle-bounce delay-700">
                   🌈
@@ -3543,7 +3543,7 @@ export default function Index({ initialProfile }: IndexProps) {
           <MagicalPortalEffect
             isActive={backgroundAnimationsEnabled && activeTab === "learn"}
             intensity="medium"
-            particleEmojis={["✨", "🌟", "⭐", "💫", "🔮", "🌈", "🦄", "🎉"]}
+            particleEmojis={["✨", "🌟", "⭐", "��", "🔮", "🌈", "🦄", "🎉"]}
           />
 
           {/* Enhanced Reward Celebration */}
