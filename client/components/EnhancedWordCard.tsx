@@ -529,12 +529,9 @@ export const EnhancedWordCard: React.FC<EnhancedWordCardProps> = ({
                             }
                           }}
                           className={cn(
-                            "w-full h-12 sm:h-14 bg-gradient-to-b from-green-400/30 to-emerald-600/30 hover:from-green-400/50 hover:to-emerald-600/50 active:from-green-400/60 active:to-emerald-600/60 border border-green-400/50 hover:border-green-400/70 text-white font-bold mobile-safe-text touch-target-large haptic-heavy transition-all duration-300 flex flex-col items-center justify-center gap-0.5 rounded-lg shadow-lg hover:shadow-xl transform hover:scale-105 active:scale-95 rating-button-enhanced",
-                            ratedAs === "easy" &&
-                              "ring-2 ring-green-300 ring-opacity-75 scale-105 from-green-400/70 to-emerald-600/70 border-green-300",
-                            showCelebration &&
-                              ratedAs === "easy" &&
-                              "rating-glow rating-celebration",
+                            "jungle-button-remember w-full h-12 sm:h-14",
+                            ratedAs === "easy" && "ring-2 ring-yellow-300 ring-opacity-75 scale-105",
+                            showCelebration && ratedAs === "easy" && "rating-glow rating-celebration",
                           )}
                           aria-label="Mark word as easy - I know it well"
                         >
@@ -546,14 +543,14 @@ export const EnhancedWordCard: React.FC<EnhancedWordCardProps> = ({
                                 : "animate-celebration-sparkles",
                             )}
                           >
-                            ����
+                            😀
                           </span>
                           <span className="text-xs font-bold leading-tight">
-                            Easy
+                            I Remember!
                           </span>
                         </Button>
                         <p className="text-xs text-white/80 text-center leading-tight mobile-safe-text hidden sm:block">
-                          I know it!
+                          I got it! 🌟
                         </p>
                       </div>
                     </div>
