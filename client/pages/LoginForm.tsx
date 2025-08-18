@@ -428,7 +428,8 @@ export default function LoginForm() {
                     onBlur={() => handleBlur("email")}
                     onKeyDown={(e) => handleKeyDown(e, "password")}
                     disabled={isLoading}
-                    className={`${getInputClassName("email")} text-base sm:text-sm min-h-[44px] touch-target`}
+                    className={`${getInputClassName("email")} min-h-[56px] touch-target`}
+                    style={{ fontFamily: 'Baloo 2' }}
                     aria-describedby={errors.email ? "email-error" : undefined}
                     aria-invalid={!!errors.email}
                   />
