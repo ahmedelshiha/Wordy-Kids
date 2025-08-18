@@ -386,7 +386,15 @@ export default function LoginForm() {
         </div>
 
         {/* Enhanced Login Card */}
-        <Card className="shadow-lg sm:shadow-2xl border-0 bg-white/95 backdrop-blur-sm animate-fade-in animation-delay-100 mx-1 sm:mx-0">
+        <Card
+          className="border-0 bg-white animate-fade-in animation-delay-100 mx-1 sm:mx-0"
+          style={{
+            borderRadius: '24px',
+            padding: '32px',
+            boxShadow: '0 12px 32px rgba(0,0,0,0.15), inset 0 1px 0 rgba(255,255,255,0.5)',
+            background: '#FFFFFF'
+          }}
+        >
           <CardHeader className="pb-2 sm:pb-3 px-3 sm:px-4 md:px-6">
             <CardTitle
               id="login-title"
