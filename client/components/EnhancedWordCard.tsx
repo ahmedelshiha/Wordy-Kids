@@ -259,11 +259,11 @@ export const EnhancedWordCard: React.FC<EnhancedWordCardProps> = ({
         >
           <CardContent className="p-3 sm:p-4 h-full flex flex-col text-white relative touch-optimized jungle-background">
             {/* Jungle Mascot Area */}
-            <div className="absolute top-2 right-2 z-20">
+            {/* <div className="absolute top-2 right-2 z-20">
               <div className="jungle-mascot text-2xl">
                 {getMascotForState(showCelebration ? "celebrating" : "idle")}
               </div>
-            </div>
+            </div> */}
 
             {/* Header with badges - Mobile optimized */}
             <div className="flex items-start mb-2 sm:mb-3">
