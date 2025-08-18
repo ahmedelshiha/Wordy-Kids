@@ -1030,6 +1030,51 @@
   }
 }
 
+/* Login page responsive backgrounds */
+.login-background {
+  background-image: url("/images/background.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+/* Mobile login background */
+@media (max-width: 767px) {
+  .login-background {
+    background-image: url("/images/background_mobile.jpg");
+  }
+}
+
+/* Tablet login background */
+@media (min-width: 768px) and (max-width: 1024px) {
+  .login-background {
+    background-image: url("/images/background_tablet.jpg");
+  }
+}
+
+/* AI Card responsive backgrounds */
+.ai-card-background {
+  background-image: url("/images/ai-card-desktop-bg.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+/* Mobile AI card background */
+@media (max-width: 640px) {
+  .ai-card-background {
+    background-image: url("/images/ai-card-mobile-bg.jpg");
+  }
+}
+
+/* Tablet AI card background */
+@media (min-width: 641px) and (max-width: 1024px) {
+  .ai-card-background {
+    background-image: url("/images/ai-card-tablet-bg.jpg");
+  }
+}
+
 /* Enhanced mobile touch interactions */
 .touch-target {
   min-height: 44px;

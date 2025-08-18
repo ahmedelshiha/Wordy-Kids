@@ -328,7 +328,7 @@ export default function LoginForm() {
     !Object.keys(errors).length && formData.email && formData.password;
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 flex items-center justify-center p-3 sm:p-6 md:p-8 relative overflow-hidden safe-area-padding-top safe-area-padding-bottom">
+    <div className="min-h-screen login-background flex items-center justify-center p-3 sm:p-6 md:p-8 relative overflow-hidden safe-area-padding-top safe-area-padding-bottom">
       {/* Compact Background Pattern - fewer elements on mobile */}
       <div className="absolute inset-0 opacity-10">
         <div className="absolute top-8 left-8 text-2xl sm:text-4xl animate-gentle-float">

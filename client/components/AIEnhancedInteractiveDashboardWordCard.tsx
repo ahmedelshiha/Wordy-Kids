@@ -1271,11 +1271,11 @@ export function AIEnhancedInteractiveDashboardWordCard({
         <Card
           className={cn(
             "w-full max-w-2xl mx-auto relative overflow-hidden",
-            "bg-gradient-to-br from-white via-blue-50/30 to-purple-50/30",
+            "ai-card-background",
             "shadow-md hover:shadow-lg border-0 rounded-xl sm:rounded-2xl",
             "backdrop-blur-sm ring-1 ring-black/5",
             celebrationEffect &&
-              "animate-pulse shadow-2xl border-yellow-400 border-4 bg-gradient-to-br from-yellow-50 to-orange-50",
+              "animate-pulse shadow-2xl border-yellow-400 border-4",
           )}
         >
           {/* Celebration Sparkles */}
