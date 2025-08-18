@@ -3464,33 +3464,35 @@ export default function Index({ initialProfile }: IndexProps) {
           )}
 
           {/* Mobile Bottom Navigation - Show for both child and parent modes */}
-          <MobileBottomNav
-            activeTab={userRole === "parent" ? "" : activeTab}
-            onTabChange={(tab) => {
-              setUserRole("child");
-              setActiveTab(tab);
-              setShowMobileMoreMenu(false);
-            }}
-            onSettingsClick={() => {
-              setShowSettings(true);
-              setShowMobileMoreMenu(false);
-            }}
-            onParentClick={() => {
-              setUserRole("parent");
-              setShowMobileMoreMenu(false);
-              window.scrollTo({ top: 0, behavior: "smooth" });
-            }}
-            onAdminClick={() => {
-              navigate("/admin");
-              setShowMobileMoreMenu(false);
-            }}
-            showMoreMenu={showMobileMoreMenu}
-            userRole={userRole}
-            onMoreToggle={() => setShowMobileMoreMenu(!showMobileMoreMenu)}
-            achievementCount={
-              learningStats.badges.filter((b) => b.earned).length
-            }
-          />
+          {showBottomNav && (
+            <MobileBottomNav
+              activeTab={userRole === "parent" ? "" : activeTab}
+              onTabChange={(tab) => {
+                setUserRole("child");
+                setActiveTab(tab);
+                setShowMobileMoreMenu(false);
+              }}
+              onSettingsClick={() => {
+                setShowSettings(true);
+                setShowMobileMoreMenu(false);
+              }}
+              onParentClick={() => {
+                setUserRole("parent");
+                setShowMobileMoreMenu(false);
+                window.scrollTo({ top: 0, behavior: "smooth" });
+              }}
+              onAdminClick={() => {
+                navigate("/admin");
+                setShowMobileMoreMenu(false);
+              }}
+              showMoreMenu={showMobileMoreMenu}
+              userRole={userRole}
+              onMoreToggle={() => setShowMobileMoreMenu(!showMobileMoreMenu)}
+              achievementCount={
+                learningStats.badges.filter((b) => b.earned).length
+              }
+            />
+          )}
 
           {/* Enhanced Floating Help Menu */}
           <FloatingHelpMenu
