@@ -115,7 +115,7 @@ export const ChildProfileSidebar: React.FC<ChildProfileSidebarProps> = ({
       variants={sidebarVariants}
       animate={isCollapsed ? "collapsed" : "expanded"}
       className={cn(
-        "bg-gradient-to-b from-blue-50 to-purple-50",
+        "bg-white/95 backdrop-blur-sm",
         "flex flex-col h-fit max-h-full",
         "transition-all duration-300",
         "relative border border-slate-200 rounded-xl shadow-md",
@@ -123,7 +123,7 @@ export const ChildProfileSidebar: React.FC<ChildProfileSidebarProps> = ({
       )}
     >
       {/* Simplified Sidebar Header */}
-      <div className="p-3 bg-gradient-to-r from-blue-100 to-purple-100 relative z-10 rounded-t-xl border-b border-slate-200">
+      <div className="p-3 bg-slate-50/80 relative z-10 rounded-t-xl border-b border-slate-200">
         <div className="flex items-center justify-between">
           <AnimatePresence mode="wait">
             {!isCollapsed && (
@@ -187,7 +187,7 @@ export const ChildProfileSidebar: React.FC<ChildProfileSidebarProps> = ({
 
               {/* Weekly Adventure Progress */}
               {showWeeklyProgress && stats && (
-                <div className="bg-gradient-to-r from-educational-green/20 to-educational-blue/20 rounded-xl p-3 border border-educational-green/30 shadow-lg backdrop-blur-sm kid-card">
+                <div className="bg-white/60 rounded-xl p-3 border border-slate-200 shadow-sm backdrop-blur-sm kid-card">
                   <h4 className="text-xs font-bold text-gray-800 mb-2 flex items-center kid-text-big text-shadow">
                     <TrendingUp className="w-4 h-4 mr-1 text-educational-yellow" />
                     🏆 This Week
@@ -226,7 +226,7 @@ export const ChildProfileSidebar: React.FC<ChildProfileSidebarProps> = ({
 
               {/* Recent Awesome Moments */}
               {stats?.recentActivity && (
-                <div className="bg-gradient-to-r from-educational-pink/20 to-educational-purple/20 rounded-xl p-4 border border-educational-pink/30 shadow-lg backdrop-blur-sm kid-card">
+                <div className="bg-white/60 rounded-xl p-4 border border-slate-200 shadow-sm backdrop-blur-sm kid-card">
                   <h4 className="text-sm font-bold text-gray-800 mb-3 flex items-center kid-text-big text-shadow">
                     <Activity className="w-5 h-5 mr-2 text-educational-yellow" />
                     🎉 Awesome Moments!
@@ -289,7 +289,7 @@ export const ChildProfileSidebar: React.FC<ChildProfileSidebarProps> = ({
       </div>
 
       {/* Enhanced Sidebar Footer */}
-      <div className="p-4 border-t border-educational-purple/30 bg-gradient-to-r from-educational-blue/40 via-educational-purple/40 to-educational-pink/40 backdrop-blur-sm relative z-10 rounded-b-2xl">
+      <div className="p-4 border-t border-slate-200 bg-slate-50/80 backdrop-blur-sm relative z-10 rounded-b-2xl">
         <AnimatePresence mode="wait">
           {!isCollapsed ? (
             <motion.div
