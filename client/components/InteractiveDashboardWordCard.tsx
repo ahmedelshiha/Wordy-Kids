@@ -1135,7 +1135,7 @@ export function InteractiveDashboardWordCard({
       >
         <Card
           className={cn(
-            "w-[800px] h-[600px] mx-auto relative overflow-hidden",
+            "w-[340px] h-[480px] sm:w-[480px] sm:h-[540px] md:w-[600px] md:h-[560px] lg:w-[800px] lg:h-[600px] mx-auto relative overflow-hidden",
             "ai-card-background",
             "shadow-lg hover:shadow-xl border-0 rounded-2xl sm:rounded-3xl",
             "backdrop-blur-sm ring-1 ring-black/5",
