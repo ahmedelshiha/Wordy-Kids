@@ -323,6 +323,17 @@ export function InteractiveDashboardWordCard({
     return () => clearTimeout(timer);
   }, [currentWordIndex]);
 
+  // Automatically pronounce word when hint is shown
+  useEffect(() => {
+    if (showHint && currentWord && !isPlaying) {
+      // Small delay to allow hint card animation to start
+      const timer = setTimeout(() => {
+        playPronunciation();
+      }, 400);
+      return () => clearTimeout(timer);
+    }
+  }, [showHint, currentWord]);
+
   const playPronunciation = () => {
     if (currentWord && !isPlaying) {
       triggerHapticFeedback("light"); // Light feedback for audio action
