@@ -456,9 +456,10 @@ export default function LoginForm() {
               <div className="space-y-1 sm:space-y-2">
                 <Label
                   htmlFor="password"
-                  className="text-sm font-medium text-gray-700 flex items-center gap-2"
+                  className="text-base font-semibold text-navy flex items-center gap-2"
+                  style={{ fontFamily: 'Baloo 2', fontWeight: 600 }}
                 >
-                  <Lock className="w-4 h-4 text-gray-500" />
+                  <Lock className="w-4 h-4 text-navy" />
                   Password
                 </Label>
                 <div className="relative">
