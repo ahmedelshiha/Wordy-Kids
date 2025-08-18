@@ -1214,8 +1214,66 @@ export function InteractiveDashboardWordCard({
             </div>
             */}
 
+            {/* Game Instructions */}
+            <header className="text-center mb-3 sm:mb-4 md:mb-5" role="banner">
+              <motion.h1
+                key={`prompt-${currentWordIndex}`}
+                initial={{ opacity: 0, y: -10, scale: 0.95 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                transition={{ duration: 0.4, type: "spring", damping: 20 }}
+                className="text-base sm:text-lg md:text-xl lg:text-2xl font-bold text-gray-800 mb-1 sm:mb-2"
+              >
+                {(() => {
+                  const prompts = [
+                    "🤔 What is this?",
+                    "🎯 Can you guess?",
+                    "🔍 What do you see?",
+                    "✨ Name this object!",
+                    "🧠 Think you know?",
+                    "👀 Look closely...",
+                    "🌟 What could this be?",
+                    "🎪 Mystery object!",
+                    "🎨 Identify this!",
+                    "🚀 What's shown here?",
+                  ];
+
+                  // Use word index and some randomness for variety
+                  const promptIndex =
+                    (currentWordIndex + (currentWord?.id || 0)) %
+                    prompts.length;
+                  return prompts[promptIndex];
+                })()}
+              </motion.h1>
+              <motion.p
+                key={`desc-${currentWordIndex}`}
+                initial={{ opacity: 0, y: 5 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.4, delay: 0.1 }}
+                className="text-xs sm:text-sm md:text-base text-gray-600 px-2"
+                id="game-instructions"
+              >
+                {(() => {
+                  const descriptions = [
+                    "Look at the picture and guess the word!",
+                    "Study the image and make your guess!",
+                    "Take a close look and identify it!",
+                    "Examine the picture carefully!",
+                    "What word matches this image?",
+                    "Use the visual clue to find the answer!",
+                    "Let the picture guide your guess!",
+                    "Connect the image to the right word!",
+                  ];
+
+                  const descIndex =
+                    (currentWordIndex + (currentWord?.category?.length || 0)) %
+                    descriptions.length;
+                  return descriptions[descIndex];
+                })()}
+              </motion.p>
+            </header>
+
             {/* Category and Progress Header */}
-            <div className="text-center mb-4 sm:mb-6 md:mb-8 mt-4 sm:mt-6 md:mt-8">
+            <div className="text-center mb-4 sm:mb-6 md:mb-8">
               <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-3 md:gap-4 mb-3 sm:mb-4">
                 {/* Difficulty classification badge */}
                 <Badge
@@ -1294,64 +1352,6 @@ export function InteractiveDashboardWordCard({
               </motion.div>
             </AnimatePresence>
 
-            {/* Game Instructions */}
-            <header className="text-center mb-3 sm:mb-4 md:mb-5" role="banner">
-              <motion.h1
-                key={`prompt-${currentWordIndex}`}
-                initial={{ opacity: 0, y: -10, scale: 0.95 }}
-                animate={{ opacity: 1, y: 0, scale: 1 }}
-                transition={{ duration: 0.4, type: "spring", damping: 20 }}
-                className="text-base sm:text-lg md:text-xl lg:text-2xl font-bold text-gray-800 mb-1 sm:mb-2"
-              >
-                {(() => {
-                  const prompts = [
-                    "🤔 What is this?",
-                    "🎯 Can you guess?",
-                    "🔍 What do you see?",
-                    "✨ Name this object!",
-                    "🧠 Think you know?",
-                    "👀 Look closely...",
-                    "🌟 What could this be?",
-                    "🎪 Mystery object!",
-                    "🎨 Identify this!",
-                    "🚀 What's shown here?",
-                  ];
-
-                  // Use word index and some randomness for variety
-                  const promptIndex =
-                    (currentWordIndex + (currentWord?.id || 0)) %
-                    prompts.length;
-                  return prompts[promptIndex];
-                })()}
-              </motion.h1>
-              <motion.p
-                key={`desc-${currentWordIndex}`}
-                initial={{ opacity: 0, y: 5 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.4, delay: 0.1 }}
-                className="text-xs sm:text-sm md:text-base text-gray-600 px-2"
-                id="game-instructions"
-              >
-                {(() => {
-                  const descriptions = [
-                    "Look at the picture and guess the word!",
-                    "Study the image and make your guess!",
-                    "Take a close look and identify it!",
-                    "Examine the picture carefully!",
-                    "What word matches this image?",
-                    "Use the visual clue to find the answer!",
-                    "Let the picture guide your guess!",
-                    "Connect the image to the right word!",
-                  ];
-
-                  const descIndex =
-                    (currentWordIndex + (currentWord?.category?.length || 0)) %
-                    descriptions.length;
-                  return descriptions[descIndex];
-                })()}
-              </motion.p>
-            </header>
-
             {/* Hint Display */}
             <AnimatePresence>
               {showHint && !showWordDetails && (
@@ -1380,8 +1380,20 @@ export function InteractiveDashboardWordCard({
                       backdropFilter: "blur(8px)",
                       backgroundColor: "rgba(255, 255, 255, 0.85)",
                     }}
-                    className="mx-auto max-w-xs p-3 md:p-4 rounded-xl border-2 border-yellow-300/60 shadow-lg relative overflow-hidden"
+                    className="mx-auto max-w-[280px] sm:max-w-xs p-2 sm:p-3 md:p-4 rounded-xl border-2 border-yellow-300/60 shadow-lg relative overflow-hidden"
                   >
+                    {/* Exit Button */}
+                    <motion.button
+                      initial={{ opacity: 0, scale: 0.8 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      transition={{ delay: 0.8, duration: 0.3 }}
+                      onClick={() => setShowHint(false)}
+                      className="absolute top-2 right-2 w-6 h-6 bg-orange-500/80 hover:bg-orange-600 text-white rounded-full flex items-center justify-center transition-all duration-200 hover:scale-110 active:scale-95 z-20"
+                      aria-label="Close hint"
+                    >
+                      <span className="text-xs font-bold">×</span>
+                    </motion.button>
+
                     {/* Hint background glow */}
                     <motion.div
                       initial={{ scale: 0, opacity: 0.6 }}
@@ -1415,7 +1427,7 @@ export function InteractiveDashboardWordCard({
                         <div className="text-2xl md:text-3xl mb-1">
                           {currentWord.emoji}
                         </div>
-                        <p className="text-base md:text-lg font-bold text-gray-800 tracking-wide">
+                        <p className="text-lg sm:text-xl md:text-2xl font-bold text-gray-800 tracking-wide">
                           {currentWord.word}
                         </p>
 
