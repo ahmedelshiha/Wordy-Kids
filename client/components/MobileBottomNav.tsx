@@ -16,6 +16,7 @@ import {
   Shield,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { jungleTheme } from "@/lib/jungleAdventureEffects";
 
 interface MobileBottomNavProps {
   activeTab: string;
