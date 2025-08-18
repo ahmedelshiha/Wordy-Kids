@@ -195,78 +195,32 @@ export const EnhancedChildProfileCard: React.FC<
       whileHover={animationEnabled ? "hover" : undefined}
       className={cn("w-full max-w-sm", className)}
     >
-      <Card className="bg-gradient-to-br from-yellow-50 via-pink-50 to-purple-50 border-4 border-rainbow-300 shadow-2xl hover:shadow-3xl transition-all duration-500 overflow-hidden relative">
-        {/* Fun Background Elements */}
-        <div className="absolute inset-0 pointer-events-none overflow-hidden">
-          <div
-            className="absolute top-2 right-2 text-lg animate-spin"
-            style={{ animationDuration: "4s" }}
-          >
-            ✨
-          </div>
-          <div
-            className="absolute bottom-2 left-2 text-sm animate-bounce"
-            style={{ animationDelay: "1s" }}
-          >
-            🌈
-          </div>
-        </div>
-
+      <Card className="bg-gradient-to-br from-blue-50 to-purple-50 border-2 border-slate-200 shadow-lg transition-all duration-300 overflow-hidden relative">
         {/* Header with Avatar and Basic Info */}
         <CardHeader className="pb-3 relative z-10">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-3">
-              <TappableZone
-                tapEffect="sparkle"
-                soundEffect={true}
-                celebration={true}
-                maxTaps={3}
+              <div
+                className={cn(
+                  "w-16 h-16 rounded-full flex items-center justify-center text-3xl shadow-md border-2 border-white",
+                  "bg-gradient-to-r transition-all duration-200",
+                  profile.avatar?.color || "from-blue-400 to-purple-400",
+                )}
               >
-                <div
-                  className={cn(
-                    "w-20 h-20 rounded-full flex items-center justify-center text-4xl shadow-xl border-4 border-white",
-                    "bg-gradient-to-r animate-pulse cursor-pointer transition-all duration-300 hover:scale-110",
-                    profile.avatar?.color ||
-                      "from-purple-400 via-pink-400 to-yellow-400",
-                  )}
-                >
-                  {profile.avatar?.emoji || "🎯"}
-                </div>
-              </TappableZone>
+                {profile.avatar?.emoji || "🎯"}
+              </div>
               <div>
-                <h3 className="font-black text-2xl text-gray-800 leading-tight">
+                <h3 className="font-bold text-xl text-slate-800 leading-tight">
                   {profile.name}
                 </h3>
-                <div className="flex items-center space-x-3">
-                  <StickerBadge
-                    type="crown"
-                    color="gold"
-                    glowing
-                    animated
-                    size="medium"
-                    onClick={() => {
-                      celebrate.levelUp();
-                    }}
-                  >
-                    <span className="text-xs font-bold text-orange-800 absolute -bottom-6 whitespace-nowrap">
-                      L{profile.level}
-                    </span>
-                  </StickerBadge>
+                <div className="flex items-center space-x-2 mt-1">
+                  <Badge className="text-xs bg-blue-500 text-white px-2 py-1 rounded-md">
+                    Level {profile.level}
+                  </Badge>
                   {profile.streak > 0 && (
-                    <StickerBadge
-                      type="fire"
-                      color="rainbow"
-                      glowing
-                      animated
-                      size="medium"
-                      onClick={() => {
-                        celebrate.streak();
-                      }}
-                    >
-                      <span className="text-xs font-bold text-red-800 absolute -bottom-6 whitespace-nowrap">
-                        {profile.streak}🔥
-                      </span>
-                    </StickerBadge>
+                    <Badge className="text-xs bg-orange-500 text-white px-2 py-1 rounded-md">
+                      {profile.streak} day{profile.streak > 1 ? "s" : ""}
+                    </Badge>
                   )}
                 </div>
               </div>
@@ -299,23 +253,12 @@ export const EnhancedChildProfileCard: React.FC<
             )}
           </div>
 
-          {/* Super Fun Motivational Message */}
-          <motion.div
-            className="bg-gradient-to-r from-yellow-200 via-pink-200 to-purple-200 rounded-xl p-3 mt-3 border-2 border-yellow-300 shadow-lg"
-            animate={{
-              scale: [1, 1.05, 1],
-              boxShadow: [
-                "0 4px 6px rgba(0, 0, 0, 0.1)",
-                "0 8px 25px rgba(255, 255, 0, 0.3)",
-                "0 4px 6px rgba(0, 0, 0, 0.1)",
-              ],
-            }}
-            transition={{ duration: 3, repeat: Infinity, repeatDelay: 5 }}
-          >
-            <p className="text-base text-purple-800 font-bold text-center leading-relaxed">
+          {/* Simple Motivational Message */}
+          <div className="bg-blue-50 rounded-lg p-2 mt-3 border border-blue-200">
+            <p className="text-sm text-slate-700 font-medium text-center">
               {motivationalMessage}
             </p>
-          </motion.div>
+          </div>
         </CardHeader>
 
         {/* Expandable Content */}
@@ -441,7 +384,7 @@ export const EnhancedChildProfileCard: React.FC<
                     className="bg-gradient-to-br from-green-100 to-blue-100 rounded-xl p-4 text-center border-3 border-green-200 shadow-lg"
                   >
                     <Target className="w-6 h-6 mx-auto mb-2 text-green-600" />
-                    <div className="text-xl font-black text-gray-800">
+                    <div className="text-xl font-black text-slate-800">
                       {stats?.currentStreak || profile.streak}
                     </div>
                     <div className="text-xs font-bold text-green-700">
@@ -453,7 +396,7 @@ export const EnhancedChildProfileCard: React.FC<
                     className="bg-gradient-to-br from-blue-100 to-purple-100 rounded-xl p-4 text-center border-3 border-blue-200 shadow-lg"
                   >
                     <Timer className="w-6 h-6 mx-auto mb-2 text-blue-600" />
-                    <div className="text-xl font-black text-gray-800">
+                    <div className="text-xl font-black text-slate-800">
                       {stats?.timeSpentToday
                         ? formatTime(stats.timeSpentToday)
                         : "0m"}
@@ -468,7 +411,7 @@ export const EnhancedChildProfileCard: React.FC<
                 {stats?.recentAchievements &&
                   stats.recentAchievements.length > 0 && (
                     <div>
-                      <h4 className="text-sm font-bold text-gray-800 mb-3 flex items-center">
+                      <h4 className="text-sm font-bold text-slate-700 mb-3 flex items-center">
                         <Award className="w-5 h-5 mr-2 text-yellow-600" />
                         🎆 Amazing Achievements!
                       </h4>

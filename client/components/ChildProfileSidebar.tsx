@@ -115,16 +115,15 @@ export const ChildProfileSidebar: React.FC<ChildProfileSidebarProps> = ({
       variants={sidebarVariants}
       animate={isCollapsed ? "collapsed" : "expanded"}
       className={cn(
-        "bg-gradient-to-b from-educational-blue/20 via-educational-purple/20 to-educational-pink/20", // Match main game background
+        "bg-gradient-to-b from-blue-50 to-purple-50",
         "flex flex-col h-fit max-h-full",
-        "transition-all duration-500",
-        "relative backdrop-blur-md border border-white/30 rounded-2xl shadow-xl",
-        "kid-card", // Apply kid-friendly styling
+        "transition-all duration-300",
+        "relative border border-slate-200 rounded-xl shadow-md",
         className,
       )}
     >
-      {/* Enhanced Sidebar Header */}
-      <div className="p-2 bg-gradient-to-r from-educational-blue/40 via-educational-purple/40 to-educational-pink/40 backdrop-blur-sm relative z-10 rounded-t-2xl border-b border-white/20">
+      {/* Simplified Sidebar Header */}
+      <div className="p-3 bg-gradient-to-r from-blue-100 to-purple-100 relative z-10 rounded-t-xl border-b border-slate-200">
         <div className="flex items-center justify-between">
           <AnimatePresence mode="wait">
             {!isCollapsed && (
@@ -147,7 +146,7 @@ export const ChildProfileSidebar: React.FC<ChildProfileSidebarProps> = ({
                 kidFriendlyEffects.playSound(SOUNDS.button_click);
                 onToggleCollapse();
               }}
-              className="h-10 w-10 p-0 bg-gradient-to-r from-educational-yellow to-educational-orange hover:from-educational-yellow-light hover:to-educational-orange-light shadow-xl border-2 border-white/80 rounded-full transition-all duration-300 hover:scale-110 animate-gentle-bounce lg:hidden"
+              className="h-8 w-8 p-0 bg-blue-500 hover:bg-blue-600 text-white rounded-md transition-all duration-200 lg:hidden"
             >
               {isCollapsed ? (
                 position === "left" ? (
@@ -263,25 +262,24 @@ export const ChildProfileSidebar: React.FC<ChildProfileSidebarProps> = ({
               {/* Collapsed Profile Avatar */}
               <div
                 className={cn(
-                  "w-14 h-14 rounded-full flex items-center justify-center text-2xl shadow-xl border-3 border-white/80",
-                  "bg-gradient-to-r animate-gentle-bounce backdrop-blur-sm kid-gradient-magic",
-                  profile.avatar?.color ||
-                    "from-educational-purple to-educational-pink",
+                  "w-12 h-12 rounded-full flex items-center justify-center text-xl shadow-md border-2 border-white",
+                  "bg-gradient-to-r transition-all duration-200",
+                  profile.avatar?.color || "from-blue-400 to-purple-400",
                 )}
               >
                 {profile.avatar?.emoji || "🎯"}
               </div>
 
               {/* Collapsed Quick Stats */}
-              <div className="flex flex-col items-center space-y-2">
-                <Badge className="text-xs bg-gradient-to-r from-educational-yellow to-educational-orange text-white border-educational-yellow shadow-lg font-bold animate-pulse">
-                  🎆 L{profile.level}
+              <div className="flex flex-col items-center space-y-1">
+                <Badge className="text-xs bg-blue-500 text-white px-2 py-1 rounded-md">
+                  L{profile.level}
                 </Badge>
                 {profile.streak > 0 && (
-                  <Badge className="text-xs bg-gradient-to-r from-yellow-500 via-orange-500 to-red-500 text-white border-yellow-400 shadow-xl font-bold animate-pulse kid-gradient-celebration">
+                  <Badge className="text-xs bg-orange-500 text-white px-2 py-1 rounded-md">
                     {profile.streak >= 7
-                      ? "🏆 LEGENDARY!"
-                      : `${profile.streak}🔥`}
+                      ? "Legendary!"
+                      : `${profile.streak} days`}
                   </Badge>
                 )}
               </div>
@@ -314,15 +312,27 @@ export const ChildProfileSidebar: React.FC<ChildProfileSidebarProps> = ({
                     if (onLogout) onLogout();
                   }
                 }}
-                className={`w-full text-xs text-white hover:text-white hover:bg-white/20 rounded-xl font-bold border border-white/20 shadow-md transition-all duration-300 hover:scale-105 ${
+                className={`w-full py-3 text-sm rounded-xl font-bold shadow-lg transform hover:scale-105 transition-all duration-300 relative overflow-hidden ${
                   isGuest
-                    ? "bg-gradient-to-r from-educational-yellow/40 to-educational-orange/40 animate-pulse"
-                    : "bg-gradient-to-r from-educational-pink/30 to-educational-purple/30"
+                    ? "bg-gradient-to-r from-purple-500 via-pink-500 to-blue-500 hover:from-purple-600 hover:via-pink-600 hover:to-blue-600 text-white"
+                    : "bg-gradient-to-r from-slate-500 to-slate-600 hover:from-slate-600 hover:to-slate-700 text-white"
                 }`}
               >
                 {isGuest ? (
                   <>
-                    <UserPlus className="w-4 h-4 mr-2" />✨ Join Adventure!
+                    <motion.div
+                      className="absolute inset-0 bg-gradient-to-r from-yellow-400/20 to-transparent"
+                      animate={{
+                        x: ["-100%", "100%"],
+                        transition: {
+                          duration: 2,
+                          repeat: Infinity,
+                          ease: "linear",
+                        },
+                      }}
+                    />
+                    <UserPlus className="w-4 h-4 mr-2" />
+                    <span>Create My Account! 🚀</span>
                   </>
                 ) : (
                   <>
@@ -333,9 +343,9 @@ export const ChildProfileSidebar: React.FC<ChildProfileSidebarProps> = ({
               </Button>
               {/* Dynamic message below button */}
               <div className="text-center">
-                <p className="text-xs text-white/80 font-medium">
+                <p className="text-xs text-slate-600 font-medium">
                   {isGuest
-                    ? "Save your progress & unlock more!"
+                    ? "It's super quick and totally free! ✨"
                     : "Thanks for learning with us!"}
                 </p>
               </div>
@@ -361,10 +371,10 @@ export const ChildProfileSidebar: React.FC<ChildProfileSidebarProps> = ({
                     if (onLogout) onLogout();
                   }
                 }}
-                className={`h-10 w-10 p-0 text-white hover:text-white rounded-full border-2 border-white/80 shadow-xl transition-all duration-300 hover:scale-110 animate-gentle-bounce ${
+                className={`h-10 w-10 p-0 text-white hover:text-white rounded-full shadow-lg transition-all duration-300 hover:scale-110 ${
                   isGuest
-                    ? "bg-gradient-to-r from-educational-yellow to-educational-orange animate-pulse"
-                    : "bg-gradient-to-r from-educational-pink to-educational-purple hover:from-educational-pink-light hover:to-educational-purple-light"
+                    ? "bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600"
+                    : "bg-gradient-to-r from-slate-500 to-slate-600 hover:from-slate-600 hover:to-slate-700"
                 }`}
               >
                 {isGuest ? (
