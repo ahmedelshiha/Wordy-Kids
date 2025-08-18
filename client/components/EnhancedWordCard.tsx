@@ -113,7 +113,7 @@ export const EnhancedWordCard: React.FC<EnhancedWordCardProps> = ({
   // Enhanced smooth 3D flip with better feedback
   const handleFlip = () => {
     setIsFlipped(!isFlipped);
-    jungleInteractions.pageTransition();
+    // jungleInteractions.pageTransition();
 
     // Enhanced haptic feedback
     if (navigator.vibrate) {
