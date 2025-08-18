@@ -385,11 +385,12 @@ export const EnhancedWordLibrary: React.FC<EnhancedWordLibraryProps> = ({
   return (
     <div
       ref={containerRef}
-      className={`min-h-screen transition-all duration-300 optimize-for-small-screen ${
+      className={`min-h-screen w-full transition-all duration-300 optimize-for-small-screen ${
         highContrastMode ? "bg-black text-white" : "bg-responsive-dashboard"
       }`}
       style={{
         backgroundImage: highContrastMode ? "none" : undefined,
+        minHeight: "100vh",
       }}
     >
       {/* Enhanced Mobile Header */}
