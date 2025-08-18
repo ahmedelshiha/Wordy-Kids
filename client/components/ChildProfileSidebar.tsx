@@ -212,15 +212,15 @@ export const ChildProfileSidebar: React.FC<ChildProfileSidebarProps> = ({
                       </div>
                     </div>
                     <div className="flex justify-between items-center">
-                      <span className="text-xs font-medium text-gray-700 flex items-center">
-                        ⏰ Adventure Time
+                      <span className="text-xs font-medium text-white flex items-center">
+                        <div className="jungle-progress-treasure mr-1">🏆</div>
+                        Legendary Streak
                       </span>
-                      <Badge className="text-xs bg-gradient-to-r from-educational-purple to-educational-pink text-white border-educational-purple shadow-md font-bold">
-                        {stats.timeThisWeek
+                      <div className="jungle-collectible">
+                        <span className="font-bold">{stats.timeThisWeek
                           ? `${Math.round(stats.timeThisWeek / 60)}h`
-                          : "0h"}{" "}
-                        🚀
-                      </Badge>
+                          : "0h"}</span> 🌟
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -228,10 +228,10 @@ export const ChildProfileSidebar: React.FC<ChildProfileSidebarProps> = ({
 
               {/* Recent Awesome Moments */}
               {stats?.recentActivity && (
-                <div className="bg-white/60 rounded-xl p-4 border border-slate-200 shadow-sm backdrop-blur-sm kid-card">
-                  <h4 className="text-sm font-bold text-gray-800 mb-3 flex items-center kid-text-big text-shadow">
-                    <Activity className="w-5 h-5 mr-2 text-educational-yellow" />
-                    🎉 Awesome Moments!
+                <div className="jungle-card p-4 border-2 border-pink-300/50 shadow-lg kid-card">
+                  <h4 className="text-sm font-bold text-white mb-3 flex items-center kid-text-big text-shadow">
+                    <div className="jungle-progress-icon mr-2">🎆</div>
+                    🌿 Jungle Treasures!
                   </h4>
                   <div className="space-y-2">
                     {stats.recentActivity
