@@ -1208,7 +1208,7 @@ export function InteractiveDashboardWordCard({
                         return "🎉 Goal achieved! You're incredible!";
                       }
                       if (percentage >= 90)
-                        return "🌟 Almost there, superstar!";
+                        return "���� Almost there, superstar!";
                       if (percentage >= 75) return "🚀 You're doing great!";
                       if (percentage >= 50) return "💪 Keep going, champion!";
                       if (percentage >= 25) return "🌱 Nice start!";
@@ -1232,7 +1232,7 @@ export function InteractiveDashboardWordCard({
                 initial={{ opacity: 0, y: -10, scale: 0.95 }}
                 animate={{ opacity: 1, y: 0, scale: 1 }}
                 transition={{ duration: 0.4, type: "spring", damping: 20 }}
-                className="text-base sm:text-lg md:text-xl lg:text-2xl font-bold text-gray-800 mb-1 sm:mb-2"
+                className="text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl font-bold text-gray-800 mb-1 sm:mb-2"
               >
                 ✨ Name this object!
               </motion.h1>
