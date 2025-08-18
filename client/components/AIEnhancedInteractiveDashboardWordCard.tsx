@@ -650,20 +650,20 @@ export function AIEnhancedInteractiveDashboardWordCard({
       setSessionAchievements(achievements);
 
       // Complete AI session
-      const sessionResult = await aiActions.endSession({
+      await aiActions.endSession({
         completed: true,
         userSatisfaction:
           newStats.accuracy >= 80 ? 5 : newStats.accuracy >= 60 ? 4 : 3,
       });
 
       setShowSessionComplete(true);
-      onSessionComplete?.(sessionResult);
+      onSessionComplete?.(newStats);
 
       console.log("AI Enhanced Session completed!", {
         stats: newStats,
         achievements: achievements.map((a) => a.title),
-        aiInsights: sessionResult?.learningInsights || [],
-        nextRecommendations: sessionResult?.nextSessionRecommendations,
+        aiInsights: [],
+        nextRecommendations: undefined,
       });
       return;
     }
