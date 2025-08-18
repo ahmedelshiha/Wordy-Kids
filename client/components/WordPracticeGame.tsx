@@ -408,7 +408,7 @@ export const WordPracticeGame: React.FC<WordPracticeGameProps> = ({
               <Button
                 onClick={() => setShowDefinition(!showDefinition)}
                 variant="outline"
-                className={`p-3 sm:p-4 h-auto min-h-[60px] ${showDefinition ? "bg-green-50 border-green-300" : "bg-white"}`}
+                className={`p-3 sm:p-4 h-auto min-h-[60px] ${showDefinition ? "bg-sunshine text-white border-0" : "bg-sunshine-light hover:bg-sunshine text-white border-0"}`}
               >
                 <div className="text-center">
                   <Sparkles className="w-5 h-5 sm:w-6 sm:h-6 mx-auto mb-2 text-green-500" />
@@ -421,7 +421,7 @@ export const WordPracticeGame: React.FC<WordPracticeGameProps> = ({
               <Button
                 onClick={() => setShowExample(!showExample)}
                 variant="outline"
-                className={`p-3 sm:p-4 h-auto min-h-[60px] ${showExample ? "bg-blue-50 border-blue-300" : "bg-white"}`}
+                className={`p-3 sm:p-4 h-auto min-h-[60px] ${showExample ? "bg-sunshine text-white border-0" : "bg-sunshine-light hover:bg-sunshine text-white border-0"}`}
               >
                 <div className="text-center">
                   <Star className="w-5 h-5 sm:w-6 sm:h-6 mx-auto mb-2 text-blue-500" />
