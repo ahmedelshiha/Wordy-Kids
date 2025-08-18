@@ -2669,7 +2669,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                                             }
                                                           }
                                                         }}
-                                                        className="flex-1 bg-gradient-to-r from-red-400 to-pink-500 hover:from-red-500 hover:to-pink-600 text-white font-bold border-0 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform active:scale-95 py-3 sm:py-4 px-3 sm:px-6 min-h-[56px] sm:min-h-[60px] relative overflow-hidden text-sm sm:text-base"
+                                                        className="flex-1 bg-sunshine hover:bg-sunshine-dark text-white font-bold border-0 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform active:scale-95 py-3 sm:py-4 px-3 sm:px-6 min-h-[56px] sm:min-h-[60px] relative overflow-hidden text-sm sm:text-base"
                                                         disabled={
                                                           isLoadingProgress
                                                         }
@@ -2823,7 +2823,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                                             }
                                                           }
                                                         }}
-                                                        className="flex-1 bg-gradient-to-r from-green-400 to-emerald-500 hover:from-green-500 hover:to-emerald-600 text-white font-bold border-0 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform active:scale-95 py-3 sm:py-4 px-3 sm:px-6 min-h-[56px] sm:min-h-[60px] relative overflow-hidden text-sm sm:text-base"
+                                                        className="flex-1 bg-jungle hover:bg-jungle-dark text-white font-bold border-0 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform active:scale-95 py-3 sm:py-4 px-3 sm:px-6 min-h-[56px] sm:min-h-[60px] relative overflow-hidden text-sm sm:text-base"
                                                         disabled={
                                                           isLoadingProgress
                                                         }
@@ -2894,7 +2894,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                                       ) {
                                                         return (
                                                           <div className="text-xs text-orange-600 font-medium">
-                                                            📚 Review
+                                                            ��� Review
                                                           </div>
                                                         );
                                                       } else {
