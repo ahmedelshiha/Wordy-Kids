@@ -212,7 +212,7 @@ export const EnhancedChildProfileCard: React.FC<
                 {profile.avatar?.emoji || "🎯"}
               </div>
               <div>
-                <h3 className="font-bold text-xl text-gray-800 leading-tight">
+                <h3 className="font-bold text-xl text-slate-800 leading-tight">
                   {profile.name}
                 </h3>
                 <div className="flex items-center space-x-2 mt-1">
@@ -257,7 +257,7 @@ export const EnhancedChildProfileCard: React.FC<
 
           {/* Simple Motivational Message */}
           <div className="bg-blue-50 rounded-lg p-2 mt-3 border border-blue-200">
-            <p className="text-sm text-blue-800 font-medium text-center">
+            <p className="text-sm text-slate-700 font-medium text-center">
               {motivationalMessage}
             </p>
           </div>
@@ -386,7 +386,7 @@ export const EnhancedChildProfileCard: React.FC<
                     className="bg-gradient-to-br from-green-100 to-blue-100 rounded-xl p-4 text-center border-3 border-green-200 shadow-lg"
                   >
                     <Target className="w-6 h-6 mx-auto mb-2 text-green-600" />
-                    <div className="text-xl font-black text-gray-800">
+                    <div className="text-xl font-black text-slate-800">
                       {stats?.currentStreak || profile.streak}
                     </div>
                     <div className="text-xs font-bold text-green-700">
@@ -398,7 +398,7 @@ export const EnhancedChildProfileCard: React.FC<
                     className="bg-gradient-to-br from-blue-100 to-purple-100 rounded-xl p-4 text-center border-3 border-blue-200 shadow-lg"
                   >
                     <Timer className="w-6 h-6 mx-auto mb-2 text-blue-600" />
-                    <div className="text-xl font-black text-gray-800">
+                    <div className="text-xl font-black text-slate-800">
                       {stats?.timeSpentToday
                         ? formatTime(stats.timeSpentToday)
                         : "0m"}
@@ -413,7 +413,7 @@ export const EnhancedChildProfileCard: React.FC<
                 {stats?.recentAchievements &&
                   stats.recentAchievements.length > 0 && (
                     <div>
-                      <h4 className="text-sm font-bold text-gray-800 mb-3 flex items-center">
+                      <h4 className="text-sm font-bold text-slate-700 mb-3 flex items-center">
                         <Award className="w-5 h-5 mr-2 text-yellow-600" />
                         🎆 Amazing Achievements!
                       </h4>
