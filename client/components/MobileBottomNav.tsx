@@ -86,11 +86,11 @@ export function MobileBottomNav({
     },
   ];
 
-  // Kid-friendly primary tabs with magical theme to match desktop
+  // Kid-friendly primary tabs with custom image icons
   const primaryTabs = [
     {
       id: "dashboard",
-      emoji: "🏡",
+      image: "/images/icons/home.png",
       label: "Home",
       icon: Target,
       activeGradient: "kid-gradient-happy",
@@ -99,7 +99,7 @@ export function MobileBottomNav({
     },
     {
       id: "learn",
-      emoji: "📚",
+      image: "/images/icons/books.png",
       label: "Learn",
       icon: BookOpen,
       activeGradient: "kid-gradient-learn",
@@ -108,7 +108,7 @@ export function MobileBottomNav({
     },
     {
       id: "quiz",
-      emoji: "🧙‍♂️",
+      image: "/images/icons/game.png",
       label: "Quiz",
       icon: Brain,
       activeGradient: "kid-gradient-adventure",
@@ -117,7 +117,7 @@ export function MobileBottomNav({
     },
     {
       id: "progress",
-      emoji: "🗺️",
+      image: "/images/icons/map.png",
       label: "Map",
       icon: Trophy,
       activeGradient: "kid-gradient-success",
@@ -249,8 +249,12 @@ export function MobileBottomNav({
                     tab.id === "progress" && "animate-gentle-bounce",
                   )}
                 >
-                  <div className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl">
-                    {tab.emoji}
+                  <div className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 lg:w-20 lg:h-20 flex items-center justify-center">
+                    <img
+                      src={tab.image}
+                      alt={tab.label}
+                      className="w-full h-full object-contain filter drop-shadow-lg"
+                    />
                   </div>
                   <span className="text-xs font-kid-friendly font-bold leading-none text-center text-white whitespace-nowrap mt-1">
                     {tab.label}
