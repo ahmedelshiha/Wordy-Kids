@@ -482,7 +482,7 @@ export function AIEnhancedInteractiveDashboardWordCard({
           id: "perfect_ai_session",
           title: "AI PERFECT SESSION!",
           description: `Amazing! You mastered all ${SESSION_SIZE} AI-selected words!`,
-          emoji: "🤖🏆",
+          emoji: "🤖��",
           unlocked: true,
         });
       } else if (accuracy >= 90) {
@@ -1280,7 +1280,7 @@ export function AIEnhancedInteractiveDashboardWordCard({
         >
           {/* Celebration Sparkles */}
           {celebrationEffect && (
-            <div className="absolute inset-0 bg-gradient-to-r from-yellow-400/20 to-pink-400/20 animate-pulse z-20">
+            <div className="absolute inset-0 animate-pulse z-20">
               <div className="absolute top-4 left-4 text-2xl animate-bounce">
                 ✨
               </div>
