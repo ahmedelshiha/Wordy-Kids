@@ -17,6 +17,7 @@ import {
   Target,
   Gift,
 } from "lucide-react";
+import { jungleTheme } from "@/lib/jungleAdventureEffects";
 
 interface ProgressData {
   wordsLearned?: number;
