@@ -20,6 +20,7 @@ import { enhancedAudioService } from "@/lib/enhancedAudioService";
 import { useVoiceSettings } from "@/hooks/use-voice-settings";
 import { cn } from "@/lib/utils";
 import { jungleConfetti, getMascotForState, getRandomCollectible } from "@/lib/jungleAdventureEffects";
+import { jungleInteractions } from "@/lib/jungleSoundSystem";
 
 interface Word {
   id: number;
