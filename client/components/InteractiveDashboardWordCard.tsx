@@ -1346,7 +1346,7 @@ export function InteractiveDashboardWordCard({
                       backdropFilter: "blur(8px)",
                       backgroundColor: "rgba(255, 255, 255, 0.85)",
                     }}
-                    className="mx-auto max-w-[280px] sm:max-w-xs p-2 sm:p-3 md:p-4 rounded-xl border-2 border-yellow-300/60 shadow-lg relative overflow-hidden"
+                    className="mx-auto max-w-[240px] sm:max-w-[280px] p-1.5 sm:p-2 md:p-3 rounded-lg border-2 border-yellow-300/60 shadow-lg relative overflow-hidden"
                   >
                     {/* Exit Button */}
                     <motion.button
