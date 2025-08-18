@@ -1650,169 +1650,6 @@ export function InteractiveDashboardWordCard({
             </AnimatePresence>
 
 
-            {/* Action Buttons - Moved to bottom */}
-            {!isAnswered && (
-              <div
-                className="space-y-3 sm:space-y-4 px-2 sm:px-0 mt-6"
-                role="group"
-                aria-label="Word learning choices"
-              >
-                <div className="grid grid-cols-2 gap-2 sm:gap-3">
-                  <Button
-                    onClick={() => {
-                      // Show hint first if not already shown
-                      if (!showHint && !showWordDetails) {
-                        handleActionWithFeedback(
-                          () => setShowHint(true),
-                          "light",
-                        );
-                      } else {
-                        // If hint is already shown, proceed with main functionality
-                        handleWordAction("needs_practice");
-                      }
-                    }}
-                    disabled={isAnswered}
-                    className={cn(
-                      "w-full text-white font-bold border-0 rounded-lg sm:rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 active:scale-95 py-2 sm:py-3 md:py-4 px-2 sm:px-3 min-h-[48px] sm:min-h-[56px] md:min-h-[64px] relative overflow-hidden disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none touch-manipulation",
-                      "bg-gradient-to-r from-orange-400 to-amber-500 hover:from-orange-500 hover:to-amber-600 active:from-orange-600 active:to-amber-700",
-                    )}
-                    aria-label={
-                      showHint
-                        ? "Mark as needs practice"
-                        : "Get hint for this word"
-                    }
-                  >
-                    <div className="absolute inset-0 bg-white/20 rounded-xl opacity-0 hover:opacity-100 transition-opacity duration-300"></div>
-                    <div className="relative z-10 flex items-center justify-center">
-                      <span className="text-base sm:text-lg mr-1 sm:mr-2 animate-wiggle">
-                        {showHint ? "💪" : "💡"}
-                      </span>
-                      <div className="text-center">
-                        <div className="font-bold text-xs sm:text-sm md:text-base">
-                          {showHint ? "Need Practice" : "Get Hint"}
-                        </div>
-                        <div className="text-xs opacity-90 mt-0.5 hidden sm:block">
-                          {showHint ? "Keep learning! 💪" : "Need help? 💡"}
-                        </div>
-                      </div>
-                    </div>
-                  </Button>
-
-                  <Button
-                    onClick={() => {
-                      // Directly proceed to remember action without showing hint
-                      handleWordAction("remembered");
-                    }}
-                    disabled={isAnswered}
-                    className="w-full bg-gradient-to-r from-green-400 to-emerald-500 hover:from-green-500 hover:to-emerald-600 active:from-green-600 active:to-emerald-700 text-white font-bold border-0 rounded-lg sm:rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 active:scale-95 py-2 sm:py-3 md:py-4 px-2 sm:px-3 min-h-[48px] sm:min-h-[56px] md:min-h-[64px] relative overflow-hidden disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none touch-manipulation"
-                    aria-label="Mark word as remembered"
-                  >
-                    <div className="absolute inset-0 bg-white/20 rounded-xl opacity-0 hover:opacity-100 transition-opacity duration-300"></div>
-                    <div className="relative z-10 flex items-center justify-center">
-                      <span className="text-base sm:text-lg mr-1 sm:mr-2 animate-bounce">
-                        😊
-                      </span>
-                      <div className="text-center">
-                        <div className="font-bold text-xs sm:text-sm md:text-base">
-                          I Remember
-                        </div>
-                        <div className="text-xs opacity-90 mt-0.5 hidden sm:block">
-                          Awesome! ⭐
-                        </div>
-                      </div>
-                    </div>
-                  </Button>
-                </div>
-
-                {/* Particle Effects Overlay */}
-                <AnimatePresence>
-                  {particles.map((particle) => (
-                    <motion.div
-                      key={particle.id}
-                      initial={{
-                        scale: 0,
-                        x: particle.x - window.innerWidth / 2,
-                        y: particle.y - window.innerHeight / 2,
-                        opacity: 1,
-                      }}
-                      animate={{
-                        scale: [0, 1, 0.8, 0],
-                        x:
-                          particle.x -
-                          window.innerWidth / 2 +
-                          (Math.random() - 0.5) * 200,
-                        y:
-                          particle.y -
-                          window.innerHeight / 2 -
-                          Math.random() * 150 -
-                          50,
-                        opacity: [1, 1, 0.7, 0],
-                        rotate: Math.random() * 360,
-                      }}
-                      transition={{
-                        duration: 1,
-                        ease: "easeOut",
-                        times: [0, 0.2, 0.8, 1],
-                      }}
-                      className="fixed pointer-events-none z-50"
-                      style={{
-                        left: "50%",
-                        top: "50%",
-                      }}
-                    >
-                      <div
-                        className={`text-2xl ${
-                          particle.type === "success"
-                            ? "filter drop-shadow-lg"
-                            : "filter drop-shadow-md"
-                        }`}
-                      >
-                        {particle.type === "success" ? "⭐" : "💪"}
-                      </div>
-                    </motion.div>
-                  ))}
-                </AnimatePresence>
-
-                {/* Skip button (smaller, less prominent) - HIDDEN */}
-                <div className="hidden text-center mt-1 mb-0">
-                  <Button
-                    onClick={() => handleWordAction("skipped")}
-                    variant="ghost"
-                    size="sm"
-                    disabled={isAnswered}
-                    className="text-gray-500 hover:text-gray-700 hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed py-1 px-3"
-                  >
-                    <SkipForward className="w-4 h-4 mr-1" />
-                    🤔 Try another word
-                  </Button>
-
-                  {/* Keyboard shortcuts hint - Desktop only */}
-                  <div className="hidden md:block mt-2 text-xs text-gray-400">
-                    💡 Shortcuts:{" "}
-                    <kbd className="px-1 py-0.5 bg-gray-100 rounded text-xs">
-                      1
-                    </kbd>{" "}
-                    or{" "}
-                    <kbd className="px-1 py-0.5 bg-gray-100 rounded text-xs">
-                      F
-                    </kbd>{" "}
-                    for Forgot,
-                    <kbd className="px-1 py-0.5 bg-gray-100 rounded text-xs ml-1">
-                      2
-                    </kbd>{" "}
-                    or{" "}
-                    <kbd className="px-1 py-0.5 bg-gray-100 rounded text-xs">
-                      R
-                    </kbd>{" "}
-                    for Remember,
-                    <kbd className="px-1 py-0.5 bg-gray-100 rounded text-xs ml-1">
-                      Space
-                    </kbd>{" "}
-                    for Audio
-                  </div>
-                </div>
-              </div>
-            )}
 
             {/* Loading next word indicator */}
             <AnimatePresence>
@@ -1900,6 +1737,131 @@ export function InteractiveDashboardWordCard({
           </div>
         </div>
       </div> */}
+
+      {/* Action Buttons - Positioned at bottom of dashboard background */}
+      {!isAnswered && (
+        <div
+          className="space-y-3 sm:space-y-4 px-2 sm:px-0 mt-6"
+          role="group"
+          aria-label="Word learning choices"
+        >
+          <div className="grid grid-cols-2 gap-2 sm:gap-3 max-w-md mx-auto">
+            <Button
+              onClick={() => {
+                // Show hint first if not already shown
+                if (!showHint && !showWordDetails) {
+                  handleActionWithFeedback(
+                    () => setShowHint(true),
+                    "light",
+                  );
+                } else {
+                  // If hint is already shown, proceed with main functionality
+                  handleWordAction("needs_practice");
+                }
+              }}
+              disabled={isAnswered}
+              className={cn(
+                "w-full text-white font-bold border-0 rounded-lg sm:rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 active:scale-95 py-2 sm:py-3 md:py-4 px-2 sm:px-3 min-h-[48px] sm:min-h-[56px] md:min-h-[64px] relative overflow-hidden disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none touch-manipulation",
+                "bg-gradient-to-r from-orange-400 to-amber-500 hover:from-orange-500 hover:to-amber-600 active:from-orange-600 active:to-amber-700",
+              )}
+              aria-label={
+                showHint
+                  ? "Mark as needs practice"
+                  : "Get hint for this word"
+              }
+            >
+              <div className="absolute inset-0 bg-white/20 rounded-xl opacity-0 hover:opacity-100 transition-opacity duration-300"></div>
+              <div className="relative z-10 flex items-center justify-center">
+                <span className="text-base sm:text-lg mr-1 sm:mr-2 animate-wiggle">
+                  {showHint ? "💪" : "💡"}
+                </span>
+                <div className="text-center">
+                  <div className="font-bold text-xs sm:text-sm md:text-base">
+                    {showHint ? "Need Practice" : "Get Hint"}
+                  </div>
+                  <div className="text-xs opacity-90 mt-0.5 hidden sm:block">
+                    {showHint ? "Keep learning! 💪" : "Need help? 💡"}
+                  </div>
+                </div>
+              </div>
+            </Button>
+
+            <Button
+              onClick={() => {
+                // Directly proceed to remember action without showing hint
+                handleWordAction("remembered");
+              }}
+              disabled={isAnswered}
+              className="w-full bg-gradient-to-r from-green-400 to-emerald-500 hover:from-green-500 hover:to-emerald-600 active:from-green-600 active:to-emerald-700 text-white font-bold border-0 rounded-lg sm:rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 active:scale-95 py-2 sm:py-3 md:py-4 px-2 sm:px-3 min-h-[48px] sm:min-h-[56px] md:min-h-[64px] relative overflow-hidden disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none touch-manipulation"
+              aria-label="Mark word as remembered"
+            >
+              <div className="absolute inset-0 bg-white/20 rounded-xl opacity-0 hover:opacity-100 transition-opacity duration-300"></div>
+              <div className="relative z-10 flex items-center justify-center">
+                <span className="text-base sm:text-lg mr-1 sm:mr-2 animate-bounce">
+                  😊
+                </span>
+                <div className="text-center">
+                  <div className="font-bold text-xs sm:text-sm md:text-base">
+                    I Remember
+                  </div>
+                  <div className="text-xs opacity-90 mt-0.5 hidden sm:block">
+                    Awesome! ⭐
+                  </div>
+                </div>
+              </div>
+            </Button>
+          </div>
+
+          {/* Particle Effects Overlay */}
+          <AnimatePresence>
+            {particles.map((particle) => (
+              <motion.div
+                key={particle.id}
+                initial={{
+                  scale: 0,
+                  x: particle.x - window.innerWidth / 2,
+                  y: particle.y - window.innerHeight / 2,
+                  opacity: 1,
+                }}
+                animate={{
+                  scale: [0, 1, 0.8, 0],
+                  x:
+                    particle.x -
+                    window.innerWidth / 2 +
+                    (Math.random() - 0.5) * 200,
+                  y:
+                    particle.y -
+                    window.innerHeight / 2 -
+                    Math.random() * 150 -
+                    50,
+                  opacity: [1, 1, 0.7, 0],
+                  rotate: Math.random() * 360,
+                }}
+                transition={{
+                  duration: 1,
+                  ease: "easeOut",
+                  times: [0, 0.2, 0.8, 1],
+                }}
+                className="fixed pointer-events-none z-50"
+                style={{
+                  left: "50%",
+                  top: "50%",
+                }}
+              >
+                <div
+                  className={`text-2xl ${
+                    particle.type === "success"
+                      ? "filter drop-shadow-lg"
+                      : "filter drop-shadow-md"
+                  }`}
+                >
+                  {particle.type === "success" ? "⭐" : "💪"}
+                </div>
+              </motion.div>
+            ))}
+          </AnimatePresence>
+        </div>
+      )}
 
       {/* Enhanced Achievement Popup for Journey Achievements */}
       {journeyAchievements.length > 0 && (
