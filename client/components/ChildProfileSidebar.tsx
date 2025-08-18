@@ -368,10 +368,10 @@ export const ChildProfileSidebar: React.FC<ChildProfileSidebarProps> = ({
                     if (onLogout) onLogout();
                   }
                 }}
-                className={`h-10 w-10 p-0 text-white hover:text-white rounded-full border-2 border-white/80 shadow-xl transition-all duration-300 hover:scale-110 animate-gentle-bounce ${
+                className={`h-10 w-10 p-0 text-white hover:text-white rounded-full shadow-lg transition-all duration-300 hover:scale-110 ${
                   isGuest
-                    ? "bg-gradient-to-r from-educational-yellow to-educational-orange animate-pulse"
-                    : "bg-gradient-to-r from-educational-pink to-educational-purple hover:from-educational-pink-light hover:to-educational-purple-light"
+                    ? "bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600"
+                    : "bg-gradient-to-r from-slate-500 to-slate-600 hover:from-slate-600 hover:to-slate-700"
                 }`}
               >
                 {isGuest ? (
