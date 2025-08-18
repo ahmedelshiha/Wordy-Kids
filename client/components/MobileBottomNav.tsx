@@ -86,11 +86,11 @@ export function MobileBottomNav({
     },
   ];
 
-  // Kid-friendly primary tabs with magical theme to match desktop
+  // Kid-friendly primary tabs with custom image icons
   const primaryTabs = [
     {
       id: "dashboard",
-      emoji: "🏡",
+      image: "/images/icons/home.png",
       label: "Home",
       icon: Target,
       activeGradient: "kid-gradient-happy",
@@ -99,7 +99,7 @@ export function MobileBottomNav({
     },
     {
       id: "learn",
-      emoji: "📚",
+      image: "/images/icons/books.png",
       label: "Learn",
       icon: BookOpen,
       activeGradient: "kid-gradient-learn",
@@ -108,7 +108,7 @@ export function MobileBottomNav({
     },
     {
       id: "quiz",
-      emoji: "🧙‍♂️",
+      image: "/images/icons/game.png",
       label: "Quiz",
       icon: Brain,
       activeGradient: "kid-gradient-adventure",
@@ -117,7 +117,7 @@ export function MobileBottomNav({
     },
     {
       id: "progress",
-      emoji: "🗺️",
+      image: "/images/icons/map.png",
       label: "Map",
       icon: Trophy,
       activeGradient: "kid-gradient-success",
