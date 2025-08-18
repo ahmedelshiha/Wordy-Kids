@@ -1730,24 +1730,12 @@ export function InteractiveDashboardWordCard({
 
                   <Button
                     onClick={() => {
-                      // Show hint first if not already shown
-                      if (!showHint && !showWordDetails) {
-                        handleActionWithFeedback(
-                          () => setShowHint(true),
-                          "light",
-                        );
-                      } else {
-                        // If hint is already shown, proceed with main functionality
-                        handleWordAction("remembered");
-                      }
+                      // Directly proceed to remember action without showing hint
+                      handleWordAction("remembered");
                     }}
                     disabled={isAnswered}
                     className="w-full bg-gradient-to-r from-green-400 to-emerald-500 hover:from-green-500 hover:to-emerald-600 active:from-green-600 active:to-emerald-700 text-white font-bold border-0 rounded-lg sm:rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 active:scale-95 py-2 sm:py-3 md:py-4 px-2 sm:px-3 min-h-[48px] sm:min-h-[56px] md:min-h-[64px] relative overflow-hidden disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none touch-manipulation"
-                    aria-label={
-                      !showHint && !showWordDetails
-                        ? "Get hint for this word"
-                        : "Mark word as remembered"
-                    }
+                    aria-label="Mark word as remembered"
                   >
                     <div className="absolute inset-0 bg-white/20 rounded-xl opacity-0 hover:opacity-100 transition-opacity duration-300"></div>
                     <div className="relative z-10 flex items-center justify-center">
