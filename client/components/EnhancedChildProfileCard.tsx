@@ -329,7 +329,7 @@ export const EnhancedChildProfileCard: React.FC<
                     <div>
                       <div className="flex justify-between items-center mb-2">
                         <span className="text-sm font-bold text-gray-800">
-                          ��� Weekly Challenge!
+                          🏆 Weekly Challenge!
                         </span>
                         <span className="text-xs text-blue-600 font-bold bg-blue-100 px-2 py-1 rounded-full">
                           {profile.weeklyGoal.current}/
