@@ -1973,7 +1973,7 @@ export default function Index({ initialProfile }: IndexProps) {
                 className="absolute inset-0 bg-black/50"
                 onClick={() => setIsMobileMenuOpen(false)}
               />
-              <aside className="absolute left-0 top-0 w-80 h-full bg-gradient-to-b from-purple-100 to-pink-100 p-6 flex flex-col shadow-2xl">
+              <aside className="absolute left-0 top-0 w-80 h-full bg-white/90 backdrop-blur-md p-6 flex flex-col shadow-2xl">
                 {/* Mobile Navigation */}
                 <nav className="flex-1 space-y-2">
                   {[
@@ -3019,7 +3019,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                           size="sm"
                                         >
                                           <Play className="w-3 h-3 md:w-4 md:h-4 mr-1" />
-                                          Let's Listen! 🎧
+                                          Let's Listen! ���
                                         </Button>
                                       </CardContent>
                                     </Card>
@@ -3039,7 +3039,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                         </p>
                                         <div className="flex justify-center gap-1 mb-2 md:mb-3">
                                           <span className="bg-educational-orange/20 text-educational-orange px-1.5 py-0.5 rounded-full text-xs">
-                                            ���� Fun!
+                                            🎯 Fun!
                                           </span>
                                         </div>
                                         <Button
@@ -3539,7 +3539,7 @@ export default function Index({ initialProfile }: IndexProps) {
           <MagicalPortalEffect
             isActive={backgroundAnimationsEnabled && activeTab === "learn"}
             intensity="medium"
-            particleEmojis={["✨", "🌟", "⭐", "💫", "🔮", "🌈", "🦄", "🎉"]}
+            particleEmojis={["✨", "���", "⭐", "💫", "🔮", "🌈", "🦄", "🎉"]}
           />
 
           {/* Enhanced Reward Celebration */}
