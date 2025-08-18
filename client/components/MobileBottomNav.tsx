@@ -291,7 +291,7 @@ export function MobileBottomNav({
                 )}
               >
                 <div className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl">
-                  🎪
+                  🦜
                 </div>
                 <span className="text-xs font-kid-friendly font-bold leading-none text-center text-white whitespace-nowrap mt-1">
                   More
