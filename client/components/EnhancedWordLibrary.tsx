@@ -118,12 +118,26 @@ export const EnhancedWordLibrary: React.FC<EnhancedWordLibraryProps> = ({
 
   // Mobile detection
   const [isMobile, setIsMobile] = useState(false);
+  const [isTablet, setIsTablet] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
+
+  // Function to get the appropriate background image based on device type
+  const getBackgroundImage = () => {
+    if (isMobile) {
+      return "url(/images/background_mobile.jpg)";
+    } else if (isTablet) {
+      return "url(/images/background_tablet.jpg)";
+    } else {
+      return "url(/images/background.jpg)";
+    }
+  };
 
   useEffect(() => {
     const checkMobile = () => {
-      setIsMobile(window.innerWidth <= 768);
-      setShowMobileControls(window.innerWidth <= 768);
+      const width = window.innerWidth;
+      setIsMobile(width <= 768);
+      setIsTablet(width > 768 && width <= 1024);
+      setShowMobileControls(width <= 768);
     };
 
     checkMobile();
@@ -382,9 +396,12 @@ export const EnhancedWordLibrary: React.FC<EnhancedWordLibraryProps> = ({
   return (
     <div
       ref={containerRef}
-      className={`min-h-screen transition-all duration-300 optimize-for-small-screen ${
-        highContrastMode ? "bg-black text-white" : "bg-responsive-dashboard"
+      className={`min-h-screen bg-cover bg-center bg-no-repeat transition-all duration-300 optimize-for-small-screen ${
+        highContrastMode ? "bg-black text-white" : ""
       }`}
+      style={{
+        backgroundImage: highContrastMode ? "none" : getBackgroundImage(),
+      }}
     >
       {/* Enhanced Mobile Header */}
       {isMobile && (
