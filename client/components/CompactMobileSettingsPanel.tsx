@@ -692,7 +692,19 @@ export const CompactMobileSettingsPanel: React.FC<
                   </CompactSettingRow>
 
                   <CompactSettingRow
-                    icon={mascotEnabled ? () => <span className="w-4 h-4 flex items-center justify-center">🦁</span> : () => <span className="w-4 h-4 flex items-center justify-center">😴</span>}
+                    icon={
+                      mascotEnabled
+                        ? () => (
+                            <span className="w-4 h-4 flex items-center justify-center">
+                              🦁
+                            </span>
+                          )
+                        : () => (
+                            <span className="w-4 h-4 flex items-center justify-center">
+                              😴
+                            </span>
+                          )
+                    }
                     label="Friendly Mascot"
                     description="Show floating helper character"
                   >

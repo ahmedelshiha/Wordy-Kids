@@ -354,7 +354,6 @@ export const LearningDashboard: React.FC<LearningDashboardProps> = ({
         </Card>
       </div> */}
 
-
       {/* Recent Achievements - Hidden */}
       {/* <Card>
         <CardHeader className="pb-3">

@@ -1054,7 +1054,6 @@ export function InteractiveDashboardWordCard({
               Session Complete!
             </h2>
 
-
             {/* Achievements */}
             {sessionAchievements.map((achievement, index) => (
               <div
