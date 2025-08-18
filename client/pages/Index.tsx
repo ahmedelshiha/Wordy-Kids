@@ -1844,7 +1844,7 @@ export default function Index({ initialProfile }: IndexProps) {
     // Show completion feedback
     setFeedback({
       type: "celebration",
-      title: "Practice Complete! 🏆",
+      title: "Practice Complete! ����",
       message: `Great job practicing your tricky words!\n\n✅ Remembered: ${results.correctWords.length} words\n🎯 Accuracy: ${results.accuracy}%\n\nKeep practicing to master all your words!`,
       points: results.correctWords.length * 15,
       onContinue: () => setFeedback(null),
@@ -1883,7 +1883,13 @@ export default function Index({ initialProfile }: IndexProps) {
       {isSessionInitialized && (
         <>
           {/* Ultra-Compact Header */}
-          <header className="relative overflow-hidden bg-gradient-to-r from-educational-blue via-educational-purple to-educational-pink text-white shadow-lg">
+          <header
+            className="relative overflow-hidden bg-cover bg-center bg-no-repeat text-white shadow-lg"
+            style={{
+              backgroundImage:
+                "linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url(/images/background.jpg)",
+            }}
+          >
             <div className="relative container mx-auto px-3 py-1 md:py-1.5">
               {/* Mobile header - Ultra compact & optimized */}
               <div className="flex items-center justify-between md:hidden">
@@ -1973,7 +1979,7 @@ export default function Index({ initialProfile }: IndexProps) {
                 className="absolute inset-0 bg-black/50"
                 onClick={() => setIsMobileMenuOpen(false)}
               />
-              <aside className="absolute left-0 top-0 w-80 h-full bg-gradient-to-b from-purple-100 to-pink-100 p-6 flex flex-col shadow-2xl">
+              <aside className="absolute left-0 top-0 w-80 h-full bg-white/90 backdrop-blur-md p-6 flex flex-col shadow-2xl">
                 {/* Mobile Navigation */}
                 <nav className="flex-1 space-y-2">
                   {[
@@ -2061,7 +2067,7 @@ export default function Index({ initialProfile }: IndexProps) {
           )}
 
           {/* Main Content with Sidebar Layout */}
-          <main className="min-h-screen bg-white scroll-smooth">
+          <main className="min-h-screen scroll-smooth">
             {userRole === "parent" ? (
               <div className="w-full p-4 md:p-8 pb-20 lg:pb-8 mobile-parent-dashboard min-h-screen overflow-y-auto">
                 <ParentDashboard
@@ -2072,13 +2078,15 @@ export default function Index({ initialProfile }: IndexProps) {
                 />
               </div>
             ) : (
-              <div className="min-h-screen bg-gradient-to-br from-white via-purple-50/30 to-pink-50/30 optimize-for-small-screen">
+              <div
+                className="min-h-screen bg-cover bg-center bg-no-repeat optimize-for-small-screen"
+                style={{ backgroundImage: "url(/images/background.jpg)" }}
+              >
                 {/* Enhanced Desktop Layout */}
-                <div className="flex h-screen bg-gradient-to-br from-blue-50/30 to-purple-50/30">
+                <div className="flex h-screen">
                   {/* Enhanced Main Game Content Container */}
                   <div className="flex-1 min-w-0 overflow-hidden relative">
                     {/* Game Content Background */}
-                    <div className="absolute inset-0 bg-gradient-to-br from-white/90 to-blue-50/90 backdrop-blur-sm"></div>
                     <div className="relative z-10 w-full h-full p-2 sm:p-3 lg:p-6 pb-20 sm:pb-24 lg:pb-6 overflow-y-auto scroll-smooth">
                       {/* Desktop: Three-column layout with sidebar + main content + side card */}
                       <div className="flex gap-6 items-start">
@@ -3019,7 +3027,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                           size="sm"
                                         >
                                           <Play className="w-3 h-3 md:w-4 md:h-4 mr-1" />
-                                          Let's Listen! 🎧
+                                          Let's Listen! ���
                                         </Button>
                                       </CardContent>
                                     </Card>
@@ -3539,7 +3547,7 @@ export default function Index({ initialProfile }: IndexProps) {
           <MagicalPortalEffect
             isActive={backgroundAnimationsEnabled && activeTab === "learn"}
             intensity="medium"
-            particleEmojis={["✨", "🌟", "⭐", "💫", "🔮", "🌈", "🦄", "🎉"]}
+            particleEmojis={["✨", "���", "⭐", "💫", "🔮", "🌈", "🦄", "🎉"]}
           />
 
           {/* Enhanced Reward Celebration */}
