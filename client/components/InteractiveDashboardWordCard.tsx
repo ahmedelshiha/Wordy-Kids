@@ -370,7 +370,7 @@ export function InteractiveDashboardWordCard({
           id: "good_effort",
           title: "GOOD EFFORT!",
           description: `Nice try! ${accuracy}% accuracy. Practice makes perfect!`,
-          emoji: "💪",
+          emoji: "���",
           unlocked: true,
         });
       } else {
@@ -976,7 +976,7 @@ export function InteractiveDashboardWordCard({
                       if (wordsLearned >= goal) {
                         if (wordsLearned >= goal * 2) return "⭐";
                         if (wordsLearned >= goal * 1.5) return "🚀";
-                        return "🏆";
+                        return "���";
                       }
                       if (percentage >= 90) return "⭐";
                       if (percentage >= 75) return "🎯";
@@ -1380,7 +1380,7 @@ export function InteractiveDashboardWordCard({
                       backdropFilter: "blur(8px)",
                       backgroundColor: "rgba(255, 255, 255, 0.85)",
                     }}
-                    className="mx-auto max-w-xs p-3 md:p-4 rounded-xl border-2 border-yellow-300/60 shadow-lg relative overflow-hidden"
+                    className="mx-auto max-w-[280px] sm:max-w-xs p-2 sm:p-3 md:p-4 rounded-xl border-2 border-yellow-300/60 shadow-lg relative overflow-hidden"
                   >
                     {/* Exit Button */}
                     <motion.button
@@ -1388,7 +1388,7 @@ export function InteractiveDashboardWordCard({
                       animate={{ opacity: 1, scale: 1 }}
                       transition={{ delay: 0.8, duration: 0.3 }}
                       onClick={() => setShowHint(false)}
-                      className="absolute top-2 right-2 w-6 h-6 bg-red-500/80 hover:bg-red-600 text-white rounded-full flex items-center justify-center transition-all duration-200 hover:scale-110 active:scale-95 z-20"
+                      className="absolute top-2 right-2 w-6 h-6 bg-orange-500/80 hover:bg-orange-600 text-white rounded-full flex items-center justify-center transition-all duration-200 hover:scale-110 active:scale-95 z-20"
                       aria-label="Close hint"
                     >
                       <span className="text-xs font-bold">×</span>
