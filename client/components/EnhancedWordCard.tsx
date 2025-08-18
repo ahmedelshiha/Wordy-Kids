@@ -128,20 +128,21 @@ export const EnhancedWordCard: React.FC<EnhancedWordCardProps> = ({
 
     // Jungle-themed celebrations and sounds
     if (rating === "easy") {
-      playSoundIfEnabled.success();
-      playSoundIfEnabled.levelUp();
+      jungleInteractions.success();
+      jungleInteractions.achievement();
       jungleConfetti.jungleSuccess();
 
       // Award a random collectible for correct answers
       const collectible = getRandomCollectible();
       setTimeout(() => {
         jungleConfetti.collectibleFound(collectible);
+        jungleInteractions.collectible();
       }, 800);
     } else if (rating === "medium") {
-      playSoundIfEnabled.click();
+      jungleInteractions.buttonClick();
       jungleConfetti.celebrate();
     } else {
-      playSoundIfEnabled.hover();
+      jungleInteractions.error();
       jungleConfetti.oopsEffect();
     }
 
