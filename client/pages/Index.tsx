@@ -45,7 +45,6 @@ import { EnhancedAchievementPopup } from "@/components/EnhancedAchievementPopup"
 import { CompactMobileSettingsPanel } from "@/components/CompactMobileSettingsPanel";
 import { FloatingBubbles } from "@/components/FloatingBubbles";
 import { CelebrationEffect } from "@/components/CelebrationEffect";
-import { FloatingHelpMenu } from "@/components/FloatingHelpMenu";
 import {
   FriendlyMascot,
   FloatingMascot,
@@ -3558,7 +3557,7 @@ export default function Index({ initialProfile }: IndexProps) {
           <MagicalPortalEffect
             isActive={backgroundAnimationsEnabled && activeTab === "learn"}
             intensity="medium"
-            particleEmojis={["✨", "���", "⭐", "💫", "🔮", "🌈", "🦄", "🎉"]}
+            particleEmojis={["���", "���", "⭐", "💫", "🔮", "🌈", "🦄", "🎉"]}
           />
 
           {/* Enhanced Reward Celebration */}
