@@ -297,26 +297,26 @@ export const StreakSideCard: React.FC<StreakSideCardProps> = ({
                         whileHover={{ scale: 1.02 }}
                       >
                         <div className="jungle-progress-book mx-auto mb-1">📚</div>
-                        <div className="text-lg font-bold text-blue-800">
+                        <div className="text-lg font-bold text-white">
                           {progressData.wordsLearned}
                         </div>
-                        <div className="text-xs text-blue-600 font-medium">
-                          Words Learned
+                        <div className="text-xs text-white font-medium">
+                          Words Explored
                         </div>
                       </motion.div>
                     )}
 
                     {progressData.totalPoints! > 0 && (
                       <motion.div
-                        className="bg-gradient-to-r from-yellow-100 to-yellow-50 border border-yellow-200 rounded-lg p-3 text-center"
+                        className="jungle-card p-3 text-center border-2 border-yellow-300/50"
                         whileHover={{ scale: 1.02 }}
                       >
-                        <Star className="w-5 h-5 text-yellow-600 mx-auto mb-1" />
-                        <div className="text-lg font-bold text-yellow-800">
+                        <div className="jungle-progress-treasure mx-auto mb-1">🏆</div>
+                        <div className="text-lg font-bold text-white">
                           {progressData.totalPoints}
                         </div>
-                        <div className="text-xs text-yellow-600 font-medium">
-                          Points Earned
+                        <div className="text-xs text-white font-medium">
+                          Jungle Gems
                         </div>
                       </motion.div>
                     )}
@@ -325,8 +325,8 @@ export const StreakSideCard: React.FC<StreakSideCardProps> = ({
 
               {/* Benefits showcase */}
               <div className="space-y-2">
-                <h4 className="text-sm font-bold text-gray-800 text-center mb-3">
-                  🎁 Unlock Amazing Features:
+                <h4 className="text-sm font-bold text-white text-center mb-3">
+                  🌿 Unlock Jungle Powers:
                 </h4>
                 <div className="grid grid-cols-2 gap-2 text-xs">
                   {[
