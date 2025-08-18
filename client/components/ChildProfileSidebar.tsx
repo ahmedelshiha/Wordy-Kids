@@ -254,6 +254,12 @@ export const ChildProfileSidebar: React.FC<ChildProfileSidebarProps> = ({
                   </div>
                 </div>
               )}
+
+              {/* Jungle Collectibles */}
+              <JungleCollectiblesDisplay
+                compact={true}
+                className="w-full"
+              />
             </motion.div>
           ) : (
             <motion.div
