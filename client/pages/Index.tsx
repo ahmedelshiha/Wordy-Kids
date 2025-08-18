@@ -129,6 +129,7 @@ import {
   Sword,
   BookOpen,
   RotateCcw,
+  Sparkles,
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { WordProgressAPI } from "@/lib/wordProgressApi";
