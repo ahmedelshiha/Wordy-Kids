@@ -2044,8 +2044,8 @@ export default function Index({ initialProfile }: IndexProps) {
                       <div
                         className="w-full flex justify-center items-center relative"
                         style={{
-                          padding: '10px 20px 5px 20px',
-                          zIndex: 10
+                          padding: "10px 20px 5px 20px",
+                          zIndex: 10,
                         }}
                       >
                         <img

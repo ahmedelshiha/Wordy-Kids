@@ -17,7 +17,7 @@
 @layer utilities {
   /* Responsive background images */
   .bg-responsive-dashboard {
-    background-image: url('/images/background.jpg');
+    background-image: url("/images/background.jpg");
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -26,21 +26,21 @@
   /* Mobile background */
   @media (max-width: 768px) {
     .bg-responsive-dashboard {
-      background-image: url('/images/background_mobile.jpg');
+      background-image: url("/images/background_mobile.jpg");
     }
   }
 
   /* Tablet background */
   @media (min-width: 769px) and (max-width: 1024px) {
     .bg-responsive-dashboard {
-      background-image: url('/images/background_tablet.jpg');
+      background-image: url("/images/background_tablet.jpg");
     }
   }
 
   /* Desktop background */
   @media (min-width: 1025px) {
     .bg-responsive-dashboard {
-      background-image: url('/images/background.jpg');
+      background-image: url("/images/background.jpg");
     }
   }
 
