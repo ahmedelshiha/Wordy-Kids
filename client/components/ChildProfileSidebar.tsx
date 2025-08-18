@@ -23,11 +23,11 @@ import {
 import { useAuth } from "@/hooks/useAuth";
 import { useNavigate } from "react-router-dom";
 import { cn } from "@/lib/utils";
-import {
-  jungleConfetti,
-  getMascotForState,
-} from "@/lib/jungleAdventureEffects";
-import { SimpleCollectiblesDisplay } from "@/components/SimpleCollectiblesDisplay";
+// import {
+//   jungleConfetti,
+//   getMascotForState,
+// } from "@/lib/jungleAdventureEffects";
+// import { SimpleCollectiblesDisplay } from "@/components/SimpleCollectiblesDisplay";
 
 interface ChildProfileSidebarProps {
   profile: any;
