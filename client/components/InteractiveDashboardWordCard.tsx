@@ -373,7 +373,7 @@ export function InteractiveDashboardWordCard({
           id: "great_session",
           title: "GREAT SESSION!",
           description: `Well done! ${accuracy}% accuracy. Keep it up!`,
-          emoji: "��",
+          emoji: "🎯",
           unlocked: true,
         });
       } else if (accuracy >= 50) {
@@ -866,7 +866,7 @@ export function InteractiveDashboardWordCard({
           onClick={playPronunciation}
         >
           {/* Animated background elements */}
-          <div className="absolute inset-0 bg-gradient-to-r from-blue-200/20 via-purple-200/20 to-pink-200/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+          <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
           <div className="absolute top-2 right-2 text-xs text-blue-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
             🔊
           </div>
@@ -1234,7 +1234,7 @@ export function InteractiveDashboardWordCard({
                 transition={{ duration: 0.4, type: "spring", damping: 20 }}
                 className="text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl font-bold text-gray-800 mb-1 sm:mb-2"
               >
-                ✨ Name this object!
+                ��� Name this object!
               </motion.h1>
             </header>
 
