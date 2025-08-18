@@ -29,7 +29,7 @@ interface DesktopKidNavProps {
 
 interface NavTab {
   id: string;
-  emoji: string;
+  image: string;
   label: string;
   color: string;
   hoverColor: string;
@@ -39,7 +39,7 @@ interface NavTab {
 const kidNavTabs: NavTab[] = [
   {
     id: "dashboard",
-    emoji: "🏡",
+    image: "/images/icons/home.png",
     label: "Home",
     color: "from-purple-400 via-pink-400 to-blue-400",
     hoverColor: "from-purple-500 via-pink-500 to-blue-500",
@@ -47,7 +47,7 @@ const kidNavTabs: NavTab[] = [
   },
   {
     id: "learn",
-    emoji: "📚",
+    image: "/images/icons/books.png",
     label: "Library",
     color: "from-orange-400 via-yellow-400 to-red-400",
     hoverColor: "from-orange-500 via-yellow-500 to-red-500",
@@ -55,7 +55,7 @@ const kidNavTabs: NavTab[] = [
   },
   {
     id: "quiz",
-    emoji: "🎮",
+    image: "/images/icons/game.png",
     label: "Play",
     color: "from-green-400 via-emerald-400 to-teal-400",
     hoverColor: "from-green-500 via-emerald-500 to-teal-500",
@@ -63,7 +63,7 @@ const kidNavTabs: NavTab[] = [
   },
   {
     id: "progress",
-    emoji: "🗺️",
+    image: "/images/icons/map.png",
     label: "Map",
     color: "from-indigo-400 via-purple-400 to-pink-400",
     hoverColor: "from-indigo-500 via-purple-500 to-pink-500",
