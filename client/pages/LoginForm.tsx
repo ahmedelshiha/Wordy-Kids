@@ -362,7 +362,7 @@ export default function LoginForm() {
         {/* Header Section with Enhanced Design */}
         <div className="text-center mb-4 sm:mb-6 animate-fade-in">
           {/* Combined Logo Section */}
-          <div className="flex justify-center items-center gap-4 mb-1 sm:mb-2">
+          <div className="flex justify-center items-center gap-1 mb-1 sm:mb-2">
             <img
               src="/images/Wordy Jungle Adventure Logo.png"
               alt="Wordy Jungle Adventure Logo"
