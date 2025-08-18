@@ -157,16 +157,11 @@ export function InteractiveDashboardWordCard({
         break;
       case "h":
       case "H":
-        event.preventDefault();
-        if (!showHint && !showWordName) {
-          setShowHint(true);
-        }
-        break;
       case "s":
       case "S":
         event.preventDefault();
-        if (!showWordName) {
-          setShowWordName(true);
+        if (!showWordDetails) {
+          setShowWordDetails(true);
         }
         break;
       case " ":
@@ -195,7 +190,7 @@ export function InteractiveDashboardWordCard({
   const [journeyAchievements, setJourneyAchievements] = useState<any[]>([]);
 
   // UI States
-  const [showWordName, setShowWordName] = useState(false);
+  const [showWordDetails, setShowWordDetails] = useState(false);
   const [isAnswered, setIsAnswered] = useState(false);
   const [celebrationEffect, setCelebrationEffect] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
@@ -203,7 +198,6 @@ export function InteractiveDashboardWordCard({
     "remembered" | "needs_practice" | null
   >(null);
   const [guess, setGuess] = useState("");
-  const [showHint, setShowHint] = useState(false);
 
   // Enhanced visual feedback states
   const [particles, setParticles] = useState<
@@ -310,10 +304,9 @@ export function InteractiveDashboardWordCard({
 
   // Reset card state when word changes
   useEffect(() => {
-    setShowWordName(false);
+    setShowWordDetails(false);
     setIsAnswered(false);
     setGuess("");
-    setShowHint(false);
     setImageLoaded(false);
     setImageError(false);
     setIsTransitioning(true);
@@ -612,8 +605,7 @@ export function InteractiveDashboardWordCard({
       setIsAnswered(false);
       setFeedbackType(null);
       setCelebrationEffect(false);
-      setShowWordName(false);
-      setShowHint(false);
+      setShowWordDetails(false);
       setParticles([]);
       setButtonClickedId(null);
       setShowSuccessRipple(false);
@@ -1256,7 +1248,7 @@ export function InteractiveDashboardWordCard({
             {/* Picture Display with State Transitions */}
             <AnimatePresence mode="wait">
               <motion.div
-                key={`word-${currentWordIndex}-${showWordName ? "revealed" : "hidden"}`}
+                key={`word-${currentWordIndex}-${showWordDetails ? "revealed" : "hidden"}`}
                 initial={{ opacity: 0, y: 20, scale: 0.95 }}
                 animate={{ opacity: 1, y: 0, scale: 1 }}
                 exit={{ opacity: 0, y: -10, scale: 1.05 }}
@@ -1359,7 +1351,7 @@ export function InteractiveDashboardWordCard({
               aria-label="Word learning controls"
               aria-describedby="game-instructions"
             >
-              {!showHint && !showWordName && (
+              {!showWordDetails && (
                 <motion.div
                   whileHover={{ scale: 1.05, y: -2 }}
                   whileTap={{ scale: 0.95, y: 0 }}
@@ -1367,42 +1359,15 @@ export function InteractiveDashboardWordCard({
                 >
                   <Button
                     onClick={() =>
-                      handleActionWithFeedback(() => setShowHint(true), "light")
-                    }
-                    variant="outline"
-                    size="sm"
-                    className="px-3 py-2 text-xs sm:text-sm rounded-xl transition-all duration-300 min-h-[44px] touch-manipulation group relative overflow-hidden bg-gradient-to-r from-yellow-50 to-orange-50 hover:from-yellow-100 hover:to-orange-100 border-2 border-yellow-200 hover:border-yellow-300 shadow-md hover:shadow-lg"
-                    aria-label="Show hint"
-                  >
-                    <div className="absolute inset-0 bg-gradient-to-r from-yellow-200/0 via-yellow-200/50 to-yellow-200/0 transform -skew-x-12 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 ease-out" />
-                    <Lightbulb className="w-4 h-4 mr-1 group-hover:animate-pulse text-yellow-600" />
-                    <span className="relative z-10 font-semibold text-yellow-700">
-                      💡 Hint
-                    </span>
-                  </Button>
-                </motion.div>
-              )}
-
-              {!showWordName && (
-                <motion.div
-                  whileHover={{ scale: 1.05, y: -2 }}
-                  whileTap={{ scale: 0.95, y: 0 }}
-                  transition={{ type: "spring", stiffness: 400, damping: 17 }}
-                >
-                  <Button
-                    onClick={() =>
-                      handleActionWithFeedback(
-                        () => setShowWordName(true),
-                        "medium",
-                      )
+                      handleActionWithFeedback(() => setShowWordDetails(true), "medium")
                     }
                     size="sm"
                     className="bg-gradient-to-r from-educational-purple via-purple-500 to-purple-600 hover:from-purple-500 hover:via-purple-600 hover:to-purple-700 text-white px-3 py-2 text-xs sm:text-sm rounded-xl min-h-[44px] touch-manipulation group relative overflow-hidden shadow-lg hover:shadow-xl border-2 border-purple-300/50 hover:border-purple-200"
-                    aria-label="Show word answer"
+                    aria-label="Show word name and hint"
                   >
                     <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/20 to-white/0 transform -skew-x-12 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-600 ease-out" />
                     <Eye className="w-4 h-4 mr-1 group-hover:animate-bounce" />
-                    <span className="relative z-10 font-semibold">👁️ Show</span>
+                    <span className="relative z-10 font-semibold">👁️ Show Name & Hint</span>
                   </Button>
                 </motion.div>
               )}
@@ -1435,42 +1400,9 @@ export function InteractiveDashboardWordCard({
               </Button>
             </div>
 
-            {/* Hint Display */}
-            <AnimatePresence>
-              {showHint && !showWordName && (
-                <motion.div
-                  initial={{ opacity: 0, y: -20, scale: 0.95 }}
-                  animate={{ opacity: 1, y: 0, scale: 1 }}
-                  exit={{ opacity: 0, y: -10, scale: 0.95 }}
-                  transition={{
-                    duration: 0.3,
-                    type: "spring",
-                    damping: 20,
-                  }}
-                  className="bg-gradient-to-br from-yellow-50 via-orange-50/50 to-amber-50 border border-yellow-200/60 rounded-2xl p-4 mb-4 text-center shadow-lg backdrop-blur-sm ring-1 ring-yellow-200/20 will-change-transform"
-                  role="region"
-                  aria-label="Word hint"
-                  aria-live="polite"
-                >
-                  <div className="flex items-center justify-center gap-2 mb-1">
-                    <Lightbulb
-                      className="w-4 h-4 text-yellow-600"
-                      aria-hidden="true"
-                    />
-                    <h2 className="text-sm font-semibold text-yellow-800">
-                      💡 Hint:
-                    </h2>
-                  </div>
-                  <p className="text-yellow-700 text-sm" id="hint-text">
-                    "{currentWord.definition}"
-                  </p>
-                </motion.div>
-              )}
-            </AnimatePresence>
-
             {/* Word Name and Details */}
             <AnimatePresence>
-              {showWordName && (
+              {showWordDetails && (
                 <motion.div
                   initial={{ opacity: 0, y: 20, scale: 0.95 }}
                   animate={{ opacity: 1, y: 0, scale: 1 }}
@@ -1594,26 +1526,44 @@ export function InteractiveDashboardWordCard({
                     </motion.div>
                   </motion.div>
 
-                  {/* Definition and Example - Hidden to show word name only */}
-                  <div className="hidden bg-gray-50 p-6 rounded-2xl">
-                    <div className="mb-4">
-                      <h3 className="text-lg font-semibold text-gray-700 mb-2">
-                        📖 Definition:
+                  {/* Hint/Definition Display */}
+                  <motion.div
+                    initial={{ opacity: 0, y: 20, scale: 0.95 }}
+                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                    transition={{
+                      delay: 0.7,
+                      duration: 0.5,
+                      type: "spring",
+                      damping: 20,
+                    }}
+                    className="bg-gradient-to-br from-yellow-50 via-orange-50/50 to-amber-50 border border-yellow-200/60 rounded-2xl p-4 text-center shadow-lg backdrop-blur-sm ring-1 ring-yellow-200/20"
+                    role="region"
+                    aria-label="Word hint and definition"
+                    aria-live="polite"
+                  >
+                    <div className="flex items-center justify-center gap-2 mb-2">
+                      <Lightbulb
+                        className="w-4 h-4 text-yellow-600"
+                        aria-hidden="true"
+                      />
+                      <h3 className="text-sm font-semibold text-yellow-800">
+                        💡 Definition:
                       </h3>
-                      <p className="text-xl text-gray-800 leading-relaxed">
-                        {currentWord.definition}
-                      </p>
                     </div>
-
-                    <div>
-                      <h3 className="text-lg font-semibold text-gray-700 mb-2">
-                        💬 Example:
-                      </h3>
-                      <p className="text-lg text-gray-700 italic leading-relaxed">
-                        "{currentWord.example}"
-                      </p>
-                    </div>
-                  </div>
+                    <p className="text-yellow-700 text-sm leading-relaxed" id="hint-text">
+                      "{currentWord.definition}"
+                    </p>
+                    {currentWord.example && (
+                      <div className="mt-3 pt-3 border-t border-yellow-200/50">
+                        <h4 className="text-xs font-semibold text-yellow-800 mb-1">
+                          💬 Example:
+                        </h4>
+                        <p className="text-yellow-700 text-xs italic leading-relaxed">
+                          "{currentWord.example}"
+                        </p>
+                      </div>
+                    )}
+                  </motion.div>
                 </motion.div>
               )}
             </AnimatePresence>
