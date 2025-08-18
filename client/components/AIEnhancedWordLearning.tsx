@@ -408,12 +408,10 @@ export function AIEnhancedWordLearning({
             {/* Word Card */}
             <WordCard
               word={currentWord}
-              onWordLearned={(word, rating) =>
-                handleWordResponse(word, rating === "easy")
+              onWordMastered={(wordId, rating) =>
+                handleWordResponse(currentWord, rating === "easy")
               }
               showDefinition={true}
-              autoPlay={true}
-              compact={false}
             />
 
             {/* Action Buttons */}
