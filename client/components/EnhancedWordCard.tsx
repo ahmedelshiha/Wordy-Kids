@@ -132,29 +132,29 @@ export const EnhancedWordCard: React.FC<EnhancedWordCardProps> = ({
 
     // Jungle-themed celebrations and sounds
     if (rating === "easy") {
-      jungleInteractions.success();
-      jungleInteractions.achievement();
-      jungleConfetti.jungleSuccess();
+      // jungleInteractions.success();
+      // jungleInteractions.achievement();
+      // jungleConfetti.jungleSuccess();
 
       // Award a random collectible for correct answers
-      const collectible = getRandomCollectible();
-      const isNewItem = collectiblesManager.collectItem(collectible);
+      // const collectible = getRandomCollectible();
+      // const isNewItem = collectiblesManager.collectItem(collectible);
 
-      setTimeout(() => {
-        jungleConfetti.collectibleFound(collectible);
-        jungleInteractions.collectible();
-
-        // Show special celebration for new items
-        if (isNewItem) {
-          jungleInteractions.achievement();
-        }
-      }, 800);
+      // setTimeout(() => {
+      //   jungleConfetti.collectibleFound(collectible);
+      //   jungleInteractions.collectible();
+      //
+      //   // Show special celebration for new items
+      //   if (isNewItem) {
+      //     jungleInteractions.achievement();
+      //   }
+      // }, 800);
     } else if (rating === "medium") {
-      jungleInteractions.buttonClick();
-      jungleConfetti.celebrate();
+      // jungleInteractions.buttonClick();
+      // jungleConfetti.celebrate();
     } else {
-      jungleInteractions.error();
-      jungleConfetti.oopsEffect();
+      // jungleInteractions.error();
+      // jungleConfetti.oopsEffect();
     }
 
     // UI interaction sound
