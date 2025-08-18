@@ -249,8 +249,12 @@ export function MobileBottomNav({
                     tab.id === "progress" && "animate-gentle-bounce",
                   )}
                 >
-                  <div className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl">
-                    {tab.emoji}
+                  <div className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 lg:w-20 lg:h-20 flex items-center justify-center">
+                    <img
+                      src={tab.image}
+                      alt={tab.label}
+                      className="w-full h-full object-contain filter drop-shadow-lg"
+                    />
                   </div>
                   <span className="text-xs font-kid-friendly font-bold leading-none text-center text-white whitespace-nowrap mt-1">
                     {tab.label}
