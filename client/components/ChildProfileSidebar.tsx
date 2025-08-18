@@ -23,6 +23,7 @@ import {
 import { useAuth } from "@/hooks/useAuth";
 import { useNavigate } from "react-router-dom";
 import { cn } from "@/lib/utils";
+import { jungleConfetti, getMascotForState } from "@/lib/jungleAdventureEffects";
 
 interface ChildProfileSidebarProps {
   profile: any;
@@ -230,7 +231,7 @@ export const ChildProfileSidebar: React.FC<ChildProfileSidebarProps> = ({
               {stats?.recentActivity && (
                 <div className="jungle-card p-4 border-2 border-pink-300/50 shadow-lg kid-card">
                   <h4 className="text-sm font-bold text-white mb-3 flex items-center kid-text-big text-shadow">
-                    <div className="jungle-progress-icon mr-2">🎆</div>
+                    <div className="jungle-progress-icon mr-2">����</div>
                     🌿 Jungle Treasures!
                   </h4>
                   <div className="space-y-2">
