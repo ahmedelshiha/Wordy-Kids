@@ -1420,7 +1420,7 @@ export function InteractiveDashboardWordCard({
                           >
                             <Volume2
                               className={cn(
-                                "w-4 h-4 mr-1",
+                                "w-3 h-3 sm:w-4 sm:h-4 mr-1",
                                 "drop-shadow-lg",
                                 isPlaying &&
                                   "animate-bounce text-yellow-100 scale-110",
