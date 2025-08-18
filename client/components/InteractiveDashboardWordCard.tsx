@@ -1639,7 +1639,7 @@ export function InteractiveDashboardWordCard({
                       </span>
                       <div className="text-center">
                         <div className="font-bold text-xs sm:text-sm md:text-base">
-                          I Forgot
+                          Get Hint
                         </div>
                         <div className="text-xs opacity-90 mt-0.5 hidden sm:block">
                           Need practice! 💪

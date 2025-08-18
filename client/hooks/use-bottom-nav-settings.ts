@@ -5,7 +5,7 @@ export interface BottomNavSettings {
 }
 
 const DEFAULT_SETTINGS: BottomNavSettings = {
-  showBottomNav: false, // Default to disabled as requested
+  showBottomNav: true, // Default to enabled for mobile users
 };
 
 export function useBottomNavSettings() {

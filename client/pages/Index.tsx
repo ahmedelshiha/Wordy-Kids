@@ -2706,7 +2706,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                                           </span>
                                                           <div className="text-center">
                                                             <div className="font-bold text-base sm:text-lg">
-                                                              I Forgot
+                                                              Get Hint
                                                             </div>
                                                             <div className="text-xs opacity-90 hidden sm:block">
                                                               Need practice! 💪
@@ -3256,7 +3256,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                 <div className="space-y-6">
                                   <div className="flex items-center justify-between">
                                     <h2 className="text-2xl font-bold text-gray-800">
-                                      🎯 Word Matching Game
+                                      �� Word Matching Game
                                     </h2>
                                   </div>
                                   <WordMatchingGame
