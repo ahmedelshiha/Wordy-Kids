@@ -129,6 +129,7 @@ import {
   Sword,
   BookOpen,
   RotateCcw,
+  Sparkles,
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { WordProgressAPI } from "@/lib/wordProgressApi";
@@ -2048,11 +2049,23 @@ export default function Index({ initialProfile }: IndexProps) {
                           zIndex: 10,
                         }}
                       >
-                        <img
-                          src="/images/Wordy Jungle Adventure Logo.png"
-                          alt="Wordy Jungle Adventure Logo"
-                          className="max-h-16 lg:max-h-24 xl:max-h-28 object-contain"
-                        />
+                        <div className="flex justify-center items-center gap-1">
+                          <img
+                            src="/images/Wordy Jungle Adventure Logo.png"
+                            alt="Wordy Jungle Adventure Logo"
+                            className="max-h-16 lg:max-h-24 xl:max-h-28 object-contain"
+                          />
+                          <div className="relative">
+                            <img
+                              src="https://cdn.builder.io/api/v1/image/assets%2F783bb0e1cd3e4c73aa9ce79d668738ac%2Fee8d2c4de0ab40c1b0b38ee3c2ef1020?format=webp&width=800"
+                              alt="Wordy Kids Logo"
+                              className="w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 lg:w-24 lg:h-24 object-contain animate-gentle-float"
+                            />
+                            <div className="absolute -top-1 -right-1 bg-yellow-400 p-1 sm:p-2 rounded-full animate-bounce">
+                              <Sparkles className="w-3 h-3 sm:w-4 sm:h-4 text-white" />
+                            </div>
+                          </div>
+                        </div>
                       </div>
 
                       {/* Desktop: Three-column layout with sidebar + main content + side card */}

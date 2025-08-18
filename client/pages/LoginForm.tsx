@@ -361,23 +361,25 @@ export default function LoginForm() {
       <div className="w-full max-w-sm sm:max-w-md mx-auto relative z-10 px-3 sm:px-0">
         {/* Header Section with Enhanced Design */}
         <div className="text-center mb-4 sm:mb-6 animate-fade-in">
-          <div className="flex justify-center mb-3 sm:mb-4">
+          {/* Combined Logo Section */}
+          <div className="flex justify-center items-center gap-1 mb-1 sm:mb-2">
+            <img
+              src="/images/Wordy Jungle Adventure Logo.png"
+              alt="Wordy Jungle Adventure Logo"
+              className="max-h-16 lg:max-h-24 xl:max-h-28 object-contain"
+            />
             <div className="relative">
-              <div className="bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 p-2 sm:p-3 md:p-4 rounded-full shadow-lg sm:shadow-2xl animate-gentle-float">
-                <img
-                  src="https://cdn.builder.io/api/v1/image/assets%2F783bb0e1cd3e4c73aa9ce79d668738ac%2Fee8d2c4de0ab40c1b0b38ee3c2ef1020?format=webp&width=800"
-                  alt="Wordy Kids Logo"
-                  className="w-10 h-10 sm:w-12 sm:h-12 md:w-16 md:h-16 object-contain"
-                />
-              </div>
+              <img
+                src="https://cdn.builder.io/api/v1/image/assets%2F783bb0e1cd3e4c73aa9ce79d668738ac%2Fee8d2c4de0ab40c1b0b38ee3c2ef1020?format=webp&width=800"
+                alt="Wordy Kids Logo"
+                className="w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 lg:w-24 lg:h-24 object-contain animate-gentle-float"
+              />
               <div className="absolute -top-1 -right-1 bg-yellow-400 p-1 sm:p-2 rounded-full animate-bounce">
                 <Sparkles className="w-3 h-3 sm:w-4 sm:h-4 text-white" />
               </div>
             </div>
           </div>
-          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent mb-1">
-            Wordy Kids !
-          </h1>
+
           <p className="text-gray-600 text-sm sm:text-base">
             Continue your learning journey
           </p>
