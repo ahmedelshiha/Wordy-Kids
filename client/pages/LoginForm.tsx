@@ -335,7 +335,7 @@ export default function LoginForm() {
           ⭐
         </div>
         <div className="absolute top-16 right-8 text-xl sm:text-3xl animate-gentle-float animation-delay-200">
-          📚
+          ����
         </div>
         <div className="absolute bottom-16 left-8 text-2xl sm:text-4xl animate-gentle-float animation-delay-100">
           🎯
@@ -380,7 +380,14 @@ export default function LoginForm() {
             </div>
           </div>
 
-          <p className="text-gray-600 text-sm sm:text-base">
+          <p
+            className="text-navy text-lg"
+            style={{
+              fontFamily: 'Baloo 2',
+              fontWeight: 500,
+              fontSize: '18px'
+            }}
+          >
             Continue your learning journey
           </p>
         </div>
