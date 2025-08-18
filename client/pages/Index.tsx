@@ -3518,26 +3518,6 @@ export default function Index({ initialProfile }: IndexProps) {
             />
           )}
 
-          {/* Enhanced Floating Help Menu */}
-          <FloatingHelpMenu
-            currentPage="home"
-            onHelpAction={(helpContent) =>
-              setFeedback({
-                type: "info",
-                title: helpContent.title,
-                message: helpContent.message,
-                onContinue: () => setFeedback(null),
-              })
-            }
-            onSettings={() => {
-              setActivePanel("settings");
-              setShowMobileMoreMenu(false);
-            }}
-            onAchievements={() => {
-              setActivePanel("progress");
-              setShowMobileMoreMenu(false);
-            }}
-          />
 
           {/* Enhanced Achievement Popup */}
           {achievementPopup.length > 0 && (
