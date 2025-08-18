@@ -297,7 +297,7 @@ class CollectiblesManager {
       },
       {
         title: "Completionist",
-        emoji: "🏆",
+        emoji: "��",
         description: "Collect every single item",
         unlocked: stats.overall.percentage === 100
       },
@@ -327,19 +327,10 @@ class CollectiblesManager {
 // Export singleton instance
 export const collectiblesManager = new CollectiblesManager();
 
-// React hook for using collectibles in components
-export function useCollectibles() {
-  const [progress, setProgress] = React.useState<CollectiblesProgress>(() => 
-    collectiblesManager.getProgress()
-  );
-
-  React.useEffect(() => {
-    collectiblesManager.subscribe(setProgress);
-    return () => collectiblesManager.unsubscribe(setProgress);
-  }, []);
-
+// Utility functions to get collectibles data without React hooks
+export function getCollectiblesData() {
   return {
-    progress,
+    progress: collectiblesManager.getProgress(),
     collectItem: (item: JungleCollectible) => collectiblesManager.collectItem(item),
     getCollectedItems: () => collectiblesManager.getCollectedItems(),
     getRecentItems: (limit?: number) => collectiblesManager.getRecentItems(limit),
