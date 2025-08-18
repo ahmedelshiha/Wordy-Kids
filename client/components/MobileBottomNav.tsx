@@ -109,8 +109,8 @@ export function MobileBottomNav({
     },
     {
       id: "quiz",
-      emoji: "🧙��♂️",
-      label: "Quiz",
+      emoji: "🎲",
+      label: "Play",
       icon: Brain,
       activeGradient: "kid-gradient-adventure",
       hoverGradient: "kid-gradient-magic",
