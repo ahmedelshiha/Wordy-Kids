@@ -45,7 +45,6 @@ import { EnhancedAchievementPopup } from "@/components/EnhancedAchievementPopup"
 import { CompactMobileSettingsPanel } from "@/components/CompactMobileSettingsPanel";
 import { FloatingBubbles } from "@/components/FloatingBubbles";
 import { CelebrationEffect } from "@/components/CelebrationEffect";
-import { FloatingHelpMenu } from "@/components/FloatingHelpMenu";
 import {
   FriendlyMascot,
   FloatingMascot,
@@ -3518,27 +3517,6 @@ export default function Index({ initialProfile }: IndexProps) {
             />
           )}
 
-          {/* Enhanced Floating Help Menu */}
-          <FloatingHelpMenu
-            currentPage="home"
-            onHelpAction={(helpContent) =>
-              setFeedback({
-                type: "info",
-                title: helpContent.title,
-                message: helpContent.message,
-                onContinue: () => setFeedback(null),
-              })
-            }
-            onSettings={() => {
-              setActivePanel("settings");
-              setShowMobileMoreMenu(false);
-            }}
-            onAchievements={() => {
-              setActivePanel("progress");
-              setShowMobileMoreMenu(false);
-            }}
-          />
-
           {/* Enhanced Achievement Popup */}
           {achievementPopup.length > 0 && (
             <EnhancedAchievementPopup
@@ -3578,7 +3556,7 @@ export default function Index({ initialProfile }: IndexProps) {
           <MagicalPortalEffect
             isActive={backgroundAnimationsEnabled && activeTab === "learn"}
             intensity="medium"
-            particleEmojis={["✨", "���", "⭐", "💫", "🔮", "🌈", "🦄", "🎉"]}
+            particleEmojis={["���", "���", "⭐", "💫", "🔮", "🌈", "🦄", "🎉"]}
           />
 
           {/* Enhanced Reward Celebration */}
