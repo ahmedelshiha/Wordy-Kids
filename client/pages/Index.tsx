@@ -1958,7 +1958,7 @@ export default function Index({ initialProfile }: IndexProps) {
             )}
           </header>
 
-          {/* Mobile Child Profile Header - Only shown on mobile for child role */}
+          {/* Mobile Child Profile Header - DISABLED
           {userRole === "child" && (
             <div className="block lg:hidden">
               <MobileChildProfileHeader
@@ -1971,6 +1971,7 @@ export default function Index({ initialProfile }: IndexProps) {
               />
             </div>
           )}
+          */}
 
           {/* Mobile Menu Overlay */}
           {isMobileMenuOpen && (
@@ -3059,7 +3060,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                           size="sm"
                                         >
                                           <Play className="w-3 h-3 md:w-4 md:h-4 mr-1" />
-                                          Let's Play! 🚀
+                                          Let's Play! ���
                                         </Button>
                                       </CardContent>
                                     </Card>
