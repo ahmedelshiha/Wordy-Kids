@@ -135,7 +135,7 @@ export const EnhancedChildProfileCard: React.FC<
     ];
 
     const timeBasedMessages = {
-      morning: `Good morning, ${profile.name}! ��`,
+      morning: `Good morning, ${profile.name}! 🌅`,
       afternoon: `Hi ${profile.name}! 🌞`,
       evening: `Good evening, ${profile.name}! 🌙`,
     };
