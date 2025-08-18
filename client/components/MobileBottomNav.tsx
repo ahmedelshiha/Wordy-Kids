@@ -67,7 +67,7 @@ export function MobileBottomNav({
     },
     {
       id: "quiz",
-      emoji: "🎲",
+      emoji: "����",
       label: "Play",
       icon: Brain,
       color: "from-orange-500 to-red-500",
@@ -77,8 +77,8 @@ export function MobileBottomNav({
     },
     {
       id: "progress",
-      emoji: "📊",
-      label: userRole === "parent" ? "Reports" : "My Journey",
+      emoji: "🗺️",
+      label: userRole === "parent" ? "Reports" : "Treasure Map",
       icon: Trophy,
       color: "from-yellow-500 to-orange-500",
       bgColor: "bg-yellow-100",
