@@ -609,7 +609,13 @@ export default function LoginForm() {
               <Button
                 type="button"
                 onClick={() => navigate("/signup")}
-                className="w-full py-2 sm:py-3 bg-jungle hover:bg-jungle-dark text-white font-semibold text-sm sm:text-base shadow-lg hover:shadow-xl transform hover:scale-[1.02] transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none min-h-[44px] touch-target"
+                className="w-full py-4 bg-sky hover:bg-sky-dark text-white font-bold text-lg rounded-3xl transition-all duration-300 transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none min-h-[56px] min-w-[200px] touch-target"
+                style={{
+                  boxShadow: '0 4px 12px rgba(33, 150, 243, 0.3)',
+                  fontFamily: 'Baloo 2',
+                  fontWeight: 700,
+                  letterSpacing: '0.5px'
+                }}
                 disabled={isLoading}
                 aria-label="Create new account"
               >
