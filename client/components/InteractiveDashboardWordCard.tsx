@@ -1626,7 +1626,7 @@ export function InteractiveDashboardWordCard({
                   "space-y-3 sm:space-y-4 px-2 sm:px-0 relative z-30",
                   showHint
                     ? "mt-4 sm:mt-6 md:mt-8" // Reduced margin when hint is active
-                    : "mt-40 sm:mt-48 md:mt-56 lg:mt-64 xl:mt-72", // Normal margin when no hint
+                    : "mt-40 sm:mt-48 md:mt-48 lg:mt-52 xl:mt-60", // Normal margin when no hint
                 )}
                 role="group"
                 aria-label="Word learning choices"
