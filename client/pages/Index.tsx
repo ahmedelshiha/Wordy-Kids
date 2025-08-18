@@ -1920,10 +1920,10 @@ export default function Index({ initialProfile }: IndexProps) {
                   </div>
                 </div>
                 <h1 className="text-xl md:text-2xl font-bold mb-1 animate-gentle-bounce">
-                  🌟 Wordy Kids!
+                  🌿 Jungle Wordy Adventure! 🦜
                 </h1>
-                <p className="text-sm font-medium text-educational-yellow-light/90 mb-1">
-                  Fun vocabulary learning for kids! 🚀
+                <p className="text-sm font-medium text-yellow-200 mb-1">
+                  Explore words in the magical jungle! 🎯
                 </p>
               </div>
             </div>
@@ -1931,11 +1931,17 @@ export default function Index({ initialProfile }: IndexProps) {
             {/* Enhanced Floating Elements - Kid-Friendly & Playful */}
             {backgroundAnimationsEnabled && (
               <>
-                <div className="hidden md:block absolute top-8 left-8 text-2xl animate-gentle-bounce">
-                  ⭐
+                <div className="hidden md:block absolute top-8 left-8 text-2xl animate-gentle-bounce jungle-leaf">
+                  🍃
                 </div>
-                <div className="hidden md:block absolute top-12 right-12 text-xl animate-gentle-float">
-                  📚
+                <div className="hidden md:block absolute top-12 right-12 text-xl animate-gentle-float jungle-leaf">
+                  🦋
+                </div>
+                <div className="hidden md:block absolute top-6 left-1/4 text-lg animate-gentle-float delay-500 jungle-leaf">
+                  🌿
+                </div>
+                <div className="hidden md:block absolute top-4 right-1/4 text-xl animate-gentle-bounce delay-700 jungle-leaf">
+                  🍀
                 </div>
                 <div className="hidden md:block absolute bottom-8 left-12 text-2xl animate-gentle-bounce delay-1000">
                   🎯
@@ -3155,7 +3161,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                           <div className="flex justify-between items-center p-3 bg-white rounded-lg">
                                             <div className="flex items-center gap-3">
                                               <span className="text-2xl">
-                                                ��
+                                                ���
                                               </span>
                                               <div>
                                                 <div className="font-semibold">
