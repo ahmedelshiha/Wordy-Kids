@@ -1359,7 +1359,10 @@ export function InteractiveDashboardWordCard({
                 >
                   <Button
                     onClick={() =>
-                      handleActionWithFeedback(() => setShowWordDetails(true), "medium")
+                      handleActionWithFeedback(
+                        () => setShowWordDetails(true),
+                        "medium",
+                      )
                     }
                     size="sm"
                     className="bg-gradient-to-r from-educational-purple via-purple-500 to-purple-600 hover:from-purple-500 hover:via-purple-600 hover:to-purple-700 text-white px-3 py-2 text-xs sm:text-sm rounded-xl min-h-[44px] touch-manipulation group relative overflow-hidden shadow-lg hover:shadow-xl border-2 border-purple-300/50 hover:border-purple-200"
@@ -1367,7 +1370,9 @@ export function InteractiveDashboardWordCard({
                   >
                     <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/20 to-white/0 transform -skew-x-12 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-600 ease-out" />
                     <Eye className="w-4 h-4 mr-1 group-hover:animate-bounce" />
-                    <span className="relative z-10 font-semibold">👁️ Show Name & Hint</span>
+                    <span className="relative z-10 font-semibold">
+                      👁️ Show Name & Hint
+                    </span>
                   </Button>
                 </motion.div>
               )}
@@ -1550,7 +1555,10 @@ export function InteractiveDashboardWordCard({
                         💡 Definition:
                       </h3>
                     </div>
-                    <p className="text-yellow-700 text-sm leading-relaxed" id="hint-text">
+                    <p
+                      className="text-yellow-700 text-sm leading-relaxed"
+                      id="hint-text"
+                    >
                       "{currentWord.definition}"
                     </p>
                     {currentWord.example && (
