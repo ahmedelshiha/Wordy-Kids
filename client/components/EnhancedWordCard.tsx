@@ -451,12 +451,9 @@ export const EnhancedWordCard: React.FC<EnhancedWordCardProps> = ({
                             }
                           }}
                           className={cn(
-                            "w-full h-12 sm:h-14 bg-gradient-to-b from-red-400/30 to-red-600/30 hover:from-red-400/50 hover:to-red-600/50 active:from-red-400/60 active:to-red-600/60 border border-red-400/50 hover:border-red-400/70 text-white font-bold mobile-safe-text touch-target-large haptic-medium transition-all duration-300 flex flex-col items-center justify-center gap-0.5 rounded-lg shadow-lg hover:shadow-xl transform hover:scale-105 active:scale-95 rating-button-enhanced",
-                            ratedAs === "hard" &&
-                              "ring-2 ring-red-300 ring-opacity-75 scale-105 from-red-400/70 to-red-600/70 border-red-300",
-                            showCelebration &&
-                              ratedAs === "hard" &&
-                              "rating-glow rating-celebration",
+                            "jungle-button-forgot w-full h-12 sm:h-14",
+                            ratedAs === "hard" && "ring-2 ring-pink-300 ring-opacity-75 scale-105",
+                            showCelebration && ratedAs === "hard" && "rating-glow rating-celebration",
                           )}
                           aria-label="Mark word as hard - I need more practice"
                         >
@@ -468,14 +465,14 @@ export const EnhancedWordCard: React.FC<EnhancedWordCardProps> = ({
                                 : "animate-wiggle",
                             )}
                           >
-                            😅
+                            😕
                           </span>
                           <span className="text-xs font-bold leading-tight">
-                            Hard
+                            I Forgot
                           </span>
                         </Button>
                         <p className="text-xs text-white/80 text-center leading-tight mobile-safe-text hidden sm:block">
-                          Need practice!
+                          Oops! 🌱
                         </p>
                       </div>
 
@@ -490,12 +487,9 @@ export const EnhancedWordCard: React.FC<EnhancedWordCardProps> = ({
                             }
                           }}
                           className={cn(
-                            "w-full h-12 sm:h-14 bg-gradient-to-b from-yellow-400/30 to-orange-500/30 hover:from-yellow-400/50 hover:to-orange-500/50 active:from-yellow-400/60 active:to-orange-500/60 border border-yellow-400/50 hover:border-yellow-400/70 text-white font-bold mobile-safe-text touch-target-large haptic-medium transition-all duration-300 flex flex-col items-center justify-center gap-0.5 rounded-lg shadow-lg hover:shadow-xl transform hover:scale-105 active:scale-95 rating-button-enhanced",
-                            ratedAs === "medium" &&
-                              "ring-2 ring-yellow-300 ring-opacity-75 scale-105 from-yellow-400/70 to-orange-500/70 border-yellow-300",
-                            showCelebration &&
-                              ratedAs === "medium" &&
-                              "rating-glow rating-celebration",
+                            "jungle-button-hint w-full h-12 sm:h-14",
+                            ratedAs === "medium" && "ring-2 ring-orange-300 ring-opacity-75 scale-105",
+                            showCelebration && ratedAs === "medium" && "rating-glow rating-celebration",
                           )}
                           aria-label="Mark word as okay - I know it a little"
                         >
@@ -507,14 +501,14 @@ export const EnhancedWordCard: React.FC<EnhancedWordCardProps> = ({
                                 : "animate-gentle-bounce",
                             )}
                           >
-                            🤔
+                            💡
                           </span>
                           <span className="text-xs font-bold leading-tight">
-                            OK
+                            Get Hint
                           </span>
                         </Button>
                         <p className="text-xs text-white/80 text-center leading-tight mobile-safe-text hidden sm:block">
-                          Getting there!
+                          Help me! 🌈
                         </p>
                       </div>
 
