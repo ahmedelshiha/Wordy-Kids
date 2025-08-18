@@ -169,7 +169,7 @@ export const StreakSideCard: React.FC<StreakSideCardProps> = ({
         }}
         whileHover={{ scale: 1.02 }}
       >
-        <Card className="bg-gradient-to-br from-white via-purple-50/50 to-pink-50/50 border-2 border-purple-200/50 shadow-xl hover:shadow-2xl transition-all duration-500 backdrop-blur-sm relative overflow-hidden">
+        <Card className="jungle-card border-4 border-yellow-400/50 shadow-2xl hover:shadow-3xl transition-all duration-500 backdrop-blur-sm relative overflow-hidden">
           {/* Animated background patterns */}
           <div className="absolute inset-0 opacity-10">
             <div className="absolute inset-0 bg-gradient-to-br from-purple-400/20 via-pink-400/20 to-blue-400/20"></div>
