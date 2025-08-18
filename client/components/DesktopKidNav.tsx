@@ -151,11 +151,13 @@ export function DesktopKidNav({
                           tab.id === "dashboard" && "filter drop-shadow-lg", // Extra shadow for home
                         )}
                       >
-                        {/* Kid-friendly emoji design for all icons */}
-                        <div className="relative">
-                          <span className="relative z-10 filter drop-shadow-2xl">
-                            {tab.emoji}
-                          </span>
+                        {/* Kid-friendly custom image design for all icons */}
+                        <div className="relative w-12 h-12 lg:w-14 lg:h-14 xl:w-16 xl:h-16 flex items-center justify-center">
+                          <img
+                            src={tab.image}
+                            alt={tab.label}
+                            className="relative z-10 w-full h-full object-contain filter drop-shadow-2xl"
+                          />
                           {/* Magical sparkles around any active icon */}
                           {activeTab === tab.id && (
                             <>
