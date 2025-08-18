@@ -1223,53 +1223,8 @@ export function InteractiveDashboardWordCard({
                 transition={{ duration: 0.4, type: "spring", damping: 20 }}
                 className="text-base sm:text-lg md:text-xl lg:text-2xl font-bold text-gray-800 mb-1 sm:mb-2"
               >
-                {(() => {
-                  const prompts = [
-                    "🤔 What is this?",
-                    "🎯 Can you guess?",
-                    "🔍 What do you see?",
-                    "✨ Name this object!",
-                    "🧠 Think you know?",
-                    "👀 Look closely...",
-                    "🌟 What could this be?",
-                    "🎪 Mystery object!",
-                    "🎨 Identify this!",
-                    "🚀 What's shown here?",
-                  ];
-
-                  // Use word index and some randomness for variety
-                  const promptIndex =
-                    (currentWordIndex + (currentWord?.id || 0)) %
-                    prompts.length;
-                  return prompts[promptIndex];
-                })()}
+                ✨ Name this object!
               </motion.h1>
-              <motion.p
-                key={`desc-${currentWordIndex}`}
-                initial={{ opacity: 0, y: 5 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.4, delay: 0.1 }}
-                className="text-xs sm:text-sm md:text-base text-gray-600 px-2"
-                id="game-instructions"
-              >
-                {(() => {
-                  const descriptions = [
-                    "Look at the picture and guess the word!",
-                    "Study the image and make your guess!",
-                    "Take a close look and identify it!",
-                    "Examine the picture carefully!",
-                    "What word matches this image?",
-                    "Use the visual clue to find the answer!",
-                    "Let the picture guide your guess!",
-                    "Connect the image to the right word!",
-                  ];
-
-                  const descIndex =
-                    (currentWordIndex + (currentWord?.category?.length || 0)) %
-                    descriptions.length;
-                  return descriptions[descIndex];
-                })()}
-              </motion.p>
             </header>
 
             {/* Category and Progress Header */}
