@@ -354,33 +354,6 @@ export const LearningDashboard: React.FC<LearningDashboardProps> = ({
         </Card>
       </div> */}
 
-      {/* Compact Word Progress Summary */}
-      {childStats && (
-        <Card>
-          <CardContent className="p-4">
-            <div className="grid grid-cols-3 gap-4 text-center">
-              <div>
-                <div className="text-2xl font-bold text-green-600">
-                  {childStats.wordsRemembered}
-                </div>
-                <div className="text-sm text-gray-600">Remembered</div>
-              </div>
-              <div>
-                <div className="text-2xl font-bold text-orange-600">
-                  {childStats.wordsNeedingPractice}
-                </div>
-                <div className="text-sm text-gray-600">Need Practice</div>
-              </div>
-              <div>
-                <div className="text-2xl font-bold text-purple-600">
-                  {childStats.averageAccuracy}%
-                </div>
-                <div className="text-sm text-gray-600">Accuracy</div>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-      )}
 
       {/* Recent Achievements - Hidden */}
       {/* <Card>
