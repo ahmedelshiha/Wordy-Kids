@@ -252,6 +252,16 @@
     --celebration-sparkle: 55 100% 70%;
     --celebration-confetti: 320 85% 70%;
 
+    /* Jungle Green Family */
+    --jungle-green: 122 39% 49%; /* #4CAF50 converted to HSL */
+    --jungle-green-dark: 122 42% 39%; /* #388E3C converted to HSL */
+    --jungle-green-light: 122 39% 69%; /* #81C784 converted to HSL */
+
+    /* Sunshine Yellow Family */
+    --sunshine-yellow: 45 100% 51%; /* #FFC107 converted to HSL */
+    --sunshine-yellow-dark: 45 88% 51%; /* #F57F17 converted to HSL */
+    --sunshine-yellow-light: 54 100% 72%; /* #FFF176 converted to HSL */
+
     /* Kid Mode Desktop Navigation */
     --kid-nav-shadow:
       0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
