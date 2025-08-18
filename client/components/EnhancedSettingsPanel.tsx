@@ -1382,6 +1382,52 @@ export const EnhancedSettingsPanel: React.FC<EnhancedSettingsPanelProps> = ({
                   </Card>
                 </div>
               )}
+
+              {/* Other Settings */}
+              {activeTab === "other" && (
+                <div className="space-y-6 animate-fade-in">
+                  <div className="flex items-center gap-3 mb-4">
+                    <div className="p-2 bg-slate-100 rounded-xl">
+                      <Settings className="w-5 h-5 text-slate-600" />
+                    </div>
+                    <h3 className="text-lg font-semibold">Other Settings</h3>
+                  </div>
+
+                  {/* Navigation Settings */}
+                  <Card className="p-4">
+                    <div className="space-y-4">
+                      <h4 className="font-medium flex items-center gap-2">
+                        <Target className="w-4 h-4" />
+                        Navigation & Interface
+                      </h4>
+
+                      <div className="space-y-4">
+                        <div className="flex items-center justify-between p-4 bg-slate-50 rounded-xl border border-slate-200">
+                          <div className="flex-1">
+                            <h5 className="font-medium text-slate-800">
+                              Show Bottom Navigation
+                            </h5>
+                            <p className="text-sm text-slate-600 mt-1">
+                              Display the bottom navigation bar on mobile devices
+                            </p>
+                          </div>
+                          <Switch
+                            checked={showBottomNav}
+                            onCheckedChange={(checked) => {
+                              setShowBottomNav(checked);
+                              setHasUnsavedChanges(true);
+                              if (deviceInfo.hasHaptic) {
+                                triggerHapticFeedback("light");
+                              }
+                            }}
+                            className="ml-4"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </Card>
+                </div>
+              )}
             </div>
           </ScrollArea>
         </div>
