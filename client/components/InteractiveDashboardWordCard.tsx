@@ -157,6 +157,11 @@ export function InteractiveDashboardWordCard({
         break;
       case "h":
       case "H":
+        event.preventDefault();
+        if (!showHint && !showWordDetails) {
+          setShowHint(true);
+        }
+        break;
       case "s":
       case "S":
         event.preventDefault();
@@ -191,6 +196,7 @@ export function InteractiveDashboardWordCard({
 
   // UI States
   const [showWordDetails, setShowWordDetails] = useState(false);
+  const [showHint, setShowHint] = useState(false);
   const [isAnswered, setIsAnswered] = useState(false);
   const [celebrationEffect, setCelebrationEffect] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
@@ -305,6 +311,7 @@ export function InteractiveDashboardWordCard({
   // Reset card state when word changes
   useEffect(() => {
     setShowWordDetails(false);
+    setShowHint(false);
     setIsAnswered(false);
     setGuess("");
     setImageLoaded(false);
@@ -606,6 +613,7 @@ export function InteractiveDashboardWordCard({
       setFeedbackType(null);
       setCelebrationEffect(false);
       setShowWordDetails(false);
+      setShowHint(false);
       setParticles([]);
       setButtonClickedId(null);
       setShowSuccessRipple(false);
@@ -1351,32 +1359,6 @@ export function InteractiveDashboardWordCard({
               aria-label="Word learning controls"
               aria-describedby="game-instructions"
             >
-              {!showWordDetails && (
-                <motion.div
-                  whileHover={{ scale: 1.05, y: -2 }}
-                  whileTap={{ scale: 0.95, y: 0 }}
-                  transition={{ type: "spring", stiffness: 400, damping: 17 }}
-                >
-                  <Button
-                    onClick={() =>
-                      handleActionWithFeedback(
-                        () => setShowWordDetails(true),
-                        "medium",
-                      )
-                    }
-                    size="sm"
-                    className="bg-gradient-to-r from-educational-purple via-purple-500 to-purple-600 hover:from-purple-500 hover:via-purple-600 hover:to-purple-700 text-white px-3 py-2 text-xs sm:text-sm rounded-xl min-h-[44px] touch-manipulation group relative overflow-hidden shadow-lg hover:shadow-xl border-2 border-purple-300/50 hover:border-purple-200"
-                    aria-label="Show word name and hint"
-                  >
-                    <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/20 to-white/0 transform -skew-x-12 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-600 ease-out" />
-                    <Eye className="w-4 h-4 mr-1 group-hover:animate-bounce" />
-                    <span className="relative z-10 font-semibold">
-                      👁️ Show Name & Hint
-                    </span>
-                  </Button>
-                </motion.div>
-              )}
-
               <Button
                 onClick={playPronunciation}
                 disabled={isPlaying}
@@ -1404,6 +1386,127 @@ export function InteractiveDashboardWordCard({
                 )}
               </Button>
             </div>
+
+            {/* Hint Display */}
+            <AnimatePresence>
+              {showHint && !showWordDetails && (
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.9, y: 20 }}
+                  animate={{ opacity: 1, scale: 1, y: 0 }}
+                  exit={{ opacity: 0, scale: 0.9, y: -10 }}
+                  transition={{
+                    duration: 0.4,
+                    type: "spring",
+                    stiffness: 300,
+                    damping: 25,
+                  }}
+                  className="mb-4 md:mb-6"
+                  role="region"
+                  aria-label="Word hint revealed"
+                  aria-live="polite"
+                >
+                  {/* Transparent Hint Card */}
+                  <motion.div
+                    initial={{
+                      backdropFilter: "blur(0px)",
+                      backgroundColor: "rgba(255, 255, 255, 0)",
+                    }}
+                    animate={{
+                      backdropFilter: "blur(8px)",
+                      backgroundColor: "rgba(255, 255, 255, 0.85)",
+                    }}
+                    className="mx-auto max-w-xs p-4 md:p-6 rounded-2xl border-2 border-yellow-300/60 shadow-xl relative overflow-hidden"
+                  >
+                    {/* Hint background glow */}
+                    <motion.div
+                      initial={{ scale: 0, opacity: 0.6 }}
+                      animate={{ scale: 2, opacity: 0 }}
+                      transition={{ duration: 1.2, ease: "easeOut" }}
+                      className="absolute inset-0 bg-gradient-to-r from-yellow-200/40 to-orange-200/40 rounded-2xl"
+                    />
+
+                    <div className="text-center relative z-10">
+                      <motion.div
+                        initial={{ scale: 0, rotate: -180 }}
+                        animate={{ scale: 1, rotate: 0 }}
+                        transition={{
+                          delay: 0.2,
+                          duration: 0.6,
+                          type: "spring",
+                          stiffness: 200,
+                        }}
+                        className="text-2xl md:text-3xl mb-2"
+                        aria-hidden="true"
+                      >
+                        💡
+                      </motion.div>
+
+                      <motion.h3
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.3, duration: 0.4 }}
+                        className="text-sm md:text-base font-bold text-yellow-800 mb-2"
+                      >
+                        Hint: What is this emoji called?
+                      </motion.h3>
+
+                      <motion.div
+                        initial={{ opacity: 0, scale: 0.8 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        transition={{ delay: 0.4, duration: 0.5 }}
+                        className="bg-white/60 rounded-xl p-3 border border-yellow-200/80 shadow-inner"
+                      >
+                        <div className="text-3xl md:text-4xl mb-2">
+                          {currentWord.emoji}
+                        </div>
+                        <p className="text-lg md:text-xl font-bold text-gray-800 tracking-wide">
+                          "{currentWord.emoji}" emoji
+                        </p>
+                        <p className="text-xs text-gray-600 mt-1">
+                          This might help you guess the word!
+                        </p>
+                      </motion.div>
+
+                      {/* Floating hint elements */}
+                      <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{
+                          opacity: [0, 1, 0],
+                          y: [20, -10, -30],
+                          x: [-20, 20, -20],
+                        }}
+                        transition={{
+                          duration: 3,
+                          repeat: Infinity,
+                          ease: "easeInOut",
+                          delay: 0.8,
+                        }}
+                        className="absolute -top-2 -right-2 text-yellow-400 text-sm"
+                      >
+                        ⭐
+                      </motion.div>
+                      <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{
+                          opacity: [0, 1, 0],
+                          y: [20, -10, -30],
+                          x: [20, -20, 20],
+                        }}
+                        transition={{
+                          duration: 3,
+                          repeat: Infinity,
+                          ease: "easeInOut",
+                          delay: 1.5,
+                        }}
+                        className="absolute -bottom-2 -left-2 text-orange-400 text-xs"
+                      >
+                        ✨
+                      </motion.div>
+                    </div>
+                  </motion.div>
+                </motion.div>
+              )}
+            </AnimatePresence>
 
             {/* Word Name and Details */}
             <AnimatePresence>
@@ -1585,32 +1688,66 @@ export function InteractiveDashboardWordCard({
               >
                 <div className="grid grid-cols-2 gap-2 sm:gap-3">
                   <Button
-                    onClick={() => handleWordAction("needs_practice")}
+                    onClick={() => {
+                      // Show hint first if not already shown
+                      if (!showHint && !showWordDetails) {
+                        handleActionWithFeedback(
+                          () => setShowHint(true),
+                          "light",
+                        );
+                      } else {
+                        // If hint is already shown, proceed with main functionality
+                        handleWordAction("needs_practice");
+                      }
+                    }}
                     disabled={isAnswered}
                     className="w-full bg-gradient-to-r from-red-400 to-pink-500 hover:from-red-500 hover:to-pink-600 active:from-red-600 active:to-pink-700 text-white font-bold border-0 rounded-lg sm:rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 active:scale-95 py-2 sm:py-3 md:py-4 px-2 sm:px-3 min-h-[48px] sm:min-h-[56px] md:min-h-[64px] relative overflow-hidden disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none touch-manipulation"
-                    aria-label="Mark word as forgotten"
+                    aria-label={
+                      !showHint && !showWordDetails
+                        ? "Get hint for this word"
+                        : "Mark word as needing practice"
+                    }
                   >
                     <div className="absolute inset-0 bg-white/20 rounded-xl opacity-0 hover:opacity-100 transition-opacity duration-300"></div>
                     <div className="relative z-10 flex items-center justify-center">
                       <span className="text-base sm:text-lg mr-1 sm:mr-2 animate-wiggle">
-                        😔
+                        {!showHint && !showWordDetails ? "💡" : "😔"}
                       </span>
                       <div className="text-center">
                         <div className="font-bold text-xs sm:text-sm md:text-base">
-                          Get Hint
+                          {!showHint && !showWordDetails
+                            ? "Get Hint"
+                            : "Need Practice"}
                         </div>
                         <div className="text-xs opacity-90 mt-0.5 hidden sm:block">
-                          Need practice! 💪
+                          {!showHint && !showWordDetails
+                            ? "Need help? 💡"
+                            : "Need practice! 💪"}
                         </div>
                       </div>
                     </div>
                   </Button>
 
                   <Button
-                    onClick={() => handleWordAction("remembered")}
+                    onClick={() => {
+                      // Show hint first if not already shown
+                      if (!showHint && !showWordDetails) {
+                        handleActionWithFeedback(
+                          () => setShowHint(true),
+                          "light",
+                        );
+                      } else {
+                        // If hint is already shown, proceed with main functionality
+                        handleWordAction("remembered");
+                      }
+                    }}
                     disabled={isAnswered}
                     className="w-full bg-gradient-to-r from-green-400 to-emerald-500 hover:from-green-500 hover:to-emerald-600 active:from-green-600 active:to-emerald-700 text-white font-bold border-0 rounded-lg sm:rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 active:scale-95 py-2 sm:py-3 md:py-4 px-2 sm:px-3 min-h-[48px] sm:min-h-[56px] md:min-h-[64px] relative overflow-hidden disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none touch-manipulation"
-                    aria-label="Mark word as remembered"
+                    aria-label={
+                      !showHint && !showWordDetails
+                        ? "Get hint for this word"
+                        : "Mark word as remembered"
+                    }
                   >
                     <div className="absolute inset-0 bg-white/20 rounded-xl opacity-0 hover:opacity-100 transition-opacity duration-300"></div>
                     <div className="relative z-10 flex items-center justify-center">
