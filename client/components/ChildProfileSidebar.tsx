@@ -313,15 +313,23 @@ export const ChildProfileSidebar: React.FC<ChildProfileSidebarProps> = ({
                     if (onLogout) onLogout();
                   }
                 }}
-                className={`w-full text-xs text-white hover:text-white hover:bg-white/20 rounded-xl font-bold border border-white/20 shadow-md transition-all duration-300 hover:scale-105 ${
+                className={`w-full py-3 text-sm rounded-xl font-bold shadow-lg transform hover:scale-105 transition-all duration-300 relative overflow-hidden ${
                   isGuest
-                    ? "bg-gradient-to-r from-educational-yellow/40 to-educational-orange/40 animate-pulse"
-                    : "bg-gradient-to-r from-educational-pink/30 to-educational-purple/30"
+                    ? "bg-gradient-to-r from-purple-500 via-pink-500 to-blue-500 hover:from-purple-600 hover:via-pink-600 hover:to-blue-600 text-white"
+                    : "bg-gradient-to-r from-slate-500 to-slate-600 hover:from-slate-600 hover:to-slate-700 text-white"
                 }`}
               >
                 {isGuest ? (
                   <>
-                    <UserPlus className="w-4 h-4 mr-2" />✨ Join Adventure!
+                    <motion.div
+                      className="absolute inset-0 bg-gradient-to-r from-yellow-400/20 to-transparent"
+                      animate={{
+                        x: ["-100%", "100%"],
+                        transition: { duration: 2, repeat: Infinity, ease: "linear" },
+                      }}
+                    />
+                    <UserPlus className="w-4 h-4 mr-2" />
+                    <span>Create My Account! 🚀</span>
                   </>
                 ) : (
                   <>
@@ -332,9 +340,9 @@ export const ChildProfileSidebar: React.FC<ChildProfileSidebarProps> = ({
               </Button>
               {/* Dynamic message below button */}
               <div className="text-center">
-                <p className="text-xs text-white/80 font-medium">
+                <p className="text-xs text-slate-600 font-medium">
                   {isGuest
-                    ? "Save your progress & unlock more!"
+                    ? "It's super quick and totally free! ✨"
                     : "Thanks for learning with us!"}
                 </p>
               </div>
