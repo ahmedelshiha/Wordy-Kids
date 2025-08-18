@@ -18,7 +18,10 @@ import {
   Calendar,
   TrendingUp,
   Activity,
+  UserPlus,
 } from "lucide-react";
+import { useAuth } from "@/hooks/useAuth";
+import { useNavigate } from "react-router-dom";
 import { cn } from "@/lib/utils";
 
 interface ChildProfileSidebarProps {
@@ -50,6 +53,8 @@ export const ChildProfileSidebar: React.FC<ChildProfileSidebarProps> = ({
 }) => {
   const [currentTime, setCurrentTime] = useState(new Date());
   const [isVisible, setIsVisible] = useState(true);
+  const { isGuest, logout } = useAuth();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const timer = setInterval(() => setCurrentTime(new Date()), 60000);
@@ -110,15 +115,16 @@ export const ChildProfileSidebar: React.FC<ChildProfileSidebarProps> = ({
       variants={sidebarVariants}
       animate={isCollapsed ? "collapsed" : "expanded"}
       className={cn(
-        "bg-transparent", // Let parent background show through
+        "bg-gradient-to-b from-educational-blue/20 via-educational-purple/20 to-educational-pink/20", // Match main game background
         "flex flex-col h-fit max-h-full",
         "transition-all duration-500",
-        "relative backdrop-blur-md",
+        "relative backdrop-blur-md border border-white/30 rounded-2xl shadow-xl",
+        "kid-card", // Apply kid-friendly styling
         className,
       )}
     >
       {/* Enhanced Sidebar Header */}
-      <div className="p-2 bg-gradient-to-r from-white/60 to-blue-50/60 backdrop-blur-sm relative z-10">
+      <div className="p-2 bg-gradient-to-r from-educational-blue/40 via-educational-purple/40 to-educational-pink/40 backdrop-blur-sm relative z-10 rounded-t-2xl border-b border-white/20">
         <div className="flex items-center justify-between">
           <AnimatePresence mode="wait">
             {!isCollapsed && (
@@ -141,7 +147,7 @@ export const ChildProfileSidebar: React.FC<ChildProfileSidebarProps> = ({
                 kidFriendlyEffects.playSound(SOUNDS.button_click);
                 onToggleCollapse();
               }}
-              className="h-10 w-10 p-0 bg-gradient-to-r from-yellow-200 to-orange-200 hover:from-yellow-300 hover:to-orange-300 shadow-lg border-2 border-white rounded-full transition-all duration-300 hover:scale-110 lg:hidden"
+              className="h-10 w-10 p-0 bg-gradient-to-r from-educational-yellow to-educational-orange hover:from-educational-yellow-light hover:to-educational-orange-light shadow-xl border-2 border-white/80 rounded-full transition-all duration-300 hover:scale-110 animate-gentle-bounce lg:hidden"
             >
               {isCollapsed ? (
                 position === "left" ? (
@@ -182,9 +188,9 @@ export const ChildProfileSidebar: React.FC<ChildProfileSidebarProps> = ({
 
               {/* Weekly Adventure Progress */}
               {showWeeklyProgress && stats && (
-                <div className="bg-gradient-to-r from-green-50/80 to-blue-50/80 rounded-lg p-3 border border-green-200/50 shadow-sm backdrop-blur-sm">
-                  <h4 className="text-xs font-bold text-gray-800 mb-2 flex items-center">
-                    <TrendingUp className="w-4 h-4 mr-1 text-green-600" />
+                <div className="bg-gradient-to-r from-educational-green/20 to-educational-blue/20 rounded-xl p-3 border border-educational-green/30 shadow-lg backdrop-blur-sm kid-card">
+                  <h4 className="text-xs font-bold text-white mb-2 flex items-center kid-text-big text-shadow">
+                    <TrendingUp className="w-4 h-4 mr-1 text-educational-yellow" />
                     🏆 This Week
                   </h4>
                   <div className="space-y-2">
@@ -192,7 +198,7 @@ export const ChildProfileSidebar: React.FC<ChildProfileSidebarProps> = ({
                       <span className="text-xs font-medium text-gray-700 flex items-center">
                         🎮 Learning Sessions
                       </span>
-                      <Badge className="text-xs bg-yellow-200 text-yellow-800 border-yellow-300">
+                      <Badge className="text-xs bg-gradient-to-r from-educational-yellow to-educational-orange text-white border-educational-yellow shadow-md font-bold">
                         {stats.sessionsThisWeek || 0} ✨
                       </Badge>
                     </div>
@@ -200,7 +206,7 @@ export const ChildProfileSidebar: React.FC<ChildProfileSidebarProps> = ({
                       <span className="text-xs font-medium text-gray-700 flex items-center">
                         📚 Words Mastered
                       </span>
-                      <Badge className="text-xs bg-blue-200 text-blue-800 border-blue-300">
+                      <Badge className="text-xs bg-gradient-to-r from-educational-blue to-educational-purple text-white border-educational-blue shadow-md font-bold">
                         {stats.wordsThisWeek || 0} 🎆
                       </Badge>
                     </div>
@@ -208,7 +214,7 @@ export const ChildProfileSidebar: React.FC<ChildProfileSidebarProps> = ({
                       <span className="text-xs font-medium text-gray-700 flex items-center">
                         ⏰ Adventure Time
                       </span>
-                      <Badge className="text-xs bg-purple-200 text-purple-800 border-purple-300">
+                      <Badge className="text-xs bg-gradient-to-r from-educational-purple to-educational-pink text-white border-educational-purple shadow-md font-bold">
                         {stats.timeThisWeek
                           ? `${Math.round(stats.timeThisWeek / 60)}h`
                           : "0h"}{" "}
@@ -221,9 +227,9 @@ export const ChildProfileSidebar: React.FC<ChildProfileSidebarProps> = ({
 
               {/* Recent Awesome Moments */}
               {stats?.recentActivity && (
-                <div className="bg-gradient-to-r from-pink-50/80 to-purple-50/80 rounded-xl p-4 border border-pink-200/50 shadow-md backdrop-blur-sm">
-                  <h4 className="text-sm font-bold text-gray-800 mb-3 flex items-center">
-                    <Activity className="w-5 h-5 mr-2 text-pink-600" />
+                <div className="bg-gradient-to-r from-educational-pink/20 to-educational-purple/20 rounded-xl p-4 border border-educational-pink/30 shadow-lg backdrop-blur-sm kid-card">
+                  <h4 className="text-sm font-bold text-white mb-3 flex items-center kid-text-big text-shadow">
+                    <Activity className="w-5 h-5 mr-2 text-educational-yellow" />
                     🎉 Awesome Moments!
                   </h4>
                   <div className="space-y-2">
@@ -237,7 +243,7 @@ export const ChildProfileSidebar: React.FC<ChildProfileSidebarProps> = ({
                           <span className="text-xs font-medium text-gray-700 truncate">
                             ✨ {activity.description}
                           </span>
-                          <Badge className="text-xs ml-2 bg-orange-200 text-orange-800 border-orange-300">
+                          <Badge className="text-xs ml-2 bg-gradient-to-r from-educational-orange to-educational-yellow text-white border-educational-orange shadow-md font-bold animate-pulse">
                             +{activity.points} 🎆
                           </Badge>
                         </div>
@@ -257,9 +263,10 @@ export const ChildProfileSidebar: React.FC<ChildProfileSidebarProps> = ({
               {/* Collapsed Profile Avatar */}
               <div
                 className={cn(
-                  "w-14 h-14 rounded-full flex items-center justify-center text-2xl shadow-lg border-2 border-white/50",
-                  "bg-gradient-to-r animate-pulse backdrop-blur-sm",
-                  profile.avatar?.color || "from-purple-400/80 to-pink-400/80",
+                  "w-14 h-14 rounded-full flex items-center justify-center text-2xl shadow-xl border-3 border-white/80",
+                  "bg-gradient-to-r animate-gentle-bounce backdrop-blur-sm kid-gradient-magic",
+                  profile.avatar?.color ||
+                    "from-educational-purple to-educational-pink",
                 )}
               >
                 {profile.avatar?.emoji || "🎯"}
@@ -267,12 +274,14 @@ export const ChildProfileSidebar: React.FC<ChildProfileSidebarProps> = ({
 
               {/* Collapsed Quick Stats */}
               <div className="flex flex-col items-center space-y-2">
-                <Badge className="text-xs bg-gradient-to-r from-yellow-200 to-orange-200 text-orange-800 border-orange-300 font-bold">
+                <Badge className="text-xs bg-gradient-to-r from-educational-yellow to-educational-orange text-white border-educational-yellow shadow-lg font-bold animate-pulse">
                   🎆 L{profile.level}
                 </Badge>
                 {profile.streak > 0 && (
-                  <Badge className="text-xs bg-gradient-to-r from-red-200 to-orange-200 text-red-800 border-red-300 animate-pulse">
-                    {profile.streak}🔥
+                  <Badge className="text-xs bg-gradient-to-r from-yellow-500 via-orange-500 to-red-500 text-white border-yellow-400 shadow-xl font-bold animate-pulse kid-gradient-celebration">
+                    {profile.streak >= 7
+                      ? "🏆 LEGENDARY!"
+                      : `${profile.streak}🔥`}
                   </Badge>
                 )}
               </div>
@@ -282,7 +291,7 @@ export const ChildProfileSidebar: React.FC<ChildProfileSidebarProps> = ({
       </div>
 
       {/* Enhanced Sidebar Footer */}
-      <div className="p-4 border-t border-purple-200/30 bg-gradient-to-r from-white/60 to-purple-50/60 backdrop-blur-sm relative z-10">
+      <div className="p-4 border-t border-educational-purple/30 bg-gradient-to-r from-educational-blue/40 via-educational-purple/40 to-educational-pink/40 backdrop-blur-sm relative z-10 rounded-b-2xl">
         <AnimatePresence mode="wait">
           {!isCollapsed ? (
             <motion.div
@@ -292,20 +301,44 @@ export const ChildProfileSidebar: React.FC<ChildProfileSidebarProps> = ({
               exit="collapsed"
               className="space-y-2"
             >
-              {onLogout && (
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={() => {
-                    kidFriendlyEffects.playSound(SOUNDS.button_click);
-                    onLogout?.();
-                  }}
-                  className="w-full text-xs text-gray-700 hover:text-gray-900 hover:bg-gray-100 rounded-xl font-medium"
-                >
-                  <LogOut className="w-4 h-4 mr-2" />
-                  🔄 Switch Friends
-                </Button>
-              )}
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => {
+                  kidFriendlyEffects.playSound(SOUNDS.button_click);
+                  if (isGuest) {
+                    navigate("/signup");
+                  } else {
+                    logout();
+                    navigate("/"); // Navigate to login page
+                    if (onLogout) onLogout();
+                  }
+                }}
+                className={`w-full text-xs text-white hover:text-white hover:bg-white/20 rounded-xl font-bold border border-white/20 shadow-md transition-all duration-300 hover:scale-105 ${
+                  isGuest
+                    ? "bg-gradient-to-r from-educational-yellow/40 to-educational-orange/40 animate-pulse"
+                    : "bg-gradient-to-r from-educational-pink/30 to-educational-purple/30"
+                }`}
+              >
+                {isGuest ? (
+                  <>
+                    <UserPlus className="w-4 h-4 mr-2" />✨ Join Adventure!
+                  </>
+                ) : (
+                  <>
+                    <LogOut className="w-4 h-4 mr-2" />
+                    👋 See You Later!
+                  </>
+                )}
+              </Button>
+              {/* Dynamic message below button */}
+              <div className="text-center">
+                <p className="text-xs text-white/80 font-medium">
+                  {isGuest
+                    ? "Save your progress & unlock more!"
+                    : "Thanks for learning with us!"}
+                </p>
+              </div>
             </motion.div>
           ) : (
             <motion.div
@@ -315,19 +348,31 @@ export const ChildProfileSidebar: React.FC<ChildProfileSidebarProps> = ({
               exit="collapsed"
               className="flex flex-col items-center space-y-2"
             >
-              {onLogout && (
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={() => {
-                    kidFriendlyEffects.playSound(SOUNDS.button_click);
-                    onLogout?.();
-                  }}
-                  className="h-10 w-10 p-0 text-gray-700 hover:text-gray-900 bg-white/80 hover:bg-white rounded-full border-2 border-gray-200 shadow-md transition-all duration-300 hover:scale-110"
-                >
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => {
+                  kidFriendlyEffects.playSound(SOUNDS.button_click);
+                  if (isGuest) {
+                    navigate("/signup");
+                  } else {
+                    logout();
+                    navigate("/"); // Navigate to login page
+                    if (onLogout) onLogout();
+                  }
+                }}
+                className={`h-10 w-10 p-0 text-white hover:text-white rounded-full border-2 border-white/80 shadow-xl transition-all duration-300 hover:scale-110 animate-gentle-bounce ${
+                  isGuest
+                    ? "bg-gradient-to-r from-educational-yellow to-educational-orange animate-pulse"
+                    : "bg-gradient-to-r from-educational-pink to-educational-purple hover:from-educational-pink-light hover:to-educational-purple-light"
+                }`}
+              >
+                {isGuest ? (
+                  <UserPlus className="w-4 h-4" />
+                ) : (
                   <LogOut className="w-4 h-4" />
-                </Button>
-              )}
+                )}
+              </Button>
             </motion.div>
           )}
         </AnimatePresence>

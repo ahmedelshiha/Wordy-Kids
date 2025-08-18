@@ -124,22 +124,20 @@ export const EnhancedChildProfileCard: React.FC<
     return () => clearInterval(timer);
   }, []);
 
-  // Generate super fun motivational messages for kids
+  // Generate simple motivational messages for kids
   useEffect(() => {
     const messages = [
-      `WOW! You're a word wizard, ${profile.name}! 🧙‍♂️✨`,
-      `AWESOME sauce! Keep being amazing! 🚀🎉`,
-      `You're FANTASTIC! High five! 🙆✋`,
-      `Super duper learning star! ⭐🌟`,
-      `Word champion extraordinaire! 🏆🎆`,
-      `Brain power activated! 🧠⚡`,
-      `Reading superhero mode ON! 🦸‍♂️📚`,
+      `Great work, ${profile.name}! 🌟`,
+      `Keep learning! 📚`,
+      `You're doing amazing! ⭐`,
+      `Word champion! 🏆`,
+      `Keep it up! 🚀`,
     ];
 
     const timeBasedMessages = {
-      morning: `Good morning, sunshine ${profile.name}! Time for word adventures! 🌅🎨`,
-      afternoon: `Hey there, word explorer ${profile.name}! Let's discover more! 🌞🔍`,
-      evening: `Evening learning party, ${profile.name}! 🌙🎉`,
+      morning: `Good morning, ${profile.name}! ��`,
+      afternoon: `Hi ${profile.name}! 🌞`,
+      evening: `Good evening, ${profile.name}! 🌙`,
     };
 
     const hour = currentTime.getHours();
@@ -237,7 +235,7 @@ export const EnhancedChildProfileCard: React.FC<
               </TappableZone>
               <div>
                 <h3 className="font-black text-2xl text-gray-800 leading-tight">
-                  🎆 {profile.name} 🎆
+                  {profile.name}
                 </h3>
                 <div className="flex items-center space-x-3">
                   <StickerBadge
@@ -251,7 +249,7 @@ export const EnhancedChildProfileCard: React.FC<
                     }}
                   >
                     <span className="text-xs font-bold text-orange-800 absolute -bottom-6 whitespace-nowrap">
-                      Level {profile.level}
+                      L{profile.level}
                     </span>
                   </StickerBadge>
                   {profile.streak > 0 && (
@@ -266,7 +264,7 @@ export const EnhancedChildProfileCard: React.FC<
                       }}
                     >
                       <span className="text-xs font-bold text-red-800 absolute -bottom-6 whitespace-nowrap">
-                        {profile.streak} Streak!
+                        {profile.streak}🔥
                       </span>
                     </StickerBadge>
                   )}
