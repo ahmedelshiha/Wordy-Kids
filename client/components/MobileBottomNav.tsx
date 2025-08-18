@@ -119,7 +119,7 @@ export function MobileBottomNav({
     {
       id: "progress",
       emoji: "🗺️",
-      label: "Map",
+      label: "Treasure Map",
       icon: Trophy,
       activeGradient: "kid-gradient-success",
       hoverGradient: "kid-gradient-adventure",
