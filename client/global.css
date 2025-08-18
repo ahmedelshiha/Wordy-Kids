@@ -1030,6 +1030,29 @@
   }
 }
 
+/* Login page responsive backgrounds */
+.login-background {
+  background-image: url("/images/background.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+/* Mobile login background */
+@media (max-width: 767px) {
+  .login-background {
+    background-image: url("/images/background_mobile.jpg");
+  }
+}
+
+/* Tablet login background */
+@media (min-width: 768px) and (max-width: 1024px) {
+  .login-background {
+    background-image: url("/images/background_tablet.jpg");
+  }
+}
+
 /* Enhanced mobile touch interactions */
 .touch-target {
   min-height: 44px;
