@@ -298,6 +298,11 @@
 
   body {
     @apply bg-background text-foreground;
+    background-image: url('/images/background.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
     -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
     font-family:
       "Nunito",
