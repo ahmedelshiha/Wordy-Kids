@@ -1359,59 +1359,6 @@ export function InteractiveDashboardWordCard({
               aria-label="Word learning controls"
               aria-describedby="game-instructions"
             >
-              {!showWordDetails && (
-                <>
-                  {!showHint && (
-                    <motion.div
-                      whileHover={{ scale: 1.05, y: -2 }}
-                      whileTap={{ scale: 0.95, y: 0 }}
-                      transition={{ type: "spring", stiffness: 400, damping: 17 }}
-                    >
-                      <Button
-                        onClick={() =>
-                          handleActionWithFeedback(
-                            () => setShowHint(true),
-                            "light",
-                          )
-                        }
-                        size="sm"
-                        className="bg-gradient-to-r from-educational-orange via-orange-500 to-orange-600 hover:from-orange-500 hover:via-orange-600 hover:to-orange-700 text-white px-3 py-2 text-xs sm:text-sm rounded-xl min-h-[44px] touch-manipulation group relative overflow-hidden shadow-lg hover:shadow-xl border-2 border-orange-300/50 hover:border-orange-200"
-                        aria-label="Get hint for this word"
-                      >
-                        <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/20 to-white/0 transform -skew-x-12 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-600 ease-out" />
-                        <Lightbulb className="w-4 h-4 mr-1 group-hover:animate-bounce" />
-                        <span className="relative z-10 font-semibold">
-                          💡 Get Hint
-                        </span>
-                      </Button>
-                    </motion.div>
-                  )}
-                  <motion.div
-                    whileHover={{ scale: 1.05, y: -2 }}
-                    whileTap={{ scale: 0.95, y: 0 }}
-                    transition={{ type: "spring", stiffness: 400, damping: 17 }}
-                  >
-                    <Button
-                      onClick={() =>
-                        handleActionWithFeedback(
-                          () => setShowWordDetails(true),
-                          "medium",
-                        )
-                      }
-                      size="sm"
-                      className="bg-gradient-to-r from-educational-purple via-purple-500 to-purple-600 hover:from-purple-500 hover:via-purple-600 hover:to-purple-700 text-white px-3 py-2 text-xs sm:text-sm rounded-xl min-h-[44px] touch-manipulation group relative overflow-hidden shadow-lg hover:shadow-xl border-2 border-purple-300/50 hover:border-purple-200"
-                      aria-label="Show word name and full answer"
-                    >
-                      <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/20 to-white/0 transform -skew-x-12 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-600 ease-out" />
-                      <Eye className="w-4 h-4 mr-1 group-hover:animate-bounce" />
-                      <span className="relative z-10 font-semibold">
-                        👁️ Show Answer
-                      </span>
-                    </Button>
-                  </motion.div>
-                </>
-              )}
-
               <Button
                 onClick={playPronunciation}
                 disabled={isPlaying}
