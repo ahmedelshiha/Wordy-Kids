@@ -1233,7 +1233,7 @@ export function InteractiveDashboardWordCard({
                 initial={{ opacity: 0, y: -10, scale: 0.95 }}
                 animate={{ opacity: 1, y: 0, scale: 1 }}
                 transition={{ duration: 0.4, type: "spring", damping: 20 }}
-                className="text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl font-bold text-white mb-1 sm:mb-2"
+                className="text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bold text-white mb-1 sm:mb-2"
               >
                 🤔 Name this object!
               </motion.h1>
@@ -1649,14 +1649,14 @@ export function InteractiveDashboardWordCard({
               )}
             </AnimatePresence>
 
-            {/* Action Buttons - Always visible */}
+            {/* Action Buttons - Inside card at bottom */}
             {!isAnswered && (
               <div
-                className="space-y-3 sm:space-y-4 px-2 sm:px-0"
+                className="space-y-3 sm:space-y-4 px-2 sm:px-0 mt-32 sm:mt-40"
                 role="group"
                 aria-label="Word learning choices"
               >
-                <div className="grid grid-cols-2 gap-2 sm:gap-3">
+                <div className="grid grid-cols-2 gap-2 sm:gap-3 max-w-md mx-auto">
                   <Button
                     onClick={() => {
                       // Show hint first if not already shown
@@ -1771,45 +1771,6 @@ export function InteractiveDashboardWordCard({
                     </motion.div>
                   ))}
                 </AnimatePresence>
-
-                {/* Skip button (smaller, less prominent) - HIDDEN */}
-                <div className="hidden text-center mt-1 mb-0">
-                  <Button
-                    onClick={() => handleWordAction("skipped")}
-                    variant="ghost"
-                    size="sm"
-                    disabled={isAnswered}
-                    className="text-gray-500 hover:text-gray-700 hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed py-1 px-3"
-                  >
-                    <SkipForward className="w-4 h-4 mr-1" />
-                    🤔 Try another word
-                  </Button>
-
-                  {/* Keyboard shortcuts hint - Desktop only */}
-                  <div className="hidden md:block mt-2 text-xs text-gray-400">
-                    💡 Shortcuts:{" "}
-                    <kbd className="px-1 py-0.5 bg-gray-100 rounded text-xs">
-                      1
-                    </kbd>{" "}
-                    or{" "}
-                    <kbd className="px-1 py-0.5 bg-gray-100 rounded text-xs">
-                      F
-                    </kbd>{" "}
-                    for Forgot,
-                    <kbd className="px-1 py-0.5 bg-gray-100 rounded text-xs ml-1">
-                      2
-                    </kbd>{" "}
-                    or{" "}
-                    <kbd className="px-1 py-0.5 bg-gray-100 rounded text-xs">
-                      R
-                    </kbd>{" "}
-                    for Remember,
-                    <kbd className="px-1 py-0.5 bg-gray-100 rounded text-xs ml-1">
-                      Space
-                    </kbd>{" "}
-                    for Audio
-                  </div>
-                </div>
               </div>
             )}
 
