@@ -1479,7 +1479,7 @@ export function AIEnhancedInteractiveDashboardWordCard({
                     }
                     variant="outline"
                     size="sm"
-                    className="px-2 py-1 text-xs rounded-lg bg-yellow-50 border-yellow-200 text-yellow-700 min-h-[32px]"
+                    className="px-2 py-1 text-xs rounded-lg bg-sunshine hover:bg-sunshine-dark text-white border-0 min-h-[32px]"
                   >
                     {EMOJI_CONSTANTS.HINT} Hint
                   </Button>
@@ -1523,7 +1523,7 @@ export function AIEnhancedInteractiveDashboardWordCard({
                       handleActionWithFeedback(handleRequestHint, "light")
                     }
                     variant="outline"
-                    className="px-4 py-2 text-sm rounded-xl bg-yellow-50 border-yellow-200 text-yellow-700 hover:bg-yellow-100"
+                    className="px-4 py-2 text-sm rounded-xl bg-sunshine hover:bg-sunshine-dark text-white border-0"
                   >
                     <Lightbulb className="w-4 h-4 mr-2" />
                     {EMOJI_CONSTANTS.HINT} Get Hint{" "}

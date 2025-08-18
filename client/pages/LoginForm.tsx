@@ -313,15 +313,16 @@ export default function LoginForm() {
   };
 
   const getInputClassName = (field: keyof ValidationState) => {
-    const baseClass = "pr-10 transition-all duration-200";
+    const baseClass =
+      "pr-10 transition-all duration-300 rounded-xl px-4 py-4 text-base border-2";
     const state = validationState[field];
 
     if (state === "valid") {
-      return `${baseClass} border-green-400 focus:border-green-500 focus:ring-green-500/20`;
+      return `${baseClass} border-jungle focus:border-jungle focus:ring-jungle/20 focus:outline-none`;
     } else if (state === "invalid") {
-      return `${baseClass} border-red-400 focus:border-red-500 focus:ring-red-500/20`;
+      return `${baseClass} border-red-400 focus:border-red-500 focus:ring-red-500/20 focus:outline-none`;
     }
-    return `${baseClass} focus:border-blue-500 focus:ring-blue-500/20`;
+    return `${baseClass} border-gray-300 focus:border-jungle focus:ring-jungle/20 focus:outline-none placeholder:text-gray-400`;
   };
 
   const isFormValid =
@@ -335,7 +336,7 @@ export default function LoginForm() {
           ⭐
         </div>
         <div className="absolute top-16 right-8 text-xl sm:text-3xl animate-gentle-float animation-delay-200">
-          📚
+          ����
         </div>
         <div className="absolute bottom-16 left-8 text-2xl sm:text-4xl animate-gentle-float animation-delay-100">
           🎯
@@ -380,23 +381,44 @@ export default function LoginForm() {
             </div>
           </div>
 
-          <p className="text-gray-600 text-sm sm:text-base">
+          <p
+            className="text-navy text-lg"
+            style={{
+              fontFamily: "Baloo 2",
+              fontWeight: 500,
+              fontSize: "18px",
+            }}
+          >
             Continue your learning journey
           </p>
         </div>
 
         {/* Enhanced Login Card */}
-        <Card className="shadow-lg sm:shadow-2xl border-0 bg-white/95 backdrop-blur-sm animate-fade-in animation-delay-100 mx-1 sm:mx-0">
-          <CardHeader className="pb-2 sm:pb-3 px-3 sm:px-4 md:px-6">
+        <Card
+          className="border-0 bg-white animate-fade-in animation-delay-100 mx-1 sm:mx-0"
+          style={{
+            borderRadius: "24px",
+            padding: "32px",
+            boxShadow:
+              "0 12px 32px rgba(0,0,0,0.15), inset 0 1px 0 rgba(255,255,255,0.5)",
+            background: "#FFFFFF",
+          }}
+        >
+          <CardHeader className="pb-4 px-0">
             <CardTitle
               id="login-title"
-              className="text-center text-base sm:text-lg text-gray-800 flex items-center justify-center gap-2"
+              className="text-center text-xl text-navy flex items-center justify-center gap-2"
+              style={{
+                fontFamily: "Baloo 2",
+                fontWeight: 600,
+                fontSize: "20px",
+              }}
             >
-              <UserCheck className="w-5 h-5 text-blue-500" />
+              <UserCheck className="w-5 h-5 text-jungle" />
               Sign In to Continue
             </CardTitle>
           </CardHeader>
-          <CardContent className="space-y-3 sm:space-y-4 px-3 sm:px-4 md:px-6">
+          <CardContent className="space-y-4 px-0">
             <form
               onSubmit={handleLogin}
               className="space-y-3 sm:space-y-4"
@@ -407,9 +429,10 @@ export default function LoginForm() {
               <div className="space-y-1 sm:space-y-2">
                 <Label
                   htmlFor="email"
-                  className="text-sm font-medium text-gray-700 flex items-center gap-2"
+                  className="text-base font-semibold text-navy flex items-center gap-2"
+                  style={{ fontFamily: "Baloo 2", fontWeight: 600 }}
                 >
-                  <Mail className="w-4 h-4 text-gray-500" />
+                  <Mail className="w-4 h-4 text-navy" />
                   Parent Email Address
                 </Label>
                 <div className="relative">
@@ -428,7 +451,8 @@ export default function LoginForm() {
                     onBlur={() => handleBlur("email")}
                     onKeyDown={(e) => handleKeyDown(e, "password")}
                     disabled={isLoading}
-                    className={`${getInputClassName("email")} text-base sm:text-sm min-h-[44px] touch-target`}
+                    className={`${getInputClassName("email")} min-h-[56px] touch-target`}
+                    style={{ fontFamily: "Baloo 2" }}
                     aria-describedby={errors.email ? "email-error" : undefined}
                     aria-invalid={!!errors.email}
                   />
@@ -454,9 +478,10 @@ export default function LoginForm() {
               <div className="space-y-1 sm:space-y-2">
                 <Label
                   htmlFor="password"
-                  className="text-sm font-medium text-gray-700 flex items-center gap-2"
+                  className="text-base font-semibold text-navy flex items-center gap-2"
+                  style={{ fontFamily: "Baloo 2", fontWeight: 600 }}
                 >
-                  <Lock className="w-4 h-4 text-gray-500" />
+                  <Lock className="w-4 h-4 text-navy" />
                   Password
                 </Label>
                 <div className="relative">
@@ -474,7 +499,8 @@ export default function LoginForm() {
                       e.key === "Enter" && handleLogin(e as any)
                     }
                     disabled={isLoading}
-                    className={`${getInputClassName("password")} text-base sm:text-sm min-h-[44px] touch-target`}
+                    className={`${getInputClassName("password")} min-h-[56px] touch-target`}
+                    style={{ fontFamily: "Baloo 2" }}
                     aria-describedby={
                       errors.password ? "password-error" : undefined
                     }
@@ -568,7 +594,13 @@ export default function LoginForm() {
               <Button
                 type="submit"
                 disabled={isLoading}
-                className="w-full py-2 sm:py-3 bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 hover:from-blue-700 hover:via-purple-700 hover:to-pink-700 text-white font-semibold text-sm sm:text-base shadow-lg hover:shadow-xl transform hover:scale-[1.02] transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none min-h-[44px] touch-target"
+                className="w-full py-4 bg-jungle hover:bg-jungle-dark text-white font-bold text-lg rounded-3xl transition-all duration-300 transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none min-h-[56px] min-w-[200px] touch-target"
+                style={{
+                  boxShadow: "0 4px 12px rgba(76, 175, 80, 0.3)",
+                  fontFamily: "Baloo 2",
+                  fontWeight: 700,
+                  letterSpacing: "0.5px",
+                }}
                 aria-describedby={errors.general ? "general-error" : undefined}
               >
                 {isLoading ? (
@@ -603,7 +635,13 @@ export default function LoginForm() {
               <Button
                 type="button"
                 onClick={() => navigate("/signup")}
-                className="w-full py-2 sm:py-3 bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 hover:from-blue-700 hover:via-purple-700 hover:to-pink-700 text-white font-semibold text-sm sm:text-base shadow-lg hover:shadow-xl transform hover:scale-[1.02] transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none min-h-[44px] touch-target"
+                className="w-full py-4 bg-sky hover:bg-sky-dark text-white font-bold text-lg rounded-3xl transition-all duration-300 transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none min-h-[56px] min-w-[200px] touch-target"
+                style={{
+                  boxShadow: "0 4px 12px rgba(33, 150, 243, 0.3)",
+                  fontFamily: "Baloo 2",
+                  fontWeight: 700,
+                  letterSpacing: "0.5px",
+                }}
                 disabled={isLoading}
                 aria-label="Create new account"
               >
@@ -619,7 +657,13 @@ export default function LoginForm() {
             <Button
               type="button"
               onClick={handleBackToMain}
-              className="w-full py-2 sm:py-3 bg-gradient-to-r from-orange-500 via-yellow-500 to-amber-500 hover:from-orange-600 hover:via-yellow-600 hover:to-amber-600 text-white font-semibold text-sm sm:text-base shadow-lg hover:shadow-xl transform hover:scale-[1.02] transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none min-h-[44px] touch-target"
+              className="w-full py-4 bg-sunshine hover:bg-sunshine-dark text-navy font-bold text-lg rounded-3xl transition-all duration-300 transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none min-h-[56px] min-w-[200px] touch-target"
+              style={{
+                boxShadow: "0 4px 12px rgba(255, 193, 7, 0.3)",
+                fontFamily: "Baloo 2",
+                fontWeight: 700,
+                letterSpacing: "0.5px",
+              }}
               disabled={isLoading}
               aria-label="Sign in as guest to explore"
             >

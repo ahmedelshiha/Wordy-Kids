@@ -1,3 +1,6 @@
+/* Import Baloo 2 Google Font */
+@import url("https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;500;600;700;800&display=swap");
+
 /* Import mobile games optimization */
 @import "./styles/mobile-games-optimization.css";
 
@@ -252,6 +255,24 @@
     --celebration-sparkle: 55 100% 70%;
     --celebration-confetti: 320 85% 70%;
 
+    /* Jungle Green Family */
+    --jungle-green: 122 39% 49%; /* #4CAF50 converted to HSL */
+    --jungle-green-dark: 122 42% 39%; /* #388E3C converted to HSL */
+    --jungle-green-light: 122 39% 69%; /* #81C784 converted to HSL */
+
+    /* Sunshine Yellow Family */
+    --sunshine-yellow: 45 100% 51%; /* #FFC107 converted to HSL */
+    --sunshine-yellow-dark: 45 88% 51%; /* #F57F17 converted to HSL */
+    --sunshine-yellow-light: 54 100% 72%; /* #FFF176 converted to HSL */
+
+    /* Sky Blue Family */
+    --sky-blue: 207 90% 54%; /* #2196F3 converted to HSL */
+    --sky-blue-dark: 207 90% 42%; /* #1976D2 converted to HSL */
+    --sky-blue-light: 207 90% 74%; /* Lighter variant */
+
+    /* Dark Navy for Text */
+    --dark-navy: 231 48% 12%; /* #1A237E converted to HSL */
+
     /* Kid Mode Desktop Navigation */
     --kid-nav-shadow:
       0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
@@ -334,6 +355,7 @@
     background-attachment: fixed;
     -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
     font-family:
+      "Baloo 2",
       "Nunito",
       "Poppins",
       -apple-system,
@@ -341,6 +363,8 @@
       "Segoe UI",
       Roboto,
       sans-serif;
+    font-size: 18px;
+    line-height: 1.5;
   }
 
   /* Mobile background */

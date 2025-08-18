@@ -420,7 +420,7 @@ export function AIEnhancedWordLearning({
                 <div className="flex flex-wrap gap-3 justify-center">
                   <Button
                     onClick={handleHintRequest}
-                    variant="outline"
+                    className="bg-sunshine hover:bg-sunshine-dark text-white border-0"
                     disabled={hintsUsed >= 3}
                   >
                     <Lightbulb className="w-4 h-4 mr-2" />
