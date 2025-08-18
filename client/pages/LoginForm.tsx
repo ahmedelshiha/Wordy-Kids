@@ -475,7 +475,8 @@ export default function LoginForm() {
                       e.key === "Enter" && handleLogin(e as any)
                     }
                     disabled={isLoading}
-                    className={`${getInputClassName("password")} text-base sm:text-sm min-h-[44px] touch-target`}
+                    className={`${getInputClassName("password")} min-h-[56px] touch-target`}
+                    style={{ fontFamily: 'Baloo 2' }}
                     aria-describedby={
                       errors.password ? "password-error" : undefined
                     }
