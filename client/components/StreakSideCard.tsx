@@ -267,12 +267,12 @@ export const StreakSideCard: React.FC<StreakSideCardProps> = ({
                         animate={{ rotate: [0, 10, -10, 0] }}
                         transition={{ duration: 1.5, repeat: Infinity }}
                       >
-                        <Flame className="w-5 h-5 text-yellow-200" />
+                        <div className="jungle-progress-torch text-lg">🕯️</div>
                       </motion.div>
                       <span className="text-lg font-bold">
                         {content.streak}
                       </span>
-                      <span className="text-sm font-medium">Day Streak!</span>
+                      <span className="text-sm font-medium">Adventure Days!</span>
                     </motion.div>
                   )}
                 </div>
@@ -293,10 +293,10 @@ export const StreakSideCard: React.FC<StreakSideCardProps> = ({
                   <div className="grid grid-cols-2 gap-3">
                     {progressData.wordsLearned! > 0 && (
                       <motion.div
-                        className="bg-gradient-to-r from-blue-100 to-blue-50 border border-blue-200 rounded-lg p-3 text-center"
+                        className="jungle-card p-3 text-center border-2 border-emerald-300/50"
                         whileHover={{ scale: 1.02 }}
                       >
-                        <BookOpen className="w-5 h-5 text-blue-600 mx-auto mb-1" />
+                        <div className="jungle-progress-book mx-auto mb-1">📚</div>
                         <div className="text-lg font-bold text-blue-800">
                           {progressData.wordsLearned}
                         </div>
