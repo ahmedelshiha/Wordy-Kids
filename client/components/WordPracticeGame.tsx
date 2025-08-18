@@ -411,7 +411,7 @@ export const WordPracticeGame: React.FC<WordPracticeGameProps> = ({
                 className={`p-3 sm:p-4 h-auto min-h-[60px] ${showDefinition ? "bg-sunshine text-white border-0" : "bg-sunshine-light hover:bg-sunshine text-white border-0"}`}
               >
                 <div className="text-center">
-                  <Sparkles className="w-5 h-5 sm:w-6 sm:h-6 mx-auto mb-2 text-green-500" />
+                  <Sparkles className="w-5 h-5 sm:w-6 sm:h-6 mx-auto mb-2 text-white" />
                   <div className="font-semibold text-xs sm:text-sm">
                     Definition Hint
                   </div>
@@ -424,7 +424,7 @@ export const WordPracticeGame: React.FC<WordPracticeGameProps> = ({
                 className={`p-3 sm:p-4 h-auto min-h-[60px] ${showExample ? "bg-sunshine text-white border-0" : "bg-sunshine-light hover:bg-sunshine text-white border-0"}`}
               >
                 <div className="text-center">
-                  <Star className="w-5 h-5 sm:w-6 sm:h-6 mx-auto mb-2 text-blue-500" />
+                  <Star className="w-5 h-5 sm:w-6 sm:h-6 mx-auto mb-2 text-white" />
                   <div className="font-semibold text-xs sm:text-sm">
                     Example Hint
                   </div>
