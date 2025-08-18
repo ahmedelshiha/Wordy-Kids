@@ -323,6 +323,17 @@ export function InteractiveDashboardWordCard({
     return () => clearTimeout(timer);
   }, [currentWordIndex]);
 
+  // Automatically pronounce word when hint is shown
+  useEffect(() => {
+    if (showHint && currentWord && !isPlaying) {
+      // Small delay to allow hint card animation to start
+      const timer = setTimeout(() => {
+        playPronunciation();
+      }, 400);
+      return () => clearTimeout(timer);
+    }
+  }, [showHint, currentWord]);
+
   const playPronunciation = () => {
     if (currentWord && !isPlaying) {
       triggerHapticFeedback("light"); // Light feedback for audio action
@@ -1197,7 +1208,7 @@ export function InteractiveDashboardWordCard({
                         return "🎉 Goal achieved! You're incredible!";
                       }
                       if (percentage >= 90)
-                        return "🌟 Almost there, superstar!";
+                        return "���� Almost there, superstar!";
                       if (percentage >= 75) return "🚀 You're doing great!";
                       if (percentage >= 50) return "💪 Keep going, champion!";
                       if (percentage >= 25) return "🌱 Nice start!";
@@ -1221,55 +1232,10 @@ export function InteractiveDashboardWordCard({
                 initial={{ opacity: 0, y: -10, scale: 0.95 }}
                 animate={{ opacity: 1, y: 0, scale: 1 }}
                 transition={{ duration: 0.4, type: "spring", damping: 20 }}
-                className="text-base sm:text-lg md:text-xl lg:text-2xl font-bold text-gray-800 mb-1 sm:mb-2"
+                className="text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl font-bold text-gray-800 mb-1 sm:mb-2"
               >
-                {(() => {
-                  const prompts = [
-                    "🤔 What is this?",
-                    "🎯 Can you guess?",
-                    "🔍 What do you see?",
-                    "✨ Name this object!",
-                    "🧠 Think you know?",
-                    "👀 Look closely...",
-                    "🌟 What could this be?",
-                    "🎪 Mystery object!",
-                    "🎨 Identify this!",
-                    "🚀 What's shown here?",
-                  ];
-
-                  // Use word index and some randomness for variety
-                  const promptIndex =
-                    (currentWordIndex + (currentWord?.id || 0)) %
-                    prompts.length;
-                  return prompts[promptIndex];
-                })()}
+                ✨ Name this object!
               </motion.h1>
-              <motion.p
-                key={`desc-${currentWordIndex}`}
-                initial={{ opacity: 0, y: 5 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.4, delay: 0.1 }}
-                className="text-xs sm:text-sm md:text-base text-gray-600 px-2"
-                id="game-instructions"
-              >
-                {(() => {
-                  const descriptions = [
-                    "Look at the picture and guess the word!",
-                    "Study the image and make your guess!",
-                    "Take a close look and identify it!",
-                    "Examine the picture carefully!",
-                    "What word matches this image?",
-                    "Use the visual clue to find the answer!",
-                    "Let the picture guide your guess!",
-                    "Connect the image to the right word!",
-                  ];
-
-                  const descIndex =
-                    (currentWordIndex + (currentWord?.category?.length || 0)) %
-                    descriptions.length;
-                  return descriptions[descIndex];
-                })()}
-              </motion.p>
             </header>
 
             {/* Category and Progress Header */}
@@ -1380,7 +1346,7 @@ export function InteractiveDashboardWordCard({
                       backdropFilter: "blur(8px)",
                       backgroundColor: "rgba(255, 255, 255, 0.85)",
                     }}
-                    className="mx-auto max-w-[280px] sm:max-w-xs p-2 sm:p-3 md:p-4 rounded-xl border-2 border-yellow-300/60 shadow-lg relative overflow-hidden"
+                    className="mx-auto max-w-[240px] sm:max-w-[280px] p-1.5 sm:p-2 md:p-3 rounded-lg border-2 border-yellow-300/60 shadow-lg relative overflow-hidden"
                   >
                     {/* Exit Button */}
                     <motion.button
@@ -1412,7 +1378,7 @@ export function InteractiveDashboardWordCard({
                           type: "spring",
                           stiffness: 200,
                         }}
-                        className="text-xl md:text-2xl mb-1"
+                        className="text-lg md:text-xl mb-0.5"
                         aria-hidden="true"
                       >
                         💡
@@ -1422,12 +1388,12 @@ export function InteractiveDashboardWordCard({
                         initial={{ opacity: 0, scale: 0.8 }}
                         animate={{ opacity: 1, scale: 1 }}
                         transition={{ delay: 0.4, duration: 0.5 }}
-                        className="bg-white/60 rounded-lg p-2 border border-yellow-200/80 shadow-inner"
+                        className="bg-white/60 rounded-lg p-1.5 sm:p-2 border border-yellow-200/80 shadow-inner"
                       >
-                        <div className="text-2xl md:text-3xl mb-1">
+                        <div className="text-xl sm:text-2xl md:text-3xl mb-1">
                           {currentWord.emoji}
                         </div>
-                        <p className="text-lg sm:text-xl md:text-2xl font-bold text-gray-800 tracking-wide">
+                        <p className="text-lg sm:text-xl md:text-2xl font-extrabold text-gray-800 tracking-wide">
                           {currentWord.word}
                         </p>
 
@@ -1436,14 +1402,14 @@ export function InteractiveDashboardWordCard({
                           initial={{ opacity: 0, scale: 0.8 }}
                           animate={{ opacity: 1, scale: 1 }}
                           transition={{ delay: 0.6, duration: 0.4 }}
-                          className="mt-2 flex justify-center"
+                          className="mt-1.5 sm:mt-2 flex justify-center"
                         >
                           <Button
                             onClick={playPronunciation}
                             disabled={isPlaying}
                             size="sm"
                             className={cn(
-                              "bg-gradient-to-br from-orange-400 via-orange-500 to-orange-600 hover:from-orange-500 hover:via-orange-600 hover:to-orange-700 text-white px-3 py-1.5 rounded-lg transition-all duration-300 transform hover:scale-110 active:scale-95 shadow-md hover:shadow-lg border border-orange-300/50 hover:border-orange-200",
+                              "bg-gradient-to-br from-orange-400 via-orange-500 to-orange-600 hover:from-orange-500 hover:via-orange-600 hover:to-orange-700 text-white px-2 sm:px-3 py-1 sm:py-1.5 rounded-md sm:rounded-lg transition-all duration-300 transform hover:scale-110 active:scale-95 shadow-md hover:shadow-lg border border-orange-300/50 hover:border-orange-200",
                               "ring-2 ring-orange-200/30 hover:ring-orange-300/50",
                               "backdrop-blur-sm",
                               isPlaying &&
@@ -1454,7 +1420,7 @@ export function InteractiveDashboardWordCard({
                           >
                             <Volume2
                               className={cn(
-                                "w-4 h-4 mr-1",
+                                "w-3 h-3 sm:w-4 sm:h-4 mr-1",
                                 "drop-shadow-lg",
                                 isPlaying &&
                                   "animate-bounce text-yellow-100 scale-110",
@@ -1708,19 +1674,23 @@ export function InteractiveDashboardWordCard({
                       "w-full text-white font-bold border-0 rounded-lg sm:rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 active:scale-95 py-2 sm:py-3 md:py-4 px-2 sm:px-3 min-h-[48px] sm:min-h-[56px] md:min-h-[64px] relative overflow-hidden disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none touch-manipulation",
                       "bg-gradient-to-r from-orange-400 to-amber-500 hover:from-orange-500 hover:to-amber-600 active:from-orange-600 active:to-amber-700",
                     )}
-                    aria-label="Get hint for this word"
+                    aria-label={
+                      showHint
+                        ? "Mark as needs practice"
+                        : "Get hint for this word"
+                    }
                   >
                     <div className="absolute inset-0 bg-white/20 rounded-xl opacity-0 hover:opacity-100 transition-opacity duration-300"></div>
                     <div className="relative z-10 flex items-center justify-center">
                       <span className="text-base sm:text-lg mr-1 sm:mr-2 animate-wiggle">
-                        💡
+                        {showHint ? "💪" : "💡"}
                       </span>
                       <div className="text-center">
                         <div className="font-bold text-xs sm:text-sm md:text-base">
-                          Get Hint
+                          {showHint ? "Need Practice" : "Get Hint"}
                         </div>
                         <div className="text-xs opacity-90 mt-0.5 hidden sm:block">
-                          Need help? 💡
+                          {showHint ? "Keep learning! 💪" : "Need help? 💡"}
                         </div>
                       </div>
                     </div>
