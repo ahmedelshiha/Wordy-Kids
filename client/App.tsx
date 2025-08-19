@@ -17,6 +17,7 @@ import AdminPage from "./pages/AdminPage";
 import WordGardenDemo from "./pages/WordGardenDemo";
 import { EnhancedWordCardDemo } from "./components/EnhancedWordCardDemo";
 import { EnhancedMagicalMenuDemo } from "./components/EnhancedMagicalMenuDemo";
+import { JungleAdventureWordCardDemo } from "./pages/JungleAdventureWordCardDemo";
 import {
   WordDatabaseNotifications,
   CompactWordDatabaseNotifications,
@@ -115,6 +116,10 @@ const App = () => {
                 <Route
                   path="/enhanced-magical-menu-demo"
                   element={<EnhancedMagicalMenuDemo />}
+                />
+                <Route
+                  path="/jungle-adventure-word-card-demo"
+                  element={<JungleAdventureWordCardDemo />}
                 />
                 {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
                 <Route path="*" element={<NotFound />} />
