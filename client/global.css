@@ -325,6 +325,19 @@
       #4facfe,
       #a8edea
     );
+
+    /* Jungle Adventure Theme */
+    --jungle-shadow: 0 8px 32px rgba(76, 175, 80, 0.2);
+    --jungle-glow: 0 0 20px rgba(76, 175, 80, 0.4);
+    --jungle-border: linear-gradient(
+      90deg,
+      #4CAF50,
+      #8BC34A,
+      #CDDC39,
+      #FFC107,
+      #FF9800,
+      #4CAF50
+    );
   }
 
   .dark {
