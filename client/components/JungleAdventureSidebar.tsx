@@ -268,36 +268,36 @@ export const JungleAdventureSidebar: React.FC<JungleAdventureSidebarProps> = ({
       {/* Enhanced Registration Call-to-Action Section */}
       <motion.div
         variants={itemVariants}
-        className="bg-sunshine rounded-[20px] p-5 shadow-lg relative overflow-hidden"
+        className="bg-sunshine rounded-[16px] p-4 shadow-lg relative overflow-hidden flex-shrink-0"
       >
         {/* Subtle background decoration */}
-        <div className="absolute top-2 right-2 w-8 h-8 bg-white/10 rounded-full" />
-        <div className="absolute bottom-2 left-2 w-6 h-6 bg-white/10 rounded-full" />
+        <div className="absolute top-2 right-2 w-6 h-6 bg-white/10 rounded-full" />
+        <div className="absolute bottom-2 left-2 w-4 h-4 bg-white/10 rounded-full" />
 
         <div className="text-center mb-3 relative z-10">
-          <h3 className="text-navy font-['Baloo_2'] text-[18px] font-bold mb-3">
+          <h3 className="text-navy font-['Baloo_2'] text-[15px] font-bold mb-2">
             {isGuest ? "Start Your Epic Journey!" : "Welcome Back, Explorer!"}
           </h3>
 
           {isGuest && (
-            <div className="space-y-2 mb-4 text-left">
+            <div className="space-y-1 mb-3 text-left">
               <motion.p
-                className="text-navy font-['Baloo_2'] text-[14px] font-medium flex items-center"
-                whileHover={{ x: 2 }}
+                className="text-navy font-['Baloo_2'] text-[11px] font-medium flex items-center"
+                whileHover={{ x: 1 }}
                 transition={{ duration: 0.2 }}
               >
                 💾 Save your progress forever!
               </motion.p>
               <motion.p
-                className="text-navy font-['Baloo_2'] text-[14px] font-medium flex items-center"
-                whileHover={{ x: 2 }}
+                className="text-navy font-['Baloo_2'] text-[11px] font-medium flex items-center"
+                whileHover={{ x: 1 }}
                 transition={{ duration: 0.2 }}
               >
                 🏆 Earn special badges and rewards!
               </motion.p>
               <motion.p
-                className="text-navy font-['Baloo_2'] text-[14px] font-medium flex items-center"
-                whileHover={{ x: 2 }}
+                className="text-navy font-['Baloo_2'] text-[11px] font-medium flex items-center"
+                whileHover={{ x: 1 }}
                 transition={{ duration: 0.2 }}
               >
                 🔥 Track your learning streaks!
