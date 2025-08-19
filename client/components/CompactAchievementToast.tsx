@@ -186,15 +186,18 @@ export function CompactAchievementToast({
                 {/* Auto-close progress bar */}
                 {autoClose && (
                   <div className="mt-2">
-                    <motion.div
-                      className="w-full bg-white/20 rounded-full h-1"
-                      initial={{ width: "100%" }}
-                      animate={{ width: "0%" }}
-                      transition={{
-                        duration: autoCloseDelay / 1000,
-                        ease: "linear",
-                      }}
-                    />
+                    <div className="w-full bg-white/20 rounded-full h-1 overflow-hidden">
+                      <motion.div
+                        className="h-full bg-white/40 rounded-full"
+                        initial={{ scaleX: 1 }}
+                        animate={{ scaleX: 0 }}
+                        transition={{
+                          duration: autoCloseDelay / 1000,
+                          ease: "linear",
+                        }}
+                        style={{ transformOrigin: "left" }}
+                      />
+                    </div>
                     <div className="text-xs text-white/60 mt-1">
                       Auto-closing...
                     </div>
