@@ -274,7 +274,7 @@ export const JungleAdventureWordCard: React.FC<
         return {
           bg: "bg-gradient-to-r from-jungle to-jungle-dark",
           icon: <TreePine className="w-4 h-4" />,
-          text: "🌿 Explorer",
+          text: "�� Explorer",
           color: "text-white",
           border: "border-jungle",
         };
@@ -329,7 +329,7 @@ export const JungleAdventureWordCard: React.FC<
         ref={cardRef}
         className={cn(
           "relative w-full transition-all duration-700 transform-gpu preserve-3d",
-          "h-[420px] xs:h-[440px] sm:h-[420px] md:h-[460px] lg:h-[480px]",
+          "h-[420px] xs:h-[440px] sm:h-[400px] md:h-[420px] lg:h-[440px]",
           "jungle-adventure-touch-target",
           "hover:scale-[1.02] transition-transform",
           "jungle-adventure-card-flip",
