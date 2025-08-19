@@ -3003,16 +3003,32 @@ export default function Index({ initialProfile }: IndexProps) {
                                     <div className="jungle-vines"></div>
 
                                     {/* Animated Jungle Creatures */}
-                                    <div className="jungle-creature jungle-creature-monkey">🐵</div>
-                                    <div className="jungle-creature jungle-creature-bird">🦜</div>
-                                    <div className="jungle-creature jungle-creature-butterfly">🦋</div>
-                                    <div className="jungle-creature jungle-creature-frog">🐸</div>
+                                    <div className="jungle-creature jungle-creature-monkey">
+                                      🐵
+                                    </div>
+                                    <div className="jungle-creature jungle-creature-bird">
+                                      🦜
+                                    </div>
+                                    <div className="jungle-creature jungle-creature-butterfly">
+                                      🦋
+                                    </div>
+                                    <div className="jungle-creature jungle-creature-frog">
+                                      🐸
+                                    </div>
 
                                     {/* Floating Jungle Leaves */}
-                                    <div className="jungle-leaves-float">🍃</div>
-                                    <div className="jungle-leaves-float">🌿</div>
-                                    <div className="jungle-leaves-float">🍃</div>
-                                    <div className="jungle-leaves-float">🌿</div>
+                                    <div className="jungle-leaves-float">
+                                      🍃
+                                    </div>
+                                    <div className="jungle-leaves-float">
+                                      🌿
+                                    </div>
+                                    <div className="jungle-leaves-float">
+                                      🍃
+                                    </div>
+                                    <div className="jungle-leaves-float">
+                                      🌿
+                                    </div>
 
                                     {/* Hero Content */}
                                     <div className="jungle-quiz-hero-content">
@@ -3025,8 +3041,10 @@ export default function Index({ initialProfile }: IndexProps) {
                                         🌟 Jungle Quiz Adventure! 🌟
                                       </h2>
                                       <p className="jungle-quiz-subtitle">
-                                        Embark on an epic word journey through the mystical jungle!
-                                        Discover treasures, meet friendly creatures, and test your vocabulary skills! 🏆✨
+                                        Embark on an epic word journey through
+                                        the mystical jungle! Discover treasures,
+                                        meet friendly creatures, and test your
+                                        vocabulary skills! 🏆✨
                                       </p>
 
                                       {/* AI Quiz Enhancement Notice - Jungle Themed */}
@@ -3041,8 +3059,9 @@ export default function Index({ initialProfile }: IndexProps) {
                                                 🤖 Magical AI Guide
                                               </span>
                                               <p className="text-sm text-jungle-dark mt-1">
-                                                Your personal jungle companion creates
-                                                adventures just for you! 🧙‍♂️✨
+                                                Your personal jungle companion
+                                                creates adventures just for you!
+                                                🧙‍♂️✨
                                               </p>
                                             </div>
                                           </div>
@@ -3056,17 +3075,25 @@ export default function Index({ initialProfile }: IndexProps) {
                                     <div className="jungle-quiz-cards-grid">
                                       {/* Enchanted Garden Expedition */}
                                       <div className="jungle-quiz-card jungle-quiz-card-forest jungle-hover-effect">
-                                        <div className="jungle-quiz-card-icon animate-jungle-sway">🌺</div>
+                                        <div className="jungle-quiz-card-icon animate-jungle-sway">
+                                          🌺
+                                        </div>
                                         <h3 className="jungle-quiz-card-title text-jungle-green">
                                           🌱 Enchanted Garden
                                         </h3>
                                         <p className="jungle-quiz-card-description">
-                                          Journey through magical gardens where words bloom into beautiful flowers!
-                                          Listen to nature's whispers and watch your vocabulary grow! 🌸✨
+                                          Journey through magical gardens where
+                                          words bloom into beautiful flowers!
+                                          Listen to nature's whispers and watch
+                                          your vocabulary grow! 🌸✨
                                         </p>
                                         <div className="jungle-quiz-card-badges">
-                                          <span className="jungle-quiz-badge">🎯 Ages 3-5</span>
-                                          <span className="jungle-quiz-badge-audio">🎵 Audio Magic</span>
+                                          <span className="jungle-quiz-badge">
+                                            🎯 Ages 3-5
+                                          </span>
+                                          <span className="jungle-quiz-badge-audio">
+                                            🎵 Audio Magic
+                                          </span>
                                         </div>
                                         <button
                                           onClick={() => {
@@ -3081,24 +3108,36 @@ export default function Index({ initialProfile }: IndexProps) {
 
                                       {/* Mystic Sound Safari */}
                                       <div className="jungle-quiz-card jungle-quiz-card-river jungle-hover-effect">
-                                        <div className="jungle-quiz-card-icon animate-jungle-pulse">🎧</div>
+                                        <div className="jungle-quiz-card-icon animate-jungle-pulse">
+                                          🎧
+                                        </div>
                                         <h3 className="jungle-quiz-card-title text-sky-blue">
                                           🌊 Mystic Sound Safari
                                         </h3>
                                         <p className="jungle-quiz-card-description">
-                                          Follow ancient jungle sounds to hidden treasures! Listen carefully to
-                                          nature's magical symphony and discover secret word treasures! 🎵🗺️
+                                          Follow ancient jungle sounds to hidden
+                                          treasures! Listen carefully to
+                                          nature's magical symphony and discover
+                                          secret word treasures! 🎵🗺️
                                         </p>
                                         <div className="jungle-quiz-card-badges">
-                                          <span className="jungle-quiz-badge">🎵 Audio Quest</span>
-                                          <span className="jungle-quiz-badge-difficulty">🏆 Challenge</span>
+                                          <span className="jungle-quiz-badge">
+                                            🎵 Audio Quest
+                                          </span>
+                                          <span className="jungle-quiz-badge-difficulty">
+                                            🏆 Challenge
+                                          </span>
                                         </div>
                                         <button
                                           onClick={() => {
                                             setSelectedQuizType("listen-guess");
                                             setShowQuiz(true);
                                           }}
-                                          className="jungle-quiz-button" style={{background: 'linear-gradient(135deg, #2196f3, #00bcd4)'}}
+                                          className="jungle-quiz-button"
+                                          style={{
+                                            background:
+                                              "linear-gradient(135deg, #2196f3, #00bcd4)",
+                                          }}
                                         >
                                           <Play className="w-5 h-5 mr-2" />
                                           Start Sound Safari! 🎧
@@ -3107,24 +3146,36 @@ export default function Index({ initialProfile }: IndexProps) {
 
                                       {/* Picture Treasure Hunt */}
                                       <div className="jungle-quiz-card jungle-quiz-card-sunset jungle-hover-effect">
-                                        <div className="jungle-quiz-card-icon animate-jungle-sparkle">📸</div>
+                                        <div className="jungle-quiz-card-icon animate-jungle-sparkle">
+                                          📸
+                                        </div>
                                         <h3 className="jungle-quiz-card-title text-bright-orange">
                                           🌅 Picture Treasure Hunt
                                         </h3>
                                         <p className="jungle-quiz-card-description">
-                                          Explore ancient jungle temples and decode mysterious picture scrolls!
-                                          Each image holds the key to incredible word treasures! 🏛️💎
+                                          Explore ancient jungle temples and
+                                          decode mysterious picture scrolls!
+                                          Each image holds the key to incredible
+                                          word treasures! 🏛️💎
                                         </p>
                                         <div className="jungle-quiz-card-badges">
-                                          <span className="jungle-quiz-badge">🎯 Visual Quest</span>
-                                          <span className="jungle-quiz-badge-difficulty">⚡ Fast Fun</span>
+                                          <span className="jungle-quiz-badge">
+                                            🎯 Visual Quest
+                                          </span>
+                                          <span className="jungle-quiz-badge-difficulty">
+                                            ⚡ Fast Fun
+                                          </span>
                                         </div>
                                         <button
                                           onClick={() => {
                                             setSelectedQuizType("picture");
                                             setShowQuiz(true);
                                           }}
-                                          className="jungle-quiz-button" style={{background: 'linear-gradient(135deg, #ff9800, #ffc107)'}}
+                                          className="jungle-quiz-button"
+                                          style={{
+                                            background:
+                                              "linear-gradient(135deg, #ff9800, #ffc107)",
+                                          }}
                                         >
                                           <Play className="w-5 h-5 mr-2" />
                                           Begin Treasure Hunt! 📸
@@ -3133,18 +3184,42 @@ export default function Index({ initialProfile }: IndexProps) {
 
                                       {/* Vowel Crystal Expedition */}
                                       <div className="jungle-quiz-card jungle-quiz-card-mystical jungle-hover-effect">
-                                        <div className="jungle-quiz-card-icon animate-jungle-glow">💎</div>
+                                        <div className="jungle-quiz-card-icon animate-jungle-glow">
+                                          💎
+                                        </div>
                                         <h3 className="jungle-quiz-card-title text-playful-purple">
                                           🔮 Vowel Crystal Expedition
                                         </h3>
                                         <p className="jungle-quiz-card-description">
-                                          Deep in the mystical jungle lie powerful vowel crystals! Choose your
-                                          adventure difficulty and unlock the ancient secrets of A, E, I, O, U! ✨🔮
+                                          Deep in the mystical jungle lie
+                                          powerful vowel crystals! Choose your
+                                          adventure difficulty and unlock the
+                                          ancient secrets of A, E, I, O, U! ✨🔮
                                         </p>
                                         <div className="jungle-quiz-card-badges">
-                                          <span className="jungle-quiz-badge" style={{background: 'rgba(76, 175, 80, 0.2)', color: '#2e7d32'}}>🌱 Easy</span>
-                                          <span className="jungle-quiz-badge" style={{background: 'rgba(156, 39, 176, 0.2)', color: '#6a1b9a'}}>⚡ Medium</span>
-                                          <span className="jungle-quiz-badge-difficulty">🏃 Timed Rush</span>
+                                          <span
+                                            className="jungle-quiz-badge"
+                                            style={{
+                                              background:
+                                                "rgba(76, 175, 80, 0.2)",
+                                              color: "#2e7d32",
+                                            }}
+                                          >
+                                            🌱 Easy
+                                          </span>
+                                          <span
+                                            className="jungle-quiz-badge"
+                                            style={{
+                                              background:
+                                                "rgba(156, 39, 176, 0.2)",
+                                              color: "#6a1b9a",
+                                            }}
+                                          >
+                                            ⚡ Medium
+                                          </span>
+                                          <span className="jungle-quiz-badge-difficulty">
+                                            🏃 Timed Rush
+                                          </span>
                                         </div>
                                         <button
                                           onClick={() => {
@@ -3153,7 +3228,11 @@ export default function Index({ initialProfile }: IndexProps) {
                                             );
                                             setShowQuiz(true);
                                           }}
-                                          className="jungle-quiz-button" style={{background: 'linear-gradient(135deg, #9c27b0, #6366f1)'}}
+                                          className="jungle-quiz-button"
+                                          style={{
+                                            background:
+                                              "linear-gradient(135deg, #9c27b0, #6366f1)",
+                                          }}
                                         >
                                           <Play className="w-5 h-5 mr-2" />
                                           Crystal Quest Awaits! 💎
@@ -3173,57 +3252,100 @@ export default function Index({ initialProfile }: IndexProps) {
                                           🏆 Your Jungle Adventures! 🏆
                                         </h3>
                                         <p className="text-jungle-dark">
-                                          Track your epic quiz journeys and celebrate your achievements! 🌟
+                                          Track your epic quiz journeys and
+                                          celebrate your achievements! 🌟
                                         </p>
                                       </div>
 
                                       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                         {/* Achievement Items */}
                                         <div className="jungle-achievement-item">
-                                          <div className="jungle-achievement-icon">🌺</div>
+                                          <div className="jungle-achievement-icon">
+                                            🌺
+                                          </div>
                                           <div className="flex-1">
-                                            <div className="font-bold text-jungle-green">Garden Explorer</div>
-                                            <div className="text-sm text-jungle-dark">Latest enchanted garden quest completed!</div>
+                                            <div className="font-bold text-jungle-green">
+                                              Garden Explorer
+                                            </div>
+                                            <div className="text-sm text-jungle-dark">
+                                              Latest enchanted garden quest
+                                              completed!
+                                            </div>
                                           </div>
                                           <div className="text-right">
-                                            <div className="font-bold text-sunshine-yellow">8/10</div>
-                                            <div className="text-sm text-jungle-dark">Amazing!</div>
+                                            <div className="font-bold text-sunshine-yellow">
+                                              8/10
+                                            </div>
+                                            <div className="text-sm text-jungle-dark">
+                                              Amazing!
+                                            </div>
                                           </div>
                                         </div>
 
                                         <div className="jungle-achievement-item">
-                                          <div className="jungle-achievement-icon">🎧</div>
+                                          <div className="jungle-achievement-icon">
+                                            🎧
+                                          </div>
                                           <div className="flex-1">
-                                            <div className="font-bold text-sky-blue">Sound Safari Master</div>
-                                            <div className="text-sm text-jungle-dark">Mystical audio adventure completed!</div>
+                                            <div className="font-bold text-sky-blue">
+                                              Sound Safari Master
+                                            </div>
+                                            <div className="text-sm text-jungle-dark">
+                                              Mystical audio adventure
+                                              completed!
+                                            </div>
                                           </div>
                                           <div className="text-right">
-                                            <div className="font-bold text-sunshine-yellow">5/5</div>
-                                            <div className="text-sm text-jungle-dark">Perfect!</div>
+                                            <div className="font-bold text-sunshine-yellow">
+                                              5/5
+                                            </div>
+                                            <div className="text-sm text-jungle-dark">
+                                              Perfect!
+                                            </div>
                                           </div>
                                         </div>
 
                                         <div className="jungle-achievement-item">
-                                          <div className="jungle-achievement-icon">📸</div>
+                                          <div className="jungle-achievement-icon">
+                                            📸
+                                          </div>
                                           <div className="flex-1">
-                                            <div className="font-bold text-bright-orange">Treasure Hunter</div>
-                                            <div className="text-sm text-jungle-dark">Picture quest adventure awaits!</div>
+                                            <div className="font-bold text-bright-orange">
+                                              Treasure Hunter
+                                            </div>
+                                            <div className="text-sm text-jungle-dark">
+                                              Picture quest adventure awaits!
+                                            </div>
                                           </div>
                                           <div className="text-right">
-                                            <div className="font-bold text-sunshine-yellow">12/15</div>
-                                            <div className="text-sm text-jungle-dark">Great job!</div>
+                                            <div className="font-bold text-sunshine-yellow">
+                                              12/15
+                                            </div>
+                                            <div className="text-sm text-jungle-dark">
+                                              Great job!
+                                            </div>
                                           </div>
                                         </div>
 
                                         <div className="jungle-achievement-item">
-                                          <div className="jungle-achievement-icon">💎</div>
+                                          <div className="jungle-achievement-icon">
+                                            💎
+                                          </div>
                                           <div className="flex-1">
-                                            <div className="font-bold text-playful-purple">Crystal Guardian</div>
-                                            <div className="text-sm text-jungle-dark">Vowel crystal expedition mastery!</div>
+                                            <div className="font-bold text-playful-purple">
+                                              Crystal Guardian
+                                            </div>
+                                            <div className="text-sm text-jungle-dark">
+                                              Vowel crystal expedition mastery!
+                                            </div>
                                           </div>
                                           <div className="text-right">
-                                            <div className="font-bold text-sunshine-yellow">Ready!</div>
-                                            <div className="text-sm text-jungle-dark">Let's go!</div>
+                                            <div className="font-bold text-sunshine-yellow">
+                                              Ready!
+                                            </div>
+                                            <div className="text-sm text-jungle-dark">
+                                              Let's go!
+                                            </div>
                                           </div>
                                         </div>
                                       </div>
