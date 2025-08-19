@@ -1496,7 +1496,7 @@ export default function Index({ initialProfile }: IndexProps) {
       } else if (accuracy >= 75) {
         achievementTitle = "Category Scholar! 🌟✨";
         achievementIcon = "📚";
-        achievementMessage = `Great job! You completed ${categoryDisplayName} with ${accuracy}% accuracy! Keep up the good work!\n\n��� Scholar Bonus: 100 points!`;
+        achievementMessage = `Great job! You completed ${categoryDisplayName} with ${accuracy}% accuracy! Keep up the good work!\n\n🎓 Scholar Bonus: 100 points!`;
       } else if (accuracy >= 50) {
         achievementTitle = "Category Explorer! 🗺️🌟";
         achievementIcon = "🗺️";
@@ -3021,7 +3021,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                       🍃
                                     </div>
                                     <div className="jungle-leaves-float">
-                                      🌿
+                                      ���
                                     </div>
                                     <div className="jungle-leaves-float">
                                       🍃
@@ -3669,7 +3669,7 @@ export default function Index({ initialProfile }: IndexProps) {
           <MagicalPortalEffect
             isActive={backgroundAnimationsEnabled && activeTab === "learn"}
             intensity="medium"
-            particleEmojis={["🌟", "✨", "⭐", "💫", "🔮", "🎊", "🦄", "🎉"]}
+            particleEmojis={["🌟", "✨", "⭐", "💫", "���", "🎊", "🦄", "🎉"]}
           />
 
           {/* Enhanced Reward Celebration */}
