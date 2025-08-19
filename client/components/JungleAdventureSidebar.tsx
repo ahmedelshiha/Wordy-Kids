@@ -226,19 +226,15 @@ export const JungleAdventureSidebar: React.FC<JungleAdventureSidebarProps> = ({
   };
 
   const cardHoverVariants = {
-    initial: { 
-      y: 0, 
-      scale: 1,
-      boxShadow: "0 4px 12px rgba(0, 0, 0, 0.08)",
-      borderColor: "transparent"
+    initial: {
+      y: 0,
+      scale: 1
     },
     hover: {
       y: -4,
       scale: 1.02,
-      boxShadow: "0 12px 28px rgba(0, 0, 0, 0.15)",
-      borderColor: "rgba(76, 175, 80, 0.3)",
-      transition: { 
-        duration: 0.3, 
+      transition: {
+        duration: 0.3,
         ease: "easeOut",
         type: "spring",
         stiffness: 300
