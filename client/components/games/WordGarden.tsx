@@ -433,7 +433,7 @@ function JungleGameCompletionDialog({
 
   return (
     <Dialog open={show} onOpenChange={() => {}}>
-      <DialogContent className="sm:max-w-xs max-w-[90vw] p-3 relative overflow-hidden border-jungle-light border-4">
+      <DialogContent className="sm:max-w-sm max-w-[95vw] max-h-[90vh] overflow-y-auto p-3 relative border-jungle-light border-4 mx-auto my-4">
         {/* Magical Jungle Background with deep emerald-to-moss gradient */}
         <div className="absolute inset-0 rounded-lg overflow-hidden">
           {/* Deep emerald-to-moss gradient base */}
