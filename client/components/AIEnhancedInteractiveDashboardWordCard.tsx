@@ -482,7 +482,7 @@ export function AIEnhancedInteractiveDashboardWordCard({
           id: "perfect_ai_session",
           title: "AI PERFECT SESSION!",
           description: `Amazing! You mastered all ${SESSION_SIZE} AI-selected words!`,
-          emoji: "🤖��",
+          emoji: "🤖🎯",
           unlocked: true,
         });
       } else if (accuracy >= 90) {

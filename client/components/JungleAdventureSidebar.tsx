@@ -4,12 +4,11 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 import { useAuth } from "@/hooks/useAuth";
+import { useUserProgress } from "@/hooks/useUserProgress";
 import { useNavigate } from "react-router-dom";
 import { kidFriendlyEffects, SOUNDS } from "@/lib/kidFriendlyEffects";
 
 interface JungleAdventureSidebarProps {
-  profile: any;
-  stats?: any;
   className?: string;
 }
 
@@ -17,11 +16,11 @@ interface JungleAdventureSidebarProps {
 const ParrotIcon = ({ className }: { className?: string }) => (
   <div
     className={cn(
-      "w-10 h-10 rounded-lg bg-sky flex items-center justify-center shadow-md hover:shadow-lg transition-all duration-300 hover:scale-105",
+      "w-10 h-10 rounded-lg bg-sky flex items-center justify-center shadow-md hover:shadow-lg transition-all duration-300 hover:scale-105 flex-shrink-0",
       className,
     )}
   >
-    <div className="text-white text-lg transform hover:rotate-12 transition-transform duration-300">
+    <div className="text-white text-sm transform hover:rotate-12 transition-transform duration-300">
       🦜
     </div>
   </div>
@@ -30,11 +29,11 @@ const ParrotIcon = ({ className }: { className?: string }) => (
 const MonkeyIcon = ({ className }: { className?: string }) => (
   <div
     className={cn(
-      "w-10 h-10 rounded-lg bg-bright-orange flex items-center justify-center shadow-md hover:shadow-lg transition-all duration-300 hover:scale-105",
+      "w-10 h-10 rounded-lg bg-bright-orange flex items-center justify-center shadow-md hover:shadow-lg transition-all duration-300 hover:scale-105 flex-shrink-0",
       className,
     )}
   >
-    <div className="text-white text-lg transform hover:rotate-12 transition-transform duration-300">
+    <div className="text-white text-sm transform hover:rotate-12 transition-transform duration-300">
       🐵
     </div>
   </div>
@@ -43,11 +42,11 @@ const MonkeyIcon = ({ className }: { className?: string }) => (
 const CompassIcon = ({ className }: { className?: string }) => (
   <div
     className={cn(
-      "w-10 h-10 rounded-lg bg-sunshine flex items-center justify-center shadow-md hover:shadow-lg transition-all duration-300 hover:scale-105",
+      "w-10 h-10 rounded-lg bg-sunshine flex items-center justify-center shadow-md hover:shadow-lg transition-all duration-300 hover:scale-105 flex-shrink-0",
       className,
     )}
   >
-    <div className="text-white text-lg transform hover:rotate-180 transition-transform duration-700">
+    <div className="text-white text-sm transform hover:rotate-180 transition-transform duration-700">
       🧭
     </div>
   </div>
@@ -61,13 +60,12 @@ const JungleLeaf = ({ className }: { className?: string }) => (
 );
 
 export const JungleAdventureSidebar: React.FC<JungleAdventureSidebarProps> = ({
-  profile,
-  stats,
   className,
 }) => {
   const { isGuest, logout } = useAuth();
   const navigate = useNavigate();
   const [isVisible, setIsVisible] = useState(true);
+  const userData = useUserProgress();
 
   // Enhanced sidebar entrance animation variants
   const sidebarVariants = {
@@ -131,7 +129,8 @@ export const JungleAdventureSidebar: React.FC<JungleAdventureSidebarProps> = ({
       className={cn(
         "w-[280px] h-[calc(100vh-80px)] flex flex-col",
         "bg-light-background/95 backdrop-blur-sm relative rounded-[24px] shadow-xl",
-        "p-5 space-y-5 overflow-hidden",
+        "p-4 space-y-3 overflow-y-auto overflow-x-hidden",
+        "scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-transparent",
         className,
       )}
     >
@@ -149,64 +148,58 @@ export const JungleAdventureSidebar: React.FC<JungleAdventureSidebarProps> = ({
       {/* Enhanced User Profile Section */}
       <motion.div
         variants={itemVariants}
-        className="bg-profile-purple rounded-[24px] p-6 shadow-lg relative overflow-hidden"
+        className="bg-profile-purple rounded-[20px] p-4 shadow-lg relative overflow-hidden flex-shrink-0"
       >
         {/* Profile Avatar with enhanced styling */}
-        <div className="flex justify-center mb-4">
+        <div className="flex justify-center mb-3">
           <motion.div
-            className="w-16 h-16 rounded-full border-3 border-white flex items-center justify-center bg-white/10 shadow-lg"
+            className="w-12 h-12 rounded-full border-2 border-white flex items-center justify-center bg-white/10 shadow-lg"
             whileHover={{ scale: 1.05, rotate: 5 }}
             transition={{ duration: 0.3 }}
           >
-            {profile?.avatar?.emoji ? (
-              <span className="text-2xl">{profile.avatar.emoji}</span>
-            ) : (
-              <span className="text-2xl">🎯</span>
-            )}
+            <span className="text-xl">{userData.avatar?.emoji || "🎯"}</span>
           </motion.div>
         </div>
 
         {/* Enhanced User Info with proper typography */}
         <div className="text-center">
-          <h2 className="text-white font-['Baloo_2'] text-[22px] font-bold leading-tight mb-2">
-            {profile?.name || "Guest Explorer"}
+          <h2 className="text-white font-['Baloo_2'] text-[18px] font-bold leading-tight mb-1 truncate">
+            {userData.name}
           </h2>
-          <p className="text-white/90 font-['Baloo_2'] text-[18px] font-semibold mb-3">
-            Level {profile?.level || 1}
+          <p className="text-white/90 font-['Baloo_2'] text-[14px] font-semibold mb-2">
+            Level {userData.level}
           </p>
-          <p className="text-white/90 font-['Baloo_2'] text-[16px] font-medium">
-            🔥 {profile?.streak || 0} days
+          <p className="text-white/90 font-['Baloo_2'] text-[13px] font-medium">
+            🔥 {userData.streak} days
           </p>
         </div>
       </motion.div>
 
       {/* Enhanced Progress Tracking Section */}
-      <div className="space-y-4 flex-1">
+      <div className="space-y-3 flex-1 min-h-0">
         {/* Learned Words Card with enhanced design */}
         <motion.div
           variants={itemVariants}
           initial="initial"
-          whileHover="hover"
-          className="bg-white rounded-[16px] p-4 shadow-md flex items-center group cursor-pointer"
-          style={cardHoverVariants.initial}
+          className="bg-white rounded-[14px] p-3 shadow-md flex items-center group cursor-pointer flex-shrink-0"
           whileHover={cardHoverVariants.hover}
         >
-          <ParrotIcon />
-          <div className="flex-1 ml-3">
-            <h3 className="text-navy font-['Baloo_2'] text-[16px] font-semibold">
+          <ParrotIcon className="w-8 h-8" />
+          <div className="flex-1 ml-3 min-w-0">
+            <h3 className="text-navy font-['Baloo_2'] text-[14px] font-semibold truncate">
               Learned Words
             </h3>
-            <p className="text-navy/70 font-['Baloo_2'] text-[14px] font-medium">
-              {stats?.wordsLearned || 15} words mastered
+            <p className="text-navy/70 font-['Baloo_2'] text-[12px] font-medium truncate">
+              {userData.stats.wordsLearned} words mastered
             </p>
           </div>
           <motion.div
-            className="w-8 h-8 bg-jungle rounded-full flex items-center justify-center shadow-md"
+            className="w-7 h-7 bg-jungle rounded-full flex items-center justify-center shadow-md flex-shrink-0"
             whileHover={{ scale: 1.1 }}
             transition={{ duration: 0.2 }}
           >
-            <span className="text-white font-['Baloo_2'] text-[14px] font-bold">
-              {stats?.wordsLearned || 15}
+            <span className="text-white font-['Baloo_2'] text-[11px] font-bold">
+              {userData.stats.wordsLearned}
             </span>
           </motion.div>
         </motion.div>
@@ -215,27 +208,25 @@ export const JungleAdventureSidebar: React.FC<JungleAdventureSidebarProps> = ({
         <motion.div
           variants={itemVariants}
           initial="initial"
-          whileHover="hover"
-          className="bg-white rounded-[16px] p-4 shadow-md flex items-center group cursor-pointer"
-          style={cardHoverVariants.initial}
+          className="bg-white rounded-[14px] p-3 shadow-md flex items-center group cursor-pointer flex-shrink-0"
           whileHover={cardHoverVariants.hover}
         >
-          <MonkeyIcon />
-          <div className="flex-1 ml-3">
-            <h3 className="text-navy font-['Baloo_2'] text-[16px] font-semibold">
+          <MonkeyIcon className="w-8 h-8" />
+          <div className="flex-1 ml-3 min-w-0">
+            <h3 className="text-navy font-['Baloo_2'] text-[14px] font-semibold truncate">
               Animals
             </h3>
-            <p className="text-navy/70 font-['Baloo_2'] text-[14px] font-medium">
-              {stats?.animalsLearned || 8} animals discovered
+            <p className="text-navy/70 font-['Baloo_2'] text-[12px] font-medium truncate">
+              {userData.stats.animalsLearned} animals discovered
             </p>
           </div>
           <motion.div
-            className="w-8 h-8 bg-playful-purple rounded-full flex items-center justify-center shadow-md"
+            className="w-7 h-7 bg-playful-purple rounded-full flex items-center justify-center shadow-md flex-shrink-0"
             whileHover={{ scale: 1.1 }}
             transition={{ duration: 0.2 }}
           >
-            <span className="text-white font-['Baloo_2'] text-[14px] font-bold">
-              {stats?.animalsLearned || 8}
+            <span className="text-white font-['Baloo_2'] text-[11px] font-bold">
+              {userData.stats.animalsLearned}
             </span>
           </motion.div>
         </motion.div>
@@ -244,28 +235,25 @@ export const JungleAdventureSidebar: React.FC<JungleAdventureSidebarProps> = ({
         <motion.div
           variants={itemVariants}
           initial="initial"
-          whileHover="hover"
-          className="bg-white rounded-[16px] p-4 shadow-md flex items-center group cursor-pointer"
-          style={cardHoverVariants.initial}
+          className="bg-white rounded-[14px] p-3 shadow-md flex items-center group cursor-pointer flex-shrink-0"
           whileHover={cardHoverVariants.hover}
         >
-          <CompassIcon />
-          <div className="flex-1 ml-3">
-            <h3 className="text-navy font-['Baloo_2'] text-[16px] font-semibold">
+          <CompassIcon className="w-8 h-8" />
+          <div className="flex-1 ml-3 min-w-0">
+            <h3 className="text-navy font-['Baloo_2'] text-[14px] font-semibold truncate">
               Adventure Time
             </h3>
-            <p className="text-navy/70 font-['Baloo_2'] text-[14px] font-medium">
-              {stats?.totalTime ? `${Math.round(stats.totalTime / 60)}h` : "2h"}{" "}
-              exploring
+            <p className="text-navy/70 font-['Baloo_2'] text-[12px] font-medium truncate">
+              {userData.stats.totalTime}min exploring
             </p>
           </div>
           <motion.div
-            className="w-8 h-8 bg-coral-red rounded-full flex items-center justify-center shadow-md"
+            className="w-7 h-7 bg-coral-red rounded-full flex items-center justify-center shadow-md flex-shrink-0"
             whileHover={{ scale: 1.1 }}
             transition={{ duration: 0.2 }}
           >
-            <span className="text-white font-['Baloo_2'] text-[14px] font-bold">
-              {stats?.totalTime ? Math.round(stats.totalTime / 60) : 2}
+            <span className="text-white font-['Baloo_2'] text-[11px] font-bold">
+              {userData.stats.totalTime}
             </span>
           </motion.div>
         </motion.div>
@@ -274,36 +262,36 @@ export const JungleAdventureSidebar: React.FC<JungleAdventureSidebarProps> = ({
       {/* Enhanced Registration Call-to-Action Section */}
       <motion.div
         variants={itemVariants}
-        className="bg-sunshine rounded-[20px] p-5 shadow-lg relative overflow-hidden"
+        className="bg-sunshine rounded-[16px] p-4 shadow-lg relative overflow-hidden flex-shrink-0"
       >
         {/* Subtle background decoration */}
-        <div className="absolute top-2 right-2 w-8 h-8 bg-white/10 rounded-full" />
-        <div className="absolute bottom-2 left-2 w-6 h-6 bg-white/10 rounded-full" />
+        <div className="absolute top-2 right-2 w-6 h-6 bg-white/10 rounded-full" />
+        <div className="absolute bottom-2 left-2 w-4 h-4 bg-white/10 rounded-full" />
 
         <div className="text-center mb-3 relative z-10">
-          <h3 className="text-navy font-['Baloo_2'] text-[18px] font-bold mb-3">
+          <h3 className="text-navy font-['Baloo_2'] text-[15px] font-bold mb-2">
             {isGuest ? "Start Your Epic Journey!" : "Welcome Back, Explorer!"}
           </h3>
 
           {isGuest && (
-            <div className="space-y-2 mb-4 text-left">
+            <div className="space-y-1 mb-3 text-left">
               <motion.p
-                className="text-navy font-['Baloo_2'] text-[14px] font-medium flex items-center"
-                whileHover={{ x: 2 }}
+                className="text-navy font-['Baloo_2'] text-[11px] font-medium flex items-center"
+                whileHover={{ x: 1 }}
                 transition={{ duration: 0.2 }}
               >
                 💾 Save your progress forever!
               </motion.p>
               <motion.p
-                className="text-navy font-['Baloo_2'] text-[14px] font-medium flex items-center"
-                whileHover={{ x: 2 }}
+                className="text-navy font-['Baloo_2'] text-[11px] font-medium flex items-center"
+                whileHover={{ x: 1 }}
                 transition={{ duration: 0.2 }}
               >
                 🏆 Earn special badges and rewards!
               </motion.p>
               <motion.p
-                className="text-navy font-['Baloo_2'] text-[14px] font-medium flex items-center"
-                whileHover={{ x: 2 }}
+                className="text-navy font-['Baloo_2'] text-[11px] font-medium flex items-center"
+                whileHover={{ x: 1 }}
                 transition={{ duration: 0.2 }}
               >
                 🔥 Track your learning streaks!
@@ -320,7 +308,7 @@ export const JungleAdventureSidebar: React.FC<JungleAdventureSidebarProps> = ({
           <Button
             onClick={isGuest ? handleRegistration : handleLogout}
             className={cn(
-              "w-full rounded-[25px] px-6 py-[14px] font-['Baloo_2'] text-[16px] font-bold text-white",
+              "w-full rounded-[20px] px-4 py-2 font-['Baloo_2'] text-[13px] font-bold text-white",
               "transition-all duration-300 shadow-lg hover:shadow-xl",
               isGuest
                 ? "bg-jungle hover:bg-jungle-dark"
@@ -333,7 +321,7 @@ export const JungleAdventureSidebar: React.FC<JungleAdventureSidebarProps> = ({
 
         {isGuest && (
           <motion.p
-            className="text-center text-navy font-['Baloo_2'] text-[14px] font-medium mt-3 underline cursor-pointer hover:no-underline transition-all duration-200"
+            className="text-center text-navy font-['Baloo_2'] text-[11px] font-medium mt-2 underline cursor-pointer hover:no-underline transition-all duration-200"
             onClick={handleContinueAsGuest}
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}

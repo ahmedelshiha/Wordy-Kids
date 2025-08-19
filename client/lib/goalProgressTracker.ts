@@ -1,4 +1,31 @@
-import { ChildProfile, LearningGoal } from "@/components/ParentDashboard";
+// Local interface definitions (copied from ParentDashboard)
+interface LearningGoal {
+  id: string;
+  type: "daily" | "weekly" | "monthly";
+  title: string;
+  description: string;
+  target: number;
+  current: number;
+  unit: string;
+  category: string;
+  reward: string;
+  isActive: boolean;
+  completedAt?: Date;
+  createdAt: Date;
+  lastUpdated?: Date;
+  streak?: number;
+}
+
+interface ChildProfile {
+  id: string;
+  name: string;
+  age: number;
+  avatar: string;
+  totalWords: number;
+  streak: number;
+  lastActive: Date;
+  learningGoals: LearningGoal[];
+}
 
 export interface ProgressUpdate {
   type:

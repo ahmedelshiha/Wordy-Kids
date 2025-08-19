@@ -289,7 +289,7 @@ export const WordPracticeGame: React.FC<WordPracticeGameProps> = ({
             +{practiceWords.length * 15}
           </div>
           <div className="text-xs sm:text-sm text-green-600 font-semibold">
-            �� Max Hero Points
+            🏆 Max Hero Points
           </div>
         </div>
         <div className="bg-gradient-to-br from-blue-50 to-cyan-50 p-3 sm:p-4 rounded-xl border-2 border-blue-300 shadow-lg hover:shadow-xl transition-shadow">

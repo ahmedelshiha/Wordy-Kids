@@ -1871,7 +1871,7 @@ export default function Index({ initialProfile }: IndexProps) {
     // Show completion feedback
     setFeedback({
       type: "celebration",
-      title: "Practice Complete! ����",
+      title: "Practice Complete! 🎉",
       message: `Great job practicing your tricky words!\n\n✅ Remembered: ${results.correctWords.length} words\n🎯 Accuracy: ${results.accuracy}%\n\nKeep practicing to master all your words!`,
       points: results.correctWords.length * 15,
       onContinue: () => setFeedback(null),
@@ -2069,11 +2069,7 @@ export default function Index({ initialProfile }: IndexProps) {
                         {/* Child Profile Sidebar - Desktop Only */}
                         <div className="hidden lg:block w-64 xl:w-72 flex-shrink-0">
                           <div className="sticky top-6">
-                            <JungleAdventureSidebar
-                              profile={currentProfile}
-                              stats={enhancedChildStats}
-                              className="border-none shadow-none"
-                            />
+                            <JungleAdventureSidebar className="border-none shadow-none" />
                           </div>
                         </div>
 
@@ -2880,7 +2876,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                                       ) {
                                                         return (
                                                           <div className="text-xs text-orange-600 font-medium">
-                                                            ��� Review
+                                                            📚 Review
                                                           </div>
                                                         );
                                                       } else {
@@ -2981,7 +2977,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                         </p>
                                         <div className="flex justify-center gap-1 mb-2 md:mb-3">
                                           <span className="bg-educational-pink/20 text-educational-pink px-1.5 py-0.5 rounded-full text-xs">
-                                            ����🔊 Audio!
+                                            🎵🔊 Audio!
                                           </span>
                                         </div>
                                         <Button
@@ -2993,7 +2989,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                           size="sm"
                                         >
                                           <Play className="w-3 h-3 md:w-4 md:h-4 mr-1" />
-                                          Let's Listen! ���
+                                          Let's Listen! 👂
                                         </Button>
                                       </CardContent>
                                     </Card>
@@ -3025,7 +3021,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                           size="sm"
                                         >
                                           <Play className="w-3 h-3 md:w-4 md:h-4 mr-1" />
-                                          Let's Play! ����
+                                          Let's Play! 🎮
                                         </Button>
                                       </CardContent>
                                     </Card>
@@ -3217,7 +3213,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                 <div className="space-y-6">
                                   <div className="flex items-center justify-between">
                                     <h2 className="text-2xl font-bold text-gray-800">
-                                      �� Word Matching Game
+                                      🎯 Word Matching Game
                                     </h2>
                                   </div>
                                   <WordMatchingGame
@@ -3479,7 +3475,7 @@ export default function Index({ initialProfile }: IndexProps) {
           <MagicalPortalEffect
             isActive={backgroundAnimationsEnabled && activeTab === "learn"}
             intensity="medium"
-            particleEmojis={["���", "���", "⭐", "💫", "🔮", "���", "🦄", "🎉"]}
+            particleEmojis={["🌟", "✨", "⭐", "💫", "🔮", "🎊", "🦄", "🎉"]}
           />
 
           {/* Enhanced Reward Celebration */}
