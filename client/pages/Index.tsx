@@ -1491,7 +1491,7 @@ export default function Index({ initialProfile }: IndexProps) {
         achievementMessage = `Outstanding! You remembered ALL ${totalWords} words in ${categoryDisplayName}! You're a true champion!\n\n🎁 Perfect Mastery Bonus: 200 points!\n🗺️ New adventure zone unlocked!`;
       } else if (accuracy >= 90) {
         achievementTitle = "Category Expert! 🎓";
-        achievementIcon = "🎓���";
+        achievementIcon = "🎓🌟";
         achievementMessage = `Excellent work! You mastered ${categoryDisplayName} with ${accuracy}% accuracy! Almost perfect!\n\n🎁 Expert Bonus: 150 points!`;
       } else if (accuracy >= 75) {
         achievementTitle = "Category Scholar! ����✨";
@@ -2911,7 +2911,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                                         <div className="absolute inset-0 bg-white/20 rounded-xl opacity-0 hover:opacity-100 transition-opacity duration-300"></div>
                                                         <div className="relative z-10 flex items-center justify-center">
                                                           <span className="text-xl sm:text-2xl mr-1 sm:mr-2 animate-bounce">
-                                                            😊
+                                                            ���
                                                           </span>
                                                           <div className="text-center">
                                                             <div className="font-bold text-base sm:text-lg">
