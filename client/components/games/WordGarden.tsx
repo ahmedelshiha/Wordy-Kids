@@ -171,11 +171,11 @@ const PLANT_TYPES = [
   ["🌱", "🌵", "🌺"], // cactus-flower - spiky cactus to hibiscus
   ["🌱", "🍃", "🌹"], // rose bush - small leaves to red rose
   ["🌱", "🌾", "🌼"], // daisy field - grain to white daisy
-  ["🌱", "💚", "����"], // tulip - green heart to pink tulip
+  ["🌱", "💚", "🌷"], // tulip - green heart to pink tulip
   ["🌱", "🌳", "🌸"], // cherry tree - tree to cherry blossom
   ["🌱", "🍀", "🌺"], // clover hibiscus - clover to tropical flower
   ["🌱", "🎋", "🏵️"], // bamboo rosette - bamboo to decorative flower
-  ["🌱", "����", "🍄"], // forest mushroom - pine to mushroom
+  ["🌱", "🌲", "🍄"], // forest mushroom - pine to mushroom
   ["🌱", "🪴", "🌻"], // potted sunflower - pot plant to big sunflower
   ["🌱", "🌿", "💐"], // bouquet garden - leaves to flower bouquet
   ["🌱", "🎍", "🌸"], // bamboo cherry - bamboo decoration to blossom
