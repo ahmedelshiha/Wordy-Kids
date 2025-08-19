@@ -39,8 +39,8 @@ const enrichedCategories: Category[] = [
     id: "animals",
     name: "Animals",
     icon: "🦋",
-    color: "bg-educational-blue",
-    gradient: "from-blue-400 to-blue-600",
+    color: "bg-jungle",
+    gradient: "from-jungle to-jungle-light",
     wordCount: getWordsByCategory("animals").length,
     description: "Meet amazing creatures from around the world!",
     funFact: "Some animals can taste with their feet!",
@@ -58,8 +58,8 @@ const enrichedCategories: Category[] = [
     id: "nature",
     name: "Nature",
     icon: "🌳",
-    color: "bg-educational-green",
-    gradient: "from-green-400 to-green-600",
+    color: "bg-jungle-light",
+    gradient: "from-jungle-light to-jungle",
     wordCount: getWordsByCategory("nature").length,
     description: "Explore the magical wonders of our natural world!",
     funFact: "Trees can live for thousands of years!",
@@ -77,8 +77,8 @@ const enrichedCategories: Category[] = [
     id: "science",
     name: "Science",
     icon: "🔬",
-    color: "bg-educational-purple",
-    gradient: "from-purple-400 to-purple-600",
+    color: "bg-profile-purple",
+    gradient: "from-profile-purple to-playful-purple",
     wordCount: getWordsByCategory("science").length,
     description: "Discover amazing scientific wonders and cool experiments!",
     funFact: "Scientists discover new things every day!",
@@ -96,8 +96,8 @@ const enrichedCategories: Category[] = [
     id: "food",
     name: "Food",
     icon: "🍎",
-    color: "bg-educational-orange",
-    gradient: "from-orange-400 to-orange-600",
+    color: "bg-bright-orange",
+    gradient: "from-bright-orange to-sunshine",
     wordCount: getWordsByCategory("food").length,
     description: "Discover delicious treats and healthy foods!",
     funFact: "Some fruits change color as they ripen!",
@@ -115,8 +115,8 @@ const enrichedCategories: Category[] = [
     id: "space",
     name: "Space",
     icon: "⭐",
-    color: "bg-indigo-600",
-    gradient: "from-indigo-500 to-indigo-700",
+    color: "bg-navy",
+    gradient: "from-navy to-sky",
     wordCount: getWordsByCategory("space").length,
     description: "Blast off and explore the mysteries of the cosmos!",
     funFact: "There are more stars than grains of sand on Earth!",
@@ -134,8 +134,8 @@ const enrichedCategories: Category[] = [
     id: "sports",
     name: "Sports",
     icon: "⚽",
-    color: "bg-green-500",
-    gradient: "from-green-400 to-green-600",
+    color: "bg-jungle",
+    gradient: "from-jungle to-jungle-dark",
     wordCount: getWordsByCategory("sports").length,
     description: "Get active with games, sports, and fun activities!",
     funFact: "Playing sports helps your brain grow stronger!",
@@ -153,8 +153,8 @@ const enrichedCategories: Category[] = [
     id: "music",
     name: "Music",
     icon: "🎵",
-    color: "bg-purple-500",
-    gradient: "from-purple-400 to-purple-600",
+    color: "bg-playful-purple",
+    gradient: "from-playful-purple to-profile-purple",
     wordCount: getWordsByCategory("music").length,
     description: "Make beautiful sounds with instruments and melodies!",
     funFact: "Music can make you feel happy and excited!",
@@ -172,8 +172,8 @@ const enrichedCategories: Category[] = [
     id: "body",
     name: "Body Parts",
     icon: "👤",
-    color: "bg-educational-pink",
-    gradient: "from-pink-400 to-pink-600",
+    color: "bg-coral-red",
+    gradient: "from-coral-red to-bright-orange",
     wordCount: getWordsByCategory("body").length,
     description: "Learn about your amazing body and all its parts!",
     funFact: "Your body has 206 bones when you're an adult!",
@@ -191,8 +191,8 @@ const enrichedCategories: Category[] = [
     id: "clothes",
     name: "Clothes",
     icon: "👕",
-    color: "bg-blue-500",
-    gradient: "from-blue-400 to-blue-600",
+    color: "bg-sky",
+    gradient: "from-sky to-sky-dark",
     wordCount: getWordsByCategory("clothes").length,
     description: "Discover different types of clothing and fashion!",
     funFact: "The first clothing was made from animal skins!",
@@ -210,8 +210,8 @@ const enrichedCategories: Category[] = [
     id: "family",
     name: "Family",
     icon: "👪",
-    color: "bg-educational-yellow",
-    gradient: "from-yellow-400 to-yellow-600",
+    color: "bg-sunshine",
+    gradient: "from-sunshine to-sunshine-dark",
     wordCount: getWordsByCategory("family").length,
     description: "Learn about family members who love and care for you!",
     funFact: "Family is the most important thing in life!",
@@ -229,8 +229,8 @@ const enrichedCategories: Category[] = [
     id: "feelings",
     name: "Feelings",
     icon: "😊",
-    color: "bg-educational-purple",
-    gradient: "from-purple-400 to-purple-600",
+    color: "bg-playful-purple",
+    gradient: "from-playful-purple to-profile-purple",
     wordCount: getWordsByCategory("feelings").length,
     description: "Understand different emotions and how you feel!",
     funFact: "It's healthy to talk about your feelings!",
@@ -250,8 +250,8 @@ const enrichedCategories: Category[] = [
     id: "greetings",
     name: "Greetings",
     icon: "👋",
-    color: "bg-yellow-500",
-    gradient: "from-yellow-400 to-yellow-600",
+    color: "bg-sunshine",
+    gradient: "from-sunshine-light to-sunshine",
     wordCount: getWordsByCategory("greetings").length,
     description: "Learn friendly ways to say hello and goodbye!",
     funFact: "Greeting people politely makes them smile!",
@@ -271,8 +271,8 @@ const enrichedCategories: Category[] = [
     id: "technology",
     name: "Technology",
     icon: "🤖",
-    color: "bg-slate-600",
-    gradient: "from-slate-500 to-slate-700",
+    color: "bg-navy",
+    gradient: "from-navy to-profile-purple",
     wordCount: getWordsByCategory("technology").length,
     description: "Discover amazing gadgets and modern inventions!",
     funFact: "Technology makes our lives easier and more fun!",
@@ -292,8 +292,8 @@ const enrichedCategories: Category[] = [
     id: "transportation",
     name: "Transportation",
     icon: "🚗",
-    color: "bg-red-500",
-    gradient: "from-red-400 to-red-600",
+    color: "bg-coral-red",
+    gradient: "from-coral-red to-bright-orange",
     wordCount: getWordsByCategory("transportation").length,
     description: "Explore different ways to travel and move around!",
     funFact: "Transportation helps us go to amazing places!",
@@ -313,8 +313,8 @@ const enrichedCategories: Category[] = [
     id: "weather",
     name: "Weather",
     icon: "🌤️",
-    color: "bg-cyan-500",
-    gradient: "from-cyan-400 to-cyan-600",
+    color: "bg-sky",
+    gradient: "from-sky-light to-sky",
     wordCount: getWordsByCategory("weather").length,
     description: "Learn about different weather and sky conditions!",
     funFact: "Weather affects how we feel and what we do!",
@@ -333,7 +333,7 @@ const enrichedCategories: Category[] = [
     name: "Colors",
     icon: "🌈",
     color: "bg-rainbow",
-    gradient: "from-red-400 via-yellow-400 to-blue-400",
+    gradient: "from-coral-red via-sunshine to-jungle",
     wordCount: getWordsByCategory("colors").length,
     description: "Discover beautiful colors that make the world bright!",
     funFact: "Colors can change how we feel and think!",
@@ -351,8 +351,8 @@ const enrichedCategories: Category[] = [
     id: "numbers",
     name: "Numbers",
     icon: "🔢",
-    color: "bg-educational-blue",
-    gradient: "from-blue-500 to-indigo-600",
+    color: "bg-sky",
+    gradient: "from-sky to-navy",
     wordCount: getWordsByCategory("numbers").length,
     description: "Learn to count and explore the magic of numbers!",
     funFact: "Numbers help us understand the world around us!",
@@ -370,8 +370,8 @@ const enrichedCategories: Category[] = [
     id: "objects",
     name: "Objects",
     icon: "🧸",
-    color: "bg-educational-purple",
-    gradient: "from-purple-400 to-purple-600",
+    color: "bg-profile-purple",
+    gradient: "from-profile-purple to-playful-purple",
     wordCount: getWordsByCategory("objects").length,
     description: "Explore everyday objects and fun things around you!",
     funFact: "Objects tell stories about how people live!",
@@ -501,21 +501,21 @@ export function ChildFriendlyCategorySelector({
       {/* Enhanced Mobile Header */}
       <div className="text-center relative mt-2 md:mt-4 px-2 md:px-0">
         <div className="md:hidden mb-4">
-          <div className="bg-gradient-to-r from-educational-blue/10 to-educational-purple/10 rounded-xl p-3 border border-educational-blue/20">
+          <div className="bg-gradient-to-r from-jungle/10 to-sunshine/10 rounded-xl p-3 border border-jungle/20 shadow-lg">
             <div className="flex items-center justify-between mb-1">
-              <h2 className="text-base font-bold text-slate-800 bg-gradient-to-r from-educational-blue to-educational-purple bg-clip-text text-transparent">
-                🌟 Pick a Topic!
+              <h2 className="text-base font-bold text-slate-800 bg-gradient-to-r from-jungle to-sunshine bg-clip-text text-transparent">
+                🌿 Jungle Adventure Library! 🦎
               </h2>
               <div className="flex gap-1">
-                <Badge className="bg-educational-green text-white px-2 py-0.5 text-xs">
+                <Badge className="bg-jungle text-white px-2 py-0.5 text-xs">
                   📚 {wordsDatabase.length}
                 </Badge>
-                <Badge className="bg-educational-blue text-white px-2 py-0.5 text-xs">
+                <Badge className="bg-sunshine text-navy px-2 py-0.5 text-xs">
                   🎯 {categories.length}
                 </Badge>
               </div>
             </div>
-            <p className="text-xs text-slate-600 leading-tight">
+            <p className="text-xs text-jungle-dark leading-tight">
               {getPersonalizedMessage()}
             </p>
           </div>
@@ -523,21 +523,21 @@ export function ChildFriendlyCategorySelector({
 
         {/* Desktop Header */}
         <div className="hidden md:block">
-          <h2 className="text-2xl font-bold text-slate-800 mb-2 bg-gradient-to-r from-educational-blue to-educational-purple bg-clip-text text-transparent">
-            🌟 Choose Your Learning Adventure! 🌟
+          <h2 className="text-3xl font-bold text-slate-800 mb-3 bg-gradient-to-r from-jungle via-sunshine to-jungle-light bg-clip-text text-transparent">
+            🌿 Welcome to the Jungle Adventure Library! 🦋
           </h2>
-          <p className="text-lg text-slate-600 max-w-2xl mx-auto mb-2">
+          <p className="text-lg text-jungle-dark max-w-3xl mx-auto mb-3">
             {getPersonalizedMessage()}
           </p>
-          <div className="flex justify-center gap-2 mb-4 flex-wrap">
-            <Badge className="bg-educational-green text-white px-3 py-1 text-sm animate-pulse">
-              📚 {wordsDatabase.length} Amazing Words
+          <div className="flex justify-center gap-3 mb-6 flex-wrap">
+            <Badge className="bg-gradient-to-r from-jungle to-jungle-light text-white px-4 py-2 text-sm animate-bounce shadow-lg">
+              🌳 {wordsDatabase.length} Adventure Words
             </Badge>
-            <Badge className="bg-educational-blue text-white px-3 py-1 text-sm animate-pulse delay-100">
-              🎯 {categories.length} Fun Categories
+            <Badge className="bg-gradient-to-r from-sunshine to-sunshine-dark text-navy px-4 py-2 text-sm animate-bounce delay-100 shadow-lg">
+              🎯 {categories.length} Jungle Paths
             </Badge>
-            <Badge className="bg-educational-purple text-white px-3 py-1 text-sm animate-pulse delay-200">
-              ⭐ 3 Difficulty Levels
+            <Badge className="bg-gradient-to-r from-bright-orange to-coral-red text-white px-4 py-2 text-sm animate-bounce delay-200 shadow-lg">
+              ⭐ 3 Adventure Levels
             </Badge>
           </div>
         </div>
