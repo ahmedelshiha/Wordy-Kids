@@ -907,15 +907,15 @@ export function ChildFriendlyCategorySelector({
             onSelectCategory(selectedCategory);
           }}
           disabled={!selectedCategory || selectedCategory === ""}
-          className="bg-gradient-to-r from-educational-blue via-educational-purple to-educational-pink text-white hover:from-educational-blue/90 hover:via-educational-purple/90 hover:to-educational-pink/90 text-lg md:text-xl px-8 md:px-12 py-3 md:py-4 rounded-full font-bold transform md:hover:scale-110 transition-all duration-300 shadow-2xl relative overflow-hidden w-full md:w-auto"
+          className="bg-gradient-to-r from-jungle via-sunshine to-bright-orange text-white hover:from-jungle-dark hover:via-sunshine-dark hover:to-coral-red text-lg md:text-xl px-8 md:px-12 py-3 md:py-4 rounded-full font-bold transform md:hover:scale-110 transition-all duration-300 shadow-2xl relative overflow-hidden w-full md:w-auto"
         >
           <span className="relative z-10 flex items-center gap-2">
             <Sparkles className="w-6 h-6 animate-spin" />
-            🚀{" "}
+            🌿{" "}
             {selectedCategory
-              ? `Start Learning ${categories.find((c) => c.id === selectedCategory)?.name}!`
-              : "Select a Category First!"}{" "}
-            🚀
+              ? `Start Jungle Adventure: ${categories.find((c) => c.id === selectedCategory)?.name}!`
+              : "Choose Your Jungle Path First!"}{" "}
+            🦋
             <Star className="w-6 h-6 animate-pulse" />
           </span>
 
@@ -923,8 +923,8 @@ export function ChildFriendlyCategorySelector({
           <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full animate-shimmer"></div>
         </Button>
 
-        <p className="text-xs md:text-sm text-slate-500 mt-4 animate-pulse">
-          ✨ Choose a category above to begin your vocabulary journey! ✨
+        <p className="text-xs md:text-sm text-jungle-dark/70 mt-4 animate-pulse">
+          🌳 Choose a jungle path above to begin your adventure! 🦋
         </p>
       </div>
 
@@ -941,11 +941,11 @@ export function ChildFriendlyCategorySelector({
                   audioService.playCheerSound();
                 }
               }}
-              className="w-14 h-14 rounded-full bg-gradient-to-r from-educational-green to-educational-blue hover:from-educational-green/90 hover:to-educational-blue/90 shadow-lg"
+              className="w-14 h-14 rounded-full bg-gradient-to-r from-jungle to-sunshine hover:from-jungle-dark hover:to-sunshine-dark shadow-lg"
             >
               <span className="text-2xl">
                 {categories.find((c) => c.id === selectedCategory)?.icon ||
-                  "🚀"}
+                  "🌿"}
               </span>
             </Button>
             <div className="text-xs text-center text-white bg-black/70 rounded px-2 py-1">
@@ -967,9 +967,9 @@ export function ChildFriendlyCategorySelector({
             ) as HTMLElement;
             allButton?.scrollIntoView({ behavior: "smooth", block: "center" });
           }}
-          className="w-12 h-12 rounded-full bg-white/90 backdrop-blur-sm shadow-lg border-2 border-educational-blue/20 hover:bg-educational-blue/10"
+          className="w-12 h-12 rounded-full bg-white/90 backdrop-blur-sm shadow-lg border-2 border-jungle/20 hover:bg-jungle/10"
         >
-          <span className="text-lg">🎯</span>
+          <span className="text-lg">🌳</span>
         </Button>
       </div>
     </div>
