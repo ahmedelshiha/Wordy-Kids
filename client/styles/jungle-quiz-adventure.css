@@ -124,7 +124,7 @@
   );
   border: 3px solid transparent;
   border-radius: 20px;
-  padding: 1.5rem;
+  padding: 1.1rem;
   position: relative;
   overflow: hidden;
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
@@ -197,34 +197,34 @@
 
 /* ========== JUNGLE CARD CONTENT ========== */
 .jungle-quiz-card-icon {
-  font-size: 4rem;
-  margin-bottom: 1rem;
+  font-size: 3rem;
+  margin-bottom: 0.75rem;
   display: block;
   text-align: center;
   animation: jungle-card-icon-float 3s ease-in-out infinite;
 }
 
 .jungle-quiz-card-title {
-  font-size: 1.5rem;
+  font-size: 1.3rem;
   font-weight: 700;
   text-align: center;
-  margin-bottom: 0.75rem;
+  margin-bottom: 0.5rem;
   color: #2d3748;
 }
 
 .jungle-quiz-card-description {
-  font-size: 0.95rem;
+  font-size: 0.85rem;
   color: #4a5568;
   text-align: center;
-  margin-bottom: 1.5rem;
-  line-height: 1.5;
+  margin-bottom: 1rem;
+  line-height: 1.4;
 }
 
 .jungle-quiz-card-badges {
   display: flex;
   justify-content: center;
   gap: 0.5rem;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1rem;
   flex-wrap: wrap;
 }
 
