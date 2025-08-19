@@ -479,25 +479,26 @@ export function AvatarCustomization({
                 variant="outline"
                 onClick={() => setStep(Math.max(1, step - 1))}
                 disabled={step === 1}
+                className="bg-white/90 border-jungle/30 hover:bg-jungle/10 text-navy font-['Baloo_2'] font-semibold"
               >
-                Previous
+                🔙 Previous
               </Button>
 
               {step < 4 ? (
                 <Button
                   onClick={() => setStep(step + 1)}
                   disabled={!canProceed}
-                  className="bg-educational-blue hover:bg-educational-blue/90"
+                  className="bg-gradient-to-r from-jungle to-bright-orange hover:from-jungle-dark hover:to-orange-600 text-white font-['Baloo_2'] font-bold shadow-lg hover:shadow-xl transform hover:scale-[1.02] transition-all duration-300"
                 >
-                  Next Step
+                  🌟 Next Step
                   <Sparkles className="w-4 h-4 ml-2" />
                 </Button>
               ) : (
                 <Button
                   onClick={handleCreateProfile}
-                  className="bg-educational-green hover:bg-educational-green/90"
+                  className="bg-gradient-to-r from-jungle to-bright-orange hover:from-jungle-dark hover:to-orange-600 text-white font-['Baloo_2'] font-bold shadow-lg hover:shadow-xl transform hover:scale-[1.02] transition-all duration-300"
                 >
-                  Start My Adventure! 🚀
+                  🎯 Start My Adventure! 🚀
                 </Button>
               )}
             </div>
