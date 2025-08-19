@@ -318,10 +318,10 @@ export function AvatarCustomization({
                     >
                       <CardContent className="p-4 text-center">
                         <div className="text-4xl mb-2">{avatar.emoji}</div>
-                        <div className="font-semibold text-gray-800">
+                        <div className="font-semibold text-navy font-['Baloo_2']">
                           {avatar.name}
                         </div>
-                        <div className="text-xs text-gray-600 mt-1">
+                        <div className="text-xs text-navy/70 mt-1 font-['Baloo_2']">
                           {avatar.personality}
                         </div>
                       </CardContent>
