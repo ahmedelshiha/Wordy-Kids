@@ -266,4 +266,26 @@
     flex-wrap: nowrap;
     justify-content: center;
   }
+
+  /* Typography optimizations for desktop */
+  .jungle-quiz-hero h2 {
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .jungle-quiz-hero p {
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  /* Compact spacing for achievement text */
+  .jungle-achievement-item .font-bold {
+    font-size: 0.95rem;
+  }
+
+  .jungle-achievement-item .text-sm {
+    font-size: 0.8rem;
+  }
 }
