@@ -16,11 +16,11 @@ interface JungleAdventureSidebarProps {
 const ParrotIcon = ({ className }: { className?: string }) => (
   <div
     className={cn(
-      "w-10 h-10 rounded-lg bg-sky flex items-center justify-center shadow-md hover:shadow-lg transition-all duration-300 hover:scale-105",
+      "w-10 h-10 rounded-lg bg-sky flex items-center justify-center shadow-md hover:shadow-lg transition-all duration-300 hover:scale-105 flex-shrink-0",
       className,
     )}
   >
-    <div className="text-white text-lg transform hover:rotate-12 transition-transform duration-300">
+    <div className="text-white text-sm transform hover:rotate-12 transition-transform duration-300">
       🦜
     </div>
   </div>
