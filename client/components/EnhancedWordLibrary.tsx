@@ -587,7 +587,7 @@ export const EnhancedWordLibrary: React.FC<EnhancedWordLibraryProps> = ({
       {/* Search and Filters */}
       {(showFilters || !isMobile) && viewMode === "words" && (
         <Card
-          className={`m-4 ${highContrastMode ? "bg-gray-900 text-white border-white" : ""}`}
+          className={`m-4 ${highContrastMode ? "bg-gray-900 text-white border-white" : "bg-gradient-to-r from-jungle/5 to-sunshine/5 border-jungle/20 shadow-lg"}`}
         >
           <CardContent className="p-4 space-y-4">
             <div className="flex flex-col sm:flex-row gap-4">
