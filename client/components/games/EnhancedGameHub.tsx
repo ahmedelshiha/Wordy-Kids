@@ -218,7 +218,7 @@ export function EnhancedGameHub({
   if (activeSection === "enhanced-quiz") {
     return (
       <div className="min-h-screen">
-        <EnhancedJungleQuizAdventure
+        <EnhancedJungleQuizAdventureDesktop
           selectedCategory={selectedCategory}
           onComplete={handleEnhancedQuizComplete}
           onExit={handleGameExit}
