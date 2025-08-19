@@ -2943,7 +2943,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                                         </div>
                                                         <div className="flex items-center gap-1 text-red-600 bg-red-50 px-2 py-1 rounded-lg">
                                                           <span className="text-sm">
-                                                            💪
+                                                            ����
                                                           </span>
                                                           <span className="font-bold text-sm">
                                                             {
@@ -3239,7 +3239,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                   </div>
 
                                   {/* Jungle Adventure Progress & Achievements */}
-                                  <div className="max-w-4xl mx-auto">
+                                  <div className="max-w-7xl mx-auto">
                                     <div className="jungle-progress-container">
                                       <div className="text-center mb-6">
                                         <h3 className="text-2xl font-bold text-jungle-green mb-2 flex items-center justify-center gap-3">
@@ -3254,7 +3254,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                         </p>
                                       </div>
 
-                                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 jungle-achievements-grid">
+                                      <div className="grid grid-cols-1 md:grid-cols-4 gap-4 jungle-achievements-grid">
                                         {/* Achievement Items */}
                                         <div className="jungle-achievement-item">
                                           <div className="jungle-achievement-icon">
