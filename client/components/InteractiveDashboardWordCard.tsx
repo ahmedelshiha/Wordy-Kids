@@ -374,21 +374,45 @@ export function InteractiveDashboardWordCard({
           console.log("Speech completed successfully");
           setIsPlaying(false);
         },
-        onError: () => {
-          console.error("Speech synthesis failed for word:", currentWord.word);
+        onError: (errorDetails) => {
+          console.error("Speech synthesis failed for word:", {
+            word: currentWord.word,
+            service: 'enhancedAudioService',
+            timestamp: new Date().toISOString(),
+            errorDetails: errorDetails || 'No error details provided'
+          });
           setIsPlaying(false);
           // Fallback: try with basic audioService
           try {
+            console.log("Attempting fallback to basic audioService for word:", currentWord.word);
             audioService.pronounceWord(currentWord.word, {
-              onStart: () => setIsPlaying(true),
-              onEnd: () => setIsPlaying(false),
-              onError: () => setIsPlaying(false),
+              onStart: () => {
+                console.log("Fallback audioService started successfully for:", currentWord.word);
+                setIsPlaying(true);
+              },
+              onEnd: () => {
+                console.log("Fallback audioService completed successfully for:", currentWord.word);
+                setIsPlaying(false);
+              },
+              onError: () => {
+                console.error("Fallback audioService also failed for word:", {
+                  word: currentWord.word,
+                  service: 'basicAudioService',
+                  timestamp: new Date().toISOString()
+                });
+                setIsPlaying(false);
+              },
             });
           } catch (fallbackError) {
-            console.error(
-              "Fallback speech synthesis also failed:",
-              fallbackError,
-            );
+            console.error("Fallback speech synthesis also failed:", {
+              word: currentWord.word,
+              error: fallbackError instanceof Error ? {
+                name: fallbackError.name,
+                message: fallbackError.message,
+                stack: fallbackError.stack
+              } : fallbackError,
+              timestamp: new Date().toISOString()
+            });
           }
         },
       });
