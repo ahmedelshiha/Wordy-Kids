@@ -139,7 +139,7 @@ import { useNavigationHistory } from "@/hooks/useNavigationHistory";
 import { useAIWordRecommendations } from "@/hooks/use-ai-word-recommendations";
 import { AIWordRecommendationService } from "@/lib/aiWordRecommendationService";
 import { getAISettings, isAIEnabled } from "@/lib/aiSettings";
-import { ChildProfileSidebar } from "@/components/ChildProfileSidebar";
+import { JungleAdventureSidebar } from "@/components/JungleAdventureSidebar";
 import { MobileChildProfileHeader } from "@/components/MobileChildProfileHeader";
 import { EnhancedStatsHelper } from "@/lib/enhancedStatsHelper";
 import { useBottomNavSettings } from "@/hooks/use-bottom-nav-settings";
