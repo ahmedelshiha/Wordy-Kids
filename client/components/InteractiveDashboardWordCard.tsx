@@ -1179,7 +1179,7 @@ export function InteractiveDashboardWordCard({
                         return "🎉 Goal achieved! You're incredible!";
                       }
                       if (percentage >= 90)
-                        return "���� Almost there, superstar!";
+                        return "🌟 Almost there, superstar!";
                       if (percentage >= 75) return "🚀 You're doing great!";
                       if (percentage >= 50) return "💪 Keep going, champion!";
                       if (percentage >= 25) return "🌱 Nice start!";
