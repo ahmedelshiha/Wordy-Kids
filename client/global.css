@@ -2039,8 +2039,8 @@
     opacity: 0;
   }
   50% {
-    transform: scale(1.2) rotate(180deg);
-    opacity: 1;
+    transform: scale(0.8) rotate(180deg);
+    opacity: 0.6;
   }
   100% {
     transform: scale(0) rotate(360deg);
@@ -2057,7 +2057,7 @@
 }
 
 .animate-celebration-sparkles {
-  animation: celebration-sparkles 1.5s ease-out infinite;
+  animation: celebration-sparkles 2.5s ease-out infinite;
 }
 
 /* Voice button pulse animations */
