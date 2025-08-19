@@ -963,7 +963,7 @@ export default function WordGarden({
         className="pointer-events-none absolute inset-0 overflow-hidden"
       />
 
-      <div className="relative rounded-3xl shadow-2xl p-2 md:p-4 pb-16 md:pb-20 text-white border-2 border-emerald-500/40 backdrop-blur-sm overflow-hidden">
+      <div className="relative rounded-3xl shadow-2xl p-2 md:p-4 pb-6 md:pb-8 text-white border-2 border-emerald-500/40 backdrop-blur-sm overflow-hidden">
         {/* Magical Jungle Background - Deep emerald-to-moss gradient */}
         <div className="absolute inset-0 rounded-3xl overflow-hidden pointer-events-none">
           {/* Main jungle gradient background */}
@@ -1315,7 +1315,7 @@ export default function WordGarden({
                         🔍
                       </span>
                       <div className="text-white font-bold text-xs md:text-sm mt-1 md:mt-2 drop-shadow-lg bg-coral-red/50 rounded-full px-2 md:px-3 py-1">
-                        <span className="mr-2">🗺️</span>Keep exploring!
+                        <span className="mr-2">🗺���</span>Keep exploring!
                       </div>
                     </div>
                   </div>
@@ -1464,7 +1464,7 @@ export default function WordGarden({
       </div>
 
       {/* Immersive Jungle Adventure Progress Trail */}
-      <div className="mt-4 md:mt-8 relative mb-6 md:mb-12">
+      <div className="mt-2 md:mt-4 relative mb-2 md:mb-4">
         {/* Rich jungle path background */}
         <div className="absolute inset-0 -mx-2 h-24 bg-gradient-to-r from-emerald-200/80 via-green-100/90 to-lime-200/80 rounded-2xl border-2 border-emerald-300/60 shadow-lg" />
         {/* Jungle path texture overlay */}
@@ -1551,7 +1551,7 @@ export default function WordGarden({
         <div className="absolute top-1/2 left-2 right-2 h-1 bg-gradient-to-r from-emerald-400 via-green-300 to-lime-400 rounded-full -translate-y-1/2 -z-10" />
 
         {/* Enhanced Adventure progress indicators with better visibility */}
-        <div className="flex justify-between mt-3 md:mt-6 px-2 md:px-3 gap-1">
+        <div className="flex justify-between mt-2 md:mt-3 px-2 md:px-3 gap-1">
           <div className="text-center flex flex-col items-center bg-emerald-900/50 border border-emerald-600/40 rounded-lg px-1 md:px-2 py-1 md:py-2 backdrop-blur-sm hover:bg-emerald-800/60 transition-all duration-300">
             <span className="block text-sm md:text-lg mb-0.5 md:mb-1 drop-shadow-lg">
               🚀
