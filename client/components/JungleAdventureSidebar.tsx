@@ -18,7 +18,7 @@ interface JungleAdventureSidebarProps {
 
 // Custom jungle-themed icons as SVG components
 const ParrotIcon = ({ className }: { className?: string }) => (
-  <div className={cn("w-10 h-10 rounded-lg bg-sky-blue flex items-center justify-center", className)}>
+  <div className={cn("w-10 h-10 rounded-lg bg-sky flex items-center justify-center", className)}>
     <span className="text-white text-lg">🦜</span>
   </div>
 );
@@ -30,7 +30,7 @@ const MonkeyIcon = ({ className }: { className?: string }) => (
 );
 
 const CompassIcon = ({ className }: { className?: string }) => (
-  <div className={cn("w-10 h-10 rounded-lg bg-sunshine-yellow flex items-center justify-center", className)}>
+  <div className={cn("w-10 h-10 rounded-lg bg-sunshine flex items-center justify-center", className)}>
     <span className="text-white text-lg">🧭</span>
   </div>
 );
