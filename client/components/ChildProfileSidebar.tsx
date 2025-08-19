@@ -115,15 +115,15 @@ export const ChildProfileSidebar: React.FC<ChildProfileSidebarProps> = ({
       variants={sidebarVariants}
       animate={isCollapsed ? "collapsed" : "expanded"}
       className={cn(
-        "bg-gradient-to-b from-blue-50 to-purple-50",
+        "bg-gradient-to-b from-jungle-light/30 to-sunshine-light/20",
         "flex flex-col h-fit max-h-full",
         "transition-all duration-300",
-        "relative border border-slate-200 rounded-xl shadow-md",
+        "relative border-2 border-jungle/40 rounded-2xl shadow-2xl backdrop-blur-sm",
         className,
       )}
     >
       {/* Simplified Sidebar Header */}
-      <div className="p-3 bg-gradient-to-r from-blue-100 to-purple-100 relative z-10 rounded-t-xl border-b border-slate-200">
+      <div className="p-3 bg-gradient-to-r from-jungle-light/40 to-sunshine-light/30 relative z-10 rounded-t-2xl border-b-2 border-jungle/30">
         <div className="flex items-center justify-between">
           <AnimatePresence mode="wait">
             {!isCollapsed && (
@@ -146,7 +146,7 @@ export const ChildProfileSidebar: React.FC<ChildProfileSidebarProps> = ({
                 kidFriendlyEffects.playSound(SOUNDS.button_click);
                 onToggleCollapse();
               }}
-              className="h-8 w-8 p-0 bg-blue-500 hover:bg-blue-600 text-white rounded-md transition-all duration-200 lg:hidden"
+              className="h-8 w-8 p-0 bg-jungle hover:bg-jungle-dark text-white rounded-xl transition-all duration-200 lg:hidden shadow-lg"
             >
               {isCollapsed ? (
                 position === "left" ? (
@@ -187,9 +187,9 @@ export const ChildProfileSidebar: React.FC<ChildProfileSidebarProps> = ({
 
               {/* Weekly Adventure Progress */}
               {showWeeklyProgress && stats && (
-                <div className="bg-white rounded-2xl p-3 border border-gray-200 shadow-lg kid-card">
-                  <h4 className="text-xs font-bold text-white mb-2 flex items-center kid-text-big text-shadow">
-                    <TrendingUp className="w-4 h-4 mr-1 text-educational-yellow" />
+                <div className="bg-gradient-to-br from-jungle-light/25 to-sunshine-light/15 rounded-2xl p-3 border-2 border-jungle/30 shadow-xl backdrop-blur-sm kid-card">
+                  <h4 className="text-xs font-bold text-jungle-dark mb-2 flex items-center kid-text-big text-shadow">
+                    <TrendingUp className="w-4 h-4 mr-1 text-sunshine" />
                     🏆 This Week
                   </h4>
                   <div className="space-y-2">
