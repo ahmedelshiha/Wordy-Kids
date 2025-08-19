@@ -448,7 +448,15 @@ export class EnhancedAudioService {
           volume: volume,
         });
         try {
-          onError?.();
+          const errorDetails = {
+            error: event.error,
+            message: event.message,
+            word: word,
+            voiceType: voiceType,
+            voice: voice?.name,
+            timestamp: new Date().toISOString()
+          };
+          onError?.(errorDetails);
         } catch (error) {
           console.error("Error in onError callback:", error);
         }
