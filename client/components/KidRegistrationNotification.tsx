@@ -301,7 +301,7 @@ export const KidRegistrationNotification: React.FC<
             <motion.div
               className="absolute inset-0 bg-gradient-to-r from-yellow-400/20 to-transparent"
               animate={{
-                x: ["-100%", "200%"],
+                transform: ["translateX(-100%)", "translateX(200%)"],
                 transition: { duration: 2, repeat: Infinity, ease: "linear" },
               }}
             />
