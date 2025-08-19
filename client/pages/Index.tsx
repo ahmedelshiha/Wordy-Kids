@@ -2876,7 +2876,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                                       ) {
                                                         return (
                                                           <div className="text-xs text-orange-600 font-medium">
-                                                            ��� Review
+                                                            📚 Review
                                                           </div>
                                                         );
                                                       } else {
