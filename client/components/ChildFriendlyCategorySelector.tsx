@@ -479,7 +479,7 @@ export function ChildFriendlyCategorySelector({
     : getRecommendedCategories();
 
   return (
-    <div className="space-y-8 relative">
+    <div className="space-y-8 relative jungle-pattern-bg jungle-mobile-optimized">
       {/* Floating Background Elements */}
       <div className="fixed inset-0 pointer-events-none overflow-hidden">
         {floatingElements.map((element) => (
@@ -501,7 +501,7 @@ export function ChildFriendlyCategorySelector({
       {/* Enhanced Mobile Header */}
       <div className="text-center relative mt-2 md:mt-4 px-2 md:px-0">
         <div className="md:hidden mb-4">
-          <div className="bg-gradient-to-r from-jungle/10 to-sunshine/10 rounded-xl p-3 border border-jungle/20 shadow-lg">
+          <div className="bg-gradient-to-r from-jungle/10 to-sunshine/10 rounded-xl p-3 border border-jungle/20 shadow-lg jungle-card animate-jungle-entrance">
             <div className="flex items-center justify-between mb-1">
               <h2 className="text-base font-bold text-slate-800 bg-gradient-to-r from-jungle to-sunshine bg-clip-text text-transparent">
                 🌿 Jungle Adventure Library! 🦎
@@ -522,7 +522,7 @@ export function ChildFriendlyCategorySelector({
         </div>
 
         {/* Desktop Header */}
-        <div className="hidden md:block">
+        <div className="hidden md:block animate-jungle-entrance">
           <h2 className="text-3xl font-bold text-slate-800 mb-3 bg-gradient-to-r from-jungle via-sunshine to-jungle-light bg-clip-text text-transparent">
             🌿 Welcome to the Jungle Adventure Library! 🦋
           </h2>
@@ -530,13 +530,13 @@ export function ChildFriendlyCategorySelector({
             {getPersonalizedMessage()}
           </p>
           <div className="flex justify-center gap-3 mb-6 flex-wrap">
-            <Badge className="bg-gradient-to-r from-jungle to-jungle-light text-white px-4 py-2 text-sm animate-bounce shadow-lg">
+            <Badge className="bg-gradient-to-r from-jungle to-jungle-light text-white px-4 py-2 text-sm animate-jungle-bounce shadow-lg jungle-sparkle">
               🌳 {wordsDatabase.length} Adventure Words
             </Badge>
-            <Badge className="bg-gradient-to-r from-sunshine to-sunshine-dark text-navy px-4 py-2 text-sm animate-bounce delay-100 shadow-lg">
+            <Badge className="bg-gradient-to-r from-sunshine to-sunshine-dark text-navy px-4 py-2 text-sm animate-jungle-bounce delay-100 shadow-lg jungle-sparkle">
               🎯 {categories.length} Jungle Paths
             </Badge>
-            <Badge className="bg-gradient-to-r from-bright-orange to-coral-red text-white px-4 py-2 text-sm animate-bounce delay-200 shadow-lg">
+            <Badge className="bg-gradient-to-r from-bright-orange to-coral-red text-white px-4 py-2 text-sm animate-jungle-bounce delay-200 shadow-lg jungle-sparkle">
               ⭐ 3 Adventure Levels
             </Badge>
           </div>
@@ -639,7 +639,7 @@ export function ChildFriendlyCategorySelector({
           return (
             <Card
               key={category.id}
-              className={`cursor-pointer transition-all duration-300 overflow-hidden ${
+              className={`cursor-pointer jungle-card-hover overflow-hidden ${
                 selectedCategory === category.id
                   ? "ring-3 ring-jungle shadow-xl bg-gradient-to-br from-jungle/5 to-sunshine/10 scale-[1.02] md:scale-105"
                   : "hover:shadow-lg hover:scale-[1.01] md:hover:scale-110 md:hover:-translate-y-1"
@@ -677,10 +677,10 @@ export function ChildFriendlyCategorySelector({
                   )}
 
                   <div
-                    className={`text-3xl md:text-6xl mb-2 md:mb-3 transition-transform duration-300 ${
+                    className={`text-3xl md:text-6xl mb-2 md:mb-3 transition-transform duration-300 animate-jungle-sway ${
                       hoveredCategory === category.id ||
                       selectedCategory === category.id
-                        ? "animate-gentle-bounce scale-110"
+                        ? "animate-jungle-bounce scale-110"
                         : ""
                     }`}
                   >
@@ -907,7 +907,7 @@ export function ChildFriendlyCategorySelector({
             onSelectCategory(selectedCategory);
           }}
           disabled={!selectedCategory || selectedCategory === ""}
-          className="bg-gradient-to-r from-jungle via-sunshine to-bright-orange text-white hover:from-jungle-dark hover:via-sunshine-dark hover:to-coral-red text-lg md:text-xl px-8 md:px-12 py-3 md:py-4 rounded-full font-bold transform md:hover:scale-110 transition-all duration-300 shadow-2xl relative overflow-hidden w-full md:w-auto"
+          className="jungle-button bg-gradient-to-r from-jungle via-sunshine to-bright-orange text-white hover:from-jungle-dark hover:via-sunshine-dark hover:to-coral-red text-lg md:text-xl px-8 md:px-12 py-3 md:py-4 rounded-full font-bold transform md:hover:scale-110 transition-all duration-300 shadow-2xl relative overflow-hidden w-full md:w-auto animate-jungle-pulse"
         >
           <span className="relative z-10 flex items-center gap-2">
             <Sparkles className="w-6 h-6 animate-spin" />
