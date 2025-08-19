@@ -428,7 +428,7 @@ export default function SignUp() {
                       disabled={isLoading}
                     />
                     {/* Calendar icon */}
-                    <span className="absolute right-3 top-1/2 transform -translate-y-1/2 text-lg pointer-events-none">
+                    <span className="absolute right-2 md:right-3 top-1/2 transform -translate-y-1/2 text-sm md:text-lg pointer-events-none">
                       📅
                     </span>
                   </div>
