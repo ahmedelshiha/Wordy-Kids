@@ -289,7 +289,7 @@ export const JungleAdventureWordCard: React.FC<
     <div
       className={cn(
         "relative w-full mx-auto",
-        "max-w-[380px] sm:max-w-[340px] md:max-w-[380px]",
+        "max-w-[380px] sm:max-w-[340px] md:max-w-[400px] lg:max-w-[420px] xl:max-w-[440px]",
         "px-2 sm:px-0",
         "jungle-adventure-card-container",
         className,
