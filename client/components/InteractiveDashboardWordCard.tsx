@@ -1155,7 +1155,7 @@ export function InteractiveDashboardWordCard({
                           if (wordsLearned >= goal * 2)
                             return "⭐ SUPERSTAR! Amazing effort!";
                           if (wordsLearned >= goal * 1.5)
-                            return "🚀 Beyond awesome! Keep going!";
+                            return "�� Beyond awesome! Keep going!";
                           return "🎉 Goal achieved! You're incredible!";
                         }
                         if (percentage >= 90)
@@ -1258,23 +1258,23 @@ export function InteractiveDashboardWordCard({
             background: `
               linear-gradient(
                 135deg,
-                rgba(76, 175, 80, 0.95) 0%,
-                rgba(56, 142, 60, 0.98) 25%,
-                rgba(27, 94, 32, 1) 50%,
-                rgba(56, 142, 60, 0.98) 75%,
-                rgba(76, 175, 80, 0.95) 100%
+                rgba(0, 0, 0, 0.4) 0%,
+                rgba(0, 0, 0, 0.3) 25%,
+                rgba(0, 0, 0, 0.5) 50%,
+                rgba(0, 0, 0, 0.3) 75%,
+                rgba(0, 0, 0, 0.4) 100%
               ),
-              url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%234CAF50' fill-opacity='0.08'%3E%3Cpath d='M30 30c0-16.569 13.431-30 30-30v60c-16.569 0-30-13.431-30-30z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")
+              url("https://images.unsplash.com/photo-1441974231531-c6227db76b6e?q=80&w=1000&auto=format&fit=crop") center/cover
             `,
             borderImage:
-              "linear-gradient(45deg, rgba(255, 215, 0, 0.6), rgba(76, 175, 80, 0.4), rgba(255, 215, 0, 0.6)) 1",
+              "linear-gradient(45deg, rgba(255, 215, 0, 0.8), rgba(34, 197, 94, 0.6), rgba(255, 215, 0, 0.8)) 1",
             borderWidth: "3px",
             borderStyle: "solid",
             boxShadow: `
-              0 20px 40px rgba(76, 175, 80, 0.3),
-              0 0 20px rgba(255, 215, 0, 0.2),
+              0 20px 40px rgba(0, 0, 0, 0.4),
+              0 0 20px rgba(255, 215, 0, 0.3),
               inset 0 1px 0 rgba(255, 255, 255, 0.2),
-              inset 0 -1px 0 rgba(0, 0, 0, 0.1)
+              inset 0 -1px 0 rgba(0, 0, 0, 0.2)
             `,
           }}
         >
