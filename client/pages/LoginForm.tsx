@@ -617,18 +617,35 @@ export default function LoginForm() {
                 )}
               </Button>
 
-              {/* Forgot Password Link */}
-              <div className="text-center py-1">
+              {/* Enhanced Jungle-Themed Forgot Password Button */}
+              <div className="text-center py-3">
                 <Button
                   type="button"
-                  variant="link"
+                  variant="outline"
                   onClick={handleForgotPassword}
-                  className="p-2 h-auto text-sm text-gray-500 hover:text-gray-700 underline-offset-2 min-h-[44px] touch-target"
+                  className="group px-6 py-3 bg-gradient-to-r from-jungle-light/10 to-educational-green-light/10 border-2 border-jungle/30 hover:border-jungle hover:bg-jungle/5 text-jungle hover:text-jungle-dark font-semibold rounded-2xl transition-all duration-300 transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none min-h-[48px] min-w-[180px] touch-target"
+                  style={{
+                    boxShadow: "0 2px 8px rgba(76, 175, 80, 0.15)",
+                    fontFamily: "Baloo 2",
+                    fontWeight: 600,
+                    letterSpacing: "0.3px",
+                  }}
                   disabled={isLoading}
-                  aria-label="Reset password"
+                  aria-label="Reset your password - we'll help you get back into your jungle adventure!"
                 >
-                  🤔 Forgot password?
+                  <div className="flex items-center gap-2">
+                    <span className="text-lg group-hover:animate-bounce">
+                      🌿
+                    </span>
+                    <span>Forgot password?</span>
+                    <span className="text-sm group-hover:animate-pulse">
+                      🔑
+                    </span>
+                  </div>
                 </Button>
+                <p className="text-xs text-jungle/70 mt-1 font-medium">
+                  🦋 No worries! We'll help you get back to your adventure
+                </p>
               </div>
 
               {/* Sign Up Button */}

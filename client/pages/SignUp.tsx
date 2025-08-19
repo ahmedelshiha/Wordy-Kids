@@ -337,16 +337,21 @@ export default function SignUp() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.3 }}
         >
-          <Card className="bg-white/95 backdrop-blur-sm shadow-2xl border-4 border-jungle/20 rounded-[24px] overflow-hidden">
-            <CardHeader className="pb-2 md:pb-4 bg-gradient-to-r from-jungle/10 to-sunshine/10">
-              <CardTitle className="text-center text-lg md:text-xl text-navy font-['Baloo_2'] font-bold flex items-center justify-center gap-2">
-                <span className="text-2xl">🌍</span>
-                Create Explorer Profile
-                <span className="text-2xl">🎒</span>
+          <Card className="bg-white/95 backdrop-blur-sm shadow-2xl border-4 border-jungle/20 rounded-[20px] md:rounded-[24px] overflow-hidden">
+            <CardHeader className="pb-1 md:pb-4 pt-3 md:pt-6 px-3 md:px-6 bg-gradient-to-r from-jungle/10 to-sunshine/10">
+              <CardTitle className="text-center text-base md:text-xl text-navy font-['Baloo_2'] font-bold flex items-center justify-center gap-1 md:gap-2">
+                <span className="text-lg md:text-2xl">🌍</span>
+                <span className="text-sm md:text-base">
+                  Create Explorer Profile
+                </span>
+                <span className="text-lg md:text-2xl">🎒</span>
               </CardTitle>
             </CardHeader>
-            <CardContent className="pt-4 md:pt-6 px-4 md:px-6">
-              <form onSubmit={handleSignUp} className="space-y-3 md:space-y-4">
+            <CardContent className="pt-3 md:pt-6 px-3 md:px-6 pb-4 md:pb-6">
+              <form
+                onSubmit={handleSignUp}
+                className="space-y-2.5 md:space-y-4"
+              >
                 {/* Child Name Field */}
                 <motion.div
                   initial={{ opacity: 0, x: -20 }}
@@ -355,9 +360,9 @@ export default function SignUp() {
                 >
                   <Label
                     htmlFor="childName"
-                    className="text-sm font-semibold text-navy flex items-center gap-2 font-['Baloo_2']"
+                    className="text-xs md:text-sm font-semibold text-navy flex items-center gap-1 md:gap-2 font-['Baloo_2']"
                   >
-                    <span className="text-lg">🐵</span>
+                    <span className="text-base md:text-lg">🐵</span>
                     Young Explorer's Name
                   </Label>
                   <Input
@@ -370,7 +375,7 @@ export default function SignUp() {
                     maxLength={50}
                     value={formData.childName}
                     onChange={handleInputChange}
-                    className="mt-2 border-jungle/30 focus:border-jungle focus:ring-jungle/20 text-base rounded-xl bg-white/80 font-['Baloo_2']"
+                    className="mt-1 md:mt-2 border-jungle/30 focus:border-jungle focus:ring-jungle/20 text-sm md:text-base rounded-lg md:rounded-xl bg-white/80 font-['Baloo_2'] py-2 md:py-3"
                     disabled={isLoading}
                   />
                 </motion.div>
@@ -383,9 +388,9 @@ export default function SignUp() {
                 >
                   <Label
                     htmlFor="birthDate"
-                    className="text-sm font-semibold text-navy flex items-center gap-2 font-['Baloo_2']"
+                    className="text-xs md:text-sm font-semibold text-navy flex items-center gap-1 md:gap-2 font-['Baloo_2']"
                   >
-                    <span className="text-lg">🎂</span>
+                    <span className="text-base md:text-lg">🎂</span>
                     Birthday Adventure
                   </Label>
                   <div className="relative">
@@ -396,7 +401,7 @@ export default function SignUp() {
                       placeholder="dd/mm/yyyy"
                       value={formData.birthDate}
                       onChange={handleInputChange}
-                      className="mt-2 border-jungle/30 focus:border-jungle focus:ring-jungle/20 text-base pr-12 rounded-xl bg-white/80 font-['Baloo_2']"
+                      className="mt-1 md:mt-2 border-jungle/30 focus:border-jungle focus:ring-jungle/20 text-sm md:text-base pr-10 md:pr-12 rounded-lg md:rounded-xl bg-white/80 font-['Baloo_2'] py-2 md:py-3"
                       maxLength={10}
                       disabled={isLoading}
                     />
@@ -428,7 +433,7 @@ export default function SignUp() {
                       disabled={isLoading}
                     />
                     {/* Calendar icon */}
-                    <span className="absolute right-3 top-1/2 transform -translate-y-1/2 text-lg pointer-events-none">
+                    <span className="absolute right-2 md:right-3 top-1/2 transform -translate-y-1/2 text-sm md:text-lg pointer-events-none">
                       📅
                     </span>
                   </div>
@@ -442,9 +447,9 @@ export default function SignUp() {
                 >
                   <Label
                     htmlFor="email"
-                    className="text-sm font-semibold text-navy flex items-center gap-2 font-['Baloo_2']"
+                    className="text-xs md:text-sm font-semibold text-navy flex items-center gap-1 md:gap-2 font-['Baloo_2']"
                   >
-                    <span className="text-lg">👨‍👩‍👧‍👦</span>
+                    <span className="text-base md:text-lg">👨‍👩‍👧‍👦</span>
                     Parent's Contact
                   </Label>
                   <Input
@@ -457,7 +462,7 @@ export default function SignUp() {
                     spellCheck={false}
                     value={formData.email}
                     onChange={handleInputChange}
-                    className="mt-2 border-jungle/30 focus:border-jungle focus:ring-jungle/20 text-base rounded-xl bg-white/80 font-['Baloo_2']"
+                    className="mt-1 md:mt-2 border-jungle/30 focus:border-jungle focus:ring-jungle/20 text-sm md:text-base rounded-lg md:rounded-xl bg-white/80 font-['Baloo_2'] py-2 md:py-3"
                     disabled={isLoading}
                   />
                 </motion.div>
@@ -470,12 +475,12 @@ export default function SignUp() {
                 >
                   <Label
                     htmlFor="password"
-                    className="text-sm font-semibold text-navy flex items-center gap-2 font-['Baloo_2']"
+                    className="text-xs md:text-sm font-semibold text-navy flex items-center gap-1 md:gap-2 font-['Baloo_2']"
                   >
-                    <span className="text-lg">🔐</span>
+                    <span className="text-base md:text-lg">🔐</span>
                     Secret Explorer Code
                   </Label>
-                  <div className="relative mt-2">
+                  <div className="relative mt-1 md:mt-2">
                     <Input
                       id="password"
                       name="password"
@@ -484,19 +489,19 @@ export default function SignUp() {
                       autoComplete="new-password"
                       value={formData.password}
                       onChange={handleInputChange}
-                      className="border-jungle/30 focus:border-jungle focus:ring-jungle/20 pr-12 rounded-xl bg-white/80 font-['Baloo_2']"
+                      className="border-jungle/30 focus:border-jungle focus:ring-jungle/20 pr-10 md:pr-12 rounded-lg md:rounded-xl bg-white/80 font-['Baloo_2'] text-sm md:text-base py-2 md:py-3"
                       disabled={isLoading}
                     />
                     <button
                       type="button"
                       onClick={() => setShowPassword(!showPassword)}
-                      className="absolute right-3 top-1/2 transform -translate-y-1/2 text-jungle hover:text-jungle-dark text-lg"
+                      className="absolute right-2 md:right-3 top-1/2 transform -translate-y-1/2 text-jungle hover:text-jungle-dark"
                       disabled={isLoading}
                     >
                       {showPassword ? (
-                        <EyeOff className="w-5 h-5" />
+                        <EyeOff className="w-4 h-4 md:w-5 md:h-5" />
                       ) : (
-                        <Eye className="w-5 h-5" />
+                        <Eye className="w-4 h-4 md:w-5 md:h-5" />
                       )}
                     </button>
                   </div>
@@ -510,12 +515,12 @@ export default function SignUp() {
                 >
                   <Label
                     htmlFor="confirmPassword"
-                    className="text-sm font-semibold text-navy flex items-center gap-2 font-['Baloo_2']"
+                    className="text-xs md:text-sm font-semibold text-navy flex items-center gap-1 md:gap-2 font-['Baloo_2']"
                   >
-                    <span className="text-lg">🔒</span>
+                    <span className="text-base md:text-lg">🔒</span>
                     Confirm Secret Code
                   </Label>
-                  <div className="relative mt-2">
+                  <div className="relative mt-1 md:mt-2">
                     <Input
                       id="confirmPassword"
                       name="confirmPassword"
@@ -524,7 +529,7 @@ export default function SignUp() {
                       autoComplete="new-password"
                       value={formData.confirmPassword}
                       onChange={handleInputChange}
-                      className="border-jungle/30 focus:border-jungle focus:ring-jungle/20 pr-12 rounded-xl bg-white/80 font-['Baloo_2']"
+                      className="border-jungle/30 focus:border-jungle focus:ring-jungle/20 pr-10 md:pr-12 rounded-lg md:rounded-xl bg-white/80 font-['Baloo_2'] text-sm md:text-base py-2 md:py-3"
                       disabled={isLoading}
                     />
                     <button
@@ -532,13 +537,13 @@ export default function SignUp() {
                       onClick={() =>
                         setShowConfirmPassword(!showConfirmPassword)
                       }
-                      className="absolute right-3 top-1/2 transform -translate-y-1/2 text-jungle hover:text-jungle-dark text-lg"
+                      className="absolute right-2 md:right-3 top-1/2 transform -translate-y-1/2 text-jungle hover:text-jungle-dark"
                       disabled={isLoading}
                     >
                       {showConfirmPassword ? (
-                        <EyeOff className="w-5 h-5" />
+                        <EyeOff className="w-4 h-4 md:w-5 md:h-5" />
                       ) : (
-                        <Eye className="w-5 h-5" />
+                        <Eye className="w-4 h-4 md:w-5 md:h-5" />
                       )}
                     </button>
                   </div>
@@ -549,17 +554,17 @@ export default function SignUp() {
                   <motion.div
                     initial={{ opacity: 0, scale: 0.9 }}
                     animate={{ opacity: 1, scale: 1 }}
-                    className={`text-center p-4 rounded-xl border-2 ${
+                    className={`text-center p-3 md:p-4 rounded-lg md:rounded-xl border-2 ${
                       message.type === "success"
                         ? "bg-jungle/10 text-jungle-dark border-jungle/30"
                         : "bg-coral-red/10 text-coral-red border-coral-red/30"
                     }`}
                   >
-                    <div className="flex items-center justify-center gap-2 font-['Baloo_2'] font-medium">
+                    <div className="flex items-center justify-center gap-2 font-['Baloo_2'] font-medium text-xs md:text-sm">
                       {message.type === "success" ? (
-                        <CheckCircle className="w-5 h-5" />
+                        <CheckCircle className="w-4 h-4 md:w-5 md:h-5" />
                       ) : (
-                        <AlertCircle className="w-5 h-5" />
+                        <AlertCircle className="w-4 h-4 md:w-5 md:h-5" />
                       )}
                       {message.text}
                     </div>
@@ -575,19 +580,23 @@ export default function SignUp() {
                   <Button
                     type="submit"
                     disabled={isLoading}
-                    className="w-full py-4 bg-gradient-to-r from-jungle to-bright-orange text-white hover:from-jungle-dark hover:to-orange-600 font-bold text-lg shadow-xl hover:shadow-2xl transform hover:scale-[1.02] transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none rounded-xl font-['Baloo_2'] border-2 border-white/20"
+                    className="w-full py-3 md:py-4 bg-gradient-to-r from-jungle to-bright-orange text-white hover:from-jungle-dark hover:to-orange-600 font-bold text-base md:text-lg shadow-xl hover:shadow-2xl transform hover:scale-[1.02] transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none rounded-lg md:rounded-xl font-['Baloo_2'] border-2 border-white/20"
                   >
                     {isLoading ? (
-                      <div className="flex items-center gap-3">
-                        <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-                        <span className="text-lg">🌟</span>
-                        Creating Adventure Profile...
+                      <div className="flex items-center gap-2 md:gap-3">
+                        <div className="w-4 h-4 md:w-5 md:h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                        <span className="text-base md:text-lg">🌟</span>
+                        <span className="text-sm md:text-base">
+                          Creating Adventure Profile...
+                        </span>
                       </div>
                     ) : (
-                      <div className="flex items-center justify-center gap-3">
-                        <span className="text-2xl">🎯</span>
-                        Start Jungle Adventure!
-                        <span className="text-2xl">🌟</span>
+                      <div className="flex items-center justify-center gap-2 md:gap-3">
+                        <span className="text-lg md:text-2xl">🎯</span>
+                        <span className="text-sm md:text-base">
+                          Start Jungle Adventure!
+                        </span>
+                        <span className="text-lg md:text-2xl">🌟</span>
                       </div>
                     )}
                   </Button>
@@ -597,7 +606,7 @@ export default function SignUp() {
           </Card>
         </motion.div>
 
-        {/* Back to Login */}
+        {/* Enhanced Jungle-Themed Back to Home Base */}
         <motion.div
           className="text-center mt-4 md:mt-6"
           initial={{ opacity: 0 }}
@@ -606,13 +615,27 @@ export default function SignUp() {
         >
           <Button
             onClick={handleBackToLogin}
-            variant="link"
-            className="p-0 h-auto text-sm text-navy/70 hover:text-navy underline-offset-2 font-['Baloo_2'] font-medium"
+            variant="outline"
+            className="group px-4 md:px-6 py-2 md:py-3 bg-gradient-to-r from-sunshine/10 to-educational-yellow-light/10 border-2 border-sunshine/40 hover:border-sunshine hover:bg-sunshine/10 text-navy hover:text-navy-dark font-semibold rounded-2xl transition-all duration-300 transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none min-h-[44px] min-w-[160px] touch-target"
+            style={{
+              boxShadow: "0 2px 8px rgba(255, 193, 7, 0.2)",
+              fontFamily: "Baloo 2",
+              fontWeight: 600,
+              letterSpacing: "0.3px",
+            }}
             disabled={isLoading}
+            aria-label="Return to the main jungle adventure login page"
           >
-            <ArrowLeft className="w-4 h-4 mr-2" />
-            🏠 Back to Home Base
+            <div className="flex items-center gap-2">
+              <ArrowLeft className="w-4 h-4 md:w-5 md:h-5 group-hover:animate-pulse transition-all duration-300" />
+              <span className="text-lg group-hover:animate-bounce">🏠</span>
+              <span className="text-sm md:text-base">Back to Home Base</span>
+              <span className="text-sm group-hover:animate-pulse">🌿</span>
+            </div>
           </Button>
+          <p className="text-xs text-sunshine-dark/70 mt-2 font-medium font-['Baloo_2']">
+            🦋 Return to the jungle entrance
+          </p>
         </motion.div>
       </motion.div>
     </div>
