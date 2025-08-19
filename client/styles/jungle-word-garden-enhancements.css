@@ -1,0 +1,350 @@
+/* Jungle Word Garden Enhanced Background Animations */
+/* Optimized for both desktop and mobile devices */
+
+/* Core Jungle Background Animations */
+@keyframes jungle-canopy-sway {
+  0%, 100% { 
+    transform: translateX(0) translateY(0) scale(1);
+    filter: brightness(1);
+  }
+  25% { 
+    transform: translateX(-3px) translateY(-2px) scale(1.02);
+    filter: brightness(1.1);
+  }
+  50% { 
+    transform: translateX(2px) translateY(2px) scale(0.98);
+    filter: brightness(0.95);
+  }
+  75% { 
+    transform: translateX(3px) translateY(-1px) scale(1.01);
+    filter: brightness(1.05);
+  }
+}
+
+@keyframes jungle-depth-float {
+  0%, 100% { 
+    transform: translateY(0) rotate(0deg) scale(1);
+    opacity: 0.6;
+  }
+  20% { 
+    transform: translateY(-6px) rotate(1deg) scale(1.05);
+    opacity: 0.8;
+  }
+  40% { 
+    transform: translateY(3px) rotate(-0.5deg) scale(0.95);
+    opacity: 0.7;
+  }
+  60% { 
+    transform: translateY(-4px) rotate(1.5deg) scale(1.02);
+    opacity: 0.9;
+  }
+  80% { 
+    transform: translateY(2px) rotate(-1deg) scale(0.98);
+    opacity: 0.75;
+  }
+}
+
+@keyframes jungle-mystical-glow {
+  0%, 100% { 
+    opacity: 0.1;
+    transform: scale(1) rotate(0deg);
+    filter: blur(0px) brightness(1);
+  }
+  25% { 
+    opacity: 0.3;
+    transform: scale(1.3) rotate(90deg);
+    filter: blur(2px) brightness(1.2);
+  }
+  50% { 
+    opacity: 0.15;
+    transform: scale(0.7) rotate(180deg);
+    filter: blur(3px) brightness(0.8);
+  }
+  75% { 
+    opacity: 0.4;
+    transform: scale(1.2) rotate(270deg);
+    filter: blur(1px) brightness(1.4);
+  }
+}
+
+@keyframes jungle-creature-patrol {
+  0%, 100% { 
+    transform: translateX(0) scale(1) rotate(0deg);
+  }
+  20% { 
+    transform: translateX(-8px) scale(1.05) rotate(-2deg);
+  }
+  40% { 
+    transform: translateX(5px) scale(0.95) rotate(1deg);
+  }
+  60% { 
+    transform: translateX(-3px) scale(1.02) rotate(-1deg);
+  }
+  80% { 
+    transform: translateX(6px) scale(0.98) rotate(1.5deg);
+  }
+}
+
+@keyframes jungle-firefly-dance {
+  0%, 100% { 
+    transform: translate(0, 0) scale(1) rotate(0deg);
+    opacity: 0.4;
+    filter: brightness(1) drop-shadow(0 0 0px rgba(255, 255, 0, 0));
+  }
+  16% { 
+    transform: translate(12px, -18px) scale(1.4) rotate(45deg);
+    opacity: 0.9;
+    filter: brightness(1.6) drop-shadow(0 0 4px rgba(255, 255, 0, 0.8));
+  }
+  33% { 
+    transform: translate(-10px, -10px) scale(0.8) rotate(90deg);
+    opacity: 0.6;
+    filter: brightness(1.2) drop-shadow(0 0 2px rgba(255, 255, 0, 0.4));
+  }
+  50% { 
+    transform: translate(8px, 8px) scale(1.2) rotate(180deg);
+    opacity: 0.8;
+    filter: brightness(1.4) drop-shadow(0 0 6px rgba(255, 255, 0, 0.6));
+  }
+  66% { 
+    transform: translate(-6px, 15px) scale(0.9) rotate(270deg);
+    opacity: 0.7;
+    filter: brightness(1.1) drop-shadow(0 0 3px rgba(255, 255, 0, 0.5));
+  }
+  83% { 
+    transform: translate(15px, -5px) scale(1.3) rotate(315deg);
+    opacity: 0.95;
+    filter: brightness(1.7) drop-shadow(0 0 8px rgba(255, 255, 0, 0.9));
+  }
+}
+
+@keyframes jungle-vine-swing {
+  0%, 100% { 
+    transform: rotate(0deg) scaleY(1) scaleX(1);
+    transform-origin: top center;
+  }
+  25% { 
+    transform: rotate(4deg) scaleY(1.08) scaleX(0.95);
+    transform-origin: top center;
+  }
+  50% { 
+    transform: rotate(0deg) scaleY(0.92) scaleX(1.05);
+    transform-origin: top center;
+  }
+  75% { 
+    transform: rotate(-3deg) scaleY(1.05) scaleX(0.98);
+    transform-origin: top center;
+  }
+}
+
+@keyframes jungle-treasure-pulse {
+  0%, 100% { 
+    transform: scale(1) rotate(0deg);
+    opacity: 0.6;
+    filter: drop-shadow(0 0 0px rgba(255, 193, 7, 0)) brightness(1);
+  }
+  25% { 
+    transform: scale(1.2) rotate(3deg);
+    opacity: 0.8;
+    filter: drop-shadow(0 0 6px rgba(255, 193, 7, 0.4)) brightness(1.2);
+  }
+  50% { 
+    transform: scale(1.25) rotate(0deg);
+    opacity: 0.95;
+    filter: drop-shadow(0 0 12px rgba(255, 193, 7, 0.8)) brightness(1.4);
+  }
+  75% { 
+    transform: scale(1.15) rotate(-2deg);
+    opacity: 0.85;
+    filter: drop-shadow(0 0 8px rgba(255, 193, 7, 0.6)) brightness(1.3);
+  }
+}
+
+/* Enhanced Jungle Background Effects */
+@keyframes jungle-atmosphere-pulse {
+  0%, 100% {
+    opacity: 0.3;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.6;
+    transform: scale(1.1);
+  }
+}
+
+@keyframes jungle-particle-drift {
+  0% {
+    transform: translateY(0) translateX(0) rotate(0deg);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.6;
+  }
+  90% {
+    opacity: 0.6;
+  }
+  100% {
+    transform: translateY(-100px) translateX(20px) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+/* Apply Enhanced Animations */
+.animate-jungle-canopy {
+  animation: jungle-canopy-sway 10s ease-in-out infinite;
+}
+
+.animate-jungle-depth {
+  animation: jungle-depth-float 8s ease-in-out infinite;
+}
+
+.animate-jungle-mystical {
+  animation: jungle-mystical-glow 12s ease-in-out infinite;
+}
+
+.animate-jungle-creature {
+  animation: jungle-creature-patrol 7s ease-in-out infinite;
+}
+
+.animate-jungle-firefly {
+  animation: jungle-firefly-dance 9s ease-in-out infinite;
+}
+
+.animate-jungle-vine {
+  animation: jungle-vine-swing 6s ease-in-out infinite;
+}
+
+.animate-jungle-treasure {
+  animation: jungle-treasure-pulse 5s ease-in-out infinite;
+}
+
+.animate-jungle-atmosphere {
+  animation: jungle-atmosphere-pulse 8s ease-in-out infinite;
+}
+
+.animate-jungle-particle {
+  animation: jungle-particle-drift 15s linear infinite;
+}
+
+/* Mobile Optimizations */
+@media (max-width: 768px) {
+  .animate-jungle-canopy {
+    animation-duration: 12s;
+  }
+  
+  .animate-jungle-depth {
+    animation-duration: 10s;
+  }
+  
+  .animate-jungle-mystical {
+    animation-duration: 15s;
+  }
+  
+  .animate-jungle-firefly {
+    animation-duration: 11s;
+  }
+  
+  .animate-jungle-creature {
+    animation-duration: 9s;
+  }
+  
+  .animate-jungle-vine {
+    animation-duration: 8s;
+  }
+  
+  .animate-jungle-treasure {
+    animation-duration: 6s;
+  }
+}
+
+/* Reduced Motion Support */
+@media (prefers-reduced-motion: reduce) {
+  .animate-jungle-canopy,
+  .animate-jungle-depth,
+  .animate-jungle-mystical,
+  .animate-jungle-creature,
+  .animate-jungle-firefly,
+  .animate-jungle-vine,
+  .animate-jungle-treasure,
+  .animate-jungle-atmosphere,
+  .animate-jungle-particle {
+    animation-duration: 20s;
+    animation-iteration-count: 3;
+  }
+}
+
+/* High Contrast Mode Support */
+@media (prefers-contrast: high) {
+  .animate-jungle-canopy,
+  .animate-jungle-depth,
+  .animate-jungle-mystical,
+  .animate-jungle-creature,
+  .animate-jungle-firefly,
+  .animate-jungle-vine,
+  .animate-jungle-treasure {
+    filter: contrast(1.5) brightness(1.2);
+  }
+}
+
+/* Touch Device Optimizations */
+@media (hover: none) and (pointer: coarse) {
+  .animate-jungle-canopy {
+    animation-duration: 14s;
+  }
+  
+  .animate-jungle-mystical {
+    animation-duration: 18s;
+  }
+  
+  .animate-jungle-firefly {
+    animation-duration: 13s;
+  }
+}
+
+/* Performance Optimizations */
+.jungle-background-layer {
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  transform-style: preserve-3d;
+}
+
+/* Jungle Adventure Word Garden Specific Enhancements */
+.word-garden-jungle-container {
+  position: relative;
+  overflow: hidden;
+  background: 
+    radial-gradient(ellipse at top, rgba(34, 197, 94, 0.1) 0%, transparent 50%),
+    radial-gradient(ellipse at bottom left, rgba(139, 195, 74, 0.08) 0%, transparent 40%),
+    radial-gradient(ellipse at bottom right, rgba(76, 175, 80, 0.06) 0%, transparent 35%);
+}
+
+.word-garden-jungle-ambient {
+  position: absolute;
+  inset: 0;
+  background: 
+    linear-gradient(45deg, transparent 30%, rgba(34, 197, 94, 0.03) 50%, transparent 70%),
+    linear-gradient(-45deg, transparent 30%, rgba(139, 195, 74, 0.02) 50%, transparent 70%);
+  animation: jungle-atmosphere-pulse 20s ease-in-out infinite;
+}
+
+/* Enhanced Jungle Depth Layers */
+.jungle-depth-layer-1 {
+  z-index: 1;
+  opacity: 0.8;
+}
+
+.jungle-depth-layer-2 {
+  z-index: 2;
+  opacity: 0.6;
+}
+
+.jungle-depth-layer-3 {
+  z-index: 3;
+  opacity: 0.4;
+}
+
+.jungle-interactive-elements {
+  z-index: 10;
+  position: relative;
+}
