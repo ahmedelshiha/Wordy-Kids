@@ -859,7 +859,10 @@ export default function WordGarden({
                   background:
                     "linear-gradient(to bottom, rgba(255, 215, 0, 0.6), rgba(255, 235, 59, 0.3), transparent)",
                   transform: `rotate(${-20 + i * 5}deg)`,
-                  animation: `sunlight-shimmer ${4 + Math.random() * 2}s ease-in-out infinite`,
+                  animationName: "sunlight-shimmer",
+                  animationDuration: `${4 + Math.random() * 2}s`,
+                  animationTimingFunction: "ease-in-out",
+                  animationIterationCount: "infinite",
                   animationDelay: `${i * 0.5}s`,
                 }}
               />
@@ -900,7 +903,10 @@ export default function WordGarden({
                   height: "100%",
                   background:
                     "linear-gradient(to bottom, transparent, rgba(0, 40, 20, 0.8), rgba(0, 60, 30, 0.6))",
-                  animation: `vine-sway ${3 + Math.random() * 2}s ease-in-out infinite`,
+                  animationName: "vine-sway",
+                  animationDuration: `${3 + Math.random() * 2}s`,
+                  animationTimingFunction: "ease-in-out",
+                  animationIterationCount: "infinite",
                   animationDelay: `${i * 0.3}s`,
                 }}
               />
@@ -919,7 +925,10 @@ export default function WordGarden({
                   background:
                     "radial-gradient(circle, rgba(255, 255, 0, 0.9), rgba(255, 215, 0, 0.4))",
                   boxShadow: "0 0 8px rgba(255, 255, 0, 0.6)",
-                  animation: `firefly-dance ${4 + Math.random() * 3}s ease-in-out infinite`,
+                  animationName: "firefly-dance",
+                  animationDuration: `${4 + Math.random() * 3}s`,
+                  animationTimingFunction: "ease-in-out",
+                  animationIterationCount: "infinite",
                   animationDelay: `${Math.random() * 4}s`,
                 }}
               />
@@ -936,7 +945,10 @@ export default function WordGarden({
                   left: `${Math.random() * 100}%`,
                   top: `${Math.random() * 100}%`,
                   fontSize: `${0.6 + Math.random() * 0.8}rem`,
-                  animation: `leaf-drift ${8 + Math.random() * 4}s linear infinite`,
+                  animationName: "leaf-drift",
+                  animationDuration: `${8 + Math.random() * 4}s`,
+                  animationTimingFunction: "linear",
+                  animationIterationCount: "infinite",
                   animationDelay: `${Math.random() * 8}s`,
                 }}
               >
