@@ -171,7 +171,7 @@ const PLANT_TYPES = [
   ["🌱", "🌵", "🌺"], // cactus-flower - spiky cactus to hibiscus
   ["🌱", "🍃", "🌹"], // rose bush - small leaves to red rose
   ["🌱", "🌾", "🌼"], // daisy field - grain to white daisy
-  ["🌱", "💚", "🌷"], // tulip - green heart to pink tulip
+  ["🌱", "���", "🌷"], // tulip - green heart to pink tulip
   ["🌱", "🌳", "🌸"], // cherry tree - tree to cherry blossom
   ["🌱", "🍀", "🌺"], // clover hibiscus - clover to tropical flower
   ["🌱", "🎋", "🏵️"], // bamboo rosette - bamboo to decorative flower
@@ -972,18 +972,18 @@ export default function WordGarden({
             ))}
 
             {/* Jungle flowers blooming */}
-            <div className="absolute top-1/3 left-8 animate-jungle-sparkle">
+            <div className="absolute top-1/3 left-8 animate-jungle-depth">
               <span className="text-xl drop-shadow-lg">🌺</span>
             </div>
-            <div className="absolute bottom-1/4 right-12 animate-jungle-sparkle" style={{ animationDelay: '1s' }}>
+            <div className="absolute bottom-1/4 right-12 animate-jungle-depth" style={{ animationDelay: '1s' }}>
               <span className="text-lg drop-shadow-lg">🌸</span>
             </div>
 
             {/* Jungle treasure chests hidden in foliage */}
-            <div className="absolute bottom-8 left-8 animate-jungle-glow opacity-60">
+            <div className="absolute bottom-8 left-8 animate-jungle-treasure opacity-60">
               <span className="text-sm drop-shadow-lg">📦</span>
             </div>
-            <div className="absolute top-1/2 right-4 animate-jungle-glow opacity-60" style={{ animationDelay: '2s' }}>
+            <div className="absolute top-1/2 right-4 animate-jungle-treasure opacity-60" style={{ animationDelay: '2s' }}>
               <span className="text-sm drop-shadow-lg">🗝️</span>
             </div>
           </div>
