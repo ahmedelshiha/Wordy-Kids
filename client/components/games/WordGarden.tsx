@@ -1431,43 +1431,48 @@ export default function WordGarden({
         }}
       />
 
-      {/* Enhanced Jungle Exit Confirmation Dialog - Mobile Optimized */}
+      {/* Enhanced Jungle Exit Confirmation Dialog - Overflow Prevention */}
       <Dialog open={showExitDialog} onOpenChange={onCloseExitDialog}>
-        <DialogContent className="sm:max-w-xs max-w-[90vw] p-4">
-          <DialogHeader className="text-center pb-2">
-            <div className="text-4xl mb-1">🐒</div>
-            <DialogTitle className="text-lg font-bold text-jungle-dark">
+        <DialogContent className="sm:max-w-sm max-w-[95vw] max-h-[90vh] overflow-y-auto p-3 sm:p-4 mx-2 my-4">
+          <DialogHeader className="text-center pb-2 space-y-2">
+            <div className="text-3xl sm:text-4xl mb-1 animate-bounce">🐒</div>
+            <DialogTitle className="text-base sm:text-lg font-bold text-jungle-dark leading-tight">
               Leave jungle adventure?
             </DialogTitle>
-            <DialogDescription className="text-sm text-jungle-DEFAULT">
+            <DialogDescription className="text-xs sm:text-sm text-jungle-DEFAULT leading-relaxed px-2">
               The monkey needs your help to find more treasures!
             </DialogDescription>
           </DialogHeader>
 
-          {/* Compact Jungle Progress Summary */}
-          <div className="bg-gradient-to-r from-jungle-light/20 via-jungle-DEFAULT/10 to-jungle-light/20 rounded-lg p-3 border border-jungle-light/30 my-3 backdrop-blur-sm">
-            <div className="flex items-center justify-between text-sm">
-              <div className="text-jungle-dark">
-                <span className="font-medium">🏆 {correctCount}</span>
-                <span className="text-xs ml-1">treasures</span>
+          {/* Responsive Jungle Progress Summary */}
+          <div className="bg-gradient-to-r from-emerald-100/80 via-green-50/90 to-lime-100/80 rounded-lg p-2 sm:p-3 border border-emerald-300/50 my-2 sm:my-3 backdrop-blur-sm">
+            <div className="grid grid-cols-3 gap-2 text-center text-xs sm:text-sm">
+              <div className="text-emerald-700">
+                <div className="text-base sm:text-lg">🏆</div>
+                <div className="font-medium">{correctCount}</div>
+                <div className="text-[10px] sm:text-xs opacity-80">treasures</div>
               </div>
-              <div className="text-jungle-DEFAULT">
-                <span className="font-medium">🔥 {bestStreak}</span>
-                <span className="text-xs ml-1">streak</span>
+              <div className="text-emerald-600">
+                <div className="text-base sm:text-lg">🔥</div>
+                <div className="font-medium">{bestStreak}</div>
+                <div className="text-[10px] sm:text-xs opacity-80">streak</div>
               </div>
-              <div className="text-jungle-DEFAULT text-xs">
-                🗺️ {roundIdx + 1}/{pool.length}
+              <div className="text-emerald-600">
+                <div className="text-base sm:text-lg">🗺️</div>
+                <div className="font-medium">{roundIdx + 1}/{pool.length}</div>
+                <div className="text-[10px] sm:text-xs opacity-80">progress</div>
               </div>
             </div>
           </div>
 
-          <DialogFooter className="flex gap-2 pt-2">
+          <DialogFooter className="flex flex-col sm:flex-row gap-2 pt-2 space-y-0">
             <Button
               variant="outline"
               onClick={() => onCloseExitDialog?.()}
-              className="flex-1 bg-jungle-light/20 hover:bg-jungle-light/30 text-jungle-dark border-jungle-light/50 text-sm py-2 backdrop-blur-sm"
+              className="flex-1 bg-emerald-50 hover:bg-emerald-100 text-emerald-700 border-emerald-300 hover:border-emerald-400 text-xs sm:text-sm py-2.5 sm:py-2 transition-all duration-200 font-medium min-h-[40px]"
             >
-              🐒 Continue Adventure
+              <span className="mr-1.5">🐒</span>
+              Continue Adventure
             </Button>
             <Button
               variant="destructive"
@@ -1475,9 +1480,10 @@ export default function WordGarden({
                 onCloseExitDialog?.();
                 onExit?.();
               }}
-              className="flex-1 bg-coral-red hover:bg-coral-red/90 text-white text-sm py-2"
+              className="flex-1 bg-red-500 hover:bg-red-600 text-white text-xs sm:text-sm py-2.5 sm:py-2 transition-all duration-200 font-medium min-h-[40px]"
             >
-              <Home className="w-4 h-4 mr-1" /> Exit Jungle
+              <Home className="w-3 h-3 sm:w-4 sm:h-4 mr-1" />
+              Exit Jungle
             </Button>
           </DialogFooter>
         </DialogContent>
