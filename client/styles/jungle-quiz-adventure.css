@@ -111,7 +111,7 @@
 .jungle-quiz-cards-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 1.5rem;
+  gap: 1rem;
   max-width: 1200px;
   margin: 0 auto;
 }
@@ -124,7 +124,7 @@
   );
   border: 3px solid transparent;
   border-radius: 20px;
-  padding: 1.5rem;
+  padding: 1.1rem;
   position: relative;
   overflow: hidden;
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
@@ -197,34 +197,34 @@
 
 /* ========== JUNGLE CARD CONTENT ========== */
 .jungle-quiz-card-icon {
-  font-size: 4rem;
-  margin-bottom: 1rem;
+  font-size: 3rem;
+  margin-bottom: 0.75rem;
   display: block;
   text-align: center;
   animation: jungle-card-icon-float 3s ease-in-out infinite;
 }
 
 .jungle-quiz-card-title {
-  font-size: 1.5rem;
+  font-size: 1.3rem;
   font-weight: 700;
   text-align: center;
-  margin-bottom: 0.75rem;
+  margin-bottom: 0.5rem;
   color: #2d3748;
 }
 
 .jungle-quiz-card-description {
-  font-size: 0.95rem;
+  font-size: 0.85rem;
   color: #4a5568;
   text-align: center;
-  margin-bottom: 1.5rem;
-  line-height: 1.5;
+  margin-bottom: 1rem;
+  line-height: 1.4;
 }
 
 .jungle-quiz-card-badges {
   display: flex;
   justify-content: center;
   gap: 0.5rem;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1rem;
   flex-wrap: wrap;
 }
 
@@ -252,7 +252,7 @@
 
 .jungle-quiz-button {
   width: 100%;
-  padding: 1rem 1.5rem;
+  padding: 0.75rem 1.25rem;
   font-size: 1rem;
   font-weight: 600;
   border: none;
@@ -352,31 +352,38 @@
   border: 2px solid rgba(76, 175, 80, 0.2);
   border-radius: 16px;
   padding: 1.5rem;
-  margin: 2rem 0;
+  margin: 1.5rem 0;
   backdrop-filter: blur(5px);
+  width: 100%;
+  max-width: none;
 }
 
 .jungle-achievement-item {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: 1rem;
+  text-align: center;
+  gap: 0.75rem;
   padding: 1rem;
   background: rgba(255, 255, 255, 0.9);
   border-radius: 12px;
   margin-bottom: 1rem;
   border: 1px solid rgba(76, 175, 80, 0.2);
   transition: all 0.3s ease;
+  min-height: 140px;
+  justify-content: space-between;
 }
 
 .jungle-achievement-item:hover {
-  transform: translateX(5px);
+  transform: translateY(-3px);
   border-color: rgba(76, 175, 80, 0.4);
   box-shadow: 0 4px 16px rgba(76, 175, 80, 0.15);
 }
 
 .jungle-achievement-icon {
-  font-size: 2rem;
+  font-size: 2.5rem;
   animation: jungle-achievement-pulse 2s ease-in-out infinite;
+  margin-bottom: 0.5rem;
 }
 
 /* ========== MOBILE OPTIMIZATIONS ========== */
