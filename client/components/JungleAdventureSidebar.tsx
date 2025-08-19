@@ -149,13 +149,13 @@ export const JungleAdventureSidebar: React.FC<JungleAdventureSidebarProps> = ({
           <ParrotIcon />
           <div className="flex-1 ml-3">
             <h3
-              className="text-dark-navy font-['Baloo_2'] text-[16px] font-semibold"
+              className="text-navy font-['Baloo_2'] text-[16px] font-semibold"
               style={{ fontFamily: "'Baloo 2', cursive" }}
             >
               Learned Words
             </h3>
             <p
-              className="text-dark-navy/70 font-['Baloo_2'] text-[14px] font-medium"
+              className="text-navy/70 font-['Baloo_2'] text-[14px] font-medium"
               style={{ fontFamily: "'Baloo 2', cursive" }}
             >
               {stats?.wordsLearned || 15} words mastered
@@ -179,13 +179,13 @@ export const JungleAdventureSidebar: React.FC<JungleAdventureSidebarProps> = ({
           <MonkeyIcon />
           <div className="flex-1 ml-3">
             <h3
-              className="text-dark-navy font-['Baloo_2'] text-[16px] font-semibold"
+              className="text-navy font-['Baloo_2'] text-[16px] font-semibold"
               style={{ fontFamily: "'Baloo 2', cursive" }}
             >
               Animals
             </h3>
             <p
-              className="text-dark-navy/70 font-['Baloo_2'] text-[14px] font-medium"
+              className="text-navy/70 font-['Baloo_2'] text-[14px] font-medium"
               style={{ fontFamily: "'Baloo 2', cursive" }}
             >
               {stats?.animalsLearned || 8} animals discovered
@@ -209,13 +209,13 @@ export const JungleAdventureSidebar: React.FC<JungleAdventureSidebarProps> = ({
           <CompassIcon />
           <div className="flex-1 ml-3">
             <h3
-              className="text-dark-navy font-['Baloo_2'] text-[16px] font-semibold"
+              className="text-navy font-['Baloo_2'] text-[16px] font-semibold"
               style={{ fontFamily: "'Baloo 2', cursive" }}
             >
               Adventure Time
             </h3>
             <p
-              className="text-dark-navy/70 font-['Baloo_2'] text-[14px] font-medium"
+              className="text-navy/70 font-['Baloo_2'] text-[14px] font-medium"
               style={{ fontFamily: "'Baloo 2', cursive" }}
             >
               {stats?.totalTime ? `${Math.round(stats.totalTime / 60)}h` : "2h"} exploring
@@ -239,7 +239,7 @@ export const JungleAdventureSidebar: React.FC<JungleAdventureSidebarProps> = ({
       >
         <div className="text-center mb-3">
           <h3
-            className="text-dark-navy font-['Baloo_2'] text-[18px] font-bold mb-3"
+            className="text-navy font-['Baloo_2'] text-[18px] font-bold mb-3"
             style={{ fontFamily: "'Baloo 2', cursive" }}
           >
             {isGuest ? "Start Your Epic Journey!" : "Welcome Back, Explorer!"}
@@ -248,19 +248,19 @@ export const JungleAdventureSidebar: React.FC<JungleAdventureSidebarProps> = ({
           {isGuest && (
             <div className="space-y-2 mb-4 text-left">
               <p
-                className="text-dark-navy font-['Baloo_2'] text-[14px] font-medium flex items-center"
+                className="text-navy font-['Baloo_2'] text-[14px] font-medium flex items-center"
                 style={{ fontFamily: "'Baloo 2', cursive" }}
               >
                 💾 Save your progress forever!
               </p>
               <p
-                className="text-dark-navy font-['Baloo_2'] text-[14px] font-medium flex items-center"
+                className="text-navy font-['Baloo_2'] text-[14px] font-medium flex items-center"
                 style={{ fontFamily: "'Baloo 2', cursive" }}
               >
                 🏆 Earn special badges and rewards!
               </p>
               <p
-                className="text-dark-navy font-['Baloo_2'] text-[14px] font-medium flex items-center"
+                className="text-navy font-['Baloo_2'] text-[14px] font-medium flex items-center"
                 style={{ fontFamily: "'Baloo 2', cursive" }}
               >
                 🔥 Track your learning streaks!
@@ -285,7 +285,7 @@ export const JungleAdventureSidebar: React.FC<JungleAdventureSidebarProps> = ({
 
         {isGuest && (
           <p
-            className="text-center text-dark-navy font-['Baloo_2'] text-[14px] font-medium mt-3 underline cursor-pointer hover:no-underline transition-all duration-200"
+            className="text-center text-navy font-['Baloo_2'] text-[14px] font-medium mt-3 underline cursor-pointer hover:no-underline transition-all duration-200"
             style={{ fontFamily: "'Baloo 2', cursive" }}
             onClick={() => {
               // Continue as guest functionality
