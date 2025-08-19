@@ -90,7 +90,39 @@ export function useMobileTouch(options: TouchOptimizationOptions = {}) {
     preventScrollOnTouch,
   ]);
 
-  return { elementRef };
+  // Haptic feedback function
+  const triggerHaptic = useCallback(
+    (type: "light" | "medium" | "heavy" | "success" | "error" = "light") => {
+      if (typeof navigator !== "undefined" && "vibrate" in navigator) {
+        let pattern: number | number[];
+
+        switch (type) {
+          case "light":
+            pattern = 10;
+            break;
+          case "medium":
+            pattern = 20;
+            break;
+          case "heavy":
+            pattern = 40;
+            break;
+          case "success":
+            pattern = [10, 50, 10];
+            break;
+          case "error":
+            pattern = [50, 30, 50];
+            break;
+          default:
+            pattern = 10;
+        }
+
+        navigator.vibrate(pattern);
+      }
+    },
+    [],
+  );
+
+  return { elementRef, triggerHaptic };
 }
 
 // Hook for detecting mobile device

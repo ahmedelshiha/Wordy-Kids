@@ -626,6 +626,22 @@ export class EnhancedAudioService {
       volume: 0.7,
     });
   }
+
+  // Alias method for compatibility
+  public speakText(
+    text: string,
+    options: {
+      rate?: number;
+      pitch?: number;
+      volume?: number;
+      voiceType?: VoiceType;
+      onStart?: () => void;
+      onEnd?: () => void;
+      onError?: () => void;
+    } = {},
+  ): void {
+    this.pronounceWord(text, options);
+  }
 }
 
 // Export singleton instance
