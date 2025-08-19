@@ -442,7 +442,7 @@ export const JungleAdventureWordCard: React.FC<
               </div>
 
               {/* Jungle Adventure Word Display */}
-              <div className="text-center space-y-3 sm:space-y-4">
+              <div className="text-center space-y-2 sm:space-y-3">
                 <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4">
                   <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-wide drop-shadow-2xl leading-tight jungle-adventure-word text-center">
                     {word.word}
