@@ -3353,20 +3353,81 @@ export default function Index({ initialProfile }: IndexProps) {
                                   </div>
                                 </div>
                               ) : gameMode === "word-garden" ? (
-                                <div className="space-y-6">
-                                  <div className="flex items-center justify-between">
-                                    <h2 className="text-2xl font-bold text-gray-800">
-                                      🌱 Word Garden
-                                    </h2>
-                                    <Button
-                                      onClick={() => setShowExitDialog(true)}
-                                      variant="outline"
-                                      size="sm"
-                                      className="bg-green-50 hover:bg-green-100 text-green-700 border-green-300 hover:border-green-400 transition-all duration-200 shadow-sm hover:shadow-md"
+                                <div className="space-y-6 relative">
+                                  {/* Immersive Jungle Adventure Header */}
+                                  <div className="relative">
+                                    {/* Centered Game Title with Jungle Magic */}
+                                    <div className="text-center mb-8">
+                                      <motion.h1
+                                        initial={{ y: -20, opacity: 0 }}
+                                        animate={{ y: 0, opacity: 1 }}
+                                        className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-jungle-dark via-jungle to-jungle-light bg-clip-text text-transparent relative"
+                                      >
+                                        <span className="relative inline-block">
+                                          <span className="animate-jungle-glow">🌿</span>
+                                          <span className="mx-3 animate-jungle-float">Word Garden</span>
+                                          <span className="animate-jungle-glow">🌿</span>
+                                        </span>
+                                        {/* Magical particles */}
+                                        <div className="absolute inset-0 -z-10">
+                                          <span className="absolute top-0 left-1/4 animate-jungle-sparkle text-sunshine text-lg">✨</span>
+                                          <span className="absolute top-2 right-1/4 animate-jungle-sparkle text-orange-400 text-sm" style={{animationDelay: '0.5s'}}>🌟</span>
+                                          <span className="absolute -top-1 left-1/3 animate-jungle-sparkle text-yellow-300 text-xs" style={{animationDelay: '1s'}}>⭐</span>
+                                          <span className="absolute top-1 right-1/3 animate-jungle-sparkle text-amber-400 text-sm" style={{animationDelay: '1.5s'}}>💫</span>
+                                        </div>
+                                      </motion.h1>
+                                      <motion.p
+                                        initial={{ opacity: 0 }}
+                                        animate={{ opacity: 1 }}
+                                        transition={{ delay: 0.3 }}
+                                        className="text-lg text-jungle-dark/80 font-medium"
+                                      >
+                                        🐵 Join the Jungle Adventure! Listen & Discover Treasures! 🏆
+                                      </motion.p>
+                                    </div>
+
+                                    {/* Enhanced Adventure Exit Button */}
+                                    <motion.div
+                                      className="absolute top-0 right-0"
+                                      initial={{ scale: 0 }}
+                                      animate={{ scale: 1 }}
+                                      transition={{ delay: 0.5, type: "spring", stiffness: 200 }}
                                     >
-                                      <span className="mr-2">🚪</span>
-                                      Exit Garden
-                                    </Button>
+                                      <Button
+                                        onClick={() => setShowExitDialog(true)}
+                                        variant="outline"
+                                        size="lg"
+                                        className="bg-gradient-to-r from-orange-100 to-red-100 hover:from-orange-200 hover:to-red-200 text-coral-red border-coral-red/30 hover:border-coral-red/50 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105 group relative overflow-hidden"
+                                      >
+                                        {/* Animated background */}
+                                        <div className="absolute inset-0 bg-gradient-to-r from-coral-red/10 to-orange-400/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+
+                                        {/* Button content */}
+                                        <div className="relative flex items-center space-x-2">
+                                          <motion.span
+                                            className="text-xl"
+                                            animate={{ rotate: [0, -10, 10, 0] }}
+                                            transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+                                          >
+                                            🚪
+                                          </motion.span>
+                                          <span className="font-semibold">Exit Adventure</span>
+                                          <motion.span
+                                            className="text-sm opacity-70"
+                                            animate={{ y: [0, -2, 0] }}
+                                            transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+                                          >
+                                            🌴
+                                          </motion.span>
+                                        </div>
+
+                                        {/* Sparkle effects */}
+                                        <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                          <span className="absolute top-1 left-2 animate-ping text-yellow-400 text-xs">✨</span>
+                                          <span className="absolute bottom-1 right-2 animate-ping text-orange-400 text-xs" style={{animationDelay: '0.5s'}}>⭐</span>
+                                        </div>
+                                      </Button>
+                                    </motion.div>
                                   </div>
                                   <WordGarden
                                     rounds={10}
