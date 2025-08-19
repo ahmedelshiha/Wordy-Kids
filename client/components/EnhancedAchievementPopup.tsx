@@ -564,7 +564,7 @@ export function EnhancedAchievementPopup({
                           className="bg-white/60 h-1 rounded-full w-full"
                           initial={{ scaleX: 1 }}
                           animate={{
-                            scaleX: timeRemaining / autoCloseDelay,
+                            scaleX: autoCloseDelay > 0 ? timeRemaining / autoCloseDelay : 0,
                           }}
                           transition={{ duration: 0.1, ease: "linear" }}
                           style={{ transformOrigin: "left" }}
